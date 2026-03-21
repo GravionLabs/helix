@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
-import { GvAppLayout, GvNotfound, authRoutes } from '@gravion/sakai-ui';
+import { GvAppLayout, GvLanding, GvNotfound, authRoutes } from '@gravion/sakai-ui';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Documentation } from './pages/documentation/documentation';
-import { Landing } from './pages/landing/landing';
 
 export const appRoutes: Routes = [
   {
@@ -15,7 +14,7 @@ export const appRoutes: Routes = [
       { path: 'pages', loadChildren: () => import('./pages/pages.routes') },
     ],
   },
-  { path: 'landing', component: Landing },
+  { path: 'landing', component: GvLanding },
   { path: 'notfound', component: GvNotfound },
   { path: 'auth', children: authRoutes },
   { path: '**', redirectTo: '/notfound' },

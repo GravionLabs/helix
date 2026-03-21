@@ -14,6 +14,13 @@ export { authRoutes } from './lib/pages/auth/auth.routes';
 export { GvError } from './lib/pages/auth/error/error';
 export { GvLogin } from './lib/pages/auth/login/login';
 export { GvEmpty } from './lib/pages/empty/empty';
+export { GvFeaturesWidget } from './lib/pages/landing/components/features-widget/features-widget';
+export { GvFooterWidget } from './lib/pages/landing/components/footer-widget/footer-widget';
+export { GvHeroWidget } from './lib/pages/landing/components/hero-widget/hero-widget';
+export { GvHighlightsWidget } from './lib/pages/landing/components/highlights-widget/highlights-widget';
+export { GvPricingWidget } from './lib/pages/landing/components/pricing-widget/pricing-widget';
+export { GvTopbarWidget } from './lib/pages/landing/components/topbar-widget/topbar-widget';
+export { GvLanding } from './lib/pages/landing/landing';
 export { GvNotfound } from './lib/pages/notfound/notfound';
 
 // Components
