@@ -1,7 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
+import { GvPricingPlan } from '../../landing.model';
+
+const DEFAULT_PLANS: GvPricingPlan[] = [
+  {
+    title: 'Free',
+    price: '$0',
+    pricePeriod: 'per month',
+    imageUrl: 'https://primefaces.org/cdn/templates/sakai/landing/free.svg',
+    imageAlt: 'free',
+    buttonLabel: 'Get Started',
+    features: [
+      'Responsive Layout',
+      'Unlimited Push Messages',
+      '50 Support Ticket',
+      'Free Shipping',
+    ],
+  },
+  {
+    title: 'Startup',
+    price: '$1',
+    pricePeriod: 'per month',
+    imageUrl: 'https://primefaces.org/cdn/templates/sakai/landing/startup.svg',
+    imageAlt: 'startup',
+    buttonLabel: 'Get Started',
+    features: [
+      'Responsive Layout',
+      'Unlimited Push Messages',
+      '50 Support Ticket',
+      'Free Shipping',
+    ],
+  },
+  {
+    title: 'Enterprise',
+    price: '$5',
+    pricePeriod: 'per month',
+    imageUrl: 'https://primefaces.org/cdn/templates/sakai/landing/enterprise.svg',
+    imageAlt: 'enterprise',
+    buttonLabel: 'Try Free',
+    features: [
+      'Responsive Layout',
+      'Unlimited Push Messages',
+      '50 Support Ticket',
+      'Free Shipping',
+    ],
+  },
+];
 
 @Component({
   selector: 'gv-pricing-widget',
@@ -10,4 +56,10 @@ import { RippleModule } from 'primeng/ripple';
   templateUrl: './pricing-widget.html',
   styleUrl: './pricing-widget.scss',
 })
-export class GvPricingWidget {}
+export class GvPricingWidget {
+  sectionTitle = input('Matchless Pricing');
+  sectionSubtitle = input('Amet consectetur adipiscing elit...');
+  plans = input<GvPricingPlan[]>(DEFAULT_PLANS);
+
+  planSelect = output<GvPricingPlan>();
+}
