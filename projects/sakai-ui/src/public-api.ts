@@ -22,6 +22,7 @@ export { GvHighlightsWidget } from './lib/pages/landing/components/highlights-wi
 export { GvPricingWidget } from './lib/pages/landing/components/pricing-widget/pricing-widget';
 export { GvTopbarWidget } from './lib/pages/landing/components/topbar-widget/topbar-widget';
 export { GvLanding } from './lib/pages/landing/landing';
+export type { GvNavLink } from './lib/pages/landing/landing.model';
 export { GvNotfound } from './lib/pages/notfound/notfound';
 export type { GvNotfoundSuggestion } from './lib/pages/notfound/notfound';
 
