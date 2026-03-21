@@ -8,6 +8,13 @@ export * from './lib/layout/store';
 // Tokens
 export { GV_MENU_MODEL } from './lib/layout/menu-model.token';
 
+// Pages
+export { GvAccess } from './lib/pages/auth/access/access';
+export { authRoutes } from './lib/pages/auth/auth.routes';
+export { GvError } from './lib/pages/auth/error/error';
+export { GvLogin } from './lib/pages/auth/login/login';
+export { GvNotfound } from './lib/pages/notfound/notfound';
+
 // Components
 export { GvAppLayout } from './lib/layout/components/app-layout/app-layout';
 export { GvConfigurator } from './lib/layout/components/configurator/configurator';
