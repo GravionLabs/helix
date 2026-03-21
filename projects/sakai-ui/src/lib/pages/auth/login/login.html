@@ -49,9 +49,9 @@
             </g>
           </svg>
           <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">
-            Welcome to PrimeLand!
+            {{ title() }}
           </div>
-          <span class="text-muted-color font-medium">Sign in to continue</span>
+          <span class="text-muted-color font-medium">{{ subtitle() }}</span>
         </div>
 
         <div>
@@ -89,11 +89,13 @@
               <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
               <label for="rememberme1">Remember me</label>
             </div>
-            <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
-              >Forgot password?</span
+            <span
+              class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
+              (click)="onForgotPassword()"
+              >{{ forgotPasswordLabel() }}</span
             >
           </div>
-          <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
+          <p-button [label]="submitLabel()" styleClass="w-full" (onClick)="onSubmit()"></p-button>
         </div>
       </div>
     </div>
