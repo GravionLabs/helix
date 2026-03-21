@@ -1,0 +1,14 @@
+.p-submenu-enter {
+            animation: p-animate-submenu-expand 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
+        }
+        .p-submenu-leave {
+            animation: p-animate-submenu-collapse 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
+        }
+        @keyframes p-animate-submenu-expand {
+            from { max-height: 0; overflow: hidden; }
+            to { max-height: 1000px; overflow: visible; }
+        }
+        @keyframes p-animate-submenu-collapse {
+            from { max-height: 1000px; overflow: hidden; }
+            to { max-height: 0; overflow: hidden; }
+        }
