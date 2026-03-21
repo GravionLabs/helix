@@ -11,7 +11,7 @@ Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-n
 - [x] Demo app scaffolded (`ng generate application demo`)
 - [x] Dependencies: `@ngrx/signals@^21`, `primeng@^21`, `tailwindcss@^4`
 - [x] GitHub Actions CI/CD workflow (build + publish to GitHub Packages)
-- [x] `.npmrc` für `@gravion` scope
+- [x] `.npmrc` for `@gravion` scope
 
 ---
 
@@ -23,7 +23,7 @@ NgRx Signal Store replacing sakai-ng's `LayoutService`. All components use separ
 - [x] `layout.models.ts` – `LayoutConfig`, `LayoutState`, `MenuMode`
 - [x] `layout.store.ts` – `LayoutStore` with `signalStore()`
 - [x] Dark mode via `withHooks().onInit` effect (View Transitions API)
-- [x] `GV_MENU_MODEL` injection token für konfigurierbare Navigation
+- [x] `GV_MENU_MODEL` injection token for configurable navigation
 
 ### Components
 - [x] `GvAppLayout` – Router-Outlet wrapper with CSS class bindings
