@@ -11,7 +11,11 @@
     "watch": "ng build demo --watch --configuration development",
     "test": "ng test",
     "test:lib": "ng test sakai-ui",
-    "format": "prettier --write \"**/*.{ts,html,scss}\" --ignore-path .gitignore"
+    "format": "prettier --write \"projects/**/*.{ts,html,scss}\"",
+    "lint": "eslint \"projects/**/*.ts\" \"projects/**/*.html\"",
+    "lint:fix": "eslint \"projects/**/*.ts\" \"projects/**/*.html\" --fix",
+    "format:check": "prettier --check \"projects/**/*.{ts,html,scss}\"",
+    "prepare": "husky"
   },
   "private": true,
   "packageManager": "npm@11.12.0",
@@ -35,13 +39,32 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-eslint/eslint-plugin": "^21.3.1",
+    "@angular-eslint/eslint-plugin-template": "^21.3.1",
+    "@angular-eslint/template-parser": "^21.3.1",
     "@angular/build": "^21.2.3",
     "@angular/cli": "^21.2.3",
     "@angular/compiler-cli": "^21.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
     "jsdom": "^28.0.0",
+    "lint-staged": "^16.4.0",
     "ng-packagr": "^21.2.0",
     "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
+  },
+  "lint-staged": {
+    "projects/**/*.{ts,html}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "projects/**/*.scss": [
+      "prettier --write"
+    ]
   }
 }

@@ -6,14 +6,14 @@ import { LayoutStore } from '../../store/layout.store';
 import { GvConfigurator } from '../configurator/configurator';
 
 @Component({
-    selector: 'gv-topbar',
-    standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, GvConfigurator],
-    templateUrl: './topbar.html',
-    styleUrl: './topbar.scss'
+  selector: 'gv-topbar',
+  standalone: true,
+  imports: [RouterModule, CommonModule, StyleClassModule, GvConfigurator],
+  templateUrl: './topbar.html',
+  styleUrl: './topbar.scss',
 })
 export class GvTopbar {
-    @Input() appTitle = 'SAKAI';
+  @Input() appTitle = 'SAKAI';
 
-    store = inject(LayoutStore);
+  store = inject(LayoutStore);
 }
