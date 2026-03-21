@@ -16,3 +16,4 @@ export { GvMenu } from './lib/layout/components/menu/menu';
 export { GvMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { GvFooter } from './lib/layout/components/footer/footer';
 export { GvConfigurator } from './lib/layout/components/configurator/configurator';
+export { GvFloatingConfigurator } from './lib/layout/components/floating-configurator/floating-configurator';

@@ -3,11 +3,11 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { Router, RouterModule } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
-import {AppFloatingConfigurator} from "@/app/layout/app.floatingconfigurator";
+import { GvFloatingConfigurator } from '@gravion/sakai-ui';
 
 @Component({
     selector: 'topbar-widget',
-    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, AppFloatingConfigurator],
+    imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, GvFloatingConfigurator],
     template: `<a class="flex items-center" href="#">
             <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 mr-2">
                 <path
@@ -59,7 +59,7 @@ import {AppFloatingConfigurator} from "@/app/layout/app.floatingconfigurator";
             <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
                 <button pButton pRipple label="Login" routerLink="/auth/login" [rounded]="true" [text]="true"></button>
                 <button pButton pRipple label="Register" routerLink="/auth/login" [rounded]="true"></button>
-                <app-floating-configurator [float]="false"/>
+                <gv-floating-configurator [float]="false"/>
             </div>
         </div> `
 })
