@@ -13,6 +13,7 @@ export { GvAccess } from './lib/pages/auth/access/access';
 export { authRoutes } from './lib/pages/auth/auth.routes';
 export { GvError } from './lib/pages/auth/error/error';
 export { GvLogin } from './lib/pages/auth/login/login';
+export { GvEmpty } from './lib/pages/empty/empty';
 export { GvNotfound } from './lib/pages/notfound/notfound';
 
 // Components
