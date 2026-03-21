@@ -1,5 +1,5 @@
 <ul class="layout-menu">
-  @for (item of model; track item.label) {
+  @for (item of model(); track item.label) {
     @if (!item.separator) {
       <li gv-menuitem [item]="item" [root]="true"></li>
     } @else {

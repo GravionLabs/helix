@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LayoutStore } from '../../store/layout.store';
 import { GvFooter } from '../footer/footer';
@@ -14,6 +14,8 @@ import { GvTopbar } from '../topbar/topbar';
   styleUrl: './app-layout.scss',
 })
 export class GvAppLayout {
+  appTitle = input('SAKAI');
+
   store = inject(LayoutStore);
 
   constructor() {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { GvMenuItem } from '../menu-item/menu-item';
@@ -12,5 +12,5 @@ import { GvMenuItem } from '../menu-item/menu-item';
   styleUrl: './menu.scss',
 })
 export class GvMenu {
-  @Input() model: MenuItem[] = [];
+  model = input<MenuItem[]>([]);
 }
