@@ -90,16 +90,21 @@ a {
   }
 }
 
-// Submenu list (direct child of this component's template)
+// Basic list reset for all submenu <ul> elements
 ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+// Overflow clipping and indentation only apply to nested (non-root) submenus.
+// Root submenus (.layout-root-submenulist) are always visible and must not be clipped.
+// All GvMenuItem instances share the same _ngcontent attribute, so these li selectors
+// propagate correctly through recursive submenu trees across component boundaries.
+:host(:not(.layout-root-menuitem)) > ul {
   overflow: hidden;
   border-radius: var(--content-border-radius);
 
-  // All GvMenuItem instances share the same _ngcontent attribute,
-  // so these nesting selectors propagate correctly through recursive submenu trees.
   li a {
     margin-left: 1rem;
   }
