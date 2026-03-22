@@ -1,9 +1,12 @@
+// PrimeNG [animate.enter]/[animate.leave] animation classes
 .p-submenu-enter {
   animation: p-animate-submenu-expand 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
 }
+
 .p-submenu-leave {
   animation: p-animate-submenu-collapse 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
 }
+
 @keyframes p-animate-submenu-expand {
   from {
     max-height: 0;
@@ -14,6 +17,7 @@
     overflow: visible;
   }
 }
+
 @keyframes p-animate-submenu-collapse {
   from {
     max-height: 1000px;
@@ -22,5 +26,101 @@
   to {
     max-height: 0;
     overflow: hidden;
+  }
+}
+
+// Root menu item: section header label
+:host(.layout-root-menuitem) {
+  > .layout-menuitem-root-text {
+    font-size: 0.857rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0.75rem 0;
+  }
+
+  // Hide the clickable <a> for root section headers
+  > a {
+    display: none;
+  }
+}
+
+// Active menu item: rotate submenu chevron
+:host(.active-menuitem) {
+  > a .layout-submenu-toggler {
+    transform: rotate(-180deg);
+  }
+}
+
+// Menu link styles
+a {
+  user-select: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  outline: 0 none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  border-radius: var(--content-border-radius);
+  transition: box-shadow var(--element-transition-duration);
+
+  .layout-menuitem-icon {
+    margin-right: 0.5rem;
+  }
+
+  .layout-submenu-toggler {
+    font-size: 75%;
+    margin-left: auto;
+    transition: transform var(--element-transition-duration);
+  }
+
+  &.active-route {
+    font-weight: 700;
+    color: var(--primary-color);
+  }
+
+  &:hover {
+    background-color: var(--surface-hover);
+  }
+
+  &:focus {
+    outline-offset: -1px;
+    box-shadow: inset var(--focus-ring-shadow);
+  }
+}
+
+// Submenu list (direct child of this component's template)
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden;
+  border-radius: var(--content-border-radius);
+
+  // All GvMenuItem instances share the same _ngcontent attribute,
+  // so these nesting selectors propagate correctly through recursive submenu trees.
+  li a {
+    margin-left: 1rem;
+  }
+
+  li li a {
+    margin-left: 2rem;
+  }
+
+  li li li a {
+    margin-left: 2.5rem;
+  }
+
+  li li li li a {
+    margin-left: 3rem;
+  }
+
+  li li li li li a {
+    margin-left: 3.5rem;
+  }
+
+  li li li li li li a {
+    margin-left: 4rem;
   }
 }
