@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LayoutStore } from '../../store/layout.store';
 import { GvFooter } from '../footer/footer';
@@ -12,6 +12,7 @@ import { GvTopbar } from '../topbar/topbar';
   imports: [CommonModule, GvTopbar, GvSidebar, RouterModule, GvFooter],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class GvAppLayout {
   appTitle = input('SAKAI');

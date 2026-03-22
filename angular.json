@@ -56,7 +56,8 @@
               }
             ],
             "styles": [
-              "projects/demo/src/assets/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "projects/demo/src/styles.scss",
               "projects/demo/src/assets/tailwind.css"
             ]
           },
