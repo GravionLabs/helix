@@ -8,9 +8,11 @@ on:
 
 jobs:
   ci:
-    uses: GravionLabs/ci/.github/workflows/node-ci.yml@main
+    uses: GravionLabs/ci/.github/workflows/angular-ci.yml@main
     with:
       node-version: '22'
+      lib-build-command: 'npm run build:lib'
+      app-build-command: 'npm run build:demo'
       run-tests: false
 
   publish:

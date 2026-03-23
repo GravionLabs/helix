@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "paths": {
-      "@gravion/sakai-ui": ["./dist/sakai-ui"],
+      "@gravion/sakai-ui": ["./projects/sakai-ui/src/public-api.ts"],
       "@/*": ["./projects/demo/src/*"]
     },
     "importHelpers": true,
