@@ -22,6 +22,34 @@ export interface GvRouteMenuItem extends MenuItem {
 }
 
 /**
+ * Recursively copies a GvRouteMenuItem tree and auto-populates `routerLink`
+ * from `path` for any item that does not already have a `routerLink`.
+ *
+ * @param items  The source menu items.
+ * @param basePath  Absolute base path prefix (e.g. `'/uikit'`).
+ *
+ * @example
+ * // uikit-menu-items.ts defines: { path: 'formlayout', label: '...', icon: '...' }
+ * gvMenuLinksFrom(UIKIT_ITEMS, '/uikit')
+ * // → { path: 'formlayout', label: '...', icon: '...', routerLink: ['/uikit/formlayout'] }
+ */
+export function gvMenuLinksFrom(items: GvRouteMenuItem[], basePath: string): GvRouteMenuItem[] {
+  return items.map((item) => {
+    const resolved: GvRouteMenuItem = {
+      ...item,
+      items: item.items ? gvMenuLinksFrom(item.items, basePath) : undefined,
+    };
+
+    if (!resolved.routerLink && resolved.path !== undefined) {
+      const fullPath = `${basePath}/${resolved.path}`.replace(/\/+/g, '/');
+      resolved.routerLink = [fullPath];
+    }
+
+    return resolved;
+  });
+}
+
+/**
  * Converts a GvRouteMenuItem tree into Angular Routes.
  *
  * - Items with `path` + `component` or `loadChildren` generate a route entry.

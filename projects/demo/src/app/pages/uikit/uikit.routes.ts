@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { Routes } from '@angular/router';
 import { ButtonDemo } from './buttondemo';
 import { ChartDemo } from './chartdemo';
@@ -14,22 +15,31 @@ import { PanelsDemo } from './panelsdemo';
 import { TableDemo } from './tabledemo';
 import { TimelineDemo } from './timelinedemo';
 import { TreeDemo } from './treedemo';
+import { UIKIT_MENU_ITEMS } from './uikit-menu-items';
+
+const COMPONENTS: Record<string, Type<unknown>> = {
+  button: ButtonDemo,
+  charts: ChartDemo,
+  file: FileDemo,
+  formlayout: FormLayoutDemo,
+  input: InputDemo,
+  list: ListDemo,
+  media: MediaDemo,
+  menu: MenuDemo,
+  message: MessagesDemo,
+  misc: MiscDemo,
+  overlay: OverlayDemo,
+  panel: PanelsDemo,
+  table: TableDemo,
+  timeline: TimelineDemo,
+  tree: TreeDemo,
+};
 
 export default [
-  { path: 'button', data: { breadcrumb: 'Button' }, component: ButtonDemo },
-  { path: 'charts', data: { breadcrumb: 'Charts' }, component: ChartDemo },
-  { path: 'file', data: { breadcrumb: 'File' }, component: FileDemo },
-  { path: 'formlayout', data: { breadcrumb: 'Form Layout' }, component: FormLayoutDemo },
-  { path: 'input', data: { breadcrumb: 'Input' }, component: InputDemo },
-  { path: 'list', data: { breadcrumb: 'List' }, component: ListDemo },
-  { path: 'media', data: { breadcrumb: 'Media' }, component: MediaDemo },
-  { path: 'message', data: { breadcrumb: 'Message' }, component: MessagesDemo },
-  { path: 'misc', data: { breadcrumb: 'Misc' }, component: MiscDemo },
-  { path: 'panel', data: { breadcrumb: 'Panel' }, component: PanelsDemo },
-  { path: 'timeline', data: { breadcrumb: 'Timeline' }, component: TimelineDemo },
-  { path: 'table', data: { breadcrumb: 'Table' }, component: TableDemo },
-  { path: 'overlay', data: { breadcrumb: 'Overlay' }, component: OverlayDemo },
-  { path: 'tree', data: { breadcrumb: 'Tree' }, component: TreeDemo },
-  { path: 'menu', data: { breadcrumb: 'Menu' }, component: MenuDemo },
+  ...UIKIT_MENU_ITEMS.filter((item) => item.path != null && COMPONENTS[item.path]).map((item) => ({
+    path: item.path!,
+    component: COMPONENTS[item.path!],
+    data: { breadcrumb: item.label },
+  })),
   { path: '**', redirectTo: '/notfound' },
 ] as Routes;

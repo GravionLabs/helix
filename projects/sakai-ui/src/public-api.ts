@@ -9,7 +9,7 @@ export * from './lib/layout/store';
 export { GV_MENU_MODEL } from './lib/layout/menu-model.token';
 
 // Route-menu model
-export { gvRoutesFrom } from './lib/layout/route-menu.model';
+export { gvMenuLinksFrom, gvRoutesFrom } from './lib/layout/route-menu.model';
 export type { GvRouteMenuItem } from './lib/layout/route-menu.model';
 
 // Pages
