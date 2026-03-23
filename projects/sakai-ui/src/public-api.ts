@@ -8,6 +8,10 @@ export * from './lib/layout/store';
 // Tokens
 export { GV_MENU_MODEL } from './lib/layout/menu-model.token';
 
+// Route-menu model
+export { gvRoutesFrom } from './lib/layout/route-menu.model';
+export type { GvRouteMenuItem } from './lib/layout/route-menu.model';
+
 // Pages
 export { GvAccess } from './lib/pages/auth/access/access';
 export { authRoutes } from './lib/pages/auth/auth.routes';

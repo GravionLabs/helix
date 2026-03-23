@@ -1,18 +1,13 @@
 import { Routes } from '@angular/router';
-import { GvAppLayout, GvLanding, GvNotfound, authRoutes } from '@gravion/sakai-ui';
-import { Dashboard } from './pages/dashboard/dashboard';
-import { Documentation } from './pages/documentation/documentation';
+import { GvAppLayout, GvLanding, GvNotfound, authRoutes, gvRoutesFrom } from '@gravion/sakai-ui';
+import { DEMO_MENU_MODEL } from './layout/menu.model';
 
 export const appRoutes: Routes = [
   {
     path: '',
     component: GvAppLayout,
-    children: [
-      { path: '', component: Dashboard },
-      { path: 'uikit', loadChildren: () => import('./pages/uikit/uikit.routes') },
-      { path: 'documentation', component: Documentation },
-      { path: 'pages', loadChildren: () => import('./pages/pages.routes') },
-    ],
+    data: { menu: DEMO_MENU_MODEL },
+    children: gvRoutesFrom(DEMO_MENU_MODEL),
   },
   { path: 'landing', component: GvLanding },
   { path: 'notfound', component: GvNotfound },

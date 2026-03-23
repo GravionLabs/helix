@@ -1,6 +1,6 @@
 <div class="layout-wrapper" [ngClass]="containerClass()">
   <gv-topbar [appTitle]="appTitle()"></gv-topbar>
-  <gv-sidebar></gv-sidebar>
+  <gv-sidebar [menu]="effectiveMenu()"></gv-sidebar>
   <div class="layout-main-container">
     <div class="layout-main">
       <router-outlet></router-outlet>

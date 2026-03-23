@@ -1,5 +1,15 @@
-import { Component, effect, ElementRef, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { GV_MENU_MODEL } from '../../menu-model.token';
 import { LayoutStore } from '../../store/layout.store';
@@ -16,7 +26,16 @@ export class GvSidebar implements OnInit, OnDestroy {
   store = inject(LayoutStore);
   router = inject(Router);
   el = inject(ElementRef);
-  menuModel = inject(GV_MENU_MODEL);
+
+  /** Optional menu model passed by the parent (e.g. GvAppLayout). */
+  menu = input<MenuItem[]>([]);
+
+  private tokenMenu = inject(GV_MENU_MODEL);
+
+  /** Uses the bound input if provided, otherwise falls back to the DI token. */
+  protected effectiveMenu = computed<MenuItem[]>(() =>
+    this.menu().length > 0 ? this.menu() : this.tokenMenu,
+  );
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
