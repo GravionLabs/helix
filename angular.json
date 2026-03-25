@@ -28,6 +28,14 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/sakai-ui/tsconfig.spec.json"
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
           }
         }
       }

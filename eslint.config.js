@@ -80,6 +80,25 @@ module.exports = [
         },
     },
 
+    // Library spec files: enforce relative imports (never barrel alias)
+    {
+        files: ['projects/sakai-ui/**/*.spec.ts'],
+        rules: {
+            'no-restricted-imports': [
+                'warn',
+                {
+                    paths: [
+                        {
+                            name: '@gravion/sakai-ui',
+                            message:
+                                'Use relative imports in library specs instead of the public barrel.',
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+
     // Angular HTML templates
     {
         files: ['**/*.html'],
