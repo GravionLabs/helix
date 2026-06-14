@@ -31,8 +31,12 @@
    - [GvFeaturesWidget](#gvfeatureswidget)
    - [GvHighlightsWidget](#gvhighlightswidget)
    - [GvPricingWidget](#gvpricingwidget)
-   - [GvFooterWidget](#gvfooterwidget)
-9. [Interfaces](#interfaces)
+    - [GvFooterWidget](#gvfooterwidget)
+ 9. [Form Infrastructure](#form-infrastructure)
+    - [HelixValidators](#helixvalidators)
+    - [helixFirstError Pipe](#helixfirsterror-pipe)
+    - [HelixFormField](#helixformfield)
+ 10. [Interfaces](#interfaces)
 
 ---
 
@@ -718,6 +722,128 @@ Landing page footer with brand link and multi-column link groups. Uses the same 
 | `brandName` | `string` | `'SAKAI'` | Brand name displayed in the footer |
 | `homeRoute` | `string` | `'/'` | Router path the brand name links to |
 | `columns` | `GvFooterColumn[]` | *(library defaults)* | Link columns. Shares the `GvFooterColumn` model with `GvFooter` |
+
+---
+
+## Form Infrastructure
+
+Validators, pipes, and structural components for building reactive forms with human-readable error messages.
+
+### HelixValidators
+
+**File:** `projects/helix/src/lib/form/validators/helix-validators.ts`
+
+A namespace of `ValidatorFn` factories that produce human-readable error messages instead of the boolean flags used by Angular's built-in validators.
+
+Every method accepts a static string or a `(value: any) => string` function for the error message, and most accept an `allowEmpty` parameter (default `true`).
+
+#### Available validators
+
+| Validator | Signature | Description |
+|-----------|-----------|-------------|
+| `required` | `(msg)` | Fails when value is `''`, `null`, or `undefined` |
+| `email` | `(msg, allowEmpty?)` | Validates email format |
+| `pattern` | `(msg, regex, allowEmpty?)` | Validates value matches the given regex |
+| `date` | `(msg, allowEmpty?)` | Validates value is a parseable, non-NaN date |
+| `number` | `(msg, allowEmpty?)` | Passes if value is coercible to a finite number (booleans excluded) |
+| `integer` | `(msg, allowEmpty?)` | Passes if value is a whole number |
+| `min` | `(msg, minimum, allowEmpty?)` | Passes if numeric value >= minimum |
+| `max` | `(msg, maximum, allowEmpty?)` | Passes if numeric value <= maximum |
+| `minLength` | `(msg, min, allowEmpty?)` | Passes if string/array length >= min |
+| `maxLength` | `(msg, max, allowEmpty?)` | Passes if string/array length <= max |
+| `oneOf` | `(msg, options)` | Passes if value is strictly contained in `options[]` |
+| `allOf` | `(msg, options, allowEmpty?)` | Passes if value is an array where every element is in `options[]` |
+
+#### Example
+
+```ts
+import { HelixValidators } from '@gravionlabs/helix';
+import { FormControl } from '@angular/forms';
+
+const emailCtrl = new FormControl('', [
+  HelixValidators.required('Email is required'),
+  HelixValidators.email('Invalid email address'),
+  HelixValidators.maxLength((v) => `Max 100 characters (you entered ${v?.length})`, 100),
+]);
+```
+
+The error object produced by these validators uses the validator name as the key and the message as the value:
+
+```ts
+emailCtrl.errors
+// → { Email: 'Invalid email address' }
+```
+
+---
+
+### helixFirstError Pipe
+
+**Pipe name:** `helixFirstError`  
+**File:** `projects/helix/src/lib/form/pipes/helix-first-error.pipe.ts`
+
+A pure, standalone pipe that extracts the first human-readable error message from a `ValidationErrors | null` object. Designed to pair with `HelixValidators` (which produce string values), but also safe against Angular's built-in validators (non-string values are ignored).
+
+#### Template usage
+
+```html
+@if (ctrl.touched && ctrl.invalid) {
+  <small class="p-error">{{ ctrl.errors | helixFirstError }}</small>
+}
+```
+
+#### Behaviour
+
+| Input | Output |
+|-------|--------|
+| `null` | `''` |
+| `undefined` | `''` |
+| `{}` | `''` |
+| `{ Required: 'Field is required' }` | `'Field is required'` |
+| `{ Email: 'Bad email', MaxLength: 'Too long' }` | `'Bad email'` (first key) |
+| `{ required: true }` | `''` (non-string value) |
+
+---
+
+### HelixFormField
+
+**Selector:** `<helix-form-field>`  
+**File:** `projects/helix/src/lib/form/form-field/form-field.ts`
+
+A structural wrapper component that renders a label, projected input content, and hint/error messages. Uses `OnPush` change detection and is fully standalone.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Label text shown above the projected input |
+| `control` | `AbstractControl \| null` | `null` | Reactive forms control for touched/invalid state detection |
+| `hint` | `string` | — | Helper text shown below the field; hidden when an error is active |
+| `error` | `string \| null` | `null` | External error message; overrides control-derived error |
+| `showLabel` | `boolean` | `true` | Show or hide the label |
+| `showHint` | `boolean` | `true` | Show or hide the hint/error area |
+
+#### Computed `activeError`
+
+Priority: `error()` input > control validation error (when touched + invalid) > `null`
+
+#### Usage examples
+
+```html
+<!-- Text input with label, control, and hint -->
+<helix-form-field label="Email" [control]="emailCtrl" hint="Work email preferred">
+  <input pInputText id="email" [formControl]="emailCtrl" class="w-full" />
+</helix-form-field>
+
+<!-- PrimeNG number input -->
+<helix-form-field label="Price" [control]="priceCtrl">
+  <p-inputnumber [formControl]="priceCtrl" mode="currency" currency="EUR" />
+</helix-form-field>
+
+<!-- External error (e.g. from server) -->
+<helix-form-field label="Username" [control]="userCtrl" [error]="serverError()">
+  <input pInputText [formControl]="userCtrl" class="w-full" />
+</helix-form-field>
+```
 
 ---
 
