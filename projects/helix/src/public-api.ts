@@ -5,7 +5,7 @@
 // Form — form field
 export { HelixFormField } from './lib/form/form-field/form-field';
 // Form — pipes
-export { HelixFirstErrorPipe } from './lib/form/pipes/helix-first-error.pipe';
+export { HelixFirstError } from './lib/form/pipes/helix-first-error.pipe';
 // Form — utils
 export { HelixFormArrayWithFactory, helixFormErrorMap } from './lib/form/utils/form.utils';
 // Form — validators
