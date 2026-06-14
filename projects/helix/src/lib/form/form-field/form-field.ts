@@ -3,7 +3,7 @@ import { AbstractControl } from '@angular/forms';
 import { HelixFirstErrorPipe } from '../pipes/helix-first-error.pipe';
 
 @Component({
-  selector: 'gv-form-field',
+  selector: 'helix-form-field',
   templateUrl: './form-field.html',
   styleUrl: './form-field.scss',
   standalone: true,

@@ -1,17 +1,17 @@
-<div class="gv-form-field">
+<div class="helix-form-field">
   @if (showLabel() && label()) {
-    <label class="gv-form-field__label">{{ label() }}</label>
+    <label class="helix-form-field__label">{{ label() }}</label>
   }
 
-  <div class="gv-form-field__control">
+  <div class="helix-form-field__control">
     <ng-content />
   </div>
 
   @if (showHint()) {
     @if (activeError(); as err) {
-      <small class="gv-form-field__message gv-form-field__message--error p-error">{{ err }}</small>
+      <small class="helix-form-field__message helix-form-field__message--error p-error">{{ err }}</small>
     } @else if (hint()) {
-      <small class="gv-form-field__message gv-form-field__message--hint">{{ hint() }}</small>
+      <small class="helix-form-field__message helix-form-field__message--hint">{{ hint() }}</small>
     }
   }
 </div>
