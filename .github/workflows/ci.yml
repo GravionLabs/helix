@@ -1,5 +1,12 @@
 name: CI / Publish
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+  packages: write
+  id-token: write
+
 on:
   push:
     branches: [main]
