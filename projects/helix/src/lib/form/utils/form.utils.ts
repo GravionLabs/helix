@@ -44,13 +44,13 @@ export class HelixFormArrayWithFactory<
     while (this.length > length) this.removeAt(this.length - 1);
   }
 
-  override reset(value?: unknown, options?: object): void {
+  override reset(value?: any, options?: object): void {
     if (Array.isArray(value)) this.alignLength(value.length);
     super.reset(value, options);
   }
 
-  override setValue(value: unknown[], options?: object): void {
-    this.alignLength(value.length);
+  override setValue(value: any, options?: object): void {
+    if (Array.isArray(value)) this.alignLength(value.length);
     super.setValue(value, options);
   }
 }

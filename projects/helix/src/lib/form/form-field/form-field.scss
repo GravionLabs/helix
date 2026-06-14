@@ -1,0 +1,30 @@
+.gv-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--p-text-color);
+  }
+
+  &__control {
+    :host-context(.p-inputtext),
+    :host-context(.p-component) {
+      width: 100%;
+    }
+  }
+
+  &__message {
+    font-size: 0.75rem;
+
+    &--hint {
+      color: var(--p-text-muted-color);
+    }
+
+    &--error {
+      color: var(--p-red-500);
+    }
+  }
+}
