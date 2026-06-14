@@ -2,6 +2,9 @@
  * Public API Surface of @gravionlabs/helix
  */
 
+// Form — validators
+export { HelixValidatorKey } from './lib/form/validators/helix-validator-key.enum';
+export type { HelixValidatorMessage } from './lib/form/validators/helix-validators';
 // Components
 export { HelixAppLayout } from './lib/layout/components/app-layout/app-layout';
 export { HelixConfigurator } from './lib/layout/components/configurator/configurator';
