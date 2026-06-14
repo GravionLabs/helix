@@ -34,7 +34,7 @@
     - [GvFooterWidget](#gvfooterwidget)
  9. [Form Infrastructure](#form-infrastructure)
     - [HelixValidators](#helixvalidators)
-    - [helixFirstError Pipe](#helixfirsterror-pipe)
+    - [helixFirstError](#helixfirsterror)
     - [HelixFormField](#helixformfield)
  10. [Interfaces](#interfaces)
 
@@ -776,7 +776,7 @@ emailCtrl.errors
 
 ---
 
-### helixFirstError Pipe
+### helixFirstError
 
 **Pipe name:** `helixFirstError`  
 **File:** `projects/helix/src/lib/form/pipes/helix-first-error.pipe.ts`
