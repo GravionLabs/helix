@@ -1,5 +1,5 @@
 import type { Type } from '@angular/core';
-import type { CanActivateFn, Route, Routes } from '@angular/router';
+import type { ActivatedRouteSnapshot, CanActivateFn, Route, Routes } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 
 /**
@@ -9,6 +9,8 @@ import type { MenuItem } from 'primeng/api';
 export interface HelixRouteMenuItem extends MenuItem {
   /** Angular route path segment (relative to the parent route). */
   path?: string;
+  /** Breadcrumb label or resolver for auto-generated breadcrumbs. */
+  breadcrumb?: string | ((route: ActivatedRouteSnapshot) => string);
   /** Component to render for this route. */
   component?: Type<unknown>;
   /** Lazy-loaded children module or routes. */
@@ -42,6 +44,10 @@ export function helixMenuLinksFrom(
       ...item,
       items: item.items ? helixMenuLinksFrom(item.items, basePath) : undefined,
     };
+
+    if (resolved.breadcrumb !== undefined) {
+      resolved.data = { ...resolved.data, ['breadcrumb']: resolved.breadcrumb };
+    }
 
     if (!resolved.routerLink && resolved.path !== undefined) {
       const fullPath = `${basePath}/${resolved.path}`.replace(/\/+/g, '/');
@@ -82,12 +88,17 @@ export function helixRoutesFrom(items: HelixRouteMenuItem[]): Routes {
       continue;
     }
 
+    const routeData: Record<string, unknown> = { ...(item.data as Record<string, unknown>) };
+    if (item.breadcrumb !== undefined) {
+      routeData['breadcrumb'] = item.breadcrumb;
+    }
+
     const route: Route = { path: item.path };
 
     if (item.component) route.component = item.component;
     if (item.loadChildren) route.loadChildren = item.loadChildren;
     if (item.canActivate) route.canActivate = item.canActivate;
-    if (item.data) route.data = item.data;
+    if (Object.keys(routeData).length > 0) route.data = routeData;
 
     // Items nested under a routable item become child routes (not recursed flat)
     if (item.items?.length) {
