@@ -361,7 +361,7 @@ describe('HelixValidators', () => {
     });
 
     it('should support function message', () => {
-      const v = HelixValidators.minLength((val) => `Length ${val.length} < 3`, 3);
+      const v = HelixValidators.minLength((val: string) => `Length ${val.length} < 3`, 3);
       expect(v(new FormControl('ab'))).toEqual({ MinLength: 'Length 2 < 3' });
     });
   });
@@ -393,7 +393,7 @@ describe('HelixValidators', () => {
     });
 
     it('should support function message', () => {
-      const v = HelixValidators.maxLength((val) => `Length ${val.length} > 5`, 5);
+      const v = HelixValidators.maxLength((val: string) => `Length ${val.length} > 5`, 5);
       expect(v(new FormControl('toolong'))).toEqual({ MaxLength: 'Length 7 > 5' });
     });
   });

@@ -2,7 +2,7 @@ import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/fo
 import { FormControl, Validators } from '@angular/forms';
 import { HelixValidatorKey } from './helix-validator-key.enum';
 
-export type HelixValidatorMessage = (value: unknown) => string;
+export type HelixValidatorMessage = (value: any) => string;
 
 const EMPTY_VALUES = ['', null, undefined];
 
