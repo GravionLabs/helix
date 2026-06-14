@@ -13,7 +13,7 @@
 ## Project Overview
 
 This is an Angular 21 workspace containing:
-- **`@gravion/helix`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
+- **`@gravionlabs/helix`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
 - **`demo`** – A demo application showcasing the library
 
 ## Code Style
@@ -31,7 +31,7 @@ This is an Angular 21 workspace containing:
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
 - Avoid using `LayoutService` – always use `LayoutStore` from the library
-- Import from `@gravion/helix`, never from local demo layout copies
+- Import from `@gravionlabs/helix`, never from local demo layout copies
 
 ### Dependency Injection
 - Use `inject()` function instead of constructor injection
@@ -54,7 +54,7 @@ projects/helix/src/lib/
 
 ## Exports
 - All public library exports go through `projects/helix/src/public-api.ts`
-- Never import directly from library source paths in the demo app – always use `@gravion/helix`
+- Never import directly from library source paths in the demo app – always use `@gravionlabs/helix`
 
 ## Testing
 - Unit tests use the `*.spec.ts` naming convention

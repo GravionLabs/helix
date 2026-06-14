@@ -1,4 +1,4 @@
-# `@gravion/helix` — Component API Reference
+# `@gravionlabs/helix` — Component API Reference
 
 > All inputs use the Angular 17+ `input()` signal API and ship with defaults, so adding a new input is never a breaking change for consumers.
 
@@ -39,7 +39,7 @@
 ## Installation
 
 ```bash
-npm install @gravion/helix
+npm install @gravionlabs/helix
 ```
 
 Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
@@ -51,8 +51,8 @@ Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { GvAppLayout } from '@gravion/helix';
-import { GV_MENU_MODEL } from '@gravion/helix';
+import { GvAppLayout } from '@gravionlabs/helix';
+import { GV_MENU_MODEL } from '@gravionlabs/helix';
 import { MenuItem } from 'primeng/api';
 
 const MENU: MenuItem[] = [
@@ -253,7 +253,7 @@ The following components are exported for completeness but have **no public inpu
 ### Setup
 
 ```ts
-import { LayoutStore } from '@gravion/helix';
+import { LayoutStore } from '@gravionlabs/helix';
 
 @Component({
   standalone: true,
@@ -278,7 +278,7 @@ export class MyLayoutComponent {
 Injection token for providing the sidebar `MenuItem[]` model to the layout without prop-drilling.
 
 ```ts
-import { GV_MENU_MODEL } from '@gravion/helix';
+import { GV_MENU_MODEL } from '@gravionlabs/helix';
 import { MenuItem } from 'primeng/api';
 
 // In your layout or app component providers:
@@ -390,7 +390,7 @@ Access-denied / forbidden page (e.g. 403).
 Pre-configured lazy route definitions for all auth pages. Import into your router config to automatically register `/auth/login`, `/auth/error`, and `/auth/access`.
 
 ```ts
-import { authRoutes } from '@gravion/helix';
+import { authRoutes } from '@gravionlabs/helix';
 
 export const appRoutes: Routes = [
   {

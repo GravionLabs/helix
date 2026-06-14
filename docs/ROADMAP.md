@@ -1,4 +1,4 @@
-# @gravion/helix – Roadmap
+# @gravionlabs/helix – Roadmap
 
 Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management.
 
@@ -7,7 +7,7 @@ Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-n
 ## ✅ Phase 1 – Workspace & Library Setup
 
 - [x] Angular 21 workspace `helix`
-- [x] Library `@gravion/helix` scaffolded (`ng generate library`)
+- [x] Library `@gravionlabs/helix` scaffolded (`ng generate library`)
 - [x] Demo app scaffolded (`ng generate application demo`)
 - [x] Dependencies: `@ngrx/signals@^21`, `primeng@^21`, `tailwindcss@^4`
 - [x] GitHub Actions CI/CD workflow (build + publish to GitHub Packages)
@@ -76,7 +76,7 @@ Generic, reusable page templates moved from the demo into the library.
 ## 📋 Phase 4 – Enhancements (Planned)
 
 - [ ] `@Input()` customization for all page components (titles, logos, links)
-- [ ] Secondary entry points (`@gravion/helix/pages`, `@gravion/helix/layout`)
+- [ ] Secondary entry points (`@gravionlabs/helix/pages`, `@gravionlabs/helix/layout`)
 - [ ] Unit tests for `LayoutStore`
 - [ ] Storybook integration
 - [ ] Separate `CHANGELOG.md` + semantic versioning via GitVersion
@@ -88,7 +88,7 @@ Generic, reusable page templates moved from the demo into the library.
 ```
 helix/
 ├── projects/
-│   ├── helix/                 # @gravion/helix (library)
+│   ├── helix/                 # @gravionlabs/helix (library)
 │   │   └── src/lib/
 │   │       ├── layout/        # Layout components + NgRx store
 │   │       └── pages/         # Reusable page templates (Phase 3)
@@ -102,4 +102,4 @@ helix/
 
 ## Published to
 
-[GitHub Packages](https://github.com/GravionLabs/helix/packages) under `@gravion/helix`.
+[GitHub Packages](https://github.com/GravionLabs/helix/packages) under `@gravionlabs/helix`.

@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "paths": {
-      "@gravion/helix": ["./projects/helix/src/public-api.ts"],
+      "@gravionlabs/helix": ["./projects/helix/src/public-api.ts"],
       "@/*": ["./projects/demo/src/*"]
     },
     "importHelpers": true,

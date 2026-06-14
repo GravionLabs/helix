@@ -6,7 +6,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     alias: {
-      '@gravion/helix': './projects/helix/src/public-api.ts',
+      '@gravionlabs/helix': './projects/helix/src/public-api.ts',
     },
     include: ['**/*.spec.ts'],
   },

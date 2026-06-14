@@ -1,6 +1,6 @@
 import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
-import { HelixEmpty } from '@gravion/helix';
+import { HelixEmpty } from '@gravionlabs/helix';
 import { Crud } from './crud/crud';
 import { Documentation } from './documentation/documentation';
 import { PAGES_MENU_ITEMS } from './pages-menu-items';

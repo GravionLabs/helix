@@ -5,7 +5,7 @@ import {
   HelixLanding,
   HelixNotfound,
   helixRoutesFrom,
-} from '@gravion/helix';
+} from '@gravionlabs/helix';
 import { DEMO_MENU_MODEL } from './layout/menu.model';
 
 export const appRoutes: Routes = [

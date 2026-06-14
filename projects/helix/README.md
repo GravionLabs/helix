@@ -1,4 +1,4 @@
-# @gravion/helix
+# @gravionlabs/helix
 
 An Angular component library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with [NgRx Signal Store](https://ngrx.io/guide/signals) for state management.
 
@@ -13,8 +13,8 @@ An Angular component library extending [sakai-ng](https://github.com/primefaces/
 ## Installation
 
 ```bash
-echo "@gravion:registry=https://npm.pkg.github.com" >> .npmrc
-npm install @gravion/helix
+echo "@gravionlabs:registry=https://npm.pkg.github.com" >> .npmrc
+npm install @gravionlabs/helix
 ```
 
 ### Peer Dependencies
@@ -43,7 +43,7 @@ export const appConfig: ApplicationConfig = {
 
 ```typescript
 // app.routes.ts
-import { HelixAppLayout } from '@gravion/helix';
+import { HelixAppLayout } from '@gravionlabs/helix';
 
 export const appRoutes: Routes = [
   {
@@ -58,7 +58,7 @@ export const appRoutes: Routes = [
 
 ```typescript
 import { inject } from '@angular/core';
-import { LayoutStore } from '@gravion/helix';
+import { LayoutStore } from '@gravionlabs/helix';
 
 layoutStore = inject(LayoutStore);
 layoutStore.toggleDarkMode();

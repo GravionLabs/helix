@@ -1,5 +1,5 @@
 /*
- * Public API Surface of @gravion/helix
+ * Public API Surface of @gravionlabs/helix
  */
 
 // Components
