@@ -1,7 +1,7 @@
 name: CI / Publish
 
 permissions:
-  contents: read
+  contents: write
   checks: write
   pull-requests: write
   packages: write
