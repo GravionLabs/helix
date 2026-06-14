@@ -43,11 +43,11 @@ jobs:
       node-version: '24'
       package-manager: pnpm
       lint-command: pnpm run lint
+      artifact-path: dist
       build-command: pnpm run build
       run-tests: true
       test-command: pnpm run test:ci
       coverage-format: cobertura
-      force-publish: ${{ inputs.force-publish == true }}
-      publish-directory: ./dist/helix
+      publish-directory: ./helix
     secrets:
       npm-token: ${{ secrets.GITHUB_TOKEN }}
