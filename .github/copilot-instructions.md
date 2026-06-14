@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for gravion-sakai
+# GitHub Copilot Instructions for helix
 
 ## Language
 
@@ -13,7 +13,7 @@
 ## Project Overview
 
 This is an Angular 21 workspace containing:
-- **`@gravion/sakai-ui`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
+- **`@gravion/helix`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
 - **`demo`** – A demo application showcasing the library
 
 ## Code Style
@@ -31,7 +31,7 @@ This is an Angular 21 workspace containing:
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
 - Avoid using `LayoutService` – always use `LayoutStore` from the library
-- Import from `@gravion/sakai-ui`, never from local demo layout copies
+- Import from `@gravion/helix`, never from local demo layout copies
 
 ### Dependency Injection
 - Use `inject()` function instead of constructor injection
@@ -40,7 +40,7 @@ This is an Angular 21 workspace containing:
 ## File Structure
 
 ```
-projects/sakai-ui/src/lib/
+projects/helix/src/lib/
 ├── layout/
 │   ├── components/        # Layout components (GvAppLayout, GvTopbar, etc.)
 │   ├── store/             # NgRx Signal Store (LayoutStore, LayoutModels)
@@ -53,9 +53,9 @@ projects/sakai-ui/src/lib/
 ```
 
 ## Exports
-- All public library exports go through `projects/sakai-ui/src/public-api.ts`
-- Never import directly from library source paths in the demo app – always use `@gravion/sakai-ui`
+- All public library exports go through `projects/helix/src/public-api.ts`
+- Never import directly from library source paths in the demo app – always use `@gravion/helix`
 
 ## Testing
 - Unit tests use the `*.spec.ts` naming convention
-- Run `ng test sakai-ui` for library tests, `ng test demo` for demo tests
+- Run `ng test helix` for library tests, `ng test demo` for demo tests

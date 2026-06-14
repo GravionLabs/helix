@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "paths": {
-      "@gravion/sakai-ui": ["./projects/sakai-ui/src/public-api.ts"],
+      "@gravion/helix": ["./projects/helix/src/public-api.ts"],
       "@/*": ["./projects/demo/src/*"]
     },
     "importHelpers": true,
@@ -28,10 +28,10 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/sakai-ui/tsconfig.lib.json"
+      "path": "./projects/helix/tsconfig.lib.json"
     },
     {
-      "path": "./projects/sakai-ui/tsconfig.spec.json"
+      "path": "./projects/helix/tsconfig.spec.json"
     },
     {
       "path": "./projects/demo/tsconfig.app.json"

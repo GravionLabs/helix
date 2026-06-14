@@ -1,4 +1,4 @@
-# `@gravion/sakai-ui` — Component API Reference
+# `@gravion/helix` — Component API Reference
 
 > All inputs use the Angular 17+ `input()` signal API and ship with defaults, so adding a new input is never a breaking change for consumers.
 
@@ -39,7 +39,7 @@
 ## Installation
 
 ```bash
-npm install @gravion/sakai-ui
+npm install @gravion/helix
 ```
 
 Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
@@ -51,8 +51,8 @@ Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { GvAppLayout } from '@gravion/sakai-ui';
-import { GV_MENU_MODEL } from '@gravion/sakai-ui';
+import { GvAppLayout } from '@gravion/helix';
+import { GV_MENU_MODEL } from '@gravion/helix';
 import { MenuItem } from 'primeng/api';
 
 const MENU: MenuItem[] = [
@@ -79,7 +79,7 @@ export class AppComponent {}
 ### GvAppLayout
 
 **Selector:** `<gv-app-layout>`  
-**File:** `projects/sakai-ui/src/lib/layout/components/app-layout/app-layout.ts`
+**File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
 
 Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `GvTopbar`.
 
@@ -100,7 +100,7 @@ Top-level shell that composes the topbar, sidebar, footer, and router outlet int
 ### GvTopbar
 
 **Selector:** `<gv-topbar>`  
-**File:** `projects/sakai-ui/src/lib/layout/components/topbar/topbar.ts`
+**File:** `projects/helix/src/lib/layout/components/topbar/topbar.ts`
 
 Application header bar. Renders the app title, configurable action buttons, and two named content slots.
 
@@ -139,7 +139,7 @@ myActions: GvTopbarAction[] = [
 ### GvFooter
 
 **Selector:** `<gv-footer>`  
-**File:** `projects/sakai-ui/src/lib/layout/components/footer/footer.ts`
+**File:** `projects/helix/src/lib/layout/components/footer/footer.ts`
 
 Application footer with optional multi-column link layout and a branded copyright line.
 
@@ -185,7 +185,7 @@ footerColumns: GvFooterColumn[] = [
 ### GvMenu
 
 **Selector:** `<gv-menu>`  
-**File:** `projects/sakai-ui/src/lib/layout/components/menu/menu.ts`
+**File:** `projects/helix/src/lib/layout/components/menu/menu.ts`
 
 Sidebar navigation menu. Accepts a standard PrimeNG `MenuItem[]` tree.
 
@@ -232,7 +232,7 @@ The following components are exported for completeness but have **no public inpu
 
 ## Layout Store
 
-**File:** `projects/sakai-ui/src/lib/layout/store/`
+**File:** `projects/helix/src/lib/layout/store/`
 
 `LayoutStore` is an **NgRx Signal Store** that manages all layout UI state. It is **not** provided globally — you must add it to the providers of your layout component.
 
@@ -253,7 +253,7 @@ The following components are exported for completeness but have **no public inpu
 ### Setup
 
 ```ts
-import { LayoutStore } from '@gravion/sakai-ui';
+import { LayoutStore } from '@gravion/helix';
 
 @Component({
   standalone: true,
@@ -278,7 +278,7 @@ export class MyLayoutComponent {
 Injection token for providing the sidebar `MenuItem[]` model to the layout without prop-drilling.
 
 ```ts
-import { GV_MENU_MODEL } from '@gravion/sakai-ui';
+import { GV_MENU_MODEL } from '@gravion/helix';
 import { MenuItem } from 'primeng/api';
 
 // In your layout or app component providers:
@@ -297,7 +297,7 @@ providers: [
 ### GvLogin
 
 **Selector:** `<gv-login>`  
-**File:** `projects/sakai-ui/src/lib/pages/auth/login/login.ts`
+**File:** `projects/helix/src/lib/pages/auth/login/login.ts`
 
 Fully styled login page with email/password form. Emits credentials on submit; handles no server communication itself.
 
@@ -390,7 +390,7 @@ Access-denied / forbidden page (e.g. 403).
 Pre-configured lazy route definitions for all auth pages. Import into your router config to automatically register `/auth/login`, `/auth/error`, and `/auth/access`.
 
 ```ts
-import { authRoutes } from '@gravion/sakai-ui';
+import { authRoutes } from '@gravion/helix';
 
 export const appRoutes: Routes = [
   {
@@ -408,7 +408,7 @@ export const appRoutes: Routes = [
 ### GvEmpty
 
 **Selector:** `<gv-empty>`  
-**File:** `projects/sakai-ui/src/lib/pages/empty/empty.ts`
+**File:** `projects/helix/src/lib/pages/empty/empty.ts`
 
 Blank page template with a title, optional subtitle, and a default content slot. Use as a starting point for new pages.
 
