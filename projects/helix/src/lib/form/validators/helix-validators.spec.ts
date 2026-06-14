@@ -170,4 +170,132 @@ describe('HelixValidators', () => {
       expect(v(new FormControl(''))).toEqual({ Date: 'Invalid date' });
     });
   });
+
+  describe('number', () => {
+    it('should pass a numeric value', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl(42))).toBeNull();
+    });
+
+    it('should pass a numeric string', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl('3.14'))).toBeNull();
+    });
+
+    it('should pass zero', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl(0))).toBeNull();
+    });
+
+    it('should fail a non-numeric string', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl('abc'))).toEqual({ Number: 'Invalid number' });
+    });
+
+    it('should fail a boolean', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl(true))).toEqual({ Number: 'Invalid number' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.number('Invalid number');
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.number('Invalid number', false);
+      expect(v(new FormControl(''))).toEqual({ Number: 'Invalid number' });
+    });
+  });
+
+  describe('integer', () => {
+    it('should pass a whole number', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl(5))).toBeNull();
+    });
+
+    it('should pass an integer string', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl('10'))).toBeNull();
+    });
+
+    it('should fail a float', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl(3.14))).toEqual({ Integer: 'Invalid integer' });
+    });
+
+    it('should fail a float string', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl('1.5'))).toEqual({ Integer: 'Invalid integer' });
+    });
+
+    it('should fail a boolean', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl(false))).toEqual({ Integer: 'Invalid integer' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.integer('Invalid integer');
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.integer('Invalid integer', false);
+      expect(v(new FormControl(''))).toEqual({ Integer: 'Invalid integer' });
+    });
+  });
+
+  describe('min', () => {
+    it('should pass a value equal to minimum', () => {
+      const v = HelixValidators.min('Too small', 5);
+      expect(v(new FormControl(5))).toBeNull();
+    });
+
+    it('should pass a value above minimum', () => {
+      const v = HelixValidators.min('Too small', 5);
+      expect(v(new FormControl(10))).toBeNull();
+    });
+
+    it('should fail a value below minimum', () => {
+      const v = HelixValidators.min('Too small', 5);
+      expect(v(new FormControl(4))).toEqual({ Min: 'Too small' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.min('Too small', 5);
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.min('Too small', 5, false);
+      expect(v(new FormControl(''))).toEqual({ Min: 'Too small' });
+    });
+  });
+
+  describe('max', () => {
+    it('should pass a value equal to maximum', () => {
+      const v = HelixValidators.max('Too large', 10);
+      expect(v(new FormControl(10))).toBeNull();
+    });
+
+    it('should pass a value below maximum', () => {
+      const v = HelixValidators.max('Too large', 10);
+      expect(v(new FormControl(0))).toBeNull();
+    });
+
+    it('should fail a value above maximum', () => {
+      const v = HelixValidators.max('Too large', 10);
+      expect(v(new FormControl(11))).toEqual({ Max: 'Too large' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.max('Too large', 10);
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.max('Too large', 10, false);
+      expect(v(new FormControl(''))).toEqual({ Max: 'Too large' });
+    });
+  });
 });
