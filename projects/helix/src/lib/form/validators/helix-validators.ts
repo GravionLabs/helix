@@ -77,4 +77,34 @@ export const HelixValidators = {
     const check = (value: unknown): boolean => Number(value) <= maximum;
     return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Max, msg);
   },
+
+  minLength: (msg: string | HelixValidatorMessage, min: number, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => (value as { length: number }).length >= min;
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.MinLength, msg);
+  },
+
+  maxLength: (msg: string | HelixValidatorMessage, max: number, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => (value as { length: number }).length <= max;
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.MaxLength, msg);
+  },
+
+  oneOf: (msg: string | HelixValidatorMessage, options: unknown[]): ValidatorFn => {
+    const anyEmptyMember = EMPTY_VALUES.some((v) => options.includes(v));
+    return (ctrl: AbstractControl): ValidationErrors | null => {
+      const value = ctrl.value;
+      if (anyEmptyMember && isEmptyValue(value)) return null;
+      if (options.includes(value)) return null;
+      return { [HelixValidatorKey.OneOf]: typeof msg === 'function' ? msg(value) : msg };
+    };
+  },
+
+  allOf: (
+    msg: string | HelixValidatorMessage,
+    options: unknown[],
+    allowEmpty = true,
+  ): ValidatorFn => {
+    const check = (value: unknown): boolean =>
+      Array.isArray(value) && value.every((v) => options.includes(v));
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.AllOf, msg);
+  },
 };
