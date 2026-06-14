@@ -12,6 +12,9 @@ export { HelixFormArrayWithFactory, helixFormErrorMap } from './lib/form/utils/f
 export { HelixValidatorKey } from './lib/form/validators/helix-validator-key.enum';
 export type { HelixValidatorMessage } from './lib/form/validators/helix-validators';
 export { HelixValidators } from './lib/form/validators/helix-validators';
+// Breadcrumb
+export type { HelixBreadcrumb } from './lib/layout/breadcrumb.model';
+export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
 // Components
 export { HelixAppLayout } from './lib/layout/components/app-layout/app-layout';
 export { HelixConfigurator } from './lib/layout/components/configurator/configurator';
