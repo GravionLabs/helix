@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import { HelixFirstErrorPipe } from '../pipes/helix-first-error.pipe';
+import type { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'helix-form-field',
@@ -8,7 +7,6 @@ import { HelixFirstErrorPipe } from '../pipes/helix-first-error.pipe';
   styleUrl: './form-field.scss',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [HelixFirstErrorPipe],
 })
 export class HelixFormField {
   readonly label = input<string>();
