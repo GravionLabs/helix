@@ -1,11 +1,11 @@
-import { GvRouteMenuItem } from '@gravion/sakai-ui';
+import type { HelixRouteMenuItem } from '@gravion/helix';
 
 /**
  * Menu metadata for the uikit section.
  * No component imports — safe to include in the main bundle.
  * `uikit.routes.ts` uses this same array to generate Angular routes.
  */
-export const UIKIT_MENU_ITEMS: GvRouteMenuItem[] = [
+export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', path: 'formlayout' },
   { label: 'Input', icon: 'pi pi-fw pi-check-square', path: 'input' },
   { label: 'Button', icon: 'pi pi-fw pi-mobile', path: 'button', styleClass: 'rotated-icon' },

@@ -1,7 +1,5 @@
-import { Customer, CustomerService, Representative } from '@/app/pages/service/customer.service';
-import { Product, ProductService } from '@/app/pages/service/product.service';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, type ElementRef, type OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,11 +12,17 @@ import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
 import { SliderModule } from 'primeng/slider';
-import { Table, TableModule } from 'primeng/table';
+import { type Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ObjectUtils } from 'primeng/utils';
+import {
+  type Customer,
+  CustomerService,
+  type Representative,
+} from '@/app/pages/service/customer.service';
+import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -593,8 +597,10 @@ export class TableDemo implements OnInit {
       this.customers1 = customers;
       this.loading = false;
 
-      // @ts-ignore
-      this.customers1.forEach((customer) => (customer.date = new Date(customer.date)));
+      // @ts-expect-error
+      this.customers1.forEach((customer) => {
+        customer.date = new Date(customer.date);
+      });
     });
     this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
     this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
@@ -717,7 +723,7 @@ export class TableDemo implements OnInit {
     let total = 0;
 
     if (this.customers2) {
-      for (let customer of this.customers2) {
+      for (const customer of this.customers2) {
         if (customer.representative?.name === name) {
           total++;
         }

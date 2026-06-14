@@ -1,10 +1,10 @@
-import { GvRouteMenuItem, gvMenuLinksFrom } from '@gravion/sakai-ui';
+import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravion/helix';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { Documentation } from '../pages/documentation/documentation';
 import { PAGES_MENU_ITEMS } from '../pages/pages-menu-items';
 import { UIKIT_MENU_ITEMS } from '../pages/uikit/uikit-menu-items';
 
-export const DEMO_MENU_MODEL: GvRouteMenuItem[] = [
+export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   {
     label: 'Home',
     items: [
@@ -20,7 +20,7 @@ export const DEMO_MENU_MODEL: GvRouteMenuItem[] = [
     label: 'UI Components',
     path: 'uikit',
     loadChildren: () => import('../pages/uikit/uikit.routes'),
-    items: gvMenuLinksFrom(UIKIT_MENU_ITEMS, '/uikit'),
+    items: helixMenuLinksFrom(UIKIT_MENU_ITEMS, '/uikit'),
   },
   {
     label: 'Pages',
@@ -38,7 +38,7 @@ export const DEMO_MENU_MODEL: GvRouteMenuItem[] = [
           { label: 'Access Denied', icon: 'pi pi-fw pi-lock', routerLink: ['/auth/access'] },
         ],
       },
-      ...gvMenuLinksFrom(PAGES_MENU_ITEMS, '/pages'),
+      ...helixMenuLinksFrom(PAGES_MENU_ITEMS, '/pages'),
       {
         label: 'Not Found',
         icon: 'pi pi-fw pi-exclamation-circle',

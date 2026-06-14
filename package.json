@@ -1,23 +1,23 @@
 {
-  "name": "gravion-sakai",
+  "name": "helix",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo",
     "start:demo": "ng serve demo",
     "dev": "ng serve demo",
-    "build": "ng build sakai-ui && ng build demo",
-    "build:lib": "ng build sakai-ui",
+    "build": "ng build helix && ng build demo",
+    "build:lib": "ng build helix",
     "build:demo": "ng build demo",
     "watch": "ng build demo --watch --configuration development",
     "test": "ng test",
-    "test:lib": "ng test sakai-ui",
-    "test:lib:stable": "NODE_OPTIONS=--max-old-space-size=6144 ng test sakai-ui --watch=false --include=\"**/*.spec.ts\"",
-    "test:ci": "ng test sakai-ui --configuration=ci",
-    "format": "prettier --write \"projects/**/*.{ts,html,scss}\"",
-    "lint": "eslint \"projects/**/*.ts\" \"projects/**/*.html\"",
-    "lint:fix": "eslint \"projects/**/*.ts\" \"projects/**/*.html\" --fix",
-    "format:check": "prettier --check \"projects/**/*.{ts,html,scss}\"",
+    "test:lib": "ng test helix",
+    "test:lib:stable": "NODE_OPTIONS=--max-old-space-size=6144 ng test helix --watch=false --include=\"**/*.spec.ts\"",
+    "test:ci": "ng test helix --configuration=ci",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome check . && eslint \"projects/**/*.html\"",
+    "lint:fix": "biome check --write . && eslint \"projects/**/*.html\" --fix",
     "prepare": "husky"
   },
   "private": true,
@@ -47,28 +47,26 @@
     "@angular/build": "^21.2.3",
     "@angular/cli": "^21.2.3",
     "@angular/compiler-cli": "^21.2.0",
+    "@biomejs/biome": "^2.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
     "@vitest/coverage-v8": "^4.1.1",
     "concurrently": "^9.2.1",
     "eslint": "^10.1.0",
-    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
     "jsdom": "^28.0.0",
     "lint-staged": "^16.4.0",
     "ng-packagr": "^21.2.0",
-    "prettier": "^3.8.1",
-    "prettier-plugin-organize-imports": "^4.3.0",
+
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   },
   "lint-staged": {
-    "projects/**/*.{ts,html}": [
-      "eslint --fix",
-      "prettier --write"
+    "*.ts": [
+      "biome check --write"
     ],
-    "projects/**/*.scss": [
-      "prettier --write"
+    "*.html": [
+      "eslint --fix && biome check --write"
     ]
   }
 }

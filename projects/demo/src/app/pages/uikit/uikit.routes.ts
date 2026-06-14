@@ -1,5 +1,5 @@
-import { Type } from '@angular/core';
-import { Routes } from '@angular/router';
+import type { Type } from '@angular/core';
+import type { Routes } from '@angular/router';
 import { ButtonDemo } from './buttondemo';
 import { ChartDemo } from './chartdemo';
 import { FileDemo } from './filedemo';
