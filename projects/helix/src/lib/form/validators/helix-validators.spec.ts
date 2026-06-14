@@ -298,4 +298,117 @@ describe('HelixValidators', () => {
       expect(v(new FormControl(''))).toEqual({ Max: 'Too large' });
     });
   });
+
+  describe('minLength', () => {
+    it('should pass a string at minimum length', () => {
+      const v = HelixValidators.minLength('Too short', 3);
+      expect(v(new FormControl('abc'))).toBeNull();
+    });
+
+    it('should pass an array at minimum length', () => {
+      const v = HelixValidators.minLength('Too short', 3);
+      expect(v(new FormControl([1, 2, 3]))).toBeNull();
+    });
+
+    it('should fail a string below minimum length', () => {
+      const v = HelixValidators.minLength('Too short', 3);
+      expect(v(new FormControl('ab'))).toEqual({ MinLength: 'Too short' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.minLength('Too short', 3);
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.minLength('Too short', 3, false);
+      expect(v(new FormControl(''))).toEqual({ MinLength: 'Too short' });
+    });
+  });
+
+  describe('maxLength', () => {
+    it('should pass a string at maximum length', () => {
+      const v = HelixValidators.maxLength('Too long', 5);
+      expect(v(new FormControl('hello'))).toBeNull();
+    });
+
+    it('should pass an array below maximum length', () => {
+      const v = HelixValidators.maxLength('Too long', 5);
+      expect(v(new FormControl([1, 2]))).toBeNull();
+    });
+
+    it('should fail a string above maximum length', () => {
+      const v = HelixValidators.maxLength('Too long', 5);
+      expect(v(new FormControl('toolong'))).toEqual({ MaxLength: 'Too long' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.maxLength('Too long', 5);
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.maxLength('Too long', 5, false);
+      expect(v(new FormControl(''))).toEqual({ MaxLength: 'Too long' });
+    });
+  });
+
+  describe('oneOf', () => {
+    it('should pass a value in options', () => {
+      const v = HelixValidators.oneOf('Not allowed', ['a', 'b', null]);
+      expect(v(new FormControl('a'))).toBeNull();
+    });
+
+    it('should pass null when null is in options', () => {
+      const v = HelixValidators.oneOf('Not allowed', ['a', 'b', null]);
+      expect(v(new FormControl(null))).toBeNull();
+    });
+
+    it('should fail a value not in options', () => {
+      const v = HelixValidators.oneOf('Not allowed', ['a', 'b']);
+      expect(v(new FormControl('c'))).toEqual({ OneOf: 'Not allowed' });
+    });
+
+    it('should fail null when null is not in options', () => {
+      const v = HelixValidators.oneOf('Not allowed', ['a', 'b']);
+      expect(v(new FormControl(null))).toEqual({ OneOf: 'Not allowed' });
+    });
+
+    it('should fail empty string when not in options', () => {
+      const v = HelixValidators.oneOf('Not allowed', ['a', 'b']);
+      expect(v(new FormControl(''))).toEqual({ OneOf: 'Not allowed' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.oneOf((val) => `"${val}" is not allowed`, ['a']);
+      expect(v(new FormControl('b'))).toEqual({ OneOf: '"b" is not allowed' });
+    });
+  });
+
+  describe('allOf', () => {
+    it('should pass when all elements are in options', () => {
+      const v = HelixValidators.allOf('Not allowed', [1, 2, 3]);
+      expect(v(new FormControl([1, 2]))).toBeNull();
+    });
+
+    it('should pass an empty array', () => {
+      const v = HelixValidators.allOf('Not allowed', [1, 2, 3]);
+      expect(v(new FormControl([]))).toBeNull();
+    });
+
+    it('should fail when an element is not in options', () => {
+      const v = HelixValidators.allOf('Not allowed', [1, 2, 3]);
+      expect(v(new FormControl([1, 4]))).toEqual({ AllOf: 'Not allowed' });
+    });
+
+    it('should pass empty value when allowEmpty=true', () => {
+      const v = HelixValidators.allOf('Not allowed', [1, 2, 3]);
+      expect(v(new FormControl(''))).toBeNull();
+    });
+
+    it('should fail empty value when allowEmpty=false', () => {
+      const v = HelixValidators.allOf('Not allowed', [1, 2, 3], false);
+      expect(v(new FormControl(''))).toEqual({ AllOf: 'Not allowed' });
+    });
+  });
 });
