@@ -1,5 +1,6 @@
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import type { HelixValidatorKey } from './helix-validator-key.enum';
+import { FormControl, Validators } from '@angular/forms';
+import { HelixValidatorKey } from './helix-validator-key.enum';
 
 export type HelixValidatorMessage = (value: unknown) => string;
 
@@ -24,3 +25,31 @@ const buildValidator =
     isValid(ctrl) ? null : { [key]: typeof msg === 'function' ? msg(ctrl.value) : msg };
 
 export { buildValidator, checkEmpty, EMPTY_VALUES, isEmptyValue };
+
+export const HelixValidators = {
+  required: (msg: string | HelixValidatorMessage): ValidatorFn => {
+    const predicate = (ctrl: AbstractControl): boolean => !isEmptyValue(ctrl.value);
+    return buildValidator(predicate, HelixValidatorKey.Required, msg);
+  },
+
+  email: (msg: string | HelixValidatorMessage, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => {
+      const ctrl = new FormControl(value);
+      return Validators.email(ctrl) === null;
+    };
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Email, msg);
+  },
+
+  pattern: (msg: string | HelixValidatorMessage, regex: RegExp, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => regex.test(value as string);
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Pattern, msg);
+  },
+
+  date: (msg: string | HelixValidatorMessage, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => {
+      const d = new Date(value as string | number | Date);
+      return !isNaN(d.getTime());
+    };
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Date, msg);
+  },
+};
