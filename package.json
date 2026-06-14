@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve demo",
-    "start:demo": "ng serve demo",
-    "dev": "ng serve demo",
-    "build": "ng build helix && ng build demo",
+    "start": "ng serve helix-demo",
+    "start:demo": "ng serve helix-demo",
+    "dev": "ng serve helix-demo",
+    "build": "ng build helix && ng build helix-demo",
     "build:lib": "ng build helix",
-    "build:demo": "ng build demo",
-    "watch": "ng build demo --watch --configuration development",
+    "build:demo": "ng build helix-demo",
+    "watch": "ng build helix-demo --watch --configuration development",
     "test": "ng test",
     "test:lib": "ng test helix",
     "test:lib:stable": "NODE_OPTIONS=--max-old-space-size=6144 ng test helix --watch=false --include=\"**/*.spec.ts\"",
@@ -21,7 +21,7 @@
     "prepare": "husky"
   },
   "private": true,
-  "packageManager": "npm@11.12.0",
+  "packageManager": "pnpm@10.10.0",
   "dependencies": {
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
