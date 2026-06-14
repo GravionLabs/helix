@@ -9,6 +9,12 @@ permissions:
 
 on:
   workflow_dispatch:
+    inputs:
+      force-publish:
+        description: 'Publish regardless of the current branch'
+        type: boolean
+        required: false
+        default: false
   push:
     branches: [main]
   pull_request:
@@ -41,6 +47,7 @@ jobs:
       run-tests: true
       test-command: pnpm run test:ci
       coverage-format: cobertura
+      force-publish: ${{ inputs.force-publish == true }}
       publish-directory: ./dist/helix
     secrets:
       npm-token: ${{ secrets.GITHUB_TOKEN }}
