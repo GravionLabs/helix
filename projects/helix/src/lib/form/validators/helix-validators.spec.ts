@@ -120,6 +120,11 @@ describe('HelixValidators', () => {
       const v = HelixValidators.email('Invalid email', false);
       expect(v(new FormControl(''))).toEqual({ Email: 'Invalid email' });
     });
+
+    it('should support function message', () => {
+      const v = HelixValidators.email((val) => `"${val}" is not valid`);
+      expect(v(new FormControl('bad'))).toEqual({ Email: '"bad" is not valid' });
+    });
   });
 
   describe('pattern', () => {
@@ -141,6 +146,11 @@ describe('HelixValidators', () => {
     it('should fail empty value when allowEmpty=false', () => {
       const v = HelixValidators.pattern('Invalid', /^[a-z]+$/, false);
       expect(v(new FormControl(''))).toEqual({ Pattern: 'Invalid' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.pattern((val) => `"${val}" does not match`, /^\d+$/);
+      expect(v(new FormControl('abc'))).toEqual({ Pattern: '"abc" does not match' });
     });
   });
 
@@ -168,6 +178,11 @@ describe('HelixValidators', () => {
     it('should fail empty value when allowEmpty=false', () => {
       const v = HelixValidators.date('Invalid date', false);
       expect(v(new FormControl(''))).toEqual({ Date: 'Invalid date' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.date((val) => `"${val}" is not a date`);
+      expect(v(new FormControl('bad'))).toEqual({ Date: '"bad" is not a date' });
     });
   });
 
@@ -206,6 +221,11 @@ describe('HelixValidators', () => {
       const v = HelixValidators.number('Invalid number', false);
       expect(v(new FormControl(''))).toEqual({ Number: 'Invalid number' });
     });
+
+    it('should support function message', () => {
+      const v = HelixValidators.number((val) => `"${val}" is not a number`);
+      expect(v(new FormControl('abc'))).toEqual({ Number: '"abc" is not a number' });
+    });
   });
 
   describe('integer', () => {
@@ -243,6 +263,11 @@ describe('HelixValidators', () => {
       const v = HelixValidators.integer('Invalid integer', false);
       expect(v(new FormControl(''))).toEqual({ Integer: 'Invalid integer' });
     });
+
+    it('should support function message', () => {
+      const v = HelixValidators.integer((val) => `"${val}" is not integer`);
+      expect(v(new FormControl(3.14))).toEqual({ Integer: '"3.14" is not integer' });
+    });
   });
 
   describe('min', () => {
@@ -269,6 +294,11 @@ describe('HelixValidators', () => {
     it('should fail empty value when allowEmpty=false', () => {
       const v = HelixValidators.min('Too small', 5, false);
       expect(v(new FormControl(''))).toEqual({ Min: 'Too small' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.min((val) => `Min is 5, got ${val}`, 5);
+      expect(v(new FormControl(1))).toEqual({ Min: 'Min is 5, got 1' });
     });
   });
 
@@ -297,6 +327,11 @@ describe('HelixValidators', () => {
       const v = HelixValidators.max('Too large', 10, false);
       expect(v(new FormControl(''))).toEqual({ Max: 'Too large' });
     });
+
+    it('should support function message', () => {
+      const v = HelixValidators.max((val) => `Max is 10, got ${val}`, 10);
+      expect(v(new FormControl(20))).toEqual({ Max: 'Max is 10, got 20' });
+    });
   });
 
   describe('minLength', () => {
@@ -324,6 +359,11 @@ describe('HelixValidators', () => {
       const v = HelixValidators.minLength('Too short', 3, false);
       expect(v(new FormControl(''))).toEqual({ MinLength: 'Too short' });
     });
+
+    it('should support function message', () => {
+      const v = HelixValidators.minLength((val) => `Length ${val.length} < 3`, 3);
+      expect(v(new FormControl('ab'))).toEqual({ MinLength: 'Length 2 < 3' });
+    });
   });
 
   describe('maxLength', () => {
@@ -350,6 +390,11 @@ describe('HelixValidators', () => {
     it('should fail empty value when allowEmpty=false', () => {
       const v = HelixValidators.maxLength('Too long', 5, false);
       expect(v(new FormControl(''))).toEqual({ MaxLength: 'Too long' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.maxLength((val) => `Length ${val.length} > 5`, 5);
+      expect(v(new FormControl('toolong'))).toEqual({ MaxLength: 'Length 7 > 5' });
     });
   });
 
@@ -409,6 +454,11 @@ describe('HelixValidators', () => {
     it('should fail empty value when allowEmpty=false', () => {
       const v = HelixValidators.allOf('Not allowed', [1, 2, 3], false);
       expect(v(new FormControl(''))).toEqual({ AllOf: 'Not allowed' });
+    });
+
+    it('should support function message', () => {
+      const v = HelixValidators.allOf((val) => `${JSON.stringify(val)} has invalid items`, [1, 2]);
+      expect(v(new FormControl([1, 3]))).toEqual({ AllOf: '[1,3] has invalid items' });
     });
   });
 });
