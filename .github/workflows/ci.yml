@@ -21,6 +21,7 @@ on:
     branches: [main]
 
 jobs:
+  ci:
     name: CI/CD
     uses: GravionLabs/ci/.github/workflows/angular-package.yml@main
     with:
