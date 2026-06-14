@@ -1,5 +1,5 @@
 import { afterNextRender, Component, effect, inject, signal } from '@angular/core';
-import { LayoutStore } from '@gravion/sakai-ui';
+import { LayoutStore } from '@gravion/helix';
 import { ChartModule } from 'primeng/chart';
 
 @Component({

@@ -1,16 +1,22 @@
-import { Routes } from '@angular/router';
-import { GvAppLayout, GvLanding, GvNotfound, authRoutes, gvRoutesFrom } from '@gravion/sakai-ui';
+import type { Routes } from '@angular/router';
+import {
+  authRoutes,
+  HelixAppLayout,
+  HelixLanding,
+  HelixNotfound,
+  helixRoutesFrom,
+} from '@gravion/helix';
 import { DEMO_MENU_MODEL } from './layout/menu.model';
 
 export const appRoutes: Routes = [
   {
     path: '',
-    component: GvAppLayout,
+    component: HelixAppLayout,
     data: { menu: DEMO_MENU_MODEL },
-    children: gvRoutesFrom(DEMO_MENU_MODEL),
+    children: helixRoutesFrom(DEMO_MENU_MODEL),
   },
-  { path: 'landing', component: GvLanding },
-  { path: 'notfound', component: GvNotfound },
+  { path: 'landing', component: HelixLanding },
+  { path: 'notfound', component: HelixNotfound },
   { path: 'auth', children: authRoutes },
   { path: '**', redirectTo: '/notfound' },
 ];

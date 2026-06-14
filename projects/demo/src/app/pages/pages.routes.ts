@@ -1,6 +1,6 @@
-import { Type } from '@angular/core';
-import { Routes } from '@angular/router';
-import { GvEmpty } from '@gravion/sakai-ui';
+import type { Type } from '@angular/core';
+import type { Routes } from '@angular/router';
+import { HelixEmpty } from '@gravion/helix';
 import { Crud } from './crud/crud';
 import { Documentation } from './documentation/documentation';
 import { PAGES_MENU_ITEMS } from './pages-menu-items';
@@ -8,7 +8,7 @@ import { PAGES_MENU_ITEMS } from './pages-menu-items';
 const COMPONENTS: Record<string, Type<unknown>> = {
   documentation: Documentation,
   crud: Crud,
-  empty: GvEmpty,
+  empty: HelixEmpty,
 };
 
 export default [

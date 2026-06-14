@@ -1,9 +1,9 @@
-import { Product, ProductService } from '@/app/pages/service/product.service';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, type OnInit, signal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
+import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({
   standalone: true,

@@ -1,10 +1,10 @@
-import { NodeService } from '@/app/pages/service/node.service';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TreeNode } from 'primeng/api';
+import type { TreeNode } from 'primeng/api';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
+import { NodeService } from '@/app/pages/service/node.service';
 
 @Component({
   selector: 'app-tree-demo',

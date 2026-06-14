@@ -1,11 +1,8 @@
-import { CountryService } from '@/app/pages/service/country.service';
-import { Country } from '@/app/pages/service/customer.service';
-import { NodeService } from '@/app/pages/service/node.service';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TreeNode } from 'primeng/api';
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import type { TreeNode } from 'primeng/api';
+import { type AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -30,6 +27,9 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { TreeSelectModule } from 'primeng/treeselect';
+import { CountryService } from '@/app/pages/service/country.service';
+import type { Country } from '@/app/pages/service/customer.service';
+import { NodeService } from '@/app/pages/service/node.service';
 
 @Component({
   selector: 'app-input-demo',
@@ -412,7 +412,7 @@ export class InputDemo implements OnInit {
 
     for (let i = 0; i < (this.autoValue as any[]).length; i++) {
       const country = (this.autoValue as any[])[i];
-      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) === 0) {
         filtered.push(country);
       }
     }

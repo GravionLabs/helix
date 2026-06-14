@@ -1,6 +1,5 @@
-import { Product, ProductService } from '@/app/pages/service/product.service';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, type OnInit, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -14,11 +13,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { SelectModule } from 'primeng/select';
-import { Table, TableModule } from 'primeng/table';
+import { type Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 interface Column {
   field: string;
@@ -404,7 +404,7 @@ export class Crud implements OnInit {
 
   deleteProduct(product: Product) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + product.name + '?',
+      message: `Are you sure you want to delete ${product.name}?`,
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -434,8 +434,8 @@ export class Crud implements OnInit {
 
   createId(): string {
     let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 5; i++) {
       id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return id;
@@ -456,7 +456,7 @@ export class Crud implements OnInit {
 
   saveProduct() {
     this.submitted = true;
-    let _products = this.products();
+    const _products = this.products();
     if (this.product.name?.trim()) {
       if (this.product.id) {
         _products[this.findIndexById(this.product.id)] = this.product;
