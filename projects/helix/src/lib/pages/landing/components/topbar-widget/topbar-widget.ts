@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+// biome-ignore lint/style/useImportType: DI token, must be value import
 import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
