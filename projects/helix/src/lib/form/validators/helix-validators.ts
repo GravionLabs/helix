@@ -48,8 +48,33 @@ export const HelixValidators = {
   date: (msg: string | HelixValidatorMessage, allowEmpty = true): ValidatorFn => {
     const check = (value: unknown): boolean => {
       const d = new Date(value as string | number | Date);
-      return !isNaN(d.getTime());
+      return !Number.isNaN(d.getTime());
     };
     return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Date, msg);
+  },
+
+  number: (msg: string | HelixValidatorMessage, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean =>
+      typeof value !== 'boolean' && !Number.isNaN(Number(value));
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Number, msg);
+  },
+
+  integer: (msg: string | HelixValidatorMessage, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => {
+      if (typeof value === 'boolean') return false;
+      const num = Number(value);
+      return !Number.isNaN(num) && num % 1 === 0;
+    };
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Integer, msg);
+  },
+
+  min: (msg: string | HelixValidatorMessage, minimum: number, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => Number(value) >= minimum;
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Min, msg);
+  },
+
+  max: (msg: string | HelixValidatorMessage, maximum: number, allowEmpty = true): ValidatorFn => {
+    const check = (value: unknown): boolean => Number(value) <= maximum;
+    return buildValidator(checkEmpty(allowEmpty, check), HelixValidatorKey.Max, msg);
   },
 };
