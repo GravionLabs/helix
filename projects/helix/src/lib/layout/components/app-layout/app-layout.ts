@@ -32,6 +32,7 @@ export class HelixAppLayout {
   protected effectiveMenu = computed<MenuItem[]>(() => {
     const inputMenu = this.menu();
     if (inputMenu.length > 0) return inputMenu;
+    // biome-ignore lint/complexity/useLiteralKeys: TS index signature access requires bracket notation
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
   });
 

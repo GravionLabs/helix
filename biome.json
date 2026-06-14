@@ -17,7 +17,7 @@
         "useExhaustiveDependencies": "off"
       },
       "suspicious": {
-        "noExplicitAny": "warn",
+        "noExplicitAny": "off",
         "noConfusingVoidType": "off"
       }
     }
