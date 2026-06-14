@@ -1,59 +1,54 @@
-# Gravion-Sakai
+# @gravion/helix
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management. Built on [PrimeNG](https://primeng.org) and [Tailwind CSS](https://tailwindcss.com).
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Layout components** — App shell with topbar, sidebar, menu, footer, and theme configurator
+- **Auth pages** — Login, error, and access-denied pages with lazy route config
+- **Landing page widgets** — Hero, features, highlights, pricing, and footer sections
+- **State management** — NgRx Signal Store for layout state (theme, menu, dark mode)
+- **Standalone components** — Fully Angular 21 standalone, no NgModules required
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Quick Start
 
 ```bash
-ng generate component component-name
+npm install @gravion/helix
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+```ts
+import { Component } from '@angular/core';
+import { HelixAppLayout } from '@gravion/helix';
+import { HELIX_MENU_MODEL } from '@gravion/helix';
+import { MenuItem } from 'primeng/api';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [HelixAppLayout],
+  providers: [
+    { provide: HELIX_MENU_MODEL, useValue: [] satisfies MenuItem[] },
+  ],
+  template: `<helix-app-layout appTitle="My App" />`,
+})
+export class AppComponent {}
+```
+
+## Development
+
+This workspace contains the library (`projects/helix`) and a demo application (`projects/demo`).
 
 ```bash
-ng generate --help
+ng serve demo           # Start the demo app
+ng build helix          # Build the library
+ng test helix           # Run library unit tests
 ```
 
-## Building
+## Documentation
 
-To build the project run:
+- [Component API reference](docs/COMPONENTS.md)
+- [Project roadmap](docs/ROADMAP.md)
 
-```bash
-ng build
-```
+## License
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
