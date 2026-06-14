@@ -2,6 +2,8 @@
  * Public API Surface of @gravionlabs/helix
  */
 
+// Form — pipes
+export { HelixFirstErrorPipe } from './lib/form/pipes/helix-first-error.pipe';
 // Form — validators
 export { HelixValidatorKey } from './lib/form/validators/helix-validator-key.enum';
 export type { HelixValidatorMessage } from './lib/form/validators/helix-validators';
