@@ -1,4 +1,12 @@
-import { type AbstractControl, FormArray, FormGroup, type ValidationErrors } from '@angular/forms';
+import {
+  type AbstractControl,
+  type AbstractControlOptions,
+  type AsyncValidatorFn,
+  FormArray,
+  FormGroup,
+  type ValidationErrors,
+  type ValidatorFn,
+} from '@angular/forms';
 
 export function helixFormErrorMap(
   control: AbstractControl,
@@ -18,4 +26,31 @@ export function helixFormErrorMap(
     if (typeof first === 'string') result[name] = first;
   }
   return result;
+}
+
+export class HelixFormArrayWithFactory<
+  TControl extends AbstractControl = AbstractControl,
+> extends FormArray<TControl> {
+  constructor(
+    readonly createControl: () => TControl,
+    validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
+  ) {
+    super([], validatorOrOpts, asyncValidator);
+  }
+
+  alignLength(length: number): void {
+    while (this.length < length) this.push(this.createControl());
+    while (this.length > length) this.removeAt(this.length - 1);
+  }
+
+  override reset(value?: unknown, options?: object): void {
+    if (Array.isArray(value)) this.alignLength(value.length);
+    super.reset(value, options);
+  }
+
+  override setValue(value: unknown[], options?: object): void {
+    this.alignLength(value.length);
+    super.setValue(value, options);
+  }
 }
