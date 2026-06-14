@@ -2,24 +2,24 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "pnpm"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "sakai-ui": {
+    "helix": {
       "projectType": "library",
-      "root": "projects/sakai-ui",
-      "sourceRoot": "projects/sakai-ui/src",
-      "prefix": "gv",
+      "root": "projects/helix",
+      "sourceRoot": "projects/helix/src",
+      "prefix": "helix",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/sakai-ui/tsconfig.lib.prod.json"
+              "tsConfig": "projects/helix/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/sakai-ui/tsconfig.lib.json"
+              "tsConfig": "projects/helix/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/sakai-ui/tsconfig.spec.json"
+            "tsConfig": "projects/helix/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -40,7 +40,7 @@
         }
       }
     },
-    "demo": {
+    "helix-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -97,10 +97,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demo:build:production"
+              "buildTarget": "helix-demo:build:production"
             },
             "development": {
-              "buildTarget": "demo:build:development"
+              "buildTarget": "helix-demo:build:development"
             }
           },
           "defaultConfiguration": "development"

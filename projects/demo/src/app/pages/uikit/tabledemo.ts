@@ -597,9 +597,10 @@ export class TableDemo implements OnInit {
       this.customers1 = customers;
       this.loading = false;
 
-      // @ts-expect-error
       this.customers1.forEach((customer) => {
-        customer.date = new Date(customer.date);
+        if (customer.date) {
+          customer.date = new Date(customer.date).toISOString();
+        }
       });
     });
     this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
