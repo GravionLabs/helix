@@ -2,6 +2,8 @@
  * Public API Surface of @gravionlabs/helix
  */
 
+// Form — form field
+export { HelixFormField } from './lib/form/form-field/form-field';
 // Form — pipes
 export { HelixFirstErrorPipe } from './lib/form/pipes/helix-first-error.pipe';
 // Form — utils
