@@ -26,6 +26,8 @@ export type {
   HelixFooterColumn,
   HelixFooterLink,
 } from './lib/layout/components/footer/footer.model';
+export { HelixBadge } from './lib/layout/components/badge/badge';
+export type { BadgeSeverity } from './lib/layout/components/badge/badge';
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
