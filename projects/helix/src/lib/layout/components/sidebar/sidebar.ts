@@ -29,6 +29,7 @@ export class HelixSidebar implements OnInit, OnDestroy {
 
   /** Optional menu model passed by the parent (e.g. HelixAppLayout). */
   menu = input<MenuItem[]>([]);
+  appTitle = input('SAKAI');
 
   private tokenMenu = inject(HELIX_MENU_MODEL);
 

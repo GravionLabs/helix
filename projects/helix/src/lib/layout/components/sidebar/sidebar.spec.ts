@@ -27,6 +27,20 @@ describe('HelixSidebar', () => {
       expect(component).toBeTruthy();
     });
 
+    it('should render brand header with default title', () => {
+      fixture.detectChanges();
+      const logoText = fixture.nativeElement.querySelector('.layout-sidebar-logo-text');
+      expect(logoText).toBeTruthy();
+      expect(logoText.textContent).toContain('SAKAI');
+    });
+
+    it('should render brand header with custom title', () => {
+      fixture.componentRef.setInput('appTitle', 'Helix');
+      fixture.detectChanges();
+      const logoText = fixture.nativeElement.querySelector('.layout-sidebar-logo-text');
+      expect(logoText.textContent).toContain('Helix');
+    });
+
     it('effectiveMenu() should return empty array when no input menu and empty token', () => {
       expect((component as unknown as HelixSidebarPrivate).effectiveMenu()).toEqual([]);
     });
