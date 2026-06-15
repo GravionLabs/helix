@@ -15,6 +15,8 @@ export { HelixValidators } from './lib/form/validators/helix-validators';
 // Breadcrumb
 export type { HelixBreadcrumb } from './lib/layout/breadcrumb.model';
 export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
+// Breadcrumb utilities
+export { helixBreadcrumbsFromRoutes } from './lib/layout/breadcrumb-utils';
 // Components
 export { HelixAppLayout } from './lib/layout/components/app-layout/app-layout';
 export { HelixConfigurator } from './lib/layout/components/configurator/configurator';
