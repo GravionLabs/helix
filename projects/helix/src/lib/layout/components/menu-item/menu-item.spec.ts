@@ -73,4 +73,40 @@ describe('HelixMenuItem', () => {
     fixture.detectChanges();
     expect(component.hasChildren()).toBe(true);
   });
+
+  it('isCollapsed() should reflect store sidebarCollapsed', () => {
+    const store = TestBed.inject(LayoutStore);
+    expect(component.isCollapsed()).toBe(false);
+    store.toggleSidebar();
+    fixture.detectChanges();
+    expect(component.isCollapsed()).toBe(true);
+  });
+
+  it('should hide menu text when collapsed', () => {
+    fixture.componentRef.setInput('item', {
+      label: 'Home',
+      icon: 'pi pi-home',
+      routerLink: ['/'],
+    });
+    fixture.detectChanges();
+    const textEl = fixture.nativeElement.querySelector('.layout-menuitem-text');
+    expect(textEl).toBeTruthy();
+
+    const store = TestBed.inject(LayoutStore);
+    store.toggleSidebar();
+    fixture.detectChanges();
+    const textAfter = fixture.nativeElement.querySelector('.layout-menuitem-text');
+    expect(textAfter).toBeNull();
+  });
+
+  it('should add layout-sidebar-collapsed class when collapsed', () => {
+    fixture.detectChanges();
+    const hostEl = fixture.nativeElement;
+    expect(hostEl.classList.contains('layout-sidebar-collapsed')).toBe(false);
+
+    const store = TestBed.inject(LayoutStore);
+    store.toggleSidebar();
+    fixture.detectChanges();
+    expect(hostEl.classList.contains('layout-sidebar-collapsed')).toBe(true);
+  });
 });

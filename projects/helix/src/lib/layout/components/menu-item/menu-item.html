@@ -1,4 +1,4 @@
-@if (root() && isVisible()) {
+@if (root() && isVisible() && !isCollapsed()) {
   <div class="layout-menuitem-root-text">{{ item().label }}</div>
 }
 @if ((!hasRouterLink() || hasChildren()) && isVisible()) {
@@ -11,8 +11,10 @@
     pRipple
   >
     <i [ngClass]="item().icon" class="layout-menuitem-icon"></i>
-    <span class="layout-menuitem-text">{{ item().label }}</span>
-    @if (hasChildren()) {
+    @if (!isCollapsed()) {
+      <span class="layout-menuitem-text">{{ item().label }}</span>
+    }
+    @if (hasChildren() && !isCollapsed()) {
       <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
     }
   </a>
@@ -43,8 +45,10 @@
     pRipple
   >
     <i [ngClass]="item().icon" class="layout-menuitem-icon"></i>
-    <span class="layout-menuitem-text">{{ item().label }}</span>
-    @if (hasChildren()) {
+    @if (!isCollapsed()) {
+      <span class="layout-menuitem-text">{{ item().label }}</span>
+    }
+    @if (hasChildren() && !isCollapsed()) {
       <i class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
     }
   </a>

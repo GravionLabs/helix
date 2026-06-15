@@ -22,6 +22,7 @@ import { LayoutStore } from '../../store/layout.store';
   host: {
     '[class.active-menuitem]': 'isActive()',
     '[class.layout-root-menuitem]': 'root()',
+    '[class.layout-sidebar-collapsed]': 'isCollapsed()',
   },
 })
 export class HelixMenuItem implements OnInit, AfterViewInit {
@@ -46,6 +47,8 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
     }
     return itemPath;
   });
+
+  isCollapsed = computed(() => this.store.isCollapsed());
 
   isActive = computed(() => {
     const activePath = this.store.activePath();
