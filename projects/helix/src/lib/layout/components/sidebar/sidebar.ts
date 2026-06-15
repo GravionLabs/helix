@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
@@ -18,7 +19,7 @@ import { HelixMenu } from '../menu/menu';
 @Component({
   selector: 'helix-sidebar',
   standalone: true,
-  imports: [HelixMenu, RouterModule],
+  imports: [CommonModule, HelixMenu, RouterModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })

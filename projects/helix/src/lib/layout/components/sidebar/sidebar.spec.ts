@@ -2,6 +2,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { HELIX_MENU_MODEL } from '../../menu-model.token';
+import { LayoutStore } from '../../store/layout.store';
 import { HelixSidebar } from './sidebar';
 
 /** Exposes private members of HelixSidebar for unit testing. */
@@ -25,6 +26,23 @@ describe('HelixSidebar', () => {
 
     it('should create', () => {
       expect(component).toBeTruthy();
+    });
+
+    it('should have a collapse toggle button', () => {
+      fixture.detectChanges();
+      const button = fixture.nativeElement.querySelector('.layout-sidebar-collapse-button');
+      expect(button).toBeTruthy();
+    });
+
+    it('should toggle sidebarCollapsed on collapse button click', () => {
+      fixture.detectChanges();
+      const store = TestBed.inject(LayoutStore);
+      expect(store.sidebarCollapsed()).toBe(false);
+
+      const button = fixture.nativeElement.querySelector('.layout-sidebar-collapse-button');
+      button.click();
+      fixture.detectChanges();
+      expect(store.sidebarCollapsed()).toBe(true);
     });
 
     it('should render brand header with default title', () => {
