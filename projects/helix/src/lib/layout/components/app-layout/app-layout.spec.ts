@@ -106,4 +106,15 @@ describe('HelixAppLayout', () => {
     const classes = component.containerClass();
     expect(classes['layout-static-inactive']).toBe(true);
   });
+
+  it('containerClass() should have layout-sidebar-collapsed when sidebarCollapsed is true', () => {
+    store.toggleSidebar();
+    const classes = component.containerClass();
+    expect(classes['layout-sidebar-collapsed']).toBe(true);
+  });
+
+  it('containerClass() should not have layout-sidebar-collapsed when sidebarCollapsed is false', () => {
+    const classes = component.containerClass();
+    expect(classes['layout-sidebar-collapsed']).toBe(false);
+  });
 });

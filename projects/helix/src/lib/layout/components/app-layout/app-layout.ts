@@ -53,5 +53,6 @@ export class HelixAppLayout {
       this.store.staticMenuDesktopInactive() && this.store.menuMode() === 'static',
     'layout-overlay-active': this.store.overlayMenuActive(),
     'layout-mobile-active': this.store.mobileMenuActive(),
+    'layout-sidebar-collapsed': this.store.isCollapsed(),
   }));
 }
