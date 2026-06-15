@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
+import type { AlertItem } from '../badge/alert-badge';
+import type { Environment } from '../badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixFooter } from '../footer/footer';
@@ -18,6 +20,9 @@ import { HelixTopbar } from '../topbar/topbar';
 })
 export class HelixAppLayout {
   appTitle = input('SAKAI');
+  environment = input<Environment | undefined>();
+  alertCount = input(0);
+  alerts = input<AlertItem[] | undefined>();
 
   /**
    * Optional menu model. When provided, overrides the HELIX_MENU_MODEL token.
@@ -34,6 +39,24 @@ export class HelixAppLayout {
     if (inputMenu.length > 0) return inputMenu;
     // biome-ignore lint/complexity/useLiteralKeys: TS index signature access requires bracket notation
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
+  });
+
+  protected effectiveEnvironment = computed<Environment | undefined>(() => {
+    const input = this.environment();
+    if (input !== undefined) return input;
+    return this.activatedRoute.snapshot.data['environment'] as Environment | undefined;
+  });
+
+  protected effectiveAlertCount = computed<number>(() => {
+    const input = this.alertCount();
+    if (input !== 0) return input;
+    return (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) ?? 0;
+  });
+
+  protected effectiveAlerts = computed<AlertItem[] | undefined>(() => {
+    const input = this.alerts();
+    if (input !== undefined) return input;
+    return this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined;
   });
 
   constructor() {

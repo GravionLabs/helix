@@ -12,7 +12,7 @@ export const appRoutes: Routes = [
   {
     path: '',
     component: HelixAppLayout,
-    data: { menu: DEMO_MENU_MODEL },
+    data: { menu: DEMO_MENU_MODEL, environment: 'development', alertCount: 3 },
     children: helixRoutesFrom(DEMO_MENU_MODEL),
   },
   { path: 'landing', component: HelixLanding },

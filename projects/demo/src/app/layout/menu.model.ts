@@ -13,11 +13,13 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
         icon: 'pi pi-fw pi-home',
         path: '',
         component: Dashboard,
+        breadcrumb: 'Dashboard',
       },
     ],
   },
   {
     label: 'UI Components',
+    breadcrumb: 'UI Components',
     path: 'uikit',
     loadChildren: () => import('../pages/uikit/uikit.routes'),
     items: helixMenuLinksFrom(UIKIT_MENU_ITEMS, '/uikit'),
@@ -25,6 +27,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   {
     label: 'Pages',
     icon: 'pi pi-fw pi-briefcase',
+    breadcrumb: 'Pages',
     path: 'pages',
     loadChildren: () => import('../pages/pages.routes'),
     items: [
@@ -52,6 +55,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
       {
         label: 'Submenu 1',
         icon: 'pi pi-fw pi-bookmark',
+        breadcrumb: 'Submenu 1',
         path: 'hierarchy/submenu_1',
         items: [
           {
@@ -73,6 +77,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
       {
         label: 'Submenu 2',
         icon: 'pi pi-fw pi-bookmark',
+        breadcrumb: 'Submenu 2',
         path: 'hierarchy/submenu_2',
         items: [
           {
@@ -98,6 +103,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
       {
         label: 'Documentation',
         icon: 'pi pi-fw pi-book',
+        breadcrumb: 'Documentation',
         path: 'documentation',
         component: Documentation,
         routerLink: ['/documentation'],

@@ -56,6 +56,23 @@ describe('HelixAppLayout', () => {
     expect(component.appTitle()).toBe('MY APP');
   });
 
+  it('should have default alertCount 0', () => {
+    expect(component.alertCount()).toBe(0);
+  });
+
+  it('should reflect custom environment input', () => {
+    fixture.componentRef.setInput('environment', 'development');
+    expect(component.environment()).toBe('development');
+  });
+
+  it('should reflect custom alertCount and alerts inputs', () => {
+    const alerts = [{ id: '1', label: 'Test', severity: 'error' }];
+    fixture.componentRef.setInput('alertCount', 3);
+    fixture.componentRef.setInput('alerts', alerts);
+    expect(component.alertCount()).toBe(3);
+    expect(component.alerts()).toEqual(alerts);
+  });
+
   it('containerClass() should have layout-static when menuMode is static', () => {
     store.setMenuMode('static');
     const classes = component.containerClass();

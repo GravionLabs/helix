@@ -21,4 +21,5 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', path: 'charts' },
   { label: 'Timeline', icon: 'pi pi-fw pi-calendar', path: 'timeline' },
   { label: 'Misc', icon: 'pi pi-fw pi-circle', path: 'misc' },
+  { label: 'Topbar', icon: 'pi pi-fw pi-bars', path: 'topbar' },
 ];

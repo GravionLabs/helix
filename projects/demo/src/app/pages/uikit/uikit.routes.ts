@@ -14,6 +14,7 @@ import { OverlayDemo } from './overlaydemo';
 import { PanelsDemo } from './panelsdemo';
 import { TableDemo } from './tabledemo';
 import { TimelineDemo } from './timelinedemo';
+import { TopbarDemo } from './topbardemo';
 import { TreeDemo } from './treedemo';
 import { UIKIT_MENU_ITEMS } from './uikit-menu-items';
 
@@ -32,6 +33,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   panel: PanelsDemo,
   table: TableDemo,
   timeline: TimelineDemo,
+  topbar: TopbarDemo,
   tree: TreeDemo,
 };
 

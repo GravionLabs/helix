@@ -13,7 +13,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { HELIX_MENU_MODEL } from '../../menu-model.token';
-import { LayoutStore } from '../../store/layout.store';
+import { LayoutStore } from '../../store';
 import { HelixMenu } from '../menu/menu';
 
 @Component({
