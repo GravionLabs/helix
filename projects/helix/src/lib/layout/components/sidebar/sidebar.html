@@ -1,4 +1,7 @@
-<div class="layout-sidebar">
+<div
+  class="layout-sidebar"
+  [ngClass]="{ 'layout-sidebar-collapsed': store.isCollapsed() }"
+>
   <div class="layout-sidebar-brand">
     <a class="layout-sidebar-logo" routerLink="/">
       <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="layout-sidebar-logo-icon">
