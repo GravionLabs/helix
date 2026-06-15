@@ -67,6 +67,30 @@ describe('HelixTopbar', () => {
     expect(component.store).toBe(store);
   });
 
+  it('should have default alertCount 0', () => {
+    expect(component.alertCount()).toBe(0);
+  });
+
+  it('should render environment badge when environment input set', () => {
+    fixture.componentRef.setInput('environment', 'development');
+    fixture.detectChanges();
+    const badge = fixture.nativeElement.querySelector('helix-environment-badge');
+    expect(badge).toBeTruthy();
+  });
+
+  it('should render alert badge', () => {
+    fixture.detectChanges();
+    const badge = fixture.nativeElement.querySelector('helix-alert-badge');
+    expect(badge).toBeTruthy();
+  });
+
+  it('should pass alertCount to helix-alert-badge', () => {
+    fixture.componentRef.setInput('alertCount', 5);
+    fixture.detectChanges();
+    const badge = fixture.nativeElement.querySelector('helix-alert-badge');
+    expect(badge).toBeTruthy();
+  });
+
   describe('breadcrumbs', () => {
     it('should have default effectiveBreadcrumbs empty', () => {
       const privateComp = component as unknown as HelixTopbarPrivate;

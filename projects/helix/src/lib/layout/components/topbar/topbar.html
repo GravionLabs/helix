@@ -5,6 +5,9 @@
       <i class="pi pi-bars"></i>
     </button>
     <a class="layout-topbar-logo" routerLink="/">
+      @if (environment(); as env) {
+        <helix-environment-badge [environment]="env" />
+      }
       <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fill-rule="evenodd"
@@ -82,6 +85,7 @@
 
     <div class="layout-topbar-menu hidden lg:block">
       <div class="layout-topbar-menu-content">
+        <helix-alert-badge [count]="alertCount()" [alerts]="alerts()" />
         @for (action of topbarActions(); track action.icon) {
           <button type="button" class="layout-topbar-action" (click)="action.command?.()">
             <i [class]="action.icon"></i>
