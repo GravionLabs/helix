@@ -37,6 +37,10 @@
     </a>
   </div>
 
+  @if (showBreadcrumbs()) {
+    <p-breadcrumb [model]="effectiveBreadcrumbs()" />
+  }
+
   <div class="layout-topbar-actions">
     <div class="layout-config-menu">
       <button type="button" class="layout-topbar-action" (click)="store.toggleDarkMode()">
