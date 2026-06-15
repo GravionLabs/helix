@@ -54,6 +54,10 @@ describe('LayoutStore', () => {
     it('should have activePath null', () => {
       expect(store.activePath()).toBeNull();
     });
+
+    it('should have sidebarCollapsed false', () => {
+      expect(store.sidebarCollapsed()).toBe(false);
+    });
   });
 
   describe('computed signals', () => {
@@ -99,6 +103,12 @@ describe('LayoutStore', () => {
 
     it('isSidebarActive should be false when all menu flags are false', () => {
       expect(store.isSidebarActive()).toBe(false);
+    });
+
+    it('isCollapsed should reflect sidebarCollapsed', () => {
+      expect(store.isCollapsed()).toBe(false);
+      store.toggleSidebar();
+      expect(store.isCollapsed()).toBe(true);
     });
   });
 
@@ -220,6 +230,7 @@ describe('LayoutStore', () => {
       store.setMenuMode('overlay');
       store.showConfigSidebar();
       store.setActivePath('/test');
+      store.toggleSidebar();
 
       store.reset();
 
@@ -230,6 +241,20 @@ describe('LayoutStore', () => {
       expect(store.menuMode()).toBe('static');
       expect(store.configSidebarVisible()).toBe(false);
       expect(store.activePath()).toBeNull();
+      expect(store.sidebarCollapsed()).toBe(false);
+    });
+  });
+
+  describe('toggleSidebar()', () => {
+    it('should toggle sidebarCollapsed from false to true', () => {
+      store.toggleSidebar();
+      expect(store.sidebarCollapsed()).toBe(true);
+    });
+
+    it('should toggle sidebarCollapsed from true to false', () => {
+      store.toggleSidebar();
+      store.toggleSidebar();
+      expect(store.sidebarCollapsed()).toBe(false);
     });
   });
 

@@ -25,6 +25,7 @@ const initialState: LayoutStoreState = {
   mobileMenuActive: false,
   menuHoverActive: false,
   activePath: null,
+  sidebarCollapsed: false,
 };
 
 export const LayoutStore = signalStore(
@@ -35,6 +36,7 @@ export const LayoutStore = signalStore(
     isOverlay: computed(() => store.menuMode() === 'overlay'),
     isStatic: computed(() => store.menuMode() === 'static'),
     isSidebarActive: computed(() => store.overlayMenuActive() || store.mobileMenuActive()),
+    isCollapsed: computed(() => store.sidebarCollapsed()),
   })),
   withMethods((store) => ({
     toggleDarkMode(): void {
@@ -68,6 +70,9 @@ export const LayoutStore = signalStore(
     },
     setActivePath(activePath: string | null): void {
       patchState(store, { activePath });
+    },
+    toggleSidebar(): void {
+      patchState(store, { sidebarCollapsed: !store.sidebarCollapsed() });
     },
     setMenuHoverActive(menuHoverActive: boolean): void {
       patchState(store, { menuHoverActive });
