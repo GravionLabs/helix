@@ -30,6 +30,8 @@ export { HelixBadge } from './lib/layout/components/badge/badge';
 export type { BadgeSeverity } from './lib/layout/components/badge/badge';
 export { HelixEnvironmentBadge } from './lib/layout/components/badge/environment-badge';
 export type { Environment } from './lib/layout/components/badge/environment-badge';
+export { HelixAlertBadge } from './lib/layout/components/badge/alert-badge';
+export type { AlertItem } from './lib/layout/components/badge/alert-badge';
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
