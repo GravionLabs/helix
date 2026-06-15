@@ -13,8 +13,14 @@ vi.mock('@primeuix/themes/nora', () => ({ default: { primitive: {} } }));
 
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixTopbar } from './topbar';
+
+type HelixTopbarPrivate = {
+  effectiveBreadcrumbs: () => MenuItem[];
+  showBreadcrumbs: () => boolean;
+};
 
 describe('HelixTopbar', () => {
   let component: HelixTopbar;
@@ -59,5 +65,32 @@ describe('HelixTopbar', () => {
   it('should have store injected', () => {
     const store = TestBed.inject(LayoutStore);
     expect(component.store).toBe(store);
+  });
+
+  describe('breadcrumbs', () => {
+    it('should have default effectiveBreadcrumbs empty', () => {
+      const privateComp = component as unknown as HelixTopbarPrivate;
+      expect(privateComp.effectiveBreadcrumbs()).toEqual([]);
+    });
+
+    it('should showBreadcrumbs be false when 0 or 1 items', () => {
+      const privateComp = component as unknown as HelixTopbarPrivate;
+      expect(privateComp.showBreadcrumbs()).toBe(false);
+    });
+
+    it('should reflect breadcrumbs input', () => {
+      const crumbs = [{ label: 'Home' }, { label: 'Page' }];
+      fixture.componentRef.setInput('breadcrumbs', crumbs);
+      fixture.detectChanges();
+      const privateComp = component as unknown as HelixTopbarPrivate;
+      expect(privateComp.effectiveBreadcrumbs()).toEqual(crumbs);
+    });
+
+    it('should showBreadcrumbs be true with 2+ items', () => {
+      fixture.componentRef.setInput('breadcrumbs', [{ label: 'Home' }, { label: 'Page' }]);
+      fixture.detectChanges();
+      const privateComp = component as unknown as HelixTopbarPrivate;
+      expect(privateComp.showBreadcrumbs()).toBe(true);
+    });
   });
 });
