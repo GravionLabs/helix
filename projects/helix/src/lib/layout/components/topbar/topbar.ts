@@ -6,10 +6,14 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { StyleClassModule } from 'primeng/styleclass';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
+import { HelixAlertBadge, type AlertItem } from '../badge/alert-badge';
+import { HelixEnvironmentBadge, type Environment } from '../badge/environment-badge';
 import { HelixConfigurator } from '../configurator/configurator';
 import type { HelixTopbarAction } from './topbar.model';
 
 export type { HelixTopbarAction } from './topbar.model';
+export type { AlertItem } from '../badge/alert-badge';
+export type { Environment } from '../badge/environment-badge';
 
 const DEFAULT_ACTIONS: HelixTopbarAction[] = [
   { icon: 'pi pi-calendar', label: 'Calendar' },
@@ -20,7 +24,7 @@ const DEFAULT_ACTIONS: HelixTopbarAction[] = [
 @Component({
   selector: 'helix-topbar',
   standalone: true,
-  imports: [RouterModule, CommonModule, StyleClassModule, HelixConfigurator, Breadcrumb],
+  imports: [RouterModule, CommonModule, StyleClassModule, HelixAlertBadge, HelixEnvironmentBadge, HelixConfigurator, Breadcrumb],
   templateUrl: './topbar.html',
   styleUrl: './topbar.scss',
 })
@@ -28,6 +32,9 @@ export class HelixTopbar {
   appTitle = input('SAKAI');
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<MenuItem[] | undefined>(undefined);
+  environment = input<Environment | undefined>();
+  alertCount = input(0);
+  alerts = input<AlertItem[] | undefined>();
 
   store = inject(LayoutStore);
   private route = inject(ActivatedRoute);
