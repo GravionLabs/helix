@@ -16,4 +16,5 @@ export interface LayoutState {
   menuHoverActive: boolean;
   activePath: string | null;
   sidebarCollapsed: boolean;
+  expandedRoot: string | null;
 }

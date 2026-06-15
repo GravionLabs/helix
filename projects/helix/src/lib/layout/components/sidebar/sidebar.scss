@@ -1,4 +1,6 @@
 .layout-sidebar {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   width: 20rem;
   height: calc(100vh - 8rem);
@@ -54,14 +56,17 @@
 }
 
 .layout-sidebar-collapse-button {
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 1rem;
-  border: 1px solid var(--surface-border, #e5e7eb);
-  border-radius: var(--content-border-radius, 6px);
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  margin-top: auto;
+  align-self: flex-end;
+  border: none;
+  border-radius: 50%;
   background-color: transparent;
   color: var(--text-color-secondary, #6b7280);
   cursor: pointer;

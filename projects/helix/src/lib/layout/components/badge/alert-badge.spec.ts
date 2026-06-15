@@ -24,7 +24,7 @@ describe('HelixAlertBadge', () => {
 
   it('should show count when > 0', () => {
     fixture.detectChanges();
-    const countEl = fixture.nativeElement.querySelector('.helix-alert-badge__count');
+    const countEl = fixture.nativeElement.querySelector('.alert-badge-count');
     expect(countEl).toBeTruthy();
     expect(countEl.textContent).toContain('3');
   });
@@ -32,7 +32,7 @@ describe('HelixAlertBadge', () => {
   it('should hide count badge when count is 0', () => {
     fixture.componentRef.setInput('count', 0);
     fixture.detectChanges();
-    const countEl = fixture.nativeElement.querySelector('.helix-alert-badge__count');
+    const countEl = fixture.nativeElement.querySelector('.alert-badge-count');
     expect(countEl).toBeNull();
   });
 
@@ -44,7 +44,7 @@ describe('HelixAlertBadge', () => {
     const button = fixture.nativeElement.querySelector('button');
     button.click();
     fixture.detectChanges();
-    const dropdown = fixture.nativeElement.querySelector('.helix-alert-badge__dropdown');
+    const dropdown = fixture.nativeElement.querySelector('.alert-badge-dropdown');
     expect(dropdown).toBeTruthy();
   });
 
@@ -57,7 +57,7 @@ describe('HelixAlertBadge', () => {
     const button = fixture.nativeElement.querySelector('button');
     button.click();
     fixture.detectChanges();
-    const items = fixture.nativeElement.querySelectorAll('.helix-alert-badge__item');
+    const items = fixture.nativeElement.querySelectorAll('.alert-badge-item');
     expect(items.length).toBe(2);
   });
 });

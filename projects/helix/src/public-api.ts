@@ -35,8 +35,11 @@ export type { AlertItem } from './lib/layout/components/badge/alert-badge';
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
-export type { HelixTopbarAction } from './lib/layout/components/topbar/topbar';
+export type { HelixTopbarAction, HelixTopbarBadge, HelixTopbarBadgeType } from './lib/layout/components/topbar/topbar.model';
 export { HelixTopbar } from './lib/layout/components/topbar/topbar';
+export { HelixDarkModeBadge } from './lib/layout/components/badge/dark-mode-badge';
+export { HelixConfiguratorBadge } from './lib/layout/components/badge/configurator-badge';
+export { HelixMobileMenuBadge } from './lib/layout/components/badge/mobile-menu-badge';
 // Tokens
 export { HELIX_MENU_MODEL } from './lib/layout/menu-model.token';
 export type { HelixRouteMenuItem } from './lib/layout/route-menu.model';

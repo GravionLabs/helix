@@ -7,6 +7,7 @@ import { UIKIT_MENU_ITEMS } from '../pages/uikit/uikit-menu-items';
 export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   {
     label: 'Home',
+    icon: 'pi pi-fw pi-home',
     items: [
       {
         label: 'Dashboard',
@@ -19,6 +20,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   },
   {
     label: 'UI Components',
+    icon: 'pi pi-fw pi-th-large',
     breadcrumb: 'UI Components',
     path: 'uikit',
     loadChildren: () => import('../pages/uikit/uikit.routes'),
@@ -51,6 +53,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   },
   {
     label: 'Hierarchy',
+    icon: 'pi pi-fw pi-sitemap',
     items: [
       {
         label: 'Submenu 1',
@@ -99,6 +102,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   },
   {
     label: 'Get Started',
+    icon: 'pi pi-fw pi-star',
     items: [
       {
         label: 'Documentation',

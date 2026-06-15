@@ -32,23 +32,29 @@
 // Root menu item: section header label
 :host(.layout-root-menuitem) {
   > .layout-menuitem-root-text {
-    font-size: 0.857rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: var(--text-color);
-    margin: 0.75rem 0;
+    display: none;
   }
 
-  // Hide the clickable <a> for root section headers
   > a {
-    display: none;
+    padding: 0.75rem 1rem 0.75rem 0;
+    font-weight: 600;
+    font-size: 1.05rem;
   }
 }
 
-// Active menu item: rotate submenu chevron
+// Active menu item: rotate submenu chevron + visual highlight
 :host(.active-menuitem) {
-  > a .layout-submenu-toggler {
-    transform: rotate(-180deg);
+  > a {
+    color: var(--primary-color);
+    font-weight: 700;
+
+    .layout-menuitem-icon {
+      color: var(--primary-color);
+    }
+
+    .layout-submenu-toggler {
+      transform: rotate(-180deg);
+    }
   }
 }
 
@@ -142,6 +148,7 @@ ul {
 
     .layout-menuitem-icon {
       margin-right: 0;
+      font-size: 1.25rem;
     }
   }
 

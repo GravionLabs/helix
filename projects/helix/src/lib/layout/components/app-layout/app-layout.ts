@@ -9,6 +9,7 @@ import { LayoutStore } from '../../store/layout.store';
 import { HelixFooter } from '../footer/footer';
 import { HelixSidebar } from '../sidebar/sidebar';
 import { HelixTopbar } from '../topbar/topbar';
+import type { HelixTopbarBadge } from '../topbar/topbar.model';
 
 @Component({
   selector: 'helix-app-layout',
@@ -47,16 +48,14 @@ export class HelixAppLayout {
     return this.activatedRoute.snapshot.data['environment'] as Environment | undefined;
   });
 
-  protected effectiveAlertCount = computed<number>(() => {
-    const input = this.alertCount();
-    if (input !== 0) return input;
-    return (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) ?? 0;
-  });
-
-  protected effectiveAlerts = computed<AlertItem[] | undefined>(() => {
-    const input = this.alerts();
-    if (input !== undefined) return input;
-    return this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined;
+  protected effectiveBadges = computed<HelixTopbarBadge[]>(() => {
+    const badges: HelixTopbarBadge[] = [{ type: 'darkmode' }, { type: 'configurator' }, { type: 'mobile' }];
+    const alertCountVal = this.alertCount() || (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) || 0;
+    const alertsVal = this.alerts() ?? (this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined);
+    if (alertCountVal > 0) {
+      badges.push({ type: 'alert', badgeCount: alertCountVal, alerts: alertsVal });
+    }
+    return badges;
   });
 
   constructor() {

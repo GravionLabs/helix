@@ -53,7 +53,7 @@
     }
   </a>
 }
-@if (hasChildren() && isVisible() && (root() || isActive())) {
+@if (hasChildren() && isVisible() && isExpanded()) {
   <ul
     [animate.enter]="initialized() ? 'p-submenu-enter' : null"
     [animate.leave]="'p-submenu-leave'"

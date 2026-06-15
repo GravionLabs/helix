@@ -73,6 +73,25 @@ describe('HelixAppLayout', () => {
     expect(component.alerts()).toEqual(alerts);
   });
 
+  it('effectiveBadges() should include darkmode, configurator, mobile by default', () => {
+    const priv = component as unknown as { effectiveBadges: () => { type: string }[] };
+    const badges = priv.effectiveBadges();
+    expect(badges.length).toBe(3);
+    expect(badges[0].type).toBe('darkmode');
+    expect(badges[1].type).toBe('configurator');
+    expect(badges[2].type).toBe('mobile');
+  });
+
+  it('effectiveBadges() should include alert badge when alertCount > 0', () => {
+    fixture.componentRef.setInput('alertCount', 5);
+    fixture.detectChanges();
+    const priv = component as unknown as { effectiveBadges: () => { type: string; badgeCount: number }[] };
+    const badges = priv.effectiveBadges();
+    const alertBadge = badges.find((b) => b.type === 'alert');
+    expect(alertBadge).toBeTruthy();
+    expect(alertBadge!.badgeCount).toBe(5);
+  });
+
   it('containerClass() should have layout-static when menuMode is static', () => {
     store.setMenuMode('static');
     const classes = component.containerClass();

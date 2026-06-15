@@ -20,7 +20,7 @@ import { LayoutStore } from '../../store/layout.store';
   templateUrl: './menu-item.html',
   styleUrl: './menu-item.scss',
   host: {
-    '[class.active-menuitem]': 'isActive()',
+    '[class.active-menuitem]': 'isExpanded()',
     '[class.layout-root-menuitem]': 'root()',
     '[class.layout-sidebar-collapsed]': 'isCollapsed()',
   },
@@ -38,6 +38,8 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
   hasRouterLink = computed(() => !!this.item()?.routerLink);
   initialized = signal<boolean>(false);
 
+  itemKey = computed(() => this.fullPath() ?? this.item()?.label ?? '');
+
   fullPath = computed(() => {
     const itemPath = this.item()?.path;
     if (!itemPath) return this.parentPath();
@@ -53,10 +55,28 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
   isActive = computed(() => {
     const activePath = this.store.activePath();
     if (this.item()?.path) {
-      return activePath?.startsWith(this.fullPath() ?? '') ?? false;
+      const normalizedPath = activePath?.replace(/^\//, '') ?? '';
+      const normalizedFull = (this.fullPath() ?? '').replace(/^\//, '');
+      return normalizedPath?.startsWith(normalizedFull) ?? false;
     }
     return false;
   });
+
+  hasActiveDescendant = computed(() => {
+    const normalized = this.store.activePath()?.replace(/^\//, '') ?? '';
+    const items = this.item()?.items;
+    if (!items) return false;
+
+    const match = (list: any[]): boolean =>
+      list.some((child: any) => {
+        if (child.path != null && child.path !== '' && normalized.startsWith(child.path.replace(/^\//, ''))) return true;
+        return child.items ? match(child.items) : false;
+      });
+
+    return match(items);
+  });
+
+  isExpanded = computed(() => this.isActive() || this.hasActiveDescendant() || this.store.expandedRoot() === this.itemKey());
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -105,10 +125,12 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
       item.command({ originalEvent: event, item });
     }
     if (this.hasChildren()) {
-      if (this.isActive()) {
-        this.store.setActivePath(this.parentPath());
+      if (this.isExpanded()) {
+        this.store.setExpandedRoot(null);
+        this.store.setActivePath(null);
       } else {
-        this.store.setActivePath(this.fullPath());
+        this.store.setExpandedRoot(this.itemKey());
+        this.store.setActivePath(this.fullPath() ?? this.item()?.label ?? '');
         this.store.setMenuHoverActive(true);
       }
     } else {

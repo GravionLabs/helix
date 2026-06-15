@@ -13,43 +13,62 @@ export interface AlertItem {
   standalone: true,
   imports: [RouterModule],
   template: `
-    <div class="helix-alert-badge">
-      <button
-        type="button"
-        class="layout-topbar-action"
-        (click)="open.set(!open())"
-        (blur)="open.set(false)"
-      >
-        <i class="pi pi-bell"></i>
-        @if (count() > 0) {
-          <span class="helix-alert-badge__count">{{ count() }}</span>
-        }
-      </button>
-      @if (open() && alerts() && alerts()!.length > 0) {
-        <div class="helix-alert-badge__dropdown">
-          @for (alert of alerts(); track alert.id) {
-            <a
-              class="helix-alert-badge__item"
-              [class.helix-alert-badge__item--warn]="alert.severity === 'warn'"
-              [class.helix-alert-badge__item--error]="alert.severity === 'error'"
-              [class.helix-alert-badge__item--success]="alert.severity === 'success'"
-              [routerLink]="alert.route || undefined"
-            >
-              <span class="helix-alert-badge__dot"></span>
-              <span class="helix-alert-badge__label">{{ alert.label }}</span>
-            </a>
-          }
-        </div>
+    <button type="button" class="alert-badge-trigger" (click)="open.set(!open())" (blur)="open.set(false)">
+      <i class="pi pi-bell"></i>
+      @if (count() > 0) {
+        <span class="alert-badge-count">{{ count() }}</span>
       }
-    </div>
+    </button>
+    @if (open() && alerts() && alerts()!.length > 0) {
+      <div class="alert-badge-dropdown">
+        @for (alert of alerts(); track alert.id) {
+          <a
+            class="alert-badge-item"
+            [class.alert-badge-item--warn]="alert.severity === 'warn'"
+            [class.alert-badge-item--error]="alert.severity === 'error'"
+            [class.alert-badge-item--success]="alert.severity === 'success'"
+            [routerLink]="alert.route || undefined"
+          >
+            <span class="alert-badge-dot"></span>
+            <span class="alert-badge-label">{{ alert.label }}</span>
+          </a>
+        }
+      </div>
+    }
   `,
   styles: [
     `
-      .helix-alert-badge {
+      :host {
         position: relative;
         display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        color: var(--text-color);
+        cursor: pointer;
       }
-      .helix-alert-badge__count {
+      :host:hover {
+        background-color: var(--surface-hover);
+      }
+      .alert-badge-trigger {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .alert-badge-trigger i {
+        font-size: 1.4rem;
+      }
+      .alert-badge-count {
         position: absolute;
         top: -0.25rem;
         right: -0.25rem;
@@ -66,7 +85,7 @@ export interface AlertItem {
         font-weight: 700;
         line-height: 1;
       }
-      .helix-alert-badge__dropdown {
+      .alert-badge-dropdown {
         position: absolute;
         top: 100%;
         right: 0;
@@ -79,7 +98,7 @@ export interface AlertItem {
         z-index: 1000;
         padding: 0.5rem;
       }
-      .helix-alert-badge__item {
+      .alert-badge-item {
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -89,26 +108,26 @@ export interface AlertItem {
         color: var(--text-color, #1f2937);
         cursor: pointer;
       }
-      .helix-alert-badge__item:hover {
+      .alert-badge-item:hover {
         background-color: var(--surface-hover, #f3f4f6);
       }
-      .helix-alert-badge__dot {
+      .alert-badge-dot {
         width: 0.5rem;
         height: 0.5rem;
         border-radius: 50%;
         background-color: var(--p-info-500, #3b82f6);
         flex-shrink: 0;
       }
-      .helix-alert-badge__item--warn .helix-alert-badge__dot {
+      .alert-badge-item--warn .alert-badge-dot {
         background-color: var(--p-warn-500, #f59e0b);
       }
-      .helix-alert-badge__item--error .helix-alert-badge__dot {
+      .alert-badge-item--error .alert-badge-dot {
         background-color: var(--p-red-500, #ef4444);
       }
-      .helix-alert-badge__item--success .helix-alert-badge__dot {
+      .alert-badge-item--success .alert-badge-dot {
         background-color: var(--p-green-500, #22c55e);
       }
-      .helix-alert-badge__label {
+      .alert-badge-label {
         font-size: 0.875rem;
       }
     `,

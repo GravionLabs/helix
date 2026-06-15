@@ -81,6 +81,7 @@ export class HelixSidebar implements OnInit, OnDestroy {
 
   private onRouteChange(path: string) {
     this.store.setActivePath(path);
+    this.store.setExpandedRoot(null);
     this.store.closeMobileMenu();
   }
 

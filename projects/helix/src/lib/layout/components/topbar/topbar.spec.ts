@@ -67,8 +67,11 @@ describe('HelixTopbar', () => {
     expect(component.store).toBe(store);
   });
 
-  it('should have default alertCount 0', () => {
-    expect(component.alertCount()).toBe(0);
+  it('should have 3 default badges', () => {
+    expect(component.badges().length).toBe(3);
+    expect(component.badges()[0].type).toBe('darkmode');
+    expect(component.badges()[1].type).toBe('configurator');
+    expect(component.badges()[2].type).toBe('mobile');
   });
 
   it('should render environment badge when environment input set', () => {
@@ -78,14 +81,10 @@ describe('HelixTopbar', () => {
     expect(badge).toBeTruthy();
   });
 
-  it('should render alert badge', () => {
-    fixture.detectChanges();
-    const badge = fixture.nativeElement.querySelector('helix-alert-badge');
-    expect(badge).toBeTruthy();
-  });
-
-  it('should pass alertCount to helix-alert-badge', () => {
-    fixture.componentRef.setInput('alertCount', 5);
+  it('should render alert badge when badges includes alert type', () => {
+    fixture.componentRef.setInput('badges', [
+      { type: 'alert', badgeCount: 3 },
+    ]);
     fixture.detectChanges();
     const badge = fixture.nativeElement.querySelector('helix-alert-badge');
     expect(badge).toBeTruthy();
