@@ -15,4 +15,5 @@ export interface LayoutState {
   mobileMenuActive: boolean;
   menuHoverActive: boolean;
   activePath: string | null;
+  sidebarCollapsed: boolean;
 }
