@@ -55,7 +55,7 @@ interface ExportColumn {
     ConfirmDialogModule,
   ],
   template: `
-    <p-toolbar styleClass="mb-6">
+    <p-toolbar styleClass="mb-3">
       <ng-template #start>
         <p-button
           label="New"
@@ -191,7 +191,7 @@ interface ExportColumn {
       [modal]="true"
     >
       <ng-template #content>
-        <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-3">
           <img
             [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
             [alt]="product.image"
@@ -238,9 +238,9 @@ interface ExportColumn {
           </div>
 
           <div>
-            <span class="block font-bold mb-4">Category</span>
-            <div class="grid grid-cols-12 gap-4">
-              <div class="flex items-center gap-2 col-span-6">
+            <span class="block font-bold mb-2">Category</span>
+            <div class="grid grid-cols-12 gap-3">
+              <div class="flex items-center gap-1 col-span-6">
                 <p-radiobutton
                   id="category1"
                   name="category"
@@ -249,7 +249,7 @@ interface ExportColumn {
                 />
                 <label for="category1">Accessories</label>
               </div>
-              <div class="flex items-center gap-2 col-span-6">
+              <div class="flex items-center gap-1 col-span-6">
                 <p-radiobutton
                   id="category2"
                   name="category"
@@ -258,7 +258,7 @@ interface ExportColumn {
                 />
                 <label for="category2">Clothing</label>
               </div>
-              <div class="flex items-center gap-2 col-span-6">
+              <div class="flex items-center gap-1 col-span-6">
                 <p-radiobutton
                   id="category3"
                   name="category"
@@ -267,7 +267,7 @@ interface ExportColumn {
                 />
                 <label for="category3">Electronics</label>
               </div>
-              <div class="flex items-center gap-2 col-span-6">
+              <div class="flex items-center gap-1 col-span-6">
                 <p-radiobutton
                   id="category4"
                   name="category"
@@ -279,7 +279,7 @@ interface ExportColumn {
             </div>
           </div>
 
-          <div class="grid grid-cols-12 gap-4">
+          <div class="grid grid-cols-12 gap-3">
             <div class="col-span-6">
               <label for="price" class="block font-bold mb-3">Price</label>
               <p-inputnumber

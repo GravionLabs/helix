@@ -10,10 +10,10 @@ import { ToastModule } from 'primeng/toast';
   standalone: true,
   imports: [CommonModule, FileUploadModule, ToastModule, ButtonModule],
   template: `<p-toast />
-    <div class="grid grid-cols-12 gap-8">
+    <div class="grid grid-cols-12 gap-2">
       <div class="col-span-full lg:col-span-6">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Advanced</div>
+          <div class="font-semibold text-xl mb-2">Advanced</div>
           <p-fileupload
             name="demo[]"
             (onUpload)="onUpload($event)"
@@ -31,8 +31,8 @@ import { ToastModule } from 'primeng/toast';
       </div>
       <div class="col-span-full lg:col-span-6">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Basic</div>
-          <div class="flex flex-col gap-4 items-center justify-center">
+          <div class="font-semibold text-xl mb-2">Basic</div>
+          <div class="flex flex-col gap-3 items-center justify-center">
             <p-fileupload
               #fu
               mode="basic"

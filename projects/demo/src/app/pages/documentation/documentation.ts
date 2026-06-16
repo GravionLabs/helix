@@ -7,16 +7,16 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   template: `
     <div class="card">
-      <div class="font-semibold text-2xl mb-4">Documentation</div>
-      <div class="font-semibold text-xl mb-4">Get Started</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-2xl mb-2">Documentation</div>
+      <div class="font-semibold text-xl mb-2">Get Started</div>
+      <p class="text-lg mb-2">
         Sakai is an application template for Angular and is distributed as a CLI project. Current
         versions are Angular v21 with PrimeNG v21. In case CLI is not installed already, use the
         command below to set it up.
       </p>
       <pre class="app-code">
 <code>npm install -g &#64;angular/cli</code></pre>
-      <p class="text-lg mb-4">
+      <p class="text-lg mb-2">
         Once CLI is ready in your system, extract the contents of the zip file distribution, cd to
         the directory, install the libraries from npm and then execute "ng serve" to run the
         application in your local environment.
@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
 npm install
 ng serve</code></pre>
 
-      <p class="text-lg mb-4">
+      <p class="text-lg mb-2">
         The application should run at
         <i class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
           >http://localhost:4200/</i
@@ -34,12 +34,12 @@ ng serve</code></pre>
         to view the application in your local environment.
       </p>
 
-      <div class="font-semibold text-xl mb-4">Structure</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-xl mb-2">Structure</div>
+      <p class="text-lg mb-2">
         Templates consists of a couple folders, demos and layout have been separated so that you can
         easily identify what is necessary for your application.
       </p>
-      <ul class="leading-normal list-disc pl-8 text-lg mb-4">
+      <ul class="leading-normal list-disc pl-8 text-lg mb-2">
         <li>
           <span class="text-primary font-medium">src/app/layout</span>: Main layout files, needs to
           be present.
@@ -54,8 +54,8 @@ ng serve</code></pre>
         </li>
       </ul>
 
-      <div class="font-semibold text-xl mb-4">Menu</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-xl mb-2">Menu</div>
+      <p class="text-lg mb-2">
         Main menu is defined at
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
           >src/app/layout/component/app.menu.ts</span
@@ -65,8 +65,8 @@ ng serve</code></pre>
         define your own menu items.
       </p>
 
-      <div class="font-semibold text-xl mb-4">Layout Service</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-xl mb-2">Layout Service</div>
+      <p class="text-lg mb-2">
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
           >src/app/layout/service/layout.service.ts</span
         >
@@ -74,14 +74,14 @@ ng serve</code></pre>
         modes, and states.
       </p>
 
-      <div class="font-semibold text-xl mb-4">Tailwind CSS</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-xl mb-2">Tailwind CSS</div>
+      <p class="text-lg mb-2">
         The demo pages are developed with Tailwind CSS however the core application shell uses
         custom CSS.
       </p>
 
-      <div class="font-semibold text-xl mb-4">Variables</div>
-      <p class="text-lg mb-4">
+      <div class="font-semibold text-xl mb-2">Variables</div>
+      <p class="text-lg mb-2">
         CSS variables used in the template are derived from the applied PrimeNG theme. Customize
         them through the CSS variables in
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"

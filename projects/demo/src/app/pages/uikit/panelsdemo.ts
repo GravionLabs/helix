@@ -41,7 +41,7 @@ import { ToolbarModule } from 'primeng/toolbar';
   template: `
     <div class="flex flex-col">
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Toolbar</div>
+        <div class="font-semibold text-xl mb-2">Toolbar</div>
         <p-toolbar>
           <ng-template #start>
             <p-button icon="pi pi-plus" class="mr-2" severity="secondary" text />
@@ -64,10 +64,10 @@ import { ToolbarModule } from 'primeng/toolbar';
         </p-toolbar>
       </div>
 
-      <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex flex-col md:flex-row gap-2">
         <div class="md:w-1/2">
           <div class="card">
-            <div class="font-semibold text-xl mb-4">Accordion</div>
+            <div class="font-semibold text-xl mb-2">Accordion</div>
             <p-accordion value="0">
               <p-accordion-panel value="0">
                 <p-accordion-header>Header I</p-accordion-header>
@@ -113,7 +113,7 @@ import { ToolbarModule } from 'primeng/toolbar';
             </p-accordion>
           </div>
           <div class="card">
-            <div class="font-semibold text-xl mb-4">Tabs</div>
+            <div class="font-semibold text-xl mb-2">Tabs</div>
             <p-tabs value="0">
               <p-tablist>
                 <p-tab value="0">Header I</p-tab>
@@ -155,9 +155,9 @@ import { ToolbarModule } from 'primeng/toolbar';
             </p-tabs>
           </div>
         </div>
-        <div class="md:w-1/2 mt-6 md:mt-0">
+        <div class="md:w-1/2 mt-2 md:mt-0">
           <div class="card">
-            <div class="font-semibold text-xl mb-4">Panel</div>
+            <div class="font-semibold text-xl mb-2">Panel</div>
             <p-panel header="Header" [toggleable]="true">
               <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -170,7 +170,7 @@ import { ToolbarModule } from 'primeng/toolbar';
             </p-panel>
           </div>
           <div class="card">
-            <div class="font-semibold text-xl mb-4">Fieldset</div>
+            <div class="font-semibold text-xl mb-2">Fieldset</div>
             <p-fieldset legend="Legend" [toggleable]="true">
               <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -185,15 +185,15 @@ import { ToolbarModule } from 'primeng/toolbar';
         </div>
       </div>
 
-      <div class="card mt-8">
-        <div class="font-semibold text-xl mb-4">Divider</div>
+      <div class="card mt-2">
+        <div class="font-semibold text-xl mb-2">Divider</div>
         <div class="flex flex-col md:flex-row">
-          <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-3 py-5">
-            <div class="flex flex-col gap-2">
+          <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-2 py-5">
+            <div class="flex flex-col gap-1">
               <label for="username">Username</label>
               <input pInputText id="username" type="text" />
             </div>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-1">
               <label for="password">Password</label>
               <input pInputText id="password" type="password" />
             </div>
@@ -224,12 +224,12 @@ import { ToolbarModule } from 'primeng/toolbar';
       </div>
 
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Splitter</div>
+        <div class="font-semibold text-xl mb-2">Splitter</div>
         <p-splitter
           [style]="{ height: '300px' }"
           [panelSizes]="[20, 80]"
           [minSizes]="[10, 0]"
-          styleClass="mb-8"
+          styleClass="mb-2"
         >
           <ng-template #panel>
             <div class="col flex items-center justify-center">Panel 1</div>

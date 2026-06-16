@@ -9,8 +9,8 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   standalone: true,
   selector: 'app-recent-sales-widget',
   imports: [CommonModule, TableModule, ButtonModule, RippleModule],
-  template: `<div class="card mb-8!">
-    <div class="font-semibold text-xl mb-4">Recent Sales</div>
+  template: `<div class="card mb-2!">
+    <div class="font-semibold text-xl mb-2">Recent Sales</div>
     <p-table [value]="products()" [paginator]="true" [rows]="5" responsiveLayout="scroll">
       <ng-template #header>
         <tr>

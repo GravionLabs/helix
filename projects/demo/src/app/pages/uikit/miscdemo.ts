@@ -31,8 +31,8 @@ import { TagModule } from 'primeng/tag';
   ],
   template: `
     <div class="card">
-      <div class="font-semibold text-xl mb-4">ProgressBar</div>
-      <div class="flex flex-col md:flex-row gap-4">
+      <div class="font-semibold text-xl mb-2">ProgressBar</div>
+      <div class="flex flex-col md:flex-row gap-3">
         <div class="md:w-1/2">
           <p-progressbar [value]="value" [showValue]="true"></p-progressbar>
         </div>
@@ -42,11 +42,11 @@ import { TagModule } from 'primeng/tag';
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-8">
+    <div class="flex flex-col md:flex-row gap-2">
       <div class="md:w-1/2">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Badge</div>
-          <div class="flex gap-2">
+          <div class="font-semibold text-xl mb-2">Badge</div>
+          <div class="flex gap-1">
             <p-badge value="2"></p-badge>
             <p-badge value="8" severity="success"></p-badge>
             <p-badge value="4" severity="info"></p-badge>
@@ -55,7 +55,7 @@ import { TagModule } from 'primeng/tag';
           </div>
 
           <div class="font-semibold my-4">Overlay</div>
-          <div class="flex gap-6">
+          <div class="flex gap-3">
             <p-overlaybadge value="2">
               <i class="pi pi-bell" style="font-size: 2rem"></i>
             </p-overlaybadge>
@@ -68,7 +68,7 @@ import { TagModule } from 'primeng/tag';
           </div>
 
           <div class="font-semibold my-4">Button</div>
-          <div class="flex gap-2">
+          <div class="flex gap-1">
             <p-button label="Emails" badge="8"></p-button>
             <p-button
               label="Messages"
@@ -80,7 +80,7 @@ import { TagModule } from 'primeng/tag';
           </div>
 
           <div class="font-semibold my-4">Sizes</div>
-          <div class="flex items-start gap-2">
+          <div class="flex items-start gap-1">
             <p-badge [value]="2"></p-badge>
             <p-badge [value]="4" badgeSize="large" severity="warn"></p-badge>
             <p-badge [value]="6" badgeSize="xlarge" severity="success"></p-badge>
@@ -88,9 +88,9 @@ import { TagModule } from 'primeng/tag';
         </div>
 
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Avatar</div>
-          <div class="font-semibold mb-4">Group</div>
-          <p-avatargroup styleClass="mb-4">
+          <div class="font-semibold text-xl mb-2">Avatar</div>
+          <div class="font-semibold mb-2">Group</div>
+          <p-avatargroup styleClass="mb-2">
             <p-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
               size="large"
@@ -147,18 +147,18 @@ import { TagModule } from 'primeng/tag';
         </div>
 
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Skeleton</div>
+          <div class="font-semibold text-xl mb-2">Skeleton</div>
           <div class="rounded-border border border-surface p-6">
-            <div class="flex mb-4">
+            <div class="flex mb-2">
               <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
               <div>
-                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="10rem" styleClass="mb-1"></p-skeleton>
+                <p-skeleton width="5rem" styleClass="mb-1"></p-skeleton>
                 <p-skeleton height=".5rem"></p-skeleton>
               </div>
             </div>
             <p-skeleton width="100%" height="150px"></p-skeleton>
-            <div class="flex justify-between mt-4">
+            <div class="flex justify-between mt-1">
               <p-skeleton width="4rem" height="2rem"></p-skeleton>
               <p-skeleton width="4rem" height="2rem"></p-skeleton>
             </div>
@@ -167,9 +167,9 @@ import { TagModule } from 'primeng/tag';
       </div>
       <div class="md:w-1/2">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Tag</div>
-          <div class="font-semibold mb-4">Default</div>
-          <div class="flex gap-2">
+          <div class="font-semibold text-xl mb-2">Tag</div>
+          <div class="font-semibold mb-2">Default</div>
+          <div class="flex gap-1">
             <p-tag value="Primary"></p-tag>
             <p-tag severity="success" value="Success"></p-tag>
             <p-tag severity="info" value="Info"></p-tag>
@@ -178,7 +178,7 @@ import { TagModule } from 'primeng/tag';
           </div>
 
           <div class="font-semibold my-4">Pills</div>
-          <div class="flex gap-2">
+          <div class="flex gap-1">
             <p-tag value="Primary" [rounded]="true"></p-tag>
             <p-tag severity="success" value="Success" [rounded]="true"></p-tag>
             <p-tag severity="info" value="Info" [rounded]="true"></p-tag>
@@ -187,7 +187,7 @@ import { TagModule } from 'primeng/tag';
           </div>
 
           <div class="font-semibold my-4">Icons</div>
-          <div class="flex gap-2">
+          <div class="flex gap-1">
             <p-tag icon="pi pi-user" value="Primary"></p-tag>
             <p-tag icon="pi pi-check" severity="success" value="Success"></p-tag>
             <p-tag icon="pi pi-info-circle" severity="info" value="Info"></p-tag>
@@ -197,8 +197,8 @@ import { TagModule } from 'primeng/tag';
         </div>
 
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Chip</div>
-          <div class="font-semibold mb-4">Basic</div>
+          <div class="font-semibold text-xl mb-2">Chip</div>
+          <div class="font-semibold mb-2">Basic</div>
           <div class="flex items-center flex-col sm:flex-row">
             <p-chip label="Action" styleClass="m-1"></p-chip>
             <p-chip label="Comedy" styleClass="m-1"></p-chip>

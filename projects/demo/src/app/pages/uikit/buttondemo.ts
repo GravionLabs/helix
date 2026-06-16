@@ -8,19 +8,19 @@ import { SplitButtonModule } from 'primeng/splitbutton';
   selector: 'app-button-demo',
   standalone: true,
   imports: [ButtonModule, ButtonGroupModule, SplitButtonModule],
-  template: `<div class="flex flex-col md:flex-row gap-8">
+  template: `<div class="flex flex-col md:flex-row gap-2">
     <div class="md:w-1/2">
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Default</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Submit"></p-button>
           <p-button label="Disabled" [disabled]="true"></p-button>
           <p-button label="Link" class="p-button-link" />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Severities</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Primary" />
           <p-button label="Secondary" severity="secondary" />
           <p-button label="Success" severity="success" />
@@ -31,9 +31,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button label="Contrast" severity="contrast" />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Text</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Primary" text />
           <p-button label="Secondary" severity="secondary" text />
           <p-button label="Success" severity="success" text />
@@ -44,9 +44,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button label="Plain" text />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Outlined</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Primary" outlined />
           <p-button label="Secondary" severity="secondary" outlined />
           <p-button label="Success" severity="success" outlined />
@@ -57,9 +57,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button label="Contrast" severity="contrast" outlined />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Group</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-buttongroup>
             <p-button label="Save" icon="pi pi-check" />
             <p-button label="Delete" icon="pi pi-trash" />
@@ -67,9 +67,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           </p-buttongroup>
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">SplitButton</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-splitbutton label="Save" [model]="items"></p-splitbutton>
           <p-splitbutton label="Save" [model]="items" severity="secondary"></p-splitbutton>
           <p-splitbutton label="Save" [model]="items" severity="success"></p-splitbutton>
@@ -80,9 +80,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-splitbutton label="Save" [model]="items" severity="contrast"></p-splitbutton>
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Templating</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button type="button">
             <img
               alt="logo"
@@ -102,17 +102,17 @@ import { SplitButtonModule } from 'primeng/splitbutton';
       </div>
     </div>
     <div class="md:w-1/2">
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Icons</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button icon="pi pi-bookmark"></p-button>
           <p-button label="Bookmark" icon="pi pi-bookmark"></p-button>
           <p-button label="Bookmark" icon="pi pi-bookmark" iconPos="right"></p-button>
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Raised</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Primary" raised />
           <p-button label="Secondary" severity="secondary" raised />
           <p-button label="Success" severity="success" raised />
@@ -123,9 +123,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button label="Contrast" severity="contrast" raised />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Rounded</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button label="Primary" rounded />
           <p-button label="Secondary" severity="secondary" rounded />
           <p-button label="Success" severity="success" rounded />
@@ -136,9 +136,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button label="Contrast" severity="contrast" rounded />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Rounded Icons</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button icon="pi pi-check" rounded />
           <p-button icon="pi pi-bookmark" severity="secondary" rounded />
           <p-button icon="pi pi-search" severity="success" rounded />
@@ -148,9 +148,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button icon="pi pi-times" severity="danger" rounded />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Rounded Text</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button icon="pi pi-check" text raised rounded />
           <p-button icon="pi pi-bookmark" severity="secondary" text raised rounded />
           <p-button icon="pi pi-search" severity="success" text raised rounded />
@@ -160,9 +160,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button icon="pi pi-times" severity="danger" text raised rounded />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Rounded Outlined</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button icon="pi pi-check" rounded outlined />
           <p-button icon="pi pi-bookmark" severity="secondary" rounded outlined />
           <p-button icon="pi pi-search" severity="success" rounded outlined />
@@ -172,9 +172,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
           <p-button icon="pi pi-times" severity="danger" rounded outlined />
         </div>
       </div>
-      <div class="card flex flex-col gap-4">
+      <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">Loading</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1">
           <p-button
             type="button"
             label="Search"

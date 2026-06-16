@@ -15,6 +15,7 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
         path: '',
         component: Dashboard,
         breadcrumb: 'Dashboard',
+        routerLink: ['/'],
       },
     ],
   },

@@ -43,7 +43,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
           <div class="flex flex-col">
             <div *ngFor="let item of items; let i = index">
               <div
-                class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+                class="flex flex-col sm:flex-row sm:items-center p-6 gap-3"
                 [ngClass]="{ 'border-t border-surface': i !== 0 }"
               >
                 <div class="md:w-40 relative">
@@ -59,17 +59,17 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                     <p-tag [value]="item.inventoryStatus" [severity]="getSeverity(item)"></p-tag>
                   </div>
                 </div>
-                <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
-                  <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-3">
+                  <div class="flex flex-row md:flex-col justify-between items-start gap-1">
                     <div>
                       <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{
                         item.category
                       }}</span>
-                      <div class="text-lg font-medium mt-2">{{ item.name }}</div>
+                      <div class="text-lg font-medium mt-1">{{ item.name }}</div>
                     </div>
                     <div class="bg-surface-100 p-1" style="border-radius: 30px">
                       <div
-                        class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
+                        class="bg-surface-0 flex items-center gap-1 justify-center py-1 px-2"
                         style="
                                                     border-radius: 30px;
                                                     box-shadow:
@@ -82,9 +82,9 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                       </div>
                     </div>
                   </div>
-                  <div class="flex flex-col md:items-end gap-8">
+                  <div class="flex flex-col md:items-end gap-2">
                     <span class="text-xl font-semibold">$ {{ item.price }}</span>
-                    <div class="flex flex-row-reverse md:flex-row gap-2">
+                    <div class="flex flex-row-reverse md:flex-row gap-1">
                       <p-button icon="pi pi-heart" styleClass="h-full" [outlined]="true"></p-button>
                       <p-button
                         icon="pi pi-shopping-cart"
@@ -101,7 +101,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
         </ng-template>
 
         <ng-template #grid let-items>
-          <div class="grid grid-cols-12 gap-4">
+          <div class="grid grid-cols-12 gap-3">
             <div
               *ngFor="let item of items; let i = index"
               class="col-span-12 sm:col-span-6 lg:col-span-4 p-2"
@@ -126,7 +126,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                   </div>
                 </div>
                 <div class="pt-12">
-                  <div class="flex flex-row justify-between items-start gap-2">
+                  <div class="flex flex-row justify-between items-start gap-1">
                     <div>
                       <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{
                         item.category
@@ -137,7 +137,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                     </div>
                     <div class="bg-surface-100 p-1" style="border-radius: 30px">
                       <div
-                        class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
+                        class="bg-surface-0 flex items-center gap-1 justify-center py-1 px-2"
                         style="
                                                     border-radius: 30px;
                                                     box-shadow:
@@ -150,9 +150,9 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                       </div>
                     </div>
                   </div>
-                  <div class="flex flex-col gap-6 mt-6">
+                  <div class="flex flex-col gap-3 mt-2">
                     <span class="text-2xl font-semibold">$ {{ item.price }}</span>
-                    <div class="flex gap-2">
+                    <div class="flex gap-1">
                       <p-button
                         icon="pi pi-shopping-cart"
                         label="Buy Now"
@@ -174,7 +174,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
     <div class="flex flex-col lg:flex-row gap-20">
       <div class="lg:w-2/3">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">PickList</div>
+          <div class="font-semibold text-xl mb-2">PickList</div>
           <p-pick-list [source]="sourceCities" [target]="targetCities" breakpoint="1400px">
             <ng-template #item let-item>
               {{ item.name }}
@@ -185,7 +185,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
 
       <div class="lg:w-1/3">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">OrderList</div>
+          <div class="font-semibold text-xl mb-2">OrderList</div>
           <p-orderlist [value]="orderCities" dataKey="id" breakpoint="575px">
             <ng-template #option let-option>
               {{ option.name }}

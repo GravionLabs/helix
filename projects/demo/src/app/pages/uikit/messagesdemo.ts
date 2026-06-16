@@ -12,11 +12,11 @@ import { ToastModule } from 'primeng/toast';
   standalone: true,
   imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule],
   template: `
-    <div class="flex flex-col md:flex-row gap-8">
+    <div class="flex flex-col md:flex-row gap-2">
       <div class="md:w-1/2">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Toast</div>
-          <div class="flex flex-wrap gap-2">
+          <div class="font-semibold text-xl mb-2">Toast</div>
+          <div class="flex flex-wrap gap-1">
             <p-button (click)="showSuccessViaToast()" label="Success" severity="success" />
             <p-button (click)="showInfoViaToast()" label="Info" severity="info" />
             <p-button (click)="showWarnViaToast()" label="Warn" severity="warn" />
@@ -24,8 +24,8 @@ import { ToastModule } from 'primeng/toast';
             <p-toast />
           </div>
 
-          <div class="font-semibold text-xl mt-4 mb-4">Inline</div>
-          <div class="flex mb-4 gap-1">
+          <div class="font-semibold text-xl mt-1 mb-2">Inline</div>
+          <div class="flex mb-2 gap-1">
             <input
               pInputText
               [(ngModel)]="username"
@@ -58,8 +58,8 @@ import { ToastModule } from 'primeng/toast';
       </div>
       <div class="md:w-1/2">
         <div class="card">
-          <div class="font-semibold text-xl mb-4">Message</div>
-          <div class="flex flex-col gap-4 mb-4">
+          <div class="font-semibold text-xl mb-2">Message</div>
+          <div class="flex flex-col gap-3 mb-2">
             <p-message severity="success">Success Message</p-message>
             <p-message severity="info">Info Message</p-message>
             <p-message severity="warn">Warn Message</p-message>
