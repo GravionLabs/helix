@@ -37,9 +37,7 @@ describe('HelixAlertBadge', () => {
   });
 
   it('should show dropdown when alerts provided and button clicked', () => {
-    fixture.componentRef.setInput('alerts', [
-      { id: '1', label: 'Alert 1', severity: 'error' },
-    ]);
+    fixture.componentRef.setInput('alerts', [{ id: '1', label: 'Alert 1', severity: 'error' }]);
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button');
     button.click();

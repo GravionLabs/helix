@@ -46,7 +46,7 @@ export function helixMenuLinksFrom(
     };
 
     if (resolved.breadcrumb !== undefined) {
-      resolved.data = { ...resolved.data, ['breadcrumb']: resolved.breadcrumb };
+      resolved.data = { ...resolved.data, breadcrumb: resolved.breadcrumb };
     }
 
     if (!resolved.routerLink && resolved.path !== undefined) {

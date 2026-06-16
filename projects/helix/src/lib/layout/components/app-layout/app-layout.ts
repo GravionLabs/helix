@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
-import type { AlertItem } from '../badge/alert-badge';
-import type { Environment } from '../badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
+import type { AlertItem } from '../badge/alert-badge';
+import type { Environment } from '../badge/environment-badge';
 import { HelixFooter } from '../footer/footer';
 import { HelixSidebar } from '../sidebar/sidebar';
 import { HelixTopbar } from '../topbar/topbar';
@@ -49,9 +49,17 @@ export class HelixAppLayout {
   });
 
   protected effectiveBadges = computed<HelixTopbarBadge[]>(() => {
-    const badges: HelixTopbarBadge[] = [{ type: 'darkmode' }, { type: 'configurator' }, { type: 'mobile' }];
-    const alertCountVal = this.alertCount() || (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) || 0;
-    const alertsVal = this.alerts() ?? (this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined);
+    const badges: HelixTopbarBadge[] = [
+      { type: 'darkmode' },
+      { type: 'configurator' },
+      { type: 'mobile' },
+    ];
+    const alertCountVal =
+      this.alertCount() ||
+      (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) ||
+      0;
+    const alertsVal =
+      this.alerts() ?? (this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined);
     if (alertCountVal > 0) {
       badges.push({ type: 'alert', badgeCount: alertCountVal, alerts: alertsVal });
     }

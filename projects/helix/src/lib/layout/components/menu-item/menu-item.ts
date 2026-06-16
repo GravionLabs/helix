@@ -81,14 +81,22 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
 
     const match = (list: any[]): boolean =>
       list.some((child: any) => {
-        if (child.path != null && child.path !== '' && normalized.startsWith(child.path.replace(/^\//, ''))) return true;
+        if (
+          child.path != null &&
+          child.path !== '' &&
+          normalized.startsWith(child.path.replace(/^\//, ''))
+        )
+          return true;
         return child.items ? match(child.items) : false;
       });
 
     return match(items);
   });
 
-  isExpanded = computed(() => this.isActive() || this.hasActiveDescendant() || this.store.expandedRoot() === this.itemKey());
+  isExpanded = computed(
+    () =>
+      this.isActive() || this.hasActiveDescendant() || this.store.expandedRoot() === this.itemKey(),
+  );
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {

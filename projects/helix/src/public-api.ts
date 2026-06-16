@@ -19,6 +19,15 @@ export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
 export { helixBreadcrumbsFromRoutes } from './lib/layout/breadcrumb-utils';
 // Components
 export { HelixAppLayout } from './lib/layout/components/app-layout/app-layout';
+export type { AlertItem } from './lib/layout/components/badge/alert-badge';
+export { HelixAlertBadge } from './lib/layout/components/badge/alert-badge';
+export type { BadgeSeverity } from './lib/layout/components/badge/badge';
+export { HelixBadge } from './lib/layout/components/badge/badge';
+export { HelixConfiguratorBadge } from './lib/layout/components/badge/configurator-badge';
+export { HelixDarkModeBadge } from './lib/layout/components/badge/dark-mode-badge';
+export type { Environment } from './lib/layout/components/badge/environment-badge';
+export { HelixEnvironmentBadge } from './lib/layout/components/badge/environment-badge';
+export { HelixMobileMenuBadge } from './lib/layout/components/badge/mobile-menu-badge';
 export { HelixConfigurator } from './lib/layout/components/configurator/configurator';
 export { HelixFloatingConfigurator } from './lib/layout/components/floating-configurator/floating-configurator';
 export { HelixFooter } from './lib/layout/components/footer/footer';
@@ -26,20 +35,15 @@ export type {
   HelixFooterColumn,
   HelixFooterLink,
 } from './lib/layout/components/footer/footer.model';
-export { HelixBadge } from './lib/layout/components/badge/badge';
-export type { BadgeSeverity } from './lib/layout/components/badge/badge';
-export { HelixEnvironmentBadge } from './lib/layout/components/badge/environment-badge';
-export type { Environment } from './lib/layout/components/badge/environment-badge';
-export { HelixAlertBadge } from './lib/layout/components/badge/alert-badge';
-export type { AlertItem } from './lib/layout/components/badge/alert-badge';
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
-export type { HelixTopbarAction, HelixTopbarBadge, HelixTopbarBadgeType } from './lib/layout/components/topbar/topbar.model';
 export { HelixTopbar } from './lib/layout/components/topbar/topbar';
-export { HelixDarkModeBadge } from './lib/layout/components/badge/dark-mode-badge';
-export { HelixConfiguratorBadge } from './lib/layout/components/badge/configurator-badge';
-export { HelixMobileMenuBadge } from './lib/layout/components/badge/mobile-menu-badge';
+export type {
+  HelixTopbarAction,
+  HelixTopbarBadge,
+  HelixTopbarBadgeType,
+} from './lib/layout/components/topbar/topbar.model';
 // Tokens
 export { HELIX_MENU_MODEL } from './lib/layout/menu-model.token';
 export type { HelixRouteMenuItem } from './lib/layout/route-menu.model';

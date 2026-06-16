@@ -82,9 +82,7 @@ describe('HelixTopbar', () => {
   });
 
   it('should render alert badge when badges includes alert type', () => {
-    fixture.componentRef.setInput('badges', [
-      { type: 'alert', badgeCount: 3 },
-    ]);
+    fixture.componentRef.setInput('badges', [{ type: 'alert', badgeCount: 3 }]);
     fixture.detectChanges();
     const badge = fixture.nativeElement.querySelector('helix-alert-badge');
     expect(badge).toBeTruthy();

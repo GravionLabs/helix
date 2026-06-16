@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { LayoutStore } from '@gravionlabs/helix';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-topbar-demo',
