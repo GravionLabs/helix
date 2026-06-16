@@ -1,18 +1,17 @@
 import type { Routes } from '@angular/router';
 import {
   authRoutes,
-  HelixAppLayout,
   HelixLanding,
   HelixNotfound,
   helixRoutesFrom,
 } from '@gravionlabs/helix';
-import { DEMO_MENU_MODEL } from './layout/menu.model';
+import { AppShell } from './shell/app-shell';
+import { DEMO_MENU_MODEL } from './shell/menu.model';
 
 export const appRoutes: Routes = [
   {
     path: '',
-    component: HelixAppLayout,
-    data: { menu: DEMO_MENU_MODEL, environment: 'development', alertCount: 3 },
+    component: AppShell,
     children: helixRoutesFrom(DEMO_MENU_MODEL),
   },
   { path: 'landing', component: HelixLanding },
