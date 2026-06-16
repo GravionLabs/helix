@@ -6,13 +6,13 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { StyleClassModule } from 'primeng/styleclass';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
-import { HelixAlertBadge } from '../badge/alert-badge';
-import { HelixConfiguratorBadge } from '../badge/configurator-badge';
-import { HelixDarkModeBadge } from '../badge/dark-mode-badge';
-import { type Environment, HelixEnvironmentBadge } from '../badge/environment-badge';
-import type { HelixTopbarAction, HelixTopbarBadge } from './topbar.model';
+import { type Environment, HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
+import type { HelixTopbarAction, HelixTopbarItem } from './topbar.model';
+import { HelixAlertAction } from './actions/alert-action';
+import { HelixConfiguratorAction } from './actions/configurator-action';
+import { HelixDarkModeAction } from './actions/dark-mode-action';
 
-export type { Environment } from '../badge/environment-badge';
+export type { Environment } from '../../../ui/badge/environment-badge';
 export type { HelixTopbarAction } from './topbar.model';
 
 const DEFAULT_ACTIONS: HelixTopbarAction[] = [
@@ -21,7 +21,7 @@ const DEFAULT_ACTIONS: HelixTopbarAction[] = [
   { icon: 'pi pi-user', label: 'Profile' },
 ];
 
-const DEFAULT_BADGES: HelixTopbarBadge[] = [
+const DEFAULT_ITEMS: HelixTopbarItem[] = [
   { type: 'darkmode' },
   { type: 'configurator' },
   { type: 'mobile' },
@@ -34,9 +34,9 @@ const DEFAULT_BADGES: HelixTopbarBadge[] = [
     RouterModule,
     CommonModule,
     StyleClassModule,
-    HelixAlertBadge,
-    HelixConfiguratorBadge,
-    HelixDarkModeBadge,
+    HelixAlertAction,
+    HelixConfiguratorAction,
+    HelixDarkModeAction,
     HelixEnvironmentBadge,
     Breadcrumb,
   ],
@@ -48,7 +48,7 @@ export class HelixTopbar {
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<MenuItem[] | undefined>(undefined);
   environment = input<Environment | undefined>();
-  badges = input<HelixTopbarBadge[]>(DEFAULT_BADGES);
+  items = input<HelixTopbarItem[]>(DEFAULT_ITEMS);
 
   store = inject(LayoutStore);
   private route = inject(ActivatedRoute);

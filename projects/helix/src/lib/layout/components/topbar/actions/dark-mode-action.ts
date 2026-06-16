@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { LayoutStore } from '../../store/layout.store';
+import { LayoutStore } from '../../../store/layout.store';
 
 @Component({
   selector: 'helix-dark-mode-action',

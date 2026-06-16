@@ -1,4 +1,4 @@
-import type { AlertItem } from '../badge/alert-badge';
+import type { AlertItem } from './actions/alert-action';
 
 export interface HelixTopbarAction {
   icon: string;
