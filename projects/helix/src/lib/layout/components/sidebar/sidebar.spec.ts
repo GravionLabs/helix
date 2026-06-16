@@ -49,7 +49,7 @@ describe('HelixSidebar', () => {
       fixture.detectChanges();
       const logoText = fixture.nativeElement.querySelector('.layout-sidebar-logo-text');
       expect(logoText).toBeTruthy();
-      expect(logoText.textContent).toContain('SAKAI');
+      expect(logoText.textContent).toContain('Helix');
     });
 
     it('should render brand header with custom title', () => {

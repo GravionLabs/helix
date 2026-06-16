@@ -44,7 +44,7 @@ const DEFAULT_BADGES: HelixTopbarBadge[] = [
   styleUrl: './topbar.scss',
 })
 export class HelixTopbar {
-  appTitle = input('SAKAI');
+  appTitle = input('Helix');
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<MenuItem[] | undefined>(undefined);
   environment = input<Environment | undefined>();

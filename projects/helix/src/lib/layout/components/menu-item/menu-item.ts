@@ -38,7 +38,19 @@ export class HelixMenuItem implements OnInit, AfterViewInit {
   hasRouterLink = computed(() => !!this.item()?.routerLink);
   initialized = signal<boolean>(false);
 
-  itemKey = computed(() => this.fullPath() ?? this.item()?.label ?? '');
+  itemKey = computed(() => {
+    const ownPath = this.item()?.path;
+    if (ownPath) {
+      const parent = this.parentPath();
+      if (parent && !ownPath.startsWith(parent)) {
+        return parent + ownPath;
+      }
+      return ownPath;
+    }
+    const label = this.item()?.label ?? '';
+    const parent = this.parentPath();
+    return parent ? `${parent}/${label}` : label;
+  });
 
   fullPath = computed(() => {
     const itemPath = this.item()?.path;

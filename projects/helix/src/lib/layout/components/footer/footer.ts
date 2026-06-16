@@ -14,7 +14,7 @@ export type { HelixFooterColumn };
   styleUrl: './footer.scss',
 })
 export class HelixFooter {
-  brandName = input('SAKAI');
+  brandName = input('Helix');
   brandUrl = input('https://primeng.org');
   columns = input<HelixFooterColumn[]>([]);
 }

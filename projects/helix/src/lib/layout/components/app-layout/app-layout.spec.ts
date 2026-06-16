@@ -47,8 +47,8 @@ describe('HelixAppLayout', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have default appTitle "SAKAI"', () => {
-    expect(component.appTitle()).toBe('SAKAI');
+  it('should have default appTitle "Helix"', () => {
+    expect(component.appTitle()).toBe('Helix');
   });
 
   it('should reflect custom appTitle input', () => {

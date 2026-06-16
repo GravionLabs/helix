@@ -20,7 +20,7 @@ import type { HelixTopbarBadge } from '../topbar/topbar.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class HelixAppLayout {
-  appTitle = input('SAKAI');
+  appTitle = input('Helix');
   environment = input<Environment | undefined>();
   alertCount = input(0);
   alerts = input<AlertItem[] | undefined>();

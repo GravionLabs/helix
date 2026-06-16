@@ -22,8 +22,8 @@ describe('HelixFooter', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have default brandName "SAKAI"', () => {
-    expect(component.brandName()).toBe('SAKAI');
+  it('should have default brandName "Helix"', () => {
+    expect(component.brandName()).toBe('Helix');
   });
 
   it('should reflect custom brandName input', () => {

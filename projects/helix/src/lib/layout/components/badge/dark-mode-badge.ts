@@ -27,6 +27,12 @@ import { LayoutStore } from '../../store/layout.store';
       :host(:hover) {
         background-color: var(--surface-hover);
       }
+      button {
+        cursor: pointer;
+      }
+      button i {
+        cursor: inherit;
+      }
     `,
   ],
 })

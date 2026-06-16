@@ -40,6 +40,15 @@ import { HelixConfigurator } from '../configurator/configurator';
       :host(:hover) {
         background-color: var(--surface-hover);
       }
+      .relative {
+        cursor: pointer;
+      }
+      button {
+        cursor: pointer;
+      }
+      button i {
+        cursor: inherit;
+      }
     `,
   ],
 })
