@@ -58,4 +58,36 @@ projects/helix/src/lib/
 
 ## Testing
 - Unit tests use the `*.spec.ts` naming convention
-- Run `ng test helix` for library tests, `ng test demo` for demo tests
+- Run `pnpm test` for all tests, `pnpm run test:lib` for library tests only
+
+## Implementing Issues and Epics
+
+When asked to implement an issue or epic (e.g., "impl #85", "implement epic #85"):
+
+### Branch Naming
+- Epic issues (`[EPIC]` in title): `epic/<number>-<slug>`
+- Others: derive prefix from conventional-commit type in title (`feat/`, `refactor/`, `fix/`, `chore/`) — `<number>-<slug>`
+- Always branch off `main` after `git pull --rebase`
+
+### Sub-Task Order
+Read the epic with `gh issue view <number>`. Implement sub-tasks in checklist order. Each sub-task is one commit. Only commit when all three pass:
+```bash
+pnpm run build:lib   # or pnpm run build for full workspace
+pnpm run lint
+pnpm test
+```
+
+### Commit Format
+```
+<type>(<scope>): <description> (#<sub-issue-number>)
+
+Part of epic #<epic-number>
+```
+
+### After All Sub-Tasks
+1. `git push -u origin <branch>`
+2. `gh pr create` — reference the epic/issue, list sub-tasks as checked
+3. `gh pr edit <pr-number> --add-reviewer "github-copilot[bot]"`
+4. `gh pr merge <pr-number> --auto --squash` — auto-merges when CI passes
+
+Skip step 4 only if explicitly asked not to merge.
