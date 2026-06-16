@@ -85,7 +85,9 @@ describe('HelixAppLayout', () => {
   it('effectiveBadges() should include alert badge when alertCount > 0', () => {
     fixture.componentRef.setInput('alertCount', 5);
     fixture.detectChanges();
-    const priv = component as unknown as { effectiveBadges: () => { type: string; badgeCount: number }[] };
+    const priv = component as unknown as {
+      effectiveBadges: () => { type: string; badgeCount: number }[];
+    };
     const badges = priv.effectiveBadges();
     const alertBadge = badges.find((b) => b.type === 'alert');
     expect(alertBadge).toBeTruthy();

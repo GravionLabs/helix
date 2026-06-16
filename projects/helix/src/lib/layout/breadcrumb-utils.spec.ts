@@ -19,7 +19,7 @@ describe('helixBreadcrumbsFromRoutes', () => {
   it('should resolve function breadcrumb', () => {
     const route = {
       snapshot: {
-        data: { breadcrumb: (s: any) => `Item ${s.params['id']}` },
+        data: { breadcrumb: (s: any) => `Item ${s.params.id}` },
         url: [
           { path: 'items', parameters: {} },
           { path: '42', parameters: {} },

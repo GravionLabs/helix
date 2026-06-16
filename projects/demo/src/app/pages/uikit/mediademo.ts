@@ -13,7 +13,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   standalone: true,
   imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule],
   template: `<div class="card">
-      <div class="font-semibold text-xl mb-4">Carousel</div>
+      <div class="font-semibold text-xl mb-2">Carousel</div>
       <p-carousel
         [value]="products()"
         [numVisible]="3"
@@ -23,7 +23,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
       >
         <ng-template let-product #item>
           <div class="border border-surface rounded-border m-2 p-4">
-            <div class="mb-4">
+            <div class="mb-2">
               <div class="relative mx-auto">
                 <img
                   src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}"
@@ -41,7 +41,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
                 </div>
               </div>
             </div>
-            <div class="mb-4 font-medium">{{ product.name }}</div>
+            <div class="mb-2 font-medium">{{ product.name }}</div>
             <div class="flex justify-between items-center">
               <div class="mt-0 font-semibold text-xl">{{ '$' + product.price }}</div>
               <span>
@@ -55,7 +55,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">Image</div>
+      <div class="font-semibold text-xl mb-2">Image</div>
       <p-image
         src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
         alt="Image"
@@ -64,7 +64,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">Galleria</div>
+      <div class="font-semibold text-xl mb-2">Galleria</div>
       <p-galleria
         [value]="images()"
         [responsiveOptions]="galleriaResponsiveOptions"

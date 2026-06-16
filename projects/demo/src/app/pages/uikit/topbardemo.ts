@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { LayoutStore } from '@gravionlabs/helix';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-topbar-demo',
@@ -39,7 +39,7 @@ import { LayoutStore } from '@gravionlabs/helix';
       <div class="card">
         <h5>Breadcrumbs</h5>
         <p>Breadcrumbs are automatically generated from route data. Navigate to a sub-page to see them in the topbar.</p>
-        <div class="flex gap-2 flex-wrap">
+        <div class="flex gap-1 flex-wrap">
           <a routerLink="/uikit/button" pButton label="Button Demo" class="p-button-outlined"></a>
           <a routerLink="/uikit/table" pButton label="Table Demo" class="p-button-outlined"></a>
           <a routerLink="/pages/documentation" pButton label="Documentation" class="p-button-outlined"></a>

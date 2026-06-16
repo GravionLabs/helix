@@ -7,13 +7,13 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixAlertBadge } from '../badge/alert-badge';
-import { HelixEnvironmentBadge, type Environment } from '../badge/environment-badge';
 import { HelixConfiguratorBadge } from '../badge/configurator-badge';
 import { HelixDarkModeBadge } from '../badge/dark-mode-badge';
+import { type Environment, HelixEnvironmentBadge } from '../badge/environment-badge';
 import type { HelixTopbarAction, HelixTopbarBadge } from './topbar.model';
 
-export type { HelixTopbarAction } from './topbar.model';
 export type { Environment } from '../badge/environment-badge';
+export type { HelixTopbarAction } from './topbar.model';
 
 const DEFAULT_ACTIONS: HelixTopbarAction[] = [
   { icon: 'pi pi-calendar', label: 'Calendar' },

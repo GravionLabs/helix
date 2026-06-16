@@ -63,11 +63,11 @@ import { NodeService } from '@/app/pages/service/node.service';
     InputGroupAddonModule,
     TextareaModule,
   ],
-  template: ` <p-fluid class="flex flex-col md:flex-row gap-8">
+  template: ` <p-fluid class="flex flex-col md:flex-row gap-2">
       <div class="md:w-1/2">
-        <div class="card flex flex-col gap-4">
+        <div class="card flex flex-col gap-3">
           <div class="font-semibold text-xl">InputText</div>
-          <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-3">
             <input pInputText type="text" placeholder="Default" />
             <input pInputText type="text" placeholder="Disabled" [disabled]="true" />
             <input pInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
@@ -121,17 +121,17 @@ import { NodeService } from '@/app/pages/service/node.service';
           <p-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></p-inputnumber>
         </div>
 
-        <div class="card flex flex-col gap-4">
+        <div class="card flex flex-col gap-3">
           <div class="font-semibold text-xl">Slider</div>
           <input pInputText [(ngModel)]="sliderValue" type="number" />
           <p-slider [(ngModel)]="sliderValue" />
 
-          <div class="flex flex-row mt-6">
-            <div class="flex flex-col gap-4 w-1/2">
+          <div class="flex flex-row mt-2">
+            <div class="flex flex-col gap-3 w-1/2">
               <div class="font-semibold text-xl">Rating</div>
               <p-rating [(ngModel)]="ratingValue" />
             </div>
-            <div class="flex flex-col gap-4 w-1/2">
+            <div class="flex flex-col gap-3 w-1/2">
               <div class="font-semibold text-xl">ColorPicker</div>
               <p-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
             </div>
@@ -148,9 +148,9 @@ import { NodeService } from '@/app/pages/service/node.service';
         </div>
       </div>
       <div class="md:w-1/2">
-        <div class="card flex flex-col gap-4">
+        <div class="card flex flex-col gap-3">
           <div class="font-semibold text-xl">RadioButton</div>
-          <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-3">
             <div class="flex items-center">
               <p-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
               <label for="option1" class="leading-none ml-2">Chicago</label>
@@ -171,7 +171,7 @@ import { NodeService } from '@/app/pages/service/node.service';
           </div>
 
           <div class="font-semibold text-xl">Checkbox</div>
-          <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-3">
             <div class="flex items-center">
               <p-checkbox
                 id="checkOption1"
@@ -205,7 +205,7 @@ import { NodeService } from '@/app/pages/service/node.service';
           <p-toggleswitch [(ngModel)]="switchValue" />
         </div>
 
-        <div class="card flex flex-col gap-4">
+        <div class="card flex flex-col gap-3">
           <div class="font-semibold text-xl">Listbox</div>
           <p-listbox
             [(ngModel)]="listboxValue"
@@ -263,7 +263,7 @@ import { NodeService } from '@/app/pages/service/node.service';
           ></p-treeselect>
         </div>
 
-        <div class="card flex flex-col gap-4">
+        <div class="card flex flex-col gap-3">
           <div class="font-semibold text-xl">ToggleButton</div>
           <p-togglebutton
             [(ngModel)]="toggleValue"
@@ -282,10 +282,10 @@ import { NodeService } from '@/app/pages/service/node.service';
       </div>
     </p-fluid>
 
-    <p-fluid class="flex mt-8">
-      <div class="card flex flex-col gap-6 w-full">
+    <p-fluid class="flex mt-2">
+      <div class="card flex flex-col gap-3 w-full">
         <div class="font-semibold text-xl">InputGroup</div>
-        <div class="flex flex-col md:flex-row gap-6">
+        <div class="flex flex-col md:flex-row gap-3">
           <p-inputgroup>
             <p-inputgroup-addon>
               <i class="pi pi-user"></i>
@@ -304,7 +304,7 @@ import { NodeService } from '@/app/pages/service/node.service';
             <p-inputgroup-addon>.00</p-inputgroup-addon>
           </p-inputgroup>
         </div>
-        <div class="flex flex-col md:flex-row gap-6">
+        <div class="flex flex-col md:flex-row gap-3">
           <p-inputgroup>
             <p-button label="Search" />
             <input pInputText placeholder="Keyword" />

@@ -21,7 +21,7 @@ import { NodeService } from '@/app/pages/service/node.service';
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">TreeTable</div>
+      <div class="font-semibold text-xl mb-2">TreeTable</div>
       <p-treetable
         [value]="treeTableValue()"
         [columns]="cols"
@@ -41,7 +41,7 @@ import { NodeService } from '@/app/pages/service/node.service';
         <ng-template #body let-rowNode let-rowData="rowData" let-columns="columns">
           <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
             <td *ngFor="let col of columns; let i = index">
-              <span class="flex items-center gap-2">
+              <span class="flex items-center gap-1">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
                 <p-treeTableCheckbox [value]="rowNode" *ngIf="i === 0" />
                 {{ rowData[col.field] }}

@@ -50,7 +50,7 @@ interface expandedRows {
     IconFieldModule,
   ],
   template: ` <div class="card">
-      <div class="font-semibold text-xl mb-4">Filtering</div>
+      <div class="font-semibold text-xl mb-2">Filtering</div>
       <p-table
         #dt1
         [value]="customers1"
@@ -68,7 +68,7 @@ interface expandedRows {
             <button
               pButton
               label="Clear"
-              class="p-button-outlined mb-2"
+              class="p-button-outlined mb-1"
               icon="pi pi-filter-slash"
               (click)="clear(dt1)"
             ></button>
@@ -135,7 +135,7 @@ interface expandedRows {
                       styleClass="w-full"
                     >
                       <ng-template let-option #item>
-                        <div class="flex items-center gap-2 w-44">
+                        <div class="flex items-center gap-1 w-44">
                           <img
                             [alt]="option.label"
                             src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
@@ -236,7 +236,7 @@ interface expandedRows {
               {{ customer.name }}
             </td>
             <td>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1">
                 <img
                   src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
                   [class]="'flag flag-' + customer.country.code"
@@ -246,7 +246,7 @@ interface expandedRows {
               </div>
             </td>
             <td>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1">
                 <img
                   [alt]="customer.representative.name"
                   src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
@@ -301,7 +301,7 @@ interface expandedRows {
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">Frozen Columns</div>
+      <div class="font-semibold text-xl mb-2">Frozen Columns</div>
       <p-togglebutton
         [(ngModel)]="balanceFrozen"
         [onIcon]="'pi pi-lock'"
@@ -310,7 +310,7 @@ interface expandedRows {
         offLabel="Balance"
       />
 
-      <p-table [value]="customers2" [scrollable]="true" scrollHeight="400px" styleClass="mt-4">
+      <p-table [value]="customers2" [scrollable]="true" scrollHeight="400px" styleClass="mt-1">
         <ng-template #header>
           <tr>
             <th style="min-width:200px" pFrozenColumn class="font-bold">Name</th>
@@ -356,7 +356,7 @@ interface expandedRows {
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">Row Expansion</div>
+      <div class="font-semibold text-xl mb-2">Row Expansion</div>
       <p-table
         [value]="products"
         dataKey="id"
@@ -473,7 +473,7 @@ interface expandedRows {
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-4">Grouping</div>
+      <div class="font-semibold text-xl mb-2">Grouping</div>
       <p-table
         [value]="customers3"
         sortField="representative.name"
@@ -496,7 +496,7 @@ interface expandedRows {
         <ng-template #groupheader let-customer>
           <tr pRowGroupHeader>
             <td colspan="5">
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1">
                 <img
                   [alt]="customer.representative.name"
                   src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
@@ -523,7 +523,7 @@ interface expandedRows {
               {{ customer.name }}
             </td>
             <td>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1">
                 <img
                   src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
                   [class]="'flag flag-' + customer.country.code"

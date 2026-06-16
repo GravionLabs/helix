@@ -28,10 +28,10 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
     TableModule,
     ToastModule,
   ],
-  template: `<div class="flex flex-col md:flex-row gap-8">
+  template: `<div class="flex flex-col md:flex-row gap-2">
     <div class="md:w-1/2">
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Dialog</div>
+        <div class="font-semibold text-xl mb-2">Dialog</div>
         <p-dialog
           header="Dialog"
           [(visible)]="display"
@@ -55,8 +55,8 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
       </div>
 
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Popover</div>
-        <div class="flex flex-wrap gap-2">
+        <div class="font-semibold text-xl mb-2">Popover</div>
+        <div class="flex flex-wrap gap-1">
           <p-button type="button" label="Show" (click)="toggleDataTable(op2, $event)" />
           <p-popover #op2 id="overlay_panel" [style]="{ width: '450px' }">
             <p-table
@@ -101,8 +101,8 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
       </div>
 
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Tooltip</div>
-        <div class="inline-flex gap-4">
+        <div class="font-semibold text-xl mb-2">Tooltip</div>
+        <div class="inline-flex gap-3">
           <input pInputText type="text" placeholder="Username" pTooltip="Your username" />
           <p-button type="button" label="Save" pTooltip="Click to proceed" />
         </div>
@@ -110,7 +110,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
     </div>
     <div class="md:w-1/2">
       <div class="card">
-        <div class="font-semibold text-xl mb-4">Drawer</div>
+        <div class="font-semibold text-xl mb-2">Drawer</div>
         <p-drawer [(visible)]="visibleLeft" header="Drawer">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -175,7 +175,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
       </div>
 
       <div class="card">
-        <div class="font-semibold text-xl mb-4">ConfirmPopup</div>
+        <div class="font-semibold text-xl mb-2">ConfirmPopup</div>
         <p-confirmpopup key="confirm2"></p-confirmpopup>
         <p-button
           #popup
@@ -187,7 +187,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
       </div>
 
       <div class="card">
-        <div class="font-semibold text-xl mb-4">ConfirmDialog</div>
+        <div class="font-semibold text-xl mb-2">ConfirmDialog</div>
         <p-button
           label="Delete"
           icon="pi pi-trash"

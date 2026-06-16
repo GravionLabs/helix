@@ -19,7 +19,7 @@ export function helixBreadcrumbsFromRoutes(route: ActivatedRoute): MenuItem[] {
     const label = typeof breadcrumb === 'function' ? breadcrumb(snapshot) : breadcrumb;
 
     if (url) {
-      breadcrumbs.push({ label, routerLink: '/' + url });
+      breadcrumbs.push({ label, routerLink: `/${url}` });
     } else {
       breadcrumbs.push({ label });
     }
