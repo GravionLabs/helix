@@ -23,6 +23,8 @@ type HelixTopbarPrivate = {
 };
 
 describe('HelixTopbar', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const anyTypeWithAlert = { type: 'alert', badgeCount: 3 } as any;
   let component: HelixTopbar;
   let fixture: ComponentFixture<HelixTopbar>;
 
@@ -67,11 +69,11 @@ describe('HelixTopbar', () => {
     expect(component.store).toBe(store);
   });
 
-  it('should have 3 default badges', () => {
-    expect(component.badges().length).toBe(3);
-    expect(component.badges()[0].type).toBe('darkmode');
-    expect(component.badges()[1].type).toBe('configurator');
-    expect(component.badges()[2].type).toBe('mobile');
+  it('should have 3 default items', () => {
+    expect(component.items().length).toBe(3);
+    expect(component.items()[0].type).toBe('darkmode');
+    expect(component.items()[1].type).toBe('configurator');
+    expect(component.items()[2].type).toBe('mobile');
   });
 
   it('should render environment badge when environment input set', () => {
@@ -81,10 +83,10 @@ describe('HelixTopbar', () => {
     expect(badge).toBeTruthy();
   });
 
-  it('should render alert badge when badges includes alert type', () => {
-    fixture.componentRef.setInput('badges', [{ type: 'alert', badgeCount: 3 }]);
+  it('should render alert item when items includes alert type', () => {
+    fixture.componentRef.setInput('items', [{ type: 'alert', badgeCount: 3 }]);
     fixture.detectChanges();
-    const badge = fixture.nativeElement.querySelector('helix-alert-badge');
+    const badge = fixture.nativeElement.querySelector('helix-alert-action');
     expect(badge).toBeTruthy();
   });
 

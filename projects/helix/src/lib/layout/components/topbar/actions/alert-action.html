@@ -1,0 +1,22 @@
+<button type="button" class="alert-badge-trigger" (click)="open.set(!open())" (blur)="open.set(false)">
+  <i class="pi pi-bell"></i>
+  @if (count() > 0) {
+    <span class="alert-badge-count">{{ count() }}</span>
+  }
+</button>
+@if (open() && alerts() && alerts()!.length > 0) {
+  <div class="alert-badge-dropdown">
+    @for (alert of alerts(); track alert.id) {
+      <a
+        class="alert-badge-item"
+        [class.alert-badge-item--warn]="alert.severity === 'warn'"
+        [class.alert-badge-item--error]="alert.severity === 'error'"
+        [class.alert-badge-item--success]="alert.severity === 'success'"
+        [routerLink]="alert.route || undefined"
+      >
+        <span class="alert-badge-dot"></span>
+        <span class="alert-badge-label">{{ alert.label }}</span>
+      </a>
+    }
+  </div>
+}

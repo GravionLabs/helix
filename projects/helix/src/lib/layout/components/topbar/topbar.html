@@ -31,20 +31,20 @@
 
   <div class="layout-topbar-actions">
     <div class="layout-config-menu">
-      @for (badge of badges(); track $index) {
-        @switch (badge.type) {
+      @for (item of items(); track $index) {
+        @switch (item.type) {
           @case ('darkmode') {
-            <helix-dark-mode-badge />
+            <helix-dark-mode-action />
           }
           @case ('configurator') {
-            <helix-configurator-badge />
+            <helix-configurator-action />
           }
           @case ('alert') {
-            <helix-alert-badge [count]="badge.badgeCount ?? 0" [alerts]="badge.alerts" />
+            <helix-alert-action [count]="item.badgeCount ?? 0" [alerts]="item.alerts" />
           }
           @case ('action') {
-            <button type="button" class="layout-topbar-action" (click)="badge.command?.()">
-              <i [class]="badge.icon ?? ''"></i>
+            <button type="button" class="layout-topbar-action" (click)="item.command?.()">
+              <i [class]="item.icon ?? ''"></i>
             </button>
           }
         }

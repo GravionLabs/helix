@@ -1,18 +1,18 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { HelixAlertBadge } from './alert-badge';
+import { HelixAlertAction } from './alert-action';
 
-describe('HelixAlertBadge', () => {
-  let component: HelixAlertBadge;
-  let fixture: ComponentFixture<HelixAlertBadge>;
+describe('HelixAlertAction', () => {
+  let component: HelixAlertAction;
+  let fixture: ComponentFixture<HelixAlertAction>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HelixAlertBadge],
+      imports: [HelixAlertAction],
       providers: [provideRouter([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HelixAlertBadge);
+    fixture = TestBed.createComponent(HelixAlertAction);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('count', 3);
     await fixture.whenStable();

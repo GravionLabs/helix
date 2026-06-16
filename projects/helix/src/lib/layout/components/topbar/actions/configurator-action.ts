@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { StyleClassModule } from 'primeng/styleclass';
-import { HelixConfigurator } from '../configurator/configurator';
+import { HelixConfigurator } from '../../configurator/configurator';
 
 @Component({
-  selector: 'helix-configurator-badge',
+  selector: 'helix-configurator-action',
   standalone: true,
   imports: [StyleClassModule, HelixConfigurator],
   template: `
@@ -52,4 +52,4 @@ import { HelixConfigurator } from '../configurator/configurator';
     `,
   ],
 })
-export class HelixConfiguratorBadge {}
+export class HelixConfiguratorAction {}

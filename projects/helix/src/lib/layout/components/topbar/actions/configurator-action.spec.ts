@@ -1,15 +1,15 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelixConfiguratorBadge } from './configurator-badge';
+import { HelixConfiguratorAction } from './configurator-action';
 
-describe('HelixConfiguratorBadge', () => {
-  let fixture: ComponentFixture<HelixConfiguratorBadge>;
+describe('HelixConfiguratorAction', () => {
+  let fixture: ComponentFixture<HelixConfiguratorAction>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HelixConfiguratorBadge],
+      imports: [HelixConfiguratorAction],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HelixConfiguratorBadge);
+    fixture = TestBed.createComponent(HelixConfiguratorAction);
     await fixture.whenStable();
   });
 

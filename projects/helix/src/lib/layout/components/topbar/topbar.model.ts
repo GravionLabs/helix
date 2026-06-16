@@ -1,4 +1,4 @@
-import type { AlertItem } from '../badge/alert-badge';
+import type { AlertItem } from './actions/alert-action';
 
 export interface HelixTopbarAction {
   icon: string;
@@ -6,10 +6,10 @@ export interface HelixTopbarAction {
   command?: () => void;
 }
 
-export type HelixTopbarBadgeType = 'darkmode' | 'configurator' | 'mobile' | 'alert' | 'action';
+export type HelixTopbarItemType = 'darkmode' | 'configurator' | 'mobile' | 'alert' | 'action';
 
-export interface HelixTopbarBadge {
-  type: HelixTopbarBadgeType;
+export interface HelixTopbarItem {
+  type: HelixTopbarItemType;
   icon?: string;
   label?: string;
   badgeCount?: number;

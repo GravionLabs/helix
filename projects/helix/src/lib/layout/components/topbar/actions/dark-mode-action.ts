@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { LayoutStore } from '../../store/layout.store';
+import { LayoutStore } from '../../../store/layout.store';
 
 @Component({
-  selector: 'helix-dark-mode-badge',
+  selector: 'helix-dark-mode-action',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -36,6 +36,6 @@ import { LayoutStore } from '../../store/layout.store';
     `,
   ],
 })
-export class HelixDarkModeBadge {
+export class HelixDarkModeAction {
   protected store = inject(LayoutStore);
 }

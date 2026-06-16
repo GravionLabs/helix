@@ -1,15 +1,15 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelixMobileMenuBadge } from './mobile-menu-badge';
+import { HelixMobileMenuAction } from './mobile-menu-action';
 
-describe('HelixMobileMenuBadge', () => {
-  let fixture: ComponentFixture<HelixMobileMenuBadge>;
+describe('HelixMobileMenuAction', () => {
+  let fixture: ComponentFixture<HelixMobileMenuAction>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HelixMobileMenuBadge],
+      imports: [HelixMobileMenuAction],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HelixMobileMenuBadge);
+    fixture = TestBed.createComponent(HelixMobileMenuAction);
     await fixture.whenStable();
   });
 

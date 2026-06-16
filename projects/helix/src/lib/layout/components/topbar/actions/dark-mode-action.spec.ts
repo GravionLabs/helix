@@ -1,16 +1,16 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { HelixDarkModeBadge } from './dark-mode-badge';
+import { HelixDarkModeAction } from './dark-mode-action';
 
-describe('HelixDarkModeBadge', () => {
-  let component: HelixDarkModeBadge;
-  let fixture: ComponentFixture<HelixDarkModeBadge>;
+describe('HelixDarkModeAction', () => {
+  let component: HelixDarkModeAction;
+  let fixture: ComponentFixture<HelixDarkModeAction>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HelixDarkModeBadge],
+      imports: [HelixDarkModeAction],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HelixDarkModeBadge);
+    fixture = TestBed.createComponent(HelixDarkModeAction);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

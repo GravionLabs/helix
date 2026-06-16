@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
-  selector: 'helix-mobile-menu-badge',
+  selector: 'helix-mobile-menu-action',
   standalone: true,
   imports: [StyleClassModule],
   template: `
@@ -19,4 +19,4 @@ import { StyleClassModule } from 'primeng/styleclass';
     </button>
   `,
 })
-export class HelixMobileMenuBadge {}
+export class HelixMobileMenuAction {}
