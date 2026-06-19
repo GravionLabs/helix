@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  computed,
   ElementRef,
   effect,
   inject,
@@ -12,7 +11,6 @@ import {
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { HELIX_MENU_MODEL } from '../../menu-model.token';
 import { LayoutStore } from '../../store';
 import { HelixMenu } from '../menu/menu';
 
@@ -28,16 +26,9 @@ export class HelixSidebar implements OnInit, OnDestroy {
   router = inject(Router);
   el = inject(ElementRef);
 
-  /** Optional menu model passed by the parent (e.g. HelixAppLayout). */
+  /** Menu model passed by the parent (e.g. HelixAppLayout). */
   menu = input<MenuItem[]>([]);
   appTitle = input('Helix');
-
-  private tokenMenu = inject(HELIX_MENU_MODEL);
-
-  /** Uses the bound input if provided, otherwise falls back to the DI token. */
-  protected effectiveMenu = computed<MenuItem[]>(() =>
-    this.menu().length > 0 ? this.menu() : this.tokenMenu,
-  );
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
