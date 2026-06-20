@@ -1,19 +1,32 @@
 :host {
-  /* ---- HelixNavRail tokens ----
-     A dark, branded rail that stays dark in both light and dark app themes.
-     Swap these to re-theme the rail without touching markup. */
+  /* ---- HelixNavRail tokens — light theme (default) ----
+     Swap these to re-theme the rail without touching markup. The teal
+     accent stays constant across themes for brand continuity; everything
+     else flips with .app-dark, same as the rest of the app's tokens. */
+  --helix-nav-bg-start: #ffffff;
+  --helix-nav-bg-end: #f8fafc;
+  --helix-nav-gradient: linear-gradient(168deg, var(--helix-nav-bg-start) 0%, var(--helix-nav-bg-end) 100%);
+  --helix-nav-text: #334155;
+  --helix-nav-text-muted: #64748b;
+  --helix-nav-hover-bg: rgba(15, 23, 42, 0.04);
+  --helix-nav-active-bg: #ccf2f1;
+  --helix-nav-active-text: #0f172a;
+  --helix-nav-accent: #009f9e;
+  --helix-nav-border: rgba(15, 23, 42, 0.08);
+
+  display: contents;
+}
+
+:host-context(.app-dark) {
+  /* ---- Dark theme — NFL-Cockpit navy + teal ---- */
   --helix-nav-bg-start: #1b4778;
   --helix-nav-bg-end: #173a63;
-  --helix-nav-gradient: linear-gradient(168deg, var(--helix-nav-bg-start) 0%, var(--helix-nav-bg-end) 100%);
   --helix-nav-text: #c4d2e4;
   --helix-nav-text-muted: #7e93b2;
   --helix-nav-hover-bg: rgba(255, 255, 255, 0.06);
   --helix-nav-active-bg: #1f436f;
   --helix-nav-active-text: #ffffff;
-  --helix-nav-accent: #009f9e;
   --helix-nav-border: rgba(255, 255, 255, 0.08);
-
-  display: contents;
 }
 
 .helix-nav-rail {
@@ -29,6 +42,7 @@
   user-select: none;
   background: var(--helix-nav-gradient);
   color: var(--helix-nav-text);
+  border-right: 1px solid var(--helix-nav-border);
   transition: width var(--layout-section-transition-duration);
 
   &.helix-nav-rail-collapsed {
