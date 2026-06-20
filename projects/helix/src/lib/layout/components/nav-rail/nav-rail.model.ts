@@ -13,15 +13,11 @@ export interface HelixNavGroup {
 
 /**
  * Adapts a flat HelixRouteMenuItem tree (as used by HelixAppLayout's `menu`
- * input) into HelixNavGroup[] by treating each top-level item as a group: its
- * label becomes the section, and its own children become the group's items.
- * A top-level item with no children becomes a single-item unlabeled group.
+ * input) into HelixNavGroup[] by wrapping it as a single unlabeled group.
+ * Each top-level item keeps its own identity (icon, children, etc.), so an
+ * item with children renders as a normal expandable HelixNavRailItem rather
+ * than being flattened into a static section heading.
  */
 export function helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[] {
-  return items.map((item) => {
-    if (item.items?.length) {
-      return { section: item.label, items: item.items };
-    }
-    return { items: [item] };
-  });
+  return [{ items }];
 }

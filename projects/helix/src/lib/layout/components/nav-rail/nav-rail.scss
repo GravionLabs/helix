@@ -1,30 +1,30 @@
 :host {
-  /* ---- HelixNavRail tokens — light theme (default) ----
+  /* ---- HelixNavRail tokens — light theme "Harbor Tint" (default) ----
      Swap these to re-theme the rail without touching markup. The teal
      accent stays constant across themes for brand continuity; everything
      else flips with .app-dark, same as the rest of the app's tokens. */
-  --helix-nav-bg-start: #ffffff;
-  --helix-nav-bg-end: #f8fafc;
+  --helix-nav-bg-start: #eef3f9;
+  --helix-nav-bg-end: #dde7f0;
   --helix-nav-gradient: linear-gradient(168deg, var(--helix-nav-bg-start) 0%, var(--helix-nav-bg-end) 100%);
-  --helix-nav-text: #334155;
-  --helix-nav-text-muted: #64748b;
-  --helix-nav-hover-bg: rgba(15, 23, 42, 0.04);
-  --helix-nav-active-bg: #ccf2f1;
-  --helix-nav-active-text: #0f172a;
+  --helix-nav-text: #1b4778;
+  --helix-nav-text-muted: #5c7da3;
+  --helix-nav-hover-bg: rgba(27, 71, 120, 0.06);
+  --helix-nav-active-bg: #c9def2;
+  --helix-nav-active-text: #1b4778;
   --helix-nav-accent: #009f9e;
-  --helix-nav-border: rgba(15, 23, 42, 0.08);
+  --helix-nav-border: rgba(27, 71, 120, 0.12);
 
   display: contents;
 }
 
 :host-context(.app-dark) {
-  /* ---- Dark theme — NFL-Cockpit navy + teal ---- */
-  --helix-nav-bg-start: #1b4778;
-  --helix-nav-bg-end: #173a63;
-  --helix-nav-text: #c4d2e4;
-  --helix-nav-text-muted: #7e93b2;
-  --helix-nav-hover-bg: rgba(255, 255, 255, 0.06);
-  --helix-nav-active-bg: #1f436f;
+  /* ---- Dark theme "Graphite Teal" — near-black, teal is the only accent ---- */
+  --helix-nav-bg-start: #102024;
+  --helix-nav-bg-end: #14282c;
+  --helix-nav-text: #b7c8ca;
+  --helix-nav-text-muted: #6f8385;
+  --helix-nav-hover-bg: rgba(255, 255, 255, 0.05);
+  --helix-nav-active-bg: #1c3438;
   --helix-nav-active-text: #ffffff;
   --helix-nav-border: rgba(255, 255, 255, 0.08);
 }

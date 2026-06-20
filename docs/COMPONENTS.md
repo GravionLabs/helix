@@ -195,12 +195,18 @@ footerColumns: HelixFooterColumn[] = [
 **Selector:** `<helix-nav-rail>`  
 **File:** `projects/helix/src/lib/layout/components/nav-rail/nav-rail.ts`
 
-Dark, branded side-navigation rail: gradient surface, grouped items with uppercase
-section labels, a pill active state with a teal accent bar, expandable submenus,
-and collapse-to-icons. Wired into `HelixAppLayout` in place of the old
+Branded side-navigation rail: gradient surface (theme-aware — "Harbor Tint" light /
+"Graphite Teal" dark, both keyed off `.app-dark` the same way the rest of the app's
+tokens are), a pill active state with a teal accent bar, expandable submenus, and
+collapse-to-icons. Wired into `HelixAppLayout` in place of the old
 `HelixSidebar`/`HelixMenu`. Items reuse `HelixRouteMenuItem` (the same shape
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
+
+Items with children (e.g. "UI Components", "Pages") render as a normal clickable
+item with a chevron rather than a static heading — clicking expands its children.
+Only one item is expanded at a time app-wide (`LayoutStore.expandedRoot()`, the
+same single-key accordion the old `HelixMenuItem` used).
 
 The rail has no opinion on branding — the logo/wordmark shown in its header is
 **owned by the consuming app**, projected via the `[brand]` content slot
@@ -232,8 +238,11 @@ interface HelixNavGroup {
 
 Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[]` to adapt
 an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
-input) into groups: each top-level item's `label` becomes the section, and its own
-children become the group's items.
+input) into the shape `HelixNavRail` expects: it wraps the whole list as a single
+unlabeled group, preserving each top-level item's own identity — an item with
+`items` of its own still renders as an expandable parent, not a label. Construct
+`HelixNavGroup[]` by hand instead (with `section` set) if you want real uppercase
+section headers grouping multiple expandable items.
 
 #### Example
 

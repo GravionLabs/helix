@@ -26,11 +26,23 @@ export class HelixNavRailItem implements AfterViewInit {
   /** Whether this item's submenu, having animated open at least once, may transition on leave too. */
   initialized = signal(false);
 
-  /** Explicit user toggle. null = no override yet, fall back to the active-descendant default. */
-  private manualOpen = signal<boolean | null>(null);
-
   hasChildren = computed(() => !!this.item()?.items?.length);
   isCollapsed = computed(() => this.store.isCollapsed());
+
+  /** Stable key used against LayoutStore.expandedRoot() — only one item app-wide is expanded at a time. */
+  itemKey = computed(() => {
+    const ownPath = this.item()?.path;
+    if (ownPath) {
+      const parent = this.parentPath();
+      if (parent && !ownPath.startsWith(parent)) {
+        return parent + ownPath;
+      }
+      return ownPath;
+    }
+    const label = this.item()?.label ?? '';
+    const parent = this.parentPath();
+    return parent ? `${parent}/${label}` : label;
+  });
 
   fullPath = computed(() => {
     const itemPath = this.item()?.path;
@@ -71,11 +83,9 @@ export class HelixNavRailItem implements AfterViewInit {
     return match(items);
   });
 
-  isExpanded = computed(() => {
-    const manual = this.manualOpen();
-    if (manual !== null) return manual;
-    return this.hasActiveDescendant();
-  });
+  isExpanded = computed(
+    () => this.hasActiveDescendant() || this.store.expandedRoot() === this.itemKey(),
+  );
 
   ngAfterViewInit() {
     setTimeout(() => this.initialized.set(true));
@@ -92,7 +102,7 @@ export class HelixNavRailItem implements AfterViewInit {
     }
     if (this.hasChildren()) {
       event.preventDefault();
-      this.manualOpen.set(!this.isExpanded());
+      this.store.setExpandedRoot(this.isExpanded() ? null : this.itemKey());
     } else {
       this.store.closeMobileMenu();
     }
