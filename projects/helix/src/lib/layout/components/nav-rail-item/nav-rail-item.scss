@@ -1,0 +1,108 @@
+@keyframes helix-nav-rail-submenu-enter {
+  from {
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    max-height: 1000px;
+    overflow: visible;
+  }
+}
+
+@keyframes helix-nav-rail-submenu-leave {
+  from {
+    max-height: 1000px;
+    overflow: hidden;
+  }
+  to {
+    max-height: 0;
+    overflow: hidden;
+  }
+}
+
+.helix-nav-rail-submenu-enter {
+  animation: helix-nav-rail-submenu-enter 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+.helix-nav-rail-submenu-leave {
+  animation: helix-nav-rail-submenu-leave 450ms cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+.helix-nav-rail-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.625rem 0.75rem;
+  margin: 1px 0.65rem;
+  border-radius: var(--content-border-radius);
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  outline: 0 none;
+  color: var(--helix-nav-text);
+  transition: background-color var(--element-transition-duration), color var(--element-transition-duration);
+
+  &:hover {
+    background-color: var(--helix-nav-hover-bg);
+  }
+
+  &.active {
+    color: var(--helix-nav-active-text);
+    background-color: var(--helix-nav-active-bg);
+
+    .helix-nav-rail-icon {
+      color: var(--helix-nav-accent);
+    }
+  }
+
+  &:focus {
+    outline-offset: -1px;
+    box-shadow: inset var(--focus-ring-shadow);
+  }
+}
+
+.helix-nav-rail-accent {
+  position: absolute;
+  left: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 24px;
+  border-radius: 3px;
+  background: var(--helix-nav-accent);
+}
+
+.helix-nav-rail-icon {
+  flex: 0 0 auto;
+  font-size: 1.15rem;
+  transition: color var(--element-transition-duration);
+}
+
+.helix-nav-rail-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.helix-nav-rail-chevron {
+  margin-left: auto;
+  font-size: 0.7rem;
+  transition: transform var(--element-transition-duration);
+
+  &.helix-nav-rail-chevron-open {
+    transform: rotate(180deg);
+  }
+}
+
+.helix-nav-rail-sublist {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+
+:host(.helix-nav-rail-item-collapsed) .helix-nav-rail-link {
+  justify-content: center;
+}
