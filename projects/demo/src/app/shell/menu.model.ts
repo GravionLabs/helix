@@ -6,7 +6,7 @@ import { UIKIT_MENU_ITEMS } from '../pages/uikit/uikit-menu-items';
 
 export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   {
-    label: 'Home',
+    label: 'Overview',
     icon: 'pi pi-fw pi-home',
     items: [
       {
