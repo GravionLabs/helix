@@ -12,8 +12,8 @@ export interface HelixNavGroup {
 }
 
 /**
- * Adapts a flat HelixRouteMenuItem tree (as used by the existing HelixMenu)
- * into HelixNavGroup[] by treating each top-level item as a group: its
+ * Adapts a flat HelixRouteMenuItem tree (as used by HelixAppLayout's `menu`
+ * input) into HelixNavGroup[] by treating each top-level item as a group: its
  * label becomes the section, and its own children become the group's items.
  * A top-level item with no children becomes a single-item unlabeled group.
  */

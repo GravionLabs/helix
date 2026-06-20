@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { LayoutStore } from '../../store/layout.store';
@@ -20,15 +21,6 @@ describe('HelixNavRail', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should accept appTitle input', () => {
-    fixture.detectChanges();
-    expect(component.appTitle()).toBe('Helix');
-
-    fixture.componentRef.setInput('appTitle', 'My App');
-    fixture.detectChanges();
-    expect(component.appTitle()).toBe('My App');
   });
 
   it('should render a section label for each named group', () => {
@@ -77,18 +69,36 @@ describe('HelixNavRail', () => {
     expect(store.sidebarCollapsed()).toBe(true);
   });
 
-  it('should hide section labels and the wordmark when collapsed', () => {
+  it('should hide section labels when collapsed', () => {
     fixture.componentRef.setInput('model', [
       { section: 'Overview', items: [{ label: 'Dashboard', path: '/dashboard' }] },
     ]);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.helix-nav-rail-section')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.helix-nav-rail-brand-word')).toBeTruthy();
 
     const store = TestBed.inject(LayoutStore);
     store.toggleSidebar();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.helix-nav-rail-section')).toBeNull();
-    expect(fixture.nativeElement.querySelector('.helix-nav-rail-brand-word')).toBeNull();
+  });
+
+  it('projects [brand] content into the brand header', async () => {
+    @Component({
+      standalone: true,
+      imports: [HelixNavRail],
+      template: `
+        <helix-nav-rail>
+          <span brand class="my-brand">Acme</span>
+        </helix-nav-rail>
+      `,
+    })
+    class HostComponent {}
+
+    const hostFixture = TestBed.createComponent(HostComponent);
+    hostFixture.detectChanges();
+    await hostFixture.whenStable();
+
+    const brandEl = hostFixture.nativeElement.querySelector('.my-brand');
+    expect(brandEl?.textContent.trim()).toBe('Acme');
   });
 });

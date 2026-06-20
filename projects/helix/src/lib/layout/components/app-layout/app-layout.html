@@ -4,7 +4,9 @@
     [environment]="effectiveEnvironment()"
     [items]="effectiveItems()"
   ></helix-topbar>
-  <helix-nav-rail [model]="effectiveNavGroups()" [appTitle]="appTitle()"></helix-nav-rail>
+  <helix-nav-rail [model]="effectiveNavGroups()">
+    <ng-content select="[brand]"></ng-content>
+  </helix-nav-rail>
   <div class="layout-main-container">
     <div class="layout-main">
       <router-outlet></router-outlet>

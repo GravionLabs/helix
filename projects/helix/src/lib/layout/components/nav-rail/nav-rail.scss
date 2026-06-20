@@ -50,25 +50,6 @@
   padding: 0;
 }
 
-.helix-nav-rail-brand-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-}
-
-.helix-nav-rail-brand-mark {
-  flex-shrink: 0;
-}
-
-.helix-nav-rail-brand-word {
-  color: var(--helix-nav-active-text);
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
 .helix-nav-rail-nav {
   flex: 1;
   overflow-y: auto;

@@ -8,7 +8,7 @@ import {
   type OnDestroy,
   type OnInit,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from '../nav-rail-item/nav-rail-item';
@@ -17,7 +17,7 @@ import type { HelixNavGroup } from './nav-rail.model';
 @Component({
   selector: 'helix-nav-rail',
   standalone: true,
-  imports: [CommonModule, HelixNavRailItem, RouterModule],
+  imports: [CommonModule, HelixNavRailItem],
   templateUrl: './nav-rail.html',
   styleUrl: './nav-rail.scss',
 })
@@ -28,8 +28,6 @@ export class HelixNavRail implements OnInit, OnDestroy {
 
   /** Grouped navigation model. Each group renders an optional uppercase section label. */
   model = input<HelixNavGroup[]>([]);
-  /** Wordmark shown next to the brand mark; hidden in collapsed (rail) mode. */
-  appTitle = input('Helix');
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
