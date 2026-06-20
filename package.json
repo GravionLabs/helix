@@ -66,7 +66,7 @@
       "biome check --write"
     ],
     "*.html": [
-      "eslint --fix && biome check --write"
+      "eslint --fix"
     ]
   }
 }
