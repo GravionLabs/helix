@@ -13,6 +13,7 @@ import { RippleModule } from 'primeng/ripple';
 import { filter } from 'rxjs/operators';
 import { LayoutStore } from '../../store/layout.store';
 
+/** @deprecated Use HelixNavRailItem instead. HelixMenuItem is no longer wired into HelixAppLayout. */
 @Component({
   selector: '[helix-menuitem]',
   standalone: true,

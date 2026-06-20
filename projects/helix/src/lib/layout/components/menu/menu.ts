@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { HelixMenuItem } from '../menu-item/menu-item';
 
+/** @deprecated Use HelixNavRail instead. HelixMenu is no longer wired into HelixAppLayout. */
 @Component({
   selector: 'helix-menu',
   standalone: true,

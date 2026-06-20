@@ -14,6 +14,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
 import { LayoutStore } from '../../store';
 import { HelixMenu } from '../menu/menu';
 
+/** @deprecated Use HelixNavRail instead. HelixSidebar is no longer wired into HelixAppLayout. */
 @Component({
   selector: 'helix-sidebar',
   standalone: true,

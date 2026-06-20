@@ -28,6 +28,10 @@ export type {
 } from './lib/layout/components/footer/footer.model';
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
+export { HelixNavRail } from './lib/layout/components/nav-rail/nav-rail';
+export type { HelixNavGroup } from './lib/layout/components/nav-rail/nav-rail.model';
+export { helixNavGroupsFromMenu } from './lib/layout/components/nav-rail/nav-rail.model';
+export { HelixNavRailItem } from './lib/layout/components/nav-rail-item/nav-rail-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
 export type { AlertItem } from './lib/layout/components/topbar/actions/alert-action';
 export { HelixAlertAction } from './lib/layout/components/topbar/actions/alert-action';

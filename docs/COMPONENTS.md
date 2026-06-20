@@ -9,29 +9,28 @@
 1. [Installation](#installation)
 2. [Quick Start](#quick-start)
 3. [Layout Components](#layout-components)
-   - [GvAppLayout](#gvapplayout)
-   - [GvTopbar](#gvtopbar)
-   - [GvFooter](#gvfooter)
-   - [GvMenu](#gvmenu)
+   - [HelixAppLayout](#helixapplayout)
+   - [HelixTopbar](#helixtopbar)
+   - [HelixFooter](#helixfooter)
+   - [HelixNavRail](#helixnavrail)
    - [Internal Layout Components](#internal-layout-components)
 4. [Layout Store](#layout-store)
-5. [DI Tokens](#di-tokens)
-6. [Auth Pages](#auth-pages)
-   - [GvLogin](#gvlogin)
-   - [GvError](#gverror)
-   - [GvAccess](#gvaccess)
+5. [Auth Pages](#auth-pages)
+   - [HelixLogin](#helixlogin)
+   - [HelixError](#helixerror)
+   - [HelixAccess](#helixaccess)
    - [authRoutes](#authroutes)
 7. [Other Pages](#other-pages)
-   - [GvEmpty](#gvempty)
-   - [GvNotfound](#gvnotfound)
+   - [HelixEmpty](#helixempty)
+   - [HelixNotfound](#helixnotfound)
 8. [Landing Page Components](#landing-page-components)
-   - [GvLanding](#gvlanding)
-   - [GvTopbarWidget](#gvtopbarwidget)
-   - [GvHeroWidget](#gvherowidget)
-   - [GvFeaturesWidget](#gvfeatureswidget)
-   - [GvHighlightsWidget](#gvhighlightswidget)
-   - [GvPricingWidget](#gvpricingwidget)
-    - [GvFooterWidget](#gvfooterwidget)
+   - [HelixLanding](#helixlanding)
+   - [HelixTopbarWidget](#helixtopbarwidget)
+   - [HelixHeroWidget](#helixherowidget)
+   - [HelixFeaturesWidget](#helixfeatureswidget)
+   - [HelixHighlightsWidget](#helixhighlightswidget)
+   - [HelixPricingWidget](#helixpricingwidget)
+    - [HelixFooterWidget](#helixfooterwidget)
  9. [Form Infrastructure](#form-infrastructure)
     - [HelixValidators](#helixvalidators)
     - [helixFirstError](#helixfirsterror)
@@ -55,55 +54,52 @@ Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { GvAppLayout } from '@gravionlabs/helix';
-import { GV_MENU_MODEL } from '@gravionlabs/helix';
-import { MenuItem } from 'primeng/api';
+import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix';
 
-const MENU: MenuItem[] = [
-  { label: 'Dashboard', icon: 'pi pi-home', routerLink: '/dashboard' },
-  { label: 'Settings',  icon: 'pi pi-cog',  routerLink: '/settings' },
+const MENU: HelixRouteMenuItem[] = [
+  { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
+  { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
 ];
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [GvAppLayout],
-  providers: [
-    { provide: GV_MENU_MODEL, useValue: MENU },
-  ],
-  template: `<gv-app-layout appTitle="My App" />`,
+  imports: [HelixAppLayout],
+  template: `<helix-app-layout appTitle="My App" [menu]="menu" />`,
 })
-export class AppComponent {}
+export class AppComponent {
+  menu = MENU;
+}
 ```
 
 ---
 
 ## Layout Components
 
-### GvAppLayout
+### HelixAppLayout
 
-**Selector:** `<gv-app-layout>`  
+**Selector:** `<helix-app-layout>`  
 **File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
 
-Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `GvTopbar`.
+Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `appTitle` | `string` | `'SAKAI'` | Application title forwarded to `GvTopbar` |
+| `appTitle` | `string` | `'SAKAI'` | Application title forwarded to `HelixTopbar` |
 
 #### Example
 
 ```html
-<gv-app-layout appTitle="Gravion Portal" />
+<helix-app-layout appTitle="Gravion Portal" />
 ```
 
 ---
 
-### GvTopbar
+### HelixTopbar
 
-**Selector:** `<gv-topbar>`  
+**Selector:** `<helix-topbar>`  
 **File:** `projects/helix/src/lib/layout/components/topbar/topbar.ts`
 
 Application header bar. Renders the app title, configurable action buttons, and two named content slots.
@@ -113,7 +109,7 @@ Application header bar. Renders the app title, configurable action buttons, and 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `appTitle` | `string` | `'SAKAI'` | Application name displayed in the topbar |
-| `topbarActions` | `GvTopbarAction[]` | 3 icon buttons (search, bell, user) | Action buttons rendered on the right side of the topbar |
+| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (search, bell, user) | Action buttons rendered on the right side of the topbar |
 
 #### Content Slots
 
@@ -125,14 +121,14 @@ Application header bar. Renders the app title, configurable action buttons, and 
 #### Example
 
 ```html
-<gv-topbar appTitle="My App" [topbarActions]="myActions">
+<helix-topbar appTitle="My App" [topbarActions]="myActions">
   <p-breadcrumb gvTopbarStart [model]="breadcrumbs" />
   <input gvTopbarEnd pInputText placeholder="Search…" />
-</gv-topbar>
+</helix-topbar>
 ```
 
 ```ts
-myActions: GvTopbarAction[] = [
+myActions: HelixTopbarAction[] = [
   { icon: 'pi pi-bell', label: 'Notifications', command: () => this.openNotifications() },
   { icon: 'pi pi-user', label: 'Profile',        command: () => this.openProfile() },
 ];
@@ -140,9 +136,9 @@ myActions: GvTopbarAction[] = [
 
 ---
 
-### GvFooter
+### HelixFooter
 
-**Selector:** `<gv-footer>`  
+**Selector:** `<helix-footer>`  
 **File:** `projects/helix/src/lib/layout/components/footer/footer.ts`
 
 Application footer with optional multi-column link layout and a branded copyright line.
@@ -153,7 +149,7 @@ Application footer with optional multi-column link layout and a branded copyrigh
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
 | `brandUrl` | `string` | `'https://primeng.org'` | URL the brand name links to |
-| `columns` | `GvFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`GvFooterColumn`](#gvfootercolumn) model as `GvFooterWidget` |
+| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model as `HelixFooterWidget` |
 
 #### Content Slots
 
@@ -164,16 +160,16 @@ Application footer with optional multi-column link layout and a branded copyrigh
 #### Example
 
 ```html
-<gv-footer
+<helix-footer
   brandName="Gravion"
   brandUrl="https://gravion.io"
   [columns]="footerColumns">
   <span gvFooterStart>© 2024 Gravion GmbH</span>
-</gv-footer>
+</helix-footer>
 ```
 
 ```ts
-footerColumns: GvFooterColumn[] = [
+footerColumns: HelixFooterColumn[] = [
   {
     title: 'Product',
     links: [
@@ -186,51 +182,83 @@ footerColumns: GvFooterColumn[] = [
 
 ---
 
-### GvMenu
+### HelixNavRail
 
-**Selector:** `<gv-menu>`  
-**File:** `projects/helix/src/lib/layout/components/menu/menu.ts`
+**Selector:** `<helix-nav-rail>`  
+**File:** `projects/helix/src/lib/layout/components/nav-rail/nav-rail.ts`
 
-Sidebar navigation menu. Accepts a standard PrimeNG `MenuItem[]` tree.
+Dark, branded side-navigation rail: gradient surface, grouped items with uppercase
+section labels, a pill active state with a teal accent bar, expandable submenus,
+and collapse-to-icons. Wired into `HelixAppLayout` in place of the old
+`HelixSidebar`/`HelixMenu`. Items reuse `HelixRouteMenuItem` (the same shape
+consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
+and breadcrumbs keep working unchanged.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `model` | `MenuItem[]` | `[]` | PrimeNG `MenuItem` array that defines the sidebar navigation structure |
+| `model` | `HelixNavGroup[]` | `[]` | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
+| `appTitle` | `string` | `'Helix'` | Wordmark shown next to the brand mark; hidden in collapsed (rail) mode |
+
+#### `HelixNavGroup`
+
+```ts
+interface HelixNavGroup {
+  section?: string;             // uppercase group label; omit for an unlabeled group
+  items: HelixRouteMenuItem[];
+}
+```
+
+Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[]` to adapt
+an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
+input) into groups: each top-level item's `label` becomes the section, and its own
+children become the group's items.
 
 #### Example
 
 ```ts
-import { MenuItem } from 'primeng/api';
+import { helixNavGroupsFromMenu, type HelixRouteMenuItem } from '@gravionlabs/helix';
 
-menuItems: MenuItem[] = [
+const menu: HelixRouteMenuItem[] = [
   {
-    label: 'Home',
+    label: 'Overview',
     items: [
-      { label: 'Dashboard', icon: 'pi pi-fw pi-home',  routerLink: ['/'] },
+      { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
       { label: 'Analytics', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/analytics'] },
     ],
   },
 ];
+
+const navGroups = helixNavGroupsFromMenu(menu);
 ```
 
 ```html
-<gv-menu [model]="menuItems" />
+<helix-nav-rail [model]="navGroups" appTitle="Helix" />
 ```
 
 ---
 
 ### Internal Layout Components
 
-The following components are exported for completeness but have **no public inputs**. They are orchestrated internally by `GvAppLayout`.
+The following components are exported for completeness but have **no public inputs**
+beyond what's listed here. They are orchestrated internally by `HelixAppLayout`.
 
 | Component | Selector | Purpose |
 |-----------|----------|---------|
-| `GvSidebar` | `<gv-sidebar>` | Sidebar shell that wraps `GvMenu` |
-| `GvConfigurator` | `<gv-configurator>` | Theme/layout configuration panel |
-| `GvFloatingConfigurator` | `<gv-floating-configurator>` | Floating toggle button for the configurator |
-| `GvMenuItem` | `<gv-menuitem>` | Recursive menu item renderer |
+| `HelixNavRailItem` | `[helix-nav-rail-item]` | Recursive item renderer used by `HelixNavRail` |
+| `HelixConfigurator` | `<helix-configurator>` | Theme/layout configuration panel |
+| `HelixFloatingConfigurator` | `<helix-floating-configurator>` | Floating toggle button for the configurator |
+
+#### Deprecated
+
+| Component | Selector | Replacement |
+|-----------|----------|-------------|
+| `HelixSidebar` | `<helix-sidebar>` | `HelixNavRail` |
+| `HelixMenu` | `<helix-menu>` | `HelixNavRail` |
+| `HelixMenuItem` | `[helix-menuitem]` | `HelixNavRailItem` |
+
+These remain exported for one release but are no longer wired into `HelixAppLayout`.
 
 ---
 
@@ -275,32 +303,11 @@ export class MyLayoutComponent {
 
 ---
 
-## DI Tokens
-
-### GV_MENU_MODEL
-
-Injection token for providing the sidebar `MenuItem[]` model to the layout without prop-drilling.
-
-```ts
-import { GV_MENU_MODEL } from '@gravionlabs/helix';
-import { MenuItem } from 'primeng/api';
-
-// In your layout or app component providers:
-providers: [
-  {
-    provide: GV_MENU_MODEL,
-    useValue: myMenuItems satisfies MenuItem[],
-  },
-]
-```
-
----
-
 ## Auth Pages
 
-### GvLogin
+### HelixLogin
 
-**Selector:** `<gv-login>`  
+**Selector:** `<helix-login>`  
 **File:** `projects/helix/src/lib/pages/auth/login/login.ts`
 
 Fully styled login page with email/password form. Emits credentials on submit; handles no server communication itself.
@@ -325,12 +332,12 @@ Fully styled login page with email/password form. Emits credentials on submit; h
 
 | Name | Payload | Description |
 |------|---------|-------------|
-| `loginSubmit` | `GvLoginCredentials` | Emitted when the user submits the login form |
+| `loginSubmit` | `HelixLoginCredentials` | Emitted when the user submits the login form |
 
 #### Example
 
 ```html
-<gv-login
+<helix-login
   logoUrl="/assets/logo.svg"
   headline="Sign in to Gravion"
   (loginSubmit)="onLogin($event)"
@@ -338,16 +345,16 @@ Fully styled login page with email/password form. Emits credentials on submit; h
 ```
 
 ```ts
-onLogin(credentials: GvLoginCredentials) {
+onLogin(credentials: HelixLoginCredentials) {
   this.authService.login(credentials.email, credentials.password).subscribe(...);
 }
 ```
 
 ---
 
-### GvError
+### HelixError
 
-**Selector:** `<gv-error>`
+**Selector:** `<helix-error>`
 
 Generic error page (e.g. 500 Internal Server Error).
 
@@ -363,7 +370,7 @@ Generic error page (e.g. 500 Internal Server Error).
 #### Example
 
 ```html
-<gv-error
+<helix-error
   title="500 — Server Error"
   subtitle="Our team has been notified. Please try again later."
   homeRoute="/dashboard"
@@ -372,9 +379,9 @@ Generic error page (e.g. 500 Internal Server Error).
 
 ---
 
-### GvAccess
+### HelixAccess
 
-**Selector:** `<gv-access>`
+**Selector:** `<helix-access>`
 
 Access-denied / forbidden page (e.g. 403).
 
@@ -409,9 +416,9 @@ export const appRoutes: Routes = [
 
 ## Other Pages
 
-### GvEmpty
+### HelixEmpty
 
-**Selector:** `<gv-empty>`  
+**Selector:** `<helix-empty>`  
 **File:** `projects/helix/src/lib/pages/empty/empty.ts`
 
 Blank page template with a title, optional subtitle, and a default content slot. Use as a starting point for new pages.
@@ -432,16 +439,16 @@ Blank page template with a title, optional subtitle, and a default content slot.
 #### Example
 
 ```html
-<gv-empty title="Reports" subtitle="No reports available yet.">
+<helix-empty title="Reports" subtitle="No reports available yet.">
   <p-button label="Create Report" icon="pi pi-plus" />
-</gv-empty>
+</helix-empty>
 ```
 
 ---
 
-### GvNotfound
+### HelixNotfound
 
-**Selector:** `<gv-notfound>`
+**Selector:** `<helix-notfound>`
 
 404 Not Found page with configurable suggestions list.
 
@@ -453,12 +460,12 @@ Blank page template with a title, optional subtitle, and a default content slot.
 | `description` | `string` | `'The page you are looking for does not exist.'` | Description text |
 | `homeLabel` | `string` | `'Go to Dashboard'` | Label for the home navigation button |
 | `homeRoute` | `string` | `'/'` | Router path for the home navigation button |
-| `suggestions` | `GvNotfoundSuggestion[]` | Several default suggestions | List of quick-navigation suggestion links |
+| `suggestions` | `HelixNotfoundSuggestion[]` | Several default suggestions | List of quick-navigation suggestion links |
 
 #### Example
 
 ```html
-<gv-notfound
+<helix-notfound
   homeRoute="/dashboard"
   [suggestions]="[
     { label: 'Dashboard', route: '/dashboard' },
@@ -474,29 +481,29 @@ Blank page template with a title, optional subtitle, and a default content slot.
 Use these components to build a public marketing / landing page. The recommended composition is:
 
 ```html
-<gv-landing>
-  <gv-topbar-widget />
-  <gv-hero-widget (buttonClick)="scrollToFeatures()" />
-  <gv-features-widget />
-  <gv-highlights-widget />
-  <gv-pricing-widget (planSelect)="onPlanSelect($event)" />
-  <gv-footer-widget />
-</gv-landing>
+<helix-landing>
+  <helix-topbar-widget />
+  <helix-hero-widget (buttonClick)="scrollToFeatures()" />
+  <helix-features-widget />
+  <helix-highlights-widget />
+  <helix-pricing-widget (planSelect)="onPlanSelect($event)" />
+  <helix-footer-widget />
+</helix-landing>
 ```
 
 ---
 
-### GvLanding
+### HelixLanding
 
-**Selector:** `<gv-landing>`
+**Selector:** `<helix-landing>`
 
 Page wrapper / container for all landing widgets. Provides consistent max-width, spacing, and scroll-anchor support. No public inputs.
 
 ---
 
-### GvTopbarWidget
+### HelixTopbarWidget
 
-**Selector:** `<gv-topbar-widget>`
+**Selector:** `<helix-topbar-widget>`
 
 Marketing topbar with navigation links and login/register buttons.
 
@@ -504,7 +511,7 @@ Marketing topbar with navigation links and login/register buttons.
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `navLinks` | `GvNavLink[]` | 4 links (home, features, pricing, contact) | Fragment-based anchor links for single-page scrolling |
+| `navLinks` | `HelixNavLink[]` | 4 links (home, features, pricing, contact) | Fragment-based anchor links for single-page scrolling |
 | `loginLabel` | `string` | `'Login'` | Label for the login button |
 | `loginRoute` | `string` | `'/auth/login'` | Router path for the login button |
 | `registerLabel` | `string` | `'Register'` | Label for the register button |
@@ -513,7 +520,7 @@ Marketing topbar with navigation links and login/register buttons.
 #### Example
 
 ```html
-<gv-topbar-widget
+<helix-topbar-widget
   loginRoute="/auth/login"
   registerRoute="/auth/register"
   [navLinks]="[
@@ -526,9 +533,9 @@ Marketing topbar with navigation links and login/register buttons.
 
 ---
 
-### GvHeroWidget
+### HelixHeroWidget
 
-**Selector:** `<gv-hero-widget>`
+**Selector:** `<helix-hero-widget>`
 
 Full-width hero section with a two-part headline, description, call-to-action button, and hero image.
 
@@ -552,7 +559,7 @@ Full-width hero section with a two-part headline, description, call-to-action bu
 #### Example
 
 ```html
-<gv-hero-widget
+<helix-hero-widget
   headlineLight="Build faster with"
   headline="Gravion UI"
   description="The Angular component library that gets you to production in days."
@@ -564,9 +571,9 @@ Full-width hero section with a two-part headline, description, call-to-action bu
 
 ---
 
-### GvFeaturesWidget
+### HelixFeaturesWidget
 
-**Selector:** `<gv-features-widget>`
+**Selector:** `<helix-features-widget>`
 
 Feature highlight grid with optional customer testimonial card.
 
@@ -576,13 +583,13 @@ Feature highlight grid with optional customer testimonial card.
 |------|------|---------|-------------|
 | `sectionTitle` | `string` | `'Marvelous Features'` | Section heading |
 | `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `features` | `GvFeature[]` | 9 default feature cards | Array of feature cards to display in the grid |
-| `testimonial` | `GvTestimonial \| null` | *(library default)* | Optional testimonial block. Pass `null` to hide |
+| `features` | `HelixFeature[]` | 9 default feature cards | Array of feature cards to display in the grid |
+| `testimonial` | `HelixTestimonial \| null` | *(library default)* | Optional testimonial block. Pass `null` to hide |
 
 #### Example
 
 ```html
-<gv-features-widget
+<helix-features-widget
   sectionTitle="Why choose Gravion?"
   [features]="myFeatures"
   [testimonial]="myTestimonial"
@@ -590,7 +597,7 @@ Feature highlight grid with optional customer testimonial card.
 ```
 
 ```ts
-myFeatures: GvFeature[] = [
+myFeatures: HelixFeature[] = [
   {
     icon: 'pi pi-bolt',
     iconBgClass: 'bg-yellow-200',
@@ -600,7 +607,7 @@ myFeatures: GvFeature[] = [
   },
 ];
 
-myTestimonial: GvTestimonial = {
+myTestimonial: HelixTestimonial = {
   name: 'Jane Doe',
   company: 'Acme Corp',
   text: 'Gravion UI cut our delivery time in half.',
@@ -610,9 +617,9 @@ myTestimonial: GvTestimonial = {
 
 ---
 
-### GvHighlightsWidget
+### HelixHighlightsWidget
 
-**Selector:** `<gv-highlights-widget>`
+**Selector:** `<helix-highlights-widget>`
 
 Alternating image/text highlight blocks for showcasing key product capabilities.
 
@@ -622,19 +629,19 @@ Alternating image/text highlight blocks for showcasing key product capabilities.
 |------|------|---------|-------------|
 | `sectionTitle` | `string` | `'Powerful Everywhere'` | Section heading |
 | `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `highlights` | `GvHighlight[]` | 2 default highlight blocks | Array of highlight items with image and text |
+| `highlights` | `HelixHighlight[]` | 2 default highlight blocks | Array of highlight items with image and text |
 
 #### Example
 
 ```html
-<gv-highlights-widget
+<helix-highlights-widget
   sectionTitle="Works on every device"
   [highlights]="myHighlights"
 />
 ```
 
 ```ts
-myHighlights: GvHighlight[] = [
+myHighlights: HelixHighlight[] = [
   {
     icon: 'pi pi-desktop',
     iconBgClass: 'bg-blue-100',
@@ -651,9 +658,9 @@ myHighlights: GvHighlight[] = [
 
 ---
 
-### GvPricingWidget
+### HelixPricingWidget
 
-**Selector:** `<gv-pricing-widget>`
+**Selector:** `<helix-pricing-widget>`
 
 Pricing plan cards section with click-to-select interaction.
 
@@ -663,25 +670,25 @@ Pricing plan cards section with click-to-select interaction.
 |------|------|---------|-------------|
 | `sectionTitle` | `string` | `'Matchless Pricing'` | Section heading |
 | `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `plans` | `GvPricingPlan[]` | 3 plans (Free / Startup / Enterprise) | Array of pricing plan cards |
+| `plans` | `HelixPricingPlan[]` | 3 plans (Free / Startup / Enterprise) | Array of pricing plan cards |
 
 #### Outputs
 
 | Name | Payload | Description |
 |------|---------|-------------|
-| `planSelect` | `GvPricingPlan` | Emitted when a card or its button is clicked |
+| `planSelect` | `HelixPricingPlan` | Emitted when a card or its button is clicked |
 
 #### Example
 
 ```html
-<gv-pricing-widget
+<helix-pricing-widget
   [plans]="pricingPlans"
   (planSelect)="onPlanSelected($event)"
 />
 ```
 
 ```ts
-pricingPlans: GvPricingPlan[] = [
+pricingPlans: HelixPricingPlan[] = [
   {
     title: 'Free',
     price: '$0',
@@ -702,18 +709,18 @@ pricingPlans: GvPricingPlan[] = [
   },
 ];
 
-onPlanSelected(plan: GvPricingPlan) {
+onPlanSelected(plan: HelixPricingPlan) {
   this.router.navigate(['/checkout'], { queryParams: { plan: plan.title } });
 }
 ```
 
 ---
 
-### GvFooterWidget
+### HelixFooterWidget
 
-**Selector:** `<gv-footer-widget>`
+**Selector:** `<helix-footer-widget>`
 
-Landing page footer with brand link and multi-column link groups. Uses the same [`GvFooterColumn`](#gvfootercolumn) model as `GvFooter`.
+Landing page footer with brand link and multi-column link groups. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model as `HelixFooter`.
 
 #### Inputs
 
@@ -721,7 +728,7 @@ Landing page footer with brand link and multi-column link groups. Uses the same 
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name displayed in the footer |
 | `homeRoute` | `string` | `'/'` | Router path the brand name links to |
-| `columns` | `GvFooterColumn[]` | *(library defaults)* | Link columns. Shares the `GvFooterColumn` model with `GvFooter` |
+| `columns` | `HelixFooterColumn[]` | *(library defaults)* | Link columns. Shares the `HelixFooterColumn` model with `HelixFooter` |
 
 ---
 
@@ -849,12 +856,12 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ## Interfaces
 
-### GvTopbarAction
+### HelixTopbarAction
 
-Used by [`GvTopbar`](#gvtopbar) `topbarActions` input.
+Used by [`HelixTopbar`](#helixtopbar) `topbarActions` input.
 
 ```ts
-interface GvTopbarAction {
+interface HelixTopbarAction {
   /** PrimeIcons class, e.g. 'pi pi-search' */
   icon: string;
   /** Accessible label for the button */
@@ -866,12 +873,12 @@ interface GvTopbarAction {
 
 ---
 
-### GvFooterLink
+### HelixFooterLink
 
-Used by [`GvFooterColumn`](#gvfootercolumn).
+Used by [`HelixFooterColumn`](#helixfootercolumn).
 
 ```ts
-interface GvFooterLink {
+interface HelixFooterLink {
   label: string;
   url: string;
 }
@@ -879,25 +886,25 @@ interface GvFooterLink {
 
 ---
 
-### GvFooterColumn
+### HelixFooterColumn
 
-Used by [`GvFooter`](#gvfooter) and [`GvFooterWidget`](#gvfooterwidget).
+Used by [`HelixFooter`](#helixfooter) and [`HelixFooterWidget`](#helixfooterwidget).
 
 ```ts
-interface GvFooterColumn {
+interface HelixFooterColumn {
   title: string;
-  links: GvFooterLink[];
+  links: HelixFooterLink[];
 }
 ```
 
 ---
 
-### GvLoginCredentials
+### HelixLoginCredentials
 
-Emitted by [`GvLogin`](#gvlogin) `loginSubmit` output.
+Emitted by [`HelixLogin`](#helixlogin) `loginSubmit` output.
 
 ```ts
-interface GvLoginCredentials {
+interface HelixLoginCredentials {
   email: string;
   password: string;
 }
@@ -905,12 +912,12 @@ interface GvLoginCredentials {
 
 ---
 
-### GvNotfoundSuggestion
+### HelixNotfoundSuggestion
 
-Used by [`GvNotfound`](#gvnotfound) `suggestions` input.
+Used by [`HelixNotfound`](#helixnotfound) `suggestions` input.
 
 ```ts
-interface GvNotfoundSuggestion {
+interface HelixNotfoundSuggestion {
   label: string;
   route: string;
 }
@@ -918,12 +925,12 @@ interface GvNotfoundSuggestion {
 
 ---
 
-### GvNavLink
+### HelixNavLink
 
-Used by [`GvTopbarWidget`](#gvtopbarwidget) `navLinks` input.
+Used by [`HelixTopbarWidget`](#helixtopbarwidget) `navLinks` input.
 
 ```ts
-interface GvNavLink {
+interface HelixNavLink {
   /** Display text */
   label: string;
   /** URL fragment (hash anchor) for single-page scrolling */
@@ -933,12 +940,12 @@ interface GvNavLink {
 
 ---
 
-### GvFeature
+### HelixFeature
 
-Used by [`GvFeaturesWidget`](#gvfeatureswidget) `features` input.
+Used by [`HelixFeaturesWidget`](#helixfeatureswidget) `features` input.
 
 ```ts
-interface GvFeature {
+interface HelixFeature {
   /** PrimeIcon class, e.g. 'pi pi-bolt' */
   icon: string;
   /** Tailwind background class for the icon container, e.g. 'bg-yellow-200' */
@@ -954,12 +961,12 @@ interface GvFeature {
 
 ---
 
-### GvTestimonial
+### HelixTestimonial
 
-Used by [`GvFeaturesWidget`](#gvfeatureswidget) `testimonial` input.
+Used by [`HelixFeaturesWidget`](#helixfeatureswidget) `testimonial` input.
 
 ```ts
-interface GvTestimonial {
+interface HelixTestimonial {
   name: string;
   company: string;
   text: string;
@@ -970,12 +977,12 @@ interface GvTestimonial {
 
 ---
 
-### GvHighlight
+### HelixHighlight
 
-Used by [`GvHighlightsWidget`](#gvhighlightswidget) `highlights` input.
+Used by [`HelixHighlightsWidget`](#helixhighlightswidget) `highlights` input.
 
 ```ts
-interface GvHighlight {
+interface HelixHighlight {
   /** PrimeIcon class */
   icon: string;
   /** Tailwind background class for the icon container */
@@ -995,12 +1002,12 @@ interface GvHighlight {
 
 ---
 
-### GvPricingPlan
+### HelixPricingPlan
 
-Used by [`GvPricingWidget`](#gvpricingwidget) `plans` input and `planSelect` output.
+Used by [`HelixPricingWidget`](#helixpricingwidget) `plans` input and `planSelect` output.
 
 ```ts
-interface GvPricingPlan {
+interface HelixPricingPlan {
   title: string;
   /** Price string, e.g. '$29' */
   price: string;

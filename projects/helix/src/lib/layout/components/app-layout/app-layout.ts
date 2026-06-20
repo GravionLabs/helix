@@ -6,7 +6,8 @@ import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixFooter } from '../footer/footer';
-import { HelixSidebar } from '../sidebar/sidebar';
+import { HelixNavRail } from '../nav-rail/nav-rail';
+import { helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixTopbar } from '../topbar/topbar';
 import type { HelixTopbarItem } from '../topbar/topbar.model';
@@ -14,7 +15,7 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 @Component({
   selector: 'helix-app-layout',
   standalone: true,
-  imports: [CommonModule, HelixTopbar, HelixSidebar, RouterModule, HelixFooter],
+  imports: [CommonModule, HelixTopbar, HelixNavRail, RouterModule, HelixFooter],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
   encapsulation: ViewEncapsulation.None,
@@ -40,6 +41,10 @@ export class HelixAppLayout {
     if (inputMenu.length > 0) return inputMenu;
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
   });
+
+  protected effectiveNavGroups = computed(() =>
+    helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[]),
+  );
 
   protected effectiveEnvironment = computed<Environment | undefined>(() => {
     const input = this.environment();

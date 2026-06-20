@@ -4,7 +4,7 @@
     [environment]="effectiveEnvironment()"
     [items]="effectiveItems()"
   ></helix-topbar>
-  <helix-sidebar [menu]="effectiveMenu()"></helix-sidebar>
+  <helix-nav-rail [model]="effectiveNavGroups()" [appTitle]="appTitle()"></helix-nav-rail>
   <div class="layout-main-container">
     <div class="layout-main">
       <router-outlet></router-outlet>
