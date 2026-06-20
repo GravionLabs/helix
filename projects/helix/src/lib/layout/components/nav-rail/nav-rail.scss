@@ -18,15 +18,17 @@
 }
 
 :host-context(.app-dark) {
-  /* ---- Dark theme "Graphite Teal" — near-black, teal is the only accent ---- */
-  --helix-nav-bg-start: #102024;
-  --helix-nav-bg-end: #14282c;
-  --helix-nav-text: #b7c8ca;
-  --helix-nav-text-muted: #6f8385;
-  --helix-nav-hover-bg: rgba(255, 255, 255, 0.05);
-  --helix-nav-active-bg: #1c3438;
-  --helix-nav-active-text: #ffffff;
-  --helix-nav-border: rgba(255, 255, 255, 0.08);
+  /* ---- Dark theme — aliases the app's own dark-mode surface tokens, so the
+     rail matches the panels/body around it exactly instead of an invented
+     hue. Teal stays the one deliberate accent against this neutral base. ---- */
+  --helix-nav-bg-start: var(--surface-card);
+  --helix-nav-bg-end: var(--surface-ground);
+  --helix-nav-text: var(--text-color);
+  --helix-nav-text-muted: var(--text-color-secondary);
+  --helix-nav-hover-bg: var(--surface-hover);
+  --helix-nav-active-bg: var(--surface-border);
+  --helix-nav-active-text: var(--text-color);
+  --helix-nav-border: var(--surface-border);
 }
 
 .helix-nav-rail {

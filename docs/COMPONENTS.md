@@ -195,10 +195,12 @@ footerColumns: HelixFooterColumn[] = [
 **Selector:** `<helix-nav-rail>`  
 **File:** `projects/helix/src/lib/layout/components/nav-rail/nav-rail.ts`
 
-Branded side-navigation rail: gradient surface (theme-aware — "Harbor Tint" light /
-"Graphite Teal" dark, both keyed off `.app-dark` the same way the rest of the app's
-tokens are), a pill active state with a teal accent bar, expandable submenus, and
-collapse-to-icons. Wired into `HelixAppLayout` in place of the old
+Branded side-navigation rail: gradient surface (theme-aware — "Harbor Tint" light
+/ a neutral dark gradient that aliases the app's own dark-mode surface tokens
+(`--surface-card`/`--surface-ground`), so the rail matches the panels and body
+around it instead of an invented hue), a pill active state with a teal accent
+bar, expandable submenus, and collapse-to-icons. Wired into `HelixAppLayout` in
+place of the old
 `HelixSidebar`/`HelixMenu`. Items reuse `HelixRouteMenuItem` (the same shape
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
