@@ -25,8 +25,8 @@ This is an Angular 21 workspace containing:
 - Use `templateUrl` and `styleUrl` (not inline `template` or `styles`)
 
 ### Component Prefix
-- All library components use the `helix-` selector prefix (e.g., `helix-topbar`, `helix-sidebar`)
-- All library class names use the `Helix` prefix (e.g., `HelixTopbar`, `HelixSidebar`)
+- All library components use the `helix-` selector prefix (e.g., `helix-topbar`, `helix-nav-rail`)
+- All library class names use the `Helix` prefix (e.g., `HelixTopbar`, `HelixNavRail`)
 
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library

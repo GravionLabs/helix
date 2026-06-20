@@ -81,18 +81,26 @@ export class AppComponent {
 **Selector:** `<helix-app-layout>`  
 **File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
 
-Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
+Top-level shell that composes the topbar, nav rail, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `appTitle` | `string` | `'SAKAI'` | Application title forwarded to `HelixTopbar` |
+| `appTitle` | `string` | `'Helix'` | Application title forwarded to `HelixTopbar` |
+
+#### Content slots
+
+| Selector | Description |
+|----------|--------------|
+| `[brand]` | Forwarded into `HelixNavRail`'s `[brand]` slot — see [HelixNavRail](#helixnavrail). |
 
 #### Example
 
 ```html
-<helix-app-layout appTitle="Gravion Portal" />
+<helix-app-layout appTitle="Gravion Portal">
+  <a brand routerLink="/">Gravion Portal</a>
+</helix-app-layout>
 ```
 
 ---
@@ -194,12 +202,24 @@ and collapse-to-icons. Wired into `HelixAppLayout` in place of the old
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
 
+The rail has no opinion on branding — the logo/wordmark shown in its header is
+**owned by the consuming app**, projected via the `[brand]` content slot
+(forwarded through `HelixAppLayout`'s own `[brand]` slot). This keeps app-specific
+branding out of the library; see the demo app's `app-shell.html` for a worked
+example, including hiding the wordmark when the rail is collapsed via
+`LayoutStore.isCollapsed()` (injectable anywhere — it's `providedIn: 'root'`).
+
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `model` | `HelixNavGroup[]` | `[]` | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
-| `appTitle` | `string` | `'Helix'` | Wordmark shown next to the brand mark; hidden in collapsed (rail) mode |
+
+#### Content slots
+
+| Selector | Description |
+|----------|--------------|
+| `[brand]` | Projected into the rail's 4.5rem header. Provide your own logo/wordmark; hide parts of it in collapsed mode by injecting `LayoutStore` and checking `isCollapsed()` yourself. |
 
 #### `HelixNavGroup`
 
@@ -234,7 +254,12 @@ const navGroups = helixNavGroupsFromMenu(menu);
 ```
 
 ```html
-<helix-nav-rail [model]="navGroups" appTitle="Helix" />
+<helix-app-layout [menu]="menu">
+  <a brand routerLink="/">
+    <img src="logo.svg" alt="" />
+    <span>My App</span>
+  </a>
+</helix-app-layout>
 ```
 
 ---
@@ -249,16 +274,6 @@ beyond what's listed here. They are orchestrated internally by `HelixAppLayout`.
 | `HelixNavRailItem` | `[helix-nav-rail-item]` | Recursive item renderer used by `HelixNavRail` |
 | `HelixConfigurator` | `<helix-configurator>` | Theme/layout configuration panel |
 | `HelixFloatingConfigurator` | `<helix-floating-configurator>` | Floating toggle button for the configurator |
-
-#### Deprecated
-
-| Component | Selector | Replacement |
-|-----------|----------|-------------|
-| `HelixSidebar` | `<helix-sidebar>` | `HelixNavRail` |
-| `HelixMenu` | `<helix-menu>` | `HelixNavRail` |
-| `HelixMenuItem` | `[helix-menuitem]` | `HelixNavRailItem` |
-
-These remain exported for one release but are no longer wired into `HelixAppLayout`.
 
 ---
 
