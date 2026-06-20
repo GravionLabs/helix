@@ -19,11 +19,6 @@ export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
 export { helixBreadcrumbsFromRoutes } from './lib/layout/breadcrumb-utils';
 // Components
 export { HelixAppLayout } from './lib/layout/components/app-layout/app-layout';
-export type { AlertItem } from './lib/layout/components/topbar/actions/alert-action';
-export { HelixAlertAction } from './lib/layout/components/topbar/actions/alert-action';
-export { HelixConfiguratorAction } from './lib/layout/components/topbar/actions/configurator-action';
-export { HelixDarkModeAction } from './lib/layout/components/topbar/actions/dark-mode-action';
-export { HelixMobileMenuAction } from './lib/layout/components/topbar/actions/mobile-menu-action';
 export { HelixConfigurator } from './lib/layout/components/configurator/configurator';
 export { HelixFloatingConfigurator } from './lib/layout/components/floating-configurator/floating-configurator';
 export { HelixFooter } from './lib/layout/components/footer/footer';
@@ -34,6 +29,11 @@ export type {
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
+export type { AlertItem } from './lib/layout/components/topbar/actions/alert-action';
+export { HelixAlertAction } from './lib/layout/components/topbar/actions/alert-action';
+export { HelixConfiguratorAction } from './lib/layout/components/topbar/actions/configurator-action';
+export { HelixDarkModeAction } from './lib/layout/components/topbar/actions/dark-mode-action';
+export { HelixMobileMenuAction } from './lib/layout/components/topbar/actions/mobile-menu-action';
 export { HelixTopbar } from './lib/layout/components/topbar/topbar';
 export type {
   HelixTopbarAction,
@@ -41,7 +41,6 @@ export type {
   HelixTopbarItemType,
 } from './lib/layout/components/topbar/topbar.model';
 // Tokens
-export { HELIX_MENU_MODEL } from './lib/layout/menu-model.token';
 export type { HelixRouteMenuItem } from './lib/layout/route-menu.model';
 // Route-menu model
 export { helixMenuLinksFrom, helixRoutesFrom } from './lib/layout/route-menu.model';

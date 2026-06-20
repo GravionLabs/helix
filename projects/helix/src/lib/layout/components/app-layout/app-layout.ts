@@ -2,13 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
-import { HELIX_MENU_MODEL } from '../../menu-model.token';
+import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
-import type { Environment } from '../../../ui/badge/environment-badge';
-import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixFooter } from '../footer/footer';
 import { HelixSidebar } from '../sidebar/sidebar';
+import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixTopbar } from '../topbar/topbar';
 import type { HelixTopbarItem } from '../topbar/topbar.model';
 
@@ -27,24 +26,19 @@ export class HelixAppLayout {
   alerts = input<AlertItem[] | undefined>();
 
   /**
-   * Optional menu model. When provided, overrides the HELIX_MENU_MODEL token.
+   * Menu model. When provided, overrides route data.
    * Also auto-populated from ActivatedRoute.data['menu'] when used as a route component.
    */
   menu = input<HelixRouteMenuItem[]>([]);
 
   store = inject(LayoutStore);
   private activatedRoute = inject(ActivatedRoute);
-  private tokenMenu = inject(HELIX_MENU_MODEL);
 
-  /** Resolved menu: input takes priority, then route data, then DI token. */
+  /** Resolved menu: input takes priority, then route data, then empty. */
   protected effectiveMenu = computed<MenuItem[]>(() => {
     const inputMenu = this.menu();
     if (inputMenu.length > 0) return inputMenu;
-    const routeMenu = this.activatedRoute.snapshot.data['menu'] as
-      | HelixRouteMenuItem[]
-      | undefined;
-    if (routeMenu?.length) return routeMenu;
-    return this.tokenMenu;
+    return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
   });
 
   protected effectiveEnvironment = computed<Environment | undefined>(() => {

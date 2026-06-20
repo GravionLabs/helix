@@ -14,7 +14,6 @@ vi.mock('@primeuix/themes/nora', () => ({ default: { primitive: {} } }));
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
-import { HELIX_MENU_MODEL } from '../../menu-model.token';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixAppLayout } from './app-layout';
 
@@ -29,7 +28,7 @@ describe('HelixAppLayout', () => {
     // signals under test live on the class and need no rendered child components.
     await TestBed.configureTestingModule({
       imports: [HelixAppLayout],
-      providers: [provideRouter([]), { provide: HELIX_MENU_MODEL, useValue: [] }],
+      providers: [provideRouter([])],
     })
       .overrideComponent(HelixAppLayout, {
         set: { template: '<div></div>', imports: [], styles: [] },
@@ -157,7 +156,7 @@ describe('HelixAppLayout', () => {
     expect(classes['layout-sidebar-collapsed']).toBe(false);
   });
 
-  it('effectiveMenu() should return empty array when no input, route data, or token', () => {
+  it('effectiveMenu() should return empty array when no input or route data', () => {
     const priv = component as unknown as { effectiveMenu: () => MenuItem[] };
     expect(priv.effectiveMenu()).toEqual([]);
   });
@@ -168,49 +167,5 @@ describe('HelixAppLayout', () => {
     expect((component as unknown as { effectiveMenu: () => MenuItem[] }).effectiveMenu()).toEqual(
       menu,
     );
-  });
-
-  it('effectiveMenu() should fall back to DI token when no input or route data', () => {
-    TestBed.resetTestingModule();
-    const tokenMenu: MenuItem[] = [{ label: 'Token Item', routerLink: ['/token'] }];
-
-    TestBed.configureTestingModule({
-      imports: [HelixAppLayout],
-      providers: [provideRouter([]), { provide: HELIX_MENU_MODEL, useValue: tokenMenu }],
-    })
-      .overrideComponent(HelixAppLayout, {
-        set: { template: '<div></div>', imports: [], styles: [] },
-      })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(HelixAppLayout);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-
-    const priv = component as unknown as { effectiveMenu: () => MenuItem[] };
-    expect(priv.effectiveMenu()).toEqual(tokenMenu);
-  });
-
-  it('effectiveMenu() should prefer input over DI token', () => {
-    TestBed.resetTestingModule();
-    const tokenMenu: MenuItem[] = [{ label: 'Token', routerLink: ['/token'] }];
-    const inputMenu: MenuItem[] = [{ label: 'Input', routerLink: ['/input'] }];
-
-    TestBed.configureTestingModule({
-      imports: [HelixAppLayout],
-      providers: [provideRouter([]), { provide: HELIX_MENU_MODEL, useValue: tokenMenu }],
-    })
-      .overrideComponent(HelixAppLayout, {
-        set: { template: '<div></div>', imports: [], styles: [] },
-      })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(HelixAppLayout);
-    component = fixture.componentInstance;
-    fixture.componentRef.setInput('menu', inputMenu);
-    fixture.detectChanges();
-
-    const priv = component as unknown as { effectiveMenu: () => MenuItem[] };
-    expect(priv.effectiveMenu()).toEqual(inputMenu);
   });
 });
