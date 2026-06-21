@@ -109,7 +109,6 @@ describe('HelixNavRail', () => {
       '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>',
     );
     fixture.detectChanges();
-    const span = fixture.nativeElement.querySelector('.helix-nav-rail-brand span');
     expect(component.isInlineSvg()).toBe(true);
   });
 });

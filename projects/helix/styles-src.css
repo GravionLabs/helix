@@ -32,42 +32,44 @@
   --focus-ring-shadow: var(--p-focus-ring-shadow);
 
   /* ===== LAYOUT DIMENSIONS ===== */
-  --helix-topbar-height:        4rem;
-  --helix-status-bar-height:    3rem;
-  --helix-nav-width:            17rem;
-  --helix-nav-width-collapsed:  4.75rem;
-  --helix-layout-gap:           1.5rem;
+  --helix-topbar-height: 4rem;
+  --helix-status-bar-height: 3rem;
+  --helix-nav-width: 17rem;
+  --helix-nav-width-collapsed: 4.75rem;
+  --helix-layout-gap: 1.5rem;
 }
 
 /* Light theme surface scale: surface-0 (most elevated) → surface-200 (borders) */
 :root {
-  --helix-surface-ground:   var(--p-surface-100); /* page background */
-  --helix-surface-chrome:   var(--p-surface-200); /* chrome (nav rail, topbar, status bar) */
-  --helix-surface-card:     var(--p-surface-0);   /* cards / content panels */
-  --helix-surface-overlay:  var(--p-surface-0);   /* popovers / dialogs */
-  --helix-surface-hover:    var(--p-surface-100); /* hover states */
-  --helix-border:           var(--p-surface-300); /* borders / dividers */
-  --code-background:        var(--p-surface-900);
-  --code-color:             var(--p-surface-200);
+  --helix-surface-ground: var(--p-surface-100); /* page background */
+  --helix-surface-chrome: var(
+    --p-surface-200
+  ); /* chrome (nav rail, topbar, status bar) */
+  --helix-surface-card: var(--p-surface-0); /* cards / content panels */
+  --helix-surface-overlay: var(--p-surface-0); /* popovers / dialogs */
+  --helix-surface-hover: var(--p-surface-100); /* hover states */
+  --helix-border: var(--p-surface-300); /* borders / dividers */
+  --code-background: var(--p-surface-900);
+  --code-color: var(--p-surface-200);
 
   /* Back-compat aliases for code still using old tokens */
-  --surface-ground:   var(--helix-surface-ground);
-  --surface-card:     var(--helix-surface-card);
-  --surface-overlay:  var(--helix-surface-overlay);
-  --surface-hover:    var(--helix-surface-hover);
-  --surface-border:   var(--helix-border);
+  --surface-ground: var(--helix-surface-ground);
+  --surface-card: var(--helix-surface-card);
+  --surface-overlay: var(--helix-surface-overlay);
+  --surface-hover: var(--helix-surface-hover);
+  --surface-border: var(--helix-border);
 }
 
 /* Dark theme surface scale */
-:root[class*='app-dark'] {
-  --helix-surface-ground:   var(--p-surface-950);
-  --helix-surface-chrome:   var(--p-surface-900);
-  --helix-surface-card:     var(--p-surface-800);
-  --helix-surface-overlay:  var(--p-surface-800);
-  --helix-surface-hover:    var(--p-surface-700);
-  --helix-border:           var(--p-surface-700);
-  --code-background:        var(--p-surface-800);
-  --code-color:             var(--p-surface-100);
+:root[class*="app-dark"] {
+  --helix-surface-ground: var(--p-surface-950);
+  --helix-surface-chrome: var(--p-surface-900);
+  --helix-surface-card: var(--p-surface-800);
+  --helix-surface-overlay: var(--p-surface-800);
+  --helix-surface-hover: var(--p-surface-700);
+  --helix-border: var(--p-surface-700);
+  --code-background: var(--p-surface-800);
+  --code-color: var(--p-surface-100);
 }
 
 /* ===== BASE ===== */
@@ -78,7 +80,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   color: var(--text-color);
   background-color: var(--helix-surface-ground);
   margin: 0;
@@ -94,7 +96,7 @@ a {
 
 /* ===== UTILITIES ===== */
 .clearfix:after {
-  content: ' ';
+  content: " ";
   display: block;
   clear: both;
 }
@@ -139,12 +141,24 @@ h6:first-child {
   margin-top: 0;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
 
 mark {
   background: #fff8e1;
@@ -195,7 +209,7 @@ p:last-child {
 
 .preloader-content:before,
 .preloader-content:after {
-  content: '';
+  content: "";
   border: 1em solid var(--primary-color);
   border-radius: 50%;
   width: inherit;
