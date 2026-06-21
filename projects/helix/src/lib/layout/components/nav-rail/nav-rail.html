@@ -50,18 +50,20 @@
     }
   </nav>
 
-  <button
-    type="button"
-    class="helix-nav-rail-collapse-button"
-    (click)="store.toggleSidebar()"
-    [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
-  >
-    <i
-      class="pi"
-      [ngClass]="{
-        'pi-angle-double-left': !store.isCollapsed(),
-        'pi-angle-double-right': store.isCollapsed(),
-      }"
-    ></i>
-  </button>
+  <div class="helix-nav-rail-footer">
+    <button
+      type="button"
+      class="helix-nav-rail-collapse-button"
+      (click)="store.toggleSidebar()"
+      [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+    >
+      <i
+        class="pi"
+        [ngClass]="{
+          'pi-angle-double-left': !store.isCollapsed(),
+          'pi-angle-double-right': store.isCollapsed(),
+        }"
+      ></i>
+    </button>
+  </div>
 </aside>

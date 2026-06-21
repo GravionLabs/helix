@@ -8,7 +8,7 @@ import {
   type OnDestroy,
   type OnInit,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from '../nav-rail-item/nav-rail-item';
@@ -17,7 +17,7 @@ import type { HelixNavGroup } from './nav-rail.model';
 @Component({
   selector: 'helix-nav-rail',
   standalone: true,
-  imports: [CommonModule, HelixNavRailItem],
+  imports: [CommonModule, HelixNavRailItem, RouterModule],
   templateUrl: './nav-rail.html',
   styleUrl: './nav-rail.scss',
 })

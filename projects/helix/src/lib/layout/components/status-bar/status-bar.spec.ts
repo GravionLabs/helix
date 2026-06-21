@@ -30,12 +30,12 @@ describe('HelixStatusBar', () => {
     expect(el.textContent).toContain('MyApp');
   });
 
-  it('should render environment when set', () => {
-    fixture.componentRef.setInput('environment', 'staging');
+  it('should render environment badge when set', () => {
+    fixture.componentRef.setInput('environment', 'testing');
     fixture.detectChanges();
-    const el = fixture.nativeElement.querySelector('.helix-status-bar-environment');
+    const el = fixture.nativeElement.querySelector('.helix-badge__label');
     expect(el).toBeTruthy();
-    expect(el.textContent).toContain('staging');
+    expect(el.textContent).toContain('Testing');
   });
 
   it('should render note when set', () => {

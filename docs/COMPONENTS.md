@@ -191,7 +191,7 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 | `note` | `string \| undefined` | `undefined` | Optional note text (e.g. "Build #1234") |
 | `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
 | `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
-| `height` | `string` | `'var(--helix-status-bar-height, 2rem)'` | Bar height |
+| `height` | `string` | `'var(--helix-status-bar-height, 3rem)'` | Bar height |
 
 #### Example
 

@@ -3,7 +3,7 @@
   align-items: center;
   gap: 1rem;
   padding: 0 1rem;
-  height: var(--helix-status-bar-height, 2rem);
+  height: var(--helix-status-bar-height, 3rem);
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
@@ -17,16 +17,6 @@
   flex-shrink: 0;
 }
 
-.helix-status-bar-environment {
-  padding: 0.1rem 0.4rem;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: rgba(0, 0, 0, 0.2);
-  flex-shrink: 0;
-}
 
 .helix-status-bar-note {
   opacity: 0.85;

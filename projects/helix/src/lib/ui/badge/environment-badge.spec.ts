@@ -22,9 +22,9 @@ describe('HelixEnvironmentBadge', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should map development to info severity', () => {
+  it('should map development to success severity', () => {
     const priv = component as unknown as HelixEnvBadgePrivate;
-    expect(priv.mapped().severity).toBe('info');
+    expect(priv.mapped().severity).toBe('success');
   });
 
   it('should map development to pi-code icon', () => {
@@ -44,10 +44,17 @@ describe('HelixEnvironmentBadge', () => {
     expect(priv.mapped().severity).toBe('warn');
   });
 
-  it('should map production to success severity', () => {
+  it('should map production to error severity', () => {
     fixture.componentRef.setInput('environment', 'production');
     fixture.detectChanges();
     const priv = component as unknown as HelixEnvBadgePrivate;
-    expect(priv.mapped().severity).toBe('success');
+    expect(priv.mapped().severity).toBe('error');
+  });
+
+  it('should map testing to info severity', () => {
+    fixture.componentRef.setInput('environment', 'testing');
+    fixture.detectChanges();
+    const priv = component as unknown as HelixEnvBadgePrivate;
+    expect(priv.mapped().severity).toBe('info');
   });
 });

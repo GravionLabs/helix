@@ -17,7 +17,7 @@
 
   // ===== LAYOUT DIMENSIONS =====
   --helix-topbar-height:        4rem;
-  --helix-status-bar-height:    2rem;
+  --helix-status-bar-height:    3rem;
   --helix-nav-width:            17rem;
   --helix-nav-width-collapsed:  4.75rem;
   --helix-layout-gap:           1.5rem;
@@ -26,11 +26,11 @@
 // Light theme surface scale: surface-0 (most elevated) → surface-200 (borders)
 :root {
   --helix-surface-ground:   var(--p-surface-100); // page background
-  --helix-surface-nav:      var(--p-surface-50);  // nav rail (1 step lighter than card)
+  --helix-surface-chrome:   var(--p-surface-200); // chrome (nav rail, topbar, status bar)
   --helix-surface-card:     var(--p-surface-0);   // cards / content panels
   --helix-surface-overlay:  var(--p-surface-0);   // popovers / dialogs
   --helix-surface-hover:    var(--p-surface-100); // hover states
-  --helix-border:           var(--p-surface-200); // borders / dividers
+  --helix-border:           var(--p-surface-300); // borders / dividers
   --code-background:        var(--p-surface-900);
   --code-color:             var(--p-surface-200);
 
@@ -45,7 +45,7 @@
 // Dark theme surface scale
 :root[class*='app-dark'] {
   --helix-surface-ground:   var(--p-surface-950);
-  --helix-surface-nav:      var(--p-surface-900);
+  --helix-surface-chrome:   var(--p-surface-900);
   --helix-surface-card:     var(--p-surface-800);
   --helix-surface-overlay:  var(--p-surface-800);
   --helix-surface-hover:    var(--p-surface-700);
