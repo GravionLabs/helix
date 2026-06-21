@@ -1,7 +1,6 @@
 @if (hasChildren()) {
   <a
     class="helix-nav-rail-link"
-    [class.active]="hasActiveDescendant()"
     [title]="item()?.label"
     [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"

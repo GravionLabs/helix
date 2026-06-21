@@ -12,6 +12,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
 };
 
 export default [
+  { path: '', redirectTo: 'crud', pathMatch: 'full' },
   ...PAGES_MENU_ITEMS.filter((item) => item.path != null && COMPONENTS[item.path]).map((item) => ({
     path: item.path!,
     component: COMPONENTS[item.path!],
