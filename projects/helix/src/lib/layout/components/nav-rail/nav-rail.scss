@@ -124,22 +124,21 @@
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  justify-content: flex-start;
-  height: var(--helix-status-bar-height, 2rem);
-  padding: 0 1.25rem;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  margin: 0.5rem auto 0.5rem;
+  align-self: flex-end;
   border: none;
-  border-top: 1px solid var(--helix-nav-border);
-  cursor: pointer;
-  width: 100%;
-  background: transparent;
+  border-radius: 50%;
+  background-color: transparent;
   color: var(--helix-nav-text-muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: color var(--element-transition-duration);
+  cursor: pointer;
+  transition: background-color var(--element-transition-duration);
 
   &:hover {
-    color: var(--helix-nav-active-text);
+    background-color: var(--helix-surface-hover);
   }
 
   &:focus {
@@ -149,5 +148,6 @@
 }
 
 .helix-nav-rail-collapsed .helix-nav-rail-collapse-button {
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
