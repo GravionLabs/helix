@@ -9,8 +9,8 @@
 1. [Installation](#installation)
 2. [Quick Start](#quick-start)
 3. [Layout Components](#layout-components)
-   - [GvAppLayout](#gvapplayout)
-   - [GvTopbar](#gvtopbar)
+   - [HelixAppLayout](#helixapplayout)
+   - [HelixTopbar](#helix-topbar)
    - [GvFooter](#gvfooter)
    - [GvMenu](#gvmenu)
    - [Internal Layout Components](#internal-layout-components)
@@ -80,59 +80,66 @@ export class AppComponent {}
 
 ## Layout Components
 
-### GvAppLayout
+### HelixAppLayout
 
-**Selector:** `<gv-app-layout>`  
+**Selector:** `<helix-app-layout>`  
 **File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
 
-Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `GvTopbar`.
+Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `appTitle` | `string` | `'SAKAI'` | Application title forwarded to `GvTopbar` |
+| `appTitle` | `string` | `'Helix'` | Application title forwarded to `HelixTopbar` |
+| `menu` | `HelixRouteMenuItem[]` | `[]` | Navigation menu model. Overrides route data when provided |
+| `alertCount` | `number` | `0` | Number of alerts shown in the topbar alert badge |
+| `alerts` | `AlertItem[]` | `undefined` | Alert items for the topbar alert dropdown |
 
 #### Example
 
 ```html
-<gv-app-layout appTitle="Gravion Portal" />
+<helix-app-layout appTitle="Gravion Portal" [menu]="myMenu" />
 ```
 
 ---
 
-### GvTopbar
+### HelixTopbar
 
-**Selector:** `<gv-topbar>`  
+**Selector:** `<helix-topbar>`  
 **File:** `projects/helix/src/lib/layout/components/topbar/topbar.ts`
 
-Application header bar. Renders the app title, configurable action buttons, and two named content slots.
+Application header bar. Renders a menu toggle, breadcrumb trail on the left, and configurable action buttons on the right.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `appTitle` | `string` | `'SAKAI'` | Application name displayed in the topbar |
-| `topbarActions` | `GvTopbarAction[]` | 3 icon buttons (search, bell, user) | Action buttons rendered on the right side of the topbar |
+| `appTitle` | `string` | `'Helix'` | Application name |
+| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered on the right side of the topbar |
+| `breadcrumbs` | `MenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
+| `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Configuration items rendered in the right action cluster |
 
 #### Content Slots
 
 | Slot | Selector | Description |
 |------|----------|-------------|
-| Start | `[gvTopbarStart]` | Content rendered to the left of the title (e.g. breadcrumbs) |
-| End | `[gvTopbarEnd]` | Content rendered to the right of the action buttons (e.g. search bar) |
+| End | `[helixTopbarEnd]` | Content rendered to the right of the action buttons |
+
+#### Layout
+
+The topbar is split into two sections:
+- **Left (`layout-topbar-start`)**: Menu toggle button followed by the breadcrumb with a home icon
+- **Right (`layout-topbar-end`)**: Config menu (dark mode, configurator, alerts) and action buttons
 
 #### Example
 
 ```html
-<gv-topbar appTitle="My App" [topbarActions]="myActions">
-  <p-breadcrumb gvTopbarStart [model]="breadcrumbs" />
-  <input gvTopbarEnd pInputText placeholder="Search…" />
-</gv-topbar>
+<helix-topbar appTitle="My App" [topbarActions]="myActions" />
 ```
 
 ```ts
-myActions: GvTopbarAction[] = [
+myActions: HelixTopbarAction[] = [
   { icon: 'pi pi-bell', label: 'Notifications', command: () => this.openNotifications() },
   { icon: 'pi pi-user', label: 'Profile',        command: () => this.openProfile() },
 ];
@@ -153,7 +160,7 @@ Application footer with optional multi-column link layout and a branded copyrigh
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
 | `brandUrl` | `string` | `'https://primeng.org'` | URL the brand name links to |
-| `columns` | `GvFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`GvFooterColumn`](#gvfootercolumn) model as `GvFooterWidget` |
+| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#gvfootercolumn) model as `GvFooterWidget` |
 
 #### Content Slots
 
@@ -849,12 +856,12 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ## Interfaces
 
-### GvTopbarAction
+### HelixTopbarAction
 
-Used by [`GvTopbar`](#gvtopbar) `topbarActions` input.
+Used by [`HelixTopbar`](#helix-topbar) `topbarActions` input.
 
 ```ts
-interface GvTopbarAction {
+interface HelixTopbarAction {
   /** PrimeIcons class, e.g. 'pi pi-search' */
   icon: string;
   /** Accessible label for the button */
