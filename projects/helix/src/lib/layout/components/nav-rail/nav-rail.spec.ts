@@ -88,4 +88,28 @@ describe('HelixNavRail', () => {
     const brandEl = fixture.nativeElement.querySelector('.helix-nav-rail-brand');
     expect(brandEl?.textContent).toContain('Acme');
   });
+
+  it('renders default SVG icon when brandIcon is not set', () => {
+    fixture.detectChanges();
+    const svg = fixture.nativeElement.querySelector('.helix-nav-rail-brand svg');
+    expect(svg).toBeTruthy();
+  });
+
+  it('renders an img tag when brandIcon is a URL', () => {
+    fixture.componentRef.setInput('brandIcon', '/assets/logo.svg');
+    fixture.detectChanges();
+    const img = fixture.nativeElement.querySelector('.helix-nav-rail-brand img');
+    expect(img).toBeTruthy();
+    expect(img.getAttribute('src')).toBe('/assets/logo.svg');
+  });
+
+  it('renders inline SVG when brandIcon starts with <svg', () => {
+    fixture.componentRef.setInput(
+      'brandIcon',
+      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>',
+    );
+    fixture.detectChanges();
+    const span = fixture.nativeElement.querySelector('.helix-nav-rail-brand span');
+    expect(component.isInlineSvg()).toBe(true);
+  });
 });

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  computed,
   ElementRef,
   effect,
   inject,
@@ -8,6 +9,7 @@ import {
   type OnDestroy,
   type OnInit,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { LayoutStore } from '../../store/layout.store';
@@ -25,12 +27,30 @@ export class HelixNavRail implements OnInit, OnDestroy {
   store = inject(LayoutStore);
   router = inject(Router);
   el = inject(ElementRef);
+  private sanitizer = inject(DomSanitizer);
 
   /** Grouped navigation model. Each group renders an optional uppercase section label. */
   model = input<HelixNavGroup[]>([]);
 
   /** Application title shown in the brand area. Hidden when nav is collapsed. */
   appTitle = input<string>('Helix');
+
+  /**
+   * Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file.
+   * Falls back to the default hardcoded icon when not provided.
+   */
+  brandIcon = input<string>();
+
+  protected isInlineSvg = computed(() => this.brandIcon()?.trim().startsWith('<svg') ?? false);
+
+  protected safeBrandIcon = computed(() => {
+    const icon = this.brandIcon();
+    if (!icon) return null;
+    if (this.isInlineSvg()) {
+      return this.sanitizer.bypassSecurityTrustHtml(icon);
+    }
+    return icon;
+  });
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
