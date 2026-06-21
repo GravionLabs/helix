@@ -1,10 +1,5 @@
 import type { Routes } from '@angular/router';
-import {
-  authRoutes,
-  HelixLanding,
-  HelixNotfound,
-  helixRoutesFrom,
-} from '@gravionlabs/helix';
+import { authRoutes, HelixLanding, HelixNotfound, helixRoutesFrom } from '@gravionlabs/helix';
 import { AppShell } from './shell/app-shell';
 import { DEMO_MENU_MODEL } from './shell/menu.model';
 
