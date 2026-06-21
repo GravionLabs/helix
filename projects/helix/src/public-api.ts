@@ -26,9 +26,10 @@ export type {
   HelixFooterColumn,
   HelixFooterLink,
 } from './lib/layout/components/footer/footer.model';
-export { HelixMenu } from './lib/layout/components/menu/menu';
-export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
-export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
+export { HelixNavRail } from './lib/layout/components/nav-rail/nav-rail';
+export type { HelixNavGroup } from './lib/layout/components/nav-rail/nav-rail.model';
+export { helixNavGroupsFromMenu } from './lib/layout/components/nav-rail/nav-rail.model';
+export { HelixNavRailItem } from './lib/layout/components/nav-rail-item/nav-rail-item';
 export { HelixStatusBar } from './lib/layout/components/status-bar/status-bar';
 export type {
   HelixStatusBarTone,

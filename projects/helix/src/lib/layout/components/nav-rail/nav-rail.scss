@@ -1,0 +1,160 @@
+:host {
+  /* ---- HelixNavRail tokens ----
+     Aliases the app's own helix surface tokens (already theme-aware via
+     .app-dark through app-layout.scss), so the rail sits one step deeper
+     than content cards in both themes. Teal is the one deliberate accent
+     against this neutral base. */
+  --helix-nav-text:        var(--text-color);
+  --helix-nav-text-muted:  var(--text-color-secondary);
+  --helix-nav-hover-bg:    var(--helix-surface-hover);
+  --helix-nav-active-bg:   var(--helix-border);
+  --helix-nav-active-text: var(--text-color);
+  --helix-nav-accent:      #009f9e;
+  --helix-nav-border:      var(--helix-border);
+
+  display: contents;
+}
+
+.helix-nav-rail {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--helix-nav-width, 17rem);
+  height: 100vh;
+  z-index: 999;
+  overflow: hidden;
+  user-select: none;
+  background: var(--helix-surface-chrome);
+  color: var(--helix-nav-text);
+  border-right: 1px solid var(--helix-nav-border);
+  transition: width var(--layout-section-transition-duration);
+
+  &.helix-nav-rail-collapsed {
+    width: var(--helix-nav-width-collapsed, 4.75rem);
+  }
+}
+
+// ===== BRAND =====
+.helix-nav-rail-brand {
+  flex: 0 0 auto;
+  height: var(--helix-topbar-height, 4rem);
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  gap: 0.65rem;
+  border-bottom: 1px solid var(--helix-nav-border);
+  overflow: hidden;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--text-color);
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    min-width: 0;
+
+    &:hover {
+      color: var(--text-color);
+    }
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .helix-nav-rail-brand-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    min-width: 0;
+  }
+}
+
+.helix-nav-rail-collapsed .helix-nav-rail-brand {
+  justify-content: center;
+  padding: 0;
+
+  a {
+    gap: 0;
+  }
+}
+
+// ===== NAV =====
+.helix-nav-rail-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.85rem 0.65rem;
+}
+
+.helix-nav-rail-group {
+  margin-bottom: 1.1rem;
+}
+
+.helix-nav-rail-section {
+  padding: 0.6rem 0.75rem 0.35rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--helix-nav-text-muted);
+}
+
+.helix-nav-rail-divider {
+  height: 1px;
+  background: var(--helix-nav-border);
+  margin: 0.5rem 0.5rem;
+}
+
+.helix-nav-rail-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.helix-nav-rail-footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: var(--helix-status-bar-height, 3rem);
+  padding-right: 1.25rem;
+  border-top: 1px solid var(--helix-nav-border);
+}
+
+.helix-nav-rail-collapsed .helix-nav-rail-footer {
+  justify-content: center;
+  padding-right: 0;
+}
+
+.helix-nav-rail-collapse-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--helix-nav-text-muted);
+  cursor: pointer;
+  transition: background-color var(--element-transition-duration);
+
+  &:hover {
+    background-color: var(--helix-surface-hover);
+  }
+
+  &:focus {
+    outline-offset: -1px;
+    box-shadow: inset var(--focus-ring-shadow);
+  }
+}

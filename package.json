@@ -4,8 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve helix-demo",
-    "start:demo": "ng serve helix-demo",
-    "dev": "ng serve helix-demo",
     "build": "ng build helix && ng build helix-demo",
     "build:lib": "ng build helix",
     "build:demo": "ng build helix-demo",

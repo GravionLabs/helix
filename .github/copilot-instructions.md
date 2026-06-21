@@ -25,8 +25,8 @@ This is an Angular 21 workspace containing:
 - Use `templateUrl` and `styleUrl` (not inline `template` or `styles`)
 
 ### Component Prefix
-- All library components use the `gv-` selector prefix (e.g., `gv-topbar`, `gv-sidebar`)
-- All library class names use the `Gv` prefix (e.g., `GvTopbar`, `GvSidebar`)
+- All library components use the `helix-` selector prefix (e.g., `helix-topbar`, `helix-nav-rail`)
+- All library class names use the `Helix` prefix (e.g., `HelixTopbar`, `HelixNavRail`)
 
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
@@ -42,11 +42,11 @@ This is an Angular 21 workspace containing:
 ```
 projects/helix/src/lib/
 ├── layout/
-│   ├── components/        # Layout components (GvAppLayout, GvTopbar, etc.)
+│   ├── components/        # Layout components (HelixAppLayout, HelixTopbar, etc.)
 │   ├── store/             # NgRx Signal Store (LayoutStore, LayoutModels)
 │   └── menu-model.token.ts
 └── pages/
-    ├── auth/              # Auth pages (GvLogin, GvError, GvAccess)
+    ├── auth/              # Auth pages (HelixLogin, HelixError, HelixAccess)
     ├── landing/           # Landing page + widgets
     ├── notfound/          # 404 page
     └── empty/             # Empty state page

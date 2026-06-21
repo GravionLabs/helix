@@ -6,8 +6,8 @@
 >
   <span class="helix-status-bar-brand">{{ brand() }}</span>
 
-  @if (environment(); as env) {
-    <span class="helix-status-bar-environment">{{ env }}</span>
+  @if (envForBadge(); as env) {
+    <helix-environment-badge [environment]="env" />
   }
 
   @if (note(); as n) {

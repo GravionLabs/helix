@@ -1,21 +1,22 @@
 <div class="layout-wrapper" [ngClass]="containerClass()">
   <helix-topbar
-    [appTitle]="appTitle()"
     [items]="effectiveItems()"
   ></helix-topbar>
-  <helix-sidebar [menu]="effectiveMenu()"></helix-sidebar>
+  <helix-nav-rail
+    [model]="effectiveNavGroups()"
+    [appTitle]="appTitle()"
+  ></helix-nav-rail>
   <div class="layout-main-container">
     <div class="layout-main">
       <router-outlet></router-outlet>
     </div>
-    <helix-footer></helix-footer>
-    <helix-status-bar
-      [brand]="statusBarBrand()"
-      [environment]="statusBarEnvironment()"
-      [note]="statusBarNote()"
-      [tone]="statusBarTone()"
-      [versions]="statusBarVersions()"
-    />
   </div>
+  <helix-status-bar
+    [brand]="statusBarBrand()"
+    [environment]="statusBarEnvironment()"
+    [note]="statusBarNote()"
+    [tone]="statusBarTone()"
+    [versions]="statusBarVersions()"
+  />
   <div class="layout-mask"></div>
 </div>

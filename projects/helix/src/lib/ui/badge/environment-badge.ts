@@ -2,12 +2,13 @@ import { Component, computed, input } from '@angular/core';
 import type { BadgeSeverity } from './badge';
 import { HelixBadge } from './badge';
 
-export type Environment = 'development' | 'staging' | 'production';
+export type Environment = 'development' | 'testing' | 'staging' | 'production';
 
 const ENV_MAP: Record<Environment, { severity: BadgeSeverity; icon: string; label: string }> = {
-  development: { severity: 'info', icon: 'pi pi-code', label: 'Development' },
+  development: { severity: 'success', icon: 'pi pi-code', label: 'Development' },
+  testing: { severity: 'info', icon: 'pi pi-flask', label: 'Testing' },
   staging: { severity: 'warn', icon: 'pi pi-layers', label: 'Staging' },
-  production: { severity: 'success', icon: 'pi pi-verified', label: 'Production' },
+  production: { severity: 'error', icon: 'pi pi-verified', label: 'Production' },
 };
 
 const DEFAULT_ENV = { severity: 'info' as BadgeSeverity, icon: 'pi pi-question', label: 'Unknown' };

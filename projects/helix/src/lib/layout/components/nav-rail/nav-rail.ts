@@ -9,26 +9,28 @@ import {
   type OnInit,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import type { MenuItem } from 'primeng/api';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { LayoutStore } from '../../store';
-import { HelixMenu } from '../menu/menu';
+import { LayoutStore } from '../../store/layout.store';
+import { HelixNavRailItem } from '../nav-rail-item/nav-rail-item';
+import type { HelixNavGroup } from './nav-rail.model';
 
 @Component({
-  selector: 'helix-sidebar',
+  selector: 'helix-nav-rail',
   standalone: true,
-  imports: [CommonModule, HelixMenu, RouterModule],
-  templateUrl: './sidebar.html',
-  styleUrl: './sidebar.scss',
+  imports: [CommonModule, HelixNavRailItem, RouterModule],
+  templateUrl: './nav-rail.html',
+  styleUrl: './nav-rail.scss',
 })
-export class HelixSidebar implements OnInit, OnDestroy {
+export class HelixNavRail implements OnInit, OnDestroy {
   store = inject(LayoutStore);
   router = inject(Router);
   el = inject(ElementRef);
 
-  /** Menu model passed by the parent (e.g. HelixAppLayout). */
-  menu = input<MenuItem[]>([]);
-  appTitle = input('Helix');
+  /** Grouped navigation model. Each group renders an optional uppercase section label. */
+  model = input<HelixNavGroup[]>([]);
+
+  /** Application title shown in the brand area. Hidden when nav is collapsed. */
+  appTitle = input<string>('Helix');
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
@@ -72,7 +74,6 @@ export class HelixSidebar implements OnInit, OnDestroy {
 
   private onRouteChange(path: string) {
     this.store.setActivePath(path);
-    this.store.setExpandedRoot(null);
     this.store.closeMobileMenu();
   }
 
@@ -96,10 +97,10 @@ export class HelixSidebar implements OnInit, OnDestroy {
 
   private isOutsideClicked(event: MouseEvent): boolean {
     const topbarButtonEl = document.querySelector('.topbar-start > button');
-    const sidebarEl = this.el.nativeElement;
+    const railEl = this.el.nativeElement;
     return !(
-      sidebarEl?.isSameNode(event.target as Node) ||
-      sidebarEl?.contains(event.target as Node) ||
+      railEl?.isSameNode(event.target as Node) ||
+      railEl?.contains(event.target as Node) ||
       topbarButtonEl?.isSameNode(event.target as Node) ||
       topbarButtonEl?.contains(event.target as Node)
     );

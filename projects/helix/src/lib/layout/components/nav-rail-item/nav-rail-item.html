@@ -1,0 +1,55 @@
+@if (hasChildren()) {
+  <a
+    class="helix-nav-rail-link"
+    [class.active]="hasActiveDescendant()"
+    [title]="item()?.label"
+    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
+    (click)="itemClick($event)"
+    tabindex="0"
+    pRipple
+  >
+    @if (item()?.icon) {
+      <i [ngClass]="item()?.icon" class="helix-nav-rail-icon"></i>
+    }
+    @if (!isCollapsed()) {
+      <span class="helix-nav-rail-label">{{ item()?.label }}</span>
+      <i
+        class="pi pi-chevron-down helix-nav-rail-chevron"
+        [class.helix-nav-rail-chevron-open]="isExpanded()"
+      ></i>
+    }
+  </a>
+  @if (isExpanded() && !isCollapsed()) {
+    <ul
+      class="helix-nav-rail-sublist"
+      [animate.enter]="initialized() ? 'helix-nav-rail-submenu-enter' : null"
+      [animate.leave]="'helix-nav-rail-submenu-leave'"
+    >
+      @for (child of item()?.items; track child.label) {
+        <li helix-nav-rail-item [item]="child" [parentPath]="fullPath()" [depth]="depth() + 1"></li>
+      }
+    </ul>
+  }
+} @else {
+  <a
+    class="helix-nav-rail-link"
+    [class.active]="isActive()"
+    [attr.aria-current]="isActive() ? 'page' : null"
+    [title]="item()?.label"
+    [routerLink]="item()?.routerLink"
+    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
+    (click)="itemClick($event)"
+    tabindex="0"
+    pRipple
+  >
+    @if (isActive() && !isCollapsed()) {
+      <span class="helix-nav-rail-accent"></span>
+    }
+    @if (item()?.icon) {
+      <i [ngClass]="item()?.icon" class="helix-nav-rail-icon"></i>
+    }
+    @if (!isCollapsed()) {
+      <span class="helix-nav-rail-label">{{ item()?.label }}</span>
+    }
+  </a>
+}

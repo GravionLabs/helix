@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
+import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
-import { HelixFooter } from '../footer/footer';
-import { HelixSidebar } from '../sidebar/sidebar';
+import { HelixNavRail } from '../nav-rail/nav-rail';
+import { helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import { HelixStatusBar } from '../status-bar/status-bar';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from '../status-bar/status-bar.model';
 import type { AlertItem } from '../topbar/actions/alert-action';
@@ -15,13 +16,14 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 @Component({
   selector: 'helix-app-layout',
   standalone: true,
-  imports: [CommonModule, HelixTopbar, HelixSidebar, RouterModule, HelixFooter, HelixStatusBar],
+  imports: [CommonModule, HelixTopbar, HelixNavRail, RouterModule, HelixStatusBar],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class HelixAppLayout {
   appTitle = input('Helix');
+  environment = input<Environment | undefined>();
   alertCount = input(0);
   alerts = input<AlertItem[] | undefined>();
 
@@ -46,6 +48,16 @@ export class HelixAppLayout {
     const inputMenu = this.menu();
     if (inputMenu.length > 0) return inputMenu;
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
+  });
+
+  protected effectiveNavGroups = computed(() =>
+    helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[]),
+  );
+
+  protected effectiveEnvironment = computed<Environment | undefined>(() => {
+    const input = this.environment();
+    if (input !== undefined) return input;
+    return this.activatedRoute.snapshot.data['environment'] as Environment | undefined;
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {
