@@ -13,12 +13,14 @@
   position: fixed;
   height: 4rem;
   z-index: 997;
-  left: 0;
+  left: 17rem;
   top: 0;
-  width: 100%;
+  width: calc(100% - 17rem);
   padding: 0 2rem;
   background-color: var(--surface-card);
-  transition: left var(--layout-section-transition-duration);
+  transition:
+    left var(--layout-section-transition-duration),
+    width var(--layout-section-transition-duration);
   display: flex;
   align-items: center;
   gap: 1rem;

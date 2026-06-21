@@ -19,6 +19,7 @@
   --focus-ring-offset: var(--p-focus-ring-offset);
   --focus-ring-shadow: var(--p-focus-ring-shadow);
   --helix-status-bar-height: 2rem;
+  --helix-layout-gap: 0.5rem;
 }
 
 :root {
@@ -66,13 +67,21 @@ a {
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
-  padding: 4.5rem 0.5rem 0 0.5rem;
-  transition: margin-left var(--layout-section-transition-duration);
+  padding: 4.5rem var(--helix-layout-gap) 0 var(--helix-layout-gap);
+  transition:
+    margin-left var(--layout-section-transition-duration),
+    padding var(--layout-section-transition-duration);
 }
 
 .layout-main {
   flex: 1 1 auto;
-  padding-bottom: 2rem;
+  padding-bottom: var(--helix-layout-gap);
+}
+
+// Status bar: stretch to fill the full container width (negate container padding)
+helix-status-bar {
+  margin-left: calc(-1 * var(--helix-layout-gap));
+  margin-right: calc(-1 * var(--helix-layout-gap));
 }
 
 // ===== LAYOUT MASK =====
@@ -103,6 +112,11 @@ a {
       .layout-main-container {
         margin-left: 0;
         padding-left: 1rem;
+      }
+
+      .layout-topbar {
+        left: 0;
+        width: 100%;
       }
 
       .helix-nav-rail {
@@ -140,11 +154,21 @@ a {
           margin-left: 0;
           padding-left: 1rem;
         }
+
+        .layout-topbar {
+          left: 0;
+          width: 100%;
+        }
       }
 
       &.layout-sidebar-collapsed {
         .layout-main-container {
           margin-left: 4.75rem;
+        }
+
+        .layout-topbar {
+          left: 4.75rem;
+          width: calc(100% - 4.75rem);
         }
       }
     }
@@ -164,6 +188,11 @@ a {
     .layout-main-container {
       margin-left: 0;
       padding-left: 1rem;
+    }
+
+    .layout-topbar {
+      left: 0;
+      width: 100%;
     }
 
     .helix-nav-rail {
