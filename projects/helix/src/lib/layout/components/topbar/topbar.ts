@@ -6,13 +6,11 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { StyleClassModule } from 'primeng/styleclass';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
-import { type Environment, HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
-import type { HelixTopbarAction, HelixTopbarItem } from './topbar.model';
 import { HelixAlertAction } from './actions/alert-action';
 import { HelixConfiguratorAction } from './actions/configurator-action';
 import { HelixDarkModeAction } from './actions/dark-mode-action';
+import type { HelixTopbarAction, HelixTopbarItem } from './topbar.model';
 
-export type { Environment } from '../../../ui/badge/environment-badge';
 export type { HelixTopbarAction } from './topbar.model';
 
 const DEFAULT_ACTIONS: HelixTopbarAction[] = [
@@ -37,7 +35,6 @@ const DEFAULT_ITEMS: HelixTopbarItem[] = [
     HelixAlertAction,
     HelixConfiguratorAction,
     HelixDarkModeAction,
-    HelixEnvironmentBadge,
     Breadcrumb,
   ],
   templateUrl: './topbar.html',
@@ -47,7 +44,6 @@ export class HelixTopbar {
   appTitle = input('Helix');
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<MenuItem[] | undefined>(undefined);
-  environment = input<Environment | undefined>();
   items = input<HelixTopbarItem[]>(DEFAULT_ITEMS);
 
   store = inject(LayoutStore);

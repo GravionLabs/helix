@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
-import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixFooter } from '../footer/footer';
@@ -21,7 +20,6 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 })
 export class HelixAppLayout {
   appTitle = input('Helix');
-  environment = input<Environment | undefined>();
   alertCount = input(0);
   alerts = input<AlertItem[] | undefined>();
 
@@ -39,12 +37,6 @@ export class HelixAppLayout {
     const inputMenu = this.menu();
     if (inputMenu.length > 0) return inputMenu;
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
-  });
-
-  protected effectiveEnvironment = computed<Environment | undefined>(() => {
-    const input = this.environment();
-    if (input !== undefined) return input;
-    return this.activatedRoute.snapshot.data['environment'] as Environment | undefined;
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {
