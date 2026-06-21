@@ -43,6 +43,11 @@
     flex-shrink: 0;
   }
 
+  ::ng-deep .p-breadcrumb {
+    background: inherit;
+    color: inherit;
+  }
+
   .layout-topbar-action {
     display: inline-flex;
     justify-content: center;
@@ -79,6 +84,7 @@
 
   .layout-menu-button {
     flex-shrink: 0;
+    margin-left: -0.5rem;
   }
 
   .layout-topbar-menu-button {

@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { LayoutStore } from '../../store/layout.store';

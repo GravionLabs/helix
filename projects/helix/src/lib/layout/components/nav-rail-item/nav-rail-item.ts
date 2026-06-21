@@ -35,7 +35,7 @@ export class HelixNavRailItem implements AfterViewInit {
     if (ownPath) {
       const parent = this.parentPath();
       if (parent && !ownPath.startsWith(parent)) {
-        return parent + ownPath;
+        return `${parent}/${ownPath}`;
       }
       return ownPath;
     }
@@ -46,10 +46,10 @@ export class HelixNavRailItem implements AfterViewInit {
 
   fullPath = computed(() => {
     const itemPath = this.item()?.path;
-    if (!itemPath) return this.parentPath();
+    if (itemPath == null) return this.parentPath();
     const parent = this.parentPath();
     if (parent && !itemPath.startsWith(parent)) {
-      return parent + itemPath;
+      return `${parent}/${itemPath}`;
     }
     return itemPath;
   });
@@ -57,7 +57,7 @@ export class HelixNavRailItem implements AfterViewInit {
   isActive = computed(() => {
     if (this.hasChildren()) return false;
     const itemPath = this.item()?.path;
-    if (!itemPath) return false;
+    if (itemPath == null) return false;
     const normalizedPath = this.store.activePath()?.replace(/^\//, '') ?? '';
     const normalizedFull = (this.fullPath() ?? '').replace(/^\//, '');
     return normalizedPath.startsWith(normalizedFull);
@@ -68,19 +68,22 @@ export class HelixNavRailItem implements AfterViewInit {
     const items = this.item()?.items;
     if (!items) return false;
 
-    const match = (list: HelixRouteMenuItem[]): boolean =>
+    const parentFullPath = (this.fullPath() ?? '').replace(/^\//, '');
+
+    const match = (list: HelixRouteMenuItem[], prefix: string): boolean =>
       list.some((child) => {
-        if (
-          child.path != null &&
-          child.path !== '' &&
-          normalized.startsWith(child.path.replace(/^\//, ''))
-        ) {
+        const childFullPath = child.path
+          ? prefix
+            ? `${prefix}/${child.path.replace(/^\//, '')}`
+            : child.path.replace(/^\//, '')
+          : prefix;
+        if (childFullPath && normalized.startsWith(childFullPath)) {
           return true;
         }
-        return child.items ? match(child.items) : false;
+        return child.items ? match(child.items, childFullPath) : false;
       });
 
-    return match(items);
+    return match(items, parentFullPath);
   });
 
   isExpanded = computed(
