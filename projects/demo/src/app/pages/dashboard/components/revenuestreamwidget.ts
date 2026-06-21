@@ -6,10 +6,8 @@ import { ChartModule } from 'primeng/chart';
   standalone: true,
   selector: 'app-revenue-stream-widget',
   imports: [ChartModule],
-  template: `<div class="card mb-2!">
-    <div class="font-semibold text-xl mb-2">Revenue Stream</div>
-    <p-chart type="bar" [data]="chartData()" [options]="chartOptions()" class="h-100" />
-  </div>`,
+  templateUrl: './revenuestreamwidget.html',
+  styleUrl: './revenuestreamwidget.scss',
 })
 export class RevenueStreamWidget {
   store = inject(LayoutStore);
