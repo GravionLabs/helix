@@ -11,6 +11,13 @@
       <router-outlet></router-outlet>
     </div>
     <helix-footer></helix-footer>
+    <helix-status-bar
+      [brand]="statusBarBrand()"
+      [environment]="statusBarEnvironment()"
+      [note]="statusBarNote()"
+      [tone]="statusBarTone()"
+      [versions]="statusBarVersions()"
+    />
   </div>
   <div class="layout-mask"></div>
 </div>
