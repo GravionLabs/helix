@@ -60,11 +60,6 @@ describe('HelixAppLayout', () => {
     expect(component.alertCount()).toBe(0);
   });
 
-  it('should reflect custom environment input', () => {
-    fixture.componentRef.setInput('environment', 'development');
-    expect(component.environment()).toBe('development');
-  });
-
   it('should reflect custom alertCount and alerts inputs', () => {
     const alerts = [{ id: '1', label: 'Test', severity: 'error' }];
     fixture.componentRef.setInput('alertCount', 3);

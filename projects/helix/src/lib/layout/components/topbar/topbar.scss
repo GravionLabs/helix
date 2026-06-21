@@ -21,30 +21,21 @@
   transition: left var(--layout-section-transition-duration);
   display: flex;
   align-items: center;
+  gap: 1rem;
 
-  .layout-topbar-logo-container {
-    width: 20rem;
+  .layout-topbar-start {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
   }
 
-  .layout-topbar-logo {
-    display: inline-flex;
+  .layout-topbar-end {
+    display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    border-radius: var(--content-border-radius);
-    color: var(--text-color);
-    font-weight: 500;
-    gap: 0.5rem;
-    cursor: default;
-
-    svg {
-      width: 3rem;
-    }
-
-    &:focus-visible {
-      @include focused();
-    }
+    gap: 1rem;
+    flex-shrink: 0;
   }
 
   .layout-topbar-action {
@@ -82,17 +73,11 @@
   }
 
   .layout-menu-button {
-    margin-right: 0.5rem;
+    flex-shrink: 0;
   }
 
   .layout-topbar-menu-button {
     display: none;
-  }
-
-  .layout-topbar-actions {
-    margin-left: auto;
-    display: flex;
-    gap: 1rem;
   }
 
   .layout-topbar-menu-content {
@@ -110,13 +95,8 @@
   .layout-topbar {
     padding: 0 2rem;
 
-    .layout-topbar-logo-container {
-      width: auto;
-    }
-
     .layout-menu-button {
       margin-left: 0;
-      margin-right: 0.5rem;
     }
 
     .layout-topbar-menu-button {

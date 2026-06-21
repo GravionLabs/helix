@@ -9,7 +9,6 @@ import { DEMO_MENU_MODEL } from './menu.model';
   template: `
     <helix-app-layout
       appTitle="Helix Demo"
-      environment="development"
       [alertCount]="3"
       [menu]="menu"
     />
