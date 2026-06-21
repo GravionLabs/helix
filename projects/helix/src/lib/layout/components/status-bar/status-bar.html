@@ -1,0 +1,25 @@
+<div
+  class="helix-status-bar"
+  [style.height]="height()"
+  [style.background-color]="bgColor()"
+  [style.color]="textColor()"
+>
+  <span class="helix-status-bar-brand">{{ brand() }}</span>
+
+  @if (environment(); as env) {
+    <span class="helix-status-bar-environment">{{ env }}</span>
+  }
+
+  @if (note(); as n) {
+    <span class="helix-status-bar-note">{{ n }}</span>
+  }
+
+  <div class="helix-status-bar-versions">
+    @for (ver of versions(); track ver.label) {
+      <span class="helix-status-bar-version">
+        <span class="helix-status-bar-version-label">{{ ver.label }}:</span>
+        <span class="helix-status-bar-version-value">{{ ver.value }}</span>
+      </span>
+    }
+  </div>
+</div>
