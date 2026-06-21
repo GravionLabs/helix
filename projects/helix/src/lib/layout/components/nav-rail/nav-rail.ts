@@ -29,6 +29,9 @@ export class HelixNavRail implements OnInit, OnDestroy {
   /** Grouped navigation model. Each group renders an optional uppercase section label. */
   model = input<HelixNavGroup[]>([]);
 
+  /** Application title shown in the brand area. Hidden when nav is collapsed. */
+  appTitle = input<string>('Helix');
+
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();
 

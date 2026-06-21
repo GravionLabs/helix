@@ -5,7 +5,6 @@ import type { MenuItem } from 'primeng/api';
 import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
-import { HelixFooter } from '../footer/footer';
 import { HelixNavRail } from '../nav-rail/nav-rail';
 import { helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import { HelixStatusBar } from '../status-bar/status-bar';
@@ -17,7 +16,7 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 @Component({
   selector: 'helix-app-layout',
   standalone: true,
-  imports: [CommonModule, HelixTopbar, HelixNavRail, RouterModule, HelixFooter, HelixStatusBar],
+  imports: [CommonModule, HelixTopbar, HelixNavRail, RouterModule, HelixStatusBar],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
   encapsulation: ViewEncapsulation.None,

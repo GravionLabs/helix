@@ -1,18 +1,1 @@
-.app-shell-brand-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  text-decoration: none;
-}
-
-.app-shell-brand-mark {
-  flex-shrink: 0;
-}
-
-.app-shell-brand-word {
-  color: var(--helix-nav-active-text);
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
+// App shell has no local styles — the nav-rail handles brand rendering internally.

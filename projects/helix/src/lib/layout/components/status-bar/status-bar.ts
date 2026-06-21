@@ -6,7 +6,7 @@ const TONE_BG: Record<HelixStatusBarTone, string> = {
   production: 'var(--p-surface-800, #1e293b)',
   success: 'var(--p-green-600, #16a34a)',
   danger: 'var(--p-red-600, #dc2626)',
-  neutral: 'var(--p-surface-400, #94a3b8)',
+  neutral: 'var(--helix-surface-card, var(--surface-card))',
 };
 
 const TONE_TEXT: Record<HelixStatusBarTone, string> = {
@@ -14,7 +14,7 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
   production: '#fff',
   success: '#fff',
   danger: '#fff',
-  neutral: '#fff',
+  neutral: 'var(--text-color)',
 };
 
 @Component({

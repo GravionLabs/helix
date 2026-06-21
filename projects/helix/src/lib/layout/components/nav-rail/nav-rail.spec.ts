@@ -82,23 +82,11 @@ describe('HelixNavRail', () => {
     expect(fixture.nativeElement.querySelector('.helix-nav-rail-section')).toBeNull();
   });
 
-  it('projects [brand] content into the brand header', async () => {
-    @Component({
-      standalone: true,
-      imports: [HelixNavRail],
-      template: `
-        <helix-nav-rail>
-          <span brand class="my-brand">Acme</span>
-        </helix-nav-rail>
-      `,
-    })
-    class HostComponent {}
+  it('renders the appTitle in the brand area', () => {
+    fixture.componentRef.setInput('appTitle', 'Acme');
+    fixture.detectChanges();
 
-    const hostFixture = TestBed.createComponent(HostComponent);
-    hostFixture.detectChanges();
-    await hostFixture.whenStable();
-
-    const brandEl = hostFixture.nativeElement.querySelector('.my-brand');
-    expect(brandEl?.textContent.trim()).toBe('Acme');
+    const brandEl = fixture.nativeElement.querySelector('.helix-nav-rail-brand');
+    expect(brandEl?.textContent).toContain('Acme');
   });
 });
