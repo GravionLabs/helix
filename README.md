@@ -34,6 +34,18 @@ import { MenuItem } from 'primeng/api';
 export class AppComponent {}
 ```
 
+## Styles
+
+Several components (e.g. the theme configurator) use Tailwind utility classes baked into their templates. The library ships a prebuilt stylesheet covering those classes — add it to your app's global styles so they resolve correctly, since Tailwind's content scanning does not look inside `node_modules` by default:
+
+```json
+// angular.json
+"styles": [
+  "node_modules/@gravionlabs/helix/styles.css",
+  "src/styles.scss"
+]
+```
+
 ## Development
 
 This workspace contains the library (`projects/helix`) and a demo application (`projects/demo`).
