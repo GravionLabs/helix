@@ -1,10 +1,12 @@
 <div class="layout-wrapper" [ngClass]="containerClass()">
   <helix-topbar
     [items]="effectiveItems()"
+    [topbarActions]="effectiveTopbarActions()"
   ></helix-topbar>
   <helix-nav-rail
     [model]="effectiveNavGroups()"
     [appTitle]="appTitle()"
+    [brandIcon]="brandIcon()"
   ></helix-nav-rail>
   <div class="layout-main-container">
     <div class="layout-main">

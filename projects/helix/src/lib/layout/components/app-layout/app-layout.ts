@@ -9,9 +9,8 @@ import { HelixNavRail } from '../nav-rail/nav-rail';
 import { helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import { HelixStatusBar } from '../status-bar/status-bar';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from '../status-bar/status-bar.model';
-import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixTopbar } from '../topbar/topbar';
-import type { HelixTopbarItem } from '../topbar/topbar.model';
+import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model';
 
 @Component({
   selector: 'helix-app-layout',
@@ -24,8 +23,18 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 export class HelixAppLayout {
   appTitle = input('Helix');
   environment = input<Environment | undefined>();
-  alertCount = input(0);
-  alerts = input<AlertItem[] | undefined>();
+
+  /** Topbar items. When provided, overrides the default darkmode / configurator / mobile items. */
+  items = input<HelixTopbarItem[] | undefined>();
+
+  /** Topbar actions rendered in the right-side dropdown. */
+  topbarActions = input<HelixTopbarAction[] | undefined>();
+
+  /**
+   * Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or a URL to an SVG file.
+   * Falls back to the default hardcoded icon when not provided.
+   */
+  brandIcon = input<string>();
 
   /** Status bar inputs */
   statusBarEnvironment = input<string | undefined>();
@@ -39,6 +48,12 @@ export class HelixAppLayout {
    * Also auto-populated from ActivatedRoute.data['menu'] when used as a route component.
    */
   menu = input<HelixRouteMenuItem[]>([]);
+
+  private static readonly DEFAULT_TOP_ACTIONS: HelixTopbarAction[] = [
+    { icon: 'pi pi-calendar', label: 'Calendar' },
+    { icon: 'pi pi-inbox', label: 'Messages' },
+    { icon: 'pi pi-user', label: 'Profile' },
+  ];
 
   store = inject(LayoutStore);
   private activatedRoute = inject(ActivatedRoute);
@@ -61,22 +76,14 @@ export class HelixAppLayout {
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {
-    const items: HelixTopbarItem[] = [
-      { type: 'darkmode' },
-      { type: 'configurator' },
-      { type: 'mobile' },
-    ];
-    const alertCountVal =
-      this.alertCount() ||
-      (this.activatedRoute.snapshot.data['alertCount'] as number | undefined) ||
-      0;
-    const alertsVal =
-      this.alerts() ?? (this.activatedRoute.snapshot.data['alerts'] as AlertItem[] | undefined);
-    if (alertCountVal > 0) {
-      items.push({ type: 'alert', badgeCount: alertCountVal, alerts: alertsVal });
-    }
-    return items;
+    const custom = this.items();
+    if (custom !== undefined) return custom;
+    return [{ type: 'darkmode' }, { type: 'configurator' }, { type: 'mobile' }];
   });
+
+  protected effectiveTopbarActions = computed(
+    () => this.topbarActions() ?? HelixAppLayout.DEFAULT_TOP_ACTIONS,
+  );
 
   constructor() {
     effect(() => {

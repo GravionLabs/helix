@@ -82,40 +82,28 @@ export class AppComponent {
 **Selector:** `<helix-app-layout>`  
 **File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
 
-<<<<<<< HEAD
 Top-level shell that composes the topbar, nav rail, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
-=======
-Top-level shell that composes the topbar, sidebar, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
->>>>>>> main
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `appTitle` | `string` | `'Helix'` | Application title forwarded to `HelixTopbar` |
-<<<<<<< HEAD
-
-#### Content slots
-
-| Selector | Description |
-|----------|--------------|
-| `[brand]` | Forwarded into `HelixNavRail`'s `[brand]` slot — see [HelixNavRail](#helixnavrail). |
-=======
 | `menu` | `HelixRouteMenuItem[]` | `[]` | Navigation menu model. Overrides route data when provided |
-| `alertCount` | `number` | `0` | Number of alerts shown in the topbar alert badge |
-| `alerts` | `AlertItem[]` | `undefined` | Alert items for the topbar alert dropdown |
->>>>>>> main
+| `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
+| `topbarActions` | `HelixTopbarAction[]` | `calendar`, `inbox`, `profile` | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks |
+| `brandIcon` | `string` | — | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon |
 
 #### Example
 
 ```html
-<<<<<<< HEAD
-<helix-app-layout appTitle="Gravion Portal">
-  <a brand routerLink="/">Gravion Portal</a>
-</helix-app-layout>
-=======
-<helix-app-layout appTitle="Gravion Portal" [menu]="myMenu" />
->>>>>>> main
+<helix-app-layout
+  appTitle="Gravion Portal"
+  [menu]="myMenu"
+  [items]="myItems"
+  [topbarActions]="myActions"
+  brandIcon="/assets/logo.svg"
+/>
 ```
 
 ---
@@ -131,15 +119,10 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-<<<<<<< HEAD
-| `appTitle` | `string` | `'SAKAI'` | Application name displayed in the topbar |
-| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (search, bell, user) | Action buttons rendered on the right side of the topbar |
-=======
 | `appTitle` | `string` | `'Helix'` | Application name |
-| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered on the right side of the topbar |
+| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered in the right-side dropdown |
 | `breadcrumbs` | `MenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
 | `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Configuration items rendered in the right action cluster |
->>>>>>> main
 
 #### Content Slots
 
@@ -156,14 +139,7 @@ The topbar is split into two sections:
 #### Example
 
 ```html
-<<<<<<< HEAD
-<helix-topbar appTitle="My App" [topbarActions]="myActions">
-  <p-breadcrumb gvTopbarStart [model]="breadcrumbs" />
-  <input gvTopbarEnd pInputText placeholder="Search…" />
-</helix-topbar>
-=======
 <helix-topbar appTitle="My App" [topbarActions]="myActions" />
->>>>>>> main
 ```
 
 ```ts
@@ -233,11 +209,7 @@ Application footer with optional multi-column link layout and a branded copyrigh
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
 | `brandUrl` | `string` | `'https://primeng.org'` | URL the brand name links to |
-<<<<<<< HEAD
-| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model as `HelixFooterWidget` |
-=======
-| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#gvfootercolumn) model as `GvFooterWidget` |
->>>>>>> main
+| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model |
 
 #### Content Slots
 
@@ -290,24 +262,17 @@ item with a chevron rather than a static heading — clicking expands its childr
 Only one item is expanded at a time app-wide (`LayoutStore.expandedRoot()`, the
 same single-key accordion the old `HelixMenuItem` used).
 
-The rail has no opinion on branding — the logo/wordmark shown in its header is
-**owned by the consuming app**, projected via the `[brand]` content slot
-(forwarded through `HelixAppLayout`'s own `[brand]` slot). This keeps app-specific
-branding out of the library; see the demo app's `app-shell.html` for a worked
-example, including hiding the wordmark when the rail is collapsed via
-`LayoutStore.isCollapsed()` (injectable anywhere — it's `providedIn: 'root'`).
+The rail's brand icon is customizable via the `brandIcon` input — pass an inline SVG
+(`<svg>…</svg>`) or a URL to an SVG file. Falls back to the default helix icon when
+not provided. The app title (`appTitle`) renders alongside regardless.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `model` | `HelixNavGroup[]` | `[]` | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
-
-#### Content slots
-
-| Selector | Description |
-|----------|--------------|
-| `[brand]` | Projected into the rail's 4.5rem header. Provide your own logo/wordmark; hide parts of it in collapsed mode by injecting `LayoutStore` and checking `isCollapsed()` yourself. |
+| `appTitle` | `string` | `'Helix'` | Application title shown in the brand area. Hidden when nav is collapsed |
+| `brandIcon` | `string` | — | Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default hardcoded icon |
 
 #### `HelixNavGroup`
 
@@ -345,12 +310,7 @@ const navGroups = helixNavGroupsFromMenu(menu);
 ```
 
 ```html
-<helix-app-layout [menu]="menu">
-  <a brand routerLink="/">
-    <img src="logo.svg" alt="" />
-    <span>My App</span>
-  </a>
-</helix-app-layout>
+<helix-app-layout [menu]="menu" brandIcon="/assets/logo.svg" />
 ```
 
 ---
@@ -964,11 +924,7 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ### HelixTopbarAction
 
-<<<<<<< HEAD
 Used by [`HelixTopbar`](#helixtopbar) `topbarActions` input.
-=======
-Used by [`HelixTopbar`](#helix-topbar) `topbarActions` input.
->>>>>>> main
 
 ```ts
 interface HelixTopbarAction {

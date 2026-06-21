@@ -56,18 +56,6 @@ describe('HelixAppLayout', () => {
     expect(component.appTitle()).toBe('MY APP');
   });
 
-  it('should have default alertCount 0', () => {
-    expect(component.alertCount()).toBe(0);
-  });
-
-  it('should reflect custom alertCount and alerts inputs', () => {
-    const alerts = [{ id: '1', label: 'Test', severity: 'error' }];
-    fixture.componentRef.setInput('alertCount', 3);
-    fixture.componentRef.setInput('alerts', alerts);
-    expect(component.alertCount()).toBe(3);
-    expect(component.alerts()).toEqual(alerts);
-  });
-
   it('effectiveItems() should include darkmode, configurator, mobile by default', () => {
     const priv = component as unknown as { effectiveItems: () => { type: string }[] };
     const items = priv.effectiveItems();
@@ -77,16 +65,37 @@ describe('HelixAppLayout', () => {
     expect(items[2].type).toBe('mobile');
   });
 
-  it('effectiveItems() should include alert item when alertCount > 0', () => {
-    fixture.componentRef.setInput('alertCount', 5);
-    fixture.detectChanges();
+  it('effectiveItems() should return custom items when items input is set', () => {
+    const custom = [
+      { type: 'action' as const, icon: 'pi pi-bell', label: 'Alerts', command: () => {} },
+    ];
+    fixture.componentRef.setInput('items', custom);
+    const priv = component as unknown as { effectiveItems: () => { type: string }[] };
+    expect(priv.effectiveItems()).toEqual(custom);
+  });
+
+  it('effectiveTopbarActions() should return default actions when topbarActions not set', () => {
     const priv = component as unknown as {
-      effectiveItems: () => { type: string; badgeCount: number }[];
+      effectiveTopbarActions: () => { icon: string; label: string }[];
     };
-    const items = priv.effectiveItems();
-    const alertItem = items.find((b) => b.type === 'alert');
-    expect(alertItem).toBeTruthy();
-    expect(alertItem!.badgeCount).toBe(5);
+    const actions = priv.effectiveTopbarActions();
+    expect(actions.length).toBe(3);
+    expect(actions[0].icon).toBe('pi pi-calendar');
+  });
+
+  it('effectiveTopbarActions() should return custom actions when topbarActions input is set', () => {
+    const custom = [{ icon: 'pi pi-cog', label: 'Settings', command: () => {} }];
+    fixture.componentRef.setInput('topbarActions', custom);
+    const priv = component as unknown as {
+      effectiveTopbarActions: () => { icon: string; label: string }[];
+    };
+    expect(priv.effectiveTopbarActions()).toEqual(custom);
+  });
+
+  it('brandIcon() should reflect input', () => {
+    expect(component.brandIcon()).toBeUndefined();
+    fixture.componentRef.setInput('brandIcon', '<svg><path d="..." /></svg>');
+    expect(component.brandIcon()).toBe('<svg><path d="..." /></svg>');
   });
 
   it('containerClass() should have layout-static when menuMode is static', () => {
