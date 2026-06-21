@@ -90,7 +90,7 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 |------|------|---------|-------------|
 | `appTitle` | `string` | `'Helix'` | Application title forwarded to `HelixTopbar` |
 | `menu` | `HelixRouteMenuItem[]` | `[]` | Navigation menu model. Overrides route data when provided |
-| `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
+| `topbarItems` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
 | `topbarActions` | `HelixTopbarAction[]` | `calendar`, `inbox`, `profile` | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks |
 | `brandIcon` | `string` | — | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon |
 
@@ -100,7 +100,7 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 <helix-app-layout
   appTitle="Gravion Portal"
   [menu]="myMenu"
-  [items]="myItems"
+  [topbarItems]="myItems"
   [topbarActions]="myActions"
   brandIcon="/assets/logo.svg"
 />

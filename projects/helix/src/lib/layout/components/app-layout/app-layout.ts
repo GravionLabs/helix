@@ -25,7 +25,7 @@ export class HelixAppLayout {
   environment = input<Environment | undefined>();
 
   /** Topbar items. When provided, overrides the default darkmode / configurator / mobile items. */
-  items = input<HelixTopbarItem[] | undefined>();
+  topbarItems = input<HelixTopbarItem[] | undefined>();
 
   /** Topbar actions rendered in the right-side dropdown. */
   topbarActions = input<HelixTopbarAction[] | undefined>();
@@ -76,7 +76,7 @@ export class HelixAppLayout {
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {
-    const custom = this.items();
+    const custom = this.topbarItems();
     if (custom !== undefined) return custom;
     return [{ type: 'darkmode' }, { type: 'configurator' }, { type: 'mobile' }];
   });

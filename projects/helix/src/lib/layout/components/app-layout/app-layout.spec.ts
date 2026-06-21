@@ -65,11 +65,11 @@ describe('HelixAppLayout', () => {
     expect(items[2].type).toBe('mobile');
   });
 
-  it('effectiveItems() should return custom items when items input is set', () => {
+  it('effectiveItems() should return custom items when topbarItems input is set', () => {
     const custom = [
       { type: 'action' as const, icon: 'pi pi-bell', label: 'Alerts', command: () => {} },
     ];
-    fixture.componentRef.setInput('items', custom);
+    fixture.componentRef.setInput('topbarItems', custom);
     const priv = component as unknown as { effectiveItems: () => { type: string }[] };
     expect(priv.effectiveItems()).toEqual(custom);
   });
