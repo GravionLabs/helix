@@ -29,6 +29,11 @@ export type {
 export { HelixMenu } from './lib/layout/components/menu/menu';
 export { HelixMenuItem } from './lib/layout/components/menu-item/menu-item';
 export { HelixSidebar } from './lib/layout/components/sidebar/sidebar';
+export { HelixStatusBar } from './lib/layout/components/status-bar/status-bar';
+export type {
+  HelixStatusBarTone,
+  HelixStatusBarVersion,
+} from './lib/layout/components/status-bar/status-bar.model';
 export type { AlertItem } from './lib/layout/components/topbar/actions/alert-action';
 export { HelixAlertAction } from './lib/layout/components/topbar/actions/alert-action';
 export { HelixConfiguratorAction } from './lib/layout/components/topbar/actions/configurator-action';

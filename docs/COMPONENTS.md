@@ -11,6 +11,7 @@
 3. [Layout Components](#layout-components)
    - [HelixAppLayout](#helixapplayout)
    - [HelixTopbar](#helix-topbar)
+   - [HelixStatusBar](#helixstatusbar)
    - [GvFooter](#gvfooter)
    - [GvMenu](#gvmenu)
    - [Internal Layout Components](#internal-layout-components)
@@ -144,6 +145,51 @@ myActions: HelixTopbarAction[] = [
   { icon: 'pi pi-user', label: 'Profile',        command: () => this.openProfile() },
 ];
 ```
+
+---
+
+### HelixStatusBar
+
+**Selector:** `<helix-status-bar>`  
+**File:** `projects/helix/src/lib/layout/components/status-bar/status-bar.ts`
+
+Thin full-bleed status bar at the bottom of the application layout. Displays brand, environment badge, note, and version labels. Background color is determined by the `tone` input.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `brand` | `string` | `''` | Brand name displayed on the left |
+| `environment` | `string \| undefined` | `undefined` | Environment label (e.g. "staging", "production"). Rendered as an uppercase pill |
+| `note` | `string \| undefined` | `undefined` | Optional note text (e.g. "Build #1234") |
+| `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
+| `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
+| `height` | `string` | `'var(--helix-status-bar-height, 2rem)'` | Bar height |
+
+#### Example
+
+```html
+<helix-status-bar
+  brand="MyApp"
+  environment="staging"
+  note="Build #456"
+  tone="staging"
+  [versions]="[
+    { label: 'UI', value: '2.1.0' },
+    { label: 'API', value: '3.0.1' },
+  ]"
+/>
+```
+
+#### Tones
+
+| Tone | Background | Use case |
+|------|-----------|----------|
+| `staging` | Amber | Staging / QA environment |
+| `production` | Dark (surface-800) | Production environment |
+| `success` | Green | All-clear status |
+| `danger` | Red | Alert / error status |
+| `neutral` | Gray | Default / unknown |
 
 ---
 

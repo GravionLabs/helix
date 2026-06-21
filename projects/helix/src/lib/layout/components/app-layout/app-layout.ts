@@ -6,6 +6,8 @@ import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixFooter } from '../footer/footer';
 import { HelixSidebar } from '../sidebar/sidebar';
+import { HelixStatusBar } from '../status-bar/status-bar';
+import type { HelixStatusBarTone, HelixStatusBarVersion } from '../status-bar/status-bar.model';
 import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixTopbar } from '../topbar/topbar';
 import type { HelixTopbarItem } from '../topbar/topbar.model';
@@ -13,7 +15,7 @@ import type { HelixTopbarItem } from '../topbar/topbar.model';
 @Component({
   selector: 'helix-app-layout',
   standalone: true,
-  imports: [CommonModule, HelixTopbar, HelixSidebar, RouterModule, HelixFooter],
+  imports: [CommonModule, HelixTopbar, HelixSidebar, RouterModule, HelixFooter, HelixStatusBar],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
   encapsulation: ViewEncapsulation.None,
@@ -22,6 +24,13 @@ export class HelixAppLayout {
   appTitle = input('Helix');
   alertCount = input(0);
   alerts = input<AlertItem[] | undefined>();
+
+  /** Status bar inputs */
+  statusBarEnvironment = input<string | undefined>();
+  statusBarNote = input<string | undefined>();
+  statusBarTone = input<HelixStatusBarTone>('neutral');
+  statusBarVersions = input<HelixStatusBarVersion[]>([]);
+  statusBarBrand = input('');
 
   /**
    * Menu model. When provided, overrides route data.
