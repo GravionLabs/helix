@@ -109,6 +109,6 @@ describe('HelixNavRail', () => {
       '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>',
     );
     fixture.detectChanges();
-    expect(component.isInlineSvg()).toBe(true);
+    expect((component as unknown as { isInlineSvg: () => boolean }).isInlineSvg()).toBe(true);
   });
 });
