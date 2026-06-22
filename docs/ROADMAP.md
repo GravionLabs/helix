@@ -23,46 +23,45 @@ NgRx Signal Store replacing sakai-ng's `LayoutService`. All components use separ
 - [x] `layout.models.ts` – `LayoutConfig`, `LayoutState`, `MenuMode`
 - [x] `layout.store.ts` – `LayoutStore` with `signalStore()`
 - [x] Dark mode via `withHooks().onInit` effect (View Transitions API)
-- [x] `GV_MENU_MODEL` injection token for configurable navigation
+- [x] `[menu]` input binding replacing removed `HELIX_MENU_MODEL` token
 
 ### Components
-- [x] `GvAppLayout` – Router-Outlet wrapper with CSS class bindings
-- [x] `GvTopbar` – Navigation bar with menu toggle
-- [x] `GvSidebar` – Collapsible sidebar with outside-click handling
-- [x] `GvMenu` – Pure presentational menu (`@Input() model`)
-- [x] `GvMenuItem` – Recursive menu item with animations
-- [x] `GvFooter` – Footer bar
-- [x] `GvConfigurator` – Theme configurator (preset, primary, surface, dark mode)
+- [x] `HelixAppLayout` – Application shell with topbar, nav-rail, footer, router outlet
+- [x] `HelixTopbar` – Navigation bar with breadcrumbs and action buttons
+- [x] `HelixNavRail` – Collapsible side-navigation rail with brand icon
+- [x] `HelixNavRailItem` – Recursive item renderer for nav rail
+- [x] `HelixFooter` – Footer bar
+- [x] `HelixConfigurator` – Theme configurator (preset, primary, surface, dark mode)
+- [x] `HelixFloatingConfigurator` – Floating theme toggle button
+- [x] `HelixStatusBar` – Status bar with environment badge
 
 ---
 
-## 🔄 Phase 3 – Pages
+## ✅ Phase 3 – Pages
 
 Generic, reusable page templates moved from the demo into the library.
 
-### Components to add
-
 #### Auth Pages
-- [ ] `GvLogin` – Login page
-- [ ] `GvError` – Error page
-- [ ] `GvAccess` – Access denied page
-- [ ] `authRoutes` – Lazy-loadable auth route config
+- [x] `HelixLogin` – Login page
+- [x] `HelixError` – Error page
+- [x] `HelixAccess` – Access denied page
+- [x] `authRoutes` – Lazy-loadable auth route config
 
 #### Utility Pages
-- [ ] `GvNotFound` – 404 Not Found page
-- [ ] `GvEmpty` – Empty state page
+- [x] `HelixNotfound` – 404 Not Found page
+- [x] `HelixEmpty` – Empty state page
 
 #### Landing Page
-- [ ] `GvLanding` – Landing page wrapper
-- [ ] `GvHeroWidget` – Hero section
-- [ ] `GvFeaturesWidget` – Features section
-- [ ] `GvHighlightsWidget` – Highlights section
-- [ ] `GvPricingWidget` – Pricing section
-- [ ] `GvFooterWidget` – Landing page footer
-- [ ] `GvTopbarWidget` – Landing page topbar
+- [x] `HelixLanding` – Landing page wrapper
+- [x] `HelixHeroWidget` – Hero section
+- [x] `HelixFeaturesWidget` – Features section
+- [x] `HelixHighlightsWidget` – Highlights section
+- [x] `HelixPricingWidget` – Pricing section
+- [x] `HelixFooterWidget` – Landing page footer
+- [x] `HelixTopbarWidget` – Landing page topbar
 
 #### Floating Configurator
-- [ ] `GvFloatingConfigurator` – Floating dark-mode + theme button (moved from demo)
+- [x] `HelixFloatingConfigurator` – Floating dark-mode + theme button (moved from demo)
 
 ### Demo stays (not in library)
 - `dashboard/` – Demo-specific charts and fake data
@@ -75,9 +74,9 @@ Generic, reusable page templates moved from the demo into the library.
 
 ## 📋 Phase 4 – Enhancements (Planned)
 
-- [ ] `@Input()` customization for all page components (titles, logos, links)
+- [x] `@Input()` customization for all page components (titles, logos, links)
+- [x] Unit tests for `LayoutStore`
 - [ ] Secondary entry points (`@gravionlabs/helix/pages`, `@gravionlabs/helix/layout`)
-- [ ] Unit tests for `LayoutStore`
 - [ ] Storybook integration
 - [ ] Separate `CHANGELOG.md` + semantic versioning via GitVersion
 
