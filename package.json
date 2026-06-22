@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve helix-demo",
+    "start": "pnpm build:lib:css && concurrently \"tailwindcss -i projects/helix/styles-src.css -o dist/helix/styles.css --watch\" \"ng serve helix-demo\"",
     "build": "pnpm build:lib && ng build helix-demo",
     "build:lib": "ng build helix && pnpm build:lib:css",
     "build:lib:css": "tailwindcss -i projects/helix/styles-src.css -o dist/helix/styles.css --content \"projects/helix/src/**/*.{html,ts}\"",

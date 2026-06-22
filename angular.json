@@ -66,7 +66,7 @@
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "projects/demo/src/styles.scss",
-              "projects/demo/src/assets/tailwind.css"
+              "dist/helix/styles.css"
             ]
           },
           "configurations": {
