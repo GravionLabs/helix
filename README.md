@@ -18,20 +18,22 @@ npm install @gravionlabs/helix
 
 ```ts
 import { Component } from '@angular/core';
-import { HelixAppLayout } from '@gravionlabs/helix';
-import { HELIX_MENU_MODEL } from '@gravionlabs/helix';
-import { MenuItem } from 'primeng/api';
+import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix';
+
+const MENU: HelixRouteMenuItem[] = [
+  { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
+  { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
+];
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [HelixAppLayout],
-  providers: [
-    { provide: HELIX_MENU_MODEL, useValue: [] satisfies MenuItem[] },
-  ],
-  template: `<helix-app-layout appTitle="My App" />`,
+  template: `<helix-app-layout appTitle="My App" [menu]="menu" />`,
 })
-export class AppComponent {}
+export class AppComponent {
+  menu = MENU;
+}
 ```
 
 ## Styles

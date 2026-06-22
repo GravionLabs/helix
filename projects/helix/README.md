@@ -68,24 +68,40 @@ layoutStore.setMenuMode('overlay');
 ## LayoutStore API
 
 | Signal / Computed | Description |
-|---|---|
+|---|---|---|
 | `darkTheme()` | Dark mode active |
 | `menuMode()` | `'static'` \| `'overlay'` |
 | `preset()` | Active theme preset |
 | `primary()` | Active primary colour |
+| `surface()` | Active surface colour |
+| `sidebarCollapsed()` | Sidebar collapsed state |
+| `expandedRoot()` | Currently expanded nav root key |
+| `activePath()` | Active route path |
+| `mobileMenuActive()` | Mobile menu open state |
+| `configSidebarVisible()` | Config sidebar visibility |
+| `menuHoverActive()` | Menu hover state |
+| `overlayMenuActive()` | Overlay menu open state |
 | `isDarkTheme()` | Computed alias |
 | `isOverlay()` | `true` when overlay mode |
-| `isSidebarActive()` | Sidebar visibility |
+| `isCollapsed()` | `true` when sidebar collapsed |
 
 | Method | Description |
-|---|---|
+|---|---|---|
 | `toggleDarkMode()` | Toggle dark / light |
 | `setMenuMode(mode)` | Set menu mode |
-| `onMenuToggle()` | Toggle sidebar |
+| `onMenuToggle()` | Toggle menu (responsive-aware) |
+| `toggleSidebar()` | Toggle sidebar collapsed state |
+| `setExpandedRoot(key)` | Set expanded nav root |
+| `setActivePath(path)` | Set active route path |
+| `setMenuHoverActive(bool)` | Set menu hover state |
+| `closeMobileMenu()` | Close mobile / overlay menu |
+| `showConfigSidebar()` | Open config sidebar |
+| `hideConfigSidebar()` | Close config sidebar |
 | `updateConfig(config)` | Partial config update |
 | `setPreset(name)` | Switch theme preset |
 | `setPrimary(name)` | Set primary colour |
 | `setSurface(name)` | Set surface colour |
+| `reset()` | Reset to default state |
 
 ## HelixTopbar Inputs
 
