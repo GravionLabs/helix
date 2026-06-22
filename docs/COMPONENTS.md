@@ -15,8 +15,12 @@
    - [HelixFooter](#helixfooter)
    - [HelixNavRail](#helixnavrail)
    - [Internal Layout Components](#internal-layout-components)
-4. [Layout Store](#layout-store)
-5. [Auth Pages](#auth-pages)
+4. [Routing Utilities](#routing-utilities)
+   - [helixRoutesFrom](#helixroutesfrom)
+   - [helixMenuLinksFrom](#helixmenulinksfrom)
+   - [helixBreadcrumbsFromRoutes](#helixbreadcrumbsfromroutes)
+5. [Layout Store](#layout-store)
+6. [Auth Pages](#auth-pages)
    - [HelixLogin](#helixlogin)
    - [HelixError](#helixerror)
    - [HelixAccess](#helixaccess)
@@ -31,12 +35,18 @@
    - [HelixFeaturesWidget](#helixfeatureswidget)
    - [HelixHighlightsWidget](#helixhighlightswidget)
    - [HelixPricingWidget](#helixpricingwidget)
-    - [HelixFooterWidget](#helixfooterwidget)
- 9. [Form Infrastructure](#form-infrastructure)
+   - [HelixFooterWidget](#helixfooterwidget)
+9. [UI Components](#ui-components)
+   - [HelixBadge](#helixbadge)
+   - [HelixEnvironmentBadge](#helixenviromentbadge)
+10. [Form Infrastructure](#form-infrastructure)
     - [HelixValidators](#helixvalidators)
     - [helixFirstError](#helixfirsterror)
     - [HelixFormField](#helixformfield)
- 10. [Interfaces](#interfaces)
+    - [HelixFormArrayWithFactory](#helixformarraywithfactory)
+    - [helixFormErrorMap](#helixformerrormap)
+11. [Interfaces](#interfaces)
+    - [HelixRouteMenuItem](#helixroutemenuitem)
 
 ---
 
@@ -328,9 +338,105 @@ beyond what's listed here. They are orchestrated internally by `HelixAppLayout`.
 
 ---
 
-## Layout Store
+## Routing Utilities
 
-**File:** `projects/helix/src/lib/layout/store/`
+Built-in helpers for deriving Angular routes, menu link models, and breadcrumbs from a single `HelixRouteMenuItem[]` tree — keeping route configuration and navigation menus in sync.
+
+### helixRoutesFrom
+
+**File:** `projects/helix/src/lib/layout/route-menu.model.ts`
+
+Converts a `HelixRouteMenuItem` tree into Angular `Routes` for use with the Router.
+
+```ts
+import { helixRoutesFrom, type HelixRouteMenuItem } from '@gravionlabs/helix';
+
+const menu: HelixRouteMenuItem[] = [
+  {
+    label: 'Dashboard',
+    icon: 'pi pi-home',
+    path: 'dashboard',
+    component: DashboardComponent,
+  },
+  {
+    label: 'Settings',
+    icon: 'pi pi-cog',
+    path: 'settings',
+    breadcrumb: 'Settings',
+    component: SettingsComponent,
+  },
+];
+
+export const appRoutes: Routes = helixRoutesFrom(menu);
+```
+
+Behaviour:
+- Items with `path` + `component` or `loadChildren` generate a route entry.
+- Items without `path` (visual-only section headers) are skipped, but their children are still recursed.
+- The `breadcrumb` value is injected into `route.data['breadcrumb']`.
+- Nested `items` under a routable item become child routes.
+- Route guards (`canActivate`) and lazy loading (`loadChildren`) are carried through.
+
+**Returns:** `Routes`
+
+---
+
+### helixMenuLinksFrom
+
+**File:** `projects/helix/src/lib/layout/route-menu.model.ts`
+
+Recursively copies a `HelixRouteMenuItem[]` tree and auto-populates `routerLink` from each item's `path`, relative to a `basePath`.
+
+```ts
+import { helixMenuLinksFrom, type HelixRouteMenuItem } from '@gravionlabs/helix';
+
+const menu: HelixRouteMenuItem[] = [
+  { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', path: 'formlayout' },
+  { label: 'Input',       icon: 'pi pi-fw pi-check-square', path: 'input' },
+];
+
+const links = helixMenuLinksFrom(menu, '/uikit');
+// → routerLink: ['/uikit/formlayout'], routerLink: ['/uikit/input']
+```
+
+**Parameters:**
+| Param | Type | Description |
+|-------|------|-------------|
+| `items` | `HelixRouteMenuItem[]` | Source menu items |
+| `basePath` | `string` | Absolute base path prefix |
+
+**Returns:** `HelixRouteMenuItem[]`
+
+---
+
+### helixBreadcrumbsFromRoutes
+
+**File:** `projects/helix/src/lib/layout/breadcrumb-utils.ts`
+
+Builds a breadcrumb trail from the current Angular `ActivatedRoute` tree. Reads the `breadcrumb` key from each route's `data` and accumulates URL segments.
+
+```ts
+import { inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { helixBreadcrumbsFromRoutes } from '@gravionlabs/helix';
+
+const route = inject(ActivatedRoute);
+const crumbs = helixBreadcrumbsFromRoutes(route);
+```
+
+Where `breadcrumb` can be a static string or a function:
+```ts
+{
+  path: 'users/:id',
+  data: { breadcrumb: (snapshot) => `User #${snapshot.params['id']}` },
+}
+```
+
+**Returns:** `MenuItem[]`
+
+---
+
+## Layout Store
 
 `LayoutStore` is an **NgRx Signal Store** that manages all layout UI state. It is **not** provided globally — you must add it to the providers of your layout component.
 
@@ -798,6 +904,65 @@ Landing page footer with brand link and multi-column link groups. Uses the same 
 
 ---
 
+## UI Components
+
+### HelixBadge
+
+**Selector:** `<helix-badge>`  
+**File:** `projects/helix/src/lib/ui/badge/badge.ts`
+
+Small inline badge with color-coded severity and optional icon / label.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `severity` | `BadgeSeverity` | — | `'info'` \| `'warn'` \| `'error'` \| `'success'` |
+| `label` | `string` | — | Text label inside the badge |
+| `icon` | `string` | — | PrimeIcons class, e.g. `'pi pi-check'` |
+| `size` | `'sm' \| 'md'` | `'md'` | Badge size variant |
+
+#### Example
+
+```html
+<helix-badge severity="success" icon="pi pi-check" label="Verified" />
+<helix-badge severity="warn" label="Pending" size="sm" />
+```
+
+---
+
+### HelixEnvironmentBadge
+
+**Selector:** `<helix-environment-badge>`  
+**File:** `projects/helix/src/lib/ui/badge/environment-badge.ts`
+
+Convenience wrapper around `HelixBadge` that maps a named environment to a fixed severity, icon, and label.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `environment` | `Environment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'` |
+
+#### Mapped appearance
+
+| Environment | Severity | Icon | Label |
+|-------------|----------|------|-------|
+| `development` | success | `pi pi-code` | Development |
+| `testing` | info | `pi pi-flask` | Testing |
+| `staging` | warn | `pi pi-layers` | Staging |
+| `production` | error | `pi pi-verified` | Production |
+| *unknown* | info | `pi pi-question` | Unknown |
+
+#### Example
+
+```html
+<helix-environment-badge environment="staging" />
+<helix-environment-badge [environment]="envName" />
+```
+
+---
+
 ## Form Infrastructure
 
 Validators, pipes, and structural components for building reactive forms with human-readable error messages.
@@ -920,7 +1085,106 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ---
 
+### HelixFormArrayWithFactory
+
+**File:** `projects/helix/src/lib/form/utils/form.utils.ts`
+
+Extends Angular's `FormArray` with a factory function that produces new controls on demand — ideal for dynamic form lists.
+
+```ts
+import { HelixFormArrayWithFactory } from '@gravionlabs/helix';
+import { FormControl, Validators } from '@angular/forms';
+
+const emails = new HelixFormArrayWithFactory(
+  () => new FormControl('', [Validators.required, Validators.email]),
+);
+
+// Automatically creates/removes controls to match the desired length
+emails.alignLength(3);
+// → [FormControl, FormControl, FormControl]
+
+// setValue also aligns length automatically
+emails.setValue(['a@b.com', 'c@d.com']);
+// → array shrinks to 2 controls
+```
+
+#### Constructor
+
+| Param | Type | Description |
+|-------|------|-------------|
+| `createControl` | `() => TControl` | Factory that creates a new control |
+| `validatorOrOpts` | `ValidatorFn \| ValidatorFn[] \| AbstractControlOptions \| null` | Optional sync validators |
+| `asyncValidator` | `AsyncValidatorFn \| AsyncValidatorFn[] \| null` | Optional async validators |
+
+#### Methods
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `alignLength` | `alignLength(length: number): void` | Add / remove controls to match the given length |
+| `reset` | `override reset(value?, options?): void` | Aligns length before resetting when value is an array |
+| `setValue` | `override setValue(value, options?): void` | Aligns length before setting values when value is an array |
+
+---
+
+### helixFormErrorMap
+
+**File:** `projects/helix/src/lib/form/utils/form.utils.ts`
+
+Recursively walks an `AbstractControl` tree and produces a flat map of field-name → first error message.
+
+```ts
+import { helixFormErrorMap } from '@gravionlabs/helix';
+
+const errors = helixFormErrorMap(myForm);
+// → { email: 'Invalid email address', 'items[0]': 'Required' }
+```
+
+#### Parameters
+
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `control` | `AbstractControl` | — | Form control tree to traverse |
+| `name` | `string` | `'form'` | Base name for the current level |
+| `result` | `Record<string, string>` | `{}` | Accumulator object (mutated and returned) |
+
+#### Behaviour
+
+- `FormGroup` controls recurse into each child using the child's key as the name.
+- `FormArray` controls recurse using index notation (`items[0]`, `items[1]`).
+- Leaf controls with errors produce a `name → firstError` entry (only string error values are recorded).
+
+**Returns:** `Record<string, string>`
+
+---
+
 ## Interfaces
+
+### HelixRouteMenuItem
+
+The core menu/route model used by `HelixAppLayout`'s `[menu]` input, `HelixNavRail`, `helixRoutesFrom`, `helixMenuLinksFrom`, and routing utilities. Extends PrimeNG's `MenuItem` with Angular routing properties.
+
+```ts
+interface HelixRouteMenuItem extends MenuItem {
+  /** Angular route path segment (relative to parent route) */
+  path?: string;
+  /** Breadcrumb label or resolver function */
+  breadcrumb?: string | ((route: ActivatedRouteSnapshot) => string);
+  /** Component to render for this route */
+  component?: Type<unknown>;
+  /** Lazy-loaded children */
+  loadChildren?: Route['loadChildren'];
+  /** Route guards */
+  canActivate?: CanActivateFn[];
+  /** Additional route data (breadcrumb auto-injected) */
+  data?: Record<string, unknown>;
+  /** Nested child items (typed override of MenuItem.items) */
+  items?: HelixRouteMenuItem[];
+}
+```
+
+All `MenuItem` fields are inherited: `label`, `icon`, `routerLink`, `visible`, `disabled`, `badge`, `target`, `command`, `url`, etc.
+
+---
 
 ### HelixTopbarAction
 
