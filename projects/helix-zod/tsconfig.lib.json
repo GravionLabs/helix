@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/helix-zod-lib",
+    "declaration": true,
+    "declarationMap": true,
+    "types": [],
+    "paths": {
+      "@gravionlabs/helix": ["../../dist/helix"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}

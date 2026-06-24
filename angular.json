@@ -40,6 +40,40 @@
         }
       }
     },
+    "helix-zod": {
+      "projectType": "library",
+      "root": "projects/helix-zod",
+      "sourceRoot": "projects/helix-zod/src",
+      "prefix": "helix-zod",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helix-zod/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helix-zod/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/helix-zod/tsconfig.spec.json"
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
+          }
+        }
+      }
+    },
     "helix-demo": {
       "projectType": "application",
       "schematics": {
@@ -47,25 +81,25 @@
           "style": "scss"
         }
       },
-      "root": "projects/demo",
-      "sourceRoot": "projects/demo/src",
+      "root": "apps/helix-demo",
+      "sourceRoot": "apps/helix-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "projects/demo/src/main.ts",
-            "tsConfig": "projects/demo/tsconfig.app.json",
+            "browser": "apps/helix-demo/src/main.ts",
+            "tsConfig": "apps/helix-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/demo/public"
+                "input": "apps/helix-demo/public"
               }
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "projects/demo/src/styles.scss",
+              "apps/helix-demo/src/styles.scss",
               "dist/helix/styles.css"
             ]
           },

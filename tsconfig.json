@@ -13,7 +13,8 @@
     "experimentalDecorators": true,
     "paths": {
       "@gravionlabs/helix": ["./projects/helix/src/public-api.ts"],
-      "@/*": ["./projects/demo/src/*"]
+      "@gravionlabs/helix-zod": ["./projects/helix-zod/src/public-api.ts"],
+      "@/*": ["./apps/helix-demo/src/*"]
     },
     "importHelpers": true,
     "target": "ES2022",
@@ -34,7 +35,13 @@
       "path": "./projects/helix/tsconfig.spec.json"
     },
     {
-      "path": "./projects/demo/tsconfig.app.json"
+      "path": "./projects/helix-zod/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/helix-zod/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/helix-demo/tsconfig.app.json"
     }
   ]
 }
