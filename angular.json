@@ -40,6 +40,40 @@
         }
       }
     },
+    "helix-zod": {
+      "projectType": "library",
+      "root": "projects/helix-zod",
+      "sourceRoot": "projects/helix-zod/src",
+      "prefix": "helix-zod",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helix-zod/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helix-zod/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/helix-zod/tsconfig.spec.json"
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
+          }
+        }
+      }
+    },
     "helix-demo": {
       "projectType": "application",
       "schematics": {

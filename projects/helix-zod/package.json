@@ -1,0 +1,16 @@
+{
+  "name": "@gravionlabs/helix-zod",
+  "version": "0.1.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "@angular/forms": ">=21",
+    "@gravionlabs/helix": ">=0.2.0",
+    "zod": "^4.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
