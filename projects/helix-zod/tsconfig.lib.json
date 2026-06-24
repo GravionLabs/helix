@@ -4,7 +4,10 @@
     "outDir": "../../out-tsc/helix-zod-lib",
     "declaration": true,
     "declarationMap": true,
-    "types": []
+    "types": [],
+    "paths": {
+      "@gravionlabs/helix": ["../../dist/helix"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts"]
