@@ -74,6 +74,40 @@
         }
       }
     },
+    "helix-ag-grid": {
+      "projectType": "library",
+      "root": "projects/helix-ag-grid",
+      "sourceRoot": "projects/helix-ag-grid/src",
+      "prefix": "helix",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helix-ag-grid/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helix-ag-grid/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/helix-ag-grid/tsconfig.spec.json"
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
+          }
+        }
+      }
+    },
     "helix-demo": {
       "projectType": "application",
       "schematics": {
@@ -100,7 +134,8 @@
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "apps/helix-demo/src/styles.scss",
-              "dist/helix/styles.css"
+              "dist/helix/styles.css",
+              "dist/helix-ag-grid/styles.css"
             ]
           },
           "configurations": {

@@ -1,0 +1,81 @@
+/*
+ * AG Grid Theme — Helix
+ *
+ * Apply the `.helix-ag-grid` class to the ag-grid host element to get a
+ * look and feel consistent with the Helix / PrimeNG design system.
+ *
+ * Token reference:
+ *   --helix-*   design tokens defined in @gravionlabs/helix styles.css
+ *   --p-*       PrimeNG Aura tokens injected at runtime by ThemeService
+ *
+ * Approach: https://www.ag-grid.com/javascript-data-grid/theming-css/#overriding-theme-parameters-with-custom-properties
+ */
+
+.helix-ag-grid {
+  /* ── Colours ──────────────────────────────────────────────────────────── */
+  --ag-background-color: var(--helix-surface-card);
+  --ag-foreground-color: var(--p-text-color);
+  --ag-text-color: var(--ag-foreground-color);
+  --ag-accent-color: var(--p-primary-color);
+  --ag-invalid-color: var(--p-form-field-invalid-border-color);
+  --ag-border-color: var(--helix-border);
+  --ag-wrapper-border: none;
+  --ag-row-border: solid 1px var(--helix-border);
+  --ag-odd-row-background-color: color-mix(
+    in srgb,
+    transparent,
+    var(--helix-border) 10%
+  );
+  --ag-row-hover-color: var(--helix-surface-hover);
+
+  /* ── Typography ───────────────────────────────────────────────────────── */
+  --ag-font-family: "Lato", sans-serif;
+  --ag-font-size: 0.75rem;
+
+  /* ── Header ───────────────────────────────────────────────────────────── */
+  --ag-header-background-color: var(--helix-surface-card);
+  --ag-header-font-family: "Lato", sans-serif;
+  --ag-header-font-weight: 500;
+  --ag-header-font-size: 0.75rem;
+  --ag-header-text-color: var(--p-primary-color);
+
+  /* ── Cells ────────────────────────────────────────────────────────────── */
+  --ag-cell-text-color: var(--p-text-color);
+  --ag-cell-horizontal-padding: 1ch;
+
+  /* ── Input ────────────────────────────────────────────────────────────── */
+  --ag-input-background-color: var(--ag-background-color);
+  --ag-input-border: solid 1px var(--ag-border-color);
+
+  /* ── Drag & drop ──────────────────────────────────────────────────────── */
+  --ag-column-drop-cell-background-color: color-mix(
+    in srgb,
+    transparent,
+    var(--ag-foreground-color) 7%
+  );
+  --ag-column-drop-cell-border: solid 1px
+    color-mix(in srgb, transparent, var(--ag-foreground-color) 13%);
+
+  /* ── Inner element overrides ──────────────────────────────────────────── */
+  .ag-root-wrapper,
+  .ag-measurement-container,
+  .ag-apply-theme-variables {
+    --ag-row-height: 2rem;
+  }
+
+  .ag-cell {
+    line-height: 1.85rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .ag-dnd-ghost {
+    font-family: "Lato", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--p-primary-color);
+  }
+
+  .ag-paging-panel {
+    block-size: 3em;
+  }
+}

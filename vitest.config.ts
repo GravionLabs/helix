@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       '@gravionlabs/helix': resolve(__dirname, 'projects/helix/src/public-api.ts'),
       '@gravionlabs/helix-zod': resolve(__dirname, 'projects/helix-zod/src/public-api.ts'),
+      '@gravionlabs/helix-ag-grid': resolve(__dirname, 'projects/helix-ag-grid/src/public-api.ts'),
     },
   },
   test: {
