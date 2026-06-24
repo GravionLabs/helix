@@ -81,25 +81,25 @@
           "style": "scss"
         }
       },
-      "root": "projects/demo",
-      "sourceRoot": "projects/demo/src",
+      "root": "apps/helix-demo",
+      "sourceRoot": "apps/helix-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "projects/demo/src/main.ts",
-            "tsConfig": "projects/demo/tsconfig.app.json",
+            "browser": "apps/helix-demo/src/main.ts",
+            "tsConfig": "apps/helix-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "projects/demo/public"
+                "input": "apps/helix-demo/public"
               }
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "projects/demo/src/styles.scss",
+              "apps/helix-demo/src/styles.scss",
               "dist/helix/styles.css"
             ]
           },
