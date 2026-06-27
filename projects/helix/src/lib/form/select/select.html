@@ -1,0 +1,21 @@
+<div class="helix-select-wrapper">
+  <select
+    class="helix-select"
+    [disabled]="disabled()"
+    (change)="onSelectChange($event)"
+    (blur)="onTouched()"
+  >
+    @if (placeholder()) {
+      <option value="" [selected]="value() === null">{{ placeholder() }}</option>
+    }
+    @for (opt of processedOptions(); track $index) {
+      <option
+        [value]="$index"
+        [selected]="isSelected(opt.value)"
+      >
+        {{ opt.label }}
+      </option>
+    }
+  </select>
+  <i class="helix-select-icon pi pi-chevron-down"></i>
+</div>
