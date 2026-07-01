@@ -21,18 +21,102 @@ on:
     branches: [main]
 
 jobs:
-  ci:
-    name: CI/CD
-    uses: GravionLabs/ci/.github/workflows/angular-package.yml@main
-    with:
-      node-version: '24'
-      package-manager: pnpm
-      lint-command: pnpm run lint
-      artifact-path: dist
-      build-command: pnpm run build
-      run-tests: true
-      test-command: pnpm run test:ci
-      coverage-format: cobertura
-      publish-directory: ./helix
-    secrets:
-      npm-token: ${{ secrets.GH_PAT }}
+  determine-version:
+    name: Determine Version
+    runs-on: ubuntu-latest
+    outputs:
+      semver: ${{ steps.version.outputs.semver }}
+      npm-version: ${{ steps.version.outputs.npm-version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine version
+        id: version
+        uses: GravionLabs/ci/versioning/determine-version@main
+
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CI
+        uses: GravionLabs/ci/node/ci@main
+        with:
+          node-version: '24'
+          package-manager: pnpm
+          lint-command: pnpm run lint
+          build-command: pnpm run build
+          run-tests: true
+          test-command: pnpm run test:ci
+          coverage-format: cobertura
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-build
+          path: dist
+          if-no-files-found: warn
+
+  publish:
+    name: Publish
+    needs: [determine-version, build-test]
+    if: github.ref == 'refs/heads/main' || inputs.force-publish == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node-build
+          path: .
+
+      - name: Publish @gravionlabs/helix
+        uses: GravionLabs/ci/node/publish@main
+        with:
+          package-manager: pnpm
+          publish-directory: helix
+          version: ${{ needs.determine-version.outputs.npm-version }}
+          npm-token: ${{ secrets.GH_PAT }}
+
+      - name: Publish @gravionlabs/helix-zod
+        uses: GravionLabs/ci/node/publish@main
+        with:
+          package-manager: pnpm
+          publish-directory: helix-zod
+          version: ${{ needs.determine-version.outputs.npm-version }}
+          npm-token: ${{ secrets.GH_PAT }}
+
+      - name: Publish @gravionlabs/helix-ag-grid
+        uses: GravionLabs/ci/node/publish@main
+        with:
+          package-manager: pnpm
+          publish-directory: helix-ag-grid
+          version: ${{ needs.determine-version.outputs.npm-version }}
+          npm-token: ${{ secrets.GH_PAT }}
+
+  release:
+    name: Release
+    needs: [determine-version, publish]
+    if: github.ref == 'refs/heads/main' || inputs.force-publish == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: GravionLabs/ci/versioning/gh-release@main
+        with:
+          version: ${{ needs.determine-version.outputs.semver }}
+          tag-prefix: v
+          changelog-file: CHANGELOG.md
