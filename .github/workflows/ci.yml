@@ -84,6 +84,7 @@ jobs:
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
+          package-manager-version: '11.6.0'
           publish-directory: helix
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.GH_PAT }}
@@ -92,6 +93,7 @@ jobs:
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
+          package-manager-version: '11.6.0'
           publish-directory: helix-zod
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.GH_PAT }}
@@ -100,6 +102,7 @@ jobs:
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
+          package-manager-version: '11.6.0'
           publish-directory: helix-ag-grid
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.GH_PAT }}
