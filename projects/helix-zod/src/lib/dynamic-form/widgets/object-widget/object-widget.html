@@ -1,0 +1,12 @@
+<fieldset class="helix-object-widget">
+  @if (label(); as l) {
+    <legend class="helix-object-widget__legend">{{ l }}</legend>
+  }
+  @if (hint(); as h) {
+    <small class="helix-object-widget__hint">{{ h }}</small>
+  }
+
+  @for (child of descriptor().children ?? []; track child.key) {
+    <helix-dynamic-field [field]="childField(child.key)" [descriptor]="child" />
+  }
+</fieldset>

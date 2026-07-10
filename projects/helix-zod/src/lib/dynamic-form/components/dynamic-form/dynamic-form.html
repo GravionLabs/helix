@@ -1,0 +1,15 @@
+<form class="helix-dynamic-form" novalidate (submit)="handleSubmit($event)">
+  @for (child of descriptors().children ?? []; track child.key) {
+    <helix-dynamic-field [field]="childField(child)" [descriptor]="child" />
+  }
+
+  @if (showSubmit()) {
+    <button
+      type="submit"
+      class="helix-dynamic-form__submit"
+      [disabled]="formTree()().submitting()"
+    >
+      {{ submitLabel() }}
+    </button>
+  }
+</form>

@@ -1,0 +1,35 @@
+@use '../input-base' as base;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.helix-union-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__select-wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+
+  &__select {
+    @include base.helix-dyn-input;
+    padding-right: 2.5rem;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--p-text-muted-color);
+    font-size: 0.875rem;
+  }
+}

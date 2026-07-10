@@ -1,0 +1,11 @@
+@use '../input-base' as base;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.helix-textarea-widget__input {
+  @include base.helix-dyn-input;
+  resize: vertical;
+}

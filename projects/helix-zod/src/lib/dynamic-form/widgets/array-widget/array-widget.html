@@ -1,0 +1,26 @@
+<div class="helix-array-widget">
+  @if (label(); as l) {
+    <div class="helix-array-widget__label">{{ l }}</div>
+  }
+
+  @for (itemField of itemFields(); track $index) {
+    <div class="helix-array-widget__item">
+      <helix-dynamic-field [field]="itemField" [descriptor]="descriptor().itemDescriptor!" />
+      <button
+        type="button"
+        class="helix-array-widget__remove"
+        (click)="removeAt($index)"
+      >
+        {{ removeLabel() }}
+      </button>
+    </div>
+  }
+
+  <button type="button" class="helix-array-widget__add" (click)="add()">{{ addLabel() }}</button>
+
+  @if (firstError(); as err) {
+    <small class="helix-array-widget__message helix-array-widget__message--error">{{ err }}</small>
+  } @else if (hint(); as h) {
+    <small class="helix-array-widget__message helix-array-widget__message--hint">{{ h }}</small>
+  }
+</div>

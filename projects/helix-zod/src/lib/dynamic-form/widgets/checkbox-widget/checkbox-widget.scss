@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.helix-checkbox-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--p-text-color);
+    cursor: pointer;
+  }
+
+  &__input {
+    accent-color: var(--p-primary-color);
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &__message {
+    font-size: 0.75rem;
+
+    &--hint {
+      color: var(--p-text-muted-color);
+    }
+
+    &--error {
+      color: var(--p-red-500);
+    }
+  }
+}

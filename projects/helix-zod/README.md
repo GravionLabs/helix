@@ -1,6 +1,9 @@
 # @gravionlabs/helix-zod
 
-Zod v4 adapter for `@gravionlabs/helix` form validation. Converts a Zod field schema into an Angular `ValidatorFn` that emits `HelixValidatorKey`-keyed `ValidationErrors` — compatible with `HelixFormField`, `HelixFirstError`, and `helixFormErrorMap` out of the box.
+Zod v4 adapter for `@gravionlabs/helix` forms. Two independent features:
+
+1. **Reactive-forms validator bridge** — `HelixZodValidators.fromZod()` converts a Zod field schema into an Angular `ValidatorFn` that emits `HelixValidatorKey`-keyed `ValidationErrors` — compatible with `HelixFormField`, `HelixFirstError`, and `helixFormErrorMap` out of the box.
+2. **Dynamic forms** — `HelixDynamicForm` generates a complete, validated form from a single annotated Zod object schema, built on Angular's experimental signal forms (`@angular/forms/signals`, requires Angular **≥ 21.2**).
 
 ---
 
@@ -10,7 +13,83 @@ Zod v4 adapter for `@gravionlabs/helix` form validation. Converts a Zod field sc
 |---|---|
 | `zod` | `^4.0.0` |
 | `@gravionlabs/helix` | `>=0.2.0` |
-| `@angular/forms` | `>=21` |
+| `@angular/core` / `@angular/common` / `@angular/forms` | `>=21` (dynamic forms: `>=21.2`) |
+
+---
+
+## Dynamic Forms from Zod Schemas
+
+> Built on `@angular/forms/signals`, which is **experimental** — minor Angular releases may introduce breaking API changes.
+
+### Quick start
+
+```ts
+import { z } from 'zod';
+import { HelixDynamicForm, helixMeta, provideHelixDynamicForms } from '@gravionlabs/helix-zod';
+
+const UserSchema = z.object({
+  email: helixMeta(z.email('Invalid email'), { label: 'E-mail', placeholder: 'you@example.com' }),
+  age: helixMeta(z.number().min(18, 'Must be 18+'), { label: 'Age' }),
+  role: helixMeta(z.enum(['user', 'editor']), { label: 'Role' }),
+  newsletter: helixMeta(z.boolean(), { label: 'Subscribe' }),
+  frequency: helixMeta(z.enum(['daily', 'weekly']), {
+    label: 'Frequency',
+    hiddenWhen: (root) => !root['newsletter'],   // conditional visibility
+  }),
+});
+
+@Component({
+  imports: [HelixDynamicForm],
+  providers: [provideHelixDynamicForms()],
+  template: `<helix-dynamic-form [schema]="schema" (submitted)="save($event)" />`,
+})
+export class UserForm {
+  readonly schema = UserSchema;
+  save(value: unknown) { /* value is UserSchema.parse()d */ }
+}
+```
+
+Validation runs through signal forms' `validateStandardSchema` against the whole Zod schema — issue paths route each error to its field, including cross-field `.refine(..., { path })` errors.
+
+### Widget inference
+
+| Zod type | Widget |
+|---|---|
+| `z.string()` | `text` (`z.email()` → `email`) |
+| `z.number()` / `z.int()` | `number` |
+| `z.boolean()` | `checkbox` |
+| `z.date()` | `date` (`Date | null` model) |
+| `z.enum()` / `z.literal()` | `select` |
+| `z.array()` | `array` (add/remove UI) |
+| `z.object()` | `object` (fieldset recursion) |
+| `z.discriminatedUnion()` | `union` (variant switcher; switching **resets** the union value) |
+
+Anything else needs a `widget` override in its metadata pointing at a registered (custom) widget — unmapped types throw in dev mode.
+
+### Metadata (`HelixFieldMeta`)
+
+Attach UI metadata with `helixMeta(schema, meta)` — it registers on the **same schema instance** (unlike `.meta()`, which clones; metadata must sit on the exact instance composed into the `z.object()` shape). Alternatively `schema.meta({ title, description, helix: {...} })` works: `title` → `label`, `description` → `hint`.
+
+Keys: `label`, `placeholder`, `hint`, `widget`, `options`, `order`, `addLabel`/`removeLabel` (arrays), and the conditional engine: `hiddenWhen`, `disabledWhen` (string return = disabled reason), `readonlyWhen`, `requiredWhen` — all predicates over the root form value — plus `extraSchema(path)` as an escape hatch for arbitrary signal-forms rules.
+
+### Custom widgets & error messages
+
+```ts
+provideHelixDynamicForms({
+  widgets: [{ widget: 'rating', component: RatingWidget }],        // or override built-ins
+  errorMessageResolver: (error, helixKey) =>
+    helixKey === HelixValidatorKey.Required ? 'Pflichtfeld' : null, // null → default message
+})
+```
+
+Custom widgets extend `HelixFieldWidgetBase` (inputs `field` + `descriptor`, computeds `state`/`firstError`/`label`/`hint`/`placeholder`) and bind their control via `[formField]="field()"`.
+
+### Notes & caveats
+
+- Passing a new `schema` input **recreates the form and resets its state**.
+- Provide your own `WritableSignal` via `[model]` to control/observe the raw value; otherwise an initial model is derived from the schema (`buildDefaultValue`).
+- `submitted` emits the `schema.parse()`d output (defaults/transforms applied) — only when the form is valid.
+- Lower-level building blocks are exported for advanced use: `zodToFieldDescriptors`, `buildHelixSchema`, `buildDefaultValue`, `helixFirstErrorMessage`, `fieldAtPath`.
 
 ---
 

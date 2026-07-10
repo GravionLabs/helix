@@ -1,0 +1,12 @@
+<div class="helix-checkbox-widget">
+  <label class="helix-checkbox-widget__label">
+    <input class="helix-checkbox-widget__input" type="checkbox" [formField]="field()" />
+    <span>{{ label() }}</span>
+  </label>
+
+  @if (firstError(); as err) {
+    <small class="helix-checkbox-widget__message helix-checkbox-widget__message--error">{{ err }}</small>
+  } @else if (hint(); as h) {
+    <small class="helix-checkbox-widget__message helix-checkbox-widget__message--hint">{{ h }}</small>
+  }
+</div>

@@ -1,0 +1,8 @@
+<helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
+  <helix-select
+    [options]="selectOptions()"
+    [placeholder]="placeholder()"
+    [disabled]="state().disabled()"
+    [formField]="field()"
+  />
+</helix-form-field>

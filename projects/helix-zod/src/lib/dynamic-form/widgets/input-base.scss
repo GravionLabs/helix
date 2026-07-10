@@ -1,0 +1,33 @@
+// Shared look for native inputs in dynamic-form widgets — mirrors helix-select.
+@mixin helix-dyn-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--p-text-color);
+  background-color: var(--p-content-background);
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-border-radius-md);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    border-color: var(--p-primary-color);
+    box-shadow: 0 0 0 0.2rem var(--p-primary-100);
+  }
+
+  &:disabled,
+  &[readonly] {
+    cursor: default;
+    background-color: var(--p-content-disabled-background);
+    color: var(--p-text-disabled-color);
+    opacity: 1;
+  }
+
+  &::placeholder {
+    color: var(--p-text-muted-color);
+  }
+}

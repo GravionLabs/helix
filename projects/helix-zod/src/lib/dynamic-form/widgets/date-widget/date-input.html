@@ -1,0 +1,9 @@
+<input
+  class="helix-date-input__input"
+  type="date"
+  [value]="rawValue()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  (input)="onInput($event)"
+  (blur)="onBlur()"
+/>

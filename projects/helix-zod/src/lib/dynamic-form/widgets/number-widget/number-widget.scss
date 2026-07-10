@@ -1,0 +1,10 @@
+@use '../input-base' as base;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.helix-number-widget__input {
+  @include base.helix-dyn-input;
+}

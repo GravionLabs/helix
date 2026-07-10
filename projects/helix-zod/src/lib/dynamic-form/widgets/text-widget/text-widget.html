@@ -1,0 +1,8 @@
+<helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
+  <input
+    class="helix-text-widget__input"
+    [type]="descriptor().inputType ?? 'text'"
+    [placeholder]="placeholder()"
+    [formField]="field()"
+  />
+</helix-form-field>

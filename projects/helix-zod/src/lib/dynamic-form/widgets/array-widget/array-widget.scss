@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.helix-array-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--p-text-color);
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    helix-dynamic-field {
+      flex: 1;
+    }
+  }
+
+  &__add,
+  &__remove {
+    padding: 0.375rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: var(--p-text-color);
+    background-color: var(--p-content-background);
+    border: 1px solid var(--p-content-border-color);
+    border-radius: var(--p-border-radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: var(--p-primary-color);
+    }
+  }
+
+  &__add {
+    align-self: flex-start;
+  }
+
+  &__message {
+    font-size: 0.75rem;
+
+    &--hint {
+      color: var(--p-text-muted-color);
+    }
+
+    &--error {
+      color: var(--p-red-500);
+    }
+  }
+}

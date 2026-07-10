@@ -1,0 +1,20 @@
+<div class="helix-union-widget">
+  <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
+    <div class="helix-union-widget__select-wrapper">
+      <select
+        class="helix-union-widget__select"
+        [disabled]="state().disabled()"
+        (change)="onTagChange($event)"
+      >
+        @for (tag of tags(); track tag) {
+          <option [value]="$index" [selected]="tag === activeTag()">{{ tag }}</option>
+        }
+      </select>
+      <i class="helix-union-widget__icon pi pi-chevron-down"></i>
+    </div>
+  </helix-form-field>
+
+  @for (child of variantChildren(); track child.key) {
+    <helix-dynamic-field [field]="childField(child.key)" [descriptor]="child" />
+  }
+</div>

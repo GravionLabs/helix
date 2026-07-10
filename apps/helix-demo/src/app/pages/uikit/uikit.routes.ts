@@ -1,7 +1,9 @@
 import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
+import { provideHelixDynamicForms } from '@gravionlabs/helix-zod';
 import { ButtonDemo } from './button/button-demo';
 import { ChartDemo } from './charts/chart-demo';
+import { DynamicFormDemo } from './dynamicform/dynamic-form-demo';
 import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
 import { InputDemo } from './input/input-demo';
@@ -21,6 +23,7 @@ import { UIKIT_MENU_ITEMS } from './uikit-menu-items';
 const COMPONENTS: Record<string, Type<unknown>> = {
   button: ButtonDemo,
   charts: ChartDemo,
+  dynamicform: DynamicFormDemo,
   file: FileDemo,
   formlayout: FormLayoutDemo,
   input: InputDemo,
@@ -43,6 +46,9 @@ export default [
     path: item.path!,
     component: COMPONENTS[item.path!],
     data: { breadcrumb: item.label },
+    // Dynamic-form widget registry is route-scoped — only pages that render
+    // HelixDynamicForm need it.
+    providers: item.path === 'dynamicform' ? [provideHelixDynamicForms()] : [],
   })),
   { path: '**', redirectTo: '/notfound' },
 ] as Routes;
