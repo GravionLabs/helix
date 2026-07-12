@@ -85,12 +85,12 @@ jobs:
           name: node-build
           path: .
 
-      - name: Publish @gravionlabs/helix
+      - name: Publish @gravionlabs/helix-shell
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
           package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: helix
+          publish-directory: helix-shell
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.GH_PAT }}
 
