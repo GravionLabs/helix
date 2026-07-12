@@ -6,20 +6,20 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "helix": {
+    "helix-shell": {
       "projectType": "library",
-      "root": "projects/helix",
-      "sourceRoot": "projects/helix/src",
+      "root": "projects/helix-shell",
+      "sourceRoot": "projects/helix-shell/src",
       "prefix": "helix",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/helix/tsconfig.lib.prod.json"
+              "tsConfig": "projects/helix-shell/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/helix/tsconfig.lib.json"
+              "tsConfig": "projects/helix-shell/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,7 +27,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/helix/tsconfig.spec.json"
+            "tsConfig": "projects/helix-shell/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -134,7 +134,7 @@
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "apps/helix-demo/src/styles.scss",
-              "dist/helix/styles.css",
+              "dist/helix-shell/styles.css",
               "dist/helix-ag-grid/styles.css"
             ]
           },

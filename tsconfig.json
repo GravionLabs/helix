@@ -12,7 +12,8 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "paths": {
-      "@gravionlabs/helix": ["./projects/helix/src/public-api.ts"],
+      "@gravionlabs/helix-shell": ["./projects/helix-shell/src/public-api.ts"],
+      "@gravionlabs/helix": ["./projects/helix-shell/src/public-api.ts"],
       "@gravionlabs/helix-zod": ["./projects/helix-zod/src/public-api.ts"],
       "@gravionlabs/helix-ag-grid": [
         "./projects/helix-ag-grid/src/public-api.ts"
@@ -32,10 +33,10 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/helix/tsconfig.lib.json"
+      "path": "./projects/helix-shell/tsconfig.lib.json"
     },
     {
-      "path": "./projects/helix/tsconfig.spec.json"
+      "path": "./projects/helix-shell/tsconfig.spec.json"
     },
     {
       "path": "./projects/helix-zod/tsconfig.lib.json"

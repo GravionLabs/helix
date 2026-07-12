@@ -6,7 +6,8 @@
     "declarationMap": true,
     "types": [],
     "paths": {
-      "@gravionlabs/helix": ["../../dist/helix"]
+      "@gravionlabs/helix-shell": ["../../dist/helix-shell"],
+      "@gravionlabs/helix": ["../../dist/helix-shell"]
     }
   },
   "include": ["src/**/*.ts"],

@@ -1,0 +1,198 @@
+<div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <div class="font-semibold text-xl mb-2">Dialog</div>
+        <p-dialog
+          header="Dialog"
+          [(visible)]="display"
+          [breakpoints]="{ '960px': '75vw' }"
+          [style]="{ width: '30vw' }"
+          [modal]="true"
+        >
+          <p class="leading-normal m-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+          </p>
+          <ng-template #footer>
+            <p-button label="Save" (click)="close()" />
+          </ng-template>
+        </p-dialog>
+        <p-button label="Show" [style]="{ width: 'auto' }" (click)="open()" />
+      </div>
+
+      <div class="card">
+        <div class="font-semibold text-xl mb-2">Popover</div>
+        <div class="flex flex-wrap gap-1">
+          <p-button type="button" label="Show" (click)="toggleDataTable(op2, $event)" />
+          <p-popover #op2 id="overlay_panel" [style]="{ width: '450px' }">
+            <p-table
+              [value]="products"
+              selectionMode="single"
+              [(selection)]="selectedProduct"
+              dataKey="id"
+              [rows]="5"
+              [paginator]="true"
+              (onRowSelect)="onProductSelect(op2, $event)"
+            >
+              <ng-template #header>
+                <tr>
+                  <th pSortableColumn="name" style="width: 33%;">
+                    Name
+                    <p-sortIcon field="name" />
+                  </th>
+                  <th style="width: 33%;">Image</th>
+                  <th pSortableColumn="price" style="width: 33%;">
+                    Price
+                    <p-sortIcon field="price" />
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-product>
+                <tr [pSelectableRow]="product">
+                  <td>{{ product.name }}</td>
+                  <td>
+                    <img
+                      [src]="'/demo/images/product/' + product.image"
+                      [alt]="product.name"
+                      class="w-16 shadow-sm"
+                    />
+                  </td>
+                  <td>{{ product.price }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </p-popover>
+          <p-toast />
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="font-semibold text-xl mb-2">Tooltip</div>
+        <div class="inline-flex gap-3">
+          <input pInputText type="text" placeholder="Username" pTooltip="Your username" />
+          <p-button type="button" label="Save" pTooltip="Click to proceed" />
+        </div>
+      </div>
+    </div>
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <div class="font-semibold text-xl mb-2">Drawer</div>
+        <p-drawer [(visible)]="visibleLeft" header="Drawer">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </p-drawer>
+
+        <p-drawer [(visible)]="visibleRight" header="Drawer" position="right">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </p-drawer>
+
+        <p-drawer [(visible)]="visibleTop" header="Drawer" position="top">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </p-drawer>
+
+        <p-drawer [(visible)]="visibleBottom" header="Drawer" position="bottom">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </p-drawer>
+
+        <p-drawer [(visible)]="visibleFull" header="Drawer" position="full">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
+        </p-drawer>
+
+        <p-button
+          icon="pi pi-arrow-right"
+          (click)="visibleLeft = true"
+          [style]="{ marginRight: '0.25em' }"
+        />
+        <p-button
+          icon="pi pi-arrow-left"
+          (click)="visibleRight = true"
+          [style]="{ marginRight: '0.25em' }"
+        />
+        <p-button
+          icon="pi pi-arrow-down"
+          (click)="visibleTop = true"
+          [style]="{ marginRight: '0.25em' }"
+        />
+        <p-button
+          icon="pi pi-arrow-up"
+          (click)="visibleBottom = true"
+          [style]="{ marginRight: '0.25em' }"
+        />
+        <p-button icon="pi pi-external-link" (click)="visibleFull = true" />
+      </div>
+
+      <div class="card">
+        <div class="font-semibold text-xl mb-2">ConfirmPopup</div>
+        <p-confirmpopup key="confirm2"></p-confirmpopup>
+        <p-button
+          #popup
+          (click)="confirm($event)"
+          icon="pi pi-check"
+          label="Confirm"
+          class="mr-2"
+        ></p-button>
+      </div>
+
+      <div class="card">
+        <div class="font-semibold text-xl mb-2">ConfirmDialog</div>
+        <p-button
+          label="Delete"
+          icon="pi pi-trash"
+          severity="danger"
+          [style]="{ width: 'auto' }"
+          (click)="openConfirmation()"
+        />
+        <p-dialog
+          header="Confirmation"
+          [(visible)]="displayConfirmation"
+          [style]="{ width: '350px' }"
+          [modal]="true"
+        >
+          <div class="flex items-center justify-center">
+            <i class="pi pi-exclamation-triangle mr-6" style="font-size: 2rem"> </i>
+            <span>Are you sure you want to proceed?</span>
+          </div>
+          <ng-template #footer>
+            <p-button
+              label="No"
+              icon="pi pi-times"
+              (click)="closeConfirmation()"
+              text
+              severity="secondary"
+            />
+            <p-button
+              label="Yes"
+              icon="pi pi-check"
+              (click)="closeConfirmation()"
+              severity="danger"
+              outlined
+              autofocus
+            />
+          </ng-template>
+        </p-dialog>
+      </div>
+    </div>
+  </div>
