@@ -1,5 +1,5 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { LayoutStore } from '@gravionlabs/helix';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 import { ChartModule } from 'primeng/chart';
 import { FluidModule } from 'primeng/fluid';
 

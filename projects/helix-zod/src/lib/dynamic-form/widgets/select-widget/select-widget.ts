@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import { HelixFormField, HelixSelect } from '@gravionlabs/helix';
+import { HelixFormField, HelixSelect } from '@gravionlabs/helix-shell';
 import { HelixFieldWidgetBase } from '../widget-base';
 
 /**

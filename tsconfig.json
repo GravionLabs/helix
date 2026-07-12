@@ -13,7 +13,6 @@
     "experimentalDecorators": true,
     "paths": {
       "@gravionlabs/helix-shell": ["./projects/helix-shell/src/public-api.ts"],
-      "@gravionlabs/helix": ["./projects/helix-shell/src/public-api.ts"],
       "@gravionlabs/helix-zod": ["./projects/helix-zod/src/public-api.ts"],
       "@gravionlabs/helix-ag-grid": [
         "./projects/helix-ag-grid/src/public-api.ts"
