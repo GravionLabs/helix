@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import { HelixFormField } from '@gravionlabs/helix';
+import { HelixFormField } from '@gravionlabs/helix-shell';
 import { HelixFieldWidgetBase } from '../widget-base';
 
 /** Built-in widget for numeric fields. */

@@ -1,4 +1,4 @@
-import type { HelixRouteMenuItem } from '@gravionlabs/helix';
+import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 /**
  * Menu metadata for routes defined in pages.routes.ts.

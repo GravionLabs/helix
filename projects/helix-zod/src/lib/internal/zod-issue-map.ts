@@ -1,4 +1,4 @@
-import { HelixValidatorKey } from '@gravionlabs/helix';
+import { HelixValidatorKey } from '@gravionlabs/helix-shell';
 import { type ZodIssue, ZodIssueCode } from 'zod';
 
 // Mirrors HelixValidators' internal EMPTY_VALUES — defined locally to avoid

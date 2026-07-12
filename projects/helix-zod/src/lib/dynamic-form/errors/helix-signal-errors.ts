@@ -1,5 +1,5 @@
 import type { ValidationError } from '@angular/forms/signals';
-import { HelixValidatorKey } from '@gravionlabs/helix';
+import { HelixValidatorKey } from '@gravionlabs/helix-shell';
 import type { ZodIssue } from 'zod';
 import { zodIssueToHelixKey } from '../../internal/zod-issue-map';
 
