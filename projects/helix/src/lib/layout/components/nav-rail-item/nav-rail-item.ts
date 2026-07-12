@@ -5,6 +5,17 @@ import { RippleModule } from 'primeng/ripple';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 
+/**
+ * Whether the active URL matches an item path on a whole-segment boundary,
+ * so `uikit/dynamicform` does not match `uikit/dynamicform-advanced` but
+ * still matches child routes, query params and fragments.
+ */
+function isPathActive(activePath: string, itemPath: string): boolean {
+  if (!itemPath || !activePath.startsWith(itemPath)) return false;
+  const next = activePath[itemPath.length];
+  return next === undefined || next === '/' || next === '?' || next === '#' || next === ';';
+}
+
 @Component({
   selector: '[helix-nav-rail-item]',
   standalone: true,
@@ -60,7 +71,7 @@ export class HelixNavRailItem implements AfterViewInit {
     if (itemPath == null) return false;
     const normalizedPath = this.store.activePath()?.replace(/^\//, '') ?? '';
     const normalizedFull = (this.fullPath() ?? '').replace(/^\//, '');
-    return normalizedPath.startsWith(normalizedFull);
+    return isPathActive(normalizedPath, normalizedFull);
   });
 
   hasActiveDescendant = computed(() => {
@@ -77,7 +88,7 @@ export class HelixNavRailItem implements AfterViewInit {
             ? `${prefix}/${child.path.replace(/^\//, '')}`
             : child.path.replace(/^\//, '')
           : prefix;
-        if (childFullPath && normalized.startsWith(childFullPath)) {
+        if (childFullPath && isPathActive(normalized, childFullPath)) {
           return true;
         }
         return child.items ? match(child.items, childFullPath) : false;
