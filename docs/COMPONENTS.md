@@ -1,4 +1,4 @@
-# `@gravionlabs/helix` — Component API Reference
+# `@gravionlabs/helix-shell` — Component API Reference
 
 > All inputs use the Angular 17+ `input()` signal API and ship with defaults, so adding a new input is never a breaking change for consumers.
 
@@ -53,7 +53,7 @@
 ## Installation
 
 ```bash
-npm install @gravionlabs/helix
+npm install @gravionlabs/helix-shell
 ```
 
 Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
@@ -65,7 +65,7 @@ Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix';
+import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const MENU: HelixRouteMenuItem[] = [
   { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
@@ -90,7 +90,7 @@ export class AppComponent {
 ### HelixAppLayout
 
 **Selector:** `<helix-app-layout>`  
-**File:** `projects/helix/src/lib/layout/components/app-layout/app-layout.ts`
+**File:** `projects/helix-shell/src/lib/layout/components/app-layout/app-layout.ts`
 
 Top-level shell that composes the topbar, nav rail, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
 
@@ -121,7 +121,7 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 ### HelixTopbar
 
 **Selector:** `<helix-topbar>`  
-**File:** `projects/helix/src/lib/layout/components/topbar/topbar.ts`
+**File:** `projects/helix-shell/src/lib/layout/components/topbar/topbar.ts`
 
 Application header bar. Renders a menu toggle, breadcrumb trail on the left, and configurable action buttons on the right.
 
@@ -164,7 +164,7 @@ myActions: HelixTopbarAction[] = [
 ### HelixStatusBar
 
 **Selector:** `<helix-status-bar>`  
-**File:** `projects/helix/src/lib/layout/components/status-bar/status-bar.ts`
+**File:** `projects/helix-shell/src/lib/layout/components/status-bar/status-bar.ts`
 
 Thin full-bleed status bar at the bottom of the application layout. Displays brand, environment badge, note, and version labels. Background color is determined by the `tone` input.
 
@@ -209,7 +209,7 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 ### HelixFooter
 
 **Selector:** `<helix-footer>`  
-**File:** `projects/helix/src/lib/layout/components/footer/footer.ts`
+**File:** `projects/helix-shell/src/lib/layout/components/footer/footer.ts`
 
 Application footer with optional multi-column link layout and a branded copyright line.
 
@@ -255,7 +255,7 @@ footerColumns: HelixFooterColumn[] = [
 ### HelixNavRail
 
 **Selector:** `<helix-nav-rail>`  
-**File:** `projects/helix/src/lib/layout/components/nav-rail/nav-rail.ts`
+**File:** `projects/helix-shell/src/lib/layout/components/nav-rail/nav-rail.ts`
 
 Branded side-navigation rail: gradient surface (theme-aware — "Harbor Tint" light
 / a neutral dark gradient that aliases the app's own dark-mode surface tokens
@@ -304,7 +304,7 @@ section headers grouping multiple expandable items.
 #### Example
 
 ```ts
-import { helixNavGroupsFromMenu, type HelixRouteMenuItem } from '@gravionlabs/helix';
+import { helixNavGroupsFromMenu, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   {
@@ -344,12 +344,12 @@ Built-in helpers for deriving Angular routes, menu link models, and breadcrumbs 
 
 ### helixRoutesFrom
 
-**File:** `projects/helix/src/lib/layout/route-menu.model.ts`
+**File:** `projects/helix-shell/src/lib/layout/route-menu.model.ts`
 
 Converts a `HelixRouteMenuItem` tree into Angular `Routes` for use with the Router.
 
 ```ts
-import { helixRoutesFrom, type HelixRouteMenuItem } from '@gravionlabs/helix';
+import { helixRoutesFrom, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   {
@@ -383,12 +383,12 @@ Behaviour:
 
 ### helixMenuLinksFrom
 
-**File:** `projects/helix/src/lib/layout/route-menu.model.ts`
+**File:** `projects/helix-shell/src/lib/layout/route-menu.model.ts`
 
 Recursively copies a `HelixRouteMenuItem[]` tree and auto-populates `routerLink` from each item's `path`, relative to a `basePath`.
 
 ```ts
-import { helixMenuLinksFrom, type HelixRouteMenuItem } from '@gravionlabs/helix';
+import { helixMenuLinksFrom, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', path: 'formlayout' },
@@ -411,14 +411,14 @@ const links = helixMenuLinksFrom(menu, '/uikit');
 
 ### helixBreadcrumbsFromRoutes
 
-**File:** `projects/helix/src/lib/layout/breadcrumb-utils.ts`
+**File:** `projects/helix-shell/src/lib/layout/breadcrumb-utils.ts`
 
 Builds a breadcrumb trail from the current Angular `ActivatedRoute` tree. Reads the `breadcrumb` key from each route's `data` and accumulates URL segments.
 
 ```ts
 import { inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { helixBreadcrumbsFromRoutes } from '@gravionlabs/helix';
+import { helixBreadcrumbsFromRoutes } from '@gravionlabs/helix-shell';
 
 const route = inject(ActivatedRoute);
 const crumbs = helixBreadcrumbsFromRoutes(route);
@@ -457,7 +457,7 @@ Where `breadcrumb` can be a static string or a function:
 ### Setup
 
 ```ts
-import { LayoutStore } from '@gravionlabs/helix';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 
 @Component({
   standalone: true,
@@ -480,7 +480,7 @@ export class MyLayoutComponent {
 ### HelixLogin
 
 **Selector:** `<helix-login>`  
-**File:** `projects/helix/src/lib/pages/auth/login/login.ts`
+**File:** `projects/helix-shell/src/lib/pages/auth/login/login.ts`
 
 Fully styled login page with email/password form. Emits credentials on submit; handles no server communication itself.
 
@@ -573,7 +573,7 @@ Access-denied / forbidden page (e.g. 403).
 Pre-configured lazy route definitions for all auth pages. Import into your router config to automatically register `/auth/login`, `/auth/error`, and `/auth/access`.
 
 ```ts
-import { authRoutes } from '@gravionlabs/helix';
+import { authRoutes } from '@gravionlabs/helix-shell';
 
 export const appRoutes: Routes = [
   {
@@ -591,7 +591,7 @@ export const appRoutes: Routes = [
 ### HelixEmpty
 
 **Selector:** `<helix-empty>`  
-**File:** `projects/helix/src/lib/pages/empty/empty.ts`
+**File:** `projects/helix-shell/src/lib/pages/empty/empty.ts`
 
 Blank page template with a title, optional subtitle, and a default content slot. Use as a starting point for new pages.
 
@@ -909,7 +909,7 @@ Landing page footer with brand link and multi-column link groups. Uses the same 
 ### HelixBadge
 
 **Selector:** `<helix-badge>`  
-**File:** `projects/helix/src/lib/ui/badge/badge.ts`
+**File:** `projects/helix-shell/src/lib/ui/badge/badge.ts`
 
 Small inline badge with color-coded severity and optional icon / label.
 
@@ -934,7 +934,7 @@ Small inline badge with color-coded severity and optional icon / label.
 ### HelixEnvironmentBadge
 
 **Selector:** `<helix-environment-badge>`  
-**File:** `projects/helix/src/lib/ui/badge/environment-badge.ts`
+**File:** `projects/helix-shell/src/lib/ui/badge/environment-badge.ts`
 
 Convenience wrapper around `HelixBadge` that maps a named environment to a fixed severity, icon, and label.
 
@@ -969,7 +969,7 @@ Validators, pipes, and structural components for building reactive forms with hu
 
 ### HelixValidators
 
-**File:** `projects/helix/src/lib/form/validators/helix-validators.ts`
+**File:** `projects/helix-shell/src/lib/form/validators/helix-validators.ts`
 
 A namespace of `ValidatorFn` factories that produce human-readable error messages instead of the boolean flags used by Angular's built-in validators.
 
@@ -995,7 +995,7 @@ Every method accepts a static string or a `(value: any) => string` function for 
 #### Example
 
 ```ts
-import { HelixValidators } from '@gravionlabs/helix';
+import { HelixValidators } from '@gravionlabs/helix-shell';
 import { FormControl } from '@angular/forms';
 
 const emailCtrl = new FormControl('', [
@@ -1017,7 +1017,7 @@ emailCtrl.errors
 ### helixFirstError
 
 **Pipe name:** `helixFirstError`  
-**File:** `projects/helix/src/lib/form/pipes/helix-first-error.pipe.ts`
+**File:** `projects/helix-shell/src/lib/form/pipes/helix-first-error.pipe.ts`
 
 A pure, standalone pipe that extracts the first human-readable error message from a `ValidationErrors | null` object. Designed to pair with `HelixValidators` (which produce string values), but also safe against Angular's built-in validators (non-string values are ignored).
 
@@ -1045,7 +1045,7 @@ A pure, standalone pipe that extracts the first human-readable error message fro
 ### HelixFormField
 
 **Selector:** `<helix-form-field>`  
-**File:** `projects/helix/src/lib/form/form-field/form-field.ts`
+**File:** `projects/helix-shell/src/lib/form/form-field/form-field.ts`
 
 A structural wrapper component that renders a label, projected input content, and hint/error messages. Uses `OnPush` change detection and is fully standalone.
 
@@ -1087,12 +1087,12 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ### HelixFormArrayWithFactory
 
-**File:** `projects/helix/src/lib/form/utils/form.utils.ts`
+**File:** `projects/helix-shell/src/lib/form/utils/form.utils.ts`
 
 Extends Angular's `FormArray` with a factory function that produces new controls on demand — ideal for dynamic form lists.
 
 ```ts
-import { HelixFormArrayWithFactory } from '@gravionlabs/helix';
+import { HelixFormArrayWithFactory } from '@gravionlabs/helix-shell';
 import { FormControl, Validators } from '@angular/forms';
 
 const emails = new HelixFormArrayWithFactory(
@@ -1128,12 +1128,12 @@ emails.setValue(['a@b.com', 'c@d.com']);
 
 ### helixFormErrorMap
 
-**File:** `projects/helix/src/lib/form/utils/form.utils.ts`
+**File:** `projects/helix-shell/src/lib/form/utils/form.utils.ts`
 
 Recursively walks an `AbstractControl` tree and produces a flat map of field-name → first error message.
 
 ```ts
-import { helixFormErrorMap } from '@gravionlabs/helix';
+import { helixFormErrorMap } from '@gravionlabs/helix-shell';
 
 const errors = helixFormErrorMap(myForm);
 // → { email: 'Invalid email address', 'items[0]': 'Required' }
