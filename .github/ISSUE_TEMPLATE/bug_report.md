@@ -1,14 +1,14 @@
 ---
 name: Bug Report
 about: Report a bug to help us improve Helix-NG
-title: 'bug: '
+title: 'fix: '
 labels: bug
 assignees: ''
 ---
 
 ## Description
 
-A clear and concise description of the bug.
+What is broken.
 
 ## Reproduction
 
@@ -16,16 +16,15 @@ Steps to reproduce the behavior:
 
 1. Go to '...'
 2. Click on '...'
-3. Scroll down to '...'
-4. See error
+3. See error
 
-## Expected behavior
+## Expected Behavior
 
-A clear and concise description of what you expected to happen.
+What should happen.
 
-## Screenshots
+## Actual Behavior
 
-If applicable, add screenshots to help explain the problem.
+What happens instead.
 
 ## Environment
 
@@ -34,6 +33,16 @@ If applicable, add screenshots to help explain the problem.
 - Browser: [e.g. Chrome 120, Firefox 120]
 - OS: [e.g. macOS 14, Ubuntu 24]
 
-## Additional context
+## Screenshots
 
-Add any other context about the problem here.
+<!-- Optional. -->
+
+## Sub-Issues
+
+<!-- Optional: only if the fix is split into Tasks; also add each as a native GitHub sub-issue. -->
+
+- [ ] #NNN — chore: …
+
+## Definition of Done
+
+- Fix merged with regression test

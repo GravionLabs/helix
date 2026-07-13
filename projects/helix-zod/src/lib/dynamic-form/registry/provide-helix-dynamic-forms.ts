@@ -13,6 +13,7 @@ import {
   HELIX_DYNAMIC_FIELD_WIDGETS,
   HELIX_ERROR_MESSAGE_RESOLVER,
   type HelixFieldWidgetRegistration,
+  HelixFieldWidgetResolver,
 } from './field-registry';
 
 const BUILT_IN_WIDGETS: readonly HelixFieldWidgetRegistration[] = [
@@ -49,6 +50,10 @@ export function provideHelixDynamicForms(
 ): EnvironmentProviders {
   const providers: Provider[] = [
     { provide: HELIX_DYNAMIC_FIELD_WIDGETS, multi: true, useValue: BUILT_IN_WIDGETS },
+    // Re-provide the resolver here so it is created in THIS environment
+    // injector and sees the registrations above. The `providedIn: 'root'`
+    // fallback instance cannot see route-scoped providers.
+    HelixFieldWidgetResolver,
   ];
   if (config.widgets?.length) {
     providers.push({ provide: HELIX_DYNAMIC_FIELD_WIDGETS, multi: true, useValue: config.widgets });

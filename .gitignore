@@ -44,3 +44,6 @@ test-results/
 .DS_Store
 Thumbs.db
 pnpm.approved-builds.json
+
+# Generated demo source assets (see scripts/generate-source-assets.mjs)
+apps/helix-demo/public/source/

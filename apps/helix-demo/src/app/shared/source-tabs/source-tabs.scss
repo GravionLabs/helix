@@ -1,0 +1,19 @@
+:host ::ng-deep .p-tabpanels {
+  padding: 0;
+  padding-top: var(--layout-gap, 1.5rem);
+  background: transparent;
+}
+
+.source-tabs__code {
+  margin: 0;
+  border-radius: var(--p-border-radius-md);
+  overflow: hidden;
+
+  code {
+    display: block;
+    padding: 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+}

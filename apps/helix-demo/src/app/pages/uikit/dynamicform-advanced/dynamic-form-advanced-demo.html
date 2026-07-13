@@ -1,0 +1,96 @@
+<app-source-tabs directory="dynamicform-advanced" componentName="dynamic-form-advanced-demo"
+  [extraSources]="['rating-widget.ts', 'advanced-error-resolver.ts', 'domain-schema.ts']">
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3 h-full">
+        <div class="font-semibold text-xl">Dynamic Form — Advanced Features</div>
+        <ul class="text-sm text-muted-color list-disc pl-5 flex flex-col gap-1">
+          <li>
+            <b>Custom widget</b> — the score renders a PrimeNG rating registered as
+            <code>widget: 'rating'</code> via <code>provideHelixDynamicForms(&#123; widgets &#125;)</code>.
+          </li>
+          <li>
+            <b>Conditional states</b> — non-draft status makes the title
+            <code>readonly</code>, "archived" <code>disables</code> the score, and escalating makes the
+            reason <code>required</code>.
+          </li>
+          <li>
+            <b>Central error resolver</b> — required/e-mail messages come from a route-provided
+            <code>errorMessageResolver</code>.
+          </li>
+          <li>
+            <b>Schema-derived defaults</b> — no <code>[model]</code> input; the initial value comes
+            from the schema's <code>.default()</code> calls.
+          </li>
+          <li>
+            <b><code>extraSchema</code> escape hatch</b> — the reviewer e-mail carries a raw
+            signal-forms <code>validate</code> rule (must end in <code>&#64;example.com</code>).
+          </li>
+        </ul>
+        <helix-dynamic-form
+          #df
+          [schema]="schema"
+          submitLabel="Submit review"
+          (submitted)="onSubmitted($event)"
+        />
+      </div>
+    </div>
+
+    <div class="md:w-1/2 flex flex-col gap-layout">
+      <div class="card flex flex-col gap-3">
+        <div class="font-semibold text-xl">Live model (schema-derived defaults)</div>
+        <pre class="dynamic-form-advanced-demo__json">{{ df.formTree()().value() | json }}</pre>
+      </div>
+
+      <div class="card flex flex-col gap-3">
+        <div class="font-semibold text-xl">Submitted (parsed) value</div>
+        @if (submittedValue(); as value) {
+          <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
+        } @else {
+          <p class="text-sm text-muted-color">Submit the form with valid values to see the parsed output.</p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-layout mt-6">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3 h-full">
+        <div class="font-semibold text-xl">Decorated domain schema</div>
+        <p class="text-sm text-muted-color">
+          This form uses a <b>plain Zod domain schema</b> (as it would ship in a shared package)
+          that is decorated with UI metadata after the fact:
+          <code>helixMeta(TaskSchema.shape.field, &#123; ... &#125;)</code> attaches to the exact
+          field instances, and the conditional callbacks are typed with
+          <code>z.infer&lt;typeof TaskSchema&gt;</code> — no hand-written model interface. See
+          <code>domain-schema.ts</code> in the sources tab.
+        </p>
+        <helix-dynamic-form
+          #taskDf
+          [schema]="taskSchema"
+          submitLabel="Save task"
+          (submitted)="onTaskSubmitted($event)"
+        />
+      </div>
+    </div>
+
+    <div class="md:w-1/2 flex flex-col gap-layout">
+      <div class="card flex flex-col gap-3">
+        <div class="font-semibold text-xl">Live model</div>
+        <pre class="dynamic-form-advanced-demo__json">{{ taskDf.formTree()().value() | json }}</pre>
+      </div>
+
+      <div class="card flex flex-col gap-3">
+        <div class="font-semibold text-xl">Submitted (parsed) value</div>
+        @if (taskSubmittedValue(); as value) {
+          <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
+        } @else {
+          <p class="text-sm text-muted-color">
+            Set priority to "high" to see the conditional required date, or "low" to hide the
+            notify toggle.
+          </p>
+        }
+      </div>
+    </div>
+  </div>
+</app-source-tabs>

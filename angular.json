@@ -129,6 +129,11 @@
               {
                 "glob": "**/*",
                 "input": "apps/helix-demo/public"
+              },
+              {
+                "glob": "github*.min.css",
+                "input": "node_modules/highlight.js/styles",
+                "output": "hljs-themes"
               }
             ],
             "styles": [

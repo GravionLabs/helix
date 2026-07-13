@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, createEnvironmentInjector, EnvironmentInjector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HelixSelectWidget } from '../widgets/select-widget/select-widget';
 import { HelixTextWidget } from '../widgets/text-widget/text-widget';
@@ -50,6 +50,22 @@ describe('HelixFieldWidgetResolver', () => {
     expect(() => TestBed.inject(HelixFieldWidgetResolver).resolve('nope')).toThrowError(
       /No widget registered for kind "nope"/,
     );
+  });
+
+  it('resolves registrations from a child environment injector (route-scoped providers)', () => {
+    TestBed.configureTestingModule({});
+    const child = createEnvironmentInjector(
+      [
+        provideHelixDynamicForms({
+          widgets: [{ widget: 'rating', component: CustomSelectWidget }],
+        }),
+      ],
+      TestBed.inject(EnvironmentInjector),
+    );
+    const resolver = child.get(HelixFieldWidgetResolver);
+
+    expect(resolver.resolve('text')).toBe(HelixTextWidget);
+    expect(resolver.resolve('rating')).toBe(CustomSelectWidget);
   });
 
   it('throws when no registrations are provided at all', () => {

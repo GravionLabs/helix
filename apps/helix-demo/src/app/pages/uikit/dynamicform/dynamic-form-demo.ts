@@ -2,6 +2,7 @@ import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { HelixDynamicForm, helixMeta } from '@gravionlabs/helix-zod';
 import { z } from 'zod';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 interface RegistrationRoot {
   newsletter?: boolean;
@@ -81,7 +82,7 @@ const RegistrationSchema = z.object({
 @Component({
   selector: 'app-dynamic-form-demo',
   standalone: true,
-  imports: [HelixDynamicForm, JsonPipe],
+  imports: [HelixDynamicForm, JsonPipe, SourceTabsComponent],
   templateUrl: './dynamic-form-demo.html',
   styleUrl: './dynamic-form-demo.scss',
 })

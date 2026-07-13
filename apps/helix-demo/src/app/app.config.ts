@@ -6,6 +6,7 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { provideHighlightOptions } from 'ngx-highlightjs';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 
@@ -19,5 +20,15 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideZonelessChangeDetection(),
     providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
+    provideHighlightOptions({
+      coreLibraryLoader: () => import('highlight.js/lib/core'),
+      languages: {
+        typescript: () => import('highlight.js/lib/languages/typescript'),
+        scss: () => import('highlight.js/lib/languages/scss'),
+        xml: () => import('highlight.js/lib/languages/xml'),
+        json: () => import('highlight.js/lib/languages/json'),
+      },
+      themePath: 'hljs-themes/github.min.css',
+    }),
   ],
 };

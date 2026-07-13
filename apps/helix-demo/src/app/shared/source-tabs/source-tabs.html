@@ -1,0 +1,22 @@
+<p-tabs [value]="activeTab()" (valueChange)="activeTab.set($any($event))" scrollable>
+  <p-tablist>
+    <p-tab value="demo">Demo</p-tab>
+    @for (tab of tabs(); track tab.file) {
+      <p-tab [value]="tab.file">{{ tab.label }}</p-tab>
+    }
+    <p-tab value="docs">Docs</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="demo">
+      <ng-content />
+    </p-tabpanel>
+    @for (tab of tabs(); track tab.file) {
+      <p-tabpanel [value]="tab.file">
+        <pre class="source-tabs__code"><code [highlight]="source(tab.file)" [language]="tab.language"></code></pre>
+      </p-tabpanel>
+    }
+    <p-tabpanel value="docs">
+      <p class="text-sm text-muted-color">Documentation coming soon.</p>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>
