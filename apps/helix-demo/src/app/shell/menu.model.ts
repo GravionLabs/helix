@@ -1,4 +1,4 @@
-import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravionlabs/helix';
+import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravionlabs/helix-shell';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { Documentation } from '../pages/documentation/documentation';
 import { PAGES_MENU_ITEMS } from '../pages/pages-menu-items';

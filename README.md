@@ -1,4 +1,4 @@
-# @gravionlabs/helix
+# @gravionlabs/helix-shell
 
 Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management. Built on [PrimeNG](https://primeng.org) and [Tailwind CSS](https://tailwindcss.com).
 
@@ -13,12 +13,12 @@ Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-n
 ## Quick Start
 
 ```bash
-npm install @gravionlabs/helix
+npm install @gravionlabs/helix-shell
 ```
 
 ```ts
 import { Component } from '@angular/core';
-import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix';
+import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const MENU: HelixRouteMenuItem[] = [
   { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
@@ -43,7 +43,7 @@ Several components (e.g. the theme configurator) use Tailwind utility classes ba
 ```json
 // angular.json
 "styles": [
-  "node_modules/@gravionlabs/helix/styles.css",
+  "node_modules/@gravionlabs/helix-shell/styles.css",
   "src/styles.scss"
 ]
 ```

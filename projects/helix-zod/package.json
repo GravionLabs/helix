@@ -8,7 +8,7 @@
     "@angular/common": ">=21",
     "@angular/core": ">=21",
     "@angular/forms": ">=21",
-    "@gravionlabs/helix": ">=0.2.0",
+    "@gravionlabs/helix-shell": ">=0.2.0",
     "zod": "^4.0.0"
   },
   "dependencies": {

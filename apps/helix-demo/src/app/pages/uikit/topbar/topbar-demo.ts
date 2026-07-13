@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LayoutStore } from '@gravionlabs/helix';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 import { ButtonModule } from 'primeng/button';
 
 @Component({

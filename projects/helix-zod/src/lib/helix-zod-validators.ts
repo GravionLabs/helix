@@ -1,5 +1,5 @@
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import type { HelixValidatorKey } from '@gravionlabs/helix';
+import type { HelixValidatorKey } from '@gravionlabs/helix-shell';
 import type { ZodSchema } from 'zod';
 import { isEmptyValue, zodIssueToHelixKey } from './internal/zod-issue-map';
 

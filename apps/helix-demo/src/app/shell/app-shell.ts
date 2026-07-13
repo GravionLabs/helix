@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import type { HelixStatusBarVersion } from '@gravionlabs/helix';
-import { HelixAppLayout } from '@gravionlabs/helix';
+import type { HelixStatusBarVersion } from '@gravionlabs/helix-shell';
+import { HelixAppLayout } from '@gravionlabs/helix-shell';
 import { DEMO_MENU_MODEL } from './menu.model';
 
 @Component({

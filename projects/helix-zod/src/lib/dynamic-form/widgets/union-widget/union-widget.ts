@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { HelixFormField } from '@gravionlabs/helix';
+import { HelixFormField } from '@gravionlabs/helix-shell';
 import { HelixDynamicField } from '../../components/dynamic-field/dynamic-field';
 import { buildDefaultValue } from '../../schema/zod-defaults';
 import { HelixFieldWidgetBase } from '../widget-base';

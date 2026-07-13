@@ -1,5 +1,5 @@
 import { requiredError, standardSchemaError } from '@angular/forms/signals';
-import { HelixValidatorKey } from '@gravionlabs/helix';
+import { HelixValidatorKey } from '@gravionlabs/helix-shell';
 import { z } from 'zod';
 import { helixErrorKey, helixFirstErrorMessage } from './helix-signal-errors';
 
