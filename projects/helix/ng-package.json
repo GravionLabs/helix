@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/helix",
+  "deleteDestPath": true,
+  "lib": {
+    "entryFile": "public_api.ts"
+  },
+  "assets": ["LICENSE.md", "VENDOR.md"],
+  "allowedNonPeerDependencies": ["@primeuix/styled", "@primeuix/utils", "@primeuix/styles", "@primeuix/motion"]
+}

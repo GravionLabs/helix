@@ -6,6 +6,29 @@
   },
   "newProjectRoot": "projects",
   "projects": {
+    "helix": {
+      "projectType": "library",
+      "root": "projects/helix",
+      "sourceRoot": "projects/helix",
+      "prefix": "h",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/helix/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/helix/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/helix/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
     "helix-shell": {
       "projectType": "library",
       "root": "projects/helix-shell",

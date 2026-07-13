@@ -51,7 +51,8 @@
       "!**/*.cjs",
       "!**/*.html",
       "!**/*.svg",
-      "!**/public"
+      "!**/public",
+      "!projects/helix/**"
     ]
   }
 }
