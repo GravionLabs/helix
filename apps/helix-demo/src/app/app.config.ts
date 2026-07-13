@@ -5,9 +5,9 @@ import {
   withEnabledBlockingInitialNavigation,
   withInMemoryScrolling,
 } from '@angular/router';
+import { providePrimeNG } from '@gravionlabs/helix/config';
 import Aura from '@primeuix/themes/aura';
 import { provideHighlightOptions } from 'ngx-highlightjs';
-import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

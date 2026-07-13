@@ -1,22 +1,22 @@
-<p-tabs [value]="activeTab()" (valueChange)="activeTab.set($any($event))" scrollable>
-  <p-tablist>
-    <p-tab value="demo">Demo</p-tab>
+<h-tabs [value]="activeTab()" (valueChange)="activeTab.set($any($event))" scrollable>
+  <h-tablist>
+    <h-tab value="demo">Demo</h-tab>
     @for (tab of tabs(); track tab.file) {
-      <p-tab [value]="tab.file">{{ tab.label }}</p-tab>
+      <h-tab [value]="tab.file">{{ tab.label }}</h-tab>
     }
-    <p-tab value="docs">Docs</p-tab>
-  </p-tablist>
-  <p-tabpanels>
-    <p-tabpanel value="demo">
+    <h-tab value="docs">Docs</h-tab>
+  </h-tablist>
+  <h-tabpanels>
+    <h-tabpanel value="demo">
       <ng-content />
-    </p-tabpanel>
+    </h-tabpanel>
     @for (tab of tabs(); track tab.file) {
-      <p-tabpanel [value]="tab.file">
+      <h-tabpanel [value]="tab.file">
         <pre class="source-tabs__code"><code [highlight]="source(tab.file)" [language]="tab.language"></code></pre>
-      </p-tabpanel>
+      </h-tabpanel>
     }
-    <p-tabpanel value="docs">
+    <h-tabpanel value="docs">
       <p class="text-sm text-muted-color">Documentation coming soon.</p>
-    </p-tabpanel>
-  </p-tabpanels>
-</p-tabs>
+    </h-tabpanel>
+  </h-tabpanels>
+</h-tabs>

@@ -1,5 +1,5 @@
 <div class="flex gap-4 top-8 right-8" [ngClass]="{ fixed: float() }">
-  <p-button
+  <h-button
     type="button"
     (onClick)="toggleDarkMode()"
     [rounded]="true"
@@ -7,9 +7,9 @@
     severity="secondary"
   />
   <div class="relative">
-    <p-button
+    <h-button
       icon="pi pi-palette"
-      pStyleClass="@next"
+      hStyleClass="@next"
       enterFromClass="hidden"
       enterActiveClass="animate-scalein"
       leaveToClass="hidden"

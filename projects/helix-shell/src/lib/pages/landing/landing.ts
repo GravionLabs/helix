@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { RippleModule } from 'primeng/ripple';
-import { StyleClassModule } from 'primeng/styleclass';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { DividerModule } from '@gravionlabs/helix/divider';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { HelixFeaturesWidget } from './components/features-widget/features-widget';
 import { HelixFooterWidget } from './components/footer-widget/footer-widget';
 import { HelixHeroWidget } from './components/hero-widget/hero-widget';

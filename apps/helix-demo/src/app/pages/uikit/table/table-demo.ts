@@ -1,22 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, type ElementRef, type OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { RatingModule } from 'primeng/rating';
-import { RippleModule } from 'primeng/ripple';
-import { SelectModule } from 'primeng/select';
-import { SliderModule } from 'primeng/slider';
-import { type Table, TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
-import { ToastModule } from 'primeng/toast';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { ObjectUtils } from 'primeng/utils';
+import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { IconFieldModule } from '@gravionlabs/helix/iconfield';
+import { InputIconModule } from '@gravionlabs/helix/inputicon';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { MultiSelectModule } from '@gravionlabs/helix/multiselect';
+import { ProgressBarModule } from '@gravionlabs/helix/progressbar';
+import { RatingModule } from '@gravionlabs/helix/rating';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { SelectModule } from '@gravionlabs/helix/select';
+import { SliderModule } from '@gravionlabs/helix/slider';
+import { type Table, TableModule } from '@gravionlabs/helix/table';
+import { TagModule } from '@gravionlabs/helix/tag';
+import { ToastModule } from '@gravionlabs/helix/toast';
+import { ToggleButtonModule } from '@gravionlabs/helix/togglebutton';
+import { ObjectUtils } from '@gravionlabs/helix/utils';
 import {
   type Customer,
   CustomerService,

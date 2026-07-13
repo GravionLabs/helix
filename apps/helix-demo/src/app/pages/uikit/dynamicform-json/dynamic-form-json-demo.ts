@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
+import { TextareaModule } from '@gravionlabs/helix/textarea';
 import { HelixDynamicForm } from '@gravionlabs/helix-zod';
-import { TextareaModule } from 'primeng/textarea';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { parseFormDefinition } from './json-form-definition';
 

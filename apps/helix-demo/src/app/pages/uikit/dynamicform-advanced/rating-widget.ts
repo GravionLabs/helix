@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RatingModule } from '@gravionlabs/helix/rating';
 import { HelixFormField } from '@gravionlabs/helix-shell';
 import { HelixFieldWidgetBase } from '@gravionlabs/helix-zod';
-import { RatingModule } from 'primeng/rating';
 
 /**
  * Custom dynamic-form widget registered under the kind `'rating'` via
@@ -15,7 +15,7 @@ import { RatingModule } from 'primeng/rating';
   imports: [FormsModule, RatingModule, HelixFormField],
   template: `
     <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-      <p-rating
+      <h-rating
         [stars]="stars()"
         [disabled]="state().disabled()"
         [ngModel]="state().value()"

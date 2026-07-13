@@ -61,7 +61,7 @@
             >Email</label
           >
           <input
-            pInputText
+            hInputText
             id="email1"
             type="text"
             placeholder="Email address"
@@ -74,7 +74,7 @@
             class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
             >Password</label
           >
-          <p-password
+          <h-password
             id="password1"
             [(ngModel)]="password"
             placeholder="Password"
@@ -82,11 +82,11 @@
             styleClass="mb-4"
             [fluid]="true"
             [feedback]="false"
-          ></p-password>
+          ></h-password>
 
           <div class="flex items-center justify-between mt-2 mb-8 gap-8">
             <div class="flex items-center">
-              <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
+              <h-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></h-checkbox>
               <label for="rememberme1">Remember me</label>
             </div>
             <span
@@ -95,7 +95,7 @@
               >{{ forgotPasswordLabel() }}</span
             >
           </div>
-          <p-button [label]="submitLabel()" styleClass="w-full" (onClick)="onSubmit()"></p-button>
+          <h-button [label]="submitLabel()" styleClass="w-full" (onClick)="onSubmit()"></h-button>
         </div>
       </div>
     </div>

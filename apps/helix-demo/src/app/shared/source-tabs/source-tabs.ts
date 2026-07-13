@@ -8,8 +8,8 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { TabsModule } from '@gravionlabs/helix/tabs';
 import { Highlight } from 'ngx-highlightjs';
-import { TabsModule } from 'primeng/tabs';
 
 interface SourceTab {
   /** Tab header + p-tab value. */

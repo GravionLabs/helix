@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { ButtonModule } from '@gravionlabs/helix/button';
 import { HelixFloatingConfigurator } from '../../layout/components/floating-configurator/floating-configurator';
 
 export interface HelixNotfoundSuggestion {

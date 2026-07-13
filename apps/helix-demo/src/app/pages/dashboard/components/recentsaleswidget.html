@@ -1,11 +1,11 @@
 <div class="card">
   <div class="font-semibold text-xl mb-2">Recent Sales</div>
-  <p-table [value]="products()" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+  <h-table [value]="products()" [paginator]="true" [rows]="5" responsiveLayout="scroll">
     <ng-template #header>
       <tr>
         <th>Image</th>
-        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+        <th hSortableColumn="name">Name <h-sortIcon field="name"></h-sortIcon></th>
+        <th hSortableColumn="price">Price <h-sortIcon field="price"></h-sortIcon></th>
         <th>View</th>
       </tr>
     </ng-template>
@@ -23,8 +23,8 @@
         <td style="width: 35%; min-width: 8rem;">{{ product.price | currency: 'USD' }}</td>
         <td style="width: 15%;">
           <button
-            pButton
-            pRipple
+            hButton
+            hRipple
             type="button"
             icon="pi pi-search"
             class="p-button p-component p-button-text p-button-icon-only"
@@ -32,5 +32,5 @@
         </td>
       </tr>
     </ng-template>
-  </p-table>
+  </h-table>
 </div>

@@ -33,13 +33,13 @@
 </a>
 
 <a
-  pButton
+  hButton
   [text]="true"
   severity="secondary"
   [rounded]="true"
-  pRipple
+  hRipple
   class="lg:hidden!"
-  pStyleClass="@next"
+  hStyleClass="@next"
   enterFromClass="hidden"
   leaveToClass="hidden"
   [hideOnOutsideClick]="true"
@@ -57,7 +57,7 @@
       <li>
         <a
           (click)="router.navigate([link.route], { fragment: link.fragment })"
-          pRipple
+          hRipple
           class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl"
         >
           <span>{{ link.label }}</span>
@@ -67,16 +67,16 @@
   </ul>
   <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
     <button
-      pButton
-      pRipple
+      hButton
+      hRipple
       [label]="loginLabel()"
       [routerLink]="loginRoute()"
       [rounded]="true"
       [text]="true"
     ></button>
     <button
-      pButton
-      pRipple
+      hButton
+      hRipple
       [label]="registerLabel()"
       [routerLink]="registerRoute()"
       [rounded]="true"

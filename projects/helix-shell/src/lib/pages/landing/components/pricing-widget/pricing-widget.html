@@ -26,14 +26,14 @@
               <span class="text-surface-600 dark:text-surface-200">{{ plan.pricePeriod }}</span>
             </div>
             <button
-              pButton
-              pRipple
+              hButton
+              hRipple
               [label]="plan.buttonLabel"
               class="p-button-rounded border-0 ml-4 font-light leading-tight bg-blue-500 text-white"
               (click)="planSelect.emit(plan); $event.stopPropagation()"
             ></button>
           </div>
-          <p-divider class="w-full bg-surface-200"></p-divider>
+          <h-divider class="w-full bg-surface-200"></h-divider>
           <ul class="my-8 list-none p-0 flex text-surface-900 dark:text-surface-0 flex-col px-8">
             @for (feature of plan.features; track feature) {
               <li class="py-2">

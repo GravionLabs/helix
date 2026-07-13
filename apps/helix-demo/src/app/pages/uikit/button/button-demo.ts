@@ -1,8 +1,8 @@
 import { Component, type OnInit } from '@angular/core';
-import type { MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ButtonGroupModule } from 'primeng/buttongroup';
-import { SplitButtonModule } from 'primeng/splitbutton';
+import type { MenuItem } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { ButtonGroupModule } from '@gravionlabs/helix/buttongroup';
+import { SplitButtonModule } from '@gravionlabs/helix/splitbutton';
 
 @Component({
   selector: 'app-button-demo',

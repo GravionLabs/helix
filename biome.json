@@ -52,7 +52,7 @@
       "!**/*.html",
       "!**/*.svg",
       "!**/public",
-      "!projects/helix/**"
+      "!projects/helix"
     ]
   }
 }
