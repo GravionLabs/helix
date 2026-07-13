@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { MenuModule } from '@gravionlabs/helix/menu';
 
 @Component({
   standalone: true,

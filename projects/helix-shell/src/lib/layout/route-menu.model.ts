@@ -1,6 +1,6 @@
 import type { Type } from '@angular/core';
 import type { ActivatedRouteSnapshot, CanActivateFn, Route, Routes } from '@angular/router';
-import type { MenuItem } from 'primeng/api';
+import type { MenuItem } from '@gravionlabs/helix/api';
 
 /**
  * Extends PrimeNG's MenuItem with Angular routing properties.

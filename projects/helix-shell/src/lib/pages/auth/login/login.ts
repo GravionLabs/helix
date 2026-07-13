@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
-import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { CheckboxModule } from '@gravionlabs/helix/checkbox';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { PasswordModule } from '@gravionlabs/helix/password';
+import { RippleModule } from '@gravionlabs/helix/ripple';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 export interface HelixLoginCredentials {

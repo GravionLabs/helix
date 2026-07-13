@@ -2,10 +2,10 @@
       <div class="font-semibold text-xl mb-2">ProgressBar</div>
       <div class="flex flex-col md:flex-row gap-3">
         <div class="md:w-1/2">
-          <p-progressbar [value]="value" [showValue]="true"></p-progressbar>
+          <h-progressbar [value]="value" [showValue]="true"></h-progressbar>
         </div>
         <div class="md:w-1/2">
-          <p-progressbar [value]="50" [showValue]="false"></p-progressbar>
+          <h-progressbar [value]="50" [showValue]="false"></h-progressbar>
         </div>
       </div>
     </div>
@@ -16,43 +16,43 @@
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Badge</div>
           <div class="flex gap-1">
-            <p-badge value="2"></p-badge>
-            <p-badge value="8" severity="success"></p-badge>
-            <p-badge value="4" severity="info"></p-badge>
-            <p-badge value="12" severity="warn"></p-badge>
-            <p-badge value="3" severity="danger"></p-badge>
+            <h-badge value="2"></h-badge>
+            <h-badge value="8" severity="success"></h-badge>
+            <h-badge value="4" severity="info"></h-badge>
+            <h-badge value="12" severity="warn"></h-badge>
+            <h-badge value="3" severity="danger"></h-badge>
           </div>
 
           <div class="font-semibold my-4">Overlay</div>
           <div class="flex gap-3">
-            <p-overlaybadge value="2">
+            <h-overlaybadge value="2">
               <i class="pi pi-bell" style="font-size: 2rem"></i>
-            </p-overlaybadge>
-            <p-overlaybadge value="4" severity="danger">
+            </h-overlaybadge>
+            <h-overlaybadge value="4" severity="danger">
               <i class="pi pi-calendar" style="font-size: 2rem"></i>
-            </p-overlaybadge>
-            <p-overlaybadge severity="danger">
+            </h-overlaybadge>
+            <h-overlaybadge severity="danger">
               <i class="pi pi-envelope" style="font-size: 2rem"></i>
-            </p-overlaybadge>
+            </h-overlaybadge>
           </div>
 
           <div class="font-semibold my-4">Button</div>
           <div class="flex gap-1">
-            <p-button label="Emails" badge="8"></p-button>
-            <p-button
+            <h-button label="Emails" badge="8"></h-button>
+            <h-button
               label="Messages"
               icon="pi pi-users"
               severity="warn"
               badge="8"
               badgeSeverity="danger"
-            ></p-button>
+            ></h-button>
           </div>
 
           <div class="font-semibold my-4">Sizes</div>
           <div class="flex items-start gap-1">
-            <p-badge [value]="2"></p-badge>
-            <p-badge [value]="4" badgeSize="large" severity="warn"></p-badge>
-            <p-badge [value]="6" badgeSize="xlarge" severity="success"></p-badge>
+            <h-badge [value]="2"></h-badge>
+            <h-badge [value]="4" badgeSize="large" severity="warn"></h-badge>
+            <h-badge [value]="6" badgeSize="xlarge" severity="success"></h-badge>
           </div>
         </div>
       </div>
@@ -61,29 +61,29 @@
           <div class="font-semibold text-xl mb-2">Tag</div>
           <div class="font-semibold mb-2">Default</div>
           <div class="flex gap-1">
-            <p-tag value="Primary"></p-tag>
-            <p-tag severity="success" value="Success"></p-tag>
-            <p-tag severity="info" value="Info"></p-tag>
-            <p-tag severity="warn" value="Warning"></p-tag>
-            <p-tag severity="danger" value="Danger"></p-tag>
+            <h-tag value="Primary"></h-tag>
+            <h-tag severity="success" value="Success"></h-tag>
+            <h-tag severity="info" value="Info"></h-tag>
+            <h-tag severity="warn" value="Warning"></h-tag>
+            <h-tag severity="danger" value="Danger"></h-tag>
           </div>
 
           <div class="font-semibold my-4">Pills</div>
           <div class="flex gap-1">
-            <p-tag value="Primary" [rounded]="true"></p-tag>
-            <p-tag severity="success" value="Success" [rounded]="true"></p-tag>
-            <p-tag severity="info" value="Info" [rounded]="true"></p-tag>
-            <p-tag severity="warn" value="Warning" [rounded]="true"></p-tag>
-            <p-tag severity="danger" value="Danger" [rounded]="true"></p-tag>
+            <h-tag value="Primary" [rounded]="true"></h-tag>
+            <h-tag severity="success" value="Success" [rounded]="true"></h-tag>
+            <h-tag severity="info" value="Info" [rounded]="true"></h-tag>
+            <h-tag severity="warn" value="Warning" [rounded]="true"></h-tag>
+            <h-tag severity="danger" value="Danger" [rounded]="true"></h-tag>
           </div>
 
           <div class="font-semibold my-4">Icons</div>
           <div class="flex gap-1">
-            <p-tag icon="pi pi-user" value="Primary"></p-tag>
-            <p-tag icon="pi pi-check" severity="success" value="Success"></p-tag>
-            <p-tag icon="pi pi-info-circle" severity="info" value="Info"></p-tag>
-            <p-tag icon="pi pi-exclamation-triangle" severity="warn" value="Warning"></p-tag>
-            <p-tag icon="pi pi-times" severity="danger" value="Danger"></p-tag>
+            <h-tag icon="pi pi-user" value="Primary"></h-tag>
+            <h-tag icon="pi pi-check" severity="success" value="Success"></h-tag>
+            <h-tag icon="pi pi-info-circle" severity="info" value="Info"></h-tag>
+            <h-tag icon="pi pi-exclamation-triangle" severity="warn" value="Warning"></h-tag>
+            <h-tag icon="pi pi-times" severity="danger" value="Danger"></h-tag>
           </div>
         </div>
       </div>
@@ -94,60 +94,60 @@
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Avatar</div>
           <div class="font-semibold mb-2">Group</div>
-          <p-avatargroup styleClass="mb-2">
-            <p-avatar
+          <h-avatargroup styleClass="mb-2">
+            <h-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
               size="large"
               shape="circle"
-            ></p-avatar>
-            <p-avatar
+            ></h-avatar>
+            <h-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
               size="large"
               shape="circle"
-            ></p-avatar>
-            <p-avatar
+            ></h-avatar>
+            <h-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
               size="large"
               shape="circle"
-            ></p-avatar>
-            <p-avatar
+            ></h-avatar>
+            <h-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
               size="large"
               shape="circle"
-            ></p-avatar>
-            <p-avatar
+            ></h-avatar>
+            <h-avatar
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
               size="large"
               shape="circle"
-            ></p-avatar>
-            <p-avatar
+            ></h-avatar>
+            <h-avatar
               label="+2"
               shape="circle"
               size="large"
               [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
-            ></p-avatar>
-          </p-avatargroup>
+            ></h-avatar>
+          </h-avatargroup>
 
           <div class="font-semibold my-4">Label - Circle</div>
-          <p-avatar class="mr-2" label="P" size="xlarge" shape="circle"></p-avatar>
-          <p-avatar
+          <h-avatar class="mr-2" label="P" size="xlarge" shape="circle"></h-avatar>
+          <h-avatar
             class="mr-2"
             label="V"
             size="large"
             [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
             shape="circle"
-          ></p-avatar>
-          <p-avatar
+          ></h-avatar>
+          <h-avatar
             class="mr-2"
             label="U"
             [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
             shape="circle"
-          ></p-avatar>
+          ></h-avatar>
 
           <div class="font-semibold my-4">Icon - Badge</div>
-          <p-overlaybadge value="4" severity="danger" class="inline-flex">
-            <p-avatar label="U" size="xlarge" />
-          </p-overlaybadge>
+          <h-overlaybadge value="4" severity="danger" class="inline-flex">
+            <h-avatar label="U" size="xlarge" />
+          </h-overlaybadge>
         </div>
       </div>
       <div class="md:w-1/2 flex flex-col">
@@ -155,48 +155,48 @@
           <div class="font-semibold text-xl mb-2">Chip</div>
           <div class="font-semibold mb-2">Basic</div>
           <div class="flex items-center flex-col sm:flex-row">
-            <p-chip label="Action" styleClass="m-1"></p-chip>
-            <p-chip label="Comedy" styleClass="m-1"></p-chip>
-            <p-chip label="Mystery" styleClass="m-1"></p-chip>
-            <p-chip label="Thriller" styleClass="m-1" [removable]="true"></p-chip>
+            <h-chip label="Action" styleClass="m-1"></h-chip>
+            <h-chip label="Comedy" styleClass="m-1"></h-chip>
+            <h-chip label="Mystery" styleClass="m-1"></h-chip>
+            <h-chip label="Thriller" styleClass="m-1" [removable]="true"></h-chip>
           </div>
 
           <div class="font-semibold my-4">Icon</div>
           <div class="flex items-center flex-col sm:flex-row">
-            <p-chip label="Apple" icon="pi pi-apple" styleClass="m-1"></p-chip>
-            <p-chip label="Facebook" icon="pi pi-facebook" styleClass="m-1"></p-chip>
-            <p-chip label="Google" icon="pi pi-google" styleClass="m-1"></p-chip>
-            <p-chip
+            <h-chip label="Apple" icon="pi pi-apple" styleClass="m-1"></h-chip>
+            <h-chip label="Facebook" icon="pi pi-facebook" styleClass="m-1"></h-chip>
+            <h-chip label="Google" icon="pi pi-google" styleClass="m-1"></h-chip>
+            <h-chip
               label="Microsoft"
               icon="pi pi-microsoft"
               styleClass="m-1"
               [removable]="true"
-            ></p-chip>
+            ></h-chip>
           </div>
 
           <div class="font-semibold my-4">Image</div>
           <div class="flex items-center flex-col sm:flex-row">
-            <p-chip
+            <h-chip
               label="Amy Elsner"
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
               styleClass="m-1"
-            ></p-chip>
-            <p-chip
+            ></h-chip>
+            <h-chip
               label="Asiya Javayant"
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
               styleClass="m-1"
-            ></p-chip>
-            <p-chip
+            ></h-chip>
+            <h-chip
               label="Onyama Limba"
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
               styleClass="m-1"
-            ></p-chip>
-            <p-chip
+            ></h-chip>
+            <h-chip
               label="Xuxue Feng"
               image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
               styleClass="m-1"
               [removable]="true"
-            ></p-chip>
+            ></h-chip>
           </div>
         </div>
       </div>
@@ -205,17 +205,17 @@
       <div class="font-semibold text-xl mb-2">Skeleton</div>
       <div class="rounded-border border border-surface p-6">
         <div class="flex mb-2">
-          <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
+          <h-skeleton shape="circle" size="4rem" styleClass="mr-2"></h-skeleton>
           <div>
-            <p-skeleton width="10rem" styleClass="mb-1"></p-skeleton>
-            <p-skeleton width="5rem" styleClass="mb-1"></p-skeleton>
-            <p-skeleton height=".5rem"></p-skeleton>
+            <h-skeleton width="10rem" styleClass="mb-1"></h-skeleton>
+            <h-skeleton width="5rem" styleClass="mb-1"></h-skeleton>
+            <h-skeleton height=".5rem"></h-skeleton>
           </div>
         </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
+        <h-skeleton width="100%" height="150px"></h-skeleton>
         <div class="flex justify-between mt-1">
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
+          <h-skeleton width="4rem" height="2rem"></h-skeleton>
+          <h-skeleton width="4rem" height="2rem"></h-skeleton>
         </div>
       </div>
     </div>

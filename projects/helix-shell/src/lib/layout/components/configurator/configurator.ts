@@ -2,12 +2,12 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, computed, inject, type OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PrimeNG } from '@gravionlabs/helix/config';
+import { SelectButtonModule } from '@gravionlabs/helix/selectbutton';
 import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
-import { PrimeNG } from 'primeng/config';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { LayoutStore } from '../../store/layout.store';
 
 const presets = { Aura, Lara, Nora } as const;

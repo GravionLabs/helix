@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { type AfterViewInit, Component, computed, inject, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RippleModule } from 'primeng/ripple';
+import { RippleModule } from '@gravionlabs/helix/ripple';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 

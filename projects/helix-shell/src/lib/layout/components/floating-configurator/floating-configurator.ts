@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, input } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { StyleClassModule } from 'primeng/styleclass';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { LayoutStore } from '../../store';
 import { HelixConfigurator } from '../configurator/configurator';
 

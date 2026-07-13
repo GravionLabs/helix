@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, type OnInit, signal } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { CarouselModule } from 'primeng/carousel';
-import { GalleriaModule } from 'primeng/galleria';
-import { ImageModule } from 'primeng/image';
-import { TagModule } from 'primeng/tag';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { CarouselModule } from '@gravionlabs/helix/carousel';
+import { GalleriaModule } from '@gravionlabs/helix/galleria';
+import { ImageModule } from '@gravionlabs/helix/image';
+import { TagModule } from '@gravionlabs/helix/tag';
 import { PhotoService } from '@/app/pages/service/photo.service';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 

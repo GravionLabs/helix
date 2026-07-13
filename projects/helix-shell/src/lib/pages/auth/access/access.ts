@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { RippleModule } from '@gravionlabs/helix/ripple';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 @Component({

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DataViewModule } from 'primeng/dataview';
-import { OrderListModule } from 'primeng/orderlist';
-import { PickListModule } from 'primeng/picklist';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { TagModule } from 'primeng/tag';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { DataViewModule } from '@gravionlabs/helix/dataview';
+import { OrderListModule } from '@gravionlabs/helix/orderlist';
+import { PickListModule } from '@gravionlabs/helix/picklist';
+import { SelectButtonModule } from '@gravionlabs/helix/selectbutton';
+import { TagModule } from '@gravionlabs/helix/tag';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

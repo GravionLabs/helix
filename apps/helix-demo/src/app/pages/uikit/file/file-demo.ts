@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { FileUploadModule } from 'primeng/fileupload';
-import { ToastModule } from 'primeng/toast';
+import { MessageService } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { FileUploadModule } from '@gravionlabs/helix/fileupload';
+import { ToastModule } from '@gravionlabs/helix/toast';
 
 @Component({
   selector: 'app-file-demo',

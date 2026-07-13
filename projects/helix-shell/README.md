@@ -20,7 +20,7 @@ npm install @gravionlabs/helix-shell
 ### Peer Dependencies
 
 ```bash
-npm install @angular/core@>=21 @ngrx/signals@>=21 primeng@>=21 @primeuix/themes@>=2
+npm install @angular/core@>=21 @ngrx/signals@>=21 @gravionlabs/helix@>=1 @primeuix/themes@>=2
 ```
 
 ## Setup
@@ -28,7 +28,7 @@ npm install @angular/core@>=21 @ngrx/signals@>=21 primeng@>=21 @primeuix/themes@
 ```typescript
 // app.config.ts
 import Aura from '@primeuix/themes/aura';
-import { providePrimeNG } from 'primeng/config';
+import { providePrimeNG } from '@gravionlabs/helix/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -1,9 +1,9 @@
 import { Component, input } from '@angular/core';
 // biome-ignore lint/style/useImportType: DI token, must be value import
 import { Router, RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
-import { StyleClassModule } from 'primeng/styleclass';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { HelixFloatingConfigurator } from '../../../../layout/components/floating-configurator/floating-configurator';
 import type { HelixNavLink } from '../../landing.model';
 
