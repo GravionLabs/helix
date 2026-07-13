@@ -1,0 +1,27 @@
+/* Vendored PrimeNG 21.1.9 source is not strict-clean; this config mirrors the
+   upstream compiler settings instead of the workspace-wide strict defaults. */
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "types": [],
+    "isolatedModules": false,
+    "strict": false,
+    "strictNullChecks": true,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "compilationMode": "partial"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { FluidModule } from 'primeng/fluid';
-import { InputTextModule } from 'primeng/inputtext';
-import { SelectModule } from 'primeng/select';
-import { TextareaModule } from 'primeng/textarea';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { FluidModule } from '@gravionlabs/helix/fluid';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { SelectModule } from '@gravionlabs/helix/select';
+import { TextareaModule } from '@gravionlabs/helix/textarea';
 
 @Component({
   selector: 'app-formlayout-demo',

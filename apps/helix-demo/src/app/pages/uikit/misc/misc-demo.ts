@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
-import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
-import { BadgeModule } from 'primeng/badge';
-import { ButtonModule } from 'primeng/button';
-import { ChipModule } from 'primeng/chip';
-import { OverlayBadgeModule } from 'primeng/overlaybadge';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { ScrollTopModule } from 'primeng/scrolltop';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TagModule } from 'primeng/tag';
+import { AvatarModule } from '@gravionlabs/helix/avatar';
+import { AvatarGroupModule } from '@gravionlabs/helix/avatargroup';
+import { BadgeModule } from '@gravionlabs/helix/badge';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { ChipModule } from '@gravionlabs/helix/chip';
+import { OverlayBadgeModule } from '@gravionlabs/helix/overlaybadge';
+import { ProgressBarModule } from '@gravionlabs/helix/progressbar';
+import { ScrollPanelModule } from '@gravionlabs/helix/scrollpanel';
+import { ScrollTopModule } from '@gravionlabs/helix/scrolltop';
+import { SkeletonModule } from '@gravionlabs/helix/skeleton';
+import { TagModule } from '@gravionlabs/helix/tag';
 
 @Component({
   selector: 'app-misc-demo',

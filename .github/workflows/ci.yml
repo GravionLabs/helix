@@ -21,7 +21,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, epic/201-primeng-fork]
 
 jobs:
   determine-version:
@@ -84,6 +84,15 @@ jobs:
         with:
           name: node-build
           path: .
+
+      - name: Publish @gravionlabs/helix
+        uses: GravionLabs/ci/node/publish@main
+        with:
+          package-manager: pnpm
+          package-manager-version: ${{ env.PNPM_VERSION }}
+          publish-directory: helix
+          version: ${{ needs.determine-version.outputs.npm-version }}
+          npm-token: ${{ secrets.GH_PAT }}
 
       - name: Publish @gravionlabs/helix-shell
         uses: GravionLabs/ci/node/publish@main

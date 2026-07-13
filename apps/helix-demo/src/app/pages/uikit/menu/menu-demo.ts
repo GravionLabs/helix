@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { ButtonModule } from 'primeng/button';
-import { ContextMenuModule } from 'primeng/contextmenu';
-import { IconField, IconFieldModule } from 'primeng/iconfield';
-import { InputIcon, InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { MegaMenuModule } from 'primeng/megamenu';
-import { MenuModule } from 'primeng/menu';
-import { MenubarModule } from 'primeng/menubar';
-import { PanelMenuModule } from 'primeng/panelmenu';
-import { StepperModule } from 'primeng/stepper';
-import { TabsModule } from 'primeng/tabs';
-import { TieredMenuModule } from 'primeng/tieredmenu';
+import { BreadcrumbModule } from '@gravionlabs/helix/breadcrumb';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { ContextMenuModule } from '@gravionlabs/helix/contextmenu';
+import { IconField, IconFieldModule } from '@gravionlabs/helix/iconfield';
+import { InputIcon, InputIconModule } from '@gravionlabs/helix/inputicon';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { MegaMenuModule } from '@gravionlabs/helix/megamenu';
+import { MenuModule } from '@gravionlabs/helix/menu';
+import { MenubarModule } from '@gravionlabs/helix/menubar';
+import { PanelMenuModule } from '@gravionlabs/helix/panelmenu';
+import { StepperModule } from '@gravionlabs/helix/stepper';
+import { TabsModule } from '@gravionlabs/helix/tabs';
+import { TieredMenuModule } from '@gravionlabs/helix/tieredmenu';
 
 @Component({
   selector: 'app-menu-demo',

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import type { TreeNode } from 'primeng/api';
-import { TreeModule } from 'primeng/tree';
-import { TreeTableModule } from 'primeng/treetable';
+import type { TreeNode } from '@gravionlabs/helix/api';
+import { TreeModule } from '@gravionlabs/helix/tree';
+import { TreeTableModule } from '@gravionlabs/helix/treetable';
 import { NodeService } from '@/app/pages/service/node.service';
 
 @Component({

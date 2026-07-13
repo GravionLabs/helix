@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, type OnInit, signal } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
-import { TableModule } from 'primeng/table';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { TableModule } from '@gravionlabs/helix/table';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

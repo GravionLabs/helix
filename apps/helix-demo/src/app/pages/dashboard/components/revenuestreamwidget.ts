@@ -1,6 +1,6 @@
 import { afterNextRender, Component, effect, inject, signal } from '@angular/core';
+import { ChartModule } from '@gravionlabs/helix/chart';
 import { LayoutStore } from '@gravionlabs/helix-shell';
-import { ChartModule } from 'primeng/chart';
 
 @Component({
   standalone: true,

@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { DividerModule } from '@gravionlabs/helix/divider';
+import { RippleModule } from '@gravionlabs/helix/ripple';
 import type { HelixPricingPlan } from '../../landing.model';
 
 const DEFAULT_PLANS: HelixPricingPlan[] = [

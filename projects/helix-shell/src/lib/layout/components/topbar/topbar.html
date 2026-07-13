@@ -4,7 +4,7 @@
       <i class="pi pi-bars"></i>
     </button>
     @if (showBreadcrumbs()) {
-      <p-breadcrumb [model]="effectiveBreadcrumbs()" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
+      <h-breadcrumb [model]="effectiveBreadcrumbs()" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
     }
   </div>
 
@@ -32,7 +32,7 @@
 
     <button
       class="layout-topbar-menu-button layout-topbar-action"
-      pStyleClass="@next"
+      hStyleClass="@next"
       enterFromClass="hidden"
       enterActiveClass="animate-scalein"
       leaveToClass="hidden"

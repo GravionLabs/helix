@@ -3,42 +3,42 @@
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Toast</div>
           <div class="flex flex-wrap gap-1">
-            <p-button (click)="showSuccessViaToast()" label="Success" severity="success" />
-            <p-button (click)="showInfoViaToast()" label="Info" severity="info" />
-            <p-button (click)="showWarnViaToast()" label="Warn" severity="warn" />
-            <p-button (click)="showErrorViaToast()" label="Error" severity="danger" />
-            <p-toast />
+            <h-button (click)="showSuccessViaToast()" label="Success" severity="success" />
+            <h-button (click)="showInfoViaToast()" label="Info" severity="info" />
+            <h-button (click)="showWarnViaToast()" label="Warn" severity="warn" />
+            <h-button (click)="showErrorViaToast()" label="Error" severity="danger" />
+            <h-toast />
           </div>
 
           <div class="font-semibold text-xl mt-1 mb-2">Inline</div>
           <div class="flex mb-2 gap-1">
             <input
-              pInputText
+              hInputText
               [(ngModel)]="username"
               placeholder="Username"
               aria-label="username"
               class="ng-dirty ng-invalid"
             />
-            <p-message severity="error" size="small" styleClass="h-auto w-full " [pt]="pt"
-              >Username is required</p-message
+            <h-message severity="error" size="small" styleClass="h-auto w-full " [pt]="pt"
+              >Username is required</h-message
             >
           </div>
           <div class="flex flex-wrap gap-1">
             <input
-              pInputText
+              hInputText
               [(ngModel)]="email"
               placeholder="Email"
               aria-label="email"
               class="ng-dirty ng-invalid"
             />
-            <p-message
+            <h-message
               severity="error"
               size="small"
               styleClass="flex items-center text-center justify-center h-auto w-11"
               [pt]="pt"
             >
               <i class="pi pi-times-circle"></i>
-            </p-message>
+            </h-message>
           </div>
         </div>
       </div>
@@ -46,12 +46,12 @@
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Message</div>
           <div class="flex flex-col gap-3 mb-2">
-            <p-message severity="success">Success Message</p-message>
-            <p-message severity="info">Info Message</p-message>
-            <p-message severity="warn">Warn Message</p-message>
-            <p-message severity="error">Error Message</p-message>
-            <p-message severity="secondary">Secondary Message</p-message>
-            <p-message severity="contrast">Contrast Message</p-message>
+            <h-message severity="success">Success Message</h-message>
+            <h-message severity="info">Info Message</h-message>
+            <h-message severity="warn">Warn Message</h-message>
+            <h-message severity="error">Error Message</h-message>
+            <h-message severity="secondary">Secondary Message</h-message>
+            <h-message severity="contrast">Contrast Message</h-message>
           </div>
         </div>
       </div>

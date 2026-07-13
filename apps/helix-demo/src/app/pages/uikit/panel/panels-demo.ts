@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AccordionModule } from 'primeng/accordion';
-import type { MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { FieldsetModule } from 'primeng/fieldset';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { MenuModule } from 'primeng/menu';
-import { PanelModule } from 'primeng/panel';
-import { RippleModule } from 'primeng/ripple';
-import { SplitButtonModule } from 'primeng/splitbutton';
-import { SplitterModule } from 'primeng/splitter';
-import { TabsModule } from 'primeng/tabs';
-import { ToolbarModule } from 'primeng/toolbar';
+import { AccordionModule } from '@gravionlabs/helix/accordion';
+import type { MenuItem } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { DividerModule } from '@gravionlabs/helix/divider';
+import { FieldsetModule } from '@gravionlabs/helix/fieldset';
+import { IconFieldModule } from '@gravionlabs/helix/iconfield';
+import { InputIconModule } from '@gravionlabs/helix/inputicon';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { MenuModule } from '@gravionlabs/helix/menu';
+import { PanelModule } from '@gravionlabs/helix/panel';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { SplitButtonModule } from '@gravionlabs/helix/splitbutton';
+import { SplitterModule } from '@gravionlabs/helix/splitter';
+import { TabsModule } from '@gravionlabs/helix/tabs';
+import { ToolbarModule } from '@gravionlabs/helix/toolbar';
 
 @Component({
   selector: 'app-panels-demo',

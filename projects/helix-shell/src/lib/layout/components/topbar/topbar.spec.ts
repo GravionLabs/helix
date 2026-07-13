@@ -13,7 +13,7 @@ vi.mock('@primeuix/themes/nora', () => ({ default: { primitive: {} } }));
 
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import type { MenuItem } from 'primeng/api';
+import type { MenuItem } from '@gravionlabs/helix/api';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixTopbar } from './topbar';
 

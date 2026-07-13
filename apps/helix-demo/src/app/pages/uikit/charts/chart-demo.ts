@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
+import { ChartModule } from '@gravionlabs/helix/chart';
+import { FluidModule } from '@gravionlabs/helix/fluid';
 import { LayoutStore } from '@gravionlabs/helix-shell';
-import { ChartModule } from 'primeng/chart';
-import { FluidModule } from 'primeng/fluid';
 
 @Component({
   selector: 'app-chart-demo',

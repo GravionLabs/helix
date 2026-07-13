@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { TimelineModule } from 'primeng/timeline';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { CardModule } from '@gravionlabs/helix/card';
+import { TimelineModule } from '@gravionlabs/helix/timeline';
 
 @Component({
   selector: 'app-timeline-demo',

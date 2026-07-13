@@ -1,34 +1,34 @@
-<p-fluid>
+<h-fluid>
     <div class="flex flex-col gap-layout">
       <div class="flex flex-col md:flex-row gap-layout">
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
             <div class="font-semibold text-xl">InputText</div>
             <div class="flex flex-col md:flex-row gap-3">
-              <input pInputText type="text" placeholder="Default" />
-              <input pInputText type="text" placeholder="Disabled" [disabled]="true" />
-              <input pInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
+              <input hInputText type="text" placeholder="Default" />
+              <input hInputText type="text" placeholder="Disabled" [disabled]="true" />
+              <input hInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
             </div>
 
             <div class="font-semibold text-xl">Icons</div>
-            <p-iconfield>
-              <p-inputicon class="pi pi-user" />
-              <input pInputText type="text" placeholder="Username" />
-            </p-iconfield>
-            <p-iconfield iconPosition="left">
-              <input pInputText type="text" placeholder="Search" />
-              <p-inputicon class="pi pi-search" />
-            </p-iconfield>
+            <h-iconfield>
+              <h-inputicon class="pi pi-user" />
+              <input hInputText type="text" placeholder="Username" />
+            </h-iconfield>
+            <h-iconfield iconPosition="left">
+              <input hInputText type="text" placeholder="Search" />
+              <h-inputicon class="pi pi-search" />
+            </h-iconfield>
 
             <div class="font-semibold text-xl">Float Label</div>
-            <p-floatlabel>
-              <input pInputText id="username" type="text" [(ngModel)]="floatValue" />
+            <h-floatlabel>
+              <input hInputText id="username" type="text" [(ngModel)]="floatValue" />
               <label for="username">Username</label>
-            </p-floatlabel>
+            </h-floatlabel>
 
             <div class="font-semibold text-xl">Textarea</div>
             <textarea
-              pTextarea
+              hTextarea
               placeholder="Your Message"
               [autoResize]="true"
               rows="3"
@@ -36,7 +36,7 @@
             ></textarea>
 
             <div class="font-semibold text-xl">AutoComplete</div>
-            <p-autocomplete
+            <h-autocomplete
               [(ngModel)]="selectedAutoValue"
               [suggestions]="autoFilteredValue"
               optionLabel="name"
@@ -48,14 +48,14 @@
             />
 
             <div class="font-semibold text-xl">DatePicker</div>
-            <p-datepicker
+            <h-datepicker
               [showIcon]="true"
               [showButtonBar]="true"
               [(ngModel)]="calendarValue"
-            ></p-datepicker>
+            ></h-datepicker>
 
             <div class="font-semibold text-xl">InputNumber</div>
-            <p-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></p-inputnumber>
+            <h-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></h-inputnumber>
           </div>
         </div>
         <div class="md:w-1/2 flex flex-col gap-1">
@@ -63,11 +63,11 @@
             <div class="font-semibold text-xl">RadioButton</div>
             <div class="flex flex-col md:flex-row gap-3">
               <div class="flex items-center">
-                <p-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
+                <h-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
                 <label for="option1" class="leading-none ml-2">Chicago</label>
               </div>
               <div class="flex items-center">
-                <p-radiobutton
+                <h-radiobutton
                   id="option2"
                   name="option"
                   value="Los Angeles"
@@ -76,7 +76,7 @@
                 <label for="option2" class="leading-none ml-2">Los Angeles</label>
               </div>
               <div class="flex items-center">
-                <p-radiobutton id="option3" name="option" value="New York" [(ngModel)]="radioValue" />
+                <h-radiobutton id="option3" name="option" value="New York" [(ngModel)]="radioValue" />
                 <label for="option3" class="leading-none ml-2">New York</label>
               </div>
             </div>
@@ -84,7 +84,7 @@
             <div class="font-semibold text-xl">Checkbox</div>
             <div class="flex flex-col md:flex-row gap-3">
               <div class="flex items-center">
-                <p-checkbox
+                <h-checkbox
                   id="checkOption1"
                   name="option"
                   value="Chicago"
@@ -93,7 +93,7 @@
                 <label for="checkOption1" class="ml-2">Chicago</label>
               </div>
               <div class="flex items-center">
-                <p-checkbox
+                <h-checkbox
                   id="checkOption2"
                   name="option"
                   value="Los Angeles"
@@ -102,7 +102,7 @@
                 <label for="checkOption2" class="ml-2">Los Angeles</label>
               </div>
               <div class="flex items-center">
-                <p-checkbox
+                <h-checkbox
                   id="checkOption3"
                   name="option"
                   value="New York"
@@ -113,12 +113,12 @@
             </div>
 
             <div class="font-semibold text-xl">ToggleSwitch</div>
-            <p-toggleswitch [(ngModel)]="switchValue" />
+            <h-toggleswitch [(ngModel)]="switchValue" />
           </div>
 
           <div class="card flex flex-col gap-3">
             <div class="font-semibold text-xl">Listbox</div>
-            <p-listbox
+            <h-listbox
               [(ngModel)]="listboxValue"
               [options]="listboxValues"
               optionLabel="name"
@@ -126,7 +126,7 @@
             />
 
             <div class="font-semibold text-xl">Select</div>
-            <p-select
+            <h-select
               [(ngModel)]="dropdownValue"
               [options]="dropdownValues"
               optionLabel="name"
@@ -134,7 +134,7 @@
             />
 
             <div class="font-semibold text-xl">MultiSelect</div>
-            <p-multiselect
+            <h-multiselect
               [options]="multiselectCountries"
               [(ngModel)]="multiselectSelectedCountries"
               placeholder="Select Countries"
@@ -164,14 +164,14 @@
                   <div>{{ country.name }}</div>
                 </div>
               </ng-template>
-            </p-multiselect>
+            </h-multiselect>
 
             <div class="font-semibold text-xl">TreeSelect</div>
-            <p-treeselect
+            <h-treeselect
               [(ngModel)]="selectedNode"
               [options]="treeSelectNodes"
               placeholder="Select Item"
-            ></p-treeselect>
+            ></h-treeselect>
           </div>
         </div>
       </div>
@@ -180,22 +180,22 @@
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
             <div class="font-semibold text-xl">Slider</div>
-            <input pInputText [(ngModel)]="sliderValue" type="number" />
-            <p-slider [(ngModel)]="sliderValue" />
+            <input hInputText [(ngModel)]="sliderValue" type="number" />
+            <h-slider [(ngModel)]="sliderValue" />
 
             <div class="flex flex-row mt-2">
               <div class="flex flex-col gap-3 w-1/2">
                 <div class="font-semibold text-xl">Rating</div>
-                <p-rating [(ngModel)]="ratingValue" />
+                <h-rating [(ngModel)]="ratingValue" />
               </div>
               <div class="flex flex-col gap-3 w-1/2">
                 <div class="font-semibold text-xl">ColorPicker</div>
-                <p-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
+                <h-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
               </div>
             </div>
 
             <div class="font-semibold text-xl">Knob</div>
-            <p-knob
+            <h-knob
               [(ngModel)]="knobValue"
               [step]="10"
               [min]="-50"
@@ -207,7 +207,7 @@
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
             <div class="font-semibold text-xl">ToggleButton</div>
-            <p-togglebutton
+            <h-togglebutton
               [(ngModel)]="toggleValue"
               onLabel="Yes"
               offLabel="No"
@@ -215,7 +215,7 @@
             />
 
             <div class="font-semibold text-xl">SelectButton</div>
-            <p-selectbutton
+            <h-selectbutton
               [(ngModel)]="selectButtonValue"
               [options]="selectButtonValues"
               optionLabel="name"
@@ -227,36 +227,36 @@
       <div class="card flex flex-col gap-3">
         <div class="font-semibold text-xl">InputGroup</div>
         <div class="flex flex-col md:flex-row gap-3">
-          <p-inputgroup>
-            <p-inputgroup-addon>
+          <h-inputgroup>
+            <h-inputgroup-addon>
               <i class="pi pi-user"></i>
-            </p-inputgroup-addon>
-            <input pInputText placeholder="Username" />
-          </p-inputgroup>
-          <p-inputgroup>
-            <p-inputgroup-addon>
+            </h-inputgroup-addon>
+            <input hInputText placeholder="Username" />
+          </h-inputgroup>
+          <h-inputgroup>
+            <h-inputgroup-addon>
               <i class="pi pi-clock"></i>
-            </p-inputgroup-addon>
-            <p-inputgroup-addon>
+            </h-inputgroup-addon>
+            <h-inputgroup-addon>
               <i class="pi pi-star-fill"></i>
-            </p-inputgroup-addon>
-            <p-inputnumber placeholder="Price" />
-            <p-inputgroup-addon>$</p-inputgroup-addon>
-            <p-inputgroup-addon>.00</p-inputgroup-addon>
-          </p-inputgroup>
+            </h-inputgroup-addon>
+            <h-inputnumber placeholder="Price" />
+            <h-inputgroup-addon>$</h-inputgroup-addon>
+            <h-inputgroup-addon>.00</h-inputgroup-addon>
+          </h-inputgroup>
         </div>
         <div class="flex flex-col md:flex-row gap-3">
-          <p-inputgroup>
-            <p-button label="Search" />
-            <input pInputText placeholder="Keyword" />
-          </p-inputgroup>
-          <p-inputgroup>
-            <p-inputgroup-addon>
-              <p-checkbox [(ngModel)]="inputGroupValue" [binary]="true" />
-            </p-inputgroup-addon>
-            <input pInputText placeholder="Confirm" />
-          </p-inputgroup>
+          <h-inputgroup>
+            <h-button label="Search" />
+            <input hInputText placeholder="Keyword" />
+          </h-inputgroup>
+          <h-inputgroup>
+            <h-inputgroup-addon>
+              <h-checkbox [(ngModel)]="inputGroupValue" [binary]="true" />
+            </h-inputgroup-addon>
+            <input hInputText placeholder="Confirm" />
+          </h-inputgroup>
         </div>
       </div>
     </div>
-  </p-fluid>
+  </h-fluid>
