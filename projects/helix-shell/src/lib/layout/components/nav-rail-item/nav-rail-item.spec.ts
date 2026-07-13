@@ -52,6 +52,30 @@ describe('HelixNavRailItem', () => {
     expect(component.isActive()).toBe(true);
   });
 
+  it('isActive() should be false when the active path only shares a name prefix', () => {
+    const store = TestBed.inject(LayoutStore);
+    store.setActivePath('/uikit/dynamicform-advanced');
+    fixture.componentRef.setInput('item', { label: 'Dynamic Form', path: '/uikit/dynamicform' });
+    fixture.detectChanges();
+    expect(component.isActive()).toBe(false);
+  });
+
+  it('isActive() should be true for a child route of the item path', () => {
+    const store = TestBed.inject(LayoutStore);
+    store.setActivePath('/uikit/dynamicform/details');
+    fixture.componentRef.setInput('item', { label: 'Dynamic Form', path: '/uikit/dynamicform' });
+    fixture.detectChanges();
+    expect(component.isActive()).toBe(true);
+  });
+
+  it('isActive() should ignore query params and fragments on the active path', () => {
+    const store = TestBed.inject(LayoutStore);
+    store.setActivePath('/dashboard?tab=2#top');
+    fixture.componentRef.setInput('item', { label: 'Dashboard', path: '/dashboard' });
+    fixture.detectChanges();
+    expect(component.isActive()).toBe(true);
+  });
+
   it('isActive() should be false for an item with children, even if a child path matches', () => {
     const store = TestBed.inject(LayoutStore);
     store.setActivePath('/projects');
@@ -85,6 +109,17 @@ describe('HelixNavRailItem', () => {
     });
     fixture.detectChanges();
     expect(component.hasActiveDescendant()).toBe(true);
+  });
+
+  it('hasActiveDescendant() should be false when a child path only shares a name prefix', () => {
+    const store = TestBed.inject(LayoutStore);
+    store.setActivePath('/projects-archive');
+    fixture.componentRef.setInput('item', {
+      label: 'Workspace',
+      items: [{ label: 'Projects', path: '/projects' }],
+    });
+    fixture.detectChanges();
+    expect(component.hasActiveDescendant()).toBe(false);
   });
 
   it('isExpanded() defaults to true when it has an active descendant', () => {
