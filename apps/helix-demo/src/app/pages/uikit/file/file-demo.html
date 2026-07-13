@@ -1,9 +1,9 @@
-<p-toast />
+<h-toast />
     <div class="grid grid-cols-12 gap-layout">
       <div class="col-span-full lg:col-span-6">
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Advanced</div>
-          <p-fileupload
+          <h-fileupload
             name="demo[]"
             (onUpload)="onUpload($event)"
             [multiple]="true"
@@ -15,14 +15,14 @@
             <ng-template #empty>
               <div>Drag and drop files to here to upload.</div>
             </ng-template>
-          </p-fileupload>
+          </h-fileupload>
         </div>
       </div>
       <div class="col-span-full lg:col-span-6">
         <div class="card h-full">
           <div class="font-semibold text-xl mb-2">Basic</div>
           <div class="flex flex-col gap-3 items-center justify-center">
-            <p-fileupload
+            <h-fileupload
               #fu
               mode="basic"
               chooseLabel="Choose"
@@ -33,7 +33,7 @@
               maxFileSize="1000000"
               (onUpload)="onUpload($event)"
             />
-            <p-button label="Upload" (onClick)="fu.upload()" severity="secondary" />
+            <h-button label="Upload" (onClick)="fu.upload()" severity="secondary" />
           </div>
         </div>
       </div>

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService, type ToastMessageOptions } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { ToastModule } from 'primeng/toast';
+import { MessageService, type ToastMessageOptions } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { MessageModule } from '@gravionlabs/helix/message';
+import { ToastModule } from '@gravionlabs/helix/toast';
 
 @Component({
   selector: 'app-messages-demo',

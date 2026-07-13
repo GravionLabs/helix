@@ -40,7 +40,7 @@
   </div>
   <div class="flex flex-col gap-2">
     <span class="text-sm text-muted-color font-semibold">Presets</span>
-    <p-selectbutton
+    <h-selectbutton
       [options]="presetOptions"
       [ngModel]="selectedPreset()"
       (ngModelChange)="onPresetChange($event)"
@@ -51,7 +51,7 @@
   @if (showMenuModeButton()) {
     <div class="flex flex-col gap-2">
       <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
-      <p-selectbutton
+      <h-selectbutton
         [ngModel]="menuMode()"
         (ngModelChange)="onMenuModeChange($event)"
         [options]="menuModeOptions"

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StyleClassModule } from 'primeng/styleclass';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { HelixConfigurator } from '../../configurator/configurator';
 
 @Component({
@@ -13,7 +13,7 @@ import { HelixConfigurator } from '../../configurator/configurator';
     >
       <button
         class="layout-topbar-action layout-topbar-action-highlight"
-        pStyleClass="@next"
+        hStyleClass="@next"
         enterFromClass="hidden"
         enterActiveClass="animate-scalein"
         leaveToClass="hidden"

@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { RippleModule } from '@gravionlabs/helix/ripple';
 
 @Component({
   selector: 'helix-hero-widget',

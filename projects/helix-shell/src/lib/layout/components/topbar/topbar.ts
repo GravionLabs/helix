@@ -9,9 +9,9 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import type { MenuItem } from 'primeng/api';
-import { Breadcrumb } from 'primeng/breadcrumb';
-import { StyleClassModule } from 'primeng/styleclass';
+import type { MenuItem } from '@gravionlabs/helix/api';
+import { Breadcrumb } from '@gravionlabs/helix/breadcrumb';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';

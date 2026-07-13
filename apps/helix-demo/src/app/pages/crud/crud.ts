@@ -1,23 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, type OnInit, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { RatingModule } from 'primeng/rating';
-import { RippleModule } from 'primeng/ripple';
-import { SelectModule } from 'primeng/select';
-import { type Table, TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
-import { TextareaModule } from 'primeng/textarea';
-import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { ConfirmDialogModule } from '@gravionlabs/helix/confirmdialog';
+import { DialogModule } from '@gravionlabs/helix/dialog';
+import { IconFieldModule } from '@gravionlabs/helix/iconfield';
+import { InputIconModule } from '@gravionlabs/helix/inputicon';
+import { InputNumberModule } from '@gravionlabs/helix/inputnumber';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { RadioButtonModule } from '@gravionlabs/helix/radiobutton';
+import { RatingModule } from '@gravionlabs/helix/rating';
+import { RippleModule } from '@gravionlabs/helix/ripple';
+import { SelectModule } from '@gravionlabs/helix/select';
+import { type Table, TableModule } from '@gravionlabs/helix/table';
+import { TagModule } from '@gravionlabs/helix/tag';
+import { TextareaModule } from '@gravionlabs/helix/textarea';
+import { ToastModule } from '@gravionlabs/helix/toast';
+import { ToolbarModule } from '@gravionlabs/helix/toolbar';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 interface Column {
@@ -55,16 +55,16 @@ interface ExportColumn {
     ConfirmDialogModule,
   ],
   template: `
-    <p-toolbar styleClass="mb-3">
+    <h-toolbar styleClass="mb-3">
       <ng-template #start>
-        <p-button
+        <h-button
           label="New"
           icon="pi pi-plus"
           severity="secondary"
           class="mr-2"
           (onClick)="openNew()"
         />
-        <p-button
+        <h-button
           severity="secondary"
           label="Delete"
           icon="pi pi-trash"
@@ -75,11 +75,11 @@ interface ExportColumn {
       </ng-template>
 
       <ng-template #end>
-        <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+        <h-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
       </ng-template>
-    </p-toolbar>
+    </h-toolbar>
 
-    <p-table
+    <h-table
       #dt
       [value]="products()"
       [rows]="10"
@@ -97,43 +97,43 @@ interface ExportColumn {
       <ng-template #caption>
         <div class="flex items-center justify-between">
           <h5 class="m-0">Manage Products</h5>
-          <p-iconfield>
-            <p-inputicon styleClass="pi pi-search" />
+          <h-iconfield>
+            <h-inputicon styleClass="pi pi-search" />
             <input
-              pInputText
+              hInputText
               type="text"
               (input)="onGlobalFilter(dt, $event)"
               placeholder="Search..."
             />
-          </p-iconfield>
+          </h-iconfield>
         </div>
       </ng-template>
       <ng-template #header>
         <tr>
           <th style="width: 3rem">
-            <p-tableHeaderCheckbox />
+            <h-tableHeaderCheckbox />
           </th>
           <th style="min-width: 16rem">Code</th>
-          <th pSortableColumn="name" style="min-width:16rem">
+          <th hSortableColumn="name" style="min-width:16rem">
             Name
-            <p-sortIcon field="name" />
+            <h-sortIcon field="name" />
           </th>
           <th>Image</th>
-          <th pSortableColumn="price" style="min-width: 8rem">
+          <th hSortableColumn="price" style="min-width: 8rem">
             Price
-            <p-sortIcon field="price" />
+            <h-sortIcon field="price" />
           </th>
-          <th pSortableColumn="category" style="min-width:10rem">
+          <th hSortableColumn="category" style="min-width:10rem">
             Category
-            <p-sortIcon field="category" />
+            <h-sortIcon field="category" />
           </th>
-          <th pSortableColumn="rating" style="min-width: 12rem">
+          <th hSortableColumn="rating" style="min-width: 12rem">
             Reviews
-            <p-sortIcon field="rating" />
+            <h-sortIcon field="rating" />
           </th>
-          <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
+          <th hSortableColumn="inventoryStatus" style="min-width: 12rem">
             Status
-            <p-sortIcon field="inventoryStatus" />
+            <h-sortIcon field="inventoryStatus" />
           </th>
           <th style="min-width: 12rem"></th>
         </tr>
@@ -141,7 +141,7 @@ interface ExportColumn {
       <ng-template #body let-product>
         <tr>
           <td style="width: 3rem">
-            <p-tableCheckbox [value]="product" />
+            <h-tableCheckbox [value]="product" />
           </td>
           <td style="min-width: 12rem">{{ product.code }}</td>
           <td style="min-width: 16rem">{{ product.name }}</td>
@@ -156,23 +156,23 @@ interface ExportColumn {
           <td>{{ product.price | currency: 'USD' }}</td>
           <td>{{ product.category }}</td>
           <td>
-            <p-rating [(ngModel)]="product.rating" [readonly]="true" />
+            <h-rating [(ngModel)]="product.rating" [readonly]="true" />
           </td>
           <td>
-            <p-tag
+            <h-tag
               [value]="product.inventoryStatus"
               [severity]="getSeverity(product.inventoryStatus)"
             />
           </td>
           <td>
-            <p-button
+            <h-button
               icon="pi pi-pencil"
               class="mr-2"
               [rounded]="true"
               [outlined]="true"
               (click)="editProduct(product)"
             />
-            <p-button
+            <h-button
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
@@ -182,9 +182,9 @@ interface ExportColumn {
           </td>
         </tr>
       </ng-template>
-    </p-table>
+    </h-table>
 
-    <p-dialog
+    <h-dialog
       [(visible)]="productDialog"
       [style]="{ width: '450px' }"
       header="Product Details"
@@ -202,7 +202,7 @@ interface ExportColumn {
             <label for="name" class="block font-bold mb-3">Name</label>
             <input
               type="text"
-              pInputText
+              hInputText
               id="name"
               [(ngModel)]="product.name"
               required
@@ -215,7 +215,7 @@ interface ExportColumn {
             <label for="description" class="block font-bold mb-3">Description</label>
             <textarea
               id="description"
-              pTextarea
+              hTextarea
               [(ngModel)]="product.description"
               required
               rows="3"
@@ -226,7 +226,7 @@ interface ExportColumn {
 
           <div>
             <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-            <p-select
+            <h-select
               [(ngModel)]="product.inventoryStatus"
               inputId="inventoryStatus"
               [options]="statuses"
@@ -241,7 +241,7 @@ interface ExportColumn {
             <span class="block font-bold mb-2">Category</span>
             <div class="grid grid-cols-12 gap-3">
               <div class="flex items-center gap-1 col-span-6">
-                <p-radiobutton
+                <h-radiobutton
                   id="category1"
                   name="category"
                   value="Accessories"
@@ -250,7 +250,7 @@ interface ExportColumn {
                 <label for="category1">Accessories</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
-                <p-radiobutton
+                <h-radiobutton
                   id="category2"
                   name="category"
                   value="Clothing"
@@ -259,7 +259,7 @@ interface ExportColumn {
                 <label for="category2">Clothing</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
-                <p-radiobutton
+                <h-radiobutton
                   id="category3"
                   name="category"
                   value="Electronics"
@@ -268,7 +268,7 @@ interface ExportColumn {
                 <label for="category3">Electronics</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
-                <p-radiobutton
+                <h-radiobutton
                   id="category4"
                   name="category"
                   value="Fitness"
@@ -282,7 +282,7 @@ interface ExportColumn {
           <div class="grid grid-cols-12 gap-3">
             <div class="col-span-6">
               <label for="price" class="block font-bold mb-3">Price</label>
-              <p-inputnumber
+              <h-inputnumber
                 id="price"
                 [(ngModel)]="product.price"
                 mode="currency"
@@ -293,19 +293,19 @@ interface ExportColumn {
             </div>
             <div class="col-span-6">
               <label for="quantity" class="block font-bold mb-3">Quantity</label>
-              <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
+              <h-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
             </div>
           </div>
         </div>
       </ng-template>
 
       <ng-template #footer>
-        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-        <p-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
+        <h-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
+        <h-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
       </ng-template>
-    </p-dialog>
+    </h-dialog>
 
-    <p-confirmdialog [style]="{ width: '450px' }" />
+    <h-confirmdialog [style]="{ width: '450px' }" />
   `,
   providers: [MessageService, ProductService, ConfirmationService],
 })

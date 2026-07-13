@@ -1,15 +1,15 @@
 <div class="card">
       <div class="font-semibold text-xl">Tree</div>
-      <p-tree
+      <h-tree
         [value]="treeValue()"
         selectionMode="checkbox"
         [(selection)]="selectedTreeValue"
-      ></p-tree>
+      ></h-tree>
     </div>
 
     <div class="card">
       <div class="font-semibold text-xl mb-2">TreeTable</div>
-      <p-treetable
+      <h-treetable
         [value]="treeTableValue()"
         [columns]="cols"
         selectionMode="checkbox"
@@ -33,10 +33,10 @@
               <td>
                 <span class="flex items-center gap-1">
                   @if (i === 0) {
-                    <p-treeTableToggler [rowNode]="rowNode" />
+                    <h-treeTableToggler [rowNode]="rowNode" />
                   }
                   @if (i === 0) {
-                    <p-treeTableCheckbox [value]="rowNode" />
+                    <h-treeTableCheckbox [value]="rowNode" />
                   }
                   {{ rowData[col.field] }}
                 </span>
@@ -44,5 +44,5 @@
             }
           </tr>
         </ng-template>
-      </p-treetable>
+      </h-treetable>
     </div>

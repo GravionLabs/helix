@@ -1,15 +1,15 @@
 import { Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { DialogModule } from 'primeng/dialog';
-import { DrawerModule } from 'primeng/drawer';
-import { InputTextModule } from 'primeng/inputtext';
-import { type Popover, PopoverModule } from 'primeng/popover';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
+import { ButtonModule } from '@gravionlabs/helix/button';
+import { ConfirmPopupModule } from '@gravionlabs/helix/confirmpopup';
+import { DialogModule } from '@gravionlabs/helix/dialog';
+import { DrawerModule } from '@gravionlabs/helix/drawer';
+import { InputTextModule } from '@gravionlabs/helix/inputtext';
+import { type Popover, PopoverModule } from '@gravionlabs/helix/popover';
+import { TableModule } from '@gravionlabs/helix/table';
+import { ToastModule } from '@gravionlabs/helix/toast';
+import { TooltipModule } from '@gravionlabs/helix/tooltip';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

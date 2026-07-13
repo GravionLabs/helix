@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StyleClassModule } from 'primeng/styleclass';
+import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 
 @Component({
   selector: 'helix-mobile-menu-action',
@@ -8,7 +8,7 @@ import { StyleClassModule } from 'primeng/styleclass';
   template: `
     <button
       class="layout-topbar-menu-button layout-topbar-action"
-      pStyleClass="@next"
+      hStyleClass="@next"
       enterFromClass="hidden"
       enterActiveClass="animate-scalein"
       leaveToClass="hidden"

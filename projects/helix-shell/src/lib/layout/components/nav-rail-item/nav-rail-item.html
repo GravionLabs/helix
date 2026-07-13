@@ -5,7 +5,7 @@
     [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
     tabindex="0"
-    pRipple
+    hRipple
   >
     @if (item()?.icon) {
       <i [ngClass]="item()?.icon" class="helix-nav-rail-icon"></i>
@@ -39,7 +39,7 @@
     [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
     tabindex="0"
-    pRipple
+    hRipple
   >
     @if (isActive() && !isCollapsed()) {
       <span class="helix-nav-rail-accent"></span>

@@ -1,6 +1,6 @@
 <div class="card">
       <div class="font-semibold text-xl mb-2">Carousel</div>
-      <p-carousel
+      <h-carousel
         [value]="products()"
         [numVisible]="3"
         [numScroll]="3"
@@ -20,7 +20,7 @@
                   class="absolute bg-black/70 rounded-border"
                   [ngStyle]="{ 'left.px': 5, 'top.px': 5 }"
                 >
-                  <p-tag
+                  <h-tag
                     [value]="product.inventoryStatus"
                     [severity]="getSeverity(product.inventoryStatus)"
                   />
@@ -31,18 +31,18 @@
             <div class="flex justify-between items-center">
               <div class="mt-0 font-semibold text-xl">{{ '$' + product.price }}</div>
               <span>
-                <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
-                <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
+                <h-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
+                <h-button icon="pi pi-shopping-cart" styleClass="ml-2" />
               </span>
             </div>
           </div>
         </ng-template>
-      </p-carousel>
+      </h-carousel>
     </div>
 
     <div class="card">
       <div class="font-semibold text-xl mb-2">Image</div>
-      <p-image
+      <h-image
         src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
         alt="Image"
         width="250"
@@ -51,7 +51,7 @@
 
     <div class="card">
       <div class="font-semibold text-xl mb-2">Galleria</div>
-      <p-galleria
+      <h-galleria
         [value]="images()"
         [responsiveOptions]="galleriaResponsiveOptions"
         [containerStyle]="{ 'max-width': '640px' }"
@@ -63,5 +63,5 @@
         <ng-template #thumbnail let-item>
           <img [src]="item.thumbnailImageSrc" />
         </ng-template>
-      </p-galleria>
+      </h-galleria>
     </div>
