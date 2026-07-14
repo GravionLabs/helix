@@ -72,17 +72,19 @@ class TestPopupTieredMenuComponent {
     standalone: false,
     template: `
         <p-tieredmenu [model]="model">
-            <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
-                <div class="custom-item">
-                    <span class="custom-label">{{ item.label }}</span>
-                    <span *ngIf="hasSubmenu" class="custom-arrow">→</span>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="submenuicon">
-                <i class="pi pi-angle-right custom-submenu-icon"></i>
-            </ng-template>
+          <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
+            <div class="custom-item">
+              <span class="custom-label">{{ item.label }}</span>
+              @if (hasSubmenu) {
+                <span class="custom-arrow">→</span>
+              }
+            </div>
+          </ng-template>
+          <ng-template pTemplate="submenuicon">
+            <i class="pi pi-angle-right custom-submenu-icon"></i>
+          </ng-template>
         </p-tieredmenu>
-    `
+        `
 })
 class TestTemplateTieredMenuComponent {
     model: MenuItem[] = [
@@ -98,18 +100,22 @@ class TestTemplateTieredMenuComponent {
     standalone: false,
     template: `
         <p-tieredmenu [model]="model">
-            <ng-template #item let-item let-hasSubmenu="hasSubmenu">
-                <div class="content-template-item">
-                    <span class="item-label">{{ item.label }}</span>
-                    <span class="custom-badge" *ngIf="item.badge">{{ item.badge }}</span>
-                    <span *ngIf="hasSubmenu" class="submenu-indicator">▶</span>
-                </div>
-            </ng-template>
-            <ng-template #submenuicon>
-                <i class="content-template-icon pi pi-chevron-right"></i>
-            </ng-template>
+          <ng-template #item let-item let-hasSubmenu="hasSubmenu">
+            <div class="content-template-item">
+              <span class="item-label">{{ item.label }}</span>
+              @if (item.badge) {
+                <span class="custom-badge">{{ item.badge }}</span>
+              }
+              @if (hasSubmenu) {
+                <span class="submenu-indicator">▶</span>
+              }
+            </div>
+          </ng-template>
+          <ng-template #submenuicon>
+            <i class="content-template-icon pi pi-chevron-right"></i>
+          </ng-template>
         </p-tieredmenu>
-    `
+        `
 })
 class TestContentTemplateTieredMenuComponent {
     model: MenuItem[] = [

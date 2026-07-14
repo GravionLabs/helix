@@ -47,98 +47,101 @@ type SplitButtonIconPosition = 'left' | 'right';
     standalone: true,
     imports: [CommonModule, ButtonDirective, TieredMenu, AutoFocus, ChevronDownIcon, Ripple, TooltipModule, SharedModule],
     template: `
-        <ng-container *ngIf="contentTemplate || _contentTemplate; else defaultButton">
-            <button
-                [class]="cx('pcButton')"
-                type="button"
-                hButton
-                hRipple
-                [severity]="severity"
-                [text]="text"
-                [outlined]="outlined"
-                [size]="size"
-                [icon]="icon"
-                [iconPos]="iconPos"
-                (click)="onDefaultButtonClick($event)"
-                [disabled]="disabled"
-                [attr.tabindex]="tabindex"
-                [attr.aria-label]="buttonProps?.['ariaLabel'] || label"
-                [hAutoFocus]="autofocus"
-                [hTooltip]="tooltip"
-                [pTooltipUnstyled]="unstyled()"
-                [tooltipOptions]="tooltipOptions"
-                [pt]="ptm('pcButton')"
-                [unstyled]="unstyled()"
-            >
-                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-            </button>
-        </ng-container>
-        <ng-template #defaultButton>
-            <button
-                #defaultbtn
-                [class]="cx('pcButton')"
-                type="button"
-                hButton
-                hRipple
-                [severity]="severity"
-                [text]="text"
-                [outlined]="outlined"
-                [size]="size"
-                [icon]="icon"
-                [iconPos]="iconPos"
-                [label]="label"
-                (click)="onDefaultButtonClick($event)"
-                [disabled]="buttonDisabled"
-                [attr.tabindex]="tabindex"
-                [attr.aria-label]="buttonProps?.['ariaLabel']"
-                [hAutoFocus]="autofocus"
-                [hTooltip]="tooltip"
-                [pTooltipUnstyled]="unstyled()"
-                [tooltipOptions]="tooltipOptions"
-                [pt]="ptm('pcButton')"
-                [unstyled]="unstyled()"
-            ></button>
-        </ng-template>
-        <button
+        @if (contentTemplate || _contentTemplate) {
+          <button
+            [class]="cx('pcButton')"
             type="button"
             hButton
             hRipple
-            [size]="size"
             [severity]="severity"
             [text]="text"
             [outlined]="outlined"
-            [class]="cx('pcDropdown')"
-            (click)="onDropdownButtonClick($event)"
-            (keydown)="onDropdownButtonKeydown($event)"
-            [disabled]="menuButtonDisabled"
-            [attr.aria-label]="menuButtonProps?.['ariaLabel'] || expandAriaLabel"
-            [attr.aria-haspopup]="menuButtonProps?.['ariaHasPopup'] || true"
-            [attr.aria-expanded]="menuButtonProps?.['ariaExpanded'] || isExpanded()"
-            [attr.aria-controls]="menuButtonProps?.['ariaControls'] || ariaId"
-            [pt]="ptm('pcDropdown')"
+            [size]="size"
+            [icon]="icon"
+            [iconPos]="iconPos"
+            (click)="onDefaultButtonClick($event)"
+            [disabled]="disabled"
+            [attr.tabindex]="tabindex"
+            [attr.aria-label]="buttonProps?.['ariaLabel'] || label"
+            [hAutoFocus]="autofocus"
+            [hTooltip]="tooltip"
+            [pTooltipUnstyled]="unstyled()"
+            [tooltipOptions]="tooltipOptions"
+            [pt]="ptm('pcButton')"
             [unstyled]="unstyled()"
-        >
-            <span *ngIf="dropdownIcon" [class]="dropdownIcon"></span>
-            <ng-container *ngIf="!dropdownIcon">
-                <svg data-p-icon="chevron-down" *ngIf="!dropdownIconTemplate && !_dropdownIconTemplate" />
-                <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate"></ng-template>
-            </ng-container>
+            >
+            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+          </button>
+        } @else {
+          <button
+            #defaultbtn
+            [class]="cx('pcButton')"
+            type="button"
+            hButton
+            hRipple
+            [severity]="severity"
+            [text]="text"
+            [outlined]="outlined"
+            [size]="size"
+            [icon]="icon"
+            [iconPos]="iconPos"
+            [label]="label"
+            (click)="onDefaultButtonClick($event)"
+            [disabled]="buttonDisabled"
+            [attr.tabindex]="tabindex"
+            [attr.aria-label]="buttonProps?.['ariaLabel']"
+            [hAutoFocus]="autofocus"
+            [hTooltip]="tooltip"
+            [pTooltipUnstyled]="unstyled()"
+            [tooltipOptions]="tooltipOptions"
+            [pt]="ptm('pcButton')"
+            [unstyled]="unstyled()"
+          ></button>
+        }
+        <button
+          type="button"
+          hButton
+          hRipple
+          [size]="size"
+          [severity]="severity"
+          [text]="text"
+          [outlined]="outlined"
+          [class]="cx('pcDropdown')"
+          (click)="onDropdownButtonClick($event)"
+          (keydown)="onDropdownButtonKeydown($event)"
+          [disabled]="menuButtonDisabled"
+          [attr.aria-label]="menuButtonProps?.['ariaLabel'] || expandAriaLabel"
+          [attr.aria-haspopup]="menuButtonProps?.['ariaHasPopup'] || true"
+          [attr.aria-expanded]="menuButtonProps?.['ariaExpanded'] || isExpanded()"
+          [attr.aria-controls]="menuButtonProps?.['ariaControls'] || ariaId"
+          [pt]="ptm('pcDropdown')"
+          [unstyled]="unstyled()"
+          >
+          @if (dropdownIcon) {
+            <span [class]="dropdownIcon"></span>
+          }
+          @if (!dropdownIcon) {
+            @if (!dropdownIconTemplate && !_dropdownIconTemplate) {
+              <svg data-p-icon="chevron-down" />
+            }
+            <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate"></ng-template>
+          }
         </button>
         <h-tieredmenu
-            [id]="ariaId"
-            #menu
-            [popup]="true"
-            [model]="model"
-            [style]="menuStyle"
-            [styleClass]="menuStyleClass"
-            [appendTo]="$appendTo()"
-            [motionOptions]="computedMotionOptions()"
-            (onHide)="onHide()"
-            (onShow)="onShow()"
-            [pt]="ptm('pcMenu')"
-            [unstyled]="unstyled()"
+          [id]="ariaId"
+          #menu
+          [popup]="true"
+          [model]="model"
+          [style]="menuStyle"
+          [styleClass]="menuStyleClass"
+          [appendTo]="$appendTo()"
+          [motionOptions]="computedMotionOptions()"
+          (onHide)="onHide()"
+          (onShow)="onShow()"
+          [pt]="ptm('pcMenu')"
+          [unstyled]="unstyled()"
         ></h-tieredmenu>
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [SplitButtonStyle, { provide: SPLITBUTTON_INSTANCE, useExisting: SplitButton }, { provide: PARENT_INSTANCE, useExisting: SplitButton }],
     encapsulation: ViewEncapsulation.None,

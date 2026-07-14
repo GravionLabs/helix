@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, InjectionToken, Input, NgModule, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find } from '@primeuix/utils';
@@ -19,21 +19,25 @@ const TERMINAL_INSTANCE = new InjectionToken<Terminal>('TERMINAL_INSTANCE');
 @Component({
     selector: 'h-terminal',
     standalone: true,
-    imports: [CommonModule, FormsModule, SharedModule, Bind],
+    imports: [FormsModule, SharedModule, Bind],
     template: `
-        <div [class]="cx('welcomeMessage')" [hBind]="ptm('welcomeMessage')" *ngIf="welcomeMessage">{{ welcomeMessage }}</div>
+        @if (welcomeMessage) {
+          <div [class]="cx('welcomeMessage')" [hBind]="ptm('welcomeMessage')">{{ welcomeMessage }}</div>
+        }
         <div [class]="cx('commandList')" [hBind]="ptm('commandList')">
-            <div [class]="cx('command')" [hBind]="ptm('command')" *ngFor="let command of commands">
-                <span [class]="cx('promptLabel')" [hBind]="ptm('promptLabel')">{{ prompt }}</span>
-                <span [class]="cx('commandValue')" [hBind]="ptm('commandValue')">{{ command.text }}</span>
-                <div [class]="cx('commandResponse')" [hBind]="ptm('commandResponse')" [attr.aria-live]="'polite'">{{ command.response }}</div>
+          @for (command of commands; track command) {
+            <div [class]="cx('command')" [hBind]="ptm('command')">
+              <span [class]="cx('promptLabel')" [hBind]="ptm('promptLabel')">{{ prompt }}</span>
+              <span [class]="cx('commandValue')" [hBind]="ptm('commandValue')">{{ command.text }}</span>
+              <div [class]="cx('commandResponse')" [hBind]="ptm('commandResponse')" [attr.aria-live]="'polite'">{{ command.response }}</div>
             </div>
+          }
         </div>
         <div [class]="cx('prompt')" [hBind]="ptm('prompt')">
-            <span [class]="cx('promptLabel')" [hBind]="ptm('promptLabel')">{{ prompt }}</span>
-            <input #in type="text" [(ngModel)]="command" [class]="cx('promptValue')" [hBind]="ptm('promptValue')" autocomplete="off" (keydown)="handleCommand($event)" autofocus />
+          <span [class]="cx('promptLabel')" [hBind]="ptm('promptLabel')">{{ prompt }}</span>
+          <input #in type="text" [(ngModel)]="command" [class]="cx('promptValue')" [hBind]="ptm('promptValue')" autocomplete="off" (keydown)="handleCommand($event)" autofocus />
         </div>
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [TerminalStyle, { provide: TERMINAL_INSTANCE, useExisting: Terminal }, { provide: PARENT_INSTANCE, useExisting: Terminal }],

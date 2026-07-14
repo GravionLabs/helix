@@ -129,19 +129,30 @@ export class TableService {
     selector: 'h-table',
     standalone: false,
     template: `
-        <div [class]="cx('mask')" [hBind]="ptm('mask')" *ngIf="loading && showLoader" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
-            <i *ngIf="loadingIcon" [class]="cn(cx('loadingIcon'), loadingIcon)" [hBind]="ptm('loadingIcon')"></i>
-            <ng-container *ngIf="!loadingIcon">
-                <svg data-p-icon="spinner" *ngIf="!loadingIconTemplate && !_loadingIconTemplate" [spin]="true" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
-                <span *ngIf="loadingIconTemplate || _loadingIconTemplate" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
-                    <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+        @if (loading && showLoader) {
+          <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
+            @if (loadingIcon) {
+              <i [class]="cn(cx('loadingIcon'), loadingIcon)" [hBind]="ptm('loadingIcon')"></i>
+            }
+            @if (!loadingIcon) {
+              @if (!loadingIconTemplate && !_loadingIconTemplate) {
+                <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
+              }
+              @if (loadingIconTemplate || _loadingIconTemplate) {
+                <span [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
+                  <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
                 </span>
-            </ng-container>
-        </div>
-        <div *ngIf="captionTemplate || _captionTemplate" [class]="cx('header')" [hBind]="ptm('header')">
+              }
+            }
+          </div>
+        }
+        @if (captionTemplate || _captionTemplate) {
+          <div [class]="cx('header')" [hBind]="ptm('header')">
             <ng-container *ngTemplateOutlet="captionTemplate || _captionTemplate"></ng-container>
-        </div>
-        <h-paginator
+          </div>
+        }
+        @if (paginator && (paginatorPosition === 'top' || paginatorPosition == 'both')) {
+          <h-paginator
             [rows]="rows"
             [first]="first"
             [totalRecords]="totalRecords"
@@ -149,7 +160,6 @@ export class TableService {
             [alwaysShow]="alwaysShowPaginator"
             (onPageChange)="onPageChange($event)"
             [rowsPerPageOptions]="rowsPerPageOptions"
-            *ngIf="paginator && (paginatorPosition === 'top' || paginatorPosition == 'both')"
             [templateLeft]="paginatorLeftTemplate || _paginatorLeftTemplate"
             [templateRight]="paginatorRightTemplate || _paginatorRightTemplate"
             [appendTo]="paginatorDropdownAppendTo"
@@ -165,53 +175,60 @@ export class TableService {
             [locale]="paginatorLocale"
             [pt]="ptm('pcPaginator')"
             [unstyled]="unstyled()"
-        >
-            <ng-template hTemplate="dropdownicon" *ngIf="paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate">
+            >
+            @if (paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate) {
+              <ng-template hTemplate="dropdownicon">
                 <ng-container *ngTemplateOutlet="paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="firstpagelinkicon" *ngIf="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate) {
+              <ng-template hTemplate="firstpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="previouspagelinkicon" *ngIf="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate) {
+              <ng-template hTemplate="previouspagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="lastpagelinkicon" *ngIf="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate) {
+              <ng-template hTemplate="lastpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="nextpagelinkicon" *ngIf="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate) {
+              <ng-template hTemplate="nextpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate"></ng-container>
-            </ng-template>
-        </h-paginator>
-
+              </ng-template>
+            }
+          </h-paginator>
+        }
+        
         <div #wrapper [class]="cx('tableContainer')" [ngStyle]="sx('tableContainer')" [hBind]="ptm('tableContainer')" [attr.data-p]="dataP">
+          @if (virtualScroll) {
             <h-scroller
-                #scroller
-                *ngIf="virtualScroll"
-                [items]="processedData"
-                [columns]="columns"
+              #scroller
+              [items]="processedData"
+              [columns]="columns"
                 [style]="{
                     height: scrollHeight !== 'flex' ? scrollHeight : undefined
                 }"
-                [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
-                [itemSize]="virtualScrollItemSize"
-                [step]="rows"
-                [delay]="lazy ? virtualScrollDelay : 0"
-                [inline]="true"
-                [autoSize]="true"
-                [lazy]="lazy"
-                (onLazyLoad)="onLazyItemLoad($event)"
-                [loaderDisabled]="true"
-                [showSpacer]="false"
-                [showLoader]="loadingBodyTemplate || _loadingBodyTemplate"
-                [options]="virtualScrollOptions"
-                [pt]="ptm('virtualScroller')"
-            >
-                <ng-template #content let-items let-scrollerOptions="options">
-                    <ng-container
+              [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
+              [itemSize]="virtualScrollItemSize"
+              [step]="rows"
+              [delay]="lazy ? virtualScrollDelay : 0"
+              [inline]="true"
+              [autoSize]="true"
+              [lazy]="lazy"
+              (onLazyLoad)="onLazyItemLoad($event)"
+              [loaderDisabled]="true"
+              [showSpacer]="false"
+              [showLoader]="loadingBodyTemplate || _loadingBodyTemplate"
+              [options]="virtualScrollOptions"
+              [pt]="ptm('virtualScroller')"
+              >
+              <ng-template #content let-items let-scrollerOptions="options">
+                <ng-container
                         *ngTemplateOutlet="
                             buildInTable;
                             context: {
@@ -219,11 +236,12 @@ export class TableService {
                                 options: scrollerOptions
                             }
                         "
-                    ></ng-container>
-                </ng-template>
-            </h-scroller>
-            <ng-container *ngIf="!virtualScroll">
-                <ng-container
+              ></ng-container>
+            </ng-template>
+          </h-scroller>
+        }
+        @if (!virtualScroll) {
+          <ng-container
                     *ngTemplateOutlet="
                         buildInTable;
                         context: {
@@ -231,69 +249,74 @@ export class TableService {
                             options: { columns }
                         }
                     "
-                ></ng-container>
-            </ng-container>
-
-            <ng-template #buildInTable let-items let-scrollerOptions="options">
-                <table #table role="table" [class]="cn(cx('table'), tableStyleClass)" [hBind]="ptm('table')" [style]="tableStyle" [attr.id]="id + '-table'">
-                    <ng-container *ngTemplateOutlet="colGroupTemplate || _colGroupTemplate; context: { $implicit: scrollerOptions.columns }"></ng-container>
-                    <thead role="rowgroup" #thead [class]="cx('thead')" [ngStyle]="sx('thead')" [hBind]="ptm('thead')">
-                        <ng-container
+        ></ng-container>
+        }
+        
+        <ng-template #buildInTable let-items let-scrollerOptions="options">
+          <table #table role="table" [class]="cn(cx('table'), tableStyleClass)" [hBind]="ptm('table')" [style]="tableStyle" [attr.id]="id + '-table'">
+            <ng-container *ngTemplateOutlet="colGroupTemplate || _colGroupTemplate; context: { $implicit: scrollerOptions.columns }"></ng-container>
+            <thead role="rowgroup" #thead [class]="cx('thead')" [ngStyle]="sx('thead')" [hBind]="ptm('thead')">
+              <ng-container
                             *ngTemplateOutlet="
                                 headerGroupedTemplate || headerTemplate || _headerTemplate;
                                 context: {
                                     $implicit: scrollerOptions.columns
                                 }
                             "
-                        ></ng-container>
-                    </thead>
-                    <tbody
-                        role="rowgroup"
-                        [class]="cx('tbody')"
-                        [hBind]="ptm('tbody')"
-                        *ngIf="frozenValue || frozenBodyTemplate || _frozenBodyTemplate"
-                        [value]="frozenValue"
-                        [frozenRows]="true"
-                        [hTableBody]="scrollerOptions.columns"
-                        [pTableBodyTemplate]="frozenBodyTemplate || _frozenBodyTemplate"
-                        [unstyled]="unstyled()"
-                        [frozen]="true"
-                        [attr.data-p-virtualscroll]="virtualScroll"
-                    ></tbody>
-                    <tbody
-                        role="rowgroup"
-                        [class]="cx('tbody', scrollerOptions.contentStyleClass)"
-                        [hBind]="ptm('tbody')"
-                        [style]="scrollerOptions.contentStyle"
-                        [value]="dataToRender(scrollerOptions.rows)"
-                        [hTableBody]="scrollerOptions.columns"
-                        [pTableBodyTemplate]="bodyTemplate || _bodyTemplate"
-                        [scrollerOptions]="scrollerOptions"
-                        [unstyled]="unstyled()"
-                        [attr.data-p-virtualscroll]="virtualScroll"
-                    ></tbody>
-                    <tbody
-                        role="rowgroup"
-                        *ngIf="scrollerOptions.spacerStyle"
-                        [style]="'height: calc(' + scrollerOptions.spacerStyle.height + ' - ' + scrollerOptions.rows.length * scrollerOptions.itemSize + 'px);'"
-                        [class]="cx('virtualScrollerSpacer')"
-                        [hBind]="ptm('virtualScrollerSpacer')"
-                    ></tbody>
-                    <tfoot role="rowgroup" *ngIf="footerGroupedTemplate || footerTemplate || _footerTemplate || _footerGroupedTemplate" #tfoot [ngClass]="cx('footer')" [ngStyle]="sx('tfoot')" [hBind]="ptm('tfoot')">
-                        <ng-container
+            ></ng-container>
+          </thead>
+          @if (frozenValue || frozenBodyTemplate || _frozenBodyTemplate) {
+            <tbody
+              role="rowgroup"
+              [class]="cx('tbody')"
+              [hBind]="ptm('tbody')"
+              [value]="frozenValue"
+              [frozenRows]="true"
+              [hTableBody]="scrollerOptions.columns"
+              [pTableBodyTemplate]="frozenBodyTemplate || _frozenBodyTemplate"
+              [unstyled]="unstyled()"
+              [frozen]="true"
+              [attr.data-p-virtualscroll]="virtualScroll"
+            ></tbody>
+          }
+          <tbody
+            role="rowgroup"
+            [class]="cx('tbody', scrollerOptions.contentStyleClass)"
+            [hBind]="ptm('tbody')"
+            [style]="scrollerOptions.contentStyle"
+            [value]="dataToRender(scrollerOptions.rows)"
+            [hTableBody]="scrollerOptions.columns"
+            [pTableBodyTemplate]="bodyTemplate || _bodyTemplate"
+            [scrollerOptions]="scrollerOptions"
+            [unstyled]="unstyled()"
+            [attr.data-p-virtualscroll]="virtualScroll"
+          ></tbody>
+          @if (scrollerOptions.spacerStyle) {
+            <tbody
+              role="rowgroup"
+              [style]="'height: calc(' + scrollerOptions.spacerStyle.height + ' - ' + scrollerOptions.rows.length * scrollerOptions.itemSize + 'px);'"
+              [class]="cx('virtualScrollerSpacer')"
+              [hBind]="ptm('virtualScrollerSpacer')"
+            ></tbody>
+          }
+          @if (footerGroupedTemplate || footerTemplate || _footerTemplate || _footerGroupedTemplate) {
+            <tfoot role="rowgroup" #tfoot [ngClass]="cx('footer')" [ngStyle]="sx('tfoot')" [hBind]="ptm('tfoot')">
+              <ng-container
                             *ngTemplateOutlet="
                                 footerGroupedTemplate || footerTemplate || _footerTemplate || _footerGroupedTemplate;
                                 context: {
                                     $implicit: scrollerOptions.columns
                                 }
                             "
-                        ></ng-container>
-                    </tfoot>
-                </table>
-            </ng-template>
+            ></ng-container>
+          </tfoot>
+        }
+        </table>
+        </ng-template>
         </div>
-
-        <h-paginator
+        
+        @if (paginator && (paginatorPosition === 'bottom' || paginatorPosition == 'both')) {
+          <h-paginator
             [rows]="rows"
             [first]="first"
             [totalRecords]="totalRecords"
@@ -301,7 +324,6 @@ export class TableService {
             [alwaysShow]="alwaysShowPaginator"
             (onPageChange)="onPageChange($event)"
             [rowsPerPageOptions]="rowsPerPageOptions"
-            *ngIf="paginator && (paginatorPosition === 'bottom' || paginatorPosition == 'both')"
             [templateLeft]="paginatorLeftTemplate || _paginatorLeftTemplate"
             [templateRight]="paginatorRightTemplate || _paginatorRightTemplate"
             [appendTo]="paginatorDropdownAppendTo"
@@ -317,42 +339,61 @@ export class TableService {
             [locale]="paginatorLocale"
             [pt]="ptm('pcPaginator')"
             [unstyled]="unstyled()"
-        >
-            <ng-template hTemplate="dropdownicon" *ngIf="paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate">
+            >
+            @if (paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate) {
+              <ng-template hTemplate="dropdownicon">
                 <ng-container *ngTemplateOutlet="paginatorDropdownIconTemplate || _paginatorDropdownIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="firstpagelinkicon" *ngIf="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate) {
+              <ng-template hTemplate="firstpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="previouspagelinkicon" *ngIf="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate) {
+              <ng-template hTemplate="previouspagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="lastpagelinkicon" *ngIf="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate) {
+              <ng-template hTemplate="lastpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hTemplate="nextpagelinkicon" *ngIf="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate">
+              </ng-template>
+            }
+            @if (paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate) {
+              <ng-template hTemplate="nextpagelinkicon">
                 <ng-container *ngTemplateOutlet="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate"></ng-container>
-            </ng-template>
-        </h-paginator>
-
-        <div *ngIf="summaryTemplate || _summaryTemplate" [ngClass]="cx('footer')" [hBind]="ptm('footer')">
+              </ng-template>
+            }
+          </h-paginator>
+        }
+        
+        @if (summaryTemplate || _summaryTemplate) {
+          <div [ngClass]="cx('footer')" [hBind]="ptm('footer')">
             <ng-container *ngTemplateOutlet="summaryTemplate || _summaryTemplate"></ng-container>
-        </div>
-
-        <div #resizeHelper [ngClass]="cx('columnResizeIndicator')" [hBind]="ptm('columnResizeIndicator')" [style.display]="'none'" *ngIf="resizableColumns"></div>
-        <span #reorderIndicatorUp [ngClass]="cx('rowReorderIndicatorUp')" [hBind]="ptm('rowReorderIndicatorUp')" [style.display]="'none'" *ngIf="reorderableColumns">
-            <svg data-p-icon="arrow-down" *ngIf="!reorderIndicatorUpIconTemplate && !_reorderIndicatorUpIconTemplate" [hBind]="ptm('rowReorderIndicatorUp')['icon']" />
+          </div>
+        }
+        
+        @if (resizableColumns) {
+          <div #resizeHelper [ngClass]="cx('columnResizeIndicator')" [hBind]="ptm('columnResizeIndicator')" [style.display]="'none'"></div>
+        }
+        @if (reorderableColumns) {
+          <span #reorderIndicatorUp [ngClass]="cx('rowReorderIndicatorUp')" [hBind]="ptm('rowReorderIndicatorUp')" [style.display]="'none'">
+            @if (!reorderIndicatorUpIconTemplate && !_reorderIndicatorUpIconTemplate) {
+              <svg data-p-icon="arrow-down" [hBind]="ptm('rowReorderIndicatorUp')['icon']" />
+            }
             <ng-template *ngTemplateOutlet="reorderIndicatorUpIconTemplate || _reorderIndicatorUpIconTemplate"></ng-template>
-        </span>
-        <span #reorderIndicatorDown [ngClass]="cx('rowReorderIndicatorDown')" [hBind]="ptm('rowReorderIndicatorDown')" [style.display]="'none'" *ngIf="reorderableColumns">
-            <svg data-p-icon="arrow-up" *ngIf="!reorderIndicatorDownIconTemplate && !_reorderIndicatorDownIconTemplate" [hBind]="ptm('rowReorderIndicatorDown')['icon']" />
+          </span>
+        }
+        @if (reorderableColumns) {
+          <span #reorderIndicatorDown [ngClass]="cx('rowReorderIndicatorDown')" [hBind]="ptm('rowReorderIndicatorDown')" [style.display]="'none'">
+            @if (!reorderIndicatorDownIconTemplate && !_reorderIndicatorDownIconTemplate) {
+              <svg data-p-icon="arrow-up" [hBind]="ptm('rowReorderIndicatorDown')['icon']" />
+            }
             <ng-template *ngTemplateOutlet="reorderIndicatorDownIconTemplate || _reorderIndicatorDownIconTemplate"></ng-template>
-        </span>
-    `,
+          </span>
+        }
+        `,
     providers: [TableService, TableStyle, { provide: TABLE_INSTANCE, useExisting: Table }, { provide: PARENT_INSTANCE, useExisting: Table }],
     changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
@@ -3215,13 +3256,13 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     selector: '[hTableBody]',
     standalone: false,
     template: `
-        <ng-container *ngIf="!dataTable.expandedRowTemplate && !dataTable._expandedRowTemplate">
-            <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="value" [ngForTrackBy]="dataTable.rowTrackBy">
-                <ng-container
-                    *ngIf="(dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))"
-                    role="row"
+        @if (!dataTable.expandedRowTemplate && !dataTable._expandedRowTemplate) {
+          @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
+            @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+              <ng-container
+                role="row"
                 >
-                    <ng-container
+                <ng-container
                         *ngTemplateOutlet="
                             dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate;
                             context: {
@@ -3232,10 +3273,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-                <ng-container *ngIf="dataTable.rowGroupMode !== 'rowspan'">
-                    <ng-container
+              ></ng-container>
+            </ng-container>
+          }
+          @if (dataTable.rowGroupMode !== 'rowspan') {
+            <ng-container
                         *ngTemplateOutlet="
                             rowData ? template : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate;
                             context: {
@@ -3246,10 +3288,10 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-                <ng-container *ngIf="dataTable.rowGroupMode === 'rowspan'">
-                    <ng-container
+          ></ng-container>
+        }
+        @if (dataTable.rowGroupMode === 'rowspan') {
+          <ng-container
                         *ngTemplateOutlet="
                             rowData ? template : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate;
                             context: {
@@ -3262,13 +3304,13 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 rowspan: calculateRowGroupSize(value, rowData, rowIndex)
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-                <ng-container
-                    *ngIf="(dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))"
-                    role="row"
-                >
-                    <ng-container
+        ></ng-container>
+        }
+        @if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+          <ng-container
+            role="row"
+            >
+            <ng-container
                         *ngTemplateOutlet="
                             dataTable.groupFooterTemplate || dataTable._groupFooterTemplate;
                             context: {
@@ -3279,14 +3321,15 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-            </ng-template>
+          ></ng-container>
         </ng-container>
-        <ng-container *ngIf="(dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))">
-            <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="value" [ngForTrackBy]="dataTable.rowTrackBy">
-                <ng-container *ngIf="!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate)">
-                    <ng-container
+        }
+        }
+        }
+        @if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))) {
+          @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
+            @if (!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate)) {
+              <ng-container
                         *ngTemplateOutlet="
                             template;
                             context: {
@@ -3298,10 +3341,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-                <ng-container *ngIf="(dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))" role="row">
-                    <ng-container
+            ></ng-container>
+          }
+          @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+            <ng-container role="row">
+              <ng-container
                         *ngTemplateOutlet="
                             dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate;
                             context: {
@@ -3313,10 +3357,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-                <ng-container *ngIf="dataTable.isRowExpanded(rowData)">
-                    <ng-container
+            ></ng-container>
+          </ng-container>
+        }
+        @if (dataTable.isRowExpanded(rowData)) {
+          <ng-container
                         *ngTemplateOutlet="
                             dataTable.expandedRowTemplate || dataTable._expandedRowTemplate;
                             context: {
@@ -3326,9 +3371,10 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                    <ng-container *ngIf="(dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))" role="row">
-                        <ng-container
+        ></ng-container>
+        @if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+          <ng-container role="row">
+            <ng-container
                             *ngTemplateOutlet="
                                 dataTable.groupFooterTemplate || dataTable._groupFooterTemplate;
                                 context: {
@@ -3340,14 +3386,15 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                     frozen: frozen
                                 }
                             "
-                        ></ng-container>
-                    </ng-container>
-                </ng-container>
-            </ng-template>
+          ></ng-container>
         </ng-container>
-        <ng-container *ngIf="(dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen">
-            <ng-template ngFor let-rowData let-rowIndex="index" [ngForOf]="value" [ngForTrackBy]="dataTable.rowTrackBy">
-                <ng-container
+        }
+        }
+        }
+        }
+        @if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen) {
+          @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
+            <ng-container
                     *ngTemplateOutlet="
                         template;
                         context: {
@@ -3359,9 +3406,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                             frozen: frozen
                         }
                     "
-                ></ng-container>
-                <ng-container *ngIf="dataTable.isRowExpanded(rowData)">
-                    <ng-container
+          ></ng-container>
+          @if (dataTable.isRowExpanded(rowData)) {
+            <ng-container
                         *ngTemplateOutlet="
                             dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate;
                             context: {
@@ -3371,17 +3418,17 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 frozen: frozen
                             }
                         "
-                    ></ng-container>
-                </ng-container>
-            </ng-template>
-        </ng-container>
-        <ng-container *ngIf="dataTable.loading">
-            <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
-        </ng-container>
-        <ng-container *ngIf="dataTable.isEmpty() && !dataTable.loading">
-            <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
-        </ng-container>
-    `,
+          ></ng-container>
+        }
+        }
+        }
+        @if (dataTable.loading) {
+          <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
+        }
+        @if (dataTable.isEmpty() && !dataTable.loading) {
+          <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -3764,16 +3811,26 @@ export class SortableColumn extends BaseComponent {
     selector: 'h-sortIcon',
     standalone: false,
     template: `
-        <ng-container *ngIf="!(dataTable.sortIconTemplate || dataTable._sortIconTemplate)">
-            <svg data-p-icon="sort-alt" [class]="cx('sortableColumnIcon')" *ngIf="sortOrder === 0" />
-            <svg data-p-icon="sort-amount-up-alt" [class]="cx('sortableColumnIcon')" *ngIf="sortOrder === 1" />
-            <svg data-p-icon="sort-amount-down" [class]="cx('sortableColumnIcon')" *ngIf="sortOrder === -1" />
-        </ng-container>
-        <span *ngIf="dataTable.sortIconTemplate || dataTable._sortIconTemplate" [class]="cx('sortableColumnIcon')">
+        @if (!(dataTable.sortIconTemplate || dataTable._sortIconTemplate)) {
+          @if (sortOrder === 0) {
+            <svg data-p-icon="sort-alt" [class]="cx('sortableColumnIcon')" />
+          }
+          @if (sortOrder === 1) {
+            <svg data-p-icon="sort-amount-up-alt" [class]="cx('sortableColumnIcon')" />
+          }
+          @if (sortOrder === -1) {
+            <svg data-p-icon="sort-amount-down" [class]="cx('sortableColumnIcon')" />
+          }
+        }
+        @if (dataTable.sortIconTemplate || dataTable._sortIconTemplate) {
+          <span [class]="cx('sortableColumnIcon')">
             <ng-template *ngTemplateOutlet="dataTable.sortIconTemplate || dataTable._sortIconTemplate; context: { $implicit: sortOrder }"></ng-template>
-        </span>
-        <h-badge *ngIf="isMultiSorted()" [class]="cx('sortableColumnBadge')" [value]="getBadgeValue()" size="small"></h-badge>
-    `,
+          </span>
+        }
+        @if (isMultiSorted()) {
+          <h-badge [class]="cx('sortableColumnBadge')" [value]="getBadgeValue()" size="small"></h-badge>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [TableStyle]
@@ -4929,13 +4986,13 @@ export class CancelEditableRow extends BaseComponent {
     selector: 'h-cellEditor',
     standalone: false,
     template: `
-        <ng-container *ngIf="editing">
-            <ng-container *ngTemplateOutlet="inputTemplate || _inputTemplate"></ng-container>
-        </ng-container>
-        <ng-container *ngIf="!editing">
-            <ng-container *ngTemplateOutlet="outputTemplate || _outputTemplate"></ng-container>
-        </ng-container>
-    `,
+        @if (editing) {
+          <ng-container *ngTemplateOutlet="inputTemplate || _inputTemplate"></ng-container>
+        }
+        @if (!editing) {
+          <ng-container *ngTemplateOutlet="outputTemplate || _outputTemplate"></ng-container>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
@@ -5378,192 +5435,214 @@ export class ReorderableRow extends BaseComponent {
     standalone: false,
     template: `
         <div [class]="cx('filter')">
+          @if (display === 'row') {
             <h-columnFilterFormElement
-                *ngIf="display === 'row'"
-                class="p-fluid"
-                [type]="type"
-                [field]="field"
-                [ariaLabel]="ariaLabel"
-                [filterConstraint]="dataTable.filters[field]"
-                [filterTemplate]="filterTemplate || _filterTemplate"
-                [placeholder]="placeholder"
-                [minFractionDigits]="minFractionDigits"
-                [maxFractionDigits]="maxFractionDigits"
-                [prefix]="prefix"
-                [suffix]="suffix"
-                [locale]="locale"
-                [localeMatcher]="localeMatcher"
-                [currency]="currency"
-                [currencyDisplay]="currencyDisplay"
-                [useGrouping]="useGrouping"
-                [showButtons]="showButtons"
-                [filterOn]="filterOn"
-                [pt]="pt()"
-                [unstyled]="unstyled()"
+              class="p-fluid"
+              [type]="type"
+              [field]="field"
+              [ariaLabel]="ariaLabel"
+              [filterConstraint]="dataTable.filters[field]"
+              [filterTemplate]="filterTemplate || _filterTemplate"
+              [placeholder]="placeholder"
+              [minFractionDigits]="minFractionDigits"
+              [maxFractionDigits]="maxFractionDigits"
+              [prefix]="prefix"
+              [suffix]="suffix"
+              [locale]="locale"
+              [localeMatcher]="localeMatcher"
+              [currency]="currency"
+              [currencyDisplay]="currencyDisplay"
+              [useGrouping]="useGrouping"
+              [showButtons]="showButtons"
+              [filterOn]="filterOn"
+              [pt]="pt()"
+              [unstyled]="unstyled()"
             ></h-columnFilterFormElement>
+          }
+          @if (showMenuButton) {
             <h-button
-                *ngIf="showMenuButton"
-                [styleClass]="cx('pcColumnFilterButton')"
-                [pt]="ptm('pcColumnFilterButton')"
-                [attr.aria-haspopup]="true"
-                [ariaLabel]="filterMenuButtonAriaLabel"
-                [attr.aria-controls]="overlayVisible ? overlayId : null"
-                [attr.aria-expanded]="overlayVisible ?? false"
-                (click)="toggleMenu($event)"
-                (keydown)="onToggleButtonKeyDown($event)"
-                [buttonProps]="$safeNavigationMigration(filterButtonProps?.filter)"
-                #menuButton
-                [unstyled]="unstyled()"
-            >
-                <ng-template #icon>
-                    <ng-container>
-                        <svg data-p-icon="filter" *ngIf="!filterIconTemplate && !_filterIconTemplate && !hasFilter" [hBind]="ptm('pcColumnFilterButton')['icon']" />
-                        <svg data-p-icon="filter-fill" *ngIf="!filterIconTemplate && !_filterIconTemplate && hasFilter" [hBind]="ptm('pcColumnFilterButton')['icon']" />
-                        <span *ngIf="filterIconTemplate || _filterIconTemplate" [hBind]="ptm('pcColumnFilterButton')['icon']" [attr.data-pc-section]="'columnfilterbuttonicon'">
-                            <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate; context: { hasFilter: hasFilter }"></ng-template>
-                        </span>
-                    </ng-container>
-                </ng-template>
+              [styleClass]="cx('pcColumnFilterButton')"
+              [pt]="ptm('pcColumnFilterButton')"
+              [attr.aria-haspopup]="true"
+              [ariaLabel]="filterMenuButtonAriaLabel"
+              [attr.aria-controls]="overlayVisible ? overlayId : null"
+              [attr.aria-expanded]="overlayVisible ?? false"
+              (click)="toggleMenu($event)"
+              (keydown)="onToggleButtonKeyDown($event)"
+              [buttonProps]="$safeNavigationMigration(filterButtonProps?.filter)"
+              #menuButton
+              [unstyled]="unstyled()"
+              >
+              <ng-template #icon>
+                <ng-container>
+                  @if (!filterIconTemplate && !_filterIconTemplate && !hasFilter) {
+                    <svg data-p-icon="filter" [hBind]="ptm('pcColumnFilterButton')['icon']" />
+                  }
+                  @if (!filterIconTemplate && !_filterIconTemplate && hasFilter) {
+                    <svg data-p-icon="filter-fill" [hBind]="ptm('pcColumnFilterButton')['icon']" />
+                  }
+                  @if (filterIconTemplate || _filterIconTemplate) {
+                    <span [hBind]="ptm('pcColumnFilterButton')['icon']" [attr.data-pc-section]="'columnfilterbuttonicon'">
+                      <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate; context: { hasFilter: hasFilter }"></ng-template>
+                    </span>
+                  }
+                </ng-container>
+              </ng-template>
             </h-button>
-            @if (renderOverlay()) {
-                <div
-                    [hMotion]="showMenu && overlayVisible"
-                    [pMotionAppear]="true"
-                    pMotionName="p-anchored-overlay"
-                    (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
-                    (pMotionOnAfterLeave)="onOverlayAnimationAfterLeave($event)"
-                    [pMotionOptions]="computedMotionOptions()"
-                    [class]="cx('filterOverlay')"
-                    [hBind]="ptm('filterOverlay')"
-                    [id]="overlayId"
-                    [attr.aria-modal]="true"
-                    role="dialog"
-                    (click)="onContentClick()"
-                    (keydown.escape)="onEscape()"
-                >
-                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate; context: { $implicit: field }"></ng-container>
-                    <ul *ngIf="display === 'row'; else menu" [class]="cx('filterConstraintList')" [hBind]="ptm('filterConstraintList')">
-                        <li
-                            *ngFor="let matchMode of matchModes; let i = index"
-                            (click)="onRowMatchModeChange(matchMode.value)"
-                            (keydown)="onRowMatchModeKeyDown($event)"
-                            (keydown.enter)="onRowMatchModeChange(matchMode.value)"
-                            [class]="cx('filterConstraint')"
-                            [hBind]="ptm('filterConstraint', ptmFilterConstraintOptions(matchMode))"
-                            [class.p-datatable-filter-constraint-selected]="isRowMatchModeSelected(matchMode.value)"
-                            [attr.tabindex]="i === 0 ? '0' : null"
-                        >
-                            {{ matchMode.label }}
-                        </li>
-                        <li [class]="cx('filterConstraintSeparator')" [hBind]="ptm('filterConstraintSeparator', { context: { index: i } })"></li>
-                        <li [class]="cx('filterConstraint')" [hBind]="ptm('emtpyFilterLabel')" (click)="onRowClearItemClick()" (keydown)="onRowMatchModeKeyDown($event)" (keydown.enter)="onRowClearItemClick()">
-                            {{ noFilterLabel }}
-                        </li>
-                    </ul>
-                    <ng-template #menu>
-                        <div [class]="cx('filterOperator')" [hBind]="ptm('filterOperator')" *ngIf="isShowOperator">
-                            <h-select [options]="operatorOptions" [pt]="ptm('pcFilterOperatorDropdown')" [ngModel]="operator" (ngModelChange)="onOperatorChange($event)" [styleClass]="cx('pcFilterOperatorDropdown')" [unstyled]="unstyled()"></h-select>
-                        </div>
-                        <div [class]="cx('filterRuleList')" [hBind]="ptm('filterRuleList')">
-                            <div *ngFor="let fieldConstraint of fieldConstraints; let i = index" [ngClass]="cx('filterRule')" [hBind]="ptm('filterRule')">
-                                <h-select
-                                    *ngIf="showMatchModes && matchModes"
-                                    [options]="matchModes"
-                                    [ngModel]="fieldConstraint.matchMode"
-                                    (ngModelChange)="onMenuMatchModeChange($event, fieldConstraint)"
-                                    [styleClass]="cx('pcFilterConstraintDropdown')"
-                                    [pt]="ptm('pcFilterConstraintDropdown')"
-                                    [unstyled]="unstyled()"
-                                ></h-select>
-                                <h-columnFilterFormElement
-                                    [type]="type"
-                                    [field]="field"
-                                    [filterConstraint]="fieldConstraint"
-                                    [filterTemplate]="filterTemplate || _filterTemplate"
-                                    [placeholder]="placeholder"
-                                    [minFractionDigits]="minFractionDigits"
-                                    [maxFractionDigits]="maxFractionDigits"
-                                    [prefix]="prefix"
-                                    [suffix]="suffix"
-                                    [locale]="locale"
-                                    [localeMatcher]="localeMatcher"
-                                    [currency]="currency"
-                                    [currencyDisplay]="currencyDisplay"
-                                    [useGrouping]="useGrouping"
-                                    [filterOn]="filterOn"
-                                    [pt]="pt()"
-                                    [unstyled]="unstyled()"
-                                ></h-columnFilterFormElement>
-                                <div>
-                                    <h-button
-                                        *ngIf="showRemoveIcon"
-                                        [styleClass]="cx('pcFilterRemoveRuleButton')"
-                                        [pt]="ptm('pcFilterRemoveRuleButton')"
-                                        [text]="true"
-                                        severity="danger"
-                                        size="small"
-                                        (onClick)="removeConstraint(fieldConstraint)"
-                                        [ariaLabel]="removeRuleButtonLabel"
-                                        [label]="removeRuleButtonLabel"
-                                        [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.removeRule)"
-                                        [unstyled]="unstyled()"
-                                    >
-                                        <ng-template #icon>
-                                            <svg data-p-icon="trash" *ngIf="!removeRuleIconTemplate && !_removeRuleIconTemplate" [hBind]="ptm('pcFilterRemoveRuleButton')['icon']" />
-                                            <ng-template *ngTemplateOutlet="removeRuleIconTemplate || _removeRuleIconTemplate"></ng-template>
-                                        </ng-template>
-                                    </h-button>
-                                </div>
-                            </div>
-                        </div>
-                        @if (isShowAddConstraint) {
-                            <h-button
-                                type="button"
-                                [pt]="ptm('pcAddRuleButtonLabel')"
-                                [label]="addRuleButtonLabel"
-                                [attr.aria-label]="addRuleButtonLabel"
-                                [styleClass]="cx('pcFilterAddRuleButton')"
-                                [text]="true"
-                                size="small"
-                                (onClick)="addConstraint()"
-                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.addRule)"
-                                [unstyled]="unstyled()"
+          }
+          @if (renderOverlay()) {
+            <div
+              [hMotion]="showMenu && overlayVisible"
+              [pMotionAppear]="true"
+              pMotionName="p-anchored-overlay"
+              (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
+              (pMotionOnAfterLeave)="onOverlayAnimationAfterLeave($event)"
+              [pMotionOptions]="computedMotionOptions()"
+              [class]="cx('filterOverlay')"
+              [hBind]="ptm('filterOverlay')"
+              [id]="overlayId"
+              [attr.aria-modal]="true"
+              role="dialog"
+              (click)="onContentClick()"
+              (keydown.escape)="onEscape()"
+              >
+              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate; context: { $implicit: field }"></ng-container>
+              @if (display === 'row') {
+                <ul [class]="cx('filterConstraintList')" [hBind]="ptm('filterConstraintList')">
+                  @for (matchMode of matchModes; track matchMode; let i = $index) {
+                    <li
+                      (click)="onRowMatchModeChange(matchMode.value)"
+                      (keydown)="onRowMatchModeKeyDown($event)"
+                      (keydown.enter)="onRowMatchModeChange(matchMode.value)"
+                      [class]="cx('filterConstraint')"
+                      [hBind]="ptm('filterConstraint', ptmFilterConstraintOptions(matchMode))"
+                      [class.p-datatable-filter-constraint-selected]="isRowMatchModeSelected(matchMode.value)"
+                      [attr.tabindex]="i === 0 ? '0' : null"
+                      >
+                      {{ matchMode.label }}
+                    </li>
+                  }
+                  <li [class]="cx('filterConstraintSeparator')" [hBind]="ptm('filterConstraintSeparator', { context: { index: i } })"></li>
+                  <li [class]="cx('filterConstraint')" [hBind]="ptm('emtpyFilterLabel')" (click)="onRowClearItemClick()" (keydown)="onRowMatchModeKeyDown($event)" (keydown.enter)="onRowClearItemClick()">
+                    {{ noFilterLabel }}
+                  </li>
+                </ul>
+              } @else {
+                @if (isShowOperator) {
+                  <div [class]="cx('filterOperator')" [hBind]="ptm('filterOperator')">
+                    <h-select [options]="operatorOptions" [pt]="ptm('pcFilterOperatorDropdown')" [ngModel]="operator" (ngModelChange)="onOperatorChange($event)" [styleClass]="cx('pcFilterOperatorDropdown')" [unstyled]="unstyled()"></h-select>
+                  </div>
+                }
+                <div [class]="cx('filterRuleList')" [hBind]="ptm('filterRuleList')">
+                  @for (fieldConstraint of fieldConstraints; track fieldConstraint; let i = $index) {
+                    <div [ngClass]="cx('filterRule')" [hBind]="ptm('filterRule')">
+                      @if (showMatchModes && matchModes) {
+                        <h-select
+                          [options]="matchModes"
+                          [ngModel]="fieldConstraint.matchMode"
+                          (ngModelChange)="onMenuMatchModeChange($event, fieldConstraint)"
+                          [styleClass]="cx('pcFilterConstraintDropdown')"
+                          [pt]="ptm('pcFilterConstraintDropdown')"
+                          [unstyled]="unstyled()"
+                        ></h-select>
+                      }
+                      <h-columnFilterFormElement
+                        [type]="type"
+                        [field]="field"
+                        [filterConstraint]="fieldConstraint"
+                        [filterTemplate]="filterTemplate || _filterTemplate"
+                        [placeholder]="placeholder"
+                        [minFractionDigits]="minFractionDigits"
+                        [maxFractionDigits]="maxFractionDigits"
+                        [prefix]="prefix"
+                        [suffix]="suffix"
+                        [locale]="locale"
+                        [localeMatcher]="localeMatcher"
+                        [currency]="currency"
+                        [currencyDisplay]="currencyDisplay"
+                        [useGrouping]="useGrouping"
+                        [filterOn]="filterOn"
+                        [pt]="pt()"
+                        [unstyled]="unstyled()"
+                      ></h-columnFilterFormElement>
+                      <div>
+                        @if (showRemoveIcon) {
+                          <h-button
+                            [styleClass]="cx('pcFilterRemoveRuleButton')"
+                            [pt]="ptm('pcFilterRemoveRuleButton')"
+                            [text]="true"
+                            severity="danger"
+                            size="small"
+                            (onClick)="removeConstraint(fieldConstraint)"
+                            [ariaLabel]="removeRuleButtonLabel"
+                            [label]="removeRuleButtonLabel"
+                            [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.removeRule)"
+                            [unstyled]="unstyled()"
                             >
-                                <ng-template #icon>
-                                    <svg data-p-icon="plus" *ngIf="!addRuleIconTemplate && !_addRuleIconTemplate" [hBind]="ptm('pcAddRuleButtonLabel')['icon']" />
-                                    <ng-template *ngTemplateOutlet="addRuleIconTemplate || _addRuleIconTemplate"></ng-template>
-                                </ng-template>
-                            </h-button>
+                            <ng-template #icon>
+                              @if (!removeRuleIconTemplate && !_removeRuleIconTemplate) {
+                                <svg data-p-icon="trash" [hBind]="ptm('pcFilterRemoveRuleButton')['icon']" />
+                              }
+                              <ng-template *ngTemplateOutlet="removeRuleIconTemplate || _removeRuleIconTemplate"></ng-template>
+                            </ng-template>
+                          </h-button>
                         }
-                        <div [class]="cx('filterButtonbar')" [hBind]="ptm('filterButtonBar')">
-                            <h-button
-                                #clearBtn
-                                *ngIf="showClearButton"
-                                [outlined]="true"
-                                (onClick)="clearFilter()"
-                                [attr.aria-label]="clearButtonLabel"
-                                [label]="clearButtonLabel"
-                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.clear)"
-                                [pt]="ptm('pcFilterClearButton')"
-                                [unstyled]="unstyled()"
-                            />
-                            <h-button
-                                *ngIf="showApplyButton"
-                                (onClick)="applyFilter()"
-                                size="small"
-                                [label]="applyButtonLabel"
-                                [attr.aria-label]="applyButtonLabel"
-                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.apply)"
-                                [pt]="ptm('pcFilterApplyButton')"
-                                [unstyled]="unstyled()"
-                            />
-                        </div>
-                    </ng-template>
-                    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate; context: { $implicit: field }"></ng-container>
+                      </div>
+                    </div>
+                  }
                 </div>
-            }
+                @if (isShowAddConstraint) {
+                  <h-button
+                    type="button"
+                    [pt]="ptm('pcAddRuleButtonLabel')"
+                    [label]="addRuleButtonLabel"
+                    [attr.aria-label]="addRuleButtonLabel"
+                    [styleClass]="cx('pcFilterAddRuleButton')"
+                    [text]="true"
+                    size="small"
+                    (onClick)="addConstraint()"
+                    [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.addRule)"
+                    [unstyled]="unstyled()"
+                    >
+                    <ng-template #icon>
+                      @if (!addRuleIconTemplate && !_addRuleIconTemplate) {
+                        <svg data-p-icon="plus" [hBind]="ptm('pcAddRuleButtonLabel')['icon']" />
+                      }
+                      <ng-template *ngTemplateOutlet="addRuleIconTemplate || _addRuleIconTemplate"></ng-template>
+                    </ng-template>
+                  </h-button>
+                }
+                <div [class]="cx('filterButtonbar')" [hBind]="ptm('filterButtonBar')">
+                  @if (showClearButton) {
+                    <h-button
+                      #clearBtn
+                      [outlined]="true"
+                      (onClick)="clearFilter()"
+                      [attr.aria-label]="clearButtonLabel"
+                      [label]="clearButtonLabel"
+                      [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.clear)"
+                      [pt]="ptm('pcFilterClearButton')"
+                      [unstyled]="unstyled()"
+                      />
+                  }
+                  @if (showApplyButton) {
+                    <h-button
+                      (onClick)="applyFilter()"
+                      size="small"
+                      [label]="applyButtonLabel"
+                      [attr.aria-label]="applyButtonLabel"
+                      [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.apply)"
+                      [pt]="ptm('pcFilterApplyButton')"
+                      [unstyled]="unstyled()"
+                      />
+                  }
+                </div>
+              }
+              <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate; context: { $implicit: field }"></ng-container>
+            </div>
+          }
         </div>
-    `,
+        `,
     providers: [TableStyle],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -6353,8 +6432,8 @@ export class ColumnFilter extends BaseComponent {
     selector: 'h-columnFilterFormElement',
     standalone: false,
     template: `
-        <ng-container *ngIf="filterTemplate; else builtInElement">
-            <ng-container
+        @if (filterTemplate) {
+          <ng-container
                 *ngTemplateOutlet="
                     filterTemplate;
                     context: {
@@ -6376,66 +6455,68 @@ export class ColumnFilter extends BaseComponent {
                         showButtons: showButtons
                     }
                 "
-            ></ng-container>
-        </ng-container>
-        <ng-template #builtInElement>
-            <ng-container [ngSwitch]="type">
-                <input
-                    *ngSwitchCase="'text'"
-                    type="text"
-                    [ariaLabel]="ariaLabel"
-                    hInputText
-                    [pt]="ptm('pcFilterInputText')"
-                    [value]="$safeNavigationMigration(filterConstraint?.value)"
-                    (input)="onModelChange($event.target.value)"
-                    (keydown.enter)="onTextInputEnterKeyDown($event)"
-                    [attr.placeholder]="placeholder"
-                    [unstyled]="unstyled()"
+        ></ng-container>
+        } @else {
+          @switch (type) {
+            @case ('text') {
+              <input
+                type="text"
+                [ariaLabel]="ariaLabel"
+                hInputText
+                [pt]="ptm('pcFilterInputText')"
+                [value]="$safeNavigationMigration(filterConstraint?.value)"
+                (input)="onModelChange($event.target.value)"
+                (keydown.enter)="onTextInputEnterKeyDown($event)"
+                [attr.placeholder]="placeholder"
+                [unstyled]="unstyled()"
                 />
-                <h-inputNumber
-                    *ngSwitchCase="'numeric'"
-                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
-                    (ngModelChange)="onModelChange($event)"
-                    (onKeyDown)="onNumericInputKeyDown($event)"
-                    [showButtons]="showButtons"
-                    [minFractionDigits]="minFractionDigits"
-                    [maxFractionDigits]="maxFractionDigits"
-                    [ariaLabel]="ariaLabel"
-                    [prefix]="prefix"
-                    [suffix]="suffix"
-                    [placeholder]="placeholder"
-                    [mode]="currency ? 'currency' : 'decimal'"
-                    [locale]="locale"
-                    [localeMatcher]="localeMatcher"
-                    [currency]="currency"
-                    [currencyDisplay]="currencyDisplay"
-                    [useGrouping]="useGrouping"
-                    [pt]="ptm('pcFilterInputNumber')"
-                    [unstyled]="unstyled()"
-                ></h-inputNumber>
-                <h-checkbox
-                    [pt]="ptm('pcFilterCheckbox')"
-                    [indeterminate]="$safeNavigationMigration(filterConstraint?.value) === null"
-                    [binary]="true"
-                    *ngSwitchCase="'boolean'"
-                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
-                    (ngModelChange)="onModelChange($event)"
-                    [unstyled]="unstyled()"
+            }
+            @case ('numeric') {
+              <h-inputNumber
+                [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+                (ngModelChange)="onModelChange($event)"
+                (onKeyDown)="onNumericInputKeyDown($event)"
+                [showButtons]="showButtons"
+                [minFractionDigits]="minFractionDigits"
+                [maxFractionDigits]="maxFractionDigits"
+                [ariaLabel]="ariaLabel"
+                [prefix]="prefix"
+                [suffix]="suffix"
+                [placeholder]="placeholder"
+                [mode]="currency ? 'currency' : 'decimal'"
+                [locale]="locale"
+                [localeMatcher]="localeMatcher"
+                [currency]="currency"
+                [currencyDisplay]="currencyDisplay"
+                [useGrouping]="useGrouping"
+                [pt]="ptm('pcFilterInputNumber')"
+                [unstyled]="unstyled()"
+              ></h-inputNumber>
+            }
+            @case ('boolean') {
+              <h-checkbox
+                [pt]="ptm('pcFilterCheckbox')"
+                [indeterminate]="$safeNavigationMigration(filterConstraint?.value) === null"
+                [binary]="true"
+                [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+                (ngModelChange)="onModelChange($event)"
+                [unstyled]="unstyled()"
                 />
-
-                <h-datepicker
-                    [pt]="ptm('pcFilterDatePicker')"
-                    [ariaLabel]="ariaLabel"
-                    *ngSwitchCase="'date'"
-                    [placeholder]="placeholder"
-                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
-                    (ngModelChange)="onModelChange($event)"
-                    appendTo="body"
-                    [unstyled]="unstyled()"
-                ></h-datepicker>
-            </ng-container>
-        </ng-template>
-    `,
+            }
+            @case ('date') {
+              <h-datepicker
+                [pt]="ptm('pcFilterDatePicker')"
+                [ariaLabel]="ariaLabel"
+                [placeholder]="placeholder"
+                [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+                (ngModelChange)="onModelChange($event)"
+                appendTo="body"
+                [unstyled]="unstyled()"
+              ></h-datepicker>
+            }
+          }
+        }
+        `,
     providers: [TableStyle],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
