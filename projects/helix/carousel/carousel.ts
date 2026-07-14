@@ -37,117 +37,140 @@ import { CarouselStyle } from './style/carouselstyle';
     standalone: true,
     imports: [CommonModule, ChevronRightIcon, ButtonModule, ChevronLeftIcon, ChevronDownIcon, ChevronUpIcon, SharedModule, BindModule],
     template: `
-        <div [class]="cx('header')" *ngIf="headerFacet || headerTemplate" [hBind]="ptm('header')">
+        @if (headerFacet || headerTemplate) {
+          <div [class]="cx('header')" [hBind]="ptm('header')">
             <ng-content select="p-header"></ng-content>
             <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-        </div>
+          </div>
+        }
         <div [class]="contentClass" [ngClass]="cx('contentContainer')" [hBind]="ptm('contentContainer')">
-            <div [class]="cx('content')" [attr.aria-live]="allowAutoplay ? 'polite' : 'off'" [hBind]="ptm('content')">
-                <h-button
-                    *ngIf="showNavigators"
-                    [class]="cx('pcPrevButton')"
-                    [attr.aria-label]="ariaPrevButtonLabel()"
-                    (click)="navBackward($event)"
-                    [text]="true"
-                    [buttonProps]="prevButtonProps"
-                    [pt]="ptm('pcPrevButton')"
-                    [unstyled]="unstyled()"
-                    attr.data-pc-group-section="navigator"
+          <div [class]="cx('content')" [attr.aria-live]="allowAutoplay ? 'polite' : 'off'" [hBind]="ptm('content')">
+            @if (showNavigators) {
+              <h-button
+                [class]="cx('pcPrevButton')"
+                [attr.aria-label]="ariaPrevButtonLabel()"
+                (click)="navBackward($event)"
+                [text]="true"
+                [buttonProps]="prevButtonProps"
+                [pt]="ptm('pcPrevButton')"
+                [unstyled]="unstyled()"
+                attr.data-pc-group-section="navigator"
                 >
-                    <ng-template #icon>
-                        <ng-container *ngIf="!previousIconTemplate && !_previousIconTemplate && !prevButtonProps?.icon">
-                            <svg data-p-icon="chevron-left" *ngIf="!isVertical()" />
-                            <svg data-p-icon="chevron-up" *ngIf="isVertical()" />
-                        </ng-container>
-                        <ng-container *ngIf="(previousIconTemplate || _previousIconTemplate) && !prevButtonProps?.icon">
-                            <ng-template *ngTemplateOutlet="previousIconTemplate || _previousIconTemplate"></ng-template>
-                        </ng-container>
-                    </ng-template>
-                </h-button>
-                <div [class]="cx('viewport')" [ngStyle]="{ height: isVertical() ? verticalViewPortHeight : 'auto' }" (touchend)="onTouchEnd($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" [hBind]="ptm('viewport')">
-                    <div #itemsContainer [class]="cx('itemList')" (transitionend)="onTransitionEnd()" [hBind]="ptm('itemList')">
-                        <div
-                            *ngFor="let item of clonedItemsForStarting; let index = index"
-                            [class]="cx('itemClone', { index })"
-                            [attr.aria-hidden]="!(totalShiftedItems * -1 === value.length)"
-                            [attr.aria-label]="ariaSlideNumber(index)"
-                            [attr.aria-roledescription]="ariaSlideLabel()"
-                            [attr.data-p-carousel-item-active]="totalShiftedItems * -1 === value.length + _numVisible"
-                            [attr.data-p-carousel-item-start]="index === 0"
-                            [attr.data-p-carousel-item-end]="clonedItemsForStarting && clonedItemsForStarting.length - 1 === index"
-                            [hBind]="ptm('itemClone')"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                        <div
-                            *ngFor="let item of value; let index = index"
-                            [class]="cx('item', { index })"
-                            role="group"
-                            [attr.aria-hidden]="!(firstIndex() <= index && lastIndex() >= index)"
-                            [attr.aria-label]="ariaSlideNumber(index)"
-                            [attr.aria-roledescription]="ariaSlideLabel()"
-                            [attr.data-p-carousel-item-active]="firstIndex() <= index && lastIndex() >= index"
-                            [attr.data-p-carousel-item-start]="firstIndex() === index"
-                            [attr.data-p-carousel-item-end]="lastIndex() === index"
-                            [hBind]="getItemPTOptions('item', index)"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                        <div
-                            *ngFor="let item of clonedItemsForFinishing; let index = index"
-                            [class]="cx('itemClone', { index })"
-                            [attr.data-p-carousel-item-active]="false"
-                            [attr.data-p-carousel-item-start]="false"
-                            [attr.data-p-carousel-item-end]="false"
-                            [hBind]="ptm('itemClone')"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                    </div>
-                </div>
-                <h-button
-                    type="button"
-                    *ngIf="showNavigators"
-                    [class]="cx('pcNextButton')"
-                    (click)="navForward($event)"
-                    [attr.aria-label]="ariaNextButtonLabel()"
-                    [buttonProps]="nextButtonProps"
-                    [text]="true"
-                    [pt]="ptm('pcNextButton')"
-                    [unstyled]="unstyled()"
-                    attr.data-pc-group-section="navigator"
-                >
-                    <ng-template #icon>
-                        <ng-container *ngIf="!nextIconTemplate && !_nextIconTemplate && !nextButtonProps?.icon">
-                            <svg data-p-icon="chevron-right" *ngIf="!isVertical()" />
-                            <svg data-p-icon="chevron-down" *ngIf="isVertical()" />
-                        </ng-container>
-                        <span *ngIf="nextIconTemplate || (_nextIconTemplate && !nextButtonProps?.icon)">
-                            <ng-template *ngTemplateOutlet="nextIconTemplate || _nextIconTemplate"></ng-template>
-                        </span>
-                    </ng-template>
-                </h-button>
+                <ng-template #icon>
+                  @if (!previousIconTemplate && !_previousIconTemplate && !prevButtonProps?.icon) {
+                    @if (!isVertical()) {
+                      <svg data-p-icon="chevron-left" />
+                    }
+                    @if (isVertical()) {
+                      <svg data-p-icon="chevron-up" />
+                    }
+                  }
+                  @if ((previousIconTemplate || _previousIconTemplate) && !prevButtonProps?.icon) {
+                    <ng-template *ngTemplateOutlet="previousIconTemplate || _previousIconTemplate"></ng-template>
+                  }
+                </ng-template>
+              </h-button>
+            }
+            <div [class]="cx('viewport')" [ngStyle]="{ height: isVertical() ? verticalViewPortHeight : 'auto' }" (touchend)="onTouchEnd($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" [hBind]="ptm('viewport')">
+              <div #itemsContainer [class]="cx('itemList')" (transitionend)="onTransitionEnd()" [hBind]="ptm('itemList')">
+                @for (item of clonedItemsForStarting; track item; let index = $index) {
+                  <div
+                    [class]="cx('itemClone', { index })"
+                    [attr.aria-hidden]="!(totalShiftedItems * -1 === value.length)"
+                    [attr.aria-label]="ariaSlideNumber(index)"
+                    [attr.aria-roledescription]="ariaSlideLabel()"
+                    [attr.data-p-carousel-item-active]="totalShiftedItems * -1 === value.length + _numVisible"
+                    [attr.data-p-carousel-item-start]="index === 0"
+                    [attr.data-p-carousel-item-end]="clonedItemsForStarting && clonedItemsForStarting.length - 1 === index"
+                    [hBind]="ptm('itemClone')"
+                    >
+                    <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
+                  </div>
+                }
+                @for (item of value; track item; let index = $index) {
+                  <div
+                    [class]="cx('item', { index })"
+                    role="group"
+                    [attr.aria-hidden]="!(firstIndex() <= index && lastIndex() >= index)"
+                    [attr.aria-label]="ariaSlideNumber(index)"
+                    [attr.aria-roledescription]="ariaSlideLabel()"
+                    [attr.data-p-carousel-item-active]="firstIndex() <= index && lastIndex() >= index"
+                    [attr.data-p-carousel-item-start]="firstIndex() === index"
+                    [attr.data-p-carousel-item-end]="lastIndex() === index"
+                    [hBind]="getItemPTOptions('item', index)"
+                    >
+                    <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
+                  </div>
+                }
+                @for (item of clonedItemsForFinishing; track item; let index = $index) {
+                  <div
+                    [class]="cx('itemClone', { index })"
+                    [attr.data-p-carousel-item-active]="false"
+                    [attr.data-p-carousel-item-start]="false"
+                    [attr.data-p-carousel-item-end]="false"
+                    [hBind]="ptm('itemClone')"
+                    >
+                    <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
+                  </div>
+                }
+              </div>
             </div>
-            <ul #indicatorContent [class]="cx('indicatorList')" [ngStyle]="indicatorsContentStyle" *ngIf="showIndicators" (keydown)="onIndicatorKeydown($event)" [hBind]="ptm('indicatorList')">
-                <li *ngFor="let totalDot of totalDotsArray(); let i = index" [class]="cx('indicator', { index: i })" [attr.data-p-active]="_page === i" [hBind]="getIndicatorPTOptions('indicator', i)">
-                    <button
-                        type="button"
-                        [class]="cx('indicatorButton')"
-                        (click)="onDotClick($event, i)"
-                        [ngStyle]="indicatorStyle"
-                        [attr.aria-label]="ariaPageLabel(i + 1)"
-                        [attr.aria-current]="_page === i ? 'page' : undefined"
-                        [tabindex]="_page === i ? 0 : -1"
-                        [hBind]="getIndicatorPTOptions('indicatorButton', i)"
-                    ></button>
+            @if (showNavigators) {
+              <h-button
+                type="button"
+                [class]="cx('pcNextButton')"
+                (click)="navForward($event)"
+                [attr.aria-label]="ariaNextButtonLabel()"
+                [buttonProps]="nextButtonProps"
+                [text]="true"
+                [pt]="ptm('pcNextButton')"
+                [unstyled]="unstyled()"
+                attr.data-pc-group-section="navigator"
+                >
+                <ng-template #icon>
+                  @if (!nextIconTemplate && !_nextIconTemplate && !nextButtonProps?.icon) {
+                    @if (!isVertical()) {
+                      <svg data-p-icon="chevron-right" />
+                    }
+                    @if (isVertical()) {
+                      <svg data-p-icon="chevron-down" />
+                    }
+                  }
+                  @if (nextIconTemplate || (_nextIconTemplate && !nextButtonProps?.icon)) {
+                    <span>
+                      <ng-template *ngTemplateOutlet="nextIconTemplate || _nextIconTemplate"></ng-template>
+                    </span>
+                  }
+                </ng-template>
+              </h-button>
+            }
+          </div>
+          @if (showIndicators) {
+            <ul #indicatorContent [class]="cx('indicatorList')" [ngStyle]="indicatorsContentStyle" (keydown)="onIndicatorKeydown($event)" [hBind]="ptm('indicatorList')">
+              @for (totalDot of totalDotsArray(); track totalDot; let i = $index) {
+                <li [class]="cx('indicator', { index: i })" [attr.data-p-active]="_page === i" [hBind]="getIndicatorPTOptions('indicator', i)">
+                  <button
+                    type="button"
+                    [class]="cx('indicatorButton')"
+                    (click)="onDotClick($event, i)"
+                    [ngStyle]="indicatorStyle"
+                    [attr.aria-label]="ariaPageLabel(i + 1)"
+                    [attr.aria-current]="_page === i ? 'page' : undefined"
+                    [tabindex]="_page === i ? 0 : -1"
+                    [hBind]="getIndicatorPTOptions('indicatorButton', i)"
+                  ></button>
                 </li>
+              }
             </ul>
+          }
         </div>
-        <div [class]="cx('footer')" *ngIf="footerFacet || footerTemplate || _footerTemplate" [hBind]="ptm('footer')">
+        @if (footerFacet || footerTemplate || _footerTemplate) {
+          <div [class]="cx('footer')" [hBind]="ptm('footer')">
             <ng-content select="p-footer"></ng-content>
             <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-        </div>
-    `,
+          </div>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [CarouselStyle, { provide: PARENT_INSTANCE, useExisting: Carousel }],

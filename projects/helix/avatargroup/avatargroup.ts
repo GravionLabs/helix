@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, HostBinding, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -15,7 +15,7 @@ const AVATARGROUP_INSTANCE = new InjectionToken<AvatarGroup>('AVATARGROUP_INSTAN
 @Component({
     selector: 'h-avatarGroup, h-avatar-group, h-avatargroup',
     standalone: true,
-    imports: [CommonModule, SharedModule],
+    imports: [SharedModule],
     template: ` <ng-content></ng-content> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

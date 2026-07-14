@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
     ChangeDetectionStrategy,
     Component,
@@ -76,7 +76,7 @@ const ACCORDION_INSTANCE = new InjectionToken<Accordion>('ACCORDION_INSTANCE');
  */
 @Component({
     selector: 'h-accordion-panel, h-accordionpanel',
-    imports: [CommonModule, BindModule],
+    imports: [BindModule],
     standalone: true,
     template: `<ng-content />`,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -131,23 +131,31 @@ export class AccordionPanel extends BaseComponent<AccordionPanelPassThrough> {
  */
 @Component({
     selector: 'h-accordion-header, h-accordionheader',
-    imports: [CommonModule, ChevronDownIcon, ChevronUpIcon, BindModule],
+    imports: [ChevronDownIcon, ChevronUpIcon, BindModule],
     standalone: true,
     template: `
         <ng-content />
         @if (toggleicon) {
-            <ng-template *ngTemplateOutlet="toggleicon; context: { active: active() }"></ng-template>
+          <ng-template *ngTemplateOutlet="toggleicon; context: { active: active() }"></ng-template>
         } @else {
-            <ng-container *ngIf="active()">
-                <span *ngIf="pcAccordion.collapseIcon" [class]="cn(cx('toggleicon'), pcAccordion.collapseIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
-                <svg data-p-icon="chevron-up" *ngIf="!pcAccordion.collapseIcon" [class]="cx('toggleicon')" [hBind]="ptm('toggleicon')" [attr.aria-hidden]="true" />
-            </ng-container>
-            <ng-container *ngIf="!active()">
-                <span *ngIf="pcAccordion.expandIcon" [class]="cn(cx('toggleicon'), pcAccordion.expandIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
-                <svg data-p-icon="chevron-down" *ngIf="!pcAccordion.expandIcon" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')" />
-            </ng-container>
+          @if (active()) {
+            @if (pcAccordion.collapseIcon) {
+              <span [class]="cn(cx('toggleicon'), pcAccordion.collapseIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
+            }
+            @if (!pcAccordion.collapseIcon) {
+              <svg data-p-icon="chevron-up" [class]="cx('toggleicon')" [hBind]="ptm('toggleicon')" [attr.aria-hidden]="true" />
+            }
+          }
+          @if (!active()) {
+            @if (pcAccordion.expandIcon) {
+              <span [class]="cn(cx('toggleicon'), pcAccordion.expandIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
+            }
+            @if (!pcAccordion.expandIcon) {
+              <svg data-p-icon="chevron-down" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')" />
+            }
+          }
         }
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -330,7 +338,7 @@ export class AccordionHeader extends BaseComponent<AccordionHeaderPassThrough> {
 
 @Component({
     selector: 'h-accordion-content, h-accordioncontent',
-    imports: [CommonModule, BindModule, MotionModule],
+    imports: [BindModule, MotionModule],
     standalone: true,
     template: `
         <h-motion [visible]="active()" name="p-collapsible" hideStrategy="visibility" [mountOnEnter]="false" [unmountOnLeave]="false" [options]="computedMotionOptions()">
@@ -393,7 +401,7 @@ export class AccordionContent extends BaseComponent<AccordionContentPassThrough>
 @Component({
     selector: 'h-accordion',
     standalone: true,
-    imports: [CommonModule, SharedModule, BindModule],
+    imports: [SharedModule, BindModule],
     template: ` <ng-content />`,
     host: {
         '[class]': "cn(cx('root'), styleClass)"

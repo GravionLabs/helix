@@ -63,7 +63,7 @@ interface ExportColumn {
           severity="secondary"
           class="mr-2"
           (onClick)="openNew()"
-        />
+          />
         <h-button
           severity="secondary"
           label="Delete"
@@ -71,14 +71,14 @@ interface ExportColumn {
           outlined
           (onClick)="deleteSelectedProducts()"
           [disabled]="!selectedProducts || !selectedProducts.length"
-        />
+          />
       </ng-template>
-
+    
       <ng-template #end>
         <h-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
       </ng-template>
     </h-toolbar>
-
+    
     <h-table
       #dt
       [value]="products()"
@@ -93,7 +93,7 @@ interface ExportColumn {
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 20, 30]"
-    >
+      >
       <ng-template #caption>
         <div class="flex items-center justify-between">
           <h5 class="m-0">Manage Products</h5>
@@ -104,7 +104,7 @@ interface ExportColumn {
               type="text"
               (input)="onGlobalFilter(dt, $event)"
               placeholder="Search..."
-            />
+              />
           </h-iconfield>
         </div>
       </ng-template>
@@ -151,7 +151,7 @@ interface ExportColumn {
               [alt]="product.name"
               style="width: 64px"
               class="rounded"
-            />
+              />
           </td>
           <td>{{ product.price | currency: 'USD' }}</td>
           <td>{{ product.category }}</td>
@@ -162,7 +162,7 @@ interface ExportColumn {
             <h-tag
               [value]="product.inventoryStatus"
               [severity]="getSeverity(product.inventoryStatus)"
-            />
+              />
           </td>
           <td>
             <h-button
@@ -171,33 +171,34 @@ interface ExportColumn {
               [rounded]="true"
               [outlined]="true"
               (click)="editProduct(product)"
-            />
+              />
             <h-button
               icon="pi pi-trash"
               severity="danger"
               [rounded]="true"
               [outlined]="true"
               (click)="deleteProduct(product)"
-            />
+              />
           </td>
         </tr>
       </ng-template>
     </h-table>
-
+    
     <h-dialog
       [(visible)]="productDialog"
       [style]="{ width: '450px' }"
       header="Product Details"
       [modal]="true"
-    >
+      >
       <ng-template #content>
         <div class="flex flex-col gap-3">
-          <img
-            [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-            [alt]="product.image"
-            class="block m-auto pb-4"
-            *ngIf="product.image"
-          />
+          @if (product.image) {
+            <img
+              [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+              [alt]="product.image"
+              class="block m-auto pb-4"
+              />
+          }
           <div>
             <label for="name" class="block font-bold mb-3">Name</label>
             <input
@@ -208,8 +209,10 @@ interface ExportColumn {
               required
               autofocus
               fluid
-            />
-            <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+              />
+            @if (submitted && !product.name) {
+              <small class="text-red-500">Name is required.</small>
+            }
           </div>
           <div>
             <label for="description" class="block font-bold mb-3">Description</label>
@@ -223,7 +226,7 @@ interface ExportColumn {
               fluid
             ></textarea>
           </div>
-
+    
           <div>
             <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
             <h-select
@@ -234,9 +237,9 @@ interface ExportColumn {
               optionValue="label"
               placeholder="Select a Status"
               fluid
-            />
+              />
           </div>
-
+    
           <div>
             <span class="block font-bold mb-2">Category</span>
             <div class="grid grid-cols-12 gap-3">
@@ -246,7 +249,7 @@ interface ExportColumn {
                   name="category"
                   value="Accessories"
                   [(ngModel)]="product.category"
-                />
+                  />
                 <label for="category1">Accessories</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
@@ -255,7 +258,7 @@ interface ExportColumn {
                   name="category"
                   value="Clothing"
                   [(ngModel)]="product.category"
-                />
+                  />
                 <label for="category2">Clothing</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
@@ -264,7 +267,7 @@ interface ExportColumn {
                   name="category"
                   value="Electronics"
                   [(ngModel)]="product.category"
-                />
+                  />
                 <label for="category3">Electronics</label>
               </div>
               <div class="flex items-center gap-1 col-span-6">
@@ -273,12 +276,12 @@ interface ExportColumn {
                   name="category"
                   value="Fitness"
                   [(ngModel)]="product.category"
-                />
+                  />
                 <label for="category4">Fitness</label>
               </div>
             </div>
           </div>
-
+    
           <div class="grid grid-cols-12 gap-3">
             <div class="col-span-6">
               <label for="price" class="block font-bold mb-3">Price</label>
@@ -289,7 +292,7 @@ interface ExportColumn {
                 currency="USD"
                 locale="en-US"
                 fluid
-              />
+                />
             </div>
             <div class="col-span-6">
               <label for="quantity" class="block font-bold mb-3">Quantity</label>
@@ -298,15 +301,15 @@ interface ExportColumn {
           </div>
         </div>
       </ng-template>
-
+    
       <ng-template #footer>
         <h-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
         <h-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
       </ng-template>
     </h-dialog>
-
+    
     <h-confirmdialog [style]="{ width: '450px' }" />
-  `,
+    `,
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MessageService, ProductService, ConfirmationService],
 })
