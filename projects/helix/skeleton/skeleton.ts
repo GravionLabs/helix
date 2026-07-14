@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -15,7 +15,7 @@ const SKELETON_INSTANCE = new InjectionToken<Skeleton>('SKELETON_INSTANCE');
 @Component({
     selector: 'h-skeleton',
     standalone: true,
-    imports: [CommonModule, SharedModule],
+    imports: [SharedModule],
     template: ``,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

@@ -77,347 +77,387 @@ const PICKLIST_INSTANCE = new InjectionToken<PickList>('PICKLIST_INSTANCE');
     ],
     template: `
         <div [ngStyle]="style" [class]="cn(cx('root'), styleClass)" cdkDropListGroup [hBind]="ptm('root')">
-            <div [class]="cx('sourceControls')" *ngIf="showSourceControls" [hBind]="ptm('sourceControls')" [attr.data-pc-group-section]="'controls'">
-                <button
-                    type="button"
-                    [attr.aria-label]="moveUpAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="sourceMoveDisabled()"
-                    (click)="moveUp(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
-                    [buttonProps]="getButtonProps('moveup')"
-                    [pt]="ptm('pcSourceMoveUpButton')"
-                    [unstyled]="unstyled()"
+          @if (showSourceControls) {
+            <div [class]="cx('sourceControls')" [hBind]="ptm('sourceControls')" [attr.data-pc-group-section]="'controls'">
+              <button
+                type="button"
+                [attr.aria-label]="moveUpAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="sourceMoveDisabled()"
+                (click)="moveUp(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
+                [buttonProps]="getButtonProps('moveup')"
+                [pt]="ptm('pcSourceMoveUpButton')"
+                [unstyled]="unstyled()"
                 >
-                    <svg data-p-icon="angle-up" *ngIf="!moveUpIconTemplate && !_moveUpIconTemplate" [pt]="ptm('pcSourceMoveUpButton')['icon']" hButtonIcon />
-                    <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveTopAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="sourceMoveDisabled()"
-                    (click)="moveTop(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
-                    [buttonProps]="getButtonProps('movetop')"
-                    [pt]="ptm('pcSourceMoveTopButton')"
-                    [unstyled]="unstyled()"
+                @if (!moveUpIconTemplate && !_moveUpIconTemplate) {
+                  <svg data-p-icon="angle-up" [pt]="ptm('pcSourceMoveUpButton')['icon']" hButtonIcon />
+                }
+                <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveTopAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="sourceMoveDisabled()"
+                (click)="moveTop(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
+                [buttonProps]="getButtonProps('movetop')"
+                [pt]="ptm('pcSourceMoveTopButton')"
+                [unstyled]="unstyled()"
                 >
-                    <svg data-p-icon="angle-double-up" *ngIf="!moveTopIconTemplate && !_moveTopIconTemplate" hButtonIcon [pt]="ptm('pcSourceMoveTopButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveTopIconTemplate || _moveTopIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveDownAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="sourceMoveDisabled()"
-                    (click)="moveDown(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
-                    [buttonProps]="getButtonProps('movedown')"
-                    [pt]="ptm('pcSourceMoveDownButton')"
-                    [unstyled]="unstyled()"
-                    hostName="picklist"
+                @if (!moveTopIconTemplate && !_moveTopIconTemplate) {
+                  <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcSourceMoveTopButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveTopIconTemplate || _moveTopIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveDownAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="sourceMoveDisabled()"
+                (click)="moveDown(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
+                [buttonProps]="getButtonProps('movedown')"
+                [pt]="ptm('pcSourceMoveDownButton')"
+                [unstyled]="unstyled()"
+                hostName="picklist"
                 >
-                    <svg data-p-icon="angle-down" *ngIf="!moveDownIconTemplate && !_moveDownIconTemplate" hButtonIcon [pt]="ptm('pcSourceMoveDownButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveBottomAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="sourceMoveDisabled()"
-                    (click)="moveBottom(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
-                    [buttonProps]="getButtonProps('movebottom')"
-                    [pt]="ptm('pcSourceMoveBottomButton')"
-                    [unstyled]="unstyled()"
-                    hostName="picklist"
+                @if (!moveDownIconTemplate && !_moveDownIconTemplate) {
+                  <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcSourceMoveDownButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveBottomAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="sourceMoveDisabled()"
+                (click)="moveBottom(sourcelist, source(), selectedItemsSource, onSourceReorder, SOURCE_LIST)"
+                [buttonProps]="getButtonProps('movebottom')"
+                [pt]="ptm('pcSourceMoveBottomButton')"
+                [unstyled]="unstyled()"
+                hostName="picklist"
                 >
-                    <svg data-p-icon="angle-double-down" *ngIf="!moveBottomIconTemplate || _moveBottomIconTemplate" hButtonIcon [pt]="ptm('pcSourceMoveBottomButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
-                </button>
+                @if (!moveBottomIconTemplate || _moveBottomIconTemplate) {
+                  <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcSourceMoveBottomButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
+              </button>
             </div>
-            <div [class]="cx('sourceListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('sourceListContainer')">
-                <h-listbox
-                    #sourcelist
-                    [ariaLabel]="sourceAriaLabel"
-                    [multiple]="true"
-                    [options]="sourceOptions"
-                    [(ngModel)]="selectedItemsSource"
-                    [optionLabel]="dataKey ?? 'name'"
-                    [id]="idSource + '_list'"
-                    [listStyle]="sourceStyle"
-                    [striped]="stripedRows"
-                    [tabindex]="tabindex"
-                    (onFocus)="onListFocus($event, SOURCE_LIST)"
-                    (onBlur)="onListBlur($event, SOURCE_LIST)"
-                    (onChange)="onChangeSelection($event, SOURCE_LIST)"
-                    (onDblClick)="onSourceItemDblClick()"
-                    [disabled]="disabled"
-                    [optionDisabled]="sourceOptionDisabled"
-                    [metaKeySelection]="metaKeySelection"
-                    [scrollHeight]="scrollHeight"
-                    [autoOptionFocus]="autoOptionFocus"
-                    [filter]="filterBy && showSourceFilter"
-                    [filterBy]="filterBy"
-                    [filterLocale]="filterLocale"
-                    [filterMatchMode]="filterMatchMode"
-                    [filterPlaceHolder]="sourceFilterPlaceholder"
-                    [dragdrop]="dragdrop"
-                    [dropListData]="source()"
-                    (onDrop)="onDrop($event, SOURCE_LIST)"
-                    (onFilter)="onFilter($event.originalEvent, SOURCE_LIST)"
-                    [pt]="ptm('pcListbox')"
-                    hostName="picklist"
-                    [attr.data-pc-group-section]="'list'"
-                    [unstyled]="unstyled()"
+          }
+          <div [class]="cx('sourceListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('sourceListContainer')">
+            <h-listbox
+              #sourcelist
+              [ariaLabel]="sourceAriaLabel"
+              [multiple]="true"
+              [options]="sourceOptions"
+              [(ngModel)]="selectedItemsSource"
+              [optionLabel]="dataKey ?? 'name'"
+              [id]="idSource + '_list'"
+              [listStyle]="sourceStyle"
+              [striped]="stripedRows"
+              [tabindex]="tabindex"
+              (onFocus)="onListFocus($event, SOURCE_LIST)"
+              (onBlur)="onListBlur($event, SOURCE_LIST)"
+              (onChange)="onChangeSelection($event, SOURCE_LIST)"
+              (onDblClick)="onSourceItemDblClick()"
+              [disabled]="disabled"
+              [optionDisabled]="sourceOptionDisabled"
+              [metaKeySelection]="metaKeySelection"
+              [scrollHeight]="scrollHeight"
+              [autoOptionFocus]="autoOptionFocus"
+              [filter]="filterBy && showSourceFilter"
+              [filterBy]="filterBy"
+              [filterLocale]="filterLocale"
+              [filterMatchMode]="filterMatchMode"
+              [filterPlaceHolder]="sourceFilterPlaceholder"
+              [dragdrop]="dragdrop"
+              [dropListData]="source()"
+              (onDrop)="onDrop($event, SOURCE_LIST)"
+              (onFilter)="onFilter($event.originalEvent, SOURCE_LIST)"
+              [pt]="ptm('pcListbox')"
+              hostName="picklist"
+              [attr.data-pc-group-section]="'list'"
+              [unstyled]="unstyled()"
+              >
+              @if (sourceHeaderTemplate || _sourceHeaderTemplate || sourceHeader) {
+                <ng-template #header>
+                  @if (!sourceHeaderTemplate && !_sourceHeaderTemplate) {
+                    <div>{{ sourceHeader }}</div>
+                  }
+                  <ng-template *ngTemplateOutlet="sourceHeaderTemplate || _sourceHeaderTemplate"></ng-template>
+                </ng-template>
+              }
+              @if (sourceFilterTemplate || _sourceFilterTemplate) {
+                <ng-template #filter>
+                  <ng-template *ngTemplateOutlet="sourceFilterTemplate || _sourceFilterTemplate; context: { options: sourceFilterOptions }"></ng-template>
+                </ng-template>
+              }
+              @if (sourceFilterIconTemplate || _sourceFilterIconTemplate) {
+                <ng-container *ngTemplateOutlet="sourceFilterIconTemplate || _sourceFilterIconTemplate"></ng-container>
+              }
+              @if (itemTemplate || _itemTemplate) {
+                <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
+                  <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
+                </ng-template>
+              }
+              @if (emptyMessageSourceTemplate || _emptyMessageSourceTemplate) {
+                <ng-template #empty>
+                  <ng-container *ngTemplateOutlet="emptyMessageSourceTemplate || _emptyMessageSourceTemplate"></ng-container>
+                </ng-template>
+              }
+              @if (emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate) {
+                <ng-template #emptyfilter>
+                  <ng-container *ngTemplateOutlet="emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate"></ng-container>
+                </ng-template>
+              }
+            </h-listbox>
+          </div>
+          <div [class]="cx('transferControls')" [attr.data-pc-group-section]="'controls'" [hBind]="ptm('transferControls')">
+            <button
+              type="button"
+              [attr.aria-label]="moveToTargetAriaLabel"
+              hButton
+              hRipple
+              severity="secondary"
+              [disabled]="moveRightDisabled()"
+              (click)="moveRight()"
+              [buttonProps]="getButtonProps('movetotarget')"
+              [pt]="ptm('pcMoveToTargetButton')"
+              hostName="picklist"
+              [unstyled]="unstyled()"
+              >
+              @if (!moveToTargetIconTemplate && !_moveToTargetIconTemplate) {
+                @if (!viewChanged) {
+                  <svg data-p-icon="angle-right" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
+                }
+                @if (viewChanged) {
+                  <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
+                }
+              }
+              <ng-template *ngTemplateOutlet="moveToTargetIconTemplate || _moveToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+            </button>
+            <button
+              type="button"
+              [attr.aria-label]="moveAllToTargetAriaLabel"
+              hButton
+              hRipple
+              severity="secondary"
+              [disabled]="moveAllRightDisabled()"
+              (click)="moveAllRight()"
+              [buttonProps]="getButtonProps('movealltotarget')"
+              [pt]="ptm('pcMoveAllToTargetButton')"
+              [unstyled]="unstyled()"
+              >
+              @if (!moveAllToTargetIconTemplate && !_moveAllToTargetIconTemplate) {
+                @if (!viewChanged) {
+                  <svg data-p-icon="angle-double-right" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
+                }
+                @if (viewChanged) {
+                  <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
+                }
+              }
+              <ng-template *ngTemplateOutlet="moveAllToTargetIconTemplate || _moveAllToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+            </button>
+            <button
+              type="button"
+              [attr.aria-label]="moveToSourceAriaLabel"
+              hButton
+              hRipple
+              severity="secondary"
+              [disabled]="moveLeftDisabled()"
+              (click)="moveLeft()"
+              [buttonProps]="getButtonProps('movetosource')"
+              [pt]="ptm('pcMoveToSourceButton')"
+              hostName="picklist"
+              [unstyled]="unstyled()"
+              >
+              @if (!moveToSourceIconTemplate && !_moveToSourceIconTemplate) {
+                @if (!viewChanged) {
+                  <svg data-p-icon="angle-left" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
+                }
+                @if (viewChanged) {
+                  <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
+                }
+              }
+              <ng-template *ngTemplateOutlet="moveToSourceIconTemplate || _moveToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+            </button>
+            <button
+              type="button"
+              [attr.aria-label]="moveAllToSourceAriaLabel"
+              hButton
+              hRipple
+              severity="secondary"
+              [disabled]="moveAllLeftDisabled()"
+              (click)="moveAllLeft()"
+              [buttonProps]="getButtonProps('movealltosource')"
+              [pt]="ptm('pcMoveAllToSourceButton')"
+              hostName="picklist"
+              [unstyled]="unstyled()"
+              >
+              @if (!moveAllToSourceIconTemplate && !_moveAllToSourceIconTemplate) {
+                @if (!viewChanged) {
+                  <svg data-p-icon="angle-double-left" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
+                }
+                @if (viewChanged) {
+                  <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
+                }
+              }
+              <ng-template *ngTemplateOutlet="moveAllToSourceIconTemplate || _moveAllToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+            </button>
+          </div>
+          <div [class]="cx('targetListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('targetListContainer')">
+            <h-listbox
+              #targetlist
+              [ariaLabel]="targetAriaLabel"
+              [multiple]="true"
+              [options]="targetOptions"
+              [(ngModel)]="selectedItemsTarget"
+              [optionLabel]="dataKey ?? 'name'"
+              [id]="idTarget + '_list'"
+              [listStyle]="targetStyle"
+              [striped]="stripedRows"
+              [tabindex]="tabindex"
+              (onFocus)="onListFocus($event, TARGET_LIST)"
+              (onBlur)="onListBlur($event, TARGET_LIST)"
+              (onChange)="onChangeSelection($event, TARGET_LIST)"
+              (onDblClick)="onTargetItemDblClick()"
+              [disabled]="disabled"
+              [optionDisabled]="targetOptionDisabled"
+              [metaKeySelection]="metaKeySelection"
+              [scrollHeight]="scrollHeight"
+              [autoOptionFocus]="autoOptionFocus"
+              [filter]="filterBy && showTargetFilter"
+              [filterBy]="filterBy"
+              [filterLocale]="filterLocale"
+              [filterMatchMode]="filterMatchMode"
+              [filterPlaceHolder]="targetFilterPlaceholder"
+              [dragdrop]="dragdrop"
+              [dropListData]="target()"
+              (onDrop)="onDrop($event, TARGET_LIST)"
+              (onFilter)="onFilter($event.originalEvent, TARGET_LIST)"
+              [pt]="ptm('pcListbox')"
+              [attr.data-pc-group-section]="'list'"
+              hostName="picklist"
+              [unstyled]="unstyled()"
+              >
+              @if (targetHeaderTemplate || _targetHeaderTemplate || targetHeader) {
+                <ng-template #header>
+                  @if (!targetHeaderTemplate && !_targetHeaderTemplate) {
+                    <div>{{ targetHeader }}</div>
+                  }
+                  <ng-template *ngTemplateOutlet="targetHeaderTemplate || _targetHeaderTemplate"></ng-template>
+                </ng-template>
+              }
+              @if (targetFilterTemplate || _targetFilterTemplate) {
+                <ng-template #filter>
+                  <ng-template *ngTemplateOutlet="targetFilterTemplate || _targetFilterTemplate; context: { options: targetFilterOptions }"></ng-template>
+                </ng-template>
+              }
+              @if (targetFilterIconTemplate || _targetFilterIconTemplate) {
+                <ng-container *ngTemplateOutlet="targetFilterIconTemplate || _targetFilterIconTemplate"></ng-container>
+              }
+              @if (itemTemplate || _itemTemplate) {
+                <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
+                  <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
+                </ng-template>
+              }
+              @if (emptyMessageTargetTemplate || _emptyMessageTargetTemplate) {
+                <ng-template #empty>
+                  <ng-container *ngTemplateOutlet="emptyMessageTargetTemplate || _emptyMessageTargetTemplate"></ng-container>
+                </ng-template>
+              }
+              @if (emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate) {
+                <ng-template #emptyfilter>
+                  <ng-container *ngTemplateOutlet="emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate"></ng-container>
+                </ng-template>
+              }
+            </h-listbox>
+          </div>
+          @if (showTargetControls) {
+            <div [class]="cx('targetControls')" [attr.data-pc-group-section]="'controls'" [hBind]="ptm('targetControls')">
+              <button
+                type="button"
+                [attr.aria-label]="moveUpAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="targetMoveDisabled()"
+                (click)="moveUp(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
+                [buttonProps]="getButtonProps('moveup')"
+                [pt]="ptm('pcTargetMoveUpButton')"
+                hostName="picklist"
+                [unstyled]="unstyled()"
                 >
-                    <ng-container *ngIf="sourceHeaderTemplate || _sourceHeaderTemplate || sourceHeader">
-                        <ng-template #header>
-                            <div *ngIf="!sourceHeaderTemplate && !_sourceHeaderTemplate">{{ sourceHeader }}</div>
-                            <ng-template *ngTemplateOutlet="sourceHeaderTemplate || _sourceHeaderTemplate"></ng-template>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="sourceFilterTemplate || _sourceFilterTemplate">
-                        <ng-template #filter>
-                            <ng-template *ngTemplateOutlet="sourceFilterTemplate || _sourceFilterTemplate; context: { options: sourceFilterOptions }"></ng-template>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="sourceFilterIconTemplate || _sourceFilterIconTemplate">
-                        <ng-container *ngTemplateOutlet="sourceFilterIconTemplate || _sourceFilterIconTemplate"></ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="itemTemplate || _itemTemplate">
-                        <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="emptyMessageSourceTemplate || _emptyMessageSourceTemplate">
-                        <ng-template #empty>
-                            <ng-container *ngTemplateOutlet="emptyMessageSourceTemplate || _emptyMessageSourceTemplate"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate">
-                        <ng-template #emptyfilter>
-                            <ng-container *ngTemplateOutlet="emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                </h-listbox>
+                @if (!moveUpIconTemplate && !_moveUpIconTemplate) {
+                  <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcTargetMoveUpButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveTopAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="targetMoveDisabled()"
+                (click)="moveTop(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
+                [buttonProps]="getButtonProps('movetop')"
+                [pt]="ptm('pcTargetMoveTopButton')"
+                hostName="picklist"
+                [unstyled]="unstyled()"
+                >
+                @if (!moveTopIconTemplate && !_moveTopIconTemplate) {
+                  <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcTargetMoveTopButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveTopIconTemplate || moveTopIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveDownAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="targetMoveDisabled()"
+                (click)="moveDown(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
+                [buttonProps]="getButtonProps('movedown')"
+                [pt]="ptm('pcTargetMoveDownButton')"
+                hostName="picklist"
+                [unstyled]="unstyled()"
+                >
+                @if (!moveDownIconTemplate && !_moveDownIconTemplate) {
+                  <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcTargetMoveDownButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
+              </button>
+              <button
+                type="button"
+                [attr.aria-label]="moveBottomAriaLabel"
+                hButton
+                hRipple
+                severity="secondary"
+                [disabled]="targetMoveDisabled()"
+                (click)="moveBottom(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
+                [buttonProps]="getButtonProps('movebottom')"
+                [pt]="ptm('pcTargetMoveBottomButton')"
+                hostName="picklist"
+                [unstyled]="unstyled()"
+                >
+                @if (!moveBottomIconTemplate && !_moveBottomIconTemplate) {
+                  <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcTargetMoveBottomButton')['icon']" />
+                }
+                <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
+              </button>
             </div>
-            <div [class]="cx('transferControls')" [attr.data-pc-group-section]="'controls'" [hBind]="ptm('transferControls')">
-                <button
-                    type="button"
-                    [attr.aria-label]="moveToTargetAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="moveRightDisabled()"
-                    (click)="moveRight()"
-                    [buttonProps]="getButtonProps('movetotarget')"
-                    [pt]="ptm('pcMoveToTargetButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <ng-container *ngIf="!moveToTargetIconTemplate && !_moveToTargetIconTemplate">
-                        <svg data-p-icon="angle-right" *ngIf="!viewChanged" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
-                        <svg data-p-icon="angle-down" *ngIf="viewChanged" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
-                    </ng-container>
-                    <ng-template *ngTemplateOutlet="moveToTargetIconTemplate || _moveToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveAllToTargetAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="moveAllRightDisabled()"
-                    (click)="moveAllRight()"
-                    [buttonProps]="getButtonProps('movealltotarget')"
-                    [pt]="ptm('pcMoveAllToTargetButton')"
-                    [unstyled]="unstyled()"
-                >
-                    <ng-container *ngIf="!moveAllToTargetIconTemplate && !_moveAllToTargetIconTemplate">
-                        <svg data-p-icon="angle-double-right" *ngIf="!viewChanged" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
-                        <svg data-p-icon="angle-double-down" *ngIf="viewChanged" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
-                    </ng-container>
-                    <ng-template *ngTemplateOutlet="moveAllToTargetIconTemplate || _moveAllToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveToSourceAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="moveLeftDisabled()"
-                    (click)="moveLeft()"
-                    [buttonProps]="getButtonProps('movetosource')"
-                    [pt]="ptm('pcMoveToSourceButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <ng-container *ngIf="!moveToSourceIconTemplate && !_moveToSourceIconTemplate">
-                        <svg data-p-icon="angle-left" *ngIf="!viewChanged" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
-                        <svg data-p-icon="angle-up" *ngIf="viewChanged" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
-                    </ng-container>
-                    <ng-template *ngTemplateOutlet="moveToSourceIconTemplate || _moveToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveAllToSourceAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="moveAllLeftDisabled()"
-                    (click)="moveAllLeft()"
-                    [buttonProps]="getButtonProps('movealltosource')"
-                    [pt]="ptm('pcMoveAllToSourceButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <ng-container *ngIf="!moveAllToSourceIconTemplate && !_moveAllToSourceIconTemplate">
-                        <svg data-p-icon="angle-double-left" *ngIf="!viewChanged" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
-                        <svg data-p-icon="angle-double-up" *ngIf="viewChanged" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
-                    </ng-container>
-                    <ng-template *ngTemplateOutlet="moveAllToSourceIconTemplate || _moveAllToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
-                </button>
-            </div>
-            <div [class]="cx('targetListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('targetListContainer')">
-                <h-listbox
-                    #targetlist
-                    [ariaLabel]="targetAriaLabel"
-                    [multiple]="true"
-                    [options]="targetOptions"
-                    [(ngModel)]="selectedItemsTarget"
-                    [optionLabel]="dataKey ?? 'name'"
-                    [id]="idTarget + '_list'"
-                    [listStyle]="targetStyle"
-                    [striped]="stripedRows"
-                    [tabindex]="tabindex"
-                    (onFocus)="onListFocus($event, TARGET_LIST)"
-                    (onBlur)="onListBlur($event, TARGET_LIST)"
-                    (onChange)="onChangeSelection($event, TARGET_LIST)"
-                    (onDblClick)="onTargetItemDblClick()"
-                    [disabled]="disabled"
-                    [optionDisabled]="targetOptionDisabled"
-                    [metaKeySelection]="metaKeySelection"
-                    [scrollHeight]="scrollHeight"
-                    [autoOptionFocus]="autoOptionFocus"
-                    [filter]="filterBy && showTargetFilter"
-                    [filterBy]="filterBy"
-                    [filterLocale]="filterLocale"
-                    [filterMatchMode]="filterMatchMode"
-                    [filterPlaceHolder]="targetFilterPlaceholder"
-                    [dragdrop]="dragdrop"
-                    [dropListData]="target()"
-                    (onDrop)="onDrop($event, TARGET_LIST)"
-                    (onFilter)="onFilter($event.originalEvent, TARGET_LIST)"
-                    [pt]="ptm('pcListbox')"
-                    [attr.data-pc-group-section]="'list'"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <ng-container *ngIf="targetHeaderTemplate || _targetHeaderTemplate || targetHeader">
-                        <ng-template #header>
-                            <div *ngIf="!targetHeaderTemplate && !_targetHeaderTemplate">{{ targetHeader }}</div>
-                            <ng-template *ngTemplateOutlet="targetHeaderTemplate || _targetHeaderTemplate"></ng-template>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="targetFilterTemplate || _targetFilterTemplate">
-                        <ng-template #filter>
-                            <ng-template *ngTemplateOutlet="targetFilterTemplate || _targetFilterTemplate; context: { options: targetFilterOptions }"></ng-template>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="targetFilterIconTemplate || _targetFilterIconTemplate">
-                        <ng-container *ngTemplateOutlet="targetFilterIconTemplate || _targetFilterIconTemplate"></ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="itemTemplate || _itemTemplate">
-                        <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="emptyMessageTargetTemplate || _emptyMessageTargetTemplate">
-                        <ng-template #empty>
-                            <ng-container *ngTemplateOutlet="emptyMessageTargetTemplate || _emptyMessageTargetTemplate"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                    <ng-container *ngIf="emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate">
-                        <ng-template #emptyfilter>
-                            <ng-container *ngTemplateOutlet="emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate"></ng-container>
-                        </ng-template>
-                    </ng-container>
-                </h-listbox>
-            </div>
-            <div [class]="cx('targetControls')" *ngIf="showTargetControls" [attr.data-pc-group-section]="'controls'" [hBind]="ptm('targetControls')">
-                <button
-                    type="button"
-                    [attr.aria-label]="moveUpAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="targetMoveDisabled()"
-                    (click)="moveUp(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
-                    [buttonProps]="getButtonProps('moveup')"
-                    [pt]="ptm('pcTargetMoveUpButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <svg data-p-icon="angle-up" *ngIf="!moveUpIconTemplate && !_moveUpIconTemplate" hButtonIcon [pt]="ptm('pcTargetMoveUpButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveTopAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="targetMoveDisabled()"
-                    (click)="moveTop(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
-                    [buttonProps]="getButtonProps('movetop')"
-                    [pt]="ptm('pcTargetMoveTopButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <svg data-p-icon="angle-double-up" *ngIf="!moveTopIconTemplate && !_moveTopIconTemplate" hButtonIcon [pt]="ptm('pcTargetMoveTopButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveTopIconTemplate || moveTopIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveDownAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="targetMoveDisabled()"
-                    (click)="moveDown(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
-                    [buttonProps]="getButtonProps('movedown')"
-                    [pt]="ptm('pcTargetMoveDownButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <svg data-p-icon="angle-down" *ngIf="!moveDownIconTemplate && !_moveDownIconTemplate" hButtonIcon [pt]="ptm('pcTargetMoveDownButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
-                </button>
-                <button
-                    type="button"
-                    [attr.aria-label]="moveBottomAriaLabel"
-                    hButton
-                    hRipple
-                    severity="secondary"
-                    [disabled]="targetMoveDisabled()"
-                    (click)="moveBottom(targetlist, target(), selectedItemsTarget, onTargetReorder, TARGET_LIST)"
-                    [buttonProps]="getButtonProps('movebottom')"
-                    [pt]="ptm('pcTargetMoveBottomButton')"
-                    hostName="picklist"
-                    [unstyled]="unstyled()"
-                >
-                    <svg data-p-icon="angle-double-down" *ngIf="!moveBottomIconTemplate && !_moveBottomIconTemplate" hButtonIcon [pt]="ptm('pcTargetMoveBottomButton')['icon']" />
-                    <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
-                </button>
-            </div>
+          }
         </div>
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [PickListStyle, { provide: PARENT_INSTANCE, useExisting: PickList }, { provide: PICKLIST_INSTANCE, useExisting: PickList }],

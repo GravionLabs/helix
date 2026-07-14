@@ -461,7 +461,7 @@ class TestPrimeTemplateSelectButtonComponent {
 // SelectButton pTemplate component
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule, SharedModule],
+    imports: [SelectButton, FormsModule, SharedModule],
     template: `
         <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with pTemplate -->
@@ -486,7 +486,7 @@ class TestSelectButtonPTemplateComponent {
 // SelectButton #template reference component
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule, SharedModule],
+    imports: [SelectButton, FormsModule, SharedModule],
     template: `
         <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with #template reference -->
@@ -1164,7 +1164,7 @@ describe('SelectButton PassThrough Tests', () => {
 // Test components for inline PT tests
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `<p-selectbutton [options]="options" [pt]="{ root: 'INLINE_STRING' }" />`
 })
 class TestInlineStringPTComponent {
@@ -1173,7 +1173,7 @@ class TestInlineStringPTComponent {
 
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `<p-selectbutton [options]="options" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }" />`
 })
 class TestInlineObjectPTComponent {
@@ -1182,7 +1182,7 @@ class TestInlineObjectPTComponent {
 
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `
         <p-selectbutton [options]="options1" />
         <p-selectbutton [options]="options2" />
