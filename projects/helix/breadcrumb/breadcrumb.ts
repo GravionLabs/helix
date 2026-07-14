@@ -101,59 +101,59 @@ const BREADCRUMB_INSTANCE = new InjectionToken<Breadcrumb>('BREADCRUMB_INSTANCE'
                             <a
                                 *ngIf="!menuitem?.routerLink"
                                 [attr.href]="menuitem?.url ? menuitem?.url : null"
-                                [class]="cn(cx('itemLink'), menuitem?.linkClass)"
-                                [ngStyle]="menuitem?.linkStyle"
+                                [class]="cn(cx('itemLink'), $safeNavigationMigration(menuitem?.linkClass))"
+                                [ngStyle]="$safeNavigationMigration(menuitem?.linkStyle)"
                                 (click)="onClick($event, menuitem)"
-                                [target]="menuitem?.target"
+                                [target]="$safeNavigationMigration(menuitem?.target)"
                                 [attr.title]="menuitem?.title"
                                 [attr.tabindex]="menuitem?.disabled ? null : menuitem?.tabindex || '0'"
                                 [attr.data-automationid]="menuitem?.automationId"
                                 [hBind]="getPTOptions(menuitem, i, 'itemLink')"
                             >
                                 <ng-container *ngIf="!itemTemplate && !_itemTemplate">
-                                    <span *ngIf="menuitem?.icon" [class]="cn(cx('itemIcon'), menuitem?.icon, menuitem?.iconClass)" [ngStyle]="menuitem?.iconStyle" [hBind]="getPTOptions(menuitem, i, 'itemIcon')"></span>
+                                    <span *ngIf="menuitem?.icon" [class]="cn(cx('itemIcon'), $safeNavigationMigration(menuitem?.icon), $safeNavigationMigration(menuitem?.iconClass))" [ngStyle]="$safeNavigationMigration(menuitem?.iconStyle)" [hBind]="getPTOptions(menuitem, i, 'itemIcon')"></span>
                                     <ng-container *ngIf="menuitem?.label">
-                                        <span *ngIf="menuitem?.escape !== false; else htmlLabel" [class]="cn(cx('itemLabel'), menuitem?.labelClass)" [ngStyle]="menuitem?.labelStyle" [hBind]="getPTOptions(menuitem, i, 'itemLabel')">{{
+                                        <span *ngIf="menuitem?.escape !== false; else htmlLabel" [class]="cn(cx('itemLabel'), $safeNavigationMigration(menuitem?.labelClass))" [ngStyle]="$safeNavigationMigration(menuitem?.labelStyle)" [hBind]="getPTOptions(menuitem, i, 'itemLabel')">{{
                                             menuitem?.label
                                         }}</span>
                                         <ng-template #htmlLabel
-                                            ><span [class]="cn(cx('itemLabel'), menuitem?.labelClass)" [ngStyle]="menuitem?.labelStyle" [innerHTML]="menuitem?.label" [hBind]="getPTOptions(menuitem, i, 'itemLabel')"></span
+                                            ><span [class]="cn(cx('itemLabel'), $safeNavigationMigration(menuitem?.labelClass))" [ngStyle]="$safeNavigationMigration(menuitem?.labelStyle)" [innerHTML]="$safeNavigationMigration(menuitem?.label)" [hBind]="getPTOptions(menuitem, i, 'itemLabel')"></span
                                         ></ng-template>
                                     </ng-container>
-                                    <h-badge *ngIf="menuitem?.badge" [styleClass]="menuitem?.badgeStyleClass" [value]="menuitem?.badge" [pt]="getPTOptions(menuitem, i, 'pcBadge')" [unstyled]="unstyled()" />
+                                    <h-badge *ngIf="menuitem?.badge" [styleClass]="$safeNavigationMigration(menuitem?.badgeStyleClass)" [value]="$safeNavigationMigration(menuitem?.badge)" [pt]="getPTOptions(menuitem, i, 'pcBadge')" [unstyled]="unstyled()" />
                                 </ng-container>
                             </a>
                             <a
                                 *ngIf="menuitem?.routerLink"
-                                [routerLink]="menuitem?.routerLink"
+                                [routerLink]="$safeNavigationMigration(menuitem?.routerLink)"
                                 routerLinkActive="p-menuitem-link-active"
-                                [queryParams]="menuitem?.queryParams"
+                                [queryParams]="$safeNavigationMigration(menuitem?.queryParams)"
                                 [routerLinkActiveOptions]="menuitem?.routerLinkActiveOptions || { exact: false }"
-                                [class]="cn(cx('itemLink'), menuitem?.linkClass)"
-                                [ngStyle]="menuitem?.linkStyle"
+                                [class]="cn(cx('itemLink'), $safeNavigationMigration(menuitem?.linkClass))"
+                                [ngStyle]="$safeNavigationMigration(menuitem?.linkStyle)"
                                 (click)="onClick($event, menuitem)"
-                                [target]="menuitem?.target"
+                                [target]="$safeNavigationMigration(menuitem?.target)"
                                 [attr.title]="menuitem?.title"
                                 [attr.tabindex]="menuitem?.disabled ? null : menuitem?.tabindex || '0'"
                                 [attr.data-automationid]="menuitem?.automationId"
-                                [fragment]="menuitem?.fragment"
-                                [queryParamsHandling]="menuitem?.queryParamsHandling"
-                                [preserveFragment]="menuitem?.preserveFragment"
-                                [skipLocationChange]="menuitem?.skipLocationChange"
-                                [replaceUrl]="menuitem?.replaceUrl"
-                                [state]="menuitem?.state"
+                                [fragment]="$safeNavigationMigration(menuitem?.fragment)"
+                                [queryParamsHandling]="$safeNavigationMigration(menuitem?.queryParamsHandling)"
+                                [preserveFragment]="$safeNavigationMigration(menuitem?.preserveFragment)"
+                                [skipLocationChange]="$safeNavigationMigration(menuitem?.skipLocationChange)"
+                                [replaceUrl]="$safeNavigationMigration(menuitem?.replaceUrl)"
+                                [state]="$safeNavigationMigration(menuitem?.state)"
                                 [hBind]="getPTOptions(menuitem, i, 'itemLink')"
                             >
-                                <span *ngIf="menuitem?.icon" [class]="cn(cx('itemIcon'), menuitem?.icon, menuitem?.iconClass)" [ngStyle]="menuitem?.iconStyle" [hBind]="getPTOptions(menuitem, i, 'itemIcon')"></span>
+                                <span *ngIf="menuitem?.icon" [class]="cn(cx('itemIcon'), $safeNavigationMigration(menuitem?.icon), $safeNavigationMigration(menuitem?.iconClass))" [ngStyle]="$safeNavigationMigration(menuitem?.iconStyle)" [hBind]="getPTOptions(menuitem, i, 'itemIcon')"></span>
                                 <ng-container *ngIf="menuitem?.label">
-                                    <span *ngIf="menuitem?.escape !== false; else htmlRouteLabel" [class]="cn(cx('itemLabel'), menuitem?.labelClass)" [ngStyle]="menuitem?.labelStyle" [hBind]="getPTOptions(menuitem, i, 'itemLabel')">{{
+                                    <span *ngIf="menuitem?.escape !== false; else htmlRouteLabel" [class]="cn(cx('itemLabel'), $safeNavigationMigration(menuitem?.labelClass))" [ngStyle]="$safeNavigationMigration(menuitem?.labelStyle)" [hBind]="getPTOptions(menuitem, i, 'itemLabel')">{{
                                         menuitem?.label
                                     }}</span>
                                     <ng-template #htmlRouteLabel
-                                        ><span [class]="cn(cx('itemLabel'), menuitem?.labelClass)" [ngStyle]="menuitem?.labelStyle" [innerHTML]="menuitem?.label" [hBind]="getPTOptions(menuitem, i, 'itemLabel')"></span
+                                        ><span [class]="cn(cx('itemLabel'), $safeNavigationMigration(menuitem?.labelClass))" [ngStyle]="$safeNavigationMigration(menuitem?.labelStyle)" [innerHTML]="$safeNavigationMigration(menuitem?.label)" [hBind]="getPTOptions(menuitem, i, 'itemLabel')"></span
                                     ></ng-template>
                                 </ng-container>
-                                <h-badge *ngIf="menuitem?.badge" [styleClass]="menuitem?.badgeStyleClass" [value]="menuitem?.badge" [pt]="getPTOptions(menuitem, i, 'pcBadge')" [unstyled]="unstyled()" />
+                                <h-badge *ngIf="menuitem?.badge" [styleClass]="$safeNavigationMigration(menuitem?.badgeStyleClass)" [value]="$safeNavigationMigration(menuitem?.badge)" [pt]="getPTOptions(menuitem, i, 'pcBadge')" [unstyled]="unstyled()" />
                             </a>
                         }
                     </li>

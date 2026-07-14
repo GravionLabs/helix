@@ -1,4 +1,11 @@
-import { afterNextRender, Component, effect, inject, signal } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { ChartModule } from '@gravionlabs/helix/chart';
 import { LayoutStore } from '@gravionlabs/helix-shell';
 
@@ -7,6 +14,7 @@ import { LayoutStore } from '@gravionlabs/helix-shell';
   selector: 'app-revenue-stream-widget',
   imports: [ChartModule],
   templateUrl: './revenuestreamwidget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './revenuestreamwidget.scss',
 })
 export class RevenueStreamWidget {

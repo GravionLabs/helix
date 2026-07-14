@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { TreeNode } from '@gravionlabs/helix/api';
 import {
@@ -68,6 +68,7 @@ import { NodeService } from '@/app/pages/service/node.service';
   ],
   templateUrl: './input-demo.html',
   styleUrl: './input-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [CountryService, NodeService],
 })
 export class InputDemo implements OnInit {

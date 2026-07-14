@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, type ElementRef, type OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type ElementRef,
+  type OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -51,6 +57,7 @@ interface expandedRows {
   ],
   templateUrl: './table-demo.html',
   styleUrl: './table-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ConfirmationService, MessageService, CustomerService, ProductService],
 })
 export class TableDemo implements OnInit {

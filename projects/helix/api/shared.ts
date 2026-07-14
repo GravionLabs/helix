@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Directive, Input, NgModule, TemplateRef } from '@angular/core';
+import { Component, Directive, Input, NgModule, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'h-header',
     template: '<ng-content></ng-content>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class Header {}
@@ -11,6 +12,7 @@ export class Header {}
 @Component({
     selector: 'h-footer',
     template: '<ng-content></ng-content>',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class Footer {}

@@ -15,6 +15,7 @@ const INPLACE_INSTANCE = new InjectionToken<Inplace>('INPLACE_INSTANCE');
     selector: 'h-inplacedisplay, h-inplaceDisplay',
     standalone: true,
     imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-content></ng-content>'
 })
 export class InplaceDisplay extends BaseComponent {}
@@ -23,6 +24,7 @@ export class InplaceDisplay extends BaseComponent {}
     selector: 'h-inplacecontent, h-inplaceContent',
     standalone: true,
     imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-content></ng-content>'
 })
 export class InplaceContent extends BaseComponent {}

@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { RippleModule } from '@gravionlabs/helix/ripple';
 
@@ -7,6 +7,7 @@ import { RippleModule } from '@gravionlabs/helix/ripple';
   standalone: true,
   imports: [ButtonModule, RippleModule],
   templateUrl: './hero-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero-widget.scss',
 })
 export class HelixHeroWidget {

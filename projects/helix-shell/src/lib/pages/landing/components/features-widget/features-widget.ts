@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { HelixFeature, HelixTestimonial } from '../../landing.model';
 
 const DEFAULT_FEATURES: HelixFeature[] = [
@@ -98,6 +98,7 @@ const DEFAULT_TESTIMONIAL: HelixTestimonial = {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './features-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './features-widget.scss',
 })
 export class HelixFeaturesWidget {

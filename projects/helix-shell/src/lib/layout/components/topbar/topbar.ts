@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -47,6 +48,7 @@ const DEFAULT_ITEMS: HelixTopbarItem[] = [
     Breadcrumb,
   ],
   templateUrl: './topbar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './topbar.scss',
 })
 export class HelixTopbar implements OnInit, OnDestroy {

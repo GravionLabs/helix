@@ -13,6 +13,7 @@ const METERGROUP_INSTANCE = new InjectionToken<MeterGroup>('METERGROUP_INSTANCE'
     selector: 'h-meterGroupLabel, h-metergrouplabel',
     standalone: true,
     imports: [CommonModule, SharedModule, Bind],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <ol [class]="cx('labelList')" [hBind]="ptm('labelList')" [attr.data-p]="dataP">
             <li *ngFor="let labelItem of value; let index = index; trackBy: parentInstance.trackByFn" [class]="cx('label')" [hBind]="ptm('label')">

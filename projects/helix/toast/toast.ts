@@ -51,7 +51,7 @@ const TOAST_INSTANCE = new InjectionToken<Toast>('TOAST_INSTANCE');
             (pMotionOnAfterLeave)="onAfterLeave($event)"
             [attr.id]="message?.id"
             [hBind]="ptm('message')"
-            [class]="cn(cx('message'), message?.styleClass)"
+            [class]="cn(cx('message'), $safeNavigationMigration(message?.styleClass))"
             (mouseenter)="onMouseEnter()"
             (mouseleave)="onMouseLeave()"
             role="alert"
@@ -62,10 +62,10 @@ const TOAST_INSTANCE = new InjectionToken<Toast>('TOAST_INSTANCE');
             @if (headlessTemplate) {
                 <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: message, closeFn: onCloseIconClick }"></ng-container>
             } @else {
-                <div [hBind]="ptm('messageContent')" [class]="cn(cx('messageContent'), message?.contentStyleClass)">
+                <div [hBind]="ptm('messageContent')" [class]="cn(cx('messageContent'), $safeNavigationMigration(message?.contentStyleClass))">
                     <ng-container *ngIf="!template">
                         @if (message.icon) {
-                            <span [hBind]="ptm('messageIcon')" [class]="cn(cx('messageIcon'), message?.icon)"></span>
+                            <span [hBind]="ptm('messageIcon')" [class]="cn(cx('messageIcon'), $safeNavigationMigration(message?.icon))"></span>
                         } @else {
                             @switch (message.severity) {
                                 @case ('success') {
@@ -106,7 +106,7 @@ const TOAST_INSTANCE = new InjectionToken<Toast>('TOAST_INSTANCE');
                                 [attr.data-p]="dataP"
                             >
                                 @if (message.closeIcon) {
-                                    <span [hBind]="ptm('closeIcon')" *ngIf="message.closeIcon" [class]="cn(cx('closeIcon'), message?.closeIcon)"></span>
+                                    <span [hBind]="ptm('closeIcon')" *ngIf="message.closeIcon" [class]="cn(cx('closeIcon'), $safeNavigationMigration(message?.closeIcon))"></span>
                                 } @else {
                                     <svg [hBind]="ptm('closeIcon')" data-p-icon="times" [class]="cx('closeIcon')" [attr.aria-hidden]="true" />
                                 }

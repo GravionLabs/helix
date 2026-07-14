@@ -84,7 +84,7 @@ export const CASCADESELECT_VALUE_ACCESSOR: any = {
                     [hBind]="getPTOptions(processedOption, i, 'optionContent')"
                 >
                     <ng-container *ngIf="optionTemplate; else defaultOptionTemplate">
-                        <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: processedOption?.option, level: level }"></ng-container>
+                        <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: $safeNavigationMigration(processedOption?.option), level: level }"></ng-container>
                     </ng-container>
                     <ng-template #defaultOptionTemplate>
                         <span [class]="cx('optionText')" [hBind]="getPTOptions(processedOption, i, 'optionText')">{{ getOptionLabelToRender(processedOption) }}</span>

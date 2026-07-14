@@ -1,5 +1,5 @@
 import { SlicePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import type { HelixFooterColumn } from './footer.model';
 
@@ -11,6 +11,7 @@ export type { HelixFooterColumn };
   selector: 'helix-footer',
   imports: [RouterModule, SlicePipe],
   templateUrl: './footer.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './footer.scss',
 })
 export class HelixFooter {

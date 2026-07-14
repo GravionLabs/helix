@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { RippleModule } from '@gravionlabs/helix/ripple';
 import { TableModule } from '@gravionlabs/helix/table';
@@ -11,6 +11,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   imports: [CommonModule, TableModule, ButtonModule, RippleModule],
   templateUrl: './recentsaleswidget.html',
   styleUrl: './recentsaleswidget.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ProductService],
 })
 export class RecentSalesWidget implements OnInit {

@@ -62,7 +62,7 @@ const DOCK_INSTANCE = new InjectionToken<Dock>('DOCK_INSTANCE');
                     <li
                         *ngIf="item.visible !== false"
                         [attr.id]="getItemId(item, i)"
-                        [class]="cn(cx('item', { item, id: getItemId(item, i) }), item?.styleClass)"
+                        [class]="cn(cx('item', { item, id: getItemId(item, i) }), $safeNavigationMigration(item?.styleClass))"
                         [ngStyle]="item.style"
                         role="menuitem"
                         [attr.aria-label]="item.label"
@@ -79,8 +79,8 @@ const DOCK_INSTANCE = new InjectionToken<Dock>('DOCK_INSTANCE');
                                 hRipple
                                 [routerLink]="item.routerLink"
                                 [queryParams]="item.queryParams"
-                                [class]="cn(cx('itemLink'), item?.linkClass)"
-                                [ngStyle]="item?.linkStyle"
+                                [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                                [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
                                 routerLinkActive="router-link-active"
                                 [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
                                 [target]="item.target"
@@ -107,8 +107,8 @@ const DOCK_INSTANCE = new InjectionToken<Dock>('DOCK_INSTANCE');
                                 <a
                                     [tooltipPosition]="item.tooltipPosition"
                                     [attr.href]="item.url || null"
-                                    [class]="cn(cx('itemLink'), item?.linkClass)"
-                                    [ngStyle]="item?.linkStyle"
+                                    [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                                    [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
                                     hRipple
                                     hTooltip
                                     [tooltipOptions]="item.tooltipOptions"

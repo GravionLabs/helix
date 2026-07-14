@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { HelixFloatingConfigurator } from '../../layout/components/floating-configurator/floating-configurator';
@@ -36,6 +36,7 @@ const DEFAULT_SUGGESTIONS: HelixNotfoundSuggestion[] = [
   standalone: true,
   imports: [RouterModule, HelixFloatingConfigurator, ButtonModule],
   templateUrl: './notfound.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './notfound.scss',
 })
 export class HelixNotfound {

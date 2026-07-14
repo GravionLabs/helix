@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export type BadgeSeverity = 'info' | 'warn' | 'error' | 'success';
 
@@ -22,6 +22,7 @@ export type BadgeSeverity = 'info' | 'warn' | 'error' | 'success';
       }
     </span>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       .helix-badge {

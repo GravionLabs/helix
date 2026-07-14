@@ -189,7 +189,7 @@ const PANELMENUSUB_INSTANCE = new InjectionToken<PanelMenuSub>('PANELMENUSUB_INS
                             hPanelMenuSub
                             [id]="getItemId(processedItem) + '_list'"
                             [panelId]="panelId"
-                            [items]="processedItem?.items"
+                            [items]="$safeNavigationMigration(processedItem?.items)"
                             [itemTemplate]="itemTemplate"
                             [transitionOptions]="transitionOptions"
                             [focusedItemId]="focusedItemId"
@@ -218,6 +218,7 @@ const PANELMENUSUB_INSTANCE = new InjectionToken<PanelMenuSub>('PANELMENUSUB_INS
         '(focusout)': 'menuBlur.emit($event)',
         '(keydown)': 'menuKeyDown.emit($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class PanelMenuSub extends BaseComponent {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { CarouselModule } from '@gravionlabs/helix/carousel';
 import { GalleriaModule } from '@gravionlabs/helix/galleria';
@@ -14,6 +14,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   imports: [CommonModule, CarouselModule, ButtonModule, GalleriaModule, ImageModule, TagModule],
   templateUrl: './media-demo.html',
   styleUrl: './media-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ProductService, PhotoService],
 })
 export class MediaDemo implements OnInit {

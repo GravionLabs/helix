@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import type { MenuItem } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { ButtonGroupModule } from '@gravionlabs/helix/buttongroup';
@@ -9,6 +9,7 @@ import { SplitButtonModule } from '@gravionlabs/helix/splitbutton';
   standalone: true,
   imports: [ButtonModule, ButtonGroupModule, SplitButtonModule],
   templateUrl: './button-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './button-demo.scss',
 })
 export class ButtonDemo implements OnInit {

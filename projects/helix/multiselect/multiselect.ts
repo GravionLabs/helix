@@ -94,6 +94,7 @@ export const MULTISELECT_VALUE_ACCESSOR: any = {
     `,
     encapsulation: ViewEncapsulation.None,
     providers: [MultiSelectStyle],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         '[style.height.px]': 'itemSize',
         '[attr.aria-label]': 'label',

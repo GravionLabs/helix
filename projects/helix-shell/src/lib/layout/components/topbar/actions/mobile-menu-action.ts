@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 
 @Component({
   selector: 'helix-mobile-menu-action',
   standalone: true,
   imports: [StyleClassModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button
       class="layout-topbar-menu-button layout-topbar-action"

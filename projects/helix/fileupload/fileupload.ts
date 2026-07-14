@@ -154,10 +154,10 @@ export class FileContent extends BaseComponent {
                             [hBind]="ptm('input')"
                         />
                         <ng-template #icon>
-                            <span *ngIf="chooseIcon" [class]="chooseIcon" [attr.aria-label]="true" [hBind]="ptm('pcChooseButton')?.icon"></span>
+                            <span *ngIf="chooseIcon" [class]="chooseIcon" [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
                             <ng-container *ngIf="!chooseIcon">
-                                <svg data-p-icon="plus" *ngIf="!chooseIconTemplate && !_chooseIconTemplate" [attr.aria-label]="true" [hBind]="ptm('pcChooseButton')?.icon" />
-                                <span *ngIf="chooseIconTemplate || _chooseIconTemplate" [attr.aria-label]="true" [hBind]="ptm('pcChooseButton')?.icon">
+                                <svg data-p-icon="plus" *ngIf="!chooseIconTemplate && !_chooseIconTemplate" [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
+                                <span *ngIf="chooseIconTemplate || _chooseIconTemplate" [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)">
                                     <ng-template *ngTemplateOutlet="chooseIconTemplate || _chooseIconTemplate"></ng-template>
                                 </span>
                             </ng-container>
@@ -175,10 +175,10 @@ export class FileContent extends BaseComponent {
                         [unstyled]="unstyled()"
                     >
                         <ng-template #icon>
-                            <span *ngIf="uploadIcon" [ngClass]="uploadIcon" [attr.aria-hidden]="true" [hBind]="ptm('pcUploadButton')?.icon"></span>
+                            <span *ngIf="uploadIcon" [ngClass]="uploadIcon" [attr.aria-hidden]="true" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)"></span>
                             <ng-container *ngIf="!uploadIcon">
-                                <svg data-p-icon="upload" *ngIf="!uploadIconTemplate && !_uploadIconTemplate" [hBind]="ptm('pcUploadButton')?.icon" />
-                                <span *ngIf="uploadIconTemplate || _uploadIconTemplate" [attr.aria-hidden]="true" [hBind]="ptm('pcUploadButton')?.icon">
+                                <svg data-p-icon="upload" *ngIf="!uploadIconTemplate && !_uploadIconTemplate" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)" />
+                                <span *ngIf="uploadIconTemplate || _uploadIconTemplate" [attr.aria-hidden]="true" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)">
                                     <ng-template *ngTemplateOutlet="uploadIconTemplate || _uploadIconTemplate"></ng-template>
                                 </span>
                             </ng-container>
@@ -300,17 +300,17 @@ export class FileContent extends BaseComponent {
                 >
                     <ng-template #icon>
                         @if (hasFiles() && !auto) {
-                            <span *ngIf="uploadIcon" class="p-button-icon p-button-icon-left" [ngClass]="uploadIcon" [hBind]="ptm('pcChooseButton')?.icon"></span>
+                            <span *ngIf="uploadIcon" class="p-button-icon p-button-icon-left" [ngClass]="uploadIcon" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
                             <ng-container *ngIf="!uploadIcon">
-                                <svg data-p-icon="upload" *ngIf="!uploadIconTemplate && !_uploadIconTemplate" [class]="'p-button-icon p-button-icon-left'" [hBind]="ptm('pcChooseButton')?.icon" />
-                                <span *ngIf="_uploadIconTemplate || uploadIconTemplate" class="p-button-icon p-button-icon-left" [hBind]="ptm('pcChooseButton')?.icon">
+                                <svg data-p-icon="upload" *ngIf="!uploadIconTemplate && !_uploadIconTemplate" [class]="'p-button-icon p-button-icon-left'" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
+                                <span *ngIf="_uploadIconTemplate || uploadIconTemplate" class="p-button-icon p-button-icon-left" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)">
                                     <ng-template *ngTemplateOutlet="_uploadIconTemplate || uploadIconTemplate"></ng-template>
                                 </span>
                             </ng-container>
                         } @else {
-                            <span *ngIf="chooseIcon" class="p-button-icon p-button-icon-left pi" [ngClass]="chooseIcon" [hBind]="ptm('pcChooseButton')?.icon"></span>
+                            <span *ngIf="chooseIcon" class="p-button-icon p-button-icon-left pi" [ngClass]="chooseIcon" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
                             <ng-container *ngIf="!chooseIcon">
-                                <svg data-p-icon="plus" *ngIf="!chooseIconTemplate && !_chooseIconTemplate" [hBind]="ptm('pcChooseButton')?.icon" />
+                                <svg data-p-icon="plus" *ngIf="!chooseIconTemplate && !_chooseIconTemplate" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
                                 <ng-template *ngTemplateOutlet="chooseIconTemplate || _chooseIconTemplate"></ng-template>
                             </ng-container>
                         }

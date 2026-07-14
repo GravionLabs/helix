@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, type OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -307,6 +307,7 @@ interface ExportColumn {
 
     <h-confirmdialog [style]="{ width: '450px' }" />
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MessageService, ProductService, ConfirmationService],
 })
 export class Crud implements OnInit {

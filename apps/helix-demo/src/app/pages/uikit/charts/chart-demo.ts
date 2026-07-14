@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { ChartModule } from '@gravionlabs/helix/chart';
 import { FluidModule } from '@gravionlabs/helix/fluid';
 import { LayoutStore } from '@gravionlabs/helix-shell';
@@ -8,6 +8,7 @@ import { LayoutStore } from '@gravionlabs/helix-shell';
   standalone: true,
   imports: [ChartModule, FluidModule],
   templateUrl: './chart-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './chart-demo.scss',
 })
 export class ChartDemo {

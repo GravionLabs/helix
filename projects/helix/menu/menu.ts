@@ -77,8 +77,8 @@ export class SafeHtmlPipe implements PipeTransform {
                 [attr.href]="item.url || null"
                 [attr.data-automationid]="item.automationId"
                 [attr.tabindex]="-1"
-                [class]="cn(cx('itemLink'), item?.linkClass)"
-                [ngStyle]="item?.linkStyle"
+                [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
                 [target]="item.target"
                 [hBind]="getPTOptions('itemLink')"
                 hRipple
@@ -94,8 +94,8 @@ export class SafeHtmlPipe implements PipeTransform {
                 [queryParams]="item.queryParams"
                 routerLinkActive="p-menu-item-link-active"
                 [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
-                [class]="cn(cx('itemLink'), item?.linkClass)"
-                [ngStyle]="item?.linkStyle"
+                [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
                 [target]="item.target"
                 [fragment]="item.fragment"
                 [queryParamsHandling]="item.queryParamsHandling"
@@ -122,6 +122,7 @@ export class SafeHtmlPipe implements PipeTransform {
         </ng-template>
     </div>`,
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [MenuStyle]
 })
 export class MenuItemContent extends BaseComponent {
@@ -222,7 +223,7 @@ export class MenuItemContent extends BaseComponent {
                         <ng-template ngFor let-item let-j="index" [ngForOf]="submenu.items">
                             <li [class]="cx('separator')" [hBind]="ptm('separator')" *ngIf="item.separator && (item.visible !== false || submenu.visible !== false)" role="separator" [attr.data-pc-section]="'separator'"></li>
                             <li
-                                [class]="cn(cx('item', { item, id: menuitemId(item, id, i, j) }), item?.styleClass)"
+                                [class]="cn(cx('item', { item, id: menuitemId(item, id, i, j) }), $safeNavigationMigration(item?.styleClass))"
                                 [hBind]="ptm('item')"
                                 *ngIf="!item.separator && item.visible !== false && (item.visible !== undefined || submenu.visible !== false)"
                                 [hMenuItemContent]="item"
@@ -247,7 +248,7 @@ export class MenuItemContent extends BaseComponent {
                     <ng-template ngFor let-item let-i="index" [ngForOf]="model" *ngIf="!hasSubMenu()">
                         <li [class]="cx('separator')" [hBind]="ptm('separator')" *ngIf="item.separator && item.visible !== false" role="separator" [attr.data-pc-section]="'separator'"></li>
                         <li
-                            [class]="cn(cx('item', { item, id: menuitemId(item, id, i) }), item?.styleClass)"
+                            [class]="cn(cx('item', { item, id: menuitemId(item, id, i) }), $safeNavigationMigration(item?.styleClass))"
                             [hBind]="ptm('item')"
                             *ngIf="!item.separator && item.visible !== false"
                             [hMenuItemContent]="item"

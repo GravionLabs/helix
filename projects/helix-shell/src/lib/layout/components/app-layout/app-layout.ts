@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, input, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { MenuItem } from '@gravionlabs/helix/api';
 import type { Environment } from '../../../ui/badge/environment-badge';
@@ -18,6 +26,7 @@ import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model'
   imports: [CommonModule, HelixTopbar, HelixNavRail, RouterModule, HelixStatusBar],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   encapsulation: ViewEncapsulation.None,
 })
 export class HelixAppLayout {

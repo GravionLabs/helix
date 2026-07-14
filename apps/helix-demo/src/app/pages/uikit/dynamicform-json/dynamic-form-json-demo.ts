@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TextareaModule } from '@gravionlabs/helix/textarea';
 import { HelixDynamicForm } from '@gravionlabs/helix-zod';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
@@ -37,6 +37,7 @@ const STORED_DEFINITION = {
   standalone: true,
   imports: [HelixDynamicForm, JsonPipe, TextareaModule, SourceTabsComponent],
   templateUrl: './dynamic-form-json-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dynamic-form-json-demo.scss',
 })
 export class DynamicFormJsonDemo {

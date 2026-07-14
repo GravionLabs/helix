@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { z } from 'zod';
 import { HelixDynamicForm } from '../../components/dynamic-form/dynamic-form';
@@ -8,6 +8,7 @@ import { provideHelixDynamicForms } from '../../registry/provide-helix-dynamic-f
 @Component({
   standalone: true,
   imports: [HelixDynamicForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<helix-dynamic-form [schema]="schema" [model]="model" [showSubmit]="false" />`,
 })
 class Host {

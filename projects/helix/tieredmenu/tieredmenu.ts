@@ -247,6 +247,7 @@ const TIEREDMENUSUB_INSTANCE = new InjectionToken<TieredMenuSub>('TIEREDMENUSUB_
         { provide: TIEREDMENUSUB_INSTANCE, useExisting: forwardRef(() => TieredMenuSub) },
         { provide: PARENT_INSTANCE, useExisting: forwardRef(() => TieredMenuSub) }
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class TieredMenuSub extends BaseComponent<TieredMenuPassThrough> {

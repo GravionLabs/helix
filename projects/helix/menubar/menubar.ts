@@ -67,7 +67,7 @@ export class MenubarService {
                 *ngIf="isItemVisible(processedItem) && getItemProp(processedItem, 'separator')"
                 [attr.id]="getItemId(processedItem)"
                 [style]="getItemProp(processedItem, 'style')"
-                [class]="cn(cx('separator'), processedItem?.styleClass)"
+                [class]="cn(cx('separator'), $safeNavigationMigration(processedItem?.styleClass))"
                 role="separator"
                 [hBind]="ptm('separator')"
             ></li>
@@ -234,6 +234,7 @@ export class MenubarService {
         </ng-template>
     `,
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         '[attr.id]': 'root ? menuId : null',
         '[attr.aria-activedescendant]': 'focusedItemId',

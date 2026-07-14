@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import type {
   HelixFooterColumn,
@@ -37,6 +37,7 @@ export type { HelixFooterColumn, HelixFooterLink };
   standalone: true,
   imports: [RouterModule],
   templateUrl: './footer-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './footer-widget.scss',
 })
 export class HelixFooterWidget {

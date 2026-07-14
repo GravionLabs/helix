@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LayoutStore } from '../../../store/layout.store';
 
 @Component({
@@ -22,6 +22,7 @@ import { LayoutStore } from '../../../store/layout.store';
     style:
       'display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer; transition: background-color var(--element-transition-duration);',
   },
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host(:hover) {
