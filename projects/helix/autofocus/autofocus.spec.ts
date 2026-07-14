@@ -111,10 +111,14 @@ class TestAutofocusConditionalComponent {
     selector: 'test-autofocus-after-content-change',
     template: `
         <div [pAutoFocus]="autofocus" class="dynamic-container">
-            <input type="text" *ngIf="showInput" class="dynamic-input" />
-            <button *ngIf="showButton" class="dynamic-button">Dynamic Button</button>
+          @if (showInput) {
+            <input type="text" class="dynamic-input" />
+          }
+          @if (showButton) {
+            <button class="dynamic-button">Dynamic Button</button>
+          }
         </div>
-    `
+        `
 })
 class TestAutofocusAfterContentChangeComponent {
     autofocus = true;
@@ -127,43 +131,47 @@ class TestAutofocusAfterContentChangeComponent {
     selector: 'test-autofocus-dialog-simulation',
     template: `
         <!-- Dialog/Drawer simülasyonu -->
-        <div class="overlay" *ngIf="isDialogVisible" [style.display]="isDialogVisible ? 'block' : 'none'">
+        @if (isDialogVisible) {
+          <div class="overlay" [style.display]="isDialogVisible ? 'block' : 'none'">
             <div class="dialog-container" role="dialog" [attr.aria-modal]="isDialogVisible">
-                <div class="dialog-header">
-                    <h3>Dialog Title</h3>
-                    <button type="button" class="close-button" (click)="closeDialog()">×</button>
-                </div>
-                <div class="dialog-content">
-                    <input type="text" [pAutoFocus]="shouldAutoFocus" class="dialog-input" placeholder="This input should be focused when dialog opens" />
-                    <textarea [pAutoFocus]="textareaAutoFocus" class="dialog-textarea" placeholder="Alternative focusable element"></textarea>
-                    <button type="button" class="dialog-button">Action Button</button>
-                </div>
-                <div class="dialog-footer">
-                    <button type="button" (click)="closeDialog()">Cancel</button>
-                    <button type="button" (click)="closeDialog()">Save</button>
-                </div>
+              <div class="dialog-header">
+                <h3>Dialog Title</h3>
+                <button type="button" class="close-button" (click)="closeDialog()">×</button>
+              </div>
+              <div class="dialog-content">
+                <input type="text" [pAutoFocus]="shouldAutoFocus" class="dialog-input" placeholder="This input should be focused when dialog opens" />
+                <textarea [pAutoFocus]="textareaAutoFocus" class="dialog-textarea" placeholder="Alternative focusable element"></textarea>
+                <button type="button" class="dialog-button">Action Button</button>
+              </div>
+              <div class="dialog-footer">
+                <button type="button" (click)="closeDialog()">Cancel</button>
+                <button type="button" (click)="closeDialog()">Save</button>
+              </div>
             </div>
-        </div>
-
+          </div>
+        }
+        
         <!-- Drawer simülasyonu -->
-        <div class="drawer" *ngIf="isDrawerVisible" [style.transform]="isDrawerVisible ? 'translateX(0)' : 'translateX(100%)'">
+        @if (isDrawerVisible) {
+          <div class="drawer" [style.transform]="isDrawerVisible ? 'translateX(0)' : 'translateX(100%)'">
             <div class="drawer-header">
-                <h4>Drawer Content</h4>
+              <h4>Drawer Content</h4>
             </div>
             <div class="drawer-body">
-                <select [pAutoFocus]="drawerAutoFocus" class="drawer-select">
-                    <option value="">Select an option</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                </select>
-                <input type="email" class="drawer-email" placeholder="Email address" />
+              <select [pAutoFocus]="drawerAutoFocus" class="drawer-select">
+                <option value="">Select an option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+              </select>
+              <input type="email" class="drawer-email" placeholder="Email address" />
             </div>
-        </div>
-
+          </div>
+        }
+        
         <!-- Trigger buttons -->
         <button type="button" (click)="openDialog()" class="open-dialog-btn">Open Dialog</button>
         <button type="button" (click)="openDrawer()" class="open-drawer-btn">Open Drawer</button>
-    `
+        `
 })
 class TestAutofocusDialogSimulationComponent {
     isDialogVisible = false;

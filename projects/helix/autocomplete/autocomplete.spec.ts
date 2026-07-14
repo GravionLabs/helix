@@ -21,80 +21,82 @@ const mockItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
     standalone: false,
     template: `
         <p-autocomplete
-            [(ngModel)]="selectedValue"
-            [suggestions]="suggestions"
-            [optionLabel]="optionLabel"
-            [optionValue]="optionValue"
-            [optionGroupLabel]="optionGroupLabel"
-            [optionDisabled]="optionDisabled"
-            [multiple]="multiple"
-            [disabled]="disabled"
-            [readonly]="readonly"
-            [placeholder]="placeholder"
-            [minLength]="minLength"
-            [delay]="delay"
-            [autoZIndex]="autoZIndex"
-            [baseZIndex]="baseZIndex"
-            [showClear]="showClear"
-            [dropdown]="dropdown"
-            [autoHighlight]="autoHighlight"
-            [forceSelection]="forceSelection"
-            [completeOnFocus]="completeOnFocus"
-            [autofocus]="autofocus"
-            [inputId]="inputId"
-            [inputStyle]="inputStyle"
-            [styleClass]="styleClass"
-            [panelStyle]="panelStyle"
-            [panelStyleClass]="panelStyleClass"
-            [scrollHeight]="scrollHeight"
-            [lazy]="lazy"
-            [virtualScroll]="virtualScroll"
-            [virtualScrollItemSize]="virtualScrollItemSize"
-            [unique]="unique"
-            [typeahead]="typeahead"
-            [addOnBlur]="addOnBlur"
-            [addOnTab]="addOnTab"
-            [separator]="separator"
-            [ariaLabel]="ariaLabel"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [dropdownAriaLabel]="dropdownAriaLabel"
-            (completeMethod)="onSearch($event)"
-            (onSelect)="onSelectionChange($event)"
-            (onUnselect)="onUnselect($event)"
-            (onFocus)="onFocus($event)"
-            (onBlur)="onBlur($event)"
-            (onClear)="onClear()"
-            (onDropdownClick)="onDropdownClick($event)"
-            (onShow)="onShow($event)"
-            (onHide)="onHide($event)"
-            (onKeyUp)="onKeyUp($event)"
-            (onAdd)="onAdd($event)"
-        >
-            <ng-template #item let-item>
-                <div class="custom-item">{{ item.name || item }}</div>
-            </ng-template>
-            <ng-template #header>
-                <div class="custom-header">Available Options</div>
-            </ng-template>
-            <ng-template #footer>
-                <div class="custom-footer">Total: {{ suggestions.length }}</div>
-            </ng-template>
-            <ng-template #empty>
-                <div class="custom-empty">No results found</div>
-            </ng-template>
-            <ng-template #selecteditem let-item>
-                <div class="custom-selected-item">{{ item.name || item }}</div>
-            </ng-template>
-            <ng-template #group let-group>
-                <div class="custom-group">{{ group.label }}</div>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [suggestions]="suggestions"
+          [optionLabel]="optionLabel"
+          [optionValue]="optionValue"
+          [optionGroupLabel]="optionGroupLabel"
+          [optionDisabled]="optionDisabled"
+          [multiple]="multiple"
+          [disabled]="disabled"
+          [readonly]="readonly"
+          [placeholder]="placeholder"
+          [minLength]="minLength"
+          [delay]="delay"
+          [autoZIndex]="autoZIndex"
+          [baseZIndex]="baseZIndex"
+          [showClear]="showClear"
+          [dropdown]="dropdown"
+          [autoHighlight]="autoHighlight"
+          [forceSelection]="forceSelection"
+          [completeOnFocus]="completeOnFocus"
+          [autofocus]="autofocus"
+          [inputId]="inputId"
+          [inputStyle]="inputStyle"
+          [styleClass]="styleClass"
+          [panelStyle]="panelStyle"
+          [panelStyleClass]="panelStyleClass"
+          [scrollHeight]="scrollHeight"
+          [lazy]="lazy"
+          [virtualScroll]="virtualScroll"
+          [virtualScrollItemSize]="virtualScrollItemSize"
+          [unique]="unique"
+          [typeahead]="typeahead"
+          [addOnBlur]="addOnBlur"
+          [addOnTab]="addOnTab"
+          [separator]="separator"
+          [ariaLabel]="ariaLabel"
+          [ariaLabelledBy]="ariaLabelledBy"
+          [dropdownAriaLabel]="dropdownAriaLabel"
+          (completeMethod)="onSearch($event)"
+          (onSelect)="onSelectionChange($event)"
+          (onUnselect)="onUnselect($event)"
+          (onFocus)="onFocus($event)"
+          (onBlur)="onBlur($event)"
+          (onClear)="onClear()"
+          (onDropdownClick)="onDropdownClick($event)"
+          (onShow)="onShow($event)"
+          (onHide)="onHide($event)"
+          (onKeyUp)="onKeyUp($event)"
+          (onAdd)="onAdd($event)"
+          >
+          <ng-template #item let-item>
+            <div class="custom-item">{{ item.name || item }}</div>
+          </ng-template>
+          <ng-template #header>
+            <div class="custom-header">Available Options</div>
+          </ng-template>
+          <ng-template #footer>
+            <div class="custom-footer">Total: {{ suggestions.length }}</div>
+          </ng-template>
+          <ng-template #empty>
+            <div class="custom-empty">No results found</div>
+          </ng-template>
+          <ng-template #selecteditem let-item>
+            <div class="custom-selected-item">{{ item.name || item }}</div>
+          </ng-template>
+          <ng-template #group let-group>
+            <div class="custom-group">{{ group.label }}</div>
+          </ng-template>
         </p-autocomplete>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-autocomplete formControlName="selectedItems" [suggestions]="formSuggestions" [optionLabel]="'name'" [multiple]="true" (completeMethod)="onFormSearch($event)"> </p-autocomplete>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestAutocompleteComponent {
     selectedValue: any;
