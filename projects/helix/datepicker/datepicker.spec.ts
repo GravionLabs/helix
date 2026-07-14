@@ -152,81 +152,85 @@ class TestReactiveFormDatePickerComponent {
     standalone: false,
     template: `
         <p-datepicker [(ngModel)]="selectedDate" [showTime]="showTime" [showIcon]="showIcon" [showClear]="showClear" [view]="view" [dateFormat]="dateFormat" [touchUI]="touchUI">
-            <!-- Date template with context parameters -->
-            <ng-template pTemplate="date" let-date="date">
-                <div class="custom-date" data-testid="date-template">
-                    <span class="day">{{ date.day }}</span>
-                    <span class="month" *ngIf="date.month">{{ date.month }}</span>
-                    <span class="year" *ngIf="date.year">{{ date.year }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template pTemplate="header">
-                <div class="custom-header" data-testid="header-template">
-                    <h4>Select Date</h4>
-                    <small>Choose your preferred date</small>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template pTemplate="footer">
-                <div class="custom-footer" data-testid="footer-template">
-                    <button type="button" class="today-btn">Today</button>
-                    <button type="button" class="clear-btn">Clear</button>
-                </div>
-            </ng-template>
-
-            <!-- Disabled date template with context -->
-            <ng-template pTemplate="disabledDate" let-date="date">
-                <div class="disabled-date" data-testid="disabled-date-template">
-                    <span class="crossed-out">{{ date.day }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Decade template with context -->
-            <ng-template pTemplate="decade" let-decade="decade">
-                <div class="custom-decade" data-testid="decade-template">
-                    <span class="decade-range">{{ decade.year }}-{{ decade.year + 9 }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Previous icon template -->
-            <ng-template pTemplate="previousicon">
-                <i class="pi pi-chevron-left custom-prev" data-testid="previous-icon-template"></i>
-            </ng-template>
-
-            <!-- Next icon template -->
-            <ng-template pTemplate="nexticon">
-                <i class="pi pi-chevron-right custom-next" data-testid="next-icon-template"></i>
-            </ng-template>
-
-            <!-- Trigger icon template -->
-            <ng-template pTemplate="triggericon">
-                <i class="pi pi-calendar custom-trigger" data-testid="trigger-icon-template"></i>
-            </ng-template>
-
-            <!-- Clear icon template -->
-            <ng-template pTemplate="clearicon">
-                <i class="pi pi-times custom-clear" data-testid="clear-icon-template"></i>
-            </ng-template>
-
-            <!-- Decrement icon template -->
-            <ng-template pTemplate="decrementicon">
-                <i class="pi pi-minus custom-decrement" data-testid="decrement-icon-template"></i>
-            </ng-template>
-
-            <!-- Increment icon template -->
-            <ng-template pTemplate="incrementicon">
-                <i class="pi pi-plus custom-increment" data-testid="increment-icon-template"></i>
-            </ng-template>
-
-            <!-- Input icon template -->
-            <ng-template pTemplate="inputicon">
-                <i class="pi pi-clock custom-input-icon" data-testid="input-icon-template"></i>
-            </ng-template>
+          <!-- Date template with context parameters -->
+          <ng-template pTemplate="date" let-date="date">
+            <div class="custom-date" data-testid="date-template">
+              <span class="day">{{ date.day }}</span>
+              @if (date.month) {
+                <span class="month">{{ date.month }}</span>
+              }
+              @if (date.year) {
+                <span class="year">{{ date.year }}</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template pTemplate="header">
+            <div class="custom-header" data-testid="header-template">
+              <h4>Select Date</h4>
+              <small>Choose your preferred date</small>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template pTemplate="footer">
+            <div class="custom-footer" data-testid="footer-template">
+              <button type="button" class="today-btn">Today</button>
+              <button type="button" class="clear-btn">Clear</button>
+            </div>
+          </ng-template>
+        
+          <!-- Disabled date template with context -->
+          <ng-template pTemplate="disabledDate" let-date="date">
+            <div class="disabled-date" data-testid="disabled-date-template">
+              <span class="crossed-out">{{ date.day }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Decade template with context -->
+          <ng-template pTemplate="decade" let-decade="decade">
+            <div class="custom-decade" data-testid="decade-template">
+              <span class="decade-range">{{ decade.year }}-{{ decade.year + 9 }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Previous icon template -->
+          <ng-template pTemplate="previousicon">
+            <i class="pi pi-chevron-left custom-prev" data-testid="previous-icon-template"></i>
+          </ng-template>
+        
+          <!-- Next icon template -->
+          <ng-template pTemplate="nexticon">
+            <i class="pi pi-chevron-right custom-next" data-testid="next-icon-template"></i>
+          </ng-template>
+        
+          <!-- Trigger icon template -->
+          <ng-template pTemplate="triggericon">
+            <i class="pi pi-calendar custom-trigger" data-testid="trigger-icon-template"></i>
+          </ng-template>
+        
+          <!-- Clear icon template -->
+          <ng-template pTemplate="clearicon">
+            <i class="pi pi-times custom-clear" data-testid="clear-icon-template"></i>
+          </ng-template>
+        
+          <!-- Decrement icon template -->
+          <ng-template pTemplate="decrementicon">
+            <i class="pi pi-minus custom-decrement" data-testid="decrement-icon-template"></i>
+          </ng-template>
+        
+          <!-- Increment icon template -->
+          <ng-template pTemplate="incrementicon">
+            <i class="pi pi-plus custom-increment" data-testid="increment-icon-template"></i>
+          </ng-template>
+        
+          <!-- Input icon template -->
+          <ng-template pTemplate="inputicon">
+            <i class="pi pi-clock custom-input-icon" data-testid="input-icon-template"></i>
+          </ng-template>
         </p-datepicker>
-    `
+        `
 })
 class TestPTemplatesDatePickerComponent {
     selectedDate: Date | null = null as any;
@@ -243,81 +247,85 @@ class TestPTemplatesDatePickerComponent {
     standalone: false,
     template: `
         <p-datepicker [(ngModel)]="selectedDate" [showTime]="showTime" [showIcon]="showIcon" [showClear]="showClear" [view]="view" [dateFormat]="dateFormat" [touchUI]="touchUI">
-            <!-- Date template with context parameters -->
-            <ng-template #date let-date="date">
-                <div class="custom-date-ref" data-testid="date-ref-template">
-                    <span class="day">{{ date?.day }}</span>
-                    <span class="month" *ngIf="date?.month">{{ date?.month }}</span>
-                    <span class="year" *ngIf="date?.year">{{ date?.year }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header>
-                <div class="custom-header-ref" data-testid="header-ref-template">
-                    <h4>Select Date (Ref)</h4>
-                    <small>Choose your preferred date using references</small>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer>
-                <div class="custom-footer-ref" data-testid="footer-ref-template">
-                    <button type="button" class="today-btn-ref">Today</button>
-                    <button type="button" class="clear-btn-ref">Clear</button>
-                </div>
-            </ng-template>
-
-            <!-- Disabled date template with context -->
-            <ng-template #disabledDate let-date="date">
-                <div class="disabled-date-ref" data-testid="disabled-date-ref-template">
-                    <span class="crossed-out-ref">{{ date?.day }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Decade template with context -->
-            <ng-template #decade let-decade="decade">
-                <div class="custom-decade-ref" data-testid="decade-ref-template">
-                    <span class="decade-range-ref">{{ decade?.year }}-{{ decade?.year ? decade.year + 9 : '' }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Previous icon template -->
-            <ng-template #previousicon>
-                <i class="pi pi-chevron-left custom-prev-ref" data-testid="previous-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Next icon template -->
-            <ng-template #nexticon>
-                <i class="pi pi-chevron-right custom-next-ref" data-testid="next-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Trigger icon template -->
-            <ng-template #triggericon>
-                <i class="pi pi-calendar custom-trigger-ref" data-testid="trigger-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Clear icon template -->
-            <ng-template #clearicon>
-                <i class="pi pi-times custom-clear-ref" data-testid="clear-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Decrement icon template -->
-            <ng-template #decrementicon>
-                <i class="pi pi-minus custom-decrement-ref" data-testid="decrement-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Increment icon template -->
-            <ng-template #incrementicon>
-                <i class="pi pi-plus custom-increment-ref" data-testid="increment-icon-ref-template"></i>
-            </ng-template>
-
-            <!-- Input icon template -->
-            <ng-template #inputicon>
-                <i class="pi pi-clock custom-input-icon-ref" data-testid="input-icon-ref-template"></i>
-            </ng-template>
+          <!-- Date template with context parameters -->
+          <ng-template #date let-date="date">
+            <div class="custom-date-ref" data-testid="date-ref-template">
+              <span class="day">{{ date?.day }}</span>
+              @if (date?.month) {
+                <span class="month">{{ date?.month }}</span>
+              }
+              @if (date?.year) {
+                <span class="year">{{ date?.year }}</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header>
+            <div class="custom-header-ref" data-testid="header-ref-template">
+              <h4>Select Date (Ref)</h4>
+              <small>Choose your preferred date using references</small>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer>
+            <div class="custom-footer-ref" data-testid="footer-ref-template">
+              <button type="button" class="today-btn-ref">Today</button>
+              <button type="button" class="clear-btn-ref">Clear</button>
+            </div>
+          </ng-template>
+        
+          <!-- Disabled date template with context -->
+          <ng-template #disabledDate let-date="date">
+            <div class="disabled-date-ref" data-testid="disabled-date-ref-template">
+              <span class="crossed-out-ref">{{ date?.day }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Decade template with context -->
+          <ng-template #decade let-decade="decade">
+            <div class="custom-decade-ref" data-testid="decade-ref-template">
+              <span class="decade-range-ref">{{ decade?.year }}-{{ decade?.year ? decade.year + 9 : '' }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Previous icon template -->
+          <ng-template #previousicon>
+            <i class="pi pi-chevron-left custom-prev-ref" data-testid="previous-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Next icon template -->
+          <ng-template #nexticon>
+            <i class="pi pi-chevron-right custom-next-ref" data-testid="next-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Trigger icon template -->
+          <ng-template #triggericon>
+            <i class="pi pi-calendar custom-trigger-ref" data-testid="trigger-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Clear icon template -->
+          <ng-template #clearicon>
+            <i class="pi pi-times custom-clear-ref" data-testid="clear-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Decrement icon template -->
+          <ng-template #decrementicon>
+            <i class="pi pi-minus custom-decrement-ref" data-testid="decrement-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Increment icon template -->
+          <ng-template #incrementicon>
+            <i class="pi pi-plus custom-increment-ref" data-testid="increment-icon-ref-template"></i>
+          </ng-template>
+        
+          <!-- Input icon template -->
+          <ng-template #inputicon>
+            <i class="pi pi-clock custom-input-icon-ref" data-testid="input-icon-ref-template"></i>
+          </ng-template>
         </p-datepicker>
-    `
+        `
 })
 class TestRefTemplatesDatePickerComponent {
     selectedDate: Date | null = null as any;

@@ -80,13 +80,15 @@ class DialogWithinDialogComponent {
     standalone: false,
     template: `
         <div class="maximizable-content">
-            <h3>Maximizable Dialog</h3>
-            <p>This dialog can be maximized</p>
-            <div style="height: 200px; overflow-y: auto;">
-                <p *ngFor="let item of items">{{ item }}</p>
-            </div>
+          <h3>Maximizable Dialog</h3>
+          <p>This dialog can be maximized</p>
+          <div style="height: 200px; overflow-y: auto;">
+            @for (item of items; track item) {
+              <p>{{ item }}</p>
+            }
+          </div>
         </div>
-    `
+        `
 })
 class MaximizableDialogComponent {
     items = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
