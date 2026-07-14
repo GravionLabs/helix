@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, type OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -326,7 +326,7 @@ export class Crud implements OnInit {
 
   statuses!: any[];
 
-  @ViewChild('dt') dt!: Table;
+  readonly dt = viewChild.required<Table>('dt');
 
   exportColumns!: ExportColumn[];
 
@@ -339,7 +339,7 @@ export class Crud implements OnInit {
   ) {}
 
   exportCSV() {
-    this.dt.exportCSV();
+    this.dt().exportCSV();
   }
 
   ngOnInit() {
