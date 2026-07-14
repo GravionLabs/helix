@@ -49,62 +49,67 @@ const DRAWER_INSTANCE = new InjectionToken<Drawer>('DRAWER_INSTANCE');
     hostDirectives: [Bind],
     template: `
         @if (modalVisible) {
-            <div
-                #container
-                [hBind]="ptm('root')"
-                [hMotion]="visible"
-                [pMotionAppear]="true"
-                [pMotionEnterActiveClass]="$enterAnimation()"
-                [pMotionLeaveActiveClass]="$leaveAnimation()"
-                [pMotionOptions]="computedMotionOptions()"
-                (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                (pMotionOnAfterLeave)="onAfterLeave($event)"
-                [class]="cn(cx('root'), styleClass)"
-                [style]="style"
-                role="complementary"
-                (keydown)="onKeyDown($event)"
-                hFocusTrap
-                [attr.data-p]="dataP"
-                [attr.data-p-open]="visible"
+          <div
+            #container
+            [hBind]="ptm('root')"
+            [hMotion]="visible"
+            [pMotionAppear]="true"
+            [pMotionEnterActiveClass]="$enterAnimation()"
+            [pMotionLeaveActiveClass]="$leaveAnimation()"
+            [pMotionOptions]="computedMotionOptions()"
+            (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+            (pMotionOnAfterLeave)="onAfterLeave($event)"
+            [class]="cn(cx('root'), styleClass)"
+            [style]="style"
+            role="complementary"
+            (keydown)="onKeyDown($event)"
+            hFocusTrap
+            [attr.data-p]="dataP"
+            [attr.data-p-open]="visible"
             >
-                @if (headlessTemplate || _headlessTemplate) {
-                    <ng-container *ngTemplateOutlet="headlessTemplate || _headlessTemplate"></ng-container>
-                } @else {
-                    <div [hBind]="ptm('header')" [ngClass]="cx('header')" [attr.data-pc-section]="'header'">
-                        <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                        <div *ngIf="header" [hBind]="ptm('title')" [class]="cx('title')">{{ header }}</div>
-                        <h-button
-                            *ngIf="showCloseIcon && closable"
-                            [pt]="ptm('pcCloseButton')"
-                            [ngClass]="cx('pcCloseButton')"
-                            (onClick)="close($event)"
-                            (keydown.enter)="close($event)"
-                            [buttonProps]="closeButtonProps"
-                            [ariaLabel]="ariaCloseLabel"
-                            [attr.data-pc-group-section]="'iconcontainer'"
-                            [unstyled]="unstyled()"
-                        >
-                            <ng-template #icon>
-                                <svg data-p-icon="times" *ngIf="!closeIconTemplate && !_closeIconTemplate" [attr.data-pc-section]="'closeicon'" />
-                                <ng-template *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-template>
-                            </ng-template>
-                        </h-button>
-                    </div>
-
-                    <div [hBind]="ptm('content')" [ngClass]="cx('content')" [attr.data-pc-section]="'content'">
-                        <ng-content></ng-content>
-                        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-                    </div>
-
-                    <ng-container *ngIf="footerTemplate || _footerTemplate">
-                        <div [hBind]="ptm('footer')" [ngClass]="cx('footer')" [attr.data-pc-section]="'footer'">
-                            <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-                        </div>
-                    </ng-container>
+            @if (headlessTemplate || _headlessTemplate) {
+              <ng-container *ngTemplateOutlet="headlessTemplate || _headlessTemplate"></ng-container>
+            } @else {
+              <div [hBind]="ptm('header')" [ngClass]="cx('header')" [attr.data-pc-section]="'header'">
+                <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                @if (header) {
+                  <div [hBind]="ptm('title')" [class]="cx('title')">{{ header }}</div>
                 }
-            </div>
+                @if (showCloseIcon && closable) {
+                  <h-button
+                    [pt]="ptm('pcCloseButton')"
+                    [ngClass]="cx('pcCloseButton')"
+                    (onClick)="close($event)"
+                    (keydown.enter)="close($event)"
+                    [buttonProps]="closeButtonProps"
+                    [ariaLabel]="ariaCloseLabel"
+                    [attr.data-pc-group-section]="'iconcontainer'"
+                    [unstyled]="unstyled()"
+                    >
+                    <ng-template #icon>
+                      @if (!closeIconTemplate && !_closeIconTemplate) {
+                        <svg data-p-icon="times" [attr.data-pc-section]="'closeicon'" />
+                      }
+                      <ng-template *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-template>
+                    </ng-template>
+                  </h-button>
+                }
+              </div>
+        
+              <div [hBind]="ptm('content')" [ngClass]="cx('content')" [attr.data-pc-section]="'content'">
+                <ng-content></ng-content>
+                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+              </div>
+        
+              @if (footerTemplate || _footerTemplate) {
+                <div [hBind]="ptm('footer')" [ngClass]="cx('footer')" [attr.data-pc-section]="'footer'">
+                  <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+                </div>
+              }
+            }
+          </div>
         }
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })

@@ -68,14 +68,16 @@ class TestRouterDockComponent {
     selector: 'test-item-template-dock',
     template: `
         <p-dock [model]="model">
-            <ng-template #item let-item>
-                <div class="custom-dock-item">
-                    <i [class]="item.icon" *ngIf="item.icon"></i>
-                    <span class="custom-label">{{ item.label }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="custom-dock-item">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span class="custom-label">{{ item.label }}</span>
+            </div>
+          </ng-template>
         </p-dock>
-    `
+        `
 })
 class TestItemTemplateDockComponent {
     model: MenuItem[] = [
