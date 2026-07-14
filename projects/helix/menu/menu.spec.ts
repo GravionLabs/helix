@@ -152,14 +152,16 @@ class TestSubmenuMenuComponent {
     selector: 'test-item-template-menu',
     template: `
         <p-menu [model]="model">
-            <ng-template #item let-item>
-                <div class="custom-menu-item">
-                    <i [class]="item.icon" *ngIf="item.icon"></i>
-                    <span class="custom-label">{{ item.label }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="custom-menu-item">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span class="custom-label">{{ item.label }}</span>
+            </div>
+          </ng-template>
         </p-menu>
-    `
+        `
 })
 class TestItemTemplateMenuComponent {
     model: MenuItem[] = [

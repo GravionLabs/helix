@@ -83,15 +83,17 @@ export const MULTISELECT_VALUE_ACCESSOR: any = {
     imports: [CommonModule, Checkbox, FormsModule, SharedModule],
     template: `
         <h-checkbox [ngModel]="selected" [binary]="true" [tabindex]="-1" [variant]="variant" [ariaLabel]="label" [pt]="getPTOptions('pcOptionCheckbox')" [unstyled]="unstyled()">
-            <ng-container *ngIf="itemCheckboxIconTemplate">
-                <ng-template #icon let-klass="class">
-                    <ng-template *ngTemplateOutlet="itemCheckboxIconTemplate; context: { checked: selected, class: klass }"></ng-template>
-                </ng-template>
-            </ng-container>
+          @if (itemCheckboxIconTemplate) {
+            <ng-template #icon let-klass="class">
+              <ng-template *ngTemplateOutlet="itemCheckboxIconTemplate; context: { checked: selected, class: klass }"></ng-template>
+            </ng-template>
+          }
         </h-checkbox>
-        <span *ngIf="!template">{{ label ?? 'empty' }}</span>
+        @if (!template) {
+          <span>{{ label ?? 'empty' }}</span>
+        }
         <ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
-    `,
+        `,
     encapsulation: ViewEncapsulation.None,
     providers: [MultiSelectStyle],
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -189,156 +191,180 @@ export class MultiSelectItem extends BaseComponent {
     hostDirectives: [Bind],
     template: `
         <div class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true" [hBind]="ptm('hiddenInputContainer')">
-            <input
-                #focusInput
-                [hTooltip]="tooltip"
-                [pTooltipUnstyled]="unstyled()"
-                [tooltipPosition]="tooltipPosition"
-                [positionStyle]="tooltipPositionStyle"
-                [tooltipStyleClass]="tooltipStyleClass"
-                [attr.aria-disabled]="$disabled()"
-                [attr.id]="inputId"
-                role="combobox"
-                [attr.aria-label]="ariaLabel"
-                [attr.aria-labelledby]="ariaLabelledBy"
-                [attr.aria-haspopup]="'listbox'"
-                [attr.aria-expanded]="overlayVisible ?? false"
-                [attr.aria-controls]="overlayVisible ? id + '_list' : null"
-                [attr.tabindex]="!$disabled() ? tabindex : -1"
-                [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
-                (focus)="onInputFocus($event)"
-                (blur)="onInputBlur($event)"
-                (keydown)="onKeyDown($event)"
-                [hAutoFocus]="autofocus"
-                [attr.value]="modelValue()"
-                [attr.name]="name()"
-                [attr.required]="required() ? '' : undefined"
-                [attr.disabled]="$disabled() ? '' : undefined"
-                [hBind]="ptm('hiddenInput')"
-            />
-        </div>
-        <div
-            [hBind]="ptm('labelContainer')"
-            [class]="cx('labelContainer')"
+          <input
+            #focusInput
             [hTooltip]="tooltip"
             [pTooltipUnstyled]="unstyled()"
-            (mouseleave)="labelContainerMouseLeave()"
-            [tooltipDisabled]="_disableTooltip"
             [tooltipPosition]="tooltipPosition"
             [positionStyle]="tooltipPositionStyle"
             [tooltipStyleClass]="tooltipStyleClass"
-        >
-            <div [hBind]="ptm('label')" [class]="cx('label')" [attr.data-p]="labelDataP">
-                <ng-container *ngIf="!selectedItemsTemplate && !_selectedItemsTemplate">
-                    <ng-container *ngIf="display === 'comma'">{{ label() || 'empty' }}</ng-container>
-                    <ng-container *ngIf="display === 'chip'">
-                        @if (chipSelectedItems() && chipSelectedItems().length === maxSelectedLabels) {
-                            {{ getSelectedItemsLabel() }}
-                        } @else {
-                            <div #token *ngFor="let item of chipSelectedItems(); let i = index" [hBind]="ptm('chipItem')" [class]="cx('chipItem')">
-                                <h-chip [pt]="ptm('pcChip')" [unstyled]="unstyled()" [class]="cx('pcChip')" [label]="getLabelByValue(item)" [removable]="!$disabled() && !readonly" (onRemove)="removeOption(item, $event)" [removeIcon]="chipIcon">
-                                    <ng-container *ngIf="chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate">
-                                        <ng-template #removeicon>
-                                            <ng-container *ngIf="!$disabled() && !readonly">
-                                                <span
-                                                    [class]="cx('chipIcon')"
-                                                    *ngIf="chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate"
-                                                    (click)="removeOption(item, $event)"
-                                                    [attr.aria-hidden]="true"
-                                                    [hBind]="ptm('chipIcon')"
-                                                >
-                                                    <ng-container *ngTemplateOutlet="chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate; context: { class: 'p-multiselect-chip-icon' }"></ng-container>
-                                                </span>
-                                            </ng-container>
-                                        </ng-template>
-                                    </ng-container>
-                                </h-chip>
-                            </div>
-                        }
-                        <ng-container *ngIf="!modelValue() || modelValue().length === 0">{{ placeholder() || 'empty' }}</ng-container>
-                    </ng-container>
-                </ng-container>
-                <ng-container *ngIf="selectedItemsTemplate || _selectedItemsTemplate">
-                    <ng-container *ngTemplateOutlet="selectedItemsTemplate || _selectedItemsTemplate; context: { $implicit: selectedOptions, removeChip: removeOption.bind(this) }"></ng-container>
-                    <ng-container *ngIf="!modelValue() || modelValue().length === 0">{{ placeholder() || 'empty' }}</ng-container>
-                </ng-container>
-            </div>
+            [attr.aria-disabled]="$disabled()"
+            [attr.id]="inputId"
+            role="combobox"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-labelledby]="ariaLabelledBy"
+            [attr.aria-haspopup]="'listbox'"
+            [attr.aria-expanded]="overlayVisible ?? false"
+            [attr.aria-controls]="overlayVisible ? id + '_list' : null"
+            [attr.tabindex]="!$disabled() ? tabindex : -1"
+            [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+            (focus)="onInputFocus($event)"
+            (blur)="onInputBlur($event)"
+            (keydown)="onKeyDown($event)"
+            [hAutoFocus]="autofocus"
+            [attr.value]="modelValue()"
+            [attr.name]="name()"
+            [attr.required]="required() ? '' : undefined"
+            [attr.disabled]="$disabled() ? '' : undefined"
+            [hBind]="ptm('hiddenInput')"
+            />
         </div>
-        <ng-container *ngIf="isVisibleClearIcon">
-            <svg data-p-icon="times" *ngIf="!clearIconTemplate && !_clearIconTemplate" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true" />
-            <span *ngIf="clearIconTemplate || _clearIconTemplate" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true">
-                <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+        <div
+          [hBind]="ptm('labelContainer')"
+          [class]="cx('labelContainer')"
+          [hTooltip]="tooltip"
+          [pTooltipUnstyled]="unstyled()"
+          (mouseleave)="labelContainerMouseLeave()"
+          [tooltipDisabled]="_disableTooltip"
+          [tooltipPosition]="tooltipPosition"
+          [positionStyle]="tooltipPositionStyle"
+          [tooltipStyleClass]="tooltipStyleClass"
+          >
+          <div [hBind]="ptm('label')" [class]="cx('label')" [attr.data-p]="labelDataP">
+            @if (!selectedItemsTemplate && !_selectedItemsTemplate) {
+              @if (display === 'comma') {
+                {{ label() || 'empty' }}
+              }
+              @if (display === 'chip') {
+                @if (chipSelectedItems() && chipSelectedItems().length === maxSelectedLabels) {
+                  {{ getSelectedItemsLabel() }}
+                } @else {
+                  @for (item of chipSelectedItems(); track item; let i = $index) {
+                    <div #token [hBind]="ptm('chipItem')" [class]="cx('chipItem')">
+                      <h-chip [pt]="ptm('pcChip')" [unstyled]="unstyled()" [class]="cx('pcChip')" [label]="getLabelByValue(item)" [removable]="!$disabled() && !readonly" (onRemove)="removeOption(item, $event)" [removeIcon]="chipIcon">
+                        @if (chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate) {
+                          <ng-template #removeicon>
+                            @if (!$disabled() && !readonly) {
+                              @if (chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate) {
+                                <span
+                                  [class]="cx('chipIcon')"
+                                  (click)="removeOption(item, $event)"
+                                  [attr.aria-hidden]="true"
+                                  [hBind]="ptm('chipIcon')"
+                                  >
+                                  <ng-container *ngTemplateOutlet="chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate; context: { class: 'p-multiselect-chip-icon' }"></ng-container>
+                                </span>
+                              }
+                            }
+                          </ng-template>
+                        }
+                      </h-chip>
+                    </div>
+                  }
+                }
+                @if (!modelValue() || modelValue().length === 0) {
+                  {{ placeholder() || 'empty' }}
+                }
+              }
+            }
+            @if (selectedItemsTemplate || _selectedItemsTemplate) {
+              <ng-container *ngTemplateOutlet="selectedItemsTemplate || _selectedItemsTemplate; context: { $implicit: selectedOptions, removeChip: removeOption.bind(this) }"></ng-container>
+              @if (!modelValue() || modelValue().length === 0) {
+                {{ placeholder() || 'empty' }}
+              }
+            }
+          </div>
+        </div>
+        @if (isVisibleClearIcon) {
+          @if (!clearIconTemplate && !_clearIconTemplate) {
+            <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true" />
+          }
+          @if (clearIconTemplate || _clearIconTemplate) {
+            <span [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true">
+              <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
             </span>
-        </ng-container>
+          }
+        }
         <div [hBind]="ptm('dropdown')" [class]="cx('dropdown')">
-            <ng-container *ngIf="loading; else elseBlock">
-                <ng-container *ngIf="loadingIconTemplate || _loadingIconTemplate">
-                    <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
-                </ng-container>
-                <ng-container *ngIf="!loadingIconTemplate && !_loadingIconTemplate">
-                    <span *ngIf="loadingIcon" [hBind]="ptm('loadingIcon')" [class]="cn(cx('loadingIcon'), 'pi-spin ' + loadingIcon)" [attr.aria-hidden]="true"></span>
-                    <span *ngIf="!loadingIcon" [hBind]="ptm('loadingIcon')" [class]="cn(cx('loadingIcon'), 'pi pi-spinner pi-spin')" [attr.aria-hidden]="true"></span>
-                </ng-container>
-            </ng-container>
-            <ng-template #elseBlock>
-                <ng-container *ngIf="!dropdownIconTemplate && !_dropdownIconTemplate">
-                    <span *ngIf="dropdownIcon" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [ngClass]="dropdownIcon" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP"></span>
-                    <svg data-p-icon="chevron-down" *ngIf="!dropdownIcon" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP" />
-                </ng-container>
-                <span *ngIf="dropdownIconTemplate || _dropdownIconTemplate" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true">
-                    <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate; context: { dataP: dropdownIconDataP }"></ng-template>
-                </span>
-            </ng-template>
+          @if (loading) {
+            @if (loadingIconTemplate || _loadingIconTemplate) {
+              <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
+            }
+            @if (!loadingIconTemplate && !_loadingIconTemplate) {
+              @if (loadingIcon) {
+                <span [hBind]="ptm('loadingIcon')" [class]="cn(cx('loadingIcon'), 'pi-spin ' + loadingIcon)" [attr.aria-hidden]="true"></span>
+              }
+              @if (!loadingIcon) {
+                <span [hBind]="ptm('loadingIcon')" [class]="cn(cx('loadingIcon'), 'pi pi-spinner pi-spin')" [attr.aria-hidden]="true"></span>
+              }
+            }
+          } @else {
+            @if (!dropdownIconTemplate && !_dropdownIconTemplate) {
+              @if (dropdownIcon) {
+                <span [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [ngClass]="dropdownIcon" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP"></span>
+              }
+              @if (!dropdownIcon) {
+                <svg data-p-icon="chevron-down" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP" />
+              }
+            }
+            @if (dropdownIconTemplate || _dropdownIconTemplate) {
+              <span [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true">
+                <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate; context: { dataP: dropdownIconDataP }"></ng-template>
+              </span>
+            }
+          }
         </div>
         <h-overlay
-            #overlay
-            [hostAttrSelector]="$attrSelector"
-            [(visible)]="overlayVisible"
-            [options]="overlayOptions"
-            [target]="'@parent'"
-            [appendTo]="$appendTo()"
-            [unstyled]="unstyled()"
-            [pt]="ptm('pcOverlay')"
-            [motionOptions]="motionOptions()"
-            (onBeforeEnter)="onOverlayBeforeEnter($event)"
-            (onAfterLeave)="onOverlayAfterLeave($event)"
-            (onHide)="onOverlayHide($event)"
-        >
-            <ng-template #content>
-                <div [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP" [attr.id]="id + '_list'" [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle">
-                    <span
-                        #firstHiddenFocusableEl
-                        role="presentation"
-                        class="p-hidden-accessible p-hidden-focusable"
-                        [attr.tabindex]="0"
-                        (focus)="onFirstHiddenFocus($event)"
-                        [attr.data-p-hidden-accessible]="true"
-                        [attr.data-p-hidden-focusable]="true"
-                        [hBind]="ptm('firstHiddenFocusableEl')"
-                    >
-                    </span>
-                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                    <div [hBind]="ptm('header')" [class]="cx('header')" *ngIf="showHeader">
-                        <ng-content select="p-header"></ng-content>
-                        <ng-container *ngIf="filterTemplate || _filterTemplate; else builtInFilterElement">
-                            <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { options: filterOptions }"></ng-container>
-                        </ng-container>
-                        <ng-template #builtInFilterElement>
-                            <h-checkbox
-                                [pt]="getHeaderCheckboxPTOptions('pcHeaderCheckbox')"
-                                [ngModel]="allSelected()"
-                                [ariaLabel]="toggleAllAriaLabel"
-                                [binary]="true"
-                                (onChange)="onToggleAll($event)"
-                                *ngIf="showToggleAll && !selectionLimit"
-                                [variant]="$variant()"
-                                [disabled]="$disabled()"
-                                [unstyled]="unstyled()"
-                                #headerCheckbox
-                            >
-                                <ng-template #icon let-klass="class">
-                                    <svg data-p-icon="check" *ngIf="!headerCheckboxIconTemplate && !_headerCheckboxIconTemplate && allSelected()" [class]="klass" [hBind]="getHeaderCheckboxPTOptions('pcHeaderCheckbox.icon')" />
-                                    <ng-template
+          #overlay
+          [hostAttrSelector]="$attrSelector"
+          [(visible)]="overlayVisible"
+          [options]="overlayOptions"
+          [target]="'@parent'"
+          [appendTo]="$appendTo()"
+          [unstyled]="unstyled()"
+          [pt]="ptm('pcOverlay')"
+          [motionOptions]="motionOptions()"
+          (onBeforeEnter)="onOverlayBeforeEnter($event)"
+          (onAfterLeave)="onOverlayAfterLeave($event)"
+          (onHide)="onOverlayHide($event)"
+          >
+          <ng-template #content>
+            <div [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP" [attr.id]="id + '_list'" [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle">
+              <span
+                #firstHiddenFocusableEl
+                role="presentation"
+                class="p-hidden-accessible p-hidden-focusable"
+                [attr.tabindex]="0"
+                (focus)="onFirstHiddenFocus($event)"
+                [attr.data-p-hidden-accessible]="true"
+                [attr.data-p-hidden-focusable]="true"
+                [hBind]="ptm('firstHiddenFocusableEl')"
+                >
+              </span>
+              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+              @if (showHeader) {
+                <div [hBind]="ptm('header')" [class]="cx('header')">
+                  <ng-content select="p-header"></ng-content>
+                  @if (filterTemplate || _filterTemplate) {
+                    <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { options: filterOptions }"></ng-container>
+                  } @else {
+                    @if (showToggleAll && !selectionLimit) {
+                      <h-checkbox
+                        [pt]="getHeaderCheckboxPTOptions('pcHeaderCheckbox')"
+                        [ngModel]="allSelected()"
+                        [ariaLabel]="toggleAllAriaLabel"
+                        [binary]="true"
+                        (onChange)="onToggleAll($event)"
+                        [variant]="$variant()"
+                        [disabled]="$disabled()"
+                        [unstyled]="unstyled()"
+                        #headerCheckbox
+                        >
+                        <ng-template #icon let-klass="class">
+                          @if (!headerCheckboxIconTemplate && !_headerCheckboxIconTemplate && allSelected()) {
+                            <svg data-p-icon="check" [class]="klass" [hBind]="getHeaderCheckboxPTOptions('pcHeaderCheckbox.icon')" />
+                          }
+                          <ng-template
                                         *ngTemplateOutlet="
                                             headerCheckboxIconTemplate || _headerCheckboxIconTemplate;
                                             context: {
@@ -347,138 +373,156 @@ export class MultiSelectItem extends BaseComponent {
                                                 class: klass
                                             }
                                         "
-                                    ></ng-template>
-                                </ng-template>
-                            </h-checkbox>
-
-                            <h-iconfield *ngIf="filter" [pt]="ptm('pcFilterContainer')" [class]="cx('pcFilterContainer')" [unstyled]="unstyled()">
-                                <input
-                                    #filterInput
-                                    hInputText
-                                    [pt]="ptm('pcFilter')"
-                                    [variant]="$variant()"
-                                    type="text"
-                                    [attr.autocomplete]="autocomplete"
-                                    role="searchbox"
-                                    [attr.aria-owns]="id + '_list'"
-                                    [attr.aria-activedescendant]="focusedOptionId"
-                                    [value]="_filterValue() || ''"
-                                    (input)="onFilterInputChange($event)"
-                                    (keydown)="onFilterKeyDown($event)"
-                                    (click)="onInputClick($event)"
-                                    (blur)="onFilterBlur($event)"
-                                    [class]="cx('pcFilter')"
-                                    [attr.disabled]="$disabled() ? '' : undefined"
-                                    [attr.placeholder]="filterPlaceHolder"
-                                    [attr.aria-label]="ariaFilterLabel"
-                                    [unstyled]="unstyled()"
-                                />
-                                <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
-                                    <svg data-p-icon="search" *ngIf="!filterIconTemplate && !_filterIconTemplate" [hBind]="ptm('filterIcon')" />
-                                    <span *ngIf="filterIconTemplate || _filterIconTemplate" [hBind]="ptm('filterIcon')" class="p-multiselect-filter-icon">
-                                        <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
-                                    </span>
-                                </h-inputicon>
-                            </h-iconfield>
-                        </ng-template>
-                    </div>
-                    <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight || 'auto'">
-                        <h-scroller
-                            *ngIf="virtualScroll"
-                            #scroller
-                            [items]="visibleOptions()"
-                            [style]="{ height: scrollHeight }"
-                            [itemSize]="virtualScrollItemSize"
-                            [autoSize]="true"
-                            [tabindex]="-1"
-                            [lazy]="lazy"
-                            (onLazyLoad)="onLazyLoad.emit($event)"
-                            [options]="virtualScrollOptions"
-                        >
-                            <ng-template #content let-items let-scrollerOptions="options">
-                                <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
-                            </ng-template>
-                            <ng-container *ngIf="loaderTemplate || _loaderTemplate">
-                                <ng-template #loader let-scrollerOptions="options">
-                                    <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
-                                </ng-template>
-                            </ng-container>
-                        </h-scroller>
-                        <ng-container *ngIf="!virtualScroll">
-                            <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
-                        </ng-container>
-
-                        <ng-template #buildInItems let-items let-scrollerOptions="options">
-                            <ul #items [hBind]="ptm('list')" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" aria-multiselectable="true" [attr.aria-label]="listLabel">
-                                <ng-template ngFor let-option [ngForOf]="items" let-i="index">
-                                    <ng-container *ngIf="isOptionGroup(option)">
-                                        <li [hBind]="ptm('optionGroup')" [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)" [class]="cx('optionGroup')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
-                                            <span *ngIf="!groupTemplate && option.optionGroup">{{ getOptionGroupLabel(option.optionGroup) }}</span>
-                                            <ng-container *ngIf="option.optionGroup && groupTemplate" [ngTemplateOutlet]="groupTemplate" [ngTemplateOutletContext]="{ $implicit: option.optionGroup }"></ng-container>
-                                        </li>
-                                    </ng-container>
-                                    <ng-container *ngIf="!isOptionGroup(option)">
-                                        <li
-                                            hMultiSelectItem
-                                            hRipple
-                                            [hBind]="getPTOptions(option, getItemOptions, i, 'option')"
-                                            [id]="id + '_' + getOptionIndex(i, scrollerOptions)"
-                                            [option]="option"
-                                            [selected]="isSelected(option)"
-                                            [label]="getOptionLabel(option)"
-                                            [disabled]="isOptionDisabled(option)"
-                                            [template]="itemTemplate || _itemTemplate"
-                                            [itemCheckboxIconTemplate]="itemCheckboxIconTemplate || _itemCheckboxIconTemplate"
-                                            [itemSize]="scrollerOptions.itemSize"
-                                            [focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
-                                            [ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
-                                            [ariaSetSize]="ariaSetSize"
-                                            [variant]="$variant()"
-                                            [highlightOnSelect]="highlightOnSelect"
-                                            (onClick)="onOptionSelect($event, false, getOptionIndex(i, scrollerOptions))"
-                                            (onMouseEnter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
-                                            [pt]="pt"
-                                            [unstyled]="unstyled()"
-                                        ></li>
-                                    </ng-container>
-                                </ng-template>
-
-                                <li *ngIf="hasFilter() && isEmpty()" [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
-                                    @if (!emptyFilterTemplate && !_emptyFilterTemplate && !emptyTemplate && !_emptyTemplate) {
-                                        {{ emptyFilterMessageLabel }}
-                                    } @else {
-                                        <ng-container *ngTemplateOutlet="emptyFilterTemplate || _emptyFilterTemplate || emptyTemplate || _emptyFilterTemplate"></ng-container>
-                                    }
-                                </li>
-                                <li *ngIf="!hasFilter() && isEmpty()" [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
-                                    @if (!emptyTemplate && !_emptyTemplate) {
-                                        {{ emptyMessageLabel }}
-                                    } @else {
-                                        <ng-container *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
-                                    }
-                                </li>
-                            </ul>
-                        </ng-template>
-                    </div>
-                    <div *ngIf="footerFacet || footerTemplate || _footerTemplate">
-                        <ng-content select="p-footer"></ng-content>
-                        <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-                    </div>
-
-                    <span
-                        #lastHiddenFocusableEl
-                        role="presentation"
-                        class="p-hidden-accessible p-hidden-focusable"
-                        [attr.tabindex]="0"
-                        (focus)="onLastHiddenFocus($event)"
-                        [attr.data-p-hidden-accessible]="true"
-                        [attr.data-p-hidden-focusable]="true"
-                        [hBind]="ptm('lastHiddenFocusableEl')"
-                    ></span>
-                </div>
-            </ng-template>
+                        ></ng-template>
+                      </ng-template>
+                    </h-checkbox>
+                  }
+                  @if (filter) {
+                    <h-iconfield [pt]="ptm('pcFilterContainer')" [class]="cx('pcFilterContainer')" [unstyled]="unstyled()">
+                      <input
+                        #filterInput
+                        hInputText
+                        [pt]="ptm('pcFilter')"
+                        [variant]="$variant()"
+                        type="text"
+                        [attr.autocomplete]="autocomplete"
+                        role="searchbox"
+                        [attr.aria-owns]="id + '_list'"
+                        [attr.aria-activedescendant]="focusedOptionId"
+                        [value]="_filterValue() || ''"
+                        (input)="onFilterInputChange($event)"
+                        (keydown)="onFilterKeyDown($event)"
+                        (click)="onInputClick($event)"
+                        (blur)="onFilterBlur($event)"
+                        [class]="cx('pcFilter')"
+                        [attr.disabled]="$disabled() ? '' : undefined"
+                        [attr.placeholder]="filterPlaceHolder"
+                        [attr.aria-label]="ariaFilterLabel"
+                        [unstyled]="unstyled()"
+                        />
+                      <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
+                        @if (!filterIconTemplate && !_filterIconTemplate) {
+                          <svg data-p-icon="search" [hBind]="ptm('filterIcon')" />
+                        }
+                        @if (filterIconTemplate || _filterIconTemplate) {
+                          <span [hBind]="ptm('filterIcon')" class="p-multiselect-filter-icon">
+                            <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
+                          </span>
+                        }
+                      </h-inputicon>
+                    </h-iconfield>
+                  }
+                }
+              </div>
+            }
+            <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight || 'auto'">
+              @if (virtualScroll) {
+                <h-scroller
+                  #scroller
+                  [items]="visibleOptions()"
+                  [style]="{ height: scrollHeight }"
+                  [itemSize]="virtualScrollItemSize"
+                  [autoSize]="true"
+                  [tabindex]="-1"
+                  [lazy]="lazy"
+                  (onLazyLoad)="onLazyLoad.emit($event)"
+                  [options]="virtualScrollOptions"
+                  >
+                  <ng-template #content let-items let-scrollerOptions="options">
+                    <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
+                  </ng-template>
+                  @if (loaderTemplate || _loaderTemplate) {
+                    <ng-template #loader let-scrollerOptions="options">
+                      <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+                    </ng-template>
+                  }
+                </h-scroller>
+              }
+              @if (!virtualScroll) {
+                <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
+              }
+        
+              <ng-template #buildInItems let-items let-scrollerOptions="options">
+                <ul #items [hBind]="ptm('list')" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" aria-multiselectable="true" [attr.aria-label]="listLabel">
+                  @for (option of items; track option; let i = $index) {
+                    @if (isOptionGroup(option)) {
+                      <li [hBind]="ptm('optionGroup')" [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)" [class]="cx('optionGroup')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                        @if (!groupTemplate && option.optionGroup) {
+                          <span>{{ getOptionGroupLabel(option.optionGroup) }}</span>
+                        }
+                        @if (option.optionGroup && groupTemplate) {
+                          <ng-container [ngTemplateOutlet]="groupTemplate" [ngTemplateOutletContext]="{ $implicit: option.optionGroup }"></ng-container>
+                        }
+                      </li>
+                    }
+                    @if (!isOptionGroup(option)) {
+                      <li
+                        hMultiSelectItem
+                        hRipple
+                        [hBind]="getPTOptions(option, getItemOptions, i, 'option')"
+                        [id]="id + '_' + getOptionIndex(i, scrollerOptions)"
+                        [option]="option"
+                        [selected]="isSelected(option)"
+                        [label]="getOptionLabel(option)"
+                        [disabled]="isOptionDisabled(option)"
+                        [template]="itemTemplate || _itemTemplate"
+                        [itemCheckboxIconTemplate]="itemCheckboxIconTemplate || _itemCheckboxIconTemplate"
+                        [itemSize]="scrollerOptions.itemSize"
+                        [focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
+                        [ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
+                        [ariaSetSize]="ariaSetSize"
+                        [variant]="$variant()"
+                        [highlightOnSelect]="highlightOnSelect"
+                        (onClick)="onOptionSelect($event, false, getOptionIndex(i, scrollerOptions))"
+                        (onMouseEnter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
+                        [pt]="pt"
+                        [unstyled]="unstyled()"
+                      ></li>
+                    }
+                  }
+        
+                  @if (hasFilter() && isEmpty()) {
+                    <li [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                      @if (!emptyFilterTemplate && !_emptyFilterTemplate && !emptyTemplate && !_emptyTemplate) {
+                        {{ emptyFilterMessageLabel }}
+                      } @else {
+                        <ng-container *ngTemplateOutlet="emptyFilterTemplate || _emptyFilterTemplate || emptyTemplate || _emptyFilterTemplate"></ng-container>
+                      }
+                    </li>
+                  }
+                  @if (!hasFilter() && isEmpty()) {
+                    <li [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                      @if (!emptyTemplate && !_emptyTemplate) {
+                        {{ emptyMessageLabel }}
+                      } @else {
+                        <ng-container *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+                      }
+                    </li>
+                  }
+                </ul>
+              </ng-template>
+            </div>
+            @if (footerFacet || footerTemplate || _footerTemplate) {
+              <div>
+                <ng-content select="p-footer"></ng-content>
+                <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+              </div>
+            }
+        
+            <span
+              #lastHiddenFocusableEl
+              role="presentation"
+              class="p-hidden-accessible p-hidden-focusable"
+              [attr.tabindex]="0"
+              (focus)="onLastHiddenFocus($event)"
+              [attr.data-p-hidden-accessible]="true"
+              [attr.data-p-hidden-focusable]="true"
+              [hBind]="ptm('lastHiddenFocusableEl')"
+            ></span>
+          </div>
+        </ng-template>
         </h-overlay>
-    `,
+        `,
     providers: [MULTISELECT_VALUE_ACCESSOR, MultiSelectStyle, { provide: MULTISELECT_INSTANCE, useExisting: MultiSelect }, { provide: PARENT_INSTANCE, useExisting: MultiSelect }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

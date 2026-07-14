@@ -46,30 +46,32 @@ const OVERLAY_INSTANCE = new InjectionToken<Overlay>('OVERLAY_INSTANCE');
     hostDirectives: [Bind],
     template: `
         @if (inline()) {
-            <ng-content></ng-content>
-            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: null } }"></ng-container>
+          <ng-content></ng-content>
+          <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: null } }"></ng-container>
         } @else {
-            <div *ngIf="modalVisible" #overlay [class]="cn(cx('root'), styleClass)" [style]="sx('root')" [hBind]="ptm('root')" (click)="onOverlayClick()">
-                <h-motion
-                    [visible]="visible"
-                    name="p-anchored-overlay"
-                    [appear]="true"
-                    [options]="computedMotionOptions()"
-                    (onBeforeEnter)="onOverlayBeforeEnter($event)"
-                    (onEnter)="onOverlayEnter($event)"
-                    (onAfterEnter)="onOverlayAfterEnter($event)"
-                    (onBeforeLeave)="onOverlayBeforeLeave($event)"
-                    (onLeave)="onOverlayLeave($event)"
-                    (onAfterLeave)="onOverlayAfterLeave($event)"
+          @if (modalVisible) {
+            <div #overlay [class]="cn(cx('root'), styleClass)" [style]="sx('root')" [hBind]="ptm('root')" (click)="onOverlayClick()">
+              <h-motion
+                [visible]="visible"
+                name="p-anchored-overlay"
+                [appear]="true"
+                [options]="computedMotionOptions()"
+                (onBeforeEnter)="onOverlayBeforeEnter($event)"
+                (onEnter)="onOverlayEnter($event)"
+                (onAfterEnter)="onOverlayAfterEnter($event)"
+                (onBeforeLeave)="onOverlayBeforeLeave($event)"
+                (onLeave)="onOverlayLeave($event)"
+                (onAfterLeave)="onOverlayAfterLeave($event)"
                 >
-                    <div #content [class]="cn(cx('content'), contentStyleClass)" [hBind]="ptm('content')" (click)="onOverlayContentClick($event)">
-                        <ng-content></ng-content>
-                        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: overlayMode } }"></ng-container>
-                    </div>
-                </h-motion>
+                <div #content [class]="cn(cx('content'), contentStyleClass)" [hBind]="ptm('content')" (click)="onOverlayContentClick($event)">
+                  <ng-content></ng-content>
+                  <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: overlayMode } }"></ng-container>
+                </div>
+              </h-motion>
             </div>
+          }
         }
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [OverlayStyle, { provide: OVERLAY_INSTANCE, useExisting: Overlay }, { provide: PARENT_INSTANCE, useExisting: Overlay }]

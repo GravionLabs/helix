@@ -114,14 +114,16 @@ class TestTemplateMenubarComponent {
     standalone: false,
     template: `
         <p-menubar [model]="model">
-            <ng-template #item let-item>
-                <div class="custom-item">
-                    <i [class]="item.icon" *ngIf="item.icon"></i>
-                    <span class="custom-label">{{ item.label }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="custom-item">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span class="custom-label">{{ item.label }}</span>
+            </div>
+          </ng-template>
         </p-menubar>
-    `
+        `
 })
 class TestItemTemplateMenubarComponent {
     model: MenuItem[] = [

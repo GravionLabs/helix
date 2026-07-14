@@ -103,14 +103,16 @@ class TestIconTemplatePanelMenuComponent {
     standalone: false,
     template: `
         <p-panelmenu [model]="model">
-            <ng-template #item let-item>
-                <div class="content-template-item">
-                    <span class="item-label">{{ item.label }}</span>
-                    <span class="custom-badge" *ngIf="item.badge">{{ item.badge }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="content-template-item">
+              <span class="item-label">{{ item.label }}</span>
+              @if (item.badge) {
+                <span class="custom-badge">{{ item.badge }}</span>
+              }
+            </div>
+          </ng-template>
         </p-panelmenu>
-    `
+        `
 })
 class TestContentItemTemplatePanelMenuComponent {
     model: MenuItem[] = [
