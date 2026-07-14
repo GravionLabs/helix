@@ -761,7 +761,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
                     [class]="cx('pcFilterInput')"
                     [attr.placeholder]="filterPlaceholder"
                     (keydown.enter)="$event.preventDefault()"
-                    (input)="_filter($event.target?.value)"
+                    (input)="_filter($safeNavigationMigration($event.target?.value))"
                     [pt]="ptm('pcFilterInput')"
                     [unstyled]="unstyled()"
                 />

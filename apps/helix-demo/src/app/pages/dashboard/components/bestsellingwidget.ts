@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { MenuModule } from '@gravionlabs/helix/menu';
 
@@ -8,6 +8,7 @@ import { MenuModule } from '@gravionlabs/helix/menu';
   selector: 'app-best-selling-widget',
   imports: [CommonModule, ButtonModule, MenuModule],
   templateUrl: './bestsellingwidget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './bestsellingwidget.scss',
 })
 export class BestSellingWidget {

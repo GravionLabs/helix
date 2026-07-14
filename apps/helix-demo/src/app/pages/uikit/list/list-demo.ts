@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { DataViewModule } from '@gravionlabs/helix/dataview';
@@ -24,6 +24,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   ],
   templateUrl: './list-demo.html',
   styleUrl: './list-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ProductService],
 })
 export class ListDemo implements OnInit {

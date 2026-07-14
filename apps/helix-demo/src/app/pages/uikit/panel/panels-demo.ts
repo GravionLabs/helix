@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccordionModule } from '@gravionlabs/helix/accordion';
 import type { MenuItem } from '@gravionlabs/helix/api';
@@ -39,6 +39,7 @@ import { ToolbarModule } from '@gravionlabs/helix/toolbar';
     InputIconModule,
   ],
   templateUrl: './panels-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './panels-demo.scss',
 })
 export class PanelsDemo {

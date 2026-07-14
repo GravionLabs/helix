@@ -354,7 +354,7 @@ export class TableService {
         </span>
     `,
     providers: [TableService, TableStyle, { provide: TABLE_INSTANCE, useExisting: Table }, { provide: PARENT_INSTANCE, useExisting: Table }],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cn(cx('root'), styleClass)",
@@ -3382,7 +3382,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
         </ng-container>
     `,
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     host: {
         '[attr.data-p]': 'dataP'
@@ -4936,6 +4936,7 @@ export class CancelEditableRow extends BaseComponent {
             <ng-container *ngTemplateOutlet="outputTemplate || _outputTemplate"></ng-container>
         </ng-container>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None
 })
 export class CellEditor extends BaseComponent {
@@ -5410,7 +5411,7 @@ export class ReorderableRow extends BaseComponent {
                 [attr.aria-expanded]="overlayVisible ?? false"
                 (click)="toggleMenu($event)"
                 (keydown)="onToggleButtonKeyDown($event)"
-                [buttonProps]="filterButtonProps?.filter"
+                [buttonProps]="$safeNavigationMigration(filterButtonProps?.filter)"
                 #menuButton
                 [unstyled]="unstyled()"
             >
@@ -5504,7 +5505,7 @@ export class ReorderableRow extends BaseComponent {
                                         (onClick)="removeConstraint(fieldConstraint)"
                                         [ariaLabel]="removeRuleButtonLabel"
                                         [label]="removeRuleButtonLabel"
-                                        [buttonProps]="filterButtonProps?.popover?.removeRule"
+                                        [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.removeRule)"
                                         [unstyled]="unstyled()"
                                     >
                                         <ng-template #icon>
@@ -5525,7 +5526,7 @@ export class ReorderableRow extends BaseComponent {
                                 [text]="true"
                                 size="small"
                                 (onClick)="addConstraint()"
-                                [buttonProps]="filterButtonProps?.popover?.addRule"
+                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.addRule)"
                                 [unstyled]="unstyled()"
                             >
                                 <ng-template #icon>
@@ -5542,7 +5543,7 @@ export class ReorderableRow extends BaseComponent {
                                 (onClick)="clearFilter()"
                                 [attr.aria-label]="clearButtonLabel"
                                 [label]="clearButtonLabel"
-                                [buttonProps]="filterButtonProps?.popover?.clear"
+                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.clear)"
                                 [pt]="ptm('pcFilterClearButton')"
                                 [unstyled]="unstyled()"
                             />
@@ -5552,7 +5553,7 @@ export class ReorderableRow extends BaseComponent {
                                 size="small"
                                 [label]="applyButtonLabel"
                                 [attr.aria-label]="applyButtonLabel"
-                                [buttonProps]="filterButtonProps?.popover?.apply"
+                                [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.apply)"
                                 [pt]="ptm('pcFilterApplyButton')"
                                 [unstyled]="unstyled()"
                             />
@@ -5565,6 +5566,7 @@ export class ReorderableRow extends BaseComponent {
     `,
     providers: [TableStyle],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class ColumnFilter extends BaseComponent {
@@ -6384,7 +6386,7 @@ export class ColumnFilter extends BaseComponent {
                     [ariaLabel]="ariaLabel"
                     hInputText
                     [pt]="ptm('pcFilterInputText')"
-                    [value]="filterConstraint?.value"
+                    [value]="$safeNavigationMigration(filterConstraint?.value)"
                     (input)="onModelChange($event.target.value)"
                     (keydown.enter)="onTextInputEnterKeyDown($event)"
                     [attr.placeholder]="placeholder"
@@ -6392,7 +6394,7 @@ export class ColumnFilter extends BaseComponent {
                 />
                 <h-inputNumber
                     *ngSwitchCase="'numeric'"
-                    [ngModel]="filterConstraint?.value"
+                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
                     (ngModelChange)="onModelChange($event)"
                     (onKeyDown)="onNumericInputKeyDown($event)"
                     [showButtons]="showButtons"
@@ -6413,10 +6415,10 @@ export class ColumnFilter extends BaseComponent {
                 ></h-inputNumber>
                 <h-checkbox
                     [pt]="ptm('pcFilterCheckbox')"
-                    [indeterminate]="filterConstraint?.value === null"
+                    [indeterminate]="$safeNavigationMigration(filterConstraint?.value) === null"
                     [binary]="true"
                     *ngSwitchCase="'boolean'"
-                    [ngModel]="filterConstraint?.value"
+                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
                     (ngModelChange)="onModelChange($event)"
                     [unstyled]="unstyled()"
                 />
@@ -6426,7 +6428,7 @@ export class ColumnFilter extends BaseComponent {
                     [ariaLabel]="ariaLabel"
                     *ngSwitchCase="'date'"
                     [placeholder]="placeholder"
-                    [ngModel]="filterConstraint?.value"
+                    [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
                     (ngModelChange)="onModelChange($event)"
                     appendTo="body"
                     [unstyled]="unstyled()"
@@ -6436,6 +6438,7 @@ export class ColumnFilter extends BaseComponent {
     `,
     providers: [TableStyle],
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class ColumnFilterFormElement extends BaseComponent<ColumnFilterPassThrough> {

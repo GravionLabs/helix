@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { MenuModule } from '@gravionlabs/helix/menu';
 
@@ -7,6 +7,7 @@ import { MenuModule } from '@gravionlabs/helix/menu';
   selector: 'app-notifications-widget',
   imports: [ButtonModule, MenuModule],
   templateUrl: './notificationswidget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './notificationswidget.scss',
 })
 export class NotificationsWidget {

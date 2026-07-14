@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { z } from 'zod';
 import { helixMeta } from '../../model/helix-field-meta';
@@ -27,6 +27,7 @@ const RegistrationSchema = z.object({
 @Component({
   standalone: true,
   imports: [HelixDynamicForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<helix-dynamic-form [schema]="schema" (submitted)="submittedValue.set($event)" />`,
 })
 class Host {

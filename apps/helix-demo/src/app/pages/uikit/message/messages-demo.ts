@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MessageService, type ToastMessageOptions } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -13,6 +13,7 @@ import { ToastModule } from '@gravionlabs/helix/toast';
   imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule],
   templateUrl: './messages-demo.html',
   styleUrl: './messages-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MessageService],
 })
 export class MessagesDemo {

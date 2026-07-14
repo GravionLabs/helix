@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { type AfterViewInit, Component, computed, inject, input, signal } from '@angular/core';
+import {
+  type AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RippleModule } from '@gravionlabs/helix/ripple';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
@@ -22,6 +30,7 @@ function isPathActive(activePath: string, itemPath: string): boolean {
   imports: [CommonModule, RouterModule, RippleModule],
   templateUrl: './nav-rail-item.html',
   styleUrl: './nav-rail-item.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: {
     '[class.helix-nav-rail-item-expanded]': 'isExpanded()',
     '[class.helix-nav-rail-item-collapsed]': 'isCollapsed()',

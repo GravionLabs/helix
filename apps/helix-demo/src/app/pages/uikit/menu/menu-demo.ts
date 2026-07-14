@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BreadcrumbModule } from '@gravionlabs/helix/breadcrumb';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { ContextMenuModule } from '@gravionlabs/helix/contextmenu';
@@ -38,6 +38,7 @@ import { TieredMenuModule } from '@gravionlabs/helix/tieredmenu';
     InputIcon,
   ],
   templateUrl: './menu-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './menu-demo.scss',
 })
 export class MenuDemo {

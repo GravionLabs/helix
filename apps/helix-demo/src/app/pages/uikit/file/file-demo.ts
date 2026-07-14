@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { FileUploadModule } from '@gravionlabs/helix/fileupload';
@@ -11,6 +11,7 @@ import { ToastModule } from '@gravionlabs/helix/toast';
   imports: [CommonModule, FileUploadModule, ToastModule, ButtonModule],
   templateUrl: './file-demo.html',
   styleUrl: './file-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [MessageService],
 })
 export class FileDemo {

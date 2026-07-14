@@ -89,17 +89,18 @@ export const SELECT_VALUE_ACCESSOR: any = {
             [attr.data-p-highlight]="selected"
             [attr.data-p-selected]="selected"
             [attr.data-p-disabled]="disabled"
-            [ngStyle]="{ height: scrollerOptions?.itemSize + 'px' }"
+            [ngStyle]="{ height: $safeNavigationMigration(scrollerOptions?.itemSize) + 'px' }"
             [class]="cx('option')"
         >
             <ng-container *ngIf="checkmark">
-                <svg data-p-icon="check" *ngIf="selected" [class]="cx('optionCheckIcon')" [hBind]="$pcSelect?.ptm('optionCheckIcon')" />
-                <svg data-p-icon="blank" *ngIf="!selected" [class]="cx('optionBlankIcon')" [hBind]="$pcSelect?.ptm('optionBlankIcon')" />
+                <svg data-p-icon="check" *ngIf="selected" [class]="cx('optionCheckIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionCheckIcon'))" />
+                <svg data-p-icon="blank" *ngIf="!selected" [class]="cx('optionBlankIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionBlankIcon'))" />
             </ng-container>
-            <span *ngIf="!template" [hBind]="$pcSelect?.ptm('optionLabel')">{{ label ?? 'empty' }}</span>
+            <span *ngIf="!template" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionLabel'))">{{ label ?? 'empty' }}</span>
             <ng-container *ngTemplateOutlet="template; context: { $implicit: option }"></ng-container>
         </li>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [SelectStyle, { provide: PARENT_INSTANCE, useExisting: SelectItem }]
 })
 export class SelectItem extends BaseComponent {

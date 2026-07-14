@@ -230,6 +230,7 @@ const MEGAMENU_SUB_INSTANCE = new InjectionToken<MegaMenuSub>('MEGAMENU_SUB_INST
         '(blur)': 'menuBlur.emit($event)',
         '(mousedown)': 'menuMouseDown.emit($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {

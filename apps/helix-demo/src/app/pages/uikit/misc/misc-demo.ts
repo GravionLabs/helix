@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, type OnDestroy, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnDestroy, type OnInit } from '@angular/core';
 import { AvatarModule } from '@gravionlabs/helix/avatar';
 import { AvatarGroupModule } from '@gravionlabs/helix/avatargroup';
 import { BadgeModule } from '@gravionlabs/helix/badge';
@@ -30,6 +30,7 @@ import { TagModule } from '@gravionlabs/helix/tag';
     OverlayBadgeModule,
   ],
   templateUrl: './misc-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './misc-demo.scss',
 })
 export class MiscDemo implements OnInit, OnDestroy {

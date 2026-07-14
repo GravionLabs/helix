@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { Environment } from '../../../ui/badge/environment-badge';
 import { HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from './status-bar.model';
@@ -24,6 +24,7 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
   standalone: true,
   imports: [HelixEnvironmentBadge],
   templateUrl: './status-bar.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './status-bar.scss',
 })
 export class HelixStatusBar {

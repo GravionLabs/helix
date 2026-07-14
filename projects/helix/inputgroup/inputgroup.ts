@@ -1,4 +1,4 @@
-import { Component, inject, InjectionToken, Input, NgModule } from '@angular/core';
+import { Component, inject, InjectionToken, Input, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -18,6 +18,7 @@ const INPUTGROUP_INSTANCE = new InjectionToken<InputGroup>('INPUTGROUP_INSTANCE'
     template: ` <ng-content></ng-content> `,
     providers: [InputGroupStyle, { provide: INPUTGROUP_INSTANCE, useExisting: InputGroup }, { provide: PARENT_INSTANCE, useExisting: InputGroup }],
     hostDirectives: [Bind],
+    changeDetection: ChangeDetectionStrategy.Eager,
     host: {
         '[class]': "cn(cx('root'), styleClass)"
     }

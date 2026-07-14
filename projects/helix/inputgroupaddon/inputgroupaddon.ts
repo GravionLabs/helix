@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject, InjectionToken, Input, NgModule } from '@angular/core';
+import { Component, HostBinding, inject, InjectionToken, Input, NgModule, ChangeDetectionStrategy } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -20,6 +20,7 @@ const INPUTGROUPADDON_INSTANCE = new InjectionToken<InputGroupAddon>('INPUTGROUP
         '[class]': "cn(cx('root'), styleClass)"
     },
     providers: [InputGroupAddonStyle, { provide: INPUTGROUPADDON_INSTANCE, useExisting: InputGroupAddon }, { provide: PARENT_INSTANCE, useExisting: InputGroupAddon }],
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class InputGroupAddon extends BaseComponent<InputGroupAddonPassThrough> {

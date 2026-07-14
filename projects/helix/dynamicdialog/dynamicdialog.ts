@@ -20,18 +20,18 @@ const DYNAMIC_DIALOG_INSTANCE = new InjectionToken<DynamicDialog>('DYNAMIC_DIALO
     template: `
         <h-dialog
             [(visible)]="visible"
-            [header]="ddconfig?.header"
+            [header]="$safeNavigationMigration(ddconfig?.header)"
             [draggable]="ddconfig?.draggable !== false"
             [resizable]="ddconfig?.resizable !== false"
-            [contentStyle]="ddconfig?.contentStyle"
+            [contentStyle]="$safeNavigationMigration(ddconfig?.contentStyle)"
             [modal]="ddconfig?.modal !== false"
             [closeOnEscape]="ddconfig?.closeOnEscape !== false"
-            [dismissableMask]="ddconfig?.dismissableMask"
-            [rtl]="ddconfig?.rtl"
+            [dismissableMask]="$safeNavigationMigration(ddconfig?.dismissableMask)"
+            [rtl]="$safeNavigationMigration(ddconfig?.rtl)"
             [closable]="closable"
             [breakpoints]="breakpoints"
-            [styleClass]="ddconfig?.styleClass"
-            [maskStyleClass]="ddconfig?.maskStyleClass"
+            [styleClass]="$safeNavigationMigration(ddconfig?.styleClass)"
+            [maskStyleClass]="$safeNavigationMigration(ddconfig?.maskStyleClass)"
             [showHeader]="ddconfig?.showHeader !== false"
             [autoZIndex]="ddconfig?.autoZIndex !== false"
             [baseZIndex]="ddconfig?.baseZIndex || 0"
@@ -83,7 +83,7 @@ const DYNAMIC_DIALOG_INSTANCE = new InjectionToken<DynamicDialog>('DYNAMIC_DIALO
             <div *ngIf="ddconfig.footer && !footerTemplate">{{ ddconfig.footer }}</div>
         </h-dialog>
     `,
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     providers: [DynamicDialogStyle, { provide: DYNAMIC_DIALOG_INSTANCE, useExisting: DynamicDialog }, { provide: PARENT_INSTANCE, useExisting: DynamicDialog }],
     hostDirectives: [Bind]

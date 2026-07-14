@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { DividerModule } from '@gravionlabs/helix/divider';
@@ -28,6 +28,7 @@ import { HelixTopbarWidget } from './components/topbar-widget/topbar-widget';
     DividerModule,
   ],
   templateUrl: './landing.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './landing.scss',
 })
 export class HelixLanding {}
