@@ -10,8 +10,17 @@ import {
   rawNumberFormatter,
 } from './ag-grid-formatters';
 
-function params<T>(value: T): AgGridFormatterParams<unknown, T> {
-  return { value } as AgGridFormatterParams<unknown, T>;
+// ValueFormatterParams is invariant in TValue, so the helpers must produce the
+// exact value types the formatters declare.
+type NumberInput = number | null | undefined;
+type DateInput = Date | string | null | undefined;
+
+function params(value: NumberInput): AgGridFormatterParams<unknown, NumberInput> {
+  return { value } as AgGridFormatterParams<unknown, NumberInput>;
+}
+
+function dateParams(value: DateInput): AgGridFormatterParams<unknown, DateInput> {
+  return { value } as AgGridFormatterParams<unknown, DateInput>;
 }
 
 // ── numberFormatter ──────────────────────────────────────────────────────────
@@ -113,58 +122,58 @@ const UTC_ISO = '2024-06-15T10:30:45Z';
 
 describe('cetDateFormatter', () => {
   it('formats a Date as dd.MM.yyyy in CET', () => {
-    expect(cetDateFormatter(params(UTC_DATE))).toBe('15.06.2024');
+    expect(cetDateFormatter(dateParams(UTC_DATE))).toBe('15.06.2024');
   });
 
   it('formats an ISO string as dd.MM.yyyy in CET', () => {
-    expect(cetDateFormatter(params(UTC_ISO))).toBe('15.06.2024');
+    expect(cetDateFormatter(dateParams(UTC_ISO))).toBe('15.06.2024');
   });
 
   it('returns empty string for null', () => {
-    expect(cetDateFormatter(params(null))).toBe('');
+    expect(cetDateFormatter(dateParams(null))).toBe('');
   });
 
   it('returns empty string for undefined', () => {
-    expect(cetDateFormatter(params(undefined))).toBe('');
+    expect(cetDateFormatter(dateParams(undefined))).toBe('');
   });
 
   it('returns empty string for an invalid date string', () => {
-    expect(cetDateFormatter(params('not-a-date'))).toBe('');
+    expect(cetDateFormatter(dateParams('not-a-date'))).toBe('');
   });
 });
 
 describe('cetDateTimeFormatter', () => {
   it('formats a Date as dd.MM.yyyy HH:mm:ss in CET', () => {
-    expect(cetDateTimeFormatter(params(UTC_DATE))).toBe('15.06.2024 12:30:45');
+    expect(cetDateTimeFormatter(dateParams(UTC_DATE))).toBe('15.06.2024 12:30:45');
   });
 
   it('formats an ISO string as dd.MM.yyyy HH:mm:ss in CET', () => {
-    expect(cetDateTimeFormatter(params(UTC_ISO))).toBe('15.06.2024 12:30:45');
+    expect(cetDateTimeFormatter(dateParams(UTC_ISO))).toBe('15.06.2024 12:30:45');
   });
 
   it('returns empty string for null', () => {
-    expect(cetDateTimeFormatter(params(null))).toBe('');
+    expect(cetDateTimeFormatter(dateParams(null))).toBe('');
   });
 
   it('returns empty string for undefined', () => {
-    expect(cetDateTimeFormatter(params(undefined))).toBe('');
+    expect(cetDateTimeFormatter(dateParams(undefined))).toBe('');
   });
 });
 
 describe('cetTimeFormatter', () => {
   it('formats a Date as HH:mm in CET', () => {
-    expect(cetTimeFormatter(params(UTC_DATE))).toBe('12:30');
+    expect(cetTimeFormatter(dateParams(UTC_DATE))).toBe('12:30');
   });
 
   it('formats an ISO string as HH:mm in CET', () => {
-    expect(cetTimeFormatter(params(UTC_ISO))).toBe('12:30');
+    expect(cetTimeFormatter(dateParams(UTC_ISO))).toBe('12:30');
   });
 
   it('returns empty string for null', () => {
-    expect(cetTimeFormatter(params(null))).toBe('');
+    expect(cetTimeFormatter(dateParams(null))).toBe('');
   });
 
   it('returns empty string for undefined', () => {
-    expect(cetTimeFormatter(params(undefined))).toBe('');
+    expect(cetTimeFormatter(dateParams(undefined))).toBe('');
   });
 });
