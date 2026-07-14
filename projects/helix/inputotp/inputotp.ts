@@ -51,39 +51,39 @@ export { InputOtpChangeEvent, InputOtpInputTemplateContext, InputOtpTemplateEven
     standalone: true,
     imports: [CommonModule, InputText, AutoFocus, SharedModule, BindModule],
     template: `
-        <ng-container *ngFor="let i of getRange(length); trackBy: trackByFn">
-            <ng-container *ngIf="!inputTemplate && !_inputTemplate">
-                <input
-                    type="text"
-                    hInputText
-                    [value]="getModelValue(i)"
-                    [attr.maxlength]="i === 1 ? length : 1"
-                    [attr.type]="inputType"
-                    [class]="cn(cx('pcInputText'), styleClass)"
-                    [pSize]="size()"
-                    [variant]="$variant()"
-                    [invalid]="invalid()"
-                    [attr.inputmode]="inputMode"
-                    [attr.name]="name()"
-                    [attr.tabindex]="tabindex"
-                    [attr.required]="required() ? '' : undefined"
-                    [attr.readonly]="readonly ? '' : undefined"
-                    [attr.disabled]="$disabled() ? '' : undefined"
-                    (input)="onInput($event, i - 1)"
-                    (focus)="onInputFocus($event)"
-                    (blur)="onInputBlur($event)"
-                    (paste)="onPaste($event)"
-                    (keydown)="onKeyDown($event)"
-                    [hAutoFocus]="getAutofocus(i)"
-                    [pt]="ptm('pcInputText')"
-                    [unstyled]="unstyled()"
-                />
-            </ng-container>
-            <ng-container *ngIf="inputTemplate || _inputTemplate">
-                <ng-container *ngTemplateOutlet="inputTemplate || _inputTemplate; context: { $implicit: getToken(i - 1), events: getTemplateEvents(i - 1), index: i }"> </ng-container>
-            </ng-container>
-        </ng-container>
-    `,
+        @for (i of getRange(length); track trackByFn($index)) {
+          @if (!inputTemplate && !_inputTemplate) {
+            <input
+              type="text"
+              hInputText
+              [value]="getModelValue(i)"
+              [attr.maxlength]="i === 1 ? length : 1"
+              [attr.type]="inputType"
+              [class]="cn(cx('pcInputText'), styleClass)"
+              [pSize]="size()"
+              [variant]="$variant()"
+              [invalid]="invalid()"
+              [attr.inputmode]="inputMode"
+              [attr.name]="name()"
+              [attr.tabindex]="tabindex"
+              [attr.required]="required() ? '' : undefined"
+              [attr.readonly]="readonly ? '' : undefined"
+              [attr.disabled]="$disabled() ? '' : undefined"
+              (input)="onInput($event, i - 1)"
+              (focus)="onInputFocus($event)"
+              (blur)="onInputBlur($event)"
+              (paste)="onPaste($event)"
+              (keydown)="onKeyDown($event)"
+              [hAutoFocus]="getAutofocus(i)"
+              [pt]="ptm('pcInputText')"
+              [unstyled]="unstyled()"
+              />
+          }
+          @if (inputTemplate || _inputTemplate) {
+            <ng-container *ngTemplateOutlet="inputTemplate || _inputTemplate; context: { $implicit: getToken(i - 1), events: getTemplateEvents(i - 1), index: i }"> </ng-container>
+          }
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [INPUT_OTP_VALUE_ACCESSOR, InputOtpStyle, { provide: INPUTOTP_INSTANCE, useExisting: InputOtp }, { provide: PARENT_INSTANCE, useExisting: InputOtp }],

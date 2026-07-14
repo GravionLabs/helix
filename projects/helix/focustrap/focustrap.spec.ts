@@ -36,16 +36,22 @@ class TestDisabledFocusTrapComponent {
     selector: 'test-dynamic-focus-trap',
     template: `
         <div pFocusTrap [pFocusTrapDisabled]="trapDisabled">
-            <input type="text" *ngIf="showFirstInput" class="dynamic-first-input" />
-            <select class="select">
-                <option>Option 1</option>
-                <option>Option 2</option>
-            </select>
-            <textarea *ngIf="showTextarea" class="textarea"></textarea>
-            <button class="dynamic-button">Dynamic Button</button>
-            <input type="checkbox" *ngIf="showCheckbox" class="checkbox" />
+          @if (showFirstInput) {
+            <input type="text" class="dynamic-first-input" />
+          }
+          <select class="select">
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>
+          @if (showTextarea) {
+            <textarea class="textarea"></textarea>
+          }
+          <button class="dynamic-button">Dynamic Button</button>
+          @if (showCheckbox) {
+            <input type="checkbox" class="checkbox" />
+          }
         </div>
-    `
+        `
 })
 class TestDynamicFocusTrapComponent {
     trapDisabled = false;
@@ -115,11 +121,17 @@ class TestEmptyFocusTrapComponent {}
     selector: 'test-conditional-focus-trap',
     template: `
         <div pFocusTrap [pFocusTrapDisabled]="trapDisabled">
-            <input type="text" *ngIf="showElements" class="conditional-input" />
-            <button *ngIf="showElements" class="conditional-button">Button</button>
-            <div *ngIf="!showElements" class="no-focusable">No focusable elements</div>
+          @if (showElements) {
+            <input type="text" class="conditional-input" />
+          }
+          @if (showElements) {
+            <button class="conditional-button">Button</button>
+          }
+          @if (!showElements) {
+            <div class="no-focusable">No focusable elements</div>
+          }
         </div>
-    `
+        `
 })
 class TestConditionalFocusTrapComponent {
     trapDisabled = false;

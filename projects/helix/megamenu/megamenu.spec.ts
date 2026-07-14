@@ -151,26 +151,28 @@ class TestRouterMegaMenuComponent {
     selector: 'test-template-megamenu',
     template: `
         <p-megamenu [model]="model">
-            <ng-template #start>
-                <div class="custom-start">Start Content</div>
-            </ng-template>
-            <ng-template #end>
-                <div class="custom-end">End Content</div>
-            </ng-template>
-            <ng-template #item let-item>
-                <div class="custom-item">
-                    <i [class]="item.icon" *ngIf="item.icon"></i>
-                    <span class="custom-label">{{ item.label }}</span>
-                </div>
-            </ng-template>
-            <ng-template #button>
-                <button class="custom-button">Custom Menu Button</button>
-            </ng-template>
-            <ng-template #buttonicon>
-                <i class="custom-menu-icon pi pi-bars"></i>
-            </ng-template>
+          <ng-template #start>
+            <div class="custom-start">Start Content</div>
+          </ng-template>
+          <ng-template #end>
+            <div class="custom-end">End Content</div>
+          </ng-template>
+          <ng-template #item let-item>
+            <div class="custom-item">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span class="custom-label">{{ item.label }}</span>
+            </div>
+          </ng-template>
+          <ng-template #button>
+            <button class="custom-button">Custom Menu Button</button>
+          </ng-template>
+          <ng-template #buttonicon>
+            <i class="custom-menu-icon pi pi-bars"></i>
+          </ng-template>
         </p-megamenu>
-    `
+        `
 })
 class TestTemplateMegaMenuComponent {
     model: MegaMenuItem[] = [

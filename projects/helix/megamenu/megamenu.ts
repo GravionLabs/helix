@@ -43,153 +43,173 @@ const MEGAMENU_SUB_INSTANCE = new InjectionToken<MegaMenuSub>('MEGAMENU_SUB_INST
     standalone: true,
     imports: [CommonModule, RouterModule, Ripple, TooltipModule, AngleDownIcon, AngleRightIcon, BadgeModule, SharedModule, Bind],
     template: `
-        <li *ngIf="submenu" [class]="cn(cx('submenuLabel'), getItemProp(submenu, 'class'))" [style]="getItemProp(submenu, 'style')" role="presentation" [hBind]="ptm('submenuLabel')">
+        @if (submenu) {
+          <li [class]="cn(cx('submenuLabel'), getItemProp(submenu, 'class'))" [style]="getItemProp(submenu, 'style')" role="presentation" [hBind]="ptm('submenuLabel')">
             {{ getItemLabel(submenu) }}
-        </li>
-        <ng-template ngFor let-processedItem [ngForOf]="items" let-index="index">
+          </li>
+        }
+        @for (processedItem of items; track processedItem; let index = $index) {
+          @if (isItemVisible(processedItem) && getItemProp(processedItem, 'separator')) {
             <li
-                *ngIf="isItemVisible(processedItem) && getItemProp(processedItem, 'separator')"
-                [attr.id]="getItemId(processedItem)"
-                [style]="getItemProp(processedItem, 'style')"
-                [class]="cn(cx('separator'), this.getItemProp(processedItem, 'class'))"
-                role="separator"
-                [hBind]="ptm('separator')"
+              [attr.id]="getItemId(processedItem)"
+              [style]="getItemProp(processedItem, 'style')"
+              [class]="cn(cx('separator'), this.getItemProp(processedItem, 'class'))"
+              role="separator"
+              [hBind]="ptm('separator')"
             ></li>
+          }
+          @if (isItemVisible(processedItem) && !getItemProp(processedItem, 'separator')) {
             <li
-                #listItem
-                *ngIf="isItemVisible(processedItem) && !getItemProp(processedItem, 'separator')"
-                role="menuitem"
-                [attr.id]="getItemId(processedItem)"
-                [attr.data-p-active]="isItemActive(processedItem)"
-                [attr.data-p-focused]="isItemFocused(processedItem)"
-                [attr.data-p-disabled]="isItemDisabled(processedItem)"
-                [attr.aria-label]="getItemLabel(processedItem)"
-                [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
-                [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
-                [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
-                [attr.aria-level]="level + 1"
-                [attr.aria-setsize]="getAriaSetSize()"
-                [attr.aria-posinset]="getAriaPosInset(index)"
-                [ngStyle]="getItemProp(processedItem, 'style')"
-                [class]="cn(cx('item', { processedItem }), getItemProp(processedItem, 'styleClass'))"
-                hTooltip
-                [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
-                [hBind]="getPTOptions(processedItem, index, 'item')"
-                [pTooltipUnstyled]="unstyled()"
-            >
-                <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)" (mouseenter)="onItemMouseEnter({ $event, processedItem })">
-                    <ng-container *ngIf="!itemTemplate">
-                        <a
-                            *ngIf="!getItemProp(processedItem, 'routerLink')"
-                            [attr.href]="getItemProp(processedItem, 'url')"
-                            [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
-                            [attr.title]="getItemProp(processedItem, 'title')"
-                            [target]="getItemProp(processedItem, 'target')"
-                            [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
-                            [ngStyle]="getItemProp(processedItem, 'linkStyle')"
-                            [attr.tabindex]="-1"
-                            [hBind]="getPTOptions(processedItem, index, 'itemLink')"
-                            hRipple
-                        >
-                            <span
-                                *ngIf="getItemProp(processedItem, 'icon')"
-                                [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'iconStyle')"
-                                [attr.tabindex]="-1"
-                                [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
+              #listItem
+              role="menuitem"
+              [attr.id]="getItemId(processedItem)"
+              [attr.data-p-active]="isItemActive(processedItem)"
+              [attr.data-p-focused]="isItemFocused(processedItem)"
+              [attr.data-p-disabled]="isItemDisabled(processedItem)"
+              [attr.aria-label]="getItemLabel(processedItem)"
+              [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
+              [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
+              [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
+              [attr.aria-level]="level + 1"
+              [attr.aria-setsize]="getAriaSetSize()"
+              [attr.aria-posinset]="getAriaPosInset(index)"
+              [ngStyle]="getItemProp(processedItem, 'style')"
+              [class]="cn(cx('item', { processedItem }), getItemProp(processedItem, 'styleClass'))"
+              hTooltip
+              [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
+              [hBind]="getPTOptions(processedItem, index, 'item')"
+              [pTooltipUnstyled]="unstyled()"
+              >
+              <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)" (mouseenter)="onItemMouseEnter({ $event, processedItem })">
+                @if (!itemTemplate) {
+                  @if (!getItemProp(processedItem, 'routerLink')) {
+                    <a
+                      [attr.href]="getItemProp(processedItem, 'url')"
+                      [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+                      [attr.title]="getItemProp(processedItem, 'title')"
+                      [target]="getItemProp(processedItem, 'target')"
+                      [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
+                      [ngStyle]="getItemProp(processedItem, 'linkStyle')"
+                      [attr.tabindex]="-1"
+                      [hBind]="getPTOptions(processedItem, index, 'itemLink')"
+                      hRipple
+                      >
+                      @if (getItemProp(processedItem, 'icon')) {
+                        <span
+                          [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
+                          [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                          [attr.tabindex]="-1"
+                          [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
+                          >
+                        </span>
+                      }
+                      @if (getItemProp(processedItem, 'escape')) {
+                        <span
+                          [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                          [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                          [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                          >
+                          {{ getItemLabel(processedItem) }}
+                        </span>
+                      } @else {
+                        <span
+                          [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                          [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                          [innerHTML]="getItemLabel(processedItem)"
+                          [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                        ></span>
+                      }
+                      @if (getItemProp(processedItem, 'badge')) {
+                        <h-badge [class]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
+                      }
+                      @if (isItemGroup(processedItem)) {
+                        @if (!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate) {
+                          @if (orientation === 'horizontal' || mobileActive) {
+                            <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                          } @else {
+                            @if (orientation === 'vertical') {
+                              <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                            }
+                          }
+                        }
+                        <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
+                      }
+                    </a>
+                  }
+                  @if (getItemProp(processedItem, 'routerLink')) {
+                    <a
+                      [routerLink]="getItemProp(processedItem, 'routerLink')"
+                      [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+                      [attr.title]="getItemProp(processedItem, 'title')"
+                      [attr.tabindex]="-1"
+                      [queryParams]="getItemProp(processedItem, 'queryParams')"
+                      [routerLinkActive]="'p-megamenu-item-link-active'"
+                      [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
+                      [target]="getItemProp(processedItem, 'target')"
+                      [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
+                      [ngStyle]="getItemProp(processedItem, 'linkStyle')"
+                      [fragment]="getItemProp(processedItem, 'fragment')"
+                      [queryParamsHandling]="getItemProp(processedItem, 'queryParamsHandling')"
+                      [preserveFragment]="getItemProp(processedItem, 'preserveFragment')"
+                      [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
+                      [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
+                      [state]="getItemProp(processedItem, 'state')"
+                      [hBind]="getPTOptions(processedItem, index, 'itemLink')"
+                      hRipple
+                      >
+                      @if (getItemProp(processedItem, 'icon')) {
+                        <span
+                          [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
+                          [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                          [attr.tabindex]="-1"
+                          [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
+                        ></span>
+                      }
+                      @if (getItemProp(processedItem, 'escape')) {
+                        <span
+                          [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                          [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                          [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                          >{{ getItemLabel(processedItem) }}</span
+                          >
+                        } @else {
+                          <span
+                            [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                            [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                            [innerHTML]="getItemLabel(processedItem)"
+                            [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                            ></span
                             >
-                            </span>
-                            <span
-                                *ngIf="getItemProp(processedItem, 'escape'); else htmlLabel"
-                                [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                            >
-                                {{ getItemLabel(processedItem) }}
-                            </span>
-                            <ng-template #htmlLabel>
-                                <span
-                                    [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                    [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                    [innerHTML]="getItemLabel(processedItem)"
-                                    [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                ></span>
-                            </ng-template>
-                            <h-badge *ngIf="getItemProp(processedItem, 'badge')" [class]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
-                            <ng-container *ngIf="isItemGroup(processedItem)">
-                                <ng-container *ngIf="!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate">
-                                    @if (orientation === 'horizontal' || mobileActive) {
-                                        <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
-                                    } @else {
-                                        <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'vertical'" [attr.aria-hidden]="true" />
-                                    }
-                                </ng-container>
-                                <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
-                            </ng-container>
+                          }
+                          @if (getItemProp(processedItem, 'badge')) {
+                            <h-badge [styleClass]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
+                          }
+                          @if (isItemGroup(processedItem)) {
+                            @if (!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate) {
+                              @if (orientation === 'horizontal') {
+                                <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                              }
+                              @if (orientation === 'vertical') {
+                                <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                              }
+                            }
+                            <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
+                          }
                         </a>
-                        <a
-                            *ngIf="getItemProp(processedItem, 'routerLink')"
-                            [routerLink]="getItemProp(processedItem, 'routerLink')"
-                            [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
-                            [attr.title]="getItemProp(processedItem, 'title')"
-                            [attr.tabindex]="-1"
-                            [queryParams]="getItemProp(processedItem, 'queryParams')"
-                            [routerLinkActive]="'p-megamenu-item-link-active'"
-                            [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
-                            [target]="getItemProp(processedItem, 'target')"
-                            [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
-                            [ngStyle]="getItemProp(processedItem, 'linkStyle')"
-                            [fragment]="getItemProp(processedItem, 'fragment')"
-                            [queryParamsHandling]="getItemProp(processedItem, 'queryParamsHandling')"
-                            [preserveFragment]="getItemProp(processedItem, 'preserveFragment')"
-                            [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
-                            [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
-                            [state]="getItemProp(processedItem, 'state')"
-                            [hBind]="getPTOptions(processedItem, index, 'itemLink')"
-                            hRipple
-                        >
-                            <span
-                                [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
-                                *ngIf="getItemProp(processedItem, 'icon')"
-                                [ngStyle]="getItemProp(processedItem, 'iconStyle')"
-                                [attr.tabindex]="-1"
-                                [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
-                            ></span>
-                            <span
-                                [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                *ngIf="getItemProp(processedItem, 'escape'); else htmlRouteLabel"
-                                [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                >{{ getItemLabel(processedItem) }}</span
-                            >
-                            <ng-template #htmlRouteLabel
-                                ><span
-                                    [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                    [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                    [innerHTML]="getItemLabel(processedItem)"
-                                    [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                ></span
-                            ></ng-template>
-                            <h-badge *ngIf="getItemProp(processedItem, 'badge')" [styleClass]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
-                            <ng-container *ngIf="isItemGroup(processedItem)">
-                                <ng-container *ngIf="!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate">
-                                    <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'horizontal'" [attr.aria-hidden]="true" />
-                                    <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'vertical'" [attr.aria-hidden]="true" />
-                                </ng-container>
-                                <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
-                            </ng-container>
-                        </a>
-                    </ng-container>
-                    <ng-container *ngIf="itemTemplate">
-                        <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
-                    </ng-container>
-                </div>
-                <div *ngIf="isItemVisible(processedItem) && isItemGroup(processedItem)" [class]="cx('overlay')" [hBind]="ptm('overlay')">
-                    <div [class]="cx('grid')" [hBind]="ptm('grid')">
-                        <div *ngFor="let col of processedItem.items" [class]="cx('column', { processedItem })" [hBind]="ptm('column')">
-                            <ul
+                      }
+                    }
+                    @if (itemTemplate) {
+                      <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
+                    }
+                  </div>
+                  @if (isItemVisible(processedItem) && isItemGroup(processedItem)) {
+                    <div [class]="cx('overlay')" [hBind]="ptm('overlay')">
+                      <div [class]="cx('grid')" [hBind]="ptm('grid')">
+                        @for (col of processedItem.items; track col) {
+                          <div [class]="cx('column', { processedItem })" [hBind]="ptm('column')">
+                            @for (submenu of col; track submenu) {
+                              <ul
                                 hMegaMenuSub
-                                *ngFor="let submenu of col"
                                 [id]="getSubListId(submenu)"
                                 [submenu]="submenu"
                                 [items]="submenu.items"
@@ -203,13 +223,17 @@ const MEGAMENU_SUB_INSTANCE = new InjectionToken<MegaMenuSub>('MEGAMENU_SUB_INST
                                 (itemMouseEnter)="onItemMouseEnter($event)"
                                 [pt]="pt()"
                                 [unstyled]="unstyled()"
-                            ></ul>
-                        </div>
+                              ></ul>
+                            }
+                          </div>
+                        }
+                      </div>
                     </div>
-                </div>
-            </li>
-        </ng-template>
-    `,
+                  }
+                </li>
+              }
+            }
+        `,
     encapsulation: ViewEncapsulation.None,
     providers: [
         { provide: MEGAMENU_SUB_INSTANCE, useExisting: MegaMenuSub },
@@ -379,61 +403,68 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     standalone: true,
     imports: [CommonModule, RouterModule, MegaMenuSub, TooltipModule, BarsIcon, BadgeModule, SharedModule, Bind],
     template: `
-        <div [class]="cx('start')" *ngIf="startTemplate || _startTemplate" [hBind]="ptm('start')">
+        @if (startTemplate || _startTemplate) {
+          <div [class]="cx('start')" [hBind]="ptm('start')">
             <ng-container *ngTemplateOutlet="startTemplate || _startTemplate"></ng-container>
-        </div>
-        <ng-container *ngIf="!buttonTemplate && !_buttonTemplate">
+          </div>
+        }
+        @if (!buttonTemplate && !_buttonTemplate) {
+          @if (model && model.length > 0) {
             <a
-                *ngIf="model && model.length > 0"
-                #menubutton
-                role="button"
-                tabindex="0"
-                [class]="cx('button')"
-                [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
-                [attr.aria-expanded]="mobileActive"
-                [attr.aria-controls]="id"
-                [attr.aria-label]="config.translation.aria.navigation"
-                [hBind]="ptm('button')"
-                (click)="menuButtonClick($event)"
-                (keydown)="menuButtonKeydown($event)"
-            >
-                <svg data-p-icon="bars" *ngIf="!buttonIconTemplate && !_buttonIconTemplate" [hBind]="ptm('buttonIcon')" />
-                <ng-template *ngTemplateOutlet="buttonIconTemplate || _buttonIconTemplate"></ng-template>
+              #menubutton
+              role="button"
+              tabindex="0"
+              [class]="cx('button')"
+              [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
+              [attr.aria-expanded]="mobileActive"
+              [attr.aria-controls]="id"
+              [attr.aria-label]="config.translation.aria.navigation"
+              [hBind]="ptm('button')"
+              (click)="menuButtonClick($event)"
+              (keydown)="menuButtonKeydown($event)"
+              >
+              @if (!buttonIconTemplate && !_buttonIconTemplate) {
+                <svg data-p-icon="bars" [hBind]="ptm('buttonIcon')" />
+              }
+              <ng-template *ngTemplateOutlet="buttonIconTemplate || _buttonIconTemplate"></ng-template>
             </a>
-        </ng-container>
+          }
+        }
         <ng-container *ngTemplateOutlet="buttonTemplate || _buttonTemplate"></ng-container>
         <ul
-            hMegaMenuSub
-            #rootmenu
-            [itemTemplate]="itemTemplate || _itemTemplate"
-            [items]="processedItems"
-            [attr.id]="id + '_list'"
-            [menuId]="id"
-            [root]="true"
-            [orientation]="orientation"
-            [ariaLabel]="ariaLabel"
-            [disabled]="disabled"
-            [tabindex]="!disabled ? tabindex : -1"
-            [activeItem]="activeItem()"
-            [level]="0"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [focusedItemId]="focused ? focusedItemId : undefined"
-            [mobileActive]="mobileActive"
-            (itemClick)="onItemClick($event)"
-            (menuFocus)="onMenuFocus($event)"
-            (menuBlur)="onMenuBlur($event)"
-            (menuKeydown)="onKeyDown($event)"
-            (menuMouseDown)="onMenuMouseDown($event)"
-            (itemMouseEnter)="onItemMouseEnter($event)"
-            [queryMatches]="queryMatches()"
-            [scrollHeight]="scrollHeight"
-            [pt]="pt()"
-            [unstyled]="unstyled()"
+          hMegaMenuSub
+          #rootmenu
+          [itemTemplate]="itemTemplate || _itemTemplate"
+          [items]="processedItems"
+          [attr.id]="id + '_list'"
+          [menuId]="id"
+          [root]="true"
+          [orientation]="orientation"
+          [ariaLabel]="ariaLabel"
+          [disabled]="disabled"
+          [tabindex]="!disabled ? tabindex : -1"
+          [activeItem]="activeItem()"
+          [level]="0"
+          [ariaLabelledBy]="ariaLabelledBy"
+          [focusedItemId]="focused ? focusedItemId : undefined"
+          [mobileActive]="mobileActive"
+          (itemClick)="onItemClick($event)"
+          (menuFocus)="onMenuFocus($event)"
+          (menuBlur)="onMenuBlur($event)"
+          (menuKeydown)="onKeyDown($event)"
+          (menuMouseDown)="onMenuMouseDown($event)"
+          (itemMouseEnter)="onItemMouseEnter($event)"
+          [queryMatches]="queryMatches()"
+          [scrollHeight]="scrollHeight"
+          [pt]="pt()"
+          [unstyled]="unstyled()"
         ></ul>
-        <div [class]="cx('end')" *ngIf="endTemplate || _endTemplate" [hBind]="ptm('end')">
+        @if (endTemplate || _endTemplate) {
+          <div [class]="cx('end')" [hBind]="ptm('end')">
             <ng-container *ngTemplateOutlet="endTemplate || _endTemplate"></ng-container>
-        </div>
-    `,
+          </div>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [MegaMenuStyle, { provide: MEGAMENU_INSTANCE, useExisting: MegaMenu }, { provide: PARENT_INSTANCE, useExisting: MegaMenu }],
