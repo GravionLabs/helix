@@ -265,8 +265,8 @@ export class FileContent extends BaseComponent {
             }
             @if (hasFiles()) {
               <div [class]="cx('fileList')" [hBind]="ptm('fileList')">
-                @for ( of files; track ) {
-                  <ng-template [ngForOf]="files" [ngForTemplate]="fileTemplate || _fileTemplate"></ng-template>
+                @for (file of files; track file; let i = $index) {
+                  <ng-container *ngTemplateOutlet="fileTemplate || _fileTemplate; context: { $implicit: file, index: i }"></ng-container>
                 }
                 @if (!fileTemplate && !_fileTemplate) {
                   <div
@@ -283,8 +283,8 @@ export class FileContent extends BaseComponent {
             }
             @if (hasUploadedFiles()) {
               <div [class]="cx('fileList')" [hBind]="ptm('fileList')">
-                @for ( of uploadedFiles; track ) {
-                  <ng-template [ngForOf]="uploadedFiles" [ngForTemplate]="fileTemplate || _fileTemplate"></ng-template>
+                @for (file of uploadedFiles; track file; let i = $index) {
+                  <ng-container *ngTemplateOutlet="fileTemplate || _fileTemplate; context: { $implicit: file, index: i }"></ng-container>
                 }
                 @if (!fileTemplate && !_fileTemplate) {
                   <div
