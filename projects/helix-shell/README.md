@@ -1,14 +1,19 @@
 # @gravionlabs/helix-shell
 
-An Angular component library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with [NgRx Signal Store](https://ngrx.io/guide/signals) for state management.
+Angular application shell for [Helix](../../README.md), extending
+[sakai-ng](https://github.com/primefaces/sakai-ng) with
+[NgRx Signal Store](https://ngrx.io/guide/signals) for state management.
 
 ## Features
 
-- 🧩 **7 Layout Components** — `HelixAppLayout`, `HelixTopbar`, `HelixSidebar`, `HelixMenu`, `HelixMenuItem`, `HelixFooter`, `HelixConfigurator`
-- ��️ **NgRx Signal Store** — `LayoutStore` replaces the classic `LayoutService`
-- 🎨 **PrimeNG 21 + PrimeUIX** — Aura / Lara / Nora theme support
-- 🌙 **Dark Mode** — CSS class toggle with View Transitions API
-- 📦 **Standalone Components** — no NgModule required
+- 🧩 **Layout** — `HelixAppLayout` with topbar, nav rail, status bar, and footer
+- 🔀 **Routing utilities** — `helixRoutesFrom`, `helixMenuLinksFrom`, `helixBreadcrumbsFromRoutes`
+- 🗃️ **NgRx Signal Store** — `LayoutStore` for theme, menu, and dark-mode state
+- 🔐 **Auth & error pages** — login, error, access-denied, not-found, with lazy route config
+- 🚀 **Landing widgets** — hero, features, highlights, pricing, footer sections
+- 📝 **Form infrastructure** — `HelixFormField`, `HelixValidators`, `helixFormErrorMap`
+- 🎨 **Helix + PrimeUIX theming** — Aura / Lara / Nora presets, dark mode via View Transitions
+- 📦 **Standalone components** — no NgModule required
 
 ## Installation
 
@@ -19,9 +24,8 @@ npm install @gravionlabs/helix-shell
 
 ### Peer Dependencies
 
-```bash
-npm install @angular/core@>=21 @ngrx/signals@>=21 @gravionlabs/helix@>=1 @primeuix/themes@>=2
-```
+`@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix >=22`,
+`@primeuix/themes >=2`, `primeicons >=7`.
 
 ## Setup
 
@@ -39,8 +43,6 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## Usage
-
 ```typescript
 // app.routes.ts
 import { HelixAppLayout } from '@gravionlabs/helix-shell';
@@ -54,7 +56,22 @@ export const appRoutes: Routes = [
 ];
 ```
 
-### Accessing the Layout Store
+## Styles
+
+Some components use Tailwind utility classes baked into their templates. The
+library ships a prebuilt stylesheet covering those classes — add it to your
+app's global styles, since Tailwind's content scanning does not look inside
+`node_modules` by default:
+
+```json
+// angular.json
+"styles": [
+  "node_modules/@gravionlabs/helix-shell/styles.css",
+  "src/styles.scss"
+]
+```
+
+## Layout Store
 
 ```typescript
 import { inject } from '@angular/core';
@@ -65,56 +82,17 @@ layoutStore.toggleDarkMode();
 layoutStore.setMenuMode('overlay');
 ```
 
-## LayoutStore API
+## Documentation
 
-| Signal / Computed | Description |
-|---|---|---|
-| `darkTheme()` | Dark mode active |
-| `menuMode()` | `'static'` \| `'overlay'` |
-| `preset()` | Active theme preset |
-| `primary()` | Active primary colour |
-| `surface()` | Active surface colour |
-| `sidebarCollapsed()` | Sidebar collapsed state |
-| `expandedRoot()` | Currently expanded nav root key |
-| `activePath()` | Active route path |
-| `mobileMenuActive()` | Mobile menu open state |
-| `configSidebarVisible()` | Config sidebar visibility |
-| `menuHoverActive()` | Menu hover state |
-| `overlayMenuActive()` | Overlay menu open state |
-| `isDarkTheme()` | Computed alias |
-| `isOverlay()` | `true` when overlay mode |
-| `isCollapsed()` | `true` when sidebar collapsed |
-
-| Method | Description |
-|---|---|---|
-| `toggleDarkMode()` | Toggle dark / light |
-| `setMenuMode(mode)` | Set menu mode |
-| `onMenuToggle()` | Toggle menu (responsive-aware) |
-| `toggleSidebar()` | Toggle sidebar collapsed state |
-| `setExpandedRoot(key)` | Set expanded nav root |
-| `setActivePath(path)` | Set active route path |
-| `setMenuHoverActive(bool)` | Set menu hover state |
-| `closeMobileMenu()` | Close mobile / overlay menu |
-| `showConfigSidebar()` | Open config sidebar |
-| `hideConfigSidebar()` | Close config sidebar |
-| `updateConfig(config)` | Partial config update |
-| `setPreset(name)` | Switch theme preset |
-| `setPrimary(name)` | Set primary colour |
-| `setSurface(name)` | Set surface colour |
-| `reset()` | Reset to default state |
-
-## HelixTopbar Inputs
-
-| Input | Type | Default |
-|---|---|---|
-| `appTitle` | `string` | `'SAKAI'` |
+Full API reference — every component, input, store signal, and form utility —
+lives in [docs/HELIX-SHELL.md](../../docs/HELIX-SHELL.md).
 
 ## Development
 
 ```bash
-npm run start:demo    # Serve demo app
-npm run build:lib     # Build library
-npm run build:demo    # Build demo app
+pnpm start                # Serve the demo app (builds libs first)
+ng build helix-shell      # Build the library
+pnpm test:lib:stable      # Run the shell unit tests
 ```
 
 ## License

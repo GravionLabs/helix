@@ -1,68 +1,73 @@
-# @gravionlabs/helix-shell
+# Helix
 
-Angular 22 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management. Built on [PrimeNG](https://primeng.org) and [Tailwind CSS](https://tailwindcss.com).
+Angular UI component ecosystem by Gravion Labs. Helix is a maintained fork of
+[PrimeNG](https://github.com/primefaces/primeng) 21.1.9 — the last MIT community
+version — rebranded as `@gravionlabs/helix` with `h-` selectors, plus an
+application shell, form utilities, and AG Grid helpers built on top of it.
 
-## Features
+## Packages
 
-- **Layout components** — App shell with topbar, sidebar, menu, footer, and theme configurator
-- **Auth pages** — Login, error, and access-denied pages with lazy route config
-- **Landing page widgets** — Hero, features, highlights, pricing, and footer sections
-- **State management** — NgRx Signal Store for layout state (theme, menu, dark mode)
-- **Standalone components** — Fully Angular 22 standalone, no NgModules required
+| Package | Description |
+| --- | --- |
+| [`@gravionlabs/helix`](projects/helix) | Base component library — 90 components, 7 directives, and theming/infra modules, one secondary entry point each (`@gravionlabs/helix/button`). |
+| [`@gravionlabs/helix-shell`](projects/helix-shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
+| [`@gravionlabs/helix-zod`](projects/helix-zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
+| [`@gravionlabs/helix-ag-grid`](projects/helix-ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
+
+The workspace also contains [`apps/helix-demo`](apps/helix-demo), the showcase
+application used for development.
 
 ## Quick Start
 
 ```bash
-npm install @gravionlabs/helix-shell
+echo "@gravionlabs:registry=https://npm.pkg.github.com" >> .npmrc
+npm install @gravionlabs/helix
 ```
 
 ```ts
-import { Component } from '@angular/core';
-import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
-
-const MENU: HelixRouteMenuItem[] = [
-  { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
-  { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
-];
-
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [HelixAppLayout],
-  template: `<helix-app-layout appTitle="My App" [menu]="menu" />`,
-})
-export class AppComponent {
-  menu = MENU;
-}
+import { Button } from '@gravionlabs/helix/button';
 ```
 
-## Styles
-
-Several components (e.g. the theme configurator) use Tailwind utility classes baked into their templates. The library ships a prebuilt stylesheet covering those classes — add it to your app's global styles so they resolve correctly, since Tailwind's content scanning does not look inside `node_modules` by default:
-
-```json
-// angular.json
-"styles": [
-  "node_modules/@gravionlabs/helix-shell/styles.css",
-  "src/styles.scss"
-]
+```html
+<h-button label="Save" />
 ```
 
-## Development
+Theming uses the `@primeuix` layer, so existing presets (Aura, Lara, Nora) work
+unchanged:
 
-This workspace contains the library (`projects/helix`) and a demo application (`projects/demo`).
+```ts
+// app.config.ts
+import Aura from '@primeuix/themes/aura';
+import { providePrimeNG } from '@gravionlabs/helix/config';
 
-```bash
-ng serve demo           # Start the demo app
-ng build helix          # Build the library
-ng test helix           # Run library unit tests
+export const appConfig: ApplicationConfig = {
+  providers: [providePrimeNG({ theme: { preset: Aura } })],
+};
 ```
 
 ## Documentation
 
-- [Component API reference](docs/COMPONENTS.md)
-- [Project roadmap](docs/ROADMAP.md)
+- [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix` entry point
+- [`helix-shell` API reference](docs/HELIX-SHELL.md)
+- [Roadmap](docs/ROADMAP.md)
+- [File structure conventions](docs/CONTRIBUTING-file-structure.md)
 
-## License
+## Development
 
-MIT
+Requires Node ≥ 24 and [pnpm](https://pnpm.io).
+
+```bash
+pnpm install
+pnpm start          # Build libs + serve the demo app
+pnpm build:lib      # Build all four libraries
+pnpm test:lib       # Run library unit tests
+pnpm lint           # biome + eslint + no-primeng import guard
+```
+
+## Attribution & License
+
+MIT. `projects/helix` is a vendored fork of PrimeNG by PrimeTek Informatics at
+tag `21.1.9` (MIT "PRIMENG COMMUNITY VERSIONS LICENSE") — see
+[LICENSE.md](projects/helix/LICENSE.md) and [VENDOR.md](projects/helix/VENDOR.md)
+for the upstream commit and the list of local modifications. All credit for the
+original component implementations belongs to PrimeTek.
