@@ -1,6 +1,5 @@
 // @ts-check
-const angularTemplate = require('@angular-eslint/eslint-plugin-template');
-const templateParser = require('@angular-eslint/template-parser');
+const angular = require('angular-eslint');
 
 /** @type {import('eslint').Linter.Config[]} */
 module.exports = [
@@ -17,16 +16,8 @@ module.exports = [
     },
 
     // Angular HTML templates only
-    {
+    ...angular.configs.templateRecommended.map((config) => ({
+        ...config,
         files: ['**/*.html'],
-        languageOptions: {
-            parser: templateParser,
-        },
-        plugins: {
-            '@angular-eslint/template': angularTemplate,
-        },
-        rules: {
-            ...angularTemplate.configs.recommended.rules,
-        },
-    },
+    })),
 ];

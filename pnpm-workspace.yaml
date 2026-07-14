@@ -4,3 +4,8 @@ allowBuilds:
   lmdb: true
   msgpackr-extract: true
 shamefullyHoist: true
+# @ngrx/signals has no Angular 22 release yet; it works on 22 (signals API is
+# stable) — drop this once @ngrx/signals@22 ships.
+peerDependencyRules:
+  allowedVersions:
+    '@ngrx/signals>@angular/core': '22'
