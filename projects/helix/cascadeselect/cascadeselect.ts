@@ -63,63 +63,67 @@ export const CASCADESELECT_VALUE_ACCESSOR: any = {
     standalone: true,
     imports: [CommonModule, Ripple, AngleRightIcon, SharedModule, Bind],
     template: `
-        <ng-template ngFor let-processedOption [ngForOf]="options" let-i="index">
-            <li
-                [class]="cx('option', { processedOption })"
-                role="treeitem"
-                [attr.aria-level]="level + 1"
-                [attr.aria-setsize]="options.length"
-                [hBind]="getPTOptions(processedOption, i, 'option')"
-                [id]="getOptionId(processedOption)"
-                [attr.aria-label]="getOptionLabelToRender(processedOption)"
-                [attr.aria-selected]="isOptionGroup(processedOption) ? undefined : isOptionSelected(processedOption)"
-                [attr.aria-posinset]="i + 1"
+        @for (processedOption of options; track processedOption; let i = $index) {
+          <li
+            [class]="cx('option', { processedOption })"
+            role="treeitem"
+            [attr.aria-level]="level + 1"
+            [attr.aria-setsize]="options.length"
+            [hBind]="getPTOptions(processedOption, i, 'option')"
+            [id]="getOptionId(processedOption)"
+            [attr.aria-label]="getOptionLabelToRender(processedOption)"
+            [attr.aria-selected]="isOptionGroup(processedOption) ? undefined : isOptionSelected(processedOption)"
+            [attr.aria-posinset]="i + 1"
             >
-                <div
-                    [class]="cx('optionContent')"
-                    (click)="onOptionClick($event, processedOption)"
-                    (mouseenter)="onOptionMouseEnter($event, processedOption)"
-                    (mousemove)="onOptionMouseMove($event, processedOption)"
-                    hRipple
-                    [hBind]="getPTOptions(processedOption, i, 'optionContent')"
-                >
-                    <ng-container *ngIf="optionTemplate; else defaultOptionTemplate">
-                        <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: $safeNavigationMigration(processedOption?.option), level: level }"></ng-container>
-                    </ng-container>
-                    <ng-template #defaultOptionTemplate>
-                        <span [class]="cx('optionText')" [hBind]="getPTOptions(processedOption, i, 'optionText')">{{ getOptionLabelToRender(processedOption) }}</span>
-                    </ng-template>
-                    <span [class]="cx('groupIcon')" *ngIf="isOptionGroup(processedOption)" [hBind]="getPTOptions(processedOption, i, 'groupIcon')">
-                        <svg data-p-icon="angle-right" *ngIf="!groupicon" [hBind]="getPTOptions(processedOption, index, 'groupIcon')" />
-                        <ng-template *ngTemplateOutlet="groupicon"></ng-template>
-                    </span>
-                </div>
-                <ul
-                    hCascadeSelectSub
-                    *ngIf="isOptionGroup(processedOption) && isOptionActive(processedOption)"
-                    [attrrole]="'group'"
-                    [class]="cx('optionList')"
-                    [selectId]="selectId"
-                    [focusedOptionId]="focusedOptionId"
-                    [activeOptionPath]="activeOptionPath"
-                    [options]="getOptionGroupChildren(processedOption)"
-                    [optionLabel]="optionLabel"
-                    [optionValue]="optionValue"
-                    [level]="level + 1"
-                    (onChange)="onChange.emit($event)"
-                    (onFocusChange)="onFocusChange.emit($event)"
-                    (onFocusEnterChange)="onFocusEnterChange.emit($event)"
-                    [optionGroupLabel]="optionGroupLabel"
-                    [optionGroupChildren]="optionGroupChildren"
-                    [dirty]="dirty"
-                    [optionTemplate]="optionTemplate"
-                    [hBind]="ptm('optionList')"
-                    [pt]="pt"
-                    [unstyled]="unstyled()"
-                ></ul>
-            </li>
-        </ng-template>
-    `,
+            <div
+              [class]="cx('optionContent')"
+              (click)="onOptionClick($event, processedOption)"
+              (mouseenter)="onOptionMouseEnter($event, processedOption)"
+              (mousemove)="onOptionMouseMove($event, processedOption)"
+              hRipple
+              [hBind]="getPTOptions(processedOption, i, 'optionContent')"
+              >
+              @if (optionTemplate) {
+                <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: $safeNavigationMigration(processedOption?.option), level: level }"></ng-container>
+              } @else {
+                <span [class]="cx('optionText')" [hBind]="getPTOptions(processedOption, i, 'optionText')">{{ getOptionLabelToRender(processedOption) }}</span>
+              }
+              @if (isOptionGroup(processedOption)) {
+                <span [class]="cx('groupIcon')" [hBind]="getPTOptions(processedOption, i, 'groupIcon')">
+                  @if (!groupicon) {
+                    <svg data-p-icon="angle-right" [hBind]="getPTOptions(processedOption, index, 'groupIcon')" />
+                  }
+                  <ng-template *ngTemplateOutlet="groupicon"></ng-template>
+                </span>
+              }
+            </div>
+            @if (isOptionGroup(processedOption) && isOptionActive(processedOption)) {
+              <ul
+                hCascadeSelectSub
+                [attrrole]="'group'"
+                [class]="cx('optionList')"
+                [selectId]="selectId"
+                [focusedOptionId]="focusedOptionId"
+                [activeOptionPath]="activeOptionPath"
+                [options]="getOptionGroupChildren(processedOption)"
+                [optionLabel]="optionLabel"
+                [optionValue]="optionValue"
+                [level]="level + 1"
+                (onChange)="onChange.emit($event)"
+                (onFocusChange)="onFocusChange.emit($event)"
+                (onFocusEnterChange)="onFocusEnterChange.emit($event)"
+                [optionGroupLabel]="optionGroupLabel"
+                [optionGroupChildren]="optionGroupChildren"
+                [dirty]="dirty"
+                [optionTemplate]="optionTemplate"
+                [hBind]="ptm('optionList')"
+                [pt]="pt"
+                [unstyled]="unstyled()"
+              ></ul>
+            }
+          </li>
+        }
+        `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [CascadeSelectStyle, { provide: PARENT_INSTANCE, useExisting: CascadeSelectSub }]
@@ -266,122 +270,132 @@ export class CascadeSelectSub extends BaseComponent {
     imports: [CommonModule, Overlay, AutoFocus, CascadeSelectSub, ChevronDownIcon, TimesIcon, SharedModule, Bind],
     template: `
         <div class="p-hidden-accessible" [hBind]="ptm('hiddenInputWrapper')">
-            <input
-                #focusInput
-                readonly
-                type="text"
-                role="combobox"
-                [attr.name]="name()"
-                [attr.required]="required() ? '' : undefined"
-                [attr.disabled]="$disabled() ? '' : undefined"
-                [attr.placeholder]="placeholder"
-                [attr.tabindex]="!$disabled() ? tabindex : -1"
-                [attr.id]="inputId"
-                [attr.aria-label]="ariaLabel"
-                [attr.aria-labelledby]="ariaLabelledBy"
-                [attr.aria-haspopup]="'tree'"
-                [attr.aria-expanded]="overlayVisible ?? false"
-                [attr.aria-controls]="overlayVisible ? id + '_tree' : null"
-                [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
-                (focus)="onInputFocus($event)"
-                (blur)="onInputBlur($event)"
-                (keydown)="onInputKeyDown($event)"
-                [hAutoFocus]="autofocus"
-                [hBind]="ptm('hiddenInput')"
+          <input
+            #focusInput
+            readonly
+            type="text"
+            role="combobox"
+            [attr.name]="name()"
+            [attr.required]="required() ? '' : undefined"
+            [attr.disabled]="$disabled() ? '' : undefined"
+            [attr.placeholder]="placeholder"
+            [attr.tabindex]="!$disabled() ? tabindex : -1"
+            [attr.id]="inputId"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-labelledby]="ariaLabelledBy"
+            [attr.aria-haspopup]="'tree'"
+            [attr.aria-expanded]="overlayVisible ?? false"
+            [attr.aria-controls]="overlayVisible ? id + '_tree' : null"
+            [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+            (focus)="onInputFocus($event)"
+            (blur)="onInputBlur($event)"
+            (keydown)="onInputKeyDown($event)"
+            [hAutoFocus]="autofocus"
+            [hBind]="ptm('hiddenInput')"
             />
         </div>
         <span [class]="cx('label')" [hBind]="ptm('label')">
-            <ng-container *ngIf="valueTemplate || _valueTemplate; else defaultValueTemplate">
-                <ng-container *ngTemplateOutlet="valueTemplate || _valueTemplate; context: { $implicit: value, placeholder: placeholder }"></ng-container>
-            </ng-container>
-            <ng-template #defaultValueTemplate>
-                {{ label() }}
-            </ng-template>
+          @if (valueTemplate || _valueTemplate) {
+            <ng-container *ngTemplateOutlet="valueTemplate || _valueTemplate; context: { $implicit: value, placeholder: placeholder }"></ng-container>
+          } @else {
+            {{ label() }}
+          }
         </span>
-
-        <ng-container *ngIf="$filled() && !$disabled() && showClear">
-            <svg data-p-icon="times" *ngIf="!clearIconTemplate && !_clearIconTemplate" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true" />
-            <span *ngIf="clearIconTemplate || _clearIconTemplate" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true">
-                <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+        
+        @if ($filled() && !$disabled() && showClear) {
+          @if (!clearIconTemplate && !_clearIconTemplate) {
+            <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true" />
+          }
+          @if (clearIconTemplate || _clearIconTemplate) {
+            <span [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true">
+              <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
             </span>
-        </ng-container>
-
+          }
+        }
+        
         <div [class]="cx('dropdown')" role="button" aria-haspopup="listbox" [attr.aria-expanded]="overlayVisible ?? false" [hBind]="ptm('dropdown')" [attr.aria-hidden]="true">
-            <ng-container *ngIf="loading; else elseBlock">
-                <ng-container *ngIf="loadingIconTemplate || _loadingIconTemplate">
-                    <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
-                </ng-container>
-                <ng-container *ngIf="!loadingIconTemplate && !_loadingIconTemplate">
-                    <span *ngIf="loadingIcon" [class]="cn(cx('loadingIcon'), loadingIcon + 'pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
-                    <span *ngIf="!loadingIcon" [class]="cn(cx('loadingIcon'), loadingIcon + ' pi pi-spinner pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
-                </ng-container>
-            </ng-container>
-            <ng-template #elseBlock>
-                <svg data-p-icon="chevron-down" *ngIf="!triggerIconTemplate && !_triggerIconTemplate" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
-                <span *ngIf="triggerIconTemplate || _triggerIconTemplate" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
-                    <ng-template *ngTemplateOutlet="triggerIconTemplate || _triggerIconTemplate"></ng-template>
-                </span>
-            </ng-template>
+          @if (loading) {
+            @if (loadingIconTemplate || _loadingIconTemplate) {
+              <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
+            }
+            @if (!loadingIconTemplate && !_loadingIconTemplate) {
+              @if (loadingIcon) {
+                <span [class]="cn(cx('loadingIcon'), loadingIcon + 'pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
+              }
+              @if (!loadingIcon) {
+                <span [class]="cn(cx('loadingIcon'), loadingIcon + ' pi pi-spinner pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
+              }
+            }
+          } @else {
+            @if (!triggerIconTemplate && !_triggerIconTemplate) {
+              <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
+            }
+            @if (triggerIconTemplate || _triggerIconTemplate) {
+              <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
+                <ng-template *ngTemplateOutlet="triggerIconTemplate || _triggerIconTemplate"></ng-template>
+              </span>
+            }
+          }
         </div>
         <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenSearchResult')">
-            {{ searchResultMessageText }}
+          {{ searchResultMessageText }}
         </span>
         <h-overlay
-            #overlay
-            [hostAttrSelector]="$attrSelector"
-            [(visible)]="overlayVisible"
-            [options]="overlayOptions"
-            [target]="'@parent'"
-            [appendTo]="$appendTo()"
-            [unstyled]="unstyled()"
-            [pt]="ptm('pcOverlay')"
-            [motionOptions]="motionOptions()"
-            (onAfterLeave)="onOverlayAfterLeave()"
-            (onBeforeShow)="onBeforeShow.emit($event)"
-            (onShow)="show($event)"
-            (onBeforeHide)="onBeforeHide.emit($event)"
-            (onHide)="hide($event)"
-        >
-            <ng-template #content>
-                <div #panel [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle" [hBind]="ptm('overlay')">
-                    <ng-template *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-template>
-                    <div [class]="cx('listContainer')" [hBind]="ptm('listContainer')">
-                        <ul
-                            hCascadeSelectSub
-                            [class]="cx('list')"
-                            [options]="processedOptions"
-                            [selectId]="id"
-                            [focusedOptionId]="focused ? focusedOptionId : undefined"
-                            [activeOptionPath]="activeOptionPath()"
-                            [optionLabel]="optionLabel"
-                            [optionValue]="optionValue"
-                            [level]="0"
-                            [optionTemplate]="optionTemplate || _optionTemplate"
-                            [groupicon]="groupIconTemplate || groupIconTemplate"
-                            [optionGroupLabel]="optionGroupLabel"
-                            [optionGroupChildren]="optionGroupChildren"
-                            [optionDisabled]="optionDisabled"
-                            [root]="true"
-                            (onChange)="onOptionClick($event)"
-                            (onFocusChange)="onOptionMouseMove($event)"
-                            (onFocusEnterChange)="onOptionMouseEnter($event)"
-                            [dirty]="dirty"
-                            [attr.role]="'tree'"
-                            [attr.aria-orientation]="'horizontal'"
-                            [hBind]="ptm('list')"
-                            [attr.aria-label]="listlabel"
-                            [pt]="pt"
-                            [unstyled]="unstyled()"
-                        ></ul>
-                    </div>
-                    <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('selectedMessageText')">
-                        {{ selectedMessageText }}
-                    </span>
-                    <ng-template *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-template>
-                </div>
-            </ng-template>
+          #overlay
+          [hostAttrSelector]="$attrSelector"
+          [(visible)]="overlayVisible"
+          [options]="overlayOptions"
+          [target]="'@parent'"
+          [appendTo]="$appendTo()"
+          [unstyled]="unstyled()"
+          [pt]="ptm('pcOverlay')"
+          [motionOptions]="motionOptions()"
+          (onAfterLeave)="onOverlayAfterLeave()"
+          (onBeforeShow)="onBeforeShow.emit($event)"
+          (onShow)="show($event)"
+          (onBeforeHide)="onBeforeHide.emit($event)"
+          (onHide)="hide($event)"
+          >
+          <ng-template #content>
+            <div #panel [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle" [hBind]="ptm('overlay')">
+              <ng-template *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-template>
+              <div [class]="cx('listContainer')" [hBind]="ptm('listContainer')">
+                <ul
+                  hCascadeSelectSub
+                  [class]="cx('list')"
+                  [options]="processedOptions"
+                  [selectId]="id"
+                  [focusedOptionId]="focused ? focusedOptionId : undefined"
+                  [activeOptionPath]="activeOptionPath()"
+                  [optionLabel]="optionLabel"
+                  [optionValue]="optionValue"
+                  [level]="0"
+                  [optionTemplate]="optionTemplate || _optionTemplate"
+                  [groupicon]="groupIconTemplate || groupIconTemplate"
+                  [optionGroupLabel]="optionGroupLabel"
+                  [optionGroupChildren]="optionGroupChildren"
+                  [optionDisabled]="optionDisabled"
+                  [root]="true"
+                  (onChange)="onOptionClick($event)"
+                  (onFocusChange)="onOptionMouseMove($event)"
+                  (onFocusEnterChange)="onOptionMouseEnter($event)"
+                  [dirty]="dirty"
+                  [attr.role]="'tree'"
+                  [attr.aria-orientation]="'horizontal'"
+                  [hBind]="ptm('list')"
+                  [attr.aria-label]="listlabel"
+                  [pt]="pt"
+                  [unstyled]="unstyled()"
+                ></ul>
+              </div>
+              <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('selectedMessageText')">
+                {{ selectedMessageText }}
+              </span>
+              <ng-template *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-template>
+            </div>
+          </ng-template>
         </h-overlay>
-    `,
+        `,
     providers: [CASCADESELECT_VALUE_ACCESSOR, CascadeSelectStyle, { provide: PARENT_INSTANCE, useExisting: CascadeSelect }, { provide: CASCADESELECT_INSTANCE, useExisting: CascadeSelect }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
