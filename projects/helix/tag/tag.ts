@@ -18,14 +18,18 @@ const TAG_INSTANCE = new InjectionToken<Tag>('TAG_INSTANCE');
     imports: [CommonModule, SharedModule, Bind],
     template: `
         <ng-content></ng-content>
-        <ng-container *ngIf="!iconTemplate && !_iconTemplate">
-            <span [class]="cx('icon')" [ngClass]="icon" [hBind]="ptm('icon')" *ngIf="icon"></span>
-        </ng-container>
-        <span [class]="cx('icon')" [hBind]="ptm('icon')" *ngIf="iconTemplate || _iconTemplate">
+        @if (!iconTemplate && !_iconTemplate) {
+          @if (icon) {
+            <span [class]="cx('icon')" [ngClass]="icon" [hBind]="ptm('icon')"></span>
+          }
+        }
+        @if (iconTemplate || _iconTemplate) {
+          <span [class]="cx('icon')" [hBind]="ptm('icon')">
             <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-template>
-        </span>
+          </span>
+        }
         <span [class]="cx('label')" [hBind]="ptm('label')">{{ value }}</span>
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [TagStyle, { provide: TAG_INSTANCE, useExisting: Tag }, { provide: PARENT_INSTANCE, useExisting: Tag }],
