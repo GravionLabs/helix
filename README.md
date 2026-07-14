@@ -1,6 +1,6 @@
 # @gravionlabs/helix-shell
 
-Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management. Built on [PrimeNG](https://primeng.org) and [Tailwind CSS](https://tailwindcss.com).
+Angular 22 UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management. Built on [PrimeNG](https://primeng.org) and [Tailwind CSS](https://tailwindcss.com).
 
 ## Features
 
@@ -8,7 +8,7 @@ Angular 21 UI library extending [sakai-ng](https://github.com/primefaces/sakai-n
 - **Auth pages** — Login, error, and access-denied pages with lazy route config
 - **Landing page widgets** — Hero, features, highlights, pricing, and footer sections
 - **State management** — NgRx Signal Store for layout state (theme, menu, dark mode)
-- **Standalone components** — Fully Angular 21 standalone, no NgModules required
+- **Standalone components** — Fully Angular 22 standalone, no NgModules required
 
 ## Quick Start
 

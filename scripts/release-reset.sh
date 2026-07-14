@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-# Release reset for epic #201 / task #225.
+# Release reset for epic #201 / task #225 (version scheme updated for
+# release/22.0.0: releases track Angular's major.minor).
 #
 # Deletes ALL GitHub releases, all v* tags, and all GitHub Packages
 # npm packages (helix, helix-shell, helix-zod, helix-ag-grid) so that
-# GitVersion (next-version: 1.0.0) mints a fresh v1.0.0 on the next
+# GitVersion (next-version: 22.0.0) mints a fresh v22.0.0 on the next
 # main build — the first publish of the reborn @gravionlabs/helix.
 #
-# Run AFTER the final epic/201-primeng-fork -> main merge and BEFORE
-# the next main CI run, in a quiet window (the script refuses to run
-# while workflow runs are in progress).
+# Run AFTER the release/22.0.0 -> main merge and BEFORE the next main
+# CI run, in a quiet window (the script refuses to run while workflow
+# runs are in progress).
 #
 # Requirements:
 #   - gh CLI authenticated as GravionLabs (or with an admin PAT via

@@ -5,7 +5,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@angular/core": ">=21",
+    "@angular/core": ">=22",
     "ag-grid-angular": ">=33",
     "ag-grid-community": ">=33"
   },

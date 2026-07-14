@@ -5,11 +5,11 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@angular/common": ">=21",
-    "@angular/core": ">=21",
-    "@angular/router": ">=21",
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/router": ">=22",
     "@ngrx/signals": ">=21",
-    "@gravionlabs/helix": ">=1",
+    "@gravionlabs/helix": ">=22",
     "@primeuix/themes": ">=2",
     "primeicons": ">=7"
   },
