@@ -8,13 +8,15 @@ import { ScrollPanel } from './scrollpanel';
     standalone: false,
     template: `
         <p-scrollpanel [styleClass]="styleClass" [step]="step" style="width: 400px; height: 200px;">
-            <div class="content-div" style="width: 800px; height: 600px; padding: 20px;">
-                <h2>Scrollable Content</h2>
-                <p>This is content that will cause scrollbars to appear.</p>
-                <div *ngFor="let item of items">Item {{ item }}</div>
-            </div>
+          <div class="content-div" style="width: 800px; height: 600px; padding: 20px;">
+            <h2>Scrollable Content</h2>
+            <p>This is content that will cause scrollbars to appear.</p>
+            @for (item of items; track item) {
+              <div>Item {{ item }}</div>
+            }
+          </div>
         </p-scrollpanel>
-    `
+        `
 })
 class TestScrollPanelComponent {
     styleClass = 'custom-scrollpanel';
