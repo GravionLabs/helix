@@ -55,78 +55,86 @@ const CONFIRMPOPUP_INSTANCE = new InjectionToken<ConfirmPopup>('CONFIRMPOPUP_INS
     hostDirectives: [Bind],
     template: `
         @if (render()) {
-            <div
-                [hMotion]="computedVisible()"
-                [pMotionAppear]="true"
-                [pMotionName]="'p-anchored-overlay'"
-                [pMotionOptions]="computedMotionOptions()"
-                (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                (pMotionOnAfterLeave)="onAfterLeave()"
-                hFocusTrap
-                [hBind]="ptm('root')"
-                [class]="cn(cx('root'), styleClass)"
-                [ngStyle]="style"
-                role="alertdialog"
-                (click)="onOverlayClick($event)"
+          <div
+            [hMotion]="computedVisible()"
+            [pMotionAppear]="true"
+            [pMotionName]="'p-anchored-overlay'"
+            [pMotionOptions]="computedMotionOptions()"
+            (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+            (pMotionOnAfterLeave)="onAfterLeave()"
+            hFocusTrap
+            [hBind]="ptm('root')"
+            [class]="cn(cx('root'), styleClass)"
+            [ngStyle]="style"
+            role="alertdialog"
+            (click)="onOverlayClick($event)"
             >
-                <ng-container *ngIf="headlessTemplate || _headlessTemplate; else notHeadless">
-                    <ng-container *ngTemplateOutlet="headlessTemplate || _headlessTemplate; context: { $implicit: confirmation }"></ng-container>
-                </ng-container>
-                <ng-template #notHeadless>
-                    <div #content [hBind]="ptm('content')" [class]="cx('content')">
-                        <ng-container *ngIf="contentTemplate || _contentTemplate; else withoutContentTemplate">
-                            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: confirmation }"></ng-container>
-                        </ng-container>
-                        <ng-template #withoutContentTemplate>
-                            <i [hBind]="ptm('icon')" [class]="cx('icon')" *ngIf="confirmation?.icon"></i>
-                            <span [hBind]="ptm('message')" [class]="cx('message')">{{ confirmation?.message }}</span>
-                        </ng-template>
-                    </div>
-                    <div [hBind]="ptm('footer')" [class]="cx('footer')">
-                        <h-button
-                            type="button"
-                            [label]="rejectButtonLabel"
-                            (onClick)="onReject()"
-                            [pt]="ptm('pcRejectButton')"
-                            [class]="cx('pcRejectButton')"
-                            [styleClass]="$safeNavigationMigration(confirmation?.rejectButtonStyleClass)"
-                            [size]="confirmation?.rejectButtonProps?.size || 'small'"
-                            [text]="confirmation?.rejectButtonProps?.text || false"
-                            *ngIf="confirmation?.rejectVisible !== false"
-                            [attr.aria-label]="rejectButtonLabel"
-                            [buttonProps]="getRejectButtonProps()"
-                            [autofocus]="autoFocusReject"
-                            [unstyled]="unstyled()"
-                        >
-                            <ng-template #icon>
-                                <i [class]="confirmation?.rejectIcon" *ngIf="confirmation?.rejectIcon; else rejecticon"></i>
-                                <ng-template #rejecticon *ngTemplateOutlet="rejectIconTemplate || _rejectIconTemplate"></ng-template>
-                            </ng-template>
-                        </h-button>
-                        <h-button
-                            type="button"
-                            [label]="acceptButtonLabel"
-                            (onClick)="onAccept()"
-                            [pt]="ptm('pcAcceptButton')"
-                            [class]="cx('pcAcceptButton')"
-                            [styleClass]="$safeNavigationMigration(confirmation?.acceptButtonStyleClass)"
-                            [size]="confirmation?.acceptButtonProps?.size || 'small'"
-                            *ngIf="confirmation?.acceptVisible !== false"
-                            [attr.aria-label]="acceptButtonLabel"
-                            [buttonProps]="getAcceptButtonProps()"
-                            [autofocus]="autoFocusAccept"
-                            [unstyled]="unstyled()"
-                        >
-                            <ng-template #icon>
-                                <i [class]="confirmation?.acceptIcon" *ngIf="confirmation?.acceptIcon; else accepticontemplate"></i>
-                                <ng-template #accepticontemplate *ngTemplateOutlet="acceptIconTemplate || _acceptIconTemplate"></ng-template>
-                            </ng-template>
-                        </h-button>
-                    </div>
-                </ng-template>
-            </div>
+            @if (headlessTemplate || _headlessTemplate) {
+              <ng-container *ngTemplateOutlet="headlessTemplate || _headlessTemplate; context: { $implicit: confirmation }"></ng-container>
+            } @else {
+              <div #content [hBind]="ptm('content')" [class]="cx('content')">
+                @if (contentTemplate || _contentTemplate) {
+                  <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: confirmation }"></ng-container>
+                } @else {
+                  @if (confirmation?.icon) {
+                    <i [hBind]="ptm('icon')" [class]="cx('icon')"></i>
+                  }
+                  <span [hBind]="ptm('message')" [class]="cx('message')">{{ confirmation?.message }}</span>
+                }
+              </div>
+              <div [hBind]="ptm('footer')" [class]="cx('footer')">
+                @if (confirmation?.rejectVisible !== false) {
+                  <h-button
+                    type="button"
+                    [label]="rejectButtonLabel"
+                    (onClick)="onReject()"
+                    [pt]="ptm('pcRejectButton')"
+                    [class]="cx('pcRejectButton')"
+                    [styleClass]="$safeNavigationMigration(confirmation?.rejectButtonStyleClass)"
+                    [size]="confirmation?.rejectButtonProps?.size || 'small'"
+                    [text]="confirmation?.rejectButtonProps?.text || false"
+                    [attr.aria-label]="rejectButtonLabel"
+                    [buttonProps]="getRejectButtonProps()"
+                    [autofocus]="autoFocusReject"
+                    [unstyled]="unstyled()"
+                    >
+                    <ng-template #icon>
+                      @if (confirmation?.rejectIcon) {
+                        <i [class]="confirmation?.rejectIcon"></i>
+                      } @else {
+                        <ng-container *ngTemplateOutlet="rejectIconTemplate || _rejectIconTemplate"></ng-container>
+                      }
+                    </ng-template>
+                  </h-button>
+                }
+                @if (confirmation?.acceptVisible !== false) {
+                  <h-button
+                    type="button"
+                    [label]="acceptButtonLabel"
+                    (onClick)="onAccept()"
+                    [pt]="ptm('pcAcceptButton')"
+                    [class]="cx('pcAcceptButton')"
+                    [styleClass]="$safeNavigationMigration(confirmation?.acceptButtonStyleClass)"
+                    [size]="confirmation?.acceptButtonProps?.size || 'small'"
+                    [attr.aria-label]="acceptButtonLabel"
+                    [buttonProps]="getAcceptButtonProps()"
+                    [autofocus]="autoFocusAccept"
+                    [unstyled]="unstyled()"
+                    >
+                    <ng-template #icon>
+                      @if (confirmation?.acceptIcon) {
+                        <i [class]="confirmation?.acceptIcon"></i>
+                      } @else {
+                        <ng-container *ngTemplateOutlet="acceptIconTemplate || _acceptIconTemplate"></ng-container>
+                      }
+                    </ng-template>
+                  </h-button>
+                }
+              </div>
+            }
+          </div>
         }
-    `,
+        `,
 
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, EventEmitter, forwardRef, inject, InjectionToken, input, Input, NgModule, Output, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
@@ -31,11 +31,11 @@ const COLORPICKER_INSTANCE = new InjectionToken<ColorPicker>('COLORPICKER_INSTAN
 @Component({
     selector: 'h-colorPicker, h-colorpicker, h-color-picker',
     standalone: true,
-    imports: [CommonModule, AutoFocusModule, SharedModule, Bind, MotionModule, OverlayModule],
+    imports: [AutoFocusModule, SharedModule, Bind, MotionModule, OverlayModule],
     hostDirectives: [Bind],
     template: `
-        <input
-            *ngIf="!inline"
+        @if (!inline) {
+          <input
             #input
             type="text"
             [class]="cx('preview')"
@@ -50,39 +50,40 @@ const COLORPICKER_INSTANCE = new InjectionToken<ColorPicker>('COLORPICKER_INSTAN
             [attr.aria-label]="ariaLabel"
             [hAutoFocus]="autofocus"
             [hBind]="ptm('preview')"
-        />
-
+            />
+        }
+        
         <h-overlay
-            #overlay
-            [hostAttrSelector]="$attrSelector"
-            [(visible)]="overlayVisible"
-            [options]="overlayOptions()"
-            [target]="'@parent'"
-            [inline]="inline"
-            [appendTo]="$appendTo()"
-            [unstyled]="unstyled()"
-            [pt]="ptm('pcOverlay')"
-            [motionOptions]="motionOptions()"
-            (onBeforeEnter)="onOverlayBeforeEnter()"
-            (onAfterLeave)="onOverlayAfterLeave()"
-            (onHide)="hide()"
-        >
-            <ng-template #content>
-                <div [class]="cx('panel')" [hBind]="ptm('panel')">
-                    <div [class]="cx('content')" [hBind]="ptm('content')">
-                        <div #colorSelector [class]="cx('colorSelector')" (touchstart)="onColorDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" (mousedown)="onColorMousedown($event)" [hBind]="ptm('colorSelector')">
-                            <div [class]="cx('colorBackground')" [hBind]="ptm('colorBackground')">
-                                <div #colorHandle [class]="cx('colorHandle')" [hBind]="ptm('colorHandle')"></div>
-                            </div>
-                        </div>
-                        <div #hue [class]="cx('hue')" (mousedown)="onHueMousedown($event)" (touchstart)="onHueDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" [hBind]="ptm('hue')">
-                            <div #hueHandle [class]="cx('hueHandle')" [hBind]="ptm('hueHandle')"></div>
-                        </div>
-                    </div>
+          #overlay
+          [hostAttrSelector]="$attrSelector"
+          [(visible)]="overlayVisible"
+          [options]="overlayOptions()"
+          [target]="'@parent'"
+          [inline]="inline"
+          [appendTo]="$appendTo()"
+          [unstyled]="unstyled()"
+          [pt]="ptm('pcOverlay')"
+          [motionOptions]="motionOptions()"
+          (onBeforeEnter)="onOverlayBeforeEnter()"
+          (onAfterLeave)="onOverlayAfterLeave()"
+          (onHide)="hide()"
+          >
+          <ng-template #content>
+            <div [class]="cx('panel')" [hBind]="ptm('panel')">
+              <div [class]="cx('content')" [hBind]="ptm('content')">
+                <div #colorSelector [class]="cx('colorSelector')" (touchstart)="onColorDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" (mousedown)="onColorMousedown($event)" [hBind]="ptm('colorSelector')">
+                  <div [class]="cx('colorBackground')" [hBind]="ptm('colorBackground')">
+                    <div #colorHandle [class]="cx('colorHandle')" [hBind]="ptm('colorHandle')"></div>
+                  </div>
                 </div>
-            </ng-template>
+                <div #hue [class]="cx('hue')" (mousedown)="onHueMousedown($event)" (touchstart)="onHueDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" [hBind]="ptm('hue')">
+                  <div #hueHandle [class]="cx('hueHandle')" [hBind]="ptm('hueHandle')"></div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
         </h-overlay>
-    `,
+        `,
     providers: [COLORPICKER_VALUE_ACCESSOR, ColorPickerStyle, { provide: COLORPICKER_INSTANCE, useExisting: ColorPicker }, { provide: PARENT_INSTANCE, useExisting: ColorPicker }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

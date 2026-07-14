@@ -84,14 +84,16 @@ class TestGlobalContextMenuComponent {
     standalone: false,
     template: `
         <p-contextmenu [model]="nestedModel">
-            <ng-template #item let-item>
-                <div class="custom-item">
-                    <i [class]="item.icon" *ngIf="item.icon"></i>
-                    <span class="custom-label">{{ item.label }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="custom-item">
+              @if (item.icon) {
+                <i [class]="item.icon"></i>
+              }
+              <span class="custom-label">{{ item.label }}</span>
+            </div>
+          </ng-template>
         </p-contextmenu>
-    `
+        `
 })
 class TestItemTemplateContextMenuComponent {
     nestedModel: MenuItem[] = [

@@ -56,95 +56,107 @@ const mockCountries = [
     standalone: false,
     template: `
         <p-cascadeselect
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="optionLabel"
-            [optionValue]="optionValue"
-            [optionGroupLabel]="optionGroupLabel"
-            [optionGroupChildren]="optionGroupChildren"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [style]="style"
-            [styleClass]="styleClass"
-            [panelStyle]="panelStyle"
-            [panelStyleClass]="panelStyleClass"
-            [showClear]="showClear"
-            [dataKey]="dataKey"
-            [inputId]="inputId"
-            [tabindex]="tabindex"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [ariaLabel]="ariaLabel"
-            [loading]="loading"
-            [loadingIcon]="loadingIcon"
-            [appendTo]="appendTo"
-            (onChange)="onSelectionChange($event)"
-            (onShow)="onPanelShow($event)"
-            (onHide)="onPanelHide($event)"
-            (onBeforeShow)="onBeforeShow($event)"
-            (onBeforeHide)="onBeforeHide($event)"
-            (onFocus)="onFocusEvent($event)"
-            (onBlur)="onBlurEvent($event)"
-            (onClear)="onClearEvent($event)"
-        >
-            <!-- Value template -->
-            <ng-template #value let-value let-placeholder="placeholder">
-                <div class="custom-value" data-testid="template-value">
-                    <span *ngIf="value">{{ value.cname || value.name }} - Custom</span>
-                    <span *ngIf="!value">{{ placeholder }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Option template -->
-            <ng-template #option let-option let-level="level">
-                <div class="custom-option" data-testid="template-option">
-                    <i class="pi pi-map-marker" *ngIf="level === 0"></i>
-                    <i class="pi pi-building" *ngIf="level === 1"></i>
-                    <i class="pi pi-home" *ngIf="level === 2"></i>
-                    <span>{{ option.name || option.cname }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header>
-                <div class="custom-header" data-testid="template-header">
-                    <i class="pi pi-search"></i>
-                    <span>Select Location</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer>
-                <div class="custom-footer" data-testid="template-footer">
-                    <small>Choose your preferred location</small>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template -->
-            <ng-template #triggericon>
-                <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
-            </ng-template>
-
-            <!-- Loading icon template -->
-            <ng-template #loadingicon>
-                <i class="pi pi-spin pi-cog custom-loading" data-testid="template-loadingicon"></i>
-            </ng-template>
-
-            <!-- Option group icon template -->
-            <ng-template #optiongroupicon>
-                <i class="pi pi-angle-right custom-group-icon" data-testid="template-optiongroupicon"></i>
-            </ng-template>
-
-            <!-- Clear icon template -->
-            <ng-template #clearicon>
-                <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="optionLabel"
+          [optionValue]="optionValue"
+          [optionGroupLabel]="optionGroupLabel"
+          [optionGroupChildren]="optionGroupChildren"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [style]="style"
+          [styleClass]="styleClass"
+          [panelStyle]="panelStyle"
+          [panelStyleClass]="panelStyleClass"
+          [showClear]="showClear"
+          [dataKey]="dataKey"
+          [inputId]="inputId"
+          [tabindex]="tabindex"
+          [ariaLabelledBy]="ariaLabelledBy"
+          [ariaLabel]="ariaLabel"
+          [loading]="loading"
+          [loadingIcon]="loadingIcon"
+          [appendTo]="appendTo"
+          (onChange)="onSelectionChange($event)"
+          (onShow)="onPanelShow($event)"
+          (onHide)="onPanelHide($event)"
+          (onBeforeShow)="onBeforeShow($event)"
+          (onBeforeHide)="onBeforeHide($event)"
+          (onFocus)="onFocusEvent($event)"
+          (onBlur)="onBlurEvent($event)"
+          (onClear)="onClearEvent($event)"
+          >
+          <!-- Value template -->
+          <ng-template #value let-value let-placeholder="placeholder">
+            <div class="custom-value" data-testid="template-value">
+              @if (value) {
+                <span>{{ value.cname || value.name }} - Custom</span>
+              }
+              @if (!value) {
+                <span>{{ placeholder }}</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Option template -->
+          <ng-template #option let-option let-level="level">
+            <div class="custom-option" data-testid="template-option">
+              @if (level === 0) {
+                <i class="pi pi-map-marker"></i>
+              }
+              @if (level === 1) {
+                <i class="pi pi-building"></i>
+              }
+              @if (level === 2) {
+                <i class="pi pi-home"></i>
+              }
+              <span>{{ option.name || option.cname }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header>
+            <div class="custom-header" data-testid="template-header">
+              <i class="pi pi-search"></i>
+              <span>Select Location</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer>
+            <div class="custom-footer" data-testid="template-footer">
+              <small>Choose your preferred location</small>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template -->
+          <ng-template #triggericon>
+            <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
+          </ng-template>
+        
+          <!-- Loading icon template -->
+          <ng-template #loadingicon>
+            <i class="pi pi-spin pi-cog custom-loading" data-testid="template-loadingicon"></i>
+          </ng-template>
+        
+          <!-- Option group icon template -->
+          <ng-template #optiongroupicon>
+            <i class="pi pi-angle-right custom-group-icon" data-testid="template-optiongroupicon"></i>
+          </ng-template>
+        
+          <!-- Clear icon template -->
+          <ng-template #clearicon>
+            <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
+          </ng-template>
         </p-cascadeselect>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-cascadeselect formControlName="selectedItems" [options]="formOptions" [optionLabel]="'cname'" [optionGroupLabel]="'name'" [optionGroupChildren]="['states', 'cities']" (onChange)="onFormChange($event)"> </p-cascadeselect>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestCascadeSelectComponent {
     selectedValue: any = null as any;
@@ -277,78 +289,88 @@ class TestCascadeSelectComponent {
     standalone: false,
     template: `
         <p-cascadeselect
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="'cname'"
-            [optionGroupLabel]="'name'"
-            [optionGroupChildren]="['states', 'cities']"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [loading]="loading"
-            [showClear]="showClear"
-        >
-            <!-- Value template with pTemplate -->
-            <ng-template pTemplate="value" let-value let-placeholder="placeholder">
-                <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
-                    <span class="value-text" *ngIf="value">{{ value.cname || value.name }} - pTemplate</span>
-                    <span class="placeholder-text" *ngIf="!value">{{ placeholder }} (pTemplate)</span>
-                </div>
-            </ng-template>
-
-            <!-- Option template with pTemplate -->
-            <ng-template pTemplate="option" let-option let-level="level">
-                <div class="ptemplate-option" [attr.data-testid]="'ptemplate-option'" [attr.data-level]="level">
-                    <i class="pi pi-flag" *ngIf="level === 0"></i>
-                    <i class="pi pi-map" *ngIf="level === 1"></i>
-                    <i class="pi pi-building" *ngIf="level === 2"></i>
-                    <span class="option-text">{{ option.name || option.cname }} (Level {{ level }})</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template with pTemplate -->
-            <ng-template pTemplate="header">
-                <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
-                    <i class="pi pi-search"></i>
-                    <h4 class="header-title">Select Location (pTemplate)</h4>
-                    <span class="header-subtitle">Available: {{ options.length }} countries</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template with pTemplate -->
-            <ng-template pTemplate="footer">
-                <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
-                    <small class="footer-text">Choose your location (pTemplate)</small>
-                    <button class="footer-button" type="button">Help</button>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template with pTemplate -->
-            <ng-template pTemplate="triggericon">
-                <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
-            </ng-template>
-
-            <!-- Loading icon template with pTemplate -->
-            <ng-template pTemplate="loadingicon">
-                <div class="ptemplate-loadingicon" [attr.data-testid]="'ptemplate-loadingicon'">
-                    <i class="pi pi-spin pi-spinner loading-icon"></i>
-                    <span class="loading-text">Loading...</span>
-                </div>
-            </ng-template>
-
-            <!-- Option group icon template with pTemplate -->
-            <ng-template pTemplate="optiongroupicon">
-                <i class="pi pi-chevron-right ptemplate-optiongroupicon" [attr.data-testid]="'ptemplate-optiongroupicon'"></i>
-            </ng-template>
-
-            <!-- Clear icon template with pTemplate -->
-            <ng-template pTemplate="clearicon">
-                <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
-                    <i class="pi pi-times clear-icon"></i>
-                    <span class="clear-text">Clear</span>
-                </div>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="'cname'"
+          [optionGroupLabel]="'name'"
+          [optionGroupChildren]="['states', 'cities']"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [loading]="loading"
+          [showClear]="showClear"
+          >
+          <!-- Value template with pTemplate -->
+          <ng-template pTemplate="value" let-value let-placeholder="placeholder">
+            <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
+              @if (value) {
+                <span class="value-text">{{ value.cname || value.name }} - pTemplate</span>
+              }
+              @if (!value) {
+                <span class="placeholder-text">{{ placeholder }} (pTemplate)</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Option template with pTemplate -->
+          <ng-template pTemplate="option" let-option let-level="level">
+            <div class="ptemplate-option" [attr.data-testid]="'ptemplate-option'" [attr.data-level]="level">
+              @if (level === 0) {
+                <i class="pi pi-flag"></i>
+              }
+              @if (level === 1) {
+                <i class="pi pi-map"></i>
+              }
+              @if (level === 2) {
+                <i class="pi pi-building"></i>
+              }
+              <span class="option-text">{{ option.name || option.cname }} (Level {{ level }})</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template with pTemplate -->
+          <ng-template pTemplate="header">
+            <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
+              <i class="pi pi-search"></i>
+              <h4 class="header-title">Select Location (pTemplate)</h4>
+              <span class="header-subtitle">Available: {{ options.length }} countries</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template with pTemplate -->
+          <ng-template pTemplate="footer">
+            <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
+              <small class="footer-text">Choose your location (pTemplate)</small>
+              <button class="footer-button" type="button">Help</button>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template with pTemplate -->
+          <ng-template pTemplate="triggericon">
+            <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
+          </ng-template>
+        
+          <!-- Loading icon template with pTemplate -->
+          <ng-template pTemplate="loadingicon">
+            <div class="ptemplate-loadingicon" [attr.data-testid]="'ptemplate-loadingicon'">
+              <i class="pi pi-spin pi-spinner loading-icon"></i>
+              <span class="loading-text">Loading...</span>
+            </div>
+          </ng-template>
+        
+          <!-- Option group icon template with pTemplate -->
+          <ng-template pTemplate="optiongroupicon">
+            <i class="pi pi-chevron-right ptemplate-optiongroupicon" [attr.data-testid]="'ptemplate-optiongroupicon'"></i>
+          </ng-template>
+        
+          <!-- Clear icon template with pTemplate -->
+          <ng-template pTemplate="clearicon">
+            <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
+              <i class="pi pi-times clear-icon"></i>
+              <span class="clear-text">Clear</span>
+            </div>
+          </ng-template>
         </p-cascadeselect>
-    `
+        `
 })
 class TestPTemplateCascadeSelectComponent {
     selectedValue: any = null as any;

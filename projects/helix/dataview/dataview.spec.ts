@@ -9,53 +9,57 @@ import { PaginatorModule } from '@gravionlabs/helix/paginator';
     standalone: false,
     template: `
         <p-dataview
-            [value]="products"
-            [paginator]="paginator"
-            [rows]="rows"
-            [totalRecords]="totalRecords"
-            [pageLinks]="pageLinks"
-            [rowsPerPageOptions]="rowsPerPageOptions"
-            [paginatorPosition]="paginatorPosition"
-            [paginatorStyleClass]="paginatorStyleClass"
-            [alwaysShowPaginator]="alwaysShowPaginator"
-            [paginatorDropdownAppendTo]="paginatorDropdownAppendTo"
-            [paginatorDropdownScrollHeight]="paginatorDropdownScrollHeight"
-            [currentPageReportTemplate]="currentPageReportTemplate"
-            [showCurrentPageReport]="showCurrentPageReport"
-            [showJumpToPageDropdown]="showJumpToPageDropdown"
-            [showFirstLastIcon]="showFirstLastIcon"
-            [showPageLinks]="showPageLinks"
-            [lazy]="lazy"
-            [lazyLoadOnInit]="lazyLoadOnInit"
-            [emptyMessage]="emptyMessage"
-            [styleClass]="styleClass"
-            [gridStyleClass]="gridStyleClass"
-            [trackBy]="trackBy"
-            [filterBy]="filterBy"
-            [filterLocale]="filterLocale"
-            [loading]="loading"
-            [loadingIcon]="loadingIcon"
-            [first]="first"
-            [sortField]="sortField"
-            [sortOrder]="sortOrder"
-            [layout]="layout"
-            (onLazyLoad)="onLazyLoadEvent($event)"
-            (onPage)="onPageEvent($event)"
-            (onSort)="onSortEvent($event)"
-            (onChangeLayout)="onChangeLayoutEvent($event)"
-        >
-            <ng-template #list let-items>
-                <div class="list-container">
-                    <div *ngFor="let item of items" class="list-item">{{ item.name }} - {{ item.price }}</div>
-                </div>
-            </ng-template>
-            <ng-template #grid let-items>
-                <div class="grid-container">
-                    <div *ngFor="let item of items" class="grid-item">{{ item.name }} - {{ item.price }}</div>
-                </div>
-            </ng-template>
+          [value]="products"
+          [paginator]="paginator"
+          [rows]="rows"
+          [totalRecords]="totalRecords"
+          [pageLinks]="pageLinks"
+          [rowsPerPageOptions]="rowsPerPageOptions"
+          [paginatorPosition]="paginatorPosition"
+          [paginatorStyleClass]="paginatorStyleClass"
+          [alwaysShowPaginator]="alwaysShowPaginator"
+          [paginatorDropdownAppendTo]="paginatorDropdownAppendTo"
+          [paginatorDropdownScrollHeight]="paginatorDropdownScrollHeight"
+          [currentPageReportTemplate]="currentPageReportTemplate"
+          [showCurrentPageReport]="showCurrentPageReport"
+          [showJumpToPageDropdown]="showJumpToPageDropdown"
+          [showFirstLastIcon]="showFirstLastIcon"
+          [showPageLinks]="showPageLinks"
+          [lazy]="lazy"
+          [lazyLoadOnInit]="lazyLoadOnInit"
+          [emptyMessage]="emptyMessage"
+          [styleClass]="styleClass"
+          [gridStyleClass]="gridStyleClass"
+          [trackBy]="trackBy"
+          [filterBy]="filterBy"
+          [filterLocale]="filterLocale"
+          [loading]="loading"
+          [loadingIcon]="loadingIcon"
+          [first]="first"
+          [sortField]="sortField"
+          [sortOrder]="sortOrder"
+          [layout]="layout"
+          (onLazyLoad)="onLazyLoadEvent($event)"
+          (onPage)="onPageEvent($event)"
+          (onSort)="onSortEvent($event)"
+          (onChangeLayout)="onChangeLayoutEvent($event)"
+          >
+          <ng-template #list let-items>
+            <div class="list-container">
+              @for (item of items; track item) {
+                <div class="list-item">{{ item.name }} - {{ item.price }}</div>
+              }
+            </div>
+          </ng-template>
+          <ng-template #grid let-items>
+            <div class="grid-container">
+              @for (item of items; track item) {
+                <div class="grid-item">{{ item.name }} - {{ item.price }}</div>
+              }
+            </div>
+          </ng-template>
         </p-dataview>
-    `
+        `
 })
 class TestBasicDataViewComponent {
     products = [
@@ -121,21 +125,23 @@ class TestBasicDataViewComponent {
     standalone: false,
     template: `
         <p-dataview [value]="products">
-            <p-header>
-                <div class="custom-header">Custom Header Content</div>
-            </p-header>
-            <ng-template #list let-items>
-                <div class="list-container">
-                    <div *ngFor="let item of items" class="list-item">
-                        {{ item.name }}
-                    </div>
+          <p-header>
+            <div class="custom-header">Custom Header Content</div>
+          </p-header>
+          <ng-template #list let-items>
+            <div class="list-container">
+              @for (item of items; track item) {
+                <div class="list-item">
+                  {{ item.name }}
                 </div>
-            </ng-template>
-            <p-footer>
-                <div class="custom-footer">Custom Footer Content</div>
-            </p-footer>
+              }
+            </div>
+          </ng-template>
+          <p-footer>
+            <div class="custom-footer">Custom Footer Content</div>
+          </p-footer>
         </p-dataview>
-    `
+        `
 })
 class TestHeaderFooterDataViewComponent {
     products = [
@@ -148,30 +154,32 @@ class TestHeaderFooterDataViewComponent {
     standalone: false,
     template: `
         <p-dataview [value]="products" [paginator]="true" [rows]="2">
-            <ng-template #list let-items>
-                <div class="list-container">
-                    <div *ngFor="let item of items" class="list-item">
-                        {{ item.name }}
-                    </div>
+          <ng-template #list let-items>
+            <div class="list-container">
+              @for (item of items; track item) {
+                <div class="list-item">
+                  {{ item.name }}
                 </div>
-            </ng-template>
-            <ng-template #header>
-                <div class="template-header">Template Header</div>
-            </ng-template>
-            <ng-template #footer>
-                <div class="template-footer">Template Footer</div>
-            </ng-template>
-            <ng-template #emptymessage>
-                <div class="empty-template">No data available</div>
-            </ng-template>
-            <ng-template #paginatorleft>
-                <span class="paginator-left">Left Content</span>
-            </ng-template>
-            <ng-template #paginatorright>
-                <span class="paginator-right">Right Content</span>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
+          <ng-template #header>
+            <div class="template-header">Template Header</div>
+          </ng-template>
+          <ng-template #footer>
+            <div class="template-footer">Template Footer</div>
+          </ng-template>
+          <ng-template #emptymessage>
+            <div class="empty-template">No data available</div>
+          </ng-template>
+          <ng-template #paginatorleft>
+            <span class="paginator-left">Left Content</span>
+          </ng-template>
+          <ng-template #paginatorright>
+            <span class="paginator-right">Right Content</span>
+          </ng-template>
         </p-dataview>
-    `
+        `
 })
 class TestTemplatesDataViewComponent {
     products: any[] = [];
@@ -181,18 +189,22 @@ class TestTemplatesDataViewComponent {
     standalone: false,
     template: `
         <p-dataview [value]="products()" [layout]="layout">
-            <ng-template #list let-items>
-                <div class="list-container">
-                    <div *ngFor="let item of items" class="list-item">List: {{ item.name }}</div>
-                </div>
-            </ng-template>
-            <ng-template #grid let-items>
-                <div class="grid-container">
-                    <div *ngFor="let item of items" class="grid-item">Grid: {{ item.name }}</div>
-                </div>
-            </ng-template>
+          <ng-template #list let-items>
+            <div class="list-container">
+              @for (item of items; track item) {
+                <div class="list-item">List: {{ item.name }}</div>
+              }
+            </div>
+          </ng-template>
+          <ng-template #grid let-items>
+            <div class="grid-container">
+              @for (item of items; track item) {
+                <div class="grid-item">Grid: {{ item.name }}</div>
+              }
+            </div>
+          </ng-template>
         </p-dataview>
-    `
+        `
 })
 class TestLayoutDataViewComponent {
     products = signal([
@@ -1628,32 +1640,36 @@ describe('DataView', () => {
     standalone: false,
     template: `
         <p-dataview
-            #dataView
-            [value]="value"
-            [paginator]="paginator"
-            [rows]="rows"
-            [totalRecords]="totalRecords"
-            [layout]="layout"
-            [loading]="loading"
-            [loadingIcon]="loadingIcon"
-            [sortField]="sortField"
-            [sortOrder]="sortOrder"
-            [filterBy]="filterBy"
-            [rowsPerPageOptions]="rowsPerPageOptions"
-            [emptyMessage]="emptyMessage"
-        >
-            <ng-template #list let-items>
-                <div class="dynamic-list-container">
-                    <div *ngFor="let item of items" class="dynamic-list-item">{{ item.name }} - {{ item.price }}</div>
-                </div>
-            </ng-template>
-            <ng-template #grid let-items>
-                <div class="dynamic-grid-container">
-                    <div *ngFor="let item of items" class="dynamic-grid-item">{{ item.name }} - {{ item.price }}</div>
-                </div>
-            </ng-template>
+          #dataView
+          [value]="value"
+          [paginator]="paginator"
+          [rows]="rows"
+          [totalRecords]="totalRecords"
+          [layout]="layout"
+          [loading]="loading"
+          [loadingIcon]="loadingIcon"
+          [sortField]="sortField"
+          [sortOrder]="sortOrder"
+          [filterBy]="filterBy"
+          [rowsPerPageOptions]="rowsPerPageOptions"
+          [emptyMessage]="emptyMessage"
+          >
+          <ng-template #list let-items>
+            <div class="dynamic-list-container">
+              @for (item of items; track item) {
+                <div class="dynamic-list-item">{{ item.name }} - {{ item.price }}</div>
+              }
+            </div>
+          </ng-template>
+          <ng-template #grid let-items>
+            <div class="dynamic-grid-container">
+              @for (item of items; track item) {
+                <div class="dynamic-grid-item">{{ item.name }} - {{ item.price }}</div>
+              }
+            </div>
+          </ng-template>
         </p-dataview>
-    `
+        `
 })
 class TestDynamicDataViewComponent {
     @ViewChild('dataView') dataView!: DataView;

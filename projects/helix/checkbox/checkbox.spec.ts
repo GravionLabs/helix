@@ -90,10 +90,12 @@ class TestBasicCheckboxComponent {
     standalone: false,
     template: `
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <p-checkbox formControlName="agreement" [binary]="true" inputId="agreement" [required]="required" (onChange)="onSelectionChange($event)"> </p-checkbox>
-            <p-checkbox formControlName="selectedIngredients" *ngFor="let ingredient of ingredients; let i = index" [value]="ingredient.value" [inputId]="'ingredient-' + i" (onChange)="onSelectionChange($event)"> </p-checkbox>
+          <p-checkbox formControlName="agreement" [binary]="true" inputId="agreement" [required]="required" (onChange)="onSelectionChange($event)"> </p-checkbox>
+          @for (ingredient of ingredients; track ingredient; let i = $index) {
+            <p-checkbox formControlName="selectedIngredients" [value]="ingredient.value" [inputId]="'ingredient-' + i" (onChange)="onSelectionChange($event)"> </p-checkbox>
+          }
         </form>
-    `
+        `
 })
 class TestReactiveFormCheckboxComponent {
     form = new FormGroup({
@@ -117,7 +119,7 @@ class TestReactiveFormCheckboxComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-checkbox [(ngModel)]="selectedIngredients" *ngFor="let ingredient of ingredients; let i = index" [value]="ingredient.value" [inputId]="'ingredient-' + i" [name]="'pizza'" (onChange)="onSelectionChange($event)"> </p-checkbox> `
+    template: ` @for (ingredient of ingredients; track ingredient; let i = $index) {<p-checkbox [(ngModel)]="selectedIngredients" [value]="ingredient.value" [inputId]="'ingredient-' + i" [name]="'pizza'" (onChange)="onSelectionChange($event)"> </p-checkbox>} `
 })
 class TestMultipleCheckboxComponent {
     selectedIngredients: string[] = [];
@@ -194,15 +196,19 @@ class TestStyledCheckboxComponent {
     standalone: false,
     template: `
         <p-checkbox [(ngModel)]="checked" [binary]="true" [value]="value">
-            <!-- Icon template with pTemplate directive -->
-            <ng-template pTemplate="icon" let-checked>
-                <span class="custom-checkbox-icon" data-testid="ptemplate-icon">
-                    <i *ngIf="checked" class="pi pi-check custom-check-icon"></i>
-                    <i *ngIf="!checked" class="pi pi-times custom-uncheck-icon"></i>
-                </span>
-            </ng-template>
+          <!-- Icon template with pTemplate directive -->
+          <ng-template pTemplate="icon" let-checked>
+            <span class="custom-checkbox-icon" data-testid="ptemplate-icon">
+              @if (checked) {
+                <i class="pi pi-check custom-check-icon"></i>
+              }
+              @if (!checked) {
+                <i class="pi pi-times custom-uncheck-icon"></i>
+              }
+            </span>
+          </ng-template>
         </p-checkbox>
-    `
+        `
 })
 class TestCheckboxPTemplateComponent {
     checked: boolean = false;
@@ -214,15 +220,19 @@ class TestCheckboxPTemplateComponent {
     standalone: false,
     template: `
         <p-checkbox [(ngModel)]="checked" [binary]="true" [value]="value">
-            <!-- Icon template with #template reference -->
-            <ng-template #icon let-checked>
-                <span class="custom-checkbox-icon" data-testid="ref-icon">
-                    <i *ngIf="checked" class="pi pi-check custom-check-icon"></i>
-                    <i *ngIf="!checked" class="pi pi-times custom-uncheck-icon"></i>
-                </span>
-            </ng-template>
+          <!-- Icon template with #template reference -->
+          <ng-template #icon let-checked>
+            <span class="custom-checkbox-icon" data-testid="ref-icon">
+              @if (checked) {
+                <i class="pi pi-check custom-check-icon"></i>
+              }
+              @if (!checked) {
+                <i class="pi pi-times custom-uncheck-icon"></i>
+              }
+            </span>
+          </ng-template>
         </p-checkbox>
-    `
+        `
 })
 class TestCheckboxRefTemplateComponent {
     checked: boolean = false;
