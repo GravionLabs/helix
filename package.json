@@ -19,9 +19,9 @@
     "test:ci": "ng test helix-shell --configuration=ci",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "lint": "biome check . && eslint \"projects/**/*.html\" && pnpm lint:no-primeng",
+    "lint": "biome check . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" && pnpm lint:no-primeng",
     "lint:no-primeng": "! grep -rn \"from 'primeng\" --include='*.ts' --include='*.html' projects/helix-shell projects/helix-zod projects/helix-ag-grid apps/helix-demo/src",
-    "lint:fix": "biome check --write . && eslint \"projects/**/*.html\" --fix",
+    "lint:fix": "biome check --write . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" --fix",
     "prepare": "husky"
   },
   "private": true,
