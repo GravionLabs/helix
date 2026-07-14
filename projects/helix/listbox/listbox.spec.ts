@@ -13,35 +13,37 @@ import { Listbox } from './listbox';
     standalone: false,
     template: `
         <p-listbox
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="optionLabel"
-            [optionValue]="optionValue"
-            [optionGroupLabel]="optionGroupLabel"
-            [optionDisabled]="optionDisabled"
-            [multiple]="multiple"
-            [filter]="filter"
-            [checkbox]="checkbox"
-            [disabled]="disabled"
-            [ariaLabel]="ariaLabel"
-            [virtualScroll]="virtualScroll"
-            [lazy]="lazy"
-            [scrollHeight]="scrollHeight"
-            [listStyle]="style"
-            [styleClass]="styleClass"
-            (onChange)="onSelectionChange($event)"
-            (onFocus)="onFocus($event)"
-            (onBlur)="onBlur($event)"
-            (onFilter)="onFilter($event)"
-            (onDblClick)="onDblClick($event)"
-            (onDrop)="onDropHandler($event)"
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="optionLabel"
+          [optionValue]="optionValue"
+          [optionGroupLabel]="optionGroupLabel"
+          [optionDisabled]="optionDisabled"
+          [multiple]="multiple"
+          [filter]="filter"
+          [checkbox]="checkbox"
+          [disabled]="disabled"
+          [ariaLabel]="ariaLabel"
+          [virtualScroll]="virtualScroll"
+          [lazy]="lazy"
+          [scrollHeight]="scrollHeight"
+          [listStyle]="style"
+          [styleClass]="styleClass"
+          (onChange)="onSelectionChange($event)"
+          (onFocus)="onFocus($event)"
+          (onBlur)="onBlur($event)"
+          (onFilter)="onFilter($event)"
+          (onDblClick)="onDblClick($event)"
+          (onDrop)="onDropHandler($event)"
         ></p-listbox>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-listbox formControlName="selectedItems" [options]="formOptions" [multiple]="true"> </p-listbox>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestListboxComponent {
     selectedValue: any = null as any;
@@ -1059,92 +1061,96 @@ describe('Listbox', () => {
     standalone: false,
     template: `
         <p-listbox [(ngModel)]="selectedValues" [options]="items" [optionLabel]="'label'" [optionValue]="'value'" [multiple]="true" [filter]="true" [checkbox]="true" [group]="true" [showToggleAll]="true" [virtualScroll]="true">
-            <!-- Item template with context parameters -->
-            <ng-template pTemplate="item" let-option let-selected="selected" let-index="index">
-                <div class="custom-item" data-testid="ptemplate-item" [attr.data-selected]="selected" [attr.data-index]="index">
-                    <span class="item-label">{{ option.label }}</span>
-                    <span class="item-value">{{ option.value }}</span>
-                    <span class="item-index">{{ index }}</span>
-                    <span class="item-selected">{{ selected }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Group template with context parameters -->
-            <ng-template pTemplate="group" let-group let-index="index">
-                <div class="custom-group" data-testid="ptemplate-group" [attr.data-index]="index">
-                    <span class="group-label">{{ group.label }}</span>
-                    <span class="group-index">{{ index }}</span>
-                    <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template pTemplate="header">
-                <div class="custom-header" data-testid="ptemplate-header">
-                    <span>Custom Header Content</span>
-                    <button class="header-action">Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Filter template with context parameters -->
-            <ng-template pTemplate="filter" let-options="options">
-                <div class="custom-filter" data-testid="ptemplate-filter">
-                    <input type="text" placeholder="Custom filter" class="custom-filter-input" />
-                    <span class="filter-count">{{ options?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template pTemplate="footer">
-                <div class="custom-footer" data-testid="ptemplate-footer">
-                    <span>Custom Footer Content</span>
-                    <button class="footer-action">Footer Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Empty filter template -->
-            <ng-template pTemplate="emptyfilter">
-                <div class="custom-empty-filter" data-testid="ptemplate-emptyfilter">
-                    <i class="pi pi-search"></i>
-                    <span>No results found for your filter</span>
-                </div>
-            </ng-template>
-
-            <!-- Empty template -->
-            <ng-template pTemplate="empty">
-                <div class="custom-empty" data-testid="ptemplate-empty">
-                    <i class="pi pi-inbox"></i>
-                    <span>No items available</span>
-                </div>
-            </ng-template>
-
-            <!-- Filter icon template -->
-            <ng-template pTemplate="filtericon">
-                <i class="pi pi-filter custom-filter-icon" data-testid="ptemplate-filtericon"></i>
-            </ng-template>
-
-            <!-- Check icon template -->
-            <ng-template pTemplate="checkicon" let-selected="selected">
-                <i class="pi pi-check custom-check-icon" data-testid="ptemplate-checkicon" [attr.data-selected]="selected"></i>
-            </ng-template>
-
-            <!-- Checkmark template -->
-            <ng-template pTemplate="checkmark" let-selected="selected">
-                <span class="custom-checkmark" data-testid="ptemplate-checkmark" [attr.data-selected]="selected">
-                    <i class="pi pi-check-circle" *ngIf="selected"></i>
-                    <i class="pi pi-circle" *ngIf="!selected"></i>
-                </span>
-            </ng-template>
-
-            <!-- Loader template -->
-            <ng-template pTemplate="loader" let-options="options">
-                <div class="custom-loader" data-testid="ptemplate-loader">
-                    <i class="pi pi-spin pi-spinner"></i>
-                    <span>Loading {{ options?.length || 0 }} items...</span>
-                </div>
-            </ng-template>
+          <!-- Item template with context parameters -->
+          <ng-template pTemplate="item" let-option let-selected="selected" let-index="index">
+            <div class="custom-item" data-testid="ptemplate-item" [attr.data-selected]="selected" [attr.data-index]="index">
+              <span class="item-label">{{ option.label }}</span>
+              <span class="item-value">{{ option.value }}</span>
+              <span class="item-index">{{ index }}</span>
+              <span class="item-selected">{{ selected }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Group template with context parameters -->
+          <ng-template pTemplate="group" let-group let-index="index">
+            <div class="custom-group" data-testid="ptemplate-group" [attr.data-index]="index">
+              <span class="group-label">{{ group.label }}</span>
+              <span class="group-index">{{ index }}</span>
+              <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template pTemplate="header">
+            <div class="custom-header" data-testid="ptemplate-header">
+              <span>Custom Header Content</span>
+              <button class="header-action">Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Filter template with context parameters -->
+          <ng-template pTemplate="filter" let-options="options">
+            <div class="custom-filter" data-testid="ptemplate-filter">
+              <input type="text" placeholder="Custom filter" class="custom-filter-input" />
+              <span class="filter-count">{{ options?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template pTemplate="footer">
+            <div class="custom-footer" data-testid="ptemplate-footer">
+              <span>Custom Footer Content</span>
+              <button class="footer-action">Footer Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Empty filter template -->
+          <ng-template pTemplate="emptyfilter">
+            <div class="custom-empty-filter" data-testid="ptemplate-emptyfilter">
+              <i class="pi pi-search"></i>
+              <span>No results found for your filter</span>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template -->
+          <ng-template pTemplate="empty">
+            <div class="custom-empty" data-testid="ptemplate-empty">
+              <i class="pi pi-inbox"></i>
+              <span>No items available</span>
+            </div>
+          </ng-template>
+        
+          <!-- Filter icon template -->
+          <ng-template pTemplate="filtericon">
+            <i class="pi pi-filter custom-filter-icon" data-testid="ptemplate-filtericon"></i>
+          </ng-template>
+        
+          <!-- Check icon template -->
+          <ng-template pTemplate="checkicon" let-selected="selected">
+            <i class="pi pi-check custom-check-icon" data-testid="ptemplate-checkicon" [attr.data-selected]="selected"></i>
+          </ng-template>
+        
+          <!-- Checkmark template -->
+          <ng-template pTemplate="checkmark" let-selected="selected">
+            <span class="custom-checkmark" data-testid="ptemplate-checkmark" [attr.data-selected]="selected">
+              @if (selected) {
+                <i class="pi pi-check-circle"></i>
+              }
+              @if (!selected) {
+                <i class="pi pi-circle"></i>
+              }
+            </span>
+          </ng-template>
+        
+          <!-- Loader template -->
+          <ng-template pTemplate="loader" let-options="options">
+            <div class="custom-loader" data-testid="ptemplate-loader">
+              <i class="pi pi-spin pi-spinner"></i>
+              <span>Loading {{ options?.length || 0 }} items...</span>
+            </div>
+          </ng-template>
         </p-listbox>
-    `
+        `
 })
 class TestListboxPTemplateComponent {
     selectedValues: any[] = [];
@@ -1173,92 +1179,96 @@ class TestListboxPTemplateComponent {
     standalone: false,
     template: `
         <p-listbox [(ngModel)]="selectedValues" [options]="items" [optionLabel]="'label'" [optionValue]="'value'" [multiple]="true" [filter]="true" [checkbox]="true" [group]="true" [showToggleAll]="true" [virtualScroll]="true">
-            <!-- Item template with context parameters -->
-            <ng-template #item let-option let-selected="selected" let-index="index">
-                <div class="custom-item" data-testid="ref-item" [attr.data-selected]="selected" [attr.data-index]="index">
-                    <span class="item-label">{{ option.label }}</span>
-                    <span class="item-value">{{ option.value }}</span>
-                    <span class="item-index">{{ index }}</span>
-                    <span class="item-selected">{{ selected }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Group template with context parameters -->
-            <ng-template #group let-group let-index="index">
-                <div class="custom-group" data-testid="ref-group" [attr.data-index]="index">
-                    <span class="group-label">{{ group.label }}</span>
-                    <span class="group-index">{{ index }}</span>
-                    <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header>
-                <div class="custom-header" data-testid="ref-header">
-                    <span>Custom Header Content</span>
-                    <button class="header-action">Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Filter template with context parameters -->
-            <ng-template #filter let-options="options">
-                <div class="custom-filter" data-testid="ref-filter">
-                    <input type="text" placeholder="Custom filter" class="custom-filter-input" />
-                    <span class="filter-count">{{ options?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer>
-                <div class="custom-footer" data-testid="ref-footer">
-                    <span>Custom Footer Content</span>
-                    <button class="footer-action">Footer Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Empty filter template -->
-            <ng-template #emptyfilter>
-                <div class="custom-empty-filter" data-testid="ref-emptyfilter">
-                    <i class="pi pi-search"></i>
-                    <span>No results found for your filter</span>
-                </div>
-            </ng-template>
-
-            <!-- Empty template -->
-            <ng-template #empty>
-                <div class="custom-empty" data-testid="ref-empty">
-                    <i class="pi pi-inbox"></i>
-                    <span>No items available</span>
-                </div>
-            </ng-template>
-
-            <!-- Filter icon template -->
-            <ng-template #filtericon>
-                <i class="pi pi-filter custom-filter-icon" data-testid="ref-filtericon"></i>
-            </ng-template>
-
-            <!-- Check icon template -->
-            <ng-template #checkicon let-selected="selected">
-                <i class="pi pi-check custom-check-icon" data-testid="ref-checkicon" [attr.data-selected]="selected"></i>
-            </ng-template>
-
-            <!-- Checkmark template -->
-            <ng-template #checkmark let-selected="selected">
-                <span class="custom-checkmark" data-testid="ref-checkmark" [attr.data-selected]="selected">
-                    <i class="pi pi-check-circle" *ngIf="selected"></i>
-                    <i class="pi pi-circle" *ngIf="!selected"></i>
-                </span>
-            </ng-template>
-
-            <!-- Loader template -->
-            <ng-template #loader let-options="options">
-                <div class="custom-loader" data-testid="ref-loader">
-                    <i class="pi pi-spin pi-spinner"></i>
-                    <span>Loading {{ options?.length || 0 }} items...</span>
-                </div>
-            </ng-template>
+          <!-- Item template with context parameters -->
+          <ng-template #item let-option let-selected="selected" let-index="index">
+            <div class="custom-item" data-testid="ref-item" [attr.data-selected]="selected" [attr.data-index]="index">
+              <span class="item-label">{{ option.label }}</span>
+              <span class="item-value">{{ option.value }}</span>
+              <span class="item-index">{{ index }}</span>
+              <span class="item-selected">{{ selected }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Group template with context parameters -->
+          <ng-template #group let-group let-index="index">
+            <div class="custom-group" data-testid="ref-group" [attr.data-index]="index">
+              <span class="group-label">{{ group.label }}</span>
+              <span class="group-index">{{ index }}</span>
+              <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header>
+            <div class="custom-header" data-testid="ref-header">
+              <span>Custom Header Content</span>
+              <button class="header-action">Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Filter template with context parameters -->
+          <ng-template #filter let-options="options">
+            <div class="custom-filter" data-testid="ref-filter">
+              <input type="text" placeholder="Custom filter" class="custom-filter-input" />
+              <span class="filter-count">{{ options?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer>
+            <div class="custom-footer" data-testid="ref-footer">
+              <span>Custom Footer Content</span>
+              <button class="footer-action">Footer Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Empty filter template -->
+          <ng-template #emptyfilter>
+            <div class="custom-empty-filter" data-testid="ref-emptyfilter">
+              <i class="pi pi-search"></i>
+              <span>No results found for your filter</span>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template -->
+          <ng-template #empty>
+            <div class="custom-empty" data-testid="ref-empty">
+              <i class="pi pi-inbox"></i>
+              <span>No items available</span>
+            </div>
+          </ng-template>
+        
+          <!-- Filter icon template -->
+          <ng-template #filtericon>
+            <i class="pi pi-filter custom-filter-icon" data-testid="ref-filtericon"></i>
+          </ng-template>
+        
+          <!-- Check icon template -->
+          <ng-template #checkicon let-selected="selected">
+            <i class="pi pi-check custom-check-icon" data-testid="ref-checkicon" [attr.data-selected]="selected"></i>
+          </ng-template>
+        
+          <!-- Checkmark template -->
+          <ng-template #checkmark let-selected="selected">
+            <span class="custom-checkmark" data-testid="ref-checkmark" [attr.data-selected]="selected">
+              @if (selected) {
+                <i class="pi pi-check-circle"></i>
+              }
+              @if (!selected) {
+                <i class="pi pi-circle"></i>
+              }
+            </span>
+          </ng-template>
+        
+          <!-- Loader template -->
+          <ng-template #loader let-options="options">
+            <div class="custom-loader" data-testid="ref-loader">
+              <i class="pi pi-spin pi-spinner"></i>
+              <span>Loading {{ options?.length || 0 }} items...</span>
+            </div>
+          </ng-template>
         </p-listbox>
-    `
+        `
 })
 class TestListboxRefTemplateComponent {
     selectedValues: any[] = [];

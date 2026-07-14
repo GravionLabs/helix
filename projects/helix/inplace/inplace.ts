@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, inject, InjectionToken, Input, NgModule, Output, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -14,7 +14,7 @@ const INPLACE_INSTANCE = new InjectionToken<Inplace>('INPLACE_INSTANCE');
 @Component({
     selector: 'h-inplacedisplay, h-inplaceDisplay',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-content></ng-content>'
 })
@@ -23,7 +23,7 @@ export class InplaceDisplay extends BaseComponent {}
 @Component({
     selector: 'h-inplacecontent, h-inplaceContent',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     changeDetection: ChangeDetectionStrategy.Eager,
     template: '<ng-content></ng-content>'
 })
@@ -35,27 +35,36 @@ export class InplaceContent extends BaseComponent {}
 @Component({
     selector: 'h-inplace',
     standalone: true,
-    imports: [CommonModule, ButtonModule, TimesIcon, SharedModule, Ripple, Bind],
+    imports: [ButtonModule, TimesIcon, SharedModule, Ripple, Bind],
     template: `
-        <div [class]="cx('display')" [hBind]="ptm('display')" (click)="onActivateClick($event)" tabindex="0" role="button" (keydown)="onKeydown($event)" [attr.data-p-disabled]="disabled" *ngIf="!active">
+        @if (!active) {
+          <div [class]="cx('display')" [hBind]="ptm('display')" (click)="onActivateClick($event)" tabindex="0" role="button" (keydown)="onKeydown($event)" [attr.data-p-disabled]="disabled">
             <ng-content select="[pInplaceDisplay]"></ng-content>
             <ng-container *ngTemplateOutlet="displayTemplate || _displayTemplate"></ng-container>
-        </div>
-        <div [class]="cx('content')" [hBind]="ptm('content')" *ngIf="active">
+          </div>
+        }
+        @if (active) {
+          <div [class]="cx('content')" [hBind]="ptm('content')">
             <ng-content select="[pInplaceContent]"></ng-content>
             <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { closeCallback: onDeactivateClick.bind(this) }"></ng-container>
-
-            <ng-container *ngIf="closable">
-                <h-button *ngIf="closeIcon" [pt]="ptm('pcButton')" type="button" [icon]="closeIcon" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel"></h-button>
-                <h-button *ngIf="!closeIcon" [pt]="ptm('pcButton')" type="button" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel">
-                    <ng-template #icon>
-                        <svg data-p-icon="times" *ngIf="!closeIconTemplate && !_closeIconTemplate" />
-                    </ng-template>
-                    <ng-template *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-template>
+            @if (closable) {
+              @if (closeIcon) {
+                <h-button [pt]="ptm('pcButton')" type="button" [icon]="closeIcon" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel"></h-button>
+              }
+              @if (!closeIcon) {
+                <h-button [pt]="ptm('pcButton')" type="button" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel">
+                  <ng-template #icon>
+                    @if (!closeIconTemplate && !_closeIconTemplate) {
+                      <svg data-p-icon="times" />
+                    }
+                  </ng-template>
+                  <ng-template *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-template>
                 </h-button>
-            </ng-container>
-        </div>
-    `,
+              }
+            }
+          </div>
+        }
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [InplaceStyle, { provide: INPLACE_INSTANCE, useExisting: Inplace }, { provide: PARENT_INSTANCE, useExisting: Inplace }],
