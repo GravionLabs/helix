@@ -22,45 +22,50 @@ const MESSAGE_INSTANCE = new InjectionToken<Message>('MESSAGE_INSTANCE');
     imports: [CommonModule, TimesIcon, Ripple, SharedModule, Bind, MotionModule],
     template: `
         <div [hBind]="ptm('contentWrapper')" [class]="cx('contentWrapper')" [attr.data-p]="dataP">
-            <div [hBind]="ptm('content')" [class]="cx('content')" [attr.data-p]="dataP">
-                @if (iconTemplate || _iconTemplate) {
-                    <ng-container *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-container>
+          <div [hBind]="ptm('content')" [class]="cx('content')" [attr.data-p]="dataP">
+            @if (iconTemplate || _iconTemplate) {
+              <ng-container *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-container>
+            }
+            @if (icon) {
+              <i [hBind]="ptm('icon')" [class]="cn(cx('icon'), icon)" [attr.data-p]="dataP"></i>
+            }
+        
+            @if (containerTemplate || _containerTemplate) {
+              <ng-container *ngTemplateOutlet="containerTemplate || _containerTemplate; context: { closeCallback: closeCallback }"></ng-container>
+            } @else {
+              @if (!escape) {
+                <div>
+                  @if (!escape) {
+                    <span [hBind]="ptm('text')" [ngClass]="cx('text')" [innerHTML]="text" [attr.data-p]="dataP"></span>
+                  }
+                </div>
+              } @else {
+                @if (escape && text) {
+                  <span [hBind]="ptm('text')" [ngClass]="cx('text')" [attr.data-p]="dataP">{{ text }}</span>
                 }
-                @if (icon) {
-                    <i [hBind]="ptm('icon')" [class]="cn(cx('icon'), icon)" [attr.data-p]="dataP"></i>
+              }
+        
+        
+              <span [hBind]="ptm('text')" [ngClass]="cx('text')" [attr.data-p]="dataP">
+                <ng-content></ng-content>
+              </span>
+            }
+            @if (closable) {
+              <button [hBind]="ptm('closeButton')" hRipple type="button" [class]="cx('closeButton')" (click)="close($event)" [attr.aria-label]="closeAriaLabel" [attr.data-p]="dataP">
+                @if (closeIcon) {
+                  <i [hBind]="ptm('closeIcon')" [class]="cn(cx('closeIcon'), closeIcon)" [ngClass]="closeIcon" [attr.data-p]="dataP"></i>
                 }
-
-                @if (containerTemplate || _containerTemplate) {
-                    <ng-container *ngTemplateOutlet="containerTemplate || _containerTemplate; context: { closeCallback: closeCallback }"></ng-container>
-                } @else {
-                    <div *ngIf="!escape; else escapeOut">
-                        <span [hBind]="ptm('text')" *ngIf="!escape" [ngClass]="cx('text')" [innerHTML]="text" [attr.data-p]="dataP"></span>
-                    </div>
-
-                    <ng-template #escapeOut>
-                        <span [hBind]="ptm('text')" *ngIf="escape && text" [ngClass]="cx('text')" [attr.data-p]="dataP">{{ text }}</span>
-                    </ng-template>
-
-                    <span [hBind]="ptm('text')" [ngClass]="cx('text')" [attr.data-p]="dataP">
-                        <ng-content></ng-content>
-                    </span>
+                @if (closeIconTemplate || _closeIconTemplate) {
+                  <ng-container *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-container>
                 }
-                @if (closable) {
-                    <button [hBind]="ptm('closeButton')" hRipple type="button" [class]="cx('closeButton')" (click)="close($event)" [attr.aria-label]="closeAriaLabel" [attr.data-p]="dataP">
-                        @if (closeIcon) {
-                            <i [hBind]="ptm('closeIcon')" [class]="cn(cx('closeIcon'), closeIcon)" [ngClass]="closeIcon" [attr.data-p]="dataP"></i>
-                        }
-                        @if (closeIconTemplate || _closeIconTemplate) {
-                            <ng-container *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-container>
-                        }
-                        @if (!closeIconTemplate && !_closeIconTemplate && !closeIcon) {
-                            <svg [hBind]="ptm('closeIcon')" data-p-icon="times" [class]="cx('closeIcon')" [attr.data-p]="dataP" />
-                        }
-                    </button>
+                @if (!closeIconTemplate && !_closeIconTemplate && !closeIcon) {
+                  <svg [hBind]="ptm('closeIcon')" data-p-icon="times" [class]="cx('closeIcon')" [attr.data-p]="dataP" />
                 }
-            </div>
+              </button>
+            }
+          </div>
         </div>
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [MessageStyle, { provide: MESSAGE_INSTANCE, useExisting: Message }, { provide: PARENT_INSTANCE, useExisting: Message }],

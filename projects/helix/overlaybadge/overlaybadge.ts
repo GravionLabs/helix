@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
@@ -16,7 +16,7 @@ const OVERLAYBADGE_INSTANCE = new InjectionToken<OverlayBadge>('OVERLAYBADGE_INS
 @Component({
     selector: 'h-overlayBadge, h-overlay-badge, h-overlaybadge',
     standalone: true,
-    imports: [CommonModule, BadgeModule, SharedModule, Bind],
+    imports: [BadgeModule, SharedModule, Bind],
     template: `
         <div [class]="cx('root')" [hBind]="ptm('root')">
             <ng-content></ng-content>

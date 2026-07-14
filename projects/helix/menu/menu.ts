@@ -70,9 +70,9 @@ export class SafeHtmlPipe implements PipeTransform {
     standalone: true,
     imports: [CommonModule, RouterModule, Ripple, TooltipModule, BadgeModule, SharedModule, SafeHtmlPipe, BindModule],
     template: ` <div [class]="cx('itemContent')" (click)="onItemClick($event, item)" [attr.data-pc-section]="'content'" [hBind]="getPTOptions('itemContent')">
-        <ng-container *ngIf="!itemTemplate">
-            <a
-                *ngIf="!item?.routerLink"
+          @if (!itemTemplate) {
+            @if (!item?.routerLink) {
+              <a
                 [attr.title]="item.title"
                 [attr.href]="item.url || null"
                 [attr.data-automationid]="item.automationId"
@@ -82,11 +82,12 @@ export class SafeHtmlPipe implements PipeTransform {
                 [target]="item.target"
                 [hBind]="getPTOptions('itemLink')"
                 hRipple
-            >
+                >
                 <ng-container *ngTemplateOutlet="itemContent; context: { $implicit: item }"></ng-container>
-            </a>
-            <a
-                *ngIf="item?.routerLink"
+              </a>
+            }
+            @if (item?.routerLink) {
+              <a
                 [routerLink]="item.routerLink"
                 [attr.data-automationid]="item.automationId"
                 [attr.tabindex]="-1"
@@ -105,22 +106,30 @@ export class SafeHtmlPipe implements PipeTransform {
                 [state]="item.state"
                 [hBind]="getPTOptions('itemLink')"
                 hRipple
-            >
+                >
                 <ng-container *ngTemplateOutlet="itemContent; context: { $implicit: item }"></ng-container>
-            </a>
-        </ng-container>
-
-        <ng-container *ngIf="itemTemplate">
+              </a>
+            }
+          }
+        
+          @if (itemTemplate) {
             <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-template>
-        </ng-container>
-
-        <ng-template #itemContent>
-            <span [class]="cn(cx('itemIcon', { item }), item.iconClass)" [hBind]="getPTOptions('itemIcon')" *ngIf="item.icon" [ngStyle]="item.iconStyle" [attr.data-pc-section]="'itemicon'"></span>
-            <span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [hBind]="getPTOptions('itemLabel')" [attr.data-pc-section]="'itemlabel'" *ngIf="item.escape !== false; else htmlLabel">{{ item.label }}</span>
-            <ng-template #htmlLabel><span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [attr.data-pc-section]="'itemlabel'" [innerHTML]="item.label | safeHtml" [hBind]="getPTOptions('itemLabel')"></span></ng-template>
-            <h-badge *ngIf="item.badge" [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions('pcBadge')" [unstyled]="unstyled()" />
-        </ng-template>
-    </div>`,
+          }
+        
+          <ng-template #itemContent>
+            @if (item.icon) {
+              <span [class]="cn(cx('itemIcon', { item }), item.iconClass)" [hBind]="getPTOptions('itemIcon')" [ngStyle]="item.iconStyle" [attr.data-pc-section]="'itemicon'"></span>
+            }
+            @if (item.escape !== false) {
+              <span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [hBind]="getPTOptions('itemLabel')" [attr.data-pc-section]="'itemlabel'">{{ item.label }}</span>
+            } @else {
+              <span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [attr.data-pc-section]="'itemlabel'" [innerHTML]="item.label | safeHtml" [hBind]="getPTOptions('itemLabel')"></span>
+            }
+            @if (item.badge) {
+              <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions('pcBadge')" [unstyled]="unstyled()" />
+            }
+          </ng-template>
+        </div>`,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
     providers: [MenuStyle]
@@ -165,117 +174,137 @@ export class MenuItemContent extends BaseComponent {
     imports: [CommonModule, RouterModule, MenuItemContent, TooltipModule, BadgeModule, SharedModule, SafeHtmlPipe, BindModule, MotionModule],
     template: `
         @if (!popup || overlayVisible) {
-            <div
-                #container
-                [class]="cn(cx('root'), styleClass)"
-                [style]="sx('root')"
-                [ngStyle]="style"
-                (click)="onOverlayClick($event)"
-                [attr.id]="id"
-                [hBind]="ptm('root')"
-                [attr.data-p]="dataP"
-                [hMotion]="visible || !popup"
-                [pMotionName]="'p-anchored-overlay'"
-                [pMotionAppear]="!!popup"
-                [pMotionDisabled]="!popup"
-                [pMotionOptions]="computedMotionOptions()"
-                (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
-                (pMotionOnAfterLeave)="onOverlayAfterLeave()"
+          <div
+            #container
+            [class]="cn(cx('root'), styleClass)"
+            [style]="sx('root')"
+            [ngStyle]="style"
+            (click)="onOverlayClick($event)"
+            [attr.id]="id"
+            [hBind]="ptm('root')"
+            [attr.data-p]="dataP"
+            [hMotion]="visible || !popup"
+            [pMotionName]="'p-anchored-overlay'"
+            [pMotionAppear]="!!popup"
+            [pMotionDisabled]="!popup"
+            [pMotionOptions]="computedMotionOptions()"
+            (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
+            (pMotionOnAfterLeave)="onOverlayAfterLeave()"
             >
-                <div *ngIf="startTemplate ?? _startTemplate" [class]="cx('start')" [hBind]="ptm('start')" [attr.data-pc-section]="'start'">
-                    <ng-container *ngTemplateOutlet="startTemplate ?? _startTemplate"></ng-container>
-                </div>
-                <ul
-                    #list
-                    [class]="cx('list')"
-                    [hBind]="ptm('list')"
-                    role="menu"
-                    [attr.id]="id + '_list'"
-                    [attr.tabindex]="getTabIndexValue()"
-                    [attr.data-pc-section]="'menu'"
-                    [attr.aria-activedescendant]="activedescendant()"
-                    [attr.aria-label]="ariaLabel"
-                    [attr.aria-labelledBy]="ariaLabelledBy"
-                    (focus)="onListFocus($event)"
-                    (blur)="onListBlur($event)"
-                    (keydown)="onListKeyDown($event)"
-                >
-                    <ng-template ngFor let-submenu let-i="index" [ngForOf]="model" *ngIf="hasSubMenu()">
-                        <li [class]="cx('separator')" [hBind]="ptm('separator')" *ngIf="submenu.separator && submenu.visible !== false" role="separator" [attr.data-pc-section]="'separator'"></li>
-                        <li
-                            [class]="cx('submenuLabel')"
-                            [hBind]="ptm('submenuLabel')"
-                            [attr.data-automationid]="submenu.automationId"
-                            *ngIf="!submenu.separator"
-                            hTooltip
-                            [tooltipOptions]="submenu.tooltipOptions"
-                            [pTooltipUnstyled]="unstyled()"
-                            role="none"
-                            [attr.id]="menuitemId(submenu, id, i)"
-                            [attr.data-pc-section]="'submenulabel'"
-                        >
-                            <ng-container *ngIf="!submenuHeaderTemplate && !_submenuHeaderTemplate">
-                                <span *ngIf="submenu.escape !== false; else htmlSubmenuLabel">{{ submenu.label }}</span>
-                                <ng-template #htmlSubmenuLabel><span [innerHTML]="submenu.label | safeHtml"></span></ng-template>
-                            </ng-container>
-                            <ng-container *ngTemplateOutlet="submenuHeaderTemplate ?? _submenuHeaderTemplate; context: { $implicit: submenu }"></ng-container>
-                        </li>
-                        <ng-template ngFor let-item let-j="index" [ngForOf]="submenu.items">
-                            <li [class]="cx('separator')" [hBind]="ptm('separator')" *ngIf="item.separator && (item.visible !== false || submenu.visible !== false)" role="separator" [attr.data-pc-section]="'separator'"></li>
-                            <li
-                                [class]="cn(cx('item', { item, id: menuitemId(item, id, i, j) }), $safeNavigationMigration(item?.styleClass))"
-                                [hBind]="ptm('item')"
-                                *ngIf="!item.separator && item.visible !== false && (item.visible !== undefined || submenu.visible !== false)"
-                                [hMenuItemContent]="item"
-                                [itemTemplate]="itemTemplate ?? _itemTemplate"
-                                [idx]="j"
-                                [menuitemId]="menuitemId(item, id, i, j)"
-                                [style]="item.style"
-                                (onMenuItemClick)="itemClick($event, menuitemId(item, id, i, j))"
-                                hTooltip
-                                [tooltipOptions]="item.tooltipOptions"
-                                [pTooltipUnstyled]="unstyled()"
-                                [unstyled]="unstyled()"
-                                role="menuitem"
-                                [attr.aria-label]="label(item.label)"
-                                [attr.data-p-focused]="isItemFocused(menuitemId(item, id, i, j))"
-                                [attr.data-p-disabled]="disabled(item.disabled)"
-                                [attr.aria-disabled]="disabled(item.disabled)"
-                                [attr.id]="menuitemId(item, id, i, j)"
-                            ></li>
-                        </ng-template>
-                    </ng-template>
-                    <ng-template ngFor let-item let-i="index" [ngForOf]="model" *ngIf="!hasSubMenu()">
-                        <li [class]="cx('separator')" [hBind]="ptm('separator')" *ngIf="item.separator && item.visible !== false" role="separator" [attr.data-pc-section]="'separator'"></li>
-                        <li
-                            [class]="cn(cx('item', { item, id: menuitemId(item, id, i) }), $safeNavigationMigration(item?.styleClass))"
-                            [hBind]="ptm('item')"
-                            *ngIf="!item.separator && item.visible !== false"
-                            [hMenuItemContent]="item"
-                            [itemTemplate]="itemTemplate ?? _itemTemplate"
-                            [idx]="i"
-                            [menuitemId]="menuitemId(item, id, i)"
-                            [ngStyle]="item.style"
-                            (onMenuItemClick)="itemClick($event, menuitemId(item, id, i))"
-                            hTooltip
-                            [tooltipOptions]="item.tooltipOptions"
-                            [unstyled]="unstyled()"
-                            [pTooltipUnstyled]="unstyled()"
-                            role="menuitem"
-                            [attr.aria-label]="label(item.label)"
-                            [attr.data-p-focused]="isItemFocused(menuitemId(item, id, i))"
-                            [attr.data-p-disabled]="disabled(item.disabled)"
-                            [attr.aria-disabled]="disabled(item.disabled)"
-                            [attr.id]="menuitemId(item, id, i)"
-                        ></li>
-                    </ng-template>
-                </ul>
-                <div *ngIf="endTemplate ?? _endTemplate" [class]="cx('end')" [hBind]="ptm('end')" [attr.data-pc-section]="'end'">
-                    <ng-container *ngTemplateOutlet="endTemplate ?? _endTemplate"></ng-container>
-                </div>
-            </div>
+            @if (startTemplate ?? _startTemplate) {
+              <div [class]="cx('start')" [hBind]="ptm('start')" [attr.data-pc-section]="'start'">
+                <ng-container *ngTemplateOutlet="startTemplate ?? _startTemplate"></ng-container>
+              </div>
+            }
+            <ul
+              #list
+              [class]="cx('list')"
+              [hBind]="ptm('list')"
+              role="menu"
+              [attr.id]="id + '_list'"
+              [attr.tabindex]="getTabIndexValue()"
+              [attr.data-pc-section]="'menu'"
+              [attr.aria-activedescendant]="activedescendant()"
+              [attr.aria-label]="ariaLabel"
+              [attr.aria-labelledBy]="ariaLabelledBy"
+              (focus)="onListFocus($event)"
+              (blur)="onListBlur($event)"
+              (keydown)="onListKeyDown($event)"
+              >
+              @for (submenu of model; track submenu; let i = $index) {
+                @if (hasSubMenu()) {
+                  @if (submenu.separator && submenu.visible !== false) {
+                    <li [class]="cx('separator')" [hBind]="ptm('separator')" role="separator" [attr.data-pc-section]="'separator'"></li>
+                  }
+                  @if (!submenu.separator) {
+                    <li
+                      [class]="cx('submenuLabel')"
+                      [hBind]="ptm('submenuLabel')"
+                      [attr.data-automationid]="submenu.automationId"
+                      hTooltip
+                      [tooltipOptions]="submenu.tooltipOptions"
+                      [pTooltipUnstyled]="unstyled()"
+                      role="none"
+                      [attr.id]="menuitemId(submenu, id, i)"
+                      [attr.data-pc-section]="'submenulabel'"
+                      >
+                      @if (!submenuHeaderTemplate && !_submenuHeaderTemplate) {
+                        @if (submenu.escape !== false) {
+                          <span>{{ submenu.label }}</span>
+                        } @else {
+                          <span [innerHTML]="submenu.label | safeHtml"></span>
+                        }
+                      }
+                      <ng-container *ngTemplateOutlet="submenuHeaderTemplate ?? _submenuHeaderTemplate; context: { $implicit: submenu }"></ng-container>
+                    </li>
+                  }
+                  @for (item of submenu.items; track item; let j = $index) {
+                    @if (item.separator && (item.visible !== false || submenu.visible !== false)) {
+                      <li [class]="cx('separator')" [hBind]="ptm('separator')" role="separator" [attr.data-pc-section]="'separator'"></li>
+                    }
+                    @if (!item.separator && item.visible !== false && (item.visible !== undefined || submenu.visible !== false)) {
+                      <li
+                        [class]="cn(cx('item', { item, id: menuitemId(item, id, i, j) }), $safeNavigationMigration(item?.styleClass))"
+                        [hBind]="ptm('item')"
+                        [hMenuItemContent]="item"
+                        [itemTemplate]="itemTemplate ?? _itemTemplate"
+                        [idx]="j"
+                        [menuitemId]="menuitemId(item, id, i, j)"
+                        [style]="item.style"
+                        (onMenuItemClick)="itemClick($event, menuitemId(item, id, i, j))"
+                        hTooltip
+                        [tooltipOptions]="item.tooltipOptions"
+                        [pTooltipUnstyled]="unstyled()"
+                        [unstyled]="unstyled()"
+                        role="menuitem"
+                        [attr.aria-label]="label(item.label)"
+                        [attr.data-p-focused]="isItemFocused(menuitemId(item, id, i, j))"
+                        [attr.data-p-disabled]="disabled(item.disabled)"
+                        [attr.aria-disabled]="disabled(item.disabled)"
+                        [attr.id]="menuitemId(item, id, i, j)"
+                      ></li>
+                    }
+                  }
+                }
+              }
+              @for (item of model; track item; let i = $index) {
+                @if (!hasSubMenu()) {
+                  @if (item.separator && item.visible !== false) {
+                    <li [class]="cx('separator')" [hBind]="ptm('separator')" role="separator" [attr.data-pc-section]="'separator'"></li>
+                  }
+                  @if (!item.separator && item.visible !== false) {
+                    <li
+                      [class]="cn(cx('item', { item, id: menuitemId(item, id, i) }), $safeNavigationMigration(item?.styleClass))"
+                      [hBind]="ptm('item')"
+                      [hMenuItemContent]="item"
+                      [itemTemplate]="itemTemplate ?? _itemTemplate"
+                      [idx]="i"
+                      [menuitemId]="menuitemId(item, id, i)"
+                      [ngStyle]="item.style"
+                      (onMenuItemClick)="itemClick($event, menuitemId(item, id, i))"
+                      hTooltip
+                      [tooltipOptions]="item.tooltipOptions"
+                      [unstyled]="unstyled()"
+                      [pTooltipUnstyled]="unstyled()"
+                      role="menuitem"
+                      [attr.aria-label]="label(item.label)"
+                      [attr.data-p-focused]="isItemFocused(menuitemId(item, id, i))"
+                      [attr.data-p-disabled]="disabled(item.disabled)"
+                      [attr.aria-disabled]="disabled(item.disabled)"
+                      [attr.id]="menuitemId(item, id, i)"
+                    ></li>
+                  }
+                }
+              }
+            </ul>
+            @if (endTemplate ?? _endTemplate) {
+              <div [class]="cx('end')" [hBind]="ptm('end')" [attr.data-pc-section]="'end'">
+                <ng-container *ngTemplateOutlet="endTemplate ?? _endTemplate"></ng-container>
+              </div>
+            }
+          </div>
         }
-    `,
+        `,
 
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
