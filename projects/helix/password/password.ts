@@ -436,77 +436,86 @@ export const Password_VALUE_ACCESSOR: any = {
     imports: [CommonModule, InputText, AutoFocus, TimesIcon, EyeSlashIcon, EyeIcon, Overlay, SharedModule, BindModule],
     template: `
         <input
-            #input
-            [attr.label]="label"
-            [attr.aria-label]="ariaLabel"
-            [attr.aria-labelledBy]="ariaLabelledBy"
-            [attr.id]="inputId"
-            [attr.tabindex]="tabindex"
-            hInputText
-            [pSize]="size()"
-            [ngStyle]="inputStyle"
-            [class]="cn(cx('pcInputText'), inputStyleClass)"
-            [attr.type]="unmasked ? 'text' : 'password'"
-            [attr.placeholder]="placeholder"
-            [attr.autocomplete]="autocomplete"
-            [value]="value"
-            [variant]="$variant()"
-            [attr.name]="name()"
-            [attr.maxlength]="maxlength() || maxLength"
-            [attr.minlength]="minlength()"
-            [attr.required]="required() ? '' : undefined"
-            [attr.disabled]="$disabled() ? '' : undefined"
-            [invalid]="invalid()"
-            (input)="onInput($event)"
-            (focus)="onInputFocus($event)"
-            (blur)="onInputBlur($event)"
-            (keyup)="onKeyUp($event)"
-            [hAutoFocus]="autofocus"
-            [pt]="ptm('pcInputText')"
-            [unstyled]="unstyled()"
-        />
-        <ng-container *ngIf="showClear && value != null">
-            <svg data-p-icon="times" *ngIf="!clearIconTemplate && !_clearIconTemplate" [class]="cx('clearIcon')" (click)="clear()" [hBind]="ptm('clearIcon')" />
-            <span (click)="clear()" [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')">
-                <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
-            </span>
-        </ng-container>
-
-        <ng-container *ngIf="toggleMask">
-            <ng-container *ngIf="unmasked">
-                <svg data-p-icon="eyeslash" [class]="cx('maskIcon')" [hBind]="ptm('maskIcon')" *ngIf="!hideIconTemplate && !_hideIconTemplate" (click)="onMaskToggle()" />
-                <span *ngIf="hideIconTemplate || _hideIconTemplate" (click)="onMaskToggle()" [hBind]="ptm('maskIcon')">
-                    <ng-template *ngTemplateOutlet="hideIconTemplate || _hideIconTemplate; context: { class: cx('maskIcon') }"></ng-template>
-                </span>
-            </ng-container>
-            <ng-container *ngIf="!unmasked">
-                <svg data-p-icon="eye" *ngIf="!showIconTemplate && !_showIconTemplate" [class]="cx('unmaskIcon')" [hBind]="ptm('unmaskIcon')" (click)="onMaskToggle()" />
-                <span *ngIf="showIconTemplate || _showIconTemplate" (click)="onMaskToggle()" [hBind]="ptm('unmaskIcon')">
-                    <ng-template *ngTemplateOutlet="showIconTemplate || _showIconTemplate; context: { class: cx('unmaskIcon') }"></ng-template>
-                </span>
-            </ng-container>
-        </ng-container>
-
+          #input
+          [attr.label]="label"
+          [attr.aria-label]="ariaLabel"
+          [attr.aria-labelledBy]="ariaLabelledBy"
+          [attr.id]="inputId"
+          [attr.tabindex]="tabindex"
+          hInputText
+          [pSize]="size()"
+          [ngStyle]="inputStyle"
+          [class]="cn(cx('pcInputText'), inputStyleClass)"
+          [attr.type]="unmasked ? 'text' : 'password'"
+          [attr.placeholder]="placeholder"
+          [attr.autocomplete]="autocomplete"
+          [value]="value"
+          [variant]="$variant()"
+          [attr.name]="name()"
+          [attr.maxlength]="maxlength() || maxLength"
+          [attr.minlength]="minlength()"
+          [attr.required]="required() ? '' : undefined"
+          [attr.disabled]="$disabled() ? '' : undefined"
+          [invalid]="invalid()"
+          (input)="onInput($event)"
+          (focus)="onInputFocus($event)"
+          (blur)="onInputBlur($event)"
+          (keyup)="onKeyUp($event)"
+          [hAutoFocus]="autofocus"
+          [pt]="ptm('pcInputText')"
+          [unstyled]="unstyled()"
+          />
+        @if (showClear && value != null) {
+          @if (!clearIconTemplate && !_clearIconTemplate) {
+            <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear()" [hBind]="ptm('clearIcon')" />
+          }
+          <span (click)="clear()" [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')">
+            <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+          </span>
+        }
+        
+        @if (toggleMask) {
+          @if (unmasked) {
+            @if (!hideIconTemplate && !_hideIconTemplate) {
+              <svg data-p-icon="eyeslash" [class]="cx('maskIcon')" [hBind]="ptm('maskIcon')" (click)="onMaskToggle()" />
+            }
+            @if (hideIconTemplate || _hideIconTemplate) {
+              <span (click)="onMaskToggle()" [hBind]="ptm('maskIcon')">
+                <ng-template *ngTemplateOutlet="hideIconTemplate || _hideIconTemplate; context: { class: cx('maskIcon') }"></ng-template>
+              </span>
+            }
+          }
+          @if (!unmasked) {
+            @if (!showIconTemplate && !_showIconTemplate) {
+              <svg data-p-icon="eye" [class]="cx('unmaskIcon')" [hBind]="ptm('unmaskIcon')" (click)="onMaskToggle()" />
+            }
+            @if (showIconTemplate || _showIconTemplate) {
+              <span (click)="onMaskToggle()" [hBind]="ptm('unmaskIcon')">
+                <ng-template *ngTemplateOutlet="showIconTemplate || _showIconTemplate; context: { class: cx('unmaskIcon') }"></ng-template>
+              </span>
+            }
+          }
+        }
+        
         <h-overlay #overlay [hostAttrSelector]="$attrSelector" [(visible)]="overlayVisible" [options]="overlayOptions" [target]="'@parent'" [appendTo]="$appendTo()" [unstyled]="unstyled()" [pt]="ptm('pcOverlay')" [motionOptions]="motionOptions()">
-            <ng-template #content>
-                <div [class]="cx('overlay')" [style]="sx('overlay')" (click)="onOverlayClick($event)" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
-                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                    <ng-container *ngIf="contentTemplate || _contentTemplate; else defaultContent">
-                        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-                    </ng-container>
-                    <ng-template #defaultContent>
-                        <div [class]="cx('content')" [hBind]="ptm('content')">
-                            <div [class]="cx('meter')" [hBind]="ptm('meter')">
-                                <div [class]="cx('meterLabel')" [ngStyle]="{ width: meter ? meter.width : '' }" [hBind]="ptm('meterLabel')" [attr.data-p]="meterDataP"></div>
-                            </div>
-                            <div [class]="cx('meterText')" [hBind]="ptm('meterText')">{{ infoText }}</div>
-                        </div>
-                    </ng-template>
-                    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+          <ng-template #content>
+            <div [class]="cx('overlay')" [style]="sx('overlay')" (click)="onOverlayClick($event)" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
+              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+              @if (contentTemplate || _contentTemplate) {
+                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+              } @else {
+                <div [class]="cx('content')" [hBind]="ptm('content')">
+                  <div [class]="cx('meter')" [hBind]="ptm('meter')">
+                    <div [class]="cx('meterLabel')" [ngStyle]="{ width: meter ? meter.width : '' }" [hBind]="ptm('meterLabel')" [attr.data-p]="meterDataP"></div>
+                  </div>
+                  <div [class]="cx('meterText')" [hBind]="ptm('meterText')">{{ infoText }}</div>
                 </div>
-            </ng-template>
+              }
+              <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+            </div>
+          </ng-template>
         </h-overlay>
-    `,
+        `,
     providers: [Password_VALUE_ACCESSOR, PasswordStyle, { provide: PASSWORD_INSTANCE, useExisting: Password }, { provide: PARENT_INSTANCE, useExisting: Password }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

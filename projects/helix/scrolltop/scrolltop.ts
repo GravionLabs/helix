@@ -24,33 +24,39 @@ const SCROLLTOP_INSTANCE = new InjectionToken<ScrollTop>('SCROLLTOP_INSTANCE');
     imports: [CommonModule, ChevronUpIcon, Button, SharedModule, MotionDirective],
     template: `
         @if (render()) {
-            <h-button
-                [hMotion]="visible()"
-                [pMotionAppear]="true"
-                [pMotionName]="'p-scrolltop'"
-                [pMotionOptions]="computedMotionOptions()"
-                (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                (pMotionOnBeforeLeave)="onBeforeLeave()"
-                (pMotionOnAfterLeave)="onAfterLeave()"
-                [attr.aria-label]="buttonAriaLabel"
-                (click)="onClick()"
-                [pt]="ptm('pcButton')"
-                [styleClass]="cn(cx('root'), styleClass)"
-                [ngStyle]="style"
-                type="button"
-                [buttonProps]="buttonProps"
-                [unstyled]="unstyled()"
+          <h-button
+            [hMotion]="visible()"
+            [pMotionAppear]="true"
+            [pMotionName]="'p-scrolltop'"
+            [pMotionOptions]="computedMotionOptions()"
+            (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+            (pMotionOnBeforeLeave)="onBeforeLeave()"
+            (pMotionOnAfterLeave)="onAfterLeave()"
+            [attr.aria-label]="buttonAriaLabel"
+            (click)="onClick()"
+            [pt]="ptm('pcButton')"
+            [styleClass]="cn(cx('root'), styleClass)"
+            [ngStyle]="style"
+            type="button"
+            [buttonProps]="buttonProps"
+            [unstyled]="unstyled()"
             >
-                <ng-template #icon>
-                    <ng-container *ngIf="!iconTemplate && !_iconTemplate">
-                        <span *ngIf="_icon" [class]="cn(cx('icon'), _icon)"></span>
-                        <svg data-p-icon="chevron-up" *ngIf="!_icon" [class]="cx('icon')" />
-                    </ng-container>
-                    <ng-template [ngIf]="!icon" *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { styleClass: cx('icon') }"></ng-template>
-                </ng-template>
-            </h-button>
+            <ng-template #icon>
+              @if (!iconTemplate && !_iconTemplate) {
+                @if (_icon) {
+                  <span [class]="cn(cx('icon'), _icon)"></span>
+                }
+                @if (!_icon) {
+                  <svg data-p-icon="chevron-up" [class]="cx('icon')" />
+                }
+              }
+              @if (!icon) {
+                <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { styleClass: cx('icon') }"></ng-template>
+              }
+            </ng-template>
+          </h-button>
         }
-    `,
+        `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ScrollTopStyle, { provide: SCROLLTOP_INSTANCE, useExisting: ScrollTop }, { provide: PARENT_INSTANCE, useExisting: ScrollTop }],

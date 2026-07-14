@@ -28,8 +28,8 @@ export const SLIDER_VALUE_ACCESSOR: any = {
     standalone: true,
     imports: [CommonModule, AutoFocus, SharedModule, BindModule],
     template: `
-        <span
-            *ngIf="range && orientation == 'horizontal'"
+        @if (range && orientation == 'horizontal') {
+          <span
             [class]="cx('range')"
             [ngStyle]="{
                 'inset-inline-start': offset !== null && offset !== undefined ? offset + '%' : handleValues[0] + '%',
@@ -39,9 +39,10 @@ export const SLIDER_VALUE_ACCESSOR: any = {
             [attr.data-pc-section]="'range'"
             [attr.data-p]="dataP"
             [hBind]="ptm('range')"
-        ></span>
-        <span
-            *ngIf="range && orientation == 'vertical'"
+          ></span>
+        }
+        @if (range && orientation == 'vertical') {
+          <span
             [class]="cx('range')"
             [ngStyle]="{
                 bottom: offset !== null && offset !== undefined ? offset + '%' : handleValues[0] + '%',
@@ -51,11 +52,16 @@ export const SLIDER_VALUE_ACCESSOR: any = {
             [attr.data-pc-section]="'range'"
             [attr.data-p]="dataP"
             [hBind]="ptm('range')"
-        ></span>
-        <span *ngIf="!range && orientation == 'vertical'" [class]="cx('range')" [attr.data-pc-section]="'range'" [style]="sx('range')" [ngStyle]="{ height: handleValue + '%' }" [hBind]="ptm('range')"></span>
-        <span *ngIf="!range && orientation == 'horizontal'" [class]="cx('range')" [attr.data-pc-section]="'range'" [style]="sx('range')" [ngStyle]="{ width: handleValue + '%' }" [hBind]="ptm('range')"></span>
-        <span
-            *ngIf="!range"
+          ></span>
+        }
+        @if (!range && orientation == 'vertical') {
+          <span [class]="cx('range')" [attr.data-pc-section]="'range'" [style]="sx('range')" [ngStyle]="{ height: handleValue + '%' }" [hBind]="ptm('range')"></span>
+        }
+        @if (!range && orientation == 'horizontal') {
+          <span [class]="cx('range')" [attr.data-pc-section]="'range'" [style]="sx('range')" [ngStyle]="{ width: handleValue + '%' }" [hBind]="ptm('range')"></span>
+        }
+        @if (!range) {
+          <span
             #sliderHandle
             [class]="cx('handle')"
             [style.transition]="dragging ? 'none' : null"
@@ -81,9 +87,10 @@ export const SLIDER_VALUE_ACCESSOR: any = {
             [hAutoFocus]="autofocus"
             [hBind]="ptm('handle')"
             [attr.data-p]="dataP"
-        ></span>
-        <span
-            *ngIf="range"
+          ></span>
+        }
+        @if (range) {
+          <span
             #sliderHandleStart
             [style.transition]="dragging ? 'none' : null"
             [class]="cn(cx('handle'), handleIndex == 0 && 'p-slider-handle-active')"
@@ -106,9 +113,10 @@ export const SLIDER_VALUE_ACCESSOR: any = {
             [hAutoFocus]="autofocus"
             [hBind]="ptm('startHandler')"
             [attr.data-p]="dataP"
-        ></span>
-        <span
-            *ngIf="range"
+          ></span>
+        }
+        @if (range) {
+          <span
             #sliderHandleEnd
             [style.transition]="dragging ? 'none' : null"
             [class]="cn(cx('handle'), handleIndex == 1 && 'p-slider-handle-active')"
@@ -130,8 +138,9 @@ export const SLIDER_VALUE_ACCESSOR: any = {
             [attr.data-pc-section]="'endHandler'"
             [hBind]="ptm('endHandler')"
             [attr.data-p]="dataP"
-        ></span>
-    `,
+          ></span>
+        }
+        `,
     providers: [SLIDER_VALUE_ACCESSOR, SliderStyle, { provide: SLIDER_INSTANCE, useExisting: Slider }, { provide: PARENT_INSTANCE, useExisting: Slider }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
