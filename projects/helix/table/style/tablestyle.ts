@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${datatable_style}
 
-/* For PrimeNG */
+/* For Helix */
 .p-datatable-scrollable-table > .p-datatable-thead {
     top: 0;
     z-index: 2;

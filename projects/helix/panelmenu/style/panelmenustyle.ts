@@ -4,7 +4,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 
 const style = /*css*/ `
     ${panelmenu_style}
-    /*For PrimeNG*/
+    /*For Helix*/
 
 
     .p-panelmenu-root-list,

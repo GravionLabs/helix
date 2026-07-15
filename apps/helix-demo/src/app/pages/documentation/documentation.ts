@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <div class="font-semibold text-xl mb-2">Get Started</div>
       <p class="text-lg mb-2">
         Sakai is an application template for Angular and is distributed as a CLI project. Current
-        versions are Angular v21 with PrimeNG v21. In case CLI is not installed already, use the
+        versions are Angular v22 with Helix v22. In case CLI is not installed already, use the
         command below to set it up.
       </p>
       <pre class="app-code">
@@ -70,7 +70,7 @@ ng serve</code></pre>
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
           >src/app/layout/service/layout.service.ts</span
         >
-        is a service that manages layout state changes, including dark mode, PrimeNG theme, menu
+        is a service that manages layout state changes, including dark mode, Helix theme, menu
         modes, and states.
       </p>
 
@@ -82,7 +82,7 @@ ng serve</code></pre>
 
       <div class="font-semibold text-xl mb-2">Variables</div>
       <p class="text-lg mb-2">
-        CSS variables used in the template are derived from the applied PrimeNG theme. Customize
+        CSS variables used in the template are derived from the applied Helix theme. Customize
         them through the CSS variables in
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
           >src/assets/layout/variables</span

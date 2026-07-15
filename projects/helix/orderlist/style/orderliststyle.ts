@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const theme = /*css*/ `
     ${style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-orderlist-controls-right .p-orderlist-controls {
         order: 2;
     }

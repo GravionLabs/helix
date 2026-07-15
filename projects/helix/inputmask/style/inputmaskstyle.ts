@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix/base';
 
 const style = /*css*/ `
-    /* For PrimeNG */
+    /* For Helix */
     p-inputmask {
         position: relative;
     }

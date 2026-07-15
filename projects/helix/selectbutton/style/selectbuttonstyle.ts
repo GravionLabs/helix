@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${selectbutton_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-selectbutton.ng-invalid.ng-dirty {
         outline: 1px solid dt('selectbutton.invalid.border.color');
         outline-offset: 0;

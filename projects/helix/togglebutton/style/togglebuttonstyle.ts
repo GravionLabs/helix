@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${togglebutton_style}
 
-    /* For PrimeNG (iconPos) */
+    /* For Helix (iconPos) */
     .p-togglebutton-icon-right {
         order: 1;
     }

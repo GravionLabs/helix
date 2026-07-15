@@ -347,7 +347,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
      */
     @Input() overlayOptions: OverlayOptions | undefined;
     /**
-     * Text to display when there are no options available. Defaults to value from PrimeNG locale configuration.
+     * Text to display when there are no options available. Defaults to value from Helix locale configuration.
      * @group Props
      */
     @Input() emptyMessage: string = '';

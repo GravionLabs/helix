@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${treeselect_style}
 
-    /* For PrimeNG */
+    /* For Helix */
 
     .p-treeselect.ng-invalid.ng-dirty {
         border-color: dt('treeselect.invalid.border.color');

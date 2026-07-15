@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${listbox_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-listbox.ng-invalid.ng-dirty {
         border-color: dt('listbox.invalid.border.color');
     }

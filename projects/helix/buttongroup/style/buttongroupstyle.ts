@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${buttongroup_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-buttongroup p-button:focus .p-button {
         position: relative;
         z-index: 1;

@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${rating_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     p-rating.ng-invalid.ng-dirty > .p-rating > .p-rating-icon {
         stroke: dt('rating.invalid.icon.color');
     }

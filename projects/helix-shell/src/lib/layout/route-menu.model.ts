@@ -3,7 +3,7 @@ import type { ActivatedRouteSnapshot, CanActivateFn, Route, Routes } from '@angu
 import type { MenuItem } from '@gravionlabs/helix/api';
 
 /**
- * Extends PrimeNG's MenuItem with Angular routing properties.
+ * Extends Helix's MenuItem with Angular routing properties.
  * Allows a single array to define both the sidebar menu and the router configuration.
  */
 export interface HelixRouteMenuItem extends MenuItem {
