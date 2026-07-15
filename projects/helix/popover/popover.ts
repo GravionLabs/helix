@@ -48,32 +48,7 @@ const POPOVER_INSTANCE = new InjectionToken<Popover>('POPOVER_INSTANCE');
     imports: [CommonModule, SharedModule, Bind, MotionModule],
     providers: [PopoverStyle, { provide: POPOVER_INSTANCE, useExisting: Popover }, { provide: PARENT_INSTANCE, useExisting: Popover }],
     hostDirectives: [Bind],
-    template: `
-        @if (render) {
-            <div
-                [hBind]="ptm('root')"
-                [class]="cn(cx('root'), styleClass)"
-                [style]="sx('root')"
-                [ngStyle]="style"
-                (click)="onOverlayClick($event)"
-                role="dialog"
-                [attr.aria-modal]="overlayVisible"
-                [attr.aria-label]="ariaLabel"
-                [attr.aria-labelledBy]="ariaLabelledBy"
-                [hMotion]="overlayVisible"
-                pMotionName="p-anchored-overlay"
-                [pMotionAppear]="true"
-                (pMotionOnEnter)="onAnimationStart($event)"
-                (pMotionOnAfterLeave)="onAnimationEnd()"
-                [pMotionOptions]="computedMotionOptions()"
-            >
-                <div [hBind]="ptm('content')" [class]="cx('content')" (click)="onContentClick($event)" (mousedown)="onContentClick($event)">
-                    <ng-content></ng-content>
-                    <ng-template *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { closeCallback: onCloseClick.bind(this) }"></ng-template>
-                </div>
-            </div>
-        }
-    `,
+    templateUrl: './popover.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
