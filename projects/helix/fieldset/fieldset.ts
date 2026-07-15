@@ -39,78 +39,7 @@ const FIELDSET_INSTANCE = new InjectionToken<Fieldset>('FIELDSET_INSTANCE');
     selector: 'h-fieldset',
     standalone: true,
     imports: [CommonModule, MinusIcon, PlusIcon, SharedModule, BindModule, MotionModule],
-    template: `
-        <fieldset [attr.id]="id" [ngStyle]="style" [class]="cn(cx('root'), styleClass)" [hBind]="ptm('root')" [attr.data-p]="dataP">
-          <legend [class]="cx('legend')" [hBind]="ptm('legend')" [attr.data-p]="dataP">
-            @if (toggleable) {
-              <button
-                [attr.id]="id + '_header'"
-                tabindex="0"
-                role="button"
-                [attr.aria-controls]="id + '_content'"
-                [attr.aria-expanded]="!collapsed"
-                [attr.aria-label]="buttonAriaLabel"
-                (click)="toggle($event)"
-                (keydown)="onKeyDown($event)"
-                [class]="cx('toggleButton')"
-                [hBind]="ptm('toggleButton')"
-                >
-                @if (collapsed) {
-                  @if (!expandIconTemplate && !_expandIconTemplate) {
-                    <svg data-p-icon="plus" [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')" />
-                  }
-                  @if (expandIconTemplate || _expandIconTemplate) {
-                    <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
-                      <ng-container *ngTemplateOutlet="expandIconTemplate || _expandIconTemplate"></ng-container>
-                    </span>
-                  }
-                }
-                @if (!collapsed) {
-                  @if (!collapseIconTemplate && !_collapseIconTemplate) {
-                    <svg data-p-icon="minus" [class]="cx('toggleIcon')" [attr.aria-hidden]="true" [hBind]="ptm('toggleIcon')" />
-                  }
-                  @if (collapseIconTemplate || _collapseIconTemplate) {
-                    <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
-                      <ng-container *ngTemplateOutlet="collapseIconTemplate || _collapseIconTemplate"></ng-container>
-                    </span>
-                  }
-                }
-                <ng-container *ngTemplateOutlet="legendContent"></ng-container>
-              </button>
-            } @else {
-              <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend }}</span>
-              <ng-content select="p-header"></ng-content>
-              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-            }
-            <ng-template #legendContent>
-              <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend }}</span>
-              <ng-content select="p-header"></ng-content>
-              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-            </ng-template>
-          </legend>
-          <div
-            [hBind]="ptm('contentContainer')"
-            [hMotion]="!toggleable || (toggleable && !collapsed)"
-            pMotionName="p-collapsible"
-            [pMotionOptions]="computedMotionOptions()"
-            [class]="cx('contentContainer')"
-            [id]="id + '_content'"
-            role="region"
-            [attr.aria-labelledby]="id + '_header'"
-            [attr.aria-hidden]="collapsed"
-            [attr.tabindex]="collapsed ? '-1' : undefined"
-            (pMotionOnAfterEnter)="onToggleDone($event)"
-            (pMotionOnAfterLeave)="onToggleDone($event)"
-            >
-            <div [hBind]="ptm('contentWrapper')" [class]="cx('contentWrapper')">
-              <div [class]="cx('content')" [hBind]="ptm('content')" #contentWrapper>
-                <ng-content></ng-content>
-                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        `,
+    templateUrl: './fieldset.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [FieldsetStyle, { provide: FIELDSET_INSTANCE, useExisting: Fieldset }, { provide: PARENT_INSTANCE, useExisting: Fieldset }],

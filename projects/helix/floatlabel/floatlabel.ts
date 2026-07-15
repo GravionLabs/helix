@@ -16,7 +16,7 @@ const FLOATLABEL_INSTANCE = new InjectionToken<FloatLabel>('FLOATLABEL_INSTANCE'
     selector: 'h-floatlabel, h-floatLabel, h-float-label',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './floatlabel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [FloatLabelStyle, { provide: FLOATLABEL_INSTANCE, useExisting: FloatLabel }, { provide: PARENT_INSTANCE, useExisting: FloatLabel }],
