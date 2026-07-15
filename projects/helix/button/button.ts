@@ -577,66 +577,7 @@ export class ButtonDirective extends BaseComponent {
     selector: 'h-button',
     standalone: true,
     imports: [CommonModule, Ripple, AutoFocus, SpinnerIcon, BadgeModule, SharedModule, Bind],
-    template: `
-        <button
-          [attr.type]="type || buttonProps?.type"
-          [attr.aria-label]="ariaLabel || buttonProps?.ariaLabel"
-          [ngStyle]="style || buttonProps?.style"
-          [disabled]="disabled || loading || buttonProps?.disabled"
-          [class]="cn(cx('root'), styleClass, $safeNavigationMigration(buttonProps?.styleClass))"
-          (click)="onClick.emit($event)"
-          (focus)="onFocus.emit($event)"
-          (blur)="onBlur.emit($event)"
-          hRipple
-          [attr.tabindex]="tabindex || buttonProps?.tabindex"
-          [hAutoFocus]="autofocus || buttonProps?.autofocus"
-          [hBind]="ptm('root')"
-          [attr.data-p]="dataP"
-          [attr.data-p-disabled]="disabled || loading || buttonProps?.disabled"
-          [attr.data-p-severity]="severity || buttonProps?.severity"
-          >
-          <ng-content></ng-content>
-          <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-          @if (loading || buttonProps?.loading) {
-            @if (!loadingIconTemplate && !_loadingIconTemplate) {
-              @if (loadingIcon || buttonProps?.loadingIcon) {
-                <span [class]="cn(cx('loadingIcon'), 'pi-spin', loadingIcon || buttonProps?.loadingIcon)" [hBind]="ptm('loadingIcon')" [attr.aria-hidden]="true"></span>
-              }
-              @if (!(loadingIcon || buttonProps?.loadingIcon)) {
-                <svg data-p-icon="spinner" [class]="cn(cx('loadingIcon'), cx('spinnerIcon'))" [hBind]="ptm('loadingIcon')" [spin]="true" [attr.aria-hidden]="true" />
-              }
-            }
-            @if (loadingIconTemplate || _loadingIconTemplate) {
-              <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate; context: { class: cx('loadingIcon'), pt: ptm('loadingIcon') }"></ng-template>
-            }
-          }
-          @if (!(loading || buttonProps?.loading)) {
-            @if ((icon || buttonProps?.icon) && !iconTemplate && !_iconTemplate) {
-              <span [class]="cn(cx('icon'), icon || buttonProps?.icon)" [hBind]="ptm('icon')" [attr.data-p]="dataIconP"></span>
-            }
-            @if (!icon && (iconTemplate || _iconTemplate)) {
-              <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { class: cx('icon'), pt: ptm('icon') }"></ng-template>
-            }
-          }
-          @if (!contentTemplate && !_contentTemplate && (label || buttonProps?.label)) {
-            <span
-              [class]="cx('label')"
-              [attr.aria-hidden]="(icon || buttonProps?.icon) && !(label || buttonProps?.label)"
-              [hBind]="ptm('label')"
-              [attr.data-p]="dataLabelP"
-              >{{ label || buttonProps?.label }}</span
-              >
-            }
-            @if (!contentTemplate && !_contentTemplate && (badge || buttonProps?.badge)) {
-              <h-badge
-                [value]="badge || buttonProps?.badge"
-                [severity]="badgeSeverity || buttonProps?.badgeSeverity"
-                [pt]="ptm('pcBadge')"
-                [unstyled]="unstyled()"
-              ></h-badge>
-            }
-          </button>
-        `,
+    templateUrl: './button.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ButtonStyle, { provide: BUTTON_INSTANCE, useExisting: Button }, { provide: PARENT_INSTANCE, useExisting: Button }],

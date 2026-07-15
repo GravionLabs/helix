@@ -16,20 +16,7 @@ const AVATAR_INSTANCE = new InjectionToken<Avatar>('AVATAR_INSTANCE');
     selector: 'h-avatar',
     standalone: true,
     imports: [CommonModule, SharedModule, Bind],
-    template: `
-        <ng-content></ng-content>
-        @if (label) {
-          <span [hBind]="ptm('label')" [class]="cx('label')" [attr.data-p]="dataP">{{ label }}</span>
-        } @else {
-          @if (icon) {
-            <span [hBind]="ptm('icon')" [class]="icon" [ngClass]="cx('icon')" [attr.data-p]="dataP"></span>
-          } @else {
-            @if (image) {
-              <img [hBind]="ptm('image')" [src]="image" (error)="imageError($event)" [attr.aria-label]="ariaLabel" [attr.data-p]="dataP" />
-            }
-          }
-        }
-        `,
+    templateUrl: './avatar.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
