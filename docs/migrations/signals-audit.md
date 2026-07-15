@@ -73,3 +73,7 @@ table above).
 - **Batch 2 (#271):** not needed — the audit found no further own-code rows.
   Recommend closing #271 as completed-by-audit (no additional batches were
   pre-authorized for fork code).
+
+Related: [css-class-prefix-decision.md](css-class-prefix-decision.md) records
+the epic-#297 decision that the `.p-*` CSS class names stay even as this
+file's keep-decorators verdict is reversed by the same epic.

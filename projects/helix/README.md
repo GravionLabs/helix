@@ -14,7 +14,8 @@ import { Button } from '@gravionlabs/helix/button';
 Selectors use the `h-` prefix (`h-button`, `hTooltip`, `hRipple`). Styling is
 provided by the pinned `@primeuix` MIT layer, so CSS classes (`.p-*`) and
 design tokens (`--p-*`) keep their upstream names and all existing PrimeNG
-themes/presets work unchanged.
+themes/presets work unchanged (decision rationale:
+[docs/migrations/css-class-prefix-decision.md](../../docs/migrations/css-class-prefix-decision.md)).
 
 ## Documentation
 
