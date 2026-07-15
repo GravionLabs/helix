@@ -48,51 +48,7 @@ const SCROLLER_INSTANCE = new InjectionToken<Scroller>('SCROLLER_INSTANCE');
     selector: 'h-scroller, h-virtualscroller, h-virtual-scroller, h-virtualScroller',
     imports: [CommonModule, SpinnerIcon, SharedModule, Bind],
     standalone: true,
-    template: `
-        @if (!_disabled) {
-          <div #element [attr.id]="_id" [attr.tabindex]="tabindex" [ngStyle]="_style" [class]="cn(cx('root'), styleClass)" (scroll)="onContainerScroll($event)" [hBind]="ptm('root')">
-            @if (contentTemplate || _contentTemplate) {
-              <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: loadedItems, options: getContentOptions() }"></ng-container>
-            } @else {
-              <div #content [class]="cn(cx('content'), contentStyleClass)" [style]="contentStyle" [hBind]="ptm('content')">
-                @for (item of loadedItems; track _trackBy(index, item); let index = $index) {
-                  <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, options: getOptions(index) }"></ng-container>
-                }
-              </div>
-            }
-            @if (_showSpacer) {
-              <div [class]="cx('spacer')" [ngStyle]="spacerStyle" [hBind]="ptm('spacer')"></div>
-            }
-            @if (!loaderDisabled && _showLoader && d_loading) {
-              <div [class]="cx('loader')" [hBind]="ptm('loader')">
-                @if (loaderTemplate || _loaderTemplate) {
-                  @for (item of loaderArr; track item; let index = $index) {
-                    <ng-container
-                                *ngTemplateOutlet="
-                                    loaderTemplate || _loaderTemplate;
-                                    context: {
-                                        options: getLoaderOptions(index, both && { numCols: numItemsInViewport.cols })
-                                    }
-                                "
-                  ></ng-container>
-                }
-              } @else {
-                @if (loaderIconTemplate || _loaderIconTemplate) {
-                  <ng-container *ngTemplateOutlet="loaderIconTemplate || _loaderIconTemplate; context: { options: { styleClass: 'p-virtualscroller-loading-icon' } }"></ng-container>
-                } @else {
-                  <svg data-p-icon="spinner" [class]="cx('loadingIcon')" [spin]="true" [hBind]="ptm('loadingIcon')" />
-                }
-              }
-            </div>
-          }
-        </div>
-        } @else {
-          <ng-content></ng-content>
-          @if (contentTemplate || _contentTemplate) {
-            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: items, options: { rows: _items, columns: loadedColumns } }"></ng-container>
-          }
-        }
-        `,
+    templateUrl: './scroller.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     providers: [ScrollerStyle, { provide: SCROLLER_INSTANCE, useExisting: Scroller }, { provide: PARENT_INSTANCE, useExisting: Scroller }],
