@@ -1,0 +1,13 @@
+<span [class]="cx('content')" [hBind]="ptm('content')" [attr.data-p]="dataP">
+        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: checked }"></ng-container>
+        @if (!contentTemplate) {
+            @if (!iconTemplate) {
+                @if (onIcon || offIcon) {
+                    <span [class]="cn(cx('icon'), checked ? this.onIcon : this.offIcon, iconPos === 'left' ? cx('iconLeft') : cx('iconRight'))" [hBind]="ptm('icon')"></span>
+                }
+            } @else {
+                <ng-container *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { $implicit: checked }"></ng-container>
+            }
+            <span [class]="cx('label')" [hBind]="ptm('label')">{{ checked ? (hasOnLabel ? onLabel : ' ') : hasOffLabel ? offLabel : ' ' }}</span>
+        }
+    </span>

@@ -1,0 +1,125 @@
+@if (node) {
+  <li
+    [class]="cn(cx('node'), node.styleClass)"
+    [ngStyle]="{ height: itemSize + 'px' }"
+    [style]="node.style"
+    [attr.aria-label]="node.label"
+    [attr.aria-checked]="checked"
+    [attr.aria-setsize]="node.children ? node.children.length : 0"
+    [attr.aria-selected]="selected"
+    [attr.aria-expanded]="node.expanded"
+    [attr.aria-posinset]="index + 1"
+    [attr.aria-level]="level + 1"
+    [attr.tabindex]="index === 0 ? 0 : -1"
+    [attr.data-id]="node.key"
+    role="treeitem"
+    (keydown)="onKeyDown($event)"
+    [hBind]="getPTOptions('node')"
+    >
+    @if (isPrevDropPointActive()) {
+      <div [class]="cx('dropPoint')" [attr.aria-hidden]="true" [hBind]="getPTOptions('dropPoint')"></div>
+    }
+    <div
+      [class]="cx('nodeContent')"
+      [style.paddingLeft]="level * indentation + 'rem'"
+      (click)="onNodeClick($event)"
+      (contextmenu)="onNodeRightClick($event)"
+      (dblclick)="onNodeDblClick($event)"
+      (touchend)="onNodeTouchEnd()"
+      (drop)="onNodeDrop($event)"
+      (dragstart)="onNodeDragStart($event)"
+      (dragover)="onNodeDragOver($event)"
+      (dragleave)="onNodeDragLeave($event)"
+      (dragend)="onNodeDragEnd($event)"
+      [draggable]="tree.draggableNodes"
+      [hBind]="getPTOptions('nodeContent')"
+      >
+      <button type="button" [class]="cx('nodeToggleButton')" (click)="toggle($event)" hRipple tabindex="-1" [hBind]="getPTOptions('nodeToggleButton')">
+        @if (!tree.togglerIconTemplate && !tree._togglerIconTemplate) {
+          @if (!node.loading) {
+            @if (!node.expanded) {
+              <svg data-p-icon="chevron-right" [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')" />
+            }
+            @if (node.expanded) {
+              <svg data-p-icon="chevron-down" [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')" />
+            }
+          }
+          @if (loadingMode === 'icon' && node.loading) {
+            <svg data-p-icon="spinner" [class]="cx('nodeToggleIcon')" spin [hBind]="getPTOptions('nodeToggleIcon')" />
+          }
+        }
+        @if (tree.togglerIconTemplate || tree._togglerIconTemplate) {
+          <span [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')">
+            <ng-template *ngTemplateOutlet="tree.togglerIconTemplate || tree._togglerIconTemplate; context: { $implicit: node.expanded, loading: node.loading }"></ng-template>
+          </span>
+        }
+      </button>
+
+      @if (tree.selectionMode == 'checkbox') {
+        <h-checkbox
+          [ngModel]="isSelected()"
+          [styleClass]="cx('nodeCheckbox')"
+          [binary]="true"
+          [indeterminate]="node.partialSelected"
+          [disabled]="node.selectable === false"
+          [variant]="tree?.config.inputStyle() === 'filled' || tree?.config.inputVariant() === 'filled' ? 'filled' : 'outlined'"
+          [attr.data-p-partialchecked]="node.partialSelected"
+          [tabindex]="-1"
+          (click)="$event.preventDefault()"
+          [pt]="getPTOptions('pcNodeCheckbox')"
+          [unstyled]="unstyled()"
+          >
+          @if (tree.checkboxIconTemplate || tree._checkboxIconTemplate) {
+            <ng-template #icon>
+              <ng-template
+                            *ngTemplateOutlet="
+                                tree.checkboxIconTemplate || tree._checkboxIconTemplate;
+                                context: {
+                                    $implicit: isSelected(),
+                                    partialSelected: node.partialSelected,
+                                    class: cx('nodeCheckbox')
+                                }
+                            "
+            ></ng-template>
+          </ng-template>
+        }
+      </h-checkbox>
+    }
+
+    @if (node.icon || node.expandedIcon || node.collapsedIcon) {
+      <span [class]="getIcon()" [hBind]="getPTOptions('nodeIcon')"></span>
+    }
+    <span [class]="cx('nodeLabel')" [hBind]="getPTOptions('nodeLabel')">
+      @if (!tree.getTemplateForNode(node)) {
+        <span>{{ node.label }}</span>
+      }
+      @if (tree.getTemplateForNode(node)) {
+        <span>
+          <ng-container *ngTemplateOutlet="tree.getTemplateForNode(node); context: { $implicit: node }"></ng-container>
+        </span>
+      }
+    </span>
+  </div>
+  @if (isNextDropPointActive()) {
+    <div [class]="cx('dropPoint', { next: true })" [attr.aria-hidden]="true" [hBind]="getPTOptions('dropPoint')"></div>
+  }
+  @if (!tree.virtualScroll && node.children && node.expanded) {
+    <ul [class]="cx('nodeChildren')" role="group" [hBind]="ptm('nodeChildren')">
+      @for (childNode of node.children; track tree.trackBy.bind(this)(index, childNode); let firstChild = $first; let lastChild = $last; let index = $index) {
+        <h-treeNode
+          [node]="childNode"
+          [parentNode]="node"
+          [firstChild]="firstChild"
+          [lastChild]="lastChild"
+          [index]="index"
+          [itemSize]="itemSize"
+          [level]="level + 1"
+          [loadingMode]="loadingMode"
+          [pt]="pt"
+          [unstyled]="unstyled()"
+        ></h-treeNode>
+      }
+    </ul>
+  }
+</li>
+}

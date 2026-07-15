@@ -1,0 +1,16 @@
+@for (msg of messages; track msg; let i = $index) {
+  <h-toastItem
+    [message]="msg"
+    [index]="i"
+    [life]="life"
+    [clearAll]="clearAllTrigger()"
+    (onClose)="onMessageClose($event)"
+    (onAnimationEnd)="onAnimationEnd()"
+    (onAnimationStart)="onAnimationStart()"
+    [template]="template || _template"
+    [headlessTemplate]="headlessTemplate || _headlessTemplate"
+    [pt]="pt"
+    [unstyled]="unstyled()"
+    [motionOptions]="computedMotionOptions()"
+  ></h-toastItem>
+}

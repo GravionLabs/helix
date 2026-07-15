@@ -1,0 +1,44 @@
+@if (render() || !popup) {
+    <div
+        #container
+        [id]="id"
+        [class]="cn(cx('root'), styleClass)"
+        [ngStyle]="style"
+        [hBind]="ptm('root')"
+        (click)="onOverlayClick($event)"
+        [hMotion]="visible || !popup"
+        [pMotionName]="'p-anchored-overlay'"
+        [pMotionAppear]="true"
+        [pMotionDisabled]="!popup"
+        [pMotionOptions]="computedMotionOptions()"
+        (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
+        (pMotionOnAfterEnter)="onOverlayAfterEnter()"
+        (pMotionOnAfterLeave)="onOverlayAfterLeave()"
+    >
+        <h-tieredMenuSub
+            #rootmenu
+            [root]="true"
+            [visible]="true"
+            [items]="processedItems"
+            [itemTemplate]="itemTemplate || _itemTemplate"
+            [menuId]="id"
+            [tabindex]="!disabled ? tabindex : -1"
+            [ariaLabel]="ariaLabel"
+            [ariaLabelledBy]="ariaLabelledBy"
+            [baseZIndex]="baseZIndex"
+            [autoZIndex]="autoZIndex"
+            [autoDisplay]="autoDisplay"
+            [popup]="popup"
+            [focusedItemId]="focused ? focusedItemId : undefined"
+            [activeItemPath]="activeItemPath()"
+            (itemClick)="onItemClick($event)"
+            (menuFocus)="onMenuFocus($event)"
+            (menuBlur)="onMenuBlur($event)"
+            (menuKeydown)="onKeyDown($event)"
+            (itemMouseEnter)="onItemMouseEnter($event)"
+            [pt]="pt()"
+            [unstyled]="unstyled()"
+            [motionOptions]="computedMotionOptions()"
+        ></h-tieredMenuSub>
+    </div>
+}

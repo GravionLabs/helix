@@ -1,0 +1,180 @@
+@if (loading && showLoader) {
+  <div [hBind]="ptm('mask')" [class]="cx('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
+    @if (loadingIcon) {
+      <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon)"></i>
+    }
+    @if (!loadingIcon) {
+      @if (!loadingIconTemplate && !_loadingIconTemplate) {
+        <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" />
+      }
+      @if (loadingIconTemplate || _loadingIconTemplate) {
+        <span [class]="cx('loadingIcon')">
+          <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+        </span>
+      }
+    }
+  </div>
+}
+@if (captionTemplate || _captionTemplate) {
+  <div [hBind]="ptm('header')" [class]="cx('header')">
+    <ng-container *ngTemplateOutlet="captionTemplate || _captionTemplate"></ng-container>
+  </div>
+}
+@if (paginator && (paginatorPosition === 'top' || paginatorPosition == 'both')) {
+  <h-paginator
+    [pt]="ptm('pcPaginator')"
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="totalRecords"
+    [pageLinkSize]="pageLinks"
+    [styleClass]="cx('pcPaginator')"
+    [alwaysShow]="alwaysShowPaginator"
+    (onPageChange)="onPageChange($event)"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [templateLeft]="paginatorLeftTemplate ?? _paginatorLeftTemplate"
+    [templateRight]="paginatorRightTemplate ?? _paginatorRightTemplate"
+    [appendTo]="paginatorDropdownAppendTo"
+    [currentPageReportTemplate]="currentPageReportTemplate"
+    [showFirstLastIcon]="showFirstLastIcon"
+    [dropdownItemTemplate]="paginatorDropdownItemTemplate ?? _paginatorDropdownItemTemplate"
+    [showCurrentPageReport]="showCurrentPageReport"
+    [showJumpToPageDropdown]="showJumpToPageDropdown"
+    [showPageLinks]="showPageLinks"
+    [locale]="paginatorLocale"
+    [unstyled]="unstyled()"
+    >
+    @if (paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate) {
+      <ng-template hTemplate="firstpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate) {
+      <ng-template hTemplate="previouspagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate) {
+      <ng-template hTemplate="lastpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate) {
+      <ng-template hTemplate="nextpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+  </h-paginator>
+}
+
+@if (!scrollable) {
+  <div [hBind]="ptm('wrapper')" [class]="cx('wrapper')">
+    <table role="treegrid" [hBind]="ptm('table')" #table [ngClass]="tableStyleClass" [ngStyle]="tableStyle">
+      <ng-container *ngTemplateOutlet="colGroupTemplate || _colGroupTemplate; context: { $implicit: columns }"></ng-container>
+      <thead role="rowgroup" [class]="cx('thead')" [hBind]="ptm('thead')">
+        <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate; context: { $implicit: columns }"></ng-container>
+      </thead>
+      <tbody [class]="cx('tbody')" [hBind]="ptm('tbody')" role="rowgroup" [unstyled]="unstyled()" [hTreeTableBody]="columns" [pTreeTableBodyTemplate]="bodyTemplate ?? _bodyTemplate"></tbody>
+      <tfoot [class]="cx('tfoot')" [hBind]="ptm('tfoot')" role="rowgroup">
+        <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate; context: { $implicit: columns }"></ng-container>
+      </tfoot>
+    </table>
+  </div>
+}
+
+@if (scrollable) {
+  <div [hBind]="ptm('scrollableWrapper')" [class]="cx('scrollableWrapper')">
+    @if (frozenColumns || frozenBodyTemplate || _frozenBodyTemplate) {
+      <div
+        [ngClass]="[cx('scrollableView'), cx('frozenView')]"
+        #scrollableFrozenView
+        [ttScrollableView]="frozenColumns"
+        [unstyled]="unstyled()"
+        [frozen]="true"
+        [ngStyle]="{ width: frozenWidth }"
+        [scrollHeight]="scrollHeight"
+        [hBind]="ptm('scrollableView')"
+      ></div>
+    }
+    <div
+      [class]="cx('scrollableView')"
+      [hBind]="ptm('scrollableView')"
+      #scrollableView
+      [ttScrollableView]="columns"
+      [unstyled]="unstyled()"
+      [frozen]="false"
+      [scrollHeight]="scrollHeight"
+      [ngStyle]="{ left: frozenWidth, width: 'calc(100% - ' + frozenWidth + ')' }"
+    ></div>
+  </div>
+}
+
+@if (paginator && (paginatorPosition === 'bottom' || paginatorPosition == 'both')) {
+  <h-paginator
+    [pt]="ptm('pcPaginator')"
+    [rows]="rows"
+    [first]="first"
+    [totalRecords]="totalRecords"
+    [pageLinkSize]="pageLinks"
+    [styleClass]="cx('pcPaginator')"
+    [alwaysShow]="alwaysShowPaginator"
+    (onPageChange)="onPageChange($event)"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [templateLeft]="paginatorLeftTemplate ?? _paginatorLeftTemplate"
+    [templateRight]="paginatorRightTemplate ?? _paginatorRightTemplate"
+    [appendTo]="paginatorDropdownAppendTo"
+    [currentPageReportTemplate]="currentPageReportTemplate"
+    [showFirstLastIcon]="showFirstLastIcon"
+    [dropdownItemTemplate]="paginatorDropdownItemTemplate ?? _paginatorDropdownItemTemplate"
+    [showCurrentPageReport]="showCurrentPageReport"
+    [showJumpToPageDropdown]="showJumpToPageDropdown"
+    [showPageLinks]="showPageLinks"
+    [locale]="paginatorLocale"
+    [unstyled]="unstyled()"
+    >
+    @if (paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate) {
+      <ng-template hTemplate="firstpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorFirstPageLinkIconTemplate || _paginatorFirstPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate) {
+      <ng-template hTemplate="previouspagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorPreviousPageLinkIconTemplate || _paginatorPreviousPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate) {
+      <ng-template hTemplate="lastpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorLastPageLinkIconTemplate || _paginatorLastPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+    @if (paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate) {
+      <ng-template hTemplate="nextpagelinkicon">
+        <ng-container *ngTemplateOutlet="paginatorNextPageLinkIconTemplate || _paginatorNextPageLinkIconTemplate"></ng-container>
+      </ng-template>
+    }
+  </h-paginator>
+}
+@if (summaryTemplate || _summaryTemplate) {
+  <div [hBind]="ptm('footer')" [class]="cx('footer')">
+    <ng-container *ngTemplateOutlet="summaryTemplate || _summaryTemplate"></ng-container>
+  </div>
+}
+
+@if (resizableColumns) {
+  <div [hBind]="ptm('columnResizerHelper')" #resizeHelper [class]="cx('columnResizerHelper')" [style.display]="'none'"></div>
+}
+@if (reorderableColumns) {
+  <span [hBind]="ptm('reorderIndicatorUp')" #reorderIndicatorUp [class]="cx('reorderIndicatorUp')" [style.display]="'none'">
+    @if (!reorderIndicatorUpIconTemplate && !_reorderIndicatorUpIconTemplate) {
+      <svg data-p-icon="arrow-down" />
+    }
+    <ng-template *ngTemplateOutlet="reorderIndicatorUpIconTemplate || _reorderIndicatorUpIconTemplate"></ng-template>
+  </span>
+}
+@if (reorderableColumns) {
+  <span [hBind]="ptm('reorderIndicatorDown')" #reorderIndicatorDown [class]="cx('reorderIndicatorDown')" [style.display]="'none'">
+    @if (!reorderIndicatorDownIconTemplate && !_reorderIndicatorDownIconTemplate) {
+      <svg data-p-icon="arrow-up" />
+    }
+    <ng-template *ngTemplateOutlet="reorderIndicatorDownIconTemplate || _reorderIndicatorDownIconTemplate"></ng-template>
+  </span>
+}
