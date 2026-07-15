@@ -20,7 +20,7 @@ const TAB_INSTANCE = new InjectionToken<Tab>('TAB_INSTANCE');
     selector: 'h-tab',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './tab.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {

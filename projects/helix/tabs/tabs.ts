@@ -16,7 +16,7 @@ const TABS_INSTANCE = new InjectionToken<Tabs>('TABS_INSTANCE');
     selector: 'h-tabs',
     standalone: true,
     imports: [CommonModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './tabs.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [TabsStyle, { provide: TABS_INSTANCE, useExisting: Tabs }, { provide: PARENT_INSTANCE, useExisting: Tabs }],

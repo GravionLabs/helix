@@ -197,34 +197,7 @@ export class StepItem extends BaseComponent<StepItemPassThrough> {
     selector: 'h-step',
     standalone: true,
     imports: [CommonModule, StepperSeparator, SharedModule, BindModule],
-    template: `
-        @if (!content && !_contentTemplate) {
-            <button
-                [attr.id]="id()"
-                [class]="cx('header')"
-                [hBind]="ptm('header')"
-                [attr.role]="'tab'"
-                [tabindex]="isStepDisabled() ? -1 : undefined"
-                [attr.aria-controls]="ariaControls()"
-                [disabled]="isStepDisabled()"
-                (click)="onStepClick()"
-                type="button"
-            >
-                <span [class]="cx('number')" [hBind]="ptm('number')">{{ value() }}</span>
-                <span [class]="cx('title')" [hBind]="ptm('title')">
-                    <ng-content></ng-content>
-                </span>
-            </button>
-            @if (isSeparatorVisible()) {
-                <h-stepper-separator />
-            }
-        } @else {
-            <ng-container *ngTemplateOutlet="content || _contentTemplate; context: { activateCallback: onStepClick.bind(this), value: value(), active: active() }"></ng-container>
-            @if (isSeparatorVisible()) {
-                <h-stepper-separator />
-            }
-        }
-    `,
+    templateUrl: './step.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -321,18 +294,7 @@ export class Step extends BaseComponent<StepPassThrough> {
     selector: 'h-step-panel',
     standalone: true,
     imports: [CommonModule, StepperSeparator, SharedModule, BindModule, MotionModule],
-    template: `
-        <h-motion [visible]="active()" name="p-collapsible" [disabled]="!isVertical()" [options]="computedMotionOptions()">
-            <div [class]="cx('contentWrapper')" [hBind]="ptm('contentWrapper')">
-                @if (isSeparatorVisible()) {
-                    <h-stepper-separator />
-                }
-                <div [class]="cx('content')" [hBind]="ptm('content')">
-                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { activateCallback: updateValue.bind(this), value: value(), active: active() }"></ng-container>
-                </div>
-            </div>
-        </h-motion>
-    `,
+    templateUrl: './steppanel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -456,7 +418,7 @@ export class StepPanels extends BaseComponent<StepPanelsPassThrough> {
     selector: 'h-stepper',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './stepper.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [StepperStyle, { provide: STEPPER_INSTANCE, useExisting: Stepper }, { provide: PARENT_INSTANCE, useExisting: Stepper }],
