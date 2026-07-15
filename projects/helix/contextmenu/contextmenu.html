@@ -1,0 +1,40 @@
+@if (render()) {
+    <div
+        #container
+        [attr.id]="id"
+        [class]="cn(cx('root'), styleClass)"
+        [style]="sx('root')"
+        [ngStyle]="style"
+        [hBind]="ptm('root')"
+        [hMotion]="visible()"
+        [pMotionName]="'p-anchored-overlay'"
+        [pMotionAppear]="true"
+        [pMotionOptions]="computedMotionOptions()"
+        (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+        (pMotionOnAfterEnter)="onAfterEnter()"
+        (pMotionOnAfterLeave)="onAfterLeave()"
+    >
+        <h-contextmenu-sub
+            #rootmenu
+            [root]="true"
+            [items]="processedItems"
+            [itemTemplate]="itemTemplate || _itemTemplate"
+            [menuId]="id"
+            [ariaLabel]="ariaLabel"
+            [ariaLabelledBy]="ariaLabelledBy"
+            [baseZIndex]="baseZIndex"
+            [autoZIndex]="autoZIndex"
+            [visible]="submenuVisible()"
+            [focusedItemId]="focused ? focusedItemId : undefined"
+            [activeItemPath]="activeItemPath()"
+            (itemClick)="onItemClick($event)"
+            (menuFocus)="onMenuFocus($event)"
+            (menuBlur)="onMenuBlur($event)"
+            (menuKeydown)="onKeyDown($event)"
+            (itemMouseEnter)="onItemMouseEnter($event)"
+            [pt]="pt()"
+            [unstyled]="unstyled()"
+            [motionOptions]="computedMotionOptions()"
+        />
+    </div>
+}
