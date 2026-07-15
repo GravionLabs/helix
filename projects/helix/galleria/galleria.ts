@@ -48,55 +48,7 @@ const GALLERIA_INSTANCE = new InjectionToken<Galleria>('GALLERIA_INSTANCE');
 @Component({
     selector: 'h-galleria',
     standalone: false,
-    template: `
-        @if (fullScreen) {
-          <div #container>
-            @if (renderMask()) {
-              <div
-                [hBind]="ptm('mask')"
-                [hMotion]="maskVisible"
-                [pMotionAppear]="true"
-                [pMotionEnterActiveClass]="fullScreen ? 'p-overlay-mask-enter-active' : ''"
-                [pMotionLeaveActiveClass]="fullScreen ? 'p-overlay-mask-leave-active' : ''"
-                [pMotionOptions]="computedMaskMotionOptions()"
-                (pMotionOnAfterLeave)="onMaskAfterLeave()"
-                [ngClass]="cx('mask')"
-                [class]="maskClass"
-                [attr.role]="fullScreen ? 'dialog' : 'region'"
-                [attr.aria-modal]="fullScreen ? 'true' : undefined"
-                (click)="onMaskHide($event)"
-                >
-                @if (renderContent()) {
-                  <div
-                    hGalleriaContent
-                    [hMotion]="visible"
-                    [pMotionAppear]="true"
-                    [pMotionName]="'p-galleria'"
-                    [pMotionOptions]="computedMotionOptions()"
-                    (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                    (pMotionOnBeforeLeave)="onBeforeLeave()"
-                    (pMotionOnAfterLeave)="onAfterLeave()"
-                    [value]="value"
-                    [activeIndex]="activeIndex"
-                    [numVisible]="numVisibleLimit || numVisible"
-                    (maskHide)="onMaskHide()"
-                    (activeItemChange)="onActiveItemChange($event)"
-                    [ngStyle]="containerStyle"
-                    [fullScreen]="fullScreen"
-                    [pt]="pt()"
-                    hFocusTrap
-                    [pFocusTrapDisabled]="!fullScreen"
-                    [unstyled]="unstyled()"
-                  ></div>
-                }
-              </div>
-            }
-          </div>
-        } @else {
-          <div hGalleriaContent [pt]="pt()" [unstyled]="unstyled()" [value]="value" [activeIndex]="activeIndex" [numVisible]="numVisibleLimit || numVisible" (activeItemChange)="onActiveItemChange($event)"></div>
-        }
-        
-        `,
+    templateUrl: './galleria.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [GalleriaStyle, { provide: GALLERIA_INSTANCE, useExisting: Galleria }, { provide: PARENT_INSTANCE, useExisting: Galleria }],
@@ -535,67 +487,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
 @Component({
     selector: 'div[hGalleriaContent]',
     standalone: false,
-    template: `
-        @if (value && value.length > 0) {
-          @if (galleria.fullScreen) {
-            <button type="button" [hBind]="getPTOptions('closeButton')" [class]="cx('closeButton')" (click)="maskHide.emit()" [attr.aria-label]="closeAriaLabel()">
-              @if (!galleria.closeIconTemplate && !galleria._closeIconTemplate) {
-                <svg data-p-icon="times" [hBind]="getPTOptions('closeIcon')" [class]="cx('closeIcon')" />
-              }
-              <ng-template *ngTemplateOutlet="galleria.closeIconTemplate || galleria._closeIconTemplate"></ng-template>
-            </button>
-          }
-          @if (galleria.templates && (galleria.headerFacet || galleria.headerTemplate)) {
-            <div hGalleriaItemSlot [unstyled]="unstyled()" type="header" [templates]="galleria.templates" [hBind]="getPTOptions('header')" [class]="cx('header')"></div>
-          }
-          <div [hBind]="getPTOptions('content')" [class]="cx('content')" [attr.aria-live]="galleria.autoPlay ? 'polite' : 'off'">
-            <div
-              hGalleriaItem
-              [id]="id"
-              [value]="value"
-              [activeIndex]="activeIndex"
-              [circular]="galleria.circular"
-              [templates]="galleria.templates"
-              (onActiveIndexChange)="onActiveIndexChange($event)"
-              [showIndicators]="galleria.showIndicators"
-              [changeItemOnIndicatorHover]="galleria.changeItemOnIndicatorHover"
-              [indicatorFacet]="galleria.indicatorFacet"
-              [captionFacet]="galleria.captionFacet"
-              [showItemNavigators]="galleria.showItemNavigators"
-              [autoPlay]="galleria.autoPlay"
-              [slideShowActive]="slideShowActive"
-              (startSlideShow)="startSlideShow()"
-              (stopSlideShow)="stopSlideShow()"
-              [pt]="pt()"
-              [unstyled]="unstyled()"
-              [class]="cx('itemsContainer')"
-            ></div>
-            @if (galleria.showThumbnails) {
-              <div
-                hGalleriaThumbnails
-                [containerId]="id"
-                [value]="value"
-                (onActiveIndexChange)="onActiveIndexChange($event)"
-                [activeIndex]="activeIndex"
-                [templates]="galleria.templates"
-                [numVisible]="numVisible"
-                [responsiveOptions]="galleria.responsiveOptions"
-                [circular]="galleria.circular"
-                [isVertical]="isVertical()"
-                [contentHeight]="galleria.verticalThumbnailViewPortHeight"
-                [showThumbnailNavigators]="galleria.showThumbnailNavigators"
-                [slideShowActive]="slideShowActive"
-                (stopSlideShow)="stopSlideShow()"
-                [pt]="pt()"
-                [unstyled]="unstyled()"
-              ></div>
-            }
-          </div>
-          @if (shouldRenderFooter()) {
-            <div hGalleriaItemSlot [hBind]="getPTOptions('footer')" [class]="cx('footer')" type="footer" [templates]="galleria.templates" [unstyled]="unstyled()"></div>
-          }
-        }
-        `,
+    templateUrl: './galleriacontent.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [GalleriaStyle],
     host: {
@@ -883,86 +775,7 @@ export class GalleriaItemSlot extends BaseComponent<GalleriaPassThrough> {
 @Component({
     selector: 'div[hGalleriaItem]',
     standalone: false,
-    template: `
-        <div [hBind]="ptm('items')" [class]="cx('items')">
-          @if (showItemNavigators) {
-            <button
-              type="button"
-              role="navigation"
-              [hBind]="ptm('prevButton')"
-              [class]="cx('prevButton')"
-              (click)="navBackward($event)"
-              (focus)="onButtonFocus('left')"
-              (blur)="onButtonBlur('left')"
-              data-pc-group-section="itemnavigator"
-              >
-              @if (!galleria.itemPreviousIconTemplate && !galleria._itemPreviousIconTemplate) {
-                <svg data-p-icon="chevron-left" [hBind]="ptm('prevIcon')" [class]="cx('prevIcon')" />
-              }
-              <ng-template *ngTemplateOutlet="galleria.itemPreviousIconTemplate || galleria._itemPreviousIconTemplate"></ng-template>
-            </button>
-          }
-          <div
-            hGalleriaItemSlot
-            [hBind]="ptm('item')"
-            [unstyled]="unstyled()"
-            [class]="cx('item')"
-            [item]="activeItem"
-            [templates]="templates"
-            [id]="id + '_item_' + activeIndex"
-            role="group"
-            [class]="cx('item')"
-            [attr.aria-label]="ariaSlideNumber(activeIndex + 1)"
-            [attr.aria-roledescription]="ariaSlideLabel()"
-          ></div>
-          @if (showItemNavigators) {
-            <button
-              type="button"
-              [hBind]="ptm('nextButton')"
-              [class]="cx('nextButton')"
-              (click)="navForward($event)"
-              role="navigation"
-              (focus)="onButtonFocus('right')"
-              (blur)="onButtonBlur('right')"
-              data-pc-group-section="itemnavigator"
-              >
-              @if (!galleria.itemNextIconTemplate && !galleria._itemNextIconTemplate) {
-                <svg data-p-icon="chevron-right" [hBind]="ptm('nextIcon')" [class]="cx('nextIcon')" />
-              }
-              <ng-template *ngTemplateOutlet="galleria.itemNextIconTemplate || galleria._itemNextIconTemplate"></ng-template>
-            </button>
-          }
-          @if (captionFacet || galleria.captionTemplate) {
-            <div hGalleriaItemSlot [hBind]="ptm('caption')" [unstyled]="unstyled()" [class]="cx('caption')" type="caption" [item]="activeItem" [templates]="templates"></div>
-          }
-        </div>
-        @if (showIndicators) {
-          <ul [hBind]="ptm('indicatorList')" [class]="cx('indicatorList')">
-            @for (item of value; track item; let index = $index) {
-              <li
-                [hBind]="getIndicatorPTOptions(index)"
-                tabindex="0"
-                (click)="onIndicatorClick(index)"
-                (mouseenter)="onIndicatorMouseEnter(index)"
-                (keydown)="onIndicatorKeyDown($event, index)"
-                [class]="cx('indicator', { index })"
-                [attr.aria-label]="ariaPageLabel(index + 1)"
-                [attr.aria-selected]="activeIndex === index"
-                [attr.aria-controls]="id + '_item_' + index"
-                [hBind]="ptm('indicator', getIndicatorPTOptions(index))"
-                [attr.data-p-active]="isIndicatorItemActive(index)"
-                >
-                @if (!indicatorFacet && !galleria.indicatorTemplate) {
-                  <button type="button" tabIndex="-1" [hBind]="ptm('indicatorButton', getIndicatorPTOptions(index))" [class]="cx('indicatorButton')"></button>
-                }
-                @if (indicatorFacet || galleria.indicatorTemplate) {
-                  <div hGalleriaItemSlot type="indicator" [index]="index" [templates]="templates" [hBind]="ptm('item')" [unstyled]="unstyled()"></div>
-                }
-              </li>
-            }
-          </ul>
-        }
-        `,
+    templateUrl: './galleriaitem.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [GalleriaStyle],
     hostDirectives: [Bind]
@@ -1155,79 +968,7 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
 @Component({
     selector: 'div[hGalleriaThumbnails]',
     standalone: false,
-    template: `
-        <div [hBind]="ptm('thumbnailContent')" [class]="cx('thumbnailContent')">
-          @if (showThumbnailNavigators) {
-            <button
-              type="button"
-              [hBind]="ptm('thumbnailPrevButton')"
-              [class]="cx('thumbnailPrevButton')"
-              (click)="navBackward($event)"
-              hRipple
-              [attr.aria-label]="ariaPrevButtonLabel()"
-              data-pc-group-section="thumbnailnavigator"
-              >
-              @if (!galleria.previousThumbnailIconTemplate && !galleria._previousThumbnailIconTemplate) {
-                @if (!isVertical) {
-                  <svg data-p-icon="chevron-left" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
-                }
-                @if (isVertical) {
-                  <svg data-p-icon="chevron-up" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
-                }
-              }
-              <ng-template *ngTemplateOutlet="galleria.previousThumbnailIconTemplate || galleria._previousThumbnailIconTemplate"></ng-template>
-            </button>
-          }
-          <div [hBind]="ptm('thumbnailsViewport')" [class]="cx('thumbnailsViewport')" [ngStyle]="{ height: isVertical ? contentHeight : '' }">
-            <div #itemsContainer [hBind]="ptm('thumbnailItems')" [class]="cx('thumbnailItems')" (transitionend)="onTransitionEnd()" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" role="tablist">
-              @for (item of value; track item; let index = $index) {
-                <div
-                  [hBind]="ptm('thumbnailItem')"
-                  [class]="cx('thumbnailItem', { index, activeIndex })"
-                  [attr.aria-selected]="activeIndex === index"
-                  [attr.aria-controls]="containerId + '_item_' + index"
-                  (keydown)="onThumbnailKeydown($event, index)"
-                  [attr.data-p-active]="activeIndex === index"
-                  >
-                  <div
-                    [hBind]="ptm('thumbnail')"
-                    [class]="cx('thumbnail')"
-                    [attr.tabindex]="activeIndex === index ? 0 : -1"
-                    [attr.aria-current]="activeIndex === index ? 'page' : undefined"
-                    [attr.aria-label]="ariaPageLabel(index + 1)"
-                    (click)="onItemClick(index)"
-                    (touchend)="onItemClick(index)"
-                    (keydown.enter)="onItemClick(index)"
-                    >
-                    <div hGalleriaItemSlot type="thumbnail" [hBind]="ptm('thumbnailItem')" [item]="item" [templates]="templates" [unstyled]="unstyled()"></div>
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-          @if (showThumbnailNavigators) {
-            <button
-              type="button"
-              [hBind]="ptm('thumbnailNextButton')"
-              [class]="cx('thumbnailNextButton')"
-              (click)="navForward($event)"
-              hRipple
-              [attr.aria-label]="ariaNextButtonLabel()"
-              data-pc-group-section="thumbnailnavigator"
-              >
-              @if (!galleria.nextThumbnailIconTemplate && !galleria._nextThumbnailIconTemplate) {
-                @if (!isVertical) {
-                  <svg data-p-icon="chevron-right" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
-                }
-                @if (isVertical) {
-                  <svg data-p-icon="chevron-down" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
-                }
-              }
-              <ng-template *ngTemplateOutlet="galleria.nextThumbnailIconTemplate || galleria._nextThumbnailIconTemplate"></ng-template>
-            </button>
-          }
-        </div>
-        `,
+    templateUrl: './galleriathumbnails.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [GalleriaStyle],
     host: {

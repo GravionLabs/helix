@@ -17,7 +17,7 @@ const IFTALABEL_INSTANCE = new InjectionToken<IftaLabel>('IFTALABEL_INSTANCE');
     selector: 'h-iftalabel, h-iftaLabel, h-ifta-label',
     standalone: true,
     imports: [BindModule],
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './iftalabel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [IftaLabelStyle, { provide: IFTALABEL_INSTANCE, useExisting: IftaLabel }, { provide: PARENT_INSTANCE, useExisting: IftaLabel }],

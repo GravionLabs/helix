@@ -16,12 +16,7 @@ const IMAGECOMPARE_INSTANCE = new InjectionToken<ImageCompare>('IMAGECOMPARE_INS
     selector: 'h-imageCompare, h-imagecompare, h-image-compare',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <ng-template *ngTemplateOutlet="leftTemplate || _leftTemplate"></ng-template>
-        <ng-template *ngTemplateOutlet="rightTemplate || _rightTemplate"></ng-template>
-
-        <input type="range" min="0" max="100" value="50" (input)="onSlide($event)" [class]="cx('slider')" [hBind]="ptm('slider')" />
-    `,
+    templateUrl: './imagecompare.html',
     host: {
         '[class]': "cx('root')",
         '[attr.tabindex]': 'tabindex',

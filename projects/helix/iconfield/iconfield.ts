@@ -15,7 +15,7 @@ const ICONFIELD_INSTANCE = new InjectionToken<IconField>('ICONFIELD_INSTANCE');
     selector: 'h-iconfield, h-iconField, h-icon-field',
     standalone: true,
     imports: [CommonModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './iconfield.html',
     providers: [IconFieldStyle, { provide: ICONFIELD_INSTANCE, useExisting: IconField }, { provide: PARENT_INSTANCE, useExisting: IconField }],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
