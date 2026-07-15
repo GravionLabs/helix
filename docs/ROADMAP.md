@@ -65,7 +65,7 @@ Generic, reusable page templates moved from the demo into the library.
 
 ### Demo stays (not in library)
 - `dashboard/` – Demo-specific charts and fake data
-- `uikit/` – PrimeNG component showcase
+- `uikit/` – Helix component showcase
 - `crud/` – Demo CRUD table
 - `service/` – Fake data services
 - `documentation/` – Project-specific documentation

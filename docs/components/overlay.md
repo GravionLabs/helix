@@ -14,7 +14,7 @@ import { Overlay } from '@gravionlabs/helix/overlay';
 
 Selector: `h-overlay`
 
-This API allows overlay components to be controlled from the PrimeNG. In this way, all overlay components in the application can have the same behavior.
+This API allows overlay components to be controlled from the Helix configuration. In this way, all overlay components in the application can have the same behavior.
 
 #### Inputs
 

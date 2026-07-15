@@ -56,7 +56,7 @@
 npm install @gravionlabs/helix-shell
 ```
 
-Peer dependencies: `@angular/core ^17`, `primeng ^17`, `@ngrx/signals`.
+Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix >=22`, `@primeuix/themes >=2`, `primeicons >=7`.
 
 ---
 
@@ -451,7 +451,7 @@ Where `breadcrumb` can be a static string or a function:
 | `configSidebarVisible` | `boolean` | Config sidebar open state |
 | `staticMenuMobileActive` | `boolean` | Static menu expanded on mobile |
 | `menuHoverActive` | `boolean` | Menu hover state (slim mode) |
-| `theme` | `string` | Active PrimeNG theme name |
+| `theme` | `string` | Active Helix theme name |
 | `darkMode` | `boolean` | Dark mode toggle |
 
 ### Setup
@@ -612,7 +612,7 @@ Blank page template with a title, optional subtitle, and a default content slot.
 
 ```html
 <helix-empty title="Reports" subtitle="No reports available yet.">
-  <p-button label="Create Report" icon="pi pi-plus" />
+  <h-button label="Create Report" icon="pi pi-plus" />
 </helix-empty>
 ```
 
@@ -1069,17 +1069,17 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 ```html
 <!-- Text input with label, control, and hint -->
 <helix-form-field label="Email" [control]="emailCtrl" hint="Work email preferred">
-  <input pInputText id="email" [formControl]="emailCtrl" class="w-full" />
+  <input hInputText id="email" [formControl]="emailCtrl" class="w-full" />
 </helix-form-field>
 
-<!-- PrimeNG number input -->
+<!-- Helix number input -->
 <helix-form-field label="Price" [control]="priceCtrl">
-  <p-inputnumber [formControl]="priceCtrl" mode="currency" currency="EUR" />
+  <h-inputnumber [formControl]="priceCtrl" mode="currency" currency="EUR" />
 </helix-form-field>
 
 <!-- External error (e.g. from server) -->
 <helix-form-field label="Username" [control]="userCtrl" [error]="serverError()">
-  <input pInputText [formControl]="userCtrl" class="w-full" />
+  <input hInputText [formControl]="userCtrl" class="w-full" />
 </helix-form-field>
 ```
 
@@ -1161,7 +1161,7 @@ const errors = helixFormErrorMap(myForm);
 
 ### HelixRouteMenuItem
 
-The core menu/route model used by `HelixAppLayout`'s `[menu]` input, `HelixNavRail`, `helixRoutesFrom`, `helixMenuLinksFrom`, and routing utilities. Extends PrimeNG's `MenuItem` with Angular routing properties.
+The core menu/route model used by `HelixAppLayout`'s `[menu]` input, `HelixNavRail`, `helixRoutesFrom`, `helixMenuLinksFrom`, and routing utilities. Extends Helix's `MenuItem` with Angular routing properties.
 
 ```ts
 interface HelixRouteMenuItem extends MenuItem {

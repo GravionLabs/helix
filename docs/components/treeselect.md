@@ -37,7 +37,7 @@ TreeSelect is a form component to choose from hierarchical data.
 | `labelStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the label element. |
 | `labelStyleClass` | `string \| undefined` | — | Style class of the label element. |
 | `overlayOptions` | `OverlayOptions \| undefined` | — | Specifies the options for the overlay. |
-| `emptyMessage` | `string` | `''` | Text to display when there are no options available. Defaults to value from PrimeNG locale configuration. |
+| `emptyMessage` | `string` | `''` | Text to display when there are no options available. Defaults to value from Helix locale configuration. |
 | `filter` | `boolean` | `false` | When specified, displays an input field to filter the items. |
 | `filterBy` | `string` | `'label'` | When filtering is enabled, filterBy decides which field or fields (comma separated) to search against. |
 | `filterMode` | `string` | `'lenient'` | Mode for filtering valid values are "lenient" and "strict". Default is lenient. |

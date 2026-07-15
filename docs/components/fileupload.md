@@ -38,9 +38,9 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the element. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
 | `previewWidth` | `number` | `50` | Width of the image thumbnail in pixels. |
-| `chooseLabel` | `string \| undefined` | — | Label of the choose button. Defaults to PrimeNG Locale configuration. |
-| `uploadLabel` | `string \| undefined` | — | Label of the upload button. Defaults to PrimeNG Locale configuration. |
-| `cancelLabel` | `string \| undefined` | — | Label of the cancel button. Defaults to PrimeNG Locale configuration. |
+| `chooseLabel` | `string \| undefined` | — | Label of the choose button. Defaults to Helix Locale configuration. |
+| `uploadLabel` | `string \| undefined` | — | Label of the upload button. Defaults to Helix Locale configuration. |
+| `cancelLabel` | `string \| undefined` | — | Label of the cancel button. Defaults to Helix Locale configuration. |
 | `chooseIcon` | `string \| undefined` | — | Icon of the choose button. |
 | `uploadIcon` | `string \| undefined` | — | Icon of the upload button. |
 | `cancelIcon` | `string \| undefined` | — | Icon of the cancel button. |
@@ -48,7 +48,7 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | `showCancelButton` | `boolean` | `true` | Whether to show the cancel button. |
 | `mode` | `'advanced' \| 'basic' \| undefined` | `'advanced'` | Defines the UI of the component. |
 | `headers` | `HttpHeaders \| undefined` | — | HttpHeaders class represents the header configuration options for an HTTP request. |
-| `customUpload` | `boolean \| undefined` | — | Whether to use the default upload or a manual implementation defined in uploadHandler callback. Defaults to PrimeNG Locale configuration. |
+| `customUpload` | `boolean \| undefined` | — | Whether to use the default upload or a manual implementation defined in uploadHandler callback. Defaults to Helix Locale configuration. |
 | `fileLimit` | `number \| undefined` | — | Maximum number of files that can be uploaded. |
 | `uploadStyleClass` | `string \| undefined` | — | Style class of the upload button. |
 | `cancelStyleClass` | `string \| undefined` | — | Style class of the cancel button. |

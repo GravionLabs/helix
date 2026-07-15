@@ -24,7 +24,7 @@ CascadeSelect is a form component to select a value from a nested structure of o
 | `searchMessage` | `string \| undefined` | — | Text to display when the search is active. Defaults to global value in i18n translation configuration. |
 | `emptyMessage` | `string \| undefined` | — | Text to display when there is no data. Defaults to global value in i18n translation configuration. |
 | `selectionMessage` | `string \| undefined` | — | Text to be displayed in hidden accessible field when options are selected. Defaults to global value in i18n translation configuration. |
-| `emptySearchMessage` | `string \| undefined` | — | Text to display when filtering does not return any results. Defaults to value from PrimeNG locale configuration. |
+| `emptySearchMessage` | `string \| undefined` | — | Text to display when filtering does not return any results. Defaults to value from Helix locale configuration. |
 | `emptySelectionMessage` | `string \| undefined` | — | Text to display when filtering does not return any results. Defaults to global value in i18n translation configuration. |
 | `searchLocale` | `string \| undefined` | — | Locale to use in searching. The default locale is the host environment's current locale. |
 | `optionDisabled` | `any` | — | Name of the disabled field of an option. |

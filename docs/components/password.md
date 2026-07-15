@@ -23,13 +23,13 @@ Password displays strength indicator for password fields.
 | `ariaLabel` | `string \| undefined` | — | Defines a string that labels the input for accessibility. |
 | `ariaLabelledBy` | `string \| undefined` | — | Specifies one or more IDs in the DOM that labels the input field. |
 | `label` | `string \| undefined` | — | Label of the input for accessibility. |
-| `promptLabel` | `string \| undefined` | — | Text to prompt password entry. Defaults to PrimeNG I18N API configuration. |
+| `promptLabel` | `string \| undefined` | — | Text to prompt password entry. Defaults to Helix I18N API configuration. |
 | `mediumRegex` | `string` | `'^(((?=.*[a-z])(?=.*[A-Z]))\|((?=.*[a-z])(?=.*[0-9]))\|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'` | Regex value for medium regex. |
 | `strongRegex` | `string` | `'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})'` | Regex value for strong regex. |
-| `weakLabel` | `string \| undefined` | — | Text for a weak password. Defaults to PrimeNG I18N API configuration. |
-| `mediumLabel` | `string \| undefined` | — | Text for a medium password. Defaults to PrimeNG I18N API configuration. |
+| `weakLabel` | `string \| undefined` | — | Text for a weak password. Defaults to Helix I18N API configuration. |
+| `mediumLabel` | `string \| undefined` | — | Text for a medium password. Defaults to Helix I18N API configuration. |
 | `maxLength` | `number \| undefined` | — | specifies the maximum number of characters allowed in the input element. |
-| `strongLabel` | `string \| undefined` | — | Text for a strong password. Defaults to PrimeNG I18N API configuration. |
+| `strongLabel` | `string \| undefined` | — | Text for a strong password. Defaults to Helix I18N API configuration. |
 | `inputId` | `string \| undefined` | — | Identifier of the accessible input element. |
 | `feedback` | `boolean` | `true` | Whether to show the strength indicator or not. |
 | `toggleMask` | `boolean \| undefined` | — | Whether to show an icon to display the password as plain text. |
@@ -67,10 +67,10 @@ Password directive.
 | --- | --- | --- | --- |
 | `pPasswordPT` | `PasswordPassThrough \| undefined` | — | Used to pass attributes to DOM elements inside the Password component. |
 | `pPasswordUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
-| `promptLabel` | `string` | `'Enter a password'` | Text to prompt password entry. Defaults to PrimeNG I18N API configuration. |
-| `weakLabel` | `string` | `'Weak'` | Text for a weak password. Defaults to PrimeNG I18N API configuration. |
-| `mediumLabel` | `string` | `'Medium'` | Text for a medium password. Defaults to PrimeNG I18N API configuration. |
-| `strongLabel` | `string` | `'Strong'` | Text for a strong password. Defaults to PrimeNG I18N API configuration. |
+| `promptLabel` | `string` | `'Enter a password'` | Text to prompt password entry. Defaults to Helix I18N API configuration. |
+| `weakLabel` | `string` | `'Weak'` | Text for a weak password. Defaults to Helix I18N API configuration. |
+| `mediumLabel` | `string` | `'Medium'` | Text for a medium password. Defaults to Helix I18N API configuration. |
+| `strongLabel` | `string` | `'Strong'` | Text for a strong password. Defaults to Helix I18N API configuration. |
 | `feedback` | `boolean` | `true` | Whether to show the strength indicator or not. |
 | `variant` | `'filled' \| 'outlined' \| undefined` | — | Specifies the input variant of the component. |
 | `fluid` | `unknown` | `undefined` | Spans 100% width of the container when enabled. |
