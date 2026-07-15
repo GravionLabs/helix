@@ -90,22 +90,22 @@ export class PasswordDirective extends BaseEditableHolder {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
     }
     /**
-     * Text to prompt password entry. Defaults to PrimeNG I18N API configuration.
+     * Text to prompt password entry. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() promptLabel: string = 'Enter a password';
     /**
-     * Text for a weak password. Defaults to PrimeNG I18N API configuration.
+     * Text for a weak password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() weakLabel: string = 'Weak';
     /**
-     * Text for a medium password. Defaults to PrimeNG I18N API configuration.
+     * Text for a medium password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() mediumLabel: string = 'Medium';
     /**
-     * Text for a strong password. Defaults to PrimeNG I18N API configuration.
+     * Text for a strong password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() strongLabel: string = 'Strong';
@@ -553,7 +553,7 @@ export class Password extends BaseInput<PasswordPassThrough> {
      */
     @Input() label: string | undefined;
     /**
-     * Text to prompt password entry. Defaults to PrimeNG I18N API configuration.
+     * Text to prompt password entry. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() promptLabel: string | undefined;
@@ -568,12 +568,12 @@ export class Password extends BaseInput<PasswordPassThrough> {
      */
     @Input() strongRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})';
     /**
-     * Text for a weak password. Defaults to PrimeNG I18N API configuration.
+     * Text for a weak password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() weakLabel: string | undefined;
     /**
-     * Text for a medium password. Defaults to PrimeNG I18N API configuration.
+     * Text for a medium password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() mediumLabel: string | undefined;
@@ -584,7 +584,7 @@ export class Password extends BaseInput<PasswordPassThrough> {
      */
     @Input({ transform: numberAttribute }) maxLength: number | undefined;
     /**
-     * Text for a strong password. Defaults to PrimeNG I18N API configuration.
+     * Text for a strong password. Defaults to Helix I18N API configuration.
      * @group Props
      */
     @Input() strongLabel: string | undefined;

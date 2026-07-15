@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${select_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-select-label.p-placeholder {
         color: dt('select.placeholder.color');
     }

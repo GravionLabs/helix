@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${multiselect_style}
 
-    /* For PrimeNG */
+    /* For Helix */
    .p-multiselect.ng-invalid.ng-dirty {
         border-color: dt('multiselect.invalid.border.color');
     }

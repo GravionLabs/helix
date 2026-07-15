@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${ripple_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-ripple {
         overflow: hidden;
         position: relative;

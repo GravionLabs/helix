@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${radiobutton_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     p-radioButton.ng-invalid.ng-dirty .p-radiobutton-box,
     p-radio-button.ng-invalid.ng-dirty .p-radiobutton-box,
     p-radiobutton.ng-invalid.ng-dirty .p-radiobutton-box {

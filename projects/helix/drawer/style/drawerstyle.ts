@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${drawer_style}
 
-/** For PrimeNG **/
+/** For Helix **/
 .p-drawer {
     position: fixed;
 }

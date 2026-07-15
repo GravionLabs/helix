@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${cascadeselect_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) {
         border-color: dt('cascadeselect.invalid.border.color');
     }

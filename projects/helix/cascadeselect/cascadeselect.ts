@@ -439,7 +439,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
      */
     @Input() selectionMessage: string | undefined;
     /**
-     * Text to display when filtering does not return any results. Defaults to value from PrimeNG locale configuration.
+     * Text to display when filtering does not return any results. Defaults to value from Helix locale configuration.
      * @group Props
      * @defaultValue 'No available options'
      */

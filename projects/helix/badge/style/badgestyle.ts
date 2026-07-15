@@ -6,7 +6,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${badge_style}
 
-    /* For PrimeNG (directive)*/
+    /* For Helix (directive)*/
     .p-overlay-badge {
         position: relative;
     }

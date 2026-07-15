@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${inputnumber_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     p-inputNumber.ng-invalid.ng-dirty > .p-inputtext,
     p-input-number.ng-invalid.ng-dirty > .p-inputtext,
     p-inputnumber.ng-invalid.ng-dirty > .p-inputtext {
