@@ -2,6 +2,9 @@
 
 Decided in epic #233 (feature #241); analysis in
 [migrations/file-separation-analysis.md](migrations/file-separation-analysis.md).
+The vendored-fork rule was revised by epic #297 (feature #298) on 2026-07-15:
+the fork no longer tracks upstream, so fork components now also use separate
+`.html` files.
 
 ## Own code (`helix-shell`, `helix-zod`, `helix-ag-grid`, `helix-demo`)
 
@@ -16,13 +19,25 @@ Decided in epic #233 (feature #241); analysis in
 
 ## Vendored fork (`projects/helix`)
 
-- Always mirrors upstream PrimeNG's single-file layout: inline template,
-  styles via the TS token system (`style/*style.ts`).
-- Never split fork components, regardless of template size — upstream
-  diffability wins. If a component is ever deliberately forked away from
-  upstream, its file structure (and its decorator APIs, see
-  [migrations/signals-audit.md](migrations/signals-audit.md)) can be
-  reconsidered at that point.
+Fork components use separate `.html` template files (epic #297); styles stay
+in the TS token system (`style/*style.ts`), unchanged. Reference example:
+`projects/helix/knob/`.
+
+Extraction rules:
+
+- **Main component** in `<dir>/<name>.ts`: the template moves verbatim to
+  `<dir>/<name>.html`; the decorator gets `templateUrl: './<name>.html'`.
+- **Secondary components/directives** declared in the same file: their
+  templates go to `<dir>/<lowercased-class-name>.html` (e.g. class
+  `TableBody` in `table.ts` → `table/tablebody.html`).
+- **Secondary components with templates under 10 lines** may stay inline.
+- **Exempt:** the 55 SVG icon components under `projects/helix/icons/`
+  (tiny static templates) keep their inline templates.
+- Template text moves **verbatim**, only re-indented to the new file's
+  baseline. No refactoring, no formatting changes, no attribute reordering.
+
+ng-packagr inlines `templateUrl` at build time, so extraction has zero
+runtime impact on the published library.
 
 ## Control flow
 
