@@ -35,77 +35,7 @@ const ORGANIZATIONCHART_INSTANCE = new InjectionToken<OrganizationChart>('ORGANI
     selector: '[hOrganizationChartNode]',
     standalone: true,
     imports: [CommonModule, ChevronDownIcon, ChevronUpIcon, SharedModule, BindModule],
-    template: `
-        @if (node) {
-          <tbody [hBind]="ptm('body')">
-            <tr [hBind]="ptm('row')">
-              <td [attr.colspan]="colspan" [hBind]="ptm('cell')">
-                <div [class]="cn(cx('node'), node.styleClass)" (click)="onNodeClick($event, node)" [hBind]="getPTOptions('node')">
-                  @if (!chart.getTemplateForNode(node)) {
-                    <div>{{ node.label }}</div>
-                  }
-                  @if (chart.getTemplateForNode(node)) {
-                    <div>
-                      <ng-container *ngTemplateOutlet="chart.getTemplateForNode(node); context: { $implicit: node }"></ng-container>
-                    </div>
-                  }
-                  @if (collapsible) {
-                    @if (!leaf) {
-                      <a
-                        tabindex="0"
-                        [class]="cx('nodeToggleButton')"
-                        (click)="toggleNode($event, node)"
-                        (keydown.enter)="toggleNode($event, node)"
-                        (keydown.space)="toggleNode($event, node)"
-                        [hBind]="getPTOptions('nodeToggleButton')"
-                        >
-                        @if (!chart.togglerIconTemplate && !chart._togglerIconTemplate) {
-                          @if (node.expanded) {
-                            <svg data-p-icon="chevron-down" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
-                          }
-                          @if (!node.expanded) {
-                            <svg data-p-icon="chevron-up" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
-                          }
-                        }
-                        @if (chart.togglerIconTemplate || chart._togglerIconTemplate) {
-                          <span [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')">
-                            <ng-template *ngTemplateOutlet="chart.togglerIconTemplate || chart._togglerIconTemplate; context: { $implicit: node.expanded }"></ng-template>
-                          </span>
-                        }
-                      </a>
-                    }
-                  }
-                </div>
-              </td>
-            </tr>
-            <tr [ngStyle]="getChildStyle(node)" [class]="cx('connectors')" [hBind]="ptm('connectors')">
-              <td [hBind]="ptm('lineCell')" [attr.colspan]="colspan">
-                <div [hBind]="ptm('connectorDown')" [class]="cx('connectorDown')"></div>
-              </td>
-            </tr>
-            <tr [ngStyle]="getChildStyle(node)" [class]="cx('connectors')" [hBind]="ptm('connectors')">
-              @if (node.children && node.children.length === 1) {
-                <td [hBind]="ptm('lineCell')" [attr.colspan]="colspan">
-                  <div [hBind]="ptm('connectorDown')" [class]="cx('connectorDown')"></div>
-                </td>
-              }
-              @if (node.children && node.children.length > 1) {
-                @for (child of node.children; track child; let first = $first; let last = $last; let index = $index) {
-                  <td [class]="cx('connectorLeft', { first })" [hBind]="getNodeOptions(!(index === 0), 'connectorLeft')">&nbsp;</td>
-                  <td [class]="cx('connectorRight', { last })" [hBind]="getNodeOptions(!(index === node.children.length - 1), 'connectorRight')">&nbsp;</td>
-                }
-              }
-            </tr>
-            <tr [ngStyle]="getChildStyle(node)" [class]="cx('nodeChildren')" [hBind]="ptm('nodeChildren')">
-              @for (child of node.children; track child) {
-                <td colspan="2" [hBind]="ptm('nodeCell')">
-                  <table [class]="cx('table')" hOrganizationChartNode [unstyled]="unstyled()" [pt]="pt" [node]="child" [collapsible]="node.children && node.children.length > 0 && collapsible"></table>
-                </td>
-              }
-            </tr>
-          </tbody>
-        }
-        `,
+    templateUrl: './organizationchartnode.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Eager,
     providers: [OrganizationChartStyle, { provide: PARENT_INSTANCE, useExisting: OrganizationChartNode }]
@@ -204,7 +134,7 @@ export class OrganizationChartNode extends BaseComponent {
     selector: 'h-organizationChart, h-organization-chart, h-organizationchart',
     standalone: true,
     imports: [CommonModule, OrganizationChartNode, SharedModule, BindModule],
-    template: ` @if (root) {<table [class]="cx('table')" [collapsible]="collapsible" hOrganizationChartNode [pt]="pt" [unstyled]="unstyled()" [node]="root" [hBind]="ptm('table')"></table>} `,
+    templateUrl: './organizationchart.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     providers: [OrganizationChartStyle, { provide: ORGANIZATIONCHART_INSTANCE, useExisting: OrganizationChart }, { provide: PARENT_INSTANCE, useExisting: OrganizationChart }],
     host: {
