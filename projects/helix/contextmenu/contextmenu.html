@@ -1,10 +1,10 @@
 @if (render()) {
     <div
         #container
-        [attr.id]="id"
-        [class]="cn(cx('root'), styleClass)"
+        [attr.id]="$id()"
+        [class]="cn(cx('root'), styleClass())"
         [style]="sx('root')"
-        [ngStyle]="style"
+        [ngStyle]="style()"
         [hBind]="ptm('root')"
         [hMotion]="visible()"
         [pMotionName]="'p-anchored-overlay'"
@@ -18,12 +18,12 @@
             #rootmenu
             [root]="true"
             [items]="processedItems"
-            [itemTemplate]="itemTemplate || _itemTemplate"
-            [menuId]="id"
-            [ariaLabel]="ariaLabel"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [baseZIndex]="baseZIndex"
-            [autoZIndex]="autoZIndex"
+            [itemTemplate]="itemTemplate() || _itemTemplate"
+            [menuId]="$id()"
+            [ariaLabel]="ariaLabel()"
+            [ariaLabelledBy]="ariaLabelledBy()"
+            [baseZIndex]="baseZIndex()"
+            [autoZIndex]="autoZIndex()"
             [visible]="submenuVisible()"
             [focusedItemId]="focused ? focusedItemId : undefined"
             [activeItemPath]="activeItemPath()"

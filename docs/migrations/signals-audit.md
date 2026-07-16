@@ -78,7 +78,7 @@ directories**, then finishes manually by these rules:
 |---|---|---|---|
 | Pilot | #311 | knob + this audit refresh | ✅ done |
 | 1 | #312 | accordion–card | ✅ done (leftovers: `blockui.blocked`, `ButtonDirective` label/icon/loading/severity/buttonProps) |
-| 2 | #313 | carousel–dataview | open |
+| 2 | #313 | carousel–dataview | ✅ done (leftovers: carousel page/numVisible/numScroll, cascadeselect value, confirmdialog visible, contextmenu model & sub visible, chip chipProps) |
 | 3 | #314 | datepicker–floatlabel | open |
 | 4 | #315 | fluid–inputicon | open |
 | 5 | #316 | inputmask–message | open |

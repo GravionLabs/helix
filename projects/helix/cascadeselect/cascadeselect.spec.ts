@@ -451,7 +451,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'string')).toBe(true);
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'string')).toBe(true);
         });
 
         it('should work with number array', async () => {
@@ -460,7 +460,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'number')).toBe(true);
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'number')).toBe(true);
         });
 
         it('should work with object array', async () => {
@@ -470,8 +470,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'object')).toBe(true);
-            expect(cascadeSelectInstance.optionLabel).toBe('name');
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'object')).toBe(true);
+            expect(cascadeSelectInstance.optionLabel()).toBe('name');
         });
 
         it('should work with getters and setters', async () => {
@@ -605,7 +605,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.optionLabel).toBe('name');
+            expect(cascadeSelectInstance.optionLabel()).toBe('name');
         });
 
         it('should work with optionLabel as function', async () => {
@@ -615,7 +615,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(typeof cascadeSelectInstance.optionLabel).toBe('function');
+            expect(typeof cascadeSelectInstance.optionLabel()).toBe('function');
         });
 
         it('should work with optionValue as string', async () => {
@@ -625,7 +625,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.optionValue).toBe('code');
+            expect(cascadeSelectInstance.optionValue()).toBe('code');
         });
 
         it('should work with optionValue as function', async () => {
@@ -635,7 +635,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(typeof cascadeSelectInstance.optionValue).toBe('function');
+            expect(typeof cascadeSelectInstance.optionValue()).toBe('function');
         });
 
         it('should work with dynamic updated values', async () => {
@@ -659,7 +659,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.placeholder).toBe('Custom placeholder');
+            expect(cascadeSelectInstance.placeholder()).toBe('Custom placeholder');
         });
 
         it('should work with loading state', async () => {
@@ -668,7 +668,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.loading).toBe(true);
+            expect(cascadeSelectInstance.loading()).toBe(true);
         });
 
         it('should work with appendTo', async () => {
@@ -678,7 +678,7 @@ describe('CascadeSelect', () => {
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
             // appendTo might be a signal, so call it as a function to get the value
-            const appendToValue = typeof cascadeSelectInstance.appendTo === 'function' ? cascadeSelectInstance.appendTo() : cascadeSelectInstance.appendTo;
+            const appendToValue = typeof cascadeSelectInstance.appendTo() === 'function' ? cascadeSelectInstance.appendTo() : cascadeSelectInstance.appendTo();
             expect(appendToValue).toBe('body');
         });
 
@@ -699,8 +699,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.panelStyle).toEqual({ background: 'lightgray' });
-            expect(cascadeSelectInstance.panelStyleClass).toBe('custom-panel');
+            expect(cascadeSelectInstance.panelStyle()).toEqual({ background: 'lightgray' });
+            expect(cascadeSelectInstance.panelStyleClass()).toBe('custom-panel');
         });
     });
 
@@ -788,21 +788,21 @@ describe('CascadeSelect', () => {
             } else {
                 // Verify template is processed even if not rendered
                 const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-                expect(cascadeSelectInstance.optionTemplate).toBeDefined();
+                expect(cascadeSelectInstance.optionTemplate()).toBeDefined();
             }
         });
 
         it('should handle multiple template types (value, option, header, footer)', async () => {
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
 
-            expect(cascadeSelectInstance.valueTemplate).toBeDefined();
-            expect(cascadeSelectInstance.optionTemplate).toBeDefined();
-            expect(cascadeSelectInstance.headerTemplate).toBeDefined();
-            expect(cascadeSelectInstance.footerTemplate).toBeDefined();
-            expect(cascadeSelectInstance.triggerIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.loadingIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.groupIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.clearIconTemplate).toBeDefined();
+            expect(cascadeSelectInstance.valueTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.optionTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.headerTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.footerTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.triggerIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.loadingIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.groupIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.clearIconTemplate()).toBeDefined();
         });
     });
 
@@ -814,8 +814,8 @@ describe('CascadeSelect', () => {
         it('should have ViewChild properties properly rendered', async () => {
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
 
-            expect(cascadeSelectInstance.focusInputViewChild).toBeDefined();
-            expect(cascadeSelectInstance.overlayViewChild).toBeDefined();
+            expect(cascadeSelectInstance.focusInputViewChild()).toBeDefined();
+            expect(cascadeSelectInstance.overlayViewChild()).toBeDefined();
         });
     });
 
@@ -939,8 +939,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.loading).toBe(true);
-            expect(cascadeSelectInstance.loadingIcon).toBe('pi pi-spin pi-cog');
+            expect(cascadeSelectInstance.loading()).toBe(true);
+            expect(cascadeSelectInstance.loadingIcon()).toBe('pi pi-spin pi-cog');
         });
 
         it('should handle large datasets efficiently', async () => {
@@ -1060,7 +1060,7 @@ describe('CascadeSelect', () => {
             cascadeSelectInstance.writeValue(mockCountries[0].states[0].cities[0]);
             await testFixture.whenStable();
 
-            expect(cascadeSelectInstance.showClear).toBe(true);
+            expect(cascadeSelectInstance.showClear()).toBe(true);
             expect(cascadeSelectInstance.$filled()).toBe(true);
         });
 
@@ -1407,8 +1407,8 @@ describe('CascadeSelect', () => {
                 expect(cascadeSelectInstance._valueTemplate).not.toBe(cascadeSelectInstance._optionTemplate);
 
                 // If ContentChild templates are available, verify they don't conflict
-                if (cascadeSelectInstance.headerTemplate && cascadeSelectInstance.footerTemplate) {
-                    expect(cascadeSelectInstance.headerTemplate).not.toBe(cascadeSelectInstance.footerTemplate);
+                if (cascadeSelectInstance.headerTemplate() && cascadeSelectInstance.footerTemplate()) {
+                    expect(cascadeSelectInstance.headerTemplate()).not.toBe(cascadeSelectInstance.footerTemplate());
                 } else {
                     // At least verify internal templates are different
                     expect(cascadeSelectInstance._headerTemplate).not.toBe(cascadeSelectInstance._footerTemplate);

@@ -1,9 +1,9 @@
-@for (processedOption of options; track processedOption; let i = $index) {
+@for (processedOption of options(); track processedOption; let i = $index) {
   <li
     [class]="cx('option', { processedOption })"
     role="treeitem"
-    [attr.aria-level]="level + 1"
-    [attr.aria-setsize]="options.length"
+    [attr.aria-level]="level() + 1"
+    [attr.aria-setsize]="options().length"
     [hBind]="getPTOptions(processedOption, i, 'option')"
     [id]="getOptionId(processedOption)"
     [attr.aria-label]="getOptionLabelToRender(processedOption)"
@@ -18,17 +18,17 @@
       hRipple
       [hBind]="getPTOptions(processedOption, i, 'optionContent')"
       >
-      @if (optionTemplate) {
-        <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: $safeNavigationMigration(processedOption?.option), level: level }"></ng-container>
+      @if (optionTemplate()) {
+        <ng-container *ngTemplateOutlet="optionTemplate(); context: { $implicit: $safeNavigationMigration(processedOption?.option), level: level() }"></ng-container>
       } @else {
         <span [class]="cx('optionText')" [hBind]="getPTOptions(processedOption, i, 'optionText')">{{ getOptionLabelToRender(processedOption) }}</span>
       }
       @if (isOptionGroup(processedOption)) {
         <span [class]="cx('groupIcon')" [hBind]="getPTOptions(processedOption, i, 'groupIcon')">
-          @if (!groupicon) {
+          @if (!groupicon()) {
             <svg data-p-icon="angle-right" [hBind]="getPTOptions(processedOption, index, 'groupIcon')" />
           }
-          <ng-template *ngTemplateOutlet="groupicon"></ng-template>
+          <ng-template *ngTemplateOutlet="groupicon()"></ng-template>
         </span>
       }
     </div>
@@ -37,20 +37,20 @@
         hCascadeSelectSub
         [attrrole]="'group'"
         [class]="cx('optionList')"
-        [selectId]="selectId"
-        [focusedOptionId]="focusedOptionId"
-        [activeOptionPath]="activeOptionPath"
+        [selectId]="selectId()"
+        [focusedOptionId]="focusedOptionId()"
+        [activeOptionPath]="activeOptionPath()"
         [options]="getOptionGroupChildren(processedOption)"
-        [optionLabel]="optionLabel"
-        [optionValue]="optionValue"
-        [level]="level + 1"
+        [optionLabel]="optionLabel()"
+        [optionValue]="optionValue()"
+        [level]="level() + 1"
         (onChange)="onChange.emit($event)"
         (onFocusChange)="onFocusChange.emit($event)"
         (onFocusEnterChange)="onFocusEnterChange.emit($event)"
-        [optionGroupLabel]="optionGroupLabel"
-        [optionGroupChildren]="optionGroupChildren"
-        [dirty]="dirty"
-        [optionTemplate]="optionTemplate"
+        [optionGroupLabel]="optionGroupLabel()"
+        [optionGroupChildren]="optionGroupChildren()"
+        [dirty]="dirty()"
+        [optionTemplate]="optionTemplate()"
         [hBind]="ptm('optionList')"
         [pt]="pt"
         [unstyled]="unstyled()"

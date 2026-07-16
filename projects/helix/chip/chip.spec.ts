@@ -653,10 +653,10 @@ describe('Chip', () => {
         });
 
         it('should apply chipProps values', async () => {
-            expect(chipComponent.label).toBe('Props Chip');
-            expect(chipComponent.icon).toBe('pi pi-star');
-            expect(chipComponent.removable).toBe(true);
-            expect(chipComponent.styleClass).toBe('props-chip');
+            expect(chipComponent.label()).toBe('Props Chip');
+            expect(chipComponent.icon()).toBe('pi pi-star');
+            expect(chipComponent.removable()).toBe(true);
+            expect(chipComponent.styleClass()).toBe('props-chip');
         });
 
         it('should update when chipProps changes', async () => {
@@ -669,10 +669,10 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(chipComponent.label).toBe('Updated Props');
-            expect(chipComponent.icon).toBe('pi pi-home');
-            expect(chipComponent.removable).toBe(false);
-            expect(chipComponent.styleClass).toBe('updated-props');
+            expect(chipComponent.label()).toBe('Updated Props');
+            expect(chipComponent.icon()).toBe('pi pi-home');
+            expect(chipComponent.removable()).toBe(false);
+            expect(chipComponent.styleClass()).toBe('updated-props');
         });
 
         it('should handle partial chipProps updates', async () => {
@@ -682,7 +682,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(chipComponent.label).toBe('Partial Update');
+            expect(chipComponent.label()).toBe('Partial Update');
         });
 
         it('should display elements from chipProps', async () => {
@@ -719,8 +719,8 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(chipComponent.icon).toBe('pi pi-star');
-            expect(chipComponent.removable).toBe(true);
+            expect(chipComponent.icon()).toBe('pi pi-star');
+            expect(chipComponent.removable()).toBe(true);
             expect(element.classList.contains('dynamic-class')).toBe(true);
         });
 
@@ -777,9 +777,9 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(chipComponent.label).toBe('ChipProps Label');
-            expect(chipComponent.icon).toBe('pi pi-star');
-            expect(chipComponent.removable).toBe(true);
+            expect(chipComponent.label()).toBe('ChipProps Label');
+            expect(chipComponent.icon()).toBe('pi pi-star');
+            expect(chipComponent.removable()).toBe(true);
         });
 
         it('should show/hide projected content dynamically', async () => {

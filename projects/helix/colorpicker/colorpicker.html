@@ -1,18 +1,18 @@
-@if (!inline) {
+@if (!inline()) {
   <input
     #input
     type="text"
     [class]="cx('preview')"
     readonly
-    [attr.tabindex]="tabindex"
+    [attr.tabindex]="tabindex()"
     [attr.disabled]="$disabled() ? '' : undefined"
     (click)="onInputClick()"
     (keydown)="onInputKeydown($event)"
     (focus)="onInputFocus()"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     [style.backgroundColor]="inputBgColor"
     [attr.aria-label]="ariaLabel"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [hBind]="ptm('preview')"
     />
 }
@@ -23,7 +23,7 @@
   [(visible)]="overlayVisible"
   [options]="overlayOptions()"
   [target]="'@parent'"
-  [inline]="inline"
+  [inline]="inline()"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
   [pt]="ptm('pcOverlay')"
