@@ -80,7 +80,9 @@ export class BaseComponent<PT = any> implements Lifecycle {
     }
 
     private get $hostName() {
-        return this['hostName'];
+        const hostName = this['hostName'];
+        // hostName is an input() signal on migrated components and a plain property on legacy ones
+        return typeof hostName === 'function' ? hostName() : hostName;
     }
 
     get $el() {
