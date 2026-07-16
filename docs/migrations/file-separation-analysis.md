@@ -2,6 +2,17 @@
 
 Part of epic #233 / feature #241. Analyzed 2026-07-14.
 
+> **Decision change (2026-07-15, epic #297):** the "keep inline (vendored)"
+> verdict below is **reversed**. The project no longer tracks upstream
+> PrimeNG, which voids criterion 2 (upstream diffability) — the load-bearing
+> reason for keeping the fork single-file. Epic #297 (feature #298) extracts
+> all fork inline templates to separate `.html` files before the first
+> 22.0.0 publish; the 55 SVG icon components under `projects/helix/icons/`
+> and secondary components with templates under 10 lines stay inline. The
+> extraction convention lives in
+> [../CONTRIBUTING-file-structure.md](../CONTRIBUTING-file-structure.md).
+> The analysis below is kept unchanged for the record.
+
 Question: which components (if any) should be split from single-file inline
 templates into separate ts/html/scss files?
 
