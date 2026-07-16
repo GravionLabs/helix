@@ -80,7 +80,7 @@ describe('InputGroupAddon', () => {
             const addonInstance = fixture.debugElement.query(By.directive(InputGroupAddon)).componentInstance;
             const addonElement = fixture.debugElement.query(By.directive(InputGroupAddon));
 
-            expect(addonInstance.style).toEqual({ 'background-color': '#f0f0f0' });
+            expect(addonInstance.style()).toEqual({ 'background-color': '#f0f0f0' });
             expect(addonElement.nativeElement.style.backgroundColor).toBe('rgb(240, 240, 240)');
         });
 
@@ -88,7 +88,7 @@ describe('InputGroupAddon', () => {
             const addonInstance = fixture.debugElement.query(By.directive(InputGroupAddon)).componentInstance;
             const addonElement = fixture.debugElement.query(By.directive(InputGroupAddon));
 
-            expect(addonInstance.styleClass).toBe('custom-addon');
+            expect(addonInstance.styleClass()).toBe('custom-addon');
             expect(addonElement.nativeElement.classList.contains('custom-addon')).toBe(true);
         });
 
@@ -101,8 +101,8 @@ describe('InputGroupAddon', () => {
             const addonInstance = fixture.debugElement.query(By.directive(InputGroupAddon)).componentInstance;
             const addonElement = fixture.debugElement.query(By.directive(InputGroupAddon));
 
-            expect(addonInstance.style).toEqual({ color: 'red' });
-            expect(addonInstance.styleClass).toBe('updated-addon');
+            expect(addonInstance.style()).toEqual({ color: 'red' });
+            expect(addonInstance.styleClass()).toBe('updated-addon');
             expect(addonElement.nativeElement.style.color).toBe('red');
             expect(addonElement.nativeElement.classList.contains('updated-addon')).toBe(true);
         });
@@ -200,7 +200,7 @@ describe('InputGroupAddon PassThrough Tests', () => {
             fixture.componentRef.setInput('styleClass', 'custom-class');
             fixture.componentRef.setInput('pt', {
                 root: ({ instance }: any) => ({
-                    class: instance?.styleClass ? 'WITH_STYLE' : 'NO_STYLE'
+                    class: instance?.styleClass?.() ? 'WITH_STYLE' : 'NO_STYLE'
                 })
             });
             fixture.detectChanges();
@@ -213,7 +213,7 @@ describe('InputGroupAddon PassThrough Tests', () => {
             fixture.componentRef.setInput('pt', {
                 root: ({ instance }: any) => ({
                     style: {
-                        'background-color': instance?.style?.color === 'green' ? 'yellow' : 'red'
+                        'background-color': instance?.style?.()?.color === 'green' ? 'yellow' : 'red'
                     }
                 })
             });

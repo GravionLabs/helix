@@ -1,26 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, NgModule, signal, TemplateRef, ViewEncapsulation, contentChild, contentChildren, viewChild, output } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { appendChild, focus } from '@primeuix/utils';
@@ -51,7 +30,8 @@ const IMAGE_INSTANCE = new InjectionToken<Image>('IMAGE_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [ImageStyle, { provide: IMAGE_INSTANCE, useExisting: Image }, { provide: PARENT_INSTANCE, useExisting: Image }],
     host: {
-        '[class]': "cn(cx('root'),styleClass)"
+        '[class]': "cn(cx('root'),styleClass())",
+        '(document:keydown.escape)': 'onKeydownHandler()'
     },
     hostDirectives: [Bind]
 })
@@ -65,85 +45,87 @@ export class Image extends BaseComponent<ImagePassThrough> {
      * Style class of the image element.
      * @group Props
      */
-    @Input() imageClass: string | undefined;
+    readonly imageClass = input<string>();
     /**
      * Inline style of the image element.
      * @group Props
      */
-    @Input() imageStyle: { [klass: string]: any } | null | undefined;
+    readonly imageStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * The source path for the main image.
      * @group Props
      */
-    @Input() src: string | SafeUrl | undefined;
+    readonly src = input<string | SafeUrl>();
     /**
      * The srcset definition for the main image.
      * @group Props
      */
-    @Input() srcSet: string | SafeUrl | undefined;
+    readonly srcSet = input<string | SafeUrl>();
     /**
      * The sizes definition for the main image.
      * @group Props
      */
-    @Input() sizes: string | undefined;
+    readonly sizes = input<string>();
     /**
      * The source path for the preview image.
      * @group Props
      */
-    @Input() previewImageSrc: string | SafeUrl | undefined;
+    readonly previewImageSrc = input<string | SafeUrl>();
     /**
      * The srcset definition for the preview image.
      * @group Props
      */
-    @Input() previewImageSrcSet: string | SafeUrl | undefined;
+    readonly previewImageSrcSet = input<string | SafeUrl>();
     /**
      * The sizes definition for the preview image.
      * @group Props
      */
-    @Input() previewImageSizes: string | undefined;
+    readonly previewImageSizes = input<string>();
     /**
      * Attribute of the preview image element.
      * @group Props
      */
-    @Input() alt: string | undefined;
+    readonly alt = input<string>();
     /**
      * Attribute of the image element.
      * @group Props
      */
-    @Input() width: string | undefined;
+    readonly width = input<string>();
     /**
      * Attribute of the image element.
      * @group Props
      */
-    @Input() height: string | undefined;
+    readonly height = input<string>();
     /**
      * Attribute of the image element.
      * @group Props
      */
-    @Input() loading: 'lazy' | 'eager' | undefined;
+    readonly loading = input<'lazy' | 'eager'>();
     /**
      * Controls the preview functionality.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) preview: boolean = false;
+    readonly preview = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Transition options of the show animation
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() showTransitionOptions: string = '150ms cubic-bezier(0, 0, 0.2, 1)';
+    readonly showTransitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Transition options of the hide animation
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() hideTransitionOptions: string = '150ms cubic-bezier(0, 0, 0.2, 1)';
+    readonly hideTransitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Enter animation class name of modal.
      * @defaultValue 'p-modal-enter'
@@ -190,72 +172,72 @@ export class Image extends BaseComponent<ImagePassThrough> {
      * Triggered when the preview overlay is shown.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
+    readonly onShow = output<any>();
     /**
      * Triggered when the preview overlay is hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
+    readonly onHide = output<any>();
     /**
      * This event is triggered if an error occurs while loading an image file.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onImageError: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onImageError = output<Event>();
 
-    @ViewChild('mask') mask: ElementRef | undefined;
+    readonly mask = viewChild<ElementRef>('mask');
 
-    @ViewChild('previewButton') previewButton: ElementRef | undefined;
+    readonly previewButton = viewChild<ElementRef>('previewButton');
 
-    @ViewChild('closeButton') closeButton: ElementRef | undefined;
+    readonly closeButton = viewChild<ElementRef>('closeButton');
 
     /**
      * Custom indicator template.
      * @group Templates
      */
-    @ContentChild('indicator', { descendants: false }) indicatorTemplate: TemplateRef<void> | undefined;
+    readonly indicatorTemplate = contentChild<TemplateRef<void>>('indicator', { descendants: false });
 
     /**
      * Custom rotate right icon template.
      * @group Templates
      */
-    @ContentChild('rotaterighticon', { descendants: false }) rotateRightIconTemplate: TemplateRef<void> | undefined;
+    readonly rotateRightIconTemplate = contentChild<TemplateRef<void>>('rotaterighticon', { descendants: false });
 
     /**
      * Custom rotate left icon template.
      * @group Templates
      */
-    @ContentChild('rotatelefticon', { descendants: false }) rotateLeftIconTemplate: TemplateRef<void> | undefined;
+    readonly rotateLeftIconTemplate = contentChild<TemplateRef<void>>('rotatelefticon', { descendants: false });
 
     /**
      * Custom zoom out icon template.
      * @group Templates
      */
-    @ContentChild('zoomouticon', { descendants: false }) zoomOutIconTemplate: TemplateRef<void> | undefined;
+    readonly zoomOutIconTemplate = contentChild<TemplateRef<void>>('zoomouticon', { descendants: false });
 
     /**
      * Custom zoom in icon template.
      * @group Templates
      */
-    @ContentChild('zoominicon', { descendants: false }) zoomInIconTemplate: TemplateRef<void> | undefined;
+    readonly zoomInIconTemplate = contentChild<TemplateRef<void>>('zoominicon', { descendants: false });
 
     /**
      * Custom close icon template.
      * @group Templates
      */
-    @ContentChild('closeicon', { descendants: false }) closeIconTemplate: TemplateRef<void> | undefined;
+    readonly closeIconTemplate = contentChild<TemplateRef<void>>('closeicon', { descendants: false });
 
     /**
      * Custom preview template.
      * @group Templates
      */
-    @ContentChild('preview', { descendants: false }) previewTemplate: TemplateRef<ImagePreviewTemplateContext> | undefined;
+    readonly previewTemplate = contentChild<TemplateRef<ImagePreviewTemplateContext>>('preview', { descendants: false });
 
     /**
      * Custom image template.
      * @group Templates
      */
-    @ContentChild('image', { descendants: false }) imageTemplate: TemplateRef<ImageImageTemplateContext> | undefined;
+    readonly imageTemplate = contentChild<TemplateRef<ImageImageTemplateContext>>('image', { descendants: false });
 
     renderMask = signal<boolean>(false);
 
@@ -294,7 +276,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
         min: 0.5
     };
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _indicatorTemplate: TemplateRef<void> | undefined;
 
@@ -317,7 +299,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
     }
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'indicator':
                     this._indicatorTemplate = item.template;
@@ -359,7 +341,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
     }
 
     onImageClick() {
-        if (this.preview) {
+        if (this.preview()) {
             this.maskVisible = true;
             this.previewVisible = true;
             this.renderMask.set(true);
@@ -381,7 +363,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
             case 'Escape':
                 this.onMaskClick();
                 setTimeout(() => {
-                    focus(this.previewButton?.nativeElement);
+                    focus(this.previewButton()?.nativeElement);
                 }, 25);
                 event.preventDefault();
 
@@ -424,7 +406,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
         this.moveOnTop();
         this.onShow.emit({});
         setTimeout(() => {
-            focus(this.closeButton?.nativeElement);
+            focus(this.closeButton()?.nativeElement);
         }, 25);
     }
 
@@ -504,7 +486,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
         return this.config.translation.aria ? this.config.translation.aria.close : undefined;
     }
 
-    @HostListener('document:keydown.escape') onKeydownHandler() {
+    onKeydownHandler() {
         if (this.previewVisible) {
             this.closePreview();
         }
