@@ -85,3 +85,7 @@ vendored fork code always mirrors upstream's single-file layout.
 
 None. No component met the split criteria, so no follow-up split PBIs are
 created from this analysis.
+
+Related: [css-class-prefix-decision.md](css-class-prefix-decision.md) — the
+`.p-*` CSS class names stay even though epic #297 reverses this file's
+keep-inline verdict.
