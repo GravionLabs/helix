@@ -1,0 +1,61 @@
+<div [class]="cx('itemContent')" (click)="onItemClick($event, item)" [attr.data-pc-section]="'content'" [hBind]="getPTOptions('itemContent')">
+         @if (!itemTemplate) {
+           @if (!item?.routerLink) {
+             <a
+               [attr.title]="item.title"
+               [attr.href]="item.url || null"
+               [attr.data-automationid]="item.automationId"
+               [attr.tabindex]="-1"
+               [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+               [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
+               [target]="item.target"
+               [hBind]="getPTOptions('itemLink')"
+               hRipple
+               >
+               <ng-container *ngTemplateOutlet="itemContent; context: { $implicit: item }"></ng-container>
+             </a>
+           }
+           @if (item?.routerLink) {
+             <a
+               [routerLink]="item.routerLink"
+               [attr.data-automationid]="item.automationId"
+               [attr.tabindex]="-1"
+               [attr.title]="item.title"
+               [queryParams]="item.queryParams"
+               routerLinkActive="p-menu-item-link-active"
+               [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+               [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+               [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
+               [target]="item.target"
+               [fragment]="item.fragment"
+               [queryParamsHandling]="item.queryParamsHandling"
+               [preserveFragment]="item.preserveFragment"
+               [skipLocationChange]="item.skipLocationChange"
+               [replaceUrl]="item.replaceUrl"
+               [state]="item.state"
+               [hBind]="getPTOptions('itemLink')"
+               hRipple
+               >
+               <ng-container *ngTemplateOutlet="itemContent; context: { $implicit: item }"></ng-container>
+             </a>
+           }
+         }
+
+         @if (itemTemplate) {
+           <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: item }"></ng-template>
+         }
+
+         <ng-template #itemContent>
+           @if (item.icon) {
+             <span [class]="cn(cx('itemIcon', { item }), item.iconClass)" [hBind]="getPTOptions('itemIcon')" [ngStyle]="item.iconStyle" [attr.data-pc-section]="'itemicon'"></span>
+           }
+           @if (item.escape !== false) {
+             <span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [hBind]="getPTOptions('itemLabel')" [attr.data-pc-section]="'itemlabel'">{{ item.label }}</span>
+           } @else {
+             <span [class]="cn(cx('itemLabel'), item.labelClass)" [ngStyle]="item.labelStyle" [attr.data-pc-section]="'itemlabel'" [innerHTML]="item.label | safeHtml" [hBind]="getPTOptions('itemLabel')"></span>
+           }
+           @if (item.badge) {
+             <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions('pcBadge')" [unstyled]="unstyled()" />
+           }
+         </ng-template>
+       </div>
