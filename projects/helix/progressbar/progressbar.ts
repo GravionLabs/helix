@@ -16,21 +16,7 @@ const PROGRESSBAR_INSTANCE = new InjectionToken<ProgressBar>('PROGRESSBAR_INSTAN
     selector: 'h-progressBar, h-progressbar, h-progress-bar',
     standalone: true,
     imports: [CommonModule, SharedModule, Bind],
-    template: `
-        @if (mode === 'determinate') {
-          <div [class]="cn(cx('value'), valueStyleClass)" [hBind]="ptm('value')" [style.width]="value + '%'" [style.display]="'flex'" [style.background]="color" [attr.data-p]="dataP">
-            <div [class]="cx('label')" [hBind]="ptm('label')" [attr.data-p]="dataP">
-              @if (showValue && !contentTemplate && !_contentTemplate) {
-                <div [style.display]="value != null && value !== 0 ? 'flex' : 'none'">{{ value }}{{ unit }}</div>
-              }
-              <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: value }"></ng-container>
-            </div>
-          </div>
-        }
-        @if (mode === 'indeterminate') {
-          <div [class]="cn(cx('value'), valueStyleClass)" [hBind]="ptm('value')" [style.background]="color" [attr.data-p]="dataP"></div>
-        }
-        `,
+    templateUrl: './progressbar.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ProgressBarStyle, { provide: PROGRESSBAR_INSTANCE, useExisting: ProgressBar }, { provide: PARENT_INSTANCE, useExisting: ProgressBar }],

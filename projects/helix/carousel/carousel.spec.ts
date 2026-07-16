@@ -223,12 +223,12 @@ describe('Carousel', () => {
             expect(carouselInstance.page).toBe(0);
             expect(carouselInstance.numVisible).toBe(3);
             expect(carouselInstance.numScroll).toBe(3); // Note: numScroll getter returns _numVisible by default
-            expect(carouselInstance.orientation).toBe('horizontal');
-            expect(carouselInstance.verticalViewPortHeight).toBe('300px');
-            expect(carouselInstance.circular).toBe(false);
-            expect(carouselInstance.showIndicators).toBe(true);
-            expect(carouselInstance.showNavigators).toBe(true);
-            expect(carouselInstance.autoplayInterval).toBe(0);
+            expect(carouselInstance.orientation()).toBe('horizontal');
+            expect(carouselInstance.verticalViewPortHeight()).toBe('300px');
+            expect(carouselInstance.circular()).toBe(false);
+            expect(carouselInstance.showIndicators()).toBe(true);
+            expect(carouselInstance.showNavigators()).toBe(true);
+            expect(carouselInstance.autoplayInterval()).toBe(0);
         });
 
         it('should accept input values', async () => {
@@ -244,14 +244,14 @@ describe('Carousel', () => {
             expect(carouselInstance.page).toBe(1);
             expect(carouselInstance.numVisible).toBe(2);
             expect(carouselInstance.numScroll).toBe(2);
-            expect(carouselInstance.circular).toBe(true);
-            expect(carouselInstance.orientation).toBe('vertical');
-            expect(carouselInstance.autoplayInterval).toBe(2000);
+            expect(carouselInstance.circular()).toBe(true);
+            expect(carouselInstance.orientation()).toBe('vertical');
+            expect(carouselInstance.autoplayInterval()).toBe(2000);
         });
 
         it('should initialize with value array', () => {
-            expect(carouselInstance.value).toEqual(mockProducts);
-            expect(carouselInstance.value.length).toBe(5);
+            expect(carouselInstance.value()).toEqual(mockProducts);
+            expect(carouselInstance.value().length).toBe(5);
         });
 
         it('should generate unique id', () => {
@@ -397,7 +397,7 @@ describe('Carousel', () => {
         });
 
         it('should enable circular mode', () => {
-            expect(carouselInstance.circular).toBe(true);
+            expect(carouselInstance.circular()).toBe(true);
             expect(carouselInstance.isCircular()).toBe(true);
         });
 
@@ -430,12 +430,12 @@ describe('Carousel', () => {
         });
 
         it('should set vertical orientation', () => {
-            expect(carouselInstance.orientation).toBe('vertical');
+            expect(carouselInstance.orientation()).toBe('vertical');
             expect(carouselInstance.isVertical()).toBe(true);
         });
 
         it('should apply vertical viewport height', () => {
-            expect(carouselInstance.verticalViewPortHeight).toBe('400px');
+            expect(carouselInstance.verticalViewPortHeight()).toBe('400px');
         });
 
         it('should render appropriate icons for vertical mode', () => {
@@ -462,8 +462,8 @@ describe('Carousel', () => {
         });
 
         it('should accept responsive options', () => {
-            expect(carouselInstance.responsiveOptions).toEqual(component.responsiveOptions);
-            expect(carouselInstance.responsiveOptions?.length).toBe(3);
+            expect(carouselInstance.responsiveOptions()).toEqual(component.responsiveOptions);
+            expect(carouselInstance.responsiveOptions()?.length).toBe(3);
         });
 
         it('should calculate position based on window size', () => {
@@ -500,7 +500,7 @@ describe('Carousel', () => {
         });
 
         it('should enable autoplay with interval', () => {
-            expect(carouselInstance.autoplayInterval).toBe(1000);
+            expect(carouselInstance.autoplayInterval()).toBe(1000);
         });
 
         it('should start autoplay when conditions are met', async () => {
@@ -711,9 +711,9 @@ describe('Carousel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(carouselInstance.styleClass).toBe('custom-carousel-class');
-            expect(carouselInstance.contentClass).toBe('custom-content-class');
-            expect(carouselInstance.indicatorsContentClass).toBe('custom-indicators-class');
+            expect(carouselInstance.styleClass()).toBe('custom-carousel-class');
+            expect(carouselInstance.contentClass()).toBe('custom-content-class');
+            expect(carouselInstance.indicatorsContentClass()).toBe('custom-indicators-class');
         });
 
         it('should apply custom styles', async () => {
@@ -722,8 +722,8 @@ describe('Carousel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(carouselInstance.indicatorsContentStyle).toEqual({ marginTop: '10px' });
-            expect(carouselInstance.indicatorStyle).toEqual({ backgroundColor: 'red' });
+            expect(carouselInstance.indicatorsContentStyle()).toEqual({ marginTop: '10px' });
+            expect(carouselInstance.indicatorStyle()).toEqual({ backgroundColor: 'red' });
         });
 
         it('should have proper CSS structure', () => {
@@ -933,8 +933,8 @@ describe('Carousel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(carouselInstance.prevButtonProps).toEqual({ severity: 'primary', icon: 'pi-custom' });
-            expect(carouselInstance.nextButtonProps).toEqual({ severity: 'secondary', text: false });
+            expect(carouselInstance.prevButtonProps()).toEqual({ severity: 'primary', icon: 'pi-custom' });
+            expect(carouselInstance.nextButtonProps()).toEqual({ severity: 'secondary', text: false });
         });
     });
 

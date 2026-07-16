@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { IconFieldPassThrough } from '@gravionlabs/helix/types/iconfield';
@@ -15,19 +15,19 @@ const ICONFIELD_INSTANCE = new InjectionToken<IconField>('ICONFIELD_INSTANCE');
     selector: 'h-iconfield, h-iconField, h-icon-field',
     standalone: true,
     imports: [CommonModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './iconfield.html',
     providers: [IconFieldStyle, { provide: ICONFIELD_INSTANCE, useExisting: IconField }, { provide: PARENT_INSTANCE, useExisting: IconField }],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
 })
 export class IconField extends BaseComponent<IconFieldPassThrough> implements AfterViewChecked {
     componentName = 'IconField';
 
-    @Input() hostName: any = '';
+    readonly hostName = input<any>('');
 
     _componentStyle = inject(IconFieldStyle);
 
@@ -43,13 +43,13 @@ export class IconField extends BaseComponent<IconFieldPassThrough> implements Af
      * Position of the icon.
      * @group Props
      */
-    @Input() iconPosition: 'right' | 'left' = 'left';
+    readonly iconPosition = input<'right' | 'left'>('left');
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string;
+    readonly styleClass = input<string>(undefined!);
 }
 
 @NgModule({

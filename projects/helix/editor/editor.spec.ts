@@ -209,12 +209,12 @@ describe('Editor', () => {
         });
 
         it('should have default values', () => {
-            expect(editorInstance.readonly).toBe(false);
-            expect(editorInstance.style).toBe(null);
-            expect(editorInstance.styleClass).toBe('' as any);
-            expect(editorInstance.placeholder).toBe('Enter text here...');
-            expect(editorInstance.formats).toBeUndefined();
-            expect(editorInstance.modules).toBeUndefined();
+            expect(editorInstance.readonly()).toBe(false);
+            expect(editorInstance.style()).toBe(null);
+            expect(editorInstance.styleClass()).toBe('' as any);
+            expect(editorInstance.placeholder()).toBe('Enter text here...');
+            expect(editorInstance.formats()).toBeUndefined();
+            expect(editorInstance.modules()).toBeUndefined();
         });
 
         it('should accept input values', async () => {
@@ -225,10 +225,10 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(editorInstance.placeholder).toBe('Custom placeholder');
-            expect(editorInstance.readonly).toBe(true);
-            expect(editorInstance.styleClass).toBe('custom-editor');
-            expect(editorInstance.formats).toEqual(['bold', 'italic']);
+            expect(editorInstance.placeholder()).toBe('Custom placeholder');
+            expect(editorInstance.readonly()).toBe(true);
+            expect(editorInstance.styleClass()).toBe('custom-editor');
+            expect(editorInstance.formats()).toEqual(['bold', 'italic']);
         });
 
         it('should initialize with ngModel value', () => {
@@ -278,10 +278,10 @@ describe('Editor', () => {
             } else {
                 // If quill is not initialized, just test the property
                 editorInstance.readonly = true;
-                expect(editorInstance.readonly).toBe(true);
+                expect(editorInstance.readonly()).toBe(true);
 
                 editorInstance.readonly = false;
-                expect(editorInstance.readonly).toBe(false);
+                expect(editorInstance.readonly()).toBe(false);
             }
         });
     });
@@ -460,7 +460,7 @@ describe('Editor', () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
-            expect(editorInstance.styleClass).toBe('custom-editor-class');
+            expect(editorInstance.styleClass()).toBe('custom-editor-class');
         });
 
         it('should apply custom styles', async () => {
@@ -471,14 +471,14 @@ describe('Editor', () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
-            expect(editorInstance.style).toEqual({ border: '2px solid red', padding: '10px' });
+            expect(editorInstance.style()).toEqual({ border: '2px solid red', padding: '10px' });
 
             // Simulate ngStyle behavior in test environment
             const contentElement = fixture.debugElement.query(By.css('.p-editor-content'));
-            if (contentElement && editorInstance.style) {
+            if (contentElement && editorInstance.style()) {
                 const element = contentElement.nativeElement;
-                Object.keys(editorInstance.style).forEach((key) => {
-                    element.style[key] = editorInstance.style![key];
+                Object.keys(editorInstance.style()).forEach((key) => {
+                    element.style[key] = editorInstance.style()![key];
                 });
 
                 expect(element.style.border).toBe('2px solid red');
@@ -502,7 +502,7 @@ describe('Editor', () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
-            expect(editorInstance.readonly).toBe(true);
+            expect(editorInstance.readonly()).toBe(true);
         });
 
         it('should disable editor when readonly is true', () => {
@@ -516,7 +516,7 @@ describe('Editor', () => {
             } else {
                 // Test readonly property setting if quill is not available
                 editorInstance.readonly = true;
-                expect(editorInstance.readonly).toBe(true);
+                expect(editorInstance.readonly()).toBe(true);
             }
         });
     });
@@ -536,7 +536,7 @@ describe('Editor', () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
-            expect(editorInstance.modules).toEqual({
+            expect(editorInstance.modules()).toEqual({
                 toolbar: [['bold', 'italic'], ['clean']]
             });
         });
@@ -545,7 +545,7 @@ describe('Editor', () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
-            expect(editorInstance.formats).toEqual(['bold', 'italic', 'underline']);
+            expect(editorInstance.formats()).toEqual(['bold', 'italic', 'underline']);
         });
     });
 
@@ -716,7 +716,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(editorInstance.placeholder).toBe('Third placeholder');
+            expect(editorInstance.placeholder()).toBe('Third placeholder');
         });
 
         it('should handle invalid configuration gracefully', async () => {
@@ -737,8 +737,8 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(editorInstance.bounds).toBe('body');
-            expect(editorInstance.scrollingContainer).toBe('#container');
+            expect(editorInstance.bounds()).toBe('body');
+            expect(editorInstance.scrollingContainer()).toBe('#container');
         });
     });
 

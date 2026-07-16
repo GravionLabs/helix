@@ -45,34 +45,7 @@ export const TOGGLESWITCH_VALUE_ACCESSOR: any = {
     selector: 'h-toggleswitch, h-toggleSwitch, h-toggle-switch',
     standalone: true,
     imports: [CommonModule, AutoFocus, SharedModule, BindModule],
-    template: `
-        <input
-            #input
-            [attr.id]="inputId"
-            type="checkbox"
-            role="switch"
-            [class]="cx('input')"
-            [checked]="checked()"
-            [attr.required]="required() ? '' : undefined"
-            [attr.disabled]="$disabled() ? '' : undefined"
-            [attr.aria-checked]="checked()"
-            [attr.aria-labelledby]="ariaLabelledBy"
-            [attr.aria-label]="ariaLabel"
-            [attr.name]="name()"
-            [attr.tabindex]="tabindex"
-            (focus)="onFocus()"
-            (blur)="onBlur()"
-            [hAutoFocus]="autofocus"
-            [hBind]="ptm('input')"
-        />
-        <div [class]="cx('slider')" [hBind]="ptm('slider')" [attr.data-p]="dataP">
-            <div [class]="cx('handle')" [hBind]="ptm('handle')" [attr.data-p]="dataP">
-                @if (handleTemplate || _handleTemplate) {
-                    <ng-container *ngTemplateOutlet="handleTemplate || _handleTemplate; context: { checked: checked() }" />
-                }
-            </div>
-        </div>
-    `,
+    templateUrl: './toggleswitch.html',
     providers: [TOGGLESWITCH_VALUE_ACCESSOR, ToggleSwitchStyle, { provide: TOGGLESWITCH_INSTANCE, useExisting: ToggleSwitch }, { provide: PARENT_INSTANCE, useExisting: ToggleSwitch }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

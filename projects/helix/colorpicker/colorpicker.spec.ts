@@ -168,11 +168,11 @@ describe('ColorPicker', () => {
         it('should have default values', () => {
             const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
 
-            expect(colorPickerInstance.format).toBe('hex');
-            expect(colorPickerInstance.inline).toBeFalsy();
+            expect(colorPickerInstance.format()).toBe('hex');
+            expect(colorPickerInstance.inline()).toBeFalsy();
             expect(colorPickerInstance.disabled()).toBe(false);
-            expect(colorPickerInstance.autoZIndex).toBe(true);
-            expect(colorPickerInstance.defaultColor).toBe('ff0000');
+            expect(colorPickerInstance.autoZIndex()).toBe(true);
+            expect(colorPickerInstance.defaultColor()).toBe('ff0000');
         });
 
         it('should accept custom values', async () => {
@@ -186,11 +186,11 @@ describe('ColorPicker', () => {
 
             const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
 
-            expect(colorPickerInstance.format).toBe('rgb');
-            expect(colorPickerInstance.inline).toBe(true);
+            expect(colorPickerInstance.format()).toBe('rgb');
+            expect(colorPickerInstance.inline()).toBe(true);
             expect(colorPickerInstance.disabled()).toBe(true);
-            expect(colorPickerInstance.autoZIndex).toBe(false);
-            expect(colorPickerInstance.defaultColor).toBe('00ff00');
+            expect(colorPickerInstance.autoZIndex()).toBe(false);
+            expect(colorPickerInstance.defaultColor()).toBe('00ff00');
         });
     });
 
@@ -280,7 +280,7 @@ describe('ColorPicker', () => {
             const hexPicker = testFixture.debugElement.query(By.css('#hex-picker'));
             const hexPickerInstance = hexPicker.componentInstance;
 
-            expect(hexPickerInstance.format).toBe('hex');
+            expect(hexPickerInstance.format()).toBe('hex');
             expect(testComponent.hexColor).toBe('#6466f1');
         });
 
@@ -288,7 +288,7 @@ describe('ColorPicker', () => {
             const rgbPicker = testFixture.debugElement.query(By.css('#rgb-picker'));
             const rgbPickerInstance = rgbPicker.componentInstance;
 
-            expect(rgbPickerInstance.format).toBe('rgb');
+            expect(rgbPickerInstance.format()).toBe('rgb');
             expect(testComponent.rgbColor).toEqual({ r: 100, g: 102, b: 241 });
         });
 
@@ -296,7 +296,7 @@ describe('ColorPicker', () => {
             const hsbPicker = testFixture.debugElement.query(By.css('#hsb-picker'));
             const hsbPickerInstance = hsbPicker.componentInstance;
 
-            expect(hsbPickerInstance.format).toBe('hsb');
+            expect(hsbPickerInstance.format()).toBe('hsb');
             expect(testComponent.hsbColor).toEqual({ h: 239, s: 59, b: 95 });
         });
 
@@ -519,7 +519,7 @@ describe('ColorPicker', () => {
             await testFixture.whenStable();
 
             const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
-            expect(colorPickerInstance.autofocus).toBe(true);
+            expect(colorPickerInstance.autofocus()).toBe(true);
         });
     });
 
@@ -595,7 +595,7 @@ describe('ColorPicker', () => {
             await testFixture.whenStable();
 
             const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
-            expect(colorPickerInstance.defaultColor).toBe('00ff00');
+            expect(colorPickerInstance.defaultColor()).toBe('00ff00');
         });
     });
 

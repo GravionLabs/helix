@@ -18,47 +18,7 @@ const SCROLLPANEL_INSTANCE = new InjectionToken<ScrollPanel>('SCROLLPANEL_INSTAN
     selector: 'h-scroll-panel, h-scrollPanel, h-scrollpanel',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <div [hBind]="ptm('contentContainer')" [class]="cx('contentContainer')">
-            <div #content [hBind]="ptm('content')" [class]="cx('content')" (mouseenter)="moveBar()" (scroll)="onScroll($event)">
-                @if (!contentTemplate && !_contentTemplate) {
-                    <ng-content></ng-content>
-                }
-                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-            </div>
-        </div>
-        <div
-            #xBar
-            [hBind]="ptm('barX')"
-            [class]="cx('barX')"
-            tabindex="0"
-            role="scrollbar"
-            [attr.aria-orientation]="'horizontal'"
-            [attr.aria-valuenow]="lastScrollLeft"
-            [attr.aria-controls]="contentId"
-            [attr.data-pc-group-section]="'bar'"
-            (mousedown)="onXBarMouseDown($event)"
-            (keydown)="onKeyDown($event)"
-            (keyup)="onKeyUp()"
-            (focus)="onFocus($event)"
-            (blur)="onBlur()"
-        ></div>
-        <div
-            #yBar
-            [hBind]="ptm('barY')"
-            [class]="cx('barY')"
-            tabindex="0"
-            role="scrollbar"
-            [attr.aria-orientation]="'vertical'"
-            [attr.aria-valuenow]="lastScrollTop"
-            [attr.aria-controls]="contentId"
-            (mousedown)="onYBarMouseDown($event)"
-            (keydown)="onKeyDown($event)"
-            (keyup)="onKeyUp()"
-            (focus)="onFocus($event)"
-            [attr.data-pc-group-section]="'bar'"
-        ></div>
-    `,
+    templateUrl: './scrollpanel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ScrollPanelStyle, { provide: SCROLLPANEL_INSTANCE, useExisting: ScrollPanel }, { provide: PARENT_INSTANCE, useExisting: ScrollPanel }],

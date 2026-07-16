@@ -1,0 +1,61 @@
+@if (startTemplate || _startTemplate) {
+  <div [class]="cx('start')" [hBind]="ptm('start')">
+    <ng-container *ngTemplateOutlet="startTemplate || _startTemplate"></ng-container>
+  </div>
+}
+@if (!buttonTemplate && !_buttonTemplate) {
+  @if (model && model.length > 0) {
+    <a
+      #menubutton
+      role="button"
+      tabindex="0"
+      [class]="cx('button')"
+      [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
+      [attr.aria-expanded]="mobileActive"
+      [attr.aria-controls]="id"
+      [attr.aria-label]="config.translation.aria.navigation"
+      [hBind]="ptm('button')"
+      (click)="menuButtonClick($event)"
+      (keydown)="menuButtonKeydown($event)"
+      >
+      @if (!buttonIconTemplate && !_buttonIconTemplate) {
+        <svg data-p-icon="bars" [hBind]="ptm('buttonIcon')" />
+      }
+      <ng-template *ngTemplateOutlet="buttonIconTemplate || _buttonIconTemplate"></ng-template>
+    </a>
+  }
+}
+<ng-container *ngTemplateOutlet="buttonTemplate || _buttonTemplate"></ng-container>
+<ul
+  hMegaMenuSub
+  #rootmenu
+  [itemTemplate]="itemTemplate || _itemTemplate"
+  [items]="processedItems"
+  [attr.id]="id + '_list'"
+  [menuId]="id"
+  [root]="true"
+  [orientation]="orientation"
+  [ariaLabel]="ariaLabel"
+  [disabled]="disabled"
+  [tabindex]="!disabled ? tabindex : -1"
+  [activeItem]="activeItem()"
+  [level]="0"
+  [ariaLabelledBy]="ariaLabelledBy"
+  [focusedItemId]="focused ? focusedItemId : undefined"
+  [mobileActive]="mobileActive"
+  (itemClick)="onItemClick($event)"
+  (menuFocus)="onMenuFocus($event)"
+  (menuBlur)="onMenuBlur($event)"
+  (menuKeydown)="onKeyDown($event)"
+  (menuMouseDown)="onMenuMouseDown($event)"
+  (itemMouseEnter)="onItemMouseEnter($event)"
+  [queryMatches]="queryMatches()"
+  [scrollHeight]="scrollHeight"
+  [pt]="pt()"
+  [unstyled]="unstyled()"
+></ul>
+@if (endTemplate || _endTemplate) {
+  <div [class]="cx('end')" [hBind]="ptm('end')">
+    <ng-container *ngTemplateOutlet="endTemplate || _endTemplate"></ng-container>
+  </div>
+}

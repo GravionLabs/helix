@@ -1,0 +1,131 @@
+@if (renderMask()) {
+  <div
+    [class]="cn(cx('mask'), maskStyleClass())"
+    [style]="sx('mask')"
+    [ngStyle]="maskStyle()"
+    [hBind]="ptm('mask')"
+    [hMotion]="maskVisible"
+    [pMotionAppear]="true"
+    [pMotionEnterActiveClass]="modal() ? 'p-overlay-mask-enter-active' : ''"
+    [pMotionLeaveActiveClass]="modal() ? 'p-overlay-mask-leave-active' : ''"
+    [pMotionOptions]="computedMaskMotionOptions()"
+    (pMotionOnAfterLeave)="onMaskAfterLeave()"
+    [attr.data-p-scrollblocker-active]="modal() || blockScroll()"
+    [attr.data-p]="dataP"
+    >
+    @if (renderDialog()) {
+      <div
+        #container
+        [class]="cn(cx('root'), styleClass())"
+        [style]="sx('root')"
+        [ngStyle]="style"
+        [hBind]="ptm('root')"
+        hFocusTrap
+        [pFocusTrapDisabled]="focusTrap() === false"
+        [hMotion]="visible"
+        [pMotionAppear]="true"
+        [pMotionName]="'p-dialog'"
+        [pMotionOptions]="computedMotionOptions()"
+        (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+        (pMotionOnAfterEnter)="onAfterEnter($event)"
+        (pMotionOnBeforeLeave)="onBeforeLeave($event)"
+        (pMotionOnAfterLeave)="onAfterLeave($event)"
+        [attr.role]="role()"
+        [attr.aria-labelledby]="ariaLabelledBy"
+        [attr.aria-modal]="true"
+        [attr.data-p]="dataP"
+        >
+        @if (_headlessTemplate() || headlessTemplate() || headlessT) {
+          <ng-container *ngTemplateOutlet="_headlessTemplate() || headlessTemplate() || headlessT"></ng-container>
+        } @else {
+          @if (resizable()) {
+            <div [class]="cx('resizeHandle')" [hBind]="ptm('resizeHandle')" [style.z-index]="90" (mousedown)="initResize($event)"></div>
+          }
+          @if (showHeader()) {
+            <div #titlebar [class]="cx('header')" [hBind]="ptm('header')" (mousedown)="initDrag($event)">
+              @if (!_headerTemplate() && !headerTemplate() && !headerT) {
+                <span [id]="ariaLabelledBy" [class]="cx('title')" [hBind]="ptm('title')">{{ header() }}</span>
+              }
+              <ng-container *ngTemplateOutlet="_headerTemplate() || headerTemplate() || headerT; context: { ariaLabelledBy: ariaLabelledBy }"></ng-container>
+              <div [class]="cx('headerActions')" [hBind]="ptm('headerActions')">
+                @if (maximizable()) {
+                  <h-button
+                    [pt]="ptm('pcMaximizeButton')"
+                    [styleClass]="cx('pcMaximizeButton')"
+                    [ariaLabel]="maximized ? minimizeLabel : maximizeLabel"
+                    (onClick)="maximize()"
+                    (keydown.enter)="maximize()"
+                    [tabindex]="maximizable() ? '0' : '-1'"
+                    [buttonProps]="maximizeButtonProps()"
+                    [unstyled]="unstyled()"
+                    [attr.data-pc-group-section]="'headericon'"
+                    >
+                    <ng-template #icon>
+                      @if (maximizeIcon() && !_maximizeiconTemplate() && !_minimizeiconTemplate()) {
+                        <span [ngClass]="maximized ? minimizeIcon() : maximizeIcon()"></span>
+                      }
+                      @if (!maximizeIcon() && !maximizeButtonProps()?.icon) {
+                        @if (!maximized && !_maximizeiconTemplate() && !maximizeIconTemplate() && !maximizeIconT) {
+                          <svg data-p-icon="window-maximize" />
+                        }
+                        @if (maximized && !_minimizeiconTemplate() && !minimizeIconTemplate() && !minimizeIconT) {
+                          <svg data-p-icon="window-minimize" />
+                        }
+                      }
+                      @if (!maximized) {
+                        <ng-template *ngTemplateOutlet="_maximizeiconTemplate() || maximizeIconTemplate() || maximizeIconT"></ng-template>
+                      }
+                      @if (maximized) {
+                        <ng-template *ngTemplateOutlet="_minimizeiconTemplate() || minimizeIconTemplate() || minimizeIconT"></ng-template>
+                      }
+                    </ng-template>
+                  </h-button>
+                }
+                @if (closable()) {
+                  <h-button
+                    [pt]="ptm('pcCloseButton')"
+                    [styleClass]="cx('pcCloseButton')"
+                    [ariaLabel]="closeAriaLabel()"
+                    (onClick)="close($event)"
+                    (keydown.enter)="close($event)"
+                    [tabindex]="closeTabindex()"
+                    [buttonProps]="closeButtonProps()"
+                    [unstyled]="unstyled()"
+                    [attr.data-pc-group-section]="'headericon'"
+                    >
+                    <ng-template #icon>
+                      @if (!_closeiconTemplate() && !closeIconTemplate() && !closeIconT && !closeButtonProps()?.icon) {
+                        @if (closeIcon()) {
+                          <span [class]="closeIcon()"></span>
+                        }
+                        @if (!closeIcon()) {
+                          <svg data-p-icon="times" />
+                        }
+                      }
+                      @if (_closeiconTemplate() || closeIconTemplate() || closeIconT) {
+                        <span>
+                          <ng-template *ngTemplateOutlet="_closeiconTemplate() || closeIconTemplate() || closeIconT"></ng-template>
+                        </span>
+                      }
+                    </ng-template>
+                  </h-button>
+                }
+              </div>
+            </div>
+          }
+          <div #content [class]="cn(cx('content'), contentStyleClass())" [ngStyle]="contentStyle()" [hBind]="ptm('content')">
+            <ng-content></ng-content>
+            <ng-container *ngTemplateOutlet="_contentTemplate() || contentTemplate() || contentT"></ng-container>
+          </div>
+          @if (_footerTemplate() || footerTemplate() || footerT) {
+            <div #footer [class]="cx('footer')" [hBind]="ptm('footer')">
+              <ng-content select="p-footer"></ng-content>
+              <ng-container *ngTemplateOutlet="_footerTemplate() || footerTemplate() || footerT"></ng-container>
+            </div>
+          }
+        }
+
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,77 @@
+<div
+  #container
+  [hMotion]="visible()"
+  [pMotionAppear]="true"
+  [pMotionName]="'p-toast-message'"
+  [pMotionOptions]="motionOptions()"
+  (pMotionOnBeforeEnter)="onBeforeEnter($event)"
+  (pMotionOnAfterLeave)="onAfterLeave($event)"
+  [attr.id]="message?.id"
+  [hBind]="ptm('message')"
+  [class]="cn(cx('message'), $safeNavigationMigration(message?.styleClass))"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  [attr.data-p]="dataP"
+  >
+  @if (headlessTemplate) {
+    <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: message, closeFn: onCloseIconClick }"></ng-container>
+  } @else {
+    <div [hBind]="ptm('messageContent')" [class]="cn(cx('messageContent'), $safeNavigationMigration(message?.contentStyleClass))">
+      @if (!template) {
+        @if (message.icon) {
+          <span [hBind]="ptm('messageIcon')" [class]="cn(cx('messageIcon'), $safeNavigationMigration(message?.icon))"></span>
+        } @else {
+          @switch (message.severity) {
+            @case ('success') {
+              <svg [hBind]="ptm('messageIcon')" data-p-icon="check" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+            }
+            @case ('info') {
+              <svg [hBind]="ptm('messageIcon')" data-p-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+            }
+            @case ('error') {
+              <svg [hBind]="ptm('messageIcon')" data-p-icon="times-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+            }
+            @case ('warn') {
+              <svg [hBind]="ptm('messageIcon')" data-p-icon="exclamation-triangle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+            }
+            @default {
+              <svg [hBind]="ptm('messageIcon')" data-p-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+            }
+          }
+        }
+        <div [hBind]="ptm('messageText')" [ngClass]="cx('messageText')" [attr.data-p]="dataP">
+          <div [hBind]="ptm('summary')" [ngClass]="cx('summary')" [attr.data-p]="dataP">
+            {{ message.summary }}
+          </div>
+          <div [hBind]="ptm('detail')" [ngClass]="cx('detail')" [attr.data-p]="dataP">{{ message.detail }}</div>
+        </div>
+      }
+      <ng-container *ngTemplateOutlet="template; context: { $implicit: message }"></ng-container>
+      @if (message?.closable !== false) {
+        <div>
+          <button
+            [hBind]="ptm('closeButton')"
+            type="button"
+            [attr.class]="cx('closeButton')"
+            (click)="onCloseIconClick($event)"
+            (keydown.enter)="onCloseIconClick($event)"
+            [attr.aria-label]="closeAriaLabel"
+            autofocus
+            [attr.data-p]="dataP"
+            >
+            @if (message.closeIcon) {
+              @if (message.closeIcon) {
+                <span [hBind]="ptm('closeIcon')" [class]="cn(cx('closeIcon'), $safeNavigationMigration(message?.closeIcon))"></span>
+              }
+            } @else {
+              <svg [hBind]="ptm('closeIcon')" data-p-icon="times" [class]="cx('closeIcon')" [attr.aria-hidden]="true" />
+            }
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

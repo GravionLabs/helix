@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef, input, provideZonelessChangeDetection, ViewChild } from '@angular/core';
+import { Component, DebugElement, ElementRef, input, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SharedModule } from '@gravionlabs/helix/api';
@@ -62,7 +62,7 @@ class TestStyleClassBadgeComponent {
     template: `<button #button pBadge [value]="value">Button</button>`
 })
 class TestDirectiveBadgeComponent {
-    @ViewChild('button', { static: true }) button!: ElementRef;
+    readonly button = viewChild.required<ElementRef>('button');
     value: string | number | undefined = '5';
 }
 

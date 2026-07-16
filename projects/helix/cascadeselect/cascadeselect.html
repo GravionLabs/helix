@@ -1,0 +1,126 @@
+<div class="p-hidden-accessible" [hBind]="ptm('hiddenInputWrapper')">
+  <input
+    #focusInput
+    readonly
+    type="text"
+    role="combobox"
+    [attr.name]="name()"
+    [attr.required]="required() ? '' : undefined"
+    [attr.disabled]="$disabled() ? '' : undefined"
+    [attr.placeholder]="placeholder()"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
+    [attr.id]="inputId()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledBy()"
+    [attr.aria-haspopup]="'tree'"
+    [attr.aria-expanded]="overlayVisible ?? false"
+    [attr.aria-controls]="overlayVisible ? $id() + '_tree' : null"
+    [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+    (focus)="onInputFocus($event)"
+    (blur)="onInputBlur($event)"
+    (keydown)="onInputKeyDown($event)"
+    [hAutoFocus]="autofocus()"
+    [hBind]="ptm('hiddenInput')"
+    />
+</div>
+<span [class]="cx('label')" [hBind]="ptm('label')">
+  @if (valueTemplate() || _valueTemplate) {
+    <ng-container *ngTemplateOutlet="valueTemplate() || _valueTemplate; context: { $implicit: value, placeholder: placeholder() }"></ng-container>
+  } @else {
+    {{ label() }}
+  }
+</span>
+
+@if ($filled() && !$disabled() && showClear()) {
+  @if (!clearIconTemplate() && !_clearIconTemplate) {
+    <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true" />
+  }
+  @if (clearIconTemplate() || _clearIconTemplate) {
+    <span [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true">
+      <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate"></ng-template>
+    </span>
+  }
+}
+
+<div [class]="cx('dropdown')" role="button" aria-haspopup="listbox" [attr.aria-expanded]="overlayVisible ?? false" [hBind]="ptm('dropdown')" [attr.aria-hidden]="true">
+  @if (loading()) {
+    @if (loadingIconTemplate() || _loadingIconTemplate) {
+      <ng-container *ngTemplateOutlet="loadingIconTemplate() || _loadingIconTemplate"></ng-container>
+    }
+    @if (!loadingIconTemplate() && !_loadingIconTemplate) {
+      @if (loadingIcon()) {
+        <span [class]="cn(cx('loadingIcon'), loadingIcon() + 'pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
+      }
+      @if (!loadingIcon()) {
+        <span [class]="cn(cx('loadingIcon'), loadingIcon() + ' pi pi-spinner pi-spin')" aria-hidden="true" [hBind]="ptm('loadingIcon')"></span>
+      }
+    }
+  } @else {
+    @if (!triggerIconTemplate() && !_triggerIconTemplate) {
+      <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
+    }
+    @if (triggerIconTemplate() || _triggerIconTemplate) {
+      <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
+        <ng-template *ngTemplateOutlet="triggerIconTemplate() || _triggerIconTemplate"></ng-template>
+      </span>
+    }
+  }
+</div>
+<span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenSearchResult')">
+  {{ searchResultMessageText }}
+</span>
+<h-overlay
+  #overlay
+  [hostAttrSelector]="$attrSelector"
+  [(visible)]="overlayVisible"
+  [options]="overlayOptions()"
+  [target]="'@parent'"
+  [appendTo]="$appendTo()"
+  [unstyled]="unstyled()"
+  [pt]="ptm('pcOverlay')"
+  [motionOptions]="motionOptions()"
+  (onAfterLeave)="onOverlayAfterLeave()"
+  (onBeforeShow)="onBeforeShow.emit($event)"
+  (onShow)="show($event)"
+  (onBeforeHide)="onBeforeHide.emit($event)"
+  (onHide)="hide($event)"
+  >
+  <ng-template #content>
+    <div #panel [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()" [hBind]="ptm('overlay')">
+      <ng-template *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-template>
+      <div [class]="cx('listContainer')" [hBind]="ptm('listContainer')">
+        <ul
+          hCascadeSelectSub
+          [class]="cx('list')"
+          [options]="processedOptions"
+          [selectId]="$id()"
+          [focusedOptionId]="focused ? focusedOptionId : undefined"
+          [activeOptionPath]="activeOptionPath()"
+          [optionLabel]="optionLabel()"
+          [optionValue]="optionValue()"
+          [level]="0"
+          [optionTemplate]="optionTemplate() || _optionTemplate"
+          [groupicon]="groupIconTemplate() || groupIconTemplate()"
+          [optionGroupLabel]="optionGroupLabel()"
+          [optionGroupChildren]="optionGroupChildren()"
+          [optionDisabled]="optionDisabled()"
+          [root]="true"
+          (onChange)="onOptionClick($event)"
+          (onFocusChange)="onOptionMouseMove($event)"
+          (onFocusEnterChange)="onOptionMouseEnter($event)"
+          [dirty]="dirty"
+          [attr.role]="'tree'"
+          [attr.aria-orientation]="'horizontal'"
+          [hBind]="ptm('list')"
+          [attr.aria-label]="listlabel"
+          [pt]="pt"
+          [unstyled]="unstyled()"
+        ></ul>
+      </div>
+      <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('selectedMessageText')">
+        {{ selectedMessageText }}
+      </span>
+      <ng-template *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-template>
+    </div>
+  </ng-template>
+</h-overlay>

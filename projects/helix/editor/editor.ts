@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformServer } from '@angular/common';
-import { afterNextRender, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, forwardRef, inject, InjectionToken, Input, NgModule, Output, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, effect } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { findSingle } from '@primeuix/utils';
 import { Header, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -25,63 +25,12 @@ export const EDITOR_VALUE_ACCESSOR: any = {
     selector: 'h-editor',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        @if (toolbar || headerTemplate || _headerTemplate) {
-          <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
-            <ng-content select="p-header"></ng-content>
-            <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-          </div>
-        }
-        @if (!toolbar && !headerTemplate && !_headerTemplate) {
-          <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <select class="ql-header" [hBind]="ptm('header')">
-                <option value="1" [hBind]="ptm('option')">Heading</option>
-                <option value="2" [hBind]="ptm('option')">Subheading</option>
-                <option selected [hBind]="ptm('option')">Normal</option>
-              </select>
-              <select class="ql-font" [hBind]="ptm('select')">
-                <option selected [hBind]="ptm('option')">Sans Serif</option>
-                <option value="serif" [hBind]="ptm('option')">Serif</option>
-                <option value="monospace" [hBind]="ptm('option')">Monospace</option>
-              </select>
-            </span>
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <button class="ql-bold" aria-label="Bold" type="button" [hBind]="ptm('bold')"></button>
-              <button class="ql-italic" aria-label="Italic" type="button" [hBind]="ptm('italic')"></button>
-              <button class="ql-underline" aria-label="Underline" type="button" [hBind]="ptm('underline')"></button>
-            </span>
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <select class="ql-color" [hBind]="ptm('color')"></select>
-              <select class="ql-background" [hBind]="ptm('background')"></select>
-            </span>
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <button class="ql-list" value="ordered" aria-label="Ordered List" type="button" [hBind]="ptm('list')"></button>
-              <button class="ql-list" value="bullet" aria-label="Unordered List" type="button" [hBind]="ptm('list')"></button>
-              <select class="ql-align" [hBind]="ptm('select')">
-                <option selected [hBind]="ptm('option')"></option>
-                <option value="center" [hBind]="ptm('option')">center</option>
-                <option value="right" [hBind]="ptm('option')">right</option>
-                <option value="justify" [hBind]="ptm('option')">justify</option>
-              </select>
-            </span>
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <button class="ql-link" aria-label="Insert Link" type="button" [hBind]="ptm('link')"></button>
-              <button class="ql-image" aria-label="Insert Image" type="button" [hBind]="ptm('image')"></button>
-              <button class="ql-code-block" aria-label="Insert Code Block" type="button" [hBind]="ptm('codeBlock')"></button>
-            </span>
-            <span class="ql-formats" [hBind]="ptm('formats')">
-              <button class="ql-clean" aria-label="Remove Styles" type="button" [hBind]="ptm('clean')"></button>
-            </span>
-          </div>
-        }
-        <div [class]="cx('content')" [ngStyle]="style" [hBind]="ptm('content')"></div>
-        `,
+    templateUrl: './editor.html',
     providers: [EDITOR_VALUE_ACCESSOR, EditorStyle, { provide: EDITOR_INSTANCE, useExisting: Editor }, { provide: PARENT_INSTANCE, useExisting: Editor }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
 })
@@ -100,102 +49,93 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
      * Inline style of the container.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the container.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Placeholder text to show when editor is empty.
      * @group Props
      */
-    @Input() placeholder: string | undefined;
+    readonly placeholder = input<string>();
     /**
      * Whitelist of formats to display, see [here](https://quilljs.com/docs/formats/) for available options.
      * @group Props
      */
-    @Input() formats: string[] | undefined;
+    readonly formats = input<string[]>();
     /**
      * Modules configuration of Editor, see [here](https://quilljs.com/docs/modules/) for available options.
      * @group Props
      */
-    @Input() modules: object | undefined;
+    readonly modules = input<object>();
     /**
      * DOM Element or a CSS selector for a DOM Element, within which the editor’s p elements (i.e. tooltips, etc.) should be confined. Currently, it only considers left and right boundaries.
      * @group Props
      */
-    @Input() bounds: HTMLElement | string | undefined;
+    readonly bounds = input<HTMLElement | string>();
     /**
      * DOM Element or a CSS selector for a DOM Element, specifying which container has the scrollbars (i.e. overflow-y: auto), if is has been changed from the default ql-editor with custom CSS. Necessary to fix scroll jumping bugs when Quill is set to auto grow its height, and another ancestor container is responsible from the scrolling..
      * @group Props
      */
-    @Input() scrollingContainer: HTMLElement | string | undefined;
+    readonly scrollingContainer = input<HTMLElement | string>();
     /**
      * Shortcut for debug. Note debug is a static method and will affect other instances of Quill editors on the page. Only warning and error messages are enabled by default.
      * @group Props
      */
-    @Input() debug: string | undefined;
+    readonly debug = input<string>();
     /**
      * Whether to instantiate the editor to read-only mode.
      * @group Props
      */
-    @Input() get readonly(): boolean {
-        return this._readonly;
-    }
-    set readonly(val: boolean) {
-        this._readonly = val;
-
-        if (this.quill) {
-            if (this._readonly) this.quill.disable();
-            else this.quill.enable();
-        }
-    }
+    readonly readonly = input<boolean>(false);
     /**
      * Callback to invoke when the quill modules are loaded.
      * @param {EditorInitEvent} event - custom event.
      * @group Emits
      */
-    @Output('onInit') onEditorInit: EventEmitter<EditorInitEvent> = new EventEmitter<EditorInitEvent>();
+    readonly onEditorInit = output<EditorInitEvent>({ alias: 'onInit' });
     /**
      * Callback to invoke when text of editor changes.
      * @param {EditorTextChangeEvent} event - custom event.
      * @group Emits
      */
-    @Output() onTextChange: EventEmitter<EditorTextChangeEvent> = new EventEmitter<EditorTextChangeEvent>();
+    readonly onTextChange = output<EditorTextChangeEvent>();
     /**
      * Callback to invoke when selection of the text changes.
      * @param {EditorSelectionChangeEvent} event - custom event.
      * @group Emits
      */
-    @Output() onSelectionChange: EventEmitter<EditorSelectionChangeEvent> = new EventEmitter<EditorSelectionChangeEvent>();
+    readonly onSelectionChange = output<EditorSelectionChangeEvent>();
     /**
      * Callback to invoke when editor content changes (combines both text and selection changes).
      * @param {EditorChangeEvent} event - custom event.
      * @group Emits
      */
-    @Output() onEditorChange: EventEmitter<EditorChangeEvent> = new EventEmitter<EditorChangeEvent>();
+    readonly onEditorChange = output<EditorChangeEvent>();
     /**
      * Callback to invoke when editor receives focus.
      * @param {EditorFocusEvent} event - custom event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<EditorFocusEvent> = new EventEmitter<EditorFocusEvent>();
+    readonly onFocus = output<EditorFocusEvent>();
     /**
      * Callback to invoke when editor loses focus.
      * @param {EditorBlurEvent} event - custom event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<EditorBlurEvent> = new EventEmitter<EditorBlurEvent>();
+    readonly onBlur = output<EditorBlurEvent>();
 
-    @ContentChild(Header) toolbar: any;
+    readonly toolbar = contentChild(Header);
 
     value: Nullable<string>;
 
     delayedCommand: Function | null = null;
 
-    _readonly: boolean = false;
 
     quill: any;
 
@@ -205,9 +145,9 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: Nullable<TemplateRef<any>>;
+    readonly headerTemplate = contentChild<Nullable<TemplateRef<any>>>('header', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _headerTemplate: TemplateRef<any> | undefined;
 
@@ -225,6 +165,13 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
 
     constructor() {
         super();
+        effect(() => {
+            const readonly = this.readonly();
+            if (this.quill) {
+                if (readonly) this.quill.disable();
+                else this.quill.enable();
+            }
+        });
         /**
          * Read or write the DOM once, when initializing non-Angular (Quill) library.
          */
@@ -235,10 +182,10 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
     }
 
     onAfterContentInit() {
-        this.templates.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'header':
-                    this.headerTemplate = item.template;
+                    this._headerTemplate = item.template;
                     break;
             }
         });
@@ -308,16 +255,17 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
 
         const { toolbarElement, editorElement } = this.quillElements;
         let defaultModule = { toolbar: toolbarElement };
-        let modules = this.modules ? { ...defaultModule, ...this.modules } : defaultModule;
+        const modulesValue = this.modules();
+        let modules = modulesValue ? { ...defaultModule, ...modulesValue } : defaultModule;
         this.quill = new this.dynamicQuill(editorElement, {
             modules: modules,
-            placeholder: this.placeholder,
-            readOnly: this.readonly,
+            placeholder: this.placeholder(),
+            readOnly: this.readonly(),
             theme: 'snow',
-            formats: this.formats,
-            bounds: this.bounds,
-            debug: this.debug,
-            scrollingContainer: this.scrollingContainer
+            formats: this.formats(),
+            bounds: this.bounds(),
+            debug: this.debug(),
+            scrollingContainer: this.scrollingContainer()
         });
 
         const isQuill2 = this.dynamicQuill.version.startsWith('2');

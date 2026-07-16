@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -16,17 +16,12 @@ const IMAGECOMPARE_INSTANCE = new InjectionToken<ImageCompare>('IMAGECOMPARE_INS
     selector: 'h-imageCompare, h-imagecompare, h-image-compare',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <ng-template *ngTemplateOutlet="leftTemplate || _leftTemplate"></ng-template>
-        <ng-template *ngTemplateOutlet="rightTemplate || _rightTemplate"></ng-template>
-
-        <input type="range" min="0" max="100" value="50" (input)="onSlide($event)" [class]="cx('slider')" [hBind]="ptm('slider')" />
-    `,
+    templateUrl: './imagecompare.html',
     host: {
         '[class]': "cx('root')",
-        '[attr.tabindex]': 'tabindex',
-        '[attr.aria-labelledby]': 'ariaLabelledby',
-        '[attr.aria-label]': 'ariaLabel'
+        '[attr.tabindex]': 'tabindex()',
+        '[attr.aria-labelledby]': 'ariaLabelledby()',
+        '[attr.aria-label]': 'ariaLabel()'
     },
     hostDirectives: [Bind],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,35 +39,35 @@ export class ImageCompare extends BaseComponent<ImageComparePassThrough> {
      * @defaultValue 0
      * @group Props
      */
-    @Input() tabindex: number | undefined;
+    readonly tabindex = input<number>();
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
      */
-    @Input() ariaLabelledby: string | undefined;
+    readonly ariaLabelledby = input<string>();
     /**
      * Identifier of the underlying input element.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
 
     /**
      * Custom left side template.
      * @group Templates
      */
-    @ContentChild('left', { descendants: false }) leftTemplate: TemplateRef<void> | undefined;
+    readonly leftTemplate = contentChild<TemplateRef<void>>('left', { descendants: false });
 
     /**
      * Custom right side template.
      * @group Templates
      */
-    @ContentChild('right', { descendants: false }) rightTemplate: TemplateRef<void> | undefined;
+    readonly rightTemplate = contentChild<TemplateRef<void>>('right', { descendants: false });
 
     _leftTemplate: TemplateRef<void> | undefined;
 
     _rightTemplate: TemplateRef<void> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _componentStyle = inject(ImageCompareStyle);
 
@@ -90,7 +85,7 @@ export class ImageCompare extends BaseComponent<ImageComparePassThrough> {
     }
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'left':
                     this._leftTemplate = item.template;

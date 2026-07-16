@@ -13,7 +13,7 @@ const FLUID_INSTANCE = new InjectionToken<Fluid>('FLUID_INSTANCE');
  */
 @Component({
     selector: 'h-fluid',
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './fluid.html',
     standalone: true,
     imports: [],
     changeDetection: ChangeDetectionStrategy.OnPush,

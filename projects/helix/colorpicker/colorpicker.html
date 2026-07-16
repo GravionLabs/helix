@@ -1,0 +1,49 @@
+@if (!inline()) {
+  <input
+    #input
+    type="text"
+    [class]="cx('preview')"
+    readonly
+    [attr.tabindex]="tabindex()"
+    [attr.disabled]="$disabled() ? '' : undefined"
+    (click)="onInputClick()"
+    (keydown)="onInputKeydown($event)"
+    (focus)="onInputFocus()"
+    [attr.id]="inputId()"
+    [style.backgroundColor]="inputBgColor"
+    [attr.aria-label]="ariaLabel"
+    [hAutoFocus]="autofocus()"
+    [hBind]="ptm('preview')"
+    />
+}
+
+<h-overlay
+  #overlay
+  [hostAttrSelector]="$attrSelector"
+  [(visible)]="overlayVisible"
+  [options]="overlayOptions()"
+  [target]="'@parent'"
+  [inline]="inline()"
+  [appendTo]="$appendTo()"
+  [unstyled]="unstyled()"
+  [pt]="ptm('pcOverlay')"
+  [motionOptions]="motionOptions()"
+  (onBeforeEnter)="onOverlayBeforeEnter()"
+  (onAfterLeave)="onOverlayAfterLeave()"
+  (onHide)="hide()"
+  >
+  <ng-template #content>
+    <div [class]="cx('panel')" [hBind]="ptm('panel')">
+      <div [class]="cx('content')" [hBind]="ptm('content')">
+        <div #colorSelector [class]="cx('colorSelector')" (touchstart)="onColorDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" (mousedown)="onColorMousedown($event)" [hBind]="ptm('colorSelector')">
+          <div [class]="cx('colorBackground')" [hBind]="ptm('colorBackground')">
+            <div #colorHandle [class]="cx('colorHandle')" [hBind]="ptm('colorHandle')"></div>
+          </div>
+        </div>
+        <div #hue [class]="cx('hue')" (mousedown)="onHueMousedown($event)" (touchstart)="onHueDragStart($event)" (touchmove)="onDrag($event)" (touchend)="onDragEnd()" [hBind]="ptm('hue')">
+          <div #hueHandle [class]="cx('hueHandle')" [hBind]="ptm('hueHandle')"></div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</h-overlay>

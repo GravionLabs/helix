@@ -1,5 +1,5 @@
 
-import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, inject, InjectionToken, Input, NgModule, Output, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, model } from '@angular/core';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -36,41 +36,13 @@ export class InplaceContent extends BaseComponent {}
     selector: 'h-inplace',
     standalone: true,
     imports: [ButtonModule, TimesIcon, SharedModule, Ripple, Bind],
-    template: `
-        @if (!active) {
-          <div [class]="cx('display')" [hBind]="ptm('display')" (click)="onActivateClick($event)" tabindex="0" role="button" (keydown)="onKeydown($event)" [attr.data-p-disabled]="disabled">
-            <ng-content select="[pInplaceDisplay]"></ng-content>
-            <ng-container *ngTemplateOutlet="displayTemplate || _displayTemplate"></ng-container>
-          </div>
-        }
-        @if (active) {
-          <div [class]="cx('content')" [hBind]="ptm('content')">
-            <ng-content select="[pInplaceContent]"></ng-content>
-            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { closeCallback: onDeactivateClick.bind(this) }"></ng-container>
-            @if (closable) {
-              @if (closeIcon) {
-                <h-button [pt]="ptm('pcButton')" type="button" [icon]="closeIcon" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel"></h-button>
-              }
-              @if (!closeIcon) {
-                <h-button [pt]="ptm('pcButton')" type="button" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel">
-                  <ng-template #icon>
-                    @if (!closeIconTemplate && !_closeIconTemplate) {
-                      <svg data-p-icon="times" />
-                    }
-                  </ng-template>
-                  <ng-template *ngTemplateOutlet="closeIconTemplate || _closeIconTemplate"></ng-template>
-                </h-button>
-              }
-            }
-          </div>
-        }
-        `,
+    templateUrl: './inplace.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [InplaceStyle, { provide: INPLACE_INSTANCE, useExisting: Inplace }, { provide: PARENT_INSTANCE, useExisting: Inplace }],
     host: {
         '[attr.aria-live]': "'polite'",
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
 })
@@ -89,78 +61,78 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
      * Whether the content is displayed or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) active: boolean | undefined = false;
+    readonly active = model<boolean | undefined>(false);
     /**
      * Displays a button to switch back to display mode.
      * @deprecated since v20.0.0, use `closeCallback` within content template.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) closable: boolean | undefined = false;
+    readonly closable = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
     /**
      * When present, it specifies that the element should be disabled.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) disabled: boolean | undefined = false;
+    readonly disabled = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
     /**
      * Allows to prevent clicking.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) preventClick: boolean | undefined;
+    readonly preventClick = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Icon to display in the close button.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() closeIcon: string | undefined;
+    readonly closeIcon = input<string>();
     /**
      * Establishes a string value that labels the close button.
      * @group Props
      */
-    @Input() closeAriaLabel: string | undefined;
+    readonly closeAriaLabel = input<string>();
     /**
      * Callback to invoke when inplace is opened.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onActivate: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onActivate = output<Event | undefined>();
     /**
      * Callback to invoke when inplace is closed.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onDeactivate: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onDeactivate = output<Event | undefined>();
 
     hover!: boolean;
     /**
      * Custom display template.
      * @group Templates
      */
-    @ContentChild('display', { descendants: false }) displayTemplate: TemplateRef<void> | undefined;
+    readonly displayTemplate = contentChild<TemplateRef<void>>('display', { descendants: false });
     /**
      * Custom content template.
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: TemplateRef<InplaceContentTemplateContext> | undefined;
+    readonly contentTemplate = contentChild<TemplateRef<InplaceContentTemplateContext>>('content', { descendants: false });
     /**
      * Custom close icon template.
      * @group Templates
      */
-    @ContentChild('closeicon', { descendants: false }) closeIconTemplate: TemplateRef<void> | undefined;
+    readonly closeIconTemplate = contentChild<TemplateRef<void>>('closeicon', { descendants: false });
 
     _componentStyle = inject(InplaceStyle);
 
     onActivateClick(event: MouseEvent) {
-        if (!this.preventClick) this.activate(event);
+        if (!this.preventClick()) this.activate(event);
     }
 
     onDeactivateClick(event: MouseEvent) {
-        if (!this.preventClick) this.deactivate(event);
+        if (!this.preventClick()) this.deactivate(event);
     }
     /**
      * Activates the content.
@@ -168,8 +140,8 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
      * @group Method
      */
     activate(event?: Event) {
-        if (!this.disabled) {
-            this.active = true;
+        if (!this.disabled()) {
+            this.active.set(true);
             this.onActivate.emit(event);
             this.cd.markForCheck();
         }
@@ -180,8 +152,8 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
      * @group Method
      */
     deactivate(event?: Event) {
-        if (!this.disabled) {
-            this.active = false;
+        if (!this.disabled()) {
+            this.active.set(false);
             this.hover = false;
             this.onDeactivate.emit(event);
             this.cd.markForCheck();
@@ -195,7 +167,7 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
         }
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _displayTemplate: TemplateRef<void> | undefined;
 
@@ -204,7 +176,7 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
     _contentTemplate: TemplateRef<InplaceContentTemplateContext> | undefined;
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'display':
                     this._displayTemplate = item.template;

@@ -1,24 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { uuid } from '@primeuix/utils';
 import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -39,78 +20,7 @@ const FIELDSET_INSTANCE = new InjectionToken<Fieldset>('FIELDSET_INSTANCE');
     selector: 'h-fieldset',
     standalone: true,
     imports: [CommonModule, MinusIcon, PlusIcon, SharedModule, BindModule, MotionModule],
-    template: `
-        <fieldset [attr.id]="id" [ngStyle]="style" [class]="cn(cx('root'), styleClass)" [hBind]="ptm('root')" [attr.data-p]="dataP">
-          <legend [class]="cx('legend')" [hBind]="ptm('legend')" [attr.data-p]="dataP">
-            @if (toggleable) {
-              <button
-                [attr.id]="id + '_header'"
-                tabindex="0"
-                role="button"
-                [attr.aria-controls]="id + '_content'"
-                [attr.aria-expanded]="!collapsed"
-                [attr.aria-label]="buttonAriaLabel"
-                (click)="toggle($event)"
-                (keydown)="onKeyDown($event)"
-                [class]="cx('toggleButton')"
-                [hBind]="ptm('toggleButton')"
-                >
-                @if (collapsed) {
-                  @if (!expandIconTemplate && !_expandIconTemplate) {
-                    <svg data-p-icon="plus" [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')" />
-                  }
-                  @if (expandIconTemplate || _expandIconTemplate) {
-                    <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
-                      <ng-container *ngTemplateOutlet="expandIconTemplate || _expandIconTemplate"></ng-container>
-                    </span>
-                  }
-                }
-                @if (!collapsed) {
-                  @if (!collapseIconTemplate && !_collapseIconTemplate) {
-                    <svg data-p-icon="minus" [class]="cx('toggleIcon')" [attr.aria-hidden]="true" [hBind]="ptm('toggleIcon')" />
-                  }
-                  @if (collapseIconTemplate || _collapseIconTemplate) {
-                    <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
-                      <ng-container *ngTemplateOutlet="collapseIconTemplate || _collapseIconTemplate"></ng-container>
-                    </span>
-                  }
-                }
-                <ng-container *ngTemplateOutlet="legendContent"></ng-container>
-              </button>
-            } @else {
-              <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend }}</span>
-              <ng-content select="p-header"></ng-content>
-              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-            }
-            <ng-template #legendContent>
-              <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend }}</span>
-              <ng-content select="p-header"></ng-content>
-              <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-            </ng-template>
-          </legend>
-          <div
-            [hBind]="ptm('contentContainer')"
-            [hMotion]="!toggleable || (toggleable && !collapsed)"
-            pMotionName="p-collapsible"
-            [pMotionOptions]="computedMotionOptions()"
-            [class]="cx('contentContainer')"
-            [id]="id + '_content'"
-            role="region"
-            [attr.aria-labelledby]="id + '_header'"
-            [attr.aria-hidden]="collapsed"
-            [attr.tabindex]="collapsed ? '-1' : undefined"
-            (pMotionOnAfterEnter)="onToggleDone($event)"
-            (pMotionOnAfterLeave)="onToggleDone($event)"
-            >
-            <div [hBind]="ptm('contentWrapper')" [class]="cx('contentWrapper')">
-              <div [class]="cx('content')" [hBind]="ptm('content')" #contentWrapper>
-                <ng-content></ng-content>
-                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        `,
+    templateUrl: './fieldset.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [FieldsetStyle, { provide: FIELDSET_INSTANCE, useExisting: Fieldset }, { provide: PARENT_INSTANCE, useExisting: Fieldset }],
@@ -131,7 +41,7 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
 
     get dataP() {
         return this.cn({
-            toggleable: this.toggleable
+            toggleable: this.toggleable()
         });
     }
 
@@ -139,29 +49,31 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
      * Header text of the fieldset.
      * @group Props
      */
-    @Input() legend: string | undefined;
+    readonly legend = input<string>();
     /**
      * When specified, content can toggled by clicking the legend.
      * @group Props
      * @defaultValue false
      */
-    @Input({ transform: booleanAttribute }) toggleable: boolean | undefined;
+    readonly toggleable = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Transition options of the panel animation.
      * @group Props
      * @deprecated since v21.0.0, use `motionOptions` instead.
      */
-    @Input() transitionOptions: string = '400ms cubic-bezier(0.86, 0, 0.07, 1)';
+    readonly transitionOptions = input<string>('400ms cubic-bezier(0.86, 0, 0.07, 1)');
     /**
      * The motion options.
      * @group Props
@@ -175,25 +87,19 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
         };
     });
     /**
-     * Emits when the collapsed state changes.
-     * @param {boolean} value - New value.
-     * @group Emits
-     */
-    @Output() collapsedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    /**
      * Callback to invoke before panel toggle.
      * @param {PanelBeforeToggleEvent} event - Custom toggle event
      * @group Emits
      */
-    @Output() onBeforeToggle: EventEmitter<FieldsetBeforeToggleEvent> = new EventEmitter<FieldsetBeforeToggleEvent>();
+    readonly onBeforeToggle = output<FieldsetBeforeToggleEvent>();
     /**
      * Callback to invoke after panel toggle.
      * @param {PanelAfterToggleEvent} event - Custom toggle event
      * @group Emits
      */
-    @Output() onAfterToggle: EventEmitter<FieldsetAfterToggleEvent> = new EventEmitter<FieldsetAfterToggleEvent>();
+    readonly onAfterToggle = output<FieldsetAfterToggleEvent>();
 
-    @ViewChild('contentWrapper') contentWrapperViewChild: ElementRef;
+    readonly contentWrapperViewChild = viewChild.required<ElementRef>('contentWrapper');
 
     private _id: string = uuid('pn_id_');
 
@@ -202,54 +108,43 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
     }
 
     get buttonAriaLabel() {
-        return this.legend;
+        return this.legend();
     }
-
-    /**
-     * Internal collapsed state
-     */
-    _collapsed: boolean | undefined;
 
     /**
      * Defines the initial state of content, supports one or two-way binding as well.
      * @group Props
      */
-    @Input({ transform: booleanAttribute })
-    get collapsed(): boolean | undefined {
-        return this._collapsed;
-    }
-    set collapsed(value: boolean | undefined) {
-        this._collapsed = value;
-    }
+    readonly collapsed = model<boolean | undefined>(false);
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom expand icon template.
      * @group Templates
      */
-    @ContentChild('expandicon', { descendants: false }) expandIconTemplate: TemplateRef<void> | undefined;
+    readonly expandIconTemplate = contentChild<TemplateRef<void>>('expandicon', { descendants: false });
 
     /**
      * Custom collapse icon template.
      * @group Templates
      */
-    @ContentChild('collapseicon', { descendants: false }) collapseIconTemplate: TemplateRef<void> | undefined;
+    readonly collapseIconTemplate = contentChild<TemplateRef<void>>('collapseicon', { descendants: false });
 
     /**
      * Custom content template.
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: TemplateRef<void> | undefined;
+    readonly contentTemplate = contentChild<TemplateRef<void>>('content', { descendants: false });
 
     toggle(event: MouseEvent) {
-        this.onBeforeToggle.emit({ originalEvent: event, collapsed: this.collapsed });
+        this.onBeforeToggle.emit({ originalEvent: event, collapsed: this.collapsed() });
 
-        if (this.collapsed) this.expand();
+        if (this.collapsed()) this.expand();
         else this.collapse();
 
         event.preventDefault();
@@ -263,14 +158,12 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
     }
 
     expand() {
-        this._collapsed = false;
-        this.collapsedChange.emit(false);
+        this.collapsed.set(false);
         this.updateTabIndex();
     }
 
     collapse() {
-        this._collapsed = true;
-        this.collapsedChange.emit(true);
+        this.collapsed.set(true);
         this.updateTabIndex();
     }
 
@@ -279,10 +172,11 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
     }
 
     updateTabIndex() {
-        if (this.contentWrapperViewChild) {
-            const focusableElements = this.contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]');
+        const contentWrapperViewChild = this.contentWrapperViewChild();
+        if (contentWrapperViewChild) {
+            const focusableElements = contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]');
             focusableElements.forEach((element: HTMLElement) => {
-                if (this.collapsed) {
+                if (this.collapsed()) {
                     element.setAttribute('tabindex', '-1');
                 } else {
                     element.removeAttribute('tabindex');
@@ -292,7 +186,7 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
     }
 
     onToggleDone(event: MotionEvent) {
-        this.onAfterToggle.emit({ originalEvent: event as any, collapsed: this.collapsed });
+        this.onAfterToggle.emit({ originalEvent: event as any, collapsed: this.collapsed() });
     }
 
     _headerTemplate: TemplateRef<void> | undefined;
@@ -303,10 +197,10 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
 
     _contentTemplate: TemplateRef<void> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        this.templates.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'header':
                     this._headerTemplate = item.template;

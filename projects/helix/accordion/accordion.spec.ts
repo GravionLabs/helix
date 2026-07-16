@@ -1,4 +1,4 @@
-import { Component, DebugElement, Input, provideZonelessChangeDetection } from '@angular/core';
+import { Component, DebugElement, input, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Accordion, AccordionContent, AccordionHeader, AccordionPanel, AccordionTabCloseEvent, AccordionTabOpenEvent } from './accordion';
@@ -132,7 +132,7 @@ class TestCustomIconAccordionComponent {
     `
 })
 class TestPTAccordionComponent {
-    @Input() pt: any;
+    readonly pt = input<any>();
 }
 
 describe('Accordion', () => {
@@ -920,9 +920,9 @@ describe('Accordion', () => {
         });
 
         it('should apply simple string classes to PT sections', async () => {
-            ptComponent.pt = {
+            ptFixture.componentRef.setInput('pt', {
                 root: 'ROOT_CLASS'
-            };
+            });
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
@@ -933,14 +933,14 @@ describe('Accordion', () => {
         });
 
         it('should apply object-based PT options with class and attributes', async () => {
-            ptComponent.pt = {
+            ptFixture.componentRef.setInput('pt', {
                 root: {
                     class: 'PT_ROOT_CLASS',
                     'data-test': 'accordion-test',
                     'aria-label': 'PT Accordion Label',
                     'data-role': 'accordion-role'
                 }
-            };
+            });
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
@@ -953,12 +953,12 @@ describe('Accordion', () => {
         });
 
         it('should apply mixed object and string PT values', async () => {
-            ptComponent.pt = {
+            ptFixture.componentRef.setInput('pt', {
                 root: {
                     class: 'PT_ROOT_CLASS',
                     'data-custom': 'custom-value'
                 }
-            };
+            });
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
@@ -969,14 +969,14 @@ describe('Accordion', () => {
         });
 
         it('should use instance variables in PT functions', async () => {
-            ptComponent.pt = {
+            ptFixture.componentRef.setInput('pt', {
                 root: ({ instance }) => {
                     return {
                         class: instance?.multiple() ? 'MULTIPLE' : 'SINGLE',
                         'data-select-on-focus': instance?.selectOnFocus()
                     };
                 }
-            };
+            });
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
@@ -988,13 +988,13 @@ describe('Accordion', () => {
 
         it('should handle event binding in PT options', async () => {
             let clicked = false;
-            ptComponent.pt = {
+            ptFixture.componentRef.setInput('pt', {
                 root: {
                     onclick: () => {
                         clicked = true;
                     }
                 }
-            };
+            });
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 

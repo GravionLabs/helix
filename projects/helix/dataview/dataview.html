@@ -1,0 +1,106 @@
+@if (loading()) {
+  <div [hBind]="ptm('loading')" [class]="cx('loading')">
+    <div [hBind]="ptm('loadingOverlay')" [class]="cx('loadingOverlay')">
+      @if (loadingIcon()) {
+        <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())"></i>
+      } @else {
+        <ng-container>
+          <svg [hBind]="ptm('loadingIcon')" data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" />
+          <ng-template *ngTemplateOutlet="loadingicon()"></ng-template>
+        </ng-container>
+      }
+    </div>
+  </div>
+}
+@if (header() || headerTemplate()) {
+  <div [hBind]="ptm('header')" [class]="cx('header')">
+    <ng-content select="p-header"></ng-content>
+    <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+  </div>
+}
+@if (paginator() && (paginatorPosition() === 'top' || paginatorPosition() == 'both')) {
+  <h-paginator
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
+    [pageLinkSize]="pageLinks()"
+    [alwaysShow]="alwaysShowPaginator()"
+    (onPageChange)="paginate($event)"
+    [rowsPerPageOptions]="rowsPerPageOptions()"
+    [appendTo]="paginatorDropdownAppendTo()"
+    [dropdownScrollHeight]="paginatorDropdownScrollHeight()"
+    [templateLeft]="paginatorleft()"
+    [templateRight]="paginatorright()"
+    [currentPageReportTemplate]="currentPageReportTemplate()"
+    [showFirstLastIcon]="showFirstLastIcon()"
+    [dropdownItemTemplate]="paginatordropdownitem()"
+    [showCurrentPageReport]="showCurrentPageReport()"
+    [showJumpToPageDropdown]="showJumpToPageDropdown()"
+    [showPageLinks]="showPageLinks()"
+    [styleClass]="cn(cx('pcPaginator', { position: 'top' }), paginatorStyleClass())"
+    [pt]="ptm('pcPaginator')"
+    [unstyled]="unstyled()"
+  ></h-paginator>
+}
+<div [hBind]="ptm('content')" [class]="cx('content')">
+  @if (layout() === 'list') {
+    <ng-container
+            *ngTemplateOutlet="
+                listTemplate();
+                context: {
+                    $implicit: paginator() ? (filteredValue || value() | slice: (lazy() ? 0 : first()) : (lazy() ? 0 : first()) + rows()) : filteredValue || value()
+                }
+            "
+  ></ng-container>
+}
+@if (layout() === 'grid') {
+  <ng-container
+            *ngTemplateOutlet="
+                gridTemplate();
+                context: {
+                    $implicit: paginator() ? (filteredValue || value() | slice: (lazy() ? 0 : first()) : (lazy() ? 0 : first()) + rows()) : filteredValue || value()
+                }
+            "
+></ng-container>
+}
+@if (isEmpty() && !loading()) {
+  <div [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')">
+    @if (!emptymessageTemplate()) {
+      {{ emptyMessageLabel }}
+    } @else {
+      <ng-template [ngTemplateOutlet]="empty"></ng-template>
+    }
+    <ng-container #empty *ngTemplateOutlet="emptymessageTemplate()"></ng-container>
+  </div>
+}
+</div>
+@if (paginator() && (paginatorPosition() === 'bottom' || paginatorPosition() == 'both')) {
+  <h-paginator
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
+    [pageLinkSize]="pageLinks()"
+    [alwaysShow]="alwaysShowPaginator()"
+    (onPageChange)="paginate($event)"
+    [rowsPerPageOptions]="rowsPerPageOptions()"
+    [appendTo]="paginatorDropdownAppendTo()"
+    [dropdownScrollHeight]="paginatorDropdownScrollHeight()"
+    [templateLeft]="paginatorleft()"
+    [templateRight]="paginatorright()"
+    [currentPageReportTemplate]="currentPageReportTemplate()"
+    [showFirstLastIcon]="showFirstLastIcon()"
+    [dropdownItemTemplate]="paginatordropdownitem()"
+    [showCurrentPageReport]="showCurrentPageReport()"
+    [showJumpToPageDropdown]="showJumpToPageDropdown()"
+    [showPageLinks]="showPageLinks()"
+    [styleClass]="cn(cx('pcPaginator', { position: 'bottom' }), paginatorStyleClass())"
+    [pt]="ptm('pcPaginator')"
+    [unstyled]="unstyled()"
+  ></h-paginator>
+}
+@if (footer() || footerTemplate()) {
+  <div [hBind]="ptm('footer')" [class]="cx('footer')">
+    <ng-content select="p-footer"></ng-content>
+    <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+  </div>
+}
