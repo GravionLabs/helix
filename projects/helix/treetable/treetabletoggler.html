@@ -1,0 +1,22 @@
+<button
+  type="button"
+  [class]="cx('toggler')"
+  [hBind]="ptm('rowToggleButton')"
+  (click)="onClick($event)"
+  tabindex="-1"
+  hRipple
+  [style.visibility]="rowNode.node.leaf === false || (rowNode.node.children && rowNode.node.children.length) ? 'visible' : 'hidden'"
+  [style.marginInlineStart]="rowNode.level * 16 + 'px'"
+  [attr.data-pc-group-section]="'rowactionbutton'"
+  [attr.aria-label]="toggleButtonAriaLabel"
+  >
+  @if (!tt.togglerIconTemplate && !tt._togglerIconTemplate) {
+    @if (rowNode.node.expanded) {
+      <svg data-p-icon="chevron-down" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
+    }
+    @if (!rowNode.node.expanded) {
+      <svg data-p-icon="chevron-right" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
+    }
+  }
+  <ng-template *ngTemplateOutlet="tt.togglerIconTemplate || tt._togglerIconTemplate; context: { $implicit: rowNode.node.expanded }"></ng-template>
+</button>
