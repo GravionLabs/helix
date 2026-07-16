@@ -16,11 +16,7 @@ const DIVIDER_INSTANCE = new InjectionToken<Divider>('DIVIDER_INSTANCE');
     selector: 'h-divider',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <div [hBind]="ptm('content')" [class]="cx('content')">
-            <ng-content></ng-content>
-        </div>
-    `,
+    templateUrl: './divider.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {

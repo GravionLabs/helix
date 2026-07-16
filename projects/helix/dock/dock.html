@@ -1,0 +1,98 @@
+<div [class]="cx('listContainer')" [hBind]="ptm('listContainer')">
+  <ul
+    #list
+    [attr.id]="id"
+    [class]="cx('list')"
+    role="menu"
+    [attr.aria-orientation]="position === 'bottom' || position === 'top' ? 'horizontal' : 'vertical'"
+    [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+    [tabindex]="tabindex"
+    [attr.aria-label]="ariaLabel"
+    [attr.aria-labelledby]="ariaLabelledBy"
+    (focus)="onListFocus($event)"
+    (blur)="onListBlur($event)"
+    (keydown)="onListKeyDown($event)"
+    (mouseleave)="onListMouseLeave()"
+    [hBind]="ptm('list')"
+    >
+    @for (item of model; track item.label; let i = $index) {
+      @if (item.visible !== false) {
+        <li
+          [attr.id]="getItemId(item, i)"
+          [class]="cn(cx('item', { item, id: getItemId(item, i) }), $safeNavigationMigration(item?.styleClass))"
+          [ngStyle]="item.style"
+          role="menuitem"
+          [attr.aria-label]="item.label"
+          [attr.aria-disabled]="disabled(item) || false"
+          (click)="onItemClick($event, item)"
+          (mouseenter)="onItemMouseEnter(i)"
+          [hBind]="getPTOptions(item, i, 'item')"
+          [attr.data-p-focused]="isItemActive(getItemId(item, i))"
+          [attr.data-p-disabled]="disabled(item) || false"
+          >
+          <div [class]="cx('itemContent')" [hBind]="getPTOptions(item, i, 'itemContent')">
+            @if (isClickableRouterLink(item)) {
+              <a
+                hRipple
+                [routerLink]="item.routerLink"
+                [queryParams]="item.queryParams"
+                [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
+                routerLinkActive="router-link-active"
+                [routerLinkActiveOptions]="item.routerLinkActiveOptions || { exact: false }"
+                [target]="item.target"
+                [attr.title]="item.title"
+                [attr.data-automationid]="item.automationId"
+                [attr.tabindex]="item.disabled ? null : item.tabindex ? item.tabindex : '-1'"
+                hTooltip
+                [tooltipOptions]="item.tooltipOptions"
+                [pTooltipUnstyled]="unstyled()"
+                [fragment]="item.fragment"
+                [queryParamsHandling]="item.queryParamsHandling"
+                [preserveFragment]="item.preserveFragment"
+                [skipLocationChange]="item.skipLocationChange"
+                [replaceUrl]="item.replaceUrl"
+                [state]="item.state"
+                [attr.aria-hidden]="true"
+                [hBind]="getPTOptions(item, i, 'itemLink')"
+                >
+                @if (item.icon && !itemTemplate && !_itemTemplate) {
+                  <span [class]="cn(cx('itemIcon'), item.icon, item.iconClass)" [ngStyle]="item.iconStyle" [hBind]="getPTOptions(item, i, 'itemIcon')"></span>
+                }
+                <ng-container *ngTemplateOutlet="itemTemplate || itemTemplate; context: { $implicit: item }"></ng-container>
+                @if (item.badge) {
+                  <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions(item, i, 'pcBadge')" [unstyled]="unstyled()" />
+                }
+              </a>
+            } @else {
+              <a
+                [tooltipPosition]="item.tooltipPosition"
+                [attr.href]="item.url || null"
+                [class]="cn(cx('itemLink'), $safeNavigationMigration(item?.linkClass))"
+                [ngStyle]="$safeNavigationMigration(item?.linkStyle)"
+                hRipple
+                hTooltip
+                [tooltipOptions]="item.tooltipOptions"
+                [pTooltipUnstyled]="unstyled()"
+                [target]="item.target"
+                [attr.title]="item.title"
+                [attr.data-automationid]="item.automationId"
+                [attr.tabindex]="item.disabled ? null : item.tabindex ? item.tabindex : '-1'"
+                [attr.aria-hidden]="true"
+                [hBind]="getPTOptions(item, i, 'itemLink')"
+                >
+                @if (item.icon && !itemTemplate && !_itemTemplate) {
+                  <span [class]="cn(cx('itemIcon'), item.icon, item.iconClass)" [ngStyle]="item.iconStyle" [hBind]="getPTOptions(item, i, 'itemIcon')"></span>
+                }
+                <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
+                @if (item.badge) {
+                  <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions(item, i, 'pcBadge')" [unstyled]="unstyled()" />
+                }
+              </a>
+            }
+          </div>
+        </li>
+      }
+    }
+  </ul>
+</div>

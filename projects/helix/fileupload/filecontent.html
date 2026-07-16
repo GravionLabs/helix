@@ -1,0 +1,21 @@
+@for (file of files(); track file?.name + '-' + $index; let index = $index) {
+        <div [class]="cx('file')" [hBind]="$pcFileUpload.ptm('file')">
+            <img role="presentation" [class]="cx('fileThumbnail')" [attr.alt]="file.name" [src]="file.objectURL" [width]="previewWidth()" [hBind]="$pcFileUpload.ptm('fileThumbnail')" />
+            <div [class]="cx('fileInfo')" [hBind]="$pcFileUpload.ptm('fileInfo')">
+                <div [class]="cx('fileName')" [hBind]="$pcFileUpload.ptm('fileName')">{{ file.name }}</div>
+                <span [class]="cx('fileSize')" [hBind]="$pcFileUpload.ptm('fileSize')">{{ formatSize(file.size) }}</span>
+            </div>
+            <h-badge [value]="badgeValue()" [severity]="badgeSeverity()" [class]="cx('pcFileBadge')" [pt]="$pcFileUpload.ptm('pcFileBadge')" [unstyled]="unstyled()" />
+            <div [class]="cx('fileActions')" [hBind]="$pcFileUpload.ptm('fileActions')">
+                <h-button (onClick)="onRemoveClick($event, index)" [styleClass]="cx('pcFileRemoveButton')" text rounded severity="danger" [pt]="$pcFileUpload.ptm('pcFileRemoveButton')" [unstyled]="unstyled()">
+                    <ng-template #icon let-iconClass="class">
+                        @if (fileRemoveIconTemplate()) {
+                            <ng-template *ngTemplateOutlet="fileRemoveIconTemplate(); context: { class: iconClass, file: file, index: index }"></ng-template>
+                        } @else {
+                            <svg data-p-icon="times" [class]="iconClass" [attr.aria-hidden]="true" />
+                        }
+                    </ng-template>
+                </h-button>
+            </div>
+        </div>
+    }

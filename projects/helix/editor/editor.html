@@ -1,0 +1,50 @@
+@if (toolbar || headerTemplate || _headerTemplate) {
+  <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
+    <ng-content select="p-header"></ng-content>
+    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+  </div>
+}
+@if (!toolbar && !headerTemplate && !_headerTemplate) {
+  <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <select class="ql-header" [hBind]="ptm('header')">
+        <option value="1" [hBind]="ptm('option')">Heading</option>
+        <option value="2" [hBind]="ptm('option')">Subheading</option>
+        <option selected [hBind]="ptm('option')">Normal</option>
+      </select>
+      <select class="ql-font" [hBind]="ptm('select')">
+        <option selected [hBind]="ptm('option')">Sans Serif</option>
+        <option value="serif" [hBind]="ptm('option')">Serif</option>
+        <option value="monospace" [hBind]="ptm('option')">Monospace</option>
+      </select>
+    </span>
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <button class="ql-bold" aria-label="Bold" type="button" [hBind]="ptm('bold')"></button>
+      <button class="ql-italic" aria-label="Italic" type="button" [hBind]="ptm('italic')"></button>
+      <button class="ql-underline" aria-label="Underline" type="button" [hBind]="ptm('underline')"></button>
+    </span>
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <select class="ql-color" [hBind]="ptm('color')"></select>
+      <select class="ql-background" [hBind]="ptm('background')"></select>
+    </span>
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <button class="ql-list" value="ordered" aria-label="Ordered List" type="button" [hBind]="ptm('list')"></button>
+      <button class="ql-list" value="bullet" aria-label="Unordered List" type="button" [hBind]="ptm('list')"></button>
+      <select class="ql-align" [hBind]="ptm('select')">
+        <option selected [hBind]="ptm('option')"></option>
+        <option value="center" [hBind]="ptm('option')">center</option>
+        <option value="right" [hBind]="ptm('option')">right</option>
+        <option value="justify" [hBind]="ptm('option')">justify</option>
+      </select>
+    </span>
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <button class="ql-link" aria-label="Insert Link" type="button" [hBind]="ptm('link')"></button>
+      <button class="ql-image" aria-label="Insert Image" type="button" [hBind]="ptm('image')"></button>
+      <button class="ql-code-block" aria-label="Insert Code Block" type="button" [hBind]="ptm('codeBlock')"></button>
+    </span>
+    <span class="ql-formats" [hBind]="ptm('formats')">
+      <button class="ql-clean" aria-label="Remove Styles" type="button" [hBind]="ptm('clean')"></button>
+    </span>
+  </div>
+}
+<div [class]="cx('content')" [ngStyle]="style" [hBind]="ptm('content')"></div>
