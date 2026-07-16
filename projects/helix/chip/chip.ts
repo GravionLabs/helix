@@ -34,60 +34,7 @@ const CHIP_INSTANCE = new InjectionToken<Chip>('CHIP_INSTANCE');
     selector: 'h-chip',
     standalone: true,
     imports: [CommonModule, TimesCircleIcon, SharedModule, Bind],
-    template: `
-        <ng-content></ng-content>
-        @if (image) {
-          <img [hBind]="ptm('image')" [class]="cx('image')" [src]="image" (error)="imageError($event)" [alt]="alt" />
-        } @else {
-          @if (icon) {
-            <span [hBind]="ptm('icon')" [class]="icon" [ngClass]="cx('icon')"></span>
-          }
-        }
-        @if (label) {
-          <div [hBind]="ptm('label')" [class]="cx('label')">{{ label }}</div>
-        }
-        @if (removable) {
-          @if (!removeIconTemplate && !_removeIconTemplate) {
-            @if (removeIcon) {
-              <span
-                [hBind]="ptm('removeIcon')"
-                [class]="removeIcon"
-                [ngClass]="cx('removeIcon')"
-                (click)="close($event)"
-                (keydown)="onKeydown($event)"
-                [attr.tabindex]="disabled ? -1 : 0"
-                [attr.aria-label]="removeAriaLabel"
-                role="button"
-              ></span>
-            }
-            @if (!removeIcon) {
-              <svg
-                [hBind]="ptm('removeIcon')"
-                data-p-icon="times-circle"
-                [class]="cx('removeIcon')"
-                (click)="close($event)"
-                (keydown)="onKeydown($event)"
-                [attr.tabindex]="disabled ? -1 : 0"
-                [attr.aria-label]="removeAriaLabel"
-                role="button"
-                />
-            }
-          }
-          @if (removeIconTemplate || _removeIconTemplate) {
-            <span
-              [hBind]="ptm('removeIcon')"
-              [attr.tabindex]="disabled ? -1 : 0"
-              [class]="cx('removeIcon')"
-              (click)="close($event)"
-              (keydown)="onKeydown($event)"
-              [attr.aria-label]="removeAriaLabel"
-              role="button"
-              >
-              <ng-template *ngTemplateOutlet="removeIconTemplate || _removeIconTemplate"></ng-template>
-            </span>
-          }
-        }
-        `,
+    templateUrl: './chip.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ChipStyle, { provide: CHIP_INSTANCE, useExisting: Chip }, { provide: PARENT_INSTANCE, useExisting: Chip }],

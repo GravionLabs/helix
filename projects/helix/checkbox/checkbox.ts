@@ -50,44 +50,7 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
     selector: 'h-checkbox, h-checkBox, h-check-box',
     standalone: true,
     imports: [CommonModule, SharedModule, CheckIcon, MinusIcon, BindModule],
-    template: `
-        <input
-          #input
-          [attr.id]="inputId"
-          type="checkbox"
-          [attr.value]="value"
-          [attr.name]="name()"
-          [checked]="checked"
-          [attr.tabindex]="tabindex"
-          [attr.required]="required() ? '' : undefined"
-          [attr.readonly]="readonly ? '' : undefined"
-          [attr.disabled]="$disabled() ? '' : undefined"
-          [attr.aria-labelledby]="ariaLabelledBy"
-          [attr.aria-label]="ariaLabel"
-          [style]="inputStyle"
-          [class]="cn(cx('input'), inputClass)"
-          [hBind]="ptm('input')"
-          (focus)="onInputFocus($event)"
-          (blur)="onInputBlur($event)"
-          (change)="handleChange($event)"
-          />
-        <div [class]="cx('box')" [hBind]="ptm('box')" [attr.data-p]="dataP">
-          @if (!checkboxIconTemplate && !_checkboxIconTemplate) {
-            @if (checked) {
-              @if (checkboxIcon) {
-                <span [class]="cx('icon')" [ngClass]="checkboxIcon" [hBind]="ptm('icon')" [attr.data-p]="dataP"></span>
-              }
-              @if (!checkboxIcon) {
-                <svg data-p-icon="check" [class]="cx('icon')" [hBind]="ptm('icon')" [attr.data-p]="dataP" />
-              }
-            }
-            @if (_indeterminate()) {
-              <svg data-p-icon="minus" [class]="cx('icon')" [hBind]="ptm('icon')" [attr.data-p]="dataP" />
-            }
-          }
-          <ng-template *ngTemplateOutlet="checkboxIconTemplate || _checkboxIconTemplate; context: { checked: checked, class: cx('icon'), dataP: dataP }"></ng-template>
-        </div>
-        `,
+    templateUrl: './checkbox.html',
     providers: [CHECKBOX_VALUE_ACCESSOR, CheckboxStyle, { provide: CHECKBOX_INSTANCE, useExisting: Checkbox }, { provide: PARENT_INSTANCE, useExisting: Checkbox }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,

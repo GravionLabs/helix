@@ -17,17 +17,7 @@ const CHART_INSTANCE = new InjectionToken<UIChart>('CHART_INSTANCE');
     selector: 'h-chart',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <canvas
-            role="img"
-            [attr.aria-label]="ariaLabel"
-            [attr.aria-labelledby]="ariaLabelledBy"
-            [attr.width]="responsive && !width ? null : width"
-            [attr.height]="responsive && !height ? null : height"
-            (click)="onCanvasClick($event)"
-            [hBind]="ptm('canvas')"
-        ></canvas>
-    `,
+    templateUrl: './chart.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
