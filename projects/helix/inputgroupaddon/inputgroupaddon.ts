@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject, InjectionToken, Input, NgModule, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, InjectionToken, NgModule, ChangeDetectionStrategy, input } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -17,7 +17,8 @@ const INPUTGROUPADDON_INSTANCE = new InjectionToken<InputGroupAddon>('INPUTGROUP
     standalone: true,
     imports: [BindModule],
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())",
+        '[style]': 'style()'
     },
     providers: [InputGroupAddonStyle, { provide: INPUTGROUPADDON_INSTANCE, useExisting: InputGroupAddon }, { provide: PARENT_INSTANCE, useExisting: InputGroupAddon }],
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -40,16 +41,12 @@ export class InputGroupAddon extends BaseComponent<InputGroupAddonPassThrough> {
      * Inline style of the element.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{ [klass: string]: any } | null>();
     /**
      * Class of the element.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
-
-    @HostBinding('style') get hostStyle(): { [klass: string]: any } | null | undefined {
-        return this.style;
-    }
+    readonly styleClass = input<string>();
 }
 
 @NgModule({
