@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, EventEmitter, inject, InjectionToken, Input, NgModule, Output, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { Badge } from '@gravionlabs/helix/badge';
@@ -34,33 +34,35 @@ export class Breadcrumb extends BaseComponent<BreadcrumbPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() model: MenuItem[] | undefined;
+    readonly model = input<MenuItem[]>();
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * MenuItem configuration for the home icon.
      * @group Props
      */
-    @Input() home: MenuItem | undefined;
+    readonly home = input<MenuItem>();
     /**
      * Defines a string that labels the home icon for accessibility.
      * @group Props
      */
-    @Input() homeAriaLabel: string | undefined;
+    readonly homeAriaLabel = input<string>();
     /**
      * Fired when an item is selected.
      * @param {BreadcrumbItemClickEvent} event - custom click event.
      * @group Emits
      */
-    @Output() onItemClick: EventEmitter<BreadcrumbItemClickEvent> = new EventEmitter<BreadcrumbItemClickEvent>();
+    readonly onItemClick = output<BreadcrumbItemClickEvent>();
 
     _componentStyle = inject(BreadCrumbStyle);
 
@@ -93,22 +95,22 @@ export class Breadcrumb extends BaseComponent<BreadcrumbPassThrough> {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item') itemTemplate: TemplateRef<BreadcrumbItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<BreadcrumbItemTemplateContext>>('item');
 
     /**
      * Custom separator template.
      * @group Templates
      */
-    @ContentChild('separator') separatorTemplate: TemplateRef<void> | undefined;
+    readonly separatorTemplate = contentChild<TemplateRef<void>>('separator');
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _separatorTemplate: TemplateRef<void> | undefined;
 
     _itemTemplate: TemplateRef<BreadcrumbItemTemplateContext> | undefined;
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'separator':
                     this._separatorTemplate = item.template;

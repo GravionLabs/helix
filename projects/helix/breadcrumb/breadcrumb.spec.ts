@@ -228,11 +228,11 @@ describe('Breadcrumb', () => {
 
             const freshBreadcrumb = freshFixture.debugElement.query(By.directive(Breadcrumb)).componentInstance;
 
-            expect(freshBreadcrumb.model).toBeUndefined();
-            expect(freshBreadcrumb.home).toBeUndefined();
-            expect(freshBreadcrumb.style).toBeUndefined();
-            expect(freshBreadcrumb.styleClass).toBeUndefined();
-            expect(freshBreadcrumb.homeAriaLabel).toBeUndefined();
+            expect(freshBreadcrumb.model()).toBeUndefined();
+            expect(freshBreadcrumb.home()).toBeUndefined();
+            expect(freshBreadcrumb.style()).toBeUndefined();
+            expect(freshBreadcrumb.styleClass()).toBeUndefined();
+            expect(freshBreadcrumb.homeAriaLabel()).toBeUndefined();
         });
 
         it('should accept custom values', async () => {
@@ -247,10 +247,10 @@ describe('Breadcrumb', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model).toBe(testModel);
-            expect(breadcrumbInstance.home).toBe(testHome);
-            expect(breadcrumbInstance.styleClass).toBe('custom-class');
-            expect(breadcrumbInstance.homeAriaLabel).toBe('Custom Home');
+            expect(breadcrumbInstance.model()).toBe(testModel);
+            expect(breadcrumbInstance.home()).toBe(testHome);
+            expect(breadcrumbInstance.styleClass()).toBe('custom-class');
+            expect(breadcrumbInstance.homeAriaLabel()).toBe('Custom Home');
         });
 
         it('should initialize templates properties', () => {
@@ -274,7 +274,7 @@ describe('Breadcrumb', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(breadcrumbInstance.model).toBe(newModel);
+            expect(breadcrumbInstance.model()).toBe(newModel);
         });
 
         it('should update home input', async () => {
@@ -283,7 +283,7 @@ describe('Breadcrumb', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(breadcrumbInstance.home).toBe(newHome);
+            expect(breadcrumbInstance.home()).toBe(newHome);
         });
 
         it('should update style input', async () => {
@@ -292,7 +292,7 @@ describe('Breadcrumb', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(breadcrumbInstance.style).toBe(newStyle);
+            expect(breadcrumbInstance.style()).toBe(newStyle);
         });
 
         it('should update styleClass input', async () => {
@@ -300,7 +300,7 @@ describe('Breadcrumb', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(breadcrumbInstance.styleClass).toBe('test-class');
+            expect(breadcrumbInstance.styleClass()).toBe('test-class');
         });
 
         it('should update homeAriaLabel input', async () => {
@@ -308,7 +308,7 @@ describe('Breadcrumb', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(breadcrumbInstance.homeAriaLabel).toBe('Go to home page');
+            expect(breadcrumbInstance.homeAriaLabel()).toBe('Go to home page');
         });
 
         it('should handle undefined inputs', async () => {
@@ -321,11 +321,11 @@ describe('Breadcrumb', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model).toBeUndefined();
-            expect(breadcrumbInstance.home).toBeUndefined();
-            expect(breadcrumbInstance.style).toBeUndefined();
-            expect(breadcrumbInstance.styleClass).toBeUndefined();
-            expect(breadcrumbInstance.homeAriaLabel).toBeUndefined();
+            expect(breadcrumbInstance.model()).toBeUndefined();
+            expect(breadcrumbInstance.home()).toBeUndefined();
+            expect(breadcrumbInstance.style()).toBeUndefined();
+            expect(breadcrumbInstance.styleClass()).toBeUndefined();
+            expect(breadcrumbInstance.homeAriaLabel()).toBeUndefined();
         });
     });
 
@@ -367,7 +367,7 @@ describe('Breadcrumb', () => {
                 expect(homeIcon).toBeTruthy();
             } else {
                 // Icon might be rendered differently in test environment
-                expect(breadcrumbInstance.home?.icon).toBe('pi pi-home');
+                expect(breadcrumbInstance.home()?.icon).toBe('pi pi-home');
             }
         });
 
@@ -384,7 +384,7 @@ describe('Breadcrumb', () => {
                 expect(defaultHomeIcon).toBeTruthy();
             } else {
                 // Default icon might render differently in test environment
-                expect(breadcrumbInstance.home).toBeTruthy();
+                expect(breadcrumbInstance.home()).toBeTruthy();
             }
         });
 
@@ -401,7 +401,7 @@ describe('Breadcrumb', () => {
                 expect(homeLink.nativeElement.getAttribute('ng-reflect-router-link')).toBe('/');
             } else {
                 // RouterLink might not be reflected in test environment
-                expect(breadcrumbInstance.home?.routerLink).toBe('/');
+                expect(breadcrumbInstance.home()?.routerLink).toBe('/');
             }
         });
 
@@ -417,7 +417,7 @@ describe('Breadcrumb', () => {
             if (homeLink) {
                 expect(homeLink.nativeElement.getAttribute('href')).toBe('/home');
             } else {
-                expect(breadcrumbInstance.home?.url).toBe('/home');
+                expect(breadcrumbInstance.home()?.url).toBe('/home');
             }
         });
 
@@ -434,7 +434,7 @@ describe('Breadcrumb', () => {
             if (homeLink) {
                 expect(homeLink.nativeElement.getAttribute('aria-label')).toBe('Navigate to home');
             } else {
-                expect(breadcrumbInstance.homeAriaLabel).toBe('Navigate to home');
+                expect(breadcrumbInstance.homeAriaLabel()).toBe('Navigate to home');
             }
         });
 
@@ -450,7 +450,7 @@ describe('Breadcrumb', () => {
             if (homeLink) {
                 expect(homeLink.nativeElement.hasAttribute('tabindex')).toBe(false);
             } else {
-                expect(breadcrumbInstance.home?.disabled).toBe(true);
+                expect(breadcrumbInstance.home()?.disabled).toBe(true);
             }
         });
     });
@@ -476,7 +476,7 @@ describe('Breadcrumb', () => {
             fixture.detectChanges();
 
             // Check if label exists in the component model
-            expect(breadcrumbInstance.model?.[0]?.label).toBe('Test Item');
+            expect(breadcrumbInstance.model()?.[0]?.label).toBe('Test Item');
         });
 
         it('should display item icons', async () => {
@@ -489,7 +489,7 @@ describe('Breadcrumb', () => {
             if (itemIcon) {
                 expect(itemIcon).toBeTruthy();
             } else {
-                expect(breadcrumbInstance.model?.[0]?.icon).toBe('pi pi-file');
+                expect(breadcrumbInstance.model()?.[0]?.icon).toBe('pi pi-file');
             }
         });
 
@@ -499,7 +499,7 @@ describe('Breadcrumb', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.routerLink).toBe('/router');
+            expect(breadcrumbInstance.model()?.[0]?.routerLink).toBe('/router');
         });
 
         it('should handle invisible items', async () => {
@@ -534,8 +534,8 @@ describe('Breadcrumb', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.label).toBe('<b>Bold Item</b>');
-            expect(breadcrumbInstance.model?.[0]?.escape).toBe(false);
+            expect(breadcrumbInstance.model()?.[0]?.label).toBe('<b>Bold Item</b>');
+            expect(breadcrumbInstance.model()?.[0]?.escape).toBe(false);
         });
     });
 
@@ -804,8 +804,8 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.style).toEqual({ color: 'red', fontWeight: 'bold' });
-            expect(breadcrumbInstance.model?.[0]?.styleClass).toBe('item-class');
+            expect(breadcrumbInstance.model()?.[0]?.style).toEqual({ color: 'red', fontWeight: 'bold' });
+            expect(breadcrumbInstance.model()?.[0]?.styleClass).toBe('item-class');
         });
     });
 
@@ -823,7 +823,7 @@ describe('Breadcrumb', () => {
             if (homeLink) {
                 expect(homeLink.nativeElement.getAttribute('aria-label')).toBe('Go to homepage');
             } else {
-                expect(breadcrumbInstance.homeAriaLabel).toBe('Go to homepage');
+                expect(breadcrumbInstance.homeAriaLabel()).toBe('Go to homepage');
             }
         });
 
@@ -835,7 +835,7 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.disabled).toBe(true);
+            expect(breadcrumbInstance.model()?.[0]?.disabled).toBe(true);
         });
 
         it('should handle tabindex for enabled items', async () => {
@@ -846,7 +846,7 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.disabled).toBe(false);
+            expect(breadcrumbInstance.model()?.[0]?.disabled).toBe(false);
         });
 
         it('should support title attributes', async () => {
@@ -858,8 +858,8 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.home?.title).toBe('Home Page');
-            expect(breadcrumbInstance.model?.[0]?.title).toBe('Item Page');
+            expect(breadcrumbInstance.home()?.title).toBe('Home Page');
+            expect(breadcrumbInstance.model()?.[0]?.title).toBe('Item Page');
         });
 
         it('should support tooltip options', async () => {
@@ -871,8 +871,8 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.home?.tooltipOptions?.tooltipLabel).toBe('Home tooltip');
-            expect(breadcrumbInstance.model?.[0]?.tooltipOptions?.tooltipLabel).toBe('Item tooltip');
+            expect(breadcrumbInstance.home()?.tooltipOptions?.tooltipLabel).toBe('Home tooltip');
+            expect(breadcrumbInstance.model()?.[0]?.tooltipOptions?.tooltipLabel).toBe('Item tooltip');
         });
     });
 
@@ -886,7 +886,7 @@ describe('Breadcrumb', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(breadcrumbInstance.model).toBeUndefined();
+            expect(breadcrumbInstance.model()).toBeUndefined();
         });
 
         it('should handle empty model array', async () => {
@@ -898,7 +898,7 @@ describe('Breadcrumb', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(breadcrumbInstance.model).toEqual([]);
+            expect(breadcrumbInstance.model()).toEqual([]);
         });
 
         it('should handle items without labels', async () => {
@@ -910,7 +910,7 @@ describe('Breadcrumb', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(breadcrumbInstance.model?.[0]?.url).toBe('/no-label');
+            expect(breadcrumbInstance.model()?.[0]?.url).toBe('/no-label');
         });
 
         it('should handle items with special characters in labels', async () => {
@@ -930,7 +930,7 @@ describe('Breadcrumb', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(breadcrumbInstance.model?.[0]?.label).toBe(item.label);
+                expect(breadcrumbInstance.model()?.[0]?.label).toBe(item.label);
                 expect(() => fixture.detectChanges()).not.toThrow();
             }
         });
@@ -948,7 +948,7 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.length).toBe(50);
+            expect(breadcrumbInstance.model()?.length).toBe(50);
             expect(() => fixture.detectChanges()).not.toThrow();
         });
 
@@ -963,8 +963,8 @@ describe('Breadcrumb', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(breadcrumbInstance.model).toBe(model);
-                expect(breadcrumbInstance.styleClass).toBe(`class-${index}`);
+                expect(breadcrumbInstance.model()).toBe(model);
+                expect(breadcrumbInstance.styleClass()).toBe(`class-${index}`);
             }
         });
 
@@ -1044,8 +1044,8 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.label).toBe('Initial');
-            expect(breadcrumbInstance.styleClass).toBe('initial-class');
+            expect(breadcrumbInstance.model()?.[0]?.label).toBe('Initial');
+            expect(breadcrumbInstance.styleClass()).toBe('initial-class');
 
             component.model = [{ label: 'Updated' }];
             component.styleClass = 'updated-class';
@@ -1055,8 +1055,8 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            expect(breadcrumbInstance.model?.[0]?.label).toBe('Updated');
-            expect(breadcrumbInstance.styleClass).toBe('updated-class');
+            expect(breadcrumbInstance.model()?.[0]?.label).toBe('Updated');
+            expect(breadcrumbInstance.styleClass()).toBe('updated-class');
         });
 
         it('should work with dynamic content changes', async () => {

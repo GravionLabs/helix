@@ -2,38 +2,56 @@ import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/button';
 import { BaseStyle } from '@gravionlabs/helix/base';
 
+const unwrap = (value: any) => (typeof value === 'function' ? value() : value);
+
 const classes = {
-    root: ({ instance }) => [
-        'p-button p-component',
-        {
-            'p-button-icon-only': instance.hasIcon && !instance.label && !instance.buttonProps?.label && !instance.badge,
-            'p-button-vertical': (instance.iconPos === 'top' || instance.iconPos === 'bottom') && instance.label,
-            'p-button-loading': instance.loading || instance.buttonProps?.loading,
-            'p-button-link': instance.link || instance.buttonProps?.link,
-            [`p-button-${instance.severity || instance.buttonProps?.severity}`]: instance.severity || instance.buttonProps?.severity,
-            'p-button-raised': instance.raised || instance.buttonProps?.raised,
-            'p-button-rounded': instance.rounded || instance.buttonProps?.rounded,
-            'p-button-text': instance.text || instance.variant === 'text' || instance.buttonProps?.text || instance.buttonProps?.variant === 'text',
-            'p-button-outlined': instance.outlined || instance.variant === 'outlined' || instance.buttonProps?.outlined || instance.buttonProps?.variant === 'outlined',
-            'p-button-sm': instance.size === 'small' || instance.buttonProps?.size === 'small',
-            'p-button-lg': instance.size === 'large' || instance.buttonProps?.size === 'large',
-            'p-button-plain': instance.plain || instance.buttonProps?.plain,
-            'p-button-fluid': instance.hasFluid
-        }
-    ],
+    root: ({ instance }) => {
+        const label = unwrap(instance.label);
+        const icon = unwrap(instance.icon);
+        const loading = unwrap(instance.loading);
+        const severity = unwrap(instance.severity);
+        const iconPos = unwrap(instance.iconPos);
+        const size = unwrap(instance.size);
+        const variant = unwrap(instance.variant);
+        const badge = unwrap(instance.badge);
+        const buttonProps = unwrap(instance.buttonProps);
+        return [
+            'p-button p-component',
+            {
+                'p-button-icon-only': instance.hasIcon && !label && !buttonProps?.label && !badge,
+                'p-button-vertical': (iconPos === 'top' || iconPos === 'bottom') && label,
+                'p-button-loading': loading || buttonProps?.loading,
+                'p-button-link': unwrap(instance.link) || buttonProps?.link,
+                [`p-button-${severity || buttonProps?.severity}`]: severity || buttonProps?.severity,
+                'p-button-raised': unwrap(instance.raised) || buttonProps?.raised,
+                'p-button-rounded': unwrap(instance.rounded) || buttonProps?.rounded,
+                'p-button-text': unwrap(instance.text) || variant === 'text' || buttonProps?.text || buttonProps?.variant === 'text',
+                'p-button-outlined': unwrap(instance.outlined) || variant === 'outlined' || buttonProps?.outlined || buttonProps?.variant === 'outlined',
+                'p-button-sm': size === 'small' || buttonProps?.size === 'small',
+                'p-button-lg': size === 'large' || buttonProps?.size === 'large',
+                'p-button-plain': unwrap(instance.plain) || buttonProps?.plain,
+                'p-button-fluid': instance.hasFluid
+            }
+        ];
+    },
     loadingIcon: 'p-button-loading-icon',
-    icon: ({ instance }) => [
-        'p-button-icon',
-        {
-            [`p-button-icon-${instance.iconPos || instance.buttonProps?.iconPos}`]: instance.label || instance.buttonProps?.label,
-            'p-button-icon-left': ((instance.iconPos === 'left' || instance.buttonProps?.iconPos === 'left') && instance.label) || instance.buttonProps?.label,
-            'p-button-icon-right': ((instance.iconPos === 'right' || instance.buttonProps?.iconPos === 'right') && instance.label) || instance.buttonProps?.label,
-            'p-button-icon-top': ((instance.iconPos === 'top' || instance.buttonProps?.iconPos === 'top') && instance.label) || instance.buttonProps?.label,
-            'p-button-icon-bottom': ((instance.iconPos === 'bottom' || instance.buttonProps?.iconPos === 'bottom') && instance.label) || instance.buttonProps?.label
-        },
-        instance.icon,
-        instance.buttonProps?.icon
-    ],
+    icon: ({ instance }) => {
+        const label = unwrap(instance.label);
+        const iconPos = unwrap(instance.iconPos);
+        const buttonProps = unwrap(instance.buttonProps);
+        return [
+            'p-button-icon',
+            {
+                [`p-button-icon-${iconPos || buttonProps?.iconPos}`]: label || buttonProps?.label,
+                'p-button-icon-left': ((iconPos === 'left' || buttonProps?.iconPos === 'left') && label) || buttonProps?.label,
+                'p-button-icon-right': ((iconPos === 'right' || buttonProps?.iconPos === 'right') && label) || buttonProps?.label,
+                'p-button-icon-top': ((iconPos === 'top' || buttonProps?.iconPos === 'top') && label) || buttonProps?.label,
+                'p-button-icon-bottom': ((iconPos === 'bottom' || buttonProps?.iconPos === 'bottom') && label) || buttonProps?.label
+            },
+            unwrap(instance.icon),
+            buttonProps?.icon
+        ];
+    },
     spinnerIcon: ({ instance }) => {
         return Object.entries(instance.cx('icon'))
             .filter(([, value]) => !!value)
