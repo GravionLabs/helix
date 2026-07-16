@@ -15,7 +15,7 @@ const INPUTGROUP_INSTANCE = new InjectionToken<InputGroup>('INPUTGROUP_INSTANCE'
     selector: 'h-inputgroup, h-inputGroup, h-input-group',
     standalone: true,
     imports: [BindModule],
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './inputgroup.html',
     providers: [InputGroupStyle, { provide: INPUTGROUP_INSTANCE, useExisting: InputGroup }, { provide: PARENT_INSTANCE, useExisting: InputGroup }],
     hostDirectives: [Bind],
     changeDetection: ChangeDetectionStrategy.Eager,

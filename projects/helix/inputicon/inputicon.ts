@@ -16,7 +16,7 @@ const INPUTICON_INSTANCE = new InjectionToken<InputIcon>('INPUTICON_INSTANCE');
     selector: 'h-inputicon, h-inputIcon',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `<ng-content></ng-content>`,
+    templateUrl: './inputicon.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [InputIconStyle, { provide: INPUTICON_INSTANCE, useExisting: InputIcon }, { provide: PARENT_INSTANCE, useExisting: InputIcon }],
