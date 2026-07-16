@@ -308,42 +308,42 @@ describe('Drawer', () => {
             testComponent.modal = false;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.modal).toBe(false);
+            expect(drawerComponent.modal()).toBe(false);
         });
 
         it('should set dismissible property correctly', async () => {
             testComponent.dismissible = false;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.dismissible).toBe(false);
+            expect(drawerComponent.dismissible()).toBe(false);
         });
 
         it('should set closeOnEscape property correctly', async () => {
             testComponent.closeOnEscape = false;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.closeOnEscape).toBe(false);
+            expect(drawerComponent.closeOnEscape()).toBe(false);
         });
 
         it('should set header property correctly', async () => {
             testComponent.header = 'Test Header';
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.header).toBe('Test Header');
+            expect(drawerComponent.header()).toBe('Test Header');
         });
 
         it('should set closable property correctly', async () => {
             testComponent.closable = false;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.closable).toBe(false);
+            expect(drawerComponent.closable()).toBe(false);
         });
 
         it('should set blockScroll property correctly', async () => {
             testComponent.blockScroll = true;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.blockScroll).toBe(true);
+            expect(drawerComponent.blockScroll()).toBe(true);
         });
 
         it('should set fullScreen property correctly', async () => {
@@ -358,28 +358,28 @@ describe('Drawer', () => {
             testComponent.style = testStyle;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.style).toEqual(testStyle);
+            expect(drawerComponent.style()).toEqual(testStyle);
         });
 
         it('should set styleClass property correctly', async () => {
             testComponent.styleClass = 'custom-drawer';
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.styleClass).toBe('custom-drawer');
+            expect(drawerComponent.styleClass()).toBe('custom-drawer');
         });
 
         it('should set autoZIndex property correctly', async () => {
             testComponent.autoZIndex = false;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.autoZIndex).toBe(false);
+            expect(drawerComponent.autoZIndex()).toBe(false);
         });
 
         it('should set baseZIndex property correctly', async () => {
             testComponent.baseZIndex = 1000;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.baseZIndex).toBe(1000);
+            expect(drawerComponent.baseZIndex()).toBe(1000);
         });
     });
 
@@ -534,7 +534,7 @@ describe('Drawer', () => {
 
             // The onKeyDown method calls hide(false) which should emit visibleChange
             // Check that the component's closeOnEscape property is working
-            expect(drawerComponent.closeOnEscape).toBe(true);
+            expect(drawerComponent.closeOnEscape()).toBe(true);
         });
 
         it('should not close drawer on Escape key when closeOnEscape is false', async () => {
@@ -754,7 +754,7 @@ describe('Drawer', () => {
 
             // Check if modal property is set correctly on component
             const drawerComponent = testFixture.debugElement.query(By.directive(Drawer)).componentInstance;
-            expect(drawerComponent.modal).toBe(true);
+            expect(drawerComponent.modal()).toBe(true);
 
             // The mask creation happens in the component's show() method
             // We verify the component is configured for modal behavior
@@ -770,7 +770,7 @@ describe('Drawer', () => {
 
             // Check if modal property is set correctly on component
             const drawerComponent = testFixture.debugElement.query(By.directive(Drawer)).componentInstance;
-            expect(drawerComponent.modal).toBe(false);
+            expect(drawerComponent.modal()).toBe(false);
             expect(testComponent.modal).toBe(false);
         });
 
@@ -784,8 +784,8 @@ describe('Drawer', () => {
 
             // Test that dismissible property is correctly set
             const drawerComponent = testFixture.debugElement.query(By.directive(Drawer)).componentInstance;
-            expect(drawerComponent.dismissible).toBe(true);
-            expect(drawerComponent.modal).toBe(true);
+            expect(drawerComponent.dismissible()).toBe(true);
+            expect(drawerComponent.modal()).toBe(true);
 
             // Since mask click behavior is complex and involves DOM manipulation,
             // we test the dismissible property setup which is the main concern
@@ -854,7 +854,7 @@ describe('Drawer', () => {
 
             // Check if ariaCloseLabel property is set on the drawer component
             const drawerComponent = testFixture.debugElement.query(By.directive(Drawer)).componentInstance;
-            expect(drawerComponent.ariaCloseLabel).toBe('Close drawer');
+            expect(drawerComponent.ariaCloseLabel()).toBe('Close drawer');
 
             const closeButton = testFixture.debugElement.query(By.css('p-button'));
             if (closeButton) {
@@ -954,14 +954,14 @@ describe('Drawer', () => {
             testComponent.style = null as any;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.style).toBeNull();
+            expect(drawerComponent.style()).toBeNull();
         });
 
         it('should handle undefined styleClass property', async () => {
             testComponent.styleClass = undefined as any;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
-            expect(drawerComponent.styleClass).toBeUndefined();
+            expect(drawerComponent.styleClass()).toBeUndefined();
         });
 
         it('should handle rapid visible changes', async () => {
