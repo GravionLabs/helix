@@ -1,79 +1,102 @@
-# Signals Audit — Remaining Decorator-Based APIs
+# Signals Audit — Decorator-to-Signal Migration
 
-Part of epic #233 / feature #240. Audited 2026-07-14 on Angular 22.
+Originally audited 2026-07-14 on Angular 22 (epic #233 / feature #240).
+Reversed and turned into a migration plan on 2026-07-16 (epic #297, see below).
 
-Inventory of remaining decorator-based Angular APIs (`@Input()`, `@Output()`,
-`@ViewChild`, `@ContentChild`, `@ContentChildren`, `@HostListener`,
-`@HostBinding`, `BehaviorSubject`-as-state) across all libraries and the demo
-app, with the signal replacement for each row or the documented reason not to
-migrate.
+## Decision change (2026-07-16, epic #297)
 
-## Summary
+The original audit verdict — **"do not migrate the fork's decorator APIs"** —
+rested on upstream diffability: the fork was expected to track PrimeNG
+releases, and rewriting ~2,850 call sites would have made upstream diffs
+unreadable. The project has since decided **not to track upstream PrimeNG**,
+which voids that rationale. Epic #297 reverses the verdict: all fork decorator
+APIs migrate to their signal equivalents **before the first 22.0.0 publish**,
+so the published API is signal-based from day one and the API break is free.
 
-| Area | Decorator usages | Verdict |
-|---|---|---|
-| `projects/helix` (vendored PrimeNG fork) | ~2,850 across 100+ files | **Do not migrate** (see below) |
-| `projects/helix-shell` | 0 | Nothing to do |
-| `projects/helix-zod` | 0 | Nothing to do |
-| `projects/helix-ag-grid` | 0 | Nothing to do |
-| `apps/helix-demo` | 2 (`@ViewChild`) | **Migrate** (batch 1, #270) |
+The other two original rationale points are addressed rather than dismissed:
 
-`BehaviorSubject`-as-state: zero occurrences anywhere.
+- **Public API breakage** (`component.foo = x` stops working on `input()`
+  signals): acceptable pre-publish; internally-written inputs follow the rules
+  below instead of a mechanical swap.
+- **Signal adoption via upstream syncs**: no longer applicable without
+  upstream tracking.
 
-## Own code — migration table (batch 1, #270)
+The [.p-* CSS class prefix decision](css-class-prefix-decision.md) is *not*
+reversed by this epic — class names stay `.p-*`.
 
-| File | Current API | Signal replacement |
-|---|---|---|
-| `apps/helix-demo/src/app/pages/crud/crud.ts:329` | `@ViewChild('dt') dt!: Table` | `dt = viewChild.required<Table>('dt')` (call sites become `this.dt()`) |
-| `apps/helix-demo/src/app/pages/uikit/table/table-demo.ts:92` | `@ViewChild('filter') filter!: ElementRef` | `filter = viewChild.required<ElementRef>('filter')` (call sites become `this.filter()`) |
+## Scope
 
-`apps/helix-demo/public/source/**` contains generated copies of the uikit page
-sources (`pnpm demo:generate-sources`); they follow automatically and are not
-audit rows.
+Inventory at time of reversal (non-spec `.ts` files, `projects/helix`):
 
-## Vendored fork (`projects/helix`) — keep decorator APIs
-
-Exact counts (non-spec `.ts` files):
-
-| API | Occurrences | Files | Signal equivalent (not applied) |
+| API | Occurrences | Files | Signal replacement |
 |---|---|---|---|
-| `@Input()` | 1,830 | 95 | `input()` / `model()` |
-| `@Output()` | 340 | 64 | `output()` |
-| `@ViewChild` | 144 | 43 | `viewChild()` |
-| `@ContentChild` | 386 | 66 | `contentChild()` |
-| `@ContentChildren` | 70 | 65 | `contentChildren()` |
-| `@HostListener` | 75 | 23 | `host: {}` metadata |
-| `@HostBinding` | 4 | 4 | `host: {}` metadata |
+| `@Input()` | ~1,830 | 95 | `input()` / `model()` |
+| `@Output()` | ~340 | 64 | `output()` |
+| `@ViewChild` | ~144 | 43 | `viewChild()` |
+| `@ContentChild` | ~386 | 66 | `contentChild()` |
+| `@ContentChildren` | ~70 | 65 | `contentChildren()` |
+| `@HostListener` | ~75 | 23 | `host: {}` metadata |
+| `@HostBinding` | ~4 | 4 | `host: {}` metadata |
 
-**Decision: do not migrate the fork's decorator APIs wholesale.**
+Own code (`helix-shell`, `helix-zod`, `helix-ag-grid`, demo app) was already
+migrated under epic #233 batch 1 (#270); nothing remains there.
 
-Rationale:
+## Working rules (fixed by the pilot, #311)
 
-1. **Upstream diffability.** The fork vendors PrimeNG 21.1.9 (epic #201). Its
-   remaining decorator usage mirrors upstream sources; rewriting ~2,850 call
-   sites would make every future upstream diff/patch port unreadable. This is
-   the same trade-off recorded for template file separation
-   (`file-separation-analysis.md`) and for the `eqeqeq` lint exception.
-2. **Public API breakage.** `@Input()` properties are assignable
-   (`component.foo = x`); `input()` signals are not. Many fork inputs are set
-   programmatically by sibling components (e.g. table ↔ paginator), so a
-   mechanical swap is not behavior-preserving.
-3. **Signal adoption already tracks upstream.** The fork already uses
-   `input()`, `computed()`, `contentChild()` etc. where upstream PrimeNG does.
-   New signal adoption should arrive by syncing upstream versions, not by
-   diverging locally.
+Each batch runs the official schematics **scoped to its component
+directories**, then finishes manually by these rules:
 
-Follow-up: revisit per component only if/when a component is deliberately
-forked away from upstream (at that point its decorators join the migration
-table above).
+1. **Schematics first.** Run per component path:
+   `@angular/core:signal-input-migration`, `@angular/core:output-migration`,
+   `@angular/core:signal-queries-migration` (with `--path projects/helix/<dir>`).
+   *Pilot finding:* the output/queries schematics analyze the whole program and
+   may edit or insert `// TODO` comments in files **outside** `--path` — revert
+   every change outside the batch's directories before committing.
+2. **Plain `@Input()` never written internally** → `input()`
+   (or `input.required()` if every consumer must bind it).
+3. **`@Input()` written internally or from a sibling component/directive** →
+   `model()` only if genuinely two-way for the consumer; otherwise keep a
+   private `signal()` for internal writes and expose the input separately.
+   If neither is trivially safe, leave the decorator and list it in the PR body.
+4. **Getter/setter `@Input` pairs backed by a signal** → collapse to
+   `input()`/`model()` when behavior-preserving.
+5. **`@Output()`** → `output()`. `OutputEmitterRef.emit()` requires its value
+   argument — fix zero-arg `emit()` calls at the source (type the output
+   `output<void>()` or pass the value) rather than leaving schematic TODOs.
+6. **`@HostListener` / `@HostBinding`** → `host: {}` metadata on the
+   component/directive decorator.
+7. **Specs:** input writes `component.x = y` →
+   `fixture.componentRef.setInput('x', y)`; input *reads* become signal calls
+   (`component.x()`); non-input members keep direct assignment.
+8. **Verification per batch:** `pnpm build:lib` and the demo build pass;
+   decorator grep over the batch's directories is empty (documented exceptions
+   listed in the PR body).
 
-## Batch plan
+## Batch tracking
 
-- **Batch 1 (#270):** the two demo-app `@ViewChild` rows above.
-- **Batch 2 (#271):** not needed — the audit found no further own-code rows.
-  Recommend closing #271 as completed-by-audit (no additional batches were
-  pre-authorized for fork code).
+| Batch | PBI | Scope | Status |
+|---|---|---|---|
+| Pilot | #311 | knob + this audit refresh | ✅ done |
+| 1 | #312 | accordion–card | open |
+| 2 | #313 | carousel–dataview | open |
+| 3 | #314 | datepicker–floatlabel | open |
+| 4 | #315 | fluid–inputicon | open |
+| 5 | #316 | inputmask–message | open |
+| 6 | #317 | metergroup–picklist | open |
+| 7 | #318 | popover–skeleton | open |
+| 8 | #319 | slider–terminal | open |
+| 9 | #320 | textarea–treetable | open |
+| 10 | #321 | directives & infrastructure | open |
+| Hard cases | #322 | table & treetable | open |
+| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |
+| Closeout | #324 | final sweep, audit update, lint guard | open |
+
+## Definition of done (epic #297)
+
+`grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\('
+projects/helix --include='*.ts'` returns nothing (or only documented
+exceptions); builds and CI green; a lint guard prevents reintroduction (#324).
 
 Related: [css-class-prefix-decision.md](css-class-prefix-decision.md) records
-the epic-#297 decision that the `.p-*` CSS class names stay even as this
-file's keep-decorators verdict is reversed by the same epic.
+the epic-#297 decision that the `.p-*` CSS class names stay even though this
+file's keep-decorators verdict was reversed by the same epic.
