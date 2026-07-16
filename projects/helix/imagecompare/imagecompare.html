@@ -1,4 +1,4 @@
-<ng-template *ngTemplateOutlet="leftTemplate() || _leftTemplate"></ng-template>
-<ng-template *ngTemplateOutlet="rightTemplate() || _rightTemplate"></ng-template>
+<ng-template *ngTemplateOutlet="leftTemplate || _leftTemplate"></ng-template>
+<ng-template *ngTemplateOutlet="rightTemplate || _rightTemplate"></ng-template>
 
 <input type="range" min="0" max="100" value="50" (input)="onSlide($event)" [class]="cx('slider')" [hBind]="ptm('slider')" />
