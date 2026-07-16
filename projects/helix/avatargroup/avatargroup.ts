@@ -16,7 +16,7 @@ const AVATARGROUP_INSTANCE = new InjectionToken<AvatarGroup>('AVATARGROUP_INSTAN
     selector: 'h-avatarGroup, h-avatar-group, h-avatargroup',
     standalone: true,
     imports: [SharedModule],
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './avatargroup.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [AvatarGroupStyle, { provide: AVATARGROUP_INSTANCE, useExisting: AvatarGroup }, { provide: PARENT_INSTANCE, useExisting: AvatarGroup }],

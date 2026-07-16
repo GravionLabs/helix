@@ -133,29 +133,7 @@ export class AccordionPanel extends BaseComponent<AccordionPanelPassThrough> {
     selector: 'h-accordion-header, h-accordionheader',
     imports: [ChevronDownIcon, ChevronUpIcon, BindModule],
     standalone: true,
-    template: `
-        <ng-content />
-        @if (toggleicon) {
-          <ng-template *ngTemplateOutlet="toggleicon; context: { active: active() }"></ng-template>
-        } @else {
-          @if (active()) {
-            @if (pcAccordion.collapseIcon) {
-              <span [class]="cn(cx('toggleicon'), pcAccordion.collapseIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
-            }
-            @if (!pcAccordion.collapseIcon) {
-              <svg data-p-icon="chevron-up" [class]="cx('toggleicon')" [hBind]="ptm('toggleicon')" [attr.aria-hidden]="true" />
-            }
-          }
-          @if (!active()) {
-            @if (pcAccordion.expandIcon) {
-              <span [class]="cn(cx('toggleicon'), pcAccordion.expandIcon)" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')"></span>
-            }
-            @if (!pcAccordion.expandIcon) {
-              <svg data-p-icon="chevron-down" [attr.aria-hidden]="true" [hBind]="ptm('toggleicon')" />
-            }
-          }
-        }
-        `,
+    templateUrl: './accordionheader.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
@@ -402,7 +380,7 @@ export class AccordionContent extends BaseComponent<AccordionContentPassThrough>
     selector: 'h-accordion',
     standalone: true,
     imports: [SharedModule, BindModule],
-    template: ` <ng-content />`,
+    templateUrl: './accordion.html',
     host: {
         '[class]': "cn(cx('root'), styleClass)"
     },

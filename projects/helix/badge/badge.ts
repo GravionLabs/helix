@@ -273,7 +273,7 @@ export class BadgeDirective extends BaseComponent {
  */
 @Component({
     selector: 'h-badge',
-    template: `{{ value() }}`,
+    templateUrl: './badge.html',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
     changeDetection: ChangeDetectionStrategy.OnPush,

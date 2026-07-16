@@ -18,10 +18,7 @@ const BLOCKUI_INSTANCE = new InjectionToken<BlockUI>('BLOCKUI_INSTANCE');
     selector: 'h-blockUI, h-blockui, h-block-ui',
     standalone: true,
     imports: [CommonModule, SharedModule],
-    template: `
-        <ng-content></ng-content>
-        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-    `,
+    templateUrl: './blockui.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [BlockUiStyle, { provide: BLOCKUI_INSTANCE, useExisting: BlockUI }, { provide: PARENT_INSTANCE, useExisting: BlockUI }],

@@ -7,11 +7,7 @@ import { ButtonGroupStyle } from './style/buttongroupstyle';
     selector: 'h-buttonGroup, h-buttongroup, h-button-group',
     standalone: true,
     imports: [],
-    template: `
-        <span class="p-buttongroup p-component" role="group">
-            <ng-content></ng-content>
-        </span>
-    `,
+    templateUrl: './buttongroup.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ButtonGroupStyle]
