@@ -253,17 +253,17 @@ describe('Dock', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(dockInstance.model).toBe(testModel);
-            expect(dockInstance.position).toBe('top');
-            expect(dockInstance.styleClass).toBe('custom-dock');
-            expect(dockInstance.ariaLabel).toBe('Custom Dock');
-            expect(dockInstance.breakpoint).toBe('768px');
+            expect(dockInstance.model()).toBe(testModel);
+            expect(dockInstance.position()).toBe('top');
+            expect(dockInstance.styleClass()).toBe('custom-dock');
+            expect(dockInstance.ariaLabel()).toBe('Custom Dock');
+            expect(dockInstance.breakpoint()).toBe('768px');
         });
 
         it('should initialize with generated id', () => {
-            expect(dockInstance.id).toBeTruthy();
-            expect(typeof dockInstance.id).toBe('string');
-            expect(dockInstance.id).toMatch(/^pn_id_/);
+            expect(dockInstance.id()).toBeTruthy();
+            expect(typeof dockInstance.id()).toBe('string');
+            expect(dockInstance.id()).toMatch(/^pn_id_/);
         });
 
         it('should have onFocus and onBlur output emitters', () => {
@@ -284,7 +284,7 @@ describe('Dock', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(dockInstance.model).toBe(newModel);
+            expect(dockInstance.model()).toBe(newModel);
         });
 
         it('should update position input', async () => {
@@ -292,7 +292,7 @@ describe('Dock', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(dockInstance.position).toBe('left');
+            expect(dockInstance.position()).toBe('left');
         });
 
         it('should update styleClass input', async () => {
@@ -300,7 +300,7 @@ describe('Dock', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(dockInstance.styleClass).toBe('test-class');
+            expect(dockInstance.styleClass()).toBe('test-class');
         });
 
         it('should update ariaLabel and ariaLabelledBy inputs', async () => {
@@ -309,22 +309,22 @@ describe('Dock', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(dockInstance.ariaLabel).toBe('Test Dock');
-            expect(dockInstance.ariaLabelledBy).toBe('dock-label');
+            expect(dockInstance.ariaLabel()).toBe('Test Dock');
+            expect(dockInstance.ariaLabelledBy()).toBe('dock-label');
         });
 
         it('should update breakpoint input', async () => {
             component.breakpoint = '768px';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(dockInstance.breakpoint).toBe('768px');
+            expect(dockInstance.breakpoint()).toBe('768px');
         });
 
         it('should update id input', async () => {
             component.id = 'custom-dock-id';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(dockInstance.id).toBe('custom-dock-id');
+            expect(dockInstance.id()).toBe('custom-dock-id');
         });
     });
 
@@ -719,7 +719,7 @@ describe('Dock', () => {
         it('should apply correct CSS classes based on position', () => {
             // This test assumes CSS classes are applied based on position
             // The actual CSS class structure depends on the component's styling implementation
-            expect(dockInstance.position).toBe('bottom'); // Default position
+            expect(dockInstance.position()).toBe('bottom'); // Default position
         });
 
         it('should have generated id on list element', () => {
@@ -926,7 +926,7 @@ describe('Dock', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
             }).not.toThrow();
-            expect(dockInstance.model).toBeUndefined();
+            expect(dockInstance.model()).toBeUndefined();
         });
 
         it('should handle items without icons', async () => {

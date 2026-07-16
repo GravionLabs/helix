@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -20,9 +20,9 @@ const DIVIDER_INSTANCE = new InjectionToken<Divider>('DIVIDER_INSTANCE');
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[attr.aria-orientation]': 'layout',
+        '[attr.aria-orientation]': 'layout()',
         role: 'separator',
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
         '[attr.data-p]': 'dataP'
     },
@@ -44,30 +44,30 @@ export class Divider extends BaseComponent<DividerPassThrough> {
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Specifies the orientation.
      * @group Props
      */
-    @Input() layout: 'horizontal' | 'vertical' | undefined = 'horizontal';
+    readonly layout = input<'horizontal' | 'vertical' | undefined>('horizontal');
     /**
      * Border style type.
      * @group Props
      */
-    @Input() type: 'solid' | 'dashed' | 'dotted' | undefined = 'solid';
+    readonly type = input<'solid' | 'dashed' | 'dotted' | undefined>('solid');
     /**
      * Alignment of the content.
      * @group Props
      */
-    @Input() align: 'left' | 'center' | 'right' | 'top' | 'bottom' | undefined;
+    readonly align = input<'left' | 'center' | 'right' | 'top' | 'bottom'>();
 
     _componentStyle = inject(DividerStyle);
 
     get dataP() {
         return this.cn({
-            [this.align as string]: this.align,
-            [this.layout as string]: this.layout,
-            [this.type as string]: this.type
+            [this.align() as string]: this.align(),
+            [this.layout() as string]: this.layout(),
+            [this.type() as string]: this.type()
         });
     }
 }
