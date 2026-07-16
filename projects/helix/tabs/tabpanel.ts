@@ -17,15 +17,7 @@ const TABPANEL_INSTANCE = new InjectionToken<TabPanel>('TABPANEL_INSTANCE');
     selector: 'h-tabpanel',
     standalone: true,
     imports: [NgTemplateOutlet, BindModule],
-    template: `
-        <ng-template #defaultContent>
-            <ng-content />
-        </ng-template>
-
-        @if (shouldRender()) {
-            <ng-container *ngTemplateOutlet="content() ? content() : defaultContent" />
-        }
-    `,
+    templateUrl: './tabpanel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [TabPanelStyle, { provide: TABPANEL_INSTANCE, useExisting: TabPanel }, { provide: PARENT_INSTANCE, useExisting: TabPanel }],

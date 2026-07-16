@@ -15,7 +15,7 @@ const TABPANELS_INSTANCE = new InjectionToken<TabPanels>('TABPANELS_INSTANCE');
     selector: 'h-tabpanels',
     standalone: true,
     imports: [CommonModule, BindModule],
-    template: ` <ng-content></ng-content>`,
+    templateUrl: './tabpanels.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
