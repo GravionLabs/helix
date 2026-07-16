@@ -16,11 +16,7 @@ const PROGRESSSPINNER_INSTANCE = new InjectionToken<ProgressSpinner>('PROGRESSSP
     selector: 'h-progressSpinner, h-progress-spinner, h-progressspinner',
     standalone: true,
     imports: [CommonModule, SharedModule, Bind],
-    template: `
-        <svg [class]="cx('spin')" [hBind]="ptm('spin')" viewBox="25 25 50 50" [style.animation-duration]="animationDuration">
-            <circle [class]="cx('circle')" [hBind]="ptm('circle')" cx="50" cy="50" r="20" [attr.fill]="fill" [attr.stroke-width]="strokeWidth" stroke-miterlimit="10" />
-        </svg>
-    `,
+    templateUrl: './progressspinner.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ProgressSpinnerStyle, { provide: PROGRESSSPINNER_INSTANCE, useExisting: ProgressSpinner }, { provide: PARENT_INSTANCE, useExisting: ProgressSpinner }],

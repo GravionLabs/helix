@@ -80,31 +80,7 @@ export class RadioControlRegistry {
     selector: 'h-radioButton, h-radiobutton, h-radio-button',
     standalone: true,
     imports: [CommonModule, AutoFocus, SharedModule, BindModule],
-    template: `
-        <input
-            #input
-            [attr.id]="inputId"
-            type="radio"
-            [class]="cx('input')"
-            [attr.name]="name()"
-            [attr.required]="required() ? '' : undefined"
-            [attr.disabled]="$disabled() ? '' : undefined"
-            [checked]="checked"
-            [attr.value]="modelValue()"
-            [attr.aria-labelledby]="ariaLabelledBy"
-            [attr.aria-label]="ariaLabel"
-            [attr.aria-checked]="checked"
-            [attr.tabindex]="tabindex"
-            (focus)="onInputFocus($event)"
-            (blur)="onInputBlur($event)"
-            (change)="onChange($event)"
-            [hAutoFocus]="autofocus"
-            [hBind]="ptm('input')"
-        />
-        <div [class]="cx('box')" [hBind]="ptm('box')">
-            <div [class]="cx('icon')" [hBind]="ptm('icon')"></div>
-        </div>
-    `,
+    templateUrl: './radiobutton.html',
     providers: [RADIO_VALUE_ACCESSOR, RadioButtonStyle, { provide: RADIOBUTTON_INSTANCE, useExisting: RadioButton }, { provide: PARENT_INSTANCE, useExisting: RadioButton }],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
