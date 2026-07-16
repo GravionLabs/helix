@@ -18,11 +18,7 @@ const MOTION_INSTANCE = new InjectionToken<Motion>('MOTION_INSTANCE');
     selector: 'h-motion',
     standalone: true,
     imports: [CommonModule, BindModule],
-    template: `
-        @if (rendered()) {
-            <ng-content />
-        }
-    `,
+    templateUrl: './motion.component.html',
     providers: [MotionStyle, { provide: MOTION_INSTANCE, useExisting: Motion }, { provide: PARENT_INSTANCE, useExisting: Motion }],
     host: {
         '[class]': "cx('root')"
