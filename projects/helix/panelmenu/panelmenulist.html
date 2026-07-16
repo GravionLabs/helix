@@ -1,0 +1,21 @@
+<ul
+    hPanelMenuSub
+    #submenu
+    [root]="root"
+    [id]="panelId + '_list'"
+    [panelId]="panelId"
+    [tabindex]="tabindex"
+    [itemTemplate]="itemTemplate"
+    [focusedItemId]="focused ? focusedItemId : undefined"
+    [activeItemPath]="activeItemPath()"
+    [transitionOptions]="transitionOptions"
+    [items]="processedItems()"
+    [parentExpanded]="parentExpanded"
+    (itemToggle)="onItemToggle($event)"
+    (keydown)="onKeyDown($event)"
+    (menuFocus)="onFocus($event)"
+    (menuBlur)="onBlur($event)"
+    [pt]="pt()"
+    [unstyled]="unstyled()"
+    [motionOptions]="motionOptions()"
+></ul>
