@@ -69,8 +69,11 @@ directories**, then finishes manually by these rules:
    `fixture.componentRef.setInput('x', y)`; input *reads* become signal calls
    (`component.x()`); non-input members keep direct assignment.
 8. **Verification per batch:** `pnpm build:lib` and the demo build pass;
-   decorator grep over the batch's directories is empty (documented exceptions
-   listed in the PR body).
+   `pnpm ng test helix-shell --watch=false` passes **after** rebuilding
+   `dist/helix` (the shell consumes the built package — it is the only
+   runnable consumer test suite and catches cross-component signal leaks
+   like the `$hostName` PT-key regression); decorator grep over the batch's
+   directories is empty (documented exceptions listed in the PR body).
 
 ## Batch tracking
 
