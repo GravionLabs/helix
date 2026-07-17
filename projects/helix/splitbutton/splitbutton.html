@@ -11,7 +11,7 @@
     [icon]="icon()"
     [iconPos]="iconPos()"
     (click)="onDefaultButtonClick($event)"
-    [disabled]="disabled"
+    [disabled]="disabled()"
     [attr.tabindex]="tabindex()"
     [attr.aria-label]="buttonProps()?.['ariaLabel'] || label()"
     [hAutoFocus]="autofocus()"

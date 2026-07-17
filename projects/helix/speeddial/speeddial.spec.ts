@@ -384,20 +384,20 @@ describe('SpeedDial', () => {
         });
 
         it('should have correct default values', () => {
-            expect(speedDialInstance.visible).toBe(false);
-            expect(speedDialInstance.direction).toBe('up');
-            expect(speedDialInstance.transitionDelay).toBe(30);
-            expect(speedDialInstance.type).toBe('linear');
-            expect(speedDialInstance.radius).toBe(0);
-            expect(speedDialInstance.mask).toBe(false);
-            expect(speedDialInstance.disabled).toBe(false);
-            expect(speedDialInstance.hideOnClickOutside).toBe(true);
-            expect(speedDialInstance.rotateAnimation).toBe(true);
+            expect(speedDialInstance.visible()).toBe(false);
+            expect(speedDialInstance.direction()).toBe('up');
+            expect(speedDialInstance.transitionDelay()).toBe(30);
+            expect(speedDialInstance.type()).toBe('linear');
+            expect(speedDialInstance.radius()).toBe(0);
+            expect(speedDialInstance.mask()).toBe(false);
+            expect(speedDialInstance.disabled()).toBe(false);
+            expect(speedDialInstance.hideOnClickOutside()).toBe(true);
+            expect(speedDialInstance.rotateAnimation()).toBe(true);
         });
 
         it('should generate unique id', () => {
-            expect(speedDialInstance.id).toBeDefined();
-            expect(speedDialInstance.id).toMatch(/^pn_id_/);
+            expect(speedDialInstance.id()).toBeDefined();
+            expect(speedDialInstance.id()).toMatch(/^pn_id_/);
         });
 
         it('should render with correct structure', () => {
@@ -411,9 +411,9 @@ describe('SpeedDial', () => {
         });
 
         it('should process model items correctly', () => {
-            expect(speedDialInstance.model).toBeDefined();
-            expect(speedDialInstance.model?.length).toBe(5);
-            expect(speedDialInstance.model?.[0].label).toBe('Add');
+            expect(speedDialInstance.model()).toBeDefined();
+            expect(speedDialInstance.model()?.length).toBe(5);
+            expect(speedDialInstance.model()?.[0].label).toBe('Add');
         });
     });
 
@@ -425,7 +425,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.model).toEqual(newModel);
+            expect(speedDialInstance.model()).toEqual(newModel);
         });
 
         it('should update visible property', async () => {
@@ -434,7 +434,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
         });
 
         it('should update direction property', async () => {
@@ -443,7 +443,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.direction).toBe('down');
+            expect(speedDialInstance.direction()).toBe('down');
         });
 
         it('should update type property', async () => {
@@ -452,7 +452,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.type).toBe('circle');
+            expect(speedDialInstance.type()).toBe('circle');
         });
 
         it('should update transitionDelay property', async () => {
@@ -461,7 +461,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.transitionDelay).toBe(50);
+            expect(speedDialInstance.transitionDelay()).toBe(50);
         });
 
         it('should update radius property', async () => {
@@ -470,7 +470,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.radius).toBe(100);
+            expect(speedDialInstance.radius()).toBe(100);
         });
 
         it('should update mask property', async () => {
@@ -479,7 +479,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.mask).toBe(true);
+            expect(speedDialInstance.mask()).toBe(true);
         });
 
         it('should update disabled property', async () => {
@@ -488,7 +488,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.disabled).toBe(true);
+            expect(speedDialInstance.disabled()).toBe(true);
         });
 
         it('should update hideOnClickOutside property', async () => {
@@ -497,7 +497,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.hideOnClickOutside).toBe(false);
+            expect(speedDialInstance.hideOnClickOutside()).toBe(false);
         });
 
         it('should update style properties', async () => {
@@ -509,10 +509,10 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.style).toEqual({ width: '100px' });
-            expect(speedDialInstance.className).toBe('custom-speed-dial');
-            expect(speedDialInstance.buttonStyle).toEqual({ backgroundColor: 'red' });
-            expect(speedDialInstance.buttonClassName).toBe('custom-button');
+            expect(speedDialInstance.style()).toEqual({ width: '100px' });
+            expect(speedDialInstance.className()).toBe('custom-speed-dial');
+            expect(speedDialInstance.buttonStyle()).toEqual({ backgroundColor: 'red' });
+            expect(speedDialInstance.buttonClassName()).toBe('custom-button');
         });
 
         it('should update icon properties', () => {
@@ -521,9 +521,9 @@ describe('SpeedDial', () => {
             speedDialInstance.hideIcon = 'pi pi-times';
             speedDialInstance.rotateAnimation = false;
 
-            expect(speedDialInstance.showIcon).toBe('pi pi-plus');
-            expect(speedDialInstance.hideIcon).toBe('pi pi-times');
-            expect(speedDialInstance.rotateAnimation).toBe(false);
+            expect(speedDialInstance.showIcon()).toBe('pi pi-plus');
+            expect(speedDialInstance.hideIcon()).toBe('pi pi-times');
+            expect(speedDialInstance.rotateAnimation()).toBe(false);
         });
 
         it('should update accessibility properties', async () => {
@@ -533,8 +533,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.ariaLabel).toBe('Speed Dial Menu');
-            expect(speedDialInstance.ariaLabelledBy).toBe('speed-dial-label');
+            expect(speedDialInstance.ariaLabel()).toBe('Speed Dial Menu');
+            expect(speedDialInstance.ariaLabelledBy()).toBe('speed-dial-label');
         });
 
         it('should update tooltip options', async () => {
@@ -544,7 +544,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.tooltipOptions.tooltipPosition).toBe('bottom');
+            expect(speedDialInstance.tooltipOptions().tooltipPosition).toBe('bottom');
         });
 
         it('should update button props', async () => {
@@ -554,7 +554,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.buttonProps.size).toBe('small');
+            expect(speedDialInstance.buttonProps().size).toBe('small');
         });
     });
 
@@ -612,19 +612,19 @@ describe('SpeedDial', () => {
         it('should toggle visibility on button click', async () => {
             const button = fixture.debugElement.query(By.css('button[pButton]'));
 
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
 
             button.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
 
             button.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
         });
 
         it('should not emit events when disabled', async () => {
@@ -654,7 +654,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
 
             // Execute first item command directly
-            const firstItem = speedDialInstance.model?.[0];
+            const firstItem = speedDialInstance.model()?.[0];
             if (firstItem?.command) {
                 firstItem.command({ originalEvent: new Event('click'), item: firstItem });
             }
@@ -666,16 +666,16 @@ describe('SpeedDial', () => {
             speedDialInstance.show();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
 
-            const firstItem = speedDialInstance.model?.[0];
+            const firstItem = speedDialInstance.model()?.[0];
             if (firstItem) {
                 speedDialInstance.onItemClick(new Event('click'), firstItem);
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
             }
 
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
         });
 
         it('should handle item tooltip options', () => {
@@ -764,7 +764,7 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
 
             expect(keydownSpy).toHaveBeenCalled();
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
         });
 
         it('should handle home key', async () => {
@@ -800,7 +800,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
 
             expect(keydownSpy).toHaveBeenCalled();
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
         });
 
         it('should handle arrow up on toggler button', async () => {
@@ -812,7 +812,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
 
             expect(keydownSpy).toHaveBeenCalled();
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
         });
 
         xit('should handle escape on toggler button', async () => {
@@ -831,7 +831,7 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
 
             expect(keydownSpy).toHaveBeenCalled();
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
         });
     });
 
@@ -842,7 +842,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.type).toBe('linear');
+            expect(speedDialInstance.type()).toBe('linear');
         });
 
         it('should handle circle type with radius', async () => {
@@ -852,8 +852,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.type).toBe('circle');
-            expect(speedDialInstance.radius).toBe(80);
+            expect(speedDialInstance.type()).toBe('circle');
+            expect(speedDialInstance.radius()).toBe(80);
         });
 
         it('should handle semi-circle type', async () => {
@@ -863,8 +863,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.type).toBe('semi-circle');
-            expect(speedDialInstance.direction).toBe('up');
+            expect(speedDialInstance.type()).toBe('semi-circle');
+            expect(speedDialInstance.direction()).toBe('up');
         });
 
         it('should handle quarter-circle type', async () => {
@@ -874,8 +874,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.type).toBe('quarter-circle');
-            expect(speedDialInstance.direction).toBe('up-right');
+            expect(speedDialInstance.type()).toBe('quarter-circle');
+            expect(speedDialInstance.direction()).toBe('up-right');
         });
 
         it('should calculate item styles for different types', async () => {
@@ -916,8 +916,8 @@ describe('SpeedDial', () => {
             maskFixture.detectChanges();
 
             const speedDialInstance = maskFixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
-            expect(speedDialInstance.maskStyle).toEqual({ backgroundColor: 'rgba(0,0,0,0.5)' });
-            expect(speedDialInstance.maskClassName).toBe('custom-mask');
+            expect(speedDialInstance.maskStyle()).toEqual({ backgroundColor: 'rgba(0,0,0,0.5)' });
+            expect(speedDialInstance.maskClassName()).toBe('custom-mask');
         });
     });
 
@@ -936,7 +936,7 @@ describe('SpeedDial', () => {
                 expect(() => speedDialInstance.ngAfterContentInit()).not.toThrow();
 
                 // Test that templates property exists and is processed
-                expect(speedDialInstance.templates).toBeDefined();
+                expect(speedDialInstance.templates()).toBeDefined();
 
                 // Verify pTemplate container is rendered
                 const container = templateFixture.debugElement.query(By.css('[data-pc-name="speeddial"]'));
@@ -1003,7 +1003,7 @@ describe('SpeedDial', () => {
 
                 // Test that item template is processed
                 expect(() => speedDialInstance.ngAfterContentInit()).not.toThrow();
-                expect(speedDialInstance.templates).toBeDefined();
+                expect(speedDialInstance.templates()).toBeDefined();
 
                 const customItems = templateFixture.debugElement.queryAll(By.css('.custom-item'));
                 const customLabels = templateFixture.debugElement.queryAll(By.css('.custom-item-label'));
@@ -1020,7 +1020,7 @@ describe('SpeedDial', () => {
 
                 // Test that icon template is processed
                 expect(() => speedDialInstance.ngAfterContentInit()).not.toThrow();
-                expect(speedDialInstance.templates).toBeDefined();
+                expect(speedDialInstance.templates()).toBeDefined();
 
                 const customIcons = templateFixture.debugElement.queryAll(By.css('.custom-icon'));
                 expect(customIcons.length).toBeGreaterThanOrEqual(0);
@@ -1041,7 +1041,7 @@ describe('SpeedDial', () => {
                 expect(() => speedDialInstance.ngAfterContentInit()).not.toThrow();
 
                 // Test that buttonTemplate property exists (ContentChild)
-                expect(speedDialInstance.buttonTemplate).toBeDefined();
+                expect(speedDialInstance.buttonTemplate()).toBeDefined();
 
                 // Verify container is rendered
                 const container = contentTemplateFixture.debugElement.query(By.css('[data-pc-name="speeddial"]'));
@@ -1057,8 +1057,8 @@ describe('SpeedDial', () => {
                 const speedDialInstance = contentTemplateFixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
 
                 // @ContentChild('button') should set buttonTemplate
-                expect(speedDialInstance.buttonTemplate).toBeDefined();
-                expect(speedDialInstance.buttonTemplate?.constructor.name).toBe('TemplateRef');
+                expect(speedDialInstance.buttonTemplate()).toBeDefined();
+                expect(speedDialInstance.buttonTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process itemTemplate from @ContentChild('item')", async () => {
@@ -1070,8 +1070,8 @@ describe('SpeedDial', () => {
                 const speedDialInstance = contentTemplateFixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
 
                 // @ContentChild('item') should set itemTemplate
-                expect(speedDialInstance.itemTemplate).toBeDefined();
-                expect(speedDialInstance.itemTemplate?.constructor.name).toBe('TemplateRef');
+                expect(speedDialInstance.itemTemplate()).toBeDefined();
+                expect(speedDialInstance.itemTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process iconTemplate from @ContentChild('icon')", async () => {
@@ -1083,8 +1083,8 @@ describe('SpeedDial', () => {
                 const speedDialInstance = contentTemplateFixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
 
                 // @ContentChild('icon') should set iconTemplate
-                expect(speedDialInstance.iconTemplate).toBeDefined();
-                expect(speedDialInstance.iconTemplate?.constructor.name).toBe('TemplateRef');
+                expect(speedDialInstance.iconTemplate()).toBeDefined();
+                expect(speedDialInstance.iconTemplate()?.constructor.name).toBe('TemplateRef');
             });
         });
 
@@ -1135,7 +1135,7 @@ describe('SpeedDial', () => {
                 const speedDialInstance = templateFixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
 
                 expect(() => speedDialInstance.ngAfterContentInit()).not.toThrow();
-                expect(speedDialInstance.templates).toBeDefined();
+                expect(speedDialInstance.templates()).toBeDefined();
             });
         });
     });
@@ -1240,7 +1240,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.className).toBe('my-custom-speed-dial');
+            expect(speedDialInstance.className()).toBe('my-custom-speed-dial');
         });
 
         it('should apply custom style', async () => {
@@ -1249,7 +1249,7 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.style).toEqual({ width: '200px', height: '200px' });
+            expect(speedDialInstance.style()).toEqual({ width: '200px', height: '200px' });
         });
 
         it('should apply button styling', async () => {
@@ -1259,8 +1259,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.buttonStyle).toEqual({ backgroundColor: 'blue' });
-            expect(speedDialInstance.buttonClassName).toBe('custom-button-class');
+            expect(speedDialInstance.buttonStyle()).toEqual({ backgroundColor: 'blue' });
+            expect(speedDialInstance.buttonClassName()).toBe('custom-button-class');
         });
 
         it('should apply mask styling when enabled', async () => {
@@ -1271,8 +1271,8 @@ describe('SpeedDial', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(speedDialInstance.maskStyle).toEqual({ backgroundColor: 'rgba(0,0,0,0.8)' });
-            expect(speedDialInstance.maskClassName).toBe('custom-mask-class');
+            expect(speedDialInstance.maskStyle()).toEqual({ backgroundColor: 'rgba(0,0,0,0.8)' });
+            expect(speedDialInstance.maskClassName()).toBe('custom-mask-class');
         });
 
         it('should have correct button icon class based on state', () => {
@@ -1295,7 +1295,7 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
-            expect(speedDialInstance.visible).toBe(true);
+            expect(speedDialInstance.visible()).toBe(true);
 
             // Simulate document click outside by calling hide directly
             // since document click listener is complex to simulate in test environment
@@ -1304,7 +1304,7 @@ describe('SpeedDial', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(speedDialInstance.visible).toBe(false);
+            expect(speedDialInstance.visible()).toBe(false);
         });
 
         it('should not hide when hideOnClickOutside is false', async () => {
@@ -1330,7 +1330,7 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(speedDialInstance.model).toEqual([]);
+            expect(speedDialInstance.model()).toEqual([]);
         });
 
         it('should handle null model', async () => {
@@ -1340,7 +1340,7 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(speedDialInstance.model).toBeNull();
+            expect(speedDialInstance.model()).toBeNull();
         });
 
         it('should handle disabled items', () => {
@@ -1420,13 +1420,13 @@ describe('SpeedDial', () => {
             fixture.detectChanges();
 
             // When visible, delay increases with index
-            speedDialInstance.visible = true;
+            speedDialInstance.visible.set(true);
             expect(speedDialInstance.calculateTransitionDelay(0)).toBe(0);
             expect(speedDialInstance.calculateTransitionDelay(1)).toBe(50);
             expect(speedDialInstance.calculateTransitionDelay(2)).toBe(100);
 
             // When not visible, delay decreases
-            speedDialInstance.visible = false;
+            speedDialInstance.visible.set(false);
             expect(speedDialInstance.calculateTransitionDelay(0)).toBe(100);
             expect(speedDialInstance.calculateTransitionDelay(1)).toBe(50);
             expect(speedDialInstance.calculateTransitionDelay(2)).toBe(0);
@@ -1516,7 +1516,7 @@ describe('SpeedDial', () => {
 
         it('should unbind document click listener when visible is set to false', () => {
             const unbindSpy = spyOn(speedDialInstance, 'unbindDocumentClickListener');
-            speedDialInstance.visible = false;
+            speedDialInstance.visible.set(false);
             expect(unbindSpy).toHaveBeenCalled();
         });
     });
@@ -1996,7 +1996,7 @@ describe('SpeedDial', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
 
-                const testId = ptSpeedDialInstance.id + '_0';
+                const testId = ptSpeedDialInstance.id() + '_0';
                 const ptOptions = ptSpeedDialInstance.getPTOptions(testId, 'item');
 
                 // Verify method returns something
@@ -2034,7 +2034,7 @@ describe('SpeedDial', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
 
-                const testId = ptSpeedDialInstance.id + '_0';
+                const testId = ptSpeedDialInstance.id() + '_0';
                 const ptOptions = ptSpeedDialInstance.getPTOptions(testId, 'pcAction');
 
                 // Verify method returns something
@@ -2049,7 +2049,7 @@ describe('SpeedDial', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
 
-                const firstItemId = ptSpeedDialInstance.id + '_0';
+                const firstItemId = ptSpeedDialInstance.id() + '_0';
 
                 // Test method can be called
                 const ptOptions = ptSpeedDialInstance.getPTOptions(firstItemId, 'item');
@@ -2066,7 +2066,7 @@ describe('SpeedDial', () => {
                 // Test verifies getPTOptions method works with visibility changes
                 expect(typeof ptSpeedDialInstance.getPTOptions).toBe('function');
 
-                const testId = ptSpeedDialInstance.id + '_0';
+                const testId = ptSpeedDialInstance.id() + '_0';
 
                 // Test method can be called
                 const ptOptions = ptSpeedDialInstance.getPTOptions(testId, 'item');
