@@ -1040,7 +1040,7 @@ export class Tree extends BaseComponent<TreePassThrough> implements BlockableUI 
                     break;
 
                 default:
-                    this._templateMap[<any>item.name] = item.template;
+                    this._templateMap[<any>item.name()] = item.template;
                     break;
             }
         });

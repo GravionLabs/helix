@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, NgModule, Output, PLATFORM_ID, Provider } from '@angular/core';
+import { booleanAttribute, Directive, ElementRef, forwardRef, HostListener, Inject, Input, NgModule, PLATFORM_ID, Provider, input, output } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { getBrowser, isAndroid } from '@primeuix/utils';
 
@@ -76,7 +76,7 @@ export class KeyFilter implements Validator {
      * When enabled, instead of blocking keys, input is validated internally to test against the regular expression.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) pValidateOnly: boolean | undefined;
+    readonly pValidateOnly = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Sets the pattern for key filtering.
      * @group Props
@@ -102,7 +102,7 @@ export class KeyFilter implements Validator {
      * @param {(string | number)} modelValue - Custom model change event.
      * @group Emits
      */
-    @Output() ngModelChange: EventEmitter<string | number> = new EventEmitter<string | number>();
+    readonly ngModelChange = output<string | number>();
 
     regex: RegExp = /./;
 
@@ -174,7 +174,7 @@ export class KeyFilter implements Validator {
 
     @HostListener('input', ['$event'])
     onInput(e: KeyboardEvent) {
-        if (this.isAndroid && !this.pValidateOnly) {
+        if (this.isAndroid && !this.pValidateOnly()) {
             let val = this.el.nativeElement.value;
             let lastVal = this.lastValue || '';
 
@@ -203,7 +203,7 @@ export class KeyFilter implements Validator {
 
     @HostListener('keypress', ['$event'])
     onKeyPress(e: KeyboardEvent) {
-        if (this.isAndroid || this.pValidateOnly) {
+        if (this.isAndroid || this.pValidateOnly()) {
             return;
         }
 
@@ -273,7 +273,7 @@ export class KeyFilter implements Validator {
     }
 
     validate(_c: AbstractControl): { [key: string]: any } | any {
-        if (this.pValidateOnly) {
+        if (this.pValidateOnly()) {
             let value = this.el.nativeElement.value;
             if (value && !this.regex.test(value)) {
                 return {

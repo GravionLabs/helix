@@ -5,7 +5,7 @@
     } @else {
       <div #content [class]="cn(cx('content'), contentStyleClass)" [style]="contentStyle" [hBind]="ptm('content')">
         @for (item of loadedItems; track _trackBy(index, item); let index = $index) {
-          <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, options: getOptions(index) }"></ng-container>
+          <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item, options: getOptions(index) }"></ng-container>
         }
       </div>
     }

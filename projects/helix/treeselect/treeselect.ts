@@ -584,7 +584,8 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
                     break;
 
                 default: //TODO: @deprecated Use "value" template instead
-                    if (item.name) this.templateMap[item.name] = item.template;
+                    const n = item.name();
+                    if (n) this.templateMap[n] = item.template;
                     else this.valueTemplate = item.template;
                     break;
             }
@@ -700,14 +701,14 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
 
     onFirstHiddenFocus(event) {
         const focusInput = this.focusInput();
-        const focusableEl = event.relatedTarget === focusInput?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.overlayViewChild?.nativeElement, ':not([data-p-hidden-focusable="true"])') : focusInput?.nativeElement;
+        const focusableEl = event.relatedTarget === focusInput?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : focusInput?.nativeElement;
 
         focus(focusableEl);
     }
 
     onLastHiddenFocus(event) {
         const focusInput = this.focusInput();
-        const focusableEl = event.relatedTarget === focusInput?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild?.nativeElement, ':not([data-p-hidden-focusable="true"])') : focusInput?.nativeElement;
+        const focusableEl = event.relatedTarget === focusInput?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : focusInput?.nativeElement;
 
         focus(focusableEl);
     }
@@ -751,7 +752,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
     }
 
     hasFocusableElements() {
-        return getFocusableElements(this.overlayViewChild()?.overlayViewChild?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
     }
 
     resetFilter() {

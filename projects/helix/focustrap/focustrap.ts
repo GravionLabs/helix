@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, Directive, inject, Input, NgModule, PLATFORM_ID, SimpleChanges } from '@angular/core';
+import { booleanAttribute, Directive, inject, NgModule, PLATFORM_ID, SimpleChanges, input } from '@angular/core';
 import { createElement, focus, getFirstFocusableElement, getLastFocusableElement } from '@primeuix/utils';
 import { BaseComponent } from '@gravionlabs/helix/basecomponent';
 
@@ -16,7 +16,7 @@ export class FocusTrap extends BaseComponent {
      * When set as true, focus wouldn't be managed.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) pFocusTrapDisabled: boolean = false;
+    readonly pFocusTrapDisabled = input<boolean, unknown>(false, { transform: booleanAttribute });
 
     platformId = inject(PLATFORM_ID);
 
@@ -27,7 +27,7 @@ export class FocusTrap extends BaseComponent {
     lastHiddenFocusableElement!: HTMLElement;
 
     onInit() {
-        if (isPlatformBrowser(this.platformId) && !this.pFocusTrapDisabled) {
+        if (isPlatformBrowser(this.platformId) && !this.pFocusTrapDisabled()) {
             !this.firstHiddenFocusableElement && !this.lastHiddenFocusableElement && this.createHiddenFocusableElements();
         }
     }

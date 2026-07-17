@@ -72,11 +72,11 @@
             (keydown.enter)="onItemClick($event, item)"
             [attr.aria-label]="item.label"
             [attr.tabindex]="item.disabled || !visible() ? null : item.tabindex ? item.tabindex : '0'"
-            [pt]="getPTOptions(id + '_' + i, 'pcAction')"
+            [pt]="getPTOptions($id() + '_' + i, 'pcAction')"
             [unstyled]="unstyled()"
             >
             @if (item.icon) {
-              <span hButtonIcon [pt]="getPTOptions(id + '_' + i, 'actionIcon')" [class]="item.icon"></span>
+              <span hButtonIcon [pt]="getPTOptions($id() + '_' + i, 'actionIcon')" [class]="item.icon"></span>
             }
           </button>
         }
