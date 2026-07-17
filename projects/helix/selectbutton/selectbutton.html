@@ -1,7 +1,7 @@
-@for (option of options; track getOptionLabel(option); let i = $index) {
+@for (option of options(); track getOptionLabel(option); let i = $index) {
     <h-togglebutton
-        [autofocus]="autofocus"
-        [styleClass]="styleClass"
+        [autofocus]="autofocus()"
+        [styleClass]="styleClass()"
         [ngModel]="isSelected(option)"
         [onLabel]="this.getOptionLabel(option)"
         [offLabel]="this.getOptionLabel(option)"
@@ -13,9 +13,9 @@
         [pt]="ptm('pcToggleButton')"
         [unstyled]="unstyled()"
     >
-        @if (itemTemplate || _itemTemplate) {
+        @if (itemTemplate() || _itemTemplate) {
             <ng-template #content>
-                <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: option, index: i }"></ng-container>
+                <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: option, index: i }"></ng-container>
             </ng-template>
         }
     </h-togglebutton>

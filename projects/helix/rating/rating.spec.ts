@@ -187,10 +187,10 @@ describe('Rating', () => {
         });
 
         it('should initialize with default properties', () => {
-            expect(ratingInstance.stars).toBe(5 as any);
-            expect(ratingInstance.readonly).toBeFalsy();
+            expect(ratingInstance.stars()).toBe(5 as any);
+            expect(ratingInstance.readonly()).toBeFalsy();
             expect(ratingInstance.value).toBeNull();
-            expect(ratingInstance.autofocus).toBeFalsy();
+            expect(ratingInstance.autofocus()).toBeFalsy();
         });
 
         it('should create stars array', () => {
@@ -348,7 +348,7 @@ describe('Rating', () => {
         });
 
         it('should support custom number of stars', () => {
-            expect(ratingInstance.stars).toBe(10);
+            expect(ratingInstance.stars()).toBe(10);
             expect(ratingInstance.starsArray?.length).toBe(10);
 
             // Find divs that are direct children of ng-template and contain input elements
@@ -692,7 +692,7 @@ describe('Rating', () => {
 
             const inputs = fixture.debugElement.queryAll(By.css('input[type="radio"]'));
             // Check that the pAutoFocus directive is applied - look for the attribute it adds
-            expect(ratingInstance.autofocus).toBe(true);
+            expect(ratingInstance.autofocus()).toBe(true);
         });
     });
 
@@ -878,12 +878,12 @@ describe('Rating', () => {
 
         it('should have onicon pTemplate', () => {
             expect(ratingInstance).toBeTruthy();
-            expect(() => ratingInstance.onIconTemplate).not.toThrow();
+            expect(() => ratingInstance.onIconTemplate()).not.toThrow();
         });
 
         it('should have officon pTemplate', () => {
             expect(ratingInstance).toBeTruthy();
-            expect(() => ratingInstance.offIconTemplate).not.toThrow();
+            expect(() => ratingInstance.offIconTemplate()).not.toThrow();
         });
 
         it('should pass context parameters to onicon template', async () => {
@@ -958,7 +958,7 @@ describe('Rating', () => {
 
             // Verify that the rating component works correctly
             expect(ratingInstance.value).toBe(3 as any);
-            expect(ratingInstance.stars).toBe(5 as any);
+            expect(ratingInstance.stars()).toBe(5 as any);
         });
     });
 
@@ -983,12 +983,12 @@ describe('Rating', () => {
 
         it('should have onicon #template', () => {
             expect(ratingInstance).toBeTruthy();
-            expect(() => ratingInstance.onIconTemplate).not.toThrow();
+            expect(() => ratingInstance.onIconTemplate()).not.toThrow();
         });
 
         it('should have officon #template', () => {
             expect(ratingInstance).toBeTruthy();
-            expect(() => ratingInstance.offIconTemplate).not.toThrow();
+            expect(() => ratingInstance.offIconTemplate()).not.toThrow();
         });
 
         it('should pass context parameters to onicon template', async () => {
@@ -1063,7 +1063,7 @@ describe('Rating', () => {
 
             // Verify that the rating component works correctly
             expect(ratingInstance.value).toBe(3 as any);
-            expect(ratingInstance.stars).toBe(5 as any);
+            expect(ratingInstance.stars()).toBe(5 as any);
         });
     });
 

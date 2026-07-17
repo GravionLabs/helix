@@ -1,25 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    AfterContentInit,
-    AfterViewChecked,
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, input, Input, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, output, contentChildren, contentChild, computed } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { equals, resolveFieldData } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -52,7 +32,7 @@ export const SELECTBUTTON_VALUE_ACCESSOR: any = {
     host: {
         '[class]': "cx('root')",
         '[attr.role]': '"group"',
-        '[attr.aria-labelledby]': 'ariaLabelledBy',
+        '[attr.aria-labelledby]': 'ariaLabelledBy()',
         '[attr.data-p]': 'dataP'
     },
     hostDirectives: [Bind]
@@ -63,72 +43,65 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
      * An array of selectitems to display as the available options.
      * @group Props
      */
-    @Input() options: any[] | undefined;
+    readonly options = input<any[]>();
     /**
      * Name of the label field of an option.
      * @group Props
      */
-    @Input() optionLabel: string | undefined;
+    readonly optionLabel = input<string>();
     /**
      * Name of the value field of an option.
      * @group Props
      */
-    @Input() optionValue: string | undefined;
+    readonly optionValue = input<string>();
     /**
      * Name of the disabled field of an option.
      * @group Props
      */
-    @Input() optionDisabled: string | undefined;
+    readonly optionDisabled = input<string>();
     /**
      * Whether selection can be cleared.
      * @group Props
      */
-    get unselectable(): boolean {
-        return this._unselectable;
-    }
-    private _unselectable: boolean = false;
-
-    @Input({ transform: booleanAttribute })
-    set unselectable(value: boolean) {
-        this._unselectable = value;
-        this.allowEmpty = !value;
-    }
+    readonly unselectable = input<boolean, unknown>(false, { transform: booleanAttribute });
 
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number = 0;
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * When specified, allows selecting multiple values.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) multiple: boolean | undefined;
+    readonly multiple = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Whether selection can not be cleared.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) allowEmpty: boolean = true;
+    readonly allowEmpty = input<boolean, unknown>(true, { transform: booleanAttribute });
+
+    private readonly $allowEmpty = computed(() => (this.unselectable() ? false : this.allowEmpty()));
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * A property to uniquely identify a value in options.
      * @group Props
      */
-    @Input() dataKey: string | undefined;
+    readonly dataKey = input<string>();
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Specifies the size of the component.
      * @defaultValue undefined
@@ -146,25 +119,25 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
      * @param {SelectButtonOptionClickEvent} event - Custom click event.
      * @group Emits
      */
-    @Output() onOptionClick: EventEmitter<SelectButtonOptionClickEvent> = new EventEmitter<SelectButtonOptionClickEvent>();
+    readonly onOptionClick = output<SelectButtonOptionClickEvent>();
     /**
      * Callback to invoke on selection change.
      * @param {SelectButtonChangeEvent} event - Custom change event.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<SelectButtonChangeEvent> = new EventEmitter<SelectButtonChangeEvent>();
+    readonly onChange = output<SelectButtonChangeEvent>();
     /**
      * Custom item template.
      * @param {SelectButtonItemTemplateContext} context - item context.
      * @see {@link SelectButtonItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<SelectButtonItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<SelectButtonItemTemplateContext>>('item', { descendants: false });
 
     _itemTemplate: TemplateRef<SelectButtonItemTemplateContext> | undefined;
 
     get equalityKey() {
-        return this.optionValue ? null : this.dataKey;
+        return this.optionValue() ? null : this.dataKey();
     }
 
     value: any;
@@ -182,22 +155,25 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
     }
 
     getAllowEmpty() {
-        if (this.multiple) {
-            return this.allowEmpty || this.value?.length !== 1;
+        if (this.multiple()) {
+            return this.$allowEmpty() || this.value?.length !== 1;
         }
-        return this.allowEmpty;
+        return this.$allowEmpty();
     }
 
     getOptionLabel(option: any) {
-        return this.optionLabel ? resolveFieldData(option, this.optionLabel) : option.label != undefined ? option.label : option;
+        const optionLabel = this.optionLabel();
+        return optionLabel ? resolveFieldData(option, optionLabel) : option.label != undefined ? option.label : option;
     }
 
     getOptionValue(option: any) {
-        return this.optionValue ? resolveFieldData(option, this.optionValue) : this.optionLabel || option.value === undefined ? option : option.value;
+        const optionValue = this.optionValue();
+        return optionValue ? resolveFieldData(option, optionValue) : this.optionLabel() || option.value === undefined ? option : option.value;
     }
 
     isOptionDisabled(option: any) {
-        return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option.disabled !== undefined ? option.disabled : false;
+        const optionDisabled = this.optionDisabled();
+        return optionDisabled ? resolveFieldData(option, optionDisabled) : option.disabled !== undefined ? option.disabled : false;
     }
 
     onOptionSelect(event, option, index) {
@@ -207,18 +183,18 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
 
         let selected = this.isSelected(option);
 
-        if (selected && this.unselectable) {
+        if (selected && this.unselectable()) {
             return;
         }
 
         let optionValue = this.getOptionValue(option);
         let newValue;
 
-        if (this.multiple) {
+        if (this.multiple()) {
             if (selected) newValue = this.value.filter((val) => !equals(val, optionValue, this.equalityKey || undefined));
             else newValue = this.value ? [...this.value, optionValue] : [optionValue];
         } else {
-            if (selected && !this.allowEmpty) {
+            if (selected && !this.$allowEmpty()) {
                 return;
             }
             newValue = selected ? null : optionValue;
@@ -269,17 +245,17 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
     }
 
     removeOption(option: any): void {
-        this.value = this.value.filter((val: any) => !equals(val, this.getOptionValue(option), this.dataKey));
+        this.value = this.value.filter((val: any) => !equals(val, this.getOptionValue(option), this.dataKey()));
     }
 
     isSelected(option: any) {
         let selected = false;
         const optionValue = this.getOptionValue(option);
 
-        if (this.multiple) {
+        if (this.multiple()) {
             if (this.value && Array.isArray(this.value)) {
                 for (let val of this.value) {
-                    if (equals(val, optionValue, this.dataKey)) {
+                    if (equals(val, optionValue, this.dataKey())) {
                         selected = true;
                         break;
                     }
@@ -292,10 +268,10 @@ export class SelectButton extends BaseEditableHolder<SelectButtonPassThrough> im
         return selected;
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;

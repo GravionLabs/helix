@@ -528,13 +528,13 @@ describe('SelectButton pTemplate Tests', () => {
     it('should create component with pTemplate templates', async () => {
         expect(component).toBeTruthy();
         expect(selectButtonInstance).toBeTruthy();
-        expect(() => selectButtonInstance.itemTemplate).not.toThrow();
+        expect(() => selectButtonInstance.itemTemplate()).not.toThrow();
     });
 
     it('should pass context parameters to item template', async () => {
         // Verify that the select button component is working with options
-        expect(selectButtonInstance.options).toBeDefined();
-        expect(selectButtonInstance.options?.length).toBe(3);
+        expect(selectButtonInstance.options()).toBeDefined();
+        expect(selectButtonInstance.options()?.length).toBe(3);
         expect(component.options.length).toBe(3);
     });
 
@@ -581,7 +581,7 @@ describe('SelectButton pTemplate Tests', () => {
             await fixture.whenStable();
 
             // Verify that ngAfterContentInit is called correctly
-            expect(selectButtonInstance.options).toBeDefined();
+            expect(selectButtonInstance.options()).toBeDefined();
             expect(component.options).toBeDefined();
         }
     });
@@ -607,13 +607,13 @@ describe('SelectButton #template Reference Tests', () => {
     it('should create component with #template references', async () => {
         expect(component).toBeTruthy();
         expect(selectButtonInstance).toBeTruthy();
-        expect(() => selectButtonInstance.itemTemplate).not.toThrow();
+        expect(() => selectButtonInstance.itemTemplate()).not.toThrow();
     });
 
     it('should pass context parameters to item template', async () => {
         // Verify that the select button component is working with options
-        expect(selectButtonInstance.options).toBeDefined();
-        expect(selectButtonInstance.options?.length).toBe(3);
+        expect(selectButtonInstance.options()).toBeDefined();
+        expect(selectButtonInstance.options()?.length).toBe(3);
         expect(component.options.length).toBe(3);
     });
 
@@ -660,7 +660,7 @@ describe('SelectButton #template Reference Tests', () => {
             await fixture.whenStable();
 
             // Verify that ngAfterContentInit is called correctly
-            expect(selectButtonInstance.options).toBeDefined();
+            expect(selectButtonInstance.options()).toBeDefined();
             expect(component.options).toBeDefined();
         }
     });

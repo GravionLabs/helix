@@ -1,13 +1,13 @@
-@if (mode === 'determinate') {
-  <div [class]="cn(cx('value'), valueStyleClass)" [hBind]="ptm('value')" [style.width]="value + '%'" [style.display]="'flex'" [style.background]="color" [attr.data-p]="dataP">
+@if (mode() === 'determinate') {
+  <div [class]="cn(cx('value'), valueStyleClass())" [hBind]="ptm('value')" [style.width]="value() + '%'" [style.display]="'flex'" [style.background]="color()" [attr.data-p]="dataP">
     <div [class]="cx('label')" [hBind]="ptm('label')" [attr.data-p]="dataP">
-      @if (showValue && !contentTemplate && !_contentTemplate) {
-        <div [style.display]="value != null && value !== 0 ? 'flex' : 'none'">{{ value }}{{ unit }}</div>
+      @if (showValue() && !contentTemplate() && !_contentTemplate) {
+        <div [style.display]="value() != null && value() !== 0 ? 'flex' : 'none'">{{ value() }}{{ unit() }}</div>
       }
-      <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: value }"></ng-container>
+      <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { $implicit: value() }"></ng-container>
     </div>
   </div>
 }
-@if (mode === 'indeterminate') {
-  <div [class]="cn(cx('value'), valueStyleClass)" [hBind]="ptm('value')" [style.background]="color" [attr.data-p]="dataP"></div>
+@if (mode() === 'indeterminate') {
+  <div [class]="cn(cx('value'), valueStyleClass())" [hBind]="ptm('value')" [style.background]="color()" [attr.data-p]="dataP"></div>
 }
