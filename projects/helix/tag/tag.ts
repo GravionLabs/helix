@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, contentChildren } from '@angular/core';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -21,7 +21,7 @@ const TAG_INSTANCE = new InjectionToken<Tag>('TAG_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [TagStyle, { provide: TAG_INSTANCE, useExisting: Tag }, { provide: PARENT_INSTANCE, useExisting: Tag }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.data-p]': 'dataP'
     },
     hostDirectives: [Bind]
@@ -41,17 +41,17 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Severity type of the tag.
      * @group Props
      */
-    @Input() severity: 'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | undefined | null;
+    readonly severity = input<'success' | 'secondary' | 'info' | 'warn' | 'danger' | 'contrast' | null>();
     /**
      * Value to display inside the tag.
      * @group Props
      */
-    @Input() value: string | undefined;
+    readonly value = input<string>();
     /**
      * Icon of the tag to display next to the value.
      * @group Props
@@ -61,7 +61,7 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
      * Whether the corners of the tag are rounded.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) rounded: boolean | undefined;
+    readonly rounded = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     /**
      * Custom icon template.
@@ -69,14 +69,14 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
      */
     @ContentChild('icon', { descendants: false }) iconTemplate: TemplateRef<void> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _iconTemplate: TemplateRef<void> | undefined;
 
     _componentStyle = inject(TagStyle);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'icon':
                     this._iconTemplate = item.template;
@@ -87,8 +87,8 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
 
     get dataP() {
         return this.cn({
-            rounded: this.rounded,
-            [this.severity as string]: this.severity
+            rounded: this.rounded(),
+            [this.severity() as string]: this.severity()
         });
     }
 }

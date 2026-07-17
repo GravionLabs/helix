@@ -843,6 +843,13 @@ export class Password extends BaseInput<PasswordPassThrough> {
         this.value = null;
         this.onModelChange(this.value);
         this.writeValue(this.value);
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
         this.onClear.emit();
     }
 

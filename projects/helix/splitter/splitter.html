@@ -1,5 +1,5 @@
 @for (panel of panels; track panel; let i = $index) {
-  <div [hBind]="ptm('panel')" [class]="cn(cx('panel'), panelStyleClass)" [ngStyle]="panelStyle" tabindex="-1">
+  <div [hBind]="ptm('panel')" [class]="cn(cx('panel'), panelStyleClass())" [ngStyle]="panelStyle()" tabindex="-1">
     <ng-container *ngTemplateOutlet="panel"></ng-container>
   </div>
   @if (i !== panels.length - 1) {
@@ -20,7 +20,7 @@
         [class]="cx('gutterHandle')"
         tabindex="0"
         [ngStyle]="gutterStyle()"
-        [attr.aria-orientation]="layout"
+        [attr.aria-orientation]="layout()"
         [attr.aria-valuenow]="prevSize"
         (keyup)="onGutterKeyUp($event)"
         (keydown)="onGutterKeyDown($event, i)"

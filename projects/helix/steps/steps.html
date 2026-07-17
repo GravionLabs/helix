@@ -1,6 +1,6 @@
-<nav [class]="cn(cx('root'), styleClass)" [ngStyle]="style" [attr.data-pc-name]="'steps'">
+<nav [class]="cn(cx('root'), styleClass())" [ngStyle]="style()" [attr.data-pc-name]="'steps'">
   <ul #list [attr.data-pc-section]="'menu'" [class]="cx('list')">
-    @for (item of model; track item.label; let i = $index) {
+    @for (item of model(); track item.label; let i = $index) {
       @if (item.visible !== false) {
         <li
           [class]="cx('item', { item, index: i })"
@@ -24,15 +24,15 @@
               (keydown)="onItemKeydown($event, item, i)"
               [target]="item.target"
               [attr.tabindex]="getItemTabIndex(item, i)"
-              [attr.aria-expanded]="i === activeIndex"
-              [attr.aria-disabled]="item.disabled || (readonly && i !== activeIndex)"
+              [attr.aria-expanded]="i === activeIndex()"
+              [attr.aria-disabled]="item.disabled || (readonly() && i !== activeIndex())"
               [fragment]="item.fragment"
               [queryParamsHandling]="item.queryParamsHandling"
               [preserveFragment]="item.preserveFragment"
               [skipLocationChange]="item.skipLocationChange"
               [replaceUrl]="item.replaceUrl"
               [state]="item.state"
-              [attr.ariaCurrentWhenActive]="exact ? 'step' : undefined"
+              [attr.ariaCurrentWhenActive]="exact() ? 'step' : undefined"
               >
               <span [class]="cx('itemNumber')">{{ i + 1 }}</span>
               @if (item.escape !== false) {
@@ -50,9 +50,9 @@
               (keydown)="onItemKeydown($event, item, i)"
               [target]="item.target"
               [attr.tabindex]="getItemTabIndex(item, i)"
-              [attr.aria-expanded]="i === activeIndex"
-              [attr.aria-disabled]="item.disabled || (readonly && i !== activeIndex)"
-              [attr.ariaCurrentWhenActive]="exact && (!item.disabled || readonly) ? 'step' : undefined"
+              [attr.aria-expanded]="i === activeIndex()"
+              [attr.aria-disabled]="item.disabled || (readonly() && i !== activeIndex())"
+              [attr.ariaCurrentWhenActive]="exact() && (!item.disabled || readonly()) ? 'step' : undefined"
               >
               <span [class]="cx('itemNumber')">{{ i + 1 }}</span>
               @if (item.escape !== false) {

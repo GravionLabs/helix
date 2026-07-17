@@ -1,39 +1,39 @@
-<div #container [hBind]="ptm('root')" [class]="cn(cx('root'), className)" [style]="style" [ngStyle]="sx('root')">
-  @if (!buttonTemplate && !_buttonTemplate) {
+<div #container [hBind]="ptm('root')" [class]="cn(cx('root'), className())" [style]="style()" [ngStyle]="sx('root')">
+  @if (!buttonTemplate() && !_buttonTemplate) {
     <button
       type="button"
       hButton
       hRipple
-      [style]="buttonStyle"
+      [style]="buttonStyle()"
       [icon]="buttonIconClass"
-      [class]="cn(cx('pcButton'), buttonClassName)"
-      [disabled]="disabled"
-      [attr.aria-expanded]="visible"
+      [class]="cn(cx('pcButton'), buttonClassName())"
+      [disabled]="disabled()"
+      [attr.aria-expanded]="visible()"
       [attr.aria-haspopup]="true"
-      [attr.aria-controls]="id + '_list'"
-      [attr.aria-label]="ariaLabel"
-      [attr.aria-labelledby]="ariaLabelledBy"
+      [attr.aria-controls]="$id() + '_list'"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-labelledby]="ariaLabelledBy()"
       (click)="onButtonClick($event)"
       (keydown)="onTogglerKeydown($event)"
-      [buttonProps]="buttonProps"
+      [buttonProps]="buttonProps()"
       [pt]="ptm('pcButton')"
       [unstyled]="unstyled()"
       >
-      @if (!buttonIconClass && !iconTemplate && !_iconTemplate) {
+      @if (!buttonIconClass && !iconTemplate() && !_iconTemplate) {
         <svg data-p-icon="plus" hButtonIcon [pt]="ptm('pcButton')['icon']" />
       }
-      <ng-container *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="iconTemplate() || _iconTemplate"></ng-container>
     </button>
   }
-  @if (buttonTemplate || _buttonTemplate) {
-    <ng-container *ngTemplateOutlet="buttonTemplate || _buttonTemplate; context: { toggleCallback: onButtonClick.bind(this) }"></ng-container>
+  @if (buttonTemplate() || _buttonTemplate) {
+    <ng-container *ngTemplateOutlet="buttonTemplate() || _buttonTemplate; context: { toggleCallback: onButtonClick.bind(this) }"></ng-container>
   }
   <ul
     #list
     [hBind]="ptm('list')"
     [class]="cx('list')"
     role="menu"
-    [id]="id + '_list'"
+    [id]="$id() + '_list'"
     (focus)="onFocus($event)"
     (focusout)="onBlur($event)"
     (keydown)="onKeyDown($event)"
@@ -41,23 +41,23 @@
     [tabindex]="-1"
     [ngStyle]="sx('list')"
     >
-    @for (item of model; track item; let i = $index) {
+    @for (item of model(); track item; let i = $index) {
       <li
-        [hBind]="getPTOptions(id + '_' + i, 'item')"
+        [hBind]="getPTOptions($id() + '_' + i, 'item')"
         [ngStyle]="getItemStyle(i)"
         [class]="cx('item', { item, i })"
         hTooltip
         [pTooltipUnstyled]="unstyled()"
         [tooltipOptions]="item.tooltipOptions || getTooltipOptions(item)"
-        [id]="id + '_' + i"
-        [attr.aria-controls]="id + '_item'"
+        [id]="$id() + '_' + i"
+        [attr.aria-controls]="$id() + '_item'"
         role="menuitem"
-        [attr.data-p-active]="isItemActive(id + '_' + i)"
+        [attr.data-p-active]="isItemActive($id() + '_' + i)"
         >
-        @if (itemTemplate || _itemTemplate) {
-          <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: i, toggleCallback: onItemClick.bind(this) }"></ng-container>
+        @if (itemTemplate() || _itemTemplate) {
+          <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item, index: i, toggleCallback: onItemClick.bind(this) }"></ng-container>
         }
-        @if (!itemTemplate && !_itemTemplate) {
+        @if (!itemTemplate() && !_itemTemplate) {
           <button
             type="button"
             hButton
@@ -71,7 +71,7 @@
             [disabled]="$safeNavigationMigration(item?.disabled)"
             (keydown.enter)="onItemClick($event, item)"
             [attr.aria-label]="item.label"
-            [attr.tabindex]="item.disabled || !visible ? null : item.tabindex ? item.tabindex : '0'"
+            [attr.tabindex]="item.disabled || !visible() ? null : item.tabindex ? item.tabindex : '0'"
             [pt]="getPTOptions(id + '_' + i, 'pcAction')"
             [unstyled]="unstyled()"
             >
@@ -84,6 +84,6 @@
     }
   </ul>
 </div>
-@if (mask && visible) {
-  <div [hBind]="ptm('mask')" [class]="cn(cx('mask'), maskClassName)" [ngStyle]="maskStyle" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active"></div>
+@if (mask() && visible()) {
+  <div [hBind]="ptm('mask')" [class]="cn(cx('mask'), maskClassName())" [ngStyle]="maskStyle()" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active"></div>
 }

@@ -1702,6 +1702,16 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
         this.writeModelValue(this.value);
         this.onModelChange(this.value);
         this.updateInputfield();
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
+        // TODO: The 'emit' function requires a mandatory any argument
         this.onClear.emit();
     }
 

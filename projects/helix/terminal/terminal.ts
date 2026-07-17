@@ -1,5 +1,5 @@
 
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, InjectionToken, Input, NgModule, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, InjectionToken, Input, NgModule, OnDestroy, ViewEncapsulation, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find } from '@primeuix/utils';
 import { SharedModule } from '@gravionlabs/helix/api';
@@ -25,7 +25,7 @@ const TERMINAL_INSTANCE = new InjectionToken<Terminal>('TERMINAL_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [TerminalStyle, { provide: TERMINAL_INSTANCE, useExisting: Terminal }, { provide: PARENT_INSTANCE, useExisting: Terminal }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
 })
@@ -44,13 +44,13 @@ export class Terminal extends BaseComponent<TerminalPassThrough> implements Afte
      * Prompt text for each command.
      * @group Props
      */
-    @Input() prompt: string | undefined;
+    readonly prompt = input<string>();
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
 
     commands: any[] = [];
 
@@ -64,11 +64,11 @@ export class Terminal extends BaseComponent<TerminalPassThrough> implements Afte
 
     _componentStyle = inject(TerminalStyle);
 
-    @ViewChild('in') inputRef!: ElementRef<HTMLInputElement>;
+    readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('in');
 
     @HostListener('click')
     onHostClick() {
-        this.focus(this.inputRef?.nativeElement);
+        this.focus(this.inputRef()?.nativeElement);
     }
 
     constructor(public terminalService: TerminalService) {

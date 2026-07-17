@@ -943,6 +943,16 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
             }
 
             if (query.length === 0 && !this.multiple) {
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
+                // TODO: The 'emit' function requires a mandatory Event | undefined argument
                 this.onClear.emit();
 
                 setTimeout(() => {
@@ -1495,6 +1505,16 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         if (isFocus) {
             focus(this.inputEL?.nativeElement);
         }
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
+        // TODO: The 'emit' function requires a mandatory Event argument
         this.onShow.emit();
         this.cd.markForCheck();
     }
@@ -1505,6 +1525,16 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
             this.overlayVisible = false;
             this.focusedOptionIndex.set(-1);
             isFocus && focus(this.inputEL?.nativeElement);
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
+            // TODO: The 'emit' function requires a mandatory Event argument
             this.onHide.emit();
             this.updateInputWithForceSelection(null);
             this.cd.markForCheck();
@@ -1518,6 +1548,16 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     clear() {
         this.updateModel(null);
         this.inputEL?.nativeElement && (this.inputEL.nativeElement.value = '');
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
+        // TODO: The 'emit' function requires a mandatory Event | undefined argument
         this.onClear.emit();
     }
 

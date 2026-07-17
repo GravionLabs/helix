@@ -9,4 +9,4 @@
     <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-template>
   </span>
 }
-<span [class]="cx('label')" [hBind]="ptm('label')">{{ value }}</span>
+<span [class]="cx('label')" [hBind]="ptm('label')">{{ value() }}</span>

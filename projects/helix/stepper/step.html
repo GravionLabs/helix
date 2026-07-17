@@ -1,4 +1,4 @@
-@if (!content && !_contentTemplate) {
+@if (!content() && !_contentTemplate) {
     <button
         [attr.id]="id()"
         [class]="cx('header')"
@@ -19,7 +19,7 @@
         <h-stepper-separator />
     }
 } @else {
-    <ng-container *ngTemplateOutlet="content || _contentTemplate; context: { activateCallback: onStepClick.bind(this), value: value(), active: active() }"></ng-container>
+    <ng-container *ngTemplateOutlet="content() || _contentTemplate; context: { activateCallback: onStepClick.bind(this), value: value(), active: active() }"></ng-container>
     @if (isSeparatorVisible()) {
         <h-stepper-separator />
     }

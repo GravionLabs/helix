@@ -1656,6 +1656,16 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                 this.contextMenu.show(event.originalEvent);
                 this.contextMenu.hideCallback = () => {
                     this.contextMenuSelection = null;
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
+                    // TODO: The 'emit' function requires a mandatory TreeTableNode argument
                     this.contextMenuSelectionChange.emit();
                     this.tableService.onContextMenu(null);
                 };
