@@ -1,18 +1,18 @@
-@for (serializedNode of serializedNodes || tt.serializedValue; track tt.rowTrackBy(rowIndex, serializedNode); let rowIndex = $index) {
+@for (serializedNode of serializedNodes() || tt.serializedValue; track tt.rowTrackBy()(rowIndex, serializedNode); let rowIndex = $index) {
   @if (serializedNode.visible) {
     <ng-container
             *ngTemplateOutlet="
-                template;
+                template();
                 context: {
                     $implicit: serializedNode,
                     node: serializedNode.node,
                     rowData: serializedNode.node.data,
-                    columns: columns
+                    columns: columns()
                 }
             "
   ></ng-container>
 }
 }
 @if (tt.isEmpty()) {
-  <ng-container *ngTemplateOutlet="tt.emptyMessageTemplate || tt._emptyMessageTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
+  <ng-container *ngTemplateOutlet="tt.emptyMessageTemplate || tt._emptyMessageTemplate(); context: { $implicit: columns(), frozen: frozen() }"></ng-container>
 }
