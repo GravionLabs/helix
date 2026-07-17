@@ -1,5 +1,5 @@
 
-import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, EventEmitter, forwardRef, inject, InjectionToken, input, Input, NgModule, Output, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { OverlayOptions, OverlayService, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
@@ -38,7 +38,7 @@ const COLORPICKER_INSTANCE = new InjectionToken<ColorPicker>('COLORPICKER_INSTAN
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     }
 })
 export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> implements AfterViewChecked {
@@ -57,54 +57,54 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Transition options of the show animation.
      * @group Props
      * @deprecated since v21.0.0, use `motionOptions` instead.
      */
-    @Input() showTransitionOptions: string = '.12s cubic-bezier(0, 0, 0.2, 1)';
+    readonly showTransitionOptions = input<string>('.12s cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Transition options of the hide animation.
      * @group Props
      * @deprecated since v21.0.0, use `motionOptions` instead.
      */
-    @Input() hideTransitionOptions: string = '.1s linear';
+    readonly hideTransitionOptions = input<string>('.1s linear');
     /**
      * Whether to display as an overlay or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) inline: boolean | undefined;
+    readonly inline = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Format to use in value binding.
      * @group Props
      */
-    @Input() format: 'hex' | 'rgb' | 'hsb' = 'hex';
+    readonly format = input<'hex' | 'rgb' | 'hsb'>('hex');
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input() tabindex: string | undefined;
+    readonly tabindex = input<string>();
     /**
      * Identifier of the focus input to match a label defined for the dropdown.
      * @group Props
      */
-    @Input() inputId: string | undefined;
+    readonly inputId = input<string>();
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Default color to display initially when model value is not present.
      * @group Props
      */
-    @Input() defaultColor: string | undefined = 'ff0000';
+    readonly defaultColor = input<string | undefined>('ff0000');
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -126,21 +126,21 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
      * @param {ColorPickerChangeEvent} event - Custom value change event.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<ColorPickerChangeEvent> = new EventEmitter<ColorPickerChangeEvent>();
+    readonly onChange = output<ColorPickerChangeEvent>();
     /**
      * Callback to invoke on panel is shown.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
+    readonly onShow = output<any>();
     /**
      * Callback to invoke on panel is hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
+    readonly onHide = output<any>();
 
-    @ViewChild('input') inputViewChild: Nullable<ElementRef>;
+    readonly inputViewChild = viewChild<Nullable<ElementRef>>('input');
 
-    @ViewChild('overlay') overlayViewChild!: ElementRef<HTMLDivElement>;
+    readonly overlayViewChild = viewChild.required<ElementRef<HTMLDivElement>>('overlay');
 
     $appendTo = computed(() => this.appendTo() || this.config.overlayAppendTo());
 
@@ -166,13 +166,13 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
 
     overlay: Nullable<HTMLDivElement>;
 
-    colorSelectorViewChild: Nullable<ElementRef>;
+    readonly colorSelectorViewChild = viewChild<ElementRef>('colorSelector');
 
-    colorHandleViewChild: Nullable<ElementRef>;
+    readonly colorHandleViewChild = viewChild<ElementRef>('colorHandle');
 
-    hueViewChild: Nullable<ElementRef>;
+    readonly hueViewChild = viewChild<ElementRef>('hue');
 
-    hueHandleViewChild: Nullable<ElementRef>;
+    readonly hueHandleViewChild = viewChild<ElementRef>('hueHandle');
 
     _componentStyle = inject(ColorPickerStyle);
 
@@ -180,21 +180,9 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
         super();
     }
 
-    @ViewChild('colorSelector') set colorSelector(element: ElementRef) {
-        this.colorSelectorViewChild = element;
-    }
 
-    @ViewChild('colorHandle') set colorHandle(element: ElementRef) {
-        this.colorHandleViewChild = element;
-    }
 
-    @ViewChild('hue') set hue(element: ElementRef) {
-        this.hueViewChild = element;
-    }
 
-    @ViewChild('hueHandle') set hueHandle(element: ElementRef) {
-        this.hueHandleViewChild = element;
-    }
 
     get ariaLabel() {
         return this.config?.getTranslation(TranslationKeys.ARIA)[TranslationKeys.SELECT_COLOR];
@@ -233,7 +221,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
 
     pickHue(event: MouseEvent | TouchEvent, position?: any) {
         let pageY = position ? position.pageY : (event as MouseEvent).pageY;
-        let top: number = this.hueViewChild?.nativeElement.getBoundingClientRect().top + ((this.document as any).defaultView.pageYOffset || this.document.documentElement.scrollTop || this.document.body.scrollTop || 0);
+        let top: number = this.hueViewChild()?.nativeElement.getBoundingClientRect().top + ((this.document as any).defaultView.pageYOffset || this.document.documentElement.scrollTop || this.document.body.scrollTop || 0);
         this.value = this.validateHSB({
             h: Math.floor((360 * (150 - Math.max(0, Math.min(150, pageY - top)))) / 150),
             s: this.value.s,
@@ -281,7 +269,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     pickColor(event: MouseEvent | TouchEvent, position?: any) {
         let pageX = position ? position.pageX : (event as MouseEvent).pageX;
         let pageY = position ? position.pageY : (event as MouseEvent).pageY;
-        let rect = this.colorSelectorViewChild?.nativeElement.getBoundingClientRect();
+        let rect = this.colorSelectorViewChild()?.nativeElement.getBoundingClientRect();
         let top = rect.top + ((this.document as any).defaultView.pageYOffset || this.document.documentElement.scrollTop || this.document.body.scrollTop || 0);
         let left = rect.left + this.document.body.scrollLeft;
         let saturation = Math.floor((100 * Math.max(0, Math.min(150, pageX - left))) / 150);
@@ -299,7 +287,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
 
     getValueToUpdate() {
         let val: any;
-        switch (this.format) {
+        switch (this.format()) {
             case 'hex':
                 val = '#' + this.HSBtoHEX(this.value);
                 break;
@@ -322,21 +310,21 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     }
 
     updateColorSelector() {
-        if (this.colorSelectorViewChild) {
+        if (this.colorSelectorViewChild()) {
             const hsb: any = {};
             hsb.s = 100;
             hsb.b = 100;
             hsb.h = this.value.h;
 
-            this.colorSelectorViewChild.nativeElement.style.backgroundColor = '#' + this.HSBtoHEX(hsb);
+            this.colorSelectorViewChild()!.nativeElement.style.backgroundColor = '#' + this.HSBtoHEX(hsb);
         }
     }
 
     updateUI() {
-        if (this.colorHandleViewChild && this.hueHandleViewChild?.nativeElement) {
-            this.colorHandleViewChild.nativeElement.style.left = Math.floor((150 * this.value.s) / 100) + 'px';
-            this.colorHandleViewChild.nativeElement.style.top = Math.floor((150 * (100 - this.value.b)) / 100) + 'px';
-            this.hueHandleViewChild.nativeElement.style.top = Math.floor(150 - (150 * this.value.h) / 360) + 'px';
+        if (this.colorHandleViewChild() && this.hueHandleViewChild()?.nativeElement) {
+            this.colorHandleViewChild()!.nativeElement.style.left = Math.floor((150 * this.value.s) / 100) + 'px';
+            this.colorHandleViewChild()!.nativeElement.style.top = Math.floor((150 * (100 - this.value.b)) / 100) + 'px';
+            this.hueHandleViewChild()!.nativeElement.style.top = Math.floor(150 - (150 * this.value.h) / 360) + 'px';
         }
 
         this.inputBgColor = '#' + this.HSBtoHEX(this.value);
@@ -352,7 +340,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     }
 
     onOverlayBeforeEnter() {
-        if (!this.inline) {
+        if (!this.inline()) {
             this.updateColorSelector();
             this.updateUI();
             this.onShow.emit({});
@@ -360,7 +348,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     }
 
     onOverlayAfterLeave() {
-        if (!this.inline) {
+        if (!this.inline()) {
             this.onHide.emit({});
         }
     }
@@ -589,7 +577,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     }
 
     onAfterViewInit() {
-        if (this.inline) {
+        if (this.inline()) {
             this.updateColorSelector();
             this.updateUI();
         }
@@ -603,7 +591,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
      */
     writeControlValue(value: any): void {
         if (value) {
-            switch (this.format) {
+            switch (this.format()) {
                 case 'hex':
                     this.value = this.HEXtoHSB(value);
                     break;
@@ -617,7 +605,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
                     break;
             }
         } else {
-            this.value = this.HEXtoHSB(this.defaultColor as string);
+            this.value = this.HEXtoHSB(this.defaultColor() as string);
         }
 
         this.updateColorSelector();
@@ -631,8 +619,9 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
             this.scrollHandler = null;
         }
 
-        if (this.overlayViewChild?.nativeElement && this.autoZIndex) {
-            ZIndexUtils.clear(this.overlayViewChild?.nativeElement);
+        const overlayViewChild = this.overlayViewChild();
+        if (overlayViewChild?.nativeElement && this.autoZIndex()) {
+            ZIndexUtils.clear(overlayViewChild?.nativeElement);
         }
     }
 }

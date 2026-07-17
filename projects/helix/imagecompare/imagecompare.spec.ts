@@ -137,9 +137,9 @@ describe('ImageCompare', () => {
         });
 
         it('should have default values', () => {
-            expect(component.tabindex).toBeUndefined();
-            expect(component.ariaLabel).toBeUndefined();
-            expect(component.ariaLabelledby).toBeUndefined();
+            expect(component.tabindex()).toBeUndefined();
+            expect(component.ariaLabel()).toBeUndefined();
+            expect(component.ariaLabelledby()).toBeUndefined();
             expect(component.isRTL).toBe(false);
         });
 
@@ -151,8 +151,8 @@ describe('ImageCompare', () => {
             const imageCompareElement = testFixture.debugElement.query(By.directive(ImageCompare));
             const imageCompareInstance = imageCompareElement.componentInstance;
 
-            expect(imageCompareInstance.tabindex).toBe(0);
-            expect(imageCompareInstance.ariaLabel).toBe('Image Compare');
+            expect(imageCompareInstance.tabindex()).toBe(0);
+            expect(imageCompareInstance.ariaLabel()).toBe('Image Compare');
         });
 
         it('should render slider input element', () => {
@@ -384,7 +384,7 @@ describe('ImageCompare', () => {
                 }
             };
 
-            imageCompareInstance.templates = mockTemplates as any;
+            (imageCompareInstance as any).templates = () => mockTemplates;
             imageCompareInstance.ngAfterContentInit();
 
             expect(imageCompareInstance._leftTemplate).toBe(mockLeftTemplate);
@@ -616,7 +616,7 @@ describe('ImageCompare', () => {
                     root: ({ instance }) => {
                         // Instance parameter is available in PT functions
                         return {
-                            class: instance?.tabindex ? 'HAS_TAB_VALUE' : 'NO_TAB_VALUE'
+                            class: instance?.tabindex() ? 'HAS_TAB_VALUE' : 'NO_TAB_VALUE'
                         };
                     }
                 };
@@ -706,7 +706,7 @@ describe('ImageCompare', () => {
                     root: ({ instance }) => {
                         return {
                             onclick: () => {
-                                instanceTabindex = instance?.tabindex;
+                                instanceTabindex = instance?.tabindex();
                             }
                         };
                     }

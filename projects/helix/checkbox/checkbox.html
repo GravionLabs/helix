@@ -1,30 +1,30 @@
 <input
   #input
-  [attr.id]="inputId"
+  [attr.id]="inputId()"
   type="checkbox"
-  [attr.value]="value"
+  [attr.value]="value()"
   [attr.name]="name()"
   [checked]="checked"
-  [attr.tabindex]="tabindex"
+  [attr.tabindex]="tabindex()"
   [attr.required]="required() ? '' : undefined"
-  [attr.readonly]="readonly ? '' : undefined"
+  [attr.readonly]="readonly() ? '' : undefined"
   [attr.disabled]="$disabled() ? '' : undefined"
-  [attr.aria-labelledby]="ariaLabelledBy"
-  [attr.aria-label]="ariaLabel"
-  [style]="inputStyle"
-  [class]="cn(cx('input'), inputClass)"
+  [attr.aria-labelledby]="ariaLabelledBy()"
+  [attr.aria-label]="ariaLabel()"
+  [style]="inputStyle()"
+  [class]="cn(cx('input'), inputClass())"
   [hBind]="ptm('input')"
   (focus)="onInputFocus($event)"
   (blur)="onInputBlur($event)"
   (change)="handleChange($event)"
   />
 <div [class]="cx('box')" [hBind]="ptm('box')" [attr.data-p]="dataP">
-  @if (!checkboxIconTemplate && !_checkboxIconTemplate) {
+  @if (!checkboxIconTemplate() && !_checkboxIconTemplate) {
     @if (checked) {
-      @if (checkboxIcon) {
-        <span [class]="cx('icon')" [ngClass]="checkboxIcon" [hBind]="ptm('icon')" [attr.data-p]="dataP"></span>
+      @if (checkboxIcon()) {
+        <span [class]="cx('icon')" [ngClass]="checkboxIcon()" [hBind]="ptm('icon')" [attr.data-p]="dataP"></span>
       }
-      @if (!checkboxIcon) {
+      @if (!checkboxIcon()) {
         <svg data-p-icon="check" [class]="cx('icon')" [hBind]="ptm('icon')" [attr.data-p]="dataP" />
       }
     }
@@ -32,5 +32,5 @@
       <svg data-p-icon="minus" [class]="cx('icon')" [hBind]="ptm('icon')" [attr.data-p]="dataP" />
     }
   }
-  <ng-template *ngTemplateOutlet="checkboxIconTemplate || _checkboxIconTemplate; context: { checked: checked, class: cx('icon'), dataP: dataP }"></ng-template>
+  <ng-template *ngTemplateOutlet="checkboxIconTemplate() || _checkboxIconTemplate; context: { checked: checked, class: cx('icon'), dataP: dataP }"></ng-template>
 </div>

@@ -1,32 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-    AfterViewChecked,
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    effect,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Inject,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    Renderer2,
-    signal,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-    ViewRef
-} from '@angular/core';
+import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, Inject, inject, InjectionToken, input, Input, NgModule, numberAttribute, Renderer2, signal, TemplateRef, ViewEncapsulation, ViewRef, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import {
@@ -80,50 +53,50 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     set visible(value: boolean) {
         this._visible = value;
 
-        if (this._visible || this.root) {
+        if (this._visible || this.root()) {
             this.render.set(true);
         }
     }
 
-    @Input() items: any[];
+    readonly items = input<any[]>(undefined!);
 
-    @Input() itemTemplate: TemplateRef<ContextMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = input<TemplateRef<ContextMenuItemTemplateContext>>();
 
-    @Input({ transform: booleanAttribute }) root: boolean | undefined = false;
+    readonly root = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
 
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Input({ transform: booleanAttribute }) popup: boolean | undefined;
+    readonly popup = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() menuId: string | undefined;
+    readonly menuId = input<string>();
 
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
 
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
 
-    @Input({ transform: numberAttribute }) level: number = 0;
+    readonly level = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Input() focusedItemId: string | undefined;
+    readonly focusedItemId = input<string>();
 
-    @Input() activeItemPath: any[];
+    readonly activeItemPath = input<any[]>(undefined!);
 
-    @Input() motionOptions: MotionOptions[] | undefined;
+    readonly motionOptions = input<MotionOptions[]>();
 
-    @Input({ transform: numberAttribute }) tabindex: number = 0;
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Output() itemClick: EventEmitter<any> = new EventEmitter();
+    readonly itemClick = output<any>();
 
-    @Output() itemMouseEnter: EventEmitter<any> = new EventEmitter();
+    readonly itemMouseEnter = output<any>();
 
-    @Output() menuFocus: EventEmitter<any> = new EventEmitter();
+    readonly menuFocus = output<any>();
 
-    @Output() menuBlur: EventEmitter<any> = new EventEmitter();
+    readonly menuBlur = output<any>();
 
-    @Output() menuKeydown: EventEmitter<any> = new EventEmitter();
+    readonly menuKeydown = output<any>();
 
-    @ViewChild('sublist') sublistViewChild: ElementRef;
+    readonly sublistViewChild = viewChild.required<ElementRef>('sublist');
 
     render = signal<boolean>(false);
 
@@ -145,7 +118,7 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
         super();
 
         this.contextMenu.handleSubmenuAfterLeave = () => {
-            if (this.root) {
+            if (this.root()) {
                 this.onAfterLeave();
             }
         };
@@ -156,7 +129,7 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     }
 
     getItemId(processedItem: any): string {
-        return processedItem.item && processedItem.item?.id ? processedItem.item.id : `${this.menuId}_${processedItem.key}`;
+        return processedItem.item && processedItem.item?.id ? processedItem.item.id : `${this.menuId()}_${processedItem.key}`;
     }
 
     getItemKey(processedItem: any): string {
@@ -168,11 +141,11 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     }
 
     getAriaSetSize() {
-        return this.items.filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
+        return this.items().filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
     }
 
     getAriaPosInset(index: number) {
-        return index - this.items.slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length + 1;
+        return index - this.items().slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length + 1;
     }
 
     isItemVisible(processedItem: any): boolean {
@@ -180,8 +153,9 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     }
 
     isItemActive(processedItem: any): boolean | undefined {
-        if (this.activeItemPath) {
-            return this.activeItemPath.some((path) => path.key === processedItem.key);
+        const activeItemPath = this.activeItemPath();
+        if (activeItemPath) {
+            return activeItemPath.some((path) => path.key === processedItem.key);
         }
     }
 
@@ -190,7 +164,7 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     }
 
     isItemFocused(processedItem: any): boolean {
-        return this.focusedItemId === this.getItemId(processedItem);
+        return this.focusedItemId() === this.getItemId(processedItem);
     }
 
     isItemGroup(processedItem: any): boolean {
@@ -279,62 +253,68 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
      * Event for which the menu must be displayed.
      * @group Props
      */
-    @Input() triggerEvent: string = 'contextmenu';
+    readonly triggerEvent = input<string>('contextmenu');
     /**
      * Local template variable name of the element to attach the context menu.
      * @group Props
      */
-    @Input() target: HTMLElement | string | null | undefined;
+    readonly target = model<HTMLElement | string | null | undefined>(undefined);
     /**
      * Attaches the menu to document instead of a particular item.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) global: boolean;
+    readonly global = input<boolean, unknown>(undefined!, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Current id state as a string.
      * @group Props
      */
-    @Input() id: string | undefined;
+    readonly id = input<string>();
+
+    private readonly autoId = uuid('pn_id_');
+
+    readonly $id = computed(() => this.id() || this.autoId);
     /**
      * The breakpoint to define the maximum width boundary.
      * @group Props
      */
-    @Input() breakpoint: string = '960px';
+    readonly breakpoint = input<string>('960px');
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Identifier of the underlying input element.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Press delay in touch devices as miliseconds.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) pressDelay: number | undefined = 500;
+    readonly pressDelay = input<number | undefined, unknown>(500, { transform: numberAttribute });
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -357,14 +337,14 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
      * Callback to invoke when overlay menu is shown.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<null> = new EventEmitter<null>();
+    readonly onShow = output<void>();
     /**
      * Callback to invoke when overlay menu is hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<null> = new EventEmitter<null>();
+    readonly onHide = output<void>();
 
-    @ViewChild('rootmenu') rootmenu: ContextMenuSub | undefined;
+    readonly rootmenu = viewChild<ContextMenuSub>('rootmenu');
 
     container: HTMLElement | null | undefined;
 
@@ -435,7 +415,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
 
     get focusedItemId() {
         const focusedItem = this.focusedItemInfo();
-        return focusedItem.item && focusedItem.item?.id ? focusedItem.item.id : focusedItem.index !== -1 ? `${this.id}${isNotEmpty(focusedItem.parentKey) ? '_' + focusedItem.parentKey : ''}_${focusedItem.index}` : null;
+        return focusedItem.item && focusedItem.item?.id ? focusedItem.item.id : focusedItem.index !== -1 ? `${this.$id()}${isNotEmpty(focusedItem.parentKey) ? '_' + focusedItem.parentKey : ''}_${focusedItem.index}` : null;
     }
 
     constructor(public overlayService: OverlayService) {
@@ -452,7 +432,6 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     }
 
     onInit() {
-        this.id = this.id || uuid('pn_id_');
         this.bindMatchMediaListener();
         this.bindTriggerEventListener();
     }
@@ -465,22 +444,22 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
         if (isPlatformBrowser(this.platformId)) {
             if (!this.triggerEventListener) {
                 if (!this.isMobile()) {
-                    if (this.global) {
-                        this.triggerEventListener = this.renderer.listen(this.document, this.triggerEvent, (event) => {
+                    if (this.global()) {
+                        this.triggerEventListener = this.renderer.listen(this.document, this.triggerEvent(), (event) => {
                             this.show(event);
                         });
-                    } else if (this.target) {
-                        this.triggerEventListener = this.renderer.listen(this.target, this.triggerEvent, (event) => {
+                    } else if (this.target()) {
+                        this.triggerEventListener = this.renderer.listen(this.target(), this.triggerEvent(), (event) => {
                             this.show(event);
                         });
                     }
                 } else {
-                    if (this.global) {
+                    if (this.global()) {
                         this.triggerEventListener = this.renderer.listen(this.document, 'touchstart', this.onTouchStart.bind(this));
                         this.touchEndListener = this.renderer.listen(this.document, 'touchend', this.onTouchEnd.bind(this));
-                    } else if (this.target) {
-                        this.triggerEventListener = this.renderer.listen(this.target, 'touchstart', this.onTouchStart.bind(this));
-                        this.touchEndListener = this.renderer.listen(this.target, 'touchend', this.onTouchEnd.bind(this));
+                    } else if (this.target()) {
+                        this.triggerEventListener = this.renderer.listen(this.target(), 'touchstart', this.onTouchStart.bind(this));
+                        this.touchEndListener = this.renderer.listen(this.target(), 'touchend', this.onTouchEnd.bind(this));
                     }
                 }
             }
@@ -509,22 +488,22 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<ContextMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<ContextMenuItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom submenu icon template.
      * @group Templates
      */
-    @ContentChild('submenuicon', { descendants: false }) submenuIconTemplate: TemplateRef<ContextMenuSubmenuIconTemplateContext> | undefined;
+    readonly submenuIconTemplate = contentChild<TemplateRef<ContextMenuSubmenuIconTemplateContext>>('submenuicon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _submenuIconTemplate: TemplateRef<ContextMenuSubmenuIconTemplateContext> | undefined;
 
     _itemTemplate: TemplateRef<ContextMenuItemTemplateContext> | undefined;
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'submenuicon':
                     this._submenuIconTemplate = item.template;
@@ -579,7 +558,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     bindMatchMediaListener() {
         if (isPlatformBrowser(this.platformId)) {
             if (!this.matchMediaListener) {
-                const query = window.matchMedia(`(max-width: ${this.breakpoint})`);
+                const query = window.matchMedia(`(max-width: ${this.breakpoint()})`);
 
                 this.query = query;
                 this.queryMatches.set(query.matches);
@@ -656,7 +635,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
             this.activeItemPath.set(this.activeItemPath().filter((p) => key !== p.key && key.startsWith(p.key)));
             this.focusedItemInfo.set({ index, level, parentKey, item });
 
-            focus(this.rootmenu?.sublistViewChild?.nativeElement);
+            focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
         } else {
             grouped ? this.onItemChange(event) : this.hide();
         }
@@ -820,7 +799,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
 
     onEnterKey(event: KeyboardEvent) {
         if (this.focusedItemInfo().index !== -1) {
-            const element = <any>findSingle(this.rootmenu?.el?.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+            const element = <any>findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
             const anchorElement = element && (<any>findSingle(element, '[data-pc-section="itemlink"]') || findSingle(element, 'a,button'));
 
             anchorElement ? anchorElement.click() : element && element.click();
@@ -850,7 +829,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
             this.submenuVisible.set(true);
         }
         this.focusedItemInfo.set({ index, level, parentKey, item: processedItem.item });
-        isFocus && focus(this.rootmenu?.sublistViewChild?.nativeElement);
+        isFocus && focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
 
         if (type === 'hover' && this.queryMatches()) {
             return;
@@ -882,7 +861,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
 
     onAfterEnter() {
         this.bindGlobalListeners();
-        focus(this.rootmenu?.sublistViewChild?.nativeElement);
+        focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
     }
 
     onAfterLeave() {
@@ -909,8 +888,8 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     }
 
     moveOnTop() {
-        if (this.autoZIndex && this.container) {
-            ZIndexUtils.set('menu', this.container, this.baseZIndex + this.config.zIndex.menu);
+        if (this.autoZIndex() && this.container) {
+            ZIndexUtils.set('menu', this.container, this.baseZIndex() + this.config.zIndex.menu);
         }
     }
 
@@ -918,10 +897,10 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
         this.unbindGlobalListeners();
 
         if (!(this.cd as ViewRef).destroyed) {
-            this.target = null;
+            this.target.set(null);
         }
 
-        if (this.container && this.autoZIndex) {
+        if (this.container && this.autoZIndex()) {
             ZIndexUtils.clear(this.container);
         }
 
@@ -931,7 +910,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     onTouchStart(event: MouseEvent) {
         this.pressTimer = setTimeout(() => {
             this.show(event);
-        }, this.pressDelay);
+        }, this.pressDelay());
     }
 
     onTouchEnd() {
@@ -954,7 +933,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     show(event: any) {
         this.activeItemPath.set([]);
         this.focusedItemInfo.set({ index: -1, level: 0, parentKey: '', item: null });
-        focus(this.rootmenu?.sublistViewChild?.nativeElement);
+        focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
 
         this.pageX = event.pageX;
         this.pageY = event.pageY;
@@ -1087,8 +1066,8 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
     }
 
     scrollInView(index: number = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedItemId;
-        const element = findSingle(this.rootmenu?.el?.nativeElement, `li[id="${id}"]`);
+        const id = index !== -1 ? `${this.$id()}_${index}` : this.focusedItemId;
+        const element = findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${id}"]`);
 
         if (element) {
             element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });

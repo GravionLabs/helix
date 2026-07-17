@@ -69,8 +69,11 @@ directories**, then finishes manually by these rules:
    `fixture.componentRef.setInput('x', y)`; input *reads* become signal calls
    (`component.x()`); non-input members keep direct assignment.
 8. **Verification per batch:** `pnpm build:lib` and the demo build pass;
-   decorator grep over the batch's directories is empty (documented exceptions
-   listed in the PR body).
+   `pnpm ng test helix-shell --watch=false` passes **after** rebuilding
+   `dist/helix` (the shell consumes the built package — it is the only
+   runnable consumer test suite and catches cross-component signal leaks
+   like the `$hostName` PT-key regression); decorator grep over the batch's
+   directories is empty (documented exceptions listed in the PR body).
 
 ## Batch tracking
 
@@ -78,9 +81,9 @@ directories**, then finishes manually by these rules:
 |---|---|---|---|
 | Pilot | #311 | knob + this audit refresh | ✅ done |
 | 1 | #312 | accordion–card | ✅ done (leftovers: `blockui.blocked`, `ButtonDirective` label/icon/loading/severity/buttonProps) |
-| 2 | #313 | carousel–dataview | open |
-| 3 | #314 | datepicker–floatlabel | open |
-| 4 | #315 | fluid–inputicon | open |
+| 2 | #313 | carousel–dataview | ✅ done (leftovers: carousel page/numVisible/numScroll, cascadeselect value, confirmdialog visible, contextmenu model & sub visible, chip chipProps) |
+| 3 | #314 | dialog–floatlabel | ✅ done (leftovers: dialog visible/style, drawer visible, fileupload files) |
+| 4 | #315 | fluid–inputicon | ✅ done (no leftovers) |
 | 5 | #316 | inputmask–message | open |
 | 6 | #317 | metergroup–picklist | open |
 | 7 | #318 | popover–skeleton | open |

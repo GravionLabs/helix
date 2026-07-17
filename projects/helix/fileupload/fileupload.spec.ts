@@ -1060,7 +1060,7 @@ describe('FileUpload Template Tests', () => {
             if (fileUpload) {
                 fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
                 fixture.detectChanges();
-                expect(fileUpload.files.length).toBe(1);
+                expect(fileUpload.files().length).toBe(1);
             } else {
                 // If component not found, verify the test component exists
                 expect(fixture.componentInstance).toBeTruthy();

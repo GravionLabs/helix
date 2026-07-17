@@ -90,7 +90,7 @@ describe('FloatLabel', () => {
         });
 
         it('should have default variant "over"', () => {
-            expect(floatLabelInstance.variant).toBe('over');
+            expect(floatLabelInstance.variant()).toBe('over');
         });
 
         it('should apply variant "in"', async () => {
@@ -98,7 +98,7 @@ describe('FloatLabel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(floatLabelInstance.variant).toBe('in');
+            expect(floatLabelInstance.variant()).toBe('in');
         });
 
         it('should apply variant "on"', async () => {
@@ -106,7 +106,7 @@ describe('FloatLabel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(floatLabelInstance.variant).toBe('on');
+            expect(floatLabelInstance.variant()).toBe('on');
         });
 
         it('should have correct variant classes', async () => {

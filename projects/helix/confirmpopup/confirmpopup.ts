@@ -1,31 +1,5 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    effect,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    Inject,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    QueryList,
-    Renderer2,
-    signal,
-    TemplateRef,
-    untracked,
-    viewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, effect, ElementRef, EventEmitter, Inject, inject, InjectionToken, input, NgModule, numberAttribute, Renderer2, signal, TemplateRef, untracked, viewChild, ViewEncapsulation, contentChild, contentChildren } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addClass, appendChild, findSingle, focus, getOffset, isIOS, isTouchDevice } from '@primeuix/utils';
 import { Confirmation, ConfirmationService, OverlayService, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
@@ -54,7 +28,9 @@ const CONFIRMPOPUP_INSTANCE = new InjectionToken<ConfirmPopup>('CONFIRMPOPUP_INS
     providers: [ConfirmPopupStyle, { provide: CONFIRMPOPUP_INSTANCE, useExisting: ConfirmPopup }, { provide: PARENT_INSTANCE, useExisting: ConfirmPopup }],
     hostDirectives: [Bind],
     templateUrl: './confirmpopup.html',
-
+    host: {
+        '(document:keydown.Escape)': 'onEscapeKeydown($event)'
+    },
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
@@ -73,44 +49,46 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
      * Optional key to match the key of confirm object, necessary to use when component tree has multiple confirm dialogs.
      * @group Props
      */
-    @Input() key: string | undefined;
+    readonly key = input<string>();
     /**
      * Element to receive the focus when the popup gets visible, valid values are "accept", "reject", and "none".
      * @group Props
      */
-    @Input() defaultFocus: string = 'accept';
+    readonly defaultFocus = input<string>('accept');
     /**
      * Transition options of the show animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() showTransitionOptions: string = '.12s cubic-bezier(0, 0, 0.2, 1)';
+    readonly showTransitionOptions = input<string>('.12s cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Transition options of the hide animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() hideTransitionOptions: string = '.1s linear';
+    readonly hideTransitionOptions = input<string>('.1s linear');
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Defines if the component is visible.
      * @group Props
@@ -158,25 +136,25 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
      * Custom content template.
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: Nullable<TemplateRef<ConfirmPopupContentTemplateContext>>;
+    readonly contentTemplate = contentChild<Nullable<TemplateRef<ConfirmPopupContentTemplateContext>>>('content', { descendants: false });
 
     /**
      * Custom accept icon template.
      * @group Templates
      */
-    @ContentChild('accepticon', { descendants: false }) acceptIconTemplate: Nullable<TemplateRef<void>>;
+    readonly acceptIconTemplate = contentChild<Nullable<TemplateRef<void>>>('accepticon', { descendants: false });
 
     /**
      * Custom reject icon template.
      * @group Templates
      */
-    @ContentChild('rejecticon', { descendants: false }) rejectIconTemplate: Nullable<TemplateRef<void>>;
+    readonly rejectIconTemplate = contentChild<Nullable<TemplateRef<void>>>('rejecticon', { descendants: false });
 
     /**
      * Custom headless template.
      * @group Templates
      */
-    @ContentChild('headless', { descendants: false }) headlessTemplate: Nullable<TemplateRef<ConfirmPopupHeadlessTemplateContext>>;
+    readonly headlessTemplate = contentChild<Nullable<TemplateRef<ConfirmPopupHeadlessTemplateContext>>>('headless', { descendants: false });
 
     acceptButtonViewChild = viewChild('acceptButton', { read: ElementRef });
 
@@ -223,7 +201,7 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
                 });
             }
 
-            if (confirmation.key === this.key) {
+            if (confirmation.key === this.key()) {
                 this.confirmation = confirmation;
                 const keys = Object.keys(confirmation);
 
@@ -256,10 +234,10 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
         });
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'content':
                     this._contentTemplate = item.template;
@@ -292,7 +270,6 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
         return undefined;
     }
 
-    @HostListener('document:keydown.Escape', ['$event'])
     onEscapeKeydown(event: KeyboardEvent) {
         if (this.confirmation && this.confirmation.closeOnEscape !== false) {
             this.onReject();
@@ -301,7 +278,7 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
 
     onBeforeEnter(event: MotionEvent) {
         if (this.confirmation) {
-            const focus = this.confirmation.defaultFocus ?? this.defaultFocus;
+            const focus = this.confirmation.defaultFocus ?? this.defaultFocus();
             this.autoFocusAccept = focus === 'accept';
             this.autoFocusReject = focus === 'reject';
         }
@@ -316,9 +293,10 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
     }
 
     handleFocus() {
-        if (this.defaultFocus && (this.acceptButtonViewChild() || this.rejectButtonViewChild())) {
+        const defaultFocus = this.defaultFocus();
+        if (defaultFocus && (this.acceptButtonViewChild() || this.rejectButtonViewChild())) {
             const focusEl = <HTMLButtonElement>(
-                (this.defaultFocus === 'accept' ? findSingle(this.acceptButtonViewChild()?.nativeElement, '[data-pc-section="root"]') : findSingle(this.rejectButtonViewChild()?.nativeElement, '[data-pc-section="root"]'))
+                (defaultFocus === 'accept' ? findSingle(this.acceptButtonViewChild()?.nativeElement, '[data-pc-section="root"]') : findSingle(this.rejectButtonViewChild()?.nativeElement, '[data-pc-section="root"]'))
             );
             focusEl.focus();
         }
@@ -348,7 +326,7 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
     }
 
     setZIndex() {
-        if (this.autoZIndex) {
+        if (this.autoZIndex()) {
             ZIndexUtils.set('overlay', this.container, this.config.zIndex.overlay);
         }
     }
@@ -513,7 +491,7 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
         this.unbindListeners();
         this.unsubscribeConfirmationSubscriptions();
 
-        if (this.autoZIndex) {
+        if (this.autoZIndex()) {
             ZIndexUtils.clear(this.container);
         }
 

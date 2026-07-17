@@ -277,13 +277,13 @@ describe('Checkbox', () => {
         it('should have default values', async () => {
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
 
-            expect(checkboxInstance.binary).toBe(false);
+            expect(checkboxInstance.binary()).toBe(false);
             expect(checkboxInstance.disabled()).toBe(false);
-            expect(checkboxInstance.readonly).toBe(false);
+            expect(checkboxInstance.readonly()).toBe(false);
             expect(checkboxInstance.required()).toBe(false);
-            expect(checkboxInstance.indeterminate).toBe(false);
-            expect(checkboxInstance.trueValue).toBe(true);
-            expect(checkboxInstance.falseValue).toBe(false);
+            expect(checkboxInstance.indeterminate()).toBe(false);
+            expect(checkboxInstance.trueValue()).toBe(true);
+            expect(checkboxInstance.falseValue()).toBe(false);
         });
 
         it('should accept custom values', async () => {
@@ -299,13 +299,13 @@ describe('Checkbox', () => {
 
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
 
-            expect(checkboxInstance.binary).toBe(true);
+            expect(checkboxInstance.binary()).toBe(true);
             expect(checkboxInstance.disabled()).toBe(true);
-            expect(checkboxInstance.readonly).toBe(true);
+            expect(checkboxInstance.readonly()).toBe(true);
             expect(checkboxInstance.required()).toBe(true);
-            expect(checkboxInstance.indeterminate).toBe(true);
-            expect(checkboxInstance.trueValue).toBe('custom-true');
-            expect(checkboxInstance.falseValue).toBe('custom-false');
+            expect(checkboxInstance.indeterminate()).toBe(true);
+            expect(checkboxInstance.trueValue()).toBe('custom-true');
+            expect(checkboxInstance.falseValue()).toBe('custom-false');
         });
     });
 
@@ -485,11 +485,11 @@ describe('Checkbox', () => {
         });
 
         it('should focus programmatically', async () => {
-            spyOn(checkboxInstance.inputViewChild.nativeElement, 'focus');
+            spyOn(checkboxInstance.inputViewChild().nativeElement, 'focus');
 
             checkboxInstance.focus();
 
-            expect(checkboxInstance.inputViewChild.nativeElement.focus).toHaveBeenCalled();
+            expect(checkboxInstance.inputViewChild().nativeElement.focus).toHaveBeenCalled();
         });
 
         it('should update model programmatically', async () => {
@@ -677,20 +677,20 @@ describe('Checkbox', () => {
 
             // Check that component received the style input
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
-            expect(checkboxInstance.inputStyle).toEqual({ border: '2px solid red' });
+            expect(checkboxInstance.inputStyle()).toEqual({ border: '2px solid red' });
 
             // Manually apply styles to test the style binding works as expected
-            if (checkboxInstance.inputStyle) {
-                Object.keys(checkboxInstance.inputStyle).forEach((key) => {
-                    inputElement.nativeElement.style[key] = checkboxInstance.inputStyle[key];
+            if (checkboxInstance.inputStyle()) {
+                Object.keys(checkboxInstance.inputStyle()).forEach((key) => {
+                    inputElement.nativeElement.style[key] = checkboxInstance.inputStyle()[key];
                 });
             }
 
             expect(inputElement.nativeElement.style.border).toBe('2px solid red');
 
             // Also verify the template binding
-            expect(checkboxInstance.inputStyle).toBeTruthy();
-            expect(Object.keys(checkboxInstance.inputStyle)).toContain('border');
+            expect(checkboxInstance.inputStyle()).toBeTruthy();
+            expect(Object.keys(checkboxInstance.inputStyle())).toContain('border');
         });
 
         it('should apply input classes', async () => {
@@ -789,11 +789,11 @@ describe('Checkbox', () => {
             await testFixture.whenStable();
 
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
-            expect(checkboxInstance.checkboxIcon).toBe('pi pi-star');
+            expect(checkboxInstance.checkboxIcon()).toBe('pi pi-star');
 
             // The test is primarily to verify the checkboxIcon property is set correctly
             // The checked state depends on modelValue, not just the input value
-            expect(checkboxInstance.checkboxIcon).toBeDefined();
+            expect(checkboxInstance.checkboxIcon()).toBeDefined();
         });
     });
 
@@ -981,7 +981,7 @@ describe('Checkbox', () => {
             const inputElement = testFixture.debugElement.query(By.css('input[type="checkbox"]'));
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
 
-            expect(checkboxInstance.value).toBe('قيمة الاختيار');
+            expect(checkboxInstance.value()).toBe('قيمة الاختيار');
             expect(inputElement.nativeElement.getAttribute('aria-label')).toBe('خانة الاختيار');
         });
 
@@ -994,7 +994,7 @@ describe('Checkbox', () => {
             const inputElement = testFixture.debugElement.query(By.css('input[type="checkbox"]'));
             const checkboxInstance = testFixture.debugElement.query(By.css('p-checkbox')).componentInstance;
 
-            expect(checkboxInstance.value).toBe('Valeur avec accents éàü');
+            expect(checkboxInstance.value()).toBe('Valeur avec accents éàü');
             expect(inputElement.nativeElement.getAttribute('aria-label')).toBe('Case à cocher spéciale');
         });
     });
@@ -1014,7 +1014,7 @@ describe('Checkbox', () => {
         it('should have icon pTemplate', async () => {
             const checkboxInstance = checkboxElement.componentInstance;
             expect(checkboxInstance).toBeTruthy();
-            expect(() => checkboxInstance.checkboxIconTemplate).not.toThrow();
+            expect(() => checkboxInstance.checkboxIconTemplate()).not.toThrow();
         });
 
         it('should pass checked context to icon template', async () => {
@@ -1112,7 +1112,7 @@ describe('Checkbox', () => {
         it('should have icon #template', async () => {
             const checkboxInstance = checkboxElement.componentInstance;
             expect(checkboxInstance).toBeTruthy();
-            expect(() => checkboxInstance.checkboxIconTemplate).not.toThrow();
+            expect(() => checkboxInstance.checkboxIconTemplate()).not.toThrow();
         });
 
         it('should pass checked context to icon template', async () => {

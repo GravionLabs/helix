@@ -2,25 +2,25 @@
   <ul
     #sublist
     role="menu"
-    [class]="root ? cx('rootList') : cx('submenu')"
-    [hBind]="_ptm(root ? 'rootList' : 'submenu')"
-    [attr.id]="menuId + '_list'"
-    [tabindex]="tabindex"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledBy]="ariaLabelledBy"
-    [attr.aria-activedescendant]="focusedItemId"
+    [class]="root() ? cx('rootList') : cx('submenu')"
+    [hBind]="_ptm(root() ? 'rootList' : 'submenu')"
+    [attr.id]="menuId() + '_list'"
+    [tabindex]="tabindex()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledBy]="ariaLabelledBy()"
+    [attr.aria-activedescendant]="focusedItemId()"
     [attr.aria-orientation]="'vertical'"
     (keydown)="menuKeydown.emit($event)"
     (focus)="menuFocus.emit($event)"
     (blur)="menuBlur.emit($event)"
-    [hMotion]="root ? true : visible"
+    [hMotion]="root() ? true : visible"
     [pMotionAppear]="true"
     [pMotionName]="'p-anchored-overlay'"
-    [pMotionOptions]="motionOptions"
+    [pMotionOptions]="motionOptions()"
     (pMotionOnBeforeEnter)="onBeforeEnter($event)"
     (pMotionOnAfterLeave)="onAfterLeave()"
     >
-    @for (processedItem of items; track processedItem; let index = $index) {
+    @for (processedItem of items(); track processedItem; let index = $index) {
       @if (isItemVisible(processedItem) && getItemProp(processedItem, 'separator')) {
         <li
           [attr.id]="getItemId(processedItem)"
@@ -42,7 +42,7 @@
           [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
           [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
           [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
-          [attr.aria-level]="level + 1"
+          [attr.aria-level]="level() + 1"
           [attr.aria-setsize]="getAriaSetSize()"
           [attr.aria-posinset]="getAriaPosInset(index)"
           [style]="getItemProp(processedItem, 'style')"
@@ -53,7 +53,7 @@
           [pTooltipUnstyled]="unstyled()"
           >
           <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)" (mouseenter)="onItemMouseEnter({ $event, processedItem })">
-            @if (!itemTemplate) {
+            @if (!itemTemplate()) {
               @if (!getItemProp(processedItem, 'routerLink')) {
                 <a
                   [attr.href]="getItemProp(processedItem, 'url')"
@@ -96,7 +96,7 @@
                     <h-badge [class]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
                   }
                   @if (isItemGroup(processedItem)) {
-                    @if (!contextMenu.submenuIconTemplate && !contextMenu._submenuIconTemplate) {
+                    @if (!contextMenu.submenuIconTemplate() && !contextMenu._submenuIconTemplate) {
                       <svg
                         data-p-icon="angle-right"
                         [class]="cx('submenuIcon')"
@@ -104,7 +104,7 @@
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }
@@ -166,7 +166,7 @@
                     <h-badge [class]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
                   }
                   @if (isItemGroup(processedItem)) {
-                    @if (!contextMenu.submenuIconTemplate && !contextMenu._submenuIconTemplate) {
+                    @if (!contextMenu.submenuIconTemplate() && !contextMenu._submenuIconTemplate) {
                       <svg
                         data-p-icon="angle-right"
                         [class]="cx('submenuIcon')"
@@ -174,28 +174,28 @@
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }
             }
-            @if (itemTemplate) {
-              <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
+            @if (itemTemplate()) {
+              <ng-template *ngTemplateOutlet="itemTemplate(); context: { $implicit: processedItem.item }"></ng-template>
             }
           </div>
           @if (isItemVisible(processedItem) && isItemGroup(processedItem)) {
             <h-contextmenu-sub
               [items]="processedItem.items"
-              [itemTemplate]="itemTemplate"
-              [menuId]="menuId"
+              [itemTemplate]="itemTemplate()"
+              [menuId]="menuId()"
               [visible]="isItemActive(processedItem) && isItemGroup(processedItem)"
-              [activeItemPath]="activeItemPath"
-              [focusedItemId]="focusedItemId"
-              [level]="level + 1"
+              [activeItemPath]="activeItemPath()"
+              [focusedItemId]="focusedItemId()"
+              [level]="level() + 1"
               (itemClick)="itemClick.emit($event)"
               (itemMouseEnter)="onItemMouseEnter($event)"
               [pt]="pt()"
-              [motionOptions]="motionOptions"
+              [motionOptions]="motionOptions()"
               [unstyled]="unstyled()"
               />
           }
