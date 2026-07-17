@@ -1,10 +1,10 @@
-@if (toolbar || headerTemplate || _headerTemplate) {
+@if (toolbar() || headerTemplate() || _headerTemplate) {
   <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
     <ng-content select="p-header"></ng-content>
-    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
   </div>
 }
-@if (!toolbar && !headerTemplate && !_headerTemplate) {
+@if (!toolbar() && !headerTemplate() && !_headerTemplate) {
   <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
     <span class="ql-formats" [hBind]="ptm('formats')">
       <select class="ql-header" [hBind]="ptm('header')">
@@ -47,4 +47,4 @@
     </span>
   </div>
 }
-<div [class]="cx('content')" [ngStyle]="style" [hBind]="ptm('content')"></div>
+<div [class]="cx('content')" [ngStyle]="style()" [hBind]="ptm('content')"></div>

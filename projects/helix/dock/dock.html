@@ -1,21 +1,21 @@
 <div [class]="cx('listContainer')" [hBind]="ptm('listContainer')">
   <ul
     #list
-    [attr.id]="id"
+    [attr.id]="$id()"
     [class]="cx('list')"
     role="menu"
-    [attr.aria-orientation]="position === 'bottom' || position === 'top' ? 'horizontal' : 'vertical'"
+    [attr.aria-orientation]="position() === 'bottom' || position() === 'top' ? 'horizontal' : 'vertical'"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     [tabindex]="tabindex"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     (focus)="onListFocus($event)"
     (blur)="onListBlur($event)"
     (keydown)="onListKeyDown($event)"
     (mouseleave)="onListMouseLeave()"
     [hBind]="ptm('list')"
     >
-    @for (item of model; track item.label; let i = $index) {
+    @for (item of model(); track item.label; let i = $index) {
       @if (item.visible !== false) {
         <li
           [attr.id]="getItemId(item, i)"
@@ -56,10 +56,10 @@
                 [attr.aria-hidden]="true"
                 [hBind]="getPTOptions(item, i, 'itemLink')"
                 >
-                @if (item.icon && !itemTemplate && !_itemTemplate) {
+                @if (item.icon && !itemTemplate() && !_itemTemplate) {
                   <span [class]="cn(cx('itemIcon'), item.icon, item.iconClass)" [ngStyle]="item.iconStyle" [hBind]="getPTOptions(item, i, 'itemIcon')"></span>
                 }
-                <ng-container *ngTemplateOutlet="itemTemplate || itemTemplate; context: { $implicit: item }"></ng-container>
+                <ng-container *ngTemplateOutlet="itemTemplate() || itemTemplate(); context: { $implicit: item }"></ng-container>
                 @if (item.badge) {
                   <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions(item, i, 'pcBadge')" [unstyled]="unstyled()" />
                 }
@@ -81,10 +81,10 @@
                 [attr.aria-hidden]="true"
                 [hBind]="getPTOptions(item, i, 'itemLink')"
                 >
-                @if (item.icon && !itemTemplate && !_itemTemplate) {
+                @if (item.icon && !itemTemplate() && !_itemTemplate) {
                   <span [class]="cn(cx('itemIcon'), item.icon, item.iconClass)" [ngStyle]="item.iconStyle" [hBind]="getPTOptions(item, i, 'itemIcon')"></span>
                 }
-                <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
+                <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item }"></ng-container>
                 @if (item.badge) {
                   <h-badge [styleClass]="item.badgeStyleClass" [value]="item.badge" [pt]="getPTOptions(item, i, 'pcBadge')" [unstyled]="unstyled()" />
                 }
