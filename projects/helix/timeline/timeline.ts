@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
 import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -22,7 +22,7 @@ const TIMELINE_INSTANCE = new InjectionToken<Timeline>('TIMELINE_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [TimelineStyle, { provide: TIMELINE_INSTANCE, useExisting: Timeline }, { provide: PARENT_INSTANCE, useExisting: Timeline }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.data-p]': 'dataP'
     },
     hostDirectives: [Bind]
@@ -41,30 +41,30 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
      * An array of events to display.
      * @group Props
      */
-    @Input() value: any[] | undefined;
+    readonly value = input<any[]>();
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Position of the timeline bar relative to the content. Valid values are "left", "right" for vertical layout and "top", "bottom" for horizontal layout.
      * @group Props
      */
-    @Input() align: string = 'left';
+    readonly align = input<string>('left');
     /**
      * Orientation of the timeline.
      * @group Props
      */
-    @Input() layout: 'vertical' | 'horizontal' = 'vertical';
+    readonly layout = input<'vertical' | 'horizontal'>('vertical');
     /**
      * Custom content template.
      * @param {TimelineItemTemplateContext} context - item context.
      * @see {@link TimelineItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: Nullable<TemplateRef<TimelineItemTemplateContext>>;
+    readonly contentTemplate = contentChild<Nullable<TemplateRef<TimelineItemTemplateContext>>>('content', { descendants: false });
 
     /**
      * Custom opposite item template.
@@ -72,7 +72,7 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
      * @see {@link TimelineItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('opposite', { descendants: false }) oppositeTemplate: Nullable<TemplateRef<TimelineItemTemplateContext>>;
+    readonly oppositeTemplate = contentChild<Nullable<TemplateRef<TimelineItemTemplateContext>>>('opposite', { descendants: false });
 
     /**
      * Custom marker template.
@@ -82,7 +82,7 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
      */
     @ContentChild('marker', { descendants: false }) markerTemplate: Nullable<TemplateRef<TimelineItemTemplateContext>>;
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<any>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _contentTemplate: TemplateRef<TimelineItemTemplateContext> | undefined;
 
@@ -97,7 +97,7 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'content':
                     this._contentTemplate = item.template;
@@ -116,8 +116,8 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
 
     get dataP() {
         return this.cn({
-            [this.layout]: this.layout,
-            [this.align]: this.align
+            [this.layout()]: this.layout(),
+            [this.align()]: this.align()
         });
     }
 }

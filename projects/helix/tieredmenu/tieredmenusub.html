@@ -2,27 +2,27 @@
   <ul
     #sublist
     role="menu"
-    [class]="root ? cx('rootList') : cx('submenu')"
-    [id]="menuId + '_list'"
-    [tabindex]="tabindex"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledBy]="ariaLabelledBy"
-    [attr.aria-activedescendant]="focusedItemId"
+    [class]="root() ? cx('rootList') : cx('submenu')"
+    [id]="menuId() + '_list'"
+    [tabindex]="tabindex()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledBy]="ariaLabelledBy()"
+    [attr.aria-activedescendant]="focusedItemId()"
     [attr.aria-orientation]="'vertical'"
-    [hBind]="_ptm(root ? 'rootList' : 'submenu')"
+    [hBind]="_ptm(root() ? 'rootList' : 'submenu')"
     (keydown)="menuKeydown.emit($event)"
     (focus)="menuFocus.emit($event)"
     (blur)="menuBlur.emit($event)"
-    [style]="inlineStyles"
-    [hMotion]="root ? true : visible"
-    [pMotionDisabled]="root"
+    [style]="inlineStyles()"
+    [hMotion]="root() ? true : visible"
+    [pMotionDisabled]="root()"
     [pMotionAppear]="true"
     [pMotionName]="'p-anchored-overlay'"
-    [pMotionOptions]="motionOptions"
+    [pMotionOptions]="motionOptions()"
     (pMotionOnBeforeEnter)="onBeforeEnter($event)"
     (pMotionOnAfterLeave)="onAfterLeave()"
     >
-    @for (processedItem of items; track processedItem; let index = $index) {
+    @for (processedItem of items(); track processedItem; let index = $index) {
       @if (isItemVisible(processedItem) && getItemProp(processedItem, 'separator')) {
         <li
           [attr.id]="getItemId(processedItem)"
@@ -99,7 +99,7 @@
                     <span [class]="cn(cx('itemBadge'), getItemProp(processedItem, 'badgeStyleClass'))">{{ getItemProp(processedItem, 'badge') }}</span>
                   }
                   @if (isItemGroup(processedItem)) {
-                    @if (!tieredMenu.submenuIconTemplate && !tieredMenu._submenuIconTemplate) {
+                    @if (!tieredMenu.submenuIconTemplate() && !tieredMenu._submenuIconTemplate) {
                       <svg
                         data-p-icon="angle-right"
                         [class]="cx('submenuIcon')"
@@ -107,7 +107,7 @@
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="tieredMenu.submenuIconTemplate || tieredMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="tieredMenu.submenuIconTemplate() || tieredMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }
@@ -165,7 +165,7 @@
                     <span [class]="cn(cx('itemBadge'), getItemProp(processedItem, 'badgeStyleClass'))">{{ getItemProp(processedItem, 'badge') }}</span>
                   }
                   @if (isItemGroup(processedItem)) {
-                    @if (!tieredMenu.submenuIconTemplate && !tieredMenu._submenuIconTemplate) {
+                    @if (!tieredMenu.submenuIconTemplate() && !tieredMenu._submenuIconTemplate) {
                       <svg
                         data-p-icon="angle-right"
                         [class]="cx('submenuIcon')"
@@ -173,7 +173,7 @@
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="tieredMenu.submenuIconTemplate || tieredMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="tieredMenu.submenuIconTemplate() || tieredMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }
@@ -186,17 +186,17 @@
             <h-tieredmenusub
               [items]="processedItem.items"
               [itemTemplate]="itemTemplate"
-              [autoDisplay]="autoDisplay"
-              [menuId]="menuId"
+              [autoDisplay]="autoDisplay()"
+              [menuId]="menuId()"
               [visible]="isItemActive(processedItem) && isItemGroup(processedItem)"
               [activeItemPath]="activeItemPath()"
-              [focusedItemId]="focusedItemId"
+              [focusedItemId]="focusedItemId()"
               [ariaLabelledBy]="getItemId(processedItem)"
-              [level]="level + 1"
+              [level]="level() + 1"
               (itemClick)="itemClick.emit($event)"
               (itemMouseEnter)="onItemMouseEnter($event)"
               [pt]="pt()"
-              [motionOptions]="motionOptions"
+              [motionOptions]="motionOptions()"
               [unstyled]="unstyled()"
             ></h-tieredmenusub>
           }

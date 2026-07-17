@@ -20,7 +20,7 @@
     <ng-container *ngTemplateOutlet="headlessTemplate; context: { $implicit: message, closeFn: onCloseIconClick }"></ng-container>
   } @else {
     <div [hBind]="ptm('messageContent')" [class]="cn(cx('messageContent'), $safeNavigationMigration(message?.contentStyleClass))">
-      @if (!template) {
+      @if (!template()) {
         @if (message.icon) {
           <span [hBind]="ptm('messageIcon')" [class]="cn(cx('messageIcon'), $safeNavigationMigration(message?.icon))"></span>
         } @else {
@@ -49,7 +49,7 @@
           <div [hBind]="ptm('detail')" [ngClass]="cx('detail')" [attr.data-p]="dataP">{{ message.detail }}</div>
         </div>
       }
-      <ng-container *ngTemplateOutlet="template; context: { $implicit: message }"></ng-container>
+      <ng-container *ngTemplateOutlet="template(); context: { $implicit: message }"></ng-container>
       @if (message?.closable !== false) {
         <div>
           <button

@@ -1,4 +1,4 @@
-import { booleanAttribute, computed, Directive, effect, EventEmitter, HostListener, inject, InjectionToken, input, Input, NgModule, Output } from '@angular/core';
+import { booleanAttribute, computed, Directive, effect, inject, InjectionToken, input, NgModule, output } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseModelHolder } from '@gravionlabs/helix/basemodelholder';
@@ -18,7 +18,8 @@ const TEXTAREA_INSTANCE = new InjectionToken<Textarea>('TEXTAREA_INSTANCE');
     selector: '[hTextarea], [hInputTextarea]',
     standalone: true,
     host: {
-        '[class]': "cx('root')"
+        '[class]': "cx('root')",
+        '(input)': 'onInput($event)'
     },
     providers: [TextareaStyle, { provide: TEXTAREA_INSTANCE, useExisting: Textarea }, { provide: PARENT_INSTANCE, useExisting: Textarea }],
     hostDirectives: [Bind]
@@ -47,12 +48,12 @@ export class Textarea extends BaseModelHolder<TextareaPassThrough> {
      * When present, textarea size changes as being typed.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoResize: boolean | undefined;
+    readonly autoResize = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Defines the size of the component.
      * @group Props
      */
-    @Input() pSize: 'large' | 'small';
+    readonly pSize = input<'large' | 'small'>(undefined!);
     /**
      * Specifies the input variant of the component.
      * @defaultValue undefined
@@ -78,7 +79,7 @@ export class Textarea extends BaseModelHolder<TextareaPassThrough> {
      * @param {(Event | {})} event - Custom resize event.
      * @group Emits
      */
-    @Output() onResize: EventEmitter<Event | {}> = new EventEmitter<Event | {}>();
+    readonly onResize = output<Event | {}>();
 
     ngControlSubscription: Subscription | undefined;
 
@@ -113,20 +114,19 @@ export class Textarea extends BaseModelHolder<TextareaPassThrough> {
     }
 
     onAfterViewInit() {
-        if (this.autoResize) this.resize();
+        if (this.autoResize()) this.resize();
 
         this.cd.detectChanges();
     }
 
     onAfterViewChecked() {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
-        if (this.autoResize) {
+        if (this.autoResize()) {
             this.resize();
         }
         this.writeModelValue(this.ngControl?.value ?? this.el.nativeElement.value);
     }
 
-    @HostListener('input', ['$event'])
     onInput(e: Event) {
         this.writeModelValue((e.target as HTMLTextAreaElement)?.value);
         this.updateState();
@@ -147,7 +147,7 @@ export class Textarea extends BaseModelHolder<TextareaPassThrough> {
     }
 
     updateState() {
-        if (this.autoResize) {
+        if (this.autoResize()) {
             this.resize();
         }
     }
