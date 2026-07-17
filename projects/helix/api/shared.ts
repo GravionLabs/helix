@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Directive, Input, NgModule, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Directive, NgModule, TemplateRef, ChangeDetectionStrategy, input } from '@angular/core';
 
 @Component({
     selector: 'h-header',
@@ -22,14 +22,14 @@ export class Footer {}
     standalone: true
 })
 export class PrimeTemplate {
-    @Input() type: string | undefined;
+    readonly type = input<string>();
 
-    @Input('hTemplate') name: string | undefined;
+    readonly name = input<string>(undefined, { alias: "hTemplate" });
 
     constructor(public template: TemplateRef<any>) {}
 
     getType(): string {
-        return this.name!;
+        return this.name()!;
     }
 }
 

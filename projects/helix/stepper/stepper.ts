@@ -1,26 +1,23 @@
 import { CommonModule } from '@angular/common';
 import {
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    contentChild,
-    ContentChild,
-    ContentChildren,
-    contentChildren,
-    effect,
-    forwardRef,
-    inject,
-    InjectionToken,
-    input,
-    InputSignal,
-    InputSignalWithTransform,
-    model,
-    ModelSignal,
-    NgModule,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewEncapsulation
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChild,
+  contentChildren,
+  effect,
+  forwardRef,
+  inject,
+  InjectionToken,
+  input,
+  InputSignal,
+  InputSignalWithTransform,
+  model,
+  ModelSignal,
+  NgModule,
+  signal,
+  TemplateRef,
+  ViewEncapsulation
 } from '@angular/core';
 
 import { MotionOptions } from '@primeuix/motion';
@@ -263,16 +260,16 @@ export class Step extends BaseComponent<StepPassThrough> {
      * @type {TemplateRef<StepContentTemplateContext>}
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) content: TemplateRef<StepContentTemplateContext>;
+    readonly content = contentChild.required<TemplateRef<StepContentTemplateContext>>('content', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _contentTemplate: TemplateRef<any> | undefined;
 
     _componentStyle = inject(StepStyle);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'content':
                     this._contentTemplate = item.template;
@@ -360,16 +357,16 @@ export class StepPanel extends BaseComponent<StepPanelPassThrough> {
      * @see {@link StepPanelContentTemplateContext}
      * @group Templates
      */
-    @ContentChild('content') contentTemplate: TemplateRef<StepPanelContentTemplateContext>;
+    readonly contentTemplate = contentChild.required<TemplateRef<StepPanelContentTemplateContext>>('content');
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _contentTemplate: TemplateRef<any> | undefined;
 
     _componentStyle = inject(StepPanelStyle);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'content':
                     this._contentTemplate = item.template;

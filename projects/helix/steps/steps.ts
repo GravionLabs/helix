@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, inject, Input, NgModule, numberAttribute, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, NgModule, numberAttribute, OnDestroy, OnInit, ViewEncapsulation, input, output, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { find, findSingle } from '@primeuix/utils';
 import { MenuItem, SharedModule } from '@gravionlabs/helix/api';
@@ -28,40 +28,42 @@ export class Steps extends BaseComponent {
      * Index of the active item.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) activeIndex: number = 0;
+    readonly activeIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * An array of menu items.
      * @group Props
      */
-    @Input() model: MenuItem[] | undefined;
+    readonly model = input<MenuItem[]>();
     /**
      * Whether the items are clickable or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) readonly: boolean = true;
+    readonly readonly = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Whether to apply 'router-link-active-exact' class if route exactly matches the item path.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) exact: boolean = true;
+    readonly exact = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Callback to invoke when the new step is selected.
      * @param {number} number - current index.
      * @group Emits
      */
-    @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
+    readonly activeIndexChange = output<number>();
 
-    @ViewChild('list', { static: false }) listViewChild: Nullable<ElementRef>;
+    readonly listViewChild = viewChild<Nullable<ElementRef>>('list');
 
     router = inject(Router);
 
@@ -76,7 +78,7 @@ export class Steps extends BaseComponent {
     }
 
     onItemClick(event: Event, item: MenuItem, i: number) {
-        if (this.readonly || item.disabled) {
+        if (this.readonly() || item.disabled) {
             event.preventDefault();
             return;
         }
@@ -97,6 +99,7 @@ export class Steps extends BaseComponent {
     }
 
     onItemKeydown(event: KeyboardEvent, item: MenuItem, i: number) {
+        const activeIndex = this.activeIndex();
         switch (event.code) {
             case 'ArrowRight': {
                 this.navigateToNextItem(event.target);
@@ -123,10 +126,10 @@ export class Steps extends BaseComponent {
             }
 
             case 'Tab':
-                if (i !== (this.activeIndex ?? -1)) {
-                    const siblings = <any>find(this.listViewChild?.nativeElement, '[data-pc-section="menuitem"]');
+                if (i !== (activeIndex ?? -1)) {
+                    const siblings = <any>find(this.listViewChild()?.nativeElement, '[data-pc-section="menuitem"]');
                     siblings[i].children[0].tabIndex = '-1';
-                    siblings[this.activeIndex ?? 0].children[0].tabIndex = '0';
+                    siblings[activeIndex ?? 0].children[0].tabIndex = '0';
                 }
                 break;
 
@@ -179,13 +182,13 @@ export class Steps extends BaseComponent {
     }
 
     findFirstItem() {
-        const firstSibling = findSingle(this.listViewChild?.nativeElement, '[data-pc-section="menuitem"]');
+        const firstSibling = findSingle(this.listViewChild()?.nativeElement, '[data-pc-section="menuitem"]');
 
         return firstSibling ? firstSibling.children[0] : null;
     }
 
     findLastItem() {
-        const siblings = find(this.listViewChild?.nativeElement, '[data-pc-section="menuitem"]');
+        const siblings = find(this.listViewChild()?.nativeElement, '[data-pc-section="menuitem"]');
 
         return siblings ? siblings[siblings.length - 1].children[0] : null;
     }
@@ -197,11 +200,11 @@ export class Steps extends BaseComponent {
     }
 
     isClickableRouterLink(item: MenuItem) {
-        return item.routerLink && !this.readonly && !item.disabled;
+        return item.routerLink && !this.readonly() && !item.disabled;
     }
 
     isItemDisabled(item: MenuItem, index: number): boolean {
-        return item.disabled || (this.readonly && !this.isActive(item, index));
+        return item.disabled || (this.readonly() && !this.isActive(item, index));
     }
 
     isActive(item: MenuItem, index: number) {
@@ -211,7 +214,7 @@ export class Steps extends BaseComponent {
             return this.router.isActive(this.router.createUrlTree(routerLink, { relativeTo: this.route }).toString(), false);
         }
 
-        return index === this.activeIndex;
+        return index === this.activeIndex();
     }
 
     getItemTabIndex(item: MenuItem, index: number): string {
@@ -219,7 +222,7 @@ export class Steps extends BaseComponent {
             return '-1';
         }
 
-        if (!item.disabled && this.activeIndex === index) {
+        if (!item.disabled && this.activeIndex() === index) {
             return item.tabindex || '0';
         }
 

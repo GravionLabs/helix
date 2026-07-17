@@ -1,26 +1,23 @@
 import { CommonModule } from '@angular/common';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    effect,
-    EventEmitter,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    NgZone,
-    numberAttribute,
-    output,
-    Output,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewEncapsulation
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  InjectionToken,
+  input,
+  Input,
+  NgModule,
+  NgZone,
+  numberAttribute,
+  output,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { isEmpty, setAttribute, uuid } from '@primeuix/utils';
@@ -46,23 +43,29 @@ const TOAST_INSTANCE = new InjectionToken<Toast>('TOAST_INSTANCE');
     providers: [ToastStyle]
 })
 export class ToastItem extends BaseComponent<ToastPassThrough> {
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() message: ToastMessageOptions | null | undefined;
 
-    @Input({ transform: numberAttribute }) index: number | null | undefined;
+    readonly index = input<number | null, unknown>(undefined, { transform: numberAttribute });
 
-    @Input({ transform: numberAttribute }) life: number;
+    readonly life = input<number, unknown>(undefined!, { transform: numberAttribute });
 
-    @Input() template: TemplateRef<ToastMessageTemplateContext> | undefined;
+    readonly template = input<TemplateRef<ToastMessageTemplateContext>>();
 
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() headlessTemplate: TemplateRef<ToastHeadlessTemplateContext> | undefined;
 
-    @Input() showTransformOptions: string | undefined;
+    readonly showTransformOptions = input<string>();
 
-    @Input() hideTransformOptions: string | undefined;
+    readonly hideTransformOptions = input<string>();
 
-    @Input() showTransitionOptions: string | undefined;
+    readonly showTransitionOptions = input<string>();
 
-    @Input() hideTransitionOptions: string | undefined;
+    readonly hideTransitionOptions = input<string>();
 
     motionOptions = input<MotionOptions>();
 
@@ -79,7 +82,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
     onAfterLeave(event: MotionEvent) {
         if (!this.visible() && !this.isDestroyed) {
             this.onClose.emit({
-                index: <number>this.index,
+                index: <number>this.index(),
                 message: <ToastMessageOptions>this.message
             });
 
@@ -89,7 +92,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
         }
     }
 
-    @Output() onClose: EventEmitter<ToastItemCloseEvent> = new EventEmitter();
+    readonly onClose = output<ToastItemCloseEvent>();
 
     _componentStyle = inject(ToastStyle);
 
@@ -125,7 +128,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
                     () => {
                         this.visible.set(false);
                     },
-                    this.message?.life || this.life || 3000
+                    this.message?.life || this.life() || 3000
                 );
             });
         }
@@ -185,7 +188,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
     encapsulation: ViewEncapsulation.None,
     providers: [ToastStyle, { provide: TOAST_INSTANCE, useExisting: Toast }, { provide: PARENT_INSTANCE, useExisting: Toast }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
         '[attr.data-p]': 'dataP'
     },
@@ -205,32 +208,34 @@ export class Toast extends BaseComponent<ToastPassThrough> {
      * Key of the message in case message is targeted to a specific toast component.
      * @group Props
      */
-    @Input() key: string | undefined;
+    readonly key = input<string>();
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * The default time to display messages for in milliseconds.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) life: number = 3000;
+    readonly life = input<number, unknown>(3000, { transform: numberAttribute });
     /**
      * Inline class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Position of the toast in viewport.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get position(): ToastPositionType {
         return this._position;
     }
@@ -244,36 +249,36 @@ export class Toast extends BaseComponent<ToastPassThrough> {
      * It does not add the new message if there is already a toast displayed with the same content
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) preventOpenDuplicates: boolean = false;
+    readonly preventOpenDuplicates = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Displays only once a message with the same content.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) preventDuplicates: boolean = false;
+    readonly preventDuplicates = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Transform options of the show animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() showTransformOptions: string = 'translateY(100%)';
+    readonly showTransformOptions = input<string>('translateY(100%)');
     /**
      * Transform options of the hide animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() hideTransformOptions: string = 'translateY(-100%)';
+    readonly hideTransformOptions = input<string>('translateY(-100%)');
     /**
      * Transition options of the show animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() showTransitionOptions: string = '300ms ease-out';
+    readonly showTransitionOptions = input<string>('300ms ease-out');
     /**
      * Transition options of the hide animation.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() hideTransitionOptions: string = '250ms ease-in';
+    readonly hideTransitionOptions = input<string>('250ms ease-in');
     /**
      * The motion options.
      * @group Props
@@ -290,27 +295,29 @@ export class Toast extends BaseComponent<ToastPassThrough> {
      * Object literal to define styles per screen size.
      * @group Props
      */
-    @Input() breakpoints: { [key: string]: any } | undefined;
+    readonly breakpoints = input<{
+    [key: string]: any;
+}>();
     /**
      * Callback to invoke when a message is closed.
      * @param {ToastCloseEvent} event - custom close event.
      * @group Emits
      */
-    @Output() onClose: EventEmitter<ToastCloseEvent> = new EventEmitter<ToastCloseEvent>();
+    readonly onClose = output<ToastCloseEvent>();
     /**
      * Custom message template.
      * @param {ToastMessageTemplateContext} context - message context.
      * @see {@link ToastMessageTemplateContext}
      * @group Templates
      */
-    @ContentChild('message') template: TemplateRef<ToastMessageTemplateContext> | undefined;
+    readonly template = contentChild<TemplateRef<ToastMessageTemplateContext>>('message');
     /**
      * Custom headless template.
      * @param {ToastHeadlessTemplateContext} context - headless context.
      * @see {@link ToastHeadlessTemplateContext}
      * @group Templates
      */
-    @ContentChild('headless') headlessTemplate: TemplateRef<ToastHeadlessTemplateContext> | undefined;
+    readonly headlessTemplate = contentChild<TemplateRef<ToastHeadlessTemplateContext>>('headless');
 
     messageSubscription: Subscription | undefined;
 
@@ -330,7 +337,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
     id: string = uuid('pn_id_');
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     clearAllTrigger = signal<{} | null>(null);
 
@@ -352,7 +359,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
         this.clearSubscription = this.messageService.clearObserver.subscribe((key) => {
             if (key) {
-                if (this.key === key) {
+                if (this.key() === key) {
                     this.clearAll();
                 }
             } else {
@@ -373,7 +380,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
     _headlessTemplate: TemplateRef<ToastHeadlessTemplateContext> | undefined;
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'message':
                     this._template = item.template;
@@ -390,7 +397,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
     }
 
     onAfterViewInit() {
-        if (this.breakpoints) {
+        if (this.breakpoints()) {
             this.createStyle();
         }
     }
@@ -398,7 +405,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
     add(messages: ToastMessageOptions[]): void {
         this.messages = this.messages ? [...this.messages, ...messages] : [...messages];
 
-        if (this.preventDuplicates) {
+        if (this.preventDuplicates()) {
             this.messagesArchieve = this.messagesArchieve ? [...this.messagesArchieve, ...messages] : [...messages];
         }
 
@@ -406,13 +413,13 @@ export class Toast extends BaseComponent<ToastPassThrough> {
     }
 
     canAdd(message: ToastMessageOptions): boolean {
-        let allow = this.key === message.key;
+        let allow = this.key() === message.key;
 
-        if (allow && this.preventOpenDuplicates) {
+        if (allow && this.preventOpenDuplicates()) {
             allow = !this.containsMessage(this.messages!, message);
         }
 
-        if (allow && this.preventDuplicates) {
+        if (allow && this.preventDuplicates()) {
             allow = !this.containsMessage(this.messagesArchieve!, message);
         }
 
@@ -443,28 +450,29 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
     onAnimationStart() {
         this.renderer.setAttribute(this.el?.nativeElement, this.id, '');
-        if (this.autoZIndex && this.el?.nativeElement.style.zIndex === '') {
-            ZIndexUtils.set('modal', this.el?.nativeElement, this.baseZIndex || this.config.zIndex.modal);
+        if (this.autoZIndex() && this.el?.nativeElement.style.zIndex === '') {
+            ZIndexUtils.set('modal', this.el?.nativeElement, this.baseZIndex() || this.config.zIndex.modal);
         }
     }
 
     onAnimationEnd() {
-        if (this.autoZIndex && isEmpty(this.messages)) {
+        if (this.autoZIndex() && isEmpty(this.messages)) {
             ZIndexUtils.clear(this.el?.nativeElement);
         }
     }
 
     createStyle() {
+        const bps = this.breakpoints();
         if (!this.styleElement) {
             this.styleElement = this.renderer.createElement('style');
             this.styleElement.type = 'text/css';
             setAttribute(this.styleElement, 'nonce', this.config?.csp()?.nonce);
             this.renderer.appendChild(this.document.head, this.styleElement);
             let innerHTML = '';
-            for (let breakpoint in this.breakpoints) {
+            for (let breakpoint in bps) {
                 let breakpointStyle = '';
-                for (let styleProp in this.breakpoints[breakpoint]) {
-                    breakpointStyle += styleProp + ':' + this.breakpoints[breakpoint][styleProp] + ' !important;';
+                for (let styleProp in bps[breakpoint]) {
+                    breakpointStyle += styleProp + ':' + bps[breakpoint][styleProp] + ' !important;';
                 }
                 innerHTML += `
                     @media screen and (max-width: ${breakpoint}) {
@@ -492,7 +500,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
             this.messageSubscription.unsubscribe();
         }
 
-        if (this.el && this.autoZIndex) {
+        if (this.el && this.autoZIndex()) {
             ZIndexUtils.clear(this.el.nativeElement);
         }
 

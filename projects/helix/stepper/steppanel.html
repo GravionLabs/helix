@@ -4,7 +4,7 @@
             <h-stepper-separator />
         }
         <div [class]="cx('content')" [hBind]="ptm('content')">
-            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { activateCallback: updateValue.bind(this), value: value(), active: active() }"></ng-container>
+            <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { activateCallback: updateValue.bind(this), value: value(), active: active() }"></ng-container>
         </div>
     </div>
 </h-motion>

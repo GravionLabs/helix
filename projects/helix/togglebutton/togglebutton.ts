@@ -1,22 +1,19 @@
 import { CommonModule } from '@angular/common';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    HostListener,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    TemplateRef
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+  InjectionToken,
+  input,
+  Input,
+  NgModule,
+  numberAttribute,
+  TemplateRef,
+  output,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -46,16 +43,18 @@ export const TOGGLEBUTTON_VALUE_ACCESSOR: any = {
     imports: [CommonModule, SharedModule, BindModule],
     hostDirectives: [{ directive: Ripple }, Bind],
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
-        '[attr.aria-labelledby]': 'ariaLabelledBy',
-        '[attr.aria-label]': 'ariaLabel',
+        '[class]': "cn(cx('root'), styleClass())",
+        '[attr.aria-labelledby]': 'ariaLabelledBy()',
+        '[attr.aria-label]': 'ariaLabel()',
         '[attr.aria-pressed]': 'checked ? "true" : "false"',
         '[attr.role]': '"button"',
-        '[attr.tabindex]': 'tabindex !== undefined ? tabindex : (!$disabled() ? 0 : -1)',
+        '[attr.tabindex]': 'tabindex() !== undefined ? tabindex() : (!$disabled() ? 0 : -1)',
         '[attr.data-pc-name]': "'togglebutton'",
         '[attr.data-p-checked]': 'active',
         '[attr.data-p-disabled]': '$disabled()',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-p]': 'dataP',
+        '(keydown)': 'onKeyDown($event)',
+        '(click)': 'toggle($event)'
     },
     templateUrl: './togglebutton.html',
     providers: [TOGGLEBUTTON_VALUE_ACCESSOR, ToggleButtonStyle, { provide: TOGGLEBUTTON_INSTANCE, useExisting: ToggleButton }, { provide: PARENT_INSTANCE, useExisting: ToggleButton }],
@@ -72,7 +71,6 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
     }
 
-    @HostListener('keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         switch (event.code) {
             case 'Enter':
@@ -86,9 +84,8 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
         }
     }
 
-    @HostListener('click', ['$event'])
     toggle(event: Event) {
-        if (!this.$disabled() && !(this.allowEmpty === false && this.checked)) {
+        if (!this.$disabled() && !(this.allowEmpty() === false && this.checked)) {
             this.checked = !this.checked;
             this.writeModelValue(this.checked);
             this.onModelChange(this.checked);
@@ -105,68 +102,74 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
      * Label for the on state.
      * @group Props
      */
-    @Input() onLabel: string = 'Yes';
+    readonly onLabel = input<string>('Yes');
     /**
      * Label for the off state.
      * @group Props
      */
-    @Input() offLabel: string = 'No';
+    readonly offLabel = input<string>('No');
     /**
      * Icon for the on state.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() onIcon: string | undefined;
     /**
      * Icon for the off state.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() offIcon: string | undefined;
     /**
      * Defines a string that labels the input for accessibility.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Style class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Identifier of the focus input to match a label defined for the component.
      * @group Props
      */
-    @Input() inputId: string | undefined;
+    readonly inputId = input<string>();
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number | undefined = 0;
+    readonly tabindex = input<number | undefined, unknown>(0, { transform: numberAttribute });
     /**
      * Position of the icon.
      * @group Props
      */
-    @Input() iconPos: 'left' | 'right' = 'left';
+    readonly iconPos = input<'left' | 'right'>('left');
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Defines the size of the component.
      * @group Props
      */
-    @Input() size: 'large' | 'small';
+    readonly size = input<'large' | 'small'>(undefined!);
     /**
      * Whether selection can not be cleared.
      * @group Props
      */
-    @Input() allowEmpty: boolean | undefined;
+    readonly allowEmpty = input<boolean>();
     /**
      * Spans 100% width of the container when enabled.
      * @defaultValue undefined
@@ -178,23 +181,23 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
      * @param {ToggleButtonChangeEvent} event - Custom change event.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<ToggleButtonChangeEvent> = new EventEmitter<ToggleButtonChangeEvent>();
+    readonly onChange = output<ToggleButtonChangeEvent>();
     /**
      * Custom icon template.
      * @param {ToggleButtonIconTemplateContext} context - icon context.
      * @see {@link ToggleButtonIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('icon', { descendants: false }) iconTemplate: Nullable<TemplateRef<ToggleButtonIconTemplateContext>>;
+    readonly iconTemplate = contentChild<Nullable<TemplateRef<ToggleButtonIconTemplateContext>>>('icon', { descendants: false });
     /**
      * Custom content template.
      * @param {ToggleButtonContentTemplateContext} context - content context.
      * @see {@link ToggleButtonContentTemplateContext}
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: Nullable<TemplateRef<ToggleButtonContentTemplateContext>>;
+    readonly contentTemplate = contentChild<Nullable<TemplateRef<ToggleButtonContentTemplateContext>>>('content', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     checked: boolean = false;
 
@@ -211,11 +214,13 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
     }
 
     get hasOnLabel(): boolean {
-        return (this.onLabel && this.onLabel.length > 0) as boolean;
+        const onLabel = this.onLabel();
+        return (onLabel && onLabel.length > 0) as boolean;
     }
 
     get hasOffLabel(): boolean {
-        return (this.offLabel && this.offLabel.length > 0) as boolean;
+        const offLabel = this.offLabel();
+        return (offLabel && offLabel.length > 0) as boolean;
     }
 
     get active() {
@@ -227,7 +232,7 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
     _contentTemplate: TemplateRef<ToggleButtonContentTemplateContext> | undefined;
 
     onAfterContentInit() {
-        this.templates.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'icon':
                     this._iconTemplate = item.template;
@@ -258,7 +263,7 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
         return this.cn({
             checked: this.active,
             invalid: this.invalid(),
-            [this.size as string]: this.size
+            [this.size() as string]: this.size()
         });
     }
 }

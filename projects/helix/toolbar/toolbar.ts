@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation, contentChildren } from '@angular/core';
 import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -72,7 +72,7 @@ export class Toolbar extends BaseComponent<ToolbarPassThrough> implements Blocka
      */
     @ContentChild('center', { descendants: false }) centerTemplate: TemplateRef<void> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _startTemplate: TemplateRef<void> | undefined;
 
@@ -81,7 +81,7 @@ export class Toolbar extends BaseComponent<ToolbarPassThrough> implements Blocka
     _centerTemplate: TemplateRef<void> | undefined;
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'start':
                 case 'left':

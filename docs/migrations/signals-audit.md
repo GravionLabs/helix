@@ -87,9 +87,9 @@ directories**, then finishes manually by these rules:
 | 5 | #316 | inputmask–message | ✅ done (leftovers: inputmask mask, megamenu/menubar model) |
 | 6 | #317 | metergroup–password | ✅ done (leftovers: orderlist value; spec input writes → #324) |
 | 7 | #318 | popover–skeleton | ✅ done (spec input writes → #324) |
-| 8 | #319 | slider–terminal | open |
-| 9 | #320 | textarea–treetable | open |
-| 10 | #321 | directives & infrastructure | open |
+| 8 | #319 | slider–terminal | ✅ done (leftovers: splitter panelSizes getter/setter) |
+| 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
+| 10 | #321 | directives & infrastructure | ✅ done (leftovers: animateonscroll enterClass/leaveClass/root/rootMargin/threshold/once, api shared.ts PrimeTemplate type/name, autofocus autofocus, dragdrop getter/setters and HostListeners, focustrap pFocusTrapDisabled, keyfilter pValidateOnly/pattern/ngModelChange/HostListeners, overlay/overlayViewChild/contentViewChild/containerViewChild, scroller remaining @Input, styleclass selector/enterFromClass/enterActiveClass/enterToClass/leaveFromClass/leaveActiveClass/leaveToClass/hideOnOutsideClick/toggleClass/hideOnEscape/hideOnResize/resizeSelector/HostListener, tooltip remaining @Input and disabled getter/setter) |
 | Hard cases | #322 | table & treetable | open |
 | Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |
 | Closeout | #324 | final sweep, audit update, lint guard | open |

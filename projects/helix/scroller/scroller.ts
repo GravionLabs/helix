@@ -1,23 +1,23 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostBinding,
-    inject,
-    InjectionToken,
-    Input,
-    NgModule,
-    NgZone,
-    Output,
-    QueryList,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  ChangeDetectionStrategy,
+  Component,
+  ContentChild,
+  ElementRef,
+  HostBinding,
+  inject,
+  InjectionToken,
+  Input,
+  NgModule,
+  NgZone,
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  output,
+  viewChild,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { findSingle, getHeight, getWidth, isTouchDevice, isVisible } from '@primeuix/utils';
 import { PrimeTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix/api';
@@ -322,23 +322,23 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
      * @param {ScrollerLazyLoadEvent} event - Custom lazy load event.
      * @group Emits
      */
-    @Output() onLazyLoad: EventEmitter<ScrollerLazyLoadEvent> = new EventEmitter<ScrollerLazyLoadEvent>();
+    readonly onLazyLoad = output<ScrollerLazyLoadEvent>();
     /**
      * Callback to invoke when scroll position changes.
      * @param {ScrollerScrollEvent} event - Custom scroll event.
      * @group Emits
      */
-    @Output() onScroll: EventEmitter<ScrollerScrollEvent> = new EventEmitter<ScrollerScrollEvent>();
+    readonly onScroll = output<ScrollerScrollEvent>();
     /**
      * Callback to invoke when scroll position and item's range in view changes.
      * @param {ScrollerScrollEvent} event - Custom scroll index change event.
      * @group Emits
      */
-    @Output() onScrollIndexChange: EventEmitter<ScrollerScrollIndexChangeEvent> = new EventEmitter<ScrollerScrollIndexChangeEvent>();
+    readonly onScrollIndexChange = output<ScrollerScrollIndexChangeEvent>();
 
-    @ViewChild('element') elementViewChild: Nullable<ElementRef>;
+    readonly elementViewChild = viewChild<Nullable<ElementRef>>('element');
 
-    @ViewChild('content') contentViewChild: Nullable<ElementRef>;
+    readonly contentViewChild = viewChild<Nullable<ElementRef>>('content');
 
     @HostBinding('style.height') height: string;
 
@@ -411,7 +411,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
      * @see {@link ScrollerItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: Nullable<TemplateRef<ScrollerItemTemplateContext>>;
+    readonly itemTemplate = contentChild<Nullable<TemplateRef<ScrollerItemTemplateContext>>>('item', { descendants: false });
 
     /**
      * Loader template of the component.
@@ -429,7 +429,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
      */
     @ContentChild('loadericon', { descendants: false }) loaderIconTemplate: Nullable<TemplateRef<ScrollerLoaderIconTemplateContext>>;
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<PrimeTemplate>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _contentTemplate: TemplateRef<ScrollerContentTemplateContext> | undefined;
 
@@ -587,7 +587,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'content':
                     this._contentTemplate = item.template;
@@ -634,13 +634,14 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
 
     viewInit() {
         if (isPlatformBrowser(this.platformId) && !this.initialized) {
-            if (isVisible(this.elementViewChild?.nativeElement)) {
+            const elementViewChild = this.elementViewChild();
+            if (isVisible(elementViewChild?.nativeElement)) {
                 this.setInitialState();
                 this.setContentEl(this.contentEl);
                 this.init();
 
-                this.defaultWidth = getWidth(this.elementViewChild?.nativeElement);
-                this.defaultHeight = getHeight(this.elementViewChild?.nativeElement);
+                this.defaultWidth = getWidth(elementViewChild?.nativeElement);
+                this.defaultHeight = getHeight(elementViewChild?.nativeElement);
                 this.defaultContentWidth = getWidth(this.contentEl);
                 this.defaultContentHeight = getHeight(this.contentEl);
                 this.initialized = true;
@@ -664,7 +665,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
     }
 
     setContentEl(el?: HTMLElement) {
-        this.contentEl = el || this.contentViewChild?.nativeElement || findSingle(this.elementViewChild?.nativeElement, '.p-virtualscroller-content');
+        this.contentEl = el || this.contentViewChild()?.nativeElement || findSingle(this.elementViewChild()?.nativeElement, '.p-virtualscroller-content');
     }
     setInitialState() {
         this.first = this.both ? { rows: 0, cols: 0 } : 0;
@@ -679,7 +680,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
     }
 
     getElementRef() {
-        return this.elementViewChild;
+        return this.elementViewChild();
     }
 
     getPageByFirst(first?: any) {
@@ -692,7 +693,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
 
     scrollTo(options: ScrollToOptions) {
         // this.lastScrollPos = this.both ? { top: 0, left: 0 } : 0;
-        this.elementViewChild?.nativeElement?.scrollTo(options);
+        this.elementViewChild()?.nativeElement?.scrollTo(options);
     }
 
     scrollToIndex(index: number | number[], behavior: ScrollBehavior = 'auto') {
@@ -700,7 +701,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
 
         if (valid) {
             const first = this.first;
-            const { scrollTop = 0, scrollLeft = 0 } = this.elementViewChild?.nativeElement;
+            const { scrollTop = 0, scrollLeft = 0 } = this.elementViewChild()?.nativeElement;
             const { numToleratedItems } = this.calculateNumItems();
             const contentPos = this.getContentPosition();
             const itemSize = this.itemSize;
@@ -776,8 +777,9 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
         let firstInViewport = this.first;
         let lastInViewport: any = 0;
 
-        if (this.elementViewChild?.nativeElement) {
-            const { scrollTop, scrollLeft } = this.elementViewChild.nativeElement;
+        const elementViewChild = this.elementViewChild();
+        if (elementViewChild?.nativeElement) {
+            const { scrollTop, scrollLeft } = elementViewChild.nativeElement;
 
             if (this.both) {
                 firstInViewport = {
@@ -807,8 +809,10 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
 
     calculateNumItems() {
         const contentPos = this.getContentPosition();
-        const contentWidth = (this.elementViewChild?.nativeElement ? this.elementViewChild.nativeElement.offsetWidth - contentPos.left : 0) || 0;
-        const contentHeight = (this.elementViewChild?.nativeElement ? this.elementViewChild.nativeElement.offsetHeight - contentPos.top : 0) || 0;
+        const elementViewChild = this.elementViewChild();
+        const contentWidth = (elementViewChild?.nativeElement ? elementViewChild.nativeElement.offsetWidth - contentPos.left : 0) || 0;
+        const elementViewChildValue = this.elementViewChild();
+        const contentHeight = (elementViewChildValue?.nativeElement ? elementViewChildValue.nativeElement.offsetHeight - contentPos.top : 0) || 0;
         const calculateNumItemsInViewport = (_contentSize: number, _itemSize: number) => (_itemSize || _contentSize ? Math.ceil(_contentSize / (_itemSize || _contentSize)) : 0);
         const calculateNumToleratedItems = (_numItems: number) => Math.ceil(_numItems / 2);
         const numItemsInViewport: any = this.both
@@ -860,19 +864,19 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
                 if (this.contentEl) {
                     this.contentEl.style.minHeight = this.contentEl.style.minWidth = 'auto';
                     this.contentEl.style.position = 'relative';
-                    (<ElementRef>this.elementViewChild).nativeElement.style.contain = 'none';
+                    (<ElementRef>this.elementViewChild()).nativeElement.style.contain = 'none';
 
                     const [contentWidth, contentHeight] = [getWidth(this.contentEl), getHeight(this.contentEl)];
-                    contentWidth !== this.defaultContentWidth && ((<ElementRef>this.elementViewChild).nativeElement.style.width = '');
-                    contentHeight !== this.defaultContentHeight && ((<ElementRef>this.elementViewChild).nativeElement.style.height = '');
+                    contentWidth !== this.defaultContentWidth && ((<ElementRef>this.elementViewChild()).nativeElement.style.width = '');
+                    contentHeight !== this.defaultContentHeight && ((<ElementRef>this.elementViewChild()).nativeElement.style.height = '');
 
-                    const [width, height] = [getWidth((<ElementRef>this.elementViewChild).nativeElement), getHeight((<ElementRef>this.elementViewChild).nativeElement)];
-                    (this.both || this.horizontal) && ((<ElementRef>this.elementViewChild).nativeElement.style.width = width < <number>this.defaultWidth ? width + 'px' : this._scrollWidth || this.defaultWidth + 'px');
-                    (this.both || this.vertical) && ((<ElementRef>this.elementViewChild).nativeElement.style.height = height < <number>this.defaultHeight ? height + 'px' : this._scrollHeight || this.defaultHeight + 'px');
+                    const [width, height] = [getWidth((<ElementRef>this.elementViewChild()).nativeElement), getHeight((<ElementRef>this.elementViewChild()).nativeElement)];
+                    (this.both || this.horizontal) && ((<ElementRef>this.elementViewChild()).nativeElement.style.width = width < <number>this.defaultWidth ? width + 'px' : this._scrollWidth || this.defaultWidth + 'px');
+                    (this.both || this.vertical) && ((<ElementRef>this.elementViewChild()).nativeElement.style.height = height < <number>this.defaultHeight ? height + 'px' : this._scrollHeight || this.defaultHeight + 'px');
 
                     this.contentEl.style.minHeight = this.contentEl.style.minWidth = '';
                     this.contentEl.style.position = '';
-                    (<ElementRef>this.elementViewChild).nativeElement.style.contain = '';
+                    (<ElementRef>this.elementViewChild()).nativeElement.style.contain = '';
                 }
             });
         }
@@ -897,8 +901,9 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
     }
 
     setSize() {
-        if (this.elementViewChild?.nativeElement) {
-            const nativeElement = this.elementViewChild.nativeElement;
+        const elementViewChild = this.elementViewChild();
+        if (elementViewChild?.nativeElement) {
+            const nativeElement = elementViewChild.nativeElement;
             const parentElement = nativeElement.parentElement?.parentElement;
 
             const elementWidth = nativeElement.offsetWidth;
@@ -1120,8 +1125,9 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
         }
 
         this.resizeTimeout = setTimeout(() => {
-            if (isVisible(this.elementViewChild?.nativeElement)) {
-                const [width, height] = [getWidth(this.elementViewChild?.nativeElement), getHeight(this.elementViewChild?.nativeElement)];
+            const elementViewChild = this.elementViewChild();
+            if (isVisible(elementViewChild?.nativeElement)) {
+                const [width, height] = [getWidth(elementViewChild?.nativeElement), getHeight(elementViewChild?.nativeElement)];
                 const [isDiffWidth, isDiffHeight] = [width !== this.defaultWidth, height !== this.defaultHeight];
                 const reinit = this.both ? isDiffWidth || isDiffHeight : this.horizontal ? isDiffWidth : this.vertical ? isDiffHeight : false;
 
@@ -1162,7 +1168,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
             scrollTo: this.scrollTo.bind(this),
             scrollToIndex: this.scrollToIndex.bind(this),
             orientation: this._orientation,
-            scrollableElement: this.elementViewChild?.nativeElement
+            scrollableElement: this.elementViewChild()?.nativeElement
         };
     }
 
