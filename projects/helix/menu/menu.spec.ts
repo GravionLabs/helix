@@ -347,11 +347,11 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.model).toBe(testModel);
-            expect(menuInstance.popup).toBe(true);
-            expect(menuInstance.styleClass).toBe('custom-menu');
-            expect(menuInstance.ariaLabel).toBe('Custom Menu');
-            expect(menuInstance.tabindex).toBe(1);
+            expect(menuInstance.model()).toBe(testModel);
+            expect(menuInstance.popup()).toBe(true);
+            expect(menuInstance.styleClass()).toBe('custom-menu');
+            expect(menuInstance.ariaLabel()).toBe('Custom Menu');
+            expect(menuInstance.tabindex()).toBe(1);
         });
 
         it('should initialize with generated id', () => {
@@ -387,7 +387,7 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.model).toBe(newModel);
+            expect(menuInstance.model()).toBe(newModel);
         });
 
         it('should update popup input', async () => {
@@ -395,7 +395,7 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.popup).toBe(true);
+            expect(menuInstance.popup()).toBe(true);
         });
 
         it('should update style inputs', async () => {
@@ -404,8 +404,8 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.style).toEqual({ width: '200px' });
-            expect(menuInstance.styleClass).toBe('test-class');
+            expect(menuInstance.style()).toEqual({ width: '200px' });
+            expect(menuInstance.styleClass()).toBe('test-class');
         });
 
         it('should update z-index inputs', async () => {
@@ -414,8 +414,8 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.autoZIndex).toBe(false);
-            expect(menuInstance.baseZIndex).toBe(1000);
+            expect(menuInstance.autoZIndex()).toBe(false);
+            expect(menuInstance.baseZIndex()).toBe(1000);
         });
 
         it('should update transition inputs', async () => {
@@ -424,8 +424,8 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.showTransitionOptions).toBe('.2s ease-in');
-            expect(menuInstance.hideTransitionOptions).toBe('.15s ease-out');
+            expect(menuInstance.showTransitionOptions()).toBe('.2s ease-in');
+            expect(menuInstance.hideTransitionOptions()).toBe('.15s ease-out');
         });
 
         it('should update aria inputs', async () => {
@@ -434,44 +434,44 @@ describe('Menu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menuInstance.ariaLabel).toBe('Test Menu');
-            expect(menuInstance.ariaLabelledBy).toBe('menu-label');
+            expect(menuInstance.ariaLabel()).toBe('Test Menu');
+            expect(menuInstance.ariaLabelledBy()).toBe('menu-label');
         });
 
         it('should update tabindex input', async () => {
             component.tabindex = 2;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menuInstance.tabindex).toBe(2);
+            expect(menuInstance.tabindex()).toBe(2);
         });
 
         it('should update id input', async () => {
             component.id = 'custom-menu-id';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menuInstance.id).toBe('custom-menu-id');
+            expect(menuInstance.id()).toBe('custom-menu-id');
         });
     });
 
     describe('Menu Item Display Tests', () => {
         it('should render menu items from model', async () => {
             // Verify model has correct structure
-            expect(menuInstance.model).toBeDefined();
-            expect(menuInstance.model!.length).toBe(4); // File, Edit, separator, Settings
+            expect(menuInstance.model()).toBeDefined();
+            expect(menuInstance.model()!.length).toBe(4); // File, Edit, separator, Settings
             // Count non-separator items
-            const nonSeparatorItems = menuInstance.model!.filter((item) => !item.separator);
+            const nonSeparatorItems = menuInstance.model()!.filter((item) => !item.separator);
             expect(nonSeparatorItems.length).toBe(3);
         });
 
         it('should render item icons when provided', async () => {
             // Verify items have icons in model
-            const itemsWithIcons = menuInstance.model!.filter((item) => item.icon);
+            const itemsWithIcons = menuInstance.model()!.filter((item) => item.icon);
             expect(itemsWithIcons.length).toBeGreaterThanOrEqual(3);
         });
 
         it('should render item labels', async () => {
             // Verify labels in model
-            const items = menuInstance.model!.filter((item) => !item.separator);
+            const items = menuInstance.model()!.filter((item) => !item.separator);
             expect(items[0].label).toBe('File');
             expect(items[1].label).toBe('Edit');
             expect(items[2].label).toBe('Settings');
@@ -509,7 +509,7 @@ describe('Menu', () => {
 
         it('should render separators', async () => {
             // Verify model has separator
-            const separators = menuInstance.model!.filter((item) => item.separator);
+            const separators = menuInstance.model()!.filter((item) => item.separator);
             expect(separators.length).toBe(1);
         });
     });
@@ -544,9 +544,9 @@ describe('Menu', () => {
             // Verify the menu instance has submenu
             const submenuInstance = submenuFixture.debugElement.query(By.directive(Menu)).componentInstance;
             expect(submenuInstance.hasSubMenu()).toBe(true);
-            expect(submenuInstance.model.length).toBe(2); // File and Edit groups
-            expect(submenuInstance.model[0].items.length).toBe(2); // File has 2 items
-            expect(submenuInstance.model[1].items.length).toBe(2); // Edit has 2 items
+            expect(submenuInstance.model().length).toBe(2); // File and Edit groups
+            expect(submenuInstance.model()[0].items.length).toBe(2); // File has 2 items
+            expect(submenuInstance.model()[1].items.length).toBe(2); // Edit has 2 items
         });
     });
 
@@ -827,15 +827,15 @@ describe('Menu', () => {
             const menuInstance = styleFixture.debugElement.query(By.directive(Menu)).componentInstance;
 
             // Check that component received the style input
-            expect(menuInstance.style).toEqual({ border: '2px solid red', padding: '10px' });
+            expect(menuInstance.style()).toEqual({ border: '2px solid red', padding: '10px' });
 
             const hostElement = styleFixture.debugElement.query(By.css('div[data-pc-name="menu"]')).nativeElement;
 
             // Manually apply styles to test the style binding works as expected
             // This simulates what ngStyle directive would do in a real browser
-            if (menuInstance.style) {
-                Object.keys(menuInstance.style).forEach((key) => {
-                    hostElement.style[key] = menuInstance.style[key];
+            if (menuInstance.style()) {
+                Object.keys(menuInstance.style()).forEach((key) => {
+                    hostElement.style[key] = menuInstance.style()[key];
                 });
             }
 
@@ -844,9 +844,9 @@ describe('Menu', () => {
             expect(hostElement.style.padding).toBe('10px');
 
             // Also verify the template binding
-            expect(menuInstance.style).toBeTruthy();
-            expect(Object.keys(menuInstance.style)).toContain('border');
-            expect(Object.keys(menuInstance.style)).toContain('padding');
+            expect(menuInstance.style()).toBeTruthy();
+            expect(Object.keys(menuInstance.style())).toContain('border');
+            expect(Object.keys(menuInstance.style())).toContain('padding');
         });
 
         it('should have proper data attributes', () => {
@@ -881,8 +881,8 @@ describe('Menu', () => {
 
         it('should have proper ARIA attributes on menu items', async () => {
             // Verify the menu has proper ARIA setup
-            expect(menuInstance.model).toBeDefined();
-            expect(menuInstance.model!.length).toBeGreaterThan(0);
+            expect(menuInstance.model()).toBeDefined();
+            expect(menuInstance.model()!.length).toBeGreaterThan(0);
 
             // Check that the menu list has proper ARIA attributes
             const listElement = fixture.debugElement.query(By.css('ul[role="menu"]'));
@@ -1271,7 +1271,7 @@ describe('Menu', () => {
             await styledFixture.whenStable();
 
             const menuInstance = styledFixture.debugElement.query(By.directive(Menu)).componentInstance;
-            expect(menuInstance.styleClass).toBe('custom-menu-class');
+            expect(menuInstance.styleClass()).toBe('custom-menu-class');
 
             const menuElement = styledFixture.debugElement.query(By.css('div[data-pc-name="menu"]'));
             expect(menuElement.nativeElement.classList.contains('custom-menu-class')).toBe(true);
@@ -1325,7 +1325,7 @@ describe('Menu', () => {
             expect(typeof menuInstance.show).toBe('function');
             expect(typeof menuInstance.hide).toBe('function');
             expect(typeof menuInstance.toggle).toBe('function');
-            expect(typeof menuInstance.menuitemId).toBe('function');
+            expect(typeof menuInstance.menuitemId()).toBe('function');
             expect(typeof menuInstance.isItemFocused).toBe('function');
             expect(typeof menuInstance.label).toBe('function');
             expect(typeof menuInstance.disabled).toBe('function');

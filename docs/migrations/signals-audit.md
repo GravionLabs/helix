@@ -84,7 +84,7 @@ directories**, then finishes manually by these rules:
 | 2 | #313 | carousel–dataview | ✅ done (leftovers: carousel page/numVisible/numScroll, cascadeselect value, confirmdialog visible, contextmenu model & sub visible, chip chipProps) |
 | 3 | #314 | dialog–floatlabel | ✅ done (leftovers: dialog visible/style, drawer visible, fileupload files) |
 | 4 | #315 | fluid–inputicon | ✅ done (no leftovers) |
-| 5 | #316 | inputmask–message | open |
+| 5 | #316 | inputmask–message | ✅ done (leftovers: inputmask mask, megamenu/menubar model) |
 | 6 | #317 | metergroup–picklist | open |
 | 7 | #318 | popover–skeleton | open |
 | 8 | #319 | slider–terminal | open |

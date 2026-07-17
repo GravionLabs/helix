@@ -1,32 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    Inject,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    Pipe,
-    PipeTransform,
-    PLATFORM_ID,
-    QueryList,
-    signal,
-    TemplateRef,
-    viewChild,
-    ViewEncapsulation,
-    ViewRef
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, Inject, inject, InjectionToken, input, Input, NgModule, numberAttribute, Pipe, PipeTransform, PLATFORM_ID, signal, TemplateRef, viewChild, ViewEncapsulation, ViewRef, output, contentChild, contentChildren } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
@@ -75,15 +48,15 @@ export class SafeHtmlPipe implements PipeTransform {
     providers: [MenuStyle]
 })
 export class MenuItemContent extends BaseComponent {
-    @Input('hMenuItemContent') item: MenuItem | undefined;
+    readonly item = input<MenuItem | undefined>(undefined, { alias: 'hMenuItemContent' });
 
-    @Input() itemTemplate: any | undefined;
+    readonly itemTemplate = input<any>();
 
     menuitemId = input<string>('');
 
     idx = input<number>(0);
 
-    @Output() onMenuItemClick: EventEmitter<any> = new EventEmitter<any>();
+    readonly onMenuItemClick = output<any>();
 
     menu: Menu;
 
@@ -101,7 +74,7 @@ export class MenuItemContent extends BaseComponent {
     }
 
     getPTOptions(key: string) {
-        return this.menu.getPTOptions(key, this.item, this.idx(), this.menuitemId());
+        return this.menu.getPTOptions(key, this.item(), this.idx(), this.menuitemId());
     }
 }
 /**
@@ -126,65 +99,71 @@ export class Menu extends BaseComponent<MenuPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() model: MenuItem[] | undefined;
+    readonly model = input<MenuItem[]>();
     /**
      * Defines if menu would displayed as a popup.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) popup: boolean | undefined;
+    readonly popup = input<boolean | undefined, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Transition options of the show animation.
      * @deprecated since v21.0.0, use `motionOptions` instead.
      * @group Props
      */
-    @Input() showTransitionOptions: string = '.12s cubic-bezier(0, 0, 0.2, 1)';
+    readonly showTransitionOptions = input<string>('.12s cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Transition options of the hide animation.
      * @deprecated since v21.0.0, use `motionOptions` instead.
      * @group Props
      */
-    @Input() hideTransitionOptions: string = '.1s linear';
+    readonly hideTransitionOptions = input<string>('.1s linear');
 
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Identifier of the underlying input element.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Current id state as a string.
      * @group Props
      */
-    @Input() id: string | undefined;
+    readonly id = input<string>();
+
+    private readonly autoId = uuid('pn_id_');
+
+    readonly $id = computed(() => this.id() || this.autoId);
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number = 0;
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -207,24 +186,24 @@ export class Menu extends BaseComponent<MenuPassThrough> {
      * Callback to invoke when overlay menu is shown.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
+    readonly onShow = output<any>();
     /**
      * Callback to invoke when overlay menu is hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
+    readonly onHide = output<any>();
     /**
      * Callback to invoke when the list loses focus.
      * @param {Event} event - blur event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onBlur = output<Event>();
     /**
      * Callback to invoke when the list receives focus.
      * @param {Event} event - focus event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onFocus = output<Event | undefined>();
 
     listViewChild = viewChild<ElementRef>('list');
 
@@ -270,7 +249,6 @@ export class Menu extends BaseComponent<MenuPassThrough> {
 
     constructor(public overlayService: OverlayService) {
         super();
-        this.id = this.id || uuid('pn_id_');
     }
 
     getPTOptions(key: string, item: any, index: number, id: string) {
@@ -313,7 +291,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     onInit() {
-        if (!this.popup) {
+        if (!this.popup()) {
             this.bindDocumentClickListener();
         }
     }
@@ -322,21 +300,21 @@ export class Menu extends BaseComponent<MenuPassThrough> {
      * Defines template option for start.
      * @group Templates
      */
-    @ContentChild('start', { descendants: false }) startTemplate: TemplateRef<void> | undefined;
+    readonly startTemplate = contentChild<TemplateRef<void>>('start', { descendants: false });
     _startTemplate: TemplateRef<void> | undefined;
 
     /**
      * Defines template option for end.
      * @group Templates
      */
-    @ContentChild('end', { descendants: false }) endTemplate: TemplateRef<void> | undefined;
+    readonly endTemplate = contentChild<TemplateRef<void>>('end', { descendants: false });
     _endTemplate: TemplateRef<void> | undefined;
 
     /**
      * Defines template option for header.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
     _headerTemplate: TemplateRef<void> | undefined;
 
     /**
@@ -345,7 +323,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
      * @see {@link MenuItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<MenuItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<MenuItemTemplateContext>>('item', { descendants: false });
     _itemTemplate: TemplateRef<MenuItemTemplateContext> | undefined;
 
     /**
@@ -354,13 +332,13 @@ export class Menu extends BaseComponent<MenuPassThrough> {
      * @see {@link MenuSubmenuHeaderTemplateContext}
      * @group Templates
      */
-    @ContentChild('submenuheader', { descendants: false }) submenuHeaderTemplate: TemplateRef<MenuSubmenuHeaderTemplateContext> | undefined;
+    readonly submenuHeaderTemplate = contentChild<TemplateRef<MenuSubmenuHeaderTemplateContext>>('submenuheader', { descendants: false });
     _submenuHeaderTemplate: TemplateRef<MenuSubmenuHeaderTemplateContext> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'start':
                     this._startTemplate = item.template;
@@ -386,7 +364,8 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     getTabIndexValue(): string | null {
-        return this.tabindex !== undefined ? this.tabindex.toString() : null;
+        const tabindex = this.tabindex();
+        return tabindex !== undefined ? tabindex.toString() : null;
     }
 
     onOverlayBeforeEnter(event: MotionEvent) {
@@ -431,8 +410,8 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     moveOnTop() {
-        if (this.autoZIndex) {
-            ZIndexUtils.set('menu', this.container, this.baseZIndex + this.config.zIndex.menu);
+        if (this.autoZIndex()) {
+            ZIndexUtils.set('menu', this.container, this.baseZIndex() + this.config.zIndex.menu);
         }
     }
     /**
@@ -474,7 +453,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     onListFocus(event: Event) {
         if (!this.focused) {
             this.focused = true;
-            !this.popup && this.changeFocusedOptionIndex(0);
+            !this.popup() && this.changeFocusedOptionIndex(0);
             this.onFocus.emit(event);
         }
     }
@@ -521,7 +500,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
 
             case 'Escape':
             case 'Tab':
-                if (this.popup) {
+                if (this.popup()) {
                     focus(this.target);
                     this.hide();
                 }
@@ -540,7 +519,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     onArrowUpKey(event) {
-        if (event.altKey && this.popup) {
+        if (event.altKey && this.popup()) {
             focus(this.target);
             this.hide();
             event.preventDefault();
@@ -566,7 +545,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
         const element = <any>findSingle(this.containerViewChild()?.nativeElement, `li[id="${`${this.focusedOptionIndex()}`}"]`);
         const anchorElement = element && (<any>findSingle(element, '[data-pc-section="itemlink"]') || findSingle(element, 'a,button'));
 
-        this.popup && focus(this.target);
+        this.popup() && focus(this.target);
         anchorElement ? anchorElement.click() : element && element.click();
 
         event.preventDefault();
@@ -603,7 +582,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
 
         if (!this.focused) {
             this.focused = true;
-            this.onFocus.emit();
+            this.onFocus.emit(undefined);
         }
 
         if (item.disabled) {
@@ -622,17 +601,17 @@ export class Menu extends BaseComponent<MenuPassThrough> {
             });
         }
 
-        if (this.popup) {
+        if (this.popup()) {
             this.hide();
         }
 
-        if (!this.popup && this.focusedOptionIndex() !== id) {
+        if (!this.popup() && this.focusedOptionIndex() !== id) {
             this.focusedOptionIndex.set(id);
         }
     }
 
     onOverlayClick(event: Event) {
-        if (this.popup) {
+        if (this.popup()) {
             this.overlayService.add({
                 originalEvent: event,
                 target: this.el.nativeElement
@@ -649,7 +628,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
             this.documentClickListener = this.renderer.listen(documentTarget, 'click', (event) => {
                 const isOutsideContainer = this.containerViewChild()?.nativeElement && !this.containerViewChild()?.nativeElement.contains(event.target);
                 const isOutsideTarget = !(this.target && (this.target === event.target || this.target.contains(event.target)));
-                if (!this.popup && isOutsideContainer && isOutsideTarget) {
+                if (!this.popup() && isOutsideContainer && isOutsideTarget) {
                     this.onListBlur(event);
                 }
                 if (this.preventDocumentDefault && this.overlayVisible && isOutsideContainer && isOutsideTarget) {
@@ -710,7 +689,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
             this.target = null;
         }
         if (this.container) {
-            if (this.autoZIndex) {
+            if (this.autoZIndex()) {
                 ZIndexUtils.clear(this.container);
             }
             this.container = undefined;
@@ -718,14 +697,14 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     onDestroy() {
-        if (this.popup) {
+        if (this.popup()) {
             if (this.scrollHandler) {
                 this.scrollHandler.destroy();
                 this.scrollHandler = null;
             }
 
             if (this.container) {
-                if (this.autoZIndex) {
+                if (this.autoZIndex()) {
                     ZIndexUtils.clear(this.container);
                 }
                 this.container = undefined;
@@ -735,13 +714,13 @@ export class Menu extends BaseComponent<MenuPassThrough> {
             this.onOverlayHide();
         }
 
-        if (!this.popup) {
+        if (!this.popup()) {
             this.unbindDocumentClickListener();
         }
     }
 
     hasSubMenu(): boolean {
-        return this.model?.some((item) => item.items) ?? false;
+        return this.model()?.some((item) => item.items) ?? false;
     }
 
     isItemHidden(item: any): boolean {
@@ -753,7 +732,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
 
     get dataP() {
         return this.cn({
-            popup: this.popup
+            popup: this.popup()
         });
     }
 }

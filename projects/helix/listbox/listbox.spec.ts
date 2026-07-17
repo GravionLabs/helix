@@ -766,8 +766,8 @@ describe('Listbox', () => {
             testFixture.detectChanges();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.virtualScroll).toBe(true);
-            expect(listbox.scrollHeight).toBe('300px');
+            expect(listbox.virtualScroll()).toBe(true);
+            expect(listbox.scrollHeight()).toBe('300px');
         });
 
         it('should handle lazy loading', () => {
@@ -775,7 +775,7 @@ describe('Listbox', () => {
             testFixture.detectChanges();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.lazy).toBe(true);
+            expect(listbox.lazy()).toBe(true);
         });
 
         it('should handle emptyMessage property', () => {
@@ -783,7 +783,7 @@ describe('Listbox', () => {
             listbox.emptyMessage = 'No items available';
             testFixture.detectChanges();
 
-            expect(listbox.emptyMessage).toBe('No items available');
+            expect(listbox.emptyMessage()).toBe('No items available');
         });
 
         it('should handle dynamic style and styleClass updates', async () => {
@@ -793,8 +793,8 @@ describe('Listbox', () => {
             await testFixture.whenStable();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.listStyle).toEqual({ border: '1px solid red' });
-            expect(listbox.styleClass).toBe('custom-class');
+            expect(listbox.listStyle()).toEqual({ border: '1px solid red' });
+            expect(listbox.styleClass()).toBe('custom-class');
         });
     });
 
@@ -1320,77 +1320,77 @@ describe('Listbox pTemplate Tests', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.itemTemplate).not.toThrow();
+            expect(() => listboxComponent.itemTemplate()).not.toThrow();
         });
 
         it('should have group pTemplate with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.groupTemplate).not.toThrow();
+            expect(() => listboxComponent.groupTemplate()).not.toThrow();
         });
 
         it('should have header pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.headerTemplate).not.toThrow();
+            expect(() => listboxComponent.headerTemplate()).not.toThrow();
         });
 
         it('should have filter pTemplate with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterTemplate).not.toThrow();
+            expect(() => listboxComponent.filterTemplate()).not.toThrow();
         });
 
         it('should have footer pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.footerTemplate).not.toThrow();
+            expect(() => listboxComponent.footerTemplate()).not.toThrow();
         });
 
         it('should have empty filter pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyFilterTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyFilterTemplate()).not.toThrow();
         });
 
         it('should have empty pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyTemplate()).not.toThrow();
         });
 
         it('should have filter icon pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterIconTemplate).not.toThrow();
+            expect(() => listboxComponent.filterIconTemplate()).not.toThrow();
         });
 
         it('should have check icon pTemplate with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkIconTemplate).not.toThrow();
+            expect(() => listboxComponent.checkIconTemplate()).not.toThrow();
         });
 
         it('should have checkmark pTemplate with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkmarkTemplate).not.toThrow();
+            expect(() => listboxComponent.checkmarkTemplate()).not.toThrow();
         });
 
         it('should have loader pTemplate with options context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.loaderTemplate).not.toThrow();
+            expect(() => listboxComponent.loaderTemplate()).not.toThrow();
         });
 
         it('should process all pTemplates after content init', async () => {
@@ -1500,77 +1500,77 @@ describe('Listbox #template Reference Tests', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.itemTemplate).not.toThrow();
+            expect(() => listboxComponent.itemTemplate()).not.toThrow();
         });
 
         it('should have group #template with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.groupTemplate).not.toThrow();
+            expect(() => listboxComponent.groupTemplate()).not.toThrow();
         });
 
         it('should have header #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.headerTemplate).not.toThrow();
+            expect(() => listboxComponent.headerTemplate()).not.toThrow();
         });
 
         it('should have filter #template with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterTemplate).not.toThrow();
+            expect(() => listboxComponent.filterTemplate()).not.toThrow();
         });
 
         it('should have footer #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.footerTemplate).not.toThrow();
+            expect(() => listboxComponent.footerTemplate()).not.toThrow();
         });
 
         it('should have empty filter #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyFilterTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyFilterTemplate()).not.toThrow();
         });
 
         it('should have empty #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyTemplate()).not.toThrow();
         });
 
         it('should have filter icon #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterIconTemplate).not.toThrow();
+            expect(() => listboxComponent.filterIconTemplate()).not.toThrow();
         });
 
         it('should have check icon #template with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkIconTemplate).not.toThrow();
+            expect(() => listboxComponent.checkIconTemplate()).not.toThrow();
         });
 
         it('should have checkmark #template with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkmarkTemplate).not.toThrow();
+            expect(() => listboxComponent.checkmarkTemplate()).not.toThrow();
         });
 
         it('should have loader #template with options context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.loaderTemplate).not.toThrow();
+            expect(() => listboxComponent.loaderTemplate()).not.toThrow();
         });
 
         it('should process all #templates after content init', async () => {
@@ -1771,8 +1771,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             const listboxComponent = listboxElement.componentInstance;
 
             expect(listboxComponent).toBeTruthy();
-            expect(() => listboxComponent.containerViewChild).not.toThrow();
-            expect(() => listboxComponent.filterViewChild).not.toThrow();
+            expect(() => listboxComponent.containerViewChild()).not.toThrow();
+            expect(() => listboxComponent.filterViewChild()).not.toThrow();
             expect(() => listboxComponent.scrollerViewChild).not.toThrow();
         });
 
@@ -1858,8 +1858,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(listboxComponent.emptyMessage).toBe('No items found');
-            expect(listboxComponent.emptyFilterMessage).toBe('No filtered results');
+            expect(listboxComponent.emptyMessage()).toBe('No items found');
+            expect(listboxComponent.emptyFilterMessage()).toBe('No filtered results');
         });
 
         it('should handle dynamic style and styleClass updates', async () => {
@@ -1988,14 +1988,14 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             const listboxComponent = fixture.debugElement.query(By.directive(Listbox)).componentInstance;
 
             // Verify dragdrop is enabled
-            expect(listboxComponent.dragdrop).toBe(true);
+            expect(listboxComponent.dragdrop()).toBe(true);
 
             // Verify options are set correctly
             expect(listboxComponent._options()).toEqual(component.options);
 
             // Since drag drop testing is complex and requires CDK setup,
             // we'll just verify the dragdrop property is working
-            expect(listboxComponent.dragdrop).toBeTruthy();
+            expect(listboxComponent.dragdrop()).toBeTruthy();
         });
 
         it('should not reorder when dragdrop is disabled', async () => {
@@ -2524,7 +2524,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Verify getPTOptions is being called
-                const ptOptions = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptions = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptOptions).toBeDefined();
             });
 
@@ -2535,7 +2535,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for selected option
-                const ptOptionsForSelected = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForSelected = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptOptionsForSelected).toBeDefined();
 
                 // Verify context.selected is true for selected option
@@ -2545,7 +2545,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for non-selected option
-                const ptOptionsForNonSelected = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForNonSelected = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 if (ptOptionsForNonSelected.context) {
                     expect(ptOptionsForNonSelected.context.selected).toBe(false);
                 }
@@ -2563,7 +2563,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for disabled option
-                const ptOptionsForDisabled = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForDisabled = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptOptionsForDisabled).toBeDefined();
 
                 // Verify context.disabled is true
@@ -2572,7 +2572,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for enabled option
-                const ptOptionsForEnabled = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForEnabled = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 if (ptOptionsForEnabled.context) {
                     expect(ptOptionsForEnabled.context.disabled).toBe(false);
                 }
@@ -2588,7 +2588,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for focused option
-                const ptOptionsForFocused = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForFocused = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptOptionsForFocused).toBeDefined();
 
                 // Verify context.focused is true
@@ -2597,7 +2597,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for non-focused option
-                const ptOptionsForNonFocused = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForNonFocused = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 if (ptOptionsForNonFocused.context) {
                     expect(ptOptionsForNonFocused.context.focused).toBe(false);
                 }
@@ -2617,7 +2617,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Check selected option
-                const ptSelected = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptSelected = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptSelected).toBeDefined();
                 if (ptSelected.context) {
                     expect(ptSelected.context.selected).toBe(true);
@@ -2629,7 +2629,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Check disabled option
-                const ptDisabled = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptDisabled = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptDisabled).toBeDefined();
                 if (ptDisabled.context) {
                     expect(ptDisabled.context.selected).toBe(false);
@@ -2640,7 +2640,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Check focused option
-                const ptFocused = listbox.getPTOptions(listbox.options[2], {}, 2, 'option');
+                const ptFocused = listbox.getPTOptions(listbox.options()[2], {}, 2, 'option');
                 expect(ptFocused).toBeDefined();
                 if (ptFocused.context) {
                     expect(ptFocused.context.selected).toBe(false);

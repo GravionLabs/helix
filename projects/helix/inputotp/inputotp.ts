@@ -1,25 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    AfterContentInit,
-    AfterViewChecked,
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
@@ -76,37 +56,37 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
      * When present, it specifies that an input field is read-only.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) readonly: boolean;
+    readonly readonly = input<boolean, unknown>(undefined!, { transform: booleanAttribute });
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input() tabindex: number | null = null;
+    readonly tabindex = input<number | null>(null);
     /**
      * Number of characters to initiate.
      * @group Props
      */
-    @Input() length: number = 4;
+    readonly length = input<number>(4);
     /**
      * Style class of the input element.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Mask pattern.
      * @group Props
      */
-    @Input() mask: boolean = false;
+    readonly mask = input<boolean>(false);
     /**
      * When present, it specifies that an input field is integer-only.
      * @group Props
      */
-    @Input() integerOnly: boolean = false;
+    readonly integerOnly = input<boolean>(false);
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Specifies the input variant of the component.
      * @defaultValue undefined
@@ -123,28 +103,28 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
      * Callback to invoke on value change.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<InputOtpChangeEvent> = new EventEmitter<InputOtpChangeEvent>();
+    readonly onChange = output<InputOtpChangeEvent>();
     /**
      * Callback to invoke when the component receives focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter();
+    readonly onFocus = output<Event>();
     /**
      * Callback to invoke when the component loses focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter();
+    readonly onBlur = output<Event>();
     /**
      * Custom input template.
      * @param {InputOtpInputTemplateContext} context - Context of the template
      * @see {@link InputOtpInputTemplateContext}
      * @group Templates
      */
-    @ContentChild('input', { descendants: false }) inputTemplate: TemplateRef<InputOtpInputTemplateContext> | undefined;
+    readonly inputTemplate = contentChild<TemplateRef<InputOtpInputTemplateContext>>('input', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<PrimeTemplate>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _inputTemplate: TemplateRef<InputOtpInputTemplateContext> | undefined;
 
@@ -155,15 +135,15 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
     $variant = computed(() => this.variant() || this.config.inputStyle() || this.config.inputVariant());
 
     get inputMode(): string {
-        return this.integerOnly ? 'numeric' : 'text';
+        return this.integerOnly() ? 'numeric' : 'text';
     }
 
     get inputType(): string {
-        return this.mask ? 'password' : 'text';
+        return this.mask() ? 'password' : 'text';
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'input':
                     this._inputTemplate = item.template;
@@ -235,7 +215,7 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
 
     getAutofocus(i: number): boolean {
         if (i === 1) {
-            return this.autofocus || false;
+            return this.autofocus() || false;
         }
         return false;
     }
@@ -318,8 +298,8 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
             default:
                 const target = event.target;
                 const hasSelection = target.selectionStart !== target.selectionEnd;
-                const isAtMaxLength = this.tokens.join('').length >= this.length;
-                const isValidKey = this.integerOnly ? /^[0-9]$/.test(event.key) : true;
+                const isAtMaxLength = this.tokens.join('').length >= this.length();
+                const isValidKey = this.integerOnly() ? /^[0-9]$/.test(event.key) : true;
 
                 if (!isValidKey || (isAtMaxLength && event.key !== 'Delete' && !hasSelection)) {
                     event.preventDefault();
@@ -330,7 +310,7 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
     }
 
     onPaste(event) {
-        if (!this.$disabled() && !this.readonly) {
+        if (!this.$disabled() && !this.readonly()) {
             let paste = event.clipboardData.getData('text');
 
             if (paste.length) {
@@ -342,9 +322,9 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
     }
 
     handleOnPaste(paste, event) {
-        let pastedCode = paste.substring(0, this.length + 1);
+        let pastedCode = paste.substring(0, this.length() + 1);
 
-        if (!this.integerOnly || !isNaN(pastedCode)) {
+        if (!this.integerOnly() || !isNaN(pastedCode)) {
             this.tokens = pastedCode.split('');
             this.updateModel(event);
         }
@@ -367,9 +347,9 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
     writeControlValue(value: any, setModelValue: (value: any) => void): void {
         if (value) {
             if (Array.isArray(value) && value.length > 0) {
-                this.value = value.slice(0, this.length);
+                this.value = value.slice(0, this.length());
             } else {
-                this.value = value.toString().split('').slice(0, this.length);
+                this.value = value.toString().split('').slice(0, this.length());
             }
         } else {
             this.value = value;
