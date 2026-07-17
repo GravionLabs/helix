@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ComponentRef, inject, InjectionToken, NgModule, Type, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ComponentRef, inject, InjectionToken, NgModule, Type, ViewEncapsulation, viewChild } from '@angular/core';
 import { uuid } from '@primeuix/utils';
 import { SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -17,73 +17,8 @@ const DYNAMIC_DIALOG_INSTANCE = new InjectionToken<DynamicDialog>('DYNAMIC_DIALO
     selector: 'h-dynamicDialog, h-dynamicdialog, h-dynamic-dialog',
     standalone: true,
     imports: [CommonModule, SharedModule, DynamicDialogContent, Dialog, BindModule],
-    template: `
-        <h-dialog
-            [(visible)]="visible"
-            [header]="ddconfig?.header"
-            [draggable]="ddconfig?.draggable !== false"
-            [resizable]="ddconfig?.resizable !== false"
-            [contentStyle]="ddconfig?.contentStyle"
-            [modal]="ddconfig?.modal !== false"
-            [closeOnEscape]="ddconfig?.closeOnEscape !== false"
-            [dismissableMask]="ddconfig?.dismissableMask"
-            [rtl]="ddconfig?.rtl"
-            [closable]="closable"
-            [breakpoints]="breakpoints"
-            [styleClass]="ddconfig?.styleClass"
-            [maskStyleClass]="ddconfig?.maskStyleClass"
-            [showHeader]="ddconfig?.showHeader !== false"
-            [autoZIndex]="ddconfig?.autoZIndex !== false"
-            [baseZIndex]="ddconfig?.baseZIndex || 0"
-            [minX]="minX"
-            [minY]="minY"
-            [focusOnShow]="ddconfig?.focusOnShow !== false"
-            [maximizable]="maximizable"
-            [keepInViewport]="keepInViewport"
-            [focusTrap]="ddconfig?.focusTrap !== false"
-            [transitionOptions]="ddconfig?.transitionOptions || '150ms cubic-bezier(0, 0, 0.2, 1)'"
-            [closeAriaLabel]="ddconfig?.closeAriaLabel || defaultCloseAriaLabel"
-            [minimizeIcon]="minimizeIcon"
-            [maximizeIcon]="maximizeIcon"
-            [closeButtonProps]="{ severity: 'secondary', variant: 'text', rounded: true }"
-            [maximizeButtonProps]="{ severity: 'secondary', variant: 'text', rounded: true }"
-            [style]="dialogStyle"
-            [position]="position"
-            (onHide)="onDialogHide($event)"
-            (onMaximize)="onDialogMaximize($event)"
-            (onResizeInit)="onDialogResizeInit($event)"
-            (onResizeEnd)="onDialogResizeEnd($event)"
-            (onDragEnd)="onDialogDragEnd($event)"
-            (visibleChange)="onVisibleChange($event)"
-            [pt]="ddconfig.pt"
-            appendTo="self"
-            hostName="DynamicDialog"
-            [unstyled]="isUnstyled"
-        >
-            <ng-template #header *ngIf="headerTemplate">
-                <ng-container *ngComponentOutlet="headerTemplate"></ng-container>
-            </ng-template>
-            <ng-template #content *ngIf="contentTemplate">
-                <ng-container *ngComponentOutlet="contentTemplate"></ng-container>
-            </ng-template>
-            <ng-template #footer *ngIf="footerTemplate">
-                <ng-container *ngComponentOutlet="footerTemplate"></ng-container>
-            </ng-template>
-            <ng-template #closeicon *ngIf="closeIconTemplate">
-                <ng-container *ngComponentOutlet="closeIconTemplate"></ng-container>
-            </ng-template>
-            <ng-template #maximizeicon *ngIf="maximizeIconTemplate">
-                <ng-container *ngComponentOutlet="maximizeIconTemplate"></ng-container>
-            </ng-template>
-            <ng-template #minimizeicon *ngIf="minimizeIconTemplate">
-                <ng-container *ngComponentOutlet="minimizeIconTemplate"></ng-container>
-            </ng-template>
-
-            <ng-template hDynamicDialogContent *ngIf="!contentTemplate"></ng-template>
-            <div *ngIf="ddconfig.footer && !footerTemplate">{{ ddconfig.footer }}</div>
-        </h-dialog>
-    `,
-    changeDetection: ChangeDetectionStrategy.Default,
+    templateUrl: './dynamicdialog.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     providers: [DynamicDialogStyle, { provide: DYNAMIC_DIALOG_INSTANCE, useExisting: DynamicDialog }, { provide: PARENT_INSTANCE, useExisting: DynamicDialog }],
     hostDirectives: [Bind]
@@ -107,9 +42,9 @@ export class DynamicDialog extends BaseComponent<DialogPassThrough> {
 
     id: string = uuid('pn_id_');
 
-    @ViewChild(DynamicDialogContent) insertionPoint: Nullable<DynamicDialogContent>;
+    readonly insertionPoint = viewChild(DynamicDialogContent);
 
-    @ViewChild(Dialog) dialog: Nullable<Dialog>;
+    readonly dialog = viewChild(Dialog);
 
     childComponentType: Nullable<Type<any>>;
 
@@ -268,7 +203,7 @@ export class DynamicDialog extends BaseComponent<DialogPassThrough> {
     }
 
     loadChildComponent(componentType: Type<any>) {
-        let viewContainerRef = this.insertionPoint?.viewContainerRef;
+        let viewContainerRef = this.insertionPoint()?.viewContainerRef;
         viewContainerRef?.clear();
 
         this.componentRef = viewContainerRef?.createComponent(componentType);

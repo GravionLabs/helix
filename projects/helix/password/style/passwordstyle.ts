@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${password_style}
 
-/* For PrimeNG */
+/* For Helix */
 .p-password-overlay {
     min-width: 100%;
 }

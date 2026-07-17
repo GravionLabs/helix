@@ -1,0 +1,19 @@
+@if (!tt.sortIconTemplate && !tt._sortIconTemplate) {
+  @if (sortOrder === 0) {
+    <svg data-p-icon="sort-alt" [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')" />
+  }
+  @if (sortOrder === 1) {
+    <svg data-p-icon="sort-amount-up-alt" [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')" />
+  }
+  @if (sortOrder === -1) {
+    <svg data-p-icon="sort-amount-down" [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')" />
+  }
+}
+@if (tt.sortIconTemplate || tt._sortIconTemplate) {
+  <span [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')">
+    <ng-template *ngTemplateOutlet="tt.sortIconTemplate || tt._sortIconTemplate; context: { $implicit: sortOrder }"></ng-template>
+  </span>
+}
+@if (isMultiSorted()) {
+  <h-badge [class]="cx('sortableColumnBadge')" [value]="getBadgeValue()" size="small" [pt]="ptm('pcSortableColumnBadge')" [unstyled]="unstyled()"></h-badge>
+}

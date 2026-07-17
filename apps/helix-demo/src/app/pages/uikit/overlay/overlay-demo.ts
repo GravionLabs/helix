@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -30,6 +30,7 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
   ],
   templateUrl: './overlay-demo.html',
   styleUrl: './overlay-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ConfirmationService, MessageService, ProductService],
 })
 export class OverlayDemo implements OnInit {

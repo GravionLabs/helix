@@ -21,7 +21,6 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, epic/201-primeng-fork]
 
 jobs:
   determine-version:

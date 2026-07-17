@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, type ElementRef, type OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type ElementRef,
+  type OnInit,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -51,6 +57,7 @@ interface expandedRows {
   ],
   templateUrl: './table-demo.html',
   styleUrl: './table-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ConfirmationService, MessageService, CustomerService, ProductService],
 })
 export class TableDemo implements OnInit {
@@ -82,7 +89,7 @@ export class TableDemo implements OnInit {
 
   loading: boolean = true;
 
-  @ViewChild('filter') filter!: ElementRef;
+  readonly filter = viewChild.required<ElementRef>('filter');
 
   constructor(
     private customerService: CustomerService,
@@ -186,7 +193,7 @@ export class TableDemo implements OnInit {
 
   clear(table: Table) {
     table.clear();
-    this.filter.nativeElement.value = '';
+    this.filter().nativeElement.value = '';
   }
 
   getSeverity(status: string) {

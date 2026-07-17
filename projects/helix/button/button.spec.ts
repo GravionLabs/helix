@@ -296,16 +296,16 @@ describe('Button', () => {
         });
 
         it('should have correct default values', () => {
-            expect(buttonInstance.type).toBe('button');
-            expect(buttonInstance.iconPos).toBe('left');
-            expect(buttonInstance.disabled).toBe(false);
-            expect(buttonInstance.loading).toBe(false);
-            expect(buttonInstance.raised).toBe(false);
-            expect(buttonInstance.rounded).toBe(false);
-            expect(buttonInstance.text).toBe(false);
-            expect(buttonInstance.outlined).toBe(false);
-            expect(buttonInstance.plain).toBe(false);
-            expect(buttonInstance.autofocus).toBe(false);
+            expect(buttonInstance.type()).toBe('button');
+            expect(buttonInstance.iconPos()).toBe('left');
+            expect(buttonInstance.disabled()).toBe(false);
+            expect(buttonInstance.loading()).toBe(false);
+            expect(buttonInstance.raised()).toBe(false);
+            expect(buttonInstance.rounded()).toBe(false);
+            expect(buttonInstance.text()).toBe(false);
+            expect(buttonInstance.outlined()).toBe(false);
+            expect(buttonInstance.plain()).toBe(false);
+            expect(buttonInstance.autofocus()).toBe(false);
         });
 
         it('should render with correct attributes', () => {
@@ -328,7 +328,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.label).toBe('Updated Label');
+            expect(buttonInstance.label()).toBe('Updated Label');
             const labelElement = buttonElement.querySelector('.p-button-label');
             expect(labelElement?.textContent?.trim()).toBe('Updated Label');
         });
@@ -339,7 +339,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.icon).toBe('pi pi-search');
+            expect(buttonInstance.icon()).toBe('pi pi-search');
             const iconElement = buttonElement.querySelector('.p-button-icon');
             expect(iconElement).toBeTruthy();
         });
@@ -350,7 +350,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.disabled).toBe(true);
+            expect(buttonInstance.disabled()).toBe(true);
             expect(buttonElement.disabled).toBe(true);
         });
 
@@ -360,7 +360,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.loading).toBe(true);
+            expect(buttonInstance.loading()).toBe(true);
             const loadingIcon = buttonElement.querySelector('[data-pc-section="loadingicon"]');
             expect(loadingIcon).toBeTruthy();
         });
@@ -371,7 +371,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.type).toBe('submit');
+            expect(buttonInstance.type()).toBe('submit');
             expect(buttonElement.type).toBe('submit');
         });
 
@@ -391,12 +391,12 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Check that component received the style input
-            expect(buttonInstance.style).toEqual({ backgroundColor: 'red', color: 'white' });
+            expect(buttonInstance.style()).toEqual({ backgroundColor: 'red', color: 'white' });
 
             // Manually apply styles to test the style binding works as expected
-            if (buttonInstance.style) {
-                Object.keys(buttonInstance.style).forEach((key) => {
-                    buttonElement.style[key] = buttonInstance.style![key];
+            if (buttonInstance.style()) {
+                Object.keys(buttonInstance.style()).forEach((key) => {
+                    buttonElement.style[key] = buttonInstance.style()![key];
                 });
             }
 
@@ -411,7 +411,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.ariaLabel).toBe('Custom Button Label');
+            expect(buttonInstance.ariaLabel()).toBe('Custom Button Label');
             expect(buttonElement.getAttribute('aria-label')).toBe('Custom Button Label');
         });
 
@@ -421,7 +421,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.tabindex).toBe(5);
+            expect(buttonInstance.tabindex()).toBe(5);
             expect(buttonElement.getAttribute('tabindex')).toBe('5');
         });
     });
@@ -479,7 +479,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.raised).toBe(true);
+            expect(buttonInstance.raised()).toBe(true);
             expect(buttonElement.classList.contains('p-button-raised')).toBe(true);
         });
 
@@ -489,7 +489,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.rounded).toBe(true);
+            expect(buttonInstance.rounded()).toBe(true);
             expect(buttonElement.classList.contains('p-button-rounded')).toBe(true);
         });
 
@@ -499,7 +499,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.text).toBe(true);
+            expect(buttonInstance.text()).toBe(true);
             expect(buttonElement.classList.contains('p-button-text')).toBe(true);
         });
 
@@ -509,7 +509,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.outlined).toBe(true);
+            expect(buttonInstance.outlined()).toBe(true);
             expect(buttonElement.classList.contains('p-button-outlined')).toBe(true);
         });
 
@@ -519,9 +519,9 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.plain).toBe(true);
+            expect(buttonInstance.plain()).toBe(true);
             // Plain buttons may not always add p-button-text class in test environment
-            expect(buttonInstance.plain).toBe(true);
+            expect(buttonInstance.plain()).toBe(true);
         });
 
         it('should apply size variations', async () => {
@@ -531,7 +531,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.size).toBe('small');
+            expect(buttonInstance.size()).toBe('small');
 
             // Large size
             component.size = 'large';
@@ -539,7 +539,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.size).toBe('large');
+            expect(buttonInstance.size()).toBe('large');
         });
 
         it('should apply fluid styling', async () => {
@@ -560,7 +560,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.severity).toBe('primary');
+            expect(buttonInstance.severity()).toBe('primary');
             expect(buttonElement.classList.contains('p-button-primary')).toBe(true);
         });
 
@@ -570,7 +570,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.severity).toBe('secondary');
+            expect(buttonInstance.severity()).toBe('secondary');
             expect(buttonElement.classList.contains('p-button-secondary')).toBe(true);
         });
 
@@ -580,7 +580,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.severity).toBe('success');
+            expect(buttonInstance.severity()).toBe('success');
             expect(buttonElement.classList.contains('p-button-success')).toBe(true);
         });
 
@@ -590,7 +590,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.severity).toBe('danger');
+            expect(buttonInstance.severity()).toBe('danger');
             expect(buttonElement.classList.contains('p-button-danger')).toBe(true);
         });
     });
@@ -823,7 +823,7 @@ describe('Button', () => {
                 expect(() => buttonInstance.ngAfterContentInit()).not.toThrow();
 
                 // Test that contentTemplate property exists (ContentChild)
-                expect(buttonInstance.contentTemplate).toBeDefined();
+                expect(buttonInstance.contentTemplate()).toBeDefined();
 
                 // Verify content container is rendered
                 const buttonElement = contentTemplateFixture.debugElement.query(By.css('button'));
@@ -839,8 +839,8 @@ describe('Button', () => {
                 const buttonInstance = contentTemplateFixture.debugElement.query(By.directive(Button)).componentInstance;
 
                 // @ContentChild('content') should set contentTemplate
-                expect(buttonInstance.contentTemplate).toBeDefined();
-                expect(buttonInstance.contentTemplate?.constructor.name).toBe('TemplateRef');
+                expect(buttonInstance.contentTemplate()).toBeDefined();
+                expect(buttonInstance.contentTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process loadingIconTemplate from @ContentChild('loadingicon')", async () => {
@@ -848,7 +848,7 @@ describe('Button', () => {
                 const buttonInstance = fixture.debugElement.query(By.directive(Button)).componentInstance;
 
                 // loadingIconTemplate should be undefined when not provided
-                expect(buttonInstance.loadingIconTemplate).toBeUndefined();
+                expect(buttonInstance.loadingIconTemplate()).toBeUndefined();
             });
 
             it("should process iconTemplate from @ContentChild('icon')", async () => {
@@ -856,7 +856,7 @@ describe('Button', () => {
                 const buttonInstance = fixture.debugElement.query(By.directive(Button)).componentInstance;
 
                 // iconTemplate should be undefined when not provided
-                expect(buttonInstance.iconTemplate).toBeUndefined();
+                expect(buttonInstance.iconTemplate()).toBeUndefined();
             });
         });
 
@@ -932,8 +932,8 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Check that icon property is set correctly
-            expect(buttonInstance.icon).toBe('pi pi-search');
-            expect(buttonInstance.label).toBeUndefined();
+            expect(buttonInstance.icon()).toBe('pi pi-search');
+            expect(buttonInstance.label()).toBeUndefined();
         });
 
         it('should handle tabindex correctly', async () => {
@@ -943,7 +943,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Check that component received the tabindex input
-            expect(buttonInstance.tabindex).toBe(0);
+            expect(buttonInstance.tabindex()).toBe(0);
         });
 
         it('should be focusable when not disabled', async () => {
@@ -980,7 +980,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.loading).toBe(true);
+            expect(buttonInstance.loading()).toBe(true);
 
             // Test disabled state
             component.loading = false;
@@ -993,7 +993,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonInstance.disabled).toBe(true);
+            expect(buttonInstance.disabled()).toBe(true);
         });
 
         it('should apply custom styleClass', async () => {
@@ -1427,7 +1427,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(buttonInstance.label).toBe('' as any);
+            expect(buttonInstance.label()).toBe('' as any);
         });
 
         it('should handle undefined label', async () => {

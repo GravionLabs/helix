@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { FluidModule } from '@gravionlabs/helix/fluid';
@@ -11,6 +11,7 @@ import { TextareaModule } from '@gravionlabs/helix/textarea';
   standalone: true,
   imports: [InputTextModule, FluidModule, ButtonModule, SelectModule, FormsModule, TextareaModule],
   templateUrl: './form-layout-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './form-layout-demo.scss',
 })
 export class FormLayoutDemo {

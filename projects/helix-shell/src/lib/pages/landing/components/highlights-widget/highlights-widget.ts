@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { HelixHighlight } from '../../landing.model';
 
 const DEFAULT_HIGHLIGHTS: HelixHighlight[] = [
@@ -34,6 +34,7 @@ const DEFAULT_HIGHLIGHTS: HelixHighlight[] = [
   standalone: true,
   imports: [NgClass],
   templateUrl: './highlights-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './highlights-widget.scss',
 })
 export class HelixHighlightsWidget {

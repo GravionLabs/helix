@@ -1,0 +1,175 @@
+@for (processedItem of items(); track processedItem; let index = $index) {
+  @if (processedItem.separator) {
+    <li [class]="cn(cx('separator'), getItemProp(processedItem, 'styleClass'))" role="separator" [hBind]="ptm('separator')"></li>
+  }
+  @if (!processedItem.separator && isItemVisible(processedItem)) {
+    <li
+      role="treeitem"
+      [attr.id]="getItemId(processedItem)"
+      [attr.aria-label]="getItemProp(processedItem, 'label')"
+      [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
+      [attr.aria-level]="level() + 1"
+      [attr.aria-setsize]="getAriaSetSize()"
+      [attr.aria-posinset]="getAriaPosInset(index)"
+      [class]="cn(cx('item', { processedItem }), getItemProp(processedItem, 'styleClass'))"
+      [ngStyle]="getItemProp(processedItem, 'style')"
+      [hTooltip]="getItemProp(processedItem, 'tooltip')"
+      [pTooltipUnstyled]="unstyled()"
+      [hBind]="getPTOptions(processedItem, index, 'item')"
+      [attr.data-p-disabled]="isItemDisabled(processedItem)"
+      [attr.data-p-focused]="isItemFocused(processedItem)"
+      [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
+      >
+      <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)">
+        @if (!itemTemplate()) {
+          @if (!getItemProp(processedItem, 'routerLink')) {
+            <a
+              [attr.href]="getItemProp(processedItem, 'url')"
+              [attr.title]="getItemProp(processedItem, 'title')"
+              [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+              [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
+              [ngStyle]="getItemProp(processedItem, 'linkStyle')"
+              [target]="getItemProp(processedItem, 'target')"
+              [attr.tabindex]="!!parentExpanded() ? '0' : '-1'"
+              [hBind]="getPTOptions(processedItem, index, 'itemLink')"
+              >
+              @if (isItemGroup(processedItem)) {
+                @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
+                  @if (isItemActive(processedItem)) {
+                    <svg
+                      data-p-icon="chevron-down"
+                      [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
+                      [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                      [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
+                      />
+                  }
+                  @if (!isItemActive(processedItem)) {
+                    <svg
+                      data-p-icon="chevron-right"
+                      [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
+                      [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                      [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
+                      />
+                  }
+                }
+                <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate() || panelMenu._submenuIconTemplate"></ng-template>
+              }
+              @if (processedItem.icon) {
+                <span
+                  [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
+                  [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                  [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
+                ></span>
+              }
+              @if (processedItem.item?.escape !== false) {
+                <span
+                  [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                  [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                  [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                  >{{ getItemProp(processedItem, 'label') }}</span
+                  >
+                } @else {
+                  <span
+                    [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                    [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                    [innerHTML]="getItemProp(processedItem, 'label')"
+                    [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                    ></span
+                    >
+                  }
+                </a>
+              }
+              @if (getItemProp(processedItem, 'routerLink')) {
+                <a
+                  [routerLink]="getItemProp(processedItem, 'routerLink')"
+                  [queryParams]="getItemProp(processedItem, 'queryParams')"
+                  [routerLinkActive]="'p-panelmenu-item-link-active'"
+                  [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
+                  [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
+                  [ngStyle]="getItemProp(processedItem, 'linkStyle')"
+                  [target]="getItemProp(processedItem, 'target')"
+                  [attr.title]="getItemProp(processedItem, 'title')"
+                  [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+                  [fragment]="getItemProp(processedItem, 'fragment')"
+                  [queryParamsHandling]="getItemProp(processedItem, 'queryParamsHandling')"
+                  [preserveFragment]="getItemProp(processedItem, 'preserveFragment')"
+                  [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
+                  [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
+                  [state]="getItemProp(processedItem, 'state')"
+                  [attr.tabindex]="!!parentExpanded() ? '0' : '-1'"
+                  [hBind]="getPTOptions(processedItem, index, 'itemLink')"
+                  >
+                  @if (isItemGroup(processedItem)) {
+                    @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
+                      @if (isItemActive(processedItem)) {
+                        <svg
+                          data-p-icon="chevron-down"
+                          [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
+                          [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                          [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
+                          />
+                      }
+                      @if (!isItemActive(processedItem)) {
+                        <svg
+                          data-p-icon="chevron-right"
+                          [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
+                          [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                          [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
+                          />
+                      }
+                    }
+                    <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate() && panelMenu._submenuIconTemplate"></ng-template>
+                  }
+                  @if (processedItem.icon) {
+                    <span
+                      [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
+                      [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                      [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
+                    ></span>
+                  }
+                  @if (getItemProp(processedItem, 'label')) {
+                    <span
+                      [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
+                      [ngStyle]="getItemProp(processedItem, 'labelStyle')"
+                      [innerHTML]="getItemProp(processedItem, 'label')"
+                      [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
+                    ></span>
+                  }
+                  @if (processedItem.badge) {
+                    <span [class]="cn(cx('badge'), getItemProp(processedItem, 'badgeStyleClass'))">{{ processedItem.badge }}</span>
+                  }
+                </a>
+              }
+            }
+            @if (itemTemplate()) {
+              <ng-template *ngTemplateOutlet="itemTemplate(); context: { $implicit: processedItem.item }"></ng-template>
+            }
+          </div>
+          <div
+            [class]="cx('contentContainer', { processedItem: processedItem })"
+            pMotionName="p-collapsible"
+            [hMotion]="isItemVisible(processedItem) && isItemGroup(processedItem) && isItemExpanded(processedItem)"
+            [pMotionOptions]="motionOptions()"
+            >
+            <div [class]="cx('contentWrapper')" [hBind]="ptm('contentWrapper')">
+              <ul
+                hPanelMenuSub
+                [id]="getItemId(processedItem) + '_list'"
+                [panelId]="panelId()"
+                [items]="$safeNavigationMigration(processedItem?.items)"
+                [itemTemplate]="itemTemplate()"
+                [transitionOptions]="transitionOptions()"
+                [focusedItemId]="focusedItemId()"
+                [activeItemPath]="activeItemPath()"
+                [level]="level() + 1"
+                [pt]="pt()"
+                [unstyled]="unstyled()"
+                [parentExpanded]="!!parentExpanded() && isItemExpanded(processedItem)"
+                (itemToggle)="onItemToggle($event)"
+                [motionOptions]="motionOptions()"
+              ></ul>
+            </div>
+          </div>
+        </li>
+      }
+    }

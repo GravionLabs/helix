@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { LayoutStore } from '../../store';
@@ -10,6 +10,7 @@ import { HelixConfigurator } from '../configurator/configurator';
   standalone: true,
   imports: [CommonModule, ButtonModule, StyleClassModule, HelixConfigurator],
   templateUrl: './floating-configurator.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './floating-configurator.scss',
 })
 export class HelixFloatingConfigurator {

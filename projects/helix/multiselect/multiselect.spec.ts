@@ -226,39 +226,41 @@ class TestFormMultiSelectComponent {
     standalone: false,
     template: `
         <p-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
-            <ng-template pTemplate="selectedItems" let-value let-removeChip="removeChip">
-                <div class="custom-selected-items">
-                    <div *ngFor="let city of value" class="custom-chip">
-                        {{ city.name }}
-                        <span class="remove-chip" (click)="removeChip(city)">×</span>
-                    </div>
+          <ng-template pTemplate="selectedItems" let-value let-removeChip="removeChip">
+            <div class="custom-selected-items">
+              @for (city of value; track city) {
+                <div class="custom-chip">
+                  {{ city.name }}
+                  <span class="remove-chip" (click)="removeChip(city)">×</span>
                 </div>
-            </ng-template>
-
-            <ng-template pTemplate="item" let-option>
-                <div class="custom-item">
-                    <span class="city-name">{{ option.name }}</span>
-                    <span class="city-code">({{ option.code }})</span>
-                </div>
-            </ng-template>
-
-            <ng-template pTemplate="header">
-                <div class="custom-header">Select Your Cities</div>
-            </ng-template>
-
-            <ng-template pTemplate="footer">
-                <div class="custom-footer">{{ selectedCities?.length || 0 }} cities selected</div>
-            </ng-template>
-
-            <ng-template pTemplate="empty">
-                <div class="custom-empty">No cities found</div>
-            </ng-template>
-
-            <ng-template pTemplate="emptyfilter">
-                <div class="custom-empty-filter">No results found</div>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
+        
+          <ng-template pTemplate="item" let-option>
+            <div class="custom-item">
+              <span class="city-name">{{ option.name }}</span>
+              <span class="city-code">({{ option.code }})</span>
+            </div>
+          </ng-template>
+        
+          <ng-template pTemplate="header">
+            <div class="custom-header">Select Your Cities</div>
+          </ng-template>
+        
+          <ng-template pTemplate="footer">
+            <div class="custom-footer">{{ selectedCities?.length || 0 }} cities selected</div>
+          </ng-template>
+        
+          <ng-template pTemplate="empty">
+            <div class="custom-empty">No cities found</div>
+          </ng-template>
+        
+          <ng-template pTemplate="emptyfilter">
+            <div class="custom-empty-filter">No results found</div>
+          </ng-template>
         </p-multiselect>
-    `
+        `
 })
 class TestTemplateMultiSelectComponent {
     options: City[] = [
@@ -307,33 +309,35 @@ class TestGroupedMultiSelectComponent {
     standalone: false,
     template: `
         <p-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
-            <ng-template #selecteditems let-value let-removeChip="removeChip">
-                <div class="content-child-selected">
-                    <div *ngFor="let city of value">{{ city.name }}</div>
-                </div>
-            </ng-template>
-
-            <ng-template #item let-option>
-                <div class="content-child-item">{{ option.name }} - {{ option.code }}</div>
-            </ng-template>
-
-            <ng-template #header>
-                <div class="content-child-header">Cities Header</div>
-            </ng-template>
-
-            <ng-template #footer>
-                <div class="content-child-footer">Cities Footer</div>
-            </ng-template>
-
-            <ng-template #empty>
-                <div class="content-child-empty">No data</div>
-            </ng-template>
-
-            <ng-template #emptyfilter>
-                <div class="content-child-empty-filter">No filter results</div>
-            </ng-template>
+          <ng-template #selecteditems let-value let-removeChip="removeChip">
+            <div class="content-child-selected">
+              @for (city of value; track city) {
+                <div>{{ city.name }}</div>
+              }
+            </div>
+          </ng-template>
+        
+          <ng-template #item let-option>
+            <div class="content-child-item">{{ option.name }} - {{ option.code }}</div>
+          </ng-template>
+        
+          <ng-template #header>
+            <div class="content-child-header">Cities Header</div>
+          </ng-template>
+        
+          <ng-template #footer>
+            <div class="content-child-footer">Cities Footer</div>
+          </ng-template>
+        
+          <ng-template #empty>
+            <div class="content-child-empty">No data</div>
+          </ng-template>
+        
+          <ng-template #emptyfilter>
+            <div class="content-child-empty-filter">No filter results</div>
+          </ng-template>
         </p-multiselect>
-    `
+        `
 })
 class TestContentChildMultiSelectComponent {
     options: City[] = [

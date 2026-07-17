@@ -773,16 +773,18 @@ class TestHashHeaderComponent {}
     standalone: false,
     template: `
         <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
-            <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
-                <div class="custom-content">
-                    <div *ngFor="let file of files; let i = index" class="file-item">
-                        <span>{{ file.name }}</span>
-                        <button (click)="removeFileCallback($event, i)" class="remove-btn">Remove</button>
-                    </div>
+          <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
+            <div class="custom-content">
+              @for (file of files; track file; let i = $index) {
+                <div class="file-item">
+                  <span>{{ file.name }}</span>
+                  <button (click)="removeFileCallback($event, i)" class="remove-btn">Remove</button>
                 </div>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
         </p-fileupload>
-    `
+        `
 })
 class TestPTemplateContentComponent {}
 
@@ -790,16 +792,18 @@ class TestPTemplateContentComponent {}
     standalone: false,
     template: `
         <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
-            <ng-template #content let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
-                <div class="custom-content">
-                    <div *ngFor="let file of files; let i = index" class="file-item">
-                        <span>{{ file.name }}</span>
-                        <button (click)="removeFileCallback($event, i)" class="remove-btn">Remove</button>
-                    </div>
+          <ng-template #content let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
+            <div class="custom-content">
+              @for (file of files; track file; let i = $index) {
+                <div class="file-item">
+                  <span>{{ file.name }}</span>
+                  <button (click)="removeFileCallback($event, i)" class="remove-btn">Remove</button>
                 </div>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
         </p-fileupload>
-    `
+        `
 })
 class TestHashContentComponent {}
 
@@ -964,17 +968,21 @@ class TestContentContextComponent {
     standalone: false,
     template: `
         <p-fileupload mode="basic" name="testFile[]" url="https://test.com/upload">
-            <ng-template pTemplate="filelabel" let-files>
-                <div class="context-file-label">
-                    <span [attr.data-files-array-length]="files?.length || 0">Files Array Length: {{ files?.length || 0 }}</span>
-                    <span [attr.data-first-file-name]="files?.[0]?.name || 'none'">First File: {{ files?.[0]?.name || 'none' }}</span>
-                    <div class="file-details" *ngIf="files && files.length > 0">
-                        <div *ngFor="let file of files; let i = index" [attr.data-file-index]="i">{{ file.name }} ({{ file.size }} bytes)</div>
-                    </div>
+          <ng-template pTemplate="filelabel" let-files>
+            <div class="context-file-label">
+              <span [attr.data-files-array-length]="files?.length || 0">Files Array Length: {{ files?.length || 0 }}</span>
+              <span [attr.data-first-file-name]="files?.[0]?.name || 'none'">First File: {{ files?.[0]?.name || 'none' }}</span>
+              @if (files && files.length > 0) {
+                <div class="file-details">
+                  @for (file of files; track file; let i = $index) {
+                    <div [attr.data-file-index]="i">{{ file.name }} ({{ file.size }} bytes)</div>
+                  }
                 </div>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
         </p-fileupload>
-    `
+        `
 })
 class TestFileLabelContextComponent {}
 
@@ -1052,7 +1060,7 @@ describe('FileUpload Template Tests', () => {
             if (fileUpload) {
                 fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
                 fixture.detectChanges();
-                expect(fileUpload.files.length).toBe(1);
+                expect(fileUpload.files().length).toBe(1);
             } else {
                 // If component not found, verify the test component exists
                 expect(fixture.componentInstance).toBeTruthy();
@@ -1633,69 +1641,79 @@ describe('FileUpload Advanced Template Combinations', () => {
             standalone: false,
             template: `
                 <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
-                    <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
-                        <div class="mixed-header">
-                            <span class="file-count">{{ files?.length || 0 }} files</span>
-                            <div class="header-actions">
-                                <button (click)="chooseCallback()" class="mixed-choose">Choose</button>
-                                <button (click)="clearCallback()" class="mixed-clear">Clear</button>
-                                <button (click)="uploadCallback()" class="mixed-upload">Upload</button>
-                            </div>
+                  <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+                    <div class="mixed-header">
+                      <span class="file-count">{{ files?.length || 0 }} files</span>
+                      <div class="header-actions">
+                        <button (click)="chooseCallback()" class="mixed-choose">Choose</button>
+                        <button (click)="clearCallback()" class="mixed-clear">Clear</button>
+                        <button (click)="uploadCallback()" class="mixed-upload">Upload</button>
+                      </div>
+                    </div>
+                  </ng-template>
+                
+                  <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-progress="progress">
+                    <div class="mixed-content">
+                      @if (files?.length) {
+                        <div class="upload-section">
+                          <h4>Ready to Upload ({{ files.length }})</h4>
+                          <div class="file-grid">
+                            @for (file of files; track file; let i = $index) {
+                              <div class="file-card" [attr.data-file-index]="i">
+                                <div class="file-name">{{ file.name }}</div>
+                                <div class="file-size">{{ file.size }} bytes</div>
+                              </div>
+                            }
+                          </div>
                         </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-progress="progress">
-                        <div class="mixed-content">
-                            <div class="upload-section" *ngIf="files?.length">
-                                <h4>Ready to Upload ({{ files.length }})</h4>
-                                <div class="file-grid">
-                                    <div *ngFor="let file of files; let i = index" class="file-card" [attr.data-file-index]="i">
-                                        <div class="file-name">{{ file.name }}</div>
-                                        <div class="file-size">{{ file.size }} bytes</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="completed-section" *ngIf="uploadedFiles?.length">
-                                <h4>Uploaded Files ({{ uploadedFiles.length }})</h4>
-                                <div class="uploaded-list">
-                                    <div *ngFor="let file of uploadedFiles" class="uploaded-item">{{ file.name }}</div>
-                                </div>
-                            </div>
-
-                            <div class="progress-section" *ngIf="progress > 0">
-                                <div class="progress-bar" [style.width.%]="progress">{{ progress }}%</div>
-                            </div>
+                      }
+                
+                      @if (uploadedFiles?.length) {
+                        <div class="completed-section">
+                          <h4>Uploaded Files ({{ uploadedFiles.length }})</h4>
+                          <div class="uploaded-list">
+                            @for (file of uploadedFiles; track file) {
+                              <div class="uploaded-item">{{ file.name }}</div>
+                            }
+                          </div>
                         </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="toolbar">
-                        <div class="mixed-toolbar">
-                            <span class="toolbar-title">Advanced File Upload</span>
-                            <div class="toolbar-stats">
-                                <span class="stat">Max: 10MB</span>
-                                <span class="stat">Types: PDF, Images</span>
-                            </div>
+                      }
+                
+                      @if (progress > 0) {
+                        <div class="progress-section">
+                          <div class="progress-bar" [style.width.%]="progress">{{ progress }}%</div>
                         </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="empty">
-                        <div class="mixed-empty">
-                            <div class="empty-icon">📁</div>
-                            <div class="empty-text">Drag and drop files here or click Choose</div>
-                            <div class="empty-hint">Supported formats: PDF, JPG, PNG</div>
-                        </div>
-                    </ng-template>
-
-                    <ng-template pTemplate="chooseicon">
-                        <i class="pi pi-cloud-upload mixed-choose-icon"></i>
-                    </ng-template>
-
-                    <ng-template pTemplate="uploadicon">
-                        <i class="pi pi-send mixed-upload-icon"></i>
-                    </ng-template>
+                      }
+                    </div>
+                  </ng-template>
+                
+                  <ng-template pTemplate="toolbar">
+                    <div class="mixed-toolbar">
+                      <span class="toolbar-title">Advanced File Upload</span>
+                      <div class="toolbar-stats">
+                        <span class="stat">Max: 10MB</span>
+                        <span class="stat">Types: PDF, Images</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                
+                  <ng-template pTemplate="empty">
+                    <div class="mixed-empty">
+                      <div class="empty-icon">📁</div>
+                      <div class="empty-text">Drag and drop files here or click Choose</div>
+                      <div class="empty-hint">Supported formats: PDF, JPG, PNG</div>
+                    </div>
+                  </ng-template>
+                
+                  <ng-template pTemplate="chooseicon">
+                    <i class="pi pi-cloud-upload mixed-choose-icon"></i>
+                  </ng-template>
+                
+                  <ng-template pTemplate="uploadicon">
+                    <i class="pi pi-send mixed-upload-icon"></i>
+                  </ng-template>
                 </p-fileupload>
-            `
+                `
         })
         class TestMixedTemplatesComponent {}
 

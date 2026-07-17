@@ -50,115 +50,123 @@ const mockTreeNodes: TreeNode[] = [
     standalone: false,
     template: `
         <p-treeselect
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [selectionMode]="selectionMode"
-            [display]="display"
-            [metaKeySelection]="metaKeySelection"
-            [showClear]="showClear"
-            [filter]="filter"
-            [filterBy]="filterBy"
-            [filterMode]="filterMode"
-            [filterPlaceholder]="filterPlaceholder"
-            [emptyMessage]="emptyMessage"
-            [scrollHeight]="scrollHeight"
-            [virtualScroll]="virtualScroll"
-            [virtualScrollItemSize]="virtualScrollItemSize"
-            [virtualScrollOptions]="virtualScrollOptions"
-            [propagateSelectionDown]="propagateSelectionDown"
-            [propagateSelectionUp]="propagateSelectionUp"
-            [resetFilterOnHide]="resetFilterOnHide"
-            [loading]="loading"
-            [autofocus]="autofocus"
-            [tabindex]="tabindex"
-            [inputId]="inputId"
-            [ariaLabel]="ariaLabel"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [panelClass]="panelClass"
-            [panelStyle]="panelStyle"
-            [containerStyle]="containerStyle"
-            [labelStyle]="labelStyle"
-            [labelStyleClass]="labelStyleClass"
-            [appendTo]="appendTo"
-            (onNodeSelect)="onNodeSelectEvent($event)"
-            (onNodeUnselect)="onNodeUnselectEvent($event)"
-            (onNodeExpand)="onNodeExpandEvent($event)"
-            (onNodeCollapse)="onNodeCollapseEvent($event)"
-            (onShow)="onShowEvent($event)"
-            (onHide)="onHideEvent($event)"
-            (onClear)="onClearEvent($event)"
-            (onFilter)="onFilterEvent($event)"
-            (onFocus)="onFocusEvent($event)"
-            (onBlur)="onBlurEvent($event)"
-        >
-            <!-- Value template -->
-            <ng-template #value let-value let-placeholder="placeholder">
-                <div class="custom-value" data-testid="template-value">
-                    <span *ngIf="value && !isArray(value)">{{ value.label }} - Custom</span>
-                    <span *ngIf="value && isArray(value)">{{ value.length }} item(s) selected - Custom</span>
-                    <span *ngIf="!value">{{ placeholder }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header let-value let-options="options">
-                <div class="custom-header" data-testid="template-header">
-                    <i class="pi pi-search"></i>
-                    <span>Select Node - Options: {{ options?.length || 0 }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer let-value let-options="options">
-                <div class="custom-footer" data-testid="template-footer">
-                    <small>Total: {{ options?.length || 0 }} nodes</small>
-                </div>
-            </ng-template>
-
-            <!-- Empty template -->
-            <ng-template #empty>
-                <div class="custom-empty" data-testid="template-empty">
-                    <span>No nodes available</span>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template -->
-            <ng-template #triggericon>
-                <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
-            </ng-template>
-
-            <!-- Clear icon template -->
-            <ng-template #clearicon>
-                <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
-            </ng-template>
-
-            <!-- Item toggler icon template -->
-            <ng-template #itemtogglericon let-expanded>
-                <i class="custom-toggler" data-testid="template-itemtogglericon" [class.expanded]="expanded">
-                    {{ expanded ? '−' : '+' }}
-                </i>
-            </ng-template>
-
-            <!-- Item checkbox icon template -->
-            <ng-template #itemcheckboxicon let-selected let-partialSelected="partialSelected">
-                <i class="custom-checkbox" data-testid="template-itemcheckboxicon" [class.selected]="selected" [class.partial]="partialSelected">
-                    {{ selected ? '☑' : partialSelected ? '☐' : '☐' }}
-                </i>
-            </ng-template>
-
-            <!-- Item loading icon template -->
-            <ng-template #itemloadingicon>
-                <i class="pi pi-spinner custom-loading" data-testid="template-itemloadingicon"></i>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [selectionMode]="selectionMode"
+          [display]="display"
+          [metaKeySelection]="metaKeySelection"
+          [showClear]="showClear"
+          [filter]="filter"
+          [filterBy]="filterBy"
+          [filterMode]="filterMode"
+          [filterPlaceholder]="filterPlaceholder"
+          [emptyMessage]="emptyMessage"
+          [scrollHeight]="scrollHeight"
+          [virtualScroll]="virtualScroll"
+          [virtualScrollItemSize]="virtualScrollItemSize"
+          [virtualScrollOptions]="virtualScrollOptions"
+          [propagateSelectionDown]="propagateSelectionDown"
+          [propagateSelectionUp]="propagateSelectionUp"
+          [resetFilterOnHide]="resetFilterOnHide"
+          [loading]="loading"
+          [autofocus]="autofocus"
+          [tabindex]="tabindex"
+          [inputId]="inputId"
+          [ariaLabel]="ariaLabel"
+          [ariaLabelledBy]="ariaLabelledBy"
+          [panelClass]="panelClass"
+          [panelStyle]="panelStyle"
+          [containerStyle]="containerStyle"
+          [labelStyle]="labelStyle"
+          [labelStyleClass]="labelStyleClass"
+          [appendTo]="appendTo"
+          (onNodeSelect)="onNodeSelectEvent($event)"
+          (onNodeUnselect)="onNodeUnselectEvent($event)"
+          (onNodeExpand)="onNodeExpandEvent($event)"
+          (onNodeCollapse)="onNodeCollapseEvent($event)"
+          (onShow)="onShowEvent($event)"
+          (onHide)="onHideEvent($event)"
+          (onClear)="onClearEvent($event)"
+          (onFilter)="onFilterEvent($event)"
+          (onFocus)="onFocusEvent($event)"
+          (onBlur)="onBlurEvent($event)"
+          >
+          <!-- Value template -->
+          <ng-template #value let-value let-placeholder="placeholder">
+            <div class="custom-value" data-testid="template-value">
+              @if (value && !isArray(value)) {
+                <span>{{ value.label }} - Custom</span>
+              }
+              @if (value && isArray(value)) {
+                <span>{{ value.length }} item(s) selected - Custom</span>
+              }
+              @if (!value) {
+                <span>{{ placeholder }}</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header let-value let-options="options">
+            <div class="custom-header" data-testid="template-header">
+              <i class="pi pi-search"></i>
+              <span>Select Node - Options: {{ options?.length || 0 }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer let-value let-options="options">
+            <div class="custom-footer" data-testid="template-footer">
+              <small>Total: {{ options?.length || 0 }} nodes</small>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template -->
+          <ng-template #empty>
+            <div class="custom-empty" data-testid="template-empty">
+              <span>No nodes available</span>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template -->
+          <ng-template #triggericon>
+            <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
+          </ng-template>
+        
+          <!-- Clear icon template -->
+          <ng-template #clearicon>
+            <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
+          </ng-template>
+        
+          <!-- Item toggler icon template -->
+          <ng-template #itemtogglericon let-expanded>
+            <i class="custom-toggler" data-testid="template-itemtogglericon" [class.expanded]="expanded">
+              {{ expanded ? '−' : '+' }}
+            </i>
+          </ng-template>
+        
+          <!-- Item checkbox icon template -->
+          <ng-template #itemcheckboxicon let-selected let-partialSelected="partialSelected">
+            <i class="custom-checkbox" data-testid="template-itemcheckboxicon" [class.selected]="selected" [class.partial]="partialSelected">
+              {{ selected ? '☑' : partialSelected ? '☐' : '☐' }}
+            </i>
+          </ng-template>
+        
+          <!-- Item loading icon template -->
+          <ng-template #itemloadingicon>
+            <i class="pi pi-spinner custom-loading" data-testid="template-itemloadingicon"></i>
+          </ng-template>
         </p-treeselect>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-treeselect formControlName="selectedNodes" [options]="formOptions" [placeholder]="'Select nodes'" (onNodeSelect)="onFormNodeSelect($event)"> </p-treeselect>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestTreeSelectComponent {
     selectedValue: TreeNode | TreeNode[] | null = null as any;
@@ -333,79 +341,85 @@ class TestTreeSelectComponent {
     standalone: false,
     template: `
         <p-treeselect [(ngModel)]="selectedValue" [options]="options" [placeholder]="placeholder" [disabled]="disabled" [showClear]="showClear" [filter]="filter">
-            <!-- Value template with pTemplate -->
-            <ng-template pTemplate="value" let-value let-placeholder="placeholder">
-                <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
-                    <span class="value-text" *ngIf="value && !isArrayValue(value)">{{ value.label }} - pTemplate</span>
-                    <span class="multi-value-text" *ngIf="value && isArrayValue(value)">{{ value.length }} selected - pTemplate</span>
-                    <span class="placeholder-text" *ngIf="!value">{{ placeholder }} (pTemplate)</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template with pTemplate -->
-            <ng-template pTemplate="header" let-value let-options="options">
-                <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
-                    <i class="pi pi-search"></i>
-                    <h4 class="header-title">Select Tree Node (pTemplate)</h4>
-                    <span class="header-subtitle">Available: {{ options?.length || 0 }} root nodes</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template with pTemplate -->
-            <ng-template pTemplate="footer" let-value let-options="options">
-                <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
-                    <small class="footer-text">Choose your node (pTemplate)</small>
-                    <button class="footer-button" type="button">Help</button>
-                </div>
-            </ng-template>
-
-            <!-- Empty template with pTemplate -->
-            <ng-template pTemplate="empty">
-                <div class="ptemplate-empty" [attr.data-testid]="'ptemplate-empty'">
-                    <i class="pi pi-info-circle"></i>
-                    <span class="empty-text">No tree nodes found (pTemplate)</span>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template with pTemplate -->
-            <ng-template pTemplate="triggericon">
-                <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
-            </ng-template>
-
-            <!-- Clear icon template with pTemplate -->
-            <ng-template pTemplate="clearicon">
-                <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
-                    <i class="pi pi-times clear-icon"></i>
-                    <span class="clear-text">Clear</span>
-                </div>
-            </ng-template>
-
-            <!-- Item toggler icon template with pTemplate -->
-            <ng-template pTemplate="itemtogglericon" let-expanded>
-                <i class="ptemplate-itemtogglericon" [attr.data-testid]="'ptemplate-itemtogglericon'" [attr.data-expanded]="expanded">
-                    <span class="toggler-text">{{ expanded ? 'Collapse' : 'Expand' }}</span>
-                </i>
-            </ng-template>
-
-            <!-- Item checkbox icon template with pTemplate -->
-            <ng-template pTemplate="itemcheckboxicon" let-selected let-partialSelected="partialSelected">
-                <div class="ptemplate-itemcheckboxicon" [attr.data-testid]="'ptemplate-itemcheckboxicon'" [attr.data-selected]="selected" [attr.data-partial]="partialSelected">
-                    <i class="checkbox-icon" [class.selected]="selected" [class.partial]="partialSelected"></i>
-                    <span class="checkbox-text">
-                        {{ selected ? 'Selected' : partialSelected ? 'Partial' : 'Unselected' }}
-                    </span>
-                </div>
-            </ng-template>
-
-            <!-- Item loading icon template with pTemplate -->
-            <ng-template pTemplate="itemloadingicon">
-                <div class="ptemplate-itemloadingicon" [attr.data-testid]="'ptemplate-itemloadingicon'">
-                    <i class="pi pi-spin pi-spinner loading-icon"></i>
-                    <span class="loading-text">Loading...</span>
-                </div>
-            </ng-template>
+          <!-- Value template with pTemplate -->
+          <ng-template pTemplate="value" let-value let-placeholder="placeholder">
+            <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
+              @if (value && !isArrayValue(value)) {
+                <span class="value-text">{{ value.label }} - pTemplate</span>
+              }
+              @if (value && isArrayValue(value)) {
+                <span class="multi-value-text">{{ value.length }} selected - pTemplate</span>
+              }
+              @if (!value) {
+                <span class="placeholder-text">{{ placeholder }} (pTemplate)</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Header template with pTemplate -->
+          <ng-template pTemplate="header" let-value let-options="options">
+            <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
+              <i class="pi pi-search"></i>
+              <h4 class="header-title">Select Tree Node (pTemplate)</h4>
+              <span class="header-subtitle">Available: {{ options?.length || 0 }} root nodes</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template with pTemplate -->
+          <ng-template pTemplate="footer" let-value let-options="options">
+            <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
+              <small class="footer-text">Choose your node (pTemplate)</small>
+              <button class="footer-button" type="button">Help</button>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template with pTemplate -->
+          <ng-template pTemplate="empty">
+            <div class="ptemplate-empty" [attr.data-testid]="'ptemplate-empty'">
+              <i class="pi pi-info-circle"></i>
+              <span class="empty-text">No tree nodes found (pTemplate)</span>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template with pTemplate -->
+          <ng-template pTemplate="triggericon">
+            <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
+          </ng-template>
+        
+          <!-- Clear icon template with pTemplate -->
+          <ng-template pTemplate="clearicon">
+            <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
+              <i class="pi pi-times clear-icon"></i>
+              <span class="clear-text">Clear</span>
+            </div>
+          </ng-template>
+        
+          <!-- Item toggler icon template with pTemplate -->
+          <ng-template pTemplate="itemtogglericon" let-expanded>
+            <i class="ptemplate-itemtogglericon" [attr.data-testid]="'ptemplate-itemtogglericon'" [attr.data-expanded]="expanded">
+              <span class="toggler-text">{{ expanded ? 'Collapse' : 'Expand' }}</span>
+            </i>
+          </ng-template>
+        
+          <!-- Item checkbox icon template with pTemplate -->
+          <ng-template pTemplate="itemcheckboxicon" let-selected let-partialSelected="partialSelected">
+            <div class="ptemplate-itemcheckboxicon" [attr.data-testid]="'ptemplate-itemcheckboxicon'" [attr.data-selected]="selected" [attr.data-partial]="partialSelected">
+              <i class="checkbox-icon" [class.selected]="selected" [class.partial]="partialSelected"></i>
+              <span class="checkbox-text">
+                {{ selected ? 'Selected' : partialSelected ? 'Partial' : 'Unselected' }}
+              </span>
+            </div>
+          </ng-template>
+        
+          <!-- Item loading icon template with pTemplate -->
+          <ng-template pTemplate="itemloadingicon">
+            <div class="ptemplate-itemloadingicon" [attr.data-testid]="'ptemplate-itemloadingicon'">
+              <i class="pi pi-spin pi-spinner loading-icon"></i>
+              <span class="loading-text">Loading...</span>
+            </div>
+          </ng-template>
         </p-treeselect>
-    `
+        `
 })
 class TestPTemplateTreeSelectComponent {
     selectedValue: TreeNode | TreeNode[] | null = null as any;

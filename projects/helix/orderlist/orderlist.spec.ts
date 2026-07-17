@@ -405,16 +405,16 @@ describe('OrderList', () => {
         });
 
         it('should have default values', () => {
-            expect(orderList.controlsPosition).toBe('left');
-            expect(orderList.metaKeySelection).toBe(false);
-            expect(orderList.dragdrop).toBe(false);
-            expect(orderList.breakpoint).toBe('960px');
-            expect(orderList.filterMatchMode).toBe('contains');
-            expect(orderList.scrollHeight).toBe('14rem');
-            expect(orderList.autoOptionFocus).toBe(true);
-            expect(orderList.stripedRows).toBeFalsy();
-            expect(orderList.disabled).toBe(false);
-            expect(orderList.responsive).toBeFalsy();
+            expect(orderList.controlsPosition()).toBe('left');
+            expect(orderList.metaKeySelection()).toBe(false);
+            expect(orderList.dragdrop()).toBe(false);
+            expect(orderList.breakpoint()).toBe('960px');
+            expect(orderList.filterMatchMode()).toBe('contains');
+            expect(orderList.scrollHeight()).toBe('14rem');
+            expect(orderList.autoOptionFocus()).toBe(true);
+            expect(orderList.stripedRows()).toBeFalsy();
+            expect(orderList.disabled()).toBe(false);
+            expect(orderList.responsive()).toBeFalsy();
         });
 
         it('should accept custom values', async () => {
@@ -428,13 +428,13 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.header).toBe('Custom Header');
-            expect(orderList.responsive).toBe(true);
-            expect(orderList.stripedRows).toBe(true);
-            expect(orderList.metaKeySelection).toBe(true);
-            expect(orderList.dragdrop).toBe(true);
-            expect(orderList.controlsPosition).toBe('right');
-            expect(orderList.filterBy).toBe('name');
+            expect(orderList.header()).toBe('Custom Header');
+            expect(orderList.responsive()).toBe(true);
+            expect(orderList.stripedRows()).toBe(true);
+            expect(orderList.metaKeySelection()).toBe(true);
+            expect(orderList.dragdrop()).toBe(true);
+            expect(orderList.controlsPosition()).toBe('right');
+            expect(orderList.filterBy()).toBe('name');
         });
 
         it('should initialize with provided value', () => {
@@ -443,7 +443,7 @@ describe('OrderList', () => {
         });
 
         it('should initialize selection as empty array', () => {
-            expect(orderList.selection).toEqual([]);
+            expect(orderList.selection()).toEqual([]);
             expect(orderList.d_selection).toEqual([]);
         });
 
@@ -921,7 +921,7 @@ describe('OrderList', () => {
             component.dragdrop = true;
             fixture.detectChanges();
 
-            expect(orderList.dragdrop).toBe(true);
+            expect(orderList.dragdrop()).toBe(true);
         });
 
         it('should handle drop event', () => {
@@ -1215,7 +1215,7 @@ describe('OrderList', () => {
             orderList.selection = newSelection;
 
             expect(orderList.d_selection).toEqual(newSelection);
-            expect(orderList.selection).toEqual(newSelection);
+            expect(orderList.selection()).toEqual(newSelection);
         });
 
         it('should handle meta key selection', async () => {
@@ -1223,7 +1223,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.metaKeySelection).toBe(true);
+            expect(orderList.metaKeySelection()).toBe(true);
         });
 
         it('should handle selection change events', async () => {
@@ -1252,9 +1252,9 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.ariaLabel).toBe('Product order list');
-            expect(orderList.ariaLabelledBy).toBe('header-id');
-            expect(orderList.ariaFilterLabel).toBe('Filter products');
+            expect(orderList.ariaLabel()).toBe('Product order list');
+            expect(orderList.ariaLabelledBy()).toBe('header-id');
+            expect(orderList.ariaFilterLabel()).toBe('Filter products');
         });
 
         it('should have move button ARIA labels', () => {
@@ -1269,7 +1269,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.tabindex).toBe(5);
+            expect(orderList.tabindex()).toBe(5);
         });
 
         it('should handle autoOptionFocus', async () => {
@@ -1277,7 +1277,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.autoOptionFocus).toBe(false);
+            expect(orderList.autoOptionFocus()).toBe(false);
         });
 
         it('should handle focus and blur events', () => {
@@ -1392,7 +1392,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.listStyle).toEqual({ height: '400px', border: '1px solid red' });
+            expect(orderList.listStyle()).toEqual({ height: '400px', border: '1px solid red' });
         });
 
         it('should handle responsive styling', async () => {
@@ -1401,8 +1401,8 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.responsive).toBe(true);
-            expect(orderList.breakpoint).toBe('768px');
+            expect(orderList.responsive()).toBe(true);
+            expect(orderList.breakpoint()).toBe('768px');
         });
 
         it('should apply striped rows', async () => {
@@ -1410,7 +1410,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.stripedRows).toBe(true);
+            expect(orderList.stripedRows()).toBe(true);
         });
 
         it('should handle controls position', async () => {
@@ -1418,7 +1418,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(orderList.controlsPosition).toBe('right');
+            expect(orderList.controlsPosition()).toBe('right');
         });
 
         it('should apply button styles', async () => {

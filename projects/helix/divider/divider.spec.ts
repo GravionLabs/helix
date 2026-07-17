@@ -120,10 +120,10 @@ describe('Divider', () => {
         });
 
         it('should have default values', () => {
-            expect(divider.layout).toBe('horizontal');
-            expect(divider.type).toBe('solid');
-            expect(divider.align).toBeUndefined();
-            expect(divider.styleClass).toBeUndefined();
+            expect(divider.layout()).toBe('horizontal');
+            expect(divider.type()).toBe('solid');
+            expect(divider.align()).toBeUndefined();
+            expect(divider.styleClass()).toBeUndefined();
         });
 
         it('should have correct host attributes', () => {

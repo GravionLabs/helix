@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${autocomplete_style}
 
-/* For PrimeNG */
+/* For Helix */
 p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input,
 p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input-multiple,
 p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input,

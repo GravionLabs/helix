@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { CardModule } from '@gravionlabs/helix/card';
 import { TimelineModule } from '@gravionlabs/helix/timeline';
@@ -9,6 +9,7 @@ import { TimelineModule } from '@gravionlabs/helix/timeline';
   standalone: true,
   imports: [CommonModule, TimelineModule, ButtonModule, CardModule],
   templateUrl: './timeline-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './timeline-demo.scss',
 })
 export class TimelineDemo implements OnInit {

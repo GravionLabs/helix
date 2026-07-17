@@ -1,26 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    effect,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    inject,
-    InjectionToken,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, effect, ElementRef, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, viewChild, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
 import { MegaMenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -42,194 +21,28 @@ const MEGAMENU_SUB_INSTANCE = new InjectionToken<MegaMenuSub>('MEGAMENU_SUB_INST
     selector: 'h-megaMenuSub, h-megamenu-sub, ul[hMegaMenuSub]',
     standalone: true,
     imports: [CommonModule, RouterModule, Ripple, TooltipModule, AngleDownIcon, AngleRightIcon, BadgeModule, SharedModule, Bind],
-    template: `
-        <li *ngIf="submenu" [class]="cn(cx('submenuLabel'), getItemProp(submenu, 'class'))" [style]="getItemProp(submenu, 'style')" role="presentation" [hBind]="ptm('submenuLabel')">
-            {{ getItemLabel(submenu) }}
-        </li>
-        <ng-template ngFor let-processedItem [ngForOf]="items" let-index="index">
-            <li
-                *ngIf="isItemVisible(processedItem) && getItemProp(processedItem, 'separator')"
-                [attr.id]="getItemId(processedItem)"
-                [style]="getItemProp(processedItem, 'style')"
-                [class]="cn(cx('separator'), this.getItemProp(processedItem, 'class'))"
-                role="separator"
-                [hBind]="ptm('separator')"
-            ></li>
-            <li
-                #listItem
-                *ngIf="isItemVisible(processedItem) && !getItemProp(processedItem, 'separator')"
-                role="menuitem"
-                [attr.id]="getItemId(processedItem)"
-                [attr.data-p-active]="isItemActive(processedItem)"
-                [attr.data-p-focused]="isItemFocused(processedItem)"
-                [attr.data-p-disabled]="isItemDisabled(processedItem)"
-                [attr.aria-label]="getItemLabel(processedItem)"
-                [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
-                [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
-                [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
-                [attr.aria-level]="level + 1"
-                [attr.aria-setsize]="getAriaSetSize()"
-                [attr.aria-posinset]="getAriaPosInset(index)"
-                [ngStyle]="getItemProp(processedItem, 'style')"
-                [class]="cn(cx('item', { processedItem }), getItemProp(processedItem, 'styleClass'))"
-                hTooltip
-                [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
-                [hBind]="getPTOptions(processedItem, index, 'item')"
-                [pTooltipUnstyled]="unstyled()"
-            >
-                <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)" (mouseenter)="onItemMouseEnter({ $event, processedItem })">
-                    <ng-container *ngIf="!itemTemplate">
-                        <a
-                            *ngIf="!getItemProp(processedItem, 'routerLink')"
-                            [attr.href]="getItemProp(processedItem, 'url')"
-                            [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
-                            [attr.title]="getItemProp(processedItem, 'title')"
-                            [target]="getItemProp(processedItem, 'target')"
-                            [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
-                            [ngStyle]="getItemProp(processedItem, 'linkStyle')"
-                            [attr.tabindex]="-1"
-                            [hBind]="getPTOptions(processedItem, index, 'itemLink')"
-                            hRipple
-                        >
-                            <span
-                                *ngIf="getItemProp(processedItem, 'icon')"
-                                [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'iconStyle')"
-                                [attr.tabindex]="-1"
-                                [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
-                            >
-                            </span>
-                            <span
-                                *ngIf="getItemProp(processedItem, 'escape'); else htmlLabel"
-                                [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                            >
-                                {{ getItemLabel(processedItem) }}
-                            </span>
-                            <ng-template #htmlLabel>
-                                <span
-                                    [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                    [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                    [innerHTML]="getItemLabel(processedItem)"
-                                    [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                ></span>
-                            </ng-template>
-                            <h-badge *ngIf="getItemProp(processedItem, 'badge')" [class]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
-                            <ng-container *ngIf="isItemGroup(processedItem)">
-                                <ng-container *ngIf="!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate">
-                                    @if (orientation === 'horizontal' || mobileActive) {
-                                        <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
-                                    } @else {
-                                        <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'vertical'" [attr.aria-hidden]="true" />
-                                    }
-                                </ng-container>
-                                <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
-                            </ng-container>
-                        </a>
-                        <a
-                            *ngIf="getItemProp(processedItem, 'routerLink')"
-                            [routerLink]="getItemProp(processedItem, 'routerLink')"
-                            [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
-                            [attr.title]="getItemProp(processedItem, 'title')"
-                            [attr.tabindex]="-1"
-                            [queryParams]="getItemProp(processedItem, 'queryParams')"
-                            [routerLinkActive]="'p-megamenu-item-link-active'"
-                            [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
-                            [target]="getItemProp(processedItem, 'target')"
-                            [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
-                            [ngStyle]="getItemProp(processedItem, 'linkStyle')"
-                            [fragment]="getItemProp(processedItem, 'fragment')"
-                            [queryParamsHandling]="getItemProp(processedItem, 'queryParamsHandling')"
-                            [preserveFragment]="getItemProp(processedItem, 'preserveFragment')"
-                            [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
-                            [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
-                            [state]="getItemProp(processedItem, 'state')"
-                            [hBind]="getPTOptions(processedItem, index, 'itemLink')"
-                            hRipple
-                        >
-                            <span
-                                [class]="cn(cx('itemIcon'), getItemProp(processedItem, 'icon'), getItemProp(processedItem, 'iconClass'))"
-                                *ngIf="getItemProp(processedItem, 'icon')"
-                                [ngStyle]="getItemProp(processedItem, 'iconStyle')"
-                                [attr.tabindex]="-1"
-                                [hBind]="getPTOptions(processedItem, index, 'itemIcon')"
-                            ></span>
-                            <span
-                                [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                *ngIf="getItemProp(processedItem, 'escape'); else htmlRouteLabel"
-                                [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                >{{ getItemLabel(processedItem) }}</span
-                            >
-                            <ng-template #htmlRouteLabel
-                                ><span
-                                    [class]="cn(cx('itemLabel'), getItemProp(processedItem, 'labelClass'))"
-                                    [ngStyle]="getItemProp(processedItem, 'labelStyle')"
-                                    [innerHTML]="getItemLabel(processedItem)"
-                                    [hBind]="getPTOptions(processedItem, index, 'itemLabel')"
-                                ></span
-                            ></ng-template>
-                            <h-badge *ngIf="getItemProp(processedItem, 'badge')" [styleClass]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" [unstyled]="unstyled()" />
-                            <ng-container *ngIf="isItemGroup(processedItem)">
-                                <ng-container *ngIf="!megaMenu.submenuIconTemplate && !megaMenu._submenuIconTemplate">
-                                    <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'horizontal'" [attr.aria-hidden]="true" />
-                                    <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" *ngIf="orientation === 'vertical'" [attr.aria-hidden]="true" />
-                                </ng-container>
-                                <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>
-                            </ng-container>
-                        </a>
-                    </ng-container>
-                    <ng-container *ngIf="itemTemplate">
-                        <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
-                    </ng-container>
-                </div>
-                <div *ngIf="isItemVisible(processedItem) && isItemGroup(processedItem)" [class]="cx('overlay')" [hBind]="ptm('overlay')">
-                    <div [class]="cx('grid')" [hBind]="ptm('grid')">
-                        <div *ngFor="let col of processedItem.items" [class]="cx('column', { processedItem })" [hBind]="ptm('column')">
-                            <ul
-                                hMegaMenuSub
-                                *ngFor="let submenu of col"
-                                [id]="getSubListId(submenu)"
-                                [submenu]="submenu"
-                                [items]="submenu.items"
-                                [itemTemplate]="itemTemplate"
-                                [mobileActive]="mobileActive"
-                                [menuId]="menuId"
-                                [focusedItemId]="focusedItemId"
-                                [level]="level + 1"
-                                [root]="false"
-                                (itemClick)="itemClick.emit($event)"
-                                (itemMouseEnter)="onItemMouseEnter($event)"
-                                [pt]="pt()"
-                                [unstyled]="unstyled()"
-                            ></ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ng-template>
-    `,
+    templateUrl: './megamenusub.html',
     encapsulation: ViewEncapsulation.None,
     providers: [
         { provide: MEGAMENU_SUB_INSTANCE, useExisting: MegaMenuSub },
         { provide: PARENT_INSTANCE, useExisting: MegaMenuSub }
     ],
     host: {
-        '[class]': 'root ? cx("rootList") : cx("submenu")',
+        '[class]': 'root() ? cx("rootList") : cx("submenu")',
         '[style]': 'sx("rootList")',
         '[style.display]': 'isSubmenuVisible(submenu) ? null : "none"',
-        '[attr.role]': 'root ? "menubar" : "menu"',
-        '[attr.id]': 'id',
-        '[attr.aria-orientation]': 'orientation',
-        '[tabindex]': 'tabindex',
-        '[attr.aria-activedescendant]': 'focusedItemId',
-        '[attr.data-pc-section]': 'root ? "rootlist" : "submenu"',
+        '[attr.role]': 'root() ? "menubar" : "menu"',
+        '[attr.id]': 'id()',
+        '[attr.aria-orientation]': 'orientation()',
+        '[tabindex]': 'tabindex()',
+        '[attr.aria-activedescendant]': 'focusedItemId()',
+        '[attr.data-pc-section]': 'root() ? "rootlist" : "submenu"',
         '(keydown)': 'menuKeydown.emit($event)',
         '(focus)': 'menuFocus.emit($event)',
         '(blur)': 'menuBlur.emit($event)',
         '(mousedown)': 'menuMouseDown.emit($event)'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     hostDirectives: [Bind]
 })
 export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
@@ -239,58 +52,58 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
 
     $pcMegaMenuSub: MegaMenuSub | undefined = inject(MEGAMENU_SUB_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    @Input() id: string | undefined;
+    readonly id = input<string>();
 
-    @Input() items: any[] | undefined;
+    readonly items = input<any[]>();
 
-    @Input() itemTemplate: TemplateRef<MegaMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = input<TemplateRef<MegaMenuItemTemplateContext>>();
 
-    @Input() menuId: string | undefined;
+    readonly menuId = input<string>();
 
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
 
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
 
-    @Input({ transform: numberAttribute }) level: number = 0;
+    readonly level = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Input() focusedItemId: string | undefined;
+    readonly focusedItemId = input<string>();
 
-    @Input({ transform: booleanAttribute }) disabled: boolean = false;
+    readonly disabled = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() orientation: string | undefined;
+    readonly orientation = input<string>();
 
-    @Input() activeItem: any;
+    readonly activeItem = input<any>();
 
-    @Input() submenu: any;
+    readonly submenu = input<any>();
 
-    @Input({ transform: booleanAttribute }) queryMatches: boolean = false;
+    readonly queryMatches = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) mobileActive: boolean = false;
+    readonly mobileActive = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() scrollHeight: string;
+    readonly scrollHeight = input<string>(undefined!);
 
-    @Input({ transform: numberAttribute }) tabindex: number = 0;
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Input({ transform: booleanAttribute }) root: boolean = false;
+    readonly root = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Output() itemClick: EventEmitter<any> = new EventEmitter();
+    readonly itemClick = output<any>();
 
-    @Output() itemMouseEnter: EventEmitter<any> = new EventEmitter();
+    readonly itemMouseEnter = output<any>();
 
-    @Output() menuFocus: EventEmitter<any> = new EventEmitter();
+    readonly menuFocus = output<any>();
 
-    @Output() menuBlur: EventEmitter<any> = new EventEmitter();
+    readonly menuBlur = output<any>();
 
-    @Output() menuKeydown: EventEmitter<any> = new EventEmitter();
+    readonly menuKeydown = output<any>();
 
-    @Output() menuMouseDown: EventEmitter<any> = new EventEmitter();
+    readonly menuMouseDown = output<any>();
 
     megaMenu: MegaMenu = inject(forwardRef(() => MegaMenu));
 
     _componentStyle = inject(MegaMenuStyle);
 
     onAfterViewChecked(): void {
-        this.bindDirectiveInstance.setAttrs(this.ptm(this.root ? 'rootList' : 'submenu'));
+        this.bindDirectiveInstance.setAttrs(this.ptm(this.root() ? 'rootList' : 'submenu'));
     }
 
     onItemClick(event: any, processedItem: any) {
@@ -303,7 +116,7 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     }
 
     getItemId(processedItem: any): string {
-        return processedItem.item && processedItem.item?.id ? processedItem.item.id : `${this.menuId}_${processedItem.key}`;
+        return processedItem.item && processedItem.item?.id ? processedItem.item.id : `${this.menuId()}_${processedItem.key}`;
     }
 
     getSubListId(processedItem) {
@@ -315,7 +128,7 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     }
 
     isSubmenuVisible(submenu: any) {
-        if (this.submenu && !this.root) {
+        if (this.submenu() && !this.root()) {
             return this.isItemVisible(submenu);
         } else {
             return true;
@@ -327,7 +140,8 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     }
 
     isItemActive(processedItem) {
-        return isNotEmpty(this.activeItem) ? this.activeItem.key === processedItem.key : false;
+        const activeItem = this.activeItem();
+        return isNotEmpty(activeItem) ? activeItem.key === processedItem.key : false;
     }
 
     isItemDisabled(processedItem: any): boolean {
@@ -335,7 +149,7 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     }
 
     isItemFocused(processedItem: any): boolean {
-        return this.focusedItemId === this.getItemId(processedItem);
+        return this.focusedItemId() === this.getItemId(processedItem);
     }
 
     isItemGroup(processedItem: any): boolean {
@@ -343,11 +157,11 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     }
 
     getAriaSetSize() {
-        return this.items?.filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
+        return this.items()?.filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
     }
 
     getAriaPosInset(index: number) {
-        return index - (this.items?.slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length || 0) + 1;
+        return index - (this.items()?.slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length || 0) + 1;
     }
 
     onItemMouseEnter(param: any) {
@@ -377,67 +191,12 @@ export class MegaMenuSub extends BaseComponent<MegaMenuPassThrough> {
     selector: 'h-megaMenu, h-megamenu, h-mega-menu',
     standalone: true,
     imports: [CommonModule, RouterModule, MegaMenuSub, TooltipModule, BarsIcon, BadgeModule, SharedModule, Bind],
-    template: `
-        <div [class]="cx('start')" *ngIf="startTemplate || _startTemplate" [hBind]="ptm('start')">
-            <ng-container *ngTemplateOutlet="startTemplate || _startTemplate"></ng-container>
-        </div>
-        <ng-container *ngIf="!buttonTemplate && !_buttonTemplate">
-            <a
-                *ngIf="model && model.length > 0"
-                #menubutton
-                role="button"
-                tabindex="0"
-                [class]="cx('button')"
-                [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
-                [attr.aria-expanded]="mobileActive"
-                [attr.aria-controls]="id"
-                [attr.aria-label]="config.translation.aria.navigation"
-                [hBind]="ptm('button')"
-                (click)="menuButtonClick($event)"
-                (keydown)="menuButtonKeydown($event)"
-            >
-                <svg data-p-icon="bars" *ngIf="!buttonIconTemplate && !_buttonIconTemplate" [hBind]="ptm('buttonIcon')" />
-                <ng-template *ngTemplateOutlet="buttonIconTemplate || _buttonIconTemplate"></ng-template>
-            </a>
-        </ng-container>
-        <ng-container *ngTemplateOutlet="buttonTemplate || _buttonTemplate"></ng-container>
-        <ul
-            hMegaMenuSub
-            #rootmenu
-            [itemTemplate]="itemTemplate || _itemTemplate"
-            [items]="processedItems"
-            [attr.id]="id + '_list'"
-            [menuId]="id"
-            [root]="true"
-            [orientation]="orientation"
-            [ariaLabel]="ariaLabel"
-            [disabled]="disabled"
-            [tabindex]="!disabled ? tabindex : -1"
-            [activeItem]="activeItem()"
-            [level]="0"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [focusedItemId]="focused ? focusedItemId : undefined"
-            [mobileActive]="mobileActive"
-            (itemClick)="onItemClick($event)"
-            (menuFocus)="onMenuFocus($event)"
-            (menuBlur)="onMenuBlur($event)"
-            (menuKeydown)="onKeyDown($event)"
-            (menuMouseDown)="onMenuMouseDown($event)"
-            (itemMouseEnter)="onItemMouseEnter($event)"
-            [queryMatches]="queryMatches()"
-            [scrollHeight]="scrollHeight"
-            [pt]="pt()"
-            [unstyled]="unstyled()"
-        ></ul>
-        <div [class]="cx('end')" *ngIf="endTemplate || _endTemplate" [hBind]="ptm('end')">
-            <ng-container *ngTemplateOutlet="endTemplate || _endTemplate"></ng-container>
-        </div>
-    `,
+    templateUrl: './megamenu.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [MegaMenuStyle, { provide: MEGAMENU_INSTANCE, useExisting: MegaMenu }, { provide: PARENT_INSTANCE, useExisting: MegaMenu }],
     host: {
-        '[class]': 'cn(cx("root"), styleClass)',
+        '[class]': 'cn(cx("root"), styleClass())',
         '[id]': 'id'
     },
     hostDirectives: [Bind]
@@ -462,90 +221,94 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Defines the orientation.
      * @group Props
      */
-    @Input() orientation: 'horizontal' | 'vertical' | string = 'horizontal';
+    readonly orientation = input<'horizontal' | 'vertical' | string>('horizontal');
     /**
      * Current id state as a string.
      * @group Props
      */
-    @Input() id: string | undefined;
+    readonly id = input<string>();
+
+    private readonly autoId = uuid('pn_id_');
+
+    readonly $id = computed(() => this.id() || this.autoId);
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Identifier of the underlying input element.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * The breakpoint to define the maximum width boundary.
      * @group Props
      */
-    @Input() breakpoint: string = '960px';
+    readonly breakpoint = input<string>('960px');
     /**
      * Height of the viewport, a scrollbar is defined if height of list exceeds this value.
      * @group Props
      */
-    @Input() scrollHeight: string = '20rem';
+    readonly scrollHeight = input<string>('20rem');
     /**
      * When present, it specifies that the component should be disabled.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) disabled: boolean = false;
+    readonly disabled = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number = 0;
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Defines template option for start.
      * @group Templates
      */
-    @ContentChild('start', { descendants: false }) startTemplate: TemplateRef<void> | undefined;
+    readonly startTemplate = contentChild<TemplateRef<void>>('start', { descendants: false });
     /**
      * Defines template option for end.
      * @group Templates
      */
-    @ContentChild('end', { descendants: false }) endTemplate: TemplateRef<void> | undefined;
+    readonly endTemplate = contentChild<TemplateRef<void>>('end', { descendants: false });
     /**
      * Defines template option for menu icon.
      * @group Templates
      */
-    @ContentChild('menuicon', { descendants: false }) menuIconTemplate: TemplateRef<void> | undefined;
+    readonly menuIconTemplate = contentChild<TemplateRef<void>>('menuicon', { descendants: false });
     /**
      * Defines template option for submenu icon.
      * @group Templates
      */
-    @ContentChild('submenuicon', { descendants: false }) submenuIconTemplate: TemplateRef<void> | undefined;
+    readonly submenuIconTemplate = contentChild<TemplateRef<void>>('submenuicon', { descendants: false });
     /**
      * Custom item template.
      * @param {MegaMenuItemTemplateContext} context - item context.
      * @see {@link MegaMenuItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<MegaMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<MegaMenuItemTemplateContext>>('item', { descendants: false });
     /**
      * Custom menu button template on responsive mode.
      * @group Templates
      */
-    @ContentChild('button', { descendants: false }) buttonTemplate: TemplateRef<void> | undefined;
+    readonly buttonTemplate = contentChild<TemplateRef<void>>('button', { descendants: false });
     /**
      * Custom menu button icon template on responsive mode.
      * @group Templates
      */
-    @ContentChild('buttonicon', { descendants: false }) buttonIconTemplate: TemplateRef<void> | undefined;
+    readonly buttonIconTemplate = contentChild<TemplateRef<void>>('buttonicon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
-    @ViewChild('menubutton') menubuttonViewChild: ElementRef | undefined;
+    readonly menubuttonViewChild = viewChild<ElementRef>('menubutton');
 
-    @ViewChild('rootmenu') rootmenu: MegaMenuSub | undefined;
+    readonly rootmenu = viewChild<MegaMenuSub>('rootmenu');
 
     _startTemplate: TemplateRef<void> | undefined;
 
@@ -616,7 +379,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
     get focusedItemId() {
         const focusedItem = this.focusedItemInfo();
-        return focusedItem?.item && focusedItem.item?.id ? focusedItem.item.id : isNotEmpty(focusedItem.key) ? `${this.id}_${focusedItem.key}` : null;
+        return focusedItem?.item && focusedItem.item?.id ? focusedItem.item.id : isNotEmpty(focusedItem.key) ? `${this.$id()}_${focusedItem.key}` : null;
     }
 
     constructor() {
@@ -635,7 +398,6 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
     onInit(): void {
         this.bindMatchMediaListener();
-        this.id = this.id || uuid('pn_id_');
     }
 
     onAfterViewChecked(): void {
@@ -643,7 +405,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     }
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'start':
                     this._startTemplate = item.template;
@@ -683,7 +445,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     bindMatchMediaListener() {
         if (isPlatformBrowser(this.platformId)) {
             if (!this.matchMediaListener) {
-                const query = window.matchMedia(`(max-width: ${this.breakpoint})`);
+                const query = window.matchMedia(`(max-width: ${this.breakpoint()})`);
 
                 this.query = query;
                 this.queryMatches.set(query.matches);
@@ -750,7 +512,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
             this.dirty = !root;
             if (!this.mobileActive) {
-                focus(this.rootmenu?.el?.nativeElement, { preventScroll: true });
+                focus(this.rootmenu()?.el?.nativeElement, { preventScroll: true });
             }
         } else {
             if (grouped) {
@@ -778,11 +540,11 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     toggle(event: MouseEvent) {
         if (this.mobileActive) {
             this.mobileActive = false;
-            ZIndexUtils.clear(this.rootmenu?.el.nativeElement);
+            ZIndexUtils.clear(this.rootmenu()?.el.nativeElement);
             this.hide();
         } else {
             this.mobileActive = true;
-            ZIndexUtils.set('menu', this.rootmenu?.el.nativeElement, this.config.zIndex.menu);
+            ZIndexUtils.set('menu', this.rootmenu()?.el.nativeElement, this.config.zIndex.menu);
             setTimeout(() => {
                 this.show();
             }, 0);
@@ -795,18 +557,18 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     show() {
         this.focusedItemInfo.set({ index: this.findFirstFocusedItemIndex(), level: 0, parentKey: '' });
 
-        focus(this.rootmenu?.el.nativeElement);
+        focus(this.rootmenu()?.el.nativeElement);
     }
 
     scrollInView(index: number = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedItemId;
+        const id = index !== -1 ? `${this.$id()}_${index}` : this.focusedItemId;
 
         let element;
 
         if (id === null && this.queryMatches()) {
-            element = this.menubuttonViewChild?.nativeElement;
+            element = this.menubuttonViewChild()?.nativeElement;
         } else {
-            element = findSingle(this.rootmenu?.el?.nativeElement, `li[id="${id}"]`);
+            element = findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${id}"]`);
         }
 
         if (element) {
@@ -828,14 +590,14 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
         this.focusedItemInfo.set({ index, key, parentKey, item });
 
         grouped && (this.dirty = true);
-        isFocus && focus(this.rootmenu?.el?.nativeElement);
+        isFocus && focus(this.rootmenu()?.el?.nativeElement);
     }
 
     hide(event?, isFocus?: boolean) {
         if (this.mobileActive) {
             this.mobileActive = false;
             setTimeout(() => {
-                focus(this.menubuttonViewChild?.nativeElement);
+                focus(this.menubuttonViewChild()?.nativeElement);
                 this.scrollInView();
             }, 100);
         }
@@ -843,7 +605,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
         this.activeItem.set(null);
         this.focusedItemInfo.set({ index: -1, key: '', parentKey: '', item: null });
 
-        isFocus && focus(this.rootmenu?.el?.nativeElement);
+        isFocus && focus(this.rootmenu()?.el?.nativeElement);
         this.dirty = false;
     }
 
@@ -1047,7 +809,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     }
 
     onArrowDownKey(event: KeyboardEvent) {
-        if (this.orientation === 'horizontal') {
+        if (this.orientation() === 'horizontal') {
             if (isNotEmpty(this.activeItem()) && this.activeItem().key === this.focusedItemInfo().key) {
                 const { key, item } = this.activeItem();
                 this.focusedItemInfo.set({ index: -1, key: '', parentKey: key, item });
@@ -1074,7 +836,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
         const grouped = this.isProccessedItemGroup(processedItem);
 
         if (grouped) {
-            if (this.orientation === 'vertical') {
+            if (this.orientation() === 'vertical') {
                 if (isNotEmpty(this.activeItem()) && this.activeItem().key === processedItem.key) {
                     this.focusedItemInfo.set({ index: -1, key: '', parentKey: this.activeItem().key, item: processedItem.item });
                 } else {
@@ -1108,7 +870,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
     }
 
     onArrowUpKey(event: KeyboardEvent) {
-        if (event.altKey && this.orientation === 'horizontal') {
+        if (event.altKey && this.orientation() === 'horizontal') {
             if (this.focusedItemInfo().index !== -1) {
                 const processedItem = this.findVisibleItem(this.focusedItemInfo().index);
                 const grouped = this.isProccessedItemGroup(processedItem);
@@ -1142,13 +904,13 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
         const grouped = this.isProccessedItemGroup(processedItem);
 
         if (grouped) {
-            if (this.orientation === 'horizontal') {
+            if (this.orientation() === 'horizontal') {
                 const itemIndex = this.focusedItemInfo().index !== -1 ? this.findPrevItemIndex(this.focusedItemInfo().index) : this.findLastFocusedItemIndex();
 
                 this.changeFocusedItemInfo(event, itemIndex);
             }
         } else {
-            if (this.orientation === 'vertical' && isNotEmpty(this.activeItem())) {
+            if (this.orientation() === 'vertical' && isNotEmpty(this.activeItem())) {
                 if (processedItem.columnIndex === 0) {
                     this.focusedItemInfo.set({
                         index: this.activeItem().index,
@@ -1205,7 +967,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
     onEnterKey(event: KeyboardEvent) {
         if (this.focusedItemInfo().index !== -1) {
-            const element = <any>findSingle(this.rootmenu?.el?.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+            const element = <any>findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
             const anchorElement = element && (<any>findSingle(element, '[data-pc-section="itemlink"]') || findSingle(element, 'a,button'));
 
             anchorElement ? anchorElement.click() : element && element.click();

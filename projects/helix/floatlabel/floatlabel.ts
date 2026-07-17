@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -16,7 +16,7 @@ const FLOATLABEL_INSTANCE = new InjectionToken<FloatLabel>('FLOATLABEL_INSTANCE'
     selector: 'h-floatlabel, h-floatLabel, h-float-label',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: ` <ng-content></ng-content> `,
+    templateUrl: './floatlabel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [FloatLabelStyle, { provide: FLOATLABEL_INSTANCE, useExisting: FloatLabel }, { provide: PARENT_INSTANCE, useExisting: FloatLabel }],
@@ -42,7 +42,7 @@ export class FloatLabel extends BaseComponent<FloatLabelPassThrough> implements 
      * Defines the positioning of the label relative to the input.
      * @group Props
      */
-    @Input() variant: 'in' | 'over' | 'on' = 'over';
+    readonly variant = input<'in' | 'over' | 'on'>('over');
 }
 
 @NgModule({

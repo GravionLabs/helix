@@ -103,14 +103,16 @@ class TestIconTemplatePanelMenuComponent {
     standalone: false,
     template: `
         <p-panelmenu [model]="model">
-            <ng-template #item let-item>
-                <div class="content-template-item">
-                    <span class="item-label">{{ item.label }}</span>
-                    <span class="custom-badge" *ngIf="item.badge">{{ item.badge }}</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item>
+            <div class="content-template-item">
+              <span class="item-label">{{ item.label }}</span>
+              @if (item.badge) {
+                <span class="custom-badge">{{ item.badge }}</span>
+              }
+            </div>
+          </ng-template>
         </p-panelmenu>
-    `
+        `
 })
 class TestContentItemTemplatePanelMenuComponent {
     model: MenuItem[] = [
@@ -284,19 +286,19 @@ describe('PanelMenu', () => {
         });
 
         it('should have correct default values', () => {
-            expect(panelMenuInstance.multiple).toBe(false);
+            expect(panelMenuInstance.multiple()).toBe(false);
 
             // Note: In test environment, @Input properties with default values may not be initialized
             // unless explicitly set. This tests the actual default behavior when no input is provided.
-            expect(panelMenuInstance.transitionOptions || '400ms cubic-bezier(0.86, 0, 0.07, 1)').toBe('400ms cubic-bezier(0.86, 0, 0.07, 1)');
+            expect(panelMenuInstance.transitionOptions() || '400ms cubic-bezier(0.86, 0, 0.07, 1)').toBe('400ms cubic-bezier(0.86, 0, 0.07, 1)');
 
             // tabindex can be undefined, 0, or NaN in test environment
-            expect(panelMenuInstance.tabindex === undefined || panelMenuInstance.tabindex === 0 || isNaN(panelMenuInstance.tabindex)).toBe(true);
+            expect(panelMenuInstance.tabindex() === undefined || panelMenuInstance.tabindex() === 0 || isNaN(panelMenuInstance.tabindex())).toBe(true);
         });
 
         it('should generate unique id if not provided', () => {
-            expect(panelMenuInstance.id).toBeTruthy();
-            expect(panelMenuInstance.id).toMatch(/^pn_id_/);
+            expect(panelMenuInstance.id()).toBeTruthy();
+            expect(panelMenuInstance.id()).toMatch(/^pn_id_/);
         });
 
         it('should use custom id when provided', async () => {
@@ -304,12 +306,12 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.id).toBe('custom_panel_menu');
+            expect(panelMenuInstance.id()).toBe('custom_panel_menu');
         });
 
         it('should initialize with provided model', () => {
-            expect(panelMenuInstance.model).toEqual(component.model);
-            expect(panelMenuInstance.model!.length).toBe(2);
+            expect(panelMenuInstance.model()).toEqual(component.model);
+            expect(panelMenuInstance.model()!.length).toBe(2);
         });
 
         it('should have proper component structure', () => {
@@ -327,7 +329,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.model).toEqual(newModel);
+            expect(panelMenuInstance.model()).toEqual(newModel);
         });
 
         it('should update multiple property', async () => {
@@ -335,7 +337,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.multiple).toBe(true);
+            expect(panelMenuInstance.multiple()).toBe(true);
         });
 
         it('should update transitionOptions property', async () => {
@@ -343,7 +345,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.transitionOptions).toBe('300ms ease-in');
+            expect(panelMenuInstance.transitionOptions()).toBe('300ms ease-in');
         });
 
         it('should update styleClass property', async () => {
@@ -351,7 +353,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.styleClass).toBe('custom-class');
+            expect(panelMenuInstance.styleClass()).toBe('custom-class');
         });
 
         it('should update tabindex property', async () => {
@@ -359,7 +361,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.tabindex).toBe(1);
+            expect(panelMenuInstance.tabindex()).toBe(1);
         });
 
         it('should handle undefined model', async () => {
@@ -367,7 +369,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.model).toBeUndefined();
+            expect(panelMenuInstance.model()).toBeUndefined();
         });
 
         it('should handle empty model', async () => {
@@ -375,7 +377,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.model).toEqual([]);
+            expect(panelMenuInstance.model()).toEqual([]);
         });
     });
 
@@ -557,7 +559,7 @@ describe('PanelMenu', () => {
 
             expect(() => panelMenuInstance.ngAfterContentInit()).not.toThrow();
 
-            expect(panelMenuInstance.templates).toBeDefined();
+            expect(panelMenuInstance.templates()).toBeDefined();
 
             const menuContent = templateFixture.debugElement.query(By.css('.p-panelmenu-content'));
             expect(menuContent).toBeTruthy();
@@ -574,7 +576,7 @@ describe('PanelMenu', () => {
 
             expect(() => panelMenuInstance.ngAfterContentInit()).not.toThrow();
 
-            expect(panelMenuInstance.itemTemplate).toBeDefined();
+            expect(panelMenuInstance.itemTemplate()).toBeDefined();
 
             const menuContent = itemTemplateFixture.debugElement.query(By.css('.p-panelmenu-content'));
             expect(menuContent).toBeTruthy();
@@ -622,7 +624,7 @@ describe('PanelMenu', () => {
 
             // Test that header icon template is processed
             expect(() => panelMenuInstance.ngAfterContentInit()).not.toThrow();
-            expect(panelMenuInstance.templates).toBeDefined();
+            expect(panelMenuInstance.templates()).toBeDefined();
 
             const customHeaderIcons = iconTemplateFixture.debugElement.queryAll(By.css('.custom-header-icon'));
             // Template may not render if component structure differs, verify component exists
@@ -641,7 +643,7 @@ describe('PanelMenu', () => {
 
             // Test that submenu icon template is processed
             expect(() => panelMenuInstance.ngAfterContentInit()).not.toThrow();
-            expect(panelMenuInstance.templates).toBeDefined();
+            expect(panelMenuInstance.templates()).toBeDefined();
 
             const customSubmenuIcons = iconTemplateFixture.debugElement.queryAll(By.css('.custom-submenu-icon'));
             // Template may not render if component structure differs
@@ -990,7 +992,7 @@ describe('PanelMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panelMenuInstance.model).toEqual(newModel);
+            expect(panelMenuInstance.model()).toEqual(newModel);
 
             const panelContent = fixture.debugElement.query(By.css('.p-panelmenu-content'));
             expect(panelContent).toBeTruthy();
@@ -1028,7 +1030,7 @@ describe('PanelMenu', () => {
             await fixture.whenStable();
 
             // Should not throw error
-            expect(panelMenuInstance.model).toEqual([]);
+            expect(panelMenuInstance.model()).toEqual([]);
         });
 
         it('should handle items without labels', async () => {

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, inject, InjectionToken, Input, NgModule, QueryList, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { equals } from '@primeuix/utils';
+import { ChangeDetectionStrategy, Component, contentChild, contentChildren, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { BlockableUI, Footer, Header, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -17,36 +16,13 @@ const CARD_INSTANCE = new InjectionToken<Card>('CARD_INSTANCE');
     selector: 'h-card',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <div [hBind]="ptm('header')" [class]="cx('header')" *ngIf="headerFacet || headerTemplate || _headerTemplate">
-            <ng-content select="p-header"></ng-content>
-            <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-        </div>
-        <div [hBind]="ptm('body')" [class]="cx('body')">
-            <div [hBind]="ptm('title')" [class]="cx('title')" *ngIf="header || titleTemplate || _titleTemplate">
-                <ng-container *ngIf="header && !_titleTemplate && !titleTemplate">{{ header }}</ng-container>
-                <ng-container *ngTemplateOutlet="titleTemplate || _titleTemplate"></ng-container>
-            </div>
-            <div [hBind]="ptm('subtitle')" [class]="cx('subtitle')" *ngIf="subheader || subtitleTemplate || _subtitleTemplate">
-                <ng-container *ngIf="subheader && !_subtitleTemplate && !subtitleTemplate">{{ subheader }}</ng-container>
-                <ng-container *ngTemplateOutlet="subtitleTemplate || _subtitleTemplate"></ng-container>
-            </div>
-            <div [hBind]="ptm('content')" [class]="cx('content')">
-                <ng-content></ng-content>
-                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-            </div>
-            <div [hBind]="ptm('footer')" [class]="cx('footer')" *ngIf="footerFacet || footerTemplate || _footerTemplate">
-                <ng-content select="p-footer"></ng-content>
-                <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-            </div>
-        </div>
-    `,
+    templateUrl: './card.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [CardStyle, { provide: CARD_INSTANCE, useExisting: Card }, { provide: PARENT_INSTANCE, useExisting: Card }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
-        '[style]': '_style()'
+        '[class]': "cn(cx('root'), styleClass())",
+        '[style]': 'style()'
     },
     hostDirectives: [Bind]
 })
@@ -66,73 +42,57 @@ export class Card extends BaseComponent<CardPassThrough> implements BlockableUI 
      * Header of the card.
      * @group Props
      */
-    @Input() header: string | undefined;
+    readonly header = input<string>();
     /**
      * Subheader of the card.
      * @group Props
      */
-    @Input() subheader: string | undefined;
+    readonly subheader = input<string>();
     /**
      * Inline style of the element.
      * @group Props
      */
-    @Input() set style(value: { [klass: string]: any } | null | undefined) {
-        if (!equals(this._style(), value)) {
-            this._style.set(value);
-            // Apply style directly to avoid infinite loop in host binding
-            if (this.el?.nativeElement) {
-                if (value) {
-                    Object.keys(value).forEach((key) => {
-                        this.el.nativeElement.style[key] = value[key];
-                    });
-                }
-            }
-        }
-    }
-
-    get style() {
-        return this._style();
-    }
+    readonly style = input<{ [klass: string]: any } | null | undefined>(null);
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
 
-    @ContentChild(Header) headerFacet: TemplateRef<any> | undefined;
+    readonly headerFacet = contentChild(Header);
 
-    @ContentChild(Footer) footerFacet: TemplateRef<any> | undefined;
+    readonly footerFacet = contentChild(Footer);
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom title template.
      * @group Templates
      */
-    @ContentChild('title', { descendants: false }) titleTemplate: TemplateRef<void> | undefined;
+    readonly titleTemplate = contentChild<TemplateRef<void>>('title', { descendants: false });
 
     /**
      * Custom subtitle template.
      * @group Templates
      */
-    @ContentChild('subtitle', { descendants: false }) subtitleTemplate: TemplateRef<void> | undefined;
+    readonly subtitleTemplate = contentChild<TemplateRef<void>>('subtitle', { descendants: false });
 
     /**
      * Custom content template.
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: TemplateRef<void> | undefined;
+    readonly contentTemplate = contentChild<TemplateRef<void>>('content', { descendants: false });
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     _headerTemplate: TemplateRef<void> | undefined;
 
@@ -144,16 +104,14 @@ export class Card extends BaseComponent<CardPassThrough> implements BlockableUI 
 
     _footerTemplate: TemplateRef<void> | undefined;
 
-    _style = signal<{ [klass: string]: any } | null | undefined>(null);
-
     getBlockableElement(): HTMLElement {
         return this.el.nativeElement;
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'header':
                     this._headerTemplate = item.template;

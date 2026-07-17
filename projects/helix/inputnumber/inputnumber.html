@@ -1,0 +1,160 @@
+<input
+  hInputText
+  #input
+  [attr.id]="inputId()"
+  role="spinbutton"
+  [class]="cn(cx('pcInputText'), inputStyleClass())"
+  [value]="formattedValue()"
+  [ngStyle]="inputStyle()"
+  [variant]="$variant()"
+  [invalid]="invalid()"
+  [attr.aria-valuemin]="min()"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-valuenow]="value"
+  [attr.placeholder]="placeholder()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledBy()"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [attr.title]="title()"
+  [pSize]="size()"
+  [attr.size]="inputSize()"
+  [attr.name]="name()"
+  [attr.autocomplete]="autocomplete()"
+  [attr.maxlength]="maxlength()"
+  [attr.minlength]="minlength()"
+  [attr.tabindex]="tabindex()"
+  [attr.aria-required]="ariaRequired()"
+  [attr.min]="min()"
+  [attr.max]="max()"
+  [attr.step]="step() ?? 1"
+  [attr.required]="required() ? '' : undefined"
+  [attr.readonly]="readonly() ? '' : undefined"
+  [attr.disabled]="$disabled() ? '' : undefined"
+  inputmode="decimal"
+  (input)="onUserInput($event)"
+  (keydown)="onInputKeyDown($event)"
+  (keypress)="onInputKeyPress($event)"
+  (paste)="onPaste($event)"
+  (click)="onInputClick()"
+  (focus)="onInputFocus($event)"
+  (blur)="onInputBlur($event)"
+  [pt]="ptm('pcInputText')"
+  [unstyled]="unstyled()"
+  [hAutoFocus]="autofocus()"
+  [fluid]="hasFluid"
+  [attr.data-p]="dataP"
+  />
+@if (buttonLayout() != 'vertical' && showClear() && value) {
+  @if (!clearIconTemplate() && !_clearIconTemplate) {
+    <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" />
+  }
+  @if (clearIconTemplate() || _clearIconTemplate) {
+    <span [hBind]="ptm('clearIcon')" (click)="clear()" [class]="cx('clearIcon')">
+      <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate"></ng-template>
+    </span>
+  }
+}
+@if (showButtons() && buttonLayout() === 'stacked') {
+  <span [hBind]="ptm('buttonGroup')" [class]="cx('buttonGroup')" [attr.data-p]="dataP">
+    <button
+      type="button"
+      [hBind]="ptm('incrementButton')"
+      [class]="cn(cx('incrementButton'), incrementButtonClass())"
+      [attr.disabled]="$disabled() ? '' : undefined"
+      tabindex="-1"
+      (mousedown)="onUpButtonMouseDown($event)"
+      (mouseup)="onUpButtonMouseUp()"
+      (mouseleave)="onUpButtonMouseLeave()"
+      (keydown)="onUpButtonKeyDown($event)"
+      (keyup)="onUpButtonKeyUp()"
+      [attr.aria-hidden]="true"
+      [attr.data-p]="dataP"
+      >
+      @if (incrementButtonIcon()) {
+        <span [hBind]="ptm('incrementButtonIcon')" [ngClass]="incrementButtonIcon()"></span>
+      }
+      @if (!incrementButtonIcon()) {
+        @if (!incrementButtonIconTemplate() && !_incrementButtonIconTemplate) {
+          <svg data-p-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
+        }
+        <ng-template *ngTemplateOutlet="incrementButtonIconTemplate() || _incrementButtonIconTemplate"></ng-template>
+      }
+    </button>
+    <button
+      type="button"
+      [hBind]="ptm('decrementButton')"
+      [class]="cn(cx('decrementButton'), decrementButtonClass())"
+      [attr.disabled]="$disabled() ? '' : undefined"
+      tabindex="-1"
+      [attr.aria-hidden]="true"
+      (mousedown)="onDownButtonMouseDown($event)"
+      (mouseup)="onDownButtonMouseUp()"
+      (mouseleave)="onDownButtonMouseLeave()"
+      (keydown)="onDownButtonKeyDown($event)"
+      (keyup)="onDownButtonKeyUp()"
+      [attr.data-p]="dataP"
+      >
+      @if (decrementButtonIcon()) {
+        <span [hBind]="ptm('decrementButtonIcon')" [ngClass]="decrementButtonIcon()"></span>
+      }
+      @if (!decrementButtonIcon()) {
+        @if (!decrementButtonIconTemplate() && !_decrementButtonIconTemplate) {
+          <svg data-p-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
+        }
+        <ng-template *ngTemplateOutlet="decrementButtonIconTemplate() || _decrementButtonIconTemplate"></ng-template>
+      }
+    </button>
+  </span>
+}
+@if (showButtons() && buttonLayout() !== 'stacked') {
+  <button
+    type="button"
+    [hBind]="ptm('incrementButton')"
+    [class]="cn(cx('incrementButton'), incrementButtonClass())"
+    [attr.disabled]="$disabled() ? '' : undefined"
+    tabindex="-1"
+    [attr.aria-hidden]="true"
+    (mousedown)="onUpButtonMouseDown($event)"
+    (mouseup)="onUpButtonMouseUp()"
+    (mouseleave)="onUpButtonMouseLeave()"
+    (keydown)="onUpButtonKeyDown($event)"
+    (keyup)="onUpButtonKeyUp()"
+    [attr.data-p]="dataP"
+    >
+    @if (incrementButtonIcon()) {
+      <span [hBind]="ptm('incrementButtonIcon')" [ngClass]="incrementButtonIcon()"></span>
+    }
+    @if (!incrementButtonIcon()) {
+      @if (!incrementButtonIconTemplate() && !_incrementButtonIconTemplate) {
+        <svg data-p-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
+      }
+      <ng-template *ngTemplateOutlet="incrementButtonIconTemplate() || _incrementButtonIconTemplate"></ng-template>
+    }
+  </button>
+}
+@if (showButtons() && buttonLayout() !== 'stacked') {
+  <button
+    type="button"
+    [hBind]="ptm('decrementButton')"
+    [class]="cn(cx('decrementButton'), decrementButtonClass())"
+    [attr.disabled]="$disabled() ? '' : undefined"
+    tabindex="-1"
+    [attr.aria-hidden]="true"
+    (mousedown)="onDownButtonMouseDown($event)"
+    (mouseup)="onDownButtonMouseUp()"
+    (mouseleave)="onDownButtonMouseLeave()"
+    (keydown)="onDownButtonKeyDown($event)"
+    (keyup)="onDownButtonKeyUp()"
+    [attr.data-p]="dataP"
+    >
+    @if (decrementButtonIcon()) {
+      <span [hBind]="ptm('decrementButtonIcon')" [ngClass]="decrementButtonIcon()"></span>
+    }
+    @if (!decrementButtonIcon()) {
+      @if (!decrementButtonIconTemplate() && !_decrementButtonIconTemplate) {
+        <svg data-p-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
+      }
+      <ng-template *ngTemplateOutlet="decrementButtonIconTemplate() || _decrementButtonIconTemplate"></ng-template>
+    }
+  </button>
+}

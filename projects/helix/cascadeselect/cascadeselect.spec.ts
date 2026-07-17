@@ -56,95 +56,107 @@ const mockCountries = [
     standalone: false,
     template: `
         <p-cascadeselect
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="optionLabel"
-            [optionValue]="optionValue"
-            [optionGroupLabel]="optionGroupLabel"
-            [optionGroupChildren]="optionGroupChildren"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [style]="style"
-            [styleClass]="styleClass"
-            [panelStyle]="panelStyle"
-            [panelStyleClass]="panelStyleClass"
-            [showClear]="showClear"
-            [dataKey]="dataKey"
-            [inputId]="inputId"
-            [tabindex]="tabindex"
-            [ariaLabelledBy]="ariaLabelledBy"
-            [ariaLabel]="ariaLabel"
-            [loading]="loading"
-            [loadingIcon]="loadingIcon"
-            [appendTo]="appendTo"
-            (onChange)="onSelectionChange($event)"
-            (onShow)="onPanelShow($event)"
-            (onHide)="onPanelHide($event)"
-            (onBeforeShow)="onBeforeShow($event)"
-            (onBeforeHide)="onBeforeHide($event)"
-            (onFocus)="onFocusEvent($event)"
-            (onBlur)="onBlurEvent($event)"
-            (onClear)="onClearEvent($event)"
-        >
-            <!-- Value template -->
-            <ng-template #value let-value let-placeholder="placeholder">
-                <div class="custom-value" data-testid="template-value">
-                    <span *ngIf="value">{{ value.cname || value.name }} - Custom</span>
-                    <span *ngIf="!value">{{ placeholder }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Option template -->
-            <ng-template #option let-option let-level="level">
-                <div class="custom-option" data-testid="template-option">
-                    <i class="pi pi-map-marker" *ngIf="level === 0"></i>
-                    <i class="pi pi-building" *ngIf="level === 1"></i>
-                    <i class="pi pi-home" *ngIf="level === 2"></i>
-                    <span>{{ option.name || option.cname }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header>
-                <div class="custom-header" data-testid="template-header">
-                    <i class="pi pi-search"></i>
-                    <span>Select Location</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer>
-                <div class="custom-footer" data-testid="template-footer">
-                    <small>Choose your preferred location</small>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template -->
-            <ng-template #triggericon>
-                <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
-            </ng-template>
-
-            <!-- Loading icon template -->
-            <ng-template #loadingicon>
-                <i class="pi pi-spin pi-cog custom-loading" data-testid="template-loadingicon"></i>
-            </ng-template>
-
-            <!-- Option group icon template -->
-            <ng-template #optiongroupicon>
-                <i class="pi pi-angle-right custom-group-icon" data-testid="template-optiongroupicon"></i>
-            </ng-template>
-
-            <!-- Clear icon template -->
-            <ng-template #clearicon>
-                <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="optionLabel"
+          [optionValue]="optionValue"
+          [optionGroupLabel]="optionGroupLabel"
+          [optionGroupChildren]="optionGroupChildren"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [style]="style"
+          [styleClass]="styleClass"
+          [panelStyle]="panelStyle"
+          [panelStyleClass]="panelStyleClass"
+          [showClear]="showClear"
+          [dataKey]="dataKey"
+          [inputId]="inputId"
+          [tabindex]="tabindex"
+          [ariaLabelledBy]="ariaLabelledBy"
+          [ariaLabel]="ariaLabel"
+          [loading]="loading"
+          [loadingIcon]="loadingIcon"
+          [appendTo]="appendTo"
+          (onChange)="onSelectionChange($event)"
+          (onShow)="onPanelShow($event)"
+          (onHide)="onPanelHide($event)"
+          (onBeforeShow)="onBeforeShow($event)"
+          (onBeforeHide)="onBeforeHide($event)"
+          (onFocus)="onFocusEvent($event)"
+          (onBlur)="onBlurEvent($event)"
+          (onClear)="onClearEvent($event)"
+          >
+          <!-- Value template -->
+          <ng-template #value let-value let-placeholder="placeholder">
+            <div class="custom-value" data-testid="template-value">
+              @if (value) {
+                <span>{{ value.cname || value.name }} - Custom</span>
+              }
+              @if (!value) {
+                <span>{{ placeholder }}</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Option template -->
+          <ng-template #option let-option let-level="level">
+            <div class="custom-option" data-testid="template-option">
+              @if (level === 0) {
+                <i class="pi pi-map-marker"></i>
+              }
+              @if (level === 1) {
+                <i class="pi pi-building"></i>
+              }
+              @if (level === 2) {
+                <i class="pi pi-home"></i>
+              }
+              <span>{{ option.name || option.cname }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header>
+            <div class="custom-header" data-testid="template-header">
+              <i class="pi pi-search"></i>
+              <span>Select Location</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer>
+            <div class="custom-footer" data-testid="template-footer">
+              <small>Choose your preferred location</small>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template -->
+          <ng-template #triggericon>
+            <i class="pi pi-chevron-down custom-trigger" data-testid="template-triggericon"></i>
+          </ng-template>
+        
+          <!-- Loading icon template -->
+          <ng-template #loadingicon>
+            <i class="pi pi-spin pi-cog custom-loading" data-testid="template-loadingicon"></i>
+          </ng-template>
+        
+          <!-- Option group icon template -->
+          <ng-template #optiongroupicon>
+            <i class="pi pi-angle-right custom-group-icon" data-testid="template-optiongroupicon"></i>
+          </ng-template>
+        
+          <!-- Clear icon template -->
+          <ng-template #clearicon>
+            <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
+          </ng-template>
         </p-cascadeselect>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-cascadeselect formControlName="selectedItems" [options]="formOptions" [optionLabel]="'cname'" [optionGroupLabel]="'name'" [optionGroupChildren]="['states', 'cities']" (onChange)="onFormChange($event)"> </p-cascadeselect>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestCascadeSelectComponent {
     selectedValue: any = null as any;
@@ -277,78 +289,88 @@ class TestCascadeSelectComponent {
     standalone: false,
     template: `
         <p-cascadeselect
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="'cname'"
-            [optionGroupLabel]="'name'"
-            [optionGroupChildren]="['states', 'cities']"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [loading]="loading"
-            [showClear]="showClear"
-        >
-            <!-- Value template with pTemplate -->
-            <ng-template pTemplate="value" let-value let-placeholder="placeholder">
-                <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
-                    <span class="value-text" *ngIf="value">{{ value.cname || value.name }} - pTemplate</span>
-                    <span class="placeholder-text" *ngIf="!value">{{ placeholder }} (pTemplate)</span>
-                </div>
-            </ng-template>
-
-            <!-- Option template with pTemplate -->
-            <ng-template pTemplate="option" let-option let-level="level">
-                <div class="ptemplate-option" [attr.data-testid]="'ptemplate-option'" [attr.data-level]="level">
-                    <i class="pi pi-flag" *ngIf="level === 0"></i>
-                    <i class="pi pi-map" *ngIf="level === 1"></i>
-                    <i class="pi pi-building" *ngIf="level === 2"></i>
-                    <span class="option-text">{{ option.name || option.cname }} (Level {{ level }})</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template with pTemplate -->
-            <ng-template pTemplate="header">
-                <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
-                    <i class="pi pi-search"></i>
-                    <h4 class="header-title">Select Location (pTemplate)</h4>
-                    <span class="header-subtitle">Available: {{ options.length }} countries</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template with pTemplate -->
-            <ng-template pTemplate="footer">
-                <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
-                    <small class="footer-text">Choose your location (pTemplate)</small>
-                    <button class="footer-button" type="button">Help</button>
-                </div>
-            </ng-template>
-
-            <!-- Trigger icon template with pTemplate -->
-            <ng-template pTemplate="triggericon">
-                <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
-            </ng-template>
-
-            <!-- Loading icon template with pTemplate -->
-            <ng-template pTemplate="loadingicon">
-                <div class="ptemplate-loadingicon" [attr.data-testid]="'ptemplate-loadingicon'">
-                    <i class="pi pi-spin pi-spinner loading-icon"></i>
-                    <span class="loading-text">Loading...</span>
-                </div>
-            </ng-template>
-
-            <!-- Option group icon template with pTemplate -->
-            <ng-template pTemplate="optiongroupicon">
-                <i class="pi pi-chevron-right ptemplate-optiongroupicon" [attr.data-testid]="'ptemplate-optiongroupicon'"></i>
-            </ng-template>
-
-            <!-- Clear icon template with pTemplate -->
-            <ng-template pTemplate="clearicon">
-                <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
-                    <i class="pi pi-times clear-icon"></i>
-                    <span class="clear-text">Clear</span>
-                </div>
-            </ng-template>
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="'cname'"
+          [optionGroupLabel]="'name'"
+          [optionGroupChildren]="['states', 'cities']"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [loading]="loading"
+          [showClear]="showClear"
+          >
+          <!-- Value template with pTemplate -->
+          <ng-template pTemplate="value" let-value let-placeholder="placeholder">
+            <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
+              @if (value) {
+                <span class="value-text">{{ value.cname || value.name }} - pTemplate</span>
+              }
+              @if (!value) {
+                <span class="placeholder-text">{{ placeholder }} (pTemplate)</span>
+              }
+            </div>
+          </ng-template>
+        
+          <!-- Option template with pTemplate -->
+          <ng-template pTemplate="option" let-option let-level="level">
+            <div class="ptemplate-option" [attr.data-testid]="'ptemplate-option'" [attr.data-level]="level">
+              @if (level === 0) {
+                <i class="pi pi-flag"></i>
+              }
+              @if (level === 1) {
+                <i class="pi pi-map"></i>
+              }
+              @if (level === 2) {
+                <i class="pi pi-building"></i>
+              }
+              <span class="option-text">{{ option.name || option.cname }} (Level {{ level }})</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template with pTemplate -->
+          <ng-template pTemplate="header">
+            <div class="ptemplate-header" [attr.data-testid]="'ptemplate-header'">
+              <i class="pi pi-search"></i>
+              <h4 class="header-title">Select Location (pTemplate)</h4>
+              <span class="header-subtitle">Available: {{ options.length }} countries</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template with pTemplate -->
+          <ng-template pTemplate="footer">
+            <div class="ptemplate-footer" [attr.data-testid]="'ptemplate-footer'">
+              <small class="footer-text">Choose your location (pTemplate)</small>
+              <button class="footer-button" type="button">Help</button>
+            </div>
+          </ng-template>
+        
+          <!-- Trigger icon template with pTemplate -->
+          <ng-template pTemplate="triggericon">
+            <i class="pi pi-angle-down ptemplate-triggericon" [attr.data-testid]="'ptemplate-triggericon'"></i>
+          </ng-template>
+        
+          <!-- Loading icon template with pTemplate -->
+          <ng-template pTemplate="loadingicon">
+            <div class="ptemplate-loadingicon" [attr.data-testid]="'ptemplate-loadingicon'">
+              <i class="pi pi-spin pi-spinner loading-icon"></i>
+              <span class="loading-text">Loading...</span>
+            </div>
+          </ng-template>
+        
+          <!-- Option group icon template with pTemplate -->
+          <ng-template pTemplate="optiongroupicon">
+            <i class="pi pi-chevron-right ptemplate-optiongroupicon" [attr.data-testid]="'ptemplate-optiongroupicon'"></i>
+          </ng-template>
+        
+          <!-- Clear icon template with pTemplate -->
+          <ng-template pTemplate="clearicon">
+            <div class="ptemplate-clearicon" [attr.data-testid]="'ptemplate-clearicon'">
+              <i class="pi pi-times clear-icon"></i>
+              <span class="clear-text">Clear</span>
+            </div>
+          </ng-template>
         </p-cascadeselect>
-    `
+        `
 })
 class TestPTemplateCascadeSelectComponent {
     selectedValue: any = null as any;
@@ -429,7 +451,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'string')).toBe(true);
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'string')).toBe(true);
         });
 
         it('should work with number array', async () => {
@@ -438,7 +460,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'number')).toBe(true);
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'number')).toBe(true);
         });
 
         it('should work with object array', async () => {
@@ -448,8 +470,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.options.every((item: any) => typeof item === 'object')).toBe(true);
-            expect(cascadeSelectInstance.optionLabel).toBe('name');
+            expect(cascadeSelectInstance.options().every((item: any) => typeof item === 'object')).toBe(true);
+            expect(cascadeSelectInstance.optionLabel()).toBe('name');
         });
 
         it('should work with getters and setters', async () => {
@@ -583,7 +605,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.optionLabel).toBe('name');
+            expect(cascadeSelectInstance.optionLabel()).toBe('name');
         });
 
         it('should work with optionLabel as function', async () => {
@@ -593,7 +615,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(typeof cascadeSelectInstance.optionLabel).toBe('function');
+            expect(typeof cascadeSelectInstance.optionLabel()).toBe('function');
         });
 
         it('should work with optionValue as string', async () => {
@@ -603,7 +625,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.optionValue).toBe('code');
+            expect(cascadeSelectInstance.optionValue()).toBe('code');
         });
 
         it('should work with optionValue as function', async () => {
@@ -613,7 +635,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(typeof cascadeSelectInstance.optionValue).toBe('function');
+            expect(typeof cascadeSelectInstance.optionValue()).toBe('function');
         });
 
         it('should work with dynamic updated values', async () => {
@@ -637,7 +659,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.placeholder).toBe('Custom placeholder');
+            expect(cascadeSelectInstance.placeholder()).toBe('Custom placeholder');
         });
 
         it('should work with loading state', async () => {
@@ -646,7 +668,7 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.loading).toBe(true);
+            expect(cascadeSelectInstance.loading()).toBe(true);
         });
 
         it('should work with appendTo', async () => {
@@ -656,7 +678,7 @@ describe('CascadeSelect', () => {
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
             // appendTo might be a signal, so call it as a function to get the value
-            const appendToValue = typeof cascadeSelectInstance.appendTo === 'function' ? cascadeSelectInstance.appendTo() : cascadeSelectInstance.appendTo;
+            const appendToValue = typeof cascadeSelectInstance.appendTo() === 'function' ? cascadeSelectInstance.appendTo() : cascadeSelectInstance.appendTo();
             expect(appendToValue).toBe('body');
         });
 
@@ -677,8 +699,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.panelStyle).toEqual({ background: 'lightgray' });
-            expect(cascadeSelectInstance.panelStyleClass).toBe('custom-panel');
+            expect(cascadeSelectInstance.panelStyle()).toEqual({ background: 'lightgray' });
+            expect(cascadeSelectInstance.panelStyleClass()).toBe('custom-panel');
         });
     });
 
@@ -766,21 +788,21 @@ describe('CascadeSelect', () => {
             } else {
                 // Verify template is processed even if not rendered
                 const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-                expect(cascadeSelectInstance.optionTemplate).toBeDefined();
+                expect(cascadeSelectInstance.optionTemplate()).toBeDefined();
             }
         });
 
         it('should handle multiple template types (value, option, header, footer)', async () => {
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
 
-            expect(cascadeSelectInstance.valueTemplate).toBeDefined();
-            expect(cascadeSelectInstance.optionTemplate).toBeDefined();
-            expect(cascadeSelectInstance.headerTemplate).toBeDefined();
-            expect(cascadeSelectInstance.footerTemplate).toBeDefined();
-            expect(cascadeSelectInstance.triggerIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.loadingIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.groupIconTemplate).toBeDefined();
-            expect(cascadeSelectInstance.clearIconTemplate).toBeDefined();
+            expect(cascadeSelectInstance.valueTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.optionTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.headerTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.footerTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.triggerIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.loadingIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.groupIconTemplate()).toBeDefined();
+            expect(cascadeSelectInstance.clearIconTemplate()).toBeDefined();
         });
     });
 
@@ -792,8 +814,8 @@ describe('CascadeSelect', () => {
         it('should have ViewChild properties properly rendered', async () => {
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
 
-            expect(cascadeSelectInstance.focusInputViewChild).toBeDefined();
-            expect(cascadeSelectInstance.overlayViewChild).toBeDefined();
+            expect(cascadeSelectInstance.focusInputViewChild()).toBeDefined();
+            expect(cascadeSelectInstance.overlayViewChild()).toBeDefined();
         });
     });
 
@@ -917,8 +939,8 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
 
             const cascadeSelectInstance = testFixture.debugElement.query(By.directive(CascadeSelect)).componentInstance;
-            expect(cascadeSelectInstance.loading).toBe(true);
-            expect(cascadeSelectInstance.loadingIcon).toBe('pi pi-spin pi-cog');
+            expect(cascadeSelectInstance.loading()).toBe(true);
+            expect(cascadeSelectInstance.loadingIcon()).toBe('pi pi-spin pi-cog');
         });
 
         it('should handle large datasets efficiently', async () => {
@@ -1038,7 +1060,7 @@ describe('CascadeSelect', () => {
             cascadeSelectInstance.writeValue(mockCountries[0].states[0].cities[0]);
             await testFixture.whenStable();
 
-            expect(cascadeSelectInstance.showClear).toBe(true);
+            expect(cascadeSelectInstance.showClear()).toBe(true);
             expect(cascadeSelectInstance.$filled()).toBe(true);
         });
 
@@ -1385,8 +1407,8 @@ describe('CascadeSelect', () => {
                 expect(cascadeSelectInstance._valueTemplate).not.toBe(cascadeSelectInstance._optionTemplate);
 
                 // If ContentChild templates are available, verify they don't conflict
-                if (cascadeSelectInstance.headerTemplate && cascadeSelectInstance.footerTemplate) {
-                    expect(cascadeSelectInstance.headerTemplate).not.toBe(cascadeSelectInstance.footerTemplate);
+                if (cascadeSelectInstance.headerTemplate() && cascadeSelectInstance.footerTemplate()) {
+                    expect(cascadeSelectInstance.headerTemplate()).not.toBe(cascadeSelectInstance.footerTemplate());
                 } else {
                     // At least verify internal templates are different
                     expect(cascadeSelectInstance._headerTemplate).not.toBe(cascadeSelectInstance._footerTemplate);

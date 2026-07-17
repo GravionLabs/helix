@@ -6,7 +6,7 @@ const classes = {
     root: ({ instance }) => [
         'p-image p-component',
         {
-            'p-image-preview': instance.preview
+            'p-image-preview': instance.preview()
         }
     ],
     previewMask: 'p-image-preview-mask',

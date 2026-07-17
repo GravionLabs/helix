@@ -142,11 +142,11 @@ describe('Message', () => {
 
         it('should have default values', () => {
             const messageInstance = messageEl.componentInstance as Message;
-            expect(messageInstance.severity).toBe('info');
-            expect(messageInstance.escape).toBe(true);
-            expect(messageInstance.closable).toBe(false);
-            expect(messageInstance.showTransitionOptions).toBe('300ms ease-out');
-            expect(messageInstance.hideTransitionOptions).toBe('200ms cubic-bezier(0.86, 0, 0.07, 1)');
+            expect(messageInstance.severity()).toBe('info');
+            expect(messageInstance.escape()).toBe(true);
+            expect(messageInstance.closable()).toBe(false);
+            expect(messageInstance.showTransitionOptions()).toBe('300ms ease-out');
+            expect(messageInstance.hideTransitionOptions()).toBe('200ms cubic-bezier(0.86, 0, 0.07, 1)');
             expect(messageInstance.visible()).toBe(true);
         });
 
@@ -164,14 +164,14 @@ describe('Message', () => {
             fixture.detectChanges();
 
             const messageInstance = messageEl.componentInstance as Message;
-            expect(messageInstance.severity).toBe('error');
-            expect(messageInstance.text).toBe('Error message');
-            expect(messageInstance.escape).toBe(false);
-            expect(messageInstance.closable).toBe(true);
-            expect(messageInstance.icon).toBe('pi pi-exclamation-triangle');
-            expect(messageInstance.closeIcon).toBe('pi pi-times');
-            expect(messageInstance.size).toBe('large');
-            expect(messageInstance.variant).toBe('outlined');
+            expect(messageInstance.severity()).toBe('error');
+            expect(messageInstance.text()).toBe('Error message');
+            expect(messageInstance.escape()).toBe(false);
+            expect(messageInstance.closable()).toBe(true);
+            expect(messageInstance.icon()).toBe('pi pi-exclamation-triangle');
+            expect(messageInstance.closeIcon()).toBe('pi pi-times');
+            expect(messageInstance.size()).toBe('large');
+            expect(messageInstance.variant()).toBe('outlined');
         });
 
         it('should render with correct ARIA attributes', () => {
@@ -354,7 +354,7 @@ describe('Message', () => {
 
                 const messageEl = fixture.debugElement.query(By.css('p-message'));
                 const messageInstance = messageEl.componentInstance as Message;
-                expect(messageInstance.severity).toBe(severity);
+                expect(messageInstance.severity()).toBe(severity);
             }
         });
 
@@ -661,12 +661,12 @@ describe('Message', () => {
             const messageEl = fixture.debugElement.query(By.css('p-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
-            expect(messageInstance.style).toEqual({ border: '2px solid red', padding: '10px' });
+            expect(messageInstance.style()).toEqual({ border: '2px solid red', padding: '10px' });
 
             // Verify component received the style input
-            expect(messageInstance.style).toBeTruthy();
-            expect(Object.keys(messageInstance.style!)).toContain('border');
-            expect(Object.keys(messageInstance.style!)).toContain('padding');
+            expect(messageInstance.style()).toBeTruthy();
+            expect(Object.keys(messageInstance.style()!)).toContain('border');
+            expect(Object.keys(messageInstance.style()!)).toContain('padding');
         });
 
         it('should apply size classes', async () => {
@@ -677,13 +677,13 @@ describe('Message', () => {
 
             const messageEl = fixture.debugElement.query(By.css('p-message'));
             const messageInstance = messageEl.componentInstance as Message;
-            expect(messageInstance.size).toBe('large');
+            expect(messageInstance.size()).toBe('large');
 
             component.size = 'small';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(messageInstance.size).toBe('small');
+            expect(messageInstance.size()).toBe('small');
         });
 
         it('should apply variant classes', async () => {
@@ -697,7 +697,7 @@ describe('Message', () => {
 
                 const messageEl = fixture.debugElement.query(By.css('p-message'));
                 const messageInstance = messageEl.componentInstance as Message;
-                expect(messageInstance.variant).toBe(variant);
+                expect(messageInstance.variant()).toBe(variant);
             }
         });
     });
@@ -819,8 +819,8 @@ describe('Message', () => {
             const message1 = fixture.debugElement.query(By.css('p-message')).componentInstance as Message;
             const message2 = fixture2.debugElement.query(By.css('p-message')).componentInstance as Message;
 
-            expect(message1.severity).toBe('error');
-            expect(message2.severity).toBe('success');
+            expect(message1.severity()).toBe('error');
+            expect(message2.severity()).toBe('success');
         });
 
         it('should handle life property with zero value', async () => {

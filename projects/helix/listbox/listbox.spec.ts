@@ -13,35 +13,37 @@ import { Listbox } from './listbox';
     standalone: false,
     template: `
         <p-listbox
-            [(ngModel)]="selectedValue"
-            [options]="options"
-            [optionLabel]="optionLabel"
-            [optionValue]="optionValue"
-            [optionGroupLabel]="optionGroupLabel"
-            [optionDisabled]="optionDisabled"
-            [multiple]="multiple"
-            [filter]="filter"
-            [checkbox]="checkbox"
-            [disabled]="disabled"
-            [ariaLabel]="ariaLabel"
-            [virtualScroll]="virtualScroll"
-            [lazy]="lazy"
-            [scrollHeight]="scrollHeight"
-            [listStyle]="style"
-            [styleClass]="styleClass"
-            (onChange)="onSelectionChange($event)"
-            (onFocus)="onFocus($event)"
-            (onBlur)="onBlur($event)"
-            (onFilter)="onFilter($event)"
-            (onDblClick)="onDblClick($event)"
-            (onDrop)="onDropHandler($event)"
+          [(ngModel)]="selectedValue"
+          [options]="options"
+          [optionLabel]="optionLabel"
+          [optionValue]="optionValue"
+          [optionGroupLabel]="optionGroupLabel"
+          [optionDisabled]="optionDisabled"
+          [multiple]="multiple"
+          [filter]="filter"
+          [checkbox]="checkbox"
+          [disabled]="disabled"
+          [ariaLabel]="ariaLabel"
+          [virtualScroll]="virtualScroll"
+          [lazy]="lazy"
+          [scrollHeight]="scrollHeight"
+          [listStyle]="style"
+          [styleClass]="styleClass"
+          (onChange)="onSelectionChange($event)"
+          (onFocus)="onFocus($event)"
+          (onBlur)="onBlur($event)"
+          (onFilter)="onFilter($event)"
+          (onDblClick)="onDblClick($event)"
+          (onDrop)="onDropHandler($event)"
         ></p-listbox>
-
+        
         <!-- Reactive Forms test -->
-        <form [formGroup]="reactiveForm" *ngIf="showReactiveForm">
+        @if (showReactiveForm) {
+          <form [formGroup]="reactiveForm">
             <p-listbox formControlName="selectedItems" [options]="formOptions" [multiple]="true"> </p-listbox>
-        </form>
-    `
+          </form>
+        }
+        `
 })
 class TestListboxComponent {
     selectedValue: any = null as any;
@@ -764,8 +766,8 @@ describe('Listbox', () => {
             testFixture.detectChanges();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.virtualScroll).toBe(true);
-            expect(listbox.scrollHeight).toBe('300px');
+            expect(listbox.virtualScroll()).toBe(true);
+            expect(listbox.scrollHeight()).toBe('300px');
         });
 
         it('should handle lazy loading', () => {
@@ -773,7 +775,7 @@ describe('Listbox', () => {
             testFixture.detectChanges();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.lazy).toBe(true);
+            expect(listbox.lazy()).toBe(true);
         });
 
         it('should handle emptyMessage property', () => {
@@ -781,7 +783,7 @@ describe('Listbox', () => {
             listbox.emptyMessage = 'No items available';
             testFixture.detectChanges();
 
-            expect(listbox.emptyMessage).toBe('No items available');
+            expect(listbox.emptyMessage()).toBe('No items available');
         });
 
         it('should handle dynamic style and styleClass updates', async () => {
@@ -791,8 +793,8 @@ describe('Listbox', () => {
             await testFixture.whenStable();
 
             const listbox = testFixture.debugElement.query(By.css('p-listbox')).componentInstance;
-            expect(listbox.listStyle).toEqual({ border: '1px solid red' });
-            expect(listbox.styleClass).toBe('custom-class');
+            expect(listbox.listStyle()).toEqual({ border: '1px solid red' });
+            expect(listbox.styleClass()).toBe('custom-class');
         });
     });
 
@@ -1059,92 +1061,96 @@ describe('Listbox', () => {
     standalone: false,
     template: `
         <p-listbox [(ngModel)]="selectedValues" [options]="items" [optionLabel]="'label'" [optionValue]="'value'" [multiple]="true" [filter]="true" [checkbox]="true" [group]="true" [showToggleAll]="true" [virtualScroll]="true">
-            <!-- Item template with context parameters -->
-            <ng-template pTemplate="item" let-option let-selected="selected" let-index="index">
-                <div class="custom-item" data-testid="ptemplate-item" [attr.data-selected]="selected" [attr.data-index]="index">
-                    <span class="item-label">{{ option.label }}</span>
-                    <span class="item-value">{{ option.value }}</span>
-                    <span class="item-index">{{ index }}</span>
-                    <span class="item-selected">{{ selected }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Group template with context parameters -->
-            <ng-template pTemplate="group" let-group let-index="index">
-                <div class="custom-group" data-testid="ptemplate-group" [attr.data-index]="index">
-                    <span class="group-label">{{ group.label }}</span>
-                    <span class="group-index">{{ index }}</span>
-                    <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template pTemplate="header">
-                <div class="custom-header" data-testid="ptemplate-header">
-                    <span>Custom Header Content</span>
-                    <button class="header-action">Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Filter template with context parameters -->
-            <ng-template pTemplate="filter" let-options="options">
-                <div class="custom-filter" data-testid="ptemplate-filter">
-                    <input type="text" placeholder="Custom filter" class="custom-filter-input" />
-                    <span class="filter-count">{{ options?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template pTemplate="footer">
-                <div class="custom-footer" data-testid="ptemplate-footer">
-                    <span>Custom Footer Content</span>
-                    <button class="footer-action">Footer Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Empty filter template -->
-            <ng-template pTemplate="emptyfilter">
-                <div class="custom-empty-filter" data-testid="ptemplate-emptyfilter">
-                    <i class="pi pi-search"></i>
-                    <span>No results found for your filter</span>
-                </div>
-            </ng-template>
-
-            <!-- Empty template -->
-            <ng-template pTemplate="empty">
-                <div class="custom-empty" data-testid="ptemplate-empty">
-                    <i class="pi pi-inbox"></i>
-                    <span>No items available</span>
-                </div>
-            </ng-template>
-
-            <!-- Filter icon template -->
-            <ng-template pTemplate="filtericon">
-                <i class="pi pi-filter custom-filter-icon" data-testid="ptemplate-filtericon"></i>
-            </ng-template>
-
-            <!-- Check icon template -->
-            <ng-template pTemplate="checkicon" let-selected="selected">
-                <i class="pi pi-check custom-check-icon" data-testid="ptemplate-checkicon" [attr.data-selected]="selected"></i>
-            </ng-template>
-
-            <!-- Checkmark template -->
-            <ng-template pTemplate="checkmark" let-selected="selected">
-                <span class="custom-checkmark" data-testid="ptemplate-checkmark" [attr.data-selected]="selected">
-                    <i class="pi pi-check-circle" *ngIf="selected"></i>
-                    <i class="pi pi-circle" *ngIf="!selected"></i>
-                </span>
-            </ng-template>
-
-            <!-- Loader template -->
-            <ng-template pTemplate="loader" let-options="options">
-                <div class="custom-loader" data-testid="ptemplate-loader">
-                    <i class="pi pi-spin pi-spinner"></i>
-                    <span>Loading {{ options?.length || 0 }} items...</span>
-                </div>
-            </ng-template>
+          <!-- Item template with context parameters -->
+          <ng-template pTemplate="item" let-option let-selected="selected" let-index="index">
+            <div class="custom-item" data-testid="ptemplate-item" [attr.data-selected]="selected" [attr.data-index]="index">
+              <span class="item-label">{{ option.label }}</span>
+              <span class="item-value">{{ option.value }}</span>
+              <span class="item-index">{{ index }}</span>
+              <span class="item-selected">{{ selected }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Group template with context parameters -->
+          <ng-template pTemplate="group" let-group let-index="index">
+            <div class="custom-group" data-testid="ptemplate-group" [attr.data-index]="index">
+              <span class="group-label">{{ group.label }}</span>
+              <span class="group-index">{{ index }}</span>
+              <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template pTemplate="header">
+            <div class="custom-header" data-testid="ptemplate-header">
+              <span>Custom Header Content</span>
+              <button class="header-action">Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Filter template with context parameters -->
+          <ng-template pTemplate="filter" let-options="options">
+            <div class="custom-filter" data-testid="ptemplate-filter">
+              <input type="text" placeholder="Custom filter" class="custom-filter-input" />
+              <span class="filter-count">{{ options?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template pTemplate="footer">
+            <div class="custom-footer" data-testid="ptemplate-footer">
+              <span>Custom Footer Content</span>
+              <button class="footer-action">Footer Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Empty filter template -->
+          <ng-template pTemplate="emptyfilter">
+            <div class="custom-empty-filter" data-testid="ptemplate-emptyfilter">
+              <i class="pi pi-search"></i>
+              <span>No results found for your filter</span>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template -->
+          <ng-template pTemplate="empty">
+            <div class="custom-empty" data-testid="ptemplate-empty">
+              <i class="pi pi-inbox"></i>
+              <span>No items available</span>
+            </div>
+          </ng-template>
+        
+          <!-- Filter icon template -->
+          <ng-template pTemplate="filtericon">
+            <i class="pi pi-filter custom-filter-icon" data-testid="ptemplate-filtericon"></i>
+          </ng-template>
+        
+          <!-- Check icon template -->
+          <ng-template pTemplate="checkicon" let-selected="selected">
+            <i class="pi pi-check custom-check-icon" data-testid="ptemplate-checkicon" [attr.data-selected]="selected"></i>
+          </ng-template>
+        
+          <!-- Checkmark template -->
+          <ng-template pTemplate="checkmark" let-selected="selected">
+            <span class="custom-checkmark" data-testid="ptemplate-checkmark" [attr.data-selected]="selected">
+              @if (selected) {
+                <i class="pi pi-check-circle"></i>
+              }
+              @if (!selected) {
+                <i class="pi pi-circle"></i>
+              }
+            </span>
+          </ng-template>
+        
+          <!-- Loader template -->
+          <ng-template pTemplate="loader" let-options="options">
+            <div class="custom-loader" data-testid="ptemplate-loader">
+              <i class="pi pi-spin pi-spinner"></i>
+              <span>Loading {{ options?.length || 0 }} items...</span>
+            </div>
+          </ng-template>
         </p-listbox>
-    `
+        `
 })
 class TestListboxPTemplateComponent {
     selectedValues: any[] = [];
@@ -1173,92 +1179,96 @@ class TestListboxPTemplateComponent {
     standalone: false,
     template: `
         <p-listbox [(ngModel)]="selectedValues" [options]="items" [optionLabel]="'label'" [optionValue]="'value'" [multiple]="true" [filter]="true" [checkbox]="true" [group]="true" [showToggleAll]="true" [virtualScroll]="true">
-            <!-- Item template with context parameters -->
-            <ng-template #item let-option let-selected="selected" let-index="index">
-                <div class="custom-item" data-testid="ref-item" [attr.data-selected]="selected" [attr.data-index]="index">
-                    <span class="item-label">{{ option.label }}</span>
-                    <span class="item-value">{{ option.value }}</span>
-                    <span class="item-index">{{ index }}</span>
-                    <span class="item-selected">{{ selected }}</span>
-                </div>
-            </ng-template>
-
-            <!-- Group template with context parameters -->
-            <ng-template #group let-group let-index="index">
-                <div class="custom-group" data-testid="ref-group" [attr.data-index]="index">
-                    <span class="group-label">{{ group.label }}</span>
-                    <span class="group-index">{{ index }}</span>
-                    <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Header template -->
-            <ng-template #header>
-                <div class="custom-header" data-testid="ref-header">
-                    <span>Custom Header Content</span>
-                    <button class="header-action">Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Filter template with context parameters -->
-            <ng-template #filter let-options="options">
-                <div class="custom-filter" data-testid="ref-filter">
-                    <input type="text" placeholder="Custom filter" class="custom-filter-input" />
-                    <span class="filter-count">{{ options?.length || 0 }} items</span>
-                </div>
-            </ng-template>
-
-            <!-- Footer template -->
-            <ng-template #footer>
-                <div class="custom-footer" data-testid="ref-footer">
-                    <span>Custom Footer Content</span>
-                    <button class="footer-action">Footer Action</button>
-                </div>
-            </ng-template>
-
-            <!-- Empty filter template -->
-            <ng-template #emptyfilter>
-                <div class="custom-empty-filter" data-testid="ref-emptyfilter">
-                    <i class="pi pi-search"></i>
-                    <span>No results found for your filter</span>
-                </div>
-            </ng-template>
-
-            <!-- Empty template -->
-            <ng-template #empty>
-                <div class="custom-empty" data-testid="ref-empty">
-                    <i class="pi pi-inbox"></i>
-                    <span>No items available</span>
-                </div>
-            </ng-template>
-
-            <!-- Filter icon template -->
-            <ng-template #filtericon>
-                <i class="pi pi-filter custom-filter-icon" data-testid="ref-filtericon"></i>
-            </ng-template>
-
-            <!-- Check icon template -->
-            <ng-template #checkicon let-selected="selected">
-                <i class="pi pi-check custom-check-icon" data-testid="ref-checkicon" [attr.data-selected]="selected"></i>
-            </ng-template>
-
-            <!-- Checkmark template -->
-            <ng-template #checkmark let-selected="selected">
-                <span class="custom-checkmark" data-testid="ref-checkmark" [attr.data-selected]="selected">
-                    <i class="pi pi-check-circle" *ngIf="selected"></i>
-                    <i class="pi pi-circle" *ngIf="!selected"></i>
-                </span>
-            </ng-template>
-
-            <!-- Loader template -->
-            <ng-template #loader let-options="options">
-                <div class="custom-loader" data-testid="ref-loader">
-                    <i class="pi pi-spin pi-spinner"></i>
-                    <span>Loading {{ options?.length || 0 }} items...</span>
-                </div>
-            </ng-template>
+          <!-- Item template with context parameters -->
+          <ng-template #item let-option let-selected="selected" let-index="index">
+            <div class="custom-item" data-testid="ref-item" [attr.data-selected]="selected" [attr.data-index]="index">
+              <span class="item-label">{{ option.label }}</span>
+              <span class="item-value">{{ option.value }}</span>
+              <span class="item-index">{{ index }}</span>
+              <span class="item-selected">{{ selected }}</span>
+            </div>
+          </ng-template>
+        
+          <!-- Group template with context parameters -->
+          <ng-template #group let-group let-index="index">
+            <div class="custom-group" data-testid="ref-group" [attr.data-index]="index">
+              <span class="group-label">{{ group.label }}</span>
+              <span class="group-index">{{ index }}</span>
+              <span class="group-items-count">{{ group.items?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Header template -->
+          <ng-template #header>
+            <div class="custom-header" data-testid="ref-header">
+              <span>Custom Header Content</span>
+              <button class="header-action">Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Filter template with context parameters -->
+          <ng-template #filter let-options="options">
+            <div class="custom-filter" data-testid="ref-filter">
+              <input type="text" placeholder="Custom filter" class="custom-filter-input" />
+              <span class="filter-count">{{ options?.length || 0 }} items</span>
+            </div>
+          </ng-template>
+        
+          <!-- Footer template -->
+          <ng-template #footer>
+            <div class="custom-footer" data-testid="ref-footer">
+              <span>Custom Footer Content</span>
+              <button class="footer-action">Footer Action</button>
+            </div>
+          </ng-template>
+        
+          <!-- Empty filter template -->
+          <ng-template #emptyfilter>
+            <div class="custom-empty-filter" data-testid="ref-emptyfilter">
+              <i class="pi pi-search"></i>
+              <span>No results found for your filter</span>
+            </div>
+          </ng-template>
+        
+          <!-- Empty template -->
+          <ng-template #empty>
+            <div class="custom-empty" data-testid="ref-empty">
+              <i class="pi pi-inbox"></i>
+              <span>No items available</span>
+            </div>
+          </ng-template>
+        
+          <!-- Filter icon template -->
+          <ng-template #filtericon>
+            <i class="pi pi-filter custom-filter-icon" data-testid="ref-filtericon"></i>
+          </ng-template>
+        
+          <!-- Check icon template -->
+          <ng-template #checkicon let-selected="selected">
+            <i class="pi pi-check custom-check-icon" data-testid="ref-checkicon" [attr.data-selected]="selected"></i>
+          </ng-template>
+        
+          <!-- Checkmark template -->
+          <ng-template #checkmark let-selected="selected">
+            <span class="custom-checkmark" data-testid="ref-checkmark" [attr.data-selected]="selected">
+              @if (selected) {
+                <i class="pi pi-check-circle"></i>
+              }
+              @if (!selected) {
+                <i class="pi pi-circle"></i>
+              }
+            </span>
+          </ng-template>
+        
+          <!-- Loader template -->
+          <ng-template #loader let-options="options">
+            <div class="custom-loader" data-testid="ref-loader">
+              <i class="pi pi-spin pi-spinner"></i>
+              <span>Loading {{ options?.length || 0 }} items...</span>
+            </div>
+          </ng-template>
         </p-listbox>
-    `
+        `
 })
 class TestListboxRefTemplateComponent {
     selectedValues: any[] = [];
@@ -1310,77 +1320,77 @@ describe('Listbox pTemplate Tests', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.itemTemplate).not.toThrow();
+            expect(() => listboxComponent.itemTemplate()).not.toThrow();
         });
 
         it('should have group pTemplate with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.groupTemplate).not.toThrow();
+            expect(() => listboxComponent.groupTemplate()).not.toThrow();
         });
 
         it('should have header pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.headerTemplate).not.toThrow();
+            expect(() => listboxComponent.headerTemplate()).not.toThrow();
         });
 
         it('should have filter pTemplate with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterTemplate).not.toThrow();
+            expect(() => listboxComponent.filterTemplate()).not.toThrow();
         });
 
         it('should have footer pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.footerTemplate).not.toThrow();
+            expect(() => listboxComponent.footerTemplate()).not.toThrow();
         });
 
         it('should have empty filter pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyFilterTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyFilterTemplate()).not.toThrow();
         });
 
         it('should have empty pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyTemplate()).not.toThrow();
         });
 
         it('should have filter icon pTemplate', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterIconTemplate).not.toThrow();
+            expect(() => listboxComponent.filterIconTemplate()).not.toThrow();
         });
 
         it('should have check icon pTemplate with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkIconTemplate).not.toThrow();
+            expect(() => listboxComponent.checkIconTemplate()).not.toThrow();
         });
 
         it('should have checkmark pTemplate with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkmarkTemplate).not.toThrow();
+            expect(() => listboxComponent.checkmarkTemplate()).not.toThrow();
         });
 
         it('should have loader pTemplate with options context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.loaderTemplate).not.toThrow();
+            expect(() => listboxComponent.loaderTemplate()).not.toThrow();
         });
 
         it('should process all pTemplates after content init', async () => {
@@ -1490,77 +1500,77 @@ describe('Listbox #template Reference Tests', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.itemTemplate).not.toThrow();
+            expect(() => listboxComponent.itemTemplate()).not.toThrow();
         });
 
         it('should have group #template with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.groupTemplate).not.toThrow();
+            expect(() => listboxComponent.groupTemplate()).not.toThrow();
         });
 
         it('should have header #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.headerTemplate).not.toThrow();
+            expect(() => listboxComponent.headerTemplate()).not.toThrow();
         });
 
         it('should have filter #template with context parameters', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterTemplate).not.toThrow();
+            expect(() => listboxComponent.filterTemplate()).not.toThrow();
         });
 
         it('should have footer #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.footerTemplate).not.toThrow();
+            expect(() => listboxComponent.footerTemplate()).not.toThrow();
         });
 
         it('should have empty filter #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyFilterTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyFilterTemplate()).not.toThrow();
         });
 
         it('should have empty #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.emptyTemplate).not.toThrow();
+            expect(() => listboxComponent.emptyTemplate()).not.toThrow();
         });
 
         it('should have filter icon #template', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.filterIconTemplate).not.toThrow();
+            expect(() => listboxComponent.filterIconTemplate()).not.toThrow();
         });
 
         it('should have check icon #template with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkIconTemplate).not.toThrow();
+            expect(() => listboxComponent.checkIconTemplate()).not.toThrow();
         });
 
         it('should have checkmark #template with selected context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.checkmarkTemplate).not.toThrow();
+            expect(() => listboxComponent.checkmarkTemplate()).not.toThrow();
         });
 
         it('should have loader #template with options context', () => {
             const listboxComponent = listboxElement.componentInstance;
             expect(listboxComponent).toBeTruthy();
             // Template should be accessible
-            expect(() => listboxComponent.loaderTemplate).not.toThrow();
+            expect(() => listboxComponent.loaderTemplate()).not.toThrow();
         });
 
         it('should process all #templates after content init', async () => {
@@ -1761,8 +1771,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             const listboxComponent = listboxElement.componentInstance;
 
             expect(listboxComponent).toBeTruthy();
-            expect(() => listboxComponent.containerViewChild).not.toThrow();
-            expect(() => listboxComponent.filterViewChild).not.toThrow();
+            expect(() => listboxComponent.containerViewChild()).not.toThrow();
+            expect(() => listboxComponent.filterViewChild()).not.toThrow();
             expect(() => listboxComponent.scrollerViewChild).not.toThrow();
         });
 
@@ -1848,8 +1858,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(listboxComponent.emptyMessage).toBe('No items found');
-            expect(listboxComponent.emptyFilterMessage).toBe('No filtered results');
+            expect(listboxComponent.emptyMessage()).toBe('No items found');
+            expect(listboxComponent.emptyFilterMessage()).toBe('No filtered results');
         });
 
         it('should handle dynamic style and styleClass updates', async () => {
@@ -1978,14 +1988,14 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             const listboxComponent = fixture.debugElement.query(By.directive(Listbox)).componentInstance;
 
             // Verify dragdrop is enabled
-            expect(listboxComponent.dragdrop).toBe(true);
+            expect(listboxComponent.dragdrop()).toBe(true);
 
             // Verify options are set correctly
             expect(listboxComponent._options()).toEqual(component.options);
 
             // Since drag drop testing is complex and requires CDK setup,
             // we'll just verify the dragdrop property is working
-            expect(listboxComponent.dragdrop).toBeTruthy();
+            expect(listboxComponent.dragdrop()).toBeTruthy();
         });
 
         it('should not reorder when dragdrop is disabled', async () => {
@@ -2514,7 +2524,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Verify getPTOptions is being called
-                const ptOptions = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptions = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptOptions).toBeDefined();
             });
 
@@ -2525,7 +2535,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for selected option
-                const ptOptionsForSelected = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForSelected = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptOptionsForSelected).toBeDefined();
 
                 // Verify context.selected is true for selected option
@@ -2535,7 +2545,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for non-selected option
-                const ptOptionsForNonSelected = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForNonSelected = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 if (ptOptionsForNonSelected.context) {
                     expect(ptOptionsForNonSelected.context.selected).toBe(false);
                 }
@@ -2553,7 +2563,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for disabled option
-                const ptOptionsForDisabled = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForDisabled = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptOptionsForDisabled).toBeDefined();
 
                 // Verify context.disabled is true
@@ -2562,7 +2572,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for enabled option
-                const ptOptionsForEnabled = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForEnabled = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 if (ptOptionsForEnabled.context) {
                     expect(ptOptionsForEnabled.context.disabled).toBe(false);
                 }
@@ -2578,7 +2588,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Get PT options for focused option
-                const ptOptionsForFocused = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptOptionsForFocused = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptOptionsForFocused).toBeDefined();
 
                 // Verify context.focused is true
@@ -2587,7 +2597,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Get PT options for non-focused option
-                const ptOptionsForNonFocused = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptOptionsForNonFocused = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 if (ptOptionsForNonFocused.context) {
                     expect(ptOptionsForNonFocused.context.focused).toBe(false);
                 }
@@ -2607,7 +2617,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 await ptFixture.whenStable();
 
                 // Check selected option
-                const ptSelected = listbox.getPTOptions(listbox.options[0], {}, 0, 'option');
+                const ptSelected = listbox.getPTOptions(listbox.options()[0], {}, 0, 'option');
                 expect(ptSelected).toBeDefined();
                 if (ptSelected.context) {
                     expect(ptSelected.context.selected).toBe(true);
@@ -2619,7 +2629,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Check disabled option
-                const ptDisabled = listbox.getPTOptions(listbox.options[1], {}, 1, 'option');
+                const ptDisabled = listbox.getPTOptions(listbox.options()[1], {}, 1, 'option');
                 expect(ptDisabled).toBeDefined();
                 if (ptDisabled.context) {
                     expect(ptDisabled.context.selected).toBe(false);
@@ -2630,7 +2640,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                 }
 
                 // Check focused option
-                const ptFocused = listbox.getPTOptions(listbox.options[2], {}, 2, 'option');
+                const ptFocused = listbox.getPTOptions(listbox.options()[2], {}, 2, 'option');
                 expect(ptFocused).toBeDefined();
                 if (ptFocused.context) {
                     expect(ptFocused.context.selected).toBe(false);

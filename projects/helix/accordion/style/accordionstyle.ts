@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${accordion_style}
 
-/* For PrimeNG */
+/* For Helix */
 .p-accordionheader-toggle-icon.icon-start {
     order: -1;
 }

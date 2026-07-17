@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { HelixFeature, HelixTestimonial } from '../../landing.model';
 
 const DEFAULT_FEATURES: HelixFeature[] = [
@@ -61,7 +61,7 @@ const DEFAULT_FEATURES: HelixFeature[] = [
     icon: 'pi pi-fw pi-shopping-cart',
     iconBgClass: 'bg-teal-200',
     iconColorClass: 'text-teal-700',
-    title: 'PrimeNG Components',
+    title: 'Helix Components',
     description: 'Feugiat pretium nibh ipsum consequat.',
     cardStyle:
       'background: linear-gradient(90deg, rgba(145,210,204,.2), rgba(160,210,250,.2)), linear-gradient(180deg, rgba(187,199,205,.2), rgba(145,210,204,.2));',
@@ -98,6 +98,7 @@ const DEFAULT_TESTIMONIAL: HelixTestimonial = {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './features-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './features-widget.scss',
 })
 export class HelixFeaturesWidget {

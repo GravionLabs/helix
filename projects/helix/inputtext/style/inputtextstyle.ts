@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${inputtext_style}
 
-    /* For PrimeNG */
+    /* For Helix */
    .p-inputtext.ng-invalid.ng-dirty {
         border-color: dt('inputtext.invalid.border.color');
     }

@@ -1,4 +1,4 @@
-import { Component, DebugElement, provideZonelessChangeDetection, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, provideZonelessChangeDetection, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -88,11 +88,11 @@ class TestFacetCardComponent {}
     `
 })
 class TestContentChildCardComponent {
-    @ViewChild('header') headerTemplate!: TemplateRef<any>;
-    @ViewChild('title') titleTemplate!: TemplateRef<any>;
-    @ViewChild('subtitle') subtitleTemplate!: TemplateRef<any>;
-    @ViewChild('content') contentTemplate!: TemplateRef<any>;
-    @ViewChild('footer') footerTemplate!: TemplateRef<any>;
+    readonly headerTemplate = viewChild.required<TemplateRef<any>>('header');
+    readonly titleTemplate = viewChild.required<TemplateRef<any>>('title');
+    readonly subtitleTemplate = viewChild.required<TemplateRef<any>>('subtitle');
+    readonly contentTemplate = viewChild.required<TemplateRef<any>>('content');
+    readonly footerTemplate = viewChild.required<TemplateRef<any>>('footer');
 }
 
 @Component({
@@ -109,11 +109,11 @@ class TestSimpleTextCardComponent {}
     standalone: false,
     template: `
         <p-card [header]="header" [subheader]="subheader">
-            <ng-container *ngIf="showContent">
-                <div class="dynamic-content">Dynamic Content</div>
-            </ng-container>
+          @if (showContent) {
+            <div class="dynamic-content">Dynamic Content</div>
+          }
         </p-card>
-    `
+        `
 })
 class TestDynamicCardComponent {
     header = 'Initial Header';
@@ -577,11 +577,11 @@ describe('Card', () => {
         });
 
         it('should have correct template references in component', () => {
-            expect(contentChildComponent.headerTemplate).toBeDefined();
-            expect(contentChildComponent.titleTemplate).toBeDefined();
-            expect(contentChildComponent.subtitleTemplate).toBeDefined();
-            expect(contentChildComponent.contentTemplate).toBeDefined();
-            expect(contentChildComponent.footerTemplate).toBeDefined();
+            expect(contentChildComponent.headerTemplate()).toBeDefined();
+            expect(contentChildComponent.titleTemplate()).toBeDefined();
+            expect(contentChildComponent.subtitleTemplate()).toBeDefined();
+            expect(contentChildComponent.contentTemplate()).toBeDefined();
+            expect(contentChildComponent.footerTemplate()).toBeDefined();
         });
     });
 

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -21,6 +22,7 @@ import type { HelixNavGroup } from './nav-rail.model';
   standalone: true,
   imports: [CommonModule, HelixNavRailItem, RouterModule],
   templateUrl: './nav-rail.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './nav-rail.scss',
 })
 export class HelixNavRail implements OnInit, OnDestroy {

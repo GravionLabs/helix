@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
+
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -15,13 +15,14 @@ const AVATARGROUP_INSTANCE = new InjectionToken<AvatarGroup>('AVATARGROUP_INSTAN
 @Component({
     selector: 'h-avatarGroup, h-avatar-group, h-avatargroup',
     standalone: true,
-    imports: [CommonModule, SharedModule],
-    template: ` <ng-content></ng-content> `,
+    imports: [SharedModule],
+    templateUrl: './avatargroup.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [AvatarGroupStyle, { provide: AVATARGROUP_INSTANCE, useExisting: AvatarGroup }, { provide: PARENT_INSTANCE, useExisting: AvatarGroup }],
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())",
+        '[style]': 'style()'
     },
     hostDirectives: [Bind]
 })
@@ -40,16 +41,14 @@ export class AvatarGroup extends BaseComponent<AvatarGroupPassThrough> {
      * Style class of the component
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
-
-    @HostBinding('style') get hostStyle() {
-        return this.style;
-    }
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
 
     _componentStyle = inject(AvatarGroupStyle);
 }

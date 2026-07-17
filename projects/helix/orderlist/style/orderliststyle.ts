@@ -5,14 +5,14 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const theme = /*css*/ `
     ${style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-orderlist-controls-right .p-orderlist-controls {
         order: 2;
     }
 `;
 
 const classes = {
-    root: ({ instance }) => ['p-orderlist p-component', { 'p-orderlist-controls-left': instance.controlsPosition === 'left', 'p-orderlist-controls-right': instance.controlsPosition === 'right' }],
+    root: ({ instance }) => ['p-orderlist p-component', { 'p-orderlist-controls-left': instance.controlsPosition() === 'left', 'p-orderlist-controls-right': instance.controlsPosition() === 'right' }],
     controls: 'p-orderlist-controls'
 };
 

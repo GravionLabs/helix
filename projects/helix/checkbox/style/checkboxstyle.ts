@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${checkbox_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     p-checkBox.ng-invalid.ng-dirty .p-checkbox-box,
     p-check-box.ng-invalid.ng-dirty .p-checkbox-box,
     p-checkbox.ng-invalid.ng-dirty .p-checkbox-box {

@@ -1,23 +1,22 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    inject,
-    Input,
-    NgModule,
-    NgZone,
-    numberAttribute,
-    Output,
-    QueryList,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  Input,
+  NgModule,
+  NgZone,
+  numberAttribute,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  input,
+  output,
+  viewChild,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { addClass, find, findSingle, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
 import { Footer, Header, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -36,118 +35,7 @@ import { CarouselStyle } from './style/carouselstyle';
     selector: 'h-carousel',
     standalone: true,
     imports: [CommonModule, ChevronRightIcon, ButtonModule, ChevronLeftIcon, ChevronDownIcon, ChevronUpIcon, SharedModule, BindModule],
-    template: `
-        <div [class]="cx('header')" *ngIf="headerFacet || headerTemplate" [hBind]="ptm('header')">
-            <ng-content select="p-header"></ng-content>
-            <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-        </div>
-        <div [class]="contentClass" [ngClass]="cx('contentContainer')" [hBind]="ptm('contentContainer')">
-            <div [class]="cx('content')" [attr.aria-live]="allowAutoplay ? 'polite' : 'off'" [hBind]="ptm('content')">
-                <h-button
-                    *ngIf="showNavigators"
-                    [class]="cx('pcPrevButton')"
-                    [attr.aria-label]="ariaPrevButtonLabel()"
-                    (click)="navBackward($event)"
-                    [text]="true"
-                    [buttonProps]="prevButtonProps"
-                    [pt]="ptm('pcPrevButton')"
-                    [unstyled]="unstyled()"
-                    attr.data-pc-group-section="navigator"
-                >
-                    <ng-template #icon>
-                        <ng-container *ngIf="!previousIconTemplate && !_previousIconTemplate && !prevButtonProps?.icon">
-                            <svg data-p-icon="chevron-left" *ngIf="!isVertical()" />
-                            <svg data-p-icon="chevron-up" *ngIf="isVertical()" />
-                        </ng-container>
-                        <ng-container *ngIf="(previousIconTemplate || _previousIconTemplate) && !prevButtonProps?.icon">
-                            <ng-template *ngTemplateOutlet="previousIconTemplate || _previousIconTemplate"></ng-template>
-                        </ng-container>
-                    </ng-template>
-                </h-button>
-                <div [class]="cx('viewport')" [ngStyle]="{ height: isVertical() ? verticalViewPortHeight : 'auto' }" (touchend)="onTouchEnd($event)" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" [hBind]="ptm('viewport')">
-                    <div #itemsContainer [class]="cx('itemList')" (transitionend)="onTransitionEnd()" [hBind]="ptm('itemList')">
-                        <div
-                            *ngFor="let item of clonedItemsForStarting; let index = index"
-                            [class]="cx('itemClone', { index })"
-                            [attr.aria-hidden]="!(totalShiftedItems * -1 === value.length)"
-                            [attr.aria-label]="ariaSlideNumber(index)"
-                            [attr.aria-roledescription]="ariaSlideLabel()"
-                            [attr.data-p-carousel-item-active]="totalShiftedItems * -1 === value.length + _numVisible"
-                            [attr.data-p-carousel-item-start]="index === 0"
-                            [attr.data-p-carousel-item-end]="clonedItemsForStarting && clonedItemsForStarting.length - 1 === index"
-                            [hBind]="ptm('itemClone')"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                        <div
-                            *ngFor="let item of value; let index = index"
-                            [class]="cx('item', { index })"
-                            role="group"
-                            [attr.aria-hidden]="!(firstIndex() <= index && lastIndex() >= index)"
-                            [attr.aria-label]="ariaSlideNumber(index)"
-                            [attr.aria-roledescription]="ariaSlideLabel()"
-                            [attr.data-p-carousel-item-active]="firstIndex() <= index && lastIndex() >= index"
-                            [attr.data-p-carousel-item-start]="firstIndex() === index"
-                            [attr.data-p-carousel-item-end]="lastIndex() === index"
-                            [hBind]="getItemPTOptions('item', index)"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                        <div
-                            *ngFor="let item of clonedItemsForFinishing; let index = index"
-                            [class]="cx('itemClone', { index })"
-                            [attr.data-p-carousel-item-active]="false"
-                            [attr.data-p-carousel-item-start]="false"
-                            [attr.data-p-carousel-item-end]="false"
-                            [hBind]="ptm('itemClone')"
-                        >
-                            <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item }"></ng-container>
-                        </div>
-                    </div>
-                </div>
-                <h-button
-                    type="button"
-                    *ngIf="showNavigators"
-                    [class]="cx('pcNextButton')"
-                    (click)="navForward($event)"
-                    [attr.aria-label]="ariaNextButtonLabel()"
-                    [buttonProps]="nextButtonProps"
-                    [text]="true"
-                    [pt]="ptm('pcNextButton')"
-                    [unstyled]="unstyled()"
-                    attr.data-pc-group-section="navigator"
-                >
-                    <ng-template #icon>
-                        <ng-container *ngIf="!nextIconTemplate && !_nextIconTemplate && !nextButtonProps?.icon">
-                            <svg data-p-icon="chevron-right" *ngIf="!isVertical()" />
-                            <svg data-p-icon="chevron-down" *ngIf="isVertical()" />
-                        </ng-container>
-                        <span *ngIf="nextIconTemplate || (_nextIconTemplate && !nextButtonProps?.icon)">
-                            <ng-template *ngTemplateOutlet="nextIconTemplate || _nextIconTemplate"></ng-template>
-                        </span>
-                    </ng-template>
-                </h-button>
-            </div>
-            <ul #indicatorContent [class]="cx('indicatorList')" [ngStyle]="indicatorsContentStyle" *ngIf="showIndicators" (keydown)="onIndicatorKeydown($event)" [hBind]="ptm('indicatorList')">
-                <li *ngFor="let totalDot of totalDotsArray(); let i = index" [class]="cx('indicator', { index: i })" [attr.data-p-active]="_page === i" [hBind]="getIndicatorPTOptions('indicator', i)">
-                    <button
-                        type="button"
-                        [class]="cx('indicatorButton')"
-                        (click)="onDotClick($event, i)"
-                        [ngStyle]="indicatorStyle"
-                        [attr.aria-label]="ariaPageLabel(i + 1)"
-                        [attr.aria-current]="_page === i ? 'page' : undefined"
-                        [tabindex]="_page === i ? 0 : -1"
-                        [hBind]="getIndicatorPTOptions('indicatorButton', i)"
-                    ></button>
-                </li>
-            </ul>
-        </div>
-        <div [class]="cx('footer')" *ngIf="footerFacet || footerTemplate || _footerTemplate" [hBind]="ptm('footer')">
-            <ng-content select="p-footer"></ng-content>
-            <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-        </div>
-    `,
+    templateUrl: './carousel.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [CarouselStyle, { provide: PARENT_INSTANCE, useExisting: Carousel }],
@@ -155,7 +43,7 @@ import { CarouselStyle } from './style/carouselstyle';
     host: {
         '[attr.id]': 'id',
         '[attr.role]': "'region'",
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     }
 })
 export class Carousel extends BaseComponent {
@@ -178,7 +66,7 @@ export class Carousel extends BaseComponent {
 
     set page(val: number) {
         if (this.isCreated && val !== this._page) {
-            if (this.autoplayInterval) {
+            if (this.autoplayInterval()) {
                 this.stopAutoplay();
             }
 
@@ -223,114 +111,112 @@ export class Carousel extends BaseComponent {
      * @see {CarouselResponsiveOptions}
      * @group Props
      */
-    @Input() responsiveOptions: CarouselResponsiveOptions[] | undefined;
+    readonly responsiveOptions = input<CarouselResponsiveOptions[]>();
     /**
      * Specifies the layout of the component.
      * @group Props
      */
-    @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+    readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
     /**
      * Height of the viewport in vertical layout.
      * @group Props
      */
-    @Input() verticalViewPortHeight: string = '300px';
+    readonly verticalViewPortHeight = input<string>('300px');
     /**
      * Style class of main content.
      * @group Props
      */
-    @Input() contentClass: string = '';
+    readonly contentClass = input<string>('');
     /**
      * Style class of the indicator items.
      * @group Props
      */
-    @Input() indicatorsContentClass: string = '';
+    readonly indicatorsContentClass = input<string>('');
     /**
      * Inline style of the indicator items.
      * @group Props
      */
-    @Input() indicatorsContentStyle: { [klass: string]: any } | null | undefined;
+    readonly indicatorsContentStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the indicators.
      * @group Props
      */
-    @Input() indicatorStyleClass: string = '';
+    readonly indicatorStyleClass = input<string>('');
     /**
      * Style of the indicators.
      * @group Props
      */
-    @Input() indicatorStyle: { [klass: string]: any } | null | undefined;
+    readonly indicatorStyle = input<{
+    [klass: string]: any;
+} | null>();
 
     /**
      * An array of objects to display.
      * @defaultValue null
      * @group Props
      */
-    @Input() get value(): any[] {
-        return this._value as any[];
-    }
-
-    set value(val) {
-        this._value = val;
-    }
+    readonly value = input<any[]>(undefined!);
 
     /**
      * Defines if scrolling would be infinite.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) circular: boolean = false;
+    readonly circular = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to display indicator container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showIndicators: boolean = true;
+    readonly showIndicators = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to display navigation buttons in container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showNavigators: boolean = true;
+    readonly showNavigators = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Time in milliseconds to scroll items automatically.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) autoplayInterval: number = 0;
+    readonly autoplayInterval = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Style class of the viewport container.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() prevButtonProps: ButtonProps = {
-        severity: 'secondary',
-        text: true,
-        rounded: true
-    };
+    readonly prevButtonProps = input<ButtonProps>({
+    severity: 'secondary',
+    text: true,
+    rounded: true
+});
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() nextButtonProps: ButtonProps = {
-        severity: 'secondary',
-        text: true,
-        rounded: true
-    };
+    readonly nextButtonProps = input<ButtonProps>({
+    severity: 'secondary',
+    text: true,
+    rounded: true
+});
     /**
      * Callback to invoke after scroll.
      * @param {CarouselPageEvent} event - Custom page event.
      * @group Emits
      */
-    @Output() onPage: EventEmitter<CarouselPageEvent> = new EventEmitter<CarouselPageEvent>();
+    readonly onPage = output<CarouselPageEvent>();
 
-    @ViewChild('itemsContainer') itemsContainer: ElementRef | undefined;
+    readonly itemsContainer = viewChild<ElementRef>('itemsContainer');
 
-    @ViewChild('indicatorContent') indicatorContent: ElementRef | undefined;
+    readonly indicatorContent = viewChild<ElementRef>('indicatorContent');
 
-    @ContentChild(Header) headerFacet: QueryList<Header> | undefined;
+    readonly headerFacet = contentChild(Header);
 
-    @ContentChild(Footer) footerFacet: QueryList<Footer> | undefined;
+    readonly footerFacet = contentChild(Footer);
 
     _numVisible: number = 1;
 
@@ -350,7 +236,6 @@ export class Carousel extends BaseComponent {
 
     _page: number = 0;
 
-    _value: any[] | null | undefined;
 
     carouselStyle: any;
 
@@ -388,31 +273,31 @@ export class Carousel extends BaseComponent {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<CarouselItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<CarouselItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     /**
      * Custom previous icon template.
      * @group Templates
      */
-    @ContentChild('previousicon', { descendants: false }) previousIconTemplate: TemplateRef<void> | undefined;
+    readonly previousIconTemplate = contentChild<TemplateRef<void>>('previousicon', { descendants: false });
 
     /**
      * Custom next icon template.
      * @group Templates
      */
-    @ContentChild('nexticon', { descendants: false }) nextIconTemplate: TemplateRef<void> | undefined;
+    readonly nextIconTemplate = contentChild<TemplateRef<void>>('nexticon', { descendants: false });
 
     _itemTemplate: TemplateRef<CarouselItemTemplateContext> | undefined;
 
@@ -440,14 +325,15 @@ export class Carousel extends BaseComponent {
     onChanges(simpleChange: SimpleChanges) {
         if (isPlatformBrowser(this.platformId)) {
             if (simpleChange.value) {
-                if (this.circular && this._value) {
+                if (this.circular() && this.value()) {
                     this.setCloneItems();
                 }
             }
 
             if (this.isCreated) {
+                const responsiveOptions = this.responsiveOptions();
                 if (simpleChange.numVisible) {
-                    if (this.responsiveOptions) {
+                    if (responsiveOptions) {
                         this.defaultNumVisible = this.numVisible;
                     }
 
@@ -460,7 +346,7 @@ export class Carousel extends BaseComponent {
                 }
 
                 if (simpleChange.numScroll) {
-                    if (this.responsiveOptions) {
+                    if (responsiveOptions) {
                         this.defaultNumScroll = this.numScroll;
                     }
                 }
@@ -469,18 +355,19 @@ export class Carousel extends BaseComponent {
         this.cd.markForCheck();
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
         this.id = uuid('pn_id_');
         if (isPlatformBrowser(this.platformId)) {
-            this.allowAutoplay = !!this.autoplayInterval;
+            this.allowAutoplay = !!this.autoplayInterval();
 
-            if (this.circular) {
+            if (this.circular()) {
                 this.setCloneItems();
             }
 
-            if (this.responsiveOptions) {
+            const responsiveOptions = this.responsiveOptions();
+            if (responsiveOptions) {
                 this.defaultNumScroll = this._numScroll;
                 this.defaultNumVisible = this._numVisible;
             }
@@ -488,12 +375,12 @@ export class Carousel extends BaseComponent {
             this.createStyle();
             this.calculatePosition();
 
-            if (this.responsiveOptions) {
+            if (responsiveOptions) {
                 this.bindDocumentListeners();
             }
         }
 
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -529,12 +416,14 @@ export class Carousel extends BaseComponent {
             const isCircular = this.isCircular();
             let totalShiftedItems = this.totalShiftedItems;
 
-            if (this.value && this.itemsContainer && (this.prevState.numScroll !== this._numScroll || this.prevState.numVisible !== this._numVisible || this.prevState.value.length !== this.value.length)) {
-                if (this.autoplayInterval) {
+            const itemsContainer = this.itemsContainer();
+            if (this.value() && itemsContainer && (this.prevState.numScroll !== this._numScroll || this.prevState.numVisible !== this._numVisible || this.prevState.value.length !== this.value().length)) {
+                const autoplayInterval = this.autoplayInterval();
+                if (autoplayInterval) {
                     this.stopAutoplay(false);
                 }
 
-                this.remainingItems = (this.value.length - this._numVisible) % this._numScroll;
+                this.remainingItems = (this.value().length - this._numVisible) % this._numScroll;
 
                 let page = this._page;
                 if (this.totalDots() !== 0 && page >= this.totalDots()) {
@@ -564,15 +453,15 @@ export class Carousel extends BaseComponent {
                 this._oldNumScroll = this._numScroll;
                 this.prevState.numScroll = this._numScroll;
                 this.prevState.numVisible = this._numVisible;
-                this.prevState.value = [...(this._value as any[])];
+                this.prevState.value = [...(this.value() as any[])];
 
-                if (this.totalDots() > 0 && this.itemsContainer.nativeElement) {
-                    this.itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+                if (this.totalDots() > 0 && itemsContainer.nativeElement) {
+                    itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
                 }
 
                 this.isCreated = true;
 
-                if (this.autoplayInterval && this.isAutoplay()) {
+                if (autoplayInterval && this.isAutoplay()) {
                     this.startAutoplay();
                 }
             }
@@ -581,7 +470,7 @@ export class Carousel extends BaseComponent {
                 if (this.page === 0) {
                     totalShiftedItems = -1 * this._numVisible;
                 } else if (totalShiftedItems === 0) {
-                    totalShiftedItems = -1 * this.value.length;
+                    totalShiftedItems = -1 * this.value().length;
                     if (this.remainingItems > 0) {
                         this.isRemainingItemsAdded = true;
                     }
@@ -609,8 +498,9 @@ export class Carousel extends BaseComponent {
 			}
         `;
 
-        if (this.responsiveOptions && !this.$unstyled()) {
-            this.responsiveOptions.sort((data1, data2) => {
+        const responsiveOptions = this.responsiveOptions();
+        if (responsiveOptions && !this.$unstyled()) {
+            responsiveOptions.sort((data1, data2) => {
                 const value1 = data1.breakpoint;
                 const value2 = data2.breakpoint;
                 let result: number | null = null;
@@ -624,8 +514,8 @@ export class Carousel extends BaseComponent {
                 return -1 * result;
             });
 
-            for (let i = 0; i < this.responsiveOptions.length; i++) {
-                let res = this.responsiveOptions[i];
+            for (let i = 0; i < responsiveOptions.length; i++) {
+                let res = responsiveOptions[i];
 
                 innerHTML += `
                     @media screen and (max-width: ${res.breakpoint}) {
@@ -641,7 +531,8 @@ export class Carousel extends BaseComponent {
     }
 
     calculatePosition() {
-        if (this.responsiveOptions) {
+        const responsiveOptions = this.responsiveOptions();
+        if (responsiveOptions) {
             let matchedResponsiveData = {
                 numVisible: this.defaultNumVisible,
                 numScroll: this.defaultNumScroll
@@ -649,8 +540,8 @@ export class Carousel extends BaseComponent {
 
             if (typeof window !== 'undefined') {
                 let windowWidth = window.innerWidth;
-                for (let i = 0; i < this.responsiveOptions.length; i++) {
-                    let res = this.responsiveOptions[i];
+                for (let i = 0; i < responsiveOptions.length; i++) {
+                    let res = responsiveOptions[i];
 
                     if (parseInt(res.breakpoint, 10) >= windowWidth) {
                         matchedResponsiveData = res;
@@ -690,8 +581,8 @@ export class Carousel extends BaseComponent {
         this.clonedItemsForStarting = [];
         this.clonedItemsForFinishing = [];
         if (this.isCircular()) {
-            this.clonedItemsForStarting.push(...this.value.slice(-1 * this._numVisible));
-            this.clonedItemsForFinishing.push(...this.value.slice(0, this._numVisible));
+            this.clonedItemsForStarting.push(...this.value().slice(-1 * this._numVisible));
+            this.clonedItemsForFinishing.push(...this.value().slice(0, this._numVisible));
         }
     }
 
@@ -704,7 +595,7 @@ export class Carousel extends BaseComponent {
     }
 
     totalDots() {
-        return this.value?.length ? Math.ceil((this.value.length - this._numVisible) / this._numScroll) + 1 : 0;
+        return this.value()?.length ? Math.ceil((this.value().length - this._numVisible) / this._numScroll) + 1 : 0;
     }
 
     totalDotsArray() {
@@ -713,15 +604,15 @@ export class Carousel extends BaseComponent {
     }
 
     isVertical() {
-        return this.orientation === 'vertical';
+        return this.orientation() === 'vertical';
     }
 
     isCircular() {
-        return this.circular && this.value && this.value.length >= this.numVisible;
+        return this.circular() && this.value() && this.value().length >= this.numVisible;
     }
 
     isAutoplay() {
-        return this.autoplayInterval && this.allowAutoplay;
+        return this.autoplayInterval() && this.allowAutoplay;
     }
 
     isForwardNavDisabled() {
@@ -733,7 +624,7 @@ export class Carousel extends BaseComponent {
     }
 
     isEmpty() {
-        return !this.value || this.value.length === 0;
+        return !this.value() || this.value().length === 0;
     }
 
     navForward(e: MouseEvent | TouchEvent, index?: number) {
@@ -741,7 +632,7 @@ export class Carousel extends BaseComponent {
             this.step(-1, index);
         }
 
-        if (this.autoplayInterval) {
+        if (this.autoplayInterval()) {
             this.stopAutoplay();
         }
 
@@ -755,7 +646,7 @@ export class Carousel extends BaseComponent {
             this.step(1, index);
         }
 
-        if (this.autoplayInterval) {
+        if (this.autoplayInterval()) {
             this.stopAutoplay();
         }
 
@@ -767,7 +658,7 @@ export class Carousel extends BaseComponent {
     onDotClick(e: MouseEvent, index: number) {
         let page = this._page;
 
-        if (this.autoplayInterval) {
+        if (this.autoplayInterval()) {
             this.stopAutoplay();
         }
 
@@ -791,7 +682,7 @@ export class Carousel extends BaseComponent {
     }
 
     onRightKey() {
-        const indicators = [...find(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
+        const indicators = [...find(this.indicatorContent()?.nativeElement, '[data-pc-section="indicator"]')];
         const activeIndex = this.findFocusedIndicatorIndex();
 
         this.changedFocusedIndicator(activeIndex, activeIndex + 1 === indicators.length ? indicators.length - 1 : activeIndex + 1);
@@ -810,17 +701,18 @@ export class Carousel extends BaseComponent {
     }
 
     onEndKey() {
-        const indicators = [...find(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
+        const indicators = [...find(this.indicatorContent()?.nativeElement, '[data-pc-section="indicator"]')];
         const activeIndex = this.findFocusedIndicatorIndex();
 
         this.changedFocusedIndicator(activeIndex, indicators.length - 1);
     }
 
     onTabKey() {
-        const indicators = <any>[...find(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
+        const indicatorContent = this.indicatorContent();
+        const indicators = <any>[...find(indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
         const highlightedIndex = indicators.findIndex((ind) => getAttribute(ind, 'data-p-highlight') === true);
 
-        const activeIndicator = <any>findSingle(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
+        const activeIndicator = <any>findSingle(indicatorContent?.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
         const activeIndex = indicators.findIndex((ind) => ind === activeIndicator.parentElement);
 
         indicators[activeIndex].children[0].tabIndex = '-1';
@@ -828,14 +720,15 @@ export class Carousel extends BaseComponent {
     }
 
     findFocusedIndicatorIndex() {
-        const indicators = [...find(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
-        const activeIndicator = findSingle(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
+        const indicatorContent = this.indicatorContent();
+        const indicators = [...find(indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
+        const activeIndicator = findSingle(indicatorContent?.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
 
         return indicators.findIndex((ind) => ind === activeIndicator?.parentElement);
     }
 
     changedFocusedIndicator(prevInd, nextInd) {
-        const indicators = <any>[...find(this.indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
+        const indicators = <any>[...find(this.indicatorContent()?.nativeElement, '[data-pc-section="indicator"]')];
 
         indicators[prevInd].children[0].tabIndex = '-1';
         indicators[nextInd].children[0].tabIndex = '0';
@@ -866,7 +759,7 @@ export class Carousel extends BaseComponent {
         }
 
         if (isCircular && this.page === this.totalDots() - 1 && dir === -1) {
-            totalShiftedItems = -1 * (this.value.length + this._numVisible);
+            totalShiftedItems = -1 * (this.value().length + this._numVisible);
             page = 0;
         } else if (isCircular && this.page === 0 && dir === 1) {
             totalShiftedItems = 0;
@@ -876,10 +769,11 @@ export class Carousel extends BaseComponent {
             this.isRemainingItemsAdded = true;
         }
 
-        if (this.itemsContainer) {
-            !this.$unstyled() && removeClass(this.itemsContainer.nativeElement, 'p-items-hidden');
-            this.itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
-            this.itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
+        const itemsContainer = this.itemsContainer();
+        if (itemsContainer) {
+            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+            itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+            itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
         }
 
         this.totalShiftedItems = totalShiftedItems;
@@ -899,7 +793,7 @@ export class Carousel extends BaseComponent {
                     this.step(-1, this.page + 1);
                 }
             }
-        }, this.autoplayInterval);
+        }, this.autoplayInterval());
         this.allowAutoplay = true;
         this.cd.markForCheck();
     }
@@ -920,12 +814,13 @@ export class Carousel extends BaseComponent {
     }
 
     onTransitionEnd() {
-        if (this.itemsContainer) {
-            !this.$unstyled() && addClass(this.itemsContainer.nativeElement, 'p-items-hidden');
-            this.itemsContainer.nativeElement.style.transition = '';
+        const itemsContainer = this.itemsContainer();
+        if (itemsContainer) {
+            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'p-items-hidden');
+            itemsContainer.nativeElement.style.transition = '';
 
             if ((this.page === 0 || this.page === this.totalDots() - 1) && this.isCircular()) {
-                this.itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${this.totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${this.totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+                itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${this.totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${this.totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
             }
         }
     }
@@ -1024,10 +919,10 @@ export class Carousel extends BaseComponent {
     }
 
     onDestroy() {
-        if (this.responsiveOptions) {
+        if (this.responsiveOptions()) {
             this.unbindDocumentListeners();
         }
-        if (this.autoplayInterval) {
+        if (this.autoplayInterval()) {
             this.stopAutoplay();
         }
     }

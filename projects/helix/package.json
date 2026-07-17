@@ -12,12 +12,12 @@
     "directory": "projects/helix"
   },
   "peerDependencies": {
-    "@angular/cdk": ">=21",
-    "@angular/common": ">=21",
-    "@angular/core": ">=21",
-    "@angular/forms": ">=21",
-    "@angular/router": ">=21",
-    "@angular/platform-browser": ">=21",
+    "@angular/cdk": ">=22",
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/forms": ">=22",
+    "@angular/router": ">=22",
+    "@angular/platform-browser": ">=22",
     "rxjs": "^6.0.0 || ^7.8.1"
   },
   "dependencies": {

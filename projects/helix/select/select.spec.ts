@@ -3212,7 +3212,7 @@ describe('Select Advanced Accessibility', () => {
 describe('Select PT (PassThrough)', () => {
     @Component({
         standalone: true,
-        imports: [CommonModule, FormsModule, Select],
+        imports: [FormsModule, Select],
         template: `
             <p-select
                 [options]="options"

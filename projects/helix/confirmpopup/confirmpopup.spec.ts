@@ -312,11 +312,11 @@ describe('ConfirmPopup', () => {
         });
 
         it('should have correct default values', () => {
-            expect(confirmPopupInstance.defaultFocus).toBe('accept');
-            expect(confirmPopupInstance.showTransitionOptions).toBe('.12s cubic-bezier(0, 0, 0.2, 1)');
-            expect(confirmPopupInstance.hideTransitionOptions).toBe('.1s linear');
-            expect(confirmPopupInstance.autoZIndex).toBe(true);
-            expect(confirmPopupInstance.baseZIndex).toBe(0);
+            expect(confirmPopupInstance.defaultFocus()).toBe('accept');
+            expect(confirmPopupInstance.showTransitionOptions()).toBe('.12s cubic-bezier(0, 0, 0.2, 1)');
+            expect(confirmPopupInstance.hideTransitionOptions()).toBe('.1s linear');
+            expect(confirmPopupInstance.autoZIndex()).toBe(true);
+            expect(confirmPopupInstance.baseZIndex()).toBe(0);
         });
 
         it('should subscribe to confirmation service', () => {
@@ -335,7 +335,7 @@ describe('ConfirmPopup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.key).toBe('testKey');
+            expect(confirmPopupInstance.key()).toBe('testKey');
         });
 
         it('should update defaultFocus property', async () => {
@@ -343,7 +343,7 @@ describe('ConfirmPopup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.defaultFocus).toBe('reject');
+            expect(confirmPopupInstance.defaultFocus()).toBe('reject');
         });
 
         it('should update transition options', async () => {
@@ -352,8 +352,8 @@ describe('ConfirmPopup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.showTransitionOptions).toBe('.2s ease-in');
-            expect(confirmPopupInstance.hideTransitionOptions).toBe('.15s ease-out');
+            expect(confirmPopupInstance.showTransitionOptions()).toBe('.2s ease-in');
+            expect(confirmPopupInstance.hideTransitionOptions()).toBe('.15s ease-out');
         });
 
         it('should update autoZIndex and baseZIndex', async () => {
@@ -362,8 +362,8 @@ describe('ConfirmPopup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.autoZIndex).toBe(false);
-            expect(confirmPopupInstance.baseZIndex).toBe(1000);
+            expect(confirmPopupInstance.autoZIndex()).toBe(false);
+            expect(confirmPopupInstance.baseZIndex()).toBe(1000);
         });
 
         it('should update style and styleClass', async () => {
@@ -372,8 +372,8 @@ describe('ConfirmPopup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.style).toEqual({ width: '300px' });
-            expect(confirmPopupInstance.styleClass).toBe('custom-popup');
+            expect(confirmPopupInstance.style()).toEqual({ width: '300px' });
+            expect(confirmPopupInstance.styleClass()).toBe('custom-popup');
         });
 
         it('should update visible property', async () => {
@@ -508,7 +508,7 @@ describe('ConfirmPopup', () => {
 
             // Verify handleFocus was called and defaultFocus is set to accept
             expect(handleFocusSpy).toHaveBeenCalled();
-            expect(confirmPopupInstance.defaultFocus).toBe('accept');
+            expect(confirmPopupInstance.defaultFocus()).toBe('accept');
         });
 
         it('should focus reject button when defaultFocus is reject', async () => {
@@ -534,7 +534,7 @@ describe('ConfirmPopup', () => {
 
             // Verify handleFocus was called and defaultFocus is set to reject
             expect(handleFocusSpy).toHaveBeenCalled();
-            expect(confirmPopupInstance.defaultFocus).toBe('reject');
+            expect(confirmPopupInstance.defaultFocus()).toBe('reject');
         });
 
         it('should not focus any button when defaultFocus is none', async () => {
@@ -570,7 +570,7 @@ describe('ConfirmPopup', () => {
                 expect(() => confirmPopupInstance.ngAfterContentInit()).not.toThrow();
 
                 // Test that templates property exists and is processed
-                expect(confirmPopupInstance.templates).toBeDefined();
+                expect(confirmPopupInstance.templates()).toBeDefined();
             });
 
             it('should process _contentTemplate from pTemplate="content"', async () => {
@@ -630,7 +630,7 @@ describe('ConfirmPopup', () => {
                 expect(() => confirmPopupInstance.ngAfterContentInit()).not.toThrow();
 
                 // Test that contentTemplate property exists (ContentChild)
-                expect(confirmPopupInstance.contentTemplate).toBeDefined();
+                expect(confirmPopupInstance.contentTemplate()).toBeDefined();
             });
 
             it("should process contentTemplate from @ContentChild('content')", async () => {
@@ -641,8 +641,8 @@ describe('ConfirmPopup', () => {
                 const confirmPopupInstance = contentTemplateFixture.debugElement.query(By.directive(ConfirmPopup)).componentInstance;
 
                 // @ContentChild('content') should set contentTemplate
-                expect(confirmPopupInstance.contentTemplate).toBeDefined();
-                expect(confirmPopupInstance.contentTemplate?.constructor.name).toBe('TemplateRef');
+                expect(confirmPopupInstance.contentTemplate()).toBeDefined();
+                expect(confirmPopupInstance.contentTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process acceptIconTemplate from @ContentChild('accepticon')", async () => {
@@ -653,8 +653,8 @@ describe('ConfirmPopup', () => {
                 const confirmPopupInstance = contentTemplateFixture.debugElement.query(By.directive(ConfirmPopup)).componentInstance;
 
                 // @ContentChild('accepticon') should set acceptIconTemplate
-                expect(confirmPopupInstance.acceptIconTemplate).toBeDefined();
-                expect(confirmPopupInstance.acceptIconTemplate?.constructor.name).toBe('TemplateRef');
+                expect(confirmPopupInstance.acceptIconTemplate()).toBeDefined();
+                expect(confirmPopupInstance.acceptIconTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process rejectIconTemplate from @ContentChild('rejecticon')", async () => {
@@ -665,8 +665,8 @@ describe('ConfirmPopup', () => {
                 const confirmPopupInstance = contentTemplateFixture.debugElement.query(By.directive(ConfirmPopup)).componentInstance;
 
                 // @ContentChild('rejecticon') should set rejectIconTemplate
-                expect(confirmPopupInstance.rejectIconTemplate).toBeDefined();
-                expect(confirmPopupInstance.rejectIconTemplate?.constructor.name).toBe('TemplateRef');
+                expect(confirmPopupInstance.rejectIconTemplate()).toBeDefined();
+                expect(confirmPopupInstance.rejectIconTemplate()?.constructor.name).toBe('TemplateRef');
             });
 
             it("should process headlessTemplate from @ContentChild('headless')", async () => {
@@ -677,8 +677,8 @@ describe('ConfirmPopup', () => {
                 const confirmPopupInstance = contentTemplateFixture.debugElement.query(By.directive(ConfirmPopup)).componentInstance;
 
                 // @ContentChild('headless') should set headlessTemplate
-                expect(confirmPopupInstance.headlessTemplate).toBeDefined();
-                expect(confirmPopupInstance.headlessTemplate?.constructor.name).toBe('TemplateRef');
+                expect(confirmPopupInstance.headlessTemplate()).toBeDefined();
+                expect(confirmPopupInstance.headlessTemplate()?.constructor.name).toBe('TemplateRef');
             });
         });
 
@@ -706,10 +706,10 @@ describe('ConfirmPopup', () => {
 
             it('should use default templates when custom ones are not provided', () => {
                 // Test default behavior without custom templates
-                expect(confirmPopupInstance.contentTemplate).toBeUndefined();
-                expect(confirmPopupInstance.acceptIconTemplate).toBeUndefined();
-                expect(confirmPopupInstance.rejectIconTemplate).toBeUndefined();
-                expect(confirmPopupInstance.headlessTemplate).toBeUndefined();
+                expect(confirmPopupInstance.contentTemplate()).toBeUndefined();
+                expect(confirmPopupInstance.acceptIconTemplate()).toBeUndefined();
+                expect(confirmPopupInstance.rejectIconTemplate()).toBeUndefined();
+                expect(confirmPopupInstance.headlessTemplate()).toBeUndefined();
             });
 
             it('should handle ngAfterContentInit template processing correctly', async () => {
@@ -720,7 +720,7 @@ describe('ConfirmPopup', () => {
                 const confirmPopupInstance = templateFixture.debugElement.query(By.directive(ConfirmPopup)).componentInstance;
 
                 expect(() => confirmPopupInstance.ngAfterContentInit()).not.toThrow();
-                expect(confirmPopupInstance.templates).toBeDefined();
+                expect(confirmPopupInstance.templates()).toBeDefined();
             });
         });
     });
@@ -1219,7 +1219,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.styleClass).toBe('my-custom-popup');
+            expect(confirmPopupInstance.styleClass()).toBe('my-custom-popup');
         });
 
         it('should apply inline styles', async () => {
@@ -1234,7 +1234,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(confirmPopupInstance.style).toEqual({ backgroundColor: 'red' });
+            expect(confirmPopupInstance.style()).toEqual({ backgroundColor: 'red' });
         });
     });
 

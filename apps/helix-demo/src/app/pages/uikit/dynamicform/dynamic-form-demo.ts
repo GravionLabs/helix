@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { HelixDynamicForm, helixMeta } from '@gravionlabs/helix-zod';
 import { z } from 'zod';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
@@ -84,6 +84,7 @@ const RegistrationSchema = z.object({
   standalone: true,
   imports: [HelixDynamicForm, JsonPipe, SourceTabsComponent],
   templateUrl: './dynamic-form-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dynamic-form-demo.scss',
 })
 export class DynamicFormDemo {

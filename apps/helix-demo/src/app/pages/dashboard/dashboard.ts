@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BestSellingWidget } from './components/bestsellingwidget';
 import { NotificationsWidget } from './components/notificationswidget';
 import { RecentSalesWidget } from './components/recentsaleswidget';
@@ -15,6 +15,7 @@ import { StatsWidget } from './components/statswidget';
     NotificationsWidget,
   ],
   templateUrl: './dashboard.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {}

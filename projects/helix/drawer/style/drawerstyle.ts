@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${drawer_style}
 
-/** For PrimeNG **/
+/** For Helix **/
 .p-drawer {
     position: fixed;
 }
@@ -94,7 +94,7 @@ ${drawer_style}
 `;
 
 const classes = {
-    mask: ({ instance }) => ['p-drawer-mask', { [`p-overlay-mask p-overlay-mask-enter-active`]: instance.modal }, { 'p-drawer-full': instance.fullScreen() }],
+    mask: ({ instance }) => ['p-drawer-mask', { [`p-overlay-mask p-overlay-mask-enter-active`]: instance.modal() }, { 'p-drawer-full': instance.fullScreen() }],
     root: ({ instance }) => [
         'p-drawer p-component',
         {

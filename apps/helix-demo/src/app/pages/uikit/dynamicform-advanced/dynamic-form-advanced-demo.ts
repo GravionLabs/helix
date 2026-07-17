@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { validate } from '@angular/forms/signals';
 import { HelixDynamicForm, helixMeta } from '@gravionlabs/helix-zod';
 import { z } from 'zod';
@@ -63,6 +63,7 @@ const ProjectReviewSchema = z.object({
   standalone: true,
   imports: [HelixDynamicForm, JsonPipe, SourceTabsComponent],
   templateUrl: './dynamic-form-advanced-demo.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dynamic-form-advanced-demo.scss',
 })
 export class DynamicFormAdvancedDemo {

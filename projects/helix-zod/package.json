@@ -5,10 +5,10 @@
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@angular/common": ">=21",
-    "@angular/core": ">=21",
-    "@angular/forms": ">=21",
-    "@gravionlabs/helix-shell": ">=0.2.0",
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/forms": ">=22",
+    "@gravionlabs/helix-shell": ">=22",
     "zod": "^4.0.0"
   },
   "dependencies": {

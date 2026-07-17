@@ -57,19 +57,7 @@ export const TOGGLEBUTTON_VALUE_ACCESSOR: any = {
         '[attr.data-p-disabled]': '$disabled()',
         '[attr.data-p]': 'dataP'
     },
-    template: `<span [class]="cx('content')" [hBind]="ptm('content')" [attr.data-p]="dataP">
-        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: checked }"></ng-container>
-        @if (!contentTemplate) {
-            @if (!iconTemplate) {
-                @if (onIcon || offIcon) {
-                    <span [class]="cn(cx('icon'), checked ? this.onIcon : this.offIcon, iconPos === 'left' ? cx('iconLeft') : cx('iconRight'))" [hBind]="ptm('icon')"></span>
-                }
-            } @else {
-                <ng-container *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { $implicit: checked }"></ng-container>
-            }
-            <span [class]="cx('label')" [hBind]="ptm('label')">{{ checked ? (hasOnLabel ? onLabel : ' ') : hasOffLabel ? offLabel : ' ' }}</span>
-        }
-    </span>`,
+    templateUrl: './togglebutton.html',
     providers: [TOGGLEBUTTON_VALUE_ACCESSOR, ToggleButtonStyle, { provide: TOGGLEBUTTON_INSTANCE, useExisting: ToggleButton }, { provide: PARENT_INSTANCE, useExisting: ToggleButton }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

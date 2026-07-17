@@ -1,11 +1,16 @@
-import { Component, createEnvironmentInjector, EnvironmentInjector } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  createEnvironmentInjector,
+  EnvironmentInjector,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HelixSelectWidget } from '../widgets/select-widget/select-widget';
 import { HelixTextWidget } from '../widgets/text-widget/text-widget';
 import { HelixFieldWidgetResolver } from './field-registry';
 import { provideHelixDynamicForms } from './provide-helix-dynamic-forms';
 
-@Component({ standalone: true, template: '' })
+@Component({ standalone: true, changeDetection: ChangeDetectionStrategy.Eager, template: '' })
 class CustomSelectWidget {}
 
 describe('HelixFieldWidgetResolver', () => {

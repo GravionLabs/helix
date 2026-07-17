@@ -1,0 +1,44 @@
+@if (showNavigators() && isPrevButtonEnabled()) {
+    <button
+        type="button"
+        #prevButton
+        hRipple
+        [hBind]="ptm('prevButton')"
+        [class]="cx('prevButton')"
+        [attr.aria-label]="prevButtonAriaLabel"
+        [attr.tabindex]="tabindex()"
+        [attr.data-pc-group-section]="'navigator'"
+        (click)="onPrevButtonClick()"
+    >
+        @if (prevIconTemplate() || _prevIconTemplate) {
+            <ng-container *ngTemplateOutlet="prevIconTemplate() || _prevIconTemplate" />
+        } @else {
+            <svg data-p-icon="chevron-left" />
+        }
+    </button>
+}
+<div #content [hBind]="ptm('content')" [class]="cx('content')" (scroll)="onScroll($event)">
+    <div #tabs [hBind]="ptm('tabList')" [class]="cx('tabList')" role="tablist">
+        <ng-content />
+        <span #inkbar [hBind]="ptm('activeBar')" role="presentation" [class]="cx('activeBar')"></span>
+    </div>
+</div>
+@if (showNavigators() && isNextButtonEnabled()) {
+    <button
+        type="button"
+        #nextButton
+        hRipple
+        [hBind]="ptm('nextButton')"
+        [class]="cx('nextButton')"
+        [attr.aria-label]="nextButtonAriaLabel"
+        [attr.tabindex]="tabindex()"
+        [attr.data-pc-group-section]="'navigator'"
+        (click)="onNextButtonClick()"
+    >
+        @if (nextIconTemplate() || _nextIconTemplate) {
+            <ng-container *ngTemplateOutlet="nextIconTemplate() || _nextIconTemplate" />
+        } @else {
+            <svg data-p-icon="chevron-right" />
+        }
+    </button>
+}

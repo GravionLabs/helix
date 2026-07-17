@@ -3,7 +3,7 @@ import { style } from '@primeuix/styles/megamenu';
 import { BaseStyle } from '@gravionlabs/helix/base';
 
 const inlineStyles = {
-    rootList: ({ instance }) => ({ 'max-height': instance.scrollHeight, overflow: 'auto' })
+    rootList: ({ instance }) => ({ 'max-height': instance.scrollHeight(), overflow: 'auto' })
 };
 
 const classes = {
@@ -12,8 +12,8 @@ const classes = {
         {
             'p-megamenu-mobile': instance.queryMatches(),
             'p-megamenu-mobile-active': instance.mobileActive,
-            'p-megamenu-horizontal': instance.orientation === 'horizontal',
-            'p-megamenu-vertical': instance.orientation === 'vertical'
+            'p-megamenu-horizontal': instance.orientation() === 'horizontal',
+            'p-megamenu-vertical': instance.orientation() === 'vertical'
         }
     ],
     start: 'p-megamenu-start',

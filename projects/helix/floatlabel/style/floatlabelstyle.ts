@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${floatlabel_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-floatlabel:has(.ng-invalid.ng-dirty) label {
         color: dt('floatlabel.invalid.color');
     }
@@ -15,9 +15,9 @@ const classes = {
     root: ({ instance }) => [
         'p-floatlabel',
         {
-            'p-floatlabel-over': instance.variant === 'over',
-            'p-floatlabel-on': instance.variant === 'on',
-            'p-floatlabel-in': instance.variant === 'in'
+            'p-floatlabel-over': instance.variant() === 'over',
+            'p-floatlabel-on': instance.variant() === 'on',
+            'p-floatlabel-in': instance.variant() === 'in'
         }
     ]
 };

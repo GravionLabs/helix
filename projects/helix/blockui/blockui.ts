@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
 import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -18,16 +18,13 @@ const BLOCKUI_INSTANCE = new InjectionToken<BlockUI>('BLOCKUI_INSTANCE');
     selector: 'h-blockUI, h-blockui, h-block-ui',
     standalone: true,
     imports: [CommonModule, SharedModule],
-    template: `
-        <ng-content></ng-content>
-        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-    `,
+    templateUrl: './blockui.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [BlockUiStyle, { provide: BLOCKUI_INSTANCE, useExisting: BlockUI }, { provide: PARENT_INSTANCE, useExisting: BlockUI }],
     host: {
         '[attr.aria-busy]': 'blocked',
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
 })
@@ -45,23 +42,23 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
      * Name of the local ng-template variable referring to another component.
      * @group Props
      */
-    @Input() target: any;
+    readonly target = input<any>();
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Current blocked state as a boolean.
      * @group Props
@@ -85,7 +82,7 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
      * template of the content
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: TemplateRef<any> | undefined;
+    readonly contentTemplate = contentChild<TemplateRef<any>>('content', { descendants: false });
 
     _blocked: boolean = false;
 
@@ -100,24 +97,25 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
     onAfterViewInit() {
         if (this._blocked) this.block();
 
-        if (this.target && !this.target.getBlockableElement) {
+        const target = this.target();
+        if (target && !target.getBlockableElement) {
             throw 'Target of BlockUI must implement BlockableUI interface';
         }
     }
 
     _contentTemplate: TemplateRef<any> | undefined;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'content':
-                    this.contentTemplate = item.template;
+                    this._contentTemplate = item.template;
                     break;
 
                 default:
-                    this.contentTemplate = item.template;
+                    this._contentTemplate = item.template;
                     break;
             }
         });
@@ -128,17 +126,18 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
             this._blocked = true;
             (this.el as ElementRef).nativeElement.style.display = 'flex';
 
-            if (this.target) {
-                this.target.getBlockableElement().appendChild((this.el as ElementRef).nativeElement);
-                this.target.getBlockableElement().style.position = 'relative';
+            const target = this.target();
+            if (target) {
+                target.getBlockableElement().appendChild((this.el as ElementRef).nativeElement);
+                target.getBlockableElement().style.position = 'relative';
             } else {
                 this.renderer.appendChild(this.document.body, (this.el as ElementRef).nativeElement);
                 //@ts-ignore
                 blockBodyScroll();
             }
 
-            if (this.autoZIndex) {
-                ZIndexUtils.set('modal', (this.el as ElementRef).nativeElement, this.baseZIndex + this.config.zIndex.modal);
+            if (this.autoZIndex()) {
+                ZIndexUtils.set('modal', (this.el as ElementRef).nativeElement, this.baseZIndex() + this.config.zIndex.modal);
             }
 
             this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask');
@@ -165,7 +164,7 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
             this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask-leave-active');
             ZIndexUtils.clear(this.el.nativeElement);
 
-            if (!this.target) {
+            if (!this.target()) {
                 this.document.body.removeChild(this.el.nativeElement);
                 //@ts-ignore
                 unblockBodyScroll();
@@ -188,7 +187,7 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
             this._blocked = false;
             if (this.el && isPlatformBrowser(this.platformId)) {
                 ZIndexUtils.clear(this.el.nativeElement);
-                if (!this.target) {
+                if (!this.target()) {
                     //@ts-ignore
                     unblockBodyScroll();
                 }

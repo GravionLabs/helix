@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StyleClassModule } from '@gravionlabs/helix/styleclass';
 import { HelixConfigurator } from '../../configurator/configurator';
 
@@ -25,6 +25,7 @@ import { HelixConfigurator } from '../../configurator/configurator';
       <helix-configurator />
     </div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {

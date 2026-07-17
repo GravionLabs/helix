@@ -1,30 +1,29 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
-    AfterContentInit,
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    NgZone,
-    numberAttribute,
-    OnDestroy,
-    OnInit,
-    Output,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation,
-    ViewRef
+  AfterContentInit,
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ContentChild,
+  ElementRef,
+  inject,
+  InjectionToken,
+  input,
+  Input,
+  NgModule,
+  NgZone,
+  numberAttribute,
+  OnDestroy,
+  OnInit,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+  ViewRef,
+  output,
+  viewChild,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@primeuix/utils';
@@ -51,118 +50,7 @@ const DIALOG_INSTANCE = new InjectionToken<Dialog>('DIALOG_INSTANCE');
     selector: 'h-dialog',
     standalone: true,
     imports: [CommonModule, Button, FocusTrap, TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon, SharedModule, Bind, MotionModule],
-    template: `
-        @if (renderMask()) {
-            <div
-                [class]="cn(cx('mask'), maskStyleClass)"
-                [style]="sx('mask')"
-                [ngStyle]="maskStyle"
-                [hBind]="ptm('mask')"
-                [hMotion]="maskVisible"
-                [pMotionAppear]="true"
-                [pMotionEnterActiveClass]="modal ? 'p-overlay-mask-enter-active' : ''"
-                [pMotionLeaveActiveClass]="modal ? 'p-overlay-mask-leave-active' : ''"
-                [pMotionOptions]="computedMaskMotionOptions()"
-                (pMotionOnAfterLeave)="onMaskAfterLeave()"
-                [attr.data-p-scrollblocker-active]="modal || blockScroll"
-                [attr.data-p]="dataP"
-            >
-                @if (renderDialog()) {
-                    <div
-                        #container
-                        [class]="cn(cx('root'), styleClass)"
-                        [style]="sx('root')"
-                        [ngStyle]="style"
-                        [hBind]="ptm('root')"
-                        hFocusTrap
-                        [pFocusTrapDisabled]="focusTrap === false"
-                        [hMotion]="visible"
-                        [pMotionAppear]="true"
-                        [pMotionName]="'p-dialog'"
-                        [pMotionOptions]="computedMotionOptions()"
-                        (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                        (pMotionOnAfterEnter)="onAfterEnter($event)"
-                        (pMotionOnBeforeLeave)="onBeforeLeave($event)"
-                        (pMotionOnAfterLeave)="onAfterLeave($event)"
-                        [attr.role]="role"
-                        [attr.aria-labelledby]="ariaLabelledBy"
-                        [attr.aria-modal]="true"
-                        [attr.data-p]="dataP"
-                    >
-                        <ng-container *ngIf="_headlessTemplate || headlessTemplate || headlessT; else notHeadless">
-                            <ng-container *ngTemplateOutlet="_headlessTemplate || headlessTemplate || headlessT"></ng-container>
-                        </ng-container>
-
-                        <ng-template #notHeadless>
-                            <div *ngIf="resizable" [class]="cx('resizeHandle')" [hBind]="ptm('resizeHandle')" [style.z-index]="90" (mousedown)="initResize($event)"></div>
-                            <div #titlebar [class]="cx('header')" [hBind]="ptm('header')" (mousedown)="initDrag($event)" *ngIf="showHeader">
-                                <span [id]="ariaLabelledBy" [class]="cx('title')" [hBind]="ptm('title')" *ngIf="!_headerTemplate && !headerTemplate && !headerT">{{ header }}</span>
-                                <ng-container *ngTemplateOutlet="_headerTemplate || headerTemplate || headerT; context: { ariaLabelledBy: ariaLabelledBy }"></ng-container>
-                                <div [class]="cx('headerActions')" [hBind]="ptm('headerActions')">
-                                    <h-button
-                                        [pt]="ptm('pcMaximizeButton')"
-                                        *ngIf="maximizable"
-                                        [styleClass]="cx('pcMaximizeButton')"
-                                        [ariaLabel]="maximized ? minimizeLabel : maximizeLabel"
-                                        (onClick)="maximize()"
-                                        (keydown.enter)="maximize()"
-                                        [tabindex]="maximizable ? '0' : '-1'"
-                                        [buttonProps]="maximizeButtonProps"
-                                        [unstyled]="unstyled()"
-                                        [attr.data-pc-group-section]="'headericon'"
-                                    >
-                                        <ng-template #icon>
-                                            <span *ngIf="maximizeIcon && !_maximizeiconTemplate && !_minimizeiconTemplate" [ngClass]="maximized ? minimizeIcon : maximizeIcon"></span>
-                                            <ng-container *ngIf="!maximizeIcon && !maximizeButtonProps?.icon">
-                                                <svg data-p-icon="window-maximize" *ngIf="!maximized && !_maximizeiconTemplate && !maximizeIconTemplate && !maximizeIconT" />
-                                                <svg data-p-icon="window-minimize" *ngIf="maximized && !_minimizeiconTemplate && !minimizeIconTemplate && !minimizeIconT" />
-                                            </ng-container>
-                                            <ng-container *ngIf="!maximized">
-                                                <ng-template *ngTemplateOutlet="_maximizeiconTemplate || maximizeIconTemplate || maximizeIconT"></ng-template>
-                                            </ng-container>
-                                            <ng-container *ngIf="maximized">
-                                                <ng-template *ngTemplateOutlet="_minimizeiconTemplate || minimizeIconTemplate || minimizeIconT"></ng-template>
-                                            </ng-container>
-                                        </ng-template>
-                                    </h-button>
-                                    <h-button
-                                        [pt]="ptm('pcCloseButton')"
-                                        *ngIf="closable"
-                                        [styleClass]="cx('pcCloseButton')"
-                                        [ariaLabel]="closeAriaLabel"
-                                        (onClick)="close($event)"
-                                        (keydown.enter)="close($event)"
-                                        [tabindex]="closeTabindex"
-                                        [buttonProps]="closeButtonProps"
-                                        [unstyled]="unstyled()"
-                                        [attr.data-pc-group-section]="'headericon'"
-                                    >
-                                        <ng-template #icon>
-                                            <ng-container *ngIf="!_closeiconTemplate && !closeIconTemplate && !closeIconT && !closeButtonProps?.icon">
-                                                <span *ngIf="closeIcon" [class]="closeIcon"></span>
-                                                <svg data-p-icon="times" *ngIf="!closeIcon" />
-                                            </ng-container>
-                                            <span *ngIf="_closeiconTemplate || closeIconTemplate || closeIconT">
-                                                <ng-template *ngTemplateOutlet="_closeiconTemplate || closeIconTemplate || closeIconT"></ng-template>
-                                            </span>
-                                        </ng-template>
-                                    </h-button>
-                                </div>
-                            </div>
-                            <div #content [class]="cn(cx('content'), contentStyleClass)" [ngStyle]="contentStyle" [hBind]="ptm('content')">
-                                <ng-content></ng-content>
-                                <ng-container *ngTemplateOutlet="_contentTemplate || contentTemplate || contentT"></ng-container>
-                            </div>
-                            <div #footer [class]="cx('footer')" [hBind]="ptm('footer')" *ngIf="_footerTemplate || footerTemplate || footerT">
-                                <ng-content select="p-footer"></ng-content>
-                                <ng-container *ngTemplateOutlet="_footerTemplate || footerTemplate || footerT"></ng-container>
-                            </div>
-                        </ng-template>
-                    </div>
-                }
-            </div>
-        }
-    `,
+    templateUrl: './dialog.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [DialogStyle, { provide: DIALOG_INSTANCE, useExisting: Dialog }, { provide: PARENT_INSTANCE, useExisting: Dialog }],
@@ -171,7 +59,7 @@ const DIALOG_INSTANCE = new InjectionToken<Dialog>('DIALOG_INSTANCE');
 export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, AfterContentInit, OnDestroy {
     componentName = 'Dialog';
 
-    @Input() hostName: string = '';
+    readonly hostName = input<string>('');
 
     $pcDialog: Dialog | undefined = inject(DIALOG_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
@@ -185,128 +73,130 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * Title text of the dialog.
      * @group Props
      */
-    @Input() header: string | undefined;
+    readonly header = input<string>();
     /**
      * Enables dragging to change the position using header.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) draggable: boolean = true;
+    readonly draggable = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Enables resizing of the content.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resizable: boolean = true;
+    readonly resizable = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Style of the content section.
      * @group Props
      */
-    @Input() contentStyle: any;
+    readonly contentStyle = input<any>();
     /**
      * Style class of the content.
      * @group Props
      */
-    @Input() contentStyleClass: string | undefined;
+    readonly contentStyleClass = input<string>();
     /**
      * Defines if background should be blocked when dialog is displayed.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) modal: boolean = false;
+    readonly modal = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Specifies if pressing escape key should hide the dialog.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) closeOnEscape: boolean = true;
+    readonly closeOnEscape = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Specifies if clicking the modal background should hide the dialog.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) dismissableMask: boolean = false;
+    readonly dismissableMask = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When enabled dialog is displayed in RTL direction.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) rtl: boolean = false;
+    readonly rtl = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Adds a close icon to the header to hide the dialog.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) closable: boolean = true;
+    readonly closable = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Object literal to define widths per screen size.
      * @group Props
      */
-    @Input() breakpoints: any;
+    readonly breakpoints = input<any>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Style class of the mask.
      * @group Props
      */
-    @Input() maskStyleClass: string | undefined;
+    readonly maskStyleClass = input<string>();
     /**
      * Style of the mask.
      * @group Props
      */
-    @Input() maskStyle: { [klass: string]: any } | null | undefined;
+    readonly maskStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Whether to show the header or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showHeader: boolean = true;
+    readonly showHeader = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether background scroll should be blocked when dialog is visible.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) blockScroll: boolean = false;
+    readonly blockScroll = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to automatically manage layering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoZIndex: boolean = true;
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Minimum value for the left coordinate of dialog in dragging.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) minX: number = 0;
+    readonly minX = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Minimum value for the top coordinate of dialog in dragging.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) minY: number = 0;
+    readonly minY = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * When enabled, first focusable element receives focus on show.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) focusOnShow: boolean = true;
+    readonly focusOnShow = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether the dialog can be displayed full screen.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) maximizable: boolean = false;
+    readonly maximizable = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Keeps dialog in the viewport.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) keepInViewport: boolean = true;
+    readonly keepInViewport = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When enabled, can only focus on elements inside the dialog.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) focusTrap: boolean = true;
+    readonly focusTrap = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Transition options of the animation.
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      * @group Props
      */
-    @Input() transitionOptions: string = '150ms cubic-bezier(0, 0, 0.2, 1)';
+    readonly transitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * The motion options for the mask.
      * @group Props
@@ -335,45 +225,45 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * Name of the close icon.
      * @group Props
      */
-    @Input() closeIcon: string | undefined;
+    readonly closeIcon = input<string>();
     /**
      * Defines a string that labels the close button for accessibility.
      * @group Props
      */
-    @Input() closeAriaLabel: string | undefined;
+    readonly closeAriaLabel = input<string>();
     /**
      * Index of the close button in tabbing order.
      * @group Props
      */
-    @Input() closeTabindex: string = '0';
+    readonly closeTabindex = input<string>('0');
     /**
      * Name of the minimize icon.
      * @group Props
      */
-    @Input() minimizeIcon: string | undefined;
+    readonly minimizeIcon = input<string>();
     /**
      * Name of the maximize icon.
      * @group Props
      */
-    @Input() maximizeIcon: string | undefined;
+    readonly maximizeIcon = input<string>();
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() closeButtonProps: ButtonProps = {
-        severity: 'secondary',
-        variant: 'text',
-        rounded: true
-    };
+    readonly closeButtonProps = input<ButtonProps>({
+    severity: 'secondary',
+    variant: 'text',
+    rounded: true
+});
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() maximizeButtonProps: ButtonProps = {
-        severity: 'secondary',
-        variant: 'text',
-        rounded: true
-    };
+    readonly maximizeButtonProps = input<ButtonProps>({
+    severity: 'secondary',
+    variant: 'text',
+    rounded: true
+});
     /**
      * Specifies the visibility of the dialog.
      * @group Props
@@ -407,12 +297,12 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * Position of the dialog.
      * @group Props
      */
-    @Input() position: 'center' | 'top' | 'bottom' | 'left' | 'right' | 'topleft' | 'topright' | 'bottomleft' | 'bottomright';
+    readonly position = input<'center' | 'top' | 'bottom' | 'left' | 'right' | 'topleft' | 'topright' | 'bottomleft' | 'bottomright'>(undefined!);
     /**
      * Role attribute of html element.
      * @group Emits
      */
-    @Input() role: string = 'dialog';
+    readonly role = input<string>('dialog');
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -423,124 +313,124 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * Callback to invoke when dialog is shown.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<any> = new EventEmitter<any>();
+    readonly onShow = output<any>();
     /**
      * Callback to invoke when dialog is hidden.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<any> = new EventEmitter<any>();
+    readonly onHide = output<any>();
     /**
      * This EventEmitter is used to notify changes in the visibility state of a component.
      * @param {boolean} value - New value.
      * @group Emits
      */
-    @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    readonly visibleChange = output<boolean>();
     /**
      * Callback to invoke when dialog resizing is initiated.
      * @param {MouseEvent} event - Mouse event.
      * @group Emits
      */
-    @Output() onResizeInit: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    readonly onResizeInit = output<MouseEvent>();
     /**
      * Callback to invoke when dialog resizing is completed.
      * @param {MouseEvent} event - Mouse event.
      * @group Emits
      */
-    @Output() onResizeEnd: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    readonly onResizeEnd = output<MouseEvent>();
     /**
      * Callback to invoke when dialog dragging is completed.
      * @param {DragEvent} event - Drag event.
      * @group Emits
      */
-    @Output() onDragEnd: EventEmitter<DragEvent> = new EventEmitter<DragEvent>();
+    readonly onDragEnd = output<DragEvent>();
     /**
      * Callback to invoke when dialog maximized or unmaximized.
      * @group Emits
      */
-    @Output() onMaximize: EventEmitter<any> = new EventEmitter<any>();
+    readonly onMaximize = output<any>();
 
-    @ViewChild('titlebar') headerViewChild: Nullable<ElementRef>;
+    readonly headerViewChild = viewChild<Nullable<ElementRef>>('titlebar');
 
-    @ViewChild('content') contentViewChild: Nullable<ElementRef>;
+    readonly contentViewChild = viewChild<Nullable<ElementRef>>('content');
 
-    @ViewChild('footer') footerViewChild: Nullable<ElementRef>;
+    readonly footerViewChild = viewChild<Nullable<ElementRef>>('footer');
     /**
      * Header template.
      * @group Templates
      */
-    @Input('content') headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = input<TemplateRef<void>>(undefined, { alias: "content" });
     /**
      * Content template.
      * @group Templates
      */
-    @Input() contentTemplate: TemplateRef<void> | undefined;
+    readonly contentTemplate = input<TemplateRef<void>>();
     /**
      * Footer template.
      * @group Templates
      */
-    @Input() footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = input<TemplateRef<void>>();
     /**
      * Close icon template.
      * @group Templates
      */
-    @Input() closeIconTemplate: TemplateRef<void> | undefined;
+    readonly closeIconTemplate = input<TemplateRef<void>>();
     /**
      * Maximize icon template.
      * @group Templates
      */
-    @Input() maximizeIconTemplate: TemplateRef<void> | undefined;
+    readonly maximizeIconTemplate = input<TemplateRef<void>>();
     /**
      * Minimize icon template.
      * @group Templates
      */
-    @Input() minimizeIconTemplate: TemplateRef<void> | undefined;
+    readonly minimizeIconTemplate = input<TemplateRef<void>>();
     /**
      * Headless template.
      * @group Templates
      */
-    @Input() headlessTemplate: TemplateRef<void> | undefined;
+    readonly headlessTemplate = input<TemplateRef<void>>();
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) _headerTemplate: TemplateRef<void> | undefined;
+    readonly _headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom content template.
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) _contentTemplate: TemplateRef<void> | undefined;
+    readonly _contentTemplate = contentChild<TemplateRef<void>>('content', { descendants: false });
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) _footerTemplate: TemplateRef<void> | undefined;
+    readonly _footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     /**
      * Custom close icon template.
      * @group Templates
      */
-    @ContentChild('closeicon', { descendants: false }) _closeiconTemplate: TemplateRef<void> | undefined;
+    readonly _closeiconTemplate = contentChild<TemplateRef<void>>('closeicon', { descendants: false });
 
     /**
      * Custom maximize icon template.
      * @group Templates
      */
-    @ContentChild('maximizeicon', { descendants: false }) _maximizeiconTemplate: TemplateRef<void> | undefined;
+    readonly _maximizeiconTemplate = contentChild<TemplateRef<void>>('maximizeicon', { descendants: false });
 
     /**
      * Custom minimize icon template.
      * @group Templates
      */
-    @ContentChild('minimizeicon', { descendants: false }) _minimizeiconTemplate: TemplateRef<void> | undefined;
+    readonly _minimizeiconTemplate = contentChild<TemplateRef<void>>('minimizeicon', { descendants: false });
 
     /**
      * Custom headless template.
      * @group Templates
      */
-    @ContentChild('headless', { descendants: false }) _headlessTemplate: TemplateRef<void> | undefined;
+    readonly _headlessTemplate = contentChild<TemplateRef<void>>('headless', { descendants: false });
 
     $appendTo = computed(() => this.appendTo() || this.config.overlayAppendTo());
 
@@ -635,25 +525,25 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
 
     get maskClass() {
         const positions = ['left', 'right', 'top', 'topleft', 'topright', 'bottom', 'bottomleft', 'bottomright'];
-        const pos = positions.find((item) => item === this.position);
+        const pos = positions.find((item) => item === this.position());
 
         return {
             'p-dialog-mask': true,
-            'p-overlay-mask': this.modal || this.dismissableMask,
+            'p-overlay-mask': this.modal() || this.dismissableMask(),
             [`p-dialog-${pos}`]: pos
         };
     }
 
     onInit() {
-        if (this.breakpoints) {
+        if (this.breakpoints()) {
             this.createStyle();
         }
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'header':
                     this.headerT = item.template;
@@ -691,7 +581,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     getAriaLabelledBy() {
-        return this.header !== null ? uuid('pn_id_') + '_header' : null;
+        return this.header() !== null ? uuid('pn_id_') + '_header' : null;
     }
 
     parseDurationToMilliseconds(durationString: string): number | undefined {
@@ -715,7 +605,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
 
     _focus(focusParentElement?: HTMLElement): boolean {
         if (focusParentElement) {
-            const timeoutDuration = this.parseDurationToMilliseconds(this.transitionOptions);
+            const timeoutDuration = this.parseDurationToMilliseconds(this.transitionOptions());
             let _focusableElements = DomHandler.getFocusableElements(focusParentElement);
             if (_focusableElements && _focusableElements.length > 0) {
                 this.zone.runOutsideAngular(() => {
@@ -728,15 +618,15 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         return false;
     }
 
-    focus(focusParentElement: HTMLElement = this.contentViewChild?.nativeElement) {
+    focus(focusParentElement: HTMLElement = this.contentViewChild()?.nativeElement) {
         let focused = this._focus(focusParentElement);
 
         if (!focused) {
-            focused = this._focus(this.footerViewChild?.nativeElement);
+            focused = this._focus(this.footerViewChild()?.nativeElement);
             if (!focused) {
-                focused = this._focus(this.headerViewChild?.nativeElement);
+                focused = this._focus(this.headerViewChild()?.nativeElement);
                 if (!focused) {
-                    this._focus(this.contentViewChild?.nativeElement);
+                    this._focus(this.contentViewChild()?.nativeElement);
                 }
             }
         }
@@ -749,7 +639,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     enableModality() {
-        if (this.closable && this.dismissableMask) {
+        if (this.closable() && this.dismissableMask()) {
             this.maskClickListener = this.renderer.listen(this.wrapper, 'mousedown', (event: any) => {
                 if (this.wrapper && this.wrapper.isSameNode(event.target)) {
                     this.close(event);
@@ -757,21 +647,21 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             });
         }
 
-        if (this.modal) {
+        if (this.modal()) {
             blockBodyScroll();
         }
     }
 
     disableModality() {
         if (this.wrapper) {
-            if (this.dismissableMask) {
+            if (this.dismissableMask()) {
                 this.unbindMaskClickListener();
             }
 
             // for nested dialogs w/modal
             const scrollBlockers = document.querySelectorAll('[data-p-scrollblocker-active="true"]');
 
-            if (this.modal && scrollBlockers && scrollBlockers.length == 1) {
+            if (this.modal() && scrollBlockers && scrollBlockers.length == 1) {
                 unblockBodyScroll();
             }
 
@@ -784,7 +674,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     maximize() {
         this.maximized = !this.maximized;
 
-        if (!this.modal && !this.blockScroll) {
+        if (!this.modal() && !this.blockScroll()) {
             if (this.maximized) {
                 blockBodyScroll();
             } else {
@@ -803,11 +693,11 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     moveOnTop() {
-        if (this.autoZIndex) {
-            ZIndexUtils.set('modal', this.container(), this.baseZIndex + this.config.zIndex.modal);
+        if (this.autoZIndex()) {
+            ZIndexUtils.set('modal', this.container(), this.baseZIndex() + this.config.zIndex.modal);
             (this.wrapper as HTMLElement).style.zIndex = String(parseInt((this.container() as HTMLDivElement).style.zIndex, 10) - 1);
         } else {
-            this.zIndexForLayering = ZIndexUtils.generateZIndex('modal', (this.baseZIndex ?? 0) + this.config.zIndex.modal);
+            this.zIndexForLayering = ZIndexUtils.generateZIndex('modal', (this.baseZIndex() ?? 0) + this.config.zIndex.modal);
         }
     }
 
@@ -819,11 +709,11 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
                 setAttribute(this.styleElement, 'nonce', this.config?.csp()?.nonce);
                 this.renderer.appendChild(this.document.head, this.styleElement);
                 let innerHTML = '';
-                for (let breakpoint in this.breakpoints) {
+                for (let breakpoint in this.breakpoints()) {
                     innerHTML += `
                         @media screen and (max-width: ${breakpoint}) {
                             .p-dialog[${this.id}]:not(.p-dialog-maximized) {
-                                width: ${this.breakpoints[breakpoint]} !important;
+                                width: ${this.breakpoints()[breakpoint]} !important;
                             }
                         }
                     `;
@@ -843,7 +733,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             return;
         }
 
-        if (this.draggable) {
+        if (this.draggable()) {
             this.dragging = true;
             this.lastPageX = event.pageX;
             this.lastPageY = event.pageY;
@@ -873,14 +763,14 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
 
             this.container()!.style.position = 'fixed';
 
-            if (this.keepInViewport) {
-                if (leftPos >= this.minX && leftPos + containerWidth < viewport.width) {
+            if (this.keepInViewport()) {
+                if (leftPos >= this.minX() && leftPos + containerWidth < viewport.width) {
                     this._style.left = `${leftPos}px`;
                     this.lastPageX = event.pageX;
                     this.container()!.style.left = `${leftPos}px`;
                 }
 
-                if (topPos >= this.minY && topPos + containerHeight < viewport.height) {
+                if (topPos >= this.minY() && topPos + containerHeight < viewport.height) {
                     this._style.top = `${topPos}px`;
                     this.lastPageY = event.pageY;
                     this.container()!.style.top = `${topPos}px`;
@@ -919,7 +809,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     initResize(event: MouseEvent) {
-        if (this.resizable) {
+        if (this.resizable()) {
             this.resizing = true;
             this.lastPageX = event.pageX;
             this.lastPageY = event.pageY;
@@ -936,7 +826,8 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             let deltaY = event.pageY - (this.lastPageY as number);
             let containerWidth = getOuterWidth(this.container() as HTMLDivElement);
             let containerHeight = getOuterHeight(this.container() as HTMLDivElement);
-            let contentHeight = getOuterHeight(this.contentViewChild?.nativeElement);
+            const contentViewChild = this.contentViewChild();
+            let contentHeight = getOuterHeight(contentViewChild?.nativeElement);
             let newWidth = containerWidth + deltaX;
             let newHeight = containerHeight + deltaY;
             let minWidth = (this.container() as HTMLDivElement).style.minWidth;
@@ -956,7 +847,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             }
 
             if ((!minHeight || newHeight > parseInt(minHeight)) && offset.top + newHeight < viewport.height) {
-                (<ElementRef>this.contentViewChild).nativeElement.style.height = contentHeight + newHeight - containerHeight + 'px';
+                (<ElementRef>contentViewChild).nativeElement.style.height = contentHeight + newHeight - containerHeight + 'px';
 
                 if (this._style.height) {
                     this._style.height = newHeight + 'px';
@@ -979,16 +870,16 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     bindGlobalListeners() {
-        if (this.draggable) {
+        if (this.draggable()) {
             this.bindDocumentDragListener();
             this.bindDocumentDragEndListener();
         }
 
-        if (this.resizable) {
+        if (this.resizable()) {
             this.bindDocumentResizeListeners();
         }
 
-        if (this.closeOnEscape && this.closable) {
+        if (this.closeOnEscape() && this.closable()) {
             this.bindDocumentEscapeListener();
         }
     }
@@ -1093,13 +984,13 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         this.bindGlobalListeners();
         this.container()?.setAttribute(this.id, '');
 
-        if (this.modal) {
+        if (this.modal()) {
             this.enableModality();
         }
     }
 
     onAfterEnter() {
-        if (this.focusOnShow) {
+        if (this.focusOnShow()) {
             this.focus();
         }
 
@@ -1107,7 +998,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     onBeforeLeave() {
-        if (this.modal) {
+        if (this.modal()) {
             this.maskVisible = false;
         }
     }
@@ -1116,7 +1007,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         this.onContainerDestroy();
         this.renderDialog.set(false);
 
-        if (this.modal) {
+        if (this.modal()) {
             this.renderMask.set(false);
         } else {
             this.maskVisible = false;
@@ -1142,7 +1033,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             this.maximized = false;
         }
 
-        if (this.modal) {
+        if (this.modal()) {
             this.disableModality();
         }
 
@@ -1150,7 +1041,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             removeClass(this.document.body, 'p-overflow-hidden');
         }
 
-        if (this.container() && this.autoZIndex) {
+        if (this.container() && this.autoZIndex()) {
             ZIndexUtils.clear(this.container());
         }
         if (this.zIndexForLayering) {
@@ -1182,7 +1073,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     get dataP() {
         return this.cn({
             maximized: this.maximized,
-            modal: this.modal
+            modal: this.modal()
         });
     }
 }

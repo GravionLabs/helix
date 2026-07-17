@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 export interface AlertItem {
@@ -13,6 +13,7 @@ export interface AlertItem {
   standalone: true,
   imports: [RouterModule],
   templateUrl: './alert-action.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './alert-action.scss',
 })
 export class HelixAlertAction {

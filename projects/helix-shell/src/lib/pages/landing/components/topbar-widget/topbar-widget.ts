@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 // biome-ignore lint/style/useImportType: DI token, must be value import
 import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -19,6 +19,7 @@ const DEFAULT_NAV_LINKS: HelixNavLink[] = [
   standalone: true,
   imports: [RouterModule, StyleClassModule, ButtonModule, RippleModule, HelixFloatingConfigurator],
   templateUrl: './topbar-widget.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './topbar-widget.scss',
 })
 export class HelixTopbarWidget {

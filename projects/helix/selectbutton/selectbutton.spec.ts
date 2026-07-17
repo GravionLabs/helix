@@ -461,7 +461,7 @@ class TestPrimeTemplateSelectButtonComponent {
 // SelectButton pTemplate component
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule, SharedModule],
+    imports: [SelectButton, FormsModule, SharedModule],
     template: `
         <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with pTemplate -->
@@ -486,7 +486,7 @@ class TestSelectButtonPTemplateComponent {
 // SelectButton #template reference component
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule, SharedModule],
+    imports: [SelectButton, FormsModule, SharedModule],
     template: `
         <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with #template reference -->
@@ -528,13 +528,13 @@ describe('SelectButton pTemplate Tests', () => {
     it('should create component with pTemplate templates', async () => {
         expect(component).toBeTruthy();
         expect(selectButtonInstance).toBeTruthy();
-        expect(() => selectButtonInstance.itemTemplate).not.toThrow();
+        expect(() => selectButtonInstance.itemTemplate()).not.toThrow();
     });
 
     it('should pass context parameters to item template', async () => {
         // Verify that the select button component is working with options
-        expect(selectButtonInstance.options).toBeDefined();
-        expect(selectButtonInstance.options?.length).toBe(3);
+        expect(selectButtonInstance.options()).toBeDefined();
+        expect(selectButtonInstance.options()?.length).toBe(3);
         expect(component.options.length).toBe(3);
     });
 
@@ -581,7 +581,7 @@ describe('SelectButton pTemplate Tests', () => {
             await fixture.whenStable();
 
             // Verify that ngAfterContentInit is called correctly
-            expect(selectButtonInstance.options).toBeDefined();
+            expect(selectButtonInstance.options()).toBeDefined();
             expect(component.options).toBeDefined();
         }
     });
@@ -607,13 +607,13 @@ describe('SelectButton #template Reference Tests', () => {
     it('should create component with #template references', async () => {
         expect(component).toBeTruthy();
         expect(selectButtonInstance).toBeTruthy();
-        expect(() => selectButtonInstance.itemTemplate).not.toThrow();
+        expect(() => selectButtonInstance.itemTemplate()).not.toThrow();
     });
 
     it('should pass context parameters to item template', async () => {
         // Verify that the select button component is working with options
-        expect(selectButtonInstance.options).toBeDefined();
-        expect(selectButtonInstance.options?.length).toBe(3);
+        expect(selectButtonInstance.options()).toBeDefined();
+        expect(selectButtonInstance.options()?.length).toBe(3);
         expect(component.options.length).toBe(3);
     });
 
@@ -660,7 +660,7 @@ describe('SelectButton #template Reference Tests', () => {
             await fixture.whenStable();
 
             // Verify that ngAfterContentInit is called correctly
-            expect(selectButtonInstance.options).toBeDefined();
+            expect(selectButtonInstance.options()).toBeDefined();
             expect(component.options).toBeDefined();
         }
     });
@@ -1164,7 +1164,7 @@ describe('SelectButton PassThrough Tests', () => {
 // Test components for inline PT tests
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `<p-selectbutton [options]="options" [pt]="{ root: 'INLINE_STRING' }" />`
 })
 class TestInlineStringPTComponent {
@@ -1173,7 +1173,7 @@ class TestInlineStringPTComponent {
 
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `<p-selectbutton [options]="options" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }" />`
 })
 class TestInlineObjectPTComponent {
@@ -1182,7 +1182,7 @@ class TestInlineObjectPTComponent {
 
 @Component({
     standalone: true,
-    imports: [SelectButton, FormsModule, CommonModule],
+    imports: [SelectButton, FormsModule],
     template: `
         <p-selectbutton [options]="options1" />
         <p-selectbutton [options]="options2" />

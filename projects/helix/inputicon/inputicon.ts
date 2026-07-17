@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -16,25 +16,25 @@ const INPUTICON_INSTANCE = new InjectionToken<InputIcon>('INPUTICON_INSTANCE');
     selector: 'h-inputicon, h-inputIcon',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `<ng-content></ng-content>`,
+    templateUrl: './inputicon.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [InputIconStyle, { provide: INPUTICON_INSTANCE, useExisting: InputIcon }, { provide: PARENT_INSTANCE, useExisting: InputIcon }],
     hostDirectives: [Bind],
     host: {
-        '[class]': "cn(cx('root'), styleClass)"
+        '[class]': "cn(cx('root'), styleClass())"
     }
 })
 export class InputIcon extends BaseComponent<InputIconPassThrough> {
     componentName = 'InputIcon';
 
-    @Input() hostName: any = '';
+    readonly hostName = input<any>('');
     /**
      * Style class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
 
     _componentStyle = inject(InputIconStyle);
 

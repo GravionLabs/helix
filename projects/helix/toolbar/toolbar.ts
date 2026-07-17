@@ -16,18 +16,7 @@ const TOOLBAR_INSTANCE = new InjectionToken<Toolbar>('TOOLBAR_INSTANCE');
     selector: 'h-toolbar',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <ng-content></ng-content>
-        <div [class]="cx('start')" *ngIf="startTemplate || _startTemplate" [hBind]="ptm('start')">
-            <ng-container *ngTemplateOutlet="startTemplate || _startTemplate"></ng-container>
-        </div>
-        <div [class]="cx('center')" *ngIf="centerTemplate || _centerTemplate" [hBind]="ptm('center')">
-            <ng-container *ngTemplateOutlet="centerTemplate || _centerTemplate"></ng-container>
-        </div>
-        <div [class]="cx('end')" *ngIf="endTemplate || _endTemplate" [hBind]="ptm('end')">
-            <ng-container *ngTemplateOutlet="endTemplate || _endTemplate"></ng-container>
-        </div>
-    `,
+    templateUrl: './toolbar.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ToolbarStyle, { provide: TOOLBAR_INSTANCE, useExisting: Toolbar }, { provide: PARENT_INSTANCE, useExisting: Toolbar }],

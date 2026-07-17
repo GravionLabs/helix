@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${textarea_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-textarea.ng-invalid.ng-dirty {
         border-color: dt('textarea.invalid.border.color');
     }

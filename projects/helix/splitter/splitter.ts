@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, contentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, Output, QueryList, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChild, ElementRef, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
 import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -19,41 +19,11 @@ const SPLITTER_INSTANCE = new InjectionToken<Splitter>('SPLITTER_INSTANCE');
     selector: 'h-splitter',
     standalone: true,
     imports: [CommonModule, SharedModule, BindModule],
-    template: `
-        <ng-template ngFor let-panel [ngForOf]="panels" let-i="index">
-            <div [hBind]="ptm('panel')" [class]="cn(cx('panel'), panelStyleClass)" [ngStyle]="panelStyle" tabindex="-1">
-                <ng-container *ngTemplateOutlet="panel"></ng-container>
-            </div>
-            <div
-                *ngIf="i !== panels.length - 1"
-                [hBind]="ptm('gutter')"
-                [class]="cx('gutter')"
-                role="separator"
-                tabindex="-1"
-                (mousedown)="onGutterMouseDown($event, i)"
-                (touchstart)="onGutterTouchStart($event, i)"
-                (touchmove)="onGutterTouchMove($event)"
-                (touchend)="onGutterTouchEnd($event)"
-                [attr.data-p-gutter-resizing]="false"
-                [attr.data-p]="dataP"
-            >
-                <div
-                    [hBind]="ptm('gutterHandle')"
-                    [class]="cx('gutterHandle')"
-                    tabindex="0"
-                    [ngStyle]="gutterStyle()"
-                    [attr.aria-orientation]="layout"
-                    [attr.aria-valuenow]="prevSize"
-                    (keyup)="onGutterKeyUp($event)"
-                    (keydown)="onGutterKeyDown($event, i)"
-                ></div>
-            </div>
-        </ng-template>
-    `,
+    templateUrl: './splitter.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.data-p-gutter-resizing]': 'false',
         '[attr.data-p]': 'dataP'
     },
@@ -74,47 +44,49 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
      * @deprecated since v20. Use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Style class of the panel.
      * @group Props
      */
-    @Input() panelStyleClass: string | undefined;
+    readonly panelStyleClass = input<string>();
     /**
      * Inline style of the panel.
      * @group Props
      */
-    @Input() panelStyle: { [klass: string]: any } | null | undefined;
+    readonly panelStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Defines where a stateful splitter keeps its state, valid values are 'session' for sessionStorage and 'local' for localStorage.
      * @group Props
      */
-    @Input() stateStorage: string | undefined = 'session';
+    readonly stateStorage = input<string | undefined>('session');
     /**
      * Storage identifier of a stateful Splitter.
      * @group Props
      */
-    @Input() stateKey: string | undefined | null = null;
+    readonly stateKey = input<string | undefined | null>(null);
     /**
      * Orientation of the panels. Valid values are 'horizontal' and 'vertical'.
      * @group Props
      */
-    @Input() layout: string | undefined = 'horizontal';
+    readonly layout = input<string | undefined>('horizontal');
     /**
      * Size of the divider in pixels.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) gutterSize: number = 4;
+    readonly gutterSize = input<number, unknown>(4, { transform: numberAttribute });
     /**
      * Step factor to increment/decrement the size of the panels while pressing the arrow keys.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) step: number = 5;
+    readonly step = input<number, unknown>(5, { transform: numberAttribute });
     /**
      * Minimum size of the elements relative to 100%.
      * @group Props
      */
-    @Input() minSizes: number[] = [];
+    readonly minSizes = input<number[]>([]);
     /**
      * Size of the elements relative to 100%.
      * @group Props
@@ -134,7 +106,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
                 let panelSize = panelInitialSize || 100 / this.panels.length;
 
                 _panelSizes[i] = panelSize;
-                children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * this.gutterSize + 'px)';
+                children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             });
         }
     }
@@ -143,17 +115,17 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
      * @param {SplitterResizeEndEvent} event - Custom panel resize end event
      * @group Emits
      */
-    @Output() onResizeEnd: EventEmitter<SplitterResizeEndEvent> = new EventEmitter<SplitterResizeEndEvent>();
+    readonly onResizeEnd = output<SplitterResizeEndEvent>();
     /**
      * Callback to invoke when resize starts.
      * @param {SplitterResizeStartEvent} event - Custom panel resize start event
      * @group Emits
      */
-    @Output() onResizeStart: EventEmitter<SplitterResizeStartEvent> = new EventEmitter<SplitterResizeStartEvent>();
+    readonly onResizeStart = output<SplitterResizeStartEvent>();
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
-    @ContentChildren('panel', { descendants: false }) panelChildren!: QueryList<ElementRef>;
+    readonly panelChildren = contentChildren<ElementRef>('panel');
 
     splitter = contentChild(forwardRef(() => Splitter));
 
@@ -196,8 +168,9 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     _componentStyle = inject(SplitterStyle);
 
     onAfterContentInit() {
-        if (this.templates && this.templates.toArray().length > 0) {
-            this.templates.forEach((item) => {
+        const templates = this.templates();
+        if (templates && templates.length > 0) {
+            templates.forEach((item) => {
                 switch (item.getType()) {
                     case 'panel':
                         this.panels.push(item.template);
@@ -208,8 +181,9 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
                 }
             });
         }
-        if (this.panelChildren && this.panelChildren.toArray().length > 0) {
-            this.panelChildren.forEach((item) => {
+        const panelChildren = this.panelChildren();
+        if (panelChildren && panelChildren.length > 0) {
+            panelChildren.forEach((item) => {
                 this.panels.push(item);
             });
         }
@@ -232,7 +206,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
                         let panelSize = panelInitialSize || 100 / this.panels.length;
 
                         _panelSizes[i] = panelSize;
-                        children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * (this.gutterSize as number) + 'px)';
+                        children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * (this.gutterSize() as number) + 'px)';
                     });
 
                     this._panelSizes = _panelSizes;
@@ -300,8 +274,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         this.prevSize = parseFloat(newPrevPanelSize).toFixed(4);
 
         if (this.validateResize(newPrevPanelSize, newNextPanelSize)) {
-            (this.prevPanelElement as HTMLElement).style.flexBasis = 'calc(' + newPrevPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize + 'px)';
-            (this.nextPanelElement as HTMLElement).style.flexBasis = 'calc(' + newNextPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize + 'px)';
+            (this.prevPanelElement as HTMLElement).style.flexBasis = 'calc(' + newPrevPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
+            (this.nextPanelElement as HTMLElement).style.flexBasis = 'calc(' + newNextPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             this._panelSizes[this.prevPanelIndex as number] = newPrevPanelSize;
             this._panelSizes[(this.prevPanelIndex as number) + 1] = newNextPanelSize;
         }
@@ -370,8 +344,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     onGutterKeyDown(event, index) {
         switch (event.code) {
             case 'ArrowLeft': {
-                if (this.layout === 'horizontal') {
-                    this.setTimer(event, index, this.step * -1);
+                if (this.layout() === 'horizontal') {
+                    this.setTimer(event, index, this.step() * -1);
                 }
 
                 event.preventDefault();
@@ -379,8 +353,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
             }
 
             case 'ArrowRight': {
-                if (this.layout === 'horizontal') {
-                    this.setTimer(event, index, this.step);
+                if (this.layout() === 'horizontal') {
+                    this.setTimer(event, index, this.step());
                 }
 
                 event.preventDefault();
@@ -388,8 +362,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
             }
 
             case 'ArrowDown': {
-                if (this.layout === 'vertical') {
-                    this.setTimer(event, index, this.step * -1);
+                if (this.layout() === 'vertical') {
+                    this.setTimer(event, index, this.step() * -1);
                 }
 
                 event.preventDefault();
@@ -397,8 +371,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
             }
 
             case 'ArrowUp': {
-                if (this.layout === 'vertical') {
-                    this.setTimer(event, index, this.step);
+                if (this.layout() === 'vertical') {
+                    this.setTimer(event, index, this.step());
                 }
 
                 event.preventDefault();
@@ -412,11 +386,13 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     }
 
     validateResize(newPrevPanelSize: number, newNextPanelSize: number) {
-        if (this.minSizes.length >= 1 && this.minSizes[0] && this.minSizes[0] > newPrevPanelSize) {
+        const minSizes = this.minSizes();
+        if (this.minSizes().length >= 1 && minSizes[0] && minSizes[0] > newPrevPanelSize) {
             return false;
         }
 
-        if (this.minSizes.length > 1 && this.minSizes[1] && this.minSizes[1] > newNextPanelSize) {
+        const minSizesValue = this.minSizes();
+        if (this.minSizes().length > 1 && minSizesValue[1] && minSizesValue[1] > newNextPanelSize) {
             return false;
         }
 
@@ -490,12 +466,13 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     }
 
     isStateful() {
-        return this.stateKey != null;
+        return this.stateKey() != null;
     }
 
     getStorage() {
         if (isPlatformBrowser(this.platformId)) {
-            switch (this.stateStorage) {
+            const stateStorage = this.stateStorage();
+            switch (stateStorage) {
                 case 'local':
                     return this.document.defaultView?.localStorage;
 
@@ -503,7 +480,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
                     return this.document.defaultView?.sessionStorage;
 
                 default:
-                    throw new Error(this.stateStorage + ' is not a valid value for the state storage, supported values are "local" and "session".');
+                    throw new Error(stateStorage + ' is not a valid value for the state storage, supported values are "local" and "session".');
             }
         } else {
             throw new Error('Storage is not a available by default on the server.');
@@ -511,18 +488,18 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     }
 
     saveState() {
-        this.getStorage()?.setItem(this.stateKey as string, JSON.stringify(this._panelSizes));
+        this.getStorage()?.setItem(this.stateKey() as string, JSON.stringify(this._panelSizes));
     }
 
     restoreState() {
         const storage = this.getStorage();
-        const stateString = storage?.getItem(this.stateKey as string);
+        const stateString = storage?.getItem(this.stateKey() as string);
 
         if (stateString) {
             this._panelSizes = JSON.parse(stateString);
             let children = [...(this.el as ElementRef).nativeElement.children].filter((child) => child.getAttribute('data-pc-section') === 'panel');
             children.forEach((child, i) => {
-                child.style.flexBasis = 'calc(' + this._panelSizes[i] + '% - ' + (this.panels.length - 1) * this.gutterSize + 'px)';
+                child.style.flexBasis = 'calc(' + this._panelSizes[i] + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             });
 
             return true;
@@ -532,17 +509,17 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     }
 
     gutterStyle() {
-        if (this.horizontal()) return { width: this.gutterSize + 'px' };
-        else return { height: this.gutterSize + 'px' };
+        if (this.horizontal()) return { width: this.gutterSize() + 'px' };
+        else return { height: this.gutterSize() + 'px' };
     }
 
     horizontal() {
-        return this.layout === 'horizontal';
+        return this.layout() === 'horizontal';
     }
 
     get dataP() {
         return this.cn({
-            [this.layout as string]: this.layout,
+            [this.layout() as string]: this.layout(),
             nested: this.nestedState() != null
         });
     }

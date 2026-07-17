@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { BadgeSeverity } from './badge';
 import { HelixBadge } from './badge';
 
@@ -17,6 +17,7 @@ const DEFAULT_ENV = { severity: 'info' as BadgeSeverity, icon: 'pi pi-question',
   selector: 'helix-environment-badge',
   standalone: true,
   imports: [HelixBadge],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <helix-badge
       [severity]="mapped().severity"

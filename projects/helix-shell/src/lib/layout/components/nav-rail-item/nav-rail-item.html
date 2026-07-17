@@ -1,14 +1,14 @@
 @if (hasChildren()) {
   <a
     class="helix-nav-rail-link"
-    [title]="item()?.label"
+    [title]="$safeNavigationMigration(item()?.label)"
     [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
     tabindex="0"
     hRipple
   >
     @if (item()?.icon) {
-      <i [ngClass]="item()?.icon" class="helix-nav-rail-icon"></i>
+      <i [ngClass]="$safeNavigationMigration(item()?.icon)" class="helix-nav-rail-icon"></i>
     }
     @if (!isCollapsed()) {
       <span class="helix-nav-rail-label">{{ item()?.label }}</span>
@@ -34,8 +34,8 @@
     class="helix-nav-rail-link"
     [class.active]="isActive()"
     [attr.aria-current]="isActive() ? 'page' : null"
-    [title]="item()?.label"
-    [routerLink]="item()?.routerLink"
+    [title]="$safeNavigationMigration(item()?.label)"
+    [routerLink]="$safeNavigationMigration(item()?.routerLink)"
     [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
     tabindex="0"
@@ -45,7 +45,7 @@
       <span class="helix-nav-rail-accent"></span>
     }
     @if (item()?.icon) {
-      <i [ngClass]="item()?.icon" class="helix-nav-rail-icon"></i>
+      <i [ngClass]="$safeNavigationMigration(item()?.icon)" class="helix-nav-rail-icon"></i>
     }
     @if (!isCollapsed()) {
       <span class="helix-nav-rail-label">{{ item()?.label }}</span>

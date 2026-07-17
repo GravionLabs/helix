@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, DebugElement, input, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -92,15 +92,17 @@ class TestBasicScrollerComponent {
     standalone: false,
     template: `
         <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-            <ng-template #content let-items="items" let-options="options">
-                <div class="custom-content">
-                    <div *ngFor="let item of items; let i = index" class="custom-item" [attr.data-index]="i">
-                        {{ item.label }}
-                    </div>
+          <ng-template #content let-items="items" let-options="options">
+            <div class="custom-content">
+              @for (item of items; track item; let i = $index) {
+                <div class="custom-item" [attr.data-index]="i">
+                  {{ item.label }}
                 </div>
-            </ng-template>
+              }
+            </div>
+          </ng-template>
         </p-scroller>
-    `
+        `
 })
 class TestContentTemplateComponent {
     items = [
@@ -118,19 +120,27 @@ class TestContentTemplateComponent {
     standalone: false,
     template: `
         <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-            <ng-template #item let-item="item" let-options="options">
-                <div class="item-template" [attr.data-index]="options.index">
-                    <span class="item-label">{{ item.label }}</span>
-                    <span class="item-index">Index: {{ options.index }}</span>
-                    <span class="item-count">Count: {{ options.count }}</span>
-                    <span class="item-first" *ngIf="options.first">First</span>
-                    <span class="item-last" *ngIf="options.last">Last</span>
-                    <span class="item-even" *ngIf="options.even">Even</span>
-                    <span class="item-odd" *ngIf="options.odd">Odd</span>
-                </div>
-            </ng-template>
+          <ng-template #item let-item="item" let-options="options">
+            <div class="item-template" [attr.data-index]="options.index">
+              <span class="item-label">{{ item.label }}</span>
+              <span class="item-index">Index: {{ options.index }}</span>
+              <span class="item-count">Count: {{ options.count }}</span>
+              @if (options.first) {
+                <span class="item-first">First</span>
+              }
+              @if (options.last) {
+                <span class="item-last">Last</span>
+              }
+              @if (options.even) {
+                <span class="item-even">Even</span>
+              }
+              @if (options.odd) {
+                <span class="item-odd">Odd</span>
+              }
+            </div>
+          </ng-template>
         </p-scroller>
-    `
+        `
 })
 class TestItemTemplateComponent {
     items = [
@@ -3290,24 +3300,26 @@ describe('Scroller', () => {
                 standalone: false,
                 template: `
                     <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-                        <ng-template pTemplate="content" let-items let-options="options">
-                            <div
-                                class="p-template-content"
-                                [attr.data-items-count]="items?.length"
-                                [attr.data-has-scroll-to]="!options.scrollTo"
-                                [attr.data-has-scroll-to-index]="!options.scrollToIndex"
-                                [attr.data-has-get-item-options]="!options.getItemOptions"
-                            >
-                                <div class="content-scrollable-element" [attr.data-scrollable]="options.scrollableElement">
-                                    <div *ngFor="let item of items; let i = index" class="p-template-content-item" [attr.data-index]="i" [attr.data-item-id]="item.id">
-                                        {{ item.name }}
-                                    </div>
-                                </div>
-                                <div class="content-options" [attr.data-orientation]="options.orientation" [attr.data-both]="options.both" [attr.data-horizontal]="options.horizontal" [attr.data-vertical]="options.vertical"></div>
-                            </div>
-                        </ng-template>
+                      <ng-template pTemplate="content" let-items let-options="options">
+                        <div
+                          class="p-template-content"
+                          [attr.data-items-count]="items?.length"
+                          [attr.data-has-scroll-to]="!options.scrollTo"
+                          [attr.data-has-scroll-to-index]="!options.scrollToIndex"
+                          [attr.data-has-get-item-options]="!options.getItemOptions"
+                          >
+                          <div class="content-scrollable-element" [attr.data-scrollable]="options.scrollableElement">
+                            @for (item of items; track item; let i = $index) {
+                              <div class="p-template-content-item" [attr.data-index]="i" [attr.data-item-id]="item.id">
+                                {{ item.name }}
+                              </div>
+                            }
+                          </div>
+                          <div class="content-options" [attr.data-orientation]="options.orientation" [attr.data-both]="options.both" [attr.data-horizontal]="options.horizontal" [attr.data-vertical]="options.vertical"></div>
+                        </div>
+                      </ng-template>
                     </p-scroller>
-                `
+                    `
             })
             class TestPTemplateContentComponent {
                 items = [
@@ -3325,27 +3337,35 @@ describe('Scroller', () => {
                 standalone: false,
                 template: `
                     <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-                        <ng-template pTemplate="item" let-item let-options="options">
-                            <div
-                                class="p-template-item"
-                                [attr.data-index]="options.index"
-                                [attr.data-count]="options.count"
-                                [attr.data-first]="options.first"
-                                [attr.data-last]="options.last"
-                                [attr.data-even]="options.even"
-                                [attr.data-odd]="options.odd"
-                                [attr.data-item-id]="item.id"
-                            >
-                                <span class="item-name">{{ item.name }}</span>
-                                <span class="item-position" *ngIf="options.first">FIRST</span>
-                                <span class="item-position" *ngIf="options.last">LAST</span>
-                                <span class="item-parity" *ngIf="options.even">EVEN</span>
-                                <span class="item-parity" *ngIf="options.odd">ODD</span>
-                                <span class="item-meta">{{ options.index + 1 }}/{{ options.count }}</span>
-                            </div>
-                        </ng-template>
+                      <ng-template pTemplate="item" let-item let-options="options">
+                        <div
+                          class="p-template-item"
+                          [attr.data-index]="options.index"
+                          [attr.data-count]="options.count"
+                          [attr.data-first]="options.first"
+                          [attr.data-last]="options.last"
+                          [attr.data-even]="options.even"
+                          [attr.data-odd]="options.odd"
+                          [attr.data-item-id]="item.id"
+                          >
+                          <span class="item-name">{{ item.name }}</span>
+                          @if (options.first) {
+                            <span class="item-position">FIRST</span>
+                          }
+                          @if (options.last) {
+                            <span class="item-position">LAST</span>
+                          }
+                          @if (options.even) {
+                            <span class="item-parity">EVEN</span>
+                          }
+                          @if (options.odd) {
+                            <span class="item-parity">ODD</span>
+                          }
+                          <span class="item-meta">{{ options.index + 1 }}/{{ options.count }}</span>
+                        </div>
+                      </ng-template>
                     </p-scroller>
-                `
+                    `
             })
             class TestPTemplateItemComponent {
                 items = [
@@ -3531,16 +3551,18 @@ describe('Scroller', () => {
                 standalone: false,
                 template: `
                     <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-                        <ng-template #content let-items let-options="options">
-                            <div class="hash-template-content" [attr.data-items-count]="items?.length" [attr.data-has-scroll-to]="!options.scrollTo" [attr.data-orientation]="options.orientation">
-                                <div class="hash-content-list">
-                                    <div *ngFor="let item of items; let i = index" class="hash-content-item" [attr.data-index]="i">{{ item.name }} (Hash Template)</div>
-                                </div>
-                                <div class="hash-content-meta" [attr.data-scrollable-element]="options.scrollableElement">Content rendered via #content template</div>
-                            </div>
-                        </ng-template>
+                      <ng-template #content let-items let-options="options">
+                        <div class="hash-template-content" [attr.data-items-count]="items?.length" [attr.data-has-scroll-to]="!options.scrollTo" [attr.data-orientation]="options.orientation">
+                          <div class="hash-content-list">
+                            @for (item of items; track item; let i = $index) {
+                              <div class="hash-content-item" [attr.data-index]="i">{{ item.name }} (Hash Template)</div>
+                            }
+                          </div>
+                          <div class="hash-content-meta" [attr.data-scrollable-element]="options.scrollableElement">Content rendered via #content template</div>
+                        </div>
+                      </ng-template>
                     </p-scroller>
-                `
+                    `
             })
             class TestHashTemplateContentComponent {
                 items = [
@@ -3556,16 +3578,20 @@ describe('Scroller', () => {
                 standalone: false,
                 template: `
                     <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-                        <ng-template #item let-item let-options="options">
-                            <div class="hash-template-item" [attr.data-index]="options.index" [attr.data-first]="options.first" [attr.data-last]="options.last">
-                                <span class="hash-item-name">{{ item.name }}</span>
-                                <span class="hash-item-badge" *ngIf="options.first">#FIRST</span>
-                                <span class="hash-item-badge" *ngIf="options.last">#LAST</span>
-                                <span class="hash-item-position">{{ options.index }}/{{ options.count - 1 }}</span>
-                            </div>
-                        </ng-template>
+                      <ng-template #item let-item let-options="options">
+                        <div class="hash-template-item" [attr.data-index]="options.index" [attr.data-first]="options.first" [attr.data-last]="options.last">
+                          <span class="hash-item-name">{{ item.name }}</span>
+                          @if (options.first) {
+                            <span class="hash-item-badge">#FIRST</span>
+                          }
+                          @if (options.last) {
+                            <span class="hash-item-badge">#LAST</span>
+                          }
+                          <span class="hash-item-position">{{ options.index }}/{{ options.count - 1 }}</span>
+                        </div>
+                      </ng-template>
                     </p-scroller>
-                `
+                    `
             })
             class TestHashTemplateItemComponent {
                 items = [
@@ -3713,23 +3739,25 @@ describe('Scroller', () => {
                 standalone: false,
                 template: `
                     <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
-                        <!-- Both pTemplate and #template should work together -->
-                        <ng-template pTemplate="content" let-items let-options="options">
-                            <div class="mixed-p-template-content">
-                                <h3>pTemplate Content ({{ items?.length }} items)</h3>
-                                <div class="p-content-items">
-                                    <div *ngFor="let item of items" class="p-content-item">{{ item.name }}</div>
-                                </div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template #item let-item let-options="options">
-                            <div class="mixed-hash-template-item">
-                                <span>#Hash Item: {{ item.name }} ({{ options.index }})</span>
-                            </div>
-                        </ng-template>
+                      <!-- Both pTemplate and #template should work together -->
+                      <ng-template pTemplate="content" let-items let-options="options">
+                        <div class="mixed-p-template-content">
+                          <h3>pTemplate Content ({{ items?.length }} items)</h3>
+                          <div class="p-content-items">
+                            @for (item of items; track item) {
+                              <div class="p-content-item">{{ item.name }}</div>
+                            }
+                          </div>
+                        </div>
+                      </ng-template>
+                    
+                      <ng-template #item let-item let-options="options">
+                        <div class="mixed-hash-template-item">
+                          <span>#Hash Item: {{ item.name }} ({{ options.index }})</span>
+                        </div>
+                      </ng-template>
                     </p-scroller>
-                `
+                    `
             })
             class TestMixedTemplateComponent {
                 items = [
@@ -3918,7 +3946,7 @@ describe('Scroller', () => {
     describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
-            imports: [CommonModule, Scroller],
+            imports: [Scroller],
             template: `
                 <p-scroller [items]="items()" [itemSize]="itemSize()" [pt]="pt()" [showLoader]="showLoader()" [loading]="loading()">
                     <ng-template #item let-item>
@@ -4127,7 +4155,7 @@ describe('Scroller', () => {
         describe('Case 6: Inline PT test', () => {
             @Component({
                 standalone: true,
-                imports: [CommonModule, Scroller],
+                imports: [Scroller],
                 template: `<p-scroller [items]="items" [itemSize]="50" [pt]="{ root: 'INLINE_TEST_CLASS' }">
                     <ng-template #item let-item>{{ item }}</ng-template>
                 </p-scroller>`
@@ -4147,7 +4175,7 @@ describe('Scroller', () => {
             it('should apply inline PT with object', async () => {
                 @Component({
                     standalone: true,
-                    imports: [CommonModule, Scroller],
+                    imports: [Scroller],
                     template: `<p-scroller [items]="items" [itemSize]="50" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }">
                         <ng-template #item let-item>{{ item }}</ng-template>
                     </p-scroller>`
@@ -4167,7 +4195,7 @@ describe('Scroller', () => {
         describe('Case 7: Global PT from PrimeNGConfig', () => {
             @Component({
                 standalone: true,
-                imports: [CommonModule, Scroller],
+                imports: [Scroller],
                 template: `
                     <p-scroller [items]="items1" [itemSize]="50">
                         <ng-template #item let-item>{{ item }}</ng-template>

@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${inputgroup_style}
 
-    /*For PrimeNG*/
+    /*For Helix*/
 
     .p-inputgroup > .p-component,
     .p-inputgroup > .p-inputwrapper > .p-component,

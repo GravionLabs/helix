@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
 ${datepicker_style}
 
-/* For PrimeNG */
+/* For Helix */
 .p-datepicker.ng-invalid.ng-dirty .p-inputtext {
     border-color: dt('inputtext.invalid.border.color');
 }

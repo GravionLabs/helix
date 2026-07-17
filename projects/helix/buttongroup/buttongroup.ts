@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, inject, NgModule, ViewEncapsulation } from '@angular/core';
 import { BaseComponent } from '@gravionlabs/helix/basecomponent';
 import { ButtonGroupStyle } from './style/buttongroupstyle';
@@ -6,12 +6,8 @@ import { ButtonGroupStyle } from './style/buttongroupstyle';
 @Component({
     selector: 'h-buttonGroup, h-buttongroup, h-button-group',
     standalone: true,
-    imports: [CommonModule],
-    template: `
-        <span class="p-buttongroup p-component" role="group">
-            <ng-content></ng-content>
-        </span>
-    `,
+    imports: [],
+    templateUrl: './buttongroup.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ButtonGroupStyle]

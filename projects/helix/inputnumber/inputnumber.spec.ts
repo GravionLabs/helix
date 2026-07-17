@@ -660,19 +660,19 @@ describe('InputNumber', () => {
         it('should have clearicon pTemplate', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.clearIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.clearIconTemplate()).not.toThrow();
         });
 
         it('should have incrementbuttonicon pTemplate', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.incrementButtonIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.incrementButtonIconTemplate()).not.toThrow();
         });
 
         it('should have decrementbuttonicon pTemplate', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.decrementButtonIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.decrementButtonIconTemplate()).not.toThrow();
         });
 
         it('should process all pTemplates after content init', async () => {
@@ -719,8 +719,8 @@ describe('InputNumber', () => {
 
         it('should handle currency formatting with pTemplates', () => {
             const inputNumberInstance = inputNumberElement.componentInstance;
-            expect(inputNumberInstance.mode).toBe('currency');
-            expect(inputNumberInstance.currency).toBe('USD');
+            expect(inputNumberInstance.mode()).toBe('currency');
+            expect(inputNumberInstance.currency()).toBe('USD');
             expect(templateComponent.value).toBe(1234.56);
         });
     });
@@ -745,19 +745,19 @@ describe('InputNumber', () => {
         it('should have clearicon #template', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.clearIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.clearIconTemplate()).not.toThrow();
         });
 
         it('should have incrementbuttonicon #template', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.incrementButtonIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.incrementButtonIconTemplate()).not.toThrow();
         });
 
         it('should have decrementbuttonicon #template', () => {
             const inputNumberComponent = inputNumberElement.componentInstance;
             expect(inputNumberComponent).toBeTruthy();
-            expect(() => inputNumberComponent.decrementButtonIconTemplate).not.toThrow();
+            expect(() => inputNumberComponent.decrementButtonIconTemplate()).not.toThrow();
         });
 
         it('should process all #templates after content init', async () => {
@@ -804,8 +804,8 @@ describe('InputNumber', () => {
 
         it('should handle currency formatting with #templates', () => {
             const inputNumberInstance = inputNumberElement.componentInstance;
-            expect(inputNumberInstance.mode).toBe('currency');
-            expect(inputNumberInstance.currency).toBe('USD');
+            expect(inputNumberInstance.mode()).toBe('currency');
+            expect(inputNumberInstance.currency()).toBe('USD');
             expect(templateComponent.value).toBe(1234.56);
         });
     });
@@ -968,8 +968,8 @@ describe('InputNumber', () => {
 
             // Test that currency mode is set correctly
             const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
-            expect(inputNumberInstance.mode).toBe('currency');
-            expect(inputNumberInstance.currency).toBe('USD');
+            expect(inputNumberInstance.mode()).toBe('currency');
+            expect(inputNumberInstance.currency()).toBe('USD');
         });
 
         it('should format EUR currency correctly', async () => {
@@ -982,8 +982,8 @@ describe('InputNumber', () => {
 
             // Test that EUR currency mode is set correctly
             const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
-            expect(inputNumberInstance.mode).toBe('currency');
-            expect(inputNumberInstance.currency).toBe('EUR');
+            expect(inputNumberInstance.mode()).toBe('currency');
+            expect(inputNumberInstance.currency()).toBe('EUR');
         });
 
         it('should handle different currency display modes', async () => {
@@ -996,8 +996,8 @@ describe('InputNumber', () => {
 
             // Test that currency display mode is set correctly
             const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
-            expect(inputNumberInstance.currencyDisplay).toBe('code');
-            expect(inputNumberInstance.currency).toBe('USD');
+            expect(inputNumberInstance.currencyDisplay()).toBe('code');
+            expect(inputNumberInstance.currency()).toBe('USD');
         });
 
         it('should handle different locales', async () => {

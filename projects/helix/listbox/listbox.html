@@ -1,0 +1,280 @@
+<span
+  #firstHiddenFocusableElement
+  role="presentation"
+  class="p-hidden-accessible p-hidden-focusable"
+  [tabindex]="!$disabled() ? tabindex() : -1"
+  (focus)="onFirstHiddenFocus($event)"
+  [attr.data-p-hidden-focusable]="true"
+  [hBind]="ptm('hiddenFirstFocusableElement')"
+  >
+</span>
+@if (headerFacet() || headerTemplate() || _headerTemplate) {
+  <div [class]="cx('header')" [hBind]="ptm('header')">
+    <ng-content select="p-header"></ng-content>
+    <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: modelValue(), options: visibleOptions() }"></ng-container>
+  </div>
+}
+@if ((checkbox() && multiple() && showToggleAll()) || filter()) {
+  <div [class]="cx('header')" [hBind]="ptm('header')">
+    @if (checkbox() && multiple() && showToggleAll()) {
+      <h-checkbox()
+        #headerchkbox
+        (onChange)="onToggleAll($event)"
+        [class]="cx('optionCheckIcon')"
+        [ngModel]="allSelected()"
+        [disabled]="$disabled()"
+        [tabindex]="-1"
+        [variant]="config.inputStyle() === 'filled' || config.inputVariant() === 'filled' ? 'filled' : 'outlined'"
+        [binary]="true"
+        [attr.aria-label]="toggleAllAriaLabel"
+        [pt]="ptm('pcCheckbox')"
+        [unstyled]="unstyled()"
+        >
+        @if (checkIconTemplate() || _checkIconTemplate) {
+          <ng-template #icon>
+            <ng-template *ngTemplateOutlet="checkIconTemplate() || _checkIconTemplate; context: { $implicit: allSelected() }"></ng-template>
+          </ng-template>
+        }
+      </h-checkbox()>
+    }
+    @if (filterTemplate() || _filterTemplate) {
+      <ng-container *ngTemplateOutlet="filterTemplate() || _filterTemplate; context: { options: filterOptions }"></ng-container>
+    } @else {
+      @if (filter()) {
+        <h-iconfield [pt]="ptm('pcFilterContainer')" hostName="listbox" [unstyled]="unstyled()">
+          <input
+            #filterInput
+            hInputText
+            type="text"
+            [class]="cx('pcFilter')"
+            role="searchbox"
+            [value]="_filterValue() || ''"
+            [attr.disabled]="$disabled() ? '' : undefined"
+            [attr.aria-owns]="$id() + '_list'"
+            [attr.aria-activedescendant]="focusedOptionId"
+            [attr.placeholder]="filterPlaceHolder()"
+            [attr.aria-label]="ariaFilterLabel()"
+            [attr.tabindex]="!$disabled() && !focused ? tabindex() : -1"
+            (input)="onFilterChange($event)"
+            (keydown)="onFilterKeyDown($event)"
+            (blur)="onFilterBlur($event)"
+            [pt]="ptm('pcFilter')"
+            [unstyled]="unstyled()"
+            hostName="listbox"
+            />
+          <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
+            @if (!filterIconTemplate() && !_filterIconTemplate) {
+              <svg data-p-icon="search" [attr.aria-hidden]="true" [hBind]="ptm('filterIcon')" />
+            }
+            @if (filterIconTemplate() || _filterIconTemplate) {
+              <span [attr.aria-hidden]="true">
+                <ng-template *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-template>
+              </span>
+            }
+          </h-inputicon>
+        </h-iconfield>
+      }
+      <span role="status" [hBind]="ptm('hiddenFilterResult')" [attr.aria-live]="'polite'" class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true">
+        {{ filterResultMessageText }}
+      </span>
+    }
+  </div>
+}
+<div
+  #container
+  [class]="cn(cx('listContainer'), listStyleClass())"
+  [ngStyle]="listStyle()"
+  [style.max-height]="virtualScroll() ? 'auto' : scrollHeight() || 'auto'"
+  cdkDropList
+  [cdkDropListData]="cdkDropData()"
+  (cdkDropListDropped)="drop($event)"
+  (cdkDropListEntered)="onDragEntered()"
+  (cdkDropListExited)="onDragExited()"
+  [hBind]="ptm('listContainer')"
+  >
+  @if (hasFilter() && isEmpty()) {
+    <div [class]="cx('emptyMessage')" [hBind]="ptm('emptyMessage')">
+      @if (!emptyFilterTemplate() && !_emptyFilterTemplate && !_emptyTemplate && !emptyTemplate()) {
+        {{ emptyFilterMessageText }}
+      } @else {
+        <ng-container #emptyFilter *ngTemplateOutlet="emptyFilterTemplate() || _emptyFilterTemplate || _emptyTemplate || emptyTemplate()"></ng-container>
+      }
+    </div>
+  } @else if (!hasFilter() && isEmpty()) {
+    <div [class]="cx('emptyMessage')" [hBind]="ptm('emptyMessage')">
+      @if (!emptyTemplate() && !_emptyTemplate) {
+        {{ emptyMessage() }}
+      } @else {
+        <ng-container #empty *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
+      }
+    </div>
+  } @else {
+    @if (virtualScroll()) {
+      <h-scroller
+        [pt]="ptm('virtualScroller')"
+        hostName="listbox"
+        #scroller
+        [items]="visibleOptions()"
+        [style]="{ height: scrollHeight() }"
+        [itemSize]="virtualScrollItemSize()"
+        [autoSize]="true"
+        [lazy]="lazy()"
+        [options]="virtualScrollOptions()"
+        (onLazyLoad)="onLazyLoad.emit($event)"
+        [tabindex]="scrollerTabIndex"
+        >
+        <ng-template #content let-items let-scrollerOptions="options">
+          <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
+        </ng-template>
+        @if (loaderTemplate() || _loaderTemplate) {
+          <ng-template #loader let-scrollerOptions="options">
+            <ng-container *ngTemplateOutlet="loaderTemplate() || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+          </ng-template>
+        }
+      </h-scroller>
+    }
+    @if (!virtualScroll()) {
+      <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
+    }
+
+    <ng-template #buildInItems let-items let-scrollerOptions="options">
+      <ul
+        #list
+        [id]="$id() + '_list'"
+        [class]="cx('list')"
+        role="listbox"
+        [tabindex]="-1"
+        [attr.aria-multiselectable]="true"
+        [ngClass]="scrollerOptions.contentStyleClass"
+        [style]="scrollerOptions.contentStyle"
+        [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+        [attr.aria-label]="ariaLabel()"
+        [attr.aria-disabled]="$disabled()"
+        (focus)="onListFocus($event)"
+        (blur)="onListBlur($event)"
+        (keydown)="onListKeyDown($event)"
+        [hBind]="ptm('list')"
+        >
+        @for (option of items; track option; let i = $index) {
+          @if (isOptionGroup(option)) {
+            <li
+              [attr.id]="$id() + '_' + getOptionIndex(i, scrollerOptions)"
+              [class]="cx('optionGroup')"
+              [hBind]="getPTOptions(option.optionGroup, scrollerOptions, i, 'optionGroup')"
+              [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }"
+              role="option"
+              cdkDrag
+              [cdkDragData]="option"
+              [cdkDragDisabled]="!dragdrop()"
+              (cdkDragStarted)="isDragging.set(true)"
+              (cdkDragEnded)="isDragging.set(false)"
+              >
+              @if (!groupTemplate() && !_groupTemplate) {
+                <span>{{ getOptionGroupLabel(option.optionGroup) }}</span>
+              }
+              <ng-container *ngTemplateOutlet="groupTemplate() || _groupTemplate; context: { $implicit: option.optionGroup }"></ng-container>
+            </li>
+          }
+          @if (!isOptionGroup(option)) {
+            <li
+              hRipple
+              [class]="cx('option', { option, i, scrollerOptions })"
+              role="option"
+              [attr.id]="$id() + '_' + getOptionIndex(i, scrollerOptions)"
+              [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }"
+              [attr.aria-label]="getOptionLabel(option)"
+              [attr.aria-selected]="isSelected(option)"
+              [attr.aria-disabled]="isOptionDisabled(option)"
+              [attr.aria-setsize]="ariaSetSize"
+              [attr.ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
+              [attr.data-p-selected]="isSelected(option)"
+              [attr.data-p-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
+              [attr.data-p-disabled]="isOptionDisabled(option)"
+              [hBind]="getPTOptions(option, scrollerOptions, i, 'option')"
+              (click)="onOptionSelect($event, option, getOptionIndex(i, scrollerOptions))"
+              (dblclick)="onOptionDoubleClick($event, option)"
+              (mousedown)="onOptionMouseDown($event, getOptionIndex(i, scrollerOptions))"
+              (mouseenter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
+              (touchend)="onOptionTouchEnd()"
+              cdkDrag
+              [cdkDragData]="option"
+              [cdkDragDisabled]="!dragdrop()"
+              (cdkDragStarted)="isDragging.set(true)"
+              (cdkDragEnded)="isDragging.set(false)"
+              >
+              @if (checkbox() && multiple()) {
+                <h-checkbox()
+                  [class]="cx('optionCheckIcon')"
+                  [ngModel]="isSelected(option)"
+                  [readonly]="true"
+                  [disabled]="$disabled() || isOptionDisabled(option)"
+                  [tabindex]="-1"
+                  [variant]="config.inputStyle() === 'filled' || config.inputVariant() === 'filled' ? 'filled' : 'outlined'"
+                  [binary]="true"
+                  [pt]="ptm('pcCheckbox')"
+                  hostName="listbox"
+                  [unstyled]="unstyled()"
+                  >
+                  @if (checkIconTemplate() || _checkIconTemplate) {
+                    <ng-template #icon>
+                      <ng-template *ngTemplateOutlet="checkIconTemplate() || _checkIconTemplate; context: { $implicit: isSelected(option) }"></ng-template>
+                    </ng-template>
+                  }
+                </h-checkbox()>
+              }
+              @if (checkmark()) {
+                @if (!checkmarkTemplate() && !_checkmarkTemplate) {
+                  @if (!isSelected(option)) {
+                    <svg data-p-icon="blank" [class]="cx('optionBlankIcon')" [hBind]="ptm('optionBlankIcon')" />
+                  }
+                  @if (isSelected(option)) {
+                    <svg data-p-icon="check" [class]="cx('optionCheckIcon')" [hBind]="ptm('optionCheckIcon')" />
+                  }
+                }
+                <ng-container *ngTemplateOutlet="checkmarkTemplate() || _checkmarkTemplate; context: { implicit: isSelected(option) }"></ng-container>
+              }
+              @if (!itemTemplate() && !_itemTemplate) {
+                <span>{{ getOptionLabel(option) }}</span>
+              }
+              <ng-container
+                                *ngTemplateOutlet="
+                                    itemTemplate() || _itemTemplate;
+                                    context: {
+                                        $implicit: option,
+                                        index: getOptionIndex(i, scrollerOptions),
+                                        selected: isSelected(option),
+                                        disabled: isOptionDisabled(option)
+                                    }
+                                "
+            ></ng-container>
+          </li>
+        }
+      }
+    </ul>
+  </ng-template>
+}
+</div>
+@if (footerFacet() || footerTemplate() || _footerTemplate) {
+  <div>
+    <ng-content select="p-footer"></ng-content>
+    <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate; context: { $implicit: modelValue(), options: visibleOptions() }"></ng-container>
+  </div>
+}
+@if (isEmpty()) {
+  <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenEmptyMessage')">
+    {{ emptyMessage() }}
+  </span>
+}
+<span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenSelectedMessage')">
+  {{ selectedMessageText }}
+</span>
+<span
+  #lastHiddenFocusableElement
+  role="presentation"
+  class="p-hidden-accessible p-hidden-focusable"
+  [tabindex]="!$disabled() ? tabindex() : -1"
+  (focus)="onLastHiddenFocus($event)"
+  [attr.data-p-hidden-focusable]="true"
+  [hBind]="ptm('hiddenLastFocusableEl')"
+  >
+</span>

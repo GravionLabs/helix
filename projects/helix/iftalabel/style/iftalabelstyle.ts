@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${iftalabel_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-iftalabel:has(.ng-invalid.ng-dirty) label {
         color: dt('iftalabel.invalid.color');
     }

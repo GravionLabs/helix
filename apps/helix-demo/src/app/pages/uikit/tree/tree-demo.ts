@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, type OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { TreeNode } from '@gravionlabs/helix/api';
 import { TreeModule } from '@gravionlabs/helix/tree';
@@ -12,6 +12,7 @@ import { NodeService } from '@/app/pages/service/node.service';
   imports: [CommonModule, FormsModule, TreeModule, TreeTableModule],
   templateUrl: './tree-demo.html',
   styleUrl: './tree-demo.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [NodeService],
 })
 export class TreeDemo implements OnInit {

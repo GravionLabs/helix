@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix/base';
 const style = /*css*/ `
     ${cascadeselect_style}
 
-    /* For PrimeNG */
+    /* For Helix */
     .p-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) {
         border-color: dt('cascadeselect.invalid.border.color');
     }
@@ -23,7 +23,7 @@ const classes = {
         'p-cascadeselect p-component p-inputwrapper',
         {
             'p-cascadeselect p-component p-inputwrapper': true,
-            'p-cascadeselect-clearable': instance.showClear && !instance.$disabled(),
+            'p-cascadeselect-clearable': instance.showClear() && !instance.$disabled(),
             'p-cascadeselect-mobile': instance.queryMatches(),
             'p-disabled': instance.$disabled(),
             'p-invalid': instance.invalid(),
@@ -40,7 +40,7 @@ const classes = {
     label: ({ instance }) => [
         'p-cascadeselect-label',
         {
-            'p-placeholder': instance.label() === instance.placeholder,
+            'p-placeholder': instance.label() === instance.placeholder(),
             'p-cascadeselect-label-empty': !instance.value && (instance.label() === 'p-emptylabel' || instance.label().length === 0)
         }
     ],

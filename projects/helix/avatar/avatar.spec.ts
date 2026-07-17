@@ -171,14 +171,14 @@ describe('Avatar', () => {
         });
 
         it('should have default values', () => {
-            expect(component.label).toBeUndefined();
-            expect(component.icon).toBeUndefined();
-            expect(component.image).toBeUndefined();
-            expect(component.size).toBe('normal');
-            expect(component.shape).toBe('square');
-            expect(component.styleClass).toBeUndefined();
-            expect(component.ariaLabel).toBeUndefined();
-            expect(component.ariaLabelledBy).toBeUndefined();
+            expect(component.label()).toBeUndefined();
+            expect(component.icon()).toBeUndefined();
+            expect(component.image()).toBeUndefined();
+            expect(component.size()).toBe('normal');
+            expect(component.shape()).toBe('square');
+            expect(component.styleClass()).toBeUndefined();
+            expect(component.ariaLabel()).toBeUndefined();
+            expect(component.ariaLabelledBy()).toBeUndefined();
         });
 
         it('should apply base CSS classes', () => {
@@ -754,12 +754,12 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(avatarComponent.label).toBeUndefined();
-            expect(avatarComponent.icon).toBeUndefined();
-            expect(avatarComponent.image).toBeUndefined();
-            expect(avatarComponent.size).toBeUndefined();
-            expect(avatarComponent.shape).toBeUndefined();
-            expect(avatarComponent.styleClass).toBeUndefined();
+            expect(avatarComponent.label()).toBeUndefined();
+            expect(avatarComponent.icon()).toBeUndefined();
+            expect(avatarComponent.image()).toBeUndefined();
+            expect(avatarComponent.size()).toBeUndefined();
+            expect(avatarComponent.shape()).toBeUndefined();
+            expect(avatarComponent.styleClass()).toBeUndefined();
         });
     });
 

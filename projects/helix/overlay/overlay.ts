@@ -36,7 +36,7 @@ import { OverlayStyle } from './style/overlaystyle';
 const OVERLAY_INSTANCE = new InjectionToken<Overlay>('OVERLAY_INSTANCE');
 
 /**
- * This API allows overlay components to be controlled from the PrimeNG. In this way, all overlay components in the application can have the same behavior.
+ * This API allows overlay components to be controlled from the Helix configuration. In this way, all overlay components in the application can have the same behavior.
  * @group Components
  */
 @Component({
@@ -44,32 +44,7 @@ const OVERLAY_INSTANCE = new InjectionToken<Overlay>('OVERLAY_INSTANCE');
     standalone: true,
     imports: [CommonModule, SharedModule, Bind, MotionModule],
     hostDirectives: [Bind],
-    template: `
-        @if (inline()) {
-            <ng-content></ng-content>
-            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: null } }"></ng-container>
-        } @else {
-            <div *ngIf="modalVisible" #overlay [class]="cn(cx('root'), styleClass)" [style]="sx('root')" [hBind]="ptm('root')" (click)="onOverlayClick()">
-                <h-motion
-                    [visible]="visible"
-                    name="p-anchored-overlay"
-                    [appear]="true"
-                    [options]="computedMotionOptions()"
-                    (onBeforeEnter)="onOverlayBeforeEnter($event)"
-                    (onEnter)="onOverlayEnter($event)"
-                    (onAfterEnter)="onOverlayAfterEnter($event)"
-                    (onBeforeLeave)="onOverlayBeforeLeave($event)"
-                    (onLeave)="onOverlayLeave($event)"
-                    (onAfterLeave)="onOverlayAfterLeave($event)"
-                >
-                    <div #content [class]="cn(cx('content'), contentStyleClass)" [hBind]="ptm('content')" (click)="onOverlayContentClick($event)">
-                        <ng-content></ng-content>
-                        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: overlayMode } }"></ng-container>
-                    </div>
-                </h-motion>
-            </div>
-        }
-    `,
+    templateUrl: './overlay.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [OverlayStyle, { provide: OVERLAY_INSTANCE, useExisting: Overlay }, { provide: PARENT_INSTANCE, useExisting: Overlay }]

@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, ContentChild, ContentChildren, inject, InjectionToken, input, Input, NgModule, numberAttribute, QueryList, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, InjectionToken, input, Input, NgModule, numberAttribute,  signal, TemplateRef, ViewEncapsulation, contentChild, contentChildren } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { getWindowScrollTop } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -22,35 +22,7 @@ const SCROLLTOP_INSTANCE = new InjectionToken<ScrollTop>('SCROLLTOP_INSTANCE');
     selector: 'h-scrollTop, h-scrolltop, h-scroll-top',
     standalone: true,
     imports: [CommonModule, ChevronUpIcon, Button, SharedModule, MotionDirective],
-    template: `
-        @if (render()) {
-            <h-button
-                [hMotion]="visible()"
-                [pMotionAppear]="true"
-                [pMotionName]="'p-scrolltop'"
-                [pMotionOptions]="computedMotionOptions()"
-                (pMotionOnBeforeEnter)="onBeforeEnter($event)"
-                (pMotionOnBeforeLeave)="onBeforeLeave()"
-                (pMotionOnAfterLeave)="onAfterLeave()"
-                [attr.aria-label]="buttonAriaLabel"
-                (click)="onClick()"
-                [pt]="ptm('pcButton')"
-                [styleClass]="cn(cx('root'), styleClass)"
-                [ngStyle]="style"
-                type="button"
-                [buttonProps]="buttonProps"
-                [unstyled]="unstyled()"
-            >
-                <ng-template #icon>
-                    <ng-container *ngIf="!iconTemplate && !_iconTemplate">
-                        <span *ngIf="_icon" [class]="cn(cx('icon'), _icon)"></span>
-                        <svg data-p-icon="chevron-up" *ngIf="!_icon" [class]="cx('icon')" />
-                    </ng-container>
-                    <ng-template [ngIf]="!icon" *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { styleClass: cx('icon') }"></ng-template>
-                </ng-template>
-            </h-button>
-        }
-    `,
+    templateUrl: './scrolltop.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [ScrollTopStyle, { provide: SCROLLTOP_INSTANCE, useExisting: ScrollTop }, { provide: PARENT_INSTANCE, useExisting: ScrollTop }],
@@ -71,46 +43,46 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
      * Class of the element.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Inline style of the element.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Target of the ScrollTop.
      * @group Props
      */
-    @Input() target: 'window' | 'parent' | undefined = 'window';
+    readonly target = input<'window' | 'parent' | undefined>('window');
     /**
      * Defines the threshold value of the vertical scroll position of the target to toggle the visibility.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) threshold: number = 400;
+    readonly threshold = input<number, unknown>(400, { transform: numberAttribute });
     /**
      * Name of the icon or JSX.Element for icon.
      * @group Props
      */
-    @Input() get icon(): string | undefined {
-        return this._icon;
-    }
+    readonly icon = input<string>();
     /**
      * Defines the scrolling behavior, "smooth" adds an animation and "auto" scrolls with a jump.
      * @group Props
      */
-    @Input() behavior: 'auto' | 'smooth' | undefined = 'smooth';
+    readonly behavior = input<'auto' | 'smooth' | undefined>('smooth');
     /**
      * A string value used to determine the display transition options.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() showTransitionOptions: string = '.15s';
+    readonly showTransitionOptions = input<string>('.15s');
     /**
      * A string value used to determine the hiding transition options.
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() hideTransitionOptions: string = '.15s';
+    readonly hideTransitionOptions = input<string>('.15s');
     /**
      * The motion options.
      * @group Props
@@ -127,29 +99,24 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
      * Establishes a string value that labels the scroll-top button.
      * @group Props
      */
-    @Input() buttonAriaLabel: string | undefined;
+    readonly buttonAriaLabel = input<string>();
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() buttonProps: ButtonProps = { rounded: true };
+    readonly buttonProps = input<ButtonProps>({ rounded: true });
     /**
      * Custom icon template.
      * @param {ScrollTopIconTemplateContext} context - icon context.
      * @see {@link ScrollTopIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('icon', { descendants: false }) iconTemplate: TemplateRef<ScrollTopIconTemplateContext> | undefined;
+    readonly iconTemplate = contentChild<TemplateRef<ScrollTopIconTemplateContext>>('icon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _iconTemplate: TemplateRef<ScrollTopIconTemplateContext> | undefined;
 
-    _icon: string | undefined;
-
-    set icon(value: string | undefined) {
-        this._icon = value;
-    }
 
     documentScrollListener: VoidFunction | null | undefined;
 
@@ -164,12 +131,13 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
     _componentStyle = inject(ScrollTopStyle);
 
     onInit() {
-        if (this.target === 'window') this.bindDocumentScrollListener();
-        else if (this.target === 'parent') this.bindParentScrollListener();
+        const target = this.target();
+        if (target === 'window') this.bindDocumentScrollListener();
+        else if (target === 'parent') this.bindParentScrollListener();
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'icon':
                     this._iconTemplate = item.template;
@@ -179,16 +147,16 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
     }
 
     onClick() {
-        let scrollElement = this.target === 'window' ? this.document.defaultView : this.el.nativeElement.parentElement;
+        let scrollElement = this.target() === 'window' ? this.document.defaultView : this.el.nativeElement.parentElement;
         scrollElement.scroll({
             top: 0,
-            behavior: this.behavior
+            behavior: this.behavior()
         });
     }
 
     onBeforeEnter(event: MotionEvent) {
         this.overlay = event.element as HTMLElement;
-        this.overlay.style.position = this.target === 'parent' ? 'sticky' : 'fixed';
+        this.overlay.style.position = this.target() === 'parent' ? 'sticky' : 'fixed';
         ZIndexUtils.set('overlay', this.overlay, this.config.zIndex.overlay);
     }
 
@@ -202,7 +170,7 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
     }
 
     checkVisibility(scrollY: number) {
-        if (scrollY > this.threshold) {
+        if (scrollY > this.threshold()) {
             this.visible.set(true);
             if (!this.render()) {
                 this.render.set(true);
@@ -243,8 +211,9 @@ export class ScrollTop extends BaseComponent<ScrollTopPassThrough> {
     }
 
     onDestroy() {
-        if (this.target === 'window') this.unbindDocumentScrollListener();
-        else if (this.target === 'parent') this.unbindParentScrollListener();
+        const target = this.target();
+        if (target === 'window') this.unbindDocumentScrollListener();
+        else if (target === 'parent') this.unbindParentScrollListener();
 
         if (this.overlay) {
             ZIndexUtils.clear(this.overlay);
