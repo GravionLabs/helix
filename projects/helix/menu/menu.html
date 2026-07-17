@@ -1,24 +1,24 @@
-@if (!popup || overlayVisible) {
+@if (!popup() || overlayVisible) {
   <div
     #container
-    [class]="cn(cx('root'), styleClass)"
+    [class]="cn(cx('root'), styleClass())"
     [style]="sx('root')"
-    [ngStyle]="style"
+    [ngStyle]="style()"
     (click)="onOverlayClick($event)"
-    [attr.id]="id"
+    [attr.id]="$id()"
     [hBind]="ptm('root')"
     [attr.data-p]="dataP"
-    [hMotion]="visible || !popup"
+    [hMotion]="visible || !popup()"
     [pMotionName]="'p-anchored-overlay'"
-    [pMotionAppear]="!!popup"
-    [pMotionDisabled]="!popup"
+    [pMotionAppear]="!!popup()"
+    [pMotionDisabled]="!popup()"
     [pMotionOptions]="computedMotionOptions()"
     (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
     (pMotionOnAfterLeave)="onOverlayAfterLeave()"
     >
-    @if (startTemplate ?? _startTemplate) {
+    @if (startTemplate() ?? _startTemplate) {
       <div [class]="cx('start')" [hBind]="ptm('start')" [attr.data-pc-section]="'start'">
-        <ng-container *ngTemplateOutlet="startTemplate ?? _startTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="startTemplate() ?? _startTemplate"></ng-container>
       </div>
     }
     <ul
@@ -26,17 +26,17 @@
       [class]="cx('list')"
       [hBind]="ptm('list')"
       role="menu"
-      [attr.id]="id + '_list'"
+      [attr.id]="$id() + '_list'"
       [attr.tabindex]="getTabIndexValue()"
       [attr.data-pc-section]="'menu'"
       [attr.aria-activedescendant]="activedescendant()"
-      [attr.aria-label]="ariaLabel"
-      [attr.aria-labelledBy]="ariaLabelledBy"
+      [attr.aria-label]="ariaLabel()"
+      [attr.aria-labelledBy]="ariaLabelledBy()"
       (focus)="onListFocus($event)"
       (blur)="onListBlur($event)"
       (keydown)="onListKeyDown($event)"
       >
-      @for (submenu of model; track submenu; let i = $index) {
+      @for (submenu of model(); track submenu; let i = $index) {
         @if (hasSubMenu()) {
           @if (submenu.separator && submenu.visible !== false) {
             <li [class]="cx('separator')" [hBind]="ptm('separator')" role="separator" [attr.data-pc-section]="'separator'"></li>
@@ -53,14 +53,14 @@
               [attr.id]="menuitemId(submenu, id, i)"
               [attr.data-pc-section]="'submenulabel'"
               >
-              @if (!submenuHeaderTemplate && !_submenuHeaderTemplate) {
+              @if (!submenuHeaderTemplate() && !_submenuHeaderTemplate) {
                 @if (submenu.escape !== false) {
                   <span>{{ submenu.label }}</span>
                 } @else {
                   <span [innerHTML]="submenu.label | safeHtml"></span>
                 }
               }
-              <ng-container *ngTemplateOutlet="submenuHeaderTemplate ?? _submenuHeaderTemplate; context: { $implicit: submenu }"></ng-container>
+              <ng-container *ngTemplateOutlet="submenuHeaderTemplate() ?? _submenuHeaderTemplate; context: { $implicit: submenu }"></ng-container>
             </li>
           }
           @for (item of submenu.items; track item; let j = $index) {
@@ -72,7 +72,7 @@
                 [class]="cn(cx('item', { item, id: menuitemId(item, id, i, j) }), $safeNavigationMigration(item?.styleClass))"
                 [hBind]="ptm('item')"
                 [hMenuItemContent]="item"
-                [itemTemplate]="itemTemplate ?? _itemTemplate"
+                [itemTemplate()]="itemTemplate() ?? _itemTemplate"
                 [idx]="j"
                 [menuitemId]="menuitemId(item, id, i, j)"
                 [style]="item.style"
@@ -92,7 +92,7 @@
           }
         }
       }
-      @for (item of model; track item; let i = $index) {
+      @for (item of model(); track item; let i = $index) {
         @if (!hasSubMenu()) {
           @if (item.separator && item.visible !== false) {
             <li [class]="cx('separator')" [hBind]="ptm('separator')" role="separator" [attr.data-pc-section]="'separator'"></li>
@@ -102,7 +102,7 @@
               [class]="cn(cx('item', { item, id: menuitemId(item, id, i) }), $safeNavigationMigration(item?.styleClass))"
               [hBind]="ptm('item')"
               [hMenuItemContent]="item"
-              [itemTemplate]="itemTemplate ?? _itemTemplate"
+              [itemTemplate()]="itemTemplate() ?? _itemTemplate"
               [idx]="i"
               [menuitemId]="menuitemId(item, id, i)"
               [ngStyle]="item.style"
@@ -122,9 +122,9 @@
         }
       }
     </ul>
-    @if (endTemplate ?? _endTemplate) {
+    @if (endTemplate() ?? _endTemplate) {
       <div [class]="cx('end')" [hBind]="ptm('end')" [attr.data-pc-section]="'end'">
-        <ng-container *ngTemplateOutlet="endTemplate ?? _endTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="endTemplate() ?? _endTemplate"></ng-container>
       </div>
     }
   </div>

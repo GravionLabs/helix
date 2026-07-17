@@ -346,19 +346,19 @@ describe('Menubar', () => {
             await fixture.whenStable();
 
             expect(menubarInstance.model).toBe(testModel);
-            expect(menubarInstance.autoZIndex).toBe(false);
-            expect(menubarInstance.baseZIndex).toBe(1000);
-            expect(menubarInstance.autoDisplay).toBe(false);
-            expect(menubarInstance.autoHide).toBe(true);
-            expect(menubarInstance.breakpoint).toBe('768px');
-            expect(menubarInstance.styleClass).toBe('custom-menubar');
-            expect(menubarInstance.ariaLabel).toBe('Custom Menu Bar');
+            expect(menubarInstance.autoZIndex()).toBe(false);
+            expect(menubarInstance.baseZIndex()).toBe(1000);
+            expect(menubarInstance.autoDisplay()).toBe(false);
+            expect(menubarInstance.autoHide()).toBe(true);
+            expect(menubarInstance.breakpoint()).toBe('768px');
+            expect(menubarInstance.styleClass()).toBe('custom-menubar');
+            expect(menubarInstance.ariaLabel()).toBe('Custom Menu Bar');
         });
 
         it('should initialize with generated id', () => {
-            expect(menubarInstance.id).toBeTruthy();
-            expect(typeof menubarInstance.id).toBe('string');
-            expect(menubarInstance.id).toMatch(/^pn_id_/);
+            expect(menubarInstance.id()).toBeTruthy();
+            expect(typeof menubarInstance.id()).toBe('string');
+            expect(menubarInstance.id()).toMatch(/^pn_id_/);
         });
 
         it('should have onFocus and onBlur output emitters', () => {
@@ -367,7 +367,7 @@ describe('Menubar', () => {
         });
 
         it('should initialize signal states', () => {
-            expect(typeof menubarInstance.activeItemPath).toBe('function');
+            expect(typeof menubarInstance.activeItemPath()).toBe('function');
             expect(typeof menubarInstance.focusedItemInfo).toBe('function');
             expect(menubarInstance.activeItemPath()).toEqual([]);
             expect(menubarInstance.focusedItemInfo().index).toBe(-1);
@@ -391,49 +391,49 @@ describe('Menubar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menubarInstance.styleClass).toBe('test-class');
+            expect(menubarInstance.styleClass()).toBe('test-class');
         });
 
         it('should update autoZIndex with booleanAttribute transform', async () => {
             component.autoZIndex = false;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.autoZIndex).toBe(false);
+            expect(menubarInstance.autoZIndex()).toBe(false);
         });
 
         it('should update baseZIndex with numberAttribute transform', async () => {
             component.baseZIndex = 500;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.baseZIndex).toBe(500);
+            expect(menubarInstance.baseZIndex()).toBe(500);
         });
 
         it('should update autoDisplay with booleanAttribute transform', async () => {
             component.autoDisplay = false;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.autoDisplay).toBe(false);
+            expect(menubarInstance.autoDisplay()).toBe(false);
         });
 
         it('should update autoHide with booleanAttribute transform', async () => {
             component.autoHide = true;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.autoHide).toBe(true);
+            expect(menubarInstance.autoHide()).toBe(true);
         });
 
         it('should update autoHideDelay with numberAttribute transform', async () => {
             component.autoHideDelay = 300;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.autoHideDelay).toBe(300);
+            expect(menubarInstance.autoHideDelay()).toBe(300);
         });
 
         it('should update breakpoint input', async () => {
             component.breakpoint = '768px';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(menubarInstance.breakpoint).toBe('768px');
+            expect(menubarInstance.breakpoint()).toBe('768px');
         });
 
         it('should update ariaLabel and ariaLabelledBy inputs', async () => {
@@ -442,8 +442,8 @@ describe('Menubar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menubarInstance.ariaLabel).toBe('Test Menubar');
-            expect(menubarInstance.ariaLabelledBy).toBe('menubar-label');
+            expect(menubarInstance.ariaLabel()).toBe('Test Menubar');
+            expect(menubarInstance.ariaLabelledBy()).toBe('menubar-label');
         });
     });
 
@@ -475,12 +475,12 @@ describe('Menubar', () => {
 
             const menuButton = fixture.debugElement.query(By.css('a[data-pc-section="button"]'));
 
-            expect(menubarInstance.mobileActive).toBeFalsy();
+            expect(menubarInstance.mobileActive()).toBeFalsy();
 
             menuButton.nativeElement.click();
             fixture.detectChanges();
 
-            expect(menubarInstance.mobileActive).toBe(true);
+            expect(menubarInstance.mobileActive()).toBe(true);
         });
 
         it('should show and hide menu programmatically', () => {
@@ -802,7 +802,7 @@ describe('Menubar', () => {
 
             // The template uses: [attr.aria-activedescendant]="focused ? focusedItemId : undefined"
             // Since both focused=true and focusedItemId exists, it should be set
-            expect(rootMenu.nativeElement.getAttribute('aria-activedescendant')).toBe(menubarInstance.focusedItemId);
+            expect(rootMenu.nativeElement.getAttribute('aria-activedescendant')).toBe(menubarInstance.focusedItemId());
         });
 
         it('should update ariaLabel and ariaLabelledBy', async () => {
@@ -865,7 +865,7 @@ describe('Menubar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menubarInstance.breakpoint).toBe('768px');
+            expect(menubarInstance.breakpoint()).toBe('768px');
         });
     });
 
@@ -999,7 +999,7 @@ describe('Menubar', () => {
         });
 
         it('should call hide method programmatically', () => {
-            menubarInstance.activeItemPath.set([{ key: 'test' }]);
+            menubarInstance.activeItemPath().set([{ key: 'test' }]);
             menubarInstance.focusedItemInfo.set({ index: 0, level: 0, parentKey: '', item: null });
 
             menubarInstance.hide();
@@ -1012,10 +1012,10 @@ describe('Menubar', () => {
             const mockEvent = new MouseEvent('click');
             spyOn(mockEvent, 'preventDefault');
 
-            expect(menubarInstance.mobileActive).toBeFalsy();
+            expect(menubarInstance.mobileActive()).toBeFalsy();
 
             menubarInstance.toggle(mockEvent);
-            expect(menubarInstance.mobileActive).toBe(true);
+            expect(menubarInstance.mobileActive()).toBe(true);
             expect(mockEvent.preventDefault).toHaveBeenCalled();
         });
 
@@ -1063,7 +1063,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item', disabled: false },
                 key: '0',
@@ -1093,7 +1093,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item' },
                 key: '0',
@@ -1112,7 +1112,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item' },
                 key: '0',
@@ -1139,7 +1139,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item', id: 'test-item-0' },
                 key: '0',
@@ -1166,7 +1166,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem', disabled: true }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Disabled Item', disabled: true },
                 key: '0',
@@ -1193,7 +1193,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item' },
                 key: '0',
@@ -1214,7 +1214,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Subitem' }] }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Test Item' },
                 key: '0',
@@ -1239,7 +1239,7 @@ describe('Menubar', () => {
             fixture.componentRef.setInput('model', [{ label: 'Item 1' }, { label: 'Item 2' }, { label: 'Item 3' }]);
             fixture.detectChanges();
 
-            const menubarSub = menubar.rootmenu as MenubarSub;
+            const menubarSub = menubar.rootmenu() as MenubarSub;
             const processedItem = {
                 item: { label: 'Item 2' },
                 key: '1',

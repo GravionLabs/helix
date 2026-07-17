@@ -1,6 +1,6 @@
-@if (startTemplate || _startTemplate) {
+@if (startTemplate() || _startTemplate) {
   <div [class]="cx('start')" [hBind]="ptm('start')">
-    <ng-container *ngTemplateOutlet="startTemplate || _startTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="startTemplate() || _startTemplate"></ng-container>
   </div>
 }
 @if (model && model.length > 0) {
@@ -10,35 +10,35 @@
     role="button"
     [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
     [attr.aria-expanded]="mobileActive"
-    [attr.aria-controls]="id"
+    [attr.aria-controls]="$id()"
     [attr.aria-label]="config.translation.aria.navigation"
     [class]="cx('button')"
     [hBind]="ptm('button')"
     (click)="menuButtonClick($event)"
     (keydown)="menuButtonKeydown($event)"
     >
-    @if (!menuIconTemplate && !_menuIconTemplate) {
+    @if (!menuIconTemplate() && !_menuIconTemplate) {
       <svg data-p-icon="bars" [hBind]="ptm('buttonIcon')" />
     }
-    <ng-template *ngTemplateOutlet="menuIconTemplate || _menuIconTemplate"></ng-template>
+    <ng-template *ngTemplateOutlet="menuIconTemplate() || _menuIconTemplate"></ng-template>
   </a>
 }
 <ul
   hMenubarSub
   #rootmenu
   [items]="processedItems"
-  [itemTemplate]="itemTemplate"
+  [itemTemplate]="itemTemplate()"
   tabindex="0"
-  [menuId]="id"
+  [menuId]="$id()"
   [root]="true"
-  [baseZIndex]="baseZIndex"
-  [autoZIndex]="autoZIndex"
+  [baseZIndex]="baseZIndex()"
+  [autoZIndex]="autoZIndex()"
   [mobileActive]="mobileActive"
-  [autoDisplay]="autoDisplay"
-  [attr.aria-label]="ariaLabel"
-  [attr.aria-labelledby]="ariaLabelledBy"
+  [autoDisplay]="autoDisplay()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledBy()"
   [focusedItemId]="focused ? focusedItemId : undefined"
-  [submenuiconTemplate]="submenuIconTemplate || _submenuIconTemplate"
+  [submenuiconTemplate]="submenuIconTemplate() || _submenuIconTemplate"
   [activeItemPath]="activeItemPath()"
   (itemClick)="onItemClick($event)"
   (mousedown)="onMenuMouseDown($event)"
@@ -51,9 +51,9 @@
   [hBind]="ptm('rootList')"
   [unstyled]="unstyled()"
 ></ul>
-@if (endTemplate || _endTemplate) {
+@if (endTemplate() || _endTemplate) {
   <div [class]="cx('end')" [hBind]="ptm('end')">
-    <ng-container *ngTemplateOutlet="endTemplate || _endTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="endTemplate() || _endTemplate"></ng-container>
   </div>
 } @else {
   <div [class]="cx('end')">

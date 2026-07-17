@@ -589,7 +589,7 @@ describe('InputMask', () => {
 
             // Clear icon should be visible when value exists and showClear is true
             const inputMaskInstance = templateComponent.debugElement.query(By.css('p-inputmask')).componentInstance;
-            expect(inputMaskInstance.showClear).toBe(true);
+            expect(inputMaskInstance.showClear()).toBe(true);
         });
     });
 
@@ -898,7 +898,7 @@ describe('InputMask', () => {
         it('should support clear icon template property access', () => {
             const inputMaskComponent = templatesInputMaskElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => inputMaskComponent.clearIconTemplate).not.toThrow();
+            expect(() => inputMaskComponent.clearIconTemplate()).not.toThrow();
             expect(inputMaskComponent).toBeTruthy();
         });
 
@@ -910,7 +910,7 @@ describe('InputMask', () => {
 
             // Test that we can access template-related properties without errors
             expect(() => {
-                inputMaskComponent.clearIconTemplate;
+                inputMaskComponent.clearIconTemplate();
             }).not.toThrow();
         });
 
@@ -989,8 +989,8 @@ describe('InputMask', () => {
                 templatesFixture.detectChanges();
 
                 // Templates should be available for clearicon template
-                if (inputMaskComponent.templates) {
-                    inputMaskComponent.templates.forEach((template: any) => {
+                if (inputMaskComponent.templates()) {
+                    inputMaskComponent.templates().forEach((template: any) => {
                         expect(template).toBeTruthy();
                     });
                 }
@@ -1023,7 +1023,7 @@ describe('InputMask', () => {
                 templatesFixture.detectChanges();
 
                 // Test clearicon template property access
-                inputMaskComponent.clearIconTemplate;
+                inputMaskComponent.clearIconTemplate();
             }).not.toThrow();
 
             // Component should handle clearicon template processing
@@ -1067,9 +1067,9 @@ describe('InputMask', () => {
                 templatesFixture.detectChanges();
 
                 // Component should handle clearicon template
-                expect(inputMaskComponent.showClear).toBe(true);
+                expect(inputMaskComponent.showClear()).toBe(true);
                 // Test that clearicon template property can be accessed
-                inputMaskComponent.clearIconTemplate;
+                inputMaskComponent.clearIconTemplate();
             }).not.toThrow();
         });
 
@@ -1081,8 +1081,8 @@ describe('InputMask', () => {
                 templatesFixture.detectChanges();
 
                 // Component should process pTemplate directive for clearicon
-                if (inputMaskComponent.templates) {
-                    const clearIconTemplates = inputMaskComponent.templates.filter((t: any) => t.getType && t.getType() === 'clearicon');
+                if (inputMaskComponent.templates()) {
+                    const clearIconTemplates = inputMaskComponent.templates().filter((t: any) => t.getType && t.getType() === 'clearicon');
                     // Should find the clearicon template
                     expect(clearIconTemplates.length).toBeGreaterThanOrEqual(0);
                 }

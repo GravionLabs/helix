@@ -1,4 +1,4 @@
-@for (processedItem of items; track processedItem; let index = $index) {
+@for (processedItem of items(); track processedItem; let index = $index) {
   @if (isItemVisible(processedItem) && getItemProp(processedItem, 'separator')) {
     <li
       [attr.id]="getItemId(processedItem)"
@@ -79,15 +79,15 @@
                   />
               }
               @if (isItemGroup(processedItem)) {
-                @if (!submenuiconTemplate) {
-                  @if (root) {
+                @if (!submenuiconTemplate()) {
+                  @if (root()) {
                     <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" />
                   }
-                  @if (!root) {
+                  @if (!root()) {
                     <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" />
                   }
                 }
-                <ng-template *ngTemplateOutlet="submenuiconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="submenuiconTemplate()"></ng-template>
               }
             </a>
           }
@@ -145,21 +145,21 @@
                       />
                   }
                   @if (isItemGroup(processedItem)) {
-                    @if (!submenuiconTemplate) {
-                      @if (root) {
+                    @if (!submenuiconTemplate()) {
+                      @if (root()) {
                         <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" />
                       }
-                      @if (!root) {
+                      @if (!root()) {
                         <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" />
                       }
                     }
-                    <ng-template *ngTemplateOutlet="submenuiconTemplate"></ng-template>
+                    <ng-template *ngTemplateOutlet="submenuiconTemplate()"></ng-template>
                   }
                 </a>
               }
             }
             @if (itemTemplate) {
-              <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item, root: root }"></ng-template>
+              <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item, root: root() }"></ng-template>
             }
           </div>
           @if (isItemVisible(processedItem) && isItemGroup(processedItem)) {
@@ -167,12 +167,12 @@
               hMenubarSub
               [itemTemplate]="itemTemplate"
               [items]="processedItem.items"
-              [mobileActive]="mobileActive"
-              [autoDisplay]="autoDisplay"
-              [menuId]="menuId"
-              [activeItemPath]="activeItemPath"
-              [focusedItemId]="focusedItemId"
-              [level]="level + 1"
+              [mobileActive]="mobileActive()"
+              [autoDisplay]="autoDisplay()"
+              [menuId]="menuId()"
+              [activeItemPath]="activeItemPath()"
+              [focusedItemId]="focusedItemId()"
+              [level]="level() + 1"
               [attr.aria-labelledby]="getItemLabelId(processedItem)"
               (itemClick)="itemClick.emit($event)"
               (itemMouseEnter)="onItemMouseEnter($event)"
