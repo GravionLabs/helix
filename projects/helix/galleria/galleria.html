@@ -10,7 +10,7 @@
         [pMotionOptions]="computedMaskMotionOptions()"
         (pMotionOnAfterLeave)="onMaskAfterLeave()"
         [ngClass]="cx('mask')"
-        [class]="maskClass"
+        [class]="maskClass()"
         [attr.role]="fullScreen ? 'dialog' : 'region'"
         [attr.aria-modal]="fullScreen ? 'true' : undefined"
         (click)="onMaskHide($event)"
@@ -25,12 +25,12 @@
             (pMotionOnBeforeEnter)="onBeforeEnter($event)"
             (pMotionOnBeforeLeave)="onBeforeLeave()"
             (pMotionOnAfterLeave)="onAfterLeave()"
-            [value]="value"
+            [value]="value()"
             [activeIndex]="activeIndex"
-            [numVisible]="numVisibleLimit || numVisible"
+            [numVisible]="numVisibleLimit || numVisible()"
             (maskHide)="onMaskHide()"
             (activeItemChange)="onActiveItemChange($event)"
-            [ngStyle]="containerStyle"
+            [ngStyle]="containerStyle()"
             [fullScreen]="fullScreen"
             [pt]="pt()"
             hFocusTrap
@@ -42,5 +42,5 @@
     }
   </div>
 } @else {
-  <div hGalleriaContent [pt]="pt()" [unstyled]="unstyled()" [value]="value" [activeIndex]="activeIndex" [numVisible]="numVisibleLimit || numVisible" (activeItemChange)="onActiveItemChange($event)"></div>
+  <div hGalleriaContent [pt]="pt()" [unstyled]="unstyled()" [value]="value()" [activeIndex]="activeIndex" [numVisible]="numVisibleLimit || numVisible()" (activeItemChange)="onActiveItemChange($event)"></div>
 }
