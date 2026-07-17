@@ -90,7 +90,7 @@ directories**, then finishes manually by these rules:
 | 8 | #319 | slider–terminal | ✅ done (leftovers: splitter panelSizes getter/setter) |
 | 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
 | 10 | #321 | directives & infrastructure | ✅ done (leftovers: animateonscroll enterClass/leaveClass/root/rootMargin/threshold/once, api shared.ts PrimeTemplate type/name, autofocus autofocus, dragdrop getter/setters and HostListeners, focustrap pFocusTrapDisabled, keyfilter pValidateOnly/pattern/ngModelChange/HostListeners, overlay/overlayViewChild/contentViewChild/containerViewChild, scroller remaining @Input, styleclass selector/enterFromClass/enterActiveClass/enterToClass/leaveFromClass/leaveActiveClass/leaveToClass/hideOnOutsideClick/toggleClass/hideOnEscape/hideOnResize/resizeSelector/HostListener, tooltip remaining @Input and disabled getter/setter) |
-| Hard cases | #322 | table & treetable | open |
+| Hard cases | #322 | table & treetable | ✅ done (leftovers: table getter/setter inputs for value, columns, first, rows, sortField, sortOrder, multiSortMeta, selection, selectAll, frozenValue, contextMenuSelection, filters, expandedRows, stateKey, loadingIcon, filterTemplate; treetable getter/setter inputs for first, rows) |
 | Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |
 | Closeout | #324 | final sweep, audit update, lint guard | open |
 

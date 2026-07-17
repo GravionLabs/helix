@@ -3,58 +3,58 @@
         *ngTemplateOutlet="
             filterTemplate;
             context: {
-                $implicit: filterConstraint.value,
+                $implicit: filterConstraint().value,
                 filterCallback: filterCallback,
-                type: type,
-                field: field,
-                filterConstraint: filterConstraint,
-                placeholder: placeholder,
-                minFractionDigits: minFractionDigits,
-                maxFractionDigits: maxFractionDigits,
-                prefix: prefix,
-                suffix: suffix,
-                locale: locale,
-                localeMatcher: localeMatcher,
-                currency: currency,
-                currencyDisplay: currencyDisplay,
-                useGrouping: useGrouping,
+                type: type(),
+                field: field(),
+                filterConstraint: filterConstraint(),
+                placeholder: placeholder(),
+                minFractionDigits: minFractionDigits(),
+                maxFractionDigits: maxFractionDigits(),
+                prefix: prefix(),
+                suffix: suffix(),
+                locale: locale(),
+                localeMatcher: localeMatcher(),
+                currency: currency(),
+                currencyDisplay: currencyDisplay(),
+                useGrouping: useGrouping(),
                 showButtons: showButtons
             }
         "
 ></ng-container>
 } @else {
-  @switch (type) {
+  @switch (type()) {
     @case ('text') {
       <input
         type="text"
-        [ariaLabel]="ariaLabel"
+        [ariaLabel]="ariaLabel()"
         hInputText
         [pt]="ptm('pcFilterInputText')"
-        [value]="$safeNavigationMigration(filterConstraint?.value)"
+        [value]="$safeNavigationMigration(filterConstraint()?.value)"
         (input)="onModelChange($event.target.value)"
         (keydown.enter)="onTextInputEnterKeyDown($event)"
-        [attr.placeholder]="placeholder"
+        [attr.placeholder]="placeholder()"
         [unstyled]="unstyled()"
         />
     }
     @case ('numeric') {
       <h-inputNumber
-        [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+        [ngModel]="$safeNavigationMigration(filterConstraint()?.value)"
         (ngModelChange)="onModelChange($event)"
         (onKeyDown)="onNumericInputKeyDown($event)"
         [showButtons]="showButtons"
-        [minFractionDigits]="minFractionDigits"
-        [maxFractionDigits]="maxFractionDigits"
-        [ariaLabel]="ariaLabel"
-        [prefix]="prefix"
-        [suffix]="suffix"
-        [placeholder]="placeholder"
-        [mode]="currency ? 'currency' : 'decimal'"
-        [locale]="locale"
-        [localeMatcher]="localeMatcher"
-        [currency]="currency"
-        [currencyDisplay]="currencyDisplay"
-        [useGrouping]="useGrouping"
+        [minFractionDigits]="minFractionDigits()"
+        [maxFractionDigits]="maxFractionDigits()"
+        [ariaLabel]="ariaLabel()"
+        [prefix]="prefix()"
+        [suffix]="suffix()"
+        [placeholder]="placeholder()"
+        [mode]="currency() ? 'currency' : 'decimal'"
+        [locale]="locale()"
+        [localeMatcher]="localeMatcher()"
+        [currency]="currency()"
+        [currencyDisplay]="currencyDisplay()"
+        [useGrouping]="useGrouping()"
         [pt]="ptm('pcFilterInputNumber')"
         [unstyled]="unstyled()"
       ></h-inputNumber>
@@ -62,9 +62,9 @@
     @case ('boolean') {
       <h-checkbox
         [pt]="ptm('pcFilterCheckbox')"
-        [indeterminate]="$safeNavigationMigration(filterConstraint?.value) === null"
+        [indeterminate]="$safeNavigationMigration(filterConstraint()?.value) === null"
         [binary]="true"
-        [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+        [ngModel]="$safeNavigationMigration(filterConstraint()?.value)"
         (ngModelChange)="onModelChange($event)"
         [unstyled]="unstyled()"
         />
@@ -72,9 +72,9 @@
     @case ('date') {
       <h-datepicker
         [pt]="ptm('pcFilterDatePicker')"
-        [ariaLabel]="ariaLabel"
-        [placeholder]="placeholder"
-        [ngModel]="$safeNavigationMigration(filterConstraint?.value)"
+        [ariaLabel]="ariaLabel()"
+        [placeholder]="placeholder()"
+        [ngModel]="$safeNavigationMigration(filterConstraint()?.value)"
         (ngModelChange)="onModelChange($event)"
         appendTo="body"
         [unstyled]="unstyled()"
