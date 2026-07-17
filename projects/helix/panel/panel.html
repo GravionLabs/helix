@@ -1,15 +1,15 @@
-@if (showHeader) {
-  <div [hBind]="ptm('header')" [class]="cx('header')" (click)="onHeaderClick($event)" [attr.id]="id + '-titlebar'" [attr.data-p]="dataP">
-    @if (_header) {
-      <span [hBind]="ptm('title')" [class]="cx('title')" [attr.id]="id + '_header'">{{ _header }}</span>
+@if (showHeader()) {
+  <div [hBind]="ptm('header')" [class]="cx('header')" (click)="onHeaderClick($event)" [attr.id]="id() + '-titlebar'" [attr.data-p]="dataP">
+    @if (_header()) {
+      <span [hBind]="ptm('title')" [class]="cx('title')" [attr.id]="id() + '_header()'">{{ _header() }}</span>
     }
     <ng-content select="p-header"></ng-content>
-    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
     <div [hBind]="ptm('headerActions')" [class]="cx('headerActions')">
-      <ng-template *ngTemplateOutlet="iconsTemplate || _iconsTemplate"></ng-template>
-      @if (toggleable) {
+      <ng-template *ngTemplateOutlet="iconsTemplate() || _iconsTemplate"></ng-template>
+      @if (toggleable()) {
         <h-button
-          [attr.id]="id + '_header'"
+          [attr.id]="id() + '_header()'"
           severity="secondary"
           [text]="true"
           [rounded]="true"
@@ -17,24 +17,24 @@
           role="button"
           [styleClass]="cx('pcToggleButton')"
           [attr.aria-label]="buttonAriaLabel"
-          [attr.aria-controls]="id + '_content'"
-          [attr.aria-expanded]="!collapsed"
+          [attr.aria-controls]="id() + '_content'"
+          [attr.aria-expanded]="!collapsed()"
           (click)="onIconClick($event)"
           (keydown)="onKeyDown($event)"
-          [buttonProps]="toggleButtonProps"
+          [buttonProps]="toggleButtonProps()"
           [pt]="ptm('pcToggleButton')"
           [unstyled]="unstyled()"
           >
           <ng-template #icon>
-            @if (!headerIconsTemplate && !_headerIconsTemplate && !toggleButtonProps?.icon) {
-              @if (!collapsed) {
+            @if (!headerIconsTemplate() && !_headerIconsTemplate && !toggleButtonProps()?.icon) {
+              @if (!collapsed()) {
                 <svg data-p-icon="minus" [hBind]="ptm('pcToggleButton.icon')" />
               }
-              @if (collapsed) {
+              @if (collapsed()) {
                 <svg data-p-icon="plus" [hBind]="ptm('pcToggleButton.icon')" />
               }
             }
-            <ng-template *ngTemplateOutlet="headerIconsTemplate || _headerIconsTemplate; context: { $implicit: collapsed }"></ng-template>
+            <ng-template *ngTemplateOutlet="headerIconsTemplate() || _headerIconsTemplate; context: { $implicit: collapsed() }"></ng-template>
           </ng-template>
         </h-button>
       }
@@ -43,27 +43,27 @@
 }
 <div
   [hBind]="ptm('contentContainer')"
-  [hMotion]="!toggleable || (toggleable && !collapsed)"
+  [hMotion]="!toggleable() || (toggleable() && !collapsed())"
   pMotionName="p-collapsible"
   [pMotionOptions]="computedMotionOptions()"
   [class]="cx('contentContainer')"
-  [id]="id + '_content'"
+  [id]="id() + '_content'"
   role="region"
-  [attr.aria-labelledby]="id + '_header'"
-  [attr.aria-hidden]="collapsed"
-  [attr.tabindex]="collapsed ? '-1' : undefined"
+  [attr.aria-labelledby]="id() + '_header()'"
+  [attr.aria-hidden]="collapsed()"
+  [attr.tabindex]="collapsed() ? '-1' : undefined"
   (pMotionOnAfterEnter)="onToggleDone($event)"
   >
   <div [hBind]="ptm('contentWrapper')" [class]="cx('contentWrapper')">
     <div [hBind]="ptm('content')" [class]="cx('content')" #contentWrapper>
       <ng-content></ng-content>
-      <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate"></ng-container>
     </div>
 
-    @if (footerFacet || footerTemplate || _footerTemplate) {
+    @if (footerFacet() || footerTemplate() || _footerTemplate) {
       <div [hBind]="ptm('footer')" [class]="cx('footer')">
         <ng-content select="p-footer"></ng-content>
-        <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
       </div>
     }
   </div>

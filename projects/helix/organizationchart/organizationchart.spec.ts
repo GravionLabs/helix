@@ -169,11 +169,11 @@ describe('OrganizationChart', () => {
         it('should have default values', () => {
             fixture.detectChanges();
 
-            expect(organizationChart.value).toEqual([]);
-            expect(organizationChart.selectionMode).toBeNull();
-            expect(organizationChart.collapsible).toBe(false);
-            expect(organizationChart.preserveSpace).toBe(true);
-            expect(organizationChart.selection).toBeUndefined();
+            expect(organizationChart.value()).toEqual([]);
+            expect(organizationChart.selectionMode()).toBeNull();
+            expect(organizationChart.collapsible()).toBe(false);
+            expect(organizationChart.preserveSpace()).toBe(true);
+            expect(organizationChart.selection()).toBeUndefined();
         });
 
         it('should accept custom values', () => {
@@ -192,28 +192,28 @@ describe('OrganizationChart', () => {
 
             fixture.detectChanges();
 
-            expect(organizationChart.value).toBe(testData);
-            expect(organizationChart.selectionMode).toBe('single');
-            expect(organizationChart.collapsible).toBe(true);
-            expect(organizationChart.preserveSpace).toBe(false);
-            expect(organizationChart.styleClass).toBe('custom-class');
+            expect(organizationChart.value()).toBe(testData);
+            expect(organizationChart.selectionMode()).toBe('single');
+            expect(organizationChart.collapsible()).toBe(true);
+            expect(organizationChart.preserveSpace()).toBe(false);
+            expect(organizationChart.styleClass()).toBe('custom-class');
         });
 
         it('should correctly identify root node', () => {
-            expect(organizationChart.root).toBeNull();
+            expect(organizationChart.root()).toBeNull();
 
             component.data = [{ label: 'Root Node' }];
             fixture.detectChanges();
 
-            expect(organizationChart.root).toBeDefined();
-            expect(organizationChart.root?.label).toBe('Root Node');
+            expect(organizationChart.root()).toBeDefined();
+            expect(organizationChart.root()?.label).toBe('Root Node');
         });
 
         it('should handle empty data array', () => {
             component.data = [];
             fixture.detectChanges();
 
-            expect(organizationChart.root).toBeNull();
+            expect(organizationChart.root()).toBeNull();
             const table = fixture.debugElement.query(By.css('table'));
             expect(table).toBeNull();
         });
@@ -237,7 +237,7 @@ describe('OrganizationChart', () => {
 
             expect(organizationChart.findIndexInSelection(node)).toBe(-1);
 
-            organizationChart.selection = node;
+            organizationChart.selection.set(node);
             expect(organizationChart.findIndexInSelection(node)).toBe(0);
 
             const otherNode = component.data[0].children![1];
@@ -253,7 +253,7 @@ describe('OrganizationChart', () => {
             const node1 = component.data[0].children![0];
             const node2 = component.data[0].children![2];
 
-            organizationChart.selection = [node1, node2];
+            organizationChart.selection.set([node1, node2]);
 
             expect(organizationChart.findIndexInSelection(node1)).toBe(0);
             expect(organizationChart.findIndexInSelection(node2)).toBe(1);
@@ -265,7 +265,7 @@ describe('OrganizationChart', () => {
 
             expect(organizationChart.isSelected(node)).toBe(false);
 
-            organizationChart.selection = node;
+            organizationChart.selection.set(node);
             expect(organizationChart.isSelected(node)).toBe(true);
         });
 
@@ -315,7 +315,7 @@ describe('OrganizationChart', () => {
 
             organizationChart.onNodeClick(event, node);
 
-            expect(organizationChart.selection).toBe(node);
+            expect(organizationChart.selection()).toBe(node);
             expect(component.nodeSelectEvent).toBeDefined();
             expect(component.nodeSelectEvent.node).toBe(node);
             expect(component.selectionChangeEvent).toBe(node);
@@ -328,7 +328,7 @@ describe('OrganizationChart', () => {
             fixture.detectChanges();
 
             const node = component.data[0].children![0];
-            organizationChart.selection = node;
+            organizationChart.selection.set(node);
 
             const event = new MouseEvent('click');
             Object.defineProperty(event, 'target', {
@@ -337,7 +337,7 @@ describe('OrganizationChart', () => {
             });
             organizationChart.onNodeClick(event, node);
 
-            expect(organizationChart.selection).toBeNull();
+            expect(organizationChart.selection()).toBeNull();
             expect(component.nodeUnselectEvent).toBeDefined();
             expect(component.nodeUnselectEvent.node).toBe(node);
         });
@@ -358,7 +358,7 @@ describe('OrganizationChart', () => {
             });
             organizationChart.onNodeClick(event1, node1);
 
-            expect(organizationChart.selection).toEqual([node1]);
+            expect(organizationChart.selection()).toEqual([node1]);
 
             const event2 = new MouseEvent('click');
             Object.defineProperty(event2, 'target', {
@@ -367,7 +367,7 @@ describe('OrganizationChart', () => {
             });
             organizationChart.onNodeClick(event2, node2);
 
-            expect(organizationChart.selection).toEqual([node1, node2]);
+            expect(organizationChart.selection()).toEqual([node1, node2]);
             expect(component.selectionChangeEvent).toEqual([node1, node2]);
         });
 
@@ -379,7 +379,7 @@ describe('OrganizationChart', () => {
 
             const node1 = component.data[0].children![0];
             const node2 = component.data[0].children![2];
-            organizationChart.selection = [node1, node2];
+            organizationChart.selection.set([node1, node2]);
 
             const event = new MouseEvent('click');
             Object.defineProperty(event, 'target', {
@@ -388,7 +388,7 @@ describe('OrganizationChart', () => {
             });
             organizationChart.onNodeClick(event, node1);
 
-            expect(organizationChart.selection).toEqual([node2]);
+            expect(organizationChart.selection()).toEqual([node2]);
             expect(component.nodeUnselectEvent.node).toBe(node1);
         });
 
@@ -407,7 +407,7 @@ describe('OrganizationChart', () => {
 
             organizationChart.onNodeClick(event, nonSelectableNode);
 
-            expect(organizationChart.selection).toBeUndefined();
+            expect(organizationChart.selection()).toBeUndefined();
             expect(component.nodeSelectEvent).toBeUndefined();
         });
 
@@ -429,7 +429,7 @@ describe('OrganizationChart', () => {
 
             organizationChart.onNodeClick(event, node);
 
-            expect(organizationChart.selection).toBeUndefined();
+            expect(organizationChart.selection()).toBeUndefined();
             expect(component.nodeSelectEvent).toBeUndefined();
         });
 
@@ -465,13 +465,13 @@ describe('OrganizationChart', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(organizationChart.root).toBeNull();
+            expect(organizationChart.root()).toBeNull();
 
             component.data = undefined as any;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             expect(() => fixture.detectChanges()).not.toThrow();
-            expect(organizationChart.root).toBeNull();
+            expect(organizationChart.root()).toBeNull();
         });
 
         it('should handle selection setter with initialized state', () => {
@@ -481,9 +481,9 @@ describe('OrganizationChart', () => {
             const node = { label: 'Test' };
             const spy = spyOn(organizationChart['selectionSource'], 'next');
 
-            organizationChart.selection = node;
+            organizationChart.selection.set(node);
 
-            expect(organizationChart.selection).toBe(node);
+            expect(organizationChart.selection()).toBe(node);
             expect(spy).toHaveBeenCalledWith(null);
         });
 
@@ -545,7 +545,7 @@ describe('OrganizationChart', () => {
                 await fixture.whenStable();
             }
 
-            expect(organizationChart.selection).toBe(nodes[2]);
+            expect(organizationChart.selection()).toBe(nodes[2]);
             expect(component.selectionChangeEvent).toBe(nodes[2]);
         });
     });

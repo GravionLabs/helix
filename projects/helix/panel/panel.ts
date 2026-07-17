@@ -1,24 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule,  TemplateRef, ViewEncapsulation, output, contentChild, viewChild, contentChildren, model } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { uuid } from '@primeuix/utils';
 import { BlockableUI, Footer, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -46,8 +27,8 @@ const PANEL_INSTANCE = new InjectionToken<Panel>('PANEL_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [PanelStyle, { provide: PANEL_INSTANCE, useExisting: Panel }, { provide: PARENT_INSTANCE, useExisting: Panel }],
     host: {
-        '[id]': 'id',
-        '[class]': "cn(cx('root'), styleClass)",
+        '[id]': 'id()',
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.data-p]': 'dataP'
     },
     hostDirectives: [Bind]
@@ -68,73 +49,62 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
     /**
      * Id of the component.
      */
-    @Input() id: string | undefined = uuid('pn_id_');
+    readonly id = input<string | undefined>(uuid('pn_id_'));
     /**
      * Defines if content of panel can be expanded and collapsed.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) toggleable: boolean | undefined;
+    readonly toggleable = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     /**
      * Header text of the panel.
      * @group Props
      */
-    @Input('header') _header: string | undefined;
-
-    /**
-     * Internal collapsed state
-     */
-    _collapsed: boolean | undefined;
+    readonly _header = input<string>(undefined, { alias: 'header' });
 
     /**
      * Defines the initial state of panel content, supports one or two-way binding as well.
      * @group Props
      */
-    @Input({ transform: booleanAttribute })
-    get collapsed(): boolean | undefined {
-        return this._collapsed;
-    }
-    set collapsed(value: boolean | undefined) {
-        this._collapsed = value;
-    }
+    readonly collapsed = model<boolean | undefined>(false);
 
     /**
      * Style class of the component.
      * @group Props
      * @deprecated since v20.0.0, use `class` instead.
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
 
     /**
      * Position of the icons.
      * @group Props
      */
-    @Input() iconPos: 'start' | 'end' | 'center' = 'end';
+    readonly iconPos = input<'start' | 'end' | 'center'>('end');
 
     /**
      * Specifies if header of panel cannot be displayed.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showHeader: boolean = true;
+    readonly showHeader = input<boolean, unknown>(true, { transform: booleanAttribute });
 
     /**
      * Specifies the toggler element to toggle the panel content.
      * @group Props
      */
-    @Input() toggler: 'icon' | 'header' = 'icon';
+    readonly toggler = input<'icon' | 'header'>('icon');
 
     /**
      * Transition options of the animation.
      * @group Props
      * @deprecated since v21.0.0, use `motionOptions` instead.
      */
-    @Input() transitionOptions: string = '400ms cubic-bezier(0.86, 0, 0.07, 1)';
+    readonly transitionOptions = input<string>('400ms cubic-bezier(0.86, 0, 0.07, 1)');
 
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() toggleButtonProps: any;
+    readonly toggleButtonProps = input<any>();
 
     /**
      * The motion options.
@@ -149,33 +119,27 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
         };
     });
 
-    /**
-     * Emitted when the collapsed changes.
-     * @param {boolean} value - New Value.
-     * @group Emits
-     */
-    @Output() collapsedChange: EventEmitter<boolean | undefined> = new EventEmitter<boolean | undefined>();
 
     /**
      * Callback to invoke before panel toggle.
      * @param {PanelBeforeToggleEvent} event - Custom panel toggle event
      * @group Emits
      */
-    @Output() onBeforeToggle: EventEmitter<PanelBeforeToggleEvent> = new EventEmitter<PanelBeforeToggleEvent>();
+    readonly onBeforeToggle = output<PanelBeforeToggleEvent>();
 
     /**
      * Callback to invoke after panel toggle.
      * @param {PanelAfterToggleEvent} event - Custom panel toggle event
      * @group Emits
      */
-    @Output() onAfterToggle: EventEmitter<PanelAfterToggleEvent> = new EventEmitter<PanelAfterToggleEvent>();
+    readonly onAfterToggle = output<PanelAfterToggleEvent>();
 
-    @ContentChild(Footer) footerFacet: Nullable<TemplateRef<void>>;
+    readonly footerFacet = contentChild(Footer);
     /**
      * Defines template option for header.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
     /**
      * Defines template option for icons.
      * @example
@@ -184,7 +148,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
      * ```
      * @group Templates
      */
-    @ContentChild('icons', { descendants: false }) iconsTemplate: TemplateRef<void> | undefined;
+    readonly iconsTemplate = contentChild<TemplateRef<void>>('icons', { descendants: false });
 
     /**
      * Defines template option for content.
@@ -194,7 +158,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
      * ```
      * @group Templates
      */
-    @ContentChild('content', { descendants: false }) contentTemplate: TemplateRef<void> | undefined;
+    readonly contentTemplate = contentChild<TemplateRef<void>>('content', { descendants: false });
 
     /**
      * Defines template option for footer.
@@ -204,7 +168,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
      * ```
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     /**
      * Defines template option for headerIcon.
@@ -216,7 +180,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
      * @see {@link PanelHeaderIconsTemplateContext}
      * @group Templates
      */
-    @ContentChild('headericons', { descendants: false }) headerIconsTemplate: TemplateRef<PanelHeaderIconsTemplateContext> | undefined;
+    readonly headerIconsTemplate = contentChild<TemplateRef<PanelHeaderIconsTemplateContext>>('headericons', { descendants: false });
 
     _headerTemplate: TemplateRef<void> | undefined;
 
@@ -228,42 +192,40 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
 
     _headerIconsTemplate: TemplateRef<PanelHeaderIconsTemplateContext> | undefined;
 
-    @ViewChild('contentWrapper') contentWrapperViewChild: ElementRef;
+    readonly contentWrapperViewChild = viewChild.required<ElementRef>('contentWrapper');
 
     get buttonAriaLabel() {
-        return this._header;
+        return this._header();
     }
 
     onHeaderClick(event: MouseEvent) {
-        if (this.toggler === 'header') {
+        if (this.toggler() === 'header') {
             this.toggle(event);
         }
     }
 
     onIconClick(event: MouseEvent) {
-        if (this.toggler === 'icon') {
+        if (this.toggler() === 'icon') {
             this.toggle(event);
         }
     }
 
     toggle(event: MouseEvent) {
-        this.onBeforeToggle.emit({ originalEvent: event, collapsed: this.collapsed });
+        this.onBeforeToggle.emit({ originalEvent: event, collapsed: this.collapsed() });
 
-        if (this.collapsed) this.expand();
+        if (this.collapsed()) this.expand();
         else this.collapse();
 
         event.preventDefault();
     }
 
     expand() {
-        this._collapsed = false;
-        this.collapsedChange.emit(false);
+        this.collapsed.set(false);
         this.updateTabIndex();
     }
 
     collapse() {
-        this._collapsed = true;
-        this.collapsedChange.emit(true);
+        this.collapsed.set(true);
         this.updateTabIndex();
     }
 
@@ -272,10 +234,11 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
     }
 
     updateTabIndex() {
-        if (this.contentWrapperViewChild) {
-            const focusableElements = this.contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]');
+        const contentWrapperViewChild = this.contentWrapperViewChild();
+        if (contentWrapperViewChild) {
+            const focusableElements = contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]');
             focusableElements.forEach((element: HTMLElement) => {
-                if (this.collapsed) {
+                if (this.collapsed()) {
                     element.setAttribute('tabindex', '-1');
                 } else {
                     element.removeAttribute('tabindex');
@@ -292,13 +255,13 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
     }
 
     onToggleDone(event: MotionEvent) {
-        this.onAfterToggle.emit({ originalEvent: event as any, collapsed: this.collapsed });
+        this.onAfterToggle.emit({ originalEvent: event as any, collapsed: this.collapsed() });
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'header':
                     this._headerTemplate = item.template;
@@ -329,7 +292,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
 
     get dataP() {
         return this.cn({
-            toggleable: this.toggleable
+            toggleable: this.toggleable()
         });
     }
 }

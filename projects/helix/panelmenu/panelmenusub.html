@@ -1,4 +1,4 @@
-@for (processedItem of items; track processedItem; let index = $index) {
+@for (processedItem of items(); track processedItem; let index = $index) {
   @if (processedItem.separator) {
     <li [class]="cn(cx('separator'), getItemProp(processedItem, 'styleClass'))" role="separator" [hBind]="ptm('separator')"></li>
   }
@@ -8,7 +8,7 @@
       [attr.id]="getItemId(processedItem)"
       [attr.aria-label]="getItemProp(processedItem, 'label')"
       [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
-      [attr.aria-level]="level + 1"
+      [attr.aria-level]="level() + 1"
       [attr.aria-setsize]="getAriaSetSize()"
       [attr.aria-posinset]="getAriaPosInset(index)"
       [class]="cn(cx('item', { processedItem }), getItemProp(processedItem, 'styleClass'))"
@@ -21,7 +21,7 @@
       [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
       >
       <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)">
-        @if (!itemTemplate) {
+        @if (!itemTemplate()) {
           @if (!getItemProp(processedItem, 'routerLink')) {
             <a
               [attr.href]="getItemProp(processedItem, 'url')"
@@ -30,11 +30,11 @@
               [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
               [ngStyle]="getItemProp(processedItem, 'linkStyle')"
               [target]="getItemProp(processedItem, 'target')"
-              [attr.tabindex]="!!parentExpanded ? '0' : '-1'"
+              [attr.tabindex]="!!parentExpanded() ? '0' : '-1'"
               [hBind]="getPTOptions(processedItem, index, 'itemLink')"
               >
               @if (isItemGroup(processedItem)) {
-                @if (!panelMenu.submenuIconTemplate && !panelMenu._submenuIconTemplate) {
+                @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
                   @if (isItemActive(processedItem)) {
                     <svg
                       data-p-icon="chevron-down"
@@ -52,7 +52,7 @@
                       />
                   }
                 }
-                <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate || panelMenu._submenuIconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate() || panelMenu._submenuIconTemplate"></ng-template>
               }
               @if (processedItem.icon) {
                 <span
@@ -96,11 +96,11 @@
                   [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
                   [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
                   [state]="getItemProp(processedItem, 'state')"
-                  [attr.tabindex]="!!parentExpanded ? '0' : '-1'"
+                  [attr.tabindex]="!!parentExpanded() ? '0' : '-1'"
                   [hBind]="getPTOptions(processedItem, index, 'itemLink')"
                   >
                   @if (isItemGroup(processedItem)) {
-                    @if (!panelMenu.submenuIconTemplate && !panelMenu._submenuIconTemplate) {
+                    @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
                       @if (isItemActive(processedItem)) {
                         <svg
                           data-p-icon="chevron-down"
@@ -118,7 +118,7 @@
                           />
                       }
                     }
-                    <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate && panelMenu._submenuIconTemplate"></ng-template>
+                    <ng-template *ngTemplateOutlet="panelMenu.submenuIconTemplate() && panelMenu._submenuIconTemplate"></ng-template>
                   }
                   @if (processedItem.icon) {
                     <span
@@ -141,8 +141,8 @@
                 </a>
               }
             }
-            @if (itemTemplate) {
-              <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
+            @if (itemTemplate()) {
+              <ng-template *ngTemplateOutlet="itemTemplate(); context: { $implicit: processedItem.item }"></ng-template>
             }
           </div>
           <div
@@ -155,16 +155,16 @@
               <ul
                 hPanelMenuSub
                 [id]="getItemId(processedItem) + '_list'"
-                [panelId]="panelId"
+                [panelId]="panelId()"
                 [items]="$safeNavigationMigration(processedItem?.items)"
-                [itemTemplate]="itemTemplate"
-                [transitionOptions]="transitionOptions"
-                [focusedItemId]="focusedItemId"
-                [activeItemPath]="activeItemPath"
-                [level]="level + 1"
+                [itemTemplate]="itemTemplate()"
+                [transitionOptions]="transitionOptions()"
+                [focusedItemId]="focusedItemId()"
+                [activeItemPath]="activeItemPath()"
+                [level]="level() + 1"
                 [pt]="pt()"
                 [unstyled]="unstyled()"
-                [parentExpanded]="!!parentExpanded && isItemExpanded(processedItem)"
+                [parentExpanded]="!!parentExpanded() && isItemExpanded(processedItem)"
                 (itemToggle)="onItemToggle($event)"
                 [motionOptions]="motionOptions()"
               ></ul>

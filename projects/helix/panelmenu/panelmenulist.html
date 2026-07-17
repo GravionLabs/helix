@@ -1,16 +1,16 @@
 <ul
     hPanelMenuSub
     #submenu
-    [root]="root"
-    [id]="panelId + '_list'"
-    [panelId]="panelId"
-    [tabindex]="tabindex"
-    [itemTemplate]="itemTemplate"
+    [root]="root()"
+    [id]="panelId() + '_list'"
+    [panelId]="panelId()"
+    [tabindex]="tabindex()"
+    [itemTemplate]="itemTemplate()"
     [focusedItemId]="focused ? focusedItemId : undefined"
     [activeItemPath]="activeItemPath()"
-    [transitionOptions]="transitionOptions"
+    [transitionOptions]="transitionOptions()"
     [items]="processedItems()"
-    [parentExpanded]="parentExpanded"
+    [parentExpanded]="parentExpanded()"
     (itemToggle)="onItemToggle($event)"
     (keydown)="onKeyDown($event)"
     (menuFocus)="onFocus($event)"
