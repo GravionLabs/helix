@@ -1,4 +1,4 @@
-@if (!(dataTable.sortIconTemplate || dataTable._sortIconTemplate)) {
+@if (!(dataTable.sortIconTemplate || dataTable._sortIconTemplate())) {
   @if (sortOrder === 0) {
     <svg data-p-icon="sort-alt" [class]="cx('sortableColumnIcon')" />
   }
@@ -9,9 +9,9 @@
     <svg data-p-icon="sort-amount-down" [class]="cx('sortableColumnIcon')" />
   }
 }
-@if (dataTable.sortIconTemplate || dataTable._sortIconTemplate) {
+@if (dataTable.sortIconTemplate || dataTable._sortIconTemplate()) {
   <span [class]="cx('sortableColumnIcon')">
-    <ng-template *ngTemplateOutlet="dataTable.sortIconTemplate || dataTable._sortIconTemplate; context: { $implicit: sortOrder }"></ng-template>
+    <ng-template *ngTemplateOutlet="dataTable.sortIconTemplate || dataTable._sortIconTemplate(); context: { $implicit: sortOrder }"></ng-template>
   </span>
 }
 @if (isMultiSorted()) {

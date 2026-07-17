@@ -1,49 +1,49 @@
 <div #scrollHeader [class]="cx('scrollableHeader')" [hBind]="ptm('scrollableHeader')">
   <div #scrollHeaderBox [class]="cx('scrollableHeaderBox')" [hBind]="ptm('scrollableHeaderBox')">
-    <table [class]="cn(cx('scrollableHeaderTable'), tt.tableStyleClass)" [hBind]="ptm('scrollableHeaderTable')" [ngStyle]="tt.tableStyle">
+    <table [class]="cn(cx('scrollableHeaderTable'), tt.tableStyleClass())" [hBind]="ptm('scrollableHeaderTable')" [ngStyle]="tt.tableStyle()">
       <ng-container
-        *ngTemplateOutlet="frozen ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate || tt.colGroupTemplate || tt._colGroupTemplate : tt.colGroupTemplate || tt._colGroupTemplate; context: { $implicit: columns }"
+        *ngTemplateOutlet="frozen() ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate() || tt.colGroupTemplate || tt._colGroupTemplate() : tt.colGroupTemplate || tt._colGroupTemplate(); context: { $implicit: columns() }"
       ></ng-container>
       <thead role="rowgroup" [class]="cx('thead')" [hBind]="ptm('thead')">
         <ng-container
-          *ngTemplateOutlet="frozen ? tt.frozenHeaderTemplate || tt._frozenHeaderTemplate || tt.headerTemplate || tt._headerTemplate : tt.headerTemplate || tt._headerTemplate; context: { $implicit: columns }"
+          *ngTemplateOutlet="frozen() ? tt.frozenHeaderTemplate || tt._frozenHeaderTemplate() || tt.headerTemplate || tt._headerTemplate() : tt.headerTemplate || tt._headerTemplate(); context: { $implicit: columns() }"
         ></ng-container>
       </thead>
     </table>
   </div>
 </div>
 
-@if (tt.virtualScroll) {
+@if (tt.virtualScroll()) {
   <h-scroller
     #scroller
     [items]="tt.serializedValue"
     [styleClass]="cx('scrollableBody')"
-    [style]="{ height: tt.scrollHeight !== 'flex' ? tt.scrollHeight : undefined }"
+    [style]="{ height: tt.scrollHeight() !== 'flex' ? tt.scrollHeight() : undefined }"
     [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
-    [itemSize]="tt.virtualScrollItemSize || tt._virtualRowHeight"
-    [lazy]="tt.lazy"
+    [itemSize]="tt.virtualScrollItemSize() || tt._virtualRowHeight"
+    [lazy]="tt.lazy()"
     (onLazyLoad)="tt.onLazyItemLoad($event)"
-    [options]="tt.virtualScrollOptions"
+    [options]="tt.virtualScrollOptions()"
     [pt]="ptm('virtualScroller')"
     >
     <ng-template #content let-items let-scrollerOptions="options">
       <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
     </ng-template>
-    @if (tt.loaderTemplate || tt._loaderTemplate) {
+    @if (tt.loaderTemplate || tt._loaderTemplate()) {
       <ng-template #loader let-scrollerOptions="options">
-        <ng-container *ngTemplateOutlet="tt.loaderTemplate || tt._loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+        <ng-container *ngTemplateOutlet="tt.loaderTemplate || tt._loaderTemplate(); context: { options: scrollerOptions }"></ng-container>
       </ng-template>
     }
   </h-scroller>
 }
-@if (!tt.virtualScroll) {
+@if (!tt.virtualScroll()) {
   <div
     #scrollBody
     [class]="cx('scrollableBody')"
     [hBind]="ptm('scrollableBody')"
         [ngStyle]="{
-            'max-height': tt.scrollHeight !== 'flex' ? scrollHeight : undefined,
-            'overflow-y': !frozen && tt.scrollHeight ? 'scroll' : undefined
+            'max-height': tt.scrollHeight() !== 'flex' ? scrollHeight : undefined,
+            'overflow-y': !frozen() && tt.scrollHeight() ? 'scroll' : undefined
         }"
     >
     <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: serializedValue, options: {} }"></ng-container>
@@ -51,37 +51,37 @@
 }
 
 <ng-template #buildInItems let-items let-scrollerOptions="options">
-  <table role="treegrid" #scrollTable [hBind]="ptm('table')" [class]="tt.tableStyleClass" [ngClass]="scrollerOptions.contentStyleClass" [ngStyle]="tt.tableStyle" [style]="scrollerOptions.contentStyle">
+  <table role="treegrid" #scrollTable [hBind]="ptm('table')" [class]="tt.tableStyleClass()" [ngClass]="scrollerOptions.contentStyleClass" [ngStyle]="tt.tableStyle()" [style]="scrollerOptions.contentStyle">
     <ng-container
-      *ngTemplateOutlet="frozen ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate || tt.colGroupTemplate || tt._colGroupTemplate : tt.colGroupTemplate || tt._colGroupTemplate; context: { $implicit: columns }"
+      *ngTemplateOutlet="frozen() ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate() || tt.colGroupTemplate || tt._colGroupTemplate() : tt.colGroupTemplate || tt._colGroupTemplate(); context: { $implicit: columns() }"
     ></ng-container>
     <tbody
       [hBind]="ptm('tbody')"
       role="rowgroup"
       [class]="cx('tbody')"
       [hBind]="ptm('tbody')"
-      [hTreeTableBody]="columns"
+      [hTreeTableBody]="columns()"
       [unstyled]="unstyled()"
-      [pTreeTableBodyTemplate]="frozen ? tt.frozenBodyTemplate || tt._frozenBodyTemplate || tt.bodyTemplate || tt._bodyTemplate : tt.bodyTemplate || tt._bodyTemplate"
+      [pTreeTableBodyTemplate]="frozen() ? tt.frozenBodyTemplate || tt._frozenBodyTemplate() || tt.bodyTemplate || tt._bodyTemplate() : tt.bodyTemplate || tt._bodyTemplate()"
       [serializedNodes]="items"
-      [frozen]="frozen"
+      [frozen]="frozen()"
     ></tbody>
   </table>
-  @if (frozen) {
+  @if (frozen()) {
     <div #scrollableAligner [style.background-color]="'transparent'"></div>
   }
 </ng-template>
 
-@if (tt.footerTemplate || tt._footerTemplate) {
+@if (tt.footerTemplate || tt._footerTemplate()) {
   <div #scrollFooter [class]="cx('scrollableFooter')" [hBind]="ptm('scrollableFooter')">
     <div #scrollFooterBox [class]="cx('scrollableFooterBox')" [hBind]="ptm('scrollableFooterBox')">
-      <table [class]="cx('scrollableFooterTable')" [ngClass]="tt.tableStyleClass" [ngStyle]="tt.tableStyle" [hBind]="ptm('scrollableFooterTable')">
+      <table [class]="cx('scrollableFooterTable')" [ngClass]="tt.tableStyleClass()" [ngStyle]="tt.tableStyle()" [hBind]="ptm('scrollableFooterTable')">
         <ng-container
-          *ngTemplateOutlet="frozen ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate || tt.colGroupTemplate || tt._colGroupTemplate : tt.colGroupTemplate || tt._colGroupTemplate; context: { $implicit: columns }"
+          *ngTemplateOutlet="frozen() ? tt.frozenColGroupTemplate || tt._frozenColGroupTemplate() || tt.colGroupTemplate || tt._colGroupTemplate() : tt.colGroupTemplate || tt._colGroupTemplate(); context: { $implicit: columns() }"
         ></ng-container>
         <tfoot role="rowgroup" [class]="cx('tfoot')" [hBind]="ptm('tfoot')">
           <ng-container
-            *ngTemplateOutlet="frozen ? tt.frozenFooterTemplate || tt._frozenFooterTemplate || tt.footerTemplate || tt._footerTemplate : tt.footerTemplate || tt._footerTemplate; context: { $implicit: columns }"
+            *ngTemplateOutlet="frozen() ? tt.frozenFooterTemplate || tt._frozenFooterTemplate() || tt.footerTemplate || tt._footerTemplate() : tt.footerTemplate || tt._footerTemplate(); context: { $implicit: columns() }"
           ></ng-container>
         </tfoot>
       </table>

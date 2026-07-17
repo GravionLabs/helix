@@ -1,4 +1,4 @@
-@if (!tt.sortIconTemplate && !tt._sortIconTemplate) {
+@if (!tt.sortIconTemplate && !tt._sortIconTemplate()) {
   @if (sortOrder === 0) {
     <svg data-p-icon="sort-alt" [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')" />
   }
@@ -9,9 +9,9 @@
     <svg data-p-icon="sort-amount-down" [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')" />
   }
 }
-@if (tt.sortIconTemplate || tt._sortIconTemplate) {
+@if (tt.sortIconTemplate || tt._sortIconTemplate()) {
   <span [class]="cx('sortableColumnIcon')" [hBind]="ptm('sortableColumnIcon')">
-    <ng-template *ngTemplateOutlet="tt.sortIconTemplate || tt._sortIconTemplate; context: { $implicit: sortOrder }"></ng-template>
+    <ng-template *ngTemplateOutlet="tt.sortIconTemplate || tt._sortIconTemplate(); context: { $implicit: sortOrder }"></ng-template>
   </span>
 }
 @if (isMultiSorted()) {

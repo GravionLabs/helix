@@ -307,7 +307,7 @@ describe('Table', () => {
 
         it('should have correct dataKey', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.dataKey).toBe('id');
+            expect(tableInstance.dataKey()).toBe('id');
         });
     });
 
@@ -324,7 +324,7 @@ describe('Table', () => {
 
         it('should enable multiple selection', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.selectionMode).toBe('multiple');
+            expect(tableInstance.selectionMode()).toBe('multiple');
         });
 
         it('should render checkboxes for selection', () => {
@@ -351,7 +351,7 @@ describe('Table', () => {
 
         it('should enable multiple sort mode', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.sortMode).toBe('multiple');
+            expect(tableInstance.sortMode()).toBe('multiple');
         });
 
         it('should render sort icons', () => {
@@ -378,7 +378,7 @@ describe('Table', () => {
 
         it('should have global filter fields configured', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.globalFilterFields).toEqual(['name', 'category']);
+            expect(tableInstance.globalFilterFields()).toEqual(['name', 'category']);
         });
 
         it('should render column filters', () => {
@@ -400,12 +400,12 @@ describe('Table', () => {
 
         it('should enable virtual scrolling', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.virtualScroll).toBe(true);
+            expect(tableInstance.virtualScroll()).toBe(true);
         });
 
         it('should have correct virtual scroll item size', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.virtualScrollItemSize).toBe(46);
+            expect(tableInstance.virtualScrollItemSize()).toBe(46);
         });
 
         it('should handle large datasets efficiently', () => {
@@ -426,12 +426,12 @@ describe('Table', () => {
 
         it('should enable lazy loading', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.lazy).toBe(true);
+            expect(tableInstance.lazy()).toBe(true);
         });
 
         it('should have correct total records', () => {
             const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
-            expect(tableInstance.totalRecords).toBe(1000);
+            expect(tableInstance.totalRecords()).toBe(1000);
         });
 
         it('should emit lazy load event', () => {
@@ -491,7 +491,7 @@ describe('Table', () => {
             await new Promise((resolve) => setTimeout(resolve, 350));
             await ecommerceFixture.whenStable();
 
-            const inStockProducts = tableInstance.filteredValue || tableInstance.value;
+            const inStockProducts = tableInstance.filteredValue || tableInstance.value();
             const inStock = inStockProducts.filter((product: any) => product.inventoryStatus === 'INSTOCK');
             expect(inStock.length).toBe(3);
         });
@@ -502,8 +502,8 @@ describe('Table', () => {
             tableInstance.sort({ field: 'price', order: 1 });
             await ecommerceFixture.whenStable();
 
-            expect(tableInstance.sortField).toBe('price');
-            expect(tableInstance.sortOrder).toBe(1);
+            expect(tableInstance.sortField()).toBe('price');
+            expect(tableInstance.sortOrder()).toBe(1);
         });
 
         it('should support price range filtering for budget constraints', async () => {
@@ -513,7 +513,7 @@ describe('Table', () => {
             await new Promise((resolve) => setTimeout(resolve, 350));
             await ecommerceFixture.whenStable();
 
-            const filteredData = tableInstance.filteredValue || tableInstance.value;
+            const filteredData = tableInstance.filteredValue || tableInstance.value();
             const affordableProducts = filteredData.filter((product: any) => product.price < 100);
             expect(affordableProducts.length).toBe(1); // Only the mouse under $100
         });
@@ -555,7 +555,7 @@ describe('Table', () => {
             it('should maintain state across user interactions', () => {
                 const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
-                expect(tableInstance.value).toBeDefined();
+                expect(tableInstance.value()).toBeDefined();
             });
 
             it('should support row expansion for master-detail views', () => {
@@ -565,7 +565,7 @@ describe('Table', () => {
             it('should handle column reordering and resizing', () => {
                 const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
-                expect(tableInstance.value).toBeDefined();
+                expect(tableInstance.value()).toBeDefined();
             });
 
             it('should provide advanced sorting capabilities', () => {

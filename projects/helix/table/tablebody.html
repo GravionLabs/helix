@@ -1,46 +1,46 @@
-@if (!dataTable.expandedRowTemplate && !dataTable._expandedRowTemplate) {
-  @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
-    @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+@if (!dataTable.expandedRowTemplate && !dataTable._expandedRowTemplate()) {
+  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
+    @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate()) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
       <ng-container
         role="row"
         >
         <ng-container
                 *ngTemplateOutlet="
-                    dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate;
+                    dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        columns: columns(),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen
                     }
                 "
       ></ng-container>
     </ng-container>
   }
-  @if (dataTable.rowGroupMode !== 'rowspan') {
+  @if (dataTable.rowGroupMode() !== 'rowspan') {
     <ng-container
                 *ngTemplateOutlet="
-                    rowData ? template : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate;
+                    rowData ? template() : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        columns: columns(),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen
                     }
                 "
   ></ng-container>
 }
-@if (dataTable.rowGroupMode === 'rowspan') {
+@if (dataTable.rowGroupMode() === 'rowspan') {
   <ng-container
                 *ngTemplateOutlet="
-                    rowData ? template : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate;
+                    rowData ? template() : dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        columns: columns(),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen,
                         rowgroup: shouldRenderRowspan(value, rowData, rowIndex),
                         rowspan: calculateRowGroupSize(value, rowData, rowIndex)
@@ -48,18 +48,18 @@
                 "
 ></ng-container>
 }
-@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && !dataTable.virtualScroll && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate()) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
   <ng-container
     role="row"
     >
     <ng-container
                 *ngTemplateOutlet="
-                    dataTable.groupFooterTemplate || dataTable._groupFooterTemplate;
+                    dataTable.groupFooterTemplate || dataTable._groupFooterTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        columns: columns(),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen
                     }
                 "
@@ -68,34 +68,34 @@
 }
 }
 }
-@if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))) {
-  @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
-    @if (!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate)) {
+@if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate()) && !(frozen && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate()))) {
+  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
+    @if (!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate())) {
       <ng-container
                 *ngTemplateOutlet="
-                    template;
+                    template();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
+                        columns: columns(),
                         expanded: dataTable.isRowExpanded(rowData),
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen
                     }
                 "
     ></ng-container>
   }
-  @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+  @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate()) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
     <ng-container role="row">
       <ng-container
                 *ngTemplateOutlet="
-                    dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate;
+                    dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
+                        columns: columns(),
                         expanded: dataTable.isRowExpanded(rowData),
-                        editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                        editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen
                     }
                 "
@@ -105,26 +105,26 @@
 @if (dataTable.isRowExpanded(rowData)) {
   <ng-container
                 *ngTemplateOutlet="
-                    dataTable.expandedRowTemplate || dataTable._expandedRowTemplate;
+                    dataTable.expandedRowTemplate || dataTable._expandedRowTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
+                        columns: columns(),
                         frozen: frozen
                     }
                 "
 ></ng-container>
-@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && dataTable.rowGroupMode === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate()) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
   <ng-container role="row">
     <ng-container
                     *ngTemplateOutlet="
-                        dataTable.groupFooterTemplate || dataTable._groupFooterTemplate;
+                        dataTable.groupFooterTemplate || dataTable._groupFooterTemplate();
                         context: {
                             $implicit: rowData,
                             rowIndex: getRowIndex(rowIndex),
-                            columns: columns,
+                            columns: columns(),
                             expanded: dataTable.isRowExpanded(rowData),
-                            editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                            editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                             frozen: frozen
                         }
                     "
@@ -134,17 +134,17 @@
 }
 }
 }
-@if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen) {
-  @for (rowData of value; track dataTable.rowTrackBy(rowIndex, rowData); let rowIndex = $index) {
+@if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate()) && frozen) {
+  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
     <ng-container
             *ngTemplateOutlet="
-                template;
+                template();
                 context: {
                     $implicit: rowData,
                     rowIndex: getRowIndex(rowIndex),
-                    columns: columns,
+                    columns: columns(),
                     expanded: dataTable.isRowExpanded(rowData),
-                    editing: dataTable.editMode === 'row' && dataTable.isRowEditing(rowData),
+                    editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                     frozen: frozen
                 }
             "
@@ -152,11 +152,11 @@
   @if (dataTable.isRowExpanded(rowData)) {
     <ng-container
                 *ngTemplateOutlet="
-                    dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate;
+                    dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate();
                     context: {
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
-                        columns: columns,
+                        columns: columns(),
                         frozen: frozen
                     }
                 "
@@ -164,9 +164,9 @@
 }
 }
 }
-@if (dataTable.loading) {
-  <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
+@if (dataTable.loading()) {
+  <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate(); context: { $implicit: columns(), frozen: frozen }"></ng-container>
 }
-@if (dataTable.isEmpty() && !dataTable.loading) {
-  <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate; context: { $implicit: columns, frozen: frozen }"></ng-container>
+@if (dataTable.isEmpty() && !dataTable.loading()) {
+  <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate(); context: { $implicit: columns(), frozen: frozen }"></ng-container>
 }
