@@ -727,16 +727,6 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
         this.resetExpandedNodes();
         this.resetPartialSelected();
         this.onModelChange(this.value);
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
         this.onClear.emit();
 
         event.stopPropagation();
