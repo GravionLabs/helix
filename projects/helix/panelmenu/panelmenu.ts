@@ -1,28 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    signal,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, Input, NgModule, numberAttribute, signal, SimpleChanges, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLast, findSingle, focus, getAttribute, isEmpty, isNotEmpty, isPrintableCharacter, resolve, uuid } from '@primeuix/utils';
@@ -46,11 +23,11 @@ const PANELMENUSUB_INSTANCE = new InjectionToken<PanelMenuSub>('PANELMENUSUB_INS
     encapsulation: ViewEncapsulation.None,
     providers: [PanelMenuStyle, { provide: PANELMENUSUB_INSTANCE, useExisting: PanelMenuSub }, { provide: PARENT_INSTANCE, useExisting: PanelMenuSub }],
     host: {
-        '[class]': 'root ? cn(cx("rootList"), cx("submenu")) : cx("submenu")',
+        '[class]': 'root() ? cn(cx("rootList"), cx("submenu")) : cx("submenu")',
         role: 'tree',
         '[tabindex]': '-1',
-        '[attr.aria-activedescendant]': 'focusedItemId',
-        '[attr.aria-hidden]': '!parentExpanded',
+        '[attr.aria-activedescendant]': 'focusedItemId()',
+        '[attr.aria-hidden]': '!parentExpanded()',
         '(focusin)': 'menuFocus.emit($event)',
         '(focusout)': 'menuBlur.emit($event)',
         '(keydown)': 'menuKeyDown.emit($event)'
@@ -59,35 +36,35 @@ const PANELMENUSUB_INSTANCE = new InjectionToken<PanelMenuSub>('PANELMENUSUB_INS
     hostDirectives: [Bind]
 })
 export class PanelMenuSub extends BaseComponent {
-    @Input() panelId: string | undefined;
+    readonly panelId = input<string>();
 
-    @Input() focusedItemId: string | undefined;
+    readonly focusedItemId = input<string>();
 
-    @Input() items: any[];
+    readonly items = input<any[]>(undefined!);
 
-    @Input() itemTemplate: TemplateRef<PanelMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = input<TemplateRef<PanelMenuItemTemplateContext>>();
 
-    @Input({ transform: numberAttribute }) level: number = 0;
+    readonly level = input<number, unknown>(0, { transform: numberAttribute });
 
-    @Input() activeItemPath: any[];
+    readonly activeItemPath = input<any[]>(undefined!);
 
-    @Input({ transform: booleanAttribute }) root: boolean | undefined;
+    readonly root = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: numberAttribute }) tabindex: number | undefined;
+    readonly tabindex = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input() transitionOptions: string | undefined;
+    readonly transitionOptions = input<string>();
 
-    @Input({ transform: booleanAttribute }) parentExpanded: boolean | undefined;
+    readonly parentExpanded = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     motionOptions = input<MotionOptions>();
 
-    @Output() itemToggle: EventEmitter<any> = new EventEmitter<any>();
+    readonly itemToggle = output<any>();
 
-    @Output() menuFocus: EventEmitter<any> = new EventEmitter<any>();
+    readonly menuFocus = output<any>();
 
-    @Output() menuBlur: EventEmitter<any> = new EventEmitter<any>();
+    readonly menuBlur = output<any>();
 
-    @Output() menuKeyDown: EventEmitter<any> = new EventEmitter<any>();
+    readonly menuKeyDown = output<any>();
 
     listViewChild: ElementRef = inject(ElementRef);
 
@@ -100,7 +77,7 @@ export class PanelMenuSub extends BaseComponent {
     $pcPanelMenu: PanelMenu | undefined = inject(PANELMENU_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
     onAfterViewChecked(): void {
-        this.bindDirectiveInstance.setAttrs(this.ptm(this.root ? 'rootList' : 'submenu'));
+        this.bindDirectiveInstance.setAttrs(this.ptm(this.root() ? 'rootList' : 'submenu'));
     }
 
     getPTOptions(processedItem: any, index: number, key: string) {
@@ -116,7 +93,7 @@ export class PanelMenuSub extends BaseComponent {
     }
 
     getItemId(processedItem) {
-        return processedItem.item?.id ?? `${this.panelId}_${processedItem.key}`;
+        return processedItem.item?.id ?? `${this.panelId()}_${processedItem.key}`;
     }
 
     getItemKey(processedItem) {
@@ -144,7 +121,7 @@ export class PanelMenuSub extends BaseComponent {
     }
 
     isItemActive(processedItem) {
-        return this.isItemExpanded(processedItem) || this.activeItemPath.some((path) => path && path.key === processedItem.key);
+        return this.isItemExpanded(processedItem) || this.activeItemPath().some((path) => path && path.key === processedItem.key);
     }
 
     isItemVisible(processedItem) {
@@ -156,7 +133,7 @@ export class PanelMenuSub extends BaseComponent {
     }
 
     isItemFocused(processedItem) {
-        return this.focusedItemId === this.getItemId(processedItem);
+        return this.focusedItemId() === this.getItemId(processedItem);
     }
 
     isItemGroup(processedItem) {
@@ -164,11 +141,11 @@ export class PanelMenuSub extends BaseComponent {
     }
 
     getAriaSetSize() {
-        return this.items.filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
+        return this.items().filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
     }
 
     getAriaPosInset(index) {
-        return index - this.items.slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length + 1;
+        return index - this.items().slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, 'separator')).length + 1;
     }
 
     onItemClick(event, processedItem) {
@@ -192,33 +169,33 @@ export class PanelMenuSub extends BaseComponent {
     encapsulation: ViewEncapsulation.None
 })
 export class PanelMenuList extends BaseComponent {
-    @Input() panelId: string | undefined;
+    readonly panelId = input<string>();
 
-    @Input() id: string | undefined;
+    readonly id = input<string>();
 
-    @Input() items: any[];
+    readonly items = input<any[]>(undefined!);
 
-    @Input() itemTemplate: TemplateRef<PanelMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = input<TemplateRef<PanelMenuItemTemplateContext>>();
 
-    @Input({ transform: booleanAttribute }) parentExpanded: boolean | undefined;
+    readonly parentExpanded = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) expanded: boolean | undefined;
+    readonly expanded = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() transitionOptions: string | undefined;
+    readonly transitionOptions = input<string>();
 
-    @Input({ transform: booleanAttribute }) root: boolean | undefined;
+    readonly root = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: numberAttribute }) tabindex: number | undefined;
+    readonly tabindex = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input() activeItem: any;
+    readonly activeItem = input<any>();
 
     motionOptions = input<MotionOptions>();
 
-    @Output() itemToggle: EventEmitter<any> = new EventEmitter<any>();
+    readonly itemToggle = output<any>();
 
-    @Output() headerFocus: EventEmitter<any> = new EventEmitter<any>();
+    readonly headerFocus = output<any>();
 
-    @ViewChild('submenu') subMenuViewChild: PanelMenuSub;
+    readonly subMenuViewChild = viewChild.required<PanelMenuSub>('submenu');
 
     searchTimeout: any;
 
@@ -239,11 +216,11 @@ export class PanelMenuList extends BaseComponent {
 
     get focusedItemId() {
         const focusedItem = this.focusedItem();
-        return focusedItem && focusedItem.item?.id ? focusedItem.item.id : isNotEmpty(this.focusedItem()) ? `${this.panelId}_${this.focusedItem().key}` : undefined;
+        return focusedItem && focusedItem.item?.id ? focusedItem.item.id : isNotEmpty(this.focusedItem()) ? `${this.panelId()}_${this.focusedItem().key}` : undefined;
     }
 
     onChanges(changes: SimpleChanges) {
-        this.processedItems.set(this.createProcessedItems(changes?.items?.currentValue || this.items || []));
+        this.processedItems.set(this.createProcessedItems(changes?.items?.currentValue || this.items() || []));
     }
 
     getItemProp(processedItem, name) {
@@ -303,7 +280,7 @@ export class PanelMenuList extends BaseComponent {
             parentNode = parentNode?.parentNode as Element;
         }
 
-        return parentNode?.id && this.visibleItems().find((processedItem: any) => this.isValidItem(processedItem) && `${this.panelId}_${processedItem.key}` === parentNode.id);
+        return parentNode?.id && this.visibleItems().find((processedItem: any) => this.isValidItem(processedItem) && `${this.panelId()}_${processedItem.key}` === parentNode.id);
     }
 
     createProcessedItems(items, level = 0, parent = {}, parentKey = '') {
@@ -366,7 +343,7 @@ export class PanelMenuList extends BaseComponent {
     }
 
     scrollInView() {
-        const element = findSingle(this.subMenuViewChild.listViewChild.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+        const element = findSingle(this.subMenuViewChild().listViewChild.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
 
         if (element) {
             element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -532,7 +509,7 @@ export class PanelMenuList extends BaseComponent {
 
     onEnterKey(event) {
         if (isNotEmpty(this.focusedItem())) {
-            const element = <any>findSingle(this.subMenuViewChild.listViewChild.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+            const element = <any>findSingle(this.subMenuViewChild().listViewChild.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
             const anchorElement = element && (<HTMLElement>findSingle(element, 'a') || <HTMLElement>findSingle(element, 'button'));
 
             anchorElement ? anchorElement.click() : element && element.click();
@@ -628,7 +605,7 @@ export class PanelMenuList extends BaseComponent {
     encapsulation: ViewEncapsulation.None,
     providers: [PanelMenuStyle, { provide: PANELMENU_INSTANCE, useExisting: PanelMenu }, { provide: PARENT_INSTANCE, useExisting: PanelMenu }],
     host: {
-        '[class]': 'cn(cx("root"), styleClass)'
+        '[class]': 'cn(cx("root"), styleClass())'
     },
     hostDirectives: [Bind]
 })
@@ -639,24 +616,24 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() model: MenuItem[] | undefined;
+    readonly model = input<MenuItem[]>();
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Whether multiple tabs can be activated at the same time or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) multiple: boolean = false;
+    readonly multiple = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Transition options of the animation.
      * @group Props
      * @deprecated since v21.0.0, use `motionOptions` instead.
      */
-    @Input() transitionOptions: string = '400ms cubic-bezier(0.86, 0, 0.07, 1)';
+    readonly transitionOptions = input<string>('400ms cubic-bezier(0.86, 0, 0.07, 1)');
     /**
      * The motion options.
      * @group Props
@@ -673,33 +650,37 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
      * Current id state as a string.
      * @group Props
      */
-    @Input() id: string | undefined;
+    readonly id = input<string>();
+
+    private readonly autoId = uuid('pn_id_');
+
+    readonly $id = computed(() => this.id() || this.autoId);
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number | undefined = 0;
+    readonly tabindex = input<number | undefined, unknown>(0, { transform: numberAttribute });
 
-    @ViewChild('container') containerViewChild: ElementRef | undefined;
+    readonly containerViewChild = viewChild<ElementRef>('container');
     /**
      * Template option of submenu icon.
      * @group Templates
      */
-    @ContentChild('submenuicon', { descendants: false }) submenuIconTemplate: TemplateRef<void> | undefined;
+    readonly submenuIconTemplate = contentChild<TemplateRef<void>>('submenuicon', { descendants: false });
     /**
      * Template option of header icon.
      * @group Templates
      */
-    @ContentChild('headericon', { descendants: false }) headerIconTemplate: TemplateRef<void> | undefined;
+    readonly headerIconTemplate = contentChild<TemplateRef<void>>('headericon', { descendants: false });
     /**
      * Template option of item.
      * @param {PanelMenuItemTemplateContext} context - item context.
      * @see {@link PanelMenuItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<PanelMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<PanelMenuItemTemplateContext>>('item', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _submenuIconTemplate: TemplateRef<void> | undefined;
 
@@ -730,11 +711,10 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
     }
 
     onInit() {
-        this.id = this.id || uuid('pn_id_');
     }
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates()?.forEach((item) => {
             switch (item.getType()) {
                 case 'submenuicon':
                     this._submenuIconTemplate = item.template;
@@ -760,7 +740,7 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
      * @group Method
      */
     collapseAll() {
-        for (let item of this.model!) {
+        for (let item of this.model()!) {
             if (item.expanded) {
                 item.expanded = false;
             }
@@ -801,7 +781,7 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
     }
 
     getPanelId(index, item?) {
-        return item && item.id ? item.id : `${this.id}_${index}`;
+        return item && item.id ? item.id : `${this.$id()}_${index}`;
     }
 
     getHeaderId(item, index) {
@@ -839,11 +819,13 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
     }
 
     findFirstHeader() {
-        return this.containerViewChild?.nativeElement ? this.findNextHeader(this.containerViewChild.nativeElement.firstElementChild, true) : null;
+        const containerViewChild = this.containerViewChild();
+        return containerViewChild?.nativeElement ? this.findNextHeader(containerViewChild.nativeElement.firstElementChild, true) : null;
     }
 
     findLastHeader() {
-        return this.containerViewChild?.nativeElement ? this.findPrevHeader(this.containerViewChild.nativeElement.lastElementChild, true) : null;
+        const containerViewChild = this.containerViewChild();
+        return containerViewChild?.nativeElement ? this.findPrevHeader(containerViewChild.nativeElement.lastElementChild, true) : null;
     }
 
     onHeaderClick(event, item, index) {
@@ -857,8 +839,8 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
             item.command({ originalEvent: event, item });
         }
 
-        if (!this.multiple) {
-            for (let modelItem of this.model!) {
+        if (!this.multiple()) {
+            for (let modelItem of this.model()!) {
                 if (item !== modelItem && modelItem.expanded) {
                     modelItem.expanded = false;
                 }

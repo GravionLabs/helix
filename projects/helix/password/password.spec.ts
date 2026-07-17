@@ -803,42 +803,42 @@ describe('Password', () => {
         it('should support header template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.headerTemplate).not.toThrow();
+            expect(() => passwordComponent.headerTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
         it('should support content template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.contentTemplate).not.toThrow();
+            expect(() => passwordComponent.contentTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
         it('should support footer template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.footerTemplate).not.toThrow();
+            expect(() => passwordComponent.footerTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
         it('should support clear icon template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.clearIconTemplate).not.toThrow();
+            expect(() => passwordComponent.clearIconTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
         it('should support hide icon template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.hideIconTemplate).not.toThrow();
+            expect(() => passwordComponent.hideIconTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
         it('should support show icon template property access', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
             // Verify component can access template properties without errors
-            expect(() => passwordComponent.showIconTemplate).not.toThrow();
+            expect(() => passwordComponent.showIconTemplate()).not.toThrow();
             expect(passwordComponent).toBeTruthy();
         });
 
@@ -846,16 +846,16 @@ describe('Password', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
 
             // Verify that the component has template properties
-            expect(passwordComponent.templates).toBeDefined();
+            expect(passwordComponent.templates()).toBeDefined();
 
             // Test that we can access template-related properties without errors
             expect(() => {
-                passwordComponent.headerTemplate;
-                passwordComponent.contentTemplate;
-                passwordComponent.footerTemplate;
-                passwordComponent.clearIconTemplate;
-                passwordComponent.hideIconTemplate;
-                passwordComponent.showIconTemplate;
+                passwordComponent.headerTemplate();
+                passwordComponent.contentTemplate();
+                passwordComponent.footerTemplate();
+                passwordComponent.clearIconTemplate();
+                passwordComponent.hideIconTemplate();
+                passwordComponent.showIconTemplate();
             }).not.toThrow();
         });
 
@@ -885,7 +885,7 @@ describe('Password', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
 
             // Verify that templates can be processed
-            expect(passwordComponent.templates).toBeDefined();
+            expect(passwordComponent.templates()).toBeDefined();
 
             // Test that the template processing lifecycle works
             expect(() => {
@@ -906,7 +906,7 @@ describe('Password', () => {
             }).not.toThrow();
 
             // Templates should be available for processing
-            expect(passwordComponent.templates).toBeDefined();
+            expect(passwordComponent.templates()).toBeDefined();
         });
 
         it('should verify #template references are accessible', () => {
@@ -934,8 +934,8 @@ describe('Password', () => {
                 templatesFixture.detectChanges();
 
                 // Templates should be available for context binding
-                if (passwordComponent.templates) {
-                    passwordComponent.templates.forEach((template: any) => {
+                if (passwordComponent.templates()) {
+                    passwordComponent.templates().forEach((template: any) => {
                         expect(template).toBeTruthy();
                     });
                 }
@@ -968,12 +968,12 @@ describe('Password', () => {
                 templatesFixture.detectChanges();
 
                 // Test template property access
-                passwordComponent.headerTemplate;
-                passwordComponent.contentTemplate;
-                passwordComponent.footerTemplate;
-                passwordComponent.clearIconTemplate;
-                passwordComponent.hideIconTemplate;
-                passwordComponent.showIconTemplate;
+                passwordComponent.headerTemplate();
+                passwordComponent.contentTemplate();
+                passwordComponent.footerTemplate();
+                passwordComponent.clearIconTemplate();
+                passwordComponent.hideIconTemplate();
+                passwordComponent.showIconTemplate();
             }).not.toThrow();
 
             // Component should handle template processing
@@ -999,7 +999,7 @@ describe('Password', () => {
             }).not.toThrow();
 
             // Templates should be properly initialized
-            expect(passwordComponent.templates).toBeDefined();
+            expect(passwordComponent.templates()).toBeDefined();
         });
     });
 

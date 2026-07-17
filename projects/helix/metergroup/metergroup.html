@@ -1,28 +1,28 @@
-@if (labelPosition === 'start') {
-  @if (!labelTemplate && !_labelTemplate) {
+@if (labelPosition() === 'start') {
+  @if (!labelTemplate() && !_labelTemplate) {
     <h-meterGroupLabel
-      [value]="value"
-      [labelPosition]="labelPosition"
-      [labelOrientation]="labelOrientation"
-      [min]="min"
-      [max]="max"
-      [iconTemplate]="iconTemplate || _iconTemplate"
+      [value]="value()"
+      [labelPosition()]="labelPosition()"
+      [labelOrientation]="labelOrientation()"
+      [min]="min()"
+      [max]="max()"
+      [iconTemplate]="iconTemplate() || _iconTemplate"
       [pt]="pt"
       [unstyled]="unstyled()"
       />
   }
-  <ng-container *ngTemplateOutlet="labelTemplate || labelTemplate; context: { $implicit: value, totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
+  <ng-container *ngTemplateOutlet="labelTemplate() || labelTemplate(); context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
 }
-<ng-container *ngTemplateOutlet="startTemplate || _startTemplate; context: { $implicit: value, totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
+<ng-container *ngTemplateOutlet="startTemplate() || _startTemplate; context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
 <div [class]="cx('meters')" [hBind]="ptm('meters')" [attr.data-p]="dataP">
-  @for (meterItem of value; track trackByFn(index); let index = $index) {
+  @for (meterItem of value(); track trackByFn(index); let index = $index) {
     <ng-container
             *ngTemplateOutlet="
-                meterTemplate || _meterTemplate;
+                meterTemplate() || _meterTemplate;
                 context: {
                     $implicit: meterItem,
                     index: index,
-                    orientation: this.orientation,
+                    orientation: this.orientation(),
                     class: cx('meter'),
                     size: percentValue(meterItem.value),
                     totalPercent: totalPercent(),
@@ -31,24 +31,24 @@
             "
     >
   </ng-container>
-  @if (!meterTemplate && !_meterTemplate && meterItem.value > 0) {
+  @if (!meterTemplate() && !_meterTemplate && meterItem.value > 0) {
     <span [class]="cx('meter')" [attr.data-p]="dataP" [hBind]="ptm('meter')" [ngStyle]="meterStyle(meterItem)"></span>
   }
 }
 </div>
-<ng-container *ngTemplateOutlet="endTemplate || _endTemplate; context: { $implicit: value, totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
-@if (labelPosition === 'end') {
-  @if (!labelTemplate && !_labelTemplate) {
+<ng-container *ngTemplateOutlet="endTemplate() || _endTemplate; context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
+@if (labelPosition() === 'end') {
+  @if (!labelTemplate() && !_labelTemplate) {
     <h-meterGroupLabel
-      [value]="value"
-      [labelPosition]="labelPosition"
-      [labelOrientation]="labelOrientation"
-      [min]="min"
-      [max]="max"
-      [iconTemplate]="iconTemplate || _iconTemplate"
+      [value]="value()"
+      [labelPosition()]="labelPosition()"
+      [labelOrientation]="labelOrientation()"
+      [min]="min()"
+      [max]="max()"
+      [iconTemplate]="iconTemplate() || _iconTemplate"
       [pt]="pt"
       [unstyled]="unstyled()"
       />
   }
-  <ng-container *ngTemplateOutlet="labelTemplate || _labelTemplate; context: { $implicit: value, totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
+  <ng-container *ngTemplateOutlet="labelTemplate() || _labelTemplate; context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
 }

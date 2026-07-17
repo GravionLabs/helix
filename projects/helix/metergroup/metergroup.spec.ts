@@ -147,9 +147,9 @@ describe('MeterGroup', () => {
         });
 
         it('should accept custom values', () => {
-            expect(meterGroup.value).toEqual(component.value);
-            expect(meterGroup.min).toBe(component.min);
-            expect(meterGroup.max).toBe(component.max);
+            expect(meterGroup.value()).toEqual(component.value);
+            expect(meterGroup.min()).toBe(component.min);
+            expect(meterGroup.max()).toBe(component.max);
         });
 
         it('should extend BaseComponent', () => {
@@ -273,7 +273,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.orientation).toBe('horizontal');
+            expect(meterGroup.orientation()).toBe('horizontal');
             expect(meterGroup.vertical).toBe(false);
         });
 
@@ -285,7 +285,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.orientation).toBe('vertical');
+            expect(meterGroup.orientation()).toBe('vertical');
             expect(meterGroup.vertical).toBe(true);
         });
 
@@ -299,7 +299,7 @@ describe('MeterGroup', () => {
 
             const labelElement = fixture.debugElement.query(By.directive(MeterGroupLabel));
             expect(labelElement).toBeTruthy();
-            expect(meterGroup.labelPosition).toBe('start');
+            expect(meterGroup.labelPosition()).toBe('start');
         });
 
         it('should handle label position end', async () => {
@@ -312,7 +312,7 @@ describe('MeterGroup', () => {
 
             const labelElement = fixture.debugElement.query(By.directive(MeterGroupLabel));
             expect(labelElement).toBeTruthy();
-            expect(meterGroup.labelPosition).toBe('end');
+            expect(meterGroup.labelPosition()).toBe('end');
         });
 
         it('should handle horizontal label orientation', async () => {
@@ -323,7 +323,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.labelOrientation).toBe('horizontal');
+            expect(meterGroup.labelOrientation()).toBe('horizontal');
         });
 
         it('should handle vertical label orientation', async () => {
@@ -334,7 +334,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.labelOrientation).toBe('vertical');
+            expect(meterGroup.labelOrientation()).toBe('vertical');
         });
 
         it('should apply height for vertical orientation', async () => {
@@ -395,7 +395,7 @@ describe('MeterGroup', () => {
             // Since we're using a custom label template, the icon template won't be used
             // (MeterGroupLabel is only rendered when there's no custom label template)
             // The icon template is stored but not rendered in this test case
-            expect(meterGroup._iconTemplate || meterGroup.iconTemplate).toBeDefined();
+            expect(meterGroup._iconTemplate || meterGroup.iconTemplate()).toBeDefined();
         });
 
         it('should pass correct context to label template', () => {
@@ -411,11 +411,11 @@ describe('MeterGroup', () => {
 
         it('should handle template processing in ngAfterContentInit', () => {
             // Templates should already be processed during component initialization
-            expect(meterGroup._labelTemplate || meterGroup.labelTemplate).toBeDefined();
-            expect(meterGroup._meterTemplate || meterGroup.meterTemplate).toBeDefined();
-            expect(meterGroup._startTemplate || meterGroup.startTemplate).toBeDefined();
-            expect(meterGroup._endTemplate || meterGroup.endTemplate).toBeDefined();
-            expect(meterGroup._iconTemplate || meterGroup.iconTemplate).toBeDefined();
+            expect(meterGroup._labelTemplate || meterGroup.labelTemplate()).toBeDefined();
+            expect(meterGroup._meterTemplate || meterGroup.meterTemplate()).toBeDefined();
+            expect(meterGroup._startTemplate || meterGroup.startTemplate()).toBeDefined();
+            expect(meterGroup._endTemplate || meterGroup.endTemplate()).toBeDefined();
+            expect(meterGroup._iconTemplate || meterGroup.iconTemplate()).toBeDefined();
 
             // Calling ngAfterContentInit again should not throw
             expect(() => meterGroup.ngAfterContentInit()).not.toThrow();
@@ -621,7 +621,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.value!.length).toBe(2);
+            expect(meterGroup.value()!.length).toBe(2);
             expect(meterGroup.totalPercent()).toBe(70);
         });
 
@@ -654,7 +654,7 @@ describe('MeterGroup', () => {
             expect(component.value.length).toBe(2);
 
             // The meterGroup should reflect the updated value
-            expect(meterGroup.value!.length).toBe(2);
+            expect(meterGroup.value()!.length).toBe(2);
 
             // Check DOM elements
             const labelTexts = element.querySelectorAll('.p-metergroup-label-text');
@@ -669,7 +669,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.value!.length).toBe(0);
+            expect(meterGroup.value()!.length).toBe(0);
             const meters = element.querySelectorAll('.p-metergroup-meter');
             expect(meters.length).toBe(0);
         });
@@ -692,7 +692,7 @@ describe('MeterGroup', () => {
         });
 
         it('should handle empty value array', () => {
-            expect(meterGroup.value).toEqual([]);
+            expect(meterGroup.value()).toEqual([]);
             expect(() => fixture.detectChanges()).not.toThrow();
         });
 
@@ -732,7 +732,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(meterGroup.value![0].value).toBe(30);
+            expect(meterGroup.value()![0].value).toBe(30);
         });
 
         it('should handle boundary values', () => {
@@ -811,7 +811,7 @@ describe('MeterGroup', () => {
             meterGroup.ngAfterContentInit();
 
             // After processing, internal template properties should be set
-            expect(meterGroup._labelTemplate || meterGroup.labelTemplate).toBeDefined();
+            expect(meterGroup._labelTemplate || meterGroup.labelTemplate()).toBeDefined();
         });
     });
 
@@ -837,7 +837,7 @@ describe('MeterGroup', () => {
             }).not.toThrow();
 
             const meterGroup = fixture.debugElement.query(By.directive(MeterGroup)).componentInstance;
-            expect(meterGroup.value!.length).toBe(100);
+            expect(meterGroup.value()!.length).toBe(100);
         });
 
         it('should efficiently update percentages', () => {
