@@ -51,3 +51,4 @@ apps/helix-demo/public/source/
 
 # APM dependencies
 apm_modules/
+.claude/

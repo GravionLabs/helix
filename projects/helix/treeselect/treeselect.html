@@ -87,7 +87,7 @@
         [hBind]="ptm('hiddenFirstFocusableEl')"
         >
       </span>
-      <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate; context: { $implicit: value, options: options }"></ng-container>
+      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: value, options: options }"></ng-container>
       <div [class]="cx('treeContainer')" [ngStyle]="{ 'max-height': scrollHeight }" [hBind]="ptm('treeContainer')">
         <h-tree
           #tree
@@ -146,7 +146,7 @@
           }
         </h-tree>
       </div>
-      <ng-container *ngTemplateOutlet="footerTemplate; context: { $implicit: value, options: options }"></ng-container>
+      <ng-container *ngTemplateOutlet="footerTemplate(); context: { $implicit: value, options: options }"></ng-container>
       <span
         #lastHiddenFocusableEl
         role="presentation"

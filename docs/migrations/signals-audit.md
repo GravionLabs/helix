@@ -88,7 +88,7 @@ directories**, then finishes manually by these rules:
 | 6 | #317 | metergroup–password | ✅ done (leftovers: orderlist value; spec input writes → #324) |
 | 7 | #318 | popover–skeleton | ✅ done (spec input writes → #324) |
 | 8 | #319 | slider–terminal | ✅ done (leftovers: splitter panelSizes getter/setter) |
-| 9 | #320 | textarea–treetable | open |
+| 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
 | 10 | #321 | directives & infrastructure | open |
 | Hard cases | #322 | table & treetable | open |
 | Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |

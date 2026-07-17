@@ -1,7 +1,7 @@
-@for (event of value; track event; let last = $last) {
+@for (event of value(); track event; let last = $last) {
   <div [hBind]="ptm('event')" [class]="cx('event')" [attr.data-p]="dataP">
     <div [hBind]="ptm('eventOpposite')" [class]="cx('eventOpposite')" [attr.data-p]="dataP">
-      <ng-container *ngTemplateOutlet="oppositeTemplate || _oppositeTemplate; context: { $implicit: event }"></ng-container>
+      <ng-container *ngTemplateOutlet="oppositeTemplate() || _oppositeTemplate; context: { $implicit: event }"></ng-container>
     </div>
     <div [hBind]="ptm('eventSeparator')" [class]="cx('eventSeparator')" [attr.data-p]="dataP">
       @if (markerTemplate || _markerTemplate) {
@@ -14,7 +14,7 @@
       }
     </div>
     <div [hBind]="ptm('eventContent')" [class]="cx('eventContent')" [attr.data-p]="dataP">
-      <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: event }"></ng-container>
+      <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { $implicit: event }"></ng-container>
     </div>
   </div>
 }
