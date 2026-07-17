@@ -1,46 +1,46 @@
-@if (loading && loadingMode === 'mask') {
+@if (loading() && loadingMode() === 'mask') {
   <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
     @if (loadingIcon) {
       <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon)" [hBind]="ptm('loadingIcon')"></i>
     }
     @if (!loadingIcon) {
-      @if (!loadingIconTemplate && !_loadingIconTemplate) {
+      @if (!loadingIconTemplate() && !_loadingIconTemplate) {
         <svg data-p-icon="spinner" spin [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
       }
-      @if (loadingIconTemplate || _loadingIconTemplate) {
+      @if (loadingIconTemplate() || _loadingIconTemplate) {
         <span [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
-          <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+          <ng-template *ngTemplateOutlet="loadingIconTemplate() || _loadingIconTemplate"></ng-template>
         </span>
       }
     }
   </div>
 }
-<ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-@if (filterTemplate || _filterTemplate) {
-  <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { $implicit: filterOptions }"></ng-container>
+<ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
+@if (filterTemplate() || _filterTemplate) {
+  <ng-container *ngTemplateOutlet="filterTemplate() || _filterTemplate; context: { $implicit: filterOptions }"></ng-container>
 } @else {
-  @if (filter) {
+  @if (filter()) {
     <h-iconfield [class]="cx('pcFilterContainer')" [pt]="ptm('pcFilterContainer')" [unstyled]="unstyled()">
       <input
         #filter
-        [hAutoFocus]="filterInputAutoFocus"
+        [hAutoFocus]="filterInputAutoFocus()"
         hInputText
         type="search"
         autocomplete="off"
         [class]="cx('pcFilterInput')"
-        [attr.placeholder]="filterPlaceholder"
+        [attr.placeholder]="filterPlaceholder()"
         (keydown.enter)="$event.preventDefault()"
         (input)="_filter($safeNavigationMigration($event.target?.value))"
         [pt]="ptm('pcFilterInput')"
         [unstyled]="unstyled()"
         />
       <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
-        @if (!filterIconTemplate && !_filterIconTemplate) {
+        @if (!filterIconTemplate() && !_filterIconTemplate) {
           <svg data-p-icon="search" [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')" />
         }
-        @if (filterIconTemplate || _filterIconTemplate) {
+        @if (filterIconTemplate() || _filterIconTemplate) {
           <span [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')">
-            <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
+            <ng-template *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-template>
           </span>
         }
       </h-inputicon>
@@ -49,20 +49,20 @@
 }
 
 @if (getRootNode()?.length) {
-  @if (virtualScroll) {
+  @if (virtualScroll()) {
     <h-scroller
       #scroller
       [items]="serializedValue"
       [tabindex]="-1"
       [styleClass]="cx('wrapper')"
-      [style]="{ height: scrollHeight !== 'flex' ? scrollHeight : undefined }"
-      [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
-      [itemSize]="virtualScrollItemSize"
-      [lazy]="lazy"
+      [style]="{ height: scrollHeight() !== 'flex' ? scrollHeight() : undefined }"
+      [scrollHeight]="scrollHeight() !== 'flex' ? undefined : '100%'"
+      [itemSize]="virtualScrollItemSize()"
+      [lazy]="lazy()"
       (onScroll)="onScroll.emit($event)"
       (onScrollIndexChange)="onScrollIndexChange.emit($event)"
       (onLazyLoad)="onLazyLoad.emit($event)"
-      [options]="virtualScrollOptions"
+      [options]="virtualScrollOptions()"
       [pt]="ptm('virtualScroller')"
       hostName="tree"
       [attr.data-p]="wrapperDataP"
@@ -75,11 +75,11 @@
             [ngClass]="scrollerOptions.contentStyleClass"
             [style]="scrollerOptions.contentStyle"
             role="tree"
-            [attr.aria-label]="ariaLabel"
-            [attr.aria-labelledby]="ariaLabelledBy"
+            [attr.aria-label]="ariaLabel()"
+            [attr.aria-labelledby]="ariaLabelledBy()"
             [hBind]="ptm('rootChildren')"
             >
-            @for (rowNode of items; track trackBy(index, rowNode); let firstChild = $first; let lastChild = $last; let index = $index) {
+            @for (rowNode of items; track trackBy()(index, rowNode); let firstChild = $first; let lastChild = $last; let index = $index) {
               <h-treeNode
                 #treeNode
                 [level]="rowNode.level"
@@ -90,8 +90,8 @@
                 [lastChild]="lastChild"
                 [index]="getIndex(scrollerOptions, index)"
                 [itemSize]="scrollerOptions.itemSize"
-                [indentation]="indentation"
-                [loadingMode]="loadingMode"
+                [indentation]="indentation()"
+                [loadingMode]="loadingMode()"
                 [pt]="pt"
                 [unstyled]="unstyled()"
               ></h-treeNode>
@@ -99,25 +99,25 @@
           </ul>
         }
       </ng-template>
-      @if (loaderTemplate || _loaderTemplate) {
+      @if (loaderTemplate() || _loaderTemplate) {
         <ng-template #loader let-scrollerOptions="options">
-          <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+          <ng-container *ngTemplateOutlet="loaderTemplate() || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
         </ng-template>
       }
     </h-scroller>
   }
-  @if (!virtualScroll) {
-    <div #wrapper [class]="cx('wrapper')" [style.max-height]="scrollHeight" [hBind]="ptm('wrapper')" [attr.data-p]="wrapperDataP">
+  @if (!virtualScroll()) {
+    <div #wrapper [class]="cx('wrapper')" [style.max-height]="scrollHeight()" [hBind]="ptm('wrapper')" [attr.data-p]="wrapperDataP">
       @if (getRootNode()) {
-        <ul #content [class]="cx('rootChildren')" role="tree" [attr.aria-label]="ariaLabel" [attr.aria-labelledby]="ariaLabelledBy" [hBind]="ptm('rootChildren')">
-          @for (node of getRootNode(); track trackBy.bind(this)(index, node); let firstChild = $first; let lastChild = $last; let index = $index) {
+        <ul #content [class]="cx('rootChildren')" role="tree" [attr.aria-label]="ariaLabel()" [attr.aria-labelledby]="ariaLabelledBy()" [hBind]="ptm('rootChildren')">
+          @for (node of getRootNode(); track trackBy().bind(this)(index, node); let firstChild = $first; let lastChild = $last; let index = $index) {
             <h-treeNode
               [node]="node"
               [firstChild]="firstChild"
               [lastChild]="lastChild"
               [index]="index"
               [level]="0"
-              [loadingMode]="loadingMode"
+              [loadingMode]="loadingMode()"
               [pt]="pt"
               [unstyled]="unstyled()"
             ></h-treeNode>
@@ -128,13 +128,13 @@
   }
 }
 
-@if (!loading && (getRootNode() == null || getRootNode().length === 0)) {
+@if (!loading() && (getRootNode() == null || getRootNode().length === 0)) {
   <div [class]="cx('emptyMessage')" [hBind]="ptm('emptyMessage')">
-    @if (!emptyTemplate && !_emptyTemplate) {
+    @if (!emptyTemplate() && !_emptyTemplate) {
       {{ emptyMessageLabel }}
     } @else {
-      <ng-container *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
     }
   </div>
 }
-<ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+<ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>

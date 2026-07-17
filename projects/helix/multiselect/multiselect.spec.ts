@@ -412,32 +412,32 @@ describe('MultiSelect', () => {
         });
 
         it('should have default values', () => {
-            expect(multiSelect.filter).toBe(true);
-            expect(multiSelect.showToggleAll).toBe(true);
-            expect(multiSelect.resetFilterOnHide).toBe(false);
-            expect(multiSelect.filterMatchMode).toBe('contains');
-            expect(multiSelect.scrollHeight).toBe('200px');
-            expect(multiSelect.lazy).toBe(false);
-            expect(multiSelect.loading).toBe(false);
-            expect(multiSelect.autofocusFilter).toBe(false);
-            expect(multiSelect.display).toBe('comma');
-            expect(multiSelect.showClear).toBe(true);
-            expect(multiSelect.autoOptionFocus).toBe(false);
-            expect(multiSelect.selectOnFocus).toBe(false);
-            expect(multiSelect.focusOnHover).toBe(true);
-            expect(multiSelect.highlightOnSelect).toBe(true);
-            expect(multiSelect.displaySelectedLabel).toBe(true);
-            expect(multiSelect.maxSelectedLabels).toBe(3);
-            expect(multiSelect.showHeader).toBe(true);
-            expect(multiSelect.optionGroupLabel).toBe('label');
-            expect(multiSelect.optionGroupChildren).toBe('items');
-            expect(multiSelect.emptyFilterMessage).toBe('' as any);
-            expect(multiSelect.emptyMessage).toBe('' as any);
-            expect(multiSelect.autocomplete).toBe('off');
-            expect(multiSelect.tooltipPosition).toBe('right');
-            expect(multiSelect.tooltipPositionStyle).toBe('absolute');
-            expect(multiSelect.tooltip).toBe('' as any);
-            expect(multiSelect.tabindex).toBe(0);
+            expect(multiSelect.filter()).toBe(true);
+            expect(multiSelect.showToggleAll()).toBe(true);
+            expect(multiSelect.resetFilterOnHide()).toBe(false);
+            expect(multiSelect.filterMatchMode()).toBe('contains');
+            expect(multiSelect.scrollHeight()).toBe('200px');
+            expect(multiSelect.lazy()).toBe(false);
+            expect(multiSelect.loading()).toBe(false);
+            expect(multiSelect.autofocusFilter()).toBe(false);
+            expect(multiSelect.display()).toBe('comma');
+            expect(multiSelect.showClear()).toBe(true);
+            expect(multiSelect.autoOptionFocus()).toBe(false);
+            expect(multiSelect.selectOnFocus()).toBe(false);
+            expect(multiSelect.focusOnHover()).toBe(true);
+            expect(multiSelect.highlightOnSelect()).toBe(true);
+            expect(multiSelect.displaySelectedLabel()).toBe(true);
+            expect(multiSelect.maxSelectedLabels()).toBe(3);
+            expect(multiSelect.showHeader()).toBe(true);
+            expect(multiSelect.optionGroupLabel()).toBe('label');
+            expect(multiSelect.optionGroupChildren()).toBe('items');
+            expect(multiSelect.emptyFilterMessage()).toBe('' as any);
+            expect(multiSelect.emptyMessage()).toBe('' as any);
+            expect(multiSelect.autocomplete()).toBe('off');
+            expect(multiSelect.tooltipPosition()).toBe('right');
+            expect(multiSelect.tooltipPositionStyle()).toBe('absolute');
+            expect(multiSelect.tooltip()).toBe('' as any);
+            expect(multiSelect.tabindex()).toBe(0);
         });
 
         it('should accept custom values', () => {
@@ -451,25 +451,25 @@ describe('MultiSelect', () => {
             fixture.detectChanges();
 
             expect(multiSelect.placeholder()).toBe('Custom Placeholder');
-            expect(multiSelect.filter).toBe(false);
-            expect(multiSelect.showToggleAll).toBe(false);
-            expect(multiSelect.maxSelectedLabels).toBe(5);
-            expect(multiSelect.display).toBe('chip');
-            expect(multiSelect.showClear).toBe(false);
-            expect(multiSelect.scrollHeight).toBe('300px');
+            expect(multiSelect.filter()).toBe(false);
+            expect(multiSelect.showToggleAll()).toBe(false);
+            expect(multiSelect.maxSelectedLabels()).toBe(5);
+            expect(multiSelect.display()).toBe('chip');
+            expect(multiSelect.showClear()).toBe(false);
+            expect(multiSelect.scrollHeight()).toBe('300px');
         });
 
         it('should initialize with options', () => {
-            expect(multiSelect.options).toBeDefined();
-            expect(multiSelect.options!.length).toBe(6);
-            expect(multiSelect.options![0]).toEqual({ name: 'New York', code: 'NY', country: 'USA' });
+            expect(multiSelect.options()).toBeDefined();
+            expect(multiSelect.options()!.length).toBe(6);
+            expect(multiSelect.options()![0]).toEqual({ name: 'New York', code: 'NY', country: 'USA' });
         });
 
         it('should handle empty options', () => {
             component.options = [];
             fixture.detectChanges();
 
-            expect(multiSelect.options!.length).toBe(0);
+            expect(multiSelect.options()!.length).toBe(0);
             expect(multiSelect.isEmpty()).toBe(true);
         });
 
@@ -487,24 +487,24 @@ describe('MultiSelect', () => {
         });
 
         it('should show panel programmatically', async () => {
-            expect(multiSelect.overlayVisible).toBeFalsy();
+            expect(multiSelect.overlayVisible()).toBeFalsy();
 
             multiSelect.show();
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(multiSelect.overlayVisible).toBe(true);
+            expect(multiSelect.overlayVisible()).toBe(true);
         });
 
         it('should hide panel programmatically', async () => {
             // Test show functionality first
-            expect(multiSelect.overlayVisible).toBe(false);
+            expect(multiSelect.overlayVisible()).toBe(false);
             multiSelect.show();
-            expect(multiSelect.overlayVisible).toBe(true);
+            expect(multiSelect.overlayVisible()).toBe(true);
 
             // Test hide functionality
             multiSelect.hide();
-            expect(multiSelect.overlayVisible).toBe(false);
+            expect(multiSelect.overlayVisible()).toBe(false);
         });
 
         it('should update model programmatically', () => {
@@ -720,7 +720,7 @@ describe('MultiSelect', () => {
         });
 
         it('should handle escape key', async () => {
-            expect(multiSelect.overlayVisible).toBe(true);
+            expect(multiSelect.overlayVisible()).toBe(true);
 
             const keyEvent = new KeyboardEvent('keydown', { code: 'Escape' });
             spyOn(keyEvent, 'preventDefault');
@@ -730,7 +730,7 @@ describe('MultiSelect', () => {
 
             expect(keyEvent.preventDefault).toHaveBeenCalled();
             expect(keyEvent.stopPropagation).toHaveBeenCalled();
-            expect(multiSelect.overlayVisible).toBe(false);
+            expect(multiSelect.overlayVisible()).toBe(false);
         });
 
         it('should handle tab key', async () => {
@@ -747,7 +747,7 @@ describe('MultiSelect', () => {
 
             // Tab key should close the overlay (or at least not cause errors)
             // overlayVisible might still be true depending on implementation
-            expect(multiSelect.overlayVisible === false || multiSelect.overlayVisible === true).toBe(true);
+            expect(multiSelect.overlayVisible() === false || multiSelect.overlayVisible() === true).toBe(true);
         });
 
         it('should handle ctrl+a for select all', async () => {
@@ -844,7 +844,7 @@ describe('MultiSelect', () => {
             const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
             expect(hiddenInput.nativeElement.getAttribute('aria-expanded')).toBe('true');
 
-            const listId = multiSelect.id + '_list';
+            const listId = multiSelect.id() + '_list';
             expect(hiddenInput.nativeElement.getAttribute('aria-controls')).toBe(listId);
         });
 
@@ -864,11 +864,11 @@ describe('MultiSelect', () => {
             // Dispatch focus event to trigger onInputFocus
             hiddenInput.nativeElement.dispatchEvent(new FocusEvent('focus'));
             fixture.detectChanges();
-            expect(multiSelect.focused).toBe(true);
+            expect(multiSelect.focused()).toBe(true);
 
             hiddenInput.nativeElement.dispatchEvent(new FocusEvent('blur'));
             fixture.detectChanges();
-            expect(multiSelect.focused).toBe(false);
+            expect(multiSelect.focused()).toBe(false);
         });
 
         it('should manage tabindex correctly', async () => {
@@ -1072,7 +1072,7 @@ describe('MultiSelect', () => {
 
             const clearIcon = fixture.debugElement.query(By.css('.p-multiselect-clear-icon'));
             // Clear icon might not be rendered immediately or use different CSS class
-            expect(clearIcon || fixture.debugElement.query(By.css('[data-pc-section="clearicon"]')) || multiSelect.showClear).toBeTruthy();
+            expect(clearIcon || fixture.debugElement.query(By.css('[data-pc-section="clearicon"]')) || multiSelect.showClear()).toBeTruthy();
         });
 
         it('should display selected items as comma-separated list', async () => {
@@ -1138,7 +1138,7 @@ describe('MultiSelect', () => {
             const clickEvent = new MouseEvent('click');
             multiSelect.onContainerClick(clickEvent);
 
-            expect(multiSelect.overlayVisible).toBeFalsy();
+            expect(multiSelect.overlayVisible()).toBeFalsy();
         });
 
         it('should handle rapid click events', async () => {
@@ -1183,7 +1183,7 @@ describe('MultiSelect', () => {
                 fixture.detectChanges();
             }).not.toThrow();
 
-            expect(multiSelect.options![0].name).toContain('<script>');
+            expect(multiSelect.options()![0].name).toContain('<script>');
         });
 
         it('should handle invalid option data', () => {
@@ -1463,12 +1463,12 @@ describe('MultiSelect Content Child Templates', () => {
         await fixture.whenStable();
 
         // After content init should process templates - check if they exist or component is initialized
-        const hasItemTemplate = !!(multiSelect.itemTemplate || multiSelect._itemTemplate);
-        const hasSelectedItemsTemplate = !!(multiSelect.selectedItemsTemplate || multiSelect._selectedItemsTemplate);
-        const hasHeaderTemplate = !!(multiSelect.headerTemplate || multiSelect._headerTemplate);
-        const hasFooterTemplate = !!(multiSelect.footerTemplate || multiSelect._footerTemplate);
-        const hasEmptyTemplate = !!(multiSelect.emptyTemplate || multiSelect._emptyTemplate);
-        const hasEmptyFilterTemplate = !!(multiSelect.emptyFilterTemplate || multiSelect._emptyFilterTemplate);
+        const hasItemTemplate = !!(multiSelect.itemTemplate() || multiSelect._itemTemplate);
+        const hasSelectedItemsTemplate = !!(multiSelect.selectedItemsTemplate() || multiSelect._selectedItemsTemplate);
+        const hasHeaderTemplate = !!(multiSelect.headerTemplate() || multiSelect._headerTemplate);
+        const hasFooterTemplate = !!(multiSelect.footerTemplate() || multiSelect._footerTemplate);
+        const hasEmptyTemplate = !!(multiSelect.emptyTemplate() || multiSelect._emptyTemplate);
+        const hasEmptyFilterTemplate = !!(multiSelect.emptyFilterTemplate() || multiSelect._emptyFilterTemplate);
 
         // At least some templates should be processed, or component should be properly initialized
         expect(hasItemTemplate || hasSelectedItemsTemplate || hasHeaderTemplate || hasFooterTemplate || hasEmptyTemplate || hasEmptyFilterTemplate || multiSelect).toBeDefined();
@@ -1645,7 +1645,7 @@ describe('MultiSelect Grouped Options', () => {
             }
         } else {
             // Filter input not available, skip detailed assertions
-            expect(multiSelect.filter).toBe(true);
+            expect(multiSelect.filter()).toBe(true);
         }
     });
 });
@@ -1669,9 +1669,9 @@ describe('MultiSelect Virtual Scrolling', () => {
     });
 
     it('should initialize virtual scrolling', () => {
-        expect(multiSelect.virtualScroll).toBe(true);
-        expect(multiSelect.virtualScrollItemSize).toBe(40);
-        expect(multiSelect.scrollHeight).toBe('200px');
+        expect(multiSelect.virtualScroll()).toBe(true);
+        expect(multiSelect.virtualScrollItemSize()).toBe(40);
+        expect(multiSelect.scrollHeight()).toBe('200px');
         expect(multiSelect.virtualScrollerDisabled).toBe(false);
     });
 
@@ -1697,8 +1697,8 @@ describe('MultiSelect Virtual Scrolling', () => {
         fixture.detectChanges();
 
         // Virtual scroller should emit lazy load events
-        if (multiSelect.scroller) {
-            multiSelect.scroller.onLazyLoad.emit({
+        if (multiSelect.scroller()) {
+            multiSelect.scroller().onLazyLoad.emit({
                 first: 0,
                 last: 10
             });
@@ -1716,8 +1716,8 @@ describe('MultiSelect Virtual Scrolling', () => {
         fixture.detectChanges();
 
         // First check if scroller exists and if scrollInView method exists
-        if (multiSelect.scroller && typeof multiSelect.scroller.scrollToIndex === 'function') {
-            const scrollSpy = spyOn(multiSelect.scroller, 'scrollToIndex');
+        if (multiSelect.scroller() && typeof multiSelect.scroller().scrollToIndex === 'function') {
+            const scrollSpy = spyOn(multiSelect.scroller(), 'scrollToIndex');
 
             if (typeof multiSelect.scrollInView === 'function') {
                 // scrollInView uses setTimeout(0) internally, so we need to wait
@@ -1733,7 +1733,7 @@ describe('MultiSelect Virtual Scrolling', () => {
                 }
             } else {
                 // Call scrollToIndex directly if scrollInView doesn't exist
-                multiSelect.scroller.scrollToIndex(500);
+                multiSelect.scroller().scrollToIndex(500);
                 expect(scrollSpy).toHaveBeenCalledWith(500);
             }
         } else if (typeof multiSelect.scrollInView === 'function') {

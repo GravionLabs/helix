@@ -1,40 +1,40 @@
-@if (fullScreen) {
+@if (fullScreen()) {
   <div #container>
     @if (renderMask()) {
       <div
         [hBind]="ptm('mask')"
         [hMotion]="maskVisible"
         [pMotionAppear]="true"
-        [pMotionEnterActiveClass]="fullScreen ? 'p-overlay-mask-enter-active' : ''"
-        [pMotionLeaveActiveClass]="fullScreen ? 'p-overlay-mask-leave-active' : ''"
+        [pMotionEnterActiveClass]="fullScreen() ? 'p-overlay-mask-enter-active' : ''"
+        [pMotionLeaveActiveClass]="fullScreen() ? 'p-overlay-mask-leave-active' : ''"
         [pMotionOptions]="computedMaskMotionOptions()"
         (pMotionOnAfterLeave)="onMaskAfterLeave()"
         [ngClass]="cx('mask')"
-        [class]="maskClass"
-        [attr.role]="fullScreen ? 'dialog' : 'region'"
-        [attr.aria-modal]="fullScreen ? 'true' : undefined"
+        [class]="maskClass()"
+        [attr.role]="fullScreen() ? 'dialog' : 'region'"
+        [attr.aria-modal]="fullScreen() ? 'true' : undefined"
         (click)="onMaskHide($event)"
         >
         @if (renderContent()) {
           <div
             hGalleriaContent
-            [hMotion]="visible"
+            [hMotion]="visible()"
             [pMotionAppear]="true"
             [pMotionName]="'p-galleria'"
             [pMotionOptions]="computedMotionOptions()"
             (pMotionOnBeforeEnter)="onBeforeEnter($event)"
             (pMotionOnBeforeLeave)="onBeforeLeave()"
             (pMotionOnAfterLeave)="onAfterLeave()"
-            [value]="value"
-            [activeIndex]="activeIndex"
-            [numVisible]="numVisibleLimit || numVisible"
+            [value]="value()"
+            [activeIndex]="activeIndex()"
+            [numVisible]="numVisibleLimit || numVisible()"
             (maskHide)="onMaskHide()"
             (activeItemChange)="onActiveItemChange($event)"
-            [ngStyle]="containerStyle"
-            [fullScreen]="fullScreen"
+            [ngStyle]="containerStyle()"
+            [fullScreen]="fullScreen()"
             [pt]="pt()"
             hFocusTrap
-            [pFocusTrapDisabled]="!fullScreen"
+            [pFocusTrapDisabled]="!fullScreen()"
             [unstyled]="unstyled()"
           ></div>
         }
@@ -42,5 +42,5 @@
     }
   </div>
 } @else {
-  <div hGalleriaContent [pt]="pt()" [unstyled]="unstyled()" [value]="value" [activeIndex]="activeIndex" [numVisible]="numVisibleLimit || numVisible" (activeItemChange)="onActiveItemChange($event)"></div>
+  <div hGalleriaContent [pt]="pt()" [unstyled]="unstyled()" [value]="value()" [activeIndex]="activeIndex()" [numVisible]="numVisibleLimit || numVisible()" (activeItemChange)="onActiveItemChange($event)"></div>
 }

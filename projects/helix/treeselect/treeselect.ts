@@ -12,7 +12,6 @@ import {
   input,
   Input,
   NgModule,
-  QueryList,
   TemplateRef,
   ViewEncapsulation,
   output,
@@ -78,7 +77,7 @@ const TREESELECT_INSTANCE = new InjectionToken<TreeSelect>('TREESELECT_INSTANCE'
     ],
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[class]': "cn(cx('root'), containerStyleClass)",
+        '[class]': "cn(cx('root'), containerStyleClass())",
         '[style]': "sx('root')",
         '(mousedown)': 'onHostClick($event)'
     }
@@ -100,164 +99,172 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
      * Identifier of the underlying input element.
      * @group Props
      */
-    @Input() inputId: string | undefined;
+    readonly inputId = input<string>();
     /**
      * Height of the viewport, a scrollbar is defined if height of list exceeds this value.
      * @group Props
      */
-    @Input() scrollHeight: string = '400px';
+    readonly scrollHeight = input<string>('400px');
     /**
      * Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) metaKeySelection: boolean = false;
+    readonly metaKeySelection = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Defines how the selected items are displayed.
      * @group Props
      */
-    @Input() display: 'comma' | 'chip' = 'comma';
+    readonly display = input<'comma' | 'chip'>('comma');
     /**
      * Defines the selection mode.
      * @group Props
      */
-    @Input() selectionMode: 'single' | 'multiple' | 'checkbox' = 'single';
+    readonly selectionMode = input<'single' | 'multiple' | 'checkbox'>('single');
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input() tabindex: string | undefined = '0';
+    readonly tabindex = input<string | undefined>('0');
     /**
      * Defines a string that labels the input for accessibility.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Label to display when there are no selections.
      * @group Props
      */
-    @Input() placeholder: string | undefined;
+    readonly placeholder = input<string>();
     /**
      * Style class of the overlay panel.
      * @group Props
      */
-    @Input() panelClass: string | string[] | Set<string> | { [klass: string]: any } | undefined;
+    readonly panelClass = input<string | string[] | Set<string> | {
+    [klass: string]: any;
+}>();
     /**
      * Inline style of the panel element.
      * @group Props
      */
-    @Input() panelStyle: { [klass: string]: any } | null | undefined;
+    readonly panelStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the panel element.
      * @group Props
      */
-    @Input() panelStyleClass: string | undefined;
+    readonly panelStyleClass = input<string>();
     /**
      * Inline style of the container element.
      * @deprecated since v20.0.0, use `style` instead.
      * @group Props
      */
-    @Input() containerStyle: { [klass: string]: any } | null | undefined;
+    readonly containerStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the container element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() containerStyleClass: string | undefined;
+    readonly containerStyleClass = input<string>();
     /**
      * Inline style of the label element.
      * @group Props
      */
-    @Input() labelStyle: { [klass: string]: any } | null | undefined;
+    readonly labelStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the label element.
      * @group Props
      */
-    @Input() labelStyleClass: string | undefined;
+    readonly labelStyleClass = input<string>();
     /**
      * Specifies the options for the overlay.
      * @group Props
      */
-    @Input() overlayOptions: OverlayOptions | undefined;
+    readonly overlayOptions = input<OverlayOptions>();
     /**
      * Text to display when there are no options available. Defaults to value from Helix locale configuration.
      * @group Props
      */
-    @Input() emptyMessage: string = '';
+    readonly emptyMessage = input<string>('');
     /**
      * When specified, displays an input field to filter the items.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) filter: boolean = false;
+    readonly filter = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
      * @group Props
      */
-    @Input() filterBy: string = 'label';
+    readonly filterBy = input<string>('label');
     /**
      * Mode for filtering valid values are "lenient" and "strict". Default is lenient.
      * @group Props
      */
-    @Input() filterMode: string = 'lenient';
+    readonly filterMode = input<string>('lenient');
     /**
      * Placeholder text to show when filter input is empty.
      * @group Props
      */
-    @Input() filterPlaceholder: string | undefined;
+    readonly filterPlaceholder = input<string>();
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
      */
-    @Input() filterLocale: string | undefined;
+    readonly filterLocale = input<string>();
     /**
      * Determines whether the filter input should be automatically focused when the component is rendered.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) filterInputAutoFocus: boolean = true;
+    readonly filterInputAutoFocus = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether checkbox selections propagate to descendant nodes.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) propagateSelectionDown: boolean = true;
+    readonly propagateSelectionDown = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether checkbox selections propagate to ancestor nodes.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) propagateSelectionUp: boolean = true;
+    readonly propagateSelectionUp = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When enabled, a clear icon is displayed to clear the value.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showClear: boolean = false;
+    readonly showClear = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Clears the filter value when hiding the dropdown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resetFilterOnHide: boolean = true;
+    readonly resetFilterOnHide = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether the data should be loaded on demand during scroll.
      * @group Props
      */
-    @Input() virtualScroll: boolean | undefined;
+    readonly virtualScroll = input<boolean>();
     /**
      * Height of an item in the list for VirtualScrolling.
      * @group Props
      */
-    @Input() virtualScrollItemSize: number | undefined;
+    readonly virtualScrollItemSize = input<number>();
     /**
      * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
      * @group Props
      */
-    @Input() virtualScrollOptions: ScrollerOptions | undefined;
+    readonly virtualScrollOptions = input<ScrollerOptions>();
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * An array of treenodes.
      * @defaultValue undefined
@@ -274,12 +281,12 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
      * Displays a loader to indicate data load is in progress.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) loading: boolean | undefined;
+    readonly loading = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Loading mode display.
      * @group Props
      */
-    @Input() loadingMode: 'mask' | 'icon' = 'mask';
+    readonly loadingMode = input<'mask' | 'icon'>('mask');
     /**
      * Specifies the size of the component.
      * @defaultValue undefined
@@ -592,9 +599,9 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
     }
 
     onOverlayBeforeEnter() {
-        if (this.filter) {
+        if (this.filter()) {
             isNotEmpty(this.filterValue) && this.treeViewChild()?._filter(<any>this.filterValue);
-            this.filterInputAutoFocus && this.filterViewChild()?.nativeElement.focus();
+            this.filterInputAutoFocus() && this.filterViewChild()?.nativeElement.focus();
         } else {
             let focusableElements = <any>getFocusableElements(this.panelEl()?.nativeElement!);
 
@@ -745,7 +752,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
 
                 event.preventDefault();
             } else {
-                this.overlayVisible && this.hide(this.filter);
+                this.overlayVisible && this.hide(this.filter());
             }
         }
     }
@@ -755,7 +762,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
     }
 
     resetFilter() {
-        if (this.filter && !this.resetFilterOnHide) {
+        if (this.filter() && !this.resetFilterOnHide()) {
             const treeViewChild = this.treeViewChild();
             this.filteredNodes = treeViewChild?.filteredNodes;
             treeViewChild?.resetFilter();
@@ -766,7 +773,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
 
     updateTreeState() {
         if (this.value) {
-            let selectedNodes = this.selectionMode === 'single' ? [this.value] : [...this.value];
+            let selectedNodes = this.selectionMode() === 'single' ? [this.value] : [...this.value];
             this.resetExpandedNodes();
             this.resetPartialSelected();
             if (selectedNodes && this.options) {
@@ -867,7 +874,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
         let index: number = -1;
 
         if (this.value) {
-            if (this.selectionMode === 'single') {
+            if (this.selectionMode() === 'single') {
                 let areNodesEqual = (this.value.key && this.value.key === node.key) || this.value == node;
                 index = areNodesEqual ? 0 : -1;
             } else {
@@ -888,7 +895,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
     onSelect(event: TreeNodeSelectEvent) {
         this.onNodeSelect.emit(event);
 
-        if (this.selectionMode === 'single') {
+        if (this.selectionMode() === 'single') {
             this.hide();
             this.focusInput()?.nativeElement.focus();
         }
@@ -936,7 +943,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
 
     get label() {
         let value = this.value || [];
-        return value.length ? value.map((node: TreeNode) => node.label).join(', ') : this.selectionMode === 'single' && this.value ? value.label : this.placeholder;
+        return value.length ? value.map((node: TreeNode) => node.label).join(', ') : this.selectionMode() === 'single' && this.value ? value.label : this.placeholder();
     }
 }
 

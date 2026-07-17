@@ -1,23 +1,23 @@
-@if (!editable) {
+@if (!editable()) {
   <span
     #focusInput
     [class]="cx('label')"
     [hBind]="ptm('label')"
-    [hTooltip]="tooltip"
+    [hTooltip]="tooltip()"
     [pTooltipUnstyled]="unstyled()"
-    [tooltipPosition]="tooltipPosition"
-    [positionStyle]="tooltipPositionStyle"
-    [tooltipStyleClass]="tooltipStyleClass"
+    [tooltipPosition]="tooltipPosition()"
+    [positionStyle]="tooltipPositionStyle()"
+    [tooltipStyleClass]="tooltipStyleClass()"
     [attr.aria-disabled]="$disabled()"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     role="combobox"
-    [attr.aria-label]="ariaLabel || (label() === 'p-emptylabel' ? undefined : label())"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-haspopup]="'listbox'"
     [attr.aria-expanded]="overlayVisible ?? false"
-    [attr.aria-controls]="overlayVisible ? id + '_list' : null"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
-    [hAutoFocus]="autofocus"
+    [attr.aria-controls]="overlayVisible ? $id() + '_list' : null"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
+    [hAutoFocus]="autofocus()"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
@@ -27,31 +27,31 @@
     [attr.disabled]="$disabled() ? '' : undefined"
     [attr.data-p]="labelDataP"
     >
-    @if (!selectedItemTemplate && !_selectedItemTemplate) {
+    @if (!selectedItemTemplate() && !_selectedItemTemplate) {
       {{ label() === 'p-emptylabel' ? '&nbsp;' : label() }}
     } @else {
       @if (isSelectedOptionEmpty()) {
         <span>{{ label() === 'p-emptylabel' ? '&nbsp;' : label() }}</span>
       }
     }
-    @if ((selectedItemTemplate || _selectedItemTemplate) && !isSelectedOptionEmpty()) {
-      <ng-container [ngTemplateOutlet]="selectedItemTemplate || _selectedItemTemplate" [ngTemplateOutletContext]="{ $implicit: selectedOption }"></ng-container>
+    @if ((selectedItemTemplate() || _selectedItemTemplate) && !isSelectedOptionEmpty()) {
+      <ng-container [ngTemplateOutlet]="selectedItemTemplate() || _selectedItemTemplate" [ngTemplateOutletContext]="{ $implicit: selectedOption }"></ng-container>
     }
   </span>
 }
-@if (editable) {
+@if (editable()) {
   <input
     #editableInput
     type="text"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     [class]="cx('label')"
     [hBind]="ptm('label')"
     [attr.aria-haspopup]="'listbox'"
-    [attr.placeholder]="modelValue() === undefined || modelValue() === null ? placeholder() : undefined"
-    [attr.aria-label]="ariaLabel || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.placeholder]="modelValue() === undefined || modelValue() === null ? $placeholder() : undefined"
+    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
     (input)="onEditableInput($event)"
     (keydown)="onKeyDown($event)"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
@@ -63,47 +63,47 @@
     [attr.size]="inputSize()"
     [attr.maxlength]="maxlength()"
     [attr.required]="required() ? '' : undefined"
-    [attr.readonly]="readonly ? '' : undefined"
+    [attr.readonly]="readonly() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
     [attr.data-p]="labelDataP"
     />
 }
 @if (isVisibleClearIcon) {
-  @if (!clearIconTemplate && !_clearIconTemplate) {
+  @if (!clearIconTemplate() && !_clearIconTemplate) {
     <svg data-p-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')" (click)="clear($event)" [attr.data-pc-section]="'clearicon'" />
   }
-  @if (clearIconTemplate || _clearIconTemplate) {
+  @if (clearIconTemplate() || _clearIconTemplate) {
     <span [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')" (click)="clear($event)" [attr.data-pc-section]="'clearicon'">
-      <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate; context: { class: cx('clearIcon') }"></ng-template>
+      <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate; context: { class: cx('clearIcon') }"></ng-template>
     </span>
   }
 }
 
 <div [class]="cx('dropdown')" [hBind]="ptm('dropdown')" role="button" aria-label="dropdown trigger" aria-haspopup="listbox" [attr.aria-expanded]="overlayVisible ?? false" [attr.data-pc-section]="'trigger'">
-  @if (loading) {
-    @if (loadingIconTemplate || _loadingIconTemplate) {
-      <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
+  @if (loading()) {
+    @if (loadingIconTemplate() || _loadingIconTemplate) {
+      <ng-container *ngTemplateOutlet="loadingIconTemplate() || _loadingIconTemplate"></ng-container>
     }
-    @if (!loadingIconTemplate && !_loadingIconTemplate) {
-      @if (loadingIcon) {
-        <span [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon)" [hBind]="ptm('loadingIcon')" aria-hidden="true"></span>
+    @if (!loadingIconTemplate() && !_loadingIconTemplate) {
+      @if (loadingIcon()) {
+        <span [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())" [hBind]="ptm('loadingIcon')" aria-hidden="true"></span>
       }
-      @if (!loadingIcon) {
+      @if (!loadingIcon()) {
         <span [class]="cn(cx('loadingIcon'), 'pi pi-spinner pi-spin')" [hBind]="ptm('loadingIcon')" aria-hidden="true"></span>
       }
     }
   } @else {
-    @if (!dropdownIconTemplate && !_dropdownIconTemplate) {
-      @if (dropdownIcon) {
-        <span [class]="cn(cx('dropdownIcon'), dropdownIcon)" [hBind]="ptm('dropdownIcon')"></span>
+    @if (!dropdownIconTemplate() && !_dropdownIconTemplate) {
+      @if (dropdownIcon()) {
+        <span [class]="cn(cx('dropdownIcon'), dropdownIcon())" [hBind]="ptm('dropdownIcon')"></span>
       }
-      @if (!dropdownIcon) {
+      @if (!dropdownIcon()) {
         <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
       }
     }
-    @if (dropdownIconTemplate || _dropdownIconTemplate) {
+    @if (dropdownIconTemplate() || _dropdownIconTemplate) {
       <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
-        <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate; context: { class: cx('dropdownIcon') }"></ng-template>
+        <ng-template *ngTemplateOutlet="dropdownIconTemplate() || _dropdownIconTemplate; context: { class: cx('dropdownIcon') }"></ng-template>
       </span>
     }
   }
@@ -114,7 +114,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -125,7 +125,7 @@
   (onHide)="hide()"
   >
   <ng-template #content>
-    <div [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
+    <div [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
       <span
         #firstHiddenFocusableEl
         role="presentation"
@@ -137,11 +137,11 @@
         [hBind]="ptm('hiddenFirstFocusableEl')"
         >
       </span>
-      <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-      @if (filter) {
+      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
+      @if (filter()) {
         <div [class]="cx('header')" (click)="$event.stopPropagation()" [hBind]="ptm('header')">
-          @if (filterTemplate || _filterTemplate) {
-            <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { options: filterOptions }"></ng-container>
+          @if (filterTemplate() || _filterTemplate) {
+            <ng-container *ngTemplateOutlet="filterTemplate() || _filterTemplate; context: { options: filterOptions }"></ng-container>
           } @else {
             <h-iconfield [pt]="ptm('pcFilterContainer')" [unstyled]="unstyled()">
               <input
@@ -154,10 +154,10 @@
                 [value]="_filterValue() || ''"
                 [class]="cx('pcFilter')"
                 [variant]="$variant()"
-                [attr.placeholder]="filterPlaceholder"
-                [attr.aria-owns]="id + '_list'"
+                [attr.placeholder]="filterPlaceholder()"
+                [attr.aria-owns]="$id() + '_list'"
                 (input)="onFilterInputChange($event)"
-                [attr.aria-label]="ariaFilterLabel"
+                [attr.aria-label]="ariaFilterLabel()"
                 [attr.aria-activedescendant]="focusedOptionId"
                 (keydown)="onFilterKeyDown($event)"
                 (blur)="onFilterBlur($event)"
@@ -165,12 +165,12 @@
                 [unstyled]="unstyled()"
                 />
               <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
-                @if (!filterIconTemplate && !_filterIconTemplate) {
+                @if (!filterIconTemplate() && !_filterIconTemplate) {
                   <svg data-p-icon="search" [hBind]="ptm('filterIcon')" />
                 }
-                @if (filterIconTemplate || _filterIconTemplate) {
+                @if (filterIconTemplate() || _filterIconTemplate) {
                   <span [hBind]="ptm('filterIcon')">
-                    <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
+                    <ng-template *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-template>
                   </span>
                 }
               </h-inputicon>
@@ -178,54 +178,54 @@
           }
         </div>
       }
-      <div [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight || 'auto'" [hBind]="ptm('listContainer')">
-        @if (virtualScroll) {
+      <div [class]="cx('listContainer')" [style.max-height]="virtualScroll() ? 'auto' : scrollHeight() || 'auto'" [hBind]="ptm('listContainer')">
+        @if (virtualScroll()) {
           <h-scroller
             hostName="select"
             #scroller
             [items]="visibleOptions()"
-            [style]="{ height: scrollHeight }"
-            [itemSize]="virtualScrollItemSize"
+            [style]="{ height: scrollHeight() }"
+            [itemSize]="virtualScrollItemSize()"
             [autoSize]="true"
-            [lazy]="lazy"
+            [lazy]="lazy()"
             (onLazyLoad)="onLazyLoad.emit($event)"
-            [options]="virtualScrollOptions"
+            [options]="virtualScrollOptions()"
             [pt]="ptm('virtualScroller')"
             >
             <ng-template #content let-items let-scrollerOptions="options">
               <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
             </ng-template>
-            @if (loaderTemplate || _loaderTemplate) {
+            @if (loaderTemplate() || _loaderTemplate) {
               <ng-template #loader let-scrollerOptions="options">
-                <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+                <ng-container *ngTemplateOutlet="loaderTemplate() || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
               </ng-template>
             }
           </h-scroller>
         }
-        @if (!virtualScroll) {
+        @if (!virtualScroll()) {
           <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
         }
 
         <ng-template #buildInItems let-items let-scrollerOptions="options">
-          <ul #items [attr.id]="id + '_list'" [attr.aria-label]="listLabel" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" [hBind]="ptm('list')">
+          <ul #items [attr.id]="$id() + '_list'" [attr.aria-label]="listLabel" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" [hBind]="ptm('list')">
             @for (option of items; track option; let i = $index) {
               @if (isOptionGroup(option)) {
-                <li [class]="cx('optionGroup')" [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option" [hBind]="ptm('optionGroup')">
-                  @if (!groupTemplate && !_groupTemplate) {
+                <li [class]="cx('optionGroup')" [attr.id]="$id() + '_' + getOptionIndex(i, scrollerOptions)" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option" [hBind]="ptm('optionGroup')">
+                  @if (!groupTemplate() && !_groupTemplate) {
                     <span [class]="cx('optionGroupLabel')" [hBind]="ptm('optionGroupLabel')">{{ getOptionGroupLabel(option.optionGroup) }}</span>
                   }
-                  <ng-container *ngTemplateOutlet="groupTemplate || _groupTemplate; context: { $implicit: option.optionGroup }"></ng-container>
+                  <ng-container *ngTemplateOutlet="groupTemplate() || _groupTemplate; context: { $implicit: option.optionGroup }"></ng-container>
                 </li>
               }
               @if (!isOptionGroup(option)) {
                 <h-selectItem
-                  [id]="id + '_' + getOptionIndex(i, scrollerOptions)"
+                  [id]="$id() + '_' + getOptionIndex(i, scrollerOptions)"
                   [option]="option"
-                  [checkmark]="checkmark"
+                  [checkmark]="checkmark()"
                   [selected]="isSelected(option)"
                   [label]="getOptionLabel(option)"
                   [disabled]="isOptionDisabled(option)"
-                  [template]="itemTemplate || _itemTemplate"
+                  [template]="itemTemplate() || _itemTemplate"
                   [focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
                   [ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
                   [ariaSetSize]="ariaSetSize"
@@ -239,26 +239,26 @@
             }
             @if (filterValue && isEmpty()) {
               <li [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option" [hBind]="ptm('emptyMessage')">
-                @if (!emptyFilterTemplate && !_emptyFilterTemplate && !emptyTemplate) {
+                @if (!emptyFilterTemplate() && !_emptyFilterTemplate && !emptyTemplate()) {
                   {{ emptyFilterMessageLabel }}
                 } @else {
-                  <ng-container #emptyFilter *ngTemplateOutlet="emptyFilterTemplate || _emptyFilterTemplate || emptyTemplate || _emptyTemplate"></ng-container>
+                  <ng-container #emptyFilter *ngTemplateOutlet="emptyFilterTemplate() || _emptyFilterTemplate || emptyTemplate() || _emptyTemplate"></ng-container>
                 }
               </li>
             }
             @if (!filterValue && isEmpty()) {
               <li [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option" [hBind]="ptm('emptyMessage')">
-                @if (!emptyTemplate && !_emptyTemplate) {
+                @if (!emptyTemplate() && !_emptyTemplate) {
                   {{ emptyMessageLabel || emptyFilterMessageLabel }}
                 } @else {
-                  <ng-container #empty *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+                  <ng-container #empty *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
                 }
               </li>
             }
           </ul>
         </ng-template>
       </div>
-      <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
       <span
         #lastHiddenFocusableEl
         role="presentation"

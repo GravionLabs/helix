@@ -1,29 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    computed,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    inject,
-    InjectionToken,
-    input,
-    Input,
-    KeyValueDiffers,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    signal,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, KeyValueDiffers, NgModule, numberAttribute, QueryList, signal, SimpleChanges, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren, model, effect, untracked } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addClass, find, findSingle, focus, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -68,140 +44,137 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
      * Index of the first item.
      * @group Props
      */
-    @Input() get activeIndex(): number {
-        return this._activeIndex;
-    }
-    set activeIndex(activeIndex) {
-        this._activeIndex = activeIndex;
-    }
+    readonly activeIndex = model<number>(0);
     /**
      * Whether to display the component on fullscreen.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) fullScreen: boolean = false;
+    readonly fullScreen = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Unique identifier of the element.
      * @group Props
      */
-    @Input() id: string | undefined;
+    readonly id = input<string>();
     /**
      * An array of objects to display.
      * @group Props
      */
-    @Input() value: any[] | undefined;
+    readonly value = input<any[]>();
     /**
      * Number of items per page.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) numVisible: number = 3;
+    readonly numVisible = input<number, unknown>(3, { transform: numberAttribute });
     /**
      * An array of options for responsive design.
      * @see {GalleriaResponsiveOptions}
      * @group Props
      */
-    @Input() responsiveOptions: GalleriaResponsiveOptions[] | undefined;
+    readonly responsiveOptions = input<GalleriaResponsiveOptions[]>();
     /**
      * Whether to display navigation buttons in item section.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showItemNavigators: boolean = false;
+    readonly showItemNavigators = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to display navigation buttons in thumbnail container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showThumbnailNavigators: boolean = true;
+    readonly showThumbnailNavigators = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to display navigation buttons on item hover.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showItemNavigatorsOnHover: boolean = false;
+    readonly showItemNavigatorsOnHover = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When enabled, item is changed on indicator hover.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) changeItemOnIndicatorHover: boolean = false;
+    readonly changeItemOnIndicatorHover = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Defines if scrolling would be infinite.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) circular: boolean = false;
+    readonly circular = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Items are displayed with a slideshow in autoPlay mode.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoPlay: boolean = false;
+    readonly autoPlay = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When enabled, autorun should stop by click.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) shouldStopAutoplayByClick: boolean = true;
+    readonly shouldStopAutoplayByClick = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Time in milliseconds to scroll items.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) transitionInterval: number = 4000;
+    readonly transitionInterval = input<number, unknown>(4000, { transform: numberAttribute });
     /**
      * Whether to display thumbnail container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showThumbnails: boolean = true;
+    readonly showThumbnails = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Position of thumbnails.
      * @group Props
      */
-    @Input() thumbnailsPosition: 'bottom' | 'top' | 'left' | 'right' | undefined = 'bottom';
+    readonly thumbnailsPosition = input<'bottom' | 'top' | 'left' | 'right' | undefined>('bottom');
     /**
      * Height of the viewport in vertical thumbnail.
      * @group Props
      */
-    @Input() verticalThumbnailViewPortHeight: string = '300px';
+    readonly verticalThumbnailViewPortHeight = input<string>('300px');
     /**
      * Whether to display indicator container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showIndicators: boolean = false;
+    readonly showIndicators = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When enabled, indicator container is displayed on item container.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showIndicatorsOnItem: boolean = false;
+    readonly showIndicatorsOnItem = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Position of indicators.
      * @group Props
      */
-    @Input() indicatorsPosition: 'bottom' | 'top' | 'left' | 'right' | undefined = 'bottom';
+    readonly indicatorsPosition = input<'bottom' | 'top' | 'left' | 'right' | undefined>('bottom');
     /**
      * Base zIndex value to use in layering.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) baseZIndex: number = 0;
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Style class of the mask on fullscreen mode.
      * @group Props
      */
-    @Input() maskClass: string | undefined;
+    readonly maskClass = input<string>();
     /**
      * Style class of the component on fullscreen mode. Otherwise, the 'class' property can be used.
      * @group Props
      */
-    @Input() containerClass: string | undefined;
+    readonly containerClass = input<string>();
     /**
      * Inline style of the component on fullscreen mode. Otherwise, the 'style' property can be used.
      * @group Props
      */
-    @Input() containerStyle: { [klass: string]: any } | null | undefined;
+    readonly containerStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Transition options of the show animation.
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      * @group Props
      */
-    @Input() showTransitionOptions: string = '150ms cubic-bezier(0, 0, 0.2, 1)';
+    readonly showTransitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Transition options of the hide animation.
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      * @group Props
      */
-    @Input() hideTransitionOptions: string = '150ms cubic-bezier(0, 0, 0.2, 1)';
+    readonly hideTransitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * The motion options.
      * @group Props
@@ -230,117 +203,88 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
      * Specifies the visibility of the mask on fullscreen mode.
      * @group Props
      */
-    @Input() get visible(): boolean {
-        return this._visible;
-    }
-    set visible(visible: boolean) {
-        this._visible = visible;
-
-        if (this._visible && !this.maskVisible) {
-            this.maskVisible = true;
-            this.renderMask.set(true);
-            this.renderContent.set(true);
-        } else if (!this._visible && this.maskVisible) {
-            this.maskVisible = false;
-        }
-    }
+    readonly visible = model<boolean>(false);
 
     renderMask = signal<boolean>(false);
     renderContent = signal<boolean>(false);
-    /**
-     * Callback to invoke on active index change.
-     * @param {number} number - Active index.
-     * @group Emits
-     */
-    @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
-    /**
-     * Callback to invoke on visiblity change.
-     * @param {boolean} boolean - Visible value.
-     * @group Emits
-     */
-    @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild('container') container: ElementRef | undefined;
-
-    _visible: boolean = false;
-
-    _activeIndex: number = 0;
+    readonly container = viewChild<ElementRef>('container');
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
     headerFacet: TemplateRef<void> | undefined;
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false, static: false }) footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
     footerFacet: TemplateRef<void> | undefined;
 
     /**
      * Custom indicator template.
      * @group Templates
      */
-    @ContentChild('indicator', { descendants: false }) indicatorTemplate: TemplateRef<GalleriaIndicatorTemplateContext> | undefined;
+    readonly indicatorTemplate = contentChild<TemplateRef<GalleriaIndicatorTemplateContext>>('indicator', { descendants: false });
     indicatorFacet: TemplateRef<GalleriaIndicatorTemplateContext> | undefined;
 
     /**
      * Custom caption template.
      * @group Templates
      */
-    @ContentChild('caption', { descendants: false }) captionTemplate: TemplateRef<GalleriaCaptionTemplateContext> | undefined;
+    readonly captionTemplate = contentChild<TemplateRef<GalleriaCaptionTemplateContext>>('caption', { descendants: false });
     captionFacet: TemplateRef<GalleriaCaptionTemplateContext> | undefined;
 
     /**
      * Custom close icon template.
      * @group Templates
      */
-    @ContentChild('closeicon', { descendants: false }) _closeIconTemplate: TemplateRef<void> | undefined;
+    readonly _closeIconTemplate = contentChild<TemplateRef<void>>('closeicon', { descendants: false });
     closeIconTemplate: TemplateRef<void> | undefined;
 
     /**
      * Custom previous thumbnail icon template.
      * @group Templates
      */
-    @ContentChild('previousthumbnailicon', { descendants: false }) _previousThumbnailIconTemplate: TemplateRef<void> | undefined;
+    readonly _previousThumbnailIconTemplate = contentChild<TemplateRef<void>>('previousthumbnailicon', { descendants: false });
     previousThumbnailIconTemplate: TemplateRef<void> | undefined;
 
     /**
      * Custom next thumbnail icon template.
      * @group Templates
      */
-    @ContentChild('nextthumbnailicon', { descendants: false }) _nextThumbnailIconTemplate: TemplateRef<void> | undefined;
+    readonly _nextThumbnailIconTemplate = contentChild<TemplateRef<void>>('nextthumbnailicon', { descendants: false });
     nextThumbnailIconTemplate: TemplateRef<void> | undefined;
 
     /**
      * Custom item previous icon template.
      * @group Templates
      */
-    @ContentChild('itempreviousicon', { descendants: false }) _itemPreviousIconTemplate: TemplateRef<void> | undefined;
+    readonly _itemPreviousIconTemplate = contentChild<TemplateRef<void>>('itempreviousicon', { descendants: false });
     itemPreviousIconTemplate: TemplateRef<void> | undefined;
 
     /**
      * Custom item next icon template.
      * @group Templates
      */
-    @ContentChild('itemnexticon', { descendants: false }) _itemNextIconTemplate: TemplateRef<void> | undefined;
+    readonly _itemNextIconTemplate = contentChild<TemplateRef<void>>('itemnexticon', { descendants: false });
     itemNextIconTemplate: TemplateRef<void> | undefined;
 
     /**
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) _itemTemplate: TemplateRef<GalleriaItemTemplateContext> | undefined;
+    readonly _itemTemplate = contentChild<TemplateRef<GalleriaItemTemplateContext>>('item', { descendants: false });
     itemTemplate: TemplateRef<GalleriaItemTemplateContext> | undefined;
 
     /**
      * Custom thumbnail template.
      * @group Templates
      */
-    @ContentChild('thumbnail', { descendants: false, static: false }) _thumbnailTemplate: TemplateRef<GalleriaThumbnailTemplateContext> | undefined;
+    readonly _thumbnailTemplate = contentChild<TemplateRef<GalleriaThumbnailTemplateContext>>('thumbnail', { descendants: false });
     thumbnailTemplate: TemplateRef<GalleriaThumbnailTemplateContext> | undefined;
 
     maskVisible: boolean = false;
@@ -351,14 +295,26 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
 
     mask: HTMLElement;
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     constructor(public element: ElementRef) {
         super();
+        effect(() => {
+            const visible = this.visible();
+            untracked(() => {
+                if (visible && !this.maskVisible) {
+                    this.maskVisible = true;
+                    this.renderMask.set(true);
+                    this.renderContent.set(true);
+                } else if (!visible && this.maskVisible) {
+                    this.maskVisible = false;
+                }
+            });
+        });
     }
 
     onAfterContentInit() {
-        this.templates?.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'header':
                     this.headerFacet = item.template;
@@ -408,7 +364,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
     }
 
     onChanges(simpleChanges: SimpleChanges) {
-        if (simpleChanges.value && simpleChanges.value.currentValue?.length < this.numVisible) {
+        if (simpleChanges.value && simpleChanges.value.currentValue?.length < this.numVisible()) {
             this.numVisibleLimit = simpleChanges.value.currentValue.length;
         } else {
             this.numVisibleLimit = 0;
@@ -417,15 +373,13 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
 
     onMaskHide(event?: MouseEvent) {
         if (!event || event.target === event.currentTarget) {
-            this.visible = false;
-            this.visibleChange.emit(false);
+            this.visible.set(false);
         }
     }
 
     onActiveItemChange(index: number) {
-        if (this.activeIndex !== index) {
-            this.activeIndex = index;
-            this.activeIndexChange.emit(index);
+        if (this.activeIndex() !== index) {
+            this.activeIndex.set(index);
         }
     }
 
@@ -433,7 +387,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
         this.mask = <HTMLElement>event.element?.parentElement;
         this.enableModality();
         setTimeout(() => {
-            const focusTarget = findSingle(this.container?.nativeElement, '[data-pc-section="closebutton"]');
+            const focusTarget = findSingle(this.container()?.nativeElement, '[data-pc-section="closebutton"]');
             if (focusTarget) focus(focusTarget as HTMLElement);
         }, 25);
     }
@@ -460,7 +414,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
         blockBodyScroll();
         this.cd.markForCheck();
         if (this.mask) {
-            ZIndexUtils.set('modal', this.mask, this.baseZIndex || this.config.zIndex.modal);
+            ZIndexUtils.set('modal', this.mask, this.baseZIndex() || this.config.zIndex.modal);
         }
     }
 
@@ -474,7 +428,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
     }
 
     onDestroy() {
-        if (this.fullScreen) {
+        if (this.fullScreen()) {
             removeClass(this.document.body, 'p-overflow-hidden');
         }
 
@@ -493,8 +447,9 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
     host: {
         '[attr.id]': 'id',
         '[attr.role]': '"region"',
-        '[style]': '!galleria.fullScreen ? galleria.containerStyle : {}',
-        '[class]': "cn(cx('root'))"
+        '[style]': '!galleria.fullScreen() ? galleria.containerStyle() : {}',
+        '[class]': "cn(cx('root'))",
+        '(document:fullscreenchange)': 'handleFullscreenChange($event)'
     },
     hostDirectives: [Bind]
 })
@@ -507,24 +462,21 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
         this.bindDirectiveInstance.setAttrs(this.getPTOptions('root'));
     }
 
-    @Input() get activeIndex(): number {
-        return this._activeIndex;
-    }
-    set activeIndex(activeIndex: number) {
-        this._activeIndex = activeIndex;
-    }
+    readonly activeIndex = input<number>(0);
 
-    @Input() value: any[] = [];
+    readonly value = input<any[]>([]);
 
-    @Input({ transform: numberAttribute }) numVisible: number | undefined;
+    readonly numVisible = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input({ transform: booleanAttribute }) fullScreen: boolean;
+    fullScreenState: boolean | undefined;
 
-    @Output() maskHide: EventEmitter<boolean> = new EventEmitter();
+    readonly fullScreen = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Output() activeItemChange: EventEmitter<number> = new EventEmitter();
+    readonly maskHide = output<boolean>();
 
-    @ViewChild('closeButton') closeButton: ElementRef | undefined;
+    readonly activeItemChange = output<number>();
+
+    readonly closeButton = viewChild<ElementRef>('closeButton');
 
     _componentStyle = inject(GalleriaStyle);
 
@@ -547,17 +499,19 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
         private differs: KeyValueDiffers
     ) {
         super();
-        this.id = this.galleria.id || uuid('pn_id_');
+        this.id = this.galleria.id() || uuid('pn_id_');
         this.differ = this.differs.find(this.galleria).create();
+        effect(() => {
+            this._activeIndex = this.activeIndex();
+        });
     }
 
     // For custom fullscreen
-    @HostListener('document:fullscreenchange', ['$event'])
     handleFullscreenChange(event: Event) {
         if (document?.fullscreenElement === this.el.nativeElement?.children[0]) {
-            this.fullScreen = true;
+            this.fullScreenState = true;
         } else {
-            this.fullScreen = false;
+            this.fullScreenState = false;
         }
     }
 
@@ -575,23 +529,23 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
     }
 
     shouldRenderFooter() {
-        return (this.galleria.footerFacet && this.galleria.templates && this.galleria.templates.toArray().length > 0) || this.galleria.footerTemplate;
+        return (this.galleria.footerFacet && this.galleria.templates().length > 0) || this.galleria.footerTemplate();
     }
 
     startSlideShow() {
         if (isPlatformBrowser(this.galleria.platformId)) {
             this.interval = setInterval(() => {
-                let activeIndex = this.galleria.circular && this.value.length - 1 === this.activeIndex ? 0 : this.activeIndex + 1;
+                let activeIndex = this.galleria.circular() && this.value().length - 1 === this._activeIndex ? 0 : this._activeIndex + 1;
                 this.onActiveIndexChange(activeIndex);
-                this.activeIndex = activeIndex;
-            }, this.galleria.transitionInterval);
+                this._activeIndex = activeIndex;
+            }, this.galleria.transitionInterval());
 
             this.slideShowActive = true;
         }
     }
 
     stopSlideShow() {
-        if (this.galleria.autoPlay && !this.galleria.shouldStopAutoplayByClick) {
+        if (this.galleria.autoPlay() && !this.galleria.shouldStopAutoplayByClick()) {
             return;
         }
 
@@ -610,13 +564,14 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
     }
 
     isVertical() {
-        return this.galleria.thumbnailsPosition === 'left' || this.galleria.thumbnailsPosition === 'right';
+        const thumbnailsPosition = this.galleria.thumbnailsPosition();
+        return thumbnailsPosition === 'left' || thumbnailsPosition === 'right';
     }
 
     onActiveIndexChange(index: number) {
-        if (this.activeIndex !== index) {
-            this.activeIndex = index;
-            this.activeItemChange.emit(this.activeIndex);
+        if (this._activeIndex !== index) {
+            this._activeIndex = index;
+            this.activeItemChange.emit(this._activeIndex);
         }
     }
 
@@ -647,25 +602,56 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
 export class GalleriaItemSlot extends BaseComponent<GalleriaPassThrough> {
     hostName: string = 'Galleria';
 
-    @Input() templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = input<QueryList<PrimeTemplate>>();
 
-    @Input({ transform: numberAttribute }) index: number | undefined;
+    readonly index = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input() get item(): any {
-        return this._item;
+    readonly item = input<any>();
+
+    constructor() {
+        super();
+        effect(() => {
+            const item = this.item();
+            untracked(() => {
+            this._item = item;
+            const templates = this.templates();
+            if (templates && templates?.toArray().length > 0) {
+                templates.forEach((item) => {
+                    const type = this.type();
+                    if (item.getType() === type) {
+                        switch (type) {
+                            case 'item':
+                            case 'caption':
+                            case 'thumbnail':
+                                this.context = { $implicit: this._item };
+                                this.contentTemplate = item.template;
+                                break;
+                            case 'footer':
+                                this.context = { $implicit: this._item };
+                                this.contentTemplate = item.template;
+                                break;
+                        }
+                    }
+                });
+            } else {
+                this.getContentTemplate();
+            }
+            });
+        });
     }
 
     shouldRender() {
+        const captionTemplate = this.galleria.captionTemplate();
         return (
             this.contentTemplate ||
-            this.galleria._itemTemplate ||
+            this.galleria._itemTemplate() ||
             this.galleria.itemTemplate ||
-            this.galleria.captionTemplate ||
-            this.galleria.captionTemplate ||
+            captionTemplate ||
+            captionTemplate ||
             this.galleria.captionFacet ||
             this.galleria.thumbnailTemplate ||
-            this.galleria._thumbnailTemplate ||
-            this.galleria.footerTemplate
+            this.galleria._thumbnailTemplate() ||
+            this.galleria.footerTemplate()
         );
     }
 
@@ -673,63 +659,40 @@ export class GalleriaItemSlot extends BaseComponent<GalleriaPassThrough> {
 
     $pcGalleria: Galleria | undefined = inject(GALLERIA_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    set item(item: any) {
-        this._item = item;
-        if (this.templates && this.templates?.toArray().length > 0) {
-            this.templates.forEach((item) => {
-                if (item.getType() === this.type) {
-                    switch (this.type) {
-                        case 'item':
-                        case 'caption':
-                        case 'thumbnail':
-                            this.context = { $implicit: this.item };
-                            this.contentTemplate = item.template;
-                            break;
-                        case 'footer':
-                            this.context = { $implicit: this.item };
-                            this.contentTemplate = item.template;
-                            break;
-                    }
-                }
-            });
-        } else {
-            this.getContentTemplate();
-        }
-    }
 
     getTemplateFromQueryList(type: string): TemplateRef<any> | undefined {
-        return this.galleria.templates?.find((item) => item.getType() === type)?.template;
+        return this.galleria.templates().find((item) => item.getType() === type)?.template;
     }
 
     getContentTemplate() {
-        switch (this.type) {
+        switch (this.type()) {
             case 'item':
-                this.context = { $implicit: this.item };
-                this.contentTemplate = this.galleria._itemTemplate || this.getTemplateFromQueryList('item');
+                this.context = { $implicit: this._item };
+                this.contentTemplate = this.galleria._itemTemplate() || this.getTemplateFromQueryList('item');
                 break;
             case 'caption':
-                this.context = { $implicit: this.item };
-                this.contentTemplate = this.galleria.captionTemplate || this.getTemplateFromQueryList('caption');
+                this.context = { $implicit: this._item };
+                this.contentTemplate = this.galleria.captionTemplate() || this.getTemplateFromQueryList('caption');
                 break;
             case 'thumbnail':
-                this.context = { $implicit: this.item };
-                this.contentTemplate = this.galleria._thumbnailTemplate || this.getTemplateFromQueryList('thumbnail');
+                this.context = { $implicit: this._item };
+                this.contentTemplate = this.galleria._thumbnailTemplate() || this.getTemplateFromQueryList('thumbnail');
                 break;
             case 'indicator':
-                this.context = { $implicit: this.index };
-                this.contentTemplate = this.galleria.indicatorTemplate || this.getTemplateFromQueryList('indicator');
+                this.context = { $implicit: this.index() };
+                this.contentTemplate = this.galleria.indicatorTemplate() || this.getTemplateFromQueryList('indicator');
                 break;
             case 'footer':
-                this.context = { $implicit: this.item };
-                this.contentTemplate = this.galleria.footerTemplate || this.getTemplateFromQueryList('footer');
+                this.context = { $implicit: this._item };
+                this.contentTemplate = this.galleria.footerTemplate() || this.getTemplateFromQueryList('footer');
                 break;
             default:
-                this.context = { $implicit: this.item };
-                this.contentTemplate = this.galleria._itemTemplate || this.getTemplateFromQueryList('item');
+                this.context = { $implicit: this._item };
+                this.contentTemplate = this.galleria._itemTemplate() || this.getTemplateFromQueryList('item');
         }
     }
 
-    @Input() type: string | undefined;
+    readonly type = input<string>();
 
     contentTemplate: TemplateRef<any> | undefined;
 
@@ -738,29 +701,31 @@ export class GalleriaItemSlot extends BaseComponent<GalleriaPassThrough> {
     _item: any;
 
     onAfterContentInit() {
-        if (this.templates && this.templates.toArray().length > 0) {
-            this.templates?.forEach((item) => {
-                if (item.getType() === this.type) {
-                    switch (this.type) {
+        const templates = this.templates();
+        if (templates && templates.toArray().length > 0) {
+            templates?.forEach((item) => {
+                const type = this.type();
+                if (item.getType() === type) {
+                    switch (type) {
                         case 'item':
                         case 'caption':
                         case 'thumbnail':
-                            this.context = { $implicit: this.item };
+                            this.context = { $implicit: this._item };
                             this.contentTemplate = item.template;
                             break;
 
                         case 'indicator':
-                            this.context = { $implicit: this.index };
+                            this.context = { $implicit: this.index() };
                             this.contentTemplate = item.template;
                             break;
 
                         case 'footer':
-                            this.context = { $implicit: this.item };
+                            this.context = { $implicit: this._item };
                             this.contentTemplate = item.template;
                             break;
 
                         default:
-                            this.context = { $implicit: this.item };
+                            this.context = { $implicit: this._item };
                             this.contentTemplate = item.template;
                             break;
                     }
@@ -789,46 +754,41 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
         this.bindDirectiveInstance.setAttrs(this.ptm('itemsContainer'));
     }
 
-    @Input() id: string | undefined;
+    readonly id = input<string>();
 
-    @Input({ transform: booleanAttribute }) circular: boolean = false;
+    readonly circular = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() value: any[] | undefined;
+    readonly value = input<any[]>();
 
-    @Input({ transform: booleanAttribute }) showItemNavigators: boolean = false;
+    readonly showItemNavigators = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) showIndicators: boolean = true;
+    readonly showIndicators = input<boolean, unknown>(true, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) slideShowActive: boolean = true;
+    readonly slideShowActive = input<boolean, unknown>(true, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) changeItemOnIndicatorHover: boolean = true;
+    readonly changeItemOnIndicatorHover = input<boolean, unknown>(true, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) autoPlay: boolean = false;
+    readonly autoPlay = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = input<QueryList<PrimeTemplate>>();
 
-    @Input() indicatorFacet: any;
+    readonly indicatorFacet = input<any>();
 
-    @Input() captionFacet: any;
+    readonly captionFacet = input<any>();
 
-    @Output() startSlideShow: EventEmitter<Event> = new EventEmitter();
+    readonly startSlideShow = output<void>();
 
-    @Output() stopSlideShow: EventEmitter<Event> = new EventEmitter();
+    readonly stopSlideShow = output<void>();
 
-    @Output() onActiveIndexChange: EventEmitter<number> = new EventEmitter();
+    readonly onActiveIndexChange = output<number>();
 
     _componentStyle = inject(GalleriaStyle);
 
-    @Input() get activeIndex(): number {
-        return this._activeIndex;
-    }
-
-    set activeIndex(activeIndex) {
-        this._activeIndex = activeIndex;
-    }
+    readonly activeIndex = input<number>(0);
 
     get activeItem() {
-        return this.value && this.value[this._activeIndex];
+        const value = this.value();
+        return value && value[this._activeIndex];
     }
 
     _activeIndex: number = 0;
@@ -839,12 +799,15 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
 
     constructor(public galleria: Galleria) {
         super();
+        effect(() => {
+            this._activeIndex = this.activeIndex();
+        });
     }
 
     getIndicatorPTOptions(index: number) {
         return this.ptm('indicator', {
             context: {
-                highlighted: this.activeIndex === index
+                highlighted: this._activeIndex === index
             }
         });
     }
@@ -860,14 +823,14 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
     }
 
     next() {
-        let nextItemIndex = this.activeIndex + 1;
-        let activeIndex = this.circular && (<any[]>this.value).length - 1 === this.activeIndex ? 0 : nextItemIndex;
+        let nextItemIndex = this._activeIndex + 1;
+        let activeIndex = this.circular() && (<any[]>this.value()).length - 1 === this._activeIndex ? 0 : nextItemIndex;
         this.onActiveIndexChange.emit(activeIndex);
     }
 
     prev() {
-        let prevItemIndex = this.activeIndex !== 0 ? this.activeIndex - 1 : 0;
-        let activeIndex = this.circular && this.activeIndex === 0 ? (<any[]>this.value).length - 1 : prevItemIndex;
+        let prevItemIndex = this._activeIndex !== 0 ? this._activeIndex - 1 : 0;
+        let activeIndex = this.circular() && this._activeIndex === 0 ? (<any[]>this.value()).length - 1 : prevItemIndex;
         this.onActiveIndexChange.emit(activeIndex);
     }
 
@@ -884,7 +847,7 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
     }
 
     stopTheSlideShow() {
-        if (this.slideShowActive && this.stopSlideShow) {
+        if (this.slideShowActive() && this.stopSlideShow) {
             this.stopSlideShow.emit();
         }
     }
@@ -915,7 +878,7 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
     }
 
     onIndicatorMouseEnter(index: number) {
-        if (this.changeItemOnIndicatorHover) {
+        if (this.changeItemOnIndicatorHover()) {
             this.stopTheSlideShow();
             this.onActiveIndexChange.emit(index);
         }
@@ -941,15 +904,15 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
     }
 
     isNavForwardDisabled() {
-        return !this.circular && this.activeIndex === (<any[]>this.value).length - 1;
+        return !this.circular() && this._activeIndex === (<any[]>this.value()).length - 1;
     }
 
     isNavBackwardDisabled() {
-        return !this.circular && this.activeIndex === 0;
+        return !this.circular() && this._activeIndex === 0;
     }
 
     isIndicatorItemActive(index: number) {
-        return this.activeIndex === index;
+        return this._activeIndex === index;
     }
 
     ariaSlideLabel() {
@@ -985,48 +948,33 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
         this.bindDirectiveInstance.setAttrs(this.ptm('thumbnails'));
     }
 
-    @Input() containerId: string | undefined;
+    readonly containerId = input<string>();
 
-    @Input() value: any[] | undefined;
+    readonly value = input<any[]>();
 
-    @Input({ transform: booleanAttribute }) isVertical: boolean = false;
+    readonly isVertical = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) slideShowActive: boolean = false;
+    readonly slideShowActive = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) circular: boolean = false;
+    readonly circular = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() responsiveOptions: GalleriaResponsiveOptions[] | undefined;
+    readonly responsiveOptions = input<GalleriaResponsiveOptions[]>();
 
-    @Input() contentHeight: string = '300px';
+    readonly contentHeight = input<string>('300px');
 
-    @Input() showThumbnailNavigators = true;
+    readonly showThumbnailNavigators = input(true);
 
-    @Input() templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = input<QueryList<PrimeTemplate>>();
 
-    @Output() onActiveIndexChange: EventEmitter<number> = new EventEmitter();
+    readonly onActiveIndexChange = output<number>();
 
-    @Output() stopSlideShow: EventEmitter<Event> = new EventEmitter();
+    readonly stopSlideShow = output<void>();
 
-    @ViewChild('itemsContainer') itemsContainer: ElementRef | undefined;
+    readonly itemsContainer = viewChild<ElementRef>('itemsContainer');
 
-    @Input() get numVisible(): number {
-        return this._numVisible;
-    }
+    readonly numVisible = input<number>(0);
 
-    set numVisible(numVisible) {
-        this._numVisible = numVisible;
-        this._oldNumVisible = this.d_numVisible;
-        this.d_numVisible = numVisible;
-    }
-
-    @Input() get activeIndex(): number {
-        return this._activeIndex;
-    }
-
-    set activeIndex(activeIndex) {
-        this._oldactiveIndex = this._activeIndex;
-        this._activeIndex = activeIndex;
-    }
+    readonly activeIndex = input<number>(0);
 
     index: number | undefined;
 
@@ -1056,13 +1004,28 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
     constructor(public galleria: Galleria) {
         super();
+        effect(() => {
+            const numVisible = this.numVisible();
+            untracked(() => {
+                this._numVisible = numVisible;
+                this._oldNumVisible = this.d_numVisible;
+                this.d_numVisible = numVisible;
+            });
+        });
+        effect(() => {
+            const activeIndex = this.activeIndex();
+            untracked(() => {
+                this._oldactiveIndex = this._activeIndex;
+                this._activeIndex = activeIndex;
+            });
+        });
     }
 
     onInit() {
         if (isPlatformBrowser(this.platformId)) {
             this.createStyle();
 
-            if (this.responsiveOptions) {
+            if (this.responsiveOptions()) {
                 this.bindDocumentListeners();
             }
         }
@@ -1071,12 +1034,13 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     onAfterContentChecked() {
         let totalShiftedItems = this.totalShiftedItems;
 
-        if ((this._oldNumVisible !== this.d_numVisible || this._oldactiveIndex !== this._activeIndex) && this.itemsContainer) {
+        const itemsContainer = this.itemsContainer();
+        if ((this._oldNumVisible !== this.d_numVisible || this._oldactiveIndex !== this._activeIndex) && itemsContainer) {
             if (this._activeIndex <= this.getMedianItemIndex()) {
                 totalShiftedItems = 0;
-            } else if ((<any[]>this.value).length - this.d_numVisible + this.getMedianItemIndex() < this._activeIndex) {
-                totalShiftedItems = this.d_numVisible - (<any[]>this.value).length;
-            } else if ((<any[]>this.value).length - this.d_numVisible < this._activeIndex && this.d_numVisible % 2 === 0) {
+            } else if ((<any[]>this.value()).length - this.d_numVisible + this.getMedianItemIndex() < this._activeIndex) {
+                totalShiftedItems = this.d_numVisible - (<any[]>this.value()).length;
+            } else if ((<any[]>this.value()).length - this.d_numVisible < this._activeIndex && this.d_numVisible % 2 === 0) {
                 totalShiftedItems = this._activeIndex * -1 + this.getMedianItemIndex() + 1;
             } else {
                 totalShiftedItems = this._activeIndex * -1 + this.getMedianItemIndex();
@@ -1086,14 +1050,14 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
                 this.totalShiftedItems = totalShiftedItems;
             }
 
-            if (this.itemsContainer && this.itemsContainer.nativeElement) {
-                this.itemsContainer.nativeElement.style.transform = this.isVertical ? `translate3d(0, ${totalShiftedItems * (100 / this.d_numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.d_numVisible)}%, 0, 0)`;
+            if (itemsContainer && itemsContainer.nativeElement) {
+                itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.d_numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.d_numVisible)}%, 0, 0)`;
             }
 
             if (this._oldactiveIndex !== this._activeIndex) {
                 this.document.body.setAttribute('data-p-items-hidden', 'false');
-                !this.$unstyled() && removeClass(this.itemsContainer.nativeElement, 'p-items-hidden');
-                this.itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
+                !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+                itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
             }
 
             this._oldactiveIndex = this._activeIndex;
@@ -1115,13 +1079,14 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
         }
 
         let innerHTML = `
-            #${this.containerId} .p-galleria-thumbnail-item {
+            #${this.containerId()} .p-galleria-thumbnail-item {
                 flex: 1 0 ${100 / this.d_numVisible}%
             }
         `;
 
-        if (this.responsiveOptions && !this.$unstyled()) {
-            this.sortedResponsiveOptions = [...this.responsiveOptions];
+        const responsiveOptions = this.responsiveOptions();
+        if (responsiveOptions && !this.$unstyled()) {
+            this.sortedResponsiveOptions = [...responsiveOptions];
             this.sortedResponsiveOptions.sort((data1, data2) => {
                 const value1 = data1.breakpoint;
                 const value2 = data2.breakpoint;
@@ -1141,7 +1106,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
                 innerHTML += `
                     @media screen and (max-width: ${res.breakpoint}) {
-                        #${this.containerId} .p-galleria-thumbnail-item {
+                        #${this.containerId()} .p-galleria-thumbnail-item {
                             flex: 1 0 ${100 / res.numVisible}%
                         }
                     }
@@ -1155,7 +1120,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
     calculatePosition() {
         if (isPlatformBrowser(this.platformId)) {
-            if (this.itemsContainer && this.sortedResponsiveOptions) {
+            if (this.itemsContainer() && this.sortedResponsiveOptions) {
                 let windowWidth = window.innerWidth;
                 let matchedResponsiveData = {
                     numVisible: this._numVisible
@@ -1185,11 +1150,12 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
         this.stopTheSlideShow();
 
         let nextItemIndex = this._activeIndex + 1;
-        if (nextItemIndex + this.totalShiftedItems > this.getMedianItemIndex() && (-1 * this.totalShiftedItems < this.getTotalPageNumber() - 1 || this.circular)) {
+        const circular = this.circular();
+        if (nextItemIndex + this.totalShiftedItems > this.getMedianItemIndex() && (-1 * this.totalShiftedItems < this.getTotalPageNumber() - 1 || circular)) {
             this.step(-1);
         }
 
-        let activeIndex = this.circular && (<any[]>this.value).length - 1 === this._activeIndex ? 0 : nextItemIndex;
+        let activeIndex = circular && (<any[]>this.value()).length - 1 === this._activeIndex ? 0 : nextItemIndex;
         this.onActiveIndexChange.emit(activeIndex);
 
         if (e.cancelable) {
@@ -1202,11 +1168,12 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
         let prevItemIndex = this._activeIndex !== 0 ? this._activeIndex - 1 : 0;
         let diff = prevItemIndex + this.totalShiftedItems;
-        if (this.d_numVisible - diff - 1 > this.getMedianItemIndex() && (-1 * this.totalShiftedItems !== 0 || this.circular)) {
+        const circular = this.circular();
+        if (this.d_numVisible - diff - 1 > this.getMedianItemIndex() && (-1 * this.totalShiftedItems !== 0 || circular)) {
             this.step(1);
         }
 
-        let activeIndex = this.circular && this._activeIndex === 0 ? (<any[]>this.value).length - 1 : prevItemIndex;
+        let activeIndex = circular && this._activeIndex === 0 ? (<any[]>this.value()).length - 1 : prevItemIndex;
         this.onActiveIndexChange.emit(activeIndex);
 
         if (e.cancelable) {
@@ -1233,8 +1200,8 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
                 }
             }
 
-            this.activeIndex = selectedItemIndex;
-            this.onActiveIndexChange.emit(this.activeIndex);
+            this._activeIndex = selectedItemIndex;
+            this.onActiveIndexChange.emit(this._activeIndex);
         }
     }
 
@@ -1278,7 +1245,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     onRightKey() {
-        const indicators = find(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]');
+        const indicators = find(this.itemsContainer()?.nativeElement, '[data-pc-section="thumbnailitem"]');
         const activeIndex = this.findFocusedIndicatorIndex();
 
         this.changedFocusedIndicator(activeIndex, activeIndex + 1 === indicators.length ? indicators.length - 1 : activeIndex + 1);
@@ -1297,17 +1264,18 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     onEndKey() {
-        const indicators = find(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]');
+        const indicators = find(this.itemsContainer()?.nativeElement, '[data-pc-section="thumbnailitem"]');
         const activeIndex = this.findFocusedIndicatorIndex();
 
         this.changedFocusedIndicator(activeIndex, indicators.length - 1);
     }
 
     onTabKey() {
-        const indicators = <any>[...find(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]')];
+        const itemsContainer = this.itemsContainer();
+        const indicators = <any>[...find(itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]')];
         const highlightedIndex = indicators.findIndex((ind: any) => getAttribute(ind, 'data-p-active') === true);
 
-        const activeIndicator = <any>findSingle(this.itemsContainer?.nativeElement, '[tabindex="0"]');
+        const activeIndicator = <any>findSingle(itemsContainer?.nativeElement, '[tabindex="0"]');
 
         const activeIndex = indicators.findIndex((ind: any) => ind === activeIndicator?.parentElement);
 
@@ -1316,14 +1284,15 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     findFocusedIndicatorIndex() {
-        const indicators = [...find(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]')];
-        const activeIndicator = findSingle(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"] > [tabindex="0"]');
+        const itemsContainer = this.itemsContainer();
+        const indicators = [...find(itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]')];
+        const activeIndicator = findSingle(itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"] > [tabindex="0"]');
 
         return indicators.findIndex((ind) => ind === activeIndicator?.parentElement);
     }
 
     changedFocusedIndicator(prevInd: number, nextInd: number) {
-        const indicators = <any>find(this.itemsContainer?.nativeElement, '[data-pc-section="thumbnailitem"]');
+        const indicators = <any>find(this.itemsContainer()?.nativeElement, '[data-pc-section="thumbnailitem"]');
 
         indicators[prevInd].children[0].tabIndex = '-1';
         indicators[nextInd].children[0].tabIndex = '0';
@@ -1333,32 +1302,34 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     step(dir: number) {
         let totalShiftedItems = this.totalShiftedItems + dir;
 
-        if (dir < 0 && -1 * totalShiftedItems + this.d_numVisible > (<any[]>this.value).length - 1) {
-            totalShiftedItems = this.d_numVisible - (<any[]>this.value).length;
+        if (dir < 0 && -1 * totalShiftedItems + this.d_numVisible > (<any[]>this.value()).length - 1) {
+            totalShiftedItems = this.d_numVisible - (<any[]>this.value()).length;
         } else if (dir > 0 && totalShiftedItems > 0) {
             totalShiftedItems = 0;
         }
 
-        if (this.circular) {
-            if (dir < 0 && (<any[]>this.value).length - 1 === this._activeIndex) {
+        if (this.circular()) {
+            const value = this.value();
+            if (dir < 0 && (<any[]>value).length - 1 === this._activeIndex) {
                 totalShiftedItems = 0;
             } else if (dir > 0 && this._activeIndex === 0) {
-                totalShiftedItems = this.d_numVisible - (<any[]>this.value).length;
+                totalShiftedItems = this.d_numVisible - (<any[]>value).length;
             }
         }
 
-        if (this.itemsContainer) {
+        const itemsContainer = this.itemsContainer();
+        if (itemsContainer) {
             this.document.body.setAttribute('data-p-items-hidden', 'false');
-            !this.$unstyled() && removeClass(this.itemsContainer.nativeElement, 'p-items-hidden');
-            this.itemsContainer.nativeElement.style.transform = this.isVertical ? `translate3d(0, ${totalShiftedItems * (100 / this.d_numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.d_numVisible)}%, 0, 0)`;
-            this.itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
+            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+            itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.d_numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.d_numVisible)}%, 0, 0)`;
+            itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
         }
 
         this.totalShiftedItems = totalShiftedItems;
     }
 
     stopTheSlideShow() {
-        if (this.slideShowActive && this.stopSlideShow) {
+        if (this.slideShowActive() && this.stopSlideShow) {
             this.stopSlideShow.emit();
         }
     }
@@ -1374,7 +1345,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     getTotalPageNumber() {
-        return (<any[]>this.value).length > this.d_numVisible ? (<any[]>this.value).length - this.d_numVisible + 1 : 0;
+        return (<any[]>this.value()).length > this.d_numVisible ? (<any[]>this.value()).length - this.d_numVisible + 1 : 0;
     }
 
     getMedianItemIndex() {
@@ -1384,17 +1355,18 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     onTransitionEnd() {
-        if (this.itemsContainer && this.itemsContainer.nativeElement) {
+        const itemsContainer = this.itemsContainer();
+        if (itemsContainer && itemsContainer.nativeElement) {
             this.document.body.setAttribute('data-p-items-hidden', 'true');
-            !this.$unstyled() && addClass(this.itemsContainer.nativeElement, 'p-items-hidden');
-            this.itemsContainer.nativeElement.style.transition = '';
+            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'p-items-hidden');
+            itemsContainer.nativeElement.style.transition = '';
         }
     }
 
     onTouchEnd(e: TouchEvent) {
         let touchobj = e.changedTouches[0];
 
-        if (this.isVertical) {
+        if (this.isVertical()) {
             this.changePageOnTouch(e, touchobj.pageY - (<{ x: number; y: number }>this.startPos).y);
         } else {
             this.changePageOnTouch(e, touchobj.pageX - (<{ x: number; y: number }>this.startPos).x);
@@ -1417,11 +1389,12 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     isNavBackwardDisabled() {
-        return (!this.circular && this._activeIndex === 0) || (<any[]>this.value).length <= this.d_numVisible;
+        return (!this.circular() && this._activeIndex === 0) || (<any[]>this.value()).length <= this.d_numVisible;
     }
 
     isNavForwardDisabled() {
-        return (!this.circular && this._activeIndex === (<any[]>this.value).length - 1) || (<any[]>this.value).length <= this.d_numVisible;
+        const value = this.value();
+        return (!this.circular() && this._activeIndex === (<any[]>value).length - 1) || (<any[]>value).length <= this.d_numVisible;
     }
 
     firstItemAciveIndex() {
@@ -1453,7 +1426,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     }
 
     onDestroy() {
-        if (this.responsiveOptions) {
+        if (this.responsiveOptions()) {
             this.unbindDocumentListeners();
         }
 

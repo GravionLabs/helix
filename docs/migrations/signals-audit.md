@@ -91,7 +91,7 @@ directories**, then finishes manually by these rules:
 | 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
 | 10 | #321 | directives & infrastructure | open |
 | Hard cases | #322 | table & treetable | open |
-| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |
+| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | ✅ done (leftovers: tree node/value/filterOptions/filteredNodes/_templateMap) |
 | Closeout | #324 | final sweep, audit update, lint guard | open |
 
 ## Definition of done (epic #297)

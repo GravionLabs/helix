@@ -1,5 +1,5 @@
 <div [hBind]="ptm('items')" [class]="cx('items')">
-  @if (showItemNavigators) {
+  @if (showItemNavigators()) {
     <button
       type="button"
       role="navigation"
@@ -10,10 +10,10 @@
       (blur)="onButtonBlur('left')"
       data-pc-group-section="itemnavigator"
       >
-      @if (!galleria.itemPreviousIconTemplate && !galleria._itemPreviousIconTemplate) {
+      @if (!galleria.itemPreviousIconTemplate && !galleria._itemPreviousIconTemplate()) {
         <svg data-p-icon="chevron-left" [hBind]="ptm('prevIcon')" [class]="cx('prevIcon')" />
       }
-      <ng-template *ngTemplateOutlet="galleria.itemPreviousIconTemplate || galleria._itemPreviousIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="galleria.itemPreviousIconTemplate || galleria._itemPreviousIconTemplate()"></ng-template>
     </button>
   }
   <div
@@ -22,14 +22,14 @@
     [unstyled]="unstyled()"
     [class]="cx('item')"
     [item]="activeItem"
-    [templates]="templates"
-    [id]="id + '_item_' + activeIndex"
+    [templates]="templates()"
+    [id]="id() + '_item_' + _activeIndex"
     role="group"
     [class]="cx('item')"
-    [attr.aria-label]="ariaSlideNumber(activeIndex + 1)"
+    [attr.aria-label]="ariaSlideNumber(_activeIndex + 1)"
     [attr.aria-roledescription]="ariaSlideLabel()"
   ></div>
-  @if (showItemNavigators) {
+  @if (showItemNavigators()) {
     <button
       type="button"
       [hBind]="ptm('nextButton')"
@@ -40,19 +40,19 @@
       (blur)="onButtonBlur('right')"
       data-pc-group-section="itemnavigator"
       >
-      @if (!galleria.itemNextIconTemplate && !galleria._itemNextIconTemplate) {
+      @if (!galleria.itemNextIconTemplate && !galleria._itemNextIconTemplate()) {
         <svg data-p-icon="chevron-right" [hBind]="ptm('nextIcon')" [class]="cx('nextIcon')" />
       }
-      <ng-template *ngTemplateOutlet="galleria.itemNextIconTemplate || galleria._itemNextIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="galleria.itemNextIconTemplate || galleria._itemNextIconTemplate()"></ng-template>
     </button>
   }
-  @if (captionFacet || galleria.captionTemplate) {
-    <div hGalleriaItemSlot [hBind]="ptm('caption')" [unstyled]="unstyled()" [class]="cx('caption')" type="caption" [item]="activeItem" [templates]="templates"></div>
+  @if (captionFacet() || galleria.captionTemplate()) {
+    <div hGalleriaItemSlot [hBind]="ptm('caption')" [unstyled]="unstyled()" [class]="cx('caption')" type="caption" [item]="activeItem" [templates]="templates()"></div>
   }
 </div>
-@if (showIndicators) {
+@if (showIndicators()) {
   <ul [hBind]="ptm('indicatorList')" [class]="cx('indicatorList')">
-    @for (item of value; track item; let index = $index) {
+    @for (item of value(); track item; let index = $index) {
       <li
         [hBind]="getIndicatorPTOptions(index)"
         tabindex="0"
@@ -61,16 +61,16 @@
         (keydown)="onIndicatorKeyDown($event, index)"
         [class]="cx('indicator', { index })"
         [attr.aria-label]="ariaPageLabel(index + 1)"
-        [attr.aria-selected]="activeIndex === index"
-        [attr.aria-controls]="id + '_item_' + index"
+        [attr.aria-selected]="_activeIndex === index"
+        [attr.aria-controls]="id() + '_item_' + index"
         [hBind]="ptm('indicator', getIndicatorPTOptions(index))"
         [attr.data-p-active]="isIndicatorItemActive(index)"
         >
-        @if (!indicatorFacet && !galleria.indicatorTemplate) {
+        @if (!indicatorFacet() && !galleria.indicatorTemplate()) {
           <button type="button" tabIndex="-1" [hBind]="ptm('indicatorButton', getIndicatorPTOptions(index))" [class]="cx('indicatorButton')"></button>
         }
-        @if (indicatorFacet || galleria.indicatorTemplate) {
-          <div hGalleriaItemSlot type="indicator" [index]="index" [templates]="templates" [hBind]="ptm('item')" [unstyled]="unstyled()"></div>
+        @if (indicatorFacet() || galleria.indicatorTemplate()) {
+          <div hGalleriaItemSlot type="indicator" [index]="index" [templates]="templates()" [hBind]="ptm('item')" [unstyled]="unstyled()"></div>
         }
       </li>
     }

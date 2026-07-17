@@ -1,20 +1,20 @@
-@if (!multiple) {
+@if (!multiple()) {
   <input
     #focusInput
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     hInputText
     [pt]="ptm('pcInputText')"
-    [class]="cn(cx('pcInputText'), inputStyleClass)"
-    [ngStyle]="inputStyle"
-    [attr.type]="type"
+    [class]="cn(cx('pcInputText'), inputStyleClass())"
+    [ngStyle]="inputStyle()"
+    [attr.type]="type()"
     [attr.value]="inputValue()"
     [variant]="$variant()"
     [invalid]="invalid()"
-    [attr.id]="inputId"
-    [attr.autocomplete]="autocomplete"
+    [attr.id]="inputId()"
+    [attr.autocomplete]="autocomplete()"
     aria-autocomplete="list"
     role="combobox"
-    [attr.placeholder]="placeholder"
+    [attr.placeholder]="placeholder()"
     [attr.name]="name()"
     [attr.minlength]="minlength()"
     [pSize]="size()"
@@ -23,15 +23,15 @@
     [attr.pattern]="pattern()"
     [attr.size]="inputSize()"
     [attr.maxlength]="maxlength()"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
     [attr.required]="required() ? '' : undefined"
-    [attr.readonly]="readonly ? '' : undefined"
+    [attr.readonly]="readonly() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-required]="required()"
     [attr.aria-expanded]="overlayVisible ?? false"
-    [attr.aria-controls]="overlayVisible ? id + '_list' : null"
+    [attr.aria-controls]="overlayVisible ? $id() + '_list' : null"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (input)="onInput($event)"
     (keydown)="onKeyDown($event)"
@@ -44,18 +44,18 @@
     [pInputTextUnstyled]="unstyled()"
     />
 }
-@if ($filled() && !$disabled() && showClear && !loading) {
-  @if (!clearIconTemplate && !_clearIconTemplate) {
+@if ($filled() && !$disabled() && showClear() && !loading) {
+  @if (!clearIconTemplate() && !_clearIconTemplate) {
     <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true" />
   }
-  @if (clearIconTemplate || _clearIconTemplate) {
+  @if (clearIconTemplate() || _clearIconTemplate) {
     <span [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true">
-      <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate"></ng-template>
     </span>
   }
 }
 
-@if (multiple) {
+@if (multiple()) {
   <ul
     #multiContainer
     [hBind]="ptm('inputMultiple')"
@@ -74,7 +74,7 @@
         #token
         [hBind]="ptm('chipItem')"
         [class]="cx('chipItem', { i })"
-        [attr.id]="id + '_multiple_option_' + i"
+        [attr.id]="$id() + '_multiple_option_' + i"
         role="option"
         [attr.aria-label]="getOptionLabel(option)"
         [attr.aria-setsize]="modelValue().length"
@@ -84,22 +84,22 @@
         <h-chip
           [pt]="ptm('pcChip')"
           [class]="cx('pcChip')"
-          [label]="!selectedItemTemplate && !_selectedItemTemplate && getOptionLabel(option)"
+          [label]="!selectedItemTemplate() && !_selectedItemTemplate && getOptionLabel(option)"
           [disabled]="$disabled()"
           [removable]="true"
-          (onRemove)="!readonly ? removeOption($event, i) : ''"
+          (onRemove)="!readonly() ? removeOption($event, i) : ''"
           [unstyled]="unstyled()"
           >
-          <ng-container *ngTemplateOutlet="selectedItemTemplate || _selectedItemTemplate; context: { $implicit: option }"></ng-container>
+          <ng-container *ngTemplateOutlet="selectedItemTemplate() || _selectedItemTemplate; context: { $implicit: option }"></ng-container>
           <ng-template #removeicon>
-            @if (!removeIconTemplate && !_removeIconTemplate) {
-              <span [hBind]="ptm('chipIcon')" [class]="cx('chipIcon')" (click)="!readonly && !$disabled() ? removeOption($event, i) : ''">
+            @if (!removeIconTemplate() && !_removeIconTemplate) {
+              <span [hBind]="ptm('chipIcon')" [class]="cx('chipIcon')" (click)="!readonly() && !$disabled() ? removeOption($event, i) : ''">
                 <svg data-p-icon="times-circle" [class]="cx('chipIcon')" [attr.aria-hidden]="true" />
               </span>
             }
-            @if (removeIconTemplate || _removeIconTemplate) {
+            @if (removeIconTemplate() || _removeIconTemplate) {
               <span [hBind]="ptm('chipIcon')" [attr.aria-hidden]="true">
-                <ng-template *ngTemplateOutlet="removeIconTemplate || _removeIconTemplate; context: { removeCallback: removeOption.bind(this), index: i, class: cx('chipIcon') }"></ng-template>
+                <ng-template *ngTemplateOutlet="removeIconTemplate() || _removeIconTemplate; context: { removeCallback: removeOption.bind(this), index: i, class: cx('chipIcon') }"></ng-template>
               </span>
             }
           </ng-template>
@@ -110,13 +110,13 @@
       <input
         #focusInput
         #multiIn
-        [hAutoFocus]="autofocus"
+        [hAutoFocus]="autofocus()"
         [hBind]="ptm('input')"
         [class]="cx('pcInputText')"
-        [ngStyle]="inputStyle"
-        [attr.type]="type"
-        [attr.id]="inputId"
-        [attr.autocomplete]="autocomplete"
+        [ngStyle]="inputStyle()"
+        [attr.type]="type()"
+        [attr.id]="inputId()"
+        [attr.autocomplete]="autocomplete()"
         [attr.name]="name()"
         [attr.minlength]="minlength()"
         [attr.maxlength]="maxlength()"
@@ -125,17 +125,17 @@
         [attr.max]="max()"
         [attr.pattern]="pattern()"
         role="combobox"
-        [attr.placeholder]="!$filled() ? placeholder : null"
+        [attr.placeholder]="!$filled() ? placeholder() : null"
         aria-autocomplete="list"
-        [attr.tabindex]="!$disabled() ? tabindex : -1"
+        [attr.tabindex]="!$disabled() ? tabindex() : -1"
         [attr.required]="required() ? '' : undefined"
-        [attr.readonly]="readonly ? '' : undefined"
+        [attr.readonly]="readonly() ? '' : undefined"
         [attr.disabled]="$disabled() ? '' : undefined"
-        [attr.aria-label]="ariaLabel"
-        [attr.aria-labelledby]="ariaLabelledBy"
+        [attr.aria-label]="ariaLabel()"
+        [attr.aria-labelledby]="ariaLabelledBy()"
         [attr.aria-required]="required()"
         [attr.aria-expanded]="overlayVisible ?? false"
-        [attr.aria-controls]="overlayVisible ? id + '_list' : null"
+        [attr.aria-controls]="overlayVisible ? $id() + '_list' : null"
         [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
         (input)="onInput($event)"
         (keydown)="onKeyDown($event)"
@@ -149,25 +149,25 @@
   </ul>
 }
 @if (loading) {
-  @if (!loadingIconTemplate && !_loadingIconTemplate) {
+  @if (!loadingIconTemplate() && !_loadingIconTemplate) {
     <svg data-p-icon="spinner" [hBind]="ptm('loader')" [class]="cx('loader')" [spin]="true" [attr.aria-hidden]="true" />
   }
-  @if (loadingIconTemplate || _loadingIconTemplate) {
+  @if (loadingIconTemplate() || _loadingIconTemplate) {
     <span [hBind]="ptm('loader')" [class]="cx('loader')" [attr.aria-hidden]="true">
-      <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="loadingIconTemplate() || _loadingIconTemplate"></ng-template>
     </span>
   }
 }
-@if (dropdown) {
-  <button #ddBtn type="button" [hBind]="ptm('dropdown')" [attr.aria-label]="dropdownAriaLabel" [class]="cx('dropdown')" [disabled]="$disabled()" hRipple (click)="handleDropdownClick($event)" [attr.tabindex]="tabindex">
-    @if (dropdownIcon) {
-      <span [ngClass]="dropdownIcon" [attr.aria-hidden]="true"></span>
+@if (dropdown()) {
+  <button #ddBtn type="button" [hBind]="ptm('dropdown')" [attr.aria-label]="dropdownAriaLabel()" [class]="cx('dropdown')" [disabled]="$disabled()" hRipple (click)="handleDropdownClick($event)" [attr.tabindex]="tabindex()">
+    @if (dropdownIcon()) {
+      <span [ngClass]="dropdownIcon()" [attr.aria-hidden]="true"></span>
     }
-    @if (!dropdownIcon) {
-      @if (!dropdownIconTemplate && !_dropdownIconTemplate) {
+    @if (!dropdownIcon()) {
+      @if (!dropdownIconTemplate() && !_dropdownIconTemplate) {
         <svg data-p-icon="chevron-down" [hBind]="ptm('dropdown')" />
       }
-      <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="dropdownIconTemplate() || _dropdownIconTemplate"></ng-template>
     }
   </button>
 }
@@ -175,7 +175,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -186,46 +186,46 @@
   [attr.data-p]="overlayDataP"
   >
   <ng-template #content>
-    <div [hBind]="ptm('overlay')" [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle">
-      <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-      <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight" [tabindex]="-1">
-        @if (virtualScroll) {
+    <div [hBind]="ptm('overlay')" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
+      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
+      <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll() ? 'auto' : scrollHeight()" [tabindex]="-1">
+        @if (virtualScroll()) {
           <h-scroller
             #scroller
             [tabindex]="-1"
             [pt]="ptm('virtualScroller')"
             [items]="visibleOptions()"
-            [style]="{ height: scrollHeight }"
-            [itemSize]="virtualScrollItemSize"
+            [style]="{ height: scrollHeight() }"
+            [itemSize]="virtualScrollItemSize()"
             [autoSize]="true"
-            [lazy]="lazy"
+            [lazy]="lazy()"
             (onLazyLoad)="onLazyLoad.emit($event)"
-            [options]="virtualScrollOptions"
+            [options]="virtualScrollOptions()"
             >
             <ng-template #content let-items let-scrollerOptions="options">
               <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
             </ng-template>
-            @if (loaderTemplate || _loaderTemplate) {
+            @if (loaderTemplate() || _loaderTemplate) {
               <ng-template #loader let-scrollerOptions="options">
-                <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+                <ng-container *ngTemplateOutlet="loaderTemplate() || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
               </ng-template>
             }
           </h-scroller>
         }
-        @if (!virtualScroll) {
+        @if (!virtualScroll()) {
           <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
         }
       </div>
 
       <ng-template #buildInItems let-items let-scrollerOptions="options">
-        <ul #items [hBind]="ptm('list')" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" [attr.id]="id + '_list'" [attr.aria-label]="listLabel">
+        <ul #items [hBind]="ptm('list')" [class]="cn(cx('list'), scrollerOptions.contentStyleClass)" [style]="scrollerOptions.contentStyle" role="listbox" [attr.id]="$id() + '_list'" [attr.aria-label]="listLabel">
           @for (option of items; track option; let i = $index) {
             @if (isOptionGroup(option)) {
-              <li [hBind]="ptm('optionGroup')" [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)" [class]="cx('optionGroup')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
-                @if (!groupTemplate) {
+              <li [hBind]="ptm('optionGroup')" [attr.id]="$id() + '_' + getOptionIndex(i, scrollerOptions)" [class]="cx('optionGroup')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                @if (!groupTemplate()) {
                   <span>{{ getOptionGroupLabel(option.optionGroup) }}</span>
                 }
-                <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: option.optionGroup }"></ng-container>
+                <ng-container *ngTemplateOutlet="groupTemplate(); context: { $implicit: option.optionGroup }"></ng-container>
               </li>
             }
             @if (!isOptionGroup(option)) {
@@ -234,7 +234,7 @@
                 [hBind]="getPTOptions(option, scrollerOptions, i, 'option')"
                 [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }"
                 [class]="cx('option', { option, i, scrollerOptions })"
-                [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)"
+                [attr.id]="$id() + '_' + getOptionIndex(i, scrollerOptions)"
                 role="option"
                 [attr.aria-label]="getOptionLabel(option)"
                 [attr.aria-selected]="isSelected(option)"
@@ -246,12 +246,12 @@
                 (click)="onOptionSelect($event, option)"
                 (mouseenter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
                 >
-                @if (!itemTemplate && !_itemTemplate) {
+                @if (!itemTemplate() && !_itemTemplate) {
                   <span>{{ getOptionLabel(option) }}</span>
                 }
                 <ng-container
                                     *ngTemplateOutlet="
-                                        itemTemplate || _itemTemplate;
+                                        itemTemplate() || _itemTemplate;
                                         context: {
                                             $implicit: option,
                                             index: scrollerOptions.getOptions ? scrollerOptions.getOptions(i) : i
@@ -261,19 +261,19 @@
             </li>
           }
         }
-        @if (!items || (items && items.length === 0 && showEmptyMessage)) {
+        @if (!items || (items && items.length === 0 && showEmptyMessage())) {
           <li [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
-            @if (!emptyTemplate && !_emptyTemplate) {
+            @if (!emptyTemplate() && !_emptyTemplate) {
               {{ searchResultMessageText }}
             } @else {
               <ng-template [ngTemplateOutlet]="empty"></ng-template>
             }
-            <ng-container #empty *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+            <ng-container #empty *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
           </li>
         }
       </ul>
     </ng-template>
-    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   </div>
   <span role="status" aria-live="polite" class="p-hidden-accessible">
     {{ selectedMessageText }}

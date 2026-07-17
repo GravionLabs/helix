@@ -1,25 +1,6 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    inject,
-    InjectionToken,
-    Input,
-    model,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, model, NgModule, numberAttribute, QueryList, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, OutputEmitterRef, effect, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@primeuix/utils';
 import { FilterService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -84,7 +65,7 @@ const PICKLIST_INSTANCE = new InjectionToken<PickList>('PICKLIST_INSTANCE');
 export class PickList extends BaseComponent {
     componentName = 'PickList';
 
-    @Input() hostName: any = '';
+    readonly hostName = input<any>('');
 
     bindDirectiveInstance = inject(Bind, { self: true });
 
@@ -107,380 +88,371 @@ export class PickList extends BaseComponent {
      * Name of the field that uniquely identifies the options.
      * @group Props
      */
-    @Input() dataKey: string | undefined;
+    readonly dataKey = input<string>();
     /**
      * Text for the source list caption
      * @group Props
      */
-    @Input() sourceHeader: string | undefined;
+    readonly sourceHeader = input<string>();
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number | undefined = 0;
+    readonly tabindex = input<number | undefined, unknown>(0, { transform: numberAttribute });
     /**
      * Defines a string that labels the move to right button for accessibility.
      * @group Props
      */
-    @Input() rightButtonAriaLabel: string | undefined;
+    readonly rightButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to left button for accessibility.
      * @group Props
      */
-    @Input() leftButtonAriaLabel: string | undefined;
+    readonly leftButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to all right button for accessibility.
      * @group Props
      */
-    @Input() allRightButtonAriaLabel: string | undefined;
+    readonly allRightButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to all left button for accessibility.
      * @group Props
      */
-    @Input() allLeftButtonAriaLabel: string | undefined;
+    readonly allLeftButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to up button for accessibility.
      * @group Props
      */
-    @Input() upButtonAriaLabel: string | undefined;
+    readonly upButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to down button for accessibility.
      * @group Props
      */
-    @Input() downButtonAriaLabel: string | undefined;
+    readonly downButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to top button for accessibility.
      * @group Props
      */
-    @Input() topButtonAriaLabel: string | undefined;
+    readonly topButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the move to bottom button for accessibility.
      * @group Props
      */
-    @Input() bottomButtonAriaLabel: string | undefined;
+    readonly bottomButtonAriaLabel = input<string>();
     /**
      * Defines a string that labels the source list.
      * @group Props
      */
-    @Input() sourceAriaLabel: string | undefined;
+    readonly sourceAriaLabel = input<string>();
     /**
      * Defines a string that labels the target list.
      * @group Props
      */
-    @Input() targetAriaLabel: string | undefined;
+    readonly targetAriaLabel = input<string>();
     /**
      * Text for the target list caption
      * @group Props
      */
-    @Input() targetHeader: string | undefined;
+    readonly targetHeader = input<string>();
     /**
      * When enabled orderlist adjusts its controls based on screen size.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) responsive: boolean | undefined;
+    readonly responsive = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * When specified displays an input field to filter the items on keyup and decides which field to search (Accepts multiple fields with a comma).
      * @group Props
      */
-    @Input() filterBy: string | undefined;
+    readonly filterBy = input<string>();
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
      */
-    @Input() filterLocale: string | undefined;
+    readonly filterLocale = input<string>();
     /**
      * Function to optimize the dom operations by delegating to ngForTrackBy, default algorithm checks for object identity. Use sourceTrackBy or targetTrackBy in case different algorithms are needed per list.
      * @group Props
      */
-    @Input() trackBy: Function = (index: number, item: any) => item;
+    readonly trackBy = input<Function>((index: number, item: any) => item);
     /**
      * Function to optimize the dom operations by delegating to ngForTrackBy in source list, default algorithm checks for object identity.
      * @group Props
      */
-    @Input() sourceTrackBy: Function | undefined;
+    readonly sourceTrackBy = input<Function>();
     /**
      * Function to optimize the dom operations by delegating to ngForTrackBy in target list, default algorithm checks for object identity.
      * @group Props
      */
-    @Input() targetTrackBy: Function | undefined;
+    readonly targetTrackBy = input<Function>();
     /**
      * Whether to show filter input for source list when filterBy is enabled.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showSourceFilter: boolean = true;
+    readonly showSourceFilter = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to show filter input for target list when filterBy is enabled.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showTargetFilter: boolean = true;
+    readonly showTargetFilter = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) metaKeySelection: boolean = false;
+    readonly metaKeySelection = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to enable dragdrop based reordering.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) dragdrop: boolean = false;
+    readonly dragdrop = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() style: { [klass: string]: any } | null | undefined;
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the component.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Inline style of the source list element.
      * @group Props
      */
-    @Input() sourceStyle: any;
+    readonly sourceStyle = input<any>();
     /**
      * Inline style of the target list element.
      * @group Props
      */
-    @Input() targetStyle: any;
+    readonly targetStyle = input<any>();
     /**
      * Whether to show buttons of source list.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showSourceControls: boolean = true;
+    readonly showSourceControls = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to show buttons of target list.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showTargetControls: boolean = true;
+    readonly showTargetControls = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Placeholder text on source filter input.
      * @group Props
      */
-    @Input() sourceFilterPlaceholder: string | undefined;
+    readonly sourceFilterPlaceholder = input<string>();
     /**
      * Placeholder text on target filter input.
      * @group Props
      */
-    @Input() targetFilterPlaceholder: string | undefined;
+    readonly targetFilterPlaceholder = input<string>();
     /**
      * When present, it specifies that the component should be disabled.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) disabled: boolean;
+    readonly disabled = input<boolean, unknown>(undefined!, { transform: booleanAttribute });
 
     /**
      * Name of the disabled field of a target option or function to determine disabled state.
      * @group Props
      */
-    @Input() sourceOptionDisabled: string | ((item: any) => boolean) | undefined;
+    readonly sourceOptionDisabled = input<string | ((item: any) => boolean)>();
 
     /**
      * Name of the disabled field of a target option or function to determine disabled state.
      * @group Props
      */
-    @Input() targetOptionDisabled: string | ((item: any) => boolean) | undefined;
+    readonly targetOptionDisabled = input<string | ((item: any) => boolean)>();
 
     /**
      * Defines a string that labels the filter input of source list.
      * @group Props
      */
-    @Input() ariaSourceFilterLabel: string | undefined;
+    readonly ariaSourceFilterLabel = input<string>();
     /**
      * Defines a string that labels the filter input of target list.
      * @group Props
      */
-    @Input() ariaTargetFilterLabel: string | undefined;
+    readonly ariaTargetFilterLabel = input<string>();
     /**
      * Defines how the items are filtered.
      * @group Props
      */
-    @Input() filterMatchMode: 'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte' | string = 'contains';
+    readonly filterMatchMode = input<'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte' | string>('contains');
     /**
      * Whether to displays rows with alternating colors.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) stripedRows: boolean | undefined;
+    readonly stripedRows = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Keeps selection on the transfer list.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) keepSelection: boolean = false;
+    readonly keepSelection = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Height of the viewport, a scrollbar is defined if height of list exceeds this value.
      * @group Props
      */
-    @Input() scrollHeight: string = '14rem';
+    readonly scrollHeight = input<string>('14rem');
     /**
      * Whether to focus on the first visible or selected element.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoOptionFocus: boolean = true;
+    readonly autoOptionFocus = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
      * @group Props
      */
-    @Input() buttonProps: ButtonProps = { severity: 'secondary' };
+    readonly buttonProps = input<ButtonProps>({ severity: 'secondary' });
     /**
      * Used to pass all properties of the ButtonProps to the move up button inside the component.
      * @group Props
      */
-    @Input() moveUpButtonProps: ButtonProps;
+    readonly moveUpButtonProps = input<ButtonProps>(undefined!);
     /**
      * 	Used to pass all properties of the ButtonProps to the move top button inside the component.
      * @group Props
      */
-    @Input() moveTopButtonProps: ButtonProps;
+    readonly moveTopButtonProps = input<ButtonProps>(undefined!);
     /**
      * 	Used to pass all properties of the ButtonProps to the move down button inside the component.
      * @group Props
      */
-    @Input() moveDownButtonProps: ButtonProps;
+    readonly moveDownButtonProps = input<ButtonProps>(undefined!);
     /**
      * 	Used to pass all properties of the ButtonProps to the move bottom button inside the component.
      * @group Props
      */
-    @Input() moveBottomButtonProps: ButtonProps;
+    readonly moveBottomButtonProps = input<ButtonProps>(undefined!);
     /**
      * 	Used to pass all properties of the ButtonProps to the move to target button inside the component.
      * @group Props
      */
-    @Input() moveToTargetProps: ButtonProps;
+    readonly moveToTargetProps = input<ButtonProps>(undefined!);
     /**
      * 	Used to pass all properties of the ButtonProps to the move all to target button inside the component.
      * @group Props
      */
-    @Input() moveAllToTargetProps: ButtonProps;
+    readonly moveAllToTargetProps = input<ButtonProps>(undefined!);
     /**
      *  Used to pass all properties of the ButtonProps to the move to source button inside the component.
      * @group Props
      */
-    @Input() moveToSourceProps: ButtonProps;
+    readonly moveToSourceProps = input<ButtonProps>(undefined!);
     /**
      *  Used to pass all properties of the ButtonProps to the move all to source button inside the component.
      * @group Props
      */
-    @Input() moveAllToSourceProps: ButtonProps;
+    readonly moveAllToSourceProps = input<ButtonProps>(undefined!);
 
     /**
      * Indicates the width of the screen at which the component should change its behavior.
      * @group Props
      */
-    @Input() get breakpoint(): string {
-        return this._breakpoint;
-    }
-    set breakpoint(value: string) {
-        if (value !== this._breakpoint) {
-            this._breakpoint = value;
-            if (isPlatformBrowser(this.platformId)) {
-                this.destroyMedia();
-                this.initMedia();
-            }
-        }
-    }
+    readonly breakpoint = input<string>('960px');
     /**
      * Callback to invoke when items are moved from target to source.
      * @param {PickListMoveToSourceEvent} event - Custom move to source event.
      * @group Emits
      */
-    @Output() onMoveToSource: EventEmitter<PickListMoveToSourceEvent> = new EventEmitter<PickListMoveToSourceEvent>();
+    readonly onMoveToSource = output<PickListMoveToSourceEvent>();
     /**
      * Callback to invoke when all items are moved from target to source.
      * @param {PickListMoveAllToSourceEvent} event - Custom move all to source event.
      * @group Emits
      */
-    @Output() onMoveAllToSource: EventEmitter<PickListMoveAllToSourceEvent> = new EventEmitter<PickListMoveAllToSourceEvent>();
+    readonly onMoveAllToSource = output<PickListMoveAllToSourceEvent>();
     /**
      * Callback to invoke when all items are moved from source to target.
      * @param {PickListMoveAllToTargetEvent} event - Custom move all to target event.
      * @group Emits
      */
-    @Output() onMoveAllToTarget: EventEmitter<PickListMoveAllToTargetEvent> = new EventEmitter<PickListMoveAllToTargetEvent>();
+    readonly onMoveAllToTarget = output<PickListMoveAllToTargetEvent>();
     /**
      * Callback to invoke when items are moved from source to target.
      * @param {PickListMoveToTargetEvent} event - Custom move to target event.
      * @group Emits
      */
-    @Output() onMoveToTarget: EventEmitter<PickListMoveToTargetEvent> = new EventEmitter<PickListMoveToTargetEvent>();
+    readonly onMoveToTarget = output<PickListMoveToTargetEvent>();
     /**
      * Callback to invoke when items are reordered within source list.
      * @param {PickListSourceReorderEvent} event - Custom source reorder event.
      * @group Emits
      */
-    @Output() onSourceReorder: EventEmitter<PickListSourceReorderEvent> = new EventEmitter<PickListSourceReorderEvent>();
+    readonly onSourceReorder = output<PickListSourceReorderEvent>();
     /**
      * Callback to invoke when items are reordered within target list.
      * @param {PickListTargetReorderEvent} event - Custom target reorder event.
      * @group Emits
      */
-    @Output() onTargetReorder: EventEmitter<PickListTargetReorderEvent> = new EventEmitter<PickListTargetReorderEvent>();
+    readonly onTargetReorder = output<PickListTargetReorderEvent>();
     /**
      * Callback to invoke when items are selected within source list.
      * @param {PickListSourceSelectEvent} event - Custom source select event.
      * @group Emits
      */
-    @Output() onSourceSelect: EventEmitter<PickListSourceSelectEvent> = new EventEmitter<PickListSourceSelectEvent>();
+    readonly onSourceSelect = output<PickListSourceSelectEvent>();
     /**
      * Callback to invoke when items are selected within target list.
      * @param {PickListTargetSelectEvent} event - Custom target select event.
      * @group Emits
      */
-    @Output() onTargetSelect: EventEmitter<PickListTargetSelectEvent> = new EventEmitter<PickListTargetSelectEvent>();
+    readonly onTargetSelect = output<PickListTargetSelectEvent>();
     /**
      * Callback to invoke when the source list is filtered
      * @param {PickListSourceFilterEvent} event - Custom source filter event.
      * @group Emits
      */
-    @Output() onSourceFilter: EventEmitter<PickListSourceFilterEvent> = new EventEmitter<PickListSourceFilterEvent>();
+    readonly onSourceFilter = output<PickListSourceFilterEvent>();
     /**
      * Callback to invoke when the target list is filtered
      * @param {PickListTargetFilterEvent} event - Custom target filter event.
      * @group Emits
      */
-    @Output() onTargetFilter: EventEmitter<PickListTargetFilterEvent> = new EventEmitter<PickListTargetFilterEvent>();
+    readonly onTargetFilter = output<PickListTargetFilterEvent>();
 
     /**
      * Callback to invoke when the list is focused
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onFocus = output<Event>();
 
     /**
      * Callback to invoke when the list is blurred
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onBlur = output<Event>();
 
-    @ViewChild('sourcelist') listViewSourceChild: Listbox;
+    readonly listViewSourceChild = viewChild.required<Listbox>('sourcelist');
 
-    @ViewChild('targetlist') listViewTargetChild: Listbox;
+    readonly listViewTargetChild = viewChild.required<Listbox>('targetlist');
 
-    @ViewChild('sourceFilter') sourceFilterViewChild: Nullable<ElementRef>;
+    readonly sourceFilterViewChild = viewChild<Nullable<ElementRef>>('sourceFilter');
 
-    @ViewChild('targetFilter') targetFilterViewChild: Nullable<ElementRef>;
+    readonly targetFilterViewChild = viewChild<Nullable<ElementRef>>('targetFilter');
 
     getButtonProps(direction: string) {
         switch (direction) {
             case 'moveup':
-                return { ...this.buttonProps, ...this.moveUpButtonProps };
+                return { ...this.buttonProps(), ...this.moveUpButtonProps() };
             case 'movetop':
-                return { ...this.buttonProps, ...this.moveTopButtonProps };
+                return { ...this.buttonProps(), ...this.moveTopButtonProps() };
             case 'movedown':
-                return { ...this.buttonProps, ...this.moveDownButtonProps };
+                return { ...this.buttonProps(), ...this.moveDownButtonProps() };
             case 'movebottom':
-                return { ...this.buttonProps, ...this.moveBottomButtonProps };
+                return { ...this.buttonProps(), ...this.moveBottomButtonProps() };
             case 'movetotarget':
-                return { ...this.buttonProps, ...this.moveToTargetProps };
+                return { ...this.buttonProps(), ...this.moveToTargetProps() };
             case 'movealltotarget':
-                return { ...this.buttonProps, ...this.moveAllToTargetProps };
+                return { ...this.buttonProps(), ...this.moveAllToTargetProps() };
             case 'movetosource':
-                return { ...this.buttonProps, ...this.moveToSourceProps };
+                return { ...this.buttonProps(), ...this.moveToSourceProps() };
             case 'movealltosource':
-                return { ...this.buttonProps, ...this.moveAllToSourceProps };
+                return { ...this.buttonProps(), ...this.moveAllToSourceProps() };
             default:
-                return this.buttonProps;
+                return this.buttonProps();
         }
     }
 
@@ -493,35 +465,43 @@ export class PickList extends BaseComponent {
     }
 
     get moveUpAriaLabel() {
-        return this.upButtonAriaLabel ? this.upButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveUp : undefined;
+        const upButtonAriaLabel = this.upButtonAriaLabel();
+        return upButtonAriaLabel ? upButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveUp : undefined;
     }
 
     get moveTopAriaLabel() {
-        return this.topButtonAriaLabel ? this.topButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveTop : undefined;
+        const topButtonAriaLabel = this.topButtonAriaLabel();
+        return topButtonAriaLabel ? topButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveTop : undefined;
     }
 
     get moveDownAriaLabel() {
-        return this.downButtonAriaLabel ? this.downButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveDown : undefined;
+        const downButtonAriaLabel = this.downButtonAriaLabel();
+        return downButtonAriaLabel ? downButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveDown : undefined;
     }
 
     get moveBottomAriaLabel() {
-        return this.bottomButtonAriaLabel ? this.bottomButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveDown : undefined;
+        const bottomButtonAriaLabel = this.bottomButtonAriaLabel();
+        return bottomButtonAriaLabel ? bottomButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveDown : undefined;
     }
 
     get moveToTargetAriaLabel() {
-        return this.rightButtonAriaLabel ? this.rightButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveToTarget : undefined;
+        const rightButtonAriaLabel = this.rightButtonAriaLabel();
+        return rightButtonAriaLabel ? rightButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveToTarget : undefined;
     }
 
     get moveAllToTargetAriaLabel() {
-        return this.allRightButtonAriaLabel ? this.allRightButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveAllToTarget : undefined;
+        const allRightButtonAriaLabel = this.allRightButtonAriaLabel();
+        return allRightButtonAriaLabel ? allRightButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveAllToTarget : undefined;
     }
 
     get moveToSourceAriaLabel() {
-        return this.leftButtonAriaLabel ? this.leftButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveToSource : undefined;
+        const leftButtonAriaLabel = this.leftButtonAriaLabel();
+        return leftButtonAriaLabel ? leftButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveToSource : undefined;
     }
 
     get moveAllToSourceAriaLabel() {
-        return this.allLeftButtonAriaLabel ? this.allLeftButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveAllToSource : undefined;
+        const allLeftButtonAriaLabel = this.allLeftButtonAriaLabel();
+        return allLeftButtonAriaLabel ? allLeftButtonAriaLabel : this.config.translation.aria ? this.config.translation.aria.moveAllToSource : undefined;
     }
 
     get idSource() {
@@ -576,17 +556,33 @@ export class PickList extends BaseComponent {
 
     _componentStyle = inject(PickListStyle);
 
+    constructor() {
+        super();
+        effect(() => {
+            const value = this.breakpoint();
+            untracked(() => {
+                if (value !== this._breakpoint) {
+                    this._breakpoint = value;
+                    if (isPlatformBrowser(this.platformId)) {
+                        this.destroyMedia();
+                        this.initMedia();
+                    }
+                }
+            });
+        });
+    }
+
     mediaChangeListener: VoidListener;
 
     filterService = inject(FilterService);
 
     onInit() {
-        if (this.responsive) {
+        if (this.responsive()) {
             this.createStyle();
             this.initMedia();
         }
 
-        if (this.filterBy) {
+        if (this.filterBy()) {
             this.sourceFilterOptions = {
                 filter: (value) => this.filterSource(value),
                 reset: () => this.resetSourceFilter()
@@ -605,19 +601,19 @@ export class PickList extends BaseComponent {
      * @see {@link PickListItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<PickListItemTemplateContext>;
+    readonly itemTemplate = contentChild<TemplateRef<PickListItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom source header template.
      * @group Templates
      */
-    @ContentChild('sourceHeader', { descendants: false }) sourceHeaderTemplate: TemplateRef<void>;
+    readonly sourceHeaderTemplate = contentChild<TemplateRef<void>>('sourceHeader', { descendants: false });
 
     /**
      * Custom target header template.
      * @group Templates
      */
-    @ContentChild('targetHeader', { descendants: false }) targetHeaderTemplate: TemplateRef<void>;
+    readonly targetHeaderTemplate = contentChild<TemplateRef<void>>('targetHeader', { descendants: false });
 
     /**
      * Custom source filter template.
@@ -625,7 +621,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListFilterTemplateContext}
      * @group Templates
      */
-    @ContentChild('sourceFilter', { descendants: false }) sourceFilterTemplate: TemplateRef<PickListFilterTemplateContext>;
+    readonly sourceFilterTemplate = contentChild<TemplateRef<PickListFilterTemplateContext>>('sourceFilter', { descendants: false });
 
     /**
      * Custom target filter template.
@@ -633,55 +629,55 @@ export class PickList extends BaseComponent {
      * @see {@link PickListFilterTemplateContext}
      * @group Templates
      */
-    @ContentChild('targetFilter', { descendants: false }) targetFilterTemplate: TemplateRef<PickListFilterTemplateContext>;
+    readonly targetFilterTemplate = contentChild<TemplateRef<PickListFilterTemplateContext>>('targetFilter', { descendants: false });
 
     /**
      * Custom empty message when source is empty template.
      * @group Templates
      */
-    @ContentChild('emptymessagesource', { descendants: false }) emptyMessageSourceTemplate: TemplateRef<void>;
+    readonly emptyMessageSourceTemplate = contentChild<TemplateRef<void>>('emptymessagesource', { descendants: false });
 
     /**
      * Custom empty filter message when source is empty template.
      * @group Templates
      */
-    @ContentChild('emptyfiltermessagesource', { descendants: false }) emptyFilterMessageSourceTemplate: TemplateRef<void>;
+    readonly emptyFilterMessageSourceTemplate = contentChild<TemplateRef<void>>('emptyfiltermessagesource', { descendants: false });
 
     /**
      * Custom empty message when target is empty template.
      * @group Templates
      */
-    @ContentChild('emptymessagetarget', { descendants: false }) emptyMessageTargetTemplate: TemplateRef<void>;
+    readonly emptyMessageTargetTemplate = contentChild<TemplateRef<void>>('emptymessagetarget', { descendants: false });
 
     /**
      * Custom empty filter message when target is empty template.
      * @group Templates
      */
-    @ContentChild('emptyfiltermessagetarget', { descendants: false }) emptyFilterMessageTargetTemplate: TemplateRef<void>;
+    readonly emptyFilterMessageTargetTemplate = contentChild<TemplateRef<void>>('emptyfiltermessagetarget', { descendants: false });
 
     /**
      * Custom move up icon template.
      * @group Templates
      */
-    @ContentChild('moveupicon', { descendants: false }) moveUpIconTemplate: TemplateRef<void>;
+    readonly moveUpIconTemplate = contentChild.required<TemplateRef<void>>('moveupicon', { descendants: false });
 
     /**
      * Custom move top icon template.
      * @group Templates
      */
-    @ContentChild('movetopicon', { descendants: false }) moveTopIconTemplate: TemplateRef<void>;
+    readonly moveTopIconTemplate = contentChild.required<TemplateRef<void>>('movetopicon', { descendants: false });
 
     /**
      * Custom move down icon template.
      * @group Templates
      */
-    @ContentChild('movedownicon', { descendants: false }) moveDownIconTemplate: TemplateRef<void>;
+    readonly moveDownIconTemplate = contentChild.required<TemplateRef<void>>('movedownicon', { descendants: false });
 
     /**
      * Custom move bottom icon template.
      * @group Templates
      */
-    @ContentChild('movebottomicon', { descendants: false }) moveBottomIconTemplate: TemplateRef<void>;
+    readonly moveBottomIconTemplate = contentChild.required<TemplateRef<void>>('movebottomicon', { descendants: false });
 
     /**
      * Custom move to target icon template.
@@ -689,7 +685,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movetotargeticon', { descendants: false }) moveToTargetIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveToTargetIconTemplate = contentChild.required<TemplateRef<PickListTransferIconTemplateContext>>('movetotargeticon', { descendants: false });
 
     /**
      * Custom move all to target icon template.
@@ -697,7 +693,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movealltotargeticon', { descendants: false }) moveAllToTargetIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveAllToTargetIconTemplate = contentChild.required<TemplateRef<PickListTransferIconTemplateContext>>('movealltotargeticon', { descendants: false });
 
     /**
      * Custom move to source icon template.
@@ -705,7 +701,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movetosourceicon', { descendants: false }) moveToSourceIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveToSourceIconTemplate = contentChild.required<TemplateRef<PickListTransferIconTemplateContext>>('movetosourceicon', { descendants: false });
 
     /**
      * Custom move all to source icon template.
@@ -713,21 +709,21 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movealltosourceicon', { descendants: false }) moveAllToSourceIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveAllToSourceIconTemplate = contentChild.required<TemplateRef<PickListTransferIconTemplateContext>>('movealltosourceicon', { descendants: false });
 
     /**
      * Custom target filter icon template.
      * @group Templates
      */
-    @ContentChild('targetfiltericon', { descendants: false }) targetFilterIconTemplate: TemplateRef<void>;
+    readonly targetFilterIconTemplate = contentChild<TemplateRef<void>>('targetfiltericon', { descendants: false });
 
     /**
      * Custom source filter icon template.
      * @group Templates
      */
-    @ContentChild('sourcefiltericon', { descendants: false }) sourceFilterIconTemplate: TemplateRef<void>;
+    readonly sourceFilterIconTemplate = contentChild<TemplateRef<void>>('sourcefiltericon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _itemTemplate: TemplateRef<PickListItemTemplateContext> | undefined;
 
@@ -768,7 +764,7 @@ export class PickList extends BaseComponent {
     _sourceFilterIconTemplate: TemplateRef<void> | undefined;
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -865,7 +861,7 @@ export class PickList extends BaseComponent {
     }
 
     onSourceItemDblClick() {
-        if (this.disabled) {
+        if (this.disabled()) {
             return;
         }
 
@@ -874,7 +870,7 @@ export class PickList extends BaseComponent {
     }
 
     onTargetItemDblClick() {
-        if (this.disabled) {
+        if (this.disabled()) {
             return;
         }
 
@@ -889,25 +885,25 @@ export class PickList extends BaseComponent {
     }
 
     filterSource(value: any = '') {
-        this.filterValueSource = value.trim().toLocaleLowerCase(this.filterLocale);
+        this.filterValueSource = value.trim().toLocaleLowerCase(this.filterLocale());
         this.filter(<any[]>this.source(), this.SOURCE_LIST);
         this.onSourceFilter.emit({ query: this.filterValueSource, value: this.visibleOptionsSource });
     }
 
     filterTarget(value: any = '') {
-        this.filterValueTarget = value.trim().toLocaleLowerCase(this.filterLocale);
+        this.filterValueTarget = value.trim().toLocaleLowerCase(this.filterLocale());
         this.filter(<any[]>this.target(), this.TARGET_LIST);
         this.onTargetFilter.emit({ query: this.filterValueTarget, value: this.visibleOptionsTarget });
     }
 
     filter(data: any[], listType: number) {
-        let searchFields = (<string>this.filterBy).split(',');
+        let searchFields = (<string>this.filterBy()).split(',');
 
         if (listType === this.SOURCE_LIST) {
-            this.visibleOptionsSource = this.filterService.filter(data, searchFields, this.filterValueSource, this.filterMatchMode, this.filterLocale);
+            this.visibleOptionsSource = this.filterService.filter(data, searchFields, this.filterValueSource, this.filterMatchMode(), this.filterLocale());
             this.onSourceFilter.emit({ query: this.filterValueSource, value: this.visibleOptionsSource });
         } else if (listType === this.TARGET_LIST) {
-            this.visibleOptionsTarget = this.filterService.filter(data, searchFields, this.filterValueTarget, this.filterMatchMode, this.filterLocale);
+            this.visibleOptionsTarget = this.filterService.filter(data, searchFields, this.filterValueTarget, this.filterMatchMode(), this.filterLocale());
             this.onTargetFilter.emit({ query: this.filterValueTarget, value: this.visibleOptionsTarget });
         }
     }
@@ -935,7 +931,7 @@ export class PickList extends BaseComponent {
     }
 
     onItemTouchEnd() {
-        if (this.disabled) {
+        if (this.disabled()) {
             return;
         }
 
@@ -947,11 +943,11 @@ export class PickList extends BaseComponent {
     }
 
     triggerChangeDetection() {
-        this.listViewTargetChild.cd.markForCheck();
-        this.listViewSourceChild.cd.markForCheck();
+        this.listViewTargetChild().cd.markForCheck();
+        this.listViewSourceChild().cd.markForCheck();
     }
 
-    moveUp(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveUp(listElement: any, list: any[], selectedItems: any[], callback: OutputEmitterRef<any>, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = 0; i < selectedItems.length; i++) {
@@ -968,7 +964,7 @@ export class PickList extends BaseComponent {
                 }
             }
 
-            if (this.dragdrop && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
+            if (this.dragdrop() && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
 
             this.movedUp = true;
             this.reorderedListElement = listElement;
@@ -977,7 +973,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveTop(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveTop(listElement: any, list: any[], selectedItems: any[], callback: OutputEmitterRef<any>, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = 0; i < selectedItems.length; i++) {
@@ -992,7 +988,7 @@ export class PickList extends BaseComponent {
                 }
             }
 
-            if (this.dragdrop && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
+            if (this.dragdrop() && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
 
             listElement.scrollTop = 0;
             callback.emit({ items: selectedItems });
@@ -1000,7 +996,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveDown(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveDown(listElement: any, list: any[], selectedItems: any[], callback: OutputEmitterRef<any>, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = selectedItems.length - 1; i >= 0; i--) {
@@ -1017,7 +1013,7 @@ export class PickList extends BaseComponent {
                 }
             }
 
-            if (this.dragdrop && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
+            if (this.dragdrop() && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
 
             this.movedDown = true;
             this.reorderedListElement = listElement;
@@ -1026,7 +1022,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveBottom(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveBottom(listElement: any, list: any[], selectedItems: any[], callback: OutputEmitterRef<any>, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = selectedItems.length - 1; i >= 0; i--) {
@@ -1041,7 +1037,7 @@ export class PickList extends BaseComponent {
                 }
             }
 
-            if (this.dragdrop && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
+            if (this.dragdrop() && ((this.filterValueSource && listType === this.SOURCE_LIST) || (this.filterValueTarget && listType === this.TARGET_LIST))) this.filter(list, listType);
 
             listElement.scrollTop = listElement.scrollHeight;
             callback.emit({ items: selectedItems });
@@ -1067,7 +1063,7 @@ export class PickList extends BaseComponent {
                 items: itemsToMove
             });
 
-            if (this.keepSelection) {
+            if (this.keepSelection()) {
                 this.selectedItemsTarget = [...this.selectedItemsTarget, ...itemsToMove];
             }
 
@@ -1097,7 +1093,7 @@ export class PickList extends BaseComponent {
             this.onMoveAllToTarget.emit({
                 items: movedItems
             });
-            if (this.keepSelection) {
+            if (this.keepSelection()) {
                 this.selectedItemsTarget = [...this.selectedItemsTarget, ...this.selectedItemsSource];
             }
             this.selectedItemsSource = [];
@@ -1127,7 +1123,7 @@ export class PickList extends BaseComponent {
             this.onMoveToSource.emit({
                 items: itemsToMove
             });
-            if (this.keepSelection) {
+            if (this.keepSelection()) {
                 this.selectedItemsSource = [...this.selectedItemsSource, itemsToMove];
             }
             itemsToMove = [];
@@ -1155,7 +1151,7 @@ export class PickList extends BaseComponent {
             this.onMoveAllToSource.emit({
                 items: movedItems
             });
-            if (this.keepSelection) {
+            if (this.keepSelection()) {
                 this.selectedItemsSource = [...this.selectedItemsSource, ...this.selectedItemsTarget];
             }
             this.selectedItemsTarget = [];
@@ -1215,7 +1211,7 @@ export class PickList extends BaseComponent {
                 // Clear target selection
                 this.selectedItemsTarget = [];
 
-                if (this.keepSelection) {
+                if (this.keepSelection()) {
                     this.selectedItemsSource = [...this.selectedItemsSource, ...itemsToMove];
                 }
 
@@ -1273,7 +1269,7 @@ export class PickList extends BaseComponent {
                 // Clear source selection
                 this.selectedItemsSource = [];
 
-                if (this.keepSelection) {
+                if (this.keepSelection()) {
                     this.selectedItemsTarget = [...this.selectedItemsTarget, ...itemsToMove];
                 }
 
@@ -1317,7 +1313,7 @@ export class PickList extends BaseComponent {
     }
 
     getListElement(listType: number) {
-        return listType === this.SOURCE_LIST ? this.listViewSourceChild?.el.nativeElement : this.listViewTargetChild?.el.nativeElement;
+        return listType === this.SOURCE_LIST ? this.listViewSourceChild()?.el.nativeElement : this.listViewTargetChild()?.el.nativeElement;
     }
 
     getListItems(listType: number) {
@@ -1374,13 +1370,13 @@ export class PickList extends BaseComponent {
     resetSourceFilter() {
         this.visibleOptionsSource = null;
         this.filterValueSource = null;
-        this.sourceFilterViewChild && ((<HTMLInputElement>this.sourceFilterViewChild.nativeElement).value = '');
+        this.sourceFilterViewChild()?.nativeElement && ((<HTMLInputElement>this.sourceFilterViewChild()!.nativeElement).value = '');
     }
 
     resetTargetFilter() {
         this.visibleOptionsTarget = null;
         this.filterValueTarget = null;
-        this.targetFilterViewChild && ((<HTMLInputElement>this.targetFilterViewChild.nativeElement).value = '');
+        this.targetFilterViewChild()?.nativeElement && ((<HTMLInputElement>this.targetFilterViewChild()!.nativeElement).value = '');
     }
 
     resetFilter() {
@@ -1444,31 +1440,31 @@ export class PickList extends BaseComponent {
     }
 
     sourceMoveDisabled() {
-        if (this.disabled || !this.selectedItemsSource.length) {
+        if (this.disabled() || !this.selectedItemsSource.length) {
             return true;
         }
     }
 
     targetMoveDisabled() {
-        if (this.disabled || !this.selectedItemsTarget.length) {
+        if (this.disabled() || !this.selectedItemsTarget.length) {
             return true;
         }
     }
 
     moveRightDisabled() {
-        return this.disabled || isEmpty(this.selectedItemsSource);
+        return this.disabled() || isEmpty(this.selectedItemsSource);
     }
 
     moveLeftDisabled() {
-        return this.disabled || isEmpty(this.selectedItemsTarget);
+        return this.disabled() || isEmpty(this.selectedItemsTarget);
     }
 
     moveAllRightDisabled() {
-        return this.disabled || isEmpty(this.source());
+        return this.disabled() || isEmpty(this.source());
     }
 
     moveAllLeftDisabled() {
-        return this.disabled || isEmpty(this.target());
+        return this.disabled() || isEmpty(this.target());
     }
 
     destroyStyle() {
