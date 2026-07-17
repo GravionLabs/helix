@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Directive, ElementRef, inject, Input, NgModule, PLATFORM_ID } from '@angular/core';
+import { Directive, ElementRef, inject, NgModule, PLATFORM_ID, input } from '@angular/core';
 import { BaseComponent } from '@gravionlabs/helix/basecomponent';
 import { DomHandler } from '@gravionlabs/helix/dom';
 
@@ -16,7 +16,7 @@ export class AutoFocus extends BaseComponent {
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input('hAutoFocus') autofocus: boolean = false;
+    readonly autofocus = input<boolean>(false, { alias: "hAutoFocus" });
 
     focused: boolean = false;
 
@@ -28,7 +28,7 @@ export class AutoFocus extends BaseComponent {
 
     onAfterContentChecked() {
         // This sets the `attr.autofocus` which is different than the Input `autofocus` attribute.
-        if (this.autofocus === false) {
+        if (this.autofocus() === false) {
             this.host.nativeElement.removeAttribute('autofocus');
         } else {
             this.host.nativeElement.setAttribute('autofocus', true);
@@ -46,7 +46,7 @@ export class AutoFocus extends BaseComponent {
     }
 
     autoFocus() {
-        if (isPlatformBrowser(this.platformId) && this.autofocus) {
+        if (isPlatformBrowser(this.platformId) && this.autofocus()) {
             setTimeout(() => {
                 const focusableElements = DomHandler.getFocusableElements(this.host?.nativeElement);
 

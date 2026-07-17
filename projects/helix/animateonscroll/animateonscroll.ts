@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, Directive, Input, NgModule, numberAttribute } from '@angular/core';
+import { booleanAttribute, Directive, NgModule, numberAttribute, input } from '@angular/core';
 import { addClass, removeClass } from '@primeuix/utils';
 import { BaseComponent } from '@gravionlabs/helix/basecomponent';
 
@@ -25,32 +25,32 @@ export class AnimateOnScroll extends BaseComponent {
      * Selector to define the CSS class for enter animation.
      * @group Props
      */
-    @Input() enterClass: string | undefined;
+    readonly enterClass = input<string>();
     /**
      * Selector to define the CSS class for leave animation.
      * @group Props
      */
-    @Input() leaveClass: string | undefined;
+    readonly leaveClass = input<string>();
     /**
      * Specifies the root option of the IntersectionObserver API.
      * @group Props
      */
-    @Input() root: HTMLElement | undefined | null;
+    readonly root = input<HTMLElement | null>();
     /**
      * Specifies the rootMargin option of the IntersectionObserver API.
      * @group Props
      */
-    @Input() rootMargin: string | undefined;
+    readonly rootMargin = input<string>();
     /**
      * Specifies the threshold option of the IntersectionObserver API
      * @group Props
      */
-    @Input({ transform: numberAttribute }) threshold: number | undefined = 0.5;
+    readonly threshold = input<number | undefined, unknown>(0.5, { transform: numberAttribute });
     /**
      * Whether the scroll event listener should be removed after initial run.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) once: boolean = false;
+    readonly once = input<boolean, unknown>(false, { transform: booleanAttribute });
 
     observer: IntersectionObserver | undefined;
 
@@ -64,7 +64,7 @@ export class AnimateOnScroll extends BaseComponent {
 
     onInit() {
         if (isPlatformBrowser(this.platformId)) {
-            this.renderer.setStyle(this.el.nativeElement, 'opacity', this.enterClass ? '0' : '');
+            this.renderer.setStyle(this.el.nativeElement, 'opacity', this.enterClass() ? '0' : '');
         }
     }
 
@@ -76,9 +76,9 @@ export class AnimateOnScroll extends BaseComponent {
 
     get options(): AnimateOnScrollOptions {
         return {
-            root: this.root,
-            rootMargin: this.rootMargin,
-            threshold: this.threshold || 0.5
+            root: this.root(),
+            rootMargin: this.rootMargin(),
+            threshold: this.threshold() || 0.5
         };
     }
 
@@ -102,8 +102,8 @@ export class AnimateOnScroll extends BaseComponent {
         this.resetObserver = new IntersectionObserver(
             ([entry]) => {
                 if (entry.boundingClientRect.top > 0 && !entry.isIntersecting) {
-                    this.el.nativeElement.style.opacity = this.enterClass ? '0' : '';
-                    removeClass(this.el.nativeElement, [this.enterClass, this.leaveClass]);
+                    this.el.nativeElement.style.opacity = this.enterClass() ? '0' : '';
+                    removeClass(this.el.nativeElement, [this.enterClass(), this.leaveClass()]);
 
                     this.resetObserver.unobserve(this.el.nativeElement);
                 }
@@ -115,12 +115,13 @@ export class AnimateOnScroll extends BaseComponent {
     }
 
     enter() {
-        if (this.animationState !== 'enter' && this.enterClass) {
+        const enterClass = this.enterClass();
+        if (this.animationState !== 'enter' && enterClass) {
             this.el.nativeElement.style.opacity = '';
-            removeClass(this.el.nativeElement, this.leaveClass);
-            addClass(this.el.nativeElement, this.enterClass);
+            removeClass(this.el.nativeElement, this.leaveClass());
+            addClass(this.el.nativeElement, enterClass);
 
-            this.once && this.unbindIntersectionObserver();
+            this.once() && this.unbindIntersectionObserver();
 
             this.bindAnimationEvents();
             this.animationState = 'enter';
@@ -128,10 +129,11 @@ export class AnimateOnScroll extends BaseComponent {
     }
 
     leave() {
-        if (this.animationState !== 'leave' && this.leaveClass) {
-            this.el.nativeElement.style.opacity = this.enterClass ? '0' : '';
-            removeClass(this.el.nativeElement, this.enterClass);
-            addClass(this.el.nativeElement, this.leaveClass);
+        const leaveClass = this.leaveClass();
+        if (this.animationState !== 'leave' && leaveClass) {
+            this.el.nativeElement.style.opacity = this.enterClass() ? '0' : '';
+            removeClass(this.el.nativeElement, this.enterClass());
+            addClass(this.el.nativeElement, leaveClass);
 
             this.bindAnimationEvents();
             this.animationState = 'leave';
@@ -141,8 +143,8 @@ export class AnimateOnScroll extends BaseComponent {
     bindAnimationEvents() {
         if (!this.animationEndListener) {
             this.animationEndListener = this.renderer.listen(this.el.nativeElement, 'animationend', () => {
-                removeClass(this.el.nativeElement, [this.enterClass, this.leaveClass]);
-                !this.once && this.resetObserver.observe(this.el.nativeElement);
+                removeClass(this.el.nativeElement, [this.enterClass(), this.leaveClass()]);
+                !this.once() && this.resetObserver.observe(this.el.nativeElement);
                 this.unbindAnimationEvents();
             });
         }

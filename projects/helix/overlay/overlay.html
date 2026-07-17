@@ -1,6 +1,6 @@
 @if (inline()) {
   <ng-content></ng-content>
-  <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: null } }"></ng-container>
+  <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { $implicit: { mode: null } }"></ng-container>
 } @else {
   @if (modalVisible) {
     <div #overlay [class]="cn(cx('root'), styleClass)" [style]="sx('root')" [hBind]="ptm('root')" (click)="onOverlayClick()">
@@ -18,7 +18,7 @@
         >
         <div #content [class]="cn(cx('content'), contentStyleClass)" [hBind]="ptm('content')" (click)="onOverlayContentClick($event)">
           <ng-content></ng-content>
-          <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: { mode: overlayMode } }"></ng-container>
+          <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { $implicit: { mode: overlayMode } }"></ng-container>
         </div>
       </h-motion>
     </div>
