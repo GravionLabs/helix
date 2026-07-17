@@ -1,9 +1,9 @@
 <div [hBind]="ptm('contentContainer')" [class]="cx('contentContainer')">
     <div #content [hBind]="ptm('content')" [class]="cx('content')" (mouseenter)="moveBar()" (scroll)="onScroll($event)">
-        @if (!contentTemplate && !_contentTemplate) {
+        @if (!contentTemplate() && !_contentTemplate) {
             <ng-content></ng-content>
         }
-        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+        <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate"></ng-container>
     </div>
 </div>
 <div

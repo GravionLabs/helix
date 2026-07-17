@@ -180,10 +180,10 @@ describe('Skeleton', () => {
         });
 
         it('should accept custom values', () => {
-            expect(skeleton.shape).toBe(component.shape);
-            expect(skeleton.animation).toBe(component.animation);
-            expect(skeleton.width).toBe(component.width);
-            expect(skeleton.height).toBe(component.height);
+            expect(skeleton.shape()).toBe(component.shape);
+            expect(skeleton.animation()).toBe(component.animation);
+            expect(skeleton.width()).toBe(component.width);
+            expect(skeleton.height()).toBe(component.height);
         });
 
         it('should extend BaseComponent', () => {
@@ -218,7 +218,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.shape).toBe('rectangle');
+            expect(skeleton.shape()).toBe('rectangle');
         });
 
         it('should handle circle shape', async () => {
@@ -227,7 +227,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.shape).toBe('circle');
+            expect(skeleton.shape()).toBe('circle');
         });
 
         it('should handle square shape', async () => {
@@ -236,7 +236,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.shape).toBe('square');
+            expect(skeleton.shape()).toBe('square');
         });
 
         it('should handle custom shapes', async () => {
@@ -245,7 +245,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.shape).toBe('custom-shape');
+            expect(skeleton.shape()).toBe('custom-shape');
         });
 
         it('should apply border radius correctly', async () => {
@@ -254,7 +254,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.borderRadius).toBe('10px');
+            expect(skeleton.borderRadius()).toBe('10px');
             expect(skeleton.containerStyle.borderRadius).toBe('10px');
         });
 
@@ -265,7 +265,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.size).toBe('50px');
+            expect(skeleton.size()).toBe('50px');
             expect(skeleton.containerStyle.width).toBe('50px');
             expect(skeleton.containerStyle.height).toBe('50px');
         });
@@ -285,8 +285,8 @@ describe('Skeleton', () => {
         });
 
         it('should apply custom width and height', () => {
-            expect(skeleton.width).toBe(component.width);
-            expect(skeleton.height).toBe(component.height);
+            expect(skeleton.width()).toBe(component.width);
+            expect(skeleton.height()).toBe(component.height);
 
             expect(skeleton.containerStyle.width).toBe('200px');
             expect(skeleton.containerStyle.height).toBe('50px');
@@ -367,7 +367,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.animation).toBe('wave');
+            expect(skeleton.animation()).toBe('wave');
         });
 
         it('should handle pulse animation', async () => {
@@ -376,7 +376,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.animation).toBe('pulse');
+            expect(skeleton.animation()).toBe('pulse');
         });
 
         it('should handle none animation', async () => {
@@ -385,7 +385,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.animation).toBe('none');
+            expect(skeleton.animation()).toBe('none');
         });
 
         it('should handle custom animation types', async () => {
@@ -394,7 +394,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.animation).toBe('custom-animation');
+            expect(skeleton.animation()).toBe('custom-animation');
         });
     });
 
@@ -571,7 +571,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.shape).toBe('circle');
+            expect(skeleton.shape()).toBe('circle');
         });
 
         it('should update animation dynamically', async () => {
@@ -580,7 +580,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.animation).toBe('pulse');
+            expect(skeleton.animation()).toBe('pulse');
         });
 
         it('should update dimensions dynamically', async () => {
@@ -590,8 +590,8 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.width).toBe('250px');
-            expect(skeleton.height).toBe('60px');
+            expect(skeleton.width()).toBe('250px');
+            expect(skeleton.height()).toBe('60px');
             expect(skeleton.containerStyle.width).toBe('250px');
             expect(skeleton.containerStyle.height).toBe('60px');
         });
@@ -602,7 +602,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.size).toBe('120px');
+            expect(skeleton.size()).toBe('120px');
             expect(skeleton.containerStyle.width).toBe('120px');
             expect(skeleton.containerStyle.height).toBe('120px');
         });
@@ -613,7 +613,7 @@ describe('Skeleton', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(skeleton.borderRadius).toBe('15px');
+            expect(skeleton.borderRadius()).toBe('15px');
             expect(skeleton.containerStyle.borderRadius).toBe('15px');
         });
 
@@ -640,10 +640,10 @@ describe('Skeleton', () => {
 
         it('should handle empty/default configuration', () => {
             expect(skeleton).toBeTruthy();
-            expect(skeleton.shape).toBe('rectangle');
-            expect(skeleton.animation).toBe('wave');
-            expect(skeleton.width).toBe('100%');
-            expect(skeleton.height).toBe('1rem');
+            expect(skeleton.shape()).toBe('rectangle');
+            expect(skeleton.animation()).toBe('wave');
+            expect(skeleton.width()).toBe('100%');
+            expect(skeleton.height()).toBe('1rem');
         });
 
         it('should handle zero dimensions', () => {
@@ -711,7 +711,7 @@ describe('Skeleton', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(skeleton.shape).toBe('square');
+            expect(skeleton.shape()).toBe('square');
         });
 
         it('should handle complex CSS calc expressions', () => {

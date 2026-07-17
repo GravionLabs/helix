@@ -136,11 +136,11 @@ describe('ScrollTop', () => {
         });
 
         it('should accept custom threshold', () => {
-            expect(scrollTop.threshold).toBe(component.threshold);
+            expect(scrollTop.threshold()).toBe(component.threshold);
         });
 
         it('should accept custom target', () => {
-            expect(scrollTop.target).toBe(component.target);
+            expect(scrollTop.target()).toBe(component.target);
         });
 
         it('should extend BaseComponent', () => {
@@ -364,7 +364,7 @@ describe('ScrollTop', () => {
             scrollTop.visible.set(true);
             fixture.detectChanges();
 
-            expect(scrollTop.icon).toBe(component.icon);
+            expect(scrollTop.icon()).toBe(component.icon);
 
             const iconElement = fixture.debugElement.query(By.css('.pi-arrow-up'));
             expect(iconElement).toBeTruthy();
@@ -407,7 +407,7 @@ describe('ScrollTop', () => {
             if (scrollTop._iconTemplate) {
                 expect(scrollTop._iconTemplate).toBeDefined();
             } else {
-                expect(scrollTop.templates).toBeDefined();
+                expect(scrollTop.templates()).toBeDefined();
             }
         });
     });
@@ -434,7 +434,7 @@ describe('ScrollTop', () => {
                 expect(button.nativeElement.getAttribute('aria-label')).toBe(component.buttonAriaLabel);
             } else {
                 // If button component doesn't render, check component property
-                expect(scrollTop.buttonAriaLabel).toBe(component.buttonAriaLabel);
+                expect(scrollTop.buttonAriaLabel()).toBe(component.buttonAriaLabel);
             }
         });
 
@@ -453,8 +453,8 @@ describe('ScrollTop', () => {
             const scrollTop = fixture.debugElement.query(By.directive(ScrollTop)).componentInstance;
 
             // Check if the component received the button props
-            if (scrollTop.buttonProps && scrollTop.buttonProps.severity === 'danger') {
-                expect(scrollTop.buttonProps).toEqual(
+            if (scrollTop.buttonProps() && scrollTop.buttonProps().severity === 'danger') {
+                expect(scrollTop.buttonProps()).toEqual(
                     jasmine.objectContaining({
                         rounded: false,
                         severity: 'danger'
@@ -484,16 +484,16 @@ describe('ScrollTop', () => {
         });
 
         it('should apply custom style', () => {
-            expect(scrollTop.style).toEqual(component.customStyle);
+            expect(scrollTop.style()).toEqual(component.customStyle);
         });
 
         it('should apply custom styleClass', () => {
-            expect(scrollTop.styleClass).toBe(component.customClass);
+            expect(scrollTop.styleClass()).toBe(component.customClass);
         });
 
         it('should apply transition options', () => {
-            expect(scrollTop.showTransitionOptions).toBe(component.showTransitionOptions);
-            expect(scrollTop.hideTransitionOptions).toBe(component.hideTransitionOptions);
+            expect(scrollTop.showTransitionOptions()).toBe(component.showTransitionOptions);
+            expect(scrollTop.hideTransitionOptions()).toBe(component.hideTransitionOptions);
         });
     });
 
@@ -703,7 +703,7 @@ describe('ScrollTop', () => {
                 try {
                     const defaultView = scrollTop.document.defaultView;
                     if (defaultView) {
-                        defaultView.scroll({ top: 0, behavior: scrollTop.behavior as ScrollBehavior });
+                        defaultView.scroll({ top: 0, behavior: scrollTop.behavior() as ScrollBehavior });
                     }
                 } catch (error) {
                     // Handle error gracefully
@@ -736,13 +736,13 @@ describe('ScrollTop', () => {
 
         it('should set and get icon property', () => {
             scrollTop.icon = 'pi pi-chevron-up';
-            expect(scrollTop.icon).toBe('pi pi-chevron-up');
+            expect(scrollTop.icon()).toBe('pi pi-chevron-up');
             expect(scrollTop._icon).toBe('pi pi-chevron-up');
         });
 
         it('should handle undefined icon', () => {
             scrollTop.icon = undefined as any;
-            expect(scrollTop.icon).toBeUndefined();
+            expect(scrollTop.icon()).toBeUndefined();
             expect(scrollTop._icon).toBeUndefined();
         });
     });
@@ -802,7 +802,7 @@ describe('ScrollTop', () => {
             if (button) {
                 expect(button.nativeElement.getAttribute('aria-label')).toBe(component.buttonAriaLabel);
             } else {
-                expect(scrollTop.buttonAriaLabel).toBe(component.buttonAriaLabel);
+                expect(scrollTop.buttonAriaLabel()).toBe(component.buttonAriaLabel);
             }
         });
 
@@ -822,7 +822,7 @@ describe('ScrollTop', () => {
                 expect(button.nativeElement.hasAttribute('aria-label')).toBe(false);
             } else {
                 // Button might not be rendered in test environment
-                expect(scrollTop.buttonAriaLabel).toBeUndefined();
+                expect(scrollTop.buttonAriaLabel()).toBeUndefined();
             }
         });
 

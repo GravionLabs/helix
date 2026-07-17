@@ -1,23 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    Component,
-    ContentChild,
-    ContentChildren,
-    EventEmitter,
-    forwardRef,
-    inject,
-    InjectionToken,
-    Input,
-    NgModule,
-    numberAttribute,
-    Output,
-    QueryList,
-    signal,
-    TemplateRef,
-    ViewEncapsulation
-} from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { focus, getFirstFocusableElement, uuid } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -72,71 +54,75 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
      * When present, changing the value is not possible.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) readonly: boolean | undefined;
+    readonly readonly = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Number of stars.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) stars: number = 5;
+    readonly stars = input<number, unknown>(5, { transform: numberAttribute });
     /**
      * Style class of the on icon.
      * @group Props
      */
-    @Input() iconOnClass: string | undefined;
+    readonly iconOnClass = input<string>();
     /**
      * Inline style of the on icon.
      * @group Props
      */
-    @Input() iconOnStyle: { [klass: string]: any } | null | undefined;
+    readonly iconOnStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the off icon.
      * @group Props
      */
-    @Input() iconOffClass: string | undefined;
+    readonly iconOffClass = input<string>();
     /**
      * Inline style of the off icon.
      * @group Props
      */
-    @Input() iconOffStyle: { [klass: string]: any } | null | undefined;
+    readonly iconOffStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Emitted on value change.
      * @param {RatingRateEvent} value - Custom rate event.
      * @group Emits
      */
-    @Output() onRate: EventEmitter<RatingRateEvent> = new EventEmitter<RatingRateEvent>();
+    readonly onRate = output<RatingRateEvent>();
     /**
      * Emitted when the rating receives focus.
      * @param {Event} value - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+    readonly onFocus = output<FocusEvent>();
     /**
      * Emitted when the rating loses focus.
      * @param {Event} value - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+    readonly onBlur = output<FocusEvent>();
     /**
      * Custom on icon template.
      * @param {RatingIconTemplateContext} context - icon context.
      * @see {@link RatingIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('onicon', { descendants: false }) onIconTemplate: Nullable<TemplateRef<RatingIconTemplateContext>>;
+    readonly onIconTemplate = contentChild<Nullable<TemplateRef<RatingIconTemplateContext>>>('onicon', { descendants: false });
     /**
      * Custom off icon template.
      * @param {RatingIconTemplateContext} context - icon context.
      * @see {@link RatingIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('officon', { descendants: false }) offIconTemplate: Nullable<TemplateRef<RatingIconTemplateContext>>;
+    readonly offIconTemplate = contentChild<Nullable<TemplateRef<RatingIconTemplateContext>>>('officon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     value: Nullable<number>;
 
@@ -157,13 +143,13 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
     onInit() {
         this.nameattr = this.nameattr || uuid('pn_id_');
         this.starsArray = [];
-        for (let i = 0; i < this.stars; i++) {
+        for (let i = 0; i < this.stars(); i++) {
             this.starsArray[i] = i;
         }
     }
 
     onAfterContentInit() {
-        this.templates.forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'onicon':
                     this._onIconTemplate = item.template;
@@ -177,7 +163,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
     }
 
     onOptionClick(event, value) {
-        if (!this.readonly && !this.$disabled()) {
+        if (!this.readonly() && !this.$disabled()) {
             this.onOptionSelect(event, value);
             this.isFocusVisibleItem = false;
             const firstFocusableEl = <any>getFirstFocusableElement(event.currentTarget, '');
@@ -187,7 +173,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
     }
 
     onOptionSelect(event, value) {
-        if (!this.readonly && !this.$disabled()) {
+        if (!this.readonly() && !this.$disabled()) {
             if (this.focusedOptionIndex() === value || value === this.value) {
                 this.focusedOptionIndex.set(-1);
                 this.updateModel(event, null);
@@ -209,7 +195,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
     }
 
     onInputFocus(event, value) {
-        if (!this.readonly && !this.$disabled()) {
+        if (!this.readonly() && !this.$disabled()) {
             this.focusedOptionIndex.set(value);
             this.isFocusVisibleItem = event.sourceCapabilities?.firesTouchEvents === false;
 
@@ -233,7 +219,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
     }
 
     getIconTemplate(i: number): Nullable<TemplateRef<RatingIconTemplateContext>> {
-        return !this.value || i >= this.value ? this.offIconTemplate || this._offIconTemplate : this.onIconTemplate || this.offIconTemplate;
+        return !this.value || i >= this.value ? this.offIconTemplate() || this._offIconTemplate : this.onIconTemplate() || this.offIconTemplate();
     }
 
     /**
@@ -253,7 +239,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
 
     get dataP() {
         return this.cn({
-            readonly: this.readonly,
+            readonly: this.readonly(),
             disabled: this.$disabled()
         });
     }

@@ -7,26 +7,26 @@
     (pMotionOnBeforeEnter)="onBeforeEnter($event)"
     (pMotionOnBeforeLeave)="onBeforeLeave()"
     (pMotionOnAfterLeave)="onAfterLeave()"
-    [attr.aria-label]="buttonAriaLabel"
+    [attr.aria-label]="buttonAriaLabel()"
     (click)="onClick()"
     [pt]="ptm('pcButton')"
-    [styleClass]="cn(cx('root'), styleClass)"
-    [ngStyle]="style"
+    [styleClass]="cn(cx('root'), styleClass())"
+    [ngStyle]="style()"
     type="button"
-    [buttonProps]="buttonProps"
+    [buttonProps]="buttonProps()"
     [unstyled]="unstyled()"
     >
-    <ng-template #icon>
-      @if (!iconTemplate && !_iconTemplate) {
+    <ng-template #icon()>
+      @if (!iconTemplate() && !_iconTemplate) {
         @if (_icon) {
           <span [class]="cn(cx('icon'), _icon)"></span>
         }
         @if (!_icon) {
-          <svg data-p-icon="chevron-up" [class]="cx('icon')" />
+          <svg data-p-icon()="chevron-up" [class]="cx('icon')" />
         }
       }
-      @if (!icon) {
-        <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { styleClass: cx('icon') }"></ng-template>
+      @if (!icon()) {
+        <ng-template *ngTemplateOutlet="iconTemplate() || _iconTemplate; context: { styleClass: cx('icon') }"></ng-template>
       }
     </ng-template>
   </h-button>

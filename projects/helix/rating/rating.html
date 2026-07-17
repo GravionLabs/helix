@@ -7,37 +7,37 @@
         [attr.name]="name() || nameattr + '_name'"
         [attr.value]="modelValue()"
         [attr.required]="required() ? '' : undefined"
-        [attr.readonly]="readonly ? '' : undefined"
+        [attr.readonly]="readonly() ? '' : undefined"
         [attr.disabled]="$disabled() ? '' : undefined"
         [checked]="value === star + 1"
         [attr.aria-label]="starAriaLabel(star + 1)"
         (focus)="onInputFocus($event, star + 1)"
         (blur)="onInputBlur($event)"
         (change)="onChange($event, star + 1)"
-        [hAutoFocus]="autofocus"
+        [hAutoFocus]="autofocus()"
         [hBind]="ptm('hiddenOptionInput')"
         />
     </span>
     @if (star + 1 <= value) {
-      @if (onIconTemplate || _onIconTemplate) {
-        <ng-container *ngTemplateOutlet="onIconTemplate || _onIconTemplate; context: { $implicit: star + 1, class: cx('onIcon') }"></ng-container>
+      @if (onIconTemplate() || _onIconTemplate) {
+        <ng-container *ngTemplateOutlet="onIconTemplate() || _onIconTemplate; context: { $implicit: star + 1, class: cx('onIcon') }"></ng-container>
       } @else {
-        @if (iconOnClass) {
-          <span [class]="cx('onIcon')" [ngStyle]="iconOnStyle" [ngClass]="iconOnClass" [hBind]="ptm('onIcon')"></span>
+        @if (iconOnClass()) {
+          <span [class]="cx('onIcon')" [ngStyle]="iconOnStyle()" [ngClass]="iconOnClass()" [hBind]="ptm('onIcon')"></span>
         }
-        @if (!iconOnClass) {
-          <svg data-p-icon="star-fill" [ngStyle]="iconOnStyle" [class]="cx('onIcon')" [hBind]="ptm('onIcon')" />
+        @if (!iconOnClass()) {
+          <svg data-p-icon="star-fill" [ngStyle]="iconOnStyle()" [class]="cx('onIcon')" [hBind]="ptm('onIcon')" />
         }
       }
     } @else {
-      @if (offIconTemplate || _offIconTemplate) {
-        <ng-container *ngTemplateOutlet="offIconTemplate || _offIconTemplate; context: { $implicit: star + 1, class: cx('offIcon') }"></ng-container>
+      @if (offIconTemplate() || _offIconTemplate) {
+        <ng-container *ngTemplateOutlet="offIconTemplate() || _offIconTemplate; context: { $implicit: star + 1, class: cx('offIcon') }"></ng-container>
       } @else {
-        @if (iconOffClass) {
-          <span [class]="cx('offIcon')" [ngStyle]="iconOffStyle" [ngClass]="iconOffClass" [hBind]="ptm('offIcon')"></span>
+        @if (iconOffClass()) {
+          <span [class]="cx('offIcon')" [ngStyle]="iconOffStyle()" [ngClass]="iconOffClass()" [hBind]="ptm('offIcon')"></span>
         }
-        @if (!iconOffClass) {
-          <svg data-p-icon="star" [ngStyle]="iconOffStyle" [class]="cx('offIcon')" [hBind]="ptm('offIcon')" />
+        @if (!iconOffClass()) {
+          <svg data-p-icon="star" [ngStyle]="iconOffStyle()" [class]="cx('offIcon')" [hBind]="ptm('offIcon')" />
         }
       }
     }

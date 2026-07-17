@@ -1,6 +1,6 @@
 <input
     #input
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     type="radio"
     [class]="cx('input')"
     [attr.name]="name()"
@@ -8,14 +8,14 @@
     [attr.disabled]="$disabled() ? '' : undefined"
     [checked]="checked"
     [attr.value]="modelValue()"
-    [attr.aria-labelledby]="ariaLabelledBy"
-    [attr.aria-label]="ariaLabel"
+    [attr.aria-labelledby]="ariaLabelledBy()"
+    [attr.aria-label]="ariaLabel()"
     [attr.aria-checked]="checked"
-    [attr.tabindex]="tabindex"
+    [attr.tabindex]="tabindex()"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
     (change)="onChange($event)"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [hBind]="ptm('input')"
 />
 <div [class]="cx('box')" [hBind]="ptm('box')">
