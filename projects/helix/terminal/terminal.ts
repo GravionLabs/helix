@@ -1,5 +1,5 @@
 
-import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, InjectionToken, Input, NgModule, OnDestroy, ViewEncapsulation, input, viewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, OnDestroy, ViewEncapsulation, input, viewChild, effect, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find } from '@primeuix/utils';
 import { SharedModule } from '@gravionlabs/helix/api';
@@ -25,7 +25,8 @@ const TERMINAL_INSTANCE = new InjectionToken<Terminal>('TERMINAL_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [TerminalStyle, { provide: TERMINAL_INSTANCE, useExisting: Terminal }, { provide: PARENT_INSTANCE, useExisting: Terminal }],
     host: {
-        '[class]': "cn(cx('root'), styleClass())"
+        '[class]': "cn(cx('root'), styleClass())",
+        '(click)': 'onHostClick()'
     },
     hostDirectives: [Bind]
 })
@@ -39,7 +40,7 @@ export class Terminal extends BaseComponent<TerminalPassThrough> implements Afte
      * Initial text to display on terminal.
      * @group Props
      */
-    @Input() welcomeMessage: string | undefined;
+    readonly welcomeMessage = input<string>();
     /**
      * Prompt text for each command.
      * @group Props
@@ -66,13 +67,21 @@ export class Terminal extends BaseComponent<TerminalPassThrough> implements Afte
 
     readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('in');
 
-    @HostListener('click')
     onHostClick() {
         this.focus(this.inputRef()?.nativeElement);
     }
 
     constructor(public terminalService: TerminalService) {
         super();
+        effect(() => {
+            const value = this.response();
+            if (value) {
+                untracked(() => {
+                    this.commands[this.commands.length - 1].response = value;
+                    this.commandProcessed = true;
+                });
+            }
+        });
         this.subscription = terminalService.responseHandler.subscribe((response) => {
             this.commands[this.commands.length - 1].response = response;
             this.commandProcessed = true;
@@ -92,13 +101,7 @@ export class Terminal extends BaseComponent<TerminalPassThrough> implements Afte
         }
     }
 
-    @Input()
-    set response(value: string) {
-        if (value) {
-            this.commands[this.commands.length - 1].response = value;
-            this.commandProcessed = true;
-        }
-    }
+    readonly response = input<string>();
 
     handleCommand(event: KeyboardEvent) {
         if (event.keyCode == 13) {

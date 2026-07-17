@@ -302,18 +302,16 @@ export class SpeedDial extends BaseComponent<SpeedDialPassThrough> {
 
     show() {
         this.onVisibleChange.emit(true);
-        this.visibleChange.emit(true);
-        this.visible() = true;
-        this.onShow.emit();
+        this.visible.set(true);
+        this.onShow.emit(undefined);
         this.bindDocumentClickListener();
         this.cd.markForCheck();
     }
 
     hide() {
         this.onVisibleChange.emit(false);
-        this.visibleChange.emit(false);
-        this.visible() = false;
-        this.onHide.emit();
+        this.visible.set(false);
+        this.onHide.emit(undefined);
         this.unbindDocumentClickListener();
         this.cd.markForCheck();
     }

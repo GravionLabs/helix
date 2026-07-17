@@ -230,7 +230,7 @@ export class SplitButton extends BaseComponent<SplitButtonPassThrough> {
      * @param {MouseEvent} event - Mouse event.
      * @group Emits
      */
-    readonly onDropdownClick = output<MouseEvent>();
+    readonly onDropdownClick = output<MouseEvent | undefined>();
 
     readonly buttonViewChild = viewChild<ElementRef>('defaultbtn');
 
@@ -302,18 +302,12 @@ export class SplitButton extends BaseComponent<SplitButtonPassThrough> {
 
     onHide() {
         this.isExpanded.set(false);
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        this.onMenuHide.emit();
+        this.onMenuHide.emit(undefined);
     }
 
     onShow() {
         this.isExpanded.set(true);
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        // TODO: The 'emit' function requires a mandatory any argument
-        this.onMenuShow.emit();
+        this.onMenuShow.emit(undefined);
     }
 }
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, contentChildren } from '@angular/core';
+import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input } from '@angular/core';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -56,7 +56,7 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
      * Icon of the tag to display next to the value.
      * @group Props
      */
-    @Input() icon: string | undefined;
+    readonly icon = input<string>();
     /**
      * Whether the corners of the tag are rounded.
      * @group Props
@@ -67,7 +67,7 @@ export class Tag extends BaseComponent<TagPassThrough> implements AfterContentIn
      * Custom icon template.
      * @group Templates
      */
-    @ContentChild('icon', { descendants: false }) iconTemplate: TemplateRef<void> | undefined;
+    readonly iconTemplate = contentChild<TemplateRef<void>>('icon', { descendants: false });
 
     readonly templates = contentChildren(PrimeTemplate);
 

@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, ContentChild, effect, ElementRef, forwardRef, inject, InjectionToken, signal, TemplateRef, ViewEncapsulation, contentChildren, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, inject, InjectionToken, signal, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
 import { findSingle, getOffset, getOuterWidth, getWidth, isRTL } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -44,13 +44,13 @@ export class TabList extends BaseComponent<TabListPassThrough> {
      * @type {TemplateRef<any> | undefined}
      * @group Templates
      */
-    @ContentChild('previcon', { descendants: false }) prevIconTemplate: TemplateRef<any> | undefined;
+    readonly prevIconTemplate = contentChild<TemplateRef<any>>('previcon', { descendants: false });
     /**
      * A template reference variable that represents the next icon in a UI component.
      * @type {TemplateRef<any> | undefined}
      * @group Templates
      */
-    @ContentChild('nexticon', { descendants: false }) nextIconTemplate: TemplateRef<any> | undefined;
+    readonly nextIconTemplate = contentChild<TemplateRef<any>>('nexticon', { descendants: false });
 
     readonly templates = contentChildren(PrimeTemplate);
 
