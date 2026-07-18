@@ -7,7 +7,6 @@ import {
   inject,
   InjectionToken,
   input,
-  Input,
   NgModule,
   NgZone,
   signal,
@@ -16,7 +15,11 @@ import {
   output,
   viewChild,
   contentChild,
-  contentChildren
+  contentChildren,
+  booleanAttribute,
+  effect,
+  model,
+  numberAttribute
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addClass, appendChild, focus, getOuterWidth, getTargetElement, isTouchDevice, relativePosition, removeClass } from '@primeuix/utils';
@@ -52,173 +55,94 @@ export class Overlay extends BaseComponent {
 
     $pcOverlay: Overlay | undefined = inject(OVERLAY_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    @Input() hostName: string = '';
+    readonly hostName = input<string>('');
 
     /**
      * The visible property is an input that determines the visibility of the component.
      * @defaultValue false
      * @group Props
      */
-    @Input() get visible(): boolean {
-        return this._visible;
-    }
-    set visible(value: boolean) {
-        this._visible = value;
-
-        if (this._visible && !this.modalVisible) {
-            this.modalVisible = true;
-        }
-    }
+    readonly visible = model<boolean>(false);
     /**
      * The mode property is an input that determines the overlay mode type or string.
      * @defaultValue null
      * @group Props
      */
-    @Input() get mode(): OverlayModeType | string {
-        return this._mode || this.overlayOptions?.mode;
-    }
-    set mode(value: OverlayModeType | string) {
-        this._mode = value;
-    }
+    readonly mode = input<OverlayModeType | string>('');
     /**
      * The style property is an input that determines the style object for the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get style(): { [klass: string]: any } | null | undefined {
-        return ObjectUtils.merge(this._style, this.modal ? this.overlayResponsiveOptions?.style : this.overlayOptions?.style);
-    }
-    set style(value: { [klass: string]: any } | null | undefined) {
-        this._style = value;
-    }
+    readonly style = input<any>(undefined);
     /**
      * The styleClass property is an input that determines the CSS class(es) for the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get styleClass(): string {
-        return ObjectUtils.merge(this._styleClass, this.modal ? this.overlayResponsiveOptions?.styleClass : this.overlayOptions?.styleClass);
-    }
-    set styleClass(value: string) {
-        this._styleClass = value;
-    }
+    readonly styleClass = input<string>('');
     /**
      * The contentStyle property is an input that determines the style object for the content of the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get contentStyle(): { [klass: string]: any } | null | undefined {
-        return ObjectUtils.merge(this._contentStyle, this.modal ? this.overlayResponsiveOptions?.contentStyle : this.overlayOptions?.contentStyle);
-    }
-    set contentStyle(value: { [klass: string]: any } | null | undefined) {
-        this._contentStyle = value;
-    }
+    readonly contentStyle = input<any>(undefined);
     /**
      * The contentStyleClass property is an input that determines the CSS class(es) for the content of the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get contentStyleClass(): string {
-        return ObjectUtils.merge(this._contentStyleClass, this.modal ? this.overlayResponsiveOptions?.contentStyleClass : this.overlayOptions?.contentStyleClass);
-    }
-    set contentStyleClass(value: string) {
-        this._contentStyleClass = value;
-    }
+    readonly contentStyleClass = input<string>('');
     /**
      * The target property is an input that specifies the target element or selector for the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get target(): string | null | undefined {
-        const value = this._target || this.overlayOptions?.target;
-        return value === undefined ? '@prev' : value;
-    }
-    set target(value: string | null | undefined) {
-        this._target = value;
-    }
+    readonly target = input<string | null | undefined>(undefined);
     /**
      * The autoZIndex determines whether to automatically manage layering. Its default value is 'false'.
      * @defaultValue false
      * @group Props
      */
-    @Input() get autoZIndex(): boolean {
-        const value = this._autoZIndex || this.overlayOptions?.autoZIndex;
-        return value === undefined ? true : value;
-    }
-    set autoZIndex(value: boolean) {
-        this._autoZIndex = value;
-    }
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * The baseZIndex is base zIndex value to use in layering.
      * @defaultValue null
      * @group Props
      */
-    @Input() get baseZIndex(): number {
-        const value = this._baseZIndex || this.overlayOptions?.baseZIndex;
-        return value === undefined ? 0 : value;
-    }
-    set baseZIndex(value: number) {
-        this._baseZIndex = value;
-    }
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
     /**
      * Transition options of the show or hide animation.
      * @defaultValue .12s cubic-bezier(0, 0, 0.2, 1)
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() get showTransitionOptions(): string {
-        const value = this._showTransitionOptions || this.overlayOptions?.showTransitionOptions;
-        return value === undefined ? '.12s cubic-bezier(0, 0, 0.2, 1)' : value;
-    }
-    set showTransitionOptions(value: string) {
-        this._showTransitionOptions = value;
-    }
+    readonly showTransitionOptions = input<string>('.12s cubic-bezier(0, 0, 0.2, 1)');
     /**
      * The hideTransitionOptions property is an input that determines the CSS transition options for hiding the component.
      * @defaultValue .1s linear
      * @group Props
      * @deprecated since v21.0.0. Use `motionOptions` instead.
      */
-    @Input() get hideTransitionOptions(): string {
-        const value = this._hideTransitionOptions || this.overlayOptions?.hideTransitionOptions;
-        return value === undefined ? '.1s linear' : value;
-    }
-    set hideTransitionOptions(value: string) {
-        this._hideTransitionOptions = value;
-    }
+    readonly hideTransitionOptions = input<string>('.1s linear');
     /**
      * The listener property is an input that specifies the listener object for the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get listener(): any {
-        return this._listener || this.overlayOptions?.listener;
-    }
-    set listener(value: any) {
-        this._listener = value;
-    }
+    readonly listener = input<any>(undefined);
     /**
      * It is the option used to determine in which mode it should appear according to the given media or breakpoint.
      * @defaultValue null
      * @group Props
      */
-    @Input() get responsive(): ResponsiveOverlayOptions | undefined {
-        return this._responsive || this.overlayOptions?.responsive;
-    }
-    set responsive(val: ResponsiveOverlayOptions | undefined) {
-        this._responsive = val;
-    }
+    readonly responsive = input<ResponsiveOverlayOptions | undefined>(undefined);
     /**
      * The options property is an input that specifies the overlay options for the component.
      * @defaultValue null
      * @group Props
      */
-    @Input() get options(): OverlayOptions | undefined {
-        return this._options;
-    }
-    set options(val: OverlayOptions | undefined) {
-        this._options = val;
-    }
+    readonly options = input<OverlayOptions | undefined>(undefined);
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -248,7 +172,6 @@ export class Overlay extends BaseComponent {
      * @param {Boolean} boolean - Value of visibility as boolean.
      * @group Emits
      */
-    readonly visibleChange = output<boolean>();
     /**
      * Callback to invoke before the overlay is shown.
      * @param {OverlayOnBeforeShowEvent} event - Custom overlay before show event.
@@ -343,33 +266,7 @@ export class Overlay extends BaseComponent {
 
     _contentTemplate: TemplateRef<OverlayContentTemplateContext> | undefined;
 
-    _visible: boolean = false;
 
-    _mode: OverlayModeType | string;
-
-    _style: { [klass: string]: any } | null | undefined;
-
-    _styleClass: string | undefined;
-
-    _contentStyle: { [klass: string]: any } | null | undefined;
-
-    _contentStyleClass: string | undefined;
-
-    _target: any;
-
-    _autoZIndex: boolean | undefined;
-
-    _baseZIndex: number | undefined;
-
-    _showTransitionOptions: string | undefined;
-
-    _hideTransitionOptions: string | undefined;
-
-    _listener: any;
-
-    _responsive: ResponsiveOverlayOptions | undefined;
-
-    _options: OverlayOptions | undefined;
 
     modalVisible: boolean = false;
 
@@ -412,20 +309,20 @@ export class Overlay extends BaseComponent {
 
     get modal() {
         if (isPlatformBrowser(this.platformId)) {
-            return this.mode === 'modal' || (this.overlayResponsiveOptions && this.document.defaultView?.matchMedia(this.overlayResponsiveOptions.media?.replace('@media', '') || `(max-width: ${this.overlayResponsiveOptions.breakpoint})`).matches);
+            return this.mode() === 'modal' || (this.overlayResponsiveOptions && this.document.defaultView?.matchMedia(this.overlayResponsiveOptions.media?.replace('@media', '') || `(max-width: ${this.overlayResponsiveOptions.breakpoint})`).matches);
         }
     }
 
     get overlayMode() {
-        return this.mode || (this.modal ? 'modal' : 'overlay');
+        return this.mode() || (this.modal ? 'modal' : 'overlay');
     }
 
     get overlayOptions(): OverlayOptions {
-        return { ...this.config?.overlayOptions, ...this.options }; // TODO: Improve performance
+        return { ...this.config?.overlayOptions, ...this.options() }; // TODO: Improve performance
     }
 
     get overlayResponsiveOptions(): ResponsiveOverlayOptions {
-        return { ...this.overlayOptions?.responsive, ...this.responsive }; // TODO: Improve performance
+        return { ...this.overlayOptions?.responsive, ...this.responsive() }; // TODO: Improve performance
     }
 
     get overlayResponsiveDirection() {
@@ -441,7 +338,7 @@ export class Overlay extends BaseComponent {
     }
 
     get targetEl() {
-        return <any>getTargetElement(this.target, this.el?.nativeElement);
+        return <any>getTargetElement(this.target(), this.el?.nativeElement);
     }
 
     constructor(
@@ -449,6 +346,11 @@ export class Overlay extends BaseComponent {
         private zone: NgZone
     ) {
         super();
+        effect(() => {
+            if (this.visible() && !this.modalVisible) {
+                this.modalVisible = true;
+            }
+        });
     }
 
     onAfterContentInit() {
@@ -478,7 +380,7 @@ export class Overlay extends BaseComponent {
     }
 
     hide(overlay?: HTMLElement, isFocus: boolean = false) {
-        if (!this.visible) {
+        if (!this.visible()) {
             return;
         } else {
             this.onVisibleChange(false);
@@ -489,8 +391,7 @@ export class Overlay extends BaseComponent {
     }
 
     onVisibleChange(visible: boolean) {
-        this._visible = visible;
-        this.visibleChange.emit(visible);
+        this.visible.set(visible);
     }
 
     onOverlayClick() {
@@ -552,13 +453,13 @@ export class Overlay extends BaseComponent {
 
     handleEvents(name: string, params: any) {
         (this as any)[name].emit(params);
-        this.options && (this.options as any)[name] && (this.options as any)[name](params);
+        this.options() && (this.options() as any)[name] && (this.options() as any)[name](params);
         this.config?.overlayOptions && (this.config?.overlayOptions as any)[name] && (this.config?.overlayOptions as any)[name](params);
     }
 
     setZIndex() {
-        if (this.autoZIndex) {
-            ZIndexUtils.set(this.overlayMode, this.overlayEl, this.baseZIndex + this.config?.zIndex[this.overlayMode]);
+        if (this.autoZIndex()) {
+            ZIndexUtils.set(this.overlayMode, this.overlayEl, this.baseZIndex() + this.config?.zIndex[this.overlayMode]);
         }
     }
 
@@ -620,7 +521,7 @@ export class Overlay extends BaseComponent {
     bindScrollListener() {
         if (!this.scrollHandler) {
             this.scrollHandler = new ConnectedOverlayScrollHandler(this.targetEl, (event: any) => {
-                const valid = this.listener ? this.listener(event, { type: 'scroll', mode: this.overlayMode, valid: true }) : true;
+                const valid = this.listener() ? this.listener()(event, { type: 'scroll', mode: this.overlayMode, valid: true }) : true;
 
                 valid && this.hide(event, true);
             });
@@ -640,7 +541,7 @@ export class Overlay extends BaseComponent {
             this.documentClickListener = this.renderer.listen(this.document, 'click', (event) => {
                 const isTargetClicked = this.targetEl && ((this.targetEl as any).isSameNode(event.target) || (!this.isOverlayClicked && (this.targetEl as any).contains(event.target)));
                 const isOutsideClicked = !isTargetClicked && !this.isOverlayContentClicked;
-                const valid = this.listener ? this.listener(event, { type: 'outside', mode: this.overlayMode, valid: event.which !== 3 && isOutsideClicked }) : isOutsideClicked;
+                const valid = this.listener() ? this.listener()(event, { type: 'outside', mode: this.overlayMode, valid: event.which !== 3 && isOutsideClicked }) : isOutsideClicked;
 
                 valid && this.hide(event);
                 this.isOverlayClicked = this.isOverlayContentClicked = false;
@@ -658,7 +559,7 @@ export class Overlay extends BaseComponent {
     bindDocumentResizeListener() {
         if (!this.documentResizeListener) {
             this.documentResizeListener = this.renderer.listen(this.document.defaultView, 'resize', (event) => {
-                const valid = this.listener ? this.listener(event, { type: 'resize', mode: this.overlayMode, valid: !isTouchDevice() }) : !isTouchDevice();
+                const valid = this.listener() ? this.listener()(event, { type: 'resize', mode: this.overlayMode, valid: !isTouchDevice() }) : !isTouchDevice();
 
                 valid && this.hide(event, true);
             });
@@ -683,7 +584,7 @@ export class Overlay extends BaseComponent {
                     return;
                 }
 
-                const valid = this.listener ? this.listener(event, { type: 'keydown', mode: this.overlayMode, valid: !isTouchDevice() }) : !isTouchDevice();
+                const valid = this.listener() ? this.listener()(event, { type: 'keydown', mode: this.overlayMode, valid: !isTouchDevice() }) : !isTouchDevice();
 
                 if (valid) {
                     this.zone.run(() => {
