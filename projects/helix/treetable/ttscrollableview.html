@@ -19,8 +19,8 @@
     [items]="tt.serializedValue"
     [styleClass]="cx('scrollableBody')"
     [style]="{ height: tt.scrollHeight() !== 'flex' ? tt.scrollHeight() : undefined }"
-    [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
-    [itemSize]="tt.virtualScrollItemSize() || tt._virtualRowHeight"
+    [scrollHeight]="scrollHeight() !== 'flex' ? undefined : '100%'"
+    [itemSize]="tt.virtualScrollItemSize() || tt.virtualRowHeight()"
     [lazy]="tt.lazy()"
     (onLazyLoad)="tt.onLazyItemLoad($event)"
     [options]="tt.virtualScrollOptions()"
@@ -42,7 +42,7 @@
     [class]="cx('scrollableBody')"
     [hBind]="ptm('scrollableBody')"
         [ngStyle]="{
-            'max-height': tt.scrollHeight() !== 'flex' ? scrollHeight : undefined,
+            'max-height': tt.scrollHeight() !== 'flex' ? scrollHeight() : undefined,
             'overflow-y': !frozen() && tt.scrollHeight() ? 'scroll' : undefined
         }"
     >

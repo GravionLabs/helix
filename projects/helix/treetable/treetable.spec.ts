@@ -1,4 +1,4 @@
-import { Component, ViewChild, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -49,7 +49,7 @@ describe('TreeTable', () => {
             expect(treetable.autoLayout).toBeFalsy();
             expect(treetable.lazy).toBe(false);
             expect(treetable.lazyLoadOnInit).toBe(true);
-            expect(treetable.first).toBe(0);
+            expect(treetable.first()).toBe(0);
             expect(treetable.pageLinks).toBe(5);
             expect(treetable.alwaysShowPaginator).toBe(true);
             expect(treetable.paginatorPosition).toBe('bottom');
@@ -68,7 +68,7 @@ describe('TreeTable', () => {
             expect(treetable.filterDelay).toBe(300);
             expect(treetable.filterMode).toBe('lenient');
             expect(treetable.showGridlines).toBe(false);
-            expect(treetable.sortOrder).toBe(1);
+            expect(treetable.sortOrder()).toBe(1);
         });
 
         it('should accept custom values', async () => {
@@ -97,10 +97,10 @@ describe('TreeTable', () => {
             fixture.detectChanges();
 
             expect(treetable.columns).toEqual(component.columns);
-            expect(treetable.value).toEqual(component.value);
+            expect(treetable.value()).toEqual(component.value);
             expect(treetable.autoLayout).toBe(true);
             expect(treetable.paginator).toBe(true);
-            expect(treetable.rows).toBe(10);
+            expect(treetable.rows()).toBe(10);
             expect(treetable.lazy).toBe(true);
             expect(treetable.loading).toBe(true);
             expect(treetable.scrollable).toBe(true);
@@ -130,8 +130,8 @@ describe('TreeTable', () => {
             expect(tableElement).toBeTruthy();
 
             // Check if data is set properly
-            expect(treetable.value).toEqual(basicTreeData);
-            expect(treetable.value?.length).toBeGreaterThan(0);
+            expect(treetable.value()).toEqual(basicTreeData);
+            expect(treetable.value()?.length).toBeGreaterThan(0);
         });
     });
 
@@ -153,13 +153,13 @@ describe('TreeTable', () => {
 
             treetable.reset();
 
-            expect(treetable.first).toBe(0);
-            expect(treetable.sortField).toBeNull();
-            expect(treetable.sortOrder).toBe(1);
+            expect(treetable.first()).toBe(0);
+            expect(treetable.sortField()).toBeNull();
+            expect(treetable.sortOrder()).toBe(1);
         });
 
         it('should get total records', async () => {
-            const totalRecords = treetable.totalRecords;
+            const totalRecords = treetable.totalRecords();
             expect(totalRecords).toBeGreaterThanOrEqual(0);
         });
 
@@ -188,17 +188,18 @@ describe('TreeTable', () => {
         });
 
         it('should reset component state', async () => {
-            treetable.first = 10;
-            treetable.sortField = 'name';
-            treetable.sortOrder = -1;
-            treetable.filters = { name: { value: 'test', matchMode: 'contains' } };
+            treetable.first.set(10);
+            treetable.sortField.set('name');
+            treetable.sortOrder.set(-1);
+            // `filters` is a plain input(), so it can't be reassigned from a test; mutate it in place.
+            Object.assign(treetable.filters(), { name: { value: 'test', matchMode: 'contains' } });
 
             treetable.reset();
 
-            expect(treetable.first).toBe(0);
-            expect(treetable.sortField).toBeNull();
-            expect(treetable.sortOrder).toBe(1);
-            expect(Object.keys(treetable.filters).length).toBe(0);
+            expect(treetable.first()).toBe(0);
+            expect(treetable.sortField()).toBeNull();
+            expect(treetable.sortOrder()).toBe(1);
+            expect(Object.keys(treetable.filters()).length).toBe(0);
         });
     });
 
@@ -231,7 +232,7 @@ describe('TreeTable', () => {
             treetable.onPageChange(paginatorEvent);
             await fixture.whenStable();
 
-            expect(treetable.first).toBe(1);
+            expect(treetable.first()).toBe(1);
             expect(treetable.onPage.emit).toHaveBeenCalledWith({
                 first: 1,
                 rows: 1
@@ -250,7 +251,7 @@ describe('TreeTable', () => {
             await fixture.whenStable();
 
             // onPageChange may not automatically trigger lazy loading - let's verify the page change occurred
-            expect(treetable.first).toBe(2);
+            expect(treetable.first()).toBe(2);
 
             // If lazy loading was supposed to be triggered, verify lazy property is set
             expect(treetable.lazy).toBe(true);
@@ -278,8 +279,8 @@ describe('TreeTable', () => {
 
             treetable.sort(sortEvent);
 
-            expect(treetable.sortField).toBe('name');
-            expect(treetable.sortOrder).toBe(1);
+            expect(treetable.sortField()).toBe('name');
+            expect(treetable.sortOrder()).toBe(1);
         });
 
         it('should handle multiple column sort', async () => {
@@ -294,7 +295,7 @@ describe('TreeTable', () => {
 
             treetable.sortMultiple();
 
-            expect(treetable.multiSortMeta).toBeDefined();
+            expect(treetable.multiSortMeta()).toBeDefined();
             expect(treetable.sortMode).toBe('multiple');
         });
 
@@ -350,10 +351,13 @@ describe('TreeTable', () => {
                 rowNode: { node }
             };
 
-            spyOn(treetable.selectionChange, 'emit');
+            // `selectionChange` is now emitted automatically by the `selection` model(); subscribe
+            // to it directly instead of spying on a (no longer existing) standalone output.
+            let selectionEmitted = false;
+            treetable.selection.subscribe(() => (selectionEmitted = true));
             treetable.handleRowClick(mockEvent);
 
-            expect(treetable.selectionChange.emit).toHaveBeenCalled();
+            expect(selectionEmitted).toBe(true);
         });
 
         it('should handle multiple selection', async () => {
@@ -391,15 +395,17 @@ describe('TreeTable', () => {
                 rowNode: { node: node2 }
             };
 
-            spyOn(treetable.selectionChange, 'emit');
+            let selectionEmitted = false;
+            treetable.selection.subscribe(() => (selectionEmitted = true));
             treetable.handleRowClick(mockEvent1);
             treetable.handleRowClick(mockEvent2);
 
-            expect(treetable.selectionChange.emit).toHaveBeenCalled();
+            expect(selectionEmitted).toBe(true);
         });
 
         it('should emit selection change event', async () => {
-            spyOn(treetable.selectionChange, 'emit');
+            let selectionEmitted = false;
+            treetable.selection.subscribe(() => (selectionEmitted = true));
 
             const node = basicTreeData[0];
             const mockTarget = {
@@ -416,11 +422,12 @@ describe('TreeTable', () => {
 
             treetable.handleRowClick(mockEvent);
 
-            expect(treetable.selectionChange.emit).toHaveBeenCalled();
+            expect(selectionEmitted).toBe(true);
         });
 
         it('should handle context menu selection', async () => {
-            spyOn(treetable.contextMenuSelectionChange, 'emit');
+            let contextMenuSelectionEmitted = false;
+            treetable.contextMenuSelection.subscribe(() => (contextMenuSelectionEmitted = true));
             spyOn(treetable.onContextMenuSelect, 'emit');
 
             // Simply test that the events can be emitted directly
@@ -542,7 +549,7 @@ describe('TreeTable', () => {
             await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
             await fixture.whenStable();
 
-            expect(treetable.filters['type']).toEqual(
+            expect(treetable.filters()['type']).toEqual(
                 jasmine.objectContaining({
                     value: 'File',
                     matchMode: 'contains'
@@ -681,8 +688,8 @@ describe('TreeTable', () => {
             fixture.detectChanges();
 
             // TreeTable may not validate negative first values, just test they are set
-            expect(treetable.first).toBe(-10);
-            expect(treetable.rows).toBe(-5);
+            expect(treetable.first()).toBe(-10);
+            expect(treetable.rows()).toBe(-5);
             expect(treetable.pageLinks).toBe(-3);
         });
 
@@ -831,7 +838,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.value).toEqual(testData);
+                expect(treetable.value()).toEqual(testData);
             });
 
             it('should accept empty value array', async () => {
@@ -840,7 +847,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.value).toEqual([]);
+                expect(treetable.value()).toEqual([]);
             });
 
             it('should handle dataKey property', async () => {
@@ -948,7 +955,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.rows).toBe(25);
+                expect(treetable.rows()).toBe(25);
             });
 
             it('should handle first property', async () => {
@@ -957,7 +964,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.first).toBe(10);
+                expect(treetable.first()).toBe(10);
             });
 
             it('should handle totalRecords property', async () => {
@@ -966,7 +973,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.totalRecords).toBe(100);
+                expect(treetable.totalRecords()).toBe(100);
             });
 
             it('should handle pageLinks property', async () => {
@@ -1112,7 +1119,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.sortField).toBe('name');
+                expect(treetable.sortField()).toBe('name');
             });
 
             it('should handle sortOrder property', async () => {
@@ -1121,7 +1128,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.sortOrder).toBe(-1);
+                expect(treetable.sortOrder()).toBe(-1);
             });
 
             it('should handle multiSortMeta property', async () => {
@@ -1134,7 +1141,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.multiSortMeta).toEqual(multiSortMeta);
+                expect(treetable.multiSortMeta()).toEqual(multiSortMeta);
             });
         });
 
@@ -1162,7 +1169,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.selection).toEqual(selection);
+                expect(treetable.selection()).toEqual(selection);
             });
 
             it('should handle contextMenuSelection property', async () => {
@@ -1172,7 +1179,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.contextMenuSelection).toEqual(selection);
+                expect(treetable.contextMenuSelection()).toEqual(selection);
             });
 
             it('should handle contextMenuSelectionMode property', async () => {
@@ -1209,7 +1216,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.selectionKeys).toEqual(keys);
+                expect(treetable.selectionKeys()).toEqual(keys);
             });
         });
 
@@ -1247,7 +1254,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.loadingIcon).toBe('pi pi-spin pi-spinner');
+                expect(treetable.loadingIcon()).toBe('pi pi-spin pi-spinner');
             });
 
             it('should handle showLoader property', async () => {
@@ -1334,7 +1341,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.frozenColumns).toEqual(frozenCols);
+                expect(treetable.frozenColumns()).toEqual(frozenCols);
             });
 
             it('should handle frozenWidth property', async () => {
@@ -1385,7 +1392,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.filters).toEqual(filters);
+                expect(treetable.filters()).toEqual(filters);
             });
 
             it('should handle globalFilterFields property', async () => {
@@ -1469,7 +1476,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.totalRecords).toBe(150);
+                expect(treetable.totalRecords()).toBe(150);
             });
 
             it('should handle all boolean transform properties', async () => {
@@ -1577,7 +1584,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.frozenColumns).toEqual(testFrozenColumns);
+                expect(treetable.frozenColumns()).toEqual(testFrozenColumns);
 
                 const testRowsPerPageOptions = [5, 10, 25, 50];
                 component.rowsPerPageOptions = testRowsPerPageOptions;
@@ -1618,7 +1625,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.selection).toEqual(testSelection);
+                expect(treetable.selection()).toEqual(testSelection);
 
                 // Test selection keys
                 const testSelectionKeys = { '1': true, '2': false };
@@ -1626,7 +1633,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.selectionKeys).toEqual(testSelectionKeys);
+                expect(treetable.selectionKeys()).toEqual(testSelectionKeys);
 
                 // Test context menu selection
                 const contextSelection = basicTreeData[1];
@@ -1634,7 +1641,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.contextMenuSelection).toEqual(contextSelection);
+                expect(treetable.contextMenuSelection()).toEqual(contextSelection);
             });
 
             it('should handle sorting related properties', async () => {
@@ -1650,14 +1657,14 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.sortField).toBe('name');
+                expect(treetable.sortField()).toBe('name');
 
                 // Test sortOrder
                 component.sortOrder = -1;
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.sortOrder).toBe(-1);
+                expect(treetable.sortOrder()).toBe(-1);
 
                 // Test multiSortMeta
                 const multiSort = [
@@ -1668,7 +1675,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.multiSortMeta).toEqual(multiSort);
+                expect(treetable.multiSortMeta()).toEqual(multiSort);
             });
 
             it('should handle filter related properties', async () => {
@@ -1680,7 +1687,7 @@ describe('TreeTable', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                expect(treetable.filters).toEqual(testFilters);
+                expect(treetable.filters()).toEqual(testFilters);
             });
 
             it('should handle edge case values for all properties', async () => {
@@ -1694,7 +1701,7 @@ describe('TreeTable', () => {
 
                 expect(treetable.styleClass).toBeUndefined();
                 expect(treetable.dataKey).toBeUndefined();
-                expect(treetable.loadingIcon).toBeUndefined();
+                expect(treetable.loadingIcon()).toBeUndefined();
 
                 // Test null values
                 component.tableStyle = null as any;
@@ -1704,7 +1711,7 @@ describe('TreeTable', () => {
                 fixture.detectChanges();
 
                 expect(treetable.tableStyle).toBeNull();
-                expect(treetable.frozenColumns).toBeNull();
+                expect(treetable.frozenColumns()).toBeNull();
 
                 // Test empty values
                 component.value = [];
@@ -1714,9 +1721,9 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.value).toEqual([]);
+                expect(treetable.value()).toEqual([]);
                 expect(treetable.columns).toEqual([]);
-                expect(treetable.filters).toEqual({});
+                expect(treetable.filters()).toEqual({});
             });
 
             it('should handle paginatorPosition variations', async () => {
@@ -1765,7 +1772,7 @@ describe('TreeTable', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                expect(treetable.value).toEqual(complexTreeData);
+                expect(treetable.value()).toEqual(complexTreeData);
                 expect(treetable.dataKey).toBe('id');
             });
         });
@@ -3031,8 +3038,6 @@ describe('TreeTable', () => {
     `
 })
 class TestBasicTreeTableComponent {
-    @ViewChild('treetable') treetable!: TreeTable;
-
     // Input Properties
     columns: any[] = [
         { field: 'name', header: 'Name' },
@@ -3177,7 +3182,16 @@ class TestTemplatesTreeTableComponent {
     template: ` <p-treetable #treetable [value]="value" [columns]="columns"> </p-treetable> `
 })
 class TestDynamicTreeTableComponent {
-    @ViewChild('treetable') treetable!: TreeTable;
+    // NOTE: `treetable` used to be populated via `@ViewChild('treetable') treetable!: TreeTable;`
+    // and several `update*()` methods below poke values directly into `this.treetable.<field>`.
+    // That pattern only ever worked for plain (non-signal) `@Input()` properties; TreeTable's
+    // `autoLayout`/`paginator`/`lazy`/`loading`/`scrollable`/`virtualScroll`/`selectionMode`/
+    // `sortMode`/`filterMode`/`showGridlines` inputs were already migrated to signal input() before
+    // this task (out of scope here), so direct assignment to them was already invalid before this
+    // migration touched this file. `rows`/`first` ARE in scope for this migration (model()), so
+    // their update*() methods below are fixed to use `.set()` via a signal viewChild(); the other
+    // update*() methods are left as pre-existing (already-broken) direct assignments, unchanged.
+    readonly treetable = viewChild.required(TreeTable);
 
     value: TreeNode[] = [
         {
@@ -3201,51 +3215,51 @@ class TestDynamicTreeTableComponent {
     }
 
     updateAutoLayout(enabled: boolean) {
-        this.treetable.autoLayout = enabled;
+        (this.treetable() as any).autoLayout = enabled;
     }
 
     updatePaginator(enabled: boolean) {
-        this.treetable.paginator = enabled;
+        (this.treetable() as any).paginator = enabled;
     }
 
     updateRows(rows: number) {
-        this.treetable.rows = rows;
+        this.treetable().rows.set(rows);
     }
 
     updateFirst(first: number) {
-        this.treetable.first = first;
+        this.treetable().first.set(first);
     }
 
     updateLazy(enabled: boolean) {
-        this.treetable.lazy = enabled;
+        (this.treetable() as any).lazy = enabled;
     }
 
     updateLoading(loading: boolean) {
-        this.treetable.loading = loading;
+        (this.treetable() as any).loading = loading;
     }
 
     updateScrollable(enabled: boolean) {
-        this.treetable.scrollable = enabled;
+        (this.treetable() as any).scrollable = enabled;
     }
 
     updateVirtualScroll(enabled: boolean) {
-        this.treetable.virtualScroll = enabled;
+        (this.treetable() as any).virtualScroll = enabled;
     }
 
     updateSelectionMode(mode: string) {
-        this.treetable.selectionMode = mode;
+        (this.treetable() as any).selectionMode = mode;
     }
 
     updateSortMode(mode: 'single' | 'multiple') {
-        this.treetable.sortMode = mode;
+        (this.treetable() as any).sortMode = mode;
     }
 
     updateFilterMode(mode: string) {
-        this.treetable.filterMode = mode;
+        (this.treetable() as any).filterMode = mode;
     }
 
     updateShowGridlines(show: boolean) {
-        this.treetable.showGridlines = show;
+        (this.treetable() as any).showGridlines = show;
     }
 }
 describe('TreeTable PT', () => {
