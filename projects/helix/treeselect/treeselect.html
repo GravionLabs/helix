@@ -3,28 +3,28 @@
     #focusInput
     type="text"
     role="combobox"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     readonly
     [attr.disabled]="$disabled() ? '' : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
     (keydown)="onKeyDown($event)"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
     [attr.aria-controls]="overlayVisible ? listId : null"
     [attr.aria-haspopup]="'tree'"
     [attr.aria-expanded]="overlayVisible ?? false"
-    [attr.aria-labelledby]="ariaLabelledBy"
-    [attr.aria-label]="ariaLabel || (label === 'p-emptylabel' ? undefined : label)"
-    [hAutoFocus]="autofocus"
+    [attr.aria-labelledby]="ariaLabelledBy()"
+    [attr.aria-label]="ariaLabel() || (label === 'p-emptylabel' ? undefined : label)"
+    [hAutoFocus]="autofocus()"
     [hBind]="ptm('hiddenInput')"
     />
 </div>
 <div [class]="cx('labelContainer')" [hBind]="ptm('labelContainer')">
-  <div [class]="cn(cx('label'), labelStyleClass)" [ngStyle]="labelStyle" [hBind]="ptm('label')">
-    @if (valueTemplate || _valueTemplate) {
-      <ng-container *ngTemplateOutlet="valueTemplate || _valueTemplate; context: { $implicit: value, placeholder: placeholder }"></ng-container>
+  <div [class]="cn(cx('label'), labelStyleClass())" [ngStyle]="labelStyle()" [hBind]="ptm('label')">
+    @if (valueTemplate() || _valueTemplate) {
+      <ng-container *ngTemplateOutlet="valueTemplate() || _valueTemplate; context: { $implicit: value, placeholder: placeholder() }"></ng-container>
     } @else {
-      @if (display === 'comma') {
+      @if (display() === 'comma') {
         {{ label || 'empty' }}
       } @else {
         @for (node of value; track node) {
@@ -33,29 +33,29 @@
           </div>
         }
         @if (emptyValue) {
-          {{ placeholder || 'empty' }}
+          {{ placeholder() || 'empty' }}
         }
       }
     }
   </div>
 </div>
-@if (checkValue() && !$disabled() && showClear) {
-  @if (!clearIconTemplate && !_clearIconTemplate) {
+@if (checkValue() && !$disabled() && showClear()) {
+  @if (!clearIconTemplate() && !_clearIconTemplate) {
     <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" />
   }
-  @if (clearIconTemplate || clearIconTemplate) {
+  @if (clearIconTemplate() || clearIconTemplate()) {
     <span [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')">
-      <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate"></ng-template>
     </span>
   }
 }
 <div [class]="cx('dropdown')" role="button" aria-haspopup="tree" [attr.aria-expanded]="overlayVisible ?? false" [attr.aria-label]="'treeselect trigger'" [hBind]="ptm('dropdown')">
-  @if (!triggerIconTemplate && !_triggerIconTemplate && !dropdownIconTemplate && !_dropdownIconTemplate) {
+  @if (!triggerIconTemplate() && !_triggerIconTemplate && !dropdownIconTemplate() && !_dropdownIconTemplate) {
     <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
   }
-  @if (triggerIconTemplate || _triggerIconTemplate || dropdownIconTemplate || _dropdownIconTemplate) {
+  @if (triggerIconTemplate() || _triggerIconTemplate || dropdownIconTemplate() || _dropdownIconTemplate) {
     <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
-      <ng-template *ngTemplateOutlet="triggerIconTemplate || _triggerIconTemplate || dropdownIconTemplate || _dropdownIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="triggerIconTemplate() || _triggerIconTemplate || dropdownIconTemplate() || _dropdownIconTemplate"></ng-template>
     </span>
   }
 </div>
@@ -63,7 +63,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -75,7 +75,7 @@
   (onHide)="hide($event)"
   >
   <ng-template #content>
-    <div #panel [attr.id]="listId" [class]="cn(cx('panel'), panelStyleClass, panelClass)" [ngStyle]="panelStyle" [hBind]="ptm('panel')">
+    <div #panel [attr.id]="listId" [class]="cn(cx('panel'), panelStyleClass(), panelClass())" [ngStyle]="panelStyle()" [hBind]="ptm('panel')">
       <span
         #firstHiddenFocusableEl
         role="presentation"
@@ -87,66 +87,66 @@
         [hBind]="ptm('hiddenFirstFocusableEl')"
         >
       </span>
-      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: value, options: options }"></ng-container>
-      <div [class]="cx('treeContainer')" [ngStyle]="{ 'max-height': scrollHeight }" [hBind]="ptm('treeContainer')">
+      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: value, options: options() }"></ng-container>
+      <div [class]="cx('treeContainer')" [ngStyle]="{ 'max-height': scrollHeight() }" [hBind]="ptm('treeContainer')">
         <h-tree
           #tree
-          [value]="options"
-          [propagateSelectionDown]="propagateSelectionDown"
-          [propagateSelectionUp]="propagateSelectionUp"
-          [selectionMode]="selectionMode"
+          [value]="options()"
+          [propagateSelectionDown]="propagateSelectionDown()"
+          [propagateSelectionUp]="propagateSelectionUp()"
+          [selectionMode]="selectionMode()"
           (selectionChange)="onSelectionChange($event)"
           [selection]="value"
-          [metaKeySelection]="metaKeySelection"
+          [metaKeySelection]="metaKeySelection()"
           (onNodeExpand)="nodeExpand($event)"
           (onNodeCollapse)="nodeCollapse($event)"
           (onNodeSelect)="onSelect($event)"
-          [emptyMessage]="emptyMessage"
+          [emptyMessage]="emptyMessage()"
           (onNodeUnselect)="onUnselect($event)"
-          [filter]="filter"
-          [filterBy]="filterBy"
-          [filterMode]="filterMode"
-          [filterPlaceholder]="filterPlaceholder"
-          [filterLocale]="filterLocale"
+          [filter]="filter()"
+          [filterBy]="filterBy()"
+          [filterMode]="filterMode()"
+          [filterPlaceholder]="filterPlaceholder()"
+          [filterLocale]="filterLocale()"
           [filteredNodes]="filteredNodes"
-          [virtualScroll]="virtualScroll"
-          [virtualScrollItemSize]="virtualScrollItemSize"
-          [virtualScrollOptions]="virtualScrollOptions"
+          [virtualScroll]="virtualScroll()"
+          [virtualScrollItemSize]="virtualScrollItemSize()"
+          [virtualScrollOptions]="virtualScrollOptions()"
           [_templateMap]="templateMap"
-          [loading]="loading"
-          [filterInputAutoFocus]="filterInputAutoFocus"
-          [loadingMode]="loadingMode"
+          [loading]="loading()"
+          [filterInputAutoFocus]="filterInputAutoFocus()"
+          [loadingMode]="loadingMode()"
           [pt]="ptm('pcTree')"
           [unstyled]="unstyled()"
           >
-          @if (emptyTemplate || _emptyTemplate) {
+          @if (emptyTemplate() || _emptyTemplate) {
             <ng-template #empty>
-              <ng-container *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+              <ng-container *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
             </ng-template>
           }
-          @if (itemTogglerIconTemplate || _itemTogglerIconTemplate; as expanded) {
+          @if (itemTogglerIconTemplate() || _itemTogglerIconTemplate; as expanded) {
             <ng-template #togglericon let-expanded>
-              <ng-container *ngTemplateOutlet="itemTogglerIconTemplate || _itemTogglerIconTemplate; context: { $implicit: expanded }"></ng-container>
+              <ng-container *ngTemplateOutlet="itemTogglerIconTemplate() || _itemTogglerIconTemplate; context: { $implicit: expanded }"></ng-container>
             </ng-template>
           }
-          @if (itemCheckboxIconTemplate || _itemCheckboxIconTemplate) {
+          @if (itemCheckboxIconTemplate() || _itemCheckboxIconTemplate) {
             <ng-template #checkboxicon let-selected let-partialSelected="partialSelected">
-              <ng-container *ngTemplateOutlet="itemCheckboxIconTemplate || _itemCheckboxIconTemplate; context: { $implicit: selected, partialSelected: partialSelected }"></ng-container>
+              <ng-container *ngTemplateOutlet="itemCheckboxIconTemplate() || _itemCheckboxIconTemplate; context: { $implicit: selected, partialSelected: partialSelected }"></ng-container>
             </ng-template>
           }
-          @if (itemLoadingIconTemplate || _itemLoadingIconTemplate) {
+          @if (itemLoadingIconTemplate() || _itemLoadingIconTemplate) {
             <ng-template #loadingicon>
-              <ng-container *ngTemplateOutlet="itemLoadingIconTemplate || _itemLoadingIconTemplate"></ng-container>
+              <ng-container *ngTemplateOutlet="itemLoadingIconTemplate() || _itemLoadingIconTemplate"></ng-container>
             </ng-template>
           }
-          @if (filterIconTemplate || _filterIconTemplate) {
+          @if (filterIconTemplate() || _filterIconTemplate) {
             <ng-template #filtericon>
-              <ng-container *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-container>
+              <ng-container *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-container>
             </ng-template>
           }
         </h-tree>
       </div>
-      <ng-container *ngTemplateOutlet="footerTemplate(); context: { $implicit: value, options: options }"></ng-container>
+      <ng-container *ngTemplateOutlet="footerTemplate(); context: { $implicit: value, options: options() }"></ng-container>
       <span
         #lastHiddenFocusableEl
         role="presentation"
