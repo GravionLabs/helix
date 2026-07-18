@@ -4,25 +4,21 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
-    ContentChild,
-    ContentChildren,
+    contentChild,
+    contentChildren,
     effect,
     ElementRef,
-    EventEmitter,
     forwardRef,
     inject,
     InjectionToken,
     input,
-    Input,
     NgModule,
     NgZone,
     numberAttribute,
-    Output,
-    QueryList,
-    Signal,
+    output,
     signal,
     TemplateRef,
-    ViewChild,
+    viewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -139,16 +135,13 @@ export class MultiSelectItem extends BaseComponent {
 
     readonly checkIconTemplate = input<TemplateRef<MultiSelectItemCheckboxIconTemplateContext>>();
 
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() itemCheckboxIconTemplate: TemplateRef<MultiSelectItemCheckboxIconTemplateContext> | undefined;
+    readonly itemCheckboxIconTemplate = input<TemplateRef<MultiSelectItemCheckboxIconTemplateContext>>();
 
     readonly highlightOnSelect = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Output() onClick: EventEmitter<any> = new EventEmitter();
+    readonly onClick = output<any>();
 
-    @Output() onMouseEnter: EventEmitter<any> = new EventEmitter();
+    readonly onMouseEnter = output<any>();
 
     _componentStyle = inject(MultiSelectStyle);
 
@@ -185,7 +178,7 @@ export class MultiSelectItem extends BaseComponent {
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[attr.id]': 'id',
+        '[attr.id]': '$id()',
         '[attr.data-p]': 'containerDataP',
         '(click)': 'onContainerClick($event)',
         '[class]': "cn(cx('root'), styleClass())",
@@ -199,9 +192,11 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Unique identifier of the component
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() id: string | undefined;
+    readonly id = input<string>();
+
+    private readonly autoId = uuid('pn_id_');
+
+    readonly $id = computed(() => this.id() || this.autoId);
     /**
      * Defines a string that labels the input for accessibility.
      * @group Props
@@ -257,9 +252,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Specifies the visibility of the options panel.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input({ transform: booleanAttribute }) overlayVisible: boolean | undefined = false;
+    overlayVisible: boolean | undefined = false;
     /**
      * Index of the element in tabbing order.
      * @group Props
@@ -280,27 +273,13 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * @group Props
      * @defaultValue true
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() set displaySelectedLabel(val: boolean) {
-        this._displaySelectedLabel = val;
-    }
-    get displaySelectedLabel(): boolean {
-        return this._displaySelectedLabel;
-    }
+    readonly displaySelectedLabel = input<boolean>(true);
     /**
      * Decides how many selected item labels to show at most.
      * @group Props
      * @defaultValue 3
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() set maxSelectedLabels(val: number | null | undefined) {
-        this._maxSelectedLabels = val;
-    }
-    get maxSelectedLabels(): number | null | undefined {
-        return this._maxSelectedLabels;
-    }
+    readonly maxSelectedLabels = input<number | null | undefined>(3);
     /**
      * Maximum number of selectable items.
      * @group Props
@@ -335,10 +314,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Icon class of the dropdown icon.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() dropdownIcon: string | undefined;
+    readonly dropdownIcon = input<string>();
     /**
      * Icon class of the chip icon.
      * @group Props
@@ -408,10 +384,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Icon to display in loading state.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() loadingIcon: string | undefined;
+    readonly loadingIcon = input<string>();
     /**
      * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
      * @group Props
@@ -481,52 +454,22 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Label to display when there are no selections.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() set placeholder(val: string | undefined) {
-        this._placeholder.set(val);
-    }
-    get placeholder(): Signal<string | undefined> {
-        return this._placeholder.asReadonly();
-    }
+    readonly placeholder = input<string | undefined>(undefined);
     /**
      * An array of objects to display as the available options.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get options(): any[] | undefined {
-        return this._options();
-    }
-    set options(val: any[] | undefined) {
-        if (!deepEquals(this._options(), val)) {
-            this._options.set(val || []);
-        }
-    }
+    readonly options = input<any[] | undefined>(undefined);
     /**
      * When specified, filter displays with this value.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get filterValue(): string | undefined | null {
-        return this._filterValue();
-    }
-    set filterValue(val: string | undefined | null) {
-        this._filterValue.set(val);
-    }
+    readonly filterValue = input<string | undefined | null>(null);
     /**
      * Whether all data is selected.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get selectAll(): boolean | undefined | null {
-        return this._selectAll;
-    }
-    set selectAll(value: boolean | undefined | null) {
-        this._selectAll = value;
-    }
+    readonly selectAll = input<boolean | undefined | null>(null);
     /**
      * Indicates whether to focus on options when hovering over them, defaults to optionLabel.
      * @group Props
@@ -586,86 +529,86 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * @param {MultiSelectChangeEvent} event - Custom change event.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<MultiSelectChangeEvent> = new EventEmitter<MultiSelectChangeEvent>();
+    readonly onChange = output<MultiSelectChangeEvent>();
     /**
      * Callback to invoke when data is filtered.
      * @param {MultiSelectFilterEvent} event - Custom filter event.
      * @group Emits
      */
-    @Output() onFilter: EventEmitter<MultiSelectFilterEvent> = new EventEmitter<MultiSelectFilterEvent>();
+    readonly onFilter = output<MultiSelectFilterEvent>();
     /**
      * Callback to invoke when multiselect receives focus.
      * @param {MultiSelectFocusEvent} event - Custom focus event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<MultiSelectFocusEvent> = new EventEmitter<MultiSelectFocusEvent>();
+    readonly onFocus = output<MultiSelectFocusEvent>();
     /**
      * Callback to invoke when multiselect loses focus.
      * @param {MultiSelectBlurEvent} event - Custom blur event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<MultiSelectBlurEvent> = new EventEmitter<MultiSelectBlurEvent>();
+    readonly onBlur = output<MultiSelectBlurEvent>();
     /**
      * Callback to invoke when component is clicked.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onClick: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onClick = output<Event>();
     /**
      * Callback to invoke when input field is cleared.
      * @group Emits
      */
-    @Output() onClear: EventEmitter<void> = new EventEmitter<void>();
+    readonly onClear = output<void>();
     /**
      * Callback to invoke when overlay panel becomes visible.
      * @param {AnimationEvent} event - Animation event.
      * @group Emits
      */
-    @Output() onPanelShow: EventEmitter<AnimationEvent> = new EventEmitter<AnimationEvent>();
+    readonly onPanelShow = output<AnimationEvent>();
     /**
      * Callback to invoke when overlay panel becomes hidden.
      * @param {AnimationEvent} event - Animation event.
      * @group Emits
      */
-    @Output() onPanelHide: EventEmitter<AnimationEvent> = new EventEmitter<AnimationEvent>();
+    readonly onPanelHide = output<AnimationEvent>();
     /**
      * Callback to invoke in lazy mode to load new data.
      * @param {MultiSelectLazyLoadEvent} event - Lazy load event.
      * @group Emits
      */
-    @Output() onLazyLoad: EventEmitter<MultiSelectLazyLoadEvent> = new EventEmitter<MultiSelectLazyLoadEvent>();
+    readonly onLazyLoad = output<MultiSelectLazyLoadEvent>();
     /**
      * Callback to invoke in lazy mode to load new data.
      * @param {MultiSelectRemoveEvent} event - Remove event.
      * @group Emits
      */
-    @Output() onRemove: EventEmitter<MultiSelectRemoveEvent> = new EventEmitter<MultiSelectRemoveEvent>();
+    readonly onRemove = output<MultiSelectRemoveEvent>();
     /**
      * Callback to invoke when all data is selected.
      * @param {MultiSelectSelectAllChangeEvent} event - Custom select event.
      * @group Emits
      */
-    @Output() onSelectAllChange: EventEmitter<MultiSelectSelectAllChangeEvent> = new EventEmitter<MultiSelectSelectAllChangeEvent>();
+    readonly onSelectAllChange = output<MultiSelectSelectAllChangeEvent>();
 
-    @ViewChild('overlay') overlayViewChild: Nullable<Overlay>;
+    readonly overlayViewChild = viewChild<Overlay>('overlay');
 
-    @ViewChild('filterInput') filterInputChild: Nullable<ElementRef>;
+    readonly filterInputChild = viewChild<ElementRef>('filterInput');
 
-    @ViewChild('focusInput') focusInputViewChild: Nullable<ElementRef>;
+    readonly focusInputViewChild = viewChild<ElementRef>('focusInput');
 
-    @ViewChild('items') itemsViewChild: Nullable<ElementRef>;
+    readonly itemsViewChild = viewChild<ElementRef>('items');
 
-    @ViewChild('scroller') scroller: Nullable<Scroller>;
+    readonly scroller = viewChild<Scroller>('scroller');
 
-    @ViewChild('lastHiddenFocusableEl') lastHiddenFocusableElementOnOverlay: Nullable<ElementRef>;
+    readonly lastHiddenFocusableElementOnOverlay = viewChild<ElementRef>('lastHiddenFocusableEl');
 
-    @ViewChild('firstHiddenFocusableEl') firstHiddenFocusableElementOnOverlay: Nullable<ElementRef>;
+    readonly firstHiddenFocusableElementOnOverlay = viewChild<ElementRef>('firstHiddenFocusableEl');
 
-    @ViewChild('headerCheckbox') headerCheckboxViewChild: Nullable<Checkbox>;
+    readonly headerCheckboxViewChild = viewChild<Checkbox>('headerCheckbox');
 
-    @ContentChild(Footer) footerFacet: any;
+    readonly footerFacet = contentChild(Footer);
 
-    @ContentChild(Header) headerFacet: any;
+    readonly headerFacet = contentChild(Header);
 
     _componentStyle = inject(MultiSelectStyle);
 
@@ -674,10 +617,6 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     searchValue: Nullable<string>;
 
     searchTimeout: any;
-
-    _selectAll: boolean | undefined | null = null;
-
-    _placeholder = signal<string | undefined>(undefined);
 
     _disableTooltip = false;
 
@@ -693,105 +632,105 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<MultiSelectItemTemplateContext> | undefined;
+    readonly itemTemplate = contentChild<TemplateRef<MultiSelectItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom group template.
      * @group Templates
      */
-    @ContentChild('group', { descendants: false }) groupTemplate: TemplateRef<MultiSelectGroupTemplateContext> | undefined;
+    readonly groupTemplate = contentChild<TemplateRef<MultiSelectGroupTemplateContext>>('group', { descendants: false });
 
     /**
      * Custom loader template.
      * @group Templates
      */
-    @ContentChild('loader', { descendants: false }) loaderTemplate: TemplateRef<MultiSelectLoaderTemplateContext> | undefined;
+    readonly loaderTemplate = contentChild<TemplateRef<MultiSelectLoaderTemplateContext>>('loader', { descendants: false });
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: TemplateRef<void> | undefined;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom filter template.
      * @group Templates
      */
-    @ContentChild('filter', { descendants: false }) filterTemplate: TemplateRef<MultiSelectFilterTemplateContext> | undefined;
+    readonly filterTemplate = contentChild<TemplateRef<MultiSelectFilterTemplateContext>>('filter', { descendants: false });
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) footerTemplate: TemplateRef<void> | undefined;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     /**
      * Custom empty filter template.
      * @group Templates
      */
-    @ContentChild('emptyfilter', { descendants: false }) emptyFilterTemplate: TemplateRef<void> | undefined;
+    readonly emptyFilterTemplate = contentChild<TemplateRef<void>>('emptyfilter', { descendants: false });
 
     /**
      * Custom empty template.
      * @group Templates
      */
-    @ContentChild('empty', { descendants: false }) emptyTemplate: TemplateRef<void> | undefined;
+    readonly emptyTemplate = contentChild<TemplateRef<void>>('empty', { descendants: false });
 
     /**
      * Custom selected items template.
      * @group Templates
      */
-    @ContentChild('selecteditems', { descendants: false }) selectedItemsTemplate: TemplateRef<MultiSelectSelectedItemsTemplateContext> | undefined;
+    readonly selectedItemsTemplate = contentChild<TemplateRef<MultiSelectSelectedItemsTemplateContext>>('selecteditems', { descendants: false });
 
     /**
      * Custom loading icon template.
      * @group Templates
      */
-    @ContentChild('loadingicon', { descendants: false }) loadingIconTemplate: TemplateRef<void> | undefined;
+    readonly loadingIconTemplate = contentChild<TemplateRef<void>>('loadingicon', { descendants: false });
 
     /**
      * Custom filter icon template.
      * @group Templates
      */
-    @ContentChild('filtericon', { descendants: false }) filterIconTemplate: TemplateRef<void> | undefined;
+    readonly filterIconTemplate = contentChild<TemplateRef<void>>('filtericon', { descendants: false });
 
     /**
      * Custom remove token icon template.
      * @group Templates
      */
-    @ContentChild('removetokenicon', { descendants: false }) removeTokenIconTemplate: TemplateRef<MultiSelectChipIconTemplateContext> | undefined;
+    readonly removeTokenIconTemplate = contentChild<TemplateRef<MultiSelectChipIconTemplateContext>>('removetokenicon', { descendants: false });
 
     /**
      * Custom chip icon template.
      * @group Templates
      */
-    @ContentChild('chipicon', { descendants: false }) chipIconTemplate: TemplateRef<MultiSelectChipIconTemplateContext> | undefined;
+    readonly chipIconTemplate = contentChild<TemplateRef<MultiSelectChipIconTemplateContext>>('chipicon', { descendants: false });
 
     /**
      * Custom clear icon template.
      * @group Templates
      */
-    @ContentChild('clearicon', { descendants: false }) clearIconTemplate: TemplateRef<void> | undefined;
+    readonly clearIconTemplate = contentChild<TemplateRef<void>>('clearicon', { descendants: false });
 
     /**
      * Custom dropdown icon template.
      * @group Templates
      */
-    @ContentChild('dropdownicon', { descendants: false }) dropdownIconTemplate: TemplateRef<MultiSelectDropdownIconTemplateContext> | undefined;
+    readonly dropdownIconTemplate = contentChild<TemplateRef<MultiSelectDropdownIconTemplateContext>>('dropdownicon', { descendants: false });
 
     /**
      * Custom item checkbox icon template.
      * @group Templates
      */
-    @ContentChild('itemcheckboxicon', { descendants: false }) itemCheckboxIconTemplate: TemplateRef<MultiSelectItemCheckboxIconTemplateContext> | undefined;
+    readonly itemCheckboxIconTemplate = contentChild<TemplateRef<MultiSelectItemCheckboxIconTemplateContext>>('itemcheckboxicon', { descendants: false });
 
     /**
      * Custom header checkbox icon template.
      * @group Templates
      */
-    @ContentChild('headercheckboxicon', { descendants: false }) headerCheckboxIconTemplate: TemplateRef<MultiSelectHeaderCheckboxIconTemplateContext> | undefined;
+    readonly headerCheckboxIconTemplate = contentChild<TemplateRef<MultiSelectHeaderCheckboxIconTemplateContext>>('headercheckboxicon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<PrimeTemplate>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _itemTemplate: TemplateRef<MultiSelectItemTemplateContext> | undefined;
 
@@ -840,7 +779,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -928,10 +867,6 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
     itemsWrapper: any;
 
-    _displaySelectedLabel: boolean = true;
-
-    _maxSelectedLabels: number | null | undefined = 3;
-
     modelValue = signal<any>(null);
 
     _filterValue = signal<any>(null);
@@ -967,7 +902,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     private getAllVisibleAndNonVisibleOptions() {
-        return this.group() ? this.flatOptions(this.options) : this.options || [];
+        return this.group() ? this.flatOptions(this.options()) : this.options() || [];
     }
 
     visibleOptions = computed(() => {
@@ -984,7 +919,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             }
 
             if (this.group()) {
-                const optionGroups = this.options || [];
+                const optionGroups = this.options() || [];
                 const filtered: any[] = [];
 
                 optionGroups.forEach((group) => {
@@ -1011,8 +946,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         let label;
         const modelValue = this.modelValue();
 
-        if (modelValue && modelValue?.length && this.displaySelectedLabel) {
-            if (isNotEmpty(this.maxSelectedLabels) && modelValue?.length > (this.maxSelectedLabels || 0)) {
+        if (modelValue && modelValue?.length && this.displaySelectedLabel()) {
+            if (isNotEmpty(this.maxSelectedLabels()) && modelValue?.length > (this.maxSelectedLabels() || 0)) {
                 return this.getSelectedItemsLabel();
             } else {
                 label = '';
@@ -1032,7 +967,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     });
 
     chipSelectedItems = computed(() => {
-        return isNotEmpty(this.maxSelectedLabels) && this.modelValue() && this.modelValue()?.length > (this.maxSelectedLabels || 0) ? this.modelValue()?.slice(0, this.maxSelectedLabels) : this.modelValue();
+        return isNotEmpty(this.maxSelectedLabels()) && this.modelValue() && this.modelValue()?.length > (this.maxSelectedLabels() || 0) ? this.modelValue()?.slice(0, this.maxSelectedLabels()) : this.modelValue();
     });
 
     constructor(
@@ -1054,10 +989,18 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
                 this.cd.markForCheck();
             }
         });
+        effect(() => {
+            const val = this.options();
+            if (!deepEquals(this._options(), val)) {
+                this._options.set(val || []);
+            }
+        });
+        effect(() => {
+            this._filterValue.set(this.filterValue());
+        });
     }
 
     onInit() {
-        this.id = this.id || uuid('pn_id_');
         this.autoUpdateModel();
 
         if (this.filterBy()) {
@@ -1084,7 +1027,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         if (this.filtered) {
             this.zone.runOutsideAngular(() => {
                 setTimeout(() => {
-                    this.overlayViewChild?.alignOverlay();
+                    this.overlayViewChild()?.alignOverlay();
                 }, 1);
             });
             this.filtered = false;
@@ -1145,7 +1088,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         this.updateModel(value, originalEvent);
         index !== -1 && this.focusedOptionIndex.set(index);
 
-        isFocus && focus(this.focusInputViewChild?.nativeElement);
+        isFocus && focus(this.focusInputViewChild()?.nativeElement);
 
         this.onChange.emit({
             originalEvent: event,
@@ -1561,7 +1504,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     onTabKey(event, pressedInInputText = false) {
         if (!pressedInInputText) {
             if (this.overlayVisible && this.hasFocusableElements()) {
-                focus(event.shiftKey ? this.lastHiddenFocusableElementOnOverlay?.nativeElement : this.firstHiddenFocusableElementOnOverlay?.nativeElement);
+                focus(event.shiftKey ? this.lastHiddenFocusableElementOnOverlay()?.nativeElement : this.firstHiddenFocusableElementOnOverlay()?.nativeElement);
 
                 event.preventDefault();
             } else {
@@ -1581,11 +1524,11 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onContainerClick(event: any) {
-        if (this.$disabled() || this.loading() || this.readonly() || event.target?.isSameNode?.(this.focusInputViewChild?.nativeElement)) {
+        if (this.$disabled() || this.loading() || this.readonly() || event.target?.isSameNode?.(this.focusInputViewChild()?.nativeElement)) {
             return;
         }
 
-        if (!this.overlayViewChild || !this.overlayViewChild.el.nativeElement.contains(event.target)) {
+        if (!this.overlayViewChild() || !this.overlayViewChild()!.el.nativeElement.contains(event.target)) {
             if (this.clickInProgress) {
                 return;
             }
@@ -1598,14 +1541,14 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
             this.overlayVisible ? this.hide(true) : this.show(true);
         }
-        this.focusInputViewChild?.nativeElement.focus({ preventScroll: true });
+        this.focusInputViewChild()?.nativeElement.focus({ preventScroll: true });
         this.onClick.emit(event);
         this.cd.detectChanges();
     }
 
     onFirstHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild?.nativeElement ? getFirstFocusableElement(this.overlayViewChild?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
@@ -1634,15 +1577,15 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         this.focusedOptionIndex.set(-1);
         this.onFilter.emit({ originalEvent: event, filter: this._filterValue() });
 
-        !this.virtualScrollerDisabled && this.scroller?.scrollToIndex(0);
+        !this.virtualScrollerDisabled && this.scroller()?.scrollToIndex(0);
         setTimeout(() => {
-            this.overlayViewChild?.alignOverlay();
+            this.overlayViewChild()?.alignOverlay();
         });
     }
 
     onLastHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild?.nativeElement ? getLastFocusableElement(this.overlayViewChild?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
@@ -1662,7 +1605,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             return;
         }
 
-        if (this.selectAll != null) {
+        if (this.selectAll() != null) {
             this.onSelectAllChange.emit({
                 originalEvent: event,
                 checked: !this.allSelected()
@@ -1702,7 +1645,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         }
 
         this.onChange.emit({ originalEvent: event, value: this.value });
-        DomHandler.focus(this.headerCheckboxViewChild?.inputViewChild()?.nativeElement);
+        DomHandler.focus(this.headerCheckboxViewChild()?.inputViewChild()?.nativeElement);
         this.headerCheckboxFocus = true;
 
         event.originalEvent.preventDefault();
@@ -1721,29 +1664,29 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     scrollInView(index = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedOptionId;
-        if (this.itemsViewChild && this.itemsViewChild.nativeElement) {
-            const element = findSingle(this.itemsViewChild.nativeElement, `li[id="${id}"]`);
+        const id = index !== -1 ? `${this.$id()}_${index}` : this.focusedOptionId;
+        if (this.itemsViewChild() && this.itemsViewChild()!.nativeElement) {
+            const element = findSingle(this.itemsViewChild()!.nativeElement, `li[id="${id}"]`);
             if (element) {
                 element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             } else if (!this.virtualScrollerDisabled) {
                 setTimeout(() => {
-                    this.virtualScroll() && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+                    this.virtualScroll() && this.scroller()?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
                 }, 0);
             }
         }
     }
 
     get focusedOptionId() {
-        return this.focusedOptionIndex() !== -1 ? `${this.id}_${this.focusedOptionIndex()}` : null;
+        return this.focusedOptionIndex() !== -1 ? `${this.$id()}_${this.focusedOptionIndex()}` : null;
     }
 
     allSelected() {
-        return this.selectAll !== null ? this.selectAll : isNotEmpty(this.visibleOptions()) && this.visibleOptions().every((option) => this.isOptionGroup(option) || this.isOptionDisabled(option) || this.isSelected(option));
+        return this.selectAll() !== null ? this.selectAll() : isNotEmpty(this.visibleOptions()) && this.visibleOptions().every((option) => this.isOptionGroup(option) || this.isOptionDisabled(option) || this.isSelected(option));
     }
 
     partialSelected() {
-        return this.selectedOptions && this.selectedOptions.length > 0 && this.selectedOptions.length < (this.options?.length || 0);
+        return this.selectedOptions && this.selectedOptions.length > 0 && this.selectedOptions.length < (this.options()?.length || 0);
     }
 
     /**
@@ -1757,7 +1700,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         this.focusedOptionIndex.set(focusedOptionIndex);
 
         if (isFocus) {
-            focus(this.focusInputViewChild?.nativeElement);
+            focus(this.focusInputViewChild()?.nativeElement);
         }
 
         this.cd.markForCheck();
@@ -1778,19 +1721,19 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             unblockBodyScroll();
         }
 
-        isFocus && focus(this.focusInputViewChild?.nativeElement);
+        isFocus && focus(this.focusInputViewChild()?.nativeElement);
         this.cd.markForCheck();
     }
 
     onOverlayBeforeEnter(event: any) {
-        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
-        this.virtualScroll() && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
+        this.itemsWrapper = <any>findSingle(this.overlayViewChild()?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
+        this.virtualScroll() && this.scroller()?.setContentEl(this.itemsViewChild()?.nativeElement);
 
-        if (this.options && this.options.length) {
+        if (this.options() && this.options()!.length) {
             if (this.virtualScroll()) {
                 const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
                 if (selectedIndex !== -1) {
-                    this.scroller?.scrollToIndex(selectedIndex);
+                    this.scroller()?.scrollToIndex(selectedIndex);
                 }
             } else {
                 let selectedListItem = findSingle(this.itemsWrapper, '[data-pc-section="option"][data-p-selected="true"]');
@@ -1801,11 +1744,11 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             }
         }
 
-        if (this.filterInputChild && this.filterInputChild.nativeElement) {
+        if (this.filterInputChild() && this.filterInputChild()!.nativeElement) {
             this.preventModelTouched = true;
 
             if (this.autofocusFilter()) {
-                this.filterInputChild.nativeElement.focus();
+                this.filterInputChild()!.nativeElement.focus();
             }
         }
 
@@ -1819,8 +1762,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     resetFilter() {
-        if (this.filterInputChild && this.filterInputChild.nativeElement) {
-            this.filterInputChild.nativeElement.value = '';
+        if (this.filterInputChild() && this.filterInputChild()!.nativeElement) {
+            this.filterInputChild()!.nativeElement.value = '';
         }
 
         this._filterValue.set(null);
@@ -1948,7 +1891,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     hasFocusableElements() {
-        return getFocusableElements(this.overlayViewChild?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
     }
 
     hasFilter() {
@@ -1972,7 +1915,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             clearable: this.showClear(),
             disabled: this.disabled,
             [this.size() as string]: this.size(),
-            'has-chip': this.display() === 'chip' && this.value && this.value.length && (this.maxSelectedLabels ? this.value.length <= this.maxSelectedLabels : true),
+            'has-chip': this.display() === 'chip' && this.value && this.value.length && (this.maxSelectedLabels() ? this.value.length <= this.maxSelectedLabels()! : true),
             empty: !this.placeholder && !this.$filled
         });
     }
