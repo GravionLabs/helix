@@ -12,7 +12,7 @@
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
       ></ng-container>
@@ -27,7 +27,7 @@
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
   ></ng-container>
@@ -41,7 +41,7 @@
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen,
+                        frozen: frozen(),
                         rowgroup: shouldRenderRowspan(value, rowData, rowIndex),
                         rowspan: calculateRowGroupSize(value, rowData, rowIndex)
                     }
@@ -60,7 +60,7 @@
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
   ></ng-container>
@@ -68,7 +68,7 @@
 }
 }
 }
-@if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))) {
+@if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen() && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))) {
   @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
     @if (!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate)) {
       <ng-container
@@ -80,7 +80,7 @@
                         columns: columns(),
                         expanded: dataTable.isRowExpanded(rowData),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
     ></ng-container>
@@ -96,7 +96,7 @@
                         columns: columns(),
                         expanded: dataTable.isRowExpanded(rowData),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
     ></ng-container>
@@ -110,7 +110,7 @@
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
 ></ng-container>
@@ -125,7 +125,7 @@
                             columns: columns(),
                             expanded: dataTable.isRowExpanded(rowData),
                             editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                            frozen: frozen
+                            frozen: frozen()
                         }
                     "
   ></ng-container>
@@ -134,7 +134,7 @@
 }
 }
 }
-@if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen) {
+@if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen()) {
   @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
     <ng-container
             *ngTemplateOutlet="
@@ -145,7 +145,7 @@
                     columns: columns(),
                     expanded: dataTable.isRowExpanded(rowData),
                     editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
-                    frozen: frozen
+                    frozen: frozen()
                 }
             "
   ></ng-container>
@@ -157,7 +157,7 @@
                         $implicit: rowData,
                         rowIndex: getRowIndex(rowIndex),
                         columns: columns(),
-                        frozen: frozen
+                        frozen: frozen()
                     }
                 "
   ></ng-container>
@@ -165,8 +165,8 @@
 }
 }
 @if (dataTable.loading()) {
-  <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate(); context: { $implicit: columns(), frozen: frozen }"></ng-container>
+  <ng-container *ngTemplateOutlet="dataTable.loadingBodyTemplate || dataTable._loadingBodyTemplate(); context: { $implicit: columns(), frozen: frozen() }"></ng-container>
 }
 @if (dataTable.isEmpty() && !dataTable.loading()) {
-  <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate(); context: { $implicit: columns(), frozen: frozen }"></ng-container>
+  <ng-container *ngTemplateOutlet="dataTable.emptyMessageTemplate || dataTable._emptyMessageTemplate(); context: { $implicit: columns(), frozen: frozen() }"></ng-container>
 }

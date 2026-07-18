@@ -1,7 +1,7 @@
-@if (filterTemplate) {
+@if (filterTemplate()) {
   <ng-container
         *ngTemplateOutlet="
-            filterTemplate;
+            filterTemplate();
             context: {
                 $implicit: filterConstraint().value,
                 filterCallback: filterCallback,

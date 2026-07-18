@@ -5,28 +5,26 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
-  ContentChild,
+  contentChild,
+  contentChildren,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   Injectable,
   InjectionToken,
   input,
-  Input,
+  model,
   NgModule,
   NgZone,
   numberAttribute,
   Optional,
+  output,
   QueryList,
   signal,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
-  output,
-  viewChild,
-  contentChildren,
-  contentChild
+  viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
@@ -78,8 +76,7 @@ import {
     TableRowExpandEvent,
     TableRowReorderEvent,
     TableRowSelectEvent,
-    TableRowUnSelectEvent,
-    TableSelectAllChangeEvent
+    TableRowUnSelectEvent
 } from '@gravionlabs/helix/types/table';
 import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@gravionlabs/helix/utils';
 import { Subject, Subscription } from 'rxjs';
@@ -149,10 +146,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * An array of objects to display as frozen.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() frozenValue: any[] | undefined;
+    readonly frozenValue = input<any[] | undefined>(undefined);
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
@@ -270,15 +264,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * Selected row with a context menu.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() contextMenuSelection: any;
-    /**
-     * Callback to invoke on context menu selection change.
-     * @param {*} object - row data.
-     * @group Emits
-     */
-    readonly contextMenuSelectionChange = output<any>();
+    readonly contextMenuSelection = model<any>(undefined);
     /**
      *  Defines the behavior of context menu selection, in "separate" mode context menu updates contextMenuSelection property whereas in joint mode selection property is used instead so that when row selection is enabled, both row selection and context menu selection use the same property.
      * @group Props
@@ -336,9 +322,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * An array of FilterMetadata objects to provide external filters.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() filters: { [s: string]: FilterMetadata | FilterMetadata[] } = {};
+    readonly filters = input<{ [s: string]: FilterMetadata | FilterMetadata[] }>({});
     /**
      * An array of fields as string to use in global filtering.
      * @group Props
@@ -358,9 +342,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * Map instance to keep the expanded rows where key of the map is the data key of the row.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() expandedRowKeys: { [s: string]: boolean } = {};
+    readonly expandedRowKeys = input<{ [s: string]: boolean }>({});
     /**
      * Map instance to keep the rows being edited where key of the map is the data key of the row.
      * @group Props
@@ -442,10 +424,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * The icon to show while indicating data load is in progress.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() loadingIcon: string | undefined;
+    readonly loadingIcon = input<string | undefined>(undefined);
     /**
      * Whether to show the loading mask when loading property is true.
      * @group Props
@@ -480,9 +459,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * Unique identifier of a stateful table to use in state storage.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() stateKey: string | undefined;
+    readonly stateKey = input<string | undefined>(undefined);
     /**
      * Defines where a stateful table keeps its state, valid values are "session" for sessionStorage and "local" for localStorage.
      * @group Props
@@ -538,130 +515,53 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      * An array of objects to display.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get value(): RowData[] {
-        return this._value;
-    }
-    set value(val: RowData[]) {
-        this._value = val;
-    }
+    readonly value = model<RowData[]>([]);
     /**
      * An array of objects to represent dynamic columns.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get columns(): any[] | undefined {
-        return this._columns;
-    }
-    set columns(cols: any[] | undefined) {
-        this._columns = cols;
-    }
+    readonly columns = model<any[] | undefined>(undefined);
     /**
      * Index of the first row to be displayed.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get first(): number | null | undefined {
-        return this._first;
-    }
-    set first(val: number | null | undefined) {
-        this._first = val;
-    }
+    readonly first = model<number | null | undefined>(0);
     /**
      * Number of rows to display per page.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get rows(): number | undefined {
-        return this._rows;
-    }
-    set rows(val: number | undefined) {
-        this._rows = val;
-    }
+    readonly rows = model<number | undefined>(undefined);
     /**
      * Number of total records, defaults to length of value when not defined.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() totalRecords: number = 0;
+    readonly totalRecords = model<number>(0);
 
     /**
      * Name of the field to sort data by default.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get sortField(): string | undefined | null {
-        return this._sortField;
-    }
-    set sortField(val: string | undefined | null) {
-        this._sortField = val;
-    }
+    readonly sortField = model<string | undefined | null>(undefined);
     /**
      * Order to sort when default sorting is enabled.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get sortOrder(): number {
-        return this._sortOrder;
-    }
-    set sortOrder(val: number) {
-        this._sortOrder = val;
-    }
+    readonly sortOrder = model<number>(1);
     /**
      * An array of SortMeta objects to sort the data by default in multiple sort mode.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get multiSortMeta(): SortMeta[] | undefined | null {
-        return this._multiSortMeta;
-    }
-    set multiSortMeta(val: SortMeta[] | undefined | null) {
-        this._multiSortMeta = val;
-    }
+    readonly multiSortMeta = model<SortMeta[] | undefined | null>(undefined);
     /**
      * Selected row in single mode or an array of values in multiple mode.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get selection(): any {
-        return this._selection;
-    }
-    set selection(val: any) {
-        this._selection = val;
-    }
+    readonly selection = model<any>(undefined);
     /**
      * Whether all data is selected.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get selectAll(): boolean | null {
-        return this._selection;
-    }
-    set selectAll(val: boolean | null) {
-        this._selection = val;
-    }
-    /**
-     * Emits when the all of the items selected or unselected.
-     * @param {TableSelectAllChangeEvent} event - custom  all selection change event.
-     * @group Emits
-     */
-    readonly selectAllChange = output<TableSelectAllChangeEvent>();
-    /**
-     * Callback to invoke on selection changed.
-     * @param {any | null} value - selected data.
-     * @group Emits
-     */
-    readonly selectionChange = output<any | null>();
+    readonly selectAll = model<boolean | null>(null);
     /**
      * Callback to invoke when a row is selected.
      * @param {TableRowSelectEvent} event - custom select event.
@@ -767,18 +667,6 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      */
     readonly sortFunction = output<any>();
     /**
-     * Callback to invoke on pagination.
-     * @param {number} number - first element.
-     * @group Emits
-     */
-    readonly firstChange = output<number>();
-    /**
-     * Callback to invoke on rows change.
-     * @param {number} number - Row count.
-     * @group Emits
-     */
-    readonly rowsChange = output<number>();
-    /**
      * Callback to invoke table state is saved.
      * @param {TableState} object - table state.
      * @group Emits
@@ -809,16 +697,6 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     readonly _templates = contentChildren(PrimeTemplate);
 
-    _value: RowData[] = [];
-
-    _columns: any[] | undefined;
-
-    _totalRecords: number = 0;
-
-    _first: number | null | undefined = 0;
-
-    _rows: number | undefined;
-
     filteredValue: any[] | undefined | null;
 
     // @todo will be refactored later
@@ -834,37 +712,48 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     readonly _loadingBodyTemplate = contentChild.required<TemplateRef<any>>('loadingbody', { descendants: false });
     loadingBodyTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('caption', { descendants: false }) _captionTemplate: TemplateRef<any>;
+    readonly _captionTemplateSignal = contentChild<TemplateRef<any>>('caption', { descendants: false });
+    get _captionTemplate(): TemplateRef<any> | undefined { return this._captionTemplateSignal(); }
     captionTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('footer', { descendants: false }) _footerTemplate: TemplateRef<any>;
+    private _footerTemplateSignal_val: TemplateRef<any> | undefined;
+    readonly _footerTemplateSignal = contentChild<TemplateRef<any>>('footer', { descendants: false });
+    get _footerTemplate(): TemplateRef<any> | undefined { return this._footerTemplateSignal_val ?? this._footerTemplateSignal(); }
+    set _footerTemplate(val: TemplateRef<any> | undefined) { this._footerTemplateSignal_val = val; }
     footerTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('footergrouped', { descendants: false }) _footerGroupedTemplate: TemplateRef<any>;
+    readonly _footerGroupedTemplateSignal = contentChild<TemplateRef<any>>('footergrouped', { descendants: false });
+    get _footerGroupedTemplate(): TemplateRef<any> | undefined { return this._footerGroupedTemplateSignal(); }
     footerGroupedTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('summary', { descendants: false }) _summaryTemplate: TemplateRef<any>;
+    readonly _summaryTemplateSignal = contentChild<TemplateRef<any>>('summary', { descendants: false });
+    get _summaryTemplate(): TemplateRef<any> | undefined { return this._summaryTemplateSignal(); }
     summaryTemplate: Nullable<TemplateRef<any>>;
 
     readonly _colGroupTemplate = contentChild.required<TemplateRef<any>>('colgroup', { descendants: false });
     colGroupTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('expandedrow', { descendants: false }) _expandedRowTemplate: TemplateRef<any>;
+    readonly _expandedRowTemplateSignal = contentChild<TemplateRef<any>>('expandedrow', { descendants: false });
+    get _expandedRowTemplate(): TemplateRef<any> | undefined { return this._expandedRowTemplateSignal(); }
     expandedRowTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('groupheader', { descendants: false }) _groupHeaderTemplate: TemplateRef<any>;
+    readonly _groupHeaderTemplateSignal = contentChild<TemplateRef<any>>('groupheader', { descendants: false });
+    get _groupHeaderTemplate(): TemplateRef<any> | undefined { return this._groupHeaderTemplateSignal(); }
     groupHeaderTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('groupfooter', { descendants: false }) _groupFooterTemplate: TemplateRef<any>;
+    readonly _groupFooterTemplateSignal = contentChild<TemplateRef<any>>('groupfooter', { descendants: false });
+    get _groupFooterTemplate(): TemplateRef<any> | undefined { return this._groupFooterTemplateSignal(); }
     groupFooterTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('frozenexpandedrow', { descendants: false }) _frozenExpandedRowTemplate: TemplateRef<any>;
+    readonly _frozenExpandedRowTemplateSignal = contentChild<TemplateRef<any>>('frozenexpandedrow', { descendants: false });
+    get _frozenExpandedRowTemplate(): TemplateRef<any> | undefined { return this._frozenExpandedRowTemplateSignal(); }
     frozenExpandedRowTemplate: Nullable<TemplateRef<any>>;
 
     readonly _frozenHeaderTemplate = contentChild.required<TemplateRef<any>>('frozenheader', { descendants: false });
     frozenHeaderTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('frozenbody', { descendants: false }) _frozenBodyTemplate: TemplateRef<any>;
+    readonly _frozenBodyTemplateSignal = contentChild<TemplateRef<any>>('frozenbody', { descendants: false });
+    get _frozenBodyTemplate(): TemplateRef<any> | undefined { return this._frozenBodyTemplateSignal(); }
     frozenBodyTemplate: Nullable<TemplateRef<any>>;
 
     readonly _frozenFooterTemplate = contentChild.required<TemplateRef<any>>('frozenfooter', { descendants: false });
@@ -885,7 +774,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     readonly _paginatorDropdownItemTemplate = contentChild.required<TemplateRef<any>>('paginatordropdownitem', { descendants: false });
     paginatorDropdownItemTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('loadingicon', { descendants: false }) _loadingIconTemplate: TemplateRef<any>;
+    readonly _loadingIconTemplateSignal = contentChild<TemplateRef<any>>('loadingicon', { descendants: false });
+    get _loadingIconTemplate(): TemplateRef<any> | undefined { return this._loadingIconTemplateSignal(); }
     loadingIconTemplate: Nullable<TemplateRef<any>>;
 
     readonly _reorderIndicatorUpIconTemplate = contentChild.required<TemplateRef<any>>('reorderindicatorupicon', { descendants: false });
@@ -894,7 +784,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     readonly _reorderIndicatorDownIconTemplate = contentChild.required<TemplateRef<any>>('reorderindicatordownicon', { descendants: false });
     reorderIndicatorDownIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('sorticon', { descendants: false }) _sortIconTemplate: TemplateRef<any>;
+    readonly _sortIconTemplateSignal = contentChild<TemplateRef<any>>('sorticon', { descendants: false });
+    get _sortIconTemplate(): TemplateRef<any> | undefined { return this._sortIconTemplateSignal(); }
     sortIconTemplate: Nullable<TemplateRef<any>>;
 
     readonly _checkboxIconTemplate = contentChild.required<TemplateRef<any>>('checkboxicon', { descendants: false });
@@ -903,19 +794,24 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     readonly _headerCheckboxIconTemplate = contentChild.required<TemplateRef<any>>('headercheckboxicon', { descendants: false });
     headerCheckboxIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('paginatordropdownicon', { descendants: false }) _paginatorDropdownIconTemplate: TemplateRef<any>;
+    readonly _paginatorDropdownIconTemplateSignal = contentChild<TemplateRef<any>>('paginatordropdownicon', { descendants: false });
+    get _paginatorDropdownIconTemplate(): TemplateRef<any> | undefined { return this._paginatorDropdownIconTemplateSignal(); }
     paginatorDropdownIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('paginatorfirstpagelinkicon', { descendants: false }) _paginatorFirstPageLinkIconTemplate: TemplateRef<any>;
+    readonly _paginatorFirstPageLinkIconTemplateSignal = contentChild<TemplateRef<any>>('paginatorfirstpagelinkicon', { descendants: false });
+    get _paginatorFirstPageLinkIconTemplate(): TemplateRef<any> | undefined { return this._paginatorFirstPageLinkIconTemplateSignal(); }
     paginatorFirstPageLinkIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('paginatorlastpagelinkicon', { descendants: false }) _paginatorLastPageLinkIconTemplate: TemplateRef<any>;
+    readonly _paginatorLastPageLinkIconTemplateSignal = contentChild<TemplateRef<any>>('paginatorlastpagelinkicon', { descendants: false });
+    get _paginatorLastPageLinkIconTemplate(): TemplateRef<any> | undefined { return this._paginatorLastPageLinkIconTemplateSignal(); }
     paginatorLastPageLinkIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('paginatorpreviouspagelinkicon', { descendants: false }) _paginatorPreviousPageLinkIconTemplate: TemplateRef<any>;
+    readonly _paginatorPreviousPageLinkIconTemplateSignal = contentChild<TemplateRef<any>>('paginatorpreviouspagelinkicon', { descendants: false });
+    get _paginatorPreviousPageLinkIconTemplate(): TemplateRef<any> | undefined { return this._paginatorPreviousPageLinkIconTemplateSignal(); }
     paginatorPreviousPageLinkIconTemplate: Nullable<TemplateRef<any>>;
 
-    @ContentChild('paginatornextpagelinkicon', { descendants: false }) _paginatorNextPageLinkIconTemplate: TemplateRef<any>;
+    readonly _paginatorNextPageLinkIconTemplateSignal = contentChild<TemplateRef<any>>('paginatornextpagelinkicon', { descendants: false });
+    get _paginatorNextPageLinkIconTemplate(): TemplateRef<any> | undefined { return this._paginatorNextPageLinkIconTemplateSignal(); }
     paginatorNextPageLinkIconTemplate: Nullable<TemplateRef<any>>;
 
     selectionKeys: any = {};
@@ -948,17 +844,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     documentEditListener: any;
 
-    _multiSortMeta: SortMeta[] | undefined | null;
-
-    _sortField: string | undefined | null;
-
-    _sortOrder: number = 1;
-
     preventSelectionSetterPropagation: boolean | undefined;
-
-    _selection: any;
-
-    _selectAll: boolean | null = null;
 
     anchorRowIndex: number | undefined | null;
 
@@ -1172,122 +1058,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         }
     }
 
-    onChanges(simpleChange: SimpleChanges) {
-        if (simpleChange.totalRecords && simpleChange.totalRecords.firstChange) {
-            this._totalRecords = simpleChange.totalRecords.currentValue;
-        }
-
-        const lazy = this.lazy();
-        if (simpleChange.value) {
-            if (this.isStateful() && !this.stateRestored && isPlatformBrowser(this.platformId)) {
-                this.restoreState();
-            }
-
-            this._value = simpleChange.value.currentValue;
-
-            if (!lazy) {
-                this.totalRecords = this._totalRecords === 0 && this._value ? this._value.length : (this._totalRecords ?? 0);
-
-                const sortMode = this.sortMode();
-                const groupRowsBy = this.groupRowsBy();
-                if (sortMode == 'single' && (this.sortField || groupRowsBy)) this.sortSingle();
-                else if (sortMode == 'multiple' && (this.multiSortMeta || groupRowsBy)) this.sortMultiple();
-                else if (this.hasFilter())
-                    //sort already filters
-                    this._filter();
-            }
-
-            this.tableService.onValueChange(simpleChange.value.currentValue);
-        }
-
-        if (simpleChange.columns) {
-            if (!this.isStateful()) {
-                this._columns = simpleChange.columns.currentValue;
-                this.tableService.onColumnsChange(simpleChange.columns.currentValue);
-            }
-
-            if (this._columns && this.isStateful() && this.reorderableColumns() && !this.columnOrderStateRestored) {
-                this.restoreColumnOrder();
-
-                this.tableService.onColumnsChange(this._columns);
-            }
-        }
-
-        const sortMode = this.sortMode();
-        if (simpleChange.sortField) {
-            this._sortField = simpleChange.sortField.currentValue;
-
-            //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!lazy || this.initialized) {
-                if (sortMode === 'single') {
-                    this.sortSingle();
-                }
-            }
-        }
-
-        if (simpleChange.groupRowsBy) {
-            //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!lazy || this.initialized) {
-                if (sortMode === 'single') {
-                    this.sortSingle();
-                }
-            }
-        }
-
-        if (simpleChange.sortOrder) {
-            this._sortOrder = simpleChange.sortOrder.currentValue;
-
-            //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!lazy || this.initialized) {
-                if (sortMode === 'single') {
-                    this.sortSingle();
-                }
-            }
-        }
-
-        if (simpleChange.groupRowsByOrder) {
-            //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!lazy || this.initialized) {
-                if (sortMode === 'single') {
-                    this.sortSingle();
-                }
-            }
-        }
-
-        if (simpleChange.multiSortMeta) {
-            this._multiSortMeta = simpleChange.multiSortMeta.currentValue;
-            if (sortMode === 'multiple' && (this.initialized || (!lazy && !this.virtualScroll()))) {
-                this.sortMultiple();
-            }
-        }
-
-        if (simpleChange.selection) {
-            this._selection = simpleChange.selection.currentValue;
-
-            if (!this.preventSelectionSetterPropagation) {
-                this.updateSelectionKeys();
-                this.tableService.onSelectionChange();
-            }
-            this.preventSelectionSetterPropagation = false;
-        }
-
-        if (simpleChange.selectAll) {
-            this._selectAll = simpleChange.selectAll.currentValue;
-
-            if (!this.preventSelectionSetterPropagation) {
-                this.updateSelectionKeys();
-                this.tableService.onSelectionChange();
-
-                if (this.isStateful()) {
-                    this.saveState();
-                }
-            }
-            this.preventSelectionSetterPropagation = false;
-        }
-    }
-
     get processedData() {
-        return this.filteredValue || this.value || [];
+        return this.filteredValue || this.value() || [];
     }
 
     private _initialColWidths: number[];
@@ -1296,8 +1068,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         const _data = data || this.processedData;
 
         if (_data && this.paginator()) {
-            const first = this.lazy() ? 0 : this.first;
-            return _data.slice(first, <number>first + <number>this.rows);
+            const first = this.lazy() ? 0 : this.first();
+            return _data.slice(first, <number>first + <number>this.rows());
         }
 
         return _data;
@@ -1305,34 +1077,32 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     updateSelectionKeys() {
         const dataKey = this.dataKey();
-        if (dataKey && this._selection) {
+        if (dataKey && this.selection()) {
             this.selectionKeys = {};
-            if (Array.isArray(this._selection)) {
-                for (let data of this._selection) {
+            if (Array.isArray(this.selection())) {
+                for (let data of this.selection()) {
                     this.selectionKeys[String(ObjectUtils.resolveFieldData(data, dataKey))] = 1;
                 }
             } else {
-                this.selectionKeys[String(ObjectUtils.resolveFieldData(this._selection, dataKey))] = 1;
+                this.selectionKeys[String(ObjectUtils.resolveFieldData(this.selection(), dataKey))] = 1;
             }
         }
     }
 
     onPageChange(event: TablePageEvent) {
-        this.first = event.first;
-        this.rows = event.rows;
+        this.first.set(event.first);
+        this.rows.set(event.rows);
 
         this.onPage.emit({
-            first: this.first,
-            rows: <number>this.rows
+            first: this.first() ?? 0,
+            rows: <number>this.rows()
         });
 
         if (this.lazy()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         }
 
-        this.firstChange.emit(this.first);
-        this.rowsChange.emit(this.rows);
-        this.tableService.onValueChange(this.value);
+        this.tableService.onValueChange(this.value());
 
         if (this.isStateful()) {
             this.saveState();
@@ -1351,12 +1121,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         const sortMode = this.sortMode();
         const resetPageOnSort = this.resetPageOnSort();
         if (sortMode === 'single') {
-            this._sortOrder = this.sortField === event.field ? this.sortOrder * -1 : this.defaultSortOrder();
-            this._sortField = event.field;
+            this.sortOrder.set(this.sortField() === event.field ? this.sortOrder() * -1 : this.defaultSortOrder());
+            this.sortField.set(event.field);
 
             if (resetPageOnSort) {
-                this._first = 0;
-                this.firstChange.emit(this._first);
+                this.first.set(0);
 
                 if (this.scrollable()) {
                     this.resetScrollTop();
@@ -1371,16 +1140,15 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
             if (sortMeta) {
                 if (!metaKey) {
-                    this._multiSortMeta = [
+                    this.multiSortMeta.set([
                         {
                             field: <string>event.field,
                             order: sortMeta.order * -1
                         }
-                    ];
+                    ]);
 
                     if (resetPageOnSort) {
-                        this._first = 0;
-                        this.firstChange.emit(this._first);
+                        this.first.set(0);
 
                         if (this.scrollable()) {
                             this.resetScrollTop();
@@ -1390,18 +1158,19 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     sortMeta.order = sortMeta.order * -1;
                 }
             } else {
-                if (!metaKey || !this.multiSortMeta) {
-                    this._multiSortMeta = [];
+                if (!metaKey || !this.multiSortMeta()) {
+                    this.multiSortMeta.set([]);
 
                     if (resetPageOnSort) {
-                        this._first = 0;
-                        this.firstChange.emit(this._first);
+                        this.first.set(0);
                     }
                 }
-                (<SortMeta[]>this._multiSortMeta).push({
+                const multiSortMeta = this.multiSortMeta() || [];
+                multiSortMeta.push({
                     field: <string>event.field,
                     order: this.defaultSortOrder()
                 });
+                this.multiSortMeta.set(multiSortMeta);
             }
 
             this.sortMultiple();
@@ -1415,11 +1184,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     sortSingle() {
-        let field = this.sortField || this.groupRowsBy();
-        let order = this.sortField ? this.sortOrder : this.groupRowsByOrder();
+        let field = this.sortField() || this.groupRowsBy();
+        let order = this.sortField() ? this.sortOrder() : this.groupRowsByOrder();
         const groupRowsBy = this.groupRowsBy();
-        if (groupRowsBy && this.sortField && groupRowsBy !== this.sortField) {
-            this._multiSortMeta = [this.getGroupRowsMeta(), { field: this.sortField, order: this.sortOrder }];
+        if (groupRowsBy && this.sortField() && groupRowsBy !== this.sortField()) {
+            this.multiSortMeta.set([this.getGroupRowsMeta(), { field: this.sortField(), order: this.sortOrder() }]);
             this.sortMultiple();
             return;
         }
@@ -1431,16 +1200,16 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
             if (this.lazy()) {
                 this.onLazyLoad.emit(this.createLazyLoadMetadata());
-            } else if (this.value) {
+            } else if (this.value()) {
                 if (this.customSort()) {
                     this.sortFunction.emit({
-                        data: this.value,
+                        data: this.value(),
                         mode: this.sortMode(),
                         field: field,
                         order: order
                     });
                 } else {
-                    this.value.sort((data1, data2) => {
+                    this.value().sort((data1, data2) => {
                         let value1 = ObjectUtils.resolveFieldData(data1, field);
                         let value2 = ObjectUtils.resolveFieldData(data2, field);
                         let result: any = null;
@@ -1454,7 +1223,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                         return order * (result || 0);
                     });
 
-                    this._value = [...this.value];
+                    this.value.set([...this.value()]);
                 }
 
                 if (this.hasFilter()) {
@@ -1475,26 +1244,26 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     sortMultiple() {
         const groupRowsBy = this.groupRowsBy();
         if (groupRowsBy) {
-            if (!this._multiSortMeta) this._multiSortMeta = [this.getGroupRowsMeta()];
-            else if ((<SortMeta[]>this.multiSortMeta)[0].field !== groupRowsBy) this._multiSortMeta = [this.getGroupRowsMeta(), ...this._multiSortMeta];
+            if (!this.multiSortMeta()) this.multiSortMeta.set([this.getGroupRowsMeta()]);
+            else if ((<SortMeta[]>this.multiSortMeta())[0].field !== groupRowsBy) this.multiSortMeta.set([this.getGroupRowsMeta(), ...(<SortMeta[]>this.multiSortMeta())]);
         }
 
-        if (this.multiSortMeta) {
+        if (this.multiSortMeta()) {
             if (this.lazy()) {
                 this.onLazyLoad.emit(this.createLazyLoadMetadata());
-            } else if (this.value) {
+            } else if (this.value()) {
                 if (this.customSort()) {
                     this.sortFunction.emit({
-                        data: this.value,
+                        data: this.value(),
                         mode: this.sortMode(),
-                        multiSortMeta: this.multiSortMeta
+                        multiSortMeta: this.multiSortMeta()
                     });
                 } else {
-                    this.value.sort((data1, data2) => {
-                        return this.multisortField(data1, data2, <SortMeta[]>this.multiSortMeta, 0);
+                    this.value().sort((data1, data2) => {
+                        return this.multisortField(data1, data2, <SortMeta[]>this.multiSortMeta(), 0);
                     });
 
-                    this._value = [...this.value];
+                    this.value.set([...this.value()]);
                 }
 
                 if (this.hasFilter()) {
@@ -1503,9 +1272,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             }
 
             this.onSort.emit({
-                multisortmeta: <SortMeta[]>this.multiSortMeta
+                multisortmeta: <SortMeta[]>this.multiSortMeta()
             });
-            this.tableService.onSort(this.multiSortMeta);
+            this.tableService.onSort(this.multiSortMeta() ?? null);
         }
     }
 
@@ -1519,14 +1288,14 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     compareValuesOnSort(value1: any, value2: any, order: any) {
-        return ObjectUtils.sort(value1, value2, order, this.filterLocale(), this.sortOrder);
+        return ObjectUtils.sort(value1, value2, order, this.filterLocale(), this.sortOrder());
     }
 
     getSortMeta(field: string) {
-        if (this.multiSortMeta && this.multiSortMeta.length) {
-            for (let i = 0; i < this.multiSortMeta.length; i++) {
-                if (this.multiSortMeta[i].field === field) {
-                    return this.multiSortMeta[i];
+        if (this.multiSortMeta() && this.multiSortMeta()!.length) {
+            for (let i = 0; i < this.multiSortMeta()!.length; i++) {
+                if (this.multiSortMeta()![i].field === field) {
+                    return this.multiSortMeta()![i];
                 }
             }
         }
@@ -1537,12 +1306,12 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     isSorted(field: string) {
         const sortMode = this.sortMode();
         if (sortMode === 'single') {
-            return this.sortField && this.sortField === field;
+            return this.sortField() && this.sortField() === field;
         } else if (sortMode === 'multiple') {
             let sorted = false;
-            if (this.multiSortMeta) {
-                for (let i = 0; i < this.multiSortMeta.length; i++) {
-                    if (this.multiSortMeta[i].field == field) {
+            if (this.multiSortMeta()) {
+                for (let i = 0; i < this.multiSortMeta()!.length; i++) {
+                    if (this.multiSortMeta()![i].field == field) {
                         sorted = true;
                         break;
                     }
@@ -1592,13 +1361,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
                     if (selected && metaKey) {
                         if (this.isSingleSelectionMode()) {
-                            this._selection = null;
+                            this.selection.set(null);
                             this.selectionKeys = {};
-                            this.selectionChange.emit(null);
                         } else {
                             let selectionIndex = this.findIndexInSelection(rowData);
-                            this._selection = this.selection.filter((val: any, i: number) => i != selectionIndex);
-                            this.selectionChange.emit(this.selection);
+                            this.selection.set(this.selection().filter((val: any, i: number) => i != selectionIndex));
                             if (dataKeyValue) {
                                 delete this.selectionKeys[dataKeyValue];
                             }
@@ -1611,22 +1378,20 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                         });
                     } else {
                         if (this.isSingleSelectionMode()) {
-                            this._selection = rowData;
-                            this.selectionChange.emit(rowData);
+                            this.selection.set(rowData);
                             if (dataKeyValue) {
                                 this.selectionKeys = {};
                                 this.selectionKeys[dataKeyValue] = 1;
                             }
                         } else if (this.isMultipleSelectionMode()) {
                             if (metaKey) {
-                                this._selection = this.selection || [];
+                                this.selection.set(this.selection() || []);
                             } else {
-                                this._selection = [];
+                                this.selection.set([]);
                                 this.selectionKeys = {};
                             }
 
-                            this._selection = [...this.selection, rowData];
-                            this.selectionChange.emit(this.selection);
+                            this.selection.set([...this.selection(), rowData]);
                             if (dataKeyValue) {
                                 this.selectionKeys[dataKeyValue] = 1;
                             }
@@ -1642,9 +1407,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 } else {
                     if (selectionMode === 'single') {
                         if (selected) {
-                            this._selection = null;
+                            this.selection.set(null);
                             this.selectionKeys = {};
-                            this.selectionChange.emit(this.selection);
                             this.onRowUnselect.emit({
                                 originalEvent: event.originalEvent,
                                 data: rowData,
@@ -1652,8 +1416,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 index: rowIndex
                             });
                         } else {
-                            this._selection = rowData;
-                            this.selectionChange.emit(this.selection);
+                            this.selection.set(rowData);
                             this.onRowSelect.emit({
                                 originalEvent: event.originalEvent,
                                 data: rowData,
@@ -1668,8 +1431,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     } else if (selectionMode === 'multiple') {
                         if (selected) {
                             let selectionIndex = this.findIndexInSelection(rowData);
-                            this._selection = this.selection.filter((val: any, i: number) => i != selectionIndex);
-                            this.selectionChange.emit(this.selection);
+                            this.selection.set(this.selection().filter((val: any, i: number) => i != selectionIndex));
                             this.onRowUnselect.emit({
                                 originalEvent: event.originalEvent,
                                 data: rowData,
@@ -1680,8 +1442,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                                 delete this.selectionKeys[dataKeyValue];
                             }
                         } else {
-                            this._selection = this.selection ? [...this.selection, rowData] : [rowData];
-                            this.selectionChange.emit(this.selection);
+                            this.selection.set(this.selection() ? [...this.selection(), rowData] : [rowData]);
                             this.onRowSelect.emit({
                                 originalEvent: event.originalEvent,
                                 data: rowData,
@@ -1718,16 +1479,14 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             const showContextMenu = () => {
                 this.contextMenu().show(event.originalEvent);
                 this.contextMenu().hideCallback = () => {
-                    this.contextMenuSelection = null;
-                    this.contextMenuSelectionChange.emit(null);
+                    this.contextMenuSelection.set(null);
                     this.tableService.onContextMenu(null);
                 };
             };
 
             const contextMenuSelectionMode = this.contextMenuSelectionMode();
             if (contextMenuSelectionMode === 'separate') {
-                this.contextMenuSelection = rowData;
-                this.contextMenuSelectionChange.emit(rowData);
+                this.contextMenuSelection.set(rowData);
                 this.tableService.onContextMenu(rowData);
                 showContextMenu();
                 this.onContextMenuSelect.emit({
@@ -1747,16 +1506,14 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     }
 
                     if (this.isSingleSelectionMode()) {
-                        this.selection = rowData;
-                        this.selectionChange.emit(rowData);
+                        this.selection.set(rowData);
 
                         if (dataKeyValue) {
                             this.selectionKeys = {};
                             this.selectionKeys[dataKeyValue] = 1;
                         }
                     } else if (this.isMultipleSelectionMode()) {
-                        this._selection = this.selection ? [...this.selection, rowData] : [rowData];
-                        this.selectionChange.emit(this.selection);
+                        this.selection.set(this.selection() ? [...this.selection(), rowData] : [rowData]);
 
                         if (dataKeyValue) {
                             this.selectionKeys[dataKeyValue] = 1;
@@ -1765,8 +1522,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 }
 
                 // Also update contextMenuSelection in joint mode
-                this.contextMenuSelection = rowData;
-                this.contextMenuSelectionChange.emit(rowData);
+                this.contextMenuSelection.set(rowData);
                 this.tableService.onContextMenu(rowData);
 
                 this.tableService.onSelectionChange();
@@ -1795,20 +1551,21 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         }
 
         if (this.lazy() && this.paginator()) {
-            (rangeStart as number) -= <number>this.first;
-            (rangeEnd as number) -= <number>this.first;
+            (rangeStart as number) -= <number>this.first();
+            (rangeEnd as number) -= <number>this.first();
         }
 
         let rangeRowsData: RowData[] = [];
+        let newSelection = this.selection() ? [...this.selection()] : [];
         for (let i = <number>rangeStart; i <= <number>rangeEnd; i++) {
-            let rangeRowData = this.filteredValue ? this.filteredValue[i] : this.value[i];
+            let rangeRowData = this.filteredValue ? this.filteredValue[i] : this.value()[i];
             if (!this.isSelected(rangeRowData) && !isMetaKeySelection) {
                 if (!this.isRowSelectable(rangeRowData, rowIndex)) {
                     continue;
                 }
 
                 rangeRowsData.push(rangeRowData);
-                this._selection = [...this.selection, rangeRowData];
+                newSelection = [...newSelection, rangeRowData];
                 const dataKey = this.dataKey();
                 let dataKeyValue = dataKey ? String(ObjectUtils.resolveFieldData(rangeRowData, dataKey)) : null;
                 if (dataKeyValue) {
@@ -1816,7 +1573,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 }
             }
         }
-        this.selectionChange.emit(this.selection);
+        this.selection.set(newSelection);
         this.onRowSelect.emit({
             originalEvent: event,
             data: rangeRowsData,
@@ -1840,10 +1597,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             rangeEnd = this.rangeRowIndex;
         }
 
+        let newSelection = this.selection() ? [...this.selection()] : [];
         for (let i = <number>rangeStart; i <= <number>rangeEnd; i++) {
-            let rangeRowData = this.value[i];
+            let rangeRowData = this.value()[i];
             let selectionIndex = this.findIndexInSelection(rangeRowData);
-            this._selection = this.selection.filter((val: any, i: number) => i != selectionIndex);
+            newSelection = newSelection.filter((val: any, j: number) => j != selectionIndex);
             const dataKey = this.dataKey();
             let dataKeyValue = dataKey ? String(ObjectUtils.resolveFieldData(rangeRowData, dataKey)) : null;
             if (dataKeyValue) {
@@ -1855,16 +1613,17 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 type: 'row'
             });
         }
+        this.selection.set(newSelection);
     }
 
     isSelected(rowData: any) {
-        if (rowData && this.selection) {
+        if (rowData && this.selection()) {
             const dataKey = this.dataKey();
             if (dataKey) {
                 return this.selectionKeys[ObjectUtils.resolveFieldData(rowData, dataKey)] !== undefined;
             } else {
-                if (Array.isArray(this.selection)) return this.findIndexInSelection(rowData) > -1;
-                else return this.equals(rowData, this.selection);
+                if (Array.isArray(this.selection())) return this.findIndexInSelection(rowData) > -1;
+                else return this.equals(rowData, this.selection());
             }
         }
 
@@ -1873,9 +1632,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     findIndexInSelection(rowData: any) {
         let index: number = -1;
-        if (this.selection && this.selection.length) {
-            for (let i = 0; i < this.selection.length; i++) {
-                if (this.equals(rowData, this.selection[i])) {
+        if (this.selection() && this.selection().length) {
+            for (let i = 0; i < this.selection().length; i++) {
+                if (this.equals(rowData, this.selection()[i])) {
                     index = i;
                     break;
                 }
@@ -1897,13 +1656,12 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     toggleRowWithRadio(event: any, rowData: any) {
         this.preventSelectionSetterPropagation = true;
 
-        if (this.selection != rowData) {
+        if (this.selection() != rowData) {
             if (!this.isRowSelectable(rowData, event.rowIndex)) {
                 return;
             }
 
-            this._selection = rowData;
-            this.selectionChange.emit(this.selection);
+            this.selection.set(rowData);
             this.onRowSelect.emit({
                 originalEvent: event.originalEvent,
                 index: event.rowIndex,
@@ -1917,8 +1675,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 this.selectionKeys[String(ObjectUtils.resolveFieldData(rowData, dataKey))] = 1;
             }
         } else {
-            this._selection = null;
-            this.selectionChange.emit(this.selection);
+            this.selection.set(null);
             this.onRowUnselect.emit({
                 originalEvent: event.originalEvent,
                 index: event.rowIndex,
@@ -1935,7 +1692,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     toggleRowWithCheckbox(event: { originalEvent: Event; rowIndex: number }, rowData: any) {
-        this.selection = this.selection || [];
+        this.selection.set(this.selection() || []);
         let selected = this.isSelected(rowData);
         const dataKey = this.dataKey();
         let dataKeyValue = dataKey ? String(ObjectUtils.resolveFieldData(rowData, dataKey)) : null;
@@ -1943,8 +1700,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
         if (selected) {
             let selectionIndex = this.findIndexInSelection(rowData);
-            this._selection = this.selection.filter((val: any, i: number) => i != selectionIndex);
-            this.selectionChange.emit(this.selection);
+            this.selection.set(this.selection().filter((val: any, i: number) => i != selectionIndex));
             this.onRowUnselect.emit({
                 originalEvent: event.originalEvent,
                 index: event.rowIndex,
@@ -1959,8 +1715,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                 return;
             }
 
-            this._selection = this.selection ? [...this.selection, rowData] : [rowData];
-            this.selectionChange.emit(this.selection);
+            this.selection.set(this.selection() ? [...this.selection(), rowData] : [rowData]);
             this.onRowSelect.emit({
                 originalEvent: event.originalEvent,
                 index: event.rowIndex,
@@ -1980,21 +1735,20 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     toggleRowsWithCheckbox({ originalEvent }: CheckboxChangeEvent, check: boolean) {
-        if (this._selectAll !== null) {
-            this.selectAllChange.emit({ originalEvent: originalEvent!, checked: check });
+        if (this.selectAll() !== null) {
+            this.selectAll.set(check);
         } else {
             const data = this.selectionPageOnly() ? this.dataToRender(this.processedData) : this.processedData;
-            let selection = this.selectionPageOnly() && this._selection ? this._selection.filter((s: any) => !data.some((d: any) => this.equals(s, d))) : [];
+            let selection = this.selectionPageOnly() && this.selection() ? this.selection().filter((s: any) => !data.some((d: any) => this.equals(s, d))) : [];
 
             if (check) {
-                selection = this.frozenValue ? [...selection, ...this.frozenValue, ...data] : [...selection, ...data];
+                selection = this.frozenValue() ? [...selection, ...(<any[]>this.frozenValue()), ...data] : [...selection, ...data];
                 selection = this.rowSelectable() ? selection.filter((data: any, index: number) => this.rowSelectable()({ data, index })) : selection;
             }
 
-            this._selection = selection;
+            this.selection.set(selection);
             this.preventSelectionSetterPropagation = true;
             this.updateSelectionKeys();
-            this.selectionChange.emit(this._selection);
             this.tableService.onSelectionChange();
             this.onHeaderCheckboxToggle.emit({
                 originalEvent: originalEvent!,
@@ -2017,9 +1771,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             clearTimeout(this.filterTimeout);
         }
         if (!this.isFilterBlank(value)) {
-            this.filters[field] = { value: value, matchMode: matchMode };
-        } else if (this.filters[field]) {
-            delete this.filters[field];
+            this.filters()[field] = { value: value, matchMode: matchMode };
+        } else if (this.filters()[field]) {
+            delete this.filters()[field];
         }
 
         this.filterTimeout = setTimeout(() => {
@@ -2044,52 +1798,51 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     _filter() {
         if (!this.restoringFilter) {
-            this.first = 0;
-            this.firstChange.emit(this.first);
+            this.first.set(0);
         }
 
         if (this.lazy()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         } else {
-            if (!this.value) {
+            if (!this.value()) {
                 return;
             }
             if (!this.hasFilter()) {
                 this.filteredValue = null;
                 if (this.paginator()) {
-                    this.totalRecords = this._totalRecords === 0 && this.value ? this.value.length : this._totalRecords;
+                    this.totalRecords.set(this.totalRecords() === 0 && this.value().length ? this.value().length : this.totalRecords());
                 }
             } else {
                 let globalFilterFieldsArray;
-                if (this.filters['global']) {
+                if (this.filters()['global']) {
                     const globalFilterFields = this.globalFilterFields();
-                    if (!this.columns && !globalFilterFields) throw new Error('Global filtering requires dynamic columns or globalFilterFields to be defined.');
-                    else globalFilterFieldsArray = globalFilterFields || this.columns;
+                    if (!this.columns() && !globalFilterFields) throw new Error('Global filtering requires dynamic columns or globalFilterFields to be defined.');
+                    else globalFilterFieldsArray = globalFilterFields || this.columns();
                 }
 
                 this.filteredValue = [];
 
-                for (let i = 0; i < this.value.length; i++) {
+                for (let i = 0; i < this.value().length; i++) {
                     let localMatch = true;
                     let globalMatch = false;
                     let localFiltered = false;
 
-                    for (let prop in this.filters) {
-                        if (this.filters.hasOwnProperty(prop) && prop !== 'global') {
+                    for (let prop in this.filters()) {
+                        if (this.filters().hasOwnProperty(prop) && prop !== 'global') {
                             localFiltered = true;
                             let filterField = prop;
-                            let filterMeta = this.filters[filterField];
+                            let filterMeta = this.filters()[filterField];
 
                             if (Array.isArray(filterMeta)) {
                                 for (let meta of filterMeta) {
-                                    localMatch = this.executeLocalFilter(filterField, this.value[i], meta);
+                                    localMatch = this.executeLocalFilter(filterField, this.value()[i], meta);
 
                                     if ((meta.operator === FilterOperator.OR && localMatch) || (meta.operator === FilterOperator.AND && !localMatch)) {
                                         break;
                                     }
                                 }
                             } else {
-                                localMatch = this.executeLocalFilter(filterField, this.value[i], <any>filterMeta);
+                                localMatch = this.executeLocalFilter(filterField, this.value()[i], <any>filterMeta);
                             }
 
                             if (!localMatch) {
@@ -2098,10 +1851,10 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                         }
                     }
 
-                    if (this.filters['global'] && !globalMatch && globalFilterFieldsArray) {
+                    if (this.filters()['global'] && !globalMatch && globalFilterFieldsArray) {
                         for (let j = 0; j < globalFilterFieldsArray.length; j++) {
                             let globalFilterField = globalFilterFieldsArray[j].field || globalFilterFieldsArray[j];
-                            globalMatch = (<any>this.filterService).filters[(<any>this.filters['global']).matchMode](ObjectUtils.resolveFieldData(this.value[i], globalFilterField), (<FilterMetadata>this.filters['global']).value, this.filterLocale());
+                            globalMatch = (<any>this.filterService).filters[(<any>this.filters()['global']).matchMode](ObjectUtils.resolveFieldData(this.value()[i], globalFilterField), (<FilterMetadata>this.filters()['global']).value, this.filterLocale());
 
                             if (globalMatch) {
                                 break;
@@ -2110,33 +1863,33 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     }
 
                     let matches: boolean;
-                    if (this.filters['global']) {
+                    if (this.filters()['global']) {
                         matches = localFiltered ? localFiltered && localMatch && globalMatch : globalMatch;
                     } else {
                         matches = localFiltered && localMatch;
                     }
 
                     if (matches) {
-                        this.filteredValue.push(this.value[i]);
+                        this.filteredValue.push(this.value()[i]);
                     }
                 }
 
-                if (this.filteredValue.length === this.value.length) {
+                if (this.filteredValue.length === this.value().length) {
                     this.filteredValue = null;
                 }
 
                 if (this.paginator()) {
-                    this.totalRecords = this.filteredValue ? this.filteredValue.length : this._totalRecords === 0 && this.value ? this.value.length : (this._totalRecords ?? 0);
+                    this.totalRecords.set(this.filteredValue ? this.filteredValue.length : this.totalRecords() === 0 && this.value().length ? this.value().length : this.totalRecords());
                 }
             }
         }
 
         this.onFilter.emit({
-            filters: <{ [s: string]: FilterMetadata | undefined }>this.filters,
-            filteredValue: this.filteredValue || this.value
+            filters: <{ [s: string]: FilterMetadata | undefined }>this.filters(),
+            filteredValue: this.filteredValue || this.value()
         });
 
-        this.tableService.onValueChange(this.value);
+        this.tableService.onValueChange(this.value());
 
         if (this.isStateful() && !this.restoringFilter) {
             this.saveState();
@@ -2164,8 +1917,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     hasFilter() {
         let empty = true;
-        for (let prop in this.filters) {
-            if (this.filters.hasOwnProperty(prop)) {
+        for (let prop in this.filters()) {
+            if (this.filters().hasOwnProperty(prop)) {
                 empty = false;
                 break;
             }
@@ -2176,39 +1929,38 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     createLazyLoadMetadata(): any {
         return {
-            first: this.first,
-            rows: this.rows,
-            sortField: this.sortField,
-            sortOrder: this.sortOrder,
-            filters: this.filters,
-            globalFilter: this.filters && this.filters['global'] ? (<FilterMetadata>this.filters['global']).value : null,
-            multiSortMeta: this.multiSortMeta,
+            first: this.first() ?? 0,
+            rows: this.rows(),
+            sortField: this.sortField(),
+            sortOrder: this.sortOrder(),
+            filters: this.filters(),
+            globalFilter: this.filters() && this.filters()['global'] ? (<FilterMetadata>this.filters()['global']).value : null,
+            multiSortMeta: this.multiSortMeta(),
             forceUpdate: () => this.cd.detectChanges()
         };
     }
 
     public clear() {
-        this._sortField = null;
-        this._sortOrder = this.defaultSortOrder();
-        this._multiSortMeta = null;
+        this.sortField.set(null);
+        this.sortOrder.set(this.defaultSortOrder());
+        this.multiSortMeta.set(null);
         this.tableService.onSort(null);
 
         this.clearFilterValues();
 
         this.filteredValue = null;
 
-        this.first = 0;
-        this.firstChange.emit(this.first);
+        this.first.set(0);
 
         if (this.lazy()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         } else {
-            this.totalRecords = this._totalRecords === 0 && this._value ? this._value.length : (this._totalRecords ?? 0);
+            this.totalRecords.set(this.totalRecords() === 0 && this.value().length ? this.value().length : this.totalRecords());
         }
     }
 
     clearFilterValues() {
-        for (const [, filterMetadata] of Object.entries(this.filters)) {
+        for (const [, filterMetadata] of Object.entries(this.filters())) {
             if (Array.isArray(filterMetadata)) {
                 for (let filter of filterMetadata) {
                     filter.value = null;
@@ -2234,17 +1986,17 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     public exportCSV(options?: ExportCSVOptions) {
         let data;
         let csv = '';
-        let columns = this.columns;
+        let columns = this.columns();
 
         if (options && options.selectionOnly) {
-            data = this.selection || [];
+            data = this.selection() || [];
         } else if (options && options.allValues) {
-            data = this.value || [];
+            data = this.value() || [];
         } else {
-            data = this.filteredValue || this.value;
+            data = this.filteredValue || this.value();
 
-            if (this.frozenValue) {
-                data = data ? [...this.frozenValue, ...data] : this.frozenValue;
+            if (this.frozenValue()) {
+                data = data ? [...(<any[]>this.frozenValue()), ...data] : this.frozenValue();
             }
         }
 
@@ -2415,18 +2167,18 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
         let dataKeyValue = groupRowsBy ? String(ObjectUtils.resolveFieldData(rowData, groupRowsBy)) : String(ObjectUtils.resolveFieldData(rowData, dataKey));
 
-        if (this.expandedRowKeys[dataKeyValue] != null) {
-            delete this.expandedRowKeys[dataKeyValue];
+        if (this.expandedRowKeys()[dataKeyValue] != null) {
+            delete this.expandedRowKeys()[dataKeyValue];
             this.onRowCollapse.emit({
                 originalEvent: <Event>event,
                 data: rowData
             });
         } else {
             if (this.rowExpandMode() === 'single') {
-                this.expandedRowKeys = {};
+                Object.keys(this.expandedRowKeys()).forEach(k => delete this.expandedRowKeys()[k]);
             }
 
-            this.expandedRowKeys[dataKeyValue] = true;
+            this.expandedRowKeys()[dataKeyValue] = true;
             this.onRowExpand.emit({
                 originalEvent: <Event>event,
                 data: rowData
@@ -2444,7 +2196,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     isRowExpanded(rowData: any): boolean {
         const groupRowsBy = this.groupRowsBy();
-        return groupRowsBy ? this.expandedRowKeys[String(ObjectUtils.resolveFieldData(rowData, groupRowsBy))] === true : this.expandedRowKeys[String(ObjectUtils.resolveFieldData(rowData, this.dataKey()))] === true;
+        return groupRowsBy ? this.expandedRowKeys()[String(ObjectUtils.resolveFieldData(rowData, groupRowsBy))] === true : this.expandedRowKeys()[String(ObjectUtils.resolveFieldData(rowData, this.dataKey()))] === true;
     }
 
     isRowEditing(rowData: any): boolean {
@@ -2600,12 +2352,12 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             }
 
             if (allowDrop) {
-                ObjectUtils.reorderArray(<any[]>this.columns, dragIndex, dropIndex);
+                ObjectUtils.reorderArray(<any[]>this.columns(), dragIndex, dropIndex);
 
                 this.onColReorder.emit({
                     dragIndex: dragIndex,
                     dropIndex: dropIndex,
-                    columns: this.columns
+                    columns: this.columns()
                 });
 
                 if (this.isStateful()) {
@@ -2704,11 +2456,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     onRowDrop(event: Event, rowElement: any) {
         if (this.droppedRowIndex != null) {
             let dropIndex = <number>this.draggedRowIndex > this.droppedRowIndex ? this.droppedRowIndex : this.droppedRowIndex === 0 ? 0 : this.droppedRowIndex - 1;
-            ObjectUtils.reorderArray(this.value, <number>this.draggedRowIndex, dropIndex);
+            ObjectUtils.reorderArray(this.value(), <number>this.draggedRowIndex, dropIndex);
 
             if (this.virtualScroll()) {
                 // TODO: Check
-                this._value = [...this._value];
+                this.value.set([...this.value()]);
             }
 
             this.onRowReorder.emit({
@@ -2722,7 +2474,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     isEmpty() {
-        let data = this.filteredValue || this.value;
+        let data = this.filteredValue || this.value();
         return data == null || data.length == 0;
     }
 
@@ -2749,100 +2501,98 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     isStateful() {
-        return this.stateKey != null;
+        return this.stateKey() != null;
     }
 
     saveState() {
         const storage = this.getStorage();
         let state: TableState = {};
 
-        if (this.paginator()) {
-            state.first = <number>this.first;
-            state.rows = this.rows;
-        }
-
-        if (this.sortField) {
-            state.sortField = this.sortField;
-            state.sortOrder = this.sortOrder;
-        }
-
-        if (this.multiSortMeta) {
-            state.multiSortMeta = this.multiSortMeta;
-        }
-
-        if (this.hasFilter()) {
-            state.filters = this.filters;
-        }
-
-        if (this.resizableColumns()) {
-            this.saveColumnWidths(state);
-        }
-
-        if (this.reorderableColumns()) {
-            this.saveColumnOrder(state);
-        }
-
-        if (this.selection) {
-            state.selection = this.selection;
-        }
-
-        if (Object.keys(this.expandedRowKeys).length) {
-            state.expandedRowKeys = this.expandedRowKeys;
-        }
-
-        storage.setItem(<string>this.stateKey, JSON.stringify(state));
-        this.onStateSave.emit(state);
-    }
-
-    clearState() {
-        const storage = this.getStorage();
-
-        if (this.stateKey) {
-            storage.removeItem(this.stateKey);
-        }
-    }
-
-    restoreState() {
-        const storage = this.getStorage();
-        const stateString = storage.getItem(<string>this.stateKey);
-        const dateFormat = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/;
-        const reviver = function (key: any, value: any) {
-            if (typeof value === 'string' && dateFormat.test(value)) {
-                return new Date(value);
-            }
-
-            return value;
-        };
-
-        if (stateString) {
-            let state: TableState = JSON.parse(stateString, reviver);
-
             if (this.paginator()) {
-                if (this.first !== undefined) {
-                    this.first = state.first;
-                    this.firstChange.emit(this.first!);
+                state.first = <number>this.first();
+                state.rows = this.rows();
+            }
+
+            if (this.sortField()) {
+                state.sortField = <string | undefined>this.sortField();
+                state.sortOrder = this.sortOrder();
+            }
+
+            if (this.multiSortMeta()) {
+                state.multiSortMeta = <SortMeta[] | undefined>this.multiSortMeta();
+            }
+
+            if (this.hasFilter()) {
+                state.filters = this.filters();
+            }
+
+            if (this.resizableColumns()) {
+                this.saveColumnWidths(state);
+            }
+
+            if (this.reorderableColumns()) {
+                this.saveColumnOrder(state);
+            }
+
+            if (this.selection()) {
+                state.selection = this.selection();
+            }
+
+            if (Object.keys(this.expandedRowKeys()).length) {
+                state.expandedRowKeys = this.expandedRowKeys();
+            }
+
+            storage.setItem(<string>this.stateKey(), JSON.stringify(state));
+            this.onStateSave.emit(state);
+        }
+
+        clearState() {
+            const storage = this.getStorage();
+
+            if (this.stateKey()) {
+                storage.removeItem(<string>this.stateKey());
+            }
+        }
+
+        restoreState() {
+            const storage = this.getStorage();
+            const stateString = storage.getItem(<string>this.stateKey());
+            const dateFormat = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/;
+            const reviver = function (key: any, value: any) {
+                if (typeof value === 'string' && dateFormat.test(value)) {
+                    return new Date(value);
                 }
 
-                if (this.rows !== undefined) {
-                    this.rows = state.rows;
-                    this.rowsChange.emit(this.rows!);
+                return value;
+            };
+
+            if (stateString) {
+                let state: TableState = JSON.parse(stateString, reviver);
+
+                if (this.paginator()) {
+                    if (this.first() !== undefined) {
+                        this.first.set(state.first);
+                    }
+
+                    if (this.rows() !== undefined) {
+                        this.rows.set(state.rows);
+                    }
                 }
-            }
 
-            if (state.sortField) {
-                this.restoringSort = true;
-                this._sortField = state.sortField;
-                this._sortOrder = <number>state.sortOrder;
-            }
+                if (state.sortField) {
+                    this.restoringSort = true;
+                    this.sortField.set(state.sortField);
+                    this.sortOrder.set(<number>state.sortOrder);
+                }
 
-            if (state.multiSortMeta) {
-                this.restoringSort = true;
-                this._multiSortMeta = state.multiSortMeta;
-            }
+                if (state.multiSortMeta) {
+                    this.restoringSort = true;
+                    this.multiSortMeta.set(state.multiSortMeta);
+                }
 
             if (state.filters) {
                 this.restoringFilter = true;
-                this.filters = state.filters;
+                Object.assign(this.filters(), state.filters);
             }
 
             if (this.resizableColumns()) {
@@ -2855,11 +2605,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             // }
 
             if (state.expandedRowKeys) {
-                this.expandedRowKeys = state.expandedRowKeys;
+                Object.assign(this.expandedRowKeys(), state.expandedRowKeys);
             }
 
             if (state.selection) {
-                Promise.resolve(null).then(() => this.selectionChange.emit(state.selection));
+                Promise.resolve(null).then(() => this.selection.set(state.selection));
             }
 
             this.stateRestored = true;
@@ -2922,9 +2672,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     }
 
     saveColumnOrder(state: any) {
-        if (this.columns) {
+        if (this.columns()) {
             let columnOrder: string[] = [];
-            this.columns.map((column) => {
+            (<any[]>this.columns()).map((column) => {
                 columnOrder.push(column.field || column.key);
             });
 
@@ -2934,7 +2684,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     restoreColumnOrder() {
         const storage = this.getStorage();
-        const stateString = storage.getItem(<string>this.stateKey);
+        const stateString = storage.getItem(<string>this.stateKey());
         if (stateString) {
             let state: TableState = JSON.parse(stateString);
             let columnOrder = state.columnOrder;
@@ -2949,14 +2699,14 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     }
                 });
                 this.columnOrderStateRestored = true;
-                this.columns = reorderedColumns;
+                this.columns.set(reorderedColumns);
             }
         }
     }
 
     findColumnByKey(key: any) {
-        if (this.columns) {
-            for (let col of this.columns) {
+        if (this.columns()) {
+            for (let col of <any[]>this.columns()) {
                 if (col.key === key || col.field === key) return col;
                 else continue;
             }
@@ -3075,34 +2825,15 @@ export class TableBody extends BaseComponent {
 
     readonly template = input<Nullable<TemplateRef<any>>>(undefined, { alias: "pTableBodyTemplate" });
 
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get value(): any[] | undefined {
-        return this._value;
-    }
-    set value(val: any[] | undefined) {
-        this._value = val;
-        if (this.frozenRows()) {
-            this.updateFrozenRowStickyPosition();
-        }
+    readonly value = input<any[]>([]);
 
-        if (this.dataTable.scrollable() && this.dataTable.rowGroupMode() === 'subheader') {
-            this.updateFrozenRowGroupHeaderStickyPosition();
-        }
-    }
-
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input({ transform: booleanAttribute }) frozen: boolean | undefined;
+    readonly frozen = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     readonly frozenRows = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     readonly scrollerOptions = input<any>();
 
     subscription: Subscription;
-
-    _value: any[] | undefined;
 
     onAfterViewInit() {
         if (this.frozenRows()) {
@@ -3128,7 +2859,7 @@ export class TableBody extends BaseComponent {
 
     shouldRenderRowGroupHeader(value: any, rowData: any, i: number) {
         let currentRowFieldData = ObjectUtils.resolveFieldData(rowData, this.dataTable?.groupRowsBy() || '');
-        let prevRowData = value[i - (this.dataTable?._first || 0) - 1];
+        let prevRowData = value[i - (this.dataTable?.first() || 0) - 1];
         if (prevRowData) {
             let previousRowFieldData = ObjectUtils.resolveFieldData(prevRowData, this.dataTable?.groupRowsBy() || '');
             return currentRowFieldData !== previousRowFieldData;
@@ -3139,7 +2870,7 @@ export class TableBody extends BaseComponent {
 
     shouldRenderRowGroupFooter(value: any, rowData: any, i: number) {
         let currentRowFieldData = ObjectUtils.resolveFieldData(rowData, this.dataTable?.groupRowsBy() || '');
-        let nextRowData = value[i - (this.dataTable?._first || 0) + 1];
+        let nextRowData = value[i - (this.dataTable?.first() || 0) + 1];
         if (nextRowData) {
             let nextRowFieldData = ObjectUtils.resolveFieldData(nextRowData, this.dataTable?.groupRowsBy() || '');
             return currentRowFieldData !== nextRowFieldData;
@@ -3206,7 +2937,7 @@ export class TableBody extends BaseComponent {
     }
 
     getRowIndex(rowIndex: number) {
-        const index = this.dataTable.paginator() ? <number>this.dataTable.first + rowIndex : rowIndex;
+        const index = this.dataTable.paginator() ? (this.dataTable.first() || 0) + rowIndex : rowIndex;
         const getItemOptions = this.getScrollerOption('getItemOptions');
         return getItemOptions ? getItemOptions(index).index : index;
     }
@@ -3214,7 +2945,7 @@ export class TableBody extends BaseComponent {
     get dataP() {
         return this.cn({
             hoverable: this.dataTable.rowHover() || this.dataTable.selectionMode(),
-            frozen: this.frozen
+            frozen: this.frozen()
         });
     }
 }
@@ -3249,16 +2980,7 @@ export class RowGroupHeader extends BaseComponent {
     providers: [TableStyle]
 })
 export class FrozenColumn extends BaseComponent {
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get frozen(): boolean {
-        return this._frozen;
-    }
-
-    set frozen(val: boolean) {
-        this._frozen = val;
-        Promise.resolve(null).then(() => this.updateStickyPosition());
-    }
+    readonly frozen = input<boolean>(true);
 
     readonly alignFrozen = input<string>('left');
 
@@ -3311,10 +3033,8 @@ export class FrozenColumn extends BaseComponent {
         }, time);
     }
 
-    _frozen: boolean = true;
-
     updateStickyPosition() {
-        if (this._frozen) {
+        if (this.frozen()) {
             if (this.alignFrozen() === 'right') {
                 let right = 0;
                 let sibling = this.el.nativeElement.nextElementSibling;
@@ -3358,7 +3078,10 @@ export class FrozenColumn extends BaseComponent {
         '[class]': "cx('sortableColumn')",
         '[tabindex]': 'isEnabled() ? "0" : null',
         role: 'columnheader',
-        '[attr.aria-sort]': 'sortOrder'
+        '[attr.aria-sort]': 'sortOrder',
+        '(click)': 'onClick($event)',
+        '(keydown.space)': 'onEnterKey($event)',
+        '(keydown.enter)': 'onEnterKey($event)'
     },
     providers: [TableStyle]
 })
@@ -3399,7 +3122,7 @@ export class SortableColumn extends BaseComponent {
         const sortMode = this.dataTable.sortMode();
         if (sortMode === 'single') {
             sorted = this.dataTable.isSorted(<string>this.field()) as boolean;
-            sortOrder = this.dataTable.sortOrder;
+            sortOrder = this.dataTable.sortOrder();
         } else if (sortMode === 'multiple') {
             const sortMeta = this.dataTable.getSortMeta(<string>this.field());
             sorted = !!sortMeta;
@@ -3410,7 +3133,6 @@ export class SortableColumn extends BaseComponent {
         this.sortOrder = sorted ? (sortOrder === 1 ? 'ascending' : 'descending') : 'none';
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: MouseEvent) {
         if (this.isEnabled() && !this.isFilterElement(<HTMLElement>event.target)) {
             this.updateSortState();
@@ -3423,8 +3145,6 @@ export class SortableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.space', ['$event'])
-    @HostListener('keydown.enter', ['$event'])
     onEnterKey(event: MouseEvent) {
         this.onClick(event);
 
@@ -3488,7 +3208,7 @@ export class SortIcon extends BaseComponent {
     updateSortState() {
         const sortMode = this.dataTable.sortMode();
         if (sortMode === 'single') {
-            this.sortOrder = this.dataTable.isSorted(<string>this.field()) ? this.dataTable.sortOrder : 0;
+            this.sortOrder = this.dataTable.isSorted(<string>this.field()) ? this.dataTable.sortOrder() : 0;
         } else if (sortMode === 'multiple') {
             let sortMeta = this.dataTable.getSortMeta(<string>this.field());
             this.sortOrder = sortMeta ? sortMeta.order : 0;
@@ -3498,7 +3218,7 @@ export class SortIcon extends BaseComponent {
     }
 
     getMultiSortMetaIndex() {
-        let multiSortMeta = this.dataTable._multiSortMeta;
+        let multiSortMeta = this.dataTable.multiSortMeta();
         let index = -1;
 
         if (multiSortMeta && this.dataTable.sortMode() === 'multiple' && this.dataTable.showInitialSortBadge() && multiSortMeta.length > 1) {
@@ -3538,7 +3258,10 @@ export class SortIcon extends BaseComponent {
     host: {
         '[class]': "cx('selectableRow')",
         '[tabindex]': 'setRowTabIndex()',
-        '[attr.data-p-selectable-row]': 'true'
+        '[attr.data-p-selectable-row]': 'true',
+        '(click)': 'onClick($event)',
+        '(touchend)': 'onTouchEnd($event)',
+        '(keydown)': 'onKeyDown($event)'
     },
     providers: [TableStyle]
 })
@@ -3570,7 +3293,7 @@ export class SelectableRow extends BaseComponent {
     setRowTabIndex() {
         const selectionMode = this.dataTable.selectionMode();
         if (selectionMode === 'single' || selectionMode === 'multiple') {
-            return !this.dataTable.selection ? 0 : this.dataTable.anchorRowIndex === this.index() ? 0 : -1;
+            return !this.dataTable.selection() ? 0 : this.dataTable.anchorRowIndex === this.index() ? 0 : -1;
         }
     }
 
@@ -3580,7 +3303,6 @@ export class SelectableRow extends BaseComponent {
         }
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: Event) {
         if (this.isEnabled()) {
             this.dataTable.handleRowClick({
@@ -3591,14 +3313,12 @@ export class SelectableRow extends BaseComponent {
         }
     }
 
-    @HostListener('touchend', ['$event'])
     onTouchEnd(event: Event) {
         if (this.isEnabled()) {
             this.dataTable.handleRowTouchEnd(event);
         }
     }
 
-    @HostListener('keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
         switch (event.code) {
             case 'ArrowDown':
@@ -3628,7 +3348,7 @@ export class SelectableRow extends BaseComponent {
             default:
                 if (event.code === 'KeyA' && (event.metaKey || event.ctrlKey) && this.dataTable.selectionMode() === 'multiple') {
                     const data = this.dataTable.dataToRender(this.dataTable.processedData);
-                    this.dataTable.selection = [...data];
+                    this.dataTable.selection.set([...data]);
                     this.dataTable.selectRange(event, data.length - 1, true);
 
                     event.preventDefault();
@@ -3688,7 +3408,7 @@ export class SelectableRow extends BaseComponent {
             const lastSelectableRowIndex = DomHandler.getAttribute(lastRow, 'index');
 
             this.dataTable.anchorRowIndex = lastSelectableRowIndex;
-            this.dataTable.selection = data.slice(this.index() || 0, data.length);
+            this.dataTable.selection.set(data.slice(this.index() || 0, data.length));
             this.dataTable.selectRange(event, this.index() || 0);
         }
         event.preventDefault();
@@ -3704,7 +3424,7 @@ export class SelectableRow extends BaseComponent {
             const firstSelectableRowIndex = DomHandler.getAttribute(firstRow, 'index');
 
             this.dataTable.anchorRowIndex = this.dataTable.anchorRowIndex || firstSelectableRowIndex || 0;
-            this.dataTable.selection = data.slice(0, (this.index() || 0) + 1);
+            this.dataTable.selection.set(data.slice(0, (this.index() || 0) + 1));
             this.dataTable.selectRange(event, this.index() || 0);
         }
         event.preventDefault();
@@ -3717,23 +3437,24 @@ export class SelectableRow extends BaseComponent {
         } else {
             this.onEnterKey(event);
 
-            if (event.shiftKey && this.dataTable.selection !== null) {
+            if (event.shiftKey && this.dataTable.selection() !== null) {
                 const data = this.dataTable.dataToRender(this.dataTable.rows);
                 let index;
 
-                if (ObjectUtils.isNotEmpty(this.dataTable.selection) && this.dataTable.selection.length > 0) {
+                const selection = this.dataTable.selection();
+                if (ObjectUtils.isNotEmpty(selection) && selection.length > 0) {
                     let firstSelectedRowIndex, lastSelectedRowIndex;
-                    firstSelectedRowIndex = ObjectUtils.findIndexInList(this.dataTable.selection[0], data);
-                    lastSelectedRowIndex = ObjectUtils.findIndexInList(this.dataTable.selection[this.dataTable.selection.length - 1], data);
+                    firstSelectedRowIndex = ObjectUtils.findIndexInList(selection[0], data);
+                    lastSelectedRowIndex = ObjectUtils.findIndexInList(selection[selection.length - 1], data);
 
                     index = (this.index() || 0) <= firstSelectedRowIndex ? lastSelectedRowIndex : firstSelectedRowIndex;
                 } else {
-                    index = ObjectUtils.findIndexInList(this.dataTable.selection, data);
+                    index = ObjectUtils.findIndexInList(selection, data);
                 }
 
                 this.dataTable.anchorRowIndex = index || 0;
                 const indexValue = this.index();
-                this.dataTable.selection = index !== indexValue ? data.slice(Math.min(index || 0, indexValue || 0), Math.max(index || 0, indexValue || 0) + 1) : [this.data()];
+                this.dataTable.selection.set(index !== indexValue ? data.slice(Math.min(index || 0, indexValue || 0), Math.max(index || 0, indexValue || 0) + 1) : [this.data()]);
                 this.dataTable.selectRange(event, this.index() || 0);
             }
 
@@ -3795,7 +3516,8 @@ export class SelectableRow extends BaseComponent {
     selector: '[hSelectableRowDblClick]',
     standalone: false,
     host: {
-        '[class]': 'cx("selectableRow")'
+        '[class]': 'cx("selectableRow")',
+        '(dblclick)': 'onClick($event)'
     },
     providers: [TableStyle]
 })
@@ -3830,7 +3552,6 @@ export class SelectableRowDblClick extends BaseComponent {
         }
     }
 
-    @HostListener('dblclick', ['$event'])
     onClick(event: Event) {
         if (this.isEnabled()) {
             this.dataTable.handleRowClick({
@@ -3857,7 +3578,8 @@ export class SelectableRowDblClick extends BaseComponent {
     standalone: false,
     host: {
         '[class]': 'cx("contextMenuRowSelected")',
-        '[attr.tabindex]': 'isEnabled() ? 0 : undefined'
+        '[attr.tabindex]': 'isEnabled() ? 0 : undefined',
+        '(contextmenu)': 'onContextMenu($event)'
     },
     providers: [TableStyle]
 })
@@ -3886,7 +3608,6 @@ export class ContextMenuRow extends BaseComponent {
         }
     }
 
-    @HostListener('contextmenu', ['$event'])
     onContextMenu(event: Event) {
         if (this.isEnabled()) {
             this.dataTable.handleRowRightClick({
@@ -3913,7 +3634,10 @@ export class ContextMenuRow extends BaseComponent {
 
 @Directive({
     selector: '[hRowToggler]',
-    standalone: false
+    standalone: false,
+    host: {
+        '(click)': 'onClick($event)'
+    }
 })
 export class RowToggler extends BaseComponent {
     readonly data = input<any>(undefined, { alias: "hRowToggler" });
@@ -3924,7 +3648,6 @@ export class RowToggler extends BaseComponent {
         super();
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: Event) {
         if (this.isEnabled()) {
             this.dataTable.toggleRow(this.data(), event);
@@ -4062,7 +3785,8 @@ export class ResizableColumn extends BaseComponent {
     selector: '[hReorderableColumn]',
     standalone: false,
     host: {
-        '[class]': "cx('reorderableColumn')"
+        '[class]': "cx('reorderableColumn')",
+        '(drop)': 'onDrop($event)'
     },
     providers: [TableStyle]
 })
@@ -4159,7 +3883,6 @@ export class ReorderableColumn extends BaseComponent {
         this.dataTable.onColumnDragLeave(event);
     }
 
-    @HostListener('drop', ['$event'])
     onDrop(event: any) {
         if (this.isEnabled()) {
             this.dataTable.onColumnDrop(event, this.el.nativeElement);
@@ -4179,7 +3902,17 @@ export class ReorderableColumn extends BaseComponent {
     selector: '[hEditableColumn]',
     standalone: false,
     host: {
-        '[attr.data-p-editable-column]': 'true'
+        '[attr.data-p-editable-column]': 'true',
+        '(click)': 'onClick($event)',
+        '(keydown.enter)': 'onEnterKeyDown($event)',
+        '(keydown.tab)': 'onShiftKeyDown($event)',
+        '(keydown.shift.tab)': 'onShiftKeyDown($event)',
+        '(keydown.meta.tab)': 'onShiftKeyDown($event)',
+        '(keydown.escape)': 'onEscapeKeyDown($event)',
+        '(keydown.arrowdown)': 'onArrowDown($event)',
+        '(keydown.arrowup)': 'onArrowUp($event)',
+        '(keydown.arrowleft)': 'onArrowLeft($event)',
+        '(keydown.arrowright)': 'onArrowRight($event)'
     }
 })
 export class EditableColumn extends BaseComponent {
@@ -4214,7 +3947,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: MouseEvent) {
         if (this.isEnabled()) {
             this.dataTable.selfClick = true;
@@ -4280,7 +4012,7 @@ export class EditableColumn extends BaseComponent {
         } else {
             this.dataTable.onEditCancel.emit(eventData);
 
-            this.dataTable.value.forEach((element) => {
+            this.dataTable.value().forEach((element) => {
                 if (element[this.dataTable.editingCellField] === this.data()) {
                     element[this.dataTable.editingCellField] = this.dataTable.editingCellData;
                 }
@@ -4299,7 +4031,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.enter', ['$event'])
     onEnterKeyDown(event: KeyboardEvent) {
         if (this.isEnabled() && !event.shiftKey) {
             if (this.dataTable.isEditingCellValid()) {
@@ -4310,7 +4041,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.tab', ['$event'])
     onTabKeyDown(event: KeyboardEvent) {
         if (this.isEnabled()) {
             if (this.dataTable.isEditingCellValid()) {
@@ -4321,7 +4051,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.escape', ['$event'])
     onEscapeKeyDown(event: KeyboardEvent) {
         if (this.isEnabled()) {
             if (this.dataTable.isEditingCellValid()) {
@@ -4332,9 +4061,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.tab', ['$event'])
-    @HostListener('keydown.shift.tab', ['$event'])
-    @HostListener('keydown.meta.tab', ['$event'])
     onShiftKeyDown(event: KeyboardEvent) {
         if (this.isEnabled()) {
             if (event.shiftKey) this.moveToPreviousCell(event);
@@ -4343,7 +4069,6 @@ export class EditableColumn extends BaseComponent {
             }
         }
     }
-    @HostListener('keydown.arrowdown', ['$event'])
     onArrowDown(event: KeyboardEvent) {
         if (this.isEnabled()) {
             let currentCell = this.findCell(event.target);
@@ -4365,7 +4090,6 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.arrowup', ['$event'])
     onArrowUp(event: KeyboardEvent) {
         if (this.isEnabled()) {
             let currentCell = this.findCell(event.target);
@@ -4387,14 +4111,12 @@ export class EditableColumn extends BaseComponent {
         }
     }
 
-    @HostListener('keydown.arrowleft', ['$event'])
     onArrowLeft(event: KeyboardEvent) {
         if (this.isEnabled()) {
             this.moveToPreviousCell(event);
         }
     }
 
-    @HostListener('keydown.arrowright', ['$event'])
     onArrowRight(event: KeyboardEvent) {
         if (this.isEnabled()) {
             this.moveToNextCell(event);
@@ -4549,7 +4271,8 @@ export class EditableRow extends BaseComponent {
     selector: '[hInitEditableRow]',
     standalone: false,
     host: {
-        class: 'p-datatable-row-editor-init'
+        class: 'p-datatable-row-editor-init',
+        '(click)': 'onClick($event)'
     }
 })
 export class InitEditableRow extends BaseComponent {
@@ -4560,7 +4283,6 @@ export class InitEditableRow extends BaseComponent {
         super();
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: Event) {
         this.dataTable.initRowEdit(this.editableRow.data());
         event.preventDefault();
@@ -4571,7 +4293,8 @@ export class InitEditableRow extends BaseComponent {
     selector: '[hSaveEditableRow]',
     standalone: false,
     host: {
-        class: 'p-datatable-row-editor-save'
+        class: 'p-datatable-row-editor-save',
+        '(click)': 'onClick($event)'
     }
 })
 export class SaveEditableRow extends BaseComponent {
@@ -4582,7 +4305,6 @@ export class SaveEditableRow extends BaseComponent {
         super();
     }
 
-    @HostListener('click', ['$event'])
     onClick(event: Event) {
         this.dataTable.saveRowEdit(this.editableRow.data(), this.editableRow.el.nativeElement);
         event.preventDefault();
@@ -4593,7 +4315,8 @@ export class SaveEditableRow extends BaseComponent {
     selector: '[hCancelEditableRow]',
     standalone: false,
     host: {
-        '[class]': "cx('rowEditorCancel')"
+        '[class]': "cx('rowEditorCancel')",
+        '(click)': 'onClick($event)'
     },
     providers: [TableStyle]
 })
@@ -4605,7 +4328,6 @@ export class CancelEditableRow extends BaseComponent {
         super();
     }
     _componentStyle = inject(TableStyle);
-    @HostListener('click', ['$event'])
     onClick(event: Event) {
         this.dataTable.cancelRowEdit(this.editableRow.data());
         event.preventDefault();
@@ -4669,7 +4391,7 @@ export class CellEditor extends BaseComponent {
 @Component({
     selector: 'h-tableRadioButton',
     standalone: false,
-    template: `<h-radioButton #rb [(ngModel)]="checked" [disabled]="disabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel" [binary]="true" [value]="value()" (onClick)="onClick($event)" [unstyled]="unstyled()" /> `,
+    template: `<h-radioButton #rb [(ngModel)]="checked" [disabled]="disabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel()" [binary]="true" [value]="value()" (onClick)="onClick($event)" [unstyled]="unstyled()" /> `,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
@@ -4681,9 +4403,7 @@ export class TableRadioButton extends BaseComponent {
     readonly inputId = input<string | undefined>();
     readonly name = input<string | undefined>();
 
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = model<string | undefined>(undefined);
 
     readonly inputViewChild = viewChild<Nullable<RadioButton>>('rb');
 
@@ -4699,7 +4419,7 @@ export class TableRadioButton extends BaseComponent {
         this.subscription = this.dataTable.tableService.selectionSource$.subscribe(() => {
             this.checked = this.dataTable.isSelected(this.value());
 
-            this.ariaLabel = this.ariaLabel || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectRow : this.dataTable.config.translation.aria.unselectRow) : undefined);
+            this.ariaLabel.set(this.ariaLabel() || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectRow : this.dataTable.config.translation.aria.unselectRow) : undefined));
             this.cd.markForCheck();
         });
     }
@@ -4734,7 +4454,7 @@ export class TableRadioButton extends BaseComponent {
     selector: 'h-tableCheckbox',
     standalone: false,
     template: `
-        <h-checkbox [(ngModel)]="checked" [binary]="true" (onChange)="onClick($event)" [required]="required()" [disabled]="disabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel" [unstyled]="unstyled()">
+        <h-checkbox [(ngModel)]="checked" [binary]="true" (onChange)="onClick($event)" [required]="required()" [disabled]="disabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel()" [unstyled]="unstyled()">
             @if (dataTable.checkboxIconTemplate || dataTable._checkboxIconTemplate(); as template) {
                 <ng-template hTemplate="icon">
                     <ng-template *ngTemplateOutlet="template; context: { $implicit: checked }" />
@@ -4754,9 +4474,7 @@ export class TableCheckbox extends BaseComponent {
     readonly inputId = input<string | undefined>();
     readonly name = input<string | undefined>();
 
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = model<string | undefined>(undefined);
 
     checked: boolean | undefined;
 
@@ -4769,7 +4487,7 @@ export class TableCheckbox extends BaseComponent {
         super();
         this.subscription = this.dataTable.tableService.selectionSource$.subscribe(() => {
             this.checked = this.dataTable.isSelected(this.value());
-            this.ariaLabel = this.ariaLabel || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectRow : this.dataTable.config.translation.aria.unselectRow) : undefined);
+            this.ariaLabel.set(this.ariaLabel() || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectRow : this.dataTable.config.translation.aria.unselectRow) : undefined));
             this.cd.markForCheck();
         });
     }
@@ -4802,7 +4520,7 @@ export class TableCheckbox extends BaseComponent {
     selector: 'h-tableHeaderCheckbox',
     standalone: false,
     template: `
-        <h-checkbox [pt]="ptm('pcCheckbox')" [(ngModel)]="checked" (onChange)="onClick($event)" [binary]="true" [disabled]="isDisabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel" [unstyled]="unstyled()">
+        <h-checkbox [pt]="ptm('pcCheckbox')" [(ngModel)]="checked" (onChange)="onClick($event)" [binary]="true" [disabled]="isDisabled()" [inputId]="inputId()" [name]="name()" [ariaLabel]="ariaLabel()" [unstyled]="unstyled()">
             @if (dataTable.headerCheckboxIconTemplate || dataTable._headerCheckboxIconTemplate(); as template) {
                 <ng-template hTemplate="icon">
                     <ng-template *ngTemplateOutlet="template; context: { $implicit: checked }" />
@@ -4827,9 +4545,7 @@ export class TableHeaderCheckbox extends BaseComponent {
     readonly inputId = input<string | undefined>();
     readonly name = input<string | undefined>();
 
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = model<string | undefined>(undefined);
 
     checked: boolean | undefined;
 
@@ -4844,7 +4560,7 @@ export class TableHeaderCheckbox extends BaseComponent {
         super();
         this.valueChangeSubscription = this.dataTable.tableService.valueSource$.subscribe(() => {
             this.checked = this.updateCheckedState();
-            this.ariaLabel = this.ariaLabel || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectAll : this.dataTable.config.translation.aria.unselectAll) : undefined);
+            this.ariaLabel.set(this.ariaLabel() || (this.dataTable.config.translation.aria ? (this.checked ? this.dataTable.config.translation.aria.selectAll : this.dataTable.config.translation.aria.unselectAll) : undefined));
         });
 
         this.selectionChangeSubscription = this.dataTable.tableService.selectionSource$.subscribe(() => {
@@ -4858,7 +4574,7 @@ export class TableHeaderCheckbox extends BaseComponent {
 
     onClick(event: CheckboxChangeEvent) {
         if (!this.disabled()) {
-            if (this.dataTable.value && this.dataTable.value.length > 0) {
+                if (this.dataTable.value() && this.dataTable.value().length > 0) {
                 this.dataTable.toggleRowsWithCheckbox(event, this.checked || false);
             }
         }
@@ -4867,7 +4583,7 @@ export class TableHeaderCheckbox extends BaseComponent {
     }
 
     isDisabled() {
-        return this.disabled() || !this.dataTable.value || !this.dataTable.value.length;
+        return this.disabled() || !this.dataTable.value() || !this.dataTable.value().length;
     }
 
     onDestroy() {
@@ -4883,14 +4599,16 @@ export class TableHeaderCheckbox extends BaseComponent {
     updateCheckedState() {
         this.cd.markForCheck();
 
-        if (this.dataTable._selectAll !== null) {
-            return this.dataTable._selectAll;
+        if (this.dataTable.selectAll() !== null) {
+            return this.dataTable.selectAll();
         } else {
             const data = this.dataTable.selectionPageOnly() ? this.dataTable.dataToRender(this.dataTable.processedData) : this.dataTable.processedData;
-            const val = this.dataTable.frozenValue ? [...this.dataTable.frozenValue, ...data] : data;
+            const frozenVal = this.dataTable.frozenValue();
+            const val = frozenVal ? [...frozenVal, ...data] : data;
+            const selection = this.dataTable.selection();
             const selectableVal = this.dataTable.rowSelectable() ? val.filter((data: any, index: number) => this.dataTable.rowSelectable()({ data, index })) : val;
 
-            return ObjectUtils.isNotEmpty(selectableVal) && ObjectUtils.isNotEmpty(this.dataTable.selection) && selectableVal.every((v: any) => this.dataTable.selection.some((s: any) => this.dataTable.equals(v, s)));
+            return ObjectUtils.isNotEmpty(selectableVal) && ObjectUtils.isNotEmpty(selection) && selectableVal.every((v: any) => selection.some((s: any) => this.dataTable.equals(v, s)));
         }
     }
 }
@@ -4927,6 +4645,9 @@ export class ReorderableRowHandle extends BaseComponent {
 @Directive({
     selector: '[hReorderableRow]',
     standalone: false,
+    host: {
+        '(drop)': 'onDrop($event)'
+    },
     hostDirectives: [Bind]
 })
 export class ReorderableRow extends BaseComponent {
@@ -5049,7 +4770,6 @@ export class ReorderableRow extends BaseComponent {
         return this.pReorderableRowDisabled() !== true;
     }
 
-    @HostListener('drop', ['$event'])
     onDrop(event: DragEvent) {
         if (this.isEnabled() && this.dataTable.rowDragging) {
             this.dataTable.onRowDrop(event, this.el.nativeElement);
@@ -5123,9 +4843,7 @@ export class ColumnFilter extends BaseComponent {
      * @defaultValue 'AND'
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() operator: string = FilterOperator.AND;
+    readonly operator = model<string>(FilterOperator.AND);
     /**
      * Decides whether to display filter operator.
      * @group Props
@@ -5320,7 +5038,7 @@ export class ColumnFilter extends BaseComponent {
      * Custom filter icon template.
      * @group Templates
      */
-    @ContentChild('filtericon', { descendants: false }) filterIconTemplate: TemplateRef<any>;
+    readonly filterIconTemplate = contentChild<TemplateRef<any>>('filtericon', { descendants: false });
     _filterIconTemplate: Nullable<TemplateRef<any>>;
 
     /**
@@ -5514,7 +5232,7 @@ export class ColumnFilter extends BaseComponent {
                       {
                           value: null,
                           matchMode: defaultMatchMode,
-                          operator: this.operator
+                          operator: this.operator()
                       }
                   ];
     }
@@ -5595,7 +5313,7 @@ export class ColumnFilter extends BaseComponent {
     onOperatorChange(value: any) {
         (<FilterMetadata[]>this.dataTable.filters[<string>this.field()]).forEach((filterMeta) => {
             filterMeta.operator = value;
-            this.operator = value;
+            this.operator.set(value);
         });
 
         if (!this.showApplyButton()) {
@@ -5722,7 +5440,7 @@ export class ColumnFilter extends BaseComponent {
     }
 
     getDefaultOperator(): string | undefined {
-        return this.dataTable.filters ? (<FilterMetadata[]>this.dataTable.filters[<string>(<string>this.field())])[0].operator : this.operator;
+        return this.dataTable.filters ? (<FilterMetadata[]>this.dataTable.filters[<string>(<string>this.field())])[0].operator : this.operator();
     }
 
     hasRowFilter() {
@@ -5884,10 +5602,7 @@ export class ColumnFilterFormElement extends BaseComponent<ColumnFilterPassThrou
 
     readonly filterConstraint = input<FilterMetadata>();
 
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() filterTemplate: Nullable<TemplateRef<any>>;
+    readonly filterTemplate = input<Nullable<TemplateRef<any>>>(undefined);
 
     readonly placeholder = input<string>();
 
