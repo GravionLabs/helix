@@ -38,13 +38,13 @@
     [pt]="ptm('pcInputText')"
     [unstyled]="unstyled()"
     />
-  @if (showClear() && !$disabled() && inputfieldViewChild?.nativeElement?.value) {
-    @if (!clearIconTemplate && !_clearIconTemplate) {
+  @if (showClear() && !$disabled() && inputfieldViewChild()?.nativeElement?.value) {
+    @if (!clearIconTemplate() && !_clearIconTemplate) {
       <svg data-p-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()" />
     }
-    @if (clearIconTemplate || _clearIconTemplate) {
+    @if (clearIconTemplate() || _clearIconTemplate) {
       <span [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()">
-        <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="clearIconTemplate() || _clearIconTemplate"></ng-template>
       </span>
     }
   }
@@ -61,23 +61,23 @@
       tabindex="0"
       [hBind]="ptm('dropdown')"
       >
-      @if (icon) {
-        <span [ngClass]="icon" [hBind]="ptm('dropdownIcon')"></span>
+      @if (icon()) {
+        <span [ngClass]="icon()" [hBind]="ptm('dropdownIcon')"></span>
       }
-      @if (!icon) {
-        @if (!triggerIconTemplate && !_triggerIconTemplate) {
+      @if (!icon()) {
+        @if (!triggerIconTemplate() && !_triggerIconTemplate) {
           <svg data-p-icon="calendar" [hBind]="ptm('dropdownIcon')" />
         }
-        <ng-template *ngTemplateOutlet="triggerIconTemplate || _triggerIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="triggerIconTemplate() || _triggerIconTemplate"></ng-template>
       }
     </button>
   }
   @if (iconDisplay() === 'input' && showIcon()) {
     <span [class]="cx('inputIconContainer')" [hBind]="ptm('inputIconContainer')" [attr.data-p]="inputIconDataP">
-      @if (!inputIconTemplate && !_inputIconTemplate) {
+      @if (!inputIconTemplate() && !_inputIconTemplate) {
         <svg data-p-icon="calendar" (click)="onButtonClick($event)" [class]="cx('inputIcon')" [hBind]="ptm('inputIcon')" />
       }
-      <ng-container *ngTemplateOutlet="inputIconTemplate || _inputIconTemplate; context: { clickCallBack: onButtonClick.bind(this) }"></ng-container>
+      <ng-container *ngTemplateOutlet="inputIconTemplate() || _inputIconTemplate; context: { clickCallBack: onButtonClick.bind(this) }"></ng-container>
     </span>
   }
 }
@@ -94,7 +94,7 @@
     [hBind]="ptm('panel')"
     >
     <ng-content select="p-header"></ng-content>
-    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
     @if (!timeOnly()) {
       <div [class]="cx('calendarContainer')" [hBind]="ptm('calendarContainer')">
         @for (month of months; track month; let i = $index) {
@@ -114,12 +114,12 @@
                 [attr.data-pc-group-section]="'navigator'"
                 >
                 <ng-template #icon>
-                  @if (!previousIconTemplate && !_previousIconTemplate) {
+                  @if (!previousIconTemplate() && !_previousIconTemplate) {
                     <svg data-p-icon="chevron-left" />
                   }
-                  @if (previousIconTemplate || _previousIconTemplate) {
+                  @if (previousIconTemplate() || _previousIconTemplate) {
                     <span>
-                      <ng-template *ngTemplateOutlet="previousIconTemplate || _previousIconTemplate"></ng-template>
+                      <ng-template *ngTemplateOutlet="previousIconTemplate() || _previousIconTemplate"></ng-template>
                     </span>
                   }
                 </ng-template>
@@ -157,10 +157,10 @@
                 }
                 @if (currentView === 'year') {
                   <span [class]="cx('decade')" [hBind]="ptm('decade')">
-                    @if (!decadeTemplate && !_decadeTemplate) {
+                    @if (!decadeTemplate() && !_decadeTemplate) {
                       {{ yearPickerValues()[0] }} - {{ yearPickerValues()[yearPickerValues().length - 1] }}
                     }
-                    <ng-container *ngTemplateOutlet="decadeTemplate || _decadeTemplate; context: { $implicit: yearPickerValues }"></ng-container>
+                    <ng-container *ngTemplateOutlet="decadeTemplate() || _decadeTemplate; context: { $implicit: yearPickerValues }"></ng-container>
                   </span>
                 }
               </div>
@@ -177,11 +177,11 @@
                 [attr.data-pc-group-section]="'navigator'"
                 >
                 <ng-template #icon>
-                  @if (!nextIconTemplate && !_nextIconTemplate) {
+                  @if (!nextIconTemplate() && !_nextIconTemplate) {
                     <svg data-p-icon="chevron-right" />
                   }
-                  @if (nextIconTemplate || _nextIconTemplate) {
-                    <ng-template *ngTemplateOutlet="nextIconTemplate || _nextIconTemplate"></ng-template>
+                  @if (nextIconTemplate() || _nextIconTemplate) {
+                    <ng-template *ngTemplateOutlet="nextIconTemplate() || _nextIconTemplate"></ng-template>
                   }
                 </ng-template>
               </h-button>
@@ -224,14 +224,14 @@
                               hRipple
                               [hBind]="ptm('day')"
                               >
-                              @if (!dateTemplate && !_dateTemplate && (date.selectable || (!disabledDateTemplate && !_disabledDateTemplate))) {
+                              @if (!dateTemplate() && !_dateTemplate && (date.selectable || (!disabledDateTemplate() && !_disabledDateTemplate))) {
                                 {{ date.day }}
                               }
-                              @if (date.selectable || (!disabledDateTemplate && !_disabledDateTemplate)) {
-                                <ng-container *ngTemplateOutlet="dateTemplate || _dateTemplate; context: { $implicit: date }"></ng-container>
+                              @if (date.selectable || (!disabledDateTemplate() && !_disabledDateTemplate)) {
+                                <ng-container *ngTemplateOutlet="dateTemplate() || _dateTemplate; context: { $implicit: date }"></ng-container>
                               }
                               @if (!date.selectable) {
-                                <ng-container *ngTemplateOutlet="disabledDateTemplate || _disabledDateTemplate; context: { $implicit: date }"></ng-container>
+                                <ng-container *ngTemplateOutlet="disabledDateTemplate() || _disabledDateTemplate; context: { $implicit: date }"></ng-container>
                               }
                             </span>
                             @if (isSelected(date)) {
@@ -279,7 +279,7 @@
         </div>
       }
     }
-    @if ((showTime || timeOnly()) && currentView === 'date') {
+    @if ((showTime() || timeOnly()) && currentView === 'date') {
       <div [class]="cx('timePicker')" [hBind]="ptm('timePicker')">
         <div [class]="cx('hourPicker')" [hBind]="ptm('hourPicker')">
           <h-button
@@ -300,10 +300,10 @@
             [attr.data-pc-group-section]="'timepickerbutton'"
             >
             <ng-template #icon>
-              @if (!incrementIconTemplate && !_incrementIconTemplate) {
+              @if (!incrementIconTemplate() && !_incrementIconTemplate) {
                 <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
               }
-              <ng-template *ngTemplateOutlet="incrementIconTemplate || _incrementIconTemplate"></ng-template>
+              <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
             </ng-template>
           </h-button>
           <span [hBind]="ptm('hour')">@if (currentHour < 10) {
@@ -327,10 +327,10 @@
             [attr.data-pc-group-section]="'timepickerbutton'"
             >
             <ng-template #icon>
-              @if (!decrementIconTemplate && !_decrementIconTemplate) {
+              @if (!decrementIconTemplate() && !_decrementIconTemplate) {
                 <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
               }
-              <ng-template *ngTemplateOutlet="decrementIconTemplate || _decrementIconTemplate"></ng-template>
+              <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
             </ng-template>
           </h-button>
         </div>
@@ -356,10 +356,10 @@
             [attr.data-pc-group-section]="'timepickerbutton'"
             >
             <ng-template #icon>
-              @if (!incrementIconTemplate && !_incrementIconTemplate) {
+              @if (!incrementIconTemplate() && !_incrementIconTemplate) {
                 <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
               }
-              <ng-template *ngTemplateOutlet="incrementIconTemplate || _incrementIconTemplate"></ng-template>
+              <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
             </ng-template>
           </h-button>
           <span [hBind]="ptm('minute')">@if (currentMinute < 10) {
@@ -383,10 +383,10 @@
             [attr.data-pc-group-section]="'timepickerbutton'"
             >
             <ng-template #icon>
-              @if (!decrementIconTemplate && !_decrementIconTemplate) {
+              @if (!decrementIconTemplate() && !_decrementIconTemplate) {
                 <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
               }
-              <ng-template *ngTemplateOutlet="decrementIconTemplate || _decrementIconTemplate"></ng-template>
+              <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
             </ng-template>
           </h-button>
         </div>
@@ -415,10 +415,10 @@
               [attr.data-pc-group-section]="'timepickerbutton'"
               >
               <ng-template #icon>
-                @if (!incrementIconTemplate && !_incrementIconTemplate) {
+                @if (!incrementIconTemplate() && !_incrementIconTemplate) {
                   <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
                 }
-                <ng-template *ngTemplateOutlet="incrementIconTemplate || _incrementIconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
               </ng-template>
             </h-button>
             <span [hBind]="ptm('second')">@if (currentSecond < 10) {
@@ -442,20 +442,20 @@
               [attr.data-pc-group-section]="'timepickerbutton'"
               >
               <ng-template #icon>
-                @if (!decrementIconTemplate && !_decrementIconTemplate) {
+                @if (!decrementIconTemplate() && !_decrementIconTemplate) {
                   <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
                 }
-                <ng-template *ngTemplateOutlet="decrementIconTemplate || _decrementIconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
               </ng-template>
             </h-button>
           </div>
         }
-        @if (hourFormat == '12') {
+        @if (hourFormat() == '12') {
           <div [class]="cx('separator')" [hBind]="ptm('separatorContainer')">
             <span [hBind]="ptm('separator')">{{ timeSeparator() }}</span>
           </div>
         }
-        @if (hourFormat == '12') {
+        @if (hourFormat() == '12') {
           <div [class]="cx('ampmPicker')" [hBind]="ptm('ampmPicker')">
             <h-button
               text
@@ -470,10 +470,10 @@
               [attr.data-pc-group-section]="'timepickerbutton'"
               >
               <ng-template #icon>
-                @if (!incrementIconTemplate && !_incrementIconTemplate) {
+                @if (!incrementIconTemplate() && !_incrementIconTemplate) {
                   <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
                 }
-                <ng-template *ngTemplateOutlet="incrementIconTemplate || _incrementIconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
               </ng-template>
             </h-button>
             <span [hBind]="ptm('ampm')">{{ pm ? 'PM' : 'AM' }}</span>
@@ -490,10 +490,10 @@
               [attr.data-pc-group-section]="'timepickerbutton'"
               >
               <ng-template #icon>
-                @if (!decrementIconTemplate && !_decrementIconTemplate) {
+                @if (!decrementIconTemplate() && !_decrementIconTemplate) {
                   <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
                 }
-                <ng-template *ngTemplateOutlet="decrementIconTemplate || _decrementIconTemplate"></ng-template>
+                <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
               </ng-template>
             </h-button>
           </div>
@@ -502,8 +502,8 @@
     }
     @if (showButtonBar()) {
       <div [class]="cx('buttonbar')" [hBind]="ptm('buttonbar')">
-        @if (buttonBarTemplate || _buttonBarTemplate) {
-          <ng-container *ngTemplateOutlet="buttonBarTemplate || _buttonBarTemplate; context: { todayCallback: onTodayButtonClick.bind(this), clearCallback: onClearButtonClick.bind(this) }"></ng-container>
+        @if (buttonBarTemplate() || _buttonBarTemplate) {
+          <ng-container *ngTemplateOutlet="buttonBarTemplate() || _buttonBarTemplate; context: { todayCallback: onTodayButtonClick.bind(this), clearCallback: onClearButtonClick.bind(this) }"></ng-container>
         } @else {
           <h-button
             size="small"
@@ -535,6 +535,6 @@
       </div>
     }
     <ng-content select="p-footer"></ng-content>
-    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   </div>
 </h-motion>
