@@ -10,21 +10,21 @@
   @if (galleria.templates && (galleria.headerFacet || galleria.headerTemplate)) {
     <div hGalleriaItemSlot [unstyled]="unstyled()" type="header" [templates]="galleria.templates" [hBind]="getPTOptions('header')" [class]="cx('header')"></div>
   }
-  <div [hBind]="getPTOptions('content')" [class]="cx('content')" [attr.aria-live]="galleria.autoPlay ? 'polite' : 'off'">
+  <div [hBind]="getPTOptions('content')" [class]="cx('content')" [attr.aria-live]="galleria.autoPlay() ? 'polite' : 'off'">
     <div
       hGalleriaItem
       [id]="id"
       [value]="value"
       [activeIndex]="activeIndex"
-      [circular]="galleria.circular"
+      [circular]="galleria.circular()"
       [templates]="galleria.templates"
       (onActiveIndexChange)="onActiveIndexChange($event)"
-      [showIndicators]="galleria.showIndicators"
-      [changeItemOnIndicatorHover]="galleria.changeItemOnIndicatorHover"
+      [showIndicators]="galleria.showIndicators()"
+      [changeItemOnIndicatorHover]="galleria.changeItemOnIndicatorHover()"
       [indicatorFacet]="galleria.indicatorFacet"
       [captionFacet]="galleria.captionFacet"
-      [showItemNavigators]="galleria.showItemNavigators"
-      [autoPlay]="galleria.autoPlay"
+      [showItemNavigators]="galleria.showItemNavigators()"
+      [autoPlay]="galleria.autoPlay()"
       [slideShowActive]="slideShowActive"
       (startSlideShow)="startSlideShow()"
       (stopSlideShow)="stopSlideShow()"
@@ -32,7 +32,7 @@
       [unstyled]="unstyled()"
       [class]="cx('itemsContainer')"
     ></div>
-    @if (galleria.showThumbnails) {
+    @if (galleria.showThumbnails()) {
       <div
         hGalleriaThumbnails
         [containerId]="id"
@@ -40,12 +40,12 @@
         (onActiveIndexChange)="onActiveIndexChange($event)"
         [activeIndex]="activeIndex"
         [templates]="galleria.templates"
-        [numVisible]="numVisible"
-        [responsiveOptions]="galleria.responsiveOptions"
-        [circular]="galleria.circular"
+        [numVisible]="numVisible()"
+        [responsiveOptions]="galleria.responsiveOptions()"
+        [circular]="galleria.circular()"
         [isVertical]="isVertical()"
-        [contentHeight]="galleria.verticalThumbnailViewPortHeight"
-        [showThumbnailNavigators]="galleria.showThumbnailNavigators"
+        [contentHeight]="galleria.verticalThumbnailViewPortHeight()"
+        [showThumbnailNavigators]="galleria.showThumbnailNavigators()"
         [slideShowActive]="slideShowActive"
         (stopSlideShow)="stopSlideShow()"
         [pt]="pt()"

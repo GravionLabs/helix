@@ -1,4 +1,4 @@
-@if (!inline) {
+@if (!inline()) {
   <input
     #inputfield
     hInputText
@@ -7,38 +7,38 @@
     [attr.size]="inputSize()"
     type="text"
     role="combobox"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     [attr.name]="name()"
     [attr.aria-required]="required()"
     aria-autocomplete="none"
     aria-haspopup="dialog"
     [attr.aria-expanded]="overlayVisible ?? false"
     [attr.aria-controls]="overlayVisible ? panelId : null"
-    [attr.aria-labelledby]="ariaLabelledBy"
-    [attr.aria-label]="ariaLabel"
+    [attr.aria-labelledby]="ariaLabelledBy()"
+    [attr.aria-label]="ariaLabel()"
     [value]="inputFieldValue"
     (focus)="onInputFocus($event)"
     (keydown)="onInputKeydown($event)"
     (click)="onInputClick()"
     (blur)="onInputBlur($event)"
     [attr.required]="required() ? '' : undefined"
-    [attr.readonly]="readonlyInput ? '' : undefined"
+    [attr.readonly]="readonlyInput() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
     (input)="onUserInput($event)"
-    [ngStyle]="inputStyle"
-    [class]="cn(cx('pcInputText'), inputStyleClass)"
-    [attr.placeholder]="placeholder"
-    [attr.tabindex]="tabindex"
-    [attr.inputmode]="touchUI ? 'off' : null"
+    [ngStyle]="inputStyle()"
+    [class]="cn(cx('pcInputText'), inputStyleClass())"
+    [attr.placeholder]="placeholder()"
+    [attr.tabindex]="tabindex()"
+    [attr.inputmode]="touchUI() ? 'off' : null"
     autocomplete="off"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [variant]="$variant()"
     [fluid]="hasFluid"
     [invalid]="invalid()"
     [pt]="ptm('pcInputText')"
     [unstyled]="unstyled()"
     />
-  @if (showClear && !$disabled() && inputfieldViewChild?.nativeElement?.value) {
+  @if (showClear() && !$disabled() && inputfieldViewChild?.nativeElement?.value) {
     @if (!clearIconTemplate && !_clearIconTemplate) {
       <svg data-p-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()" />
     }
@@ -48,7 +48,7 @@
       </span>
     }
   }
-  @if (showIcon && iconDisplay === 'button') {
+  @if (showIcon() && iconDisplay() === 'button') {
     <button
       type="button"
       [attr.aria-label]="iconButtonAriaLabel"
@@ -72,7 +72,7 @@
       }
     </button>
   }
-  @if (iconDisplay === 'input' && showIcon) {
+  @if (iconDisplay() === 'input' && showIcon()) {
     <span [class]="cx('inputIconContainer')" [hBind]="ptm('inputIconContainer')" [attr.data-p]="inputIconDataP">
       @if (!inputIconTemplate && !_inputIconTemplate) {
         <svg data-p-icon="calendar" (click)="onButtonClick($event)" [class]="cx('inputIcon')" [hBind]="ptm('inputIcon')" />
@@ -81,21 +81,21 @@
     </span>
   }
 }
-<h-motion [visible]="inline || overlayVisible" name="p-anchored-overlay" [appear]="!inline" [options]="computedMotionOptions()" (onBeforeEnter)="onOverlayBeforeEnter($event)" (onAfterLeave)="onOverlayAfterLeave($event)">
+<h-motion [visible]="inline() || overlayVisible" name="p-anchored-overlay" [appear]="!inline()" [options]="computedMotionOptions()" (onBeforeEnter)="onOverlayBeforeEnter($event)" (onAfterLeave)="onOverlayAfterLeave($event)">
   <div
     #contentWrapper
     [attr.id]="panelId"
-    [ngStyle]="panelStyle"
-    [class]="cn(cx('panel'), panelStyleClass)"
+    [ngStyle]="panelStyle()"
+    [class]="cn(cx('panel'), panelStyleClass())"
     [attr.aria-label]="getTranslation('chooseDate')"
-    [attr.role]="inline ? null : 'dialog'"
-    [attr.aria-modal]="inline ? null : 'true'"
+    [attr.role]="inline() ? null : 'dialog'"
+    [attr.aria-modal]="inline() ? null : 'true'"
     (click)="onOverlayClick($event)"
     [hBind]="ptm('panel')"
     >
     <ng-content select="p-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-    @if (!timeOnly) {
+    @if (!timeOnly()) {
       <div [class]="cx('calendarContainer')" [hBind]="ptm('calendarContainer')">
         @for (month of months; track month; let i = $index) {
           <div [class]="cx('calendar')" [hBind]="ptm('calendar')">
@@ -190,7 +190,7 @@
               <table [class]="cx('dayView')" role="grid" [hBind]="ptm('table')">
                 <thead [hBind]="ptm('tableHeader')">
                   <tr [hBind]="ptm('tableHeaderRow')">
-                    @if (showWeek) {
+                    @if (showWeek()) {
                       <th [class]="cx('weekHeader')" [hBind]="ptm('weekHeader')">
                         <span [hBind]="ptm('weekHeaderLabel')">{{ getTranslation('weekHeader') }}</span>
                       </th>
@@ -205,7 +205,7 @@
                 <tbody [hBind]="ptm('tableBody')">
                   @for (week of month.dates; track week; let j = $index) {
                     <tr [hBind]="ptm('tableBodyRow')">
-                      @if (showWeek) {
+                      @if (showWeek()) {
                         <td [class]="cx('weekNumber')" [hBind]="ptm('weekNumber')">
                           <span [class]="cx('weekLabelContainer')" [hBind]="ptm('weekLabelContainer')">
                             {{ month.weekNumbers[j] }}
@@ -214,7 +214,7 @@
                       }
                       @for (date of week; track date) {
                         <td [attr.aria-label]="date.day" [class]="cx('dayCell', { date })" [hBind]="ptm('dayCell')">
-                          @if (date.otherMonth ? showOtherMonths : true) {
+                          @if (date.otherMonth ? showOtherMonths() : true) {
                             <span
                               [ngClass]="dayClass(date)"
                               (click)="onDateSelect($event, date)"
@@ -279,7 +279,7 @@
         </div>
       }
     }
-    @if ((showTime || timeOnly) && currentView === 'date') {
+    @if ((showTime || timeOnly()) && currentView === 'date') {
       <div [class]="cx('timePicker')" [hBind]="ptm('timePicker')">
         <div [class]="cx('hourPicker')" [hBind]="ptm('hourPicker')">
           <h-button
@@ -335,7 +335,7 @@
           </h-button>
         </div>
         <div class="p-datepicker-separator" [hBind]="ptm('separatorContainer')">
-          <span [hBind]="ptm('separator')">{{ timeSeparator }}</span>
+          <span [hBind]="ptm('separator')">{{ timeSeparator() }}</span>
         </div>
         <div [class]="cx('minutePicker')" [hBind]="ptm('minutePicker')">
           <h-button
@@ -390,12 +390,12 @@
             </ng-template>
           </h-button>
         </div>
-        @if (showSeconds) {
+        @if (showSeconds()) {
           <div [class]="cx('separator')" [hBind]="ptm('separatorContainer')">
-            <span [hBind]="ptm('separator')">{{ timeSeparator }}</span>
+            <span [hBind]="ptm('separator')">{{ timeSeparator() }}</span>
           </div>
         }
-        @if (showSeconds) {
+        @if (showSeconds()) {
           <div [class]="cx('secondPicker')" [hBind]="ptm('secondPicker')">
             <h-button
               rounded
@@ -452,7 +452,7 @@
         }
         @if (hourFormat == '12') {
           <div [class]="cx('separator')" [hBind]="ptm('separatorContainer')">
-            <span [hBind]="ptm('separator')">{{ timeSeparator }}</span>
+            <span [hBind]="ptm('separator')">{{ timeSeparator() }}</span>
           </div>
         }
         @if (hourFormat == '12') {
@@ -500,7 +500,7 @@
         }
       </div>
     }
-    @if (showButtonBar) {
+    @if (showButtonBar()) {
       <div [class]="cx('buttonbar')" [hBind]="ptm('buttonbar')">
         @if (buttonBarTemplate || _buttonBarTemplate) {
           <ng-container *ngTemplateOutlet="buttonBarTemplate || _buttonBarTemplate; context: { todayCallback: onTodayButtonClick.bind(this), clearCallback: onClearButtonClick.bind(this) }"></ng-container>
@@ -511,7 +511,7 @@
             [label]="getTranslation('today')"
             (keydown)="onContainerButtonKeydown($event)"
             (onClick)="onTodayButtonClick($event)"
-            [ngClass]="todayButtonStyleClass"
+            [ngClass]="todayButtonStyleClass()"
             severity="secondary"
             variant="text"
             size="small"
@@ -524,7 +524,7 @@
             [label]="getTranslation('clear')"
             (keydown)="onContainerButtonKeydown($event)"
             (onClick)="onClearButtonClick($event)"
-            [ngClass]="clearButtonStyleClass"
+            [ngClass]="clearButtonStyleClass()"
             severity="secondary"
             variant="text"
             size="small"

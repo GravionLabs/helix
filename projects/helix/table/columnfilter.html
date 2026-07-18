@@ -1,24 +1,24 @@
 <div [class]="cx('filter')">
-  @if (display === 'row') {
+  @if (display() === 'row') {
     <h-columnFilterFormElement
       class="p-fluid"
-      [type]="type"
-      [field]="field"
-      [ariaLabel]="ariaLabel"
-      [filterConstraint]="dataTable.filters[field]"
-      [filterTemplate]="filterTemplate || _filterTemplate"
-      [placeholder]="placeholder"
-      [minFractionDigits]="minFractionDigits"
-      [maxFractionDigits]="maxFractionDigits"
-      [prefix]="prefix"
-      [suffix]="suffix"
-      [locale]="locale"
-      [localeMatcher]="localeMatcher"
-      [currency]="currency"
-      [currencyDisplay]="currencyDisplay"
-      [useGrouping]="useGrouping"
-      [showButtons]="showButtons"
-      [filterOn]="filterOn"
+      [type]="type()"
+      [field]="field()"
+      [ariaLabel]="ariaLabel()"
+      [filterConstraint]="dataTable.filters[field()]"
+      [filterTemplate]="filterTemplate() || _filterTemplate"
+      [placeholder]="placeholder()"
+      [minFractionDigits]="minFractionDigits()"
+      [maxFractionDigits]="maxFractionDigits()"
+      [prefix]="prefix()"
+      [suffix]="suffix()"
+      [locale]="locale()"
+      [localeMatcher]="localeMatcher()"
+      [currency]="currency()"
+      [currencyDisplay]="currencyDisplay()"
+      [useGrouping]="useGrouping()"
+      [showButtons]="showButtons()"
+      [filterOn]="filterOn()"
       [pt]="pt()"
       [unstyled]="unstyled()"
     ></h-columnFilterFormElement>
@@ -33,7 +33,7 @@
       [attr.aria-expanded]="overlayVisible ?? false"
       (click)="toggleMenu($event)"
       (keydown)="onToggleButtonKeyDown($event)"
-      [buttonProps]="$safeNavigationMigration(filterButtonProps?.filter)"
+      [buttonProps]="$safeNavigationMigration(filterButtonProps()?.filter)"
       #menuButton
       [unstyled]="unstyled()"
       >
@@ -56,7 +56,7 @@
   }
   @if (renderOverlay()) {
     <div
-      [hMotion]="showMenu && overlayVisible"
+      [hMotion]="showMenu() && overlayVisible"
       [pMotionAppear]="true"
       pMotionName="p-anchored-overlay"
       (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
@@ -70,8 +70,8 @@
       (click)="onContentClick()"
       (keydown.escape)="onEscape()"
       >
-      <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate; context: { $implicit: field }"></ng-container>
-      @if (display === 'row') {
+      <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: field() }"></ng-container>
+      @if (display() === 'row') {
         <ul [class]="cx('filterConstraintList')" [hBind]="ptm('filterConstraintList')">
           @for (matchMode of matchModes; track matchMode; let i = $index) {
             <li
@@ -100,7 +100,7 @@
         <div [class]="cx('filterRuleList')" [hBind]="ptm('filterRuleList')">
           @for (fieldConstraint of fieldConstraints; track fieldConstraint; let i = $index) {
             <div [ngClass]="cx('filterRule')" [hBind]="ptm('filterRule')">
-              @if (showMatchModes && matchModes) {
+              @if (showMatchModes() && matchModes) {
                 <h-select
                   [options]="matchModes"
                   [ngModel]="fieldConstraint.matchMode"
@@ -111,21 +111,21 @@
                 ></h-select>
               }
               <h-columnFilterFormElement
-                [type]="type"
-                [field]="field"
+                [type]="type()"
+                [field]="field()"
                 [filterConstraint]="fieldConstraint"
-                [filterTemplate]="filterTemplate || _filterTemplate"
-                [placeholder]="placeholder"
-                [minFractionDigits]="minFractionDigits"
-                [maxFractionDigits]="maxFractionDigits"
-                [prefix]="prefix"
-                [suffix]="suffix"
-                [locale]="locale"
-                [localeMatcher]="localeMatcher"
-                [currency]="currency"
-                [currencyDisplay]="currencyDisplay"
-                [useGrouping]="useGrouping"
-                [filterOn]="filterOn"
+                [filterTemplate]="filterTemplate() || _filterTemplate"
+                [placeholder]="placeholder()"
+                [minFractionDigits]="minFractionDigits()"
+                [maxFractionDigits]="maxFractionDigits()"
+                [prefix]="prefix()"
+                [suffix]="suffix()"
+                [locale]="locale()"
+                [localeMatcher]="localeMatcher()"
+                [currency]="currency()"
+                [currencyDisplay]="currencyDisplay()"
+                [useGrouping]="useGrouping()"
+                [filterOn]="filterOn()"
                 [pt]="pt()"
                 [unstyled]="unstyled()"
               ></h-columnFilterFormElement>
@@ -140,14 +140,14 @@
                     (onClick)="removeConstraint(fieldConstraint)"
                     [ariaLabel]="removeRuleButtonLabel"
                     [label]="removeRuleButtonLabel"
-                    [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.removeRule)"
+                    [buttonProps]="$safeNavigationMigration(filterButtonProps()?.popover?.removeRule)"
                     [unstyled]="unstyled()"
                     >
                     <ng-template #icon>
-                      @if (!removeRuleIconTemplate && !_removeRuleIconTemplate) {
+                      @if (!removeRuleIconTemplate() && !_removeRuleIconTemplate) {
                         <svg data-p-icon="trash" [hBind]="ptm('pcFilterRemoveRuleButton')['icon']" />
                       }
-                      <ng-template *ngTemplateOutlet="removeRuleIconTemplate || _removeRuleIconTemplate"></ng-template>
+                      <ng-template *ngTemplateOutlet="removeRuleIconTemplate() || _removeRuleIconTemplate"></ng-template>
                     </ng-template>
                   </h-button>
                 }
@@ -165,44 +165,44 @@
             [text]="true"
             size="small"
             (onClick)="addConstraint()"
-            [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.addRule)"
+            [buttonProps]="$safeNavigationMigration(filterButtonProps()?.popover?.addRule)"
             [unstyled]="unstyled()"
             >
             <ng-template #icon>
-              @if (!addRuleIconTemplate && !_addRuleIconTemplate) {
+              @if (!addRuleIconTemplate() && !_addRuleIconTemplate) {
                 <svg data-p-icon="plus" [hBind]="ptm('pcAddRuleButtonLabel')['icon']" />
               }
-              <ng-template *ngTemplateOutlet="addRuleIconTemplate || _addRuleIconTemplate"></ng-template>
+              <ng-template *ngTemplateOutlet="addRuleIconTemplate() || _addRuleIconTemplate"></ng-template>
             </ng-template>
           </h-button>
         }
         <div [class]="cx('filterButtonbar')" [hBind]="ptm('filterButtonBar')">
-          @if (showClearButton) {
+          @if (showClearButton()) {
             <h-button
               #clearBtn
               [outlined]="true"
               (onClick)="clearFilter()"
               [attr.aria-label]="clearButtonLabel"
               [label]="clearButtonLabel"
-              [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.clear)"
+              [buttonProps]="$safeNavigationMigration(filterButtonProps()?.popover?.clear)"
               [pt]="ptm('pcFilterClearButton')"
               [unstyled]="unstyled()"
               />
           }
-          @if (showApplyButton) {
+          @if (showApplyButton()) {
             <h-button
               (onClick)="applyFilter()"
               size="small"
               [label]="applyButtonLabel"
               [attr.aria-label]="applyButtonLabel"
-              [buttonProps]="$safeNavigationMigration(filterButtonProps?.popover?.apply)"
+              [buttonProps]="$safeNavigationMigration(filterButtonProps()?.popover?.apply)"
               [pt]="ptm('pcFilterApplyButton')"
               [unstyled]="unstyled()"
               />
           }
         </div>
       }
-      <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate; context: { $implicit: field }"></ng-container>
+      <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate; context: { $implicit: field() }"></ng-container>
     </div>
   }
 </div>

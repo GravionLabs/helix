@@ -1,28 +1,29 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
-    booleanAttribute,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ContentChildren,
-    Directive,
-    ElementRef,
-    EventEmitter,
-    HostListener,
-    inject,
-    Injectable,
-    InjectionToken,
-    Input,
-    NgModule,
-    NgZone,
-    numberAttribute,
-    Output,
-    QueryList,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  Directive,
+  ElementRef,
+  HostListener,
+  inject,
+  Injectable,
+  InjectionToken,
+  Input,
+  NgModule,
+  NgZone,
+  numberAttribute,
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
+  ViewEncapsulation,
+  input,
+  output,
+  viewChild,
+  contentChild,
+  contentChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -133,7 +134,7 @@ export class TreeTableService {
     providers: [TreeTableService, TreeTableStyle, { provide: TREETABLE_INSTANCE, useExisting: TreeTable }, { provide: PARENT_INSTANCE, useExisting: TreeTable }],
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.data-p]': 'dataP',
         '[attr.data-scrollselectors]': "'.p-treetable-scrollable-body'"
     },
@@ -154,277 +155,295 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * An array of objects to represent dynamic columns.
      * @group Props
      */
-    @Input() columns: any[] | undefined;
+    readonly columns = input<any[]>();
     /**
      * Style class of the component.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Inline style of the table.
      * @group Props
      */
-    @Input() tableStyle: { [klass: string]: any } | null | undefined;
+    readonly tableStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the table.
      * @group Props
      */
-    @Input() tableStyleClass: string | undefined;
+    readonly tableStyleClass = input<string>();
     /**
      * Whether the cell widths scale according to their content or not.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoLayout: boolean | undefined;
+    readonly autoLayout = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Defines if data is loaded and interacted with in lazy manner.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) lazy: boolean = false;
+    readonly lazy = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to call lazy loading on initialization.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) lazyLoadOnInit: boolean = true;
+    readonly lazyLoadOnInit = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When specified as true, enables the pagination.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) paginator: boolean | undefined;
+    readonly paginator = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Number of rows to display per page.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input({ transform: numberAttribute }) rows: number | undefined;
     /**
      * Index of the first row to be displayed.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input({ transform: numberAttribute }) first: number = 0;
     /**
      * Number of page links to display in paginator.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) pageLinks: number = 5;
+    readonly pageLinks = input<number, unknown>(5, { transform: numberAttribute });
     /**
      * Array of integer/object values to display inside rows per page dropdown of paginator
      * @group Props
      */
-    @Input() rowsPerPageOptions: any[] | undefined;
+    readonly rowsPerPageOptions = input<any[]>();
     /**
      * Whether to show it even there is only one page.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) alwaysShowPaginator: boolean = true;
+    readonly alwaysShowPaginator = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Position of the paginator.
      * @group Props
      */
-    @Input() paginatorPosition: 'top' | 'bottom' | 'both' = 'bottom';
+    readonly paginatorPosition = input<'top' | 'bottom' | 'both'>('bottom');
     /**
      * Custom style class for paginator
      * @group Props
      */
-    @Input() paginatorStyleClass: string | undefined;
+    readonly paginatorStyleClass = input<string>();
     /**
      * Target element to attach the paginator dropdown overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @group Props
      */
-    @Input() paginatorDropdownAppendTo: HTMLElement | ElementRef | TemplateRef<any> | string | null | undefined | any;
+    readonly paginatorDropdownAppendTo = input<HTMLElement | ElementRef | TemplateRef<any> | string | null | any>();
     /**
      * Template of the current page report element. Available placeholders are {currentPage},{totalPages},{rows},{first},{last} and {totalRecords}
      * @group Props
      */
-    @Input() currentPageReportTemplate: string = '{currentPage} of {totalPages}';
+    readonly currentPageReportTemplate = input<string>('{currentPage} of {totalPages}');
     /**
      * Whether to display current page report.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showCurrentPageReport: boolean | undefined;
+    readonly showCurrentPageReport = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Whether to display a dropdown to navigate to any page.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showJumpToPageDropdown: boolean | undefined;
+    readonly showJumpToPageDropdown = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * When enabled, icons are displayed on paginator to go first and last page.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showFirstLastIcon: boolean = true;
+    readonly showFirstLastIcon = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to show page links.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showPageLinks: boolean = true;
+    readonly showPageLinks = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Sort order to use when an unsorted column gets sorted by user interaction.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) defaultSortOrder: number = 1;
+    readonly defaultSortOrder = input<number, unknown>(1, { transform: numberAttribute });
     /**
      * Defines whether sorting works on single column or on multiple columns.
      * @group Props
      */
-    @Input() sortMode: 'single' | 'multiple' = 'single';
+    readonly sortMode = input<'single' | 'multiple'>('single');
     /**
      * When true, resets paginator to first page after sorting.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resetPageOnSort: boolean = true;
+    readonly resetPageOnSort = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Whether to use the default sorting or a custom one using sortFunction.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) customSort: boolean | undefined;
+    readonly customSort = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Specifies the selection mode, valid values are "single" and "multiple".
      * @group Props
      */
-    @Input() selectionMode: string | undefined;
+    readonly selectionMode = input<string>();
     /**
      * Selected row with a context menu.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() contextMenuSelection: any;
     /**
      * Mode of the contet menu selection.
      * @group Props
      */
-    @Input() contextMenuSelectionMode: string = 'separate';
+    readonly contextMenuSelectionMode = input<string>('separate');
     /**
      * A property to uniquely identify a record in data.
      * @group Props
      */
-    @Input() dataKey: string | undefined;
+    readonly dataKey = input<string>();
     /**
      * Defines whether metaKey is should be considered for the selection. On touch enabled devices, metaKeySelection is turned off automatically.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) metaKeySelection: boolean | undefined = false;
+    readonly metaKeySelection = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
     /**
      * Algorithm to define if a row is selected, valid values are "equals" that compares by reference and "deepEquals" that compares all fields.
      * @group Props
      */
-    @Input() compareSelectionBy: string = 'deepEquals';
+    readonly compareSelectionBy = input<string>('deepEquals');
     /**
      * Adds hover effect to rows without the need for selectionMode.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) rowHover: boolean | undefined;
+    readonly rowHover = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Displays a loader to indicate data load is in progress.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) loading: boolean | undefined;
+    readonly loading = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * The icon to show while indicating data load is in progress.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() loadingIcon: string | undefined;
     /**
      * Whether to show the loading mask when loading property is true.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showLoader: boolean = true;
+    readonly showLoader = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When specified, enables horizontal and/or vertical scrolling.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) scrollable: boolean | undefined;
+    readonly scrollable = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Height of the scroll viewport in fixed pixels or the "flex" keyword for a dynamic size.
      * @group Props
      */
-    @Input() scrollHeight: string | undefined;
+    readonly scrollHeight = input<string>();
     /**
      * Whether the data should be loaded on demand during scroll.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) virtualScroll: boolean | undefined;
+    readonly virtualScroll = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Height of a row to use in calculations of virtual scrolling.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) virtualScrollItemSize: number | undefined;
+    readonly virtualScrollItemSize = input<number, unknown>(undefined, { transform: numberAttribute });
     /**
      * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
      * @group Props
      */
-    @Input() virtualScrollOptions: ScrollerOptions | undefined;
+    readonly virtualScrollOptions = input<ScrollerOptions>();
     /**
      * The delay (in milliseconds) before triggering the virtual scroll. This determines the time gap between the user's scroll action and the actual rendering of the next set of items in the virtual scroll.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) virtualScrollDelay: number = 150;
+    readonly virtualScrollDelay = input<number, unknown>(150, { transform: numberAttribute });
     /**
      * Width of the frozen columns container.
      * @group Props
      */
-    @Input() frozenWidth: string | undefined;
+    readonly frozenWidth = input<string>();
     /**
      * An array of objects to represent dynamic columns that are frozen.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() frozenColumns: { [klass: string]: any } | null | undefined;
     /**
      * When enabled, columns can be resized using drag and drop.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resizableColumns: boolean | undefined;
+    readonly resizableColumns = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Defines whether the overall table width should change on column resize, valid values are "fit" and "expand".
      * @group Props
      */
-    @Input() columnResizeMode: string = 'fit';
+    readonly columnResizeMode = input<string>('fit');
     /**
      * When enabled, columns can be reordered using drag and drop.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) reorderableColumns: boolean | undefined;
+    readonly reorderableColumns = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Local ng-template varilable of a ContextMenu.
      * @group Props
      */
-    @Input() contextMenu: any;
+    readonly contextMenu = input<any>();
     /**
      * Function to optimize the dom operations by delegating to ngForTrackBy, default algorithm checks for object identity.
      * @group Props
      */
-    @Input() rowTrackBy: Function = (index: number, item: any) => item;
+    readonly rowTrackBy = input<Function>((index: number, item: any) => item);
     /**
      * An array of FilterMetadata objects to provide external filters.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() filters: { [s: string]: FilterMetadata | undefined } = {};
     /**
      * An array of fields as string to use in global filtering.
      * @group Props
      */
-    @Input() globalFilterFields: string[] | undefined;
+    readonly globalFilterFields = input<string[]>();
     /**
      * Delay in milliseconds before filtering the data.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) filterDelay: number = 300;
+    readonly filterDelay = input<number, unknown>(300, { transform: numberAttribute });
     /**
      * Mode for filtering valid values are "lenient" and "strict". Default is lenient.
      * @group Props
      */
-    @Input() filterMode: string = 'lenient';
+    readonly filterMode = input<string>('lenient');
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
      */
-    @Input() filterLocale: string | undefined;
+    readonly filterLocale = input<string>();
     /**
      * Locale to be used in paginator formatting.
      * @group Props
      */
-    @Input() paginatorLocale: string | undefined;
+    readonly paginatorLocale = input<string>();
     /**
      * Number of total records, defaults to length of value when not defined.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get totalRecords(): number {
         return this._totalRecords;
     }
@@ -436,6 +455,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * Name of the field to sort data by default.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get sortField(): string | undefined | null {
         return this._sortField;
     }
@@ -447,6 +468,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @defaultValue 1
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get sortOrder(): number {
         return this._sortOrder;
     }
@@ -458,6 +481,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @defaultValue null
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get multiSortMeta(): SortMeta[] | undefined | null {
         return this._multiSortMeta;
     }
@@ -469,6 +494,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @defaultValue null
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get selection(): any {
         return this._selection;
     }
@@ -480,6 +507,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @defaultValue null
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get value(): TreeNode<any>[] | undefined {
         return this._value;
     }
@@ -492,6 +521,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @group Props
      * @deprecated use virtualScrollItemSize property instead.
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get virtualRowHeight(): number {
         return this._virtualRowHeight;
     }
@@ -503,6 +534,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * A map of keys to control the selection state.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get selectionKeys(): any {
         return this._selectionKeys;
     }
@@ -515,133 +548,133 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @defaultValue false
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showGridlines: boolean = false;
+    readonly showGridlines = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Callback to invoke on selected node change.
      * @param {TreeTableNode} object - Node instance.
      * @group Emits
      */
-    @Output() selectionChange: EventEmitter<TreeTableNode<any> | TreeTableNode<any>[] | null> = new EventEmitter<TreeTableNode<any> | TreeTableNode<any>[] | null>();
+    readonly selectionChange = output<TreeTableNode<any> | TreeTableNode<any>[] | null>();
     /**
      * Callback to invoke on context menu selection change.
      * @param {TreeTableNode} object - Node instance.
      * @group Emits
      */
-    @Output() contextMenuSelectionChange: EventEmitter<TreeTableNode> = new EventEmitter<TreeTableNode>();
+    readonly contextMenuSelectionChange = output<TreeTableNode>();
     /**
      * Callback to invoke when data is filtered.
      * @param {TreeTableFilterEvent} event - Custom filter event.
      * @group Emits
      */
-    @Output() onFilter: EventEmitter<TreeTableFilterEvent> = new EventEmitter<TreeTableFilterEvent>();
+    readonly onFilter = output<TreeTableFilterEvent>();
     /**
      * Callback to invoke when a node is expanded.
      * @param {TreeTableNodeExpandEvent} event - Node expand event.
      * @group Emits
      */
-    @Output() onNodeExpand: EventEmitter<TreeTableNodeExpandEvent> = new EventEmitter<TreeTableNodeExpandEvent>();
+    readonly onNodeExpand = output<TreeTableNodeExpandEvent>();
     /**
      * Callback to invoke when a node is collapsed.
      * @param {TreeTableNodeCollapseEvent} event - Node collapse event.
      * @group Emits
      */
-    @Output() onNodeCollapse: EventEmitter<TreeTableNodeCollapseEvent> = new EventEmitter<TreeTableNodeCollapseEvent>();
+    readonly onNodeCollapse = output<TreeTableNodeCollapseEvent>();
     /**
      * Callback to invoke when pagination occurs.
      * @param {TreeTablePaginatorState} object - Paginator state.
      * @group Emits
      */
-    @Output() onPage: EventEmitter<TreeTablePaginatorState> = new EventEmitter<TreeTablePaginatorState>();
+    readonly onPage = output<TreeTablePaginatorState>();
     /**
      * Callback to invoke when a column gets sorted.
      * @param {Object} Object - Sort data.
      * @group Emits
      */
-    @Output() onSort: EventEmitter<any> = new EventEmitter<any>();
+    readonly onSort = output<any>();
     /**
      * Callback to invoke when paging, sorting or filtering happens in lazy mode.
      * @param {TreeTableLazyLoadEvent} event - Custom lazy load event.
      * @group Emits
      */
-    @Output() onLazyLoad: EventEmitter<TreeTableLazyLoadEvent> = new EventEmitter<TreeTableLazyLoadEvent>();
+    readonly onLazyLoad = output<TreeTableLazyLoadEvent>();
     /**
      * An event emitter to invoke on custom sorting, refer to sorting section for details.
      * @param {TreeTableSortEvent} event - Custom sort event.
      * @group Emits
      */
-    @Output() sortFunction: EventEmitter<TreeTableSortEvent> = new EventEmitter<TreeTableSortEvent>();
+    readonly sortFunction = output<TreeTableSortEvent>();
     /**
      * Callback to invoke when a column is resized.
      * @param {TreeTableColResizeEvent} event - Custom column resize event.
      * @group Emits
      */
-    @Output() onColResize: EventEmitter<TreeTableColResizeEvent> = new EventEmitter<TreeTableColResizeEvent>();
+    readonly onColResize = output<TreeTableColResizeEvent>();
     /**
      * Callback to invoke when a column is reordered.
      * @param {TreeTableColumnReorderEvent} event - Custom column reorder.
      * @group Emits
      */
-    @Output() onColReorder: EventEmitter<TreeTableColumnReorderEvent> = new EventEmitter<TreeTableColumnReorderEvent>();
+    readonly onColReorder = output<TreeTableColumnReorderEvent>();
     /**
      * Callback to invoke when a node is selected.
      * @param {TreeTableNode} object - Node instance.
      * @group Emits
      */
-    @Output() onNodeSelect: EventEmitter<TreeTableNode> = new EventEmitter<TreeTableNode>();
+    readonly onNodeSelect = output<TreeTableNode>();
     /**
      * Callback to invoke when a node is unselected.
      * @param {TreeTableNodeUnSelectEvent} event - Custom node unselect event.
      * @group Emits
      */
-    @Output() onNodeUnselect: EventEmitter<TreeTableNodeUnSelectEvent> = new EventEmitter<TreeTableNodeUnSelectEvent>();
+    readonly onNodeUnselect = output<TreeTableNodeUnSelectEvent>();
     /**
      * Callback to invoke when a node is selected with right click.
      * @param {TreeTableContextMenuSelectEvent} event - Custom context menu select event.
      * @group Emits
      */
-    @Output() onContextMenuSelect: EventEmitter<TreeTableContextMenuSelectEvent> = new EventEmitter<TreeTableContextMenuSelectEvent>();
+    readonly onContextMenuSelect = output<TreeTableContextMenuSelectEvent>();
     /**
      * Callback to invoke when state of header checkbox changes.
      * @param {TreeTableHeaderCheckboxToggleEvent} event - Custom checkbox toggle event.
      * @group Emits
      */
-    @Output() onHeaderCheckboxToggle: EventEmitter<TreeTableHeaderCheckboxToggleEvent> = new EventEmitter<TreeTableHeaderCheckboxToggleEvent>();
+    readonly onHeaderCheckboxToggle = output<TreeTableHeaderCheckboxToggleEvent>();
     /**
      * Callback to invoke when a cell switches to edit mode.
      * @param {TreeTableEditEvent} event - Custom edit event.
      * @group Emits
      */
-    @Output() onEditInit: EventEmitter<TreeTableEditEvent> = new EventEmitter<TreeTableEditEvent>();
+    readonly onEditInit = output<TreeTableEditEvent>();
     /**
      * Callback to invoke when cell edit is completed.
      * @param {TreeTableEditEvent} event - Custom edit event.
      * @group Emits
      */
-    @Output() onEditComplete: EventEmitter<TreeTableEditEvent> = new EventEmitter<TreeTableEditEvent>();
+    readonly onEditComplete = output<TreeTableEditEvent>();
     /**
      * Callback to invoke when cell edit is cancelled with escape key.
      * @param {TreeTableEditEvent} event - Custom edit event.
      * @group Emits
      */
-    @Output() onEditCancel: EventEmitter<TreeTableEditEvent> = new EventEmitter<TreeTableEditEvent>();
+    readonly onEditCancel = output<TreeTableEditEvent>();
     /**
      * Callback to invoke when selectionKeys are changed.
      * @param {Object} object - updated value of the selectionKeys.
      * @group Emits
      */
-    @Output() selectionKeysChange: EventEmitter<any> = new EventEmitter();
+    readonly selectionKeysChange = output<any>();
 
-    @ViewChild('resizeHelper') resizeHelperViewChild: Nullable<ElementRef>;
+    readonly resizeHelperViewChild = viewChild<Nullable<ElementRef>>('resizeHelper');
 
-    @ViewChild('reorderIndicatorUp') reorderIndicatorUpViewChild: Nullable<ElementRef>;
+    readonly reorderIndicatorUpViewChild = viewChild<Nullable<ElementRef>>('reorderIndicatorUp');
 
-    @ViewChild('reorderIndicatorDown') reorderIndicatorDownViewChild: Nullable<ElementRef>;
+    readonly reorderIndicatorDownViewChild = viewChild<Nullable<ElementRef>>('reorderIndicatorDown');
 
-    @ViewChild('table') tableViewChild: Nullable<ElementRef>;
+    readonly tableViewChild = viewChild<Nullable<ElementRef>>('table');
 
-    @ViewChild('scrollableView') scrollableViewChild: Nullable<ElementRef>;
+    readonly scrollableViewChild = viewChild<Nullable<ElementRef>>('scrollableView');
 
-    @ViewChild('scrollableFrozenView') scrollableFrozenViewChild: Nullable<ElementRef>;
+    readonly scrollableFrozenViewChild = viewChild<Nullable<ElementRef>>('scrollableFrozenView');
 
     _value: TreeNode<any>[] | undefined = [];
 
@@ -663,16 +696,16 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
     filterTimeout: any;
 
-    @ContentChild('colgroup', { descendants: false }) _colGroupTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
+    readonly _colGroupTemplate = contentChild<Nullable<TemplateRef<TreeTableColumnsTemplateContext>>>('colgroup', { descendants: false });
     colGroupTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
 
     @ContentChild('caption', { descendants: false }) _captionTemplate: Nullable<TemplateRef<void>>;
     captionTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('header', { descendants: false }) _headerTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
+    readonly _headerTemplate = contentChild<Nullable<TemplateRef<TreeTableColumnsTemplateContext>>>('header', { descendants: false });
     headerTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
 
-    @ContentChild('body', { descendants: false }) _bodyTemplate: Nullable<TemplateRef<TreeTableBodyTemplateContext>>;
+    readonly _bodyTemplate = contentChild<Nullable<TemplateRef<TreeTableBodyTemplateContext>>>('body', { descendants: false });
     bodyTemplate: Nullable<TemplateRef<TreeTableBodyTemplateContext>>;
 
     @ContentChild('footer', { descendants: false }) _footerTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
@@ -681,37 +714,37 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     @ContentChild('summary', { descendants: false }) _summaryTemplate: Nullable<TemplateRef<void>>;
     summaryTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('emptymessage', { descendants: false }) _emptyMessageTemplate: Nullable<TemplateRef<TreeTableEmptyMessageTemplateContext>>;
+    readonly _emptyMessageTemplate = contentChild<Nullable<TemplateRef<TreeTableEmptyMessageTemplateContext>>>('emptymessage', { descendants: false });
     emptyMessageTemplate: Nullable<TemplateRef<TreeTableEmptyMessageTemplateContext>>;
 
-    @ContentChild('paginatorleft', { descendants: false }) _paginatorLeftTemplate: Nullable<TemplateRef<void>>;
+    readonly _paginatorLeftTemplate = contentChild<Nullable<TemplateRef<void>>>('paginatorleft', { descendants: false });
     paginatorLeftTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('paginatorright', { descendants: false }) _paginatorRightTemplate: Nullable<TemplateRef<void>>;
+    readonly _paginatorRightTemplate = contentChild<Nullable<TemplateRef<void>>>('paginatorright', { descendants: false });
     paginatorRightTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('paginatordropdownitem', { descendants: false }) _paginatorDropdownItemTemplate: Nullable<TemplateRef<void>>;
+    readonly _paginatorDropdownItemTemplate = contentChild<Nullable<TemplateRef<void>>>('paginatordropdownitem', { descendants: false });
     paginatorDropdownItemTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('frozenheader', { descendants: false }) _frozenHeaderTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
+    readonly _frozenHeaderTemplate = contentChild<Nullable<TemplateRef<TreeTableColumnsTemplateContext>>>('frozenheader', { descendants: false });
     frozenHeaderTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
 
-    @ContentChild('frozenbody', { descendants: false }) _frozenBodyTemplate: Nullable<TemplateRef<void>>;
+    readonly _frozenBodyTemplate = contentChild<Nullable<TemplateRef<void>>>('frozenbody', { descendants: false });
     frozenBodyTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('frozenfooter', { descendants: false }) _frozenFooterTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
+    readonly _frozenFooterTemplate = contentChild<Nullable<TemplateRef<TreeTableColumnsTemplateContext>>>('frozenfooter', { descendants: false });
     frozenFooterTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
 
-    @ContentChild('frozencolgroup', { descendants: false }) _frozenColGroupTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
+    readonly _frozenColGroupTemplate = contentChild<Nullable<TemplateRef<TreeTableColumnsTemplateContext>>>('frozencolgroup', { descendants: false });
     frozenColGroupTemplate: Nullable<TemplateRef<TreeTableColumnsTemplateContext>>;
 
     @ContentChild('loadingicon', { descendants: false }) _loadingIconTemplate: Nullable<TemplateRef<void>>;
     loadingIconTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('reorderindicatorupicon', { descendants: false }) _reorderIndicatorUpIconTemplate: Nullable<TemplateRef<void>>;
+    readonly _reorderIndicatorUpIconTemplate = contentChild<Nullable<TemplateRef<void>>>('reorderindicatorupicon', { descendants: false });
     reorderIndicatorUpIconTemplate: Nullable<TemplateRef<void>>;
 
-    @ContentChild('reorderindicatordownicon', { descendants: false }) _reorderIndicatorDownIconTemplate: Nullable<TemplateRef<void>>;
+    readonly _reorderIndicatorDownIconTemplate = contentChild<Nullable<TemplateRef<void>>>('reorderindicatordownicon', { descendants: false });
     reorderIndicatorDownIconTemplate: Nullable<TemplateRef<void>>;
 
     @ContentChild('sorticon', { descendants: false }) _sortIconTemplate: Nullable<TemplateRef<TreeTableSortIconTemplateContext>>;
@@ -723,7 +756,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     @ContentChild('headercheckboxicon', { descendants: false }) _headerCheckboxIconTemplate: Nullable<TemplateRef<TreeTableHeaderCheckboxIconTemplateContext>>;
     headerCheckboxIconTemplate: Nullable<TemplateRef<TreeTableHeaderCheckboxIconTemplateContext>>;
 
-    @ContentChild('togglericon', { descendants: false }) _togglerIconTemplate: Nullable<TemplateRef<TreeTableTogglerIconTemplateContext>>;
+    readonly _togglerIconTemplate = contentChild<Nullable<TemplateRef<TreeTableTogglerIconTemplateContext>>>('togglericon', { descendants: false });
     togglerIconTemplate: Nullable<TemplateRef<TreeTableTogglerIconTemplateContext>>;
 
     @ContentChild('paginatorfirstpagelinkicon', { descendants: false }) _paginatorFirstPageLinkIconTemplate: Nullable<TemplateRef<void>>;
@@ -774,16 +807,16 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     toggleRowIndex: Nullable<number>;
 
     onInit() {
-        if (this.lazy && this.lazyLoadOnInit && !this.virtualScroll) {
+        if (this.lazy() && this.lazyLoadOnInit() && !this.virtualScroll()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         }
         this.initialized = true;
     }
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<PrimeTemplate>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'caption':
                     this.captionTemplate = item.template;
@@ -902,11 +935,12 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         if (simpleChange.value) {
             this._value = simpleChange.value.currentValue;
 
-            if (!this.lazy) {
+            if (!this.lazy()) {
                 this.totalRecords = this._value ? this._value.length : 0;
 
-                if (this.sortMode == 'single' && this.sortField) this.sortSingle();
-                else if (this.sortMode == 'multiple' && this.multiSortMeta) this.sortMultiple();
+                const sortMode = this.sortMode();
+                if (sortMode == 'single' && this.sortField) this.sortSingle();
+                else if (sortMode == 'multiple' && this.multiSortMeta) this.sortMultiple();
                 else if (this.hasFilter())
                     //sort already filters
                     this._filter();
@@ -916,12 +950,14 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             this.tableService.onUIUpdate(this.value);
         }
 
+        const lazy = this.lazy();
+        const sortMode = this.sortMode();
         if (simpleChange.sortField) {
             this._sortField = simpleChange.sortField.currentValue;
 
             //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!this.lazy || this.initialized) {
-                if (this.sortMode === 'single') {
+            if (!lazy || this.initialized) {
+                if (sortMode === 'single') {
                     this.sortSingle();
                 }
             }
@@ -931,8 +967,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             this._sortOrder = simpleChange.sortOrder.currentValue;
 
             //avoid triggering lazy load prior to lazy initialization at onInit
-            if (!this.lazy || this.initialized) {
-                if (this.sortMode === 'single') {
+            if (!lazy || this.initialized) {
+                if (sortMode === 'single') {
                     this.sortSingle();
                 }
             }
@@ -940,7 +976,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
         if (simpleChange.multiSortMeta) {
             this._multiSortMeta = simpleChange.multiSortMeta.currentValue;
-            if (this.sortMode === 'multiple') {
+            if (sortMode === 'multiple') {
                 this.sortMultiple();
             }
         }
@@ -959,7 +995,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     updateSerializedValue() {
         this.serializedValue = [];
 
-        if (this.paginator) this.serializePageNodes();
+        if (this.paginator()) this.serializePageNodes();
         else this.serializeNodes(null, this.filteredNodes || this.value, 0, true);
     }
 
@@ -986,7 +1022,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         let data = this.filteredNodes || this.value;
         this.serializedValue = [];
         if (data && data.length) {
-            const first = this.lazy ? 0 : this.first;
+            const first = this.lazy() ? 0 : this.first;
 
             for (let i = first; i < first + <number>this.rows; i++) {
                 let node = data[i];
@@ -1005,14 +1041,15 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     updateselectedKeys() {
-        if (this.dataKey && this._selection) {
+        const dataKey = this.dataKey();
+        if (dataKey && this._selection) {
             this.selectedKeys = {};
             if (Array.isArray(this._selection)) {
                 for (let node of this._selection) {
-                    this.selectedKeys[String(resolveFieldData(node.data, this.dataKey))] = 1;
+                    this.selectedKeys[String(resolveFieldData(node.data, dataKey))] = 1;
                 }
             } else {
-                this.selectedKeys[String(resolveFieldData((<any>this._selection).data, this.dataKey))] = 1;
+                this.selectedKeys[String(resolveFieldData((<any>this._selection).data, dataKey))] = 1;
             }
         }
     }
@@ -1021,7 +1058,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         this.first = <number>event.first;
         this.rows = <number>event.rows;
 
-        if (this.lazy) this.onLazyLoad.emit(this.createLazyLoadMetadata());
+        if (this.lazy()) this.onLazyLoad.emit(this.createLazyLoadMetadata());
         else this.serializePageNodes();
 
         this.onPage.emit({
@@ -1031,7 +1068,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
         this.tableService.onUIUpdate(this.value);
 
-        if (this.scrollable) {
+        if (this.scrollable()) {
             this.resetScrollTop();
         }
     }
@@ -1039,16 +1076,19 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     sort(event: TreeTableSortEvent) {
         let originalEvent = event.originalEvent;
 
-        if (this.sortMode === 'single') {
-            this._sortOrder = this.sortField === event.field ? this.sortOrder * -1 : this.defaultSortOrder;
+        const sortMode = this.sortMode();
+        const scrollable = this.scrollable();
+        const resetPageOnSort = this.resetPageOnSort();
+        if (sortMode === 'single') {
+            this._sortOrder = this.sortField === event.field ? this.sortOrder * -1 : this.defaultSortOrder();
             this._sortField = event.field;
             this.sortSingle();
 
-            if (this.resetPageOnSort && this.scrollable) {
+            if (resetPageOnSort && scrollable) {
                 this.resetScrollTop();
             }
         }
-        if (this.sortMode === 'multiple') {
+        if (sortMode === 'multiple') {
             let metaKey = (<KeyboardEvent>originalEvent).metaKey || (<KeyboardEvent>originalEvent).ctrlKey;
             let sortMeta = this.getSortMeta(<string>event.field);
 
@@ -1056,7 +1096,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                 if (!metaKey) {
                     this._multiSortMeta = [{ field: <string>event.field, order: sortMeta.order * -1 }];
 
-                    if (this.resetPageOnSort && this.scrollable) {
+                    if (resetPageOnSort && scrollable) {
                         this.resetScrollTop();
                     }
                 } else {
@@ -1066,11 +1106,11 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                 if (!metaKey || !this.multiSortMeta) {
                     this._multiSortMeta = [];
 
-                    if (this.resetPageOnSort && this.scrollable) {
+                    if (resetPageOnSort && scrollable) {
                         this.resetScrollTop();
                     }
                 }
-                (<SortMeta[]>this.multiSortMeta).push({ field: <string>event.field, order: this.defaultSortOrder });
+                (<SortMeta[]>this.multiSortMeta).push({ field: <string>event.field, order: this.defaultSortOrder() });
             }
 
             this.sortMultiple();
@@ -1079,7 +1119,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
     sortSingle() {
         if (this.sortField && this.sortOrder) {
-            if (this.lazy) {
+            if (this.lazy()) {
                 this.onLazyLoad.emit(this.createLazyLoadMetadata());
             } else if (this.value) {
                 this.sortNodes(this.value);
@@ -1105,10 +1145,10 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             return;
         }
 
-        if (this.customSort) {
+        if (this.customSort()) {
             this.sortFunction.emit({
                 data: nodes,
-                mode: this.sortMode,
+                mode: this.sortMode(),
                 field: <string>this.sortField,
                 order: this.sortOrder
             });
@@ -1135,7 +1175,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
     sortMultiple() {
         if (this.multiSortMeta) {
-            if (this.lazy) {
+            if (this.lazy()) {
                 this.onLazyLoad.emit(this.createLazyLoadMetadata());
             } else if (this.value) {
                 this.sortMultipleNodes(this.value);
@@ -1158,10 +1198,10 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             return;
         }
 
-        if (this.customSort) {
+        if (this.customSort()) {
             this.sortFunction.emit({
                 data: this.value,
-                mode: this.sortMode,
+                mode: this.sortMode(),
                 multiSortMeta: this.multiSortMeta
             });
         } else {
@@ -1215,9 +1255,10 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     isSorted(field: string) {
-        if (this.sortMode === 'single') {
+        const sortMode = this.sortMode();
+        if (sortMode === 'single') {
             return this.sortField && this.sortField === field;
-        } else if (this.sortMode === 'multiple') {
+        } else if (sortMode === 'multiple') {
             let sorted = false;
             if (this.multiSortMeta) {
                 for (let i = 0; i < this.multiSortMeta.length; i++) {
@@ -1256,7 +1297,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @group Method
      */
     public resetScrollTop() {
-        if (this.virtualScroll) this.scrollToVirtualIndex(0);
+        if (this.virtualScroll()) this.scrollToVirtualIndex(0);
         else this.scrollTo({ top: 0 });
     }
     /**
@@ -1265,12 +1306,13 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @group Method
      */
     public scrollToVirtualIndex(index: number) {
-        if (this.scrollableViewChild) {
-            (<any>this.scrollableViewChild).scrollToVirtualIndex(<number>index);
+        const scrollableViewChild = this.scrollableViewChild();
+        if (scrollableViewChild) {
+            (<any>scrollableViewChild).scrollToVirtualIndex(<number>index);
         }
 
-        if (this.scrollableFrozenViewChild) {
-            (<any>this.scrollableViewChild).scrollToVirtualIndex(index);
+        if (this.scrollableFrozenViewChild()) {
+            (<any>scrollableViewChild).scrollToVirtualIndex(index);
         }
     }
     /**
@@ -1279,12 +1321,13 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
      * @group Method
      */
     public scrollTo(options: ScrollToOptions) {
-        if (this.scrollableViewChild) {
-            (<any>this.scrollableViewChild).scrollTo(options);
+        const scrollableViewChild = this.scrollableViewChild();
+        if (scrollableViewChild) {
+            (<any>scrollableViewChild).scrollTo(options);
         }
 
-        if (this.scrollableFrozenViewChild) {
-            (<any>this.scrollableViewChild).scrollTo(options);
+        if (this.scrollableFrozenViewChild()) {
+            (<any>scrollableViewChild).scrollTo(options);
         }
     }
 
@@ -1307,21 +1350,22 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         let containerLeft = <any>getOffset(this.el?.nativeElement).left;
         this.el?.nativeElement.setAttribute('data-p-unselectable-text', 'true');
         !this.$unstyled() && addStyle(this.el.nativeElement, { 'user-select': 'none' });
-        (<ElementRef>this.resizeHelperViewChild).nativeElement.style.height = this.el?.nativeElement.offsetHeight + 'px';
-        (<ElementRef>this.resizeHelperViewChild).nativeElement.style.top = 0 + 'px';
-        (<ElementRef>this.resizeHelperViewChild).nativeElement.style.left = event.pageX - containerLeft + this.el?.nativeElement.scrollLeft + 'px';
+        (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.height = this.el?.nativeElement.offsetHeight + 'px';
+        (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.top = 0 + 'px';
+        (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.left = event.pageX - containerLeft + this.el?.nativeElement.scrollLeft + 'px';
 
-        (<ElementRef>this.resizeHelperViewChild).nativeElement.style.display = 'block';
+        (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.display = 'block';
     }
 
     onColumnResizeEnd(event: MouseEvent, column: any) {
-        let delta = (<ElementRef>this.resizeHelperViewChild).nativeElement.offsetLeft - <number>this.lastResizerHelperX;
+        let delta = (<ElementRef>this.resizeHelperViewChild()).nativeElement.offsetLeft - <number>this.lastResizerHelperX;
         let columnWidth = column.offsetWidth;
         let newColumnWidth = columnWidth + delta;
         let minWidth = column.style.minWidth || 15;
 
         if (columnWidth + delta > parseInt(minWidth)) {
-            if (this.columnResizeMode === 'fit') {
+            const columnResizeMode = this.columnResizeMode();
+            if (columnResizeMode === 'fit') {
                 let nextColumn = column.nextElementSibling;
                 while (!nextColumn.offsetParent) {
                     nextColumn = nextColumn.nextElementSibling;
@@ -1332,7 +1376,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                     let nextColumnMinWidth = nextColumn.style.minWidth || 15;
 
                     if (newColumnWidth > 15 && nextColumnWidth > parseInt(nextColumnMinWidth)) {
-                        if (this.scrollable) {
+                        if (this.scrollable()) {
                             let scrollableView = this.findParentScrollableView(column);
                             let scrollableBodyTable = <any>findSingle(scrollableView, '[data-pc-section="scrollablebody"] table') || findSingle(scrollableView, '[data-pc-name="virtualscroller"] table');
                             let scrollableHeaderTable = <any>findSingle(scrollableView, '[data-pc-section="scrollableheadertable"]');
@@ -1350,8 +1394,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                         }
                     }
                 }
-            } else if (this.columnResizeMode === 'expand') {
-                if (this.scrollable) {
+            } else if (columnResizeMode === 'expand') {
+                if (this.scrollable()) {
                     let scrollableView = this.findParentScrollableView(column);
                     let scrollableBody = <any>findSingle(scrollableView, '[data-pc-section="scrollablebody"]') || findSingle(scrollableView, '[data-pc-name="virtualscroller"]');
                     let scrollableHeader = <any>findSingle(scrollableView, '[data-pc-section="scrollableheader"]');
@@ -1385,9 +1429,10 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                     this.resizeColGroup(scrollableBodyTable, resizeColumnIndex, newColumnWidth, null);
                     this.resizeColGroup(scrollableFooterTable, resizeColumnIndex, newColumnWidth, null);
                 } else {
-                    (<ElementRef>this.tableViewChild).nativeElement.style.width = this.tableViewChild?.nativeElement.offsetWidth + delta + 'px';
+                    const tableViewChild = this.tableViewChild();
+                    (<ElementRef>this.tableViewChild()).nativeElement.style.width = tableViewChild?.nativeElement.offsetWidth + delta + 'px';
                     column.style.width = newColumnWidth + 'px';
-                    let containerWidth = this.tableViewChild?.nativeElement.style.width;
+                    let containerWidth = tableViewChild?.nativeElement.style.width;
                     (<ElementRef>this.el).nativeElement.style.width = containerWidth + 'px';
                 }
             }
@@ -1398,7 +1443,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             });
         }
 
-        (this.resizeHelperViewChild as ElementRef).nativeElement.style.display = 'none';
+        (this.resizeHelperViewChild() as ElementRef).nativeElement.style.display = 'none';
 
         this.el.nativeElement.removeAttribute('data-p-unselectable-text');
         !this.$unstyled() && (this.el.nativeElement.style['user-select'] = '');
@@ -1436,14 +1481,14 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     onColumnDragStart(event: DragEvent, columnElement: any) {
-        this.reorderIconWidth = getHiddenElementOuterWidth(this.reorderIndicatorUpViewChild?.nativeElement);
-        this.reorderIconHeight = getHiddenElementOuterHeight(this.reorderIndicatorDownViewChild?.nativeElement);
+        this.reorderIconWidth = getHiddenElementOuterWidth(this.reorderIndicatorUpViewChild()?.nativeElement);
+        this.reorderIconHeight = getHiddenElementOuterHeight(this.reorderIndicatorDownViewChild()?.nativeElement);
         this.draggedColumn = columnElement;
         (<any>event).dataTransfer.setData('text', 'b'); // For firefox
     }
 
     onColumnDragEnter(event: DragEvent, dropHeader: any) {
-        if (this.reorderableColumns && this.draggedColumn && dropHeader) {
+        if (this.reorderableColumns() && this.draggedColumn && dropHeader) {
             event.preventDefault();
             let containerOffset = <any>getOffset(this.el?.nativeElement);
             let dropHeaderOffset = <any>getOffset(dropHeader);
@@ -1453,21 +1498,21 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                 let targetTop = containerOffset.top - dropHeaderOffset.top;
                 let columnCenter = dropHeaderOffset.left + dropHeader.offsetWidth / 2;
 
-                (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.top = dropHeaderOffset.top - containerOffset.top - (<number>this.reorderIconHeight - 1) + 'px';
-                (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.top = dropHeaderOffset.top - containerOffset.top + dropHeader.offsetHeight + 'px';
+                (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.top = dropHeaderOffset.top - containerOffset.top - (<number>this.reorderIconHeight - 1) + 'px';
+                (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.top = dropHeaderOffset.top - containerOffset.top + dropHeader.offsetHeight + 'px';
 
                 if (event.pageX > columnCenter) {
-                    (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.left = targetLeft + dropHeader.offsetWidth - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
-                    (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.left = targetLeft + dropHeader.offsetWidth - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
+                    (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.left = targetLeft + dropHeader.offsetWidth - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
+                    (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.left = targetLeft + dropHeader.offsetWidth - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
                     this.dropPosition = 1;
                 } else {
-                    (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.left = targetLeft - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
-                    (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.left = targetLeft - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
+                    (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.left = targetLeft - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
+                    (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.left = targetLeft - Math.ceil(<number>this.reorderIconWidth / 2) + 'px';
                     this.dropPosition = -1;
                 }
 
-                (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.display = 'block';
-                (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.display = 'block';
+                (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.display = 'block';
+                (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.display = 'block';
             } else {
                 (<any>event).dataTransfer.dropEffect = 'none';
             }
@@ -1475,10 +1520,10 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     onColumnDragLeave(event: DragEvent) {
-        if (this.reorderableColumns && this.draggedColumn) {
+        if (this.reorderableColumns() && this.draggedColumn) {
             event.preventDefault();
-            (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.display = 'none';
-            (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.display = 'none';
+            (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.display = 'none';
+            (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.display = 'none';
         }
     }
 
@@ -1501,17 +1546,18 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             }
 
             if (allowDrop) {
-                reorderArray(<any[]>this.columns, dragIndex, dropIndex);
+                const columns = this.columns();
+                reorderArray(<any[]>columns, dragIndex, dropIndex);
 
                 this.onColReorder.emit({
                     dragIndex: dragIndex,
                     dropIndex: dropIndex,
-                    columns: this.columns
+                    columns: columns
                 });
             }
 
-            (<ElementRef>this.reorderIndicatorUpViewChild).nativeElement.style.display = 'none';
-            (<ElementRef>this.reorderIndicatorDownViewChild).nativeElement.style.display = 'none';
+            (<ElementRef>this.reorderIndicatorUpViewChild()).nativeElement.style.display = 'none';
+            (<ElementRef>this.reorderIndicatorDownViewChild()).nativeElement.style.display = 'none';
             (this.draggedColumn as any).draggable = false;
             this.draggedColumn = null;
             this.dropPosition = null;
@@ -1524,12 +1570,14 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
             return;
         }
 
-        if (this.selectionMode) {
+        const selectionMode = this.selectionMode();
+        if (selectionMode) {
             this.preventSelectionSetterPropagation = true;
             let rowNode = event.rowNode;
             let selected = this.isSelected((<any>rowNode).node);
-            let metaSelection = this.rowTouched ? false : this.metaKeySelection;
-            let dataKeyValue = this.dataKey ? String(resolveFieldData((<TreeTableNode>rowNode.node).data, this.dataKey)) : null;
+            let metaSelection = this.rowTouched ? false : this.metaKeySelection();
+            const dataKey = this.dataKey();
+            let dataKeyValue = dataKey ? String(resolveFieldData((<TreeTableNode>rowNode.node).data, dataKey)) : null;
 
             if (metaSelection) {
                 let keyboardEvent = <KeyboardEvent>event.originalEvent;
@@ -1585,7 +1633,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                     });
                 }
             } else {
-                if (this.selectionMode === 'single') {
+                if (selectionMode === 'single') {
                     if (selected) {
                         this._selection = null;
                         this.selectedKeys = {};
@@ -1609,7 +1657,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                             this.selectedKeys[dataKeyValue] = 1;
                         }
                     }
-                } else if (this.selectionMode === 'multiple') {
+                } else if (selectionMode === 'multiple') {
                     if (selected) {
                         let selectionIndex = this.findIndexInSelection(rowNode.node);
                         this._selection = this.selection.filter((val: TreeTableNode, i: number) => i != selectionIndex);
@@ -1649,28 +1697,30 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     handleRowRightClick(event: any) {
-        if (this.contextMenu) {
+        if (this.contextMenu()) {
             const node = event.rowNode.node;
 
             const showContextMenu = () => {
-                this.contextMenu.show(event.originalEvent);
-                this.contextMenu.hideCallback = () => {
+                this.contextMenu().show(event.originalEvent);
+                this.contextMenu().hideCallback = () => {
                     this.contextMenuSelection = null;
-                    this.contextMenuSelectionChange.emit();
+                    this.contextMenuSelectionChange.emit(null!);
                     this.tableService.onContextMenu(null);
                 };
             };
 
-            if (this.contextMenuSelectionMode === 'separate') {
+            const contextMenuSelectionMode = this.contextMenuSelectionMode();
+            if (contextMenuSelectionMode === 'separate') {
                 this.contextMenuSelection = node;
                 this.contextMenuSelectionChange.emit(node);
                 this.tableService.onContextMenu(node);
                 showContextMenu();
                 this.onContextMenuSelect.emit({ originalEvent: event.originalEvent, node: node });
-            } else if (this.contextMenuSelectionMode === 'joint') {
+            } else if (contextMenuSelectionMode === 'joint') {
                 this.preventSelectionSetterPropagation = true;
                 let selected = this.isSelected(node);
-                let dataKeyValue = this.dataKey ? String(resolveFieldData(node.data, this.dataKey)) : null;
+                const dataKey = this.dataKey();
+                let dataKeyValue = dataKey ? String(resolveFieldData(node.data, dataKey)) : null;
 
                 if (!selected) {
                     if (this.isSingleSelectionMode()) {
@@ -1766,7 +1816,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         if (node.children && node.children.length) {
             let selectedChildCount: number = 0;
             let childPartialSelected: boolean = false;
-            let dataKeyValue = this.dataKey ? String(resolveFieldData(node.data, this.dataKey)) : null;
+            const dataKey = this.dataKey();
+            let dataKeyValue = dataKey ? String(resolveFieldData(node.data, dataKey)) : null;
 
             for (let child of node.children) {
                 if (this.isSelected(child)) selectedChildCount++;
@@ -1806,7 +1857,8 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     propagateSelectionDown(node: TreeTableNode, select: boolean) {
         // legacy selection support, will be removed in v18
         let index = this.findIndexInSelection(node);
-        let dataKeyValue = this.dataKey ? String(resolveFieldData(node.data, this.dataKey)) : null;
+        const dataKey = this.dataKey();
+        let dataKeyValue = dataKey ? String(resolveFieldData(node.data, dataKey)) : null;
 
         if (select && index == -1) {
             this._selection = [...(this.selection || []), node];
@@ -1833,11 +1885,12 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     isSelected(node: TreeTableNode) {
         // legacy selection support, will be removed in v18
         if (node && this.selection) {
-            if (this.dataKey) {
+            const dataKey = this.dataKey();
+            if (dataKey) {
                 if (node.hasOwnProperty('checked')) {
                     return node['checked'];
                 } else {
-                    return this.selectedKeys[resolveFieldData(node.data, this.dataKey)] !== undefined;
+                    return this.selectedKeys[resolveFieldData(node.data, dataKey)] !== undefined;
                 }
             } else {
                 if (Array.isArray(this.selection)) return this.findIndexInSelection(node) > -1;
@@ -1849,15 +1902,16 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     isNodeSelected(node) {
-        return this.selectionMode && this.selectionKeys ? this.selectionKeys[this.nodeKey(node)]?.checked === true : false;
+        return this.selectionMode() && this.selectionKeys ? this.selectionKeys[this.nodeKey(node)]?.checked === true : false;
     }
 
     isNodePartialSelected(node) {
-        return this.selectionMode && this.selectionKeys ? this.selectionKeys[this.nodeKey(node)]?.partialChecked === true : false;
+        return this.selectionMode() && this.selectionKeys ? this.selectionKeys[this.nodeKey(node)]?.partialChecked === true : false;
     }
 
     nodeKey(node) {
-        return resolveFieldData(node, this.dataKey) || resolveFieldData(node?.data, this.dataKey);
+        const dataKey = this.dataKey();
+        return resolveFieldData(node, dataKey) || resolveFieldData(node?.data, dataKey);
     }
 
     toggleCheckbox(event) {
@@ -1932,15 +1986,15 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     isSingleSelectionMode() {
-        return this.selectionMode === 'single';
+        return this.selectionMode() === 'single';
     }
 
     isMultipleSelectionMode() {
-        return this.selectionMode === 'multiple';
+        return this.selectionMode() === 'multiple';
     }
 
     equals(node1: TreeTableNode, node2: TreeTableNode) {
-        return this.compareSelectionBy === 'equals' ? equals(node1, node2) : equals(node1.data, node2.data, this.dataKey);
+        return this.compareSelectionBy() === 'equals' ? equals(node1, node2) : equals(node1.data, node2.data, this.dataKey());
     }
 
     filter(value: string | string[], field: string, matchMode: string) {
@@ -1957,7 +2011,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         this.filterTimeout = setTimeout(() => {
             this._filter();
             this.filterTimeout = null;
-        }, this.filterDelay);
+        }, this.filterDelay());
     }
 
     filterGlobal(value: string, matchMode: string) {
@@ -1973,7 +2027,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 
     _filter() {
-        if (this.lazy) {
+        if (this.lazy()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         } else {
             if (!this.value) {
@@ -1982,18 +2036,20 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
             if (!this.hasFilter()) {
                 this.filteredNodes = null;
-                if (this.paginator) {
+                if (this.paginator()) {
                     this.totalRecords = this.value ? this.value.length : 0;
                 }
             } else {
                 let globalFilterFieldsArray;
                 if (this.filters['global']) {
-                    if (!this.columns && !this.globalFilterFields) throw new Error('Global filtering requires dynamic columns or globalFilterFields to be defined.');
-                    else globalFilterFieldsArray = this.globalFilterFields || this.columns;
+                    const columns = this.columns();
+                    const globalFilterFields = this.globalFilterFields();
+                    if (!columns && !globalFilterFields) throw new Error('Global filtering requires dynamic columns or globalFilterFields to be defined.');
+                    else globalFilterFieldsArray = globalFilterFields || columns;
                 }
 
                 this.filteredNodes = [];
-                const isStrictMode = this.filterMode === 'strict';
+                const isStrictMode = this.filterMode() === 'strict';
                 let isValueChanged = false;
 
                 for (let node of this.value) {
@@ -2061,7 +2117,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
                     this.filteredNodes = null;
                 }
 
-                if (this.paginator) {
+                if (this.paginator()) {
                     this.totalRecords = this.filteredNodes ? this.filteredNodes.length : this.value ? this.value.length : 0;
                 }
             }
@@ -2080,7 +2136,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         this.tableService.onUIUpdate(filteredValue);
         this.updateSerializedValue();
 
-        if (this.scrollable) {
+        if (this.scrollable()) {
             this.resetScrollTop();
         }
     }
@@ -2109,7 +2165,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     isFilterMatched(node: TreeTableNode, filterOptions: TreeTableFilterOptions) {
         let { filterField, filterValue, filterConstraint, isStrictMode, globalFilterFieldsArray } = <any>filterOptions;
         let matched = false;
-        const isMatched = (field: string) => filterConstraint(resolveFieldData(node.data, field), filterValue, <string>this.filterLocale);
+        const isMatched = (field: string) => filterConstraint(resolveFieldData(node.data, field), filterValue, <string>this.filterLocale());
 
         matched = globalFilterFieldsArray?.length ? globalFilterFieldsArray.some((globalFilterField) => isMatched(globalFilterField.field || globalFilterField)) : isMatched(filterField);
 
@@ -2157,7 +2213,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
         this.first = 0;
 
-        if (this.lazy) {
+        if (this.lazy()) {
             this.onLazyLoad.emit(this.createLazyLoadMetadata());
         } else {
             this.totalRecords = this._value ? this._value.length : 0;
@@ -2209,9 +2265,9 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
 
     get dataP() {
         return this.cn({
-            scrollable: this.scrollable,
-            'flex-scrollable': this.scrollable && this.scrollHeight === 'flex',
-            loading: this.loading,
+            scrollable: this.scrollable(),
+            'flex-scrollable': this.scrollable() && this.scrollHeight() === 'flex',
+            loading: this.loading(),
             empty: this.isEmpty()
         });
     }
@@ -2228,15 +2284,15 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
     }
 })
 export class TTBody extends BaseComponent {
-    @Input('hTreeTableBody') columns: any[] | undefined;
+    readonly columns = input<any[]>(undefined, { alias: "hTreeTableBody" });
 
-    @Input('pTreeTableBodyTemplate') template: Nullable<TemplateRef<any>>;
+    readonly template = input<Nullable<TemplateRef<any>>>(undefined, { alias: "pTreeTableBodyTemplate" });
 
-    @Input({ transform: booleanAttribute }) frozen: boolean | undefined;
+    readonly frozen = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() serializedNodes: any;
+    readonly serializedNodes = input<any>();
 
-    @Input() scrollerOptions: any;
+    readonly scrollerOptions = input<any>();
 
     subscription: Subscription;
 
@@ -2246,15 +2302,15 @@ export class TTBody extends BaseComponent {
     ) {
         super();
         this.subscription = this.tt.tableService.uiUpdateSource$.subscribe(() => {
-            if (this.tt.virtualScroll) {
+            if (this.tt.virtualScroll()) {
                 this.cd.detectChanges();
             }
         });
     }
 
     getScrollerOption(option: any, options?: any) {
-        if (this.tt.virtualScroll) {
-            options = options || this.scrollerOptions;
+        if (this.tt.virtualScroll()) {
+            options = options || this.scrollerOptions();
             return options ? options[option] : null;
         }
 
@@ -2274,8 +2330,8 @@ export class TTBody extends BaseComponent {
 
     get dataP() {
         return this.cn({
-            hoverable: this.tt.rowHover || this.tt.selectionMode,
-            frozen: this.frozen
+            hoverable: this.tt.rowHover() || this.tt.selectionMode(),
+            frozen: this.frozen()
         });
     }
 }
@@ -2291,27 +2347,27 @@ export class TTBody extends BaseComponent {
 export class TTScrollableView extends BaseComponent {
     hostName = 'TreeTable';
 
-    @Input('ttScrollableView') columns: any[] | undefined;
+    readonly columns = input<any[]>(undefined, { alias: "ttScrollableView" });
 
-    @Input({ transform: booleanAttribute }) frozen: boolean | undefined;
+    readonly frozen = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @ViewChild('scrollHeader') scrollHeaderViewChild: Nullable<ElementRef>;
+    readonly scrollHeaderViewChild = viewChild<Nullable<ElementRef>>('scrollHeader');
 
-    @ViewChild('scrollHeaderBox') scrollHeaderBoxViewChild: Nullable<ElementRef>;
+    readonly scrollHeaderBoxViewChild = viewChild<Nullable<ElementRef>>('scrollHeaderBox');
 
-    @ViewChild('scrollBody') scrollBodyViewChild: Nullable<ElementRef>;
+    readonly scrollBodyViewChild = viewChild<Nullable<ElementRef>>('scrollBody');
 
-    @ViewChild('scrollTable') scrollTableViewChild: Nullable<ElementRef>;
+    readonly scrollTableViewChild = viewChild<Nullable<ElementRef>>('scrollTable');
 
-    @ViewChild('loadingTable') scrollLoadingTableViewChild: Nullable<ElementRef>;
+    readonly scrollLoadingTableViewChild = viewChild<Nullable<ElementRef>>('loadingTable');
 
-    @ViewChild('scrollFooter') scrollFooterViewChild: Nullable<ElementRef>;
+    readonly scrollFooterViewChild = viewChild<Nullable<ElementRef>>('scrollFooter');
 
-    @ViewChild('scrollFooterBox') scrollFooterBoxViewChild: Nullable<ElementRef>;
+    readonly scrollFooterBoxViewChild = viewChild<Nullable<ElementRef>>('scrollFooterBox');
 
-    @ViewChild('scrollableAligner') scrollableAlignerViewChild: Nullable<ElementRef>;
+    readonly scrollableAlignerViewChild = viewChild<Nullable<ElementRef>>('scrollableAligner');
 
-    @ViewChild('scroller') scroller: Nullable<Scroller>;
+    readonly scroller = viewChild<Nullable<Scroller>>('scroller');
 
     headerScrollListener: VoidListener;
 
@@ -2329,6 +2385,8 @@ export class TTScrollableView extends BaseComponent {
 
     _componentStyle = inject(TreeTableStyle);
 
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get scrollHeight(): string | undefined | null {
         return this._scrollHeight;
     }
@@ -2348,30 +2406,33 @@ export class TTScrollableView extends BaseComponent {
 
     onAfterViewInit() {
         if (isPlatformBrowser(this.platformId)) {
-            if (!this.frozen) {
-                if (this.tt.frozenColumns || this.tt.frozenBodyTemplate || this.tt._frozenBodyTemplate) {
+            if (!this.frozen()) {
+                if (this.tt.frozenColumns || this.tt.frozenBodyTemplate || this.tt._frozenBodyTemplate()) {
                     addClass(this.el.nativeElement, 'p-treetable-unfrozen-view');
                 }
 
                 let frozenView = this.el.nativeElement.previousElementSibling;
                 if (frozenView) {
-                    if (this.tt.virtualScroll) this.frozenSiblingBody = findSingle(frozenView, '[data-pc-name="virtualscroller"]');
+                    if (this.tt.virtualScroll()) this.frozenSiblingBody = findSingle(frozenView, '[data-pc-name="virtualscroller"]');
                     else this.frozenSiblingBody = findSingle(frozenView, '[data-pc-section="scrollablebody"]');
                 }
 
                 if (this.scrollHeight) {
                     let scrollBarWidth = calculateScrollbarWidth();
-                    if (this.scrollHeaderBoxViewChild?.nativeElement) {
-                        this.scrollHeaderBoxViewChild.nativeElement.style.paddingRight = scrollBarWidth + 'px';
+                    const scrollHeaderBoxViewChild = this.scrollHeaderBoxViewChild();
+                    if (scrollHeaderBoxViewChild?.nativeElement) {
+                        scrollHeaderBoxViewChild.nativeElement.style.paddingRight = scrollBarWidth + 'px';
                     }
 
-                    if (this.scrollFooterBoxViewChild && this.scrollFooterBoxViewChild.nativeElement) {
-                        this.scrollFooterBoxViewChild.nativeElement.style.paddingRight = scrollBarWidth + 'px';
+                    const scrollFooterBoxViewChild = this.scrollFooterBoxViewChild();
+                    if (scrollFooterBoxViewChild && scrollFooterBoxViewChild.nativeElement) {
+                        scrollFooterBoxViewChild.nativeElement.style.paddingRight = scrollBarWidth + 'px';
                     }
                 }
             } else {
-                if (this.scrollableAlignerViewChild && this.scrollableAlignerViewChild.nativeElement) {
-                    this.scrollableAlignerViewChild.nativeElement.style.height = calculateScrollbarHeight() + 'px';
+                const scrollableAlignerViewChild = this.scrollableAlignerViewChild();
+                if (scrollableAlignerViewChild && scrollableAlignerViewChild.nativeElement) {
+                    scrollableAlignerViewChild.nativeElement.style.height = calculateScrollbarHeight() + 'px';
                 }
             }
 
@@ -2382,19 +2443,21 @@ export class TTScrollableView extends BaseComponent {
     bindEvents() {
         if (isPlatformBrowser(this.platformId)) {
             this.zone.runOutsideAngular(() => {
-                if (this.scrollHeaderViewChild && this.scrollHeaderViewChild.nativeElement) {
-                    this.headerScrollListener = this.renderer.listen(this.scrollHeaderBoxViewChild?.nativeElement, 'scroll', this.onHeaderScroll.bind(this));
+                const scrollHeaderViewChild = this.scrollHeaderViewChild();
+                if (scrollHeaderViewChild && scrollHeaderViewChild.nativeElement) {
+                    this.headerScrollListener = this.renderer.listen(this.scrollHeaderBoxViewChild()?.nativeElement, 'scroll', this.onHeaderScroll.bind(this));
                 }
 
-                if (this.scrollFooterViewChild && this.scrollFooterViewChild.nativeElement) {
-                    this.footerScrollListener = this.renderer.listen(this.scrollFooterViewChild.nativeElement, 'scroll', this.onFooterScroll.bind(this));
+                const scrollFooterViewChild = this.scrollFooterViewChild();
+                if (scrollFooterViewChild && scrollFooterViewChild.nativeElement) {
+                    this.footerScrollListener = this.renderer.listen(scrollFooterViewChild.nativeElement, 'scroll', this.onFooterScroll.bind(this));
                 }
 
-                if (!this.frozen) {
-                    if (this.tt.virtualScroll) {
-                        this.bodyScrollListener = this.renderer.listen((this.scroller?.getElementRef() as ElementRef).nativeElement, 'scroll', this.onBodyScroll.bind(this));
+                if (!this.frozen()) {
+                    if (this.tt.virtualScroll()) {
+                        this.bodyScrollListener = this.renderer.listen((this.scroller()?.getElementRef() as ElementRef).nativeElement, 'scroll', this.onBodyScroll.bind(this));
                     } else {
-                        this.bodyScrollListener = this.renderer.listen(this.scrollBodyViewChild?.nativeElement, 'scroll', this.onBodyScroll.bind(this));
+                        this.bodyScrollListener = this.renderer.listen(this.scrollBodyViewChild()?.nativeElement, 'scroll', this.onBodyScroll.bind(this));
                     }
                 }
             });
@@ -2403,28 +2466,32 @@ export class TTScrollableView extends BaseComponent {
 
     unbindEvents() {
         if (isPlatformBrowser(this.platformId)) {
-            if (this.scrollHeaderViewChild && this.scrollHeaderViewChild.nativeElement) {
+            const scrollHeaderViewChild = this.scrollHeaderViewChild();
+            if (scrollHeaderViewChild && scrollHeaderViewChild.nativeElement) {
                 if (this.headerScrollListener) {
                     this.headerScrollListener();
                     this.headerScrollListener = null;
                 }
             }
 
-            if (this.scrollFooterViewChild && this.scrollFooterViewChild.nativeElement) {
+            const scrollFooterViewChild = this.scrollFooterViewChild();
+            if (scrollFooterViewChild && scrollFooterViewChild.nativeElement) {
                 if (this.footerScrollListener) {
                     this.footerScrollListener();
                     this.footerScrollListener = null;
                 }
             }
 
-            if (this.scrollBodyViewChild && this.scrollBodyViewChild.nativeElement) {
+            const scrollBodyViewChild = this.scrollBodyViewChild();
+            if (scrollBodyViewChild && scrollBodyViewChild.nativeElement) {
                 if (this.bodyScrollListener) {
                     this.bodyScrollListener();
                     this.bodyScrollListener = null;
                 }
             }
 
-            if (this.scroller && this.scroller.getElementRef()) {
+            const scroller = this.scroller();
+            if (scroller && scroller.getElementRef()) {
                 if (this.bodyScrollListener) {
                     this.bodyScrollListener();
                     this.bodyScrollListener = null;
@@ -2434,23 +2501,25 @@ export class TTScrollableView extends BaseComponent {
     }
 
     onHeaderScroll() {
-        const scrollLeft = this.scrollHeaderViewChild?.nativeElement.scrollLeft;
+        const scrollLeft = this.scrollHeaderViewChild()?.nativeElement.scrollLeft;
 
-        (this.scrollBodyViewChild as ElementRef).nativeElement.scrollLeft = scrollLeft;
+        (this.scrollBodyViewChild() as ElementRef).nativeElement.scrollLeft = scrollLeft;
 
-        if (this.scrollFooterViewChild && this.scrollFooterViewChild.nativeElement) {
-            this.scrollFooterViewChild.nativeElement.scrollLeft = scrollLeft;
+        const scrollFooterViewChild = this.scrollFooterViewChild();
+        if (scrollFooterViewChild && scrollFooterViewChild.nativeElement) {
+            scrollFooterViewChild.nativeElement.scrollLeft = scrollLeft;
         }
 
         this.preventBodyScrollPropagation = true;
     }
 
     onFooterScroll() {
-        const scrollLeft = this.scrollFooterViewChild?.nativeElement.scrollLeft;
-        (this.scrollBodyViewChild as ElementRef).nativeElement.scrollLeft = scrollLeft;
+        const scrollLeft = this.scrollFooterViewChild()?.nativeElement.scrollLeft;
+        (this.scrollBodyViewChild() as ElementRef).nativeElement.scrollLeft = scrollLeft;
 
-        if (this.scrollHeaderViewChild && this.scrollHeaderViewChild.nativeElement) {
-            this.scrollHeaderViewChild.nativeElement.scrollLeft = scrollLeft;
+        const scrollHeaderViewChild = this.scrollHeaderViewChild();
+        if (scrollHeaderViewChild && scrollHeaderViewChild.nativeElement) {
+            scrollHeaderViewChild.nativeElement.scrollLeft = scrollLeft;
         }
 
         this.preventBodyScrollPropagation = true;
@@ -2462,12 +2531,14 @@ export class TTScrollableView extends BaseComponent {
             return;
         }
 
-        if (this.scrollHeaderViewChild && this.scrollHeaderViewChild.nativeElement) {
-            (this.scrollHeaderBoxViewChild as ElementRef).nativeElement.style.marginLeft = -1 * event.target.scrollLeft + 'px';
+        const scrollHeaderViewChild = this.scrollHeaderViewChild();
+        if (scrollHeaderViewChild && scrollHeaderViewChild.nativeElement) {
+            (this.scrollHeaderBoxViewChild() as ElementRef).nativeElement.style.marginLeft = -1 * event.target.scrollLeft + 'px';
         }
 
-        if (this.scrollFooterViewChild && this.scrollFooterViewChild.nativeElement) {
-            (this.scrollFooterBoxViewChild as ElementRef).nativeElement.style.marginLeft = -1 * event.target.scrollLeft + 'px';
+        const scrollFooterViewChild = this.scrollFooterViewChild();
+        if (scrollFooterViewChild && scrollFooterViewChild.nativeElement) {
+            (this.scrollFooterBoxViewChild() as ElementRef).nativeElement.style.marginLeft = -1 * event.target.scrollLeft + 'px';
         }
 
         if (this.frozenSiblingBody) {
@@ -2476,20 +2547,23 @@ export class TTScrollableView extends BaseComponent {
     }
 
     scrollToVirtualIndex(index: number): void {
-        if (this.scroller) {
-            this.scroller.scrollToIndex(index);
+        const scroller = this.scroller();
+        if (scroller) {
+            scroller.scrollToIndex(index);
         }
     }
 
     scrollTo(options: ScrollToOptions): void {
-        if (this.scroller) {
-            this.scroller.scrollTo(options);
+        const scroller = this.scroller();
+        if (scroller) {
+            scroller.scrollTo(options);
         } else {
-            if (this.scrollBodyViewChild?.nativeElement.scrollTo) {
-                this.scrollBodyViewChild.nativeElement.scrollTo(options);
+            const scrollBodyViewChild = this.scrollBodyViewChild();
+            if (scrollBodyViewChild?.nativeElement.scrollTo) {
+                scrollBodyViewChild.nativeElement.scrollTo(options);
             } else {
-                (this.scrollBodyViewChild as ElementRef).nativeElement.scrollLeft = options.left;
-                (this.scrollBodyViewChild as ElementRef).nativeElement.scrollTop = options.top;
+                (scrollBodyViewChild as ElementRef).nativeElement.scrollLeft = options.left;
+                (scrollBodyViewChild as ElementRef).nativeElement.scrollTop = options.top;
             }
         }
     }
@@ -2522,9 +2596,9 @@ export class TTSortableColumn extends BaseComponent {
         this.bindDirectiveInstance.setAttrs(this.ptm('sortableColumn', { context: { sorted: this.sorted } }));
     }
 
-    @Input('ttSortableColumn') field: string | undefined;
+    readonly field = input<string>(undefined, { alias: "ttSortableColumn" });
 
-    @Input({ transform: booleanAttribute }) ttSortableColumnDisabled: boolean | undefined;
+    readonly ttSortableColumnDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     sorted: boolean | undefined;
 
@@ -2554,7 +2628,7 @@ export class TTSortableColumn extends BaseComponent {
     }
 
     updateSortState() {
-        this.sorted = this.tt.isSorted(<string>this.field) as boolean;
+        this.sorted = this.tt.isSorted(<string>this.field()) as boolean;
     }
 
     @HostListener('click', ['$event'])
@@ -2563,7 +2637,7 @@ export class TTSortableColumn extends BaseComponent {
             this.updateSortState();
             this.tt.sort({
                 originalEvent: event,
-                field: this.field
+                field: this.field()
             });
 
             clearSelection();
@@ -2576,7 +2650,7 @@ export class TTSortableColumn extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttSortableColumnDisabled !== true;
+        return this.ttSortableColumnDisabled() !== true;
     }
 
     onDestroy() {
@@ -2597,11 +2671,11 @@ export class TTSortableColumn extends BaseComponent {
 export class TTSortIcon extends BaseComponent {
     hostName = 'TreeTable';
 
-    @Input() field: string | undefined;
+    readonly field = input<string>();
 
-    @Input() ariaLabelDesc: string | undefined;
+    readonly ariaLabelDesc = input<string>();
 
-    @Input() ariaLabelAsc: string | undefined;
+    readonly ariaLabelAsc = input<string>();
 
     subscription: Subscription | undefined;
 
@@ -2632,10 +2706,11 @@ export class TTSortIcon extends BaseComponent {
         let multiSortMeta = this.tt._multiSortMeta;
         let index = -1;
 
-        if (multiSortMeta && this.tt.sortMode === 'multiple' && multiSortMeta.length > 1) {
+        if (multiSortMeta && this.tt.sortMode() === 'multiple' && multiSortMeta.length > 1) {
             for (let i = 0; i < multiSortMeta.length; i++) {
                 let meta = multiSortMeta[i];
-                if (meta.field === this.field || meta.field === this.field) {
+                const field = this.field();
+                if (meta.field === field || meta.field === field) {
                     index = i;
                     break;
                 }
@@ -2646,10 +2721,11 @@ export class TTSortIcon extends BaseComponent {
     }
 
     updateSortState() {
-        if (this.tt.sortMode === 'single') {
-            this.sortOrder = this.tt.isSorted(<string>this.field) ? this.tt.sortOrder : 0;
-        } else if (this.tt.sortMode === 'multiple') {
-            let sortMeta = this.tt.getSortMeta(<string>this.field);
+        const sortMode = this.tt.sortMode();
+        if (sortMode === 'single') {
+            this.sortOrder = this.tt.isSorted(<string>this.field()) ? this.tt.sortOrder : 0;
+        } else if (sortMode === 'multiple') {
+            let sortMeta = this.tt.getSortMeta(<string>this.field());
             this.sortOrder = sortMeta ? sortMeta.order : 0;
         }
     }
@@ -2659,7 +2735,7 @@ export class TTSortIcon extends BaseComponent {
     }
 
     isMultiSorted() {
-        return this.tt.sortMode === 'multiple' && this.getMultiSortMetaIndex() > -1;
+        return this.tt.sortMode() === 'multiple' && this.getMultiSortMetaIndex() > -1;
     }
 
     onDestroy() {
@@ -2676,7 +2752,7 @@ export class TTSortIcon extends BaseComponent {
 export class TTResizableColumn extends BaseComponent {
     hostName = 'TreeTable';
 
-    @Input({ transform: booleanAttribute }) ttResizableColumnDisabled: boolean | undefined;
+    readonly ttResizableColumnDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     resizer: HTMLSpanElement | undefined;
 
@@ -2743,7 +2819,7 @@ export class TTResizableColumn extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttResizableColumnDisabled !== true;
+        return this.ttResizableColumnDisabled() !== true;
     }
 
     onDestroy() {
@@ -2763,7 +2839,7 @@ export class TTResizableColumn extends BaseComponent {
 export class TTReorderableColumn extends BaseComponent {
     hostName = 'TreeTable';
 
-    @Input({ transform: booleanAttribute }) ttReorderableColumnDisabled: boolean | undefined;
+    readonly ttReorderableColumnDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     dragStartListener: VoidListener;
 
@@ -2853,7 +2929,7 @@ export class TTReorderableColumn extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttReorderableColumnDisabled !== true;
+        return this.ttReorderableColumnDisabled() !== true;
     }
 
     onDestroy() {
@@ -2871,9 +2947,9 @@ export class TTReorderableColumn extends BaseComponent {
     providers: [TreeTableStyle]
 })
 export class TTSelectableRow extends BaseComponent {
-    @Input('ttSelectableRow') rowNode: any;
+    readonly rowNode = input<any>(undefined, { alias: "ttSelectableRow" });
 
-    @Input({ transform: booleanAttribute }) ttSelectableRowDisabled: boolean | undefined;
+    readonly ttSelectableRowDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     selected: boolean | undefined;
 
@@ -2888,14 +2964,14 @@ export class TTSelectableRow extends BaseComponent {
         super();
         if (this.isEnabled()) {
             this.subscription = this.tt.tableService.selectionSource$.subscribe(() => {
-                this.selected = this.tt.isSelected(this.rowNode.node);
+                this.selected = this.tt.isSelected(this.rowNode().node);
             });
         }
     }
 
     onInit() {
         if (this.isEnabled()) {
-            this.selected = this.tt.isSelected(this.rowNode.node);
+            this.selected = this.tt.isSelected(this.rowNode().node);
         }
     }
 
@@ -2904,7 +2980,7 @@ export class TTSelectableRow extends BaseComponent {
         if (this.isEnabled()) {
             this.tt.handleRowClick({
                 originalEvent: event,
-                rowNode: this.rowNode
+                rowNode: this.rowNode()
             });
         }
     }
@@ -2930,10 +3006,10 @@ export class TTSelectableRow extends BaseComponent {
     }
 
     onEnterKey(event) {
-        if (this.tt.selectionMode === 'checkbox') {
+        if (this.tt.selectionMode() === 'checkbox') {
             this.tt.toggleNodeWithCheckbox({
                 originalEvent: event,
-                rowNode: this.rowNode
+                rowNode: this.rowNode()
             });
         } else {
             this.onClick(event);
@@ -2942,7 +3018,7 @@ export class TTSelectableRow extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttSelectableRowDisabled !== true;
+        return this.ttSelectableRowDisabled() !== true;
     }
 
     onDestroy() {
@@ -2961,9 +3037,9 @@ export class TTSelectableRow extends BaseComponent {
     providers: [TreeTableStyle]
 })
 export class TTSelectableRowDblClick extends BaseComponent {
-    @Input('ttSelectableRowDblClick') rowNode: any;
+    readonly rowNode = input<any>(undefined, { alias: "ttSelectableRowDblClick" });
 
-    @Input({ transform: booleanAttribute }) ttSelectableRowDisabled: boolean | undefined;
+    readonly ttSelectableRowDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     selected: boolean | undefined;
 
@@ -2978,14 +3054,14 @@ export class TTSelectableRowDblClick extends BaseComponent {
         super();
         if (this.isEnabled()) {
             this.subscription = this.tt.tableService.selectionSource$.subscribe(() => {
-                this.selected = this.tt.isSelected(this.rowNode.node);
+                this.selected = this.tt.isSelected(this.rowNode().node);
             });
         }
     }
 
     onInit() {
         if (this.isEnabled()) {
-            this.selected = this.tt.isSelected(this.rowNode.node);
+            this.selected = this.tt.isSelected(this.rowNode().node);
         }
     }
 
@@ -2994,13 +3070,13 @@ export class TTSelectableRowDblClick extends BaseComponent {
         if (this.isEnabled()) {
             this.tt.handleRowClick({
                 originalEvent: event,
-                rowNode: this.rowNode
+                rowNode: this.rowNode()
             });
         }
     }
 
     isEnabled() {
-        return this.ttSelectableRowDisabled !== true;
+        return this.ttSelectableRowDisabled() !== true;
     }
 
     onDestroy() {
@@ -3020,9 +3096,9 @@ export class TTSelectableRowDblClick extends BaseComponent {
     providers: [TreeTableStyle]
 })
 export class TTContextMenuRow extends BaseComponent {
-    @Input('ttContextMenuRow') rowNode: any | undefined;
+    readonly rowNode = input<any>(undefined, { alias: "ttContextMenuRow" });
 
-    @Input({ transform: booleanAttribute }) ttContextMenuRowDisabled: boolean | undefined;
+    readonly ttContextMenuRowDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     selected: boolean | undefined;
 
@@ -3037,7 +3113,7 @@ export class TTContextMenuRow extends BaseComponent {
         super();
         if (this.isEnabled()) {
             this.subscription = this.tt.tableService.contextMenuSource$.subscribe((node) => {
-                this.selected = node ? this.tt.equals(this.rowNode.node, node) : false;
+                this.selected = node ? this.tt.equals(this.rowNode().node, node) : false;
             });
         }
     }
@@ -3047,7 +3123,7 @@ export class TTContextMenuRow extends BaseComponent {
         if (this.isEnabled()) {
             this.tt.handleRowRightClick({
                 originalEvent: event,
-                rowNode: this.rowNode
+                rowNode: this.rowNode()
             });
 
             this.el.nativeElement.focus();
@@ -3057,7 +3133,7 @@ export class TTContextMenuRow extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttContextMenuRowDisabled !== true;
+        return this.ttContextMenuRowDisabled() !== true;
     }
 
     onDestroy() {
@@ -3071,7 +3147,7 @@ export class TTContextMenuRow extends BaseComponent {
     selector: 'h-treeTableCheckbox, h-treetable-checkbox, h-tree-table-checkbox',
     standalone: false,
     template: `
-        <h-checkbox [ngModel]="checked" [pt]="ptm('pcRowCheckbox')" (onChange)="onClick($event)" [binary]="true" [disabled]="disabled" [indeterminate]="partialChecked" [styleClass]="cx('pcNodeCheckbox')" [tabIndex]="-1" [unstyled]="unstyled()">
+        <h-checkbox [ngModel]="checked" [pt]="ptm('pcRowCheckbox')" (onChange)="onClick($event)" [binary]="true" [disabled]="disabled()" [indeterminate]="partialChecked" [styleClass]="cx('pcNodeCheckbox')" [tabIndex]="-1" [unstyled]="unstyled()">
           @if (tt.checkboxIconTemplate || tt._checkboxIconTemplate) {
             <ng-template hTemplate="icon">
               <ng-template *ngTemplateOutlet="tt.checkboxIconTemplate || tt._checkboxIconTemplate; context: { $implicit: checked, partialSelected: partialChecked }"></ng-template>
@@ -3086,9 +3162,9 @@ export class TTContextMenuRow extends BaseComponent {
 export class TTCheckbox extends BaseComponent {
     hostName = 'TreeTable';
 
-    @Input({ transform: booleanAttribute }) disabled: boolean | undefined;
+    readonly disabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input('value') rowNode: any;
+    readonly rowNode = input<any>(undefined, { alias: "value" });
 
     checked: boolean | undefined;
 
@@ -3108,11 +3184,11 @@ export class TTCheckbox extends BaseComponent {
         super();
         this.subscription = this.tt.tableService.selectionSource$.subscribe(() => {
             if (this.tt.selectionKeys) {
-                this.checked = this.tt.isNodeSelected(this.rowNode.node);
-                this.partialChecked = this.tt.isNodePartialSelected(this.rowNode.node);
+                this.checked = this.tt.isNodeSelected(this.rowNode().node);
+                this.partialChecked = this.tt.isNodePartialSelected(this.rowNode().node);
             } else {
-                this.checked = this.tt.isSelected(this.rowNode.node);
-                this.partialChecked = this.rowNode.node.partialSelected;
+                this.checked = this.tt.isSelected(this.rowNode().node);
+                this.partialChecked = this.rowNode().node.partialSelected;
             }
             this.cd.markForCheck();
         });
@@ -3120,28 +3196,28 @@ export class TTCheckbox extends BaseComponent {
 
     onInit() {
         if (this.tt.selectionKeys) {
-            this.checked = this.tt.isNodeSelected(this.rowNode.node);
-            this.partialChecked = this.tt.isNodePartialSelected(this.rowNode.node);
+            this.checked = this.tt.isNodeSelected(this.rowNode().node);
+            this.partialChecked = this.tt.isNodePartialSelected(this.rowNode().node);
         } else {
             // for backward compatibility
-            this.checked = this.tt.isSelected(this.rowNode.node);
-            this.partialChecked = this.rowNode.node.partialSelected;
+            this.checked = this.tt.isSelected(this.rowNode().node);
+            this.partialChecked = this.rowNode().node.partialSelected;
         }
     }
 
     onClick(event: Event) {
-        if (!this.disabled) {
+        if (!this.disabled()) {
             if (this.tt.selectionKeys) {
                 const _check = !this.checked;
                 this.tt.toggleCheckbox({
                     originalEvent: event,
                     check: _check,
-                    rowNode: this.rowNode
+                    rowNode: this.rowNode()
                 });
             } else {
                 this.tt.toggleNodeWithCheckbox({
                     originalEvent: event,
-                    rowNode: this.rowNode
+                    rowNode: this.rowNode()
                 });
             }
         }
@@ -3263,11 +3339,11 @@ export class TTHeaderCheckbox extends BaseComponent {
     standalone: false
 })
 export class TTEditableColumn extends BaseComponent {
-    @Input('ttEditableColumn') data: any;
+    readonly data = input<any>(undefined, { alias: "ttEditableColumn" });
 
-    @Input('ttEditableColumnField') field: any;
+    readonly field = input<any>(undefined, { alias: "ttEditableColumnField" });
 
-    @Input({ transform: booleanAttribute }) ttEditableColumnDisabled: boolean | undefined;
+    readonly ttEditableColumnDisabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     constructor(
         public tt: TreeTable,
@@ -3304,10 +3380,12 @@ export class TTEditableColumn extends BaseComponent {
     }
 
     openCell() {
-        this.tt.updateEditingCell(this.el.nativeElement, this.data, this.field);
+        const data = this.data();
+        const field = this.field();
+        this.tt.updateEditingCell(this.el.nativeElement, data, field);
         !this.$unstyled() && addClass(this.el.nativeElement, 'p-cell-editing');
         this.el?.nativeElement.setAttribute('data-p-cell-editing', 'true');
-        this.tt.onEditInit.emit({ field: this.field, data: this.data });
+        this.tt.onEditInit.emit({ field: field, data: data });
         this.tt.editingCellClick = true;
         this.zone.runOutsideAngular(() => {
             setTimeout(() => {
@@ -3336,7 +3414,7 @@ export class TTEditableColumn extends BaseComponent {
                         this.el?.nativeElement.setAttribute('data-p-cell-editing', 'false');
                     }
                     this.closeEditingCell();
-                    this.tt.onEditComplete.emit({ field: this.field, data: this.data });
+                    this.tt.onEditComplete.emit({ field: this.field(), data: this.data() });
                 }
 
                 event.preventDefault();
@@ -3350,7 +3428,7 @@ export class TTEditableColumn extends BaseComponent {
                         this.el?.nativeElement.setAttribute('data-p-cell-editing', 'false');
                     }
                     this.closeEditingCell();
-                    this.tt.onEditCancel.emit({ field: this.field, data: this.data });
+                    this.tt.onEditCancel.emit({ field: this.field(), data: this.data() });
                 }
 
                 event.preventDefault();
@@ -3358,7 +3436,7 @@ export class TTEditableColumn extends BaseComponent {
 
             //tab
             else if (event.keyCode == 9) {
-                this.tt.onEditComplete.emit({ field: this.field, data: this.data });
+                this.tt.onEditComplete.emit({ field: this.field(), data: this.data() });
 
                 if (event.shiftKey) this.moveToPreviousCell(event);
                 else this.moveToNextCell(event);
@@ -3440,7 +3518,7 @@ export class TTEditableColumn extends BaseComponent {
     }
 
     isEnabled() {
-        return this.ttEditableColumnDisabled !== true;
+        return this.ttEditableColumnDisabled() !== true;
     }
 }
 
@@ -3468,7 +3546,7 @@ export class TreeTableCellEditor extends BaseComponent {
         this.bindDirectiveInstance.setAttrs(this.ptm('cellEditor'));
     }
 
-    @ContentChildren(PrimeTemplate) templates: Nullable<QueryList<PrimeTemplate>>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     inputTemplate: Nullable<TemplateRef<any>>;
 
@@ -3482,7 +3560,7 @@ export class TreeTableCellEditor extends BaseComponent {
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'input':
                     this.inputTemplate = item.template;
@@ -3521,18 +3599,18 @@ export class TTRow extends BaseComponent {
     }
 
     get level() {
-        return this.rowNode?.['level'] + 1;
+        return this.rowNode()?.['level'] + 1;
     }
 
     get styleClass() {
-        return this.rowNode?.node['styleClass'] || '';
+        return this.rowNode()?.node['styleClass'] || '';
     }
 
     get expanded() {
-        return this.rowNode?.node['expanded'];
+        return this.rowNode()?.node['expanded'];
     }
 
-    @Input('ttRow') rowNode: any;
+    readonly rowNode = input<any>(undefined, { alias: "ttRow" });
 
     _componentStyle = inject(TreeTableStyle);
 
@@ -3602,7 +3680,7 @@ export class TTRow extends BaseComponent {
         const currentTarget = <HTMLElement>event.currentTarget;
         const isHiddenIcon = (findSingle(currentTarget, 'button') as any).style.visibility === 'hidden';
 
-        if (!isHiddenIcon && !this.expanded && this.rowNode.node['children']) {
+        if (!isHiddenIcon && !this.expanded && this.rowNode().node['children']) {
             this.expand(event);
 
             currentTarget.tabIndex = -1;
@@ -3660,25 +3738,27 @@ export class TTRow extends BaseComponent {
 
     expand(event: Event) {
         this.tt.toggleRowIndex = getIndex(this.el.nativeElement);
-        this.rowNode.node['expanded'] = true;
+        const node = this.rowNode()?.node;
+        if (node) node['expanded'] = true;
 
         this.tt.updateSerializedValue();
         this.tt.tableService.onUIUpdate(this.tt.value);
-        this.rowNode.node['children'] ? this.restoreFocus(this.tt.toggleRowIndex + 1) : this.restoreFocus();
+        node?.['children'] ? this.restoreFocus(this.tt.toggleRowIndex + 1) : this.restoreFocus();
 
         this.tt.onNodeExpand.emit({
             originalEvent: event,
-            node: this.rowNode.node
+            node
         });
     }
 
     collapse(event: Event) {
-        this.rowNode.node['expanded'] = false;
+        const node = this.rowNode()?.node;
+        if (node) node['expanded'] = false;
 
         this.tt.updateSerializedValue();
         this.tt.tableService.onUIUpdate(this.tt.value);
 
-        this.tt.onNodeCollapse.emit({ originalEvent: event, node: this.rowNode.node });
+        this.tt.onNodeCollapse.emit({ originalEvent: event, node });
     }
 
     focusRowChange(firstFocusableRow, currentFocusedRow, lastVisibleDescendant?) {
@@ -3714,10 +3794,10 @@ export class TTRow extends BaseComponent {
     ptmOptions() {
         return {
             context: {
-                selectable: this.treeTable?.rowHover || this.treeTable.selectionMode === 'row',
-                selected: this.treeTable.isSelected((<any>this.rowNode)?.node),
-                scrollable: this.treeTable?.scrollable,
-                rowNode: this.rowNode
+                selectable: this.treeTable?.rowHover() || this.treeTable.selectionMode() === 'row',
+                selected: this.treeTable.isSelected((<any>this.rowNode())?.node),
+                scrollable: this.treeTable?.scrollable(),
+                rowNode: this.rowNode()
             }
         };
     }
@@ -3741,7 +3821,7 @@ export class TreeTableToggler extends BaseComponent {
         this.bindDirectiveInstance.setAttrs(this.ptm('toggler'));
     }
 
-    @Input() rowNode: any;
+    readonly rowNode = input<any>();
 
     _componentStyle = inject(TreeTableStyle);
 
@@ -3750,21 +3830,22 @@ export class TreeTableToggler extends BaseComponent {
     }
 
     get toggleButtonAriaLabel() {
-        return this.config.translation ? (this.rowNode.expanded ? this.config.translation?.aria?.collapseRow : this.config.translation?.aria?.expandRow) : undefined;
+        return this.config.translation ? (this.rowNode().expanded ? this.config.translation?.aria?.collapseRow : this.config.translation?.aria?.expandRow) : undefined;
     }
 
     onClick(event: Event) {
-        this.rowNode.node.expanded = !this.rowNode.node.expanded;
+        const node = this.rowNode();
+        node.node.expanded = !node.node.expanded;
 
-        if (this.rowNode.node.expanded) {
+        if (node.node.expanded) {
             this.tt.onNodeExpand.emit({
                 originalEvent: event,
-                node: this.rowNode.node
+                node: node.node
             });
         } else {
             this.tt.onNodeCollapse.emit({
                 originalEvent: event,
-                node: this.rowNode.node
+                node: node.node
             });
         }
 

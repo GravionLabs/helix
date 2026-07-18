@@ -1,25 +1,25 @@
 <div class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true" [hBind]="ptm('hiddenInputContainer')">
   <input
     #focusInput
-    [hTooltip]="tooltip"
+    [hTooltip]="tooltip()"
     [pTooltipUnstyled]="unstyled()"
-    [tooltipPosition]="tooltipPosition"
-    [positionStyle]="tooltipPositionStyle"
-    [tooltipStyleClass]="tooltipStyleClass"
+    [tooltipPosition]="tooltipPosition()"
+    [positionStyle]="tooltipPositionStyle()"
+    [tooltipStyleClass]="tooltipStyleClass()"
     [attr.aria-disabled]="$disabled()"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     role="combobox"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-haspopup]="'listbox'"
     [attr.aria-expanded]="overlayVisible ?? false"
     [attr.aria-controls]="overlayVisible ? id + '_list' : null"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
     (keydown)="onKeyDown($event)"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [attr.value]="modelValue()"
     [attr.name]="name()"
     [attr.required]="required() ? '' : undefined"
@@ -30,29 +30,29 @@
 <div
   [hBind]="ptm('labelContainer')"
   [class]="cx('labelContainer')"
-  [hTooltip]="tooltip"
+  [hTooltip]="tooltip()"
   [pTooltipUnstyled]="unstyled()"
   (mouseleave)="labelContainerMouseLeave()"
   [tooltipDisabled]="_disableTooltip"
-  [tooltipPosition]="tooltipPosition"
-  [positionStyle]="tooltipPositionStyle"
-  [tooltipStyleClass]="tooltipStyleClass"
+  [tooltipPosition]="tooltipPosition()"
+  [positionStyle]="tooltipPositionStyle()"
+  [tooltipStyleClass]="tooltipStyleClass()"
   >
   <div [hBind]="ptm('label')" [class]="cx('label')" [attr.data-p]="labelDataP">
     @if (!selectedItemsTemplate && !_selectedItemsTemplate) {
-      @if (display === 'comma') {
+      @if (display() === 'comma') {
         {{ label() || 'empty' }}
       }
-      @if (display === 'chip') {
+      @if (display() === 'chip') {
         @if (chipSelectedItems() && chipSelectedItems().length === maxSelectedLabels) {
           {{ getSelectedItemsLabel() }}
         } @else {
           @for (item of chipSelectedItems(); track item; let i = $index) {
             <div #token [hBind]="ptm('chipItem')" [class]="cx('chipItem')">
-              <h-chip [pt]="ptm('pcChip')" [unstyled]="unstyled()" [class]="cx('pcChip')" [label]="getLabelByValue(item)" [removable]="!$disabled() && !readonly" (onRemove)="removeOption(item, $event)" [removeIcon]="chipIcon">
+              <h-chip [pt]="ptm('pcChip')" [unstyled]="unstyled()" [class]="cx('pcChip')" [label]="getLabelByValue(item)" [removable]="!$disabled() && !readonly()" (onRemove)="removeOption(item, $event)" [removeIcon]="chipIcon()">
                 @if (chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate) {
                   <ng-template #removeicon>
-                    @if (!$disabled() && !readonly) {
+                    @if (!$disabled() && !readonly()) {
                       @if (chipIconTemplate || _chipIconTemplate || removeTokenIconTemplate || _removeTokenIconTemplate) {
                         <span
                           [class]="cx('chipIcon')"
@@ -94,7 +94,7 @@
   }
 }
 <div [hBind]="ptm('dropdown')" [class]="cx('dropdown')">
-  @if (loading) {
+  @if (loading()) {
     @if (loadingIconTemplate || _loadingIconTemplate) {
       <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
     }
@@ -126,7 +126,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -137,7 +137,7 @@
   (onHide)="onOverlayHide($event)"
   >
   <ng-template #content>
-    <div [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP" [attr.id]="id + '_list'" [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle">
+    <div [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP" [attr.id]="id + '_list'" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
       <span
         #firstHiddenFocusableEl
         role="presentation"
@@ -150,13 +150,13 @@
         >
       </span>
       <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-      @if (showHeader) {
+      @if (showHeader()) {
         <div [hBind]="ptm('header')" [class]="cx('header')">
           <ng-content select="p-header"></ng-content>
           @if (filterTemplate || _filterTemplate) {
             <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { options: filterOptions }"></ng-container>
           } @else {
-            @if (showToggleAll && !selectionLimit) {
+            @if (showToggleAll() && !selectionLimit()) {
               <h-checkbox
                 [pt]="getHeaderCheckboxPTOptions('pcHeaderCheckbox')"
                 [ngModel]="allSelected()"
@@ -185,7 +185,7 @@
               </ng-template>
             </h-checkbox>
           }
-          @if (filter) {
+          @if (filter()) {
             <h-iconfield [pt]="ptm('pcFilterContainer')" [class]="cx('pcFilterContainer')" [unstyled]="unstyled()">
               <input
                 #filterInput
@@ -193,7 +193,7 @@
                 [pt]="ptm('pcFilter')"
                 [variant]="$variant()"
                 type="text"
-                [attr.autocomplete]="autocomplete"
+                [attr.autocomplete]="autocomplete()"
                 role="searchbox"
                 [attr.aria-owns]="id + '_list'"
                 [attr.aria-activedescendant]="focusedOptionId"
@@ -204,8 +204,8 @@
                 (blur)="onFilterBlur($event)"
                 [class]="cx('pcFilter')"
                 [attr.disabled]="$disabled() ? '' : undefined"
-                [attr.placeholder]="filterPlaceHolder"
-                [attr.aria-label]="ariaFilterLabel"
+                [attr.placeholder]="filterPlaceHolder()"
+                [attr.aria-label]="ariaFilterLabel()"
                 [unstyled]="unstyled()"
                 />
               <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
@@ -223,18 +223,18 @@
         }
       </div>
     }
-    <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight || 'auto'">
-      @if (virtualScroll) {
+    <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll() ? 'auto' : scrollHeight() || 'auto'">
+      @if (virtualScroll()) {
         <h-scroller
           #scroller
           [items]="visibleOptions()"
-          [style]="{ height: scrollHeight }"
-          [itemSize]="virtualScrollItemSize"
+          [style]="{ height: scrollHeight() }"
+          [itemSize]="virtualScrollItemSize()"
           [autoSize]="true"
           [tabindex]="-1"
-          [lazy]="lazy"
+          [lazy]="lazy()"
           (onLazyLoad)="onLazyLoad.emit($event)"
-          [options]="virtualScrollOptions"
+          [options]="virtualScrollOptions()"
           >
           <ng-template #content let-items let-scrollerOptions="options">
             <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
@@ -246,7 +246,7 @@
           }
         </h-scroller>
       }
-      @if (!virtualScroll) {
+      @if (!virtualScroll()) {
         <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
       }
 
@@ -280,7 +280,7 @@
                 [ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
                 [ariaSetSize]="ariaSetSize"
                 [variant]="$variant()"
-                [highlightOnSelect]="highlightOnSelect"
+                [highlightOnSelect]="highlightOnSelect()"
                 (onClick)="onOptionSelect($event, false, getOptionIndex(i, scrollerOptions))"
                 (onMouseEnter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
                 [pt]="pt"

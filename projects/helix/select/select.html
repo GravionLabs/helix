@@ -1,23 +1,23 @@
-@if (!editable) {
+@if (!editable()) {
   <span
     #focusInput
     [class]="cx('label')"
     [hBind]="ptm('label')"
-    [hTooltip]="tooltip"
+    [hTooltip]="tooltip()"
     [pTooltipUnstyled]="unstyled()"
-    [tooltipPosition]="tooltipPosition"
-    [positionStyle]="tooltipPositionStyle"
-    [tooltipStyleClass]="tooltipStyleClass"
+    [tooltipPosition]="tooltipPosition()"
+    [positionStyle]="tooltipPositionStyle()"
+    [tooltipStyleClass]="tooltipStyleClass()"
     [attr.aria-disabled]="$disabled()"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     role="combobox"
-    [attr.aria-label]="ariaLabel || (label() === 'p-emptylabel' ? undefined : label())"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-haspopup]="'listbox'"
     [attr.aria-expanded]="overlayVisible ?? false"
     [attr.aria-controls]="overlayVisible ? id + '_list' : null"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
-    [hAutoFocus]="autofocus"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
+    [hAutoFocus]="autofocus()"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
@@ -39,19 +39,19 @@
     }
   </span>
 }
-@if (editable) {
+@if (editable()) {
   <input
     #editableInput
     type="text"
-    [attr.id]="inputId"
+    [attr.id]="inputId()"
     [class]="cx('label')"
     [hBind]="ptm('label')"
     [attr.aria-haspopup]="'listbox'"
     [attr.placeholder]="modelValue() === undefined || modelValue() === null ? placeholder() : undefined"
-    [attr.aria-label]="ariaLabel || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
     (input)="onEditableInput($event)"
     (keydown)="onKeyDown($event)"
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
     (focus)="onInputFocus($event)"
     (blur)="onInputBlur($event)"
@@ -63,7 +63,7 @@
     [attr.size]="inputSize()"
     [attr.maxlength]="maxlength()"
     [attr.required]="required() ? '' : undefined"
-    [attr.readonly]="readonly ? '' : undefined"
+    [attr.readonly]="readonly() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
     [attr.data-p]="labelDataP"
     />
@@ -80,7 +80,7 @@
 }
 
 <div [class]="cx('dropdown')" [hBind]="ptm('dropdown')" role="button" aria-label="dropdown trigger" aria-haspopup="listbox" [attr.aria-expanded]="overlayVisible ?? false" [attr.data-pc-section]="'trigger'">
-  @if (loading) {
+  @if (loading()) {
     @if (loadingIconTemplate || _loadingIconTemplate) {
       <ng-container *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-container>
     }
@@ -114,7 +114,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -125,7 +125,7 @@
   (onHide)="hide()"
   >
   <ng-template #content>
-    <div [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
+    <div [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
       <span
         #firstHiddenFocusableEl
         role="presentation"
@@ -138,7 +138,7 @@
         >
       </span>
       <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-      @if (filter) {
+      @if (filter()) {
         <div [class]="cx('header')" (click)="$event.stopPropagation()" [hBind]="ptm('header')">
           @if (filterTemplate || _filterTemplate) {
             <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { options: filterOptions }"></ng-container>
@@ -154,10 +154,10 @@
                 [value]="_filterValue() || ''"
                 [class]="cx('pcFilter')"
                 [variant]="$variant()"
-                [attr.placeholder]="filterPlaceholder"
+                [attr.placeholder]="filterPlaceholder()"
                 [attr.aria-owns]="id + '_list'"
                 (input)="onFilterInputChange($event)"
-                [attr.aria-label]="ariaFilterLabel"
+                [attr.aria-label]="ariaFilterLabel()"
                 [attr.aria-activedescendant]="focusedOptionId"
                 (keydown)="onFilterKeyDown($event)"
                 (blur)="onFilterBlur($event)"
@@ -178,18 +178,18 @@
           }
         </div>
       }
-      <div [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight || 'auto'" [hBind]="ptm('listContainer')">
-        @if (virtualScroll) {
+      <div [class]="cx('listContainer')" [style.max-height]="virtualScroll() ? 'auto' : scrollHeight() || 'auto'" [hBind]="ptm('listContainer')">
+        @if (virtualScroll()) {
           <h-scroller
             hostName="select"
             #scroller
             [items]="visibleOptions()"
-            [style]="{ height: scrollHeight }"
-            [itemSize]="virtualScrollItemSize"
+            [style]="{ height: scrollHeight() }"
+            [itemSize]="virtualScrollItemSize()"
             [autoSize]="true"
-            [lazy]="lazy"
+            [lazy]="lazy()"
             (onLazyLoad)="onLazyLoad.emit($event)"
-            [options]="virtualScrollOptions"
+            [options]="virtualScrollOptions()"
             [pt]="ptm('virtualScroller')"
             >
             <ng-template #content let-items let-scrollerOptions="options">
@@ -202,7 +202,7 @@
             }
           </h-scroller>
         }
-        @if (!virtualScroll) {
+        @if (!virtualScroll()) {
           <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
         }
 
@@ -221,7 +221,7 @@
                 <h-selectItem
                   [id]="id + '_' + getOptionIndex(i, scrollerOptions)"
                   [option]="option"
-                  [checkmark]="checkmark"
+                  [checkmark]="checkmark()"
                   [selected]="isSelected(option)"
                   [label]="getOptionLabel(option)"
                   [disabled]="isOptionDisabled(option)"
