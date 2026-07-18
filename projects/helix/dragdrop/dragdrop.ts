@@ -1,4 +1,4 @@
-import { AfterViewInit, booleanAttribute, Directive, ElementRef, HostListener, Input, NgModule, NgZone, OnDestroy, Renderer2, input, output } from '@angular/core';
+import { AfterViewInit, booleanAttribute, Directive, effect, ElementRef, NgModule, NgZone, OnDestroy, Renderer2, input, output } from '@angular/core';
 import { addClass, removeClass } from '@primeuix/utils';
 import { DomHandler } from '@gravionlabs/helix/dom';
 import { VoidListener } from '@gravionlabs/helix/ts-helpers';
@@ -9,7 +9,11 @@ import { VoidListener } from '@gravionlabs/helix/ts-helpers';
  */
 @Directive({
     selector: '[hDraggable]',
-    standalone: true
+    standalone: true,
+    host: {
+        '(dragstart)': 'dragStart($event)',
+        '(dragend)': 'dragEnd($event)'
+    }
 })
 export class Draggable implements AfterViewInit, OnDestroy {
     readonly scope = input<string>(undefined, { alias: "hDraggable" });
@@ -50,30 +54,26 @@ export class Draggable implements AfterViewInit, OnDestroy {
 
     mouseUpListener: VoidListener;
 
-    _pDraggableDisabled: boolean = false;
-
     constructor(
         public el: ElementRef,
         public zone: NgZone,
         private renderer: Renderer2
-    ) {}
-
-    @Input() get pDraggableDisabled(): boolean {
-        return this._pDraggableDisabled;
+    ) {
+        effect(() => {
+            const disabled = this.pDraggableDisabled();
+            if (disabled) {
+                this.unbindMouseListeners();
+            } else {
+                this.el.nativeElement.draggable = true;
+                this.bindMouseListeners();
+            }
+        });
     }
-    set pDraggableDisabled(_pDraggableDisabled: boolean) {
-        this._pDraggableDisabled = _pDraggableDisabled;
 
-        if (this._pDraggableDisabled) {
-            this.unbindMouseListeners();
-        } else {
-            this.el.nativeElement.draggable = true;
-            this.bindMouseListeners();
-        }
-    }
+    readonly pDraggableDisabled = input<boolean, unknown>(false, { transform: booleanAttribute });
 
     ngAfterViewInit() {
-        if (!this.pDraggableDisabled) {
+        if (!this.pDraggableDisabled()) {
             this.el.nativeElement.draggable = true;
             this.bindMouseListeners();
         }
@@ -120,9 +120,8 @@ export class Draggable implements AfterViewInit, OnDestroy {
         this.onDrag.emit(event);
     }
 
-    @HostListener('dragstart', ['$event'])
     dragStart(event: DragEvent) {
-        if (this.allowDrag() && !this.pDraggableDisabled) {
+        if (this.allowDrag() && !this.pDraggableDisabled()) {
             const dragEffect = this.dragEffect();
             if (dragEffect) {
                 (event.dataTransfer as DataTransfer).effectAllowed = dragEffect;
@@ -137,7 +136,6 @@ export class Draggable implements AfterViewInit, OnDestroy {
         }
     }
 
-    @HostListener('dragend', ['$event'])
     dragEnd(event: DragEvent) {
         this.onDragEnd.emit(event);
         this.unbindDragListener();
@@ -168,7 +166,12 @@ export class Draggable implements AfterViewInit, OnDestroy {
  */
 @Directive({
     selector: '[hDroppable]',
-    standalone: true
+    standalone: true,
+    host: {
+        '(drop)': 'drop($event)',
+        '(dragenter)': 'dragEnter($event)',
+        '(dragleave)': 'dragLeave($event)'
+    }
 })
 export class Droppable implements AfterViewInit, OnDestroy {
     readonly scope = input<string | string[]>(undefined, { alias: "hDroppable" });
@@ -176,19 +179,21 @@ export class Droppable implements AfterViewInit, OnDestroy {
      * Whether the element is droppable, useful for conditional cases.
      * @group Props
      */
-    _pDroppableDisabled: boolean = false;
+    readonly pDroppableDisabled = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    @Input() get pDroppableDisabled(): boolean {
-        return this._pDroppableDisabled;
-    }
-    set pDroppableDisabled(_pDroppableDisabled: boolean) {
-        this._pDroppableDisabled = _pDroppableDisabled;
-
-        if (this._pDroppableDisabled) {
-            this.unbindDragOverListener();
-        } else {
-            this.bindDragOverListener();
-        }
+    constructor(
+        public el: ElementRef,
+        public zone: NgZone,
+        private renderer: Renderer2
+    ) {
+        effect(() => {
+            const disabled = this.pDroppableDisabled();
+            if (disabled) {
+                this.unbindDragOverListener();
+            } else {
+                this.bindDragOverListener();
+            }
+        });
     }
     /**
      * Defines the cursor style, valid values are none, copy, move, link, copyMove, copyLink, linkMove and all.
@@ -211,16 +216,10 @@ export class Droppable implements AfterViewInit, OnDestroy {
      */
     readonly onDrop = output<DragEvent>();
 
-    constructor(
-        public el: ElementRef,
-        public zone: NgZone,
-        private renderer: Renderer2
-    ) {}
-
     dragOverListener: VoidListener;
 
     ngAfterViewInit() {
-        if (!this.pDroppableDisabled) {
+        if (!this.pDroppableDisabled()) {
             this.bindDragOverListener();
         }
     }
@@ -246,7 +245,6 @@ export class Droppable implements AfterViewInit, OnDestroy {
         event.preventDefault();
     }
 
-    @HostListener('drop', ['$event'])
     drop(event: DragEvent) {
         if (this.allowDrop(event)) {
             removeClass(this.el.nativeElement, 'p-draggable-enter');
@@ -255,7 +253,6 @@ export class Droppable implements AfterViewInit, OnDestroy {
         }
     }
 
-    @HostListener('dragenter', ['$event'])
     dragEnter(event: DragEvent) {
         event.preventDefault();
 
@@ -268,7 +265,6 @@ export class Droppable implements AfterViewInit, OnDestroy {
         this.onDragEnter.emit(event);
     }
 
-    @HostListener('dragleave', ['$event'])
     dragLeave(event: DragEvent) {
         event.preventDefault();
 
