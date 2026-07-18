@@ -1,4 +1,4 @@
-@if (node) {
+@if (node(); as node) {
   <li
     [class]="cn(cx('node'), node.styleClass)"
     [ngStyle]="{ height: itemSize() + 'px' }"
@@ -35,7 +35,7 @@
       [hBind]="getPTOptions('nodeContent')"
       >
       <button type="button" [class]="cx('nodeToggleButton')" (click)="toggle($event)" hRipple tabindex="-1" [hBind]="getPTOptions('nodeToggleButton')">
-        @if (!tree.togglerIconTemplate && !tree._togglerIconTemplate) {
+        @if (!tree.togglerIconTemplate() && !tree._togglerIconTemplate) {
           @if (!node.loading) {
             @if (!node.expanded) {
               <svg data-p-icon="chevron-right" [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')" />
@@ -48,14 +48,14 @@
             <svg data-p-icon="spinner" [class]="cx('nodeToggleIcon')" spin [hBind]="getPTOptions('nodeToggleIcon')" />
           }
         }
-        @if (tree.togglerIconTemplate || tree._togglerIconTemplate) {
+        @if (tree.togglerIconTemplate() || tree._togglerIconTemplate) {
           <span [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')">
-            <ng-template *ngTemplateOutlet="tree.togglerIconTemplate || tree._togglerIconTemplate; context: { $implicit: node.expanded, loading: node.loading }"></ng-template>
+            <ng-template *ngTemplateOutlet="tree.togglerIconTemplate() || tree._togglerIconTemplate; context: { $implicit: node.expanded, loading: node.loading }"></ng-template>
           </span>
         }
       </button>
 
-      @if (tree.selectionMode == 'checkbox') {
+      @if (tree.selectionMode() == 'checkbox') {
         <h-checkbox
           [ngModel]="isSelected()"
           [styleClass]="cx('nodeCheckbox')"
@@ -69,11 +69,11 @@
           [pt]="getPTOptions('pcNodeCheckbox')"
           [unstyled]="unstyled()"
           >
-          @if (tree.checkboxIconTemplate || tree._checkboxIconTemplate) {
+          @if (tree.checkboxIconTemplate() || tree._checkboxIconTemplate) {
             <ng-template #icon>
               <ng-template
                             *ngTemplateOutlet="
-                                tree.checkboxIconTemplate || tree._checkboxIconTemplate;
+                                tree.checkboxIconTemplate() || tree._checkboxIconTemplate;
                                 context: {
                                     $implicit: isSelected(),
                                     partialSelected: node.partialSelected,
