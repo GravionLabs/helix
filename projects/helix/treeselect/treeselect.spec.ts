@@ -471,15 +471,15 @@ describe('TreeSelect', () => {
         });
 
         it('should initialize with default properties', () => {
-            expect(component.selectionMode).toBe('single');
-            expect(component.display).toBe('comma');
-            expect(component.scrollHeight).toBe('400px');
-            expect(component.propagateSelectionDown).toBe(true);
-            expect(component.propagateSelectionUp).toBe(true);
-            expect(component.resetFilterOnHide).toBe(true);
-            expect(component.metaKeySelection).toBe(false);
-            expect(component.showClear).toBe(false);
-            expect(component.filter).toBe(false);
+            expect(component.selectionMode()).toBe('single');
+            expect(component.display()).toBe('comma');
+            expect(component.scrollHeight()).toBe('400px');
+            expect(component.propagateSelectionDown()).toBe(true);
+            expect(component.propagateSelectionUp()).toBe(true);
+            expect(component.resetFilterOnHide()).toBe(true);
+            expect(component.metaKeySelection()).toBe(false);
+            expect(component.showClear()).toBe(false);
+            expect(component.filter()).toBe(false);
         });
     });
 
@@ -495,8 +495,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toEqual(mockTreeNodes);
-            expect(treeSelectInstance.options.length).toBe(2);
+            expect(treeSelectInstance.options()).toEqual(mockTreeNodes);
+            expect(treeSelectInstance.options().length).toBe(2);
         });
 
         it('should work with string-based TreeNode array', async () => {
@@ -510,7 +510,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toEqual(stringNodes);
+            expect(treeSelectInstance.options()).toEqual(stringNodes);
         });
 
         it('should work with number-based TreeNode array', async () => {
@@ -521,7 +521,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toEqual(numberNodes);
+            expect(treeSelectInstance.options()).toEqual(numberNodes);
         });
 
         it('should work with getters and setters', async () => {
@@ -531,8 +531,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toBeDefined();
-            expect(treeSelectInstance.options.length).toBe(2);
+            expect(treeSelectInstance.options()).toBeDefined();
+            expect(treeSelectInstance.options().length).toBe(2);
         });
 
         it('should work with signals', async () => {
@@ -542,8 +542,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toBeDefined();
-            expect(treeSelectInstance.options.length).toBe(1);
+            expect(treeSelectInstance.options()).toBeDefined();
+            expect(treeSelectInstance.options().length).toBe(1);
         });
 
         it('should work with observables and async pipe', async () => {
@@ -555,8 +555,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toBeDefined();
-            expect(treeSelectInstance.options.length).toBe(1);
+            expect(treeSelectInstance.options()).toBeDefined();
+            expect(treeSelectInstance.options().length).toBe(1);
         });
 
         it('should work with late-loaded values', async () => {
@@ -566,8 +566,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toBeDefined();
-            expect(treeSelectInstance.options.length).toBe(1);
+            expect(treeSelectInstance.options()).toBeDefined();
+            expect(treeSelectInstance.options().length).toBe(1);
         });
     });
 
@@ -680,7 +680,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.placeholder).toBe('Choose a tree node');
+            expect(treeSelectInstance.placeholder()).toBe('Choose a tree node');
         });
 
         it('should work with disabled state', async () => {
@@ -700,7 +700,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.selectionMode).toBe('multiple');
+            expect(treeSelectInstance.selectionMode()).toBe('multiple');
         });
 
         it('should work with display mode', async () => {
@@ -710,7 +710,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.display).toBe('chip');
+            expect(treeSelectInstance.display()).toBe('chip');
         });
 
         it('should work with filter', async () => {
@@ -723,10 +723,10 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.filter).toBe(true);
-            expect(treeSelectInstance.filterBy).toBe('label');
-            expect(treeSelectInstance.filterMode).toBe('strict');
-            expect(treeSelectInstance.filterPlaceholder).toBe('Search nodes');
+            expect(treeSelectInstance.filter()).toBe(true);
+            expect(treeSelectInstance.filterBy()).toBe('label');
+            expect(treeSelectInstance.filterMode()).toBe('strict');
+            expect(treeSelectInstance.filterPlaceholder()).toBe('Search nodes');
         });
 
         it('should work with loading state', async () => {
@@ -736,7 +736,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.loading).toBe(true);
+            expect(treeSelectInstance.loading()).toBe(true);
         });
 
         it('should work with virtualScroll', async () => {
@@ -748,9 +748,9 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.virtualScroll).toBe(true);
-            expect(treeSelectInstance.virtualScrollItemSize).toBe(35);
-            expect(treeSelectInstance.scrollHeight).toBe('300px');
+            expect(treeSelectInstance.virtualScroll()).toBe(true);
+            expect(treeSelectInstance.virtualScrollItemSize()).toBe(35);
+            expect(treeSelectInstance.scrollHeight()).toBe('300px');
         });
 
         it('should work with appendTo', async () => {
@@ -775,11 +775,11 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.containerStyle).toEqual({ border: '2px solid blue', padding: '5px' });
-            expect(treeSelectInstance.labelStyle).toEqual({ color: 'red', fontWeight: 'bold' });
-            expect(treeSelectInstance.labelStyleClass).toBe('custom-label');
-            expect(treeSelectInstance.panelClass).toBe('custom-panel');
-            expect(treeSelectInstance.panelStyle).toEqual({ backgroundColor: 'lightgray' });
+            expect(treeSelectInstance.containerStyle()).toEqual({ border: '2px solid blue', padding: '5px' });
+            expect(treeSelectInstance.labelStyle()).toEqual({ color: 'red', fontWeight: 'bold' });
+            expect(treeSelectInstance.labelStyleClass()).toBe('custom-label');
+            expect(treeSelectInstance.panelClass()).toBe('custom-panel');
+            expect(treeSelectInstance.panelStyle()).toEqual({ backgroundColor: 'lightgray' });
         });
     });
 
@@ -859,13 +859,13 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.showClear).toBe(true);
+            expect(treeSelectInstance.showClear()).toBe(true);
 
             // Verify clear icon is available when showClear is true and value exists
             if (treeSelectInstance.checkValue && treeSelectInstance.checkValue()) {
                 expect(true).toBe(true); // Clear functionality is configured
             } else {
-                expect(treeSelectInstance.showClear).toBe(true); // At least verify showClear is set
+                expect(treeSelectInstance.showClear()).toBe(true); // At least verify showClear is set
             }
         });
 
@@ -1265,12 +1265,12 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.selectionMode).toBe('multiple');
+            expect(treeSelectInstance.selectionMode()).toBe('multiple');
             // Use the component's internal value check method or property
             if (treeSelectInstance.value) {
                 expect(Array.isArray(treeSelectInstance.value)).toBe(true);
             } else {
-                expect(treeSelectInstance.selectionMode).toBe('multiple'); // At least verify the mode was set
+                expect(treeSelectInstance.selectionMode()).toBe('multiple'); // At least verify the mode was set
             }
         });
 
@@ -1283,9 +1283,9 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.selectionMode).toBe('checkbox');
-            expect(treeSelectInstance.propagateSelectionDown).toBe(true);
-            expect(treeSelectInstance.propagateSelectionUp).toBe(true);
+            expect(treeSelectInstance.selectionMode()).toBe('checkbox');
+            expect(treeSelectInstance.propagateSelectionDown()).toBe(true);
+            expect(treeSelectInstance.propagateSelectionUp()).toBe(true);
         });
 
         it('should handle filter functionality', async () => {
@@ -1303,9 +1303,9 @@ describe('TreeSelect', () => {
 
             // Verify filter properties are set
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.filter).toBe(true);
-            expect(treeSelectInstance.filterBy).toBe('label');
-            expect(treeSelectInstance.filterMode).toBe('lenient');
+            expect(treeSelectInstance.filter()).toBe(true);
+            expect(treeSelectInstance.filterBy()).toBe('label');
+            expect(treeSelectInstance.filterMode()).toBe('lenient');
         });
 
         it('should handle empty state properly', async () => {
@@ -1316,8 +1316,8 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options).toEqual([]);
-            expect(treeSelectInstance.emptyMessage).toBe('No nodes available');
+            expect(treeSelectInstance.options()).toEqual([]);
+            expect(treeSelectInstance.emptyMessage()).toBe('No nodes available');
         });
 
         it('should handle large datasets with virtual scrolling', async () => {
@@ -1339,9 +1339,9 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options.length).toBe(1000);
-            expect(treeSelectInstance.virtualScroll).toBe(true);
-            expect(treeSelectInstance.virtualScrollItemSize).toBe(32);
+            expect(treeSelectInstance.options().length).toBe(1000);
+            expect(treeSelectInstance.virtualScroll()).toBe(true);
+            expect(treeSelectInstance.virtualScrollItemSize()).toBe(32);
         });
 
         it('should handle dynamic option updates', async () => {
@@ -1364,7 +1364,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.options.length).toBe(2);
+            expect(treeSelectInstance.options().length).toBe(2);
         });
     });
 
@@ -1385,7 +1385,7 @@ describe('TreeSelect', () => {
             treeSelectInstance.writeValue(mockTreeNodes[0]);
             testFixture.detectChanges();
 
-            expect(treeSelectInstance.showClear).toBe(true);
+            expect(treeSelectInstance.showClear()).toBe(true);
             expect(treeSelectInstance.checkValue()).toBe(true);
         });
 
@@ -1406,7 +1406,7 @@ describe('TreeSelect', () => {
             testFixture.detectChanges();
 
             const treeSelectInstance = testFixture.debugElement.query(By.directive(TreeSelect)).componentInstance;
-            expect(treeSelectInstance.autofocus).toBe(true);
+            expect(treeSelectInstance.autofocus()).toBe(true);
         });
     });
 
@@ -1433,7 +1433,7 @@ describe('TreeSelect', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(TreeSelect);
-            fixture.componentInstance.options = mockTreeNodes;
+            fixture.componentRef.setInput('options', mockTreeNodes);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1459,7 +1459,7 @@ describe('TreeSelect', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(TreeSelect);
-            fixture.componentInstance.options = mockTreeNodes;
+            fixture.componentRef.setInput('options', mockTreeNodes);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1485,7 +1485,7 @@ describe('TreeSelect', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(TreeSelect);
-            fixture.componentInstance.options = mockTreeNodes;
+            fixture.componentRef.setInput('options', mockTreeNodes);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1514,7 +1514,7 @@ describe('TreeSelect', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(TreeSelect);
-            fixture.componentInstance.options = mockTreeNodes;
+            fixture.componentRef.setInput('options', mockTreeNodes);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1546,7 +1546,7 @@ describe('TreeSelect', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(TreeSelect);
-            fixture.componentInstance.options = mockTreeNodes;
+            fixture.componentRef.setInput('options', mockTreeNodes);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
