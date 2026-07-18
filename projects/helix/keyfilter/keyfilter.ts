@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, Directive, ElementRef, forwardRef, HostListener, Inject, Input, NgModule, PLATFORM_ID, Provider, input, output } from '@angular/core';
+import { booleanAttribute, Directive, effect, ElementRef, forwardRef, Inject, NgModule, PLATFORM_ID, Provider, input, output } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { getBrowser, isAndroid } from '@primeuix/utils';
 
@@ -69,7 +69,12 @@ const SAFARI_KEYS: SafariKeys = {
 @Directive({
     selector: '[hKeyFilter]',
     standalone: true,
-    providers: [KEYFILTER_VALIDATOR]
+    providers: [KEYFILTER_VALIDATOR],
+    host: {
+        '(input)': 'onInput($event)',
+        '(keypress)': 'onKeyPress($event)',
+        '(paste)': 'onPaste($event)'
+    }
 })
 export class KeyFilter implements Validator {
     /**
@@ -81,21 +86,7 @@ export class KeyFilter implements Validator {
      * Sets the pattern for key filtering.
      * @group Props
      */
-
-    @Input('hKeyFilter') set pattern(_pattern: RegExp | KeyFilterPattern | null | undefined) {
-        this._pattern = _pattern;
-
-        if (_pattern instanceof RegExp) {
-            this.regex = _pattern;
-        } else if (_pattern && _pattern in DEFAULT_MASKS) {
-            this.regex = DEFAULT_MASKS[_pattern as keyof typeof DEFAULT_MASKS];
-        } else {
-            this.regex = /./;
-        }
-    }
-    get pattern(): RegExp | KeyFilterPattern | null | undefined {
-        return this._pattern;
-    }
+    readonly pattern = input<RegExp | KeyFilterPattern | null | undefined>(undefined, { alias: 'hKeyFilter' });
 
     /**
      * Emits a value whenever the ngModel of the component changes.
@@ -105,8 +96,6 @@ export class KeyFilter implements Validator {
     readonly ngModelChange = output<string | number>();
 
     regex: RegExp = /./;
-
-    _pattern: RegExp | KeyFilterPattern | null | undefined;
 
     isAndroid: boolean;
 
@@ -122,6 +111,17 @@ export class KeyFilter implements Validator {
         } else {
             this.isAndroid = false;
         }
+
+        effect(() => {
+            const _pattern = this.pattern();
+            if (_pattern instanceof RegExp) {
+                this.regex = _pattern;
+            } else if (_pattern && _pattern in DEFAULT_MASKS) {
+                this.regex = DEFAULT_MASKS[_pattern as keyof typeof DEFAULT_MASKS];
+            } else {
+                this.regex = /./;
+            }
+        });
     }
 
     isNavKeyPress(e: KeyboardEvent) {
@@ -172,7 +172,6 @@ export class KeyFilter implements Validator {
         return true;
     }
 
-    @HostListener('input', ['$event'])
     onInput(e: KeyboardEvent) {
         if (this.isAndroid && !this.pValidateOnly()) {
             let val = this.el.nativeElement.value;
@@ -201,7 +200,6 @@ export class KeyFilter implements Validator {
         }
     }
 
-    @HostListener('keypress', ['$event'])
     onKeyPress(e: KeyboardEvent) {
         if (this.isAndroid || this.pValidateOnly()) {
             return;
@@ -239,7 +237,6 @@ export class KeyFilter implements Validator {
         }
     }
 
-    @HostListener('paste', ['$event'])
     onPaste(e: ClipboardEvent) {
         let clipboardData = e.clipboardData;
 

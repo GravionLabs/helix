@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, computed, Directive, effect, ElementRef, inject, InjectionToken, input, Input, NgModule, NgZone, numberAttribute, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
+import { booleanAttribute, computed, Directive, effect, ElementRef, inject, InjectionToken, input, NgModule, NgZone, numberAttribute, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 import { appendChild, createElement, fadeIn, findSingle, getOuterHeight, getOuterWidth, getViewport, getWindowScrollLeft, getWindowScrollTop, hasClass, removeChild, uuid } from '@primeuix/utils';
 import { TooltipOptions } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -112,13 +112,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
      * @defaultValue false
      * @group Props
      */
-    @Input('tooltipDisabled') get disabled(): boolean {
-        return this._disabled as boolean;
-    }
-    set disabled(val: boolean) {
-        this._disabled = val;
-        this.deactivate();
-    }
+    readonly disabled = input<boolean, unknown>(false, { alias: 'tooltipDisabled', transform: booleanAttribute });
     /**
      * Specifies the tooltip configuration options for the component.
      * @group Props
@@ -153,8 +147,6 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
         showOnEllipsis: false,
         id: uuid('pn_id_') + '_tooltip'
     };
-
-    _disabled: boolean | undefined;
 
     container: any;
 
@@ -230,6 +222,11 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
 
         effect(() => {
             this.pTooltipUnstyled() && this.directiveUnstyled.set(this.pTooltipUnstyled());
+        });
+
+        effect(() => {
+            this.disabled();
+            this.deactivate();
         });
     }
 
@@ -316,10 +313,6 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
 
         if (simpleChange.positionLeft) {
             this.setOption({ positionLeft: simpleChange.positionLeft.currentValue });
-        }
-
-        if (simpleChange.disabled) {
-            this.setOption({ disabled: simpleChange.disabled.currentValue });
         }
 
         if (simpleChange.content) {
