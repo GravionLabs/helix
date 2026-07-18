@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, Inject, inject, InjectionToken, input, Input, NgModule, numberAttribute, Renderer2, signal, TemplateRef, ViewEncapsulation, ViewRef, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
+import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, Inject, inject, InjectionToken, input, NgModule, numberAttribute, Renderer2, signal, TemplateRef, ViewEncapsulation, ViewRef, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import {
@@ -47,16 +47,13 @@ const CONTEXTMENUSUB_INSTANCE = new InjectionToken<ContextMenuSub>('CONTEXTMENUS
     providers: [ContextMenuStyle, { provide: CONTEXTMENUSUB_INSTANCE, useExisting: ContextMenuSub }, { provide: PARENT_INSTANCE, useExisting: ContextMenuSub }]
 })
 export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implements AfterViewChecked {
-    @Input() get visible(): boolean {
-        return this._visible;
-    }
-    set visible(value: boolean) {
-        this._visible = value;
+    readonly visible = model<boolean>(false);
 
-        if (this._visible || this.root()) {
+    _visibleEffect = effect(() => {
+        if (this.visible() || this.root()) {
             this.render.set(true);
         }
-    }
+    });
 
     readonly items = input<any[]>(undefined!);
 
@@ -107,8 +104,6 @@ export class ContextMenuSub extends BaseComponent<ContextMenuPassThrough> implem
     $pcContextMenu: ContextMenu | undefined = inject(CONTEXTMENU_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
     $pcContextMenuSub: ContextMenuSub | undefined = inject(CONTEXTMENUSUB_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
-
-    _visible: boolean = false;
 
     constructor(
         public el: ElementRef,
@@ -242,13 +237,11 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() set model(value: MenuItem[] | undefined) {
-        this._model = value;
-        this._processedItems = this.createProcessedItems(this._model || []);
-    }
-    get model(): MenuItem[] | undefined {
-        return this._model;
-    }
+    readonly model = input<MenuItem[] | undefined>(undefined);
+
+    _modelEffect = effect(() => {
+        this._processedItems = this.createProcessedItems(this.model() || []);
+    });
     /**
      * Event for which the menu must be displayed.
      * @group Props
@@ -386,8 +379,6 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
 
     _processedItems: any[];
 
-    _model: MenuItem[] | undefined;
-
     pressTimer: any;
 
     hideCallback: any;
@@ -408,7 +399,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
 
     get processedItems() {
         if (!this._processedItems || !this._processedItems.length) {
-            this._processedItems = this.createProcessedItems(this.model || []);
+            this._processedItems = this.createProcessedItems(this.model() || []);
         }
         return this._processedItems;
     }

@@ -12,7 +12,7 @@ import {
   inject,
   InjectionToken,
   input,
-  Input,
+  model,
   NgModule,
   numberAttribute,
   signal,
@@ -335,7 +335,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
      * Selected value of the component.
      * @group Props
      */
-    @Input() value: string | undefined | null;
+    readonly value = model<string | undefined | null>(undefined);
     /**
      * A property to uniquely identify an option.
      * @group Props
@@ -969,7 +969,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
     }
 
     updateModel(value, event?) {
-        this.value = value;
+        this.value.set(value);
         this.onModelChange(value);
         this.writeModelValue(value);
 
@@ -1398,7 +1398,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
      * Writes the value to the control.
      */
     writeControlValue(value: any, setModelValue: (value: any) => void): void {
-        this.value = value;
+        this.value.set(value);
         setModelValue(value);
         this.cd.markForCheck();
     }

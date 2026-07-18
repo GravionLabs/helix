@@ -1,6 +1,6 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, input, model, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { findIndexInList, setAttribute, uuid } from '@primeuix/utils';
 import { FilterService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -187,18 +187,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
      * It represents the data source for the list of items.
      * @group Props
      */
-    @Input() set value(val: any[] | undefined) {
-        this._value = val;
-        if (this.filterValue) {
-            this.filter();
-        } else if (this.dragdrop()) {
-            // Initialize visibleOptions for drag&drop even when no filtering is active
-            this.visibleOptions = [...(val || [])];
-        }
-    }
-    get value(): any[] | undefined {
-        return this._value;
-    }
+    readonly value = model<any[]>([]);
 
     /**
      * Used to pass all properties of the ButtonProps to the Button component.
@@ -367,6 +356,15 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         effect(() => {
             this.d_selection = this.selection();
         });
+        effect(() => {
+            const val = this.value();
+            if (this.filterValue) {
+                this.filter();
+            } else if (this.dragdrop()) {
+                // Initialize visibleOptions for drag&drop even when no filtering is active
+                this.visibleOptions = [...(val || [])];
+            }
+        });
     }
 
     movedUp: Nullable<boolean>;
@@ -382,8 +380,6 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
     public filterValue: Nullable<string>;
 
     public visibleOptions: Nullable<any[]>;
-
-    public _value: any[] | undefined;
 
     filterService = inject(FilterService);
 
@@ -415,8 +411,8 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         }
 
         // Initialize visibleOptions for drag&drop if enabled and value exists
-        if (this.dragdrop() && this.value && !this.visibleOptions) {
-            this.visibleOptions = [...this.value];
+        if (this.dragdrop() && this.value() && !this.visibleOptions) {
+            this.visibleOptions = [...this.value()];
         }
     }
 
@@ -514,7 +510,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
 
     filter() {
         let searchFields: string[] = (this.filterBy() as string).split(',');
-        this.visibleOptions = this.filterService.filter(this.value as any[], searchFields, this.filterValue, this.filterMatchMode(), this.filterLocale());
+        this.visibleOptions = this.filterService.filter(this.value() as any[], searchFields, this.filterValue, this.filterMatchMode(), this.filterLocale());
     }
 
     /**
@@ -543,22 +539,22 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
     }
 
     isEmpty() {
-        return this.filterValue ? !this.visibleOptions || this.visibleOptions.length === 0 : !this.value || this.value.length === 0;
+        return this.filterValue ? !this.visibleOptions || this.visibleOptions.length === 0 : !this.value() || this.value().length === 0;
     }
 
     moveUp() {
-        if (this.d_selection && this.value instanceof Array) {
+        if (this.d_selection && this.value() instanceof Array) {
             // Sort selection by their current index to process them from top to bottom
-            const sortedSelection = this.sortByIndexInList(this.d_selection, this.value);
+            const sortedSelection = this.sortByIndexInList(this.d_selection, this.value());
 
             for (let selectedItem of sortedSelection) {
-                let selectedItemIndex: number = findIndexInList(selectedItem, this.value);
+                let selectedItemIndex: number = findIndexInList(selectedItem, this.value());
                 // Only move if not at top and there's a valid position above
                 if (selectedItemIndex > 0) {
-                    let movedItem = this.value[selectedItemIndex];
-                    let temp = this.value[selectedItemIndex - 1];
-                    this.value[selectedItemIndex - 1] = movedItem;
-                    this.value[selectedItemIndex] = temp;
+                    let movedItem = this.value()[selectedItemIndex];
+                    let temp = this.value()[selectedItemIndex - 1];
+                    this.value()[selectedItemIndex - 1] = movedItem;
+                    this.value()[selectedItemIndex] = temp;
                 }
                 // Don't break - continue with other items even if one can't move
             }
@@ -568,7 +564,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                     this.filter();
                 } else if (this.visibleOptions) {
                     // Update visibleOptions to match value when no filtering
-                    this.visibleOptions = [...this.value];
+                    this.visibleOptions = [...this.value()];
                 }
             }
 
@@ -582,11 +578,11 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         if (this.d_selection) {
             for (let i = this.d_selection.length - 1; i >= 0; i--) {
                 let selectedItem = this.d_selection[i];
-                let selectedItemIndex: number = findIndexInList(selectedItem, this.value || []);
+                let selectedItemIndex: number = findIndexInList(selectedItem, this.value() || []);
 
-                if (selectedItemIndex != 0 && this.value instanceof Array) {
-                    let movedItem = this.value.splice(selectedItemIndex, 1)[0];
-                    this.value.unshift(movedItem);
+                if (selectedItemIndex != 0 && this.value() instanceof Array) {
+                    let movedItem = this.value().splice(selectedItemIndex, 1)[0];
+                    this.value().unshift(movedItem);
                 } else {
                     break;
                 }
@@ -597,7 +593,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                     this.filter();
                 } else if (this.visibleOptions) {
                     // Update visibleOptions to match value when no filtering
-                    this.visibleOptions = [...(this.value || [])];
+                    this.visibleOptions = [...(this.value() || [])];
                 }
             }
 
@@ -610,16 +606,16 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
     }
 
     moveDown() {
-        if (this.d_selection && this.value instanceof Array) {
-            const sortedSelection = this.sortByIndexInList(this.d_selection, this.value).reverse();
+        if (this.d_selection && this.value() instanceof Array) {
+            const sortedSelection = this.sortByIndexInList(this.d_selection, this.value()).reverse();
 
             for (let selectedItem of sortedSelection) {
-                let selectedItemIndex: number = findIndexInList(selectedItem, this.value);
-                if (selectedItemIndex < this.value.length - 1) {
-                    let movedItem = this.value[selectedItemIndex];
-                    let temp = this.value[selectedItemIndex + 1];
-                    this.value[selectedItemIndex + 1] = movedItem;
-                    this.value[selectedItemIndex] = temp;
+                let selectedItemIndex: number = findIndexInList(selectedItem, this.value());
+                if (selectedItemIndex < this.value().length - 1) {
+                    let movedItem = this.value()[selectedItemIndex];
+                    let temp = this.value()[selectedItemIndex + 1];
+                    this.value()[selectedItemIndex + 1] = movedItem;
+                    this.value()[selectedItemIndex] = temp;
                 }
             }
 
@@ -627,7 +623,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                 if (this.filterValue) {
                     this.filter();
                 } else if (this.visibleOptions) {
-                    this.visibleOptions = [...this.value];
+                    this.visibleOptions = [...this.value()];
                 }
             }
 
@@ -642,11 +638,11 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         if (this.d_selection) {
             for (let i = 0; i < this.d_selection.length; i++) {
                 let selectedItem = this.d_selection[i];
-                let selectedItemIndex: number = findIndexInList(selectedItem, this.value || []);
+                let selectedItemIndex: number = findIndexInList(selectedItem, this.value() || []);
 
-                if (this.value instanceof Array && selectedItemIndex != this.value.length - 1) {
-                    let movedItem = this.value.splice(selectedItemIndex, 1)[0];
-                    this.value.push(movedItem);
+                if (this.value() instanceof Array && selectedItemIndex != this.value().length - 1) {
+                    let movedItem = this.value().splice(selectedItemIndex, 1)[0];
+                    this.value().push(movedItem);
                 } else {
                     break;
                 }
@@ -656,12 +652,12 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                 if (this.filterValue) {
                     this.filter();
                 } else if (this.visibleOptions) {
-                    this.visibleOptions = [...(this.value || [])];
+                    this.visibleOptions = [...(this.value() || [])];
                 }
             }
 
             this.onReorder.emit(this.d_selection);
-            this.listViewChild()?.scrollInView(this.value?.length ? this.value.length - 1 : 0);
+            this.listViewChild()?.scrollInView(this.value()?.length ? this.value().length - 1 : 0);
         }
         this.listViewChild()?.cd?.markForCheck();
     }
@@ -671,7 +667,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         let currentIndex = event.currentIndex;
 
         // Store the original state before any modifications
-        const originalValue = [...(this.value || [])];
+        const originalValue = [...(this.value() || [])];
         const originalVisibleOptions = this.visibleOptions ? [...this.visibleOptions] : null;
 
         if (previousIndex !== currentIndex) {
@@ -684,9 +680,9 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                 itemsToMove = [...this.d_selection];
 
                 // For multi-selection, restore original state to undo Listbox's automatic reordering
-                if (this.value) {
-                    this.value.length = 0;
-                    this.value.push(...originalValue);
+                if (this.value()) {
+                    this.value().length = 0;
+                    this.value().push(...originalValue);
                 }
                 if (originalVisibleOptions && this.visibleOptions) {
                     this.visibleOptions.length = 0;
@@ -694,12 +690,12 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                 }
 
                 // Sort items by their index in the array to maintain relative order
-                itemsToMove = this.sortByIndexInList(itemsToMove, this.value || []);
+                itemsToMove = this.sortByIndexInList(itemsToMove, this.value() || []);
 
                 // Calculate how many selected items are before the drop position
                 let itemsBefore = 0;
                 for (const item of itemsToMove) {
-                    const itemIndex = findIndexInList(item, this.value || []);
+                    const itemIndex = findIndexInList(item, this.value() || []);
                     if (itemIndex !== -1 && itemIndex < currentIndex) {
                         itemsBefore++;
                     }
@@ -707,9 +703,9 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
 
                 // Remove all selected items (in reverse order to avoid index shifting)
                 for (let i = itemsToMove.length - 1; i >= 0; i--) {
-                    const itemIndex = findIndexInList(itemsToMove[i], this.value || []);
+                    const itemIndex = findIndexInList(itemsToMove[i], this.value() || []);
                     if (itemIndex !== -1) {
-                        this.value?.splice(itemIndex, 1);
+                        this.value()?.splice(itemIndex, 1);
                     }
                 }
 
@@ -719,14 +715,14 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
 
                 // Insert all selected items at the target position
                 for (let i = 0; i < itemsToMove.length; i++) {
-                    this.value?.splice(targetIndex + i, 0, itemsToMove[i]);
+                    this.value()?.splice(targetIndex + i, 0, itemsToMove[i]);
                 }
                 // Update visibleOptions to match value
                 if (this.dragdrop()) {
                     if (this.filterValue) {
                         this.filter();
                     } else if (this.visibleOptions) {
-                        this.visibleOptions = [...(this.value || [])];
+                        this.visibleOptions = [...(this.value() || [])];
                     }
                 }
 
@@ -739,15 +735,15 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
                 itemsToMove = [event.item.data];
 
                 if (this.filterValue) {
-                    previousIndex = findIndexInList(event.item.data, this.value || []);
-                    currentIndex = findIndexInList(this.visibleOptions?.[currentIndex], this.value || []);
+                    previousIndex = findIndexInList(event.item.data, this.value() || []);
+                    currentIndex = findIndexInList(this.visibleOptions?.[currentIndex], this.value() || []);
                 }
 
-                moveItemInArray(this.value as any[], previousIndex, currentIndex);
+                moveItemInArray(this.value() as any[], previousIndex, currentIndex);
 
                 // Sync visibleOptions for non-filtered case
                 if (this.dragdrop() && this.visibleOptions && !this.filterValue) {
-                    this.visibleOptions = [...(this.value || [])];
+                    this.visibleOptions = [...(this.value() || [])];
                 }
 
                 this.onReorder.emit([event.item.data]);
@@ -773,7 +769,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
     }
 
     getVisibleOptions() {
-        return this.visibleOptions && this.visibleOptions.length > 0 ? this.visibleOptions : this.value && this.value.length > 0 ? this.value : null;
+        return this.visibleOptions && this.visibleOptions.length > 0 ? this.visibleOptions : this.value() && this.value().length > 0 ? this.value() : null;
     }
 
     moveDisabled() {

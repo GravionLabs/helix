@@ -363,7 +363,7 @@ describe('MegaMenu', () => {
 
             const freshMegaMenu = freshFixture.debugElement.query(By.directive(MegaMenu)).componentInstance;
 
-            expect(freshMegaMenu.model).toBeUndefined();
+            expect(freshMegaMenu.model()).toBeUndefined();
             expect(freshMegaMenu.orientation).toBe('horizontal');
             expect(freshMegaMenu.breakpoint).toBe('960px');
             expect(freshMegaMenu.scrollHeight).toBe('20rem');
@@ -383,7 +383,7 @@ describe('MegaMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(megaMenuInstance.model).toBe(testModel);
+            expect(megaMenuInstance.model()).toBe(testModel);
             expect(megaMenuInstance.orientation()).toBe('vertical');
             expect(megaMenuInstance.styleClass()).toBe('custom-megamenu');
             expect(megaMenuInstance.ariaLabel()).toBe('Custom MegaMenu');
@@ -420,7 +420,7 @@ describe('MegaMenu', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(megaMenuInstance.model).toBe(newModel);
+            expect(megaMenuInstance.model()).toBe(newModel);
             expect(megaMenuInstance.processedItems.length).toBe(1);
         });
 
@@ -1138,7 +1138,7 @@ describe('MegaMenu', () => {
             await dynamicFixture.whenStable();
 
             // Initially empty
-            expect(dynamicMegaMenu.model.length).toBe(0);
+            expect(dynamicMegaMenu.model().length).toBe(0);
 
             // Add items
             dynamicComponent.addItem({ label: 'Item 1', icon: 'pi pi-test' });
@@ -1146,23 +1146,23 @@ describe('MegaMenu', () => {
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
 
-            expect(dynamicMegaMenu.model.length).toBe(2);
-            expect(dynamicMegaMenu.model[0].label).toBe('Item 1');
+            expect(dynamicMegaMenu.model().length).toBe(2);
+            expect(dynamicMegaMenu.model()[0].label).toBe('Item 1');
 
             // Remove item
             dynamicComponent.removeItem(0);
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
 
-            expect(dynamicMegaMenu.model.length).toBe(1);
-            expect(dynamicMegaMenu.model[0].label).toBe('Item 2');
+            expect(dynamicMegaMenu.model().length).toBe(1);
+            expect(dynamicMegaMenu.model()[0].label).toBe('Item 2');
 
             // Clear all
             dynamicComponent.clearItems();
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
 
-            expect(dynamicMegaMenu.model.length).toBe(0);
+            expect(dynamicMegaMenu.model().length).toBe(0);
         });
     });
 
@@ -1174,7 +1174,7 @@ describe('MegaMenu', () => {
             await fixture.whenStable();
 
             expect(() => fixture.changeDetectorRef.markForCheck()).not.toThrow();
-            expect(megaMenuInstance.model).toBeUndefined();
+            expect(megaMenuInstance.model()).toBeUndefined();
         });
 
         it('should handle items without icons', async () => {

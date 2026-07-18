@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, effect, ElementRef, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, viewChild, computed } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, effect, ElementRef, forwardRef, inject, InjectionToken, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, viewChild, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
 import { MegaMenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -209,13 +209,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() set model(value: MegaMenuItem[] | undefined) {
-        this._model = value;
-        this._processedItems = this.createProcessedItems(this._model || []);
-    }
-    get model(): MegaMenuItem[] | undefined {
-        return this._model;
-    }
+    readonly model = input<MegaMenuItem[] | undefined>();
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
@@ -342,8 +336,6 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
     _processedItems: any[];
 
-    _model: MegaMenuItem[] | undefined;
-
     _componentStyle = inject(MegaMenuStyle);
 
     private matchMediaListener: () => void;
@@ -372,7 +364,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
 
     get processedItems() {
         if (!this._processedItems || !this._processedItems.length) {
-            this._processedItems = this.createProcessedItems(this.model || []);
+            this._processedItems = this.createProcessedItems(this.model() || []);
         }
         return this._processedItems;
     }
@@ -393,6 +385,10 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
                 this.unbindOutsideClickListener();
                 this.unbindResizeListener();
             }
+        });
+        effect(() => {
+            const model = this.model();
+            this._processedItems = this.createProcessedItems(model || []);
         });
     }
 

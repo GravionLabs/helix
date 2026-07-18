@@ -101,7 +101,7 @@
             *ngTemplateOutlet="
                 headerTemplate() || _headerTemplate;
                 context: {
-                    $implicit: files,
+                    $implicit: files(),
                     uploadedFiles: uploadedFiles,
                     chooseCallback: choose.bind(this),
                     clearCallback: clear.bind(this),
@@ -117,7 +117,7 @@
                 *ngTemplateOutlet="
                     contentTemplate() || _contentTemplate;
                     context: {
-                        $implicit: files,
+                        $implicit: files(),
                         uploadedFiles: uploadedFiles,
                         chooseCallback: choose.bind(this),
                         clearCallback: clear.bind(this),
@@ -137,14 +137,14 @@
     }
     @if (hasFiles()) {
       <div [class]="cx('fileList')" [hBind]="ptm('fileList')">
-        @for (file of files; track file; let i = $index) {
+        @for (file of files(); track file; let i = $index) {
           <ng-container *ngTemplateOutlet="fileTemplate() || _fileTemplate; context: { $implicit: file, index: i }"></ng-container>
         }
         @if (!fileTemplate() && !_fileTemplate) {
           <div
             hFileContent
             [unstyled]="unstyled()"
-            [files]="files"
+            [files]="files()"
             (onRemove)="onRemoveClick($event)"
             [badgeValue]="pendingLabel"
             [previewWidth]="previewWidth()"
@@ -231,7 +231,7 @@
             {{ basicFileChosenLabel() }}
           </span>
         } @else {
-          <ng-container *ngTemplateOutlet="fileLabelTemplate() || _fileLabelTemplate; context: { $implicit: files }"></ng-container>
+          <ng-container *ngTemplateOutlet="fileLabelTemplate() || _fileLabelTemplate; context: { $implicit: files() }"></ng-container>
         }
       }
     </div>

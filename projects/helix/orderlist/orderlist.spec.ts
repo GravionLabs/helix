@@ -438,8 +438,8 @@ describe('OrderList', () => {
         });
 
         it('should initialize with provided value', () => {
-            expect(orderList.value).toEqual(component.products);
-            expect(orderList.value?.length).toBe(5);
+            expect(orderList.value()).toEqual(component.products);
+            expect(orderList.value()?.length).toBe(5);
         });
 
         it('should initialize selection as empty array', () => {
@@ -1350,7 +1350,7 @@ describe('OrderList', () => {
             const endTime = performance.now();
 
             expect(endTime - startTime).toBeLessThan(1000);
-            expect(orderList.value?.length).toBe(1000);
+            expect(orderList.value()?.length).toBe(1000);
         });
 
         it('should handle malformed data', () => {
@@ -1505,9 +1505,9 @@ describe('OrderList', () => {
         it('should handle value changes', () => {
             const newProducts = [{ id: '10', code: 'P010', name: 'New Product', description: 'New Description', price: 1000, quantity: 1, inventoryStatus: 'INSTOCK', category: 'New Category' }];
 
-            orderList.value = newProducts;
+            orderList.value.set(newProducts);
 
-            expect(orderList._value).toEqual(newProducts);
+            expect(orderList.value()).toEqual(newProducts);
         });
 
         it('should handle value changes with filter', () => {
@@ -1517,7 +1517,7 @@ describe('OrderList', () => {
 
             const newProducts = [{ id: '10', code: 'P010', name: 'Test Product', description: 'Test Description', price: 1000, quantity: 1, inventoryStatus: 'INSTOCK', category: 'Test Category' }];
 
-            orderList.value = newProducts;
+            orderList.value.set(newProducts);
 
             expect(orderList.filter).toHaveBeenCalled();
         });

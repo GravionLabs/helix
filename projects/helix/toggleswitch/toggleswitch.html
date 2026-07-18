@@ -19,8 +19,8 @@
 />
 <div [class]="cx('slider')" [hBind]="ptm('slider')" [attr.data-p]="dataP">
     <div [class]="cx('handle')" [hBind]="ptm('handle')" [attr.data-p]="dataP">
-        @if (handleTemplate || _handleTemplate) {
-            <ng-container *ngTemplateOutlet="handleTemplate || _handleTemplate; context: { checked: checked() }" />
+        @if (handleTemplate() || _handleTemplate) {
+            <ng-container *ngTemplateOutlet="handleTemplate() || _handleTemplate; context: { checked: checked() }" />
         }
     </div>
 </div>

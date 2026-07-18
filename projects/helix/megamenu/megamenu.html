@@ -4,13 +4,13 @@
   </div>
 }
 @if (!buttonTemplate() && !_buttonTemplate) {
-  @if (model && model.length > 0) {
+  @if (model() && model()!.length > 0) {
     <a
       #menubutton
       role="button"
       tabindex="0"
       [class]="cx('button')"
-      [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
+      [attr.aria-haspopup]="model()!.length && model()!.length > 0 ? true : false"
       [attr.aria-expanded]="mobileActive"
       [attr.aria-controls]="$id()"
       [attr.aria-label]="config.translation.aria.navigation"

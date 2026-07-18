@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, effect, ElementRef, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
 import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -23,7 +23,7 @@ const BLOCKUI_INSTANCE = new InjectionToken<BlockUI>('BLOCKUI_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     providers: [BlockUiStyle, { provide: BLOCKUI_INSTANCE, useExisting: BlockUI }, { provide: PARENT_INSTANCE, useExisting: BlockUI }],
     host: {
-        '[attr.aria-busy]': 'blocked',
+        '[attr.aria-busy]': 'blocked()',
         '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]
@@ -63,21 +63,7 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
      * Current blocked state as a boolean.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) get blocked(): boolean {
-        return this._blocked;
-    }
-    set blocked(val: boolean) {
-        if (this.el && this.el.nativeElement) {
-            if (val) {
-                this.block();
-            } else if (this._blocked) {
-                // Only unblock if currently blocked
-                this.unblock();
-            }
-        } else {
-            this._blocked = val;
-        }
-    }
+    readonly blocked = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * template of the content
      * @group Templates
@@ -92,6 +78,13 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
 
     constructor() {
         super();
+        effect(() => {
+            if (this.blocked()) {
+                this.block();
+            } else if (this._blocked) {
+                this.unblock();
+            }
+        });
     }
 
     onAfterViewInit() {

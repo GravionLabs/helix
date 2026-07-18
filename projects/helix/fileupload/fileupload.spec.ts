@@ -34,7 +34,7 @@ describe('FileUpload', () => {
             expect(component.showUploadButton).toBe(true);
             expect(component.showCancelButton).toBe(true);
             expect(component.previewWidth).toBe(50);
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
             expect(component.progress).toBe(0);
             expect(component.uploading).toBeFalsy();
             expect(component.uploadedFiles).toEqual([]);
@@ -88,24 +88,24 @@ describe('FileUpload', () => {
         });
 
         it('should clear files programmatically', () => {
-            component.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+            fixture.componentRef.setInput('files', [new File(['test'], 'test.txt', { type: 'text/plain' })]);
             spyOn(component.onClear, 'emit');
 
             component.clear();
 
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
             expect(component.onClear.emit).toHaveBeenCalled();
         });
 
         it('should remove file by index', () => {
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
             spyOn(component.onRemove, 'emit');
 
             const event = new Event('click');
             component.remove(event, 0);
 
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
             expect(component.onRemove.emit).toHaveBeenCalledWith({
                 originalEvent: event,
                 file: testFile
@@ -114,7 +114,7 @@ describe('FileUpload', () => {
 
         it('should upload files when upload method called', async () => {
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
             spyOn(component, 'uploader');
 
             component.upload();
@@ -159,10 +159,10 @@ describe('FileUpload', () => {
 
         it('should validate file limit', () => {
             component.fileLimit = 2;
-            component.files = []; // Start with empty files
+            fixture.componentRef.setInput('files', []); // Start with empty files
             const files = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })];
 
-            component.files = files; // Set files first to trigger limit check
+            fixture.componentRef.setInput('files', files); // Set files first to trigger limit check
             component.checkFileLimit(files);
 
             if (component.msgs && component.msgs.length > 0) {
@@ -231,12 +231,12 @@ describe('FileUpload', () => {
             component.onFileSelect(event);
             await fixture.whenStable();
 
-            expect(component.files.length).toBe(2);
+            expect(component.files().length).toBe(2);
         });
 
         it('should replace files when multiple is false', async () => {
             component.multiple = false;
-            component.files = [new File(['existing'], 'existing.txt', { type: 'text/plain' })];
+            fixture.componentRef.setInput('files', [new File(['existing'], 'existing.txt', { type: 'text/plain' })]);
 
             const newFile = new File(['new'], 'new.txt', { type: 'text/plain' });
             const event = {
@@ -246,8 +246,8 @@ describe('FileUpload', () => {
             component.onFileSelect(event);
             await fixture.whenStable();
 
-            expect(component.files.length).toBe(1);
-            expect(component.files[0].name).toBe('new.txt');
+            expect(component.files().length).toBe(1);
+            expect(component.files()[0].name).toBe('new.txt');
         });
 
         it('should auto upload when auto is enabled', async () => {
@@ -361,7 +361,7 @@ describe('FileUpload', () => {
 
         it('should upload files via HTTP', async () => {
             const testFile = new File(['test content'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
 
             spyOn(component.onBeforeUpload, 'emit');
             spyOn(component.onSend, 'emit');
@@ -394,7 +394,7 @@ describe('FileUpload', () => {
 
         it('should handle upload error', async () => {
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
 
             spyOn(component.onError, 'emit');
 
@@ -411,7 +411,7 @@ describe('FileUpload', () => {
         it('should handle custom upload', async () => {
             component.customUpload = true;
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
 
             spyOn(component.uploadHandler, 'emit');
 
@@ -524,10 +524,10 @@ describe('FileUpload', () => {
 
     describe('Helper Methods', () => {
         it('should check if has files', () => {
-            component.files = [];
+            fixture.componentRef.setInput('files', []);
             expect(component.hasFiles()).toBe(false);
 
-            component.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+            fixture.componentRef.setInput('files', [new File(['test'], 'test.txt', { type: 'text/plain' })]);
             expect(component.hasFiles()).toBe(true);
         });
 
@@ -556,7 +556,7 @@ describe('FileUpload', () => {
         it('should check if file limit is exceeded', () => {
             component.fileLimit = 2;
             component.uploadedFileCount = 0;
-            component.files = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })];
+            fixture.componentRef.setInput('files', [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })]);
 
             expect(component.isFileLimitExceeded()).toBe(true);
         });
@@ -564,7 +564,7 @@ describe('FileUpload', () => {
         it('should check if choose is disabled', () => {
             component.fileLimit = 2;
             component.uploadedFileCount = 0;
-            component.files = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })];
+            fixture.componentRef.setInput('files', [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })]);
 
             expect(component.isChooseDisabled()).toBe(true);
         });
@@ -633,11 +633,11 @@ describe('FileUpload', () => {
             expect(component.basicButtonLabel).toBe('Choose');
 
             component.auto = false;
-            component.files = [];
+            fixture.componentRef.setInput('files', []);
             expect(component.basicButtonLabel).toBe('Choose');
 
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
             const result = component.basicButtonLabel;
             // In basic mode with files, it should return either the upload label or the file name
             expect(result).toBeTruthy();
@@ -674,18 +674,18 @@ describe('FileUpload', () => {
 
         it('should handle duplicate file selection', async () => {
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
-            component.files = [testFile];
+            fixture.componentRef.setInput('files', [testFile]);
 
             const event = {
                 target: { files: [testFile] }
             };
 
-            const initialLength = component.files.length;
+            const initialLength = component.files().length;
             component.onFileSelect(event);
             await fixture.whenStable();
 
             // Should not add duplicate file
-            expect(component.files.length).toBe(initialLength);
+            expect(component.files().length).toBe(initialLength);
         });
 
         it('should handle empty file selection', async () => {
@@ -696,7 +696,7 @@ describe('FileUpload', () => {
             component.onFileSelect(event);
             await fixture.whenStable();
 
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
         });
 
         it('should handle large number of files', async () => {
@@ -707,7 +707,7 @@ describe('FileUpload', () => {
             component.onFileSelect(event);
             await fixture.whenStable();
 
-            expect(component.files.length).toBe(100);
+            expect(component.files().length).toBe(100);
         });
     });
 
@@ -1032,7 +1032,7 @@ describe('FileUpload Template Tests', () => {
 
             const fileUpload = fixture.debugElement.query(By.directive(FileUpload)).componentInstance;
             if (fileUpload) {
-                fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+                fileUpload.files.set([new File(['test'], 'test.txt', { type: 'text/plain' })]);
                 fixture.detectChanges();
             }
 
@@ -1058,7 +1058,7 @@ describe('FileUpload Template Tests', () => {
 
             const fileUpload = fixture.debugElement.query(By.directive(FileUpload)).componentInstance;
             if (fileUpload) {
-                fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+                fileUpload.files.set([new File(['test'], 'test.txt', { type: 'text/plain' })]);
                 fixture.detectChanges();
                 expect(fileUpload.files().length).toBe(1);
             } else {
@@ -1233,7 +1233,7 @@ describe('FileUpload Template Tests', () => {
             if (fileUpload) {
                 // Add some test files
                 const testFiles = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' })];
-                fileUpload.files = testFiles;
+                fileUpload.files.set(testFiles);
             }
 
             fixture.detectChanges();
@@ -1269,7 +1269,7 @@ describe('FileUpload Template Tests', () => {
 
             if (fileUpload) {
                 // Add test data
-                fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+                fileUpload.files.set([new File(['test'], 'test.txt', { type: 'text/plain' })]);
                 fileUpload.uploadedFiles = [new File(['uploaded'], 'uploaded.txt', { type: 'text/plain' })];
                 fileUpload.progress = 75;
                 fileUpload.msgs = [{ severity: 'info', text: 'Test message' }];
@@ -1315,7 +1315,7 @@ describe('FileUpload Template Tests', () => {
             if (fileUpload) {
                 // Add test files for file label context
                 const testFiles = [new File(['content1'], 'document1.pdf', { type: 'application/pdf' }), new File(['content2'], 'image.jpg', { type: 'image/jpeg' })];
-                fileUpload.files = testFiles;
+                fileUpload.files.set(testFiles);
             }
 
             fixture.detectChanges();
@@ -1589,7 +1589,7 @@ describe('FileUpload Performance and Edge Cases', () => {
         component.onFileSelect(event);
         await fixture.whenStable();
 
-        expect(component.files).toEqual([]);
+        expect(component.files()).toEqual([]);
     });
 
     it('should handle malformed file objects', () => {
@@ -1774,7 +1774,7 @@ describe('FileUpload Advanced Template Combinations', () => {
             if (fileUpload) {
                 // Add test files
                 const testFiles = [new File(['content1'], 'test1.pdf', { type: 'application/pdf' }), new File(['content2'], 'test2.jpg', { type: 'image/jpeg' })];
-                fileUpload.files = testFiles;
+                fileUpload.files.set(testFiles);
                 fileUpload.uploadedFiles = [new File(['uploaded'], 'completed.txt', { type: 'text/plain' })];
                 fileUpload.progress = 45;
 
@@ -1881,7 +1881,7 @@ describe('FileUpload Advanced Template Combinations', () => {
 
             if (fileUpload) {
                 // Set up test data
-                fileUpload.files = [new File(['test'], 'test.txt', { type: 'text/plain' })];
+                fileUpload.files.set([new File(['test'], 'test.txt', { type: 'text/plain' })]);
                 fileUpload.uploadedFiles = [new File(['uploaded'], 'uploaded.txt', { type: 'text/plain' })];
                 fileUpload.progress = 60;
                 fileUpload.msgs = [
@@ -2226,9 +2226,9 @@ describe('FileUpload Input Properties - Static Values', () => {
 
         it('should set and get files property', () => {
             const testFiles = [new File(['test'], 'test.txt', { type: 'text/plain' }), new File(['image'], 'image.jpg', { type: 'image/jpeg' })];
-            component.files = testFiles;
+            fixture.componentRef.setInput('files', testFiles);
             fixture.detectChanges();
-            expect(component.files).toEqual(testFiles);
+            expect(component.files()).toEqual(testFiles);
         });
     });
 });
@@ -2409,9 +2409,9 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const fileSets = [[], [new File(['test1'], 'test1.txt', { type: 'text/plain' })], [new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['image'], 'image.jpg', { type: 'image/jpeg' })], []];
 
             fileSets.forEach((files) => {
-                component.files = files;
+                fixture.componentRef.setInput('files', files);
                 fixture.detectChanges();
-                expect(component.files).toEqual(files);
+                expect(component.files()).toEqual(files);
             });
         });
     });
@@ -2633,20 +2633,20 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const filesSubject = new BehaviorSubject<File[]>([]);
 
             filesSubject.subscribe((files) => {
-                component.files = files;
+                fixture.componentRef.setInput('files', files);
                 fixture.changeDetectorRef.markForCheck();
             });
 
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
 
             const newFiles = [new File(['test'], 'test.txt', { type: 'text/plain' })];
             filesSubject.next(newFiles);
             await fixture.whenStable();
-            expect(component.files).toEqual(newFiles);
+            expect(component.files()).toEqual(newFiles);
 
             filesSubject.next([]);
             await fixture.whenStable();
-            expect(component.files).toEqual([]);
+            expect(component.files()).toEqual([]);
         });
     });
 

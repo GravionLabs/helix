@@ -324,7 +324,7 @@ describe('Menubar', () => {
 
             const freshMenubar = freshFixture.debugElement.query(By.directive(Menubar)).componentInstance;
 
-            expect(freshMenubar.model).toBeUndefined();
+            expect(freshMenubar.model()).toBeUndefined();
             expect(freshMenubar.autoZIndex).toBe(true);
             expect(freshMenubar.baseZIndex).toBe(0);
             expect(freshMenubar.autoDisplay).toBe(true);
@@ -345,7 +345,7 @@ describe('Menubar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menubarInstance.model).toBe(testModel);
+            expect(menubarInstance.model()).toBe(testModel);
             expect(menubarInstance.autoZIndex()).toBe(false);
             expect(menubarInstance.baseZIndex()).toBe(1000);
             expect(menubarInstance.autoDisplay()).toBe(false);
@@ -382,7 +382,7 @@ describe('Menubar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(menubarInstance.model).toBe(newModel);
+            expect(menubarInstance.model()).toBe(newModel);
             expect(menubarInstance.processedItems).toBeTruthy();
         });
 
@@ -824,9 +824,9 @@ describe('Menubar', () => {
 
             const routerMenubar = routerFixture.debugElement.query(By.directive(Menubar)).componentInstance;
 
-            expect(routerMenubar.model[0].routerLink).toBe('/');
-            expect(routerMenubar.model[1].routerLink).toBe('/products');
-            expect(routerMenubar.model[2].queryParams).toEqual({ tab: 'overview' });
+            expect(routerMenubar.model()[0].routerLink).toBe('/');
+            expect(routerMenubar.model()[1].routerLink).toBe('/products');
+            expect(routerMenubar.model()[2].queryParams).toEqual({ tab: 'overview' });
         });
 
         it('should handle router links in template', () => {
@@ -899,7 +899,7 @@ describe('Menubar', () => {
             await fixture.whenStable();
 
             expect(() => fixture.changeDetectorRef.markForCheck()).not.toThrow();
-            expect(menubarInstance.model).toBeUndefined();
+            expect(menubarInstance.model()).toBeUndefined();
         });
 
         it('should handle empty model array', async () => {
@@ -908,7 +908,7 @@ describe('Menubar', () => {
             await fixture.whenStable();
 
             expect(() => fixture.changeDetectorRef.markForCheck()).not.toThrow();
-            expect(menubarInstance.model).toEqual([]);
+            expect(menubarInstance.model()).toEqual([]);
         });
 
         it('should handle items without labels', async () => {
@@ -917,7 +917,7 @@ describe('Menubar', () => {
             await fixture.whenStable();
 
             expect(() => fixture.changeDetectorRef.markForCheck()).not.toThrow();
-            expect(menubarInstance.model?.[0]?.icon).toBe('pi pi-file');
+            expect(menubarInstance.model()?.[0]?.icon).toBe('pi pi-file');
         });
 
         it('should handle disabled items', () => {

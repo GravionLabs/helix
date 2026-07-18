@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, ChangeDetectionStrategy, Component, Input, inject, InjectionToken, NgModule,  SimpleChanges, TemplateRef, ViewEncapsulation, input, output, contentChildren, model, contentChild, booleanAttribute } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChildren, model, contentChild, booleanAttribute } from '@angular/core';
 import { PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -102,19 +102,7 @@ export class Chip extends BaseComponent<ChipPassThrough> {
      * Used to pass all properties of the chipProps to the Chip component.
      * @group Props
      */
-    @Input() get chipProps(): ChipProps | undefined {
-        return this._chipProps;
-    }
-    set chipProps(val: ChipProps | undefined) {
-        this._chipProps = val;
-
-        if (val && typeof val === 'object') {
-            //@ts-ignore
-            Object.entries(val).forEach(([k, v]) => this[`_${k}`] !== v && (this[`_${k}`] = v));
-        }
-    }
-
-    _chipProps: ChipProps | undefined;
+    readonly chipProps = input<ChipProps | undefined>(undefined);
 
     _componentStyle = inject(ChipStyle);
 
@@ -142,32 +130,36 @@ export class Chip extends BaseComponent<ChipPassThrough> {
         });
     }
 
-    onChanges(simpleChanges: SimpleChanges) {
-        if (simpleChanges.chipProps && simpleChanges.chipProps.currentValue) {
-            const { currentValue } = simpleChanges.chipProps;
+    constructor() {
+        super();
+        effect(() => {
+            const val = this.chipProps();
+            if (val && typeof val === 'object') {
+                Object.entries(val).forEach(([k, v]) => this[`_${k}`] !== v && (this[`_${k}`] = v));
 
-            if (currentValue.label !== undefined) {
-                this.label.set(currentValue.label);
+                if (val.label !== undefined) {
+                    this.label.set(val.label);
+                }
+                if (val.icon !== undefined) {
+                    this.icon.set(val.icon);
+                }
+                if (val.image !== undefined) {
+                    this.image.set(val.image);
+                }
+                if (val.alt !== undefined) {
+                    this.alt.set(val.alt);
+                }
+                if (val.styleClass !== undefined) {
+                    this.styleClass.set(val.styleClass);
+                }
+                if (val.removable !== undefined) {
+                    this.removable.set(val.removable);
+                }
+                if (val.removeIcon !== undefined) {
+                    this.removeIcon.set(val.removeIcon);
+                }
             }
-            if (currentValue.icon !== undefined) {
-                this.icon.set(currentValue.icon);
-            }
-            if (currentValue.image !== undefined) {
-                this.image.set(currentValue.image);
-            }
-            if (currentValue.alt !== undefined) {
-                this.alt.set(currentValue.alt);
-            }
-            if (currentValue.styleClass !== undefined) {
-                this.styleClass.set(currentValue.styleClass);
-            }
-            if (currentValue.removable !== undefined) {
-                this.removable.set(currentValue.removable);
-            }
-            if (currentValue.removeIcon !== undefined) {
-                this.removeIcon.set(currentValue.removeIcon);
-            }
-        }
+        });
     }
 
     close(event: MouseEvent) {

@@ -8,7 +8,7 @@ import {
   inject,
   InjectionToken,
   input,
-  Input,
+  model,
   NgModule,
   NgZone,
   numberAttribute,
@@ -43,10 +43,7 @@ const TOAST_INSTANCE = new InjectionToken<Toast>('TOAST_INSTANCE');
     providers: [ToastStyle]
 })
 export class ToastItem extends BaseComponent<ToastPassThrough> {
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() message: ToastMessageOptions | null | undefined;
+    readonly message = input<ToastMessageOptions | null | undefined>(undefined);
 
     readonly index = input<number | null, unknown>(undefined, { transform: numberAttribute });
 
@@ -54,10 +51,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
 
     readonly template = input<TemplateRef<ToastMessageTemplateContext>>();
 
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() headlessTemplate: TemplateRef<ToastHeadlessTemplateContext> | undefined;
+    readonly headlessTemplate = input<TemplateRef<ToastHeadlessTemplateContext> | undefined>(undefined);
 
     readonly showTransformOptions = input<string>();
 
@@ -83,7 +77,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
         if (!this.visible() && !this.isDestroyed) {
             this.onClose.emit({
                 index: <number>this.index(),
-                message: <ToastMessageOptions>this.message
+                message: <ToastMessageOptions>this.message()
             });
 
             if (!this.isDestroyed) {
@@ -115,12 +109,12 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
     }
 
     onAfterViewInit() {
-        this.message?.sticky && this.visible.set(true);
+        this.message()?.sticky && this.visible.set(true);
         this.initTimeout();
     }
 
     initTimeout() {
-        if (!this.message?.sticky) {
+        if (!this.message()?.sticky) {
             this.clearTimeout();
             this.zone.runOutsideAngular(() => {
                 this.visible.set(true);
@@ -128,7 +122,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
                     () => {
                         this.visible.set(false);
                     },
-                    this.message?.life || this.life() || 3000
+                    this.message()?.life || this.life() || 3000
                 );
             });
         }
@@ -170,7 +164,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
 
     get dataP() {
         return this.cn({
-            [this.message?.severity as string]: this.message?.severity
+            [this.message()?.severity as string]: this.message()?.severity
         });
     }
 }
@@ -234,16 +228,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
      * Position of the toast in viewport.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get position(): ToastPositionType {
-        return this._position;
-    }
-
-    set position(value: ToastPositionType) {
-        this._position = value;
-        this.cd.markForCheck();
-    }
+    readonly position = model<ToastPositionType>('top-right');
 
     /**
      * It does not add the new message if there is already a toast displayed with the same content
@@ -327,7 +312,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
     messagesArchieve: ToastMessageOptions[] | undefined;
 
-    _position: ToastPositionType = 'top-right';
+
 
     messageService: MessageService = inject(MessageService);
 
@@ -513,7 +498,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
     get dataP() {
         return this.cn({
-            [this.position]: this.position
+            [this.position()]: this.position()
         });
     }
 }
