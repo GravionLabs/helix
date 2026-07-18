@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, provideZonelessChangeDetection, signal, ViewChild } from '@angular/core';
+import { Component, computed, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -37,6 +37,7 @@ interface Country {
             [showToggleAll]="showToggleAll"
             [maxSelectedLabels]="maxSelectedLabels"
             [selectionLimit]="selectionLimit"
+            [selectAll]="selectAll"
             [displaySelectedLabel]="displaySelectedLabel"
             [display]="display"
             [showClear]="showClear"
@@ -99,6 +100,7 @@ class TestBasicMultiSelectComponent {
     showToggleAll = true;
     maxSelectedLabels = 3;
     selectionLimit: number | undefined;
+    selectAll: boolean | undefined | null = null;
     displaySelectedLabel = true;
     display: 'comma' | 'chip' = 'comma';
     showClear = true;
@@ -412,32 +414,32 @@ describe('MultiSelect', () => {
         });
 
         it('should have default values', () => {
-            expect(multiSelect.filter).toBe(true);
-            expect(multiSelect.showToggleAll).toBe(true);
-            expect(multiSelect.resetFilterOnHide).toBe(false);
-            expect(multiSelect.filterMatchMode).toBe('contains');
-            expect(multiSelect.scrollHeight).toBe('200px');
-            expect(multiSelect.lazy).toBe(false);
-            expect(multiSelect.loading).toBe(false);
-            expect(multiSelect.autofocusFilter).toBe(false);
-            expect(multiSelect.display).toBe('comma');
-            expect(multiSelect.showClear).toBe(true);
-            expect(multiSelect.autoOptionFocus).toBe(false);
-            expect(multiSelect.selectOnFocus).toBe(false);
-            expect(multiSelect.focusOnHover).toBe(true);
-            expect(multiSelect.highlightOnSelect).toBe(true);
-            expect(multiSelect.displaySelectedLabel).toBe(true);
-            expect(multiSelect.maxSelectedLabels).toBe(3);
-            expect(multiSelect.showHeader).toBe(true);
-            expect(multiSelect.optionGroupLabel).toBe('label');
-            expect(multiSelect.optionGroupChildren).toBe('items');
-            expect(multiSelect.emptyFilterMessage).toBe('' as any);
-            expect(multiSelect.emptyMessage).toBe('' as any);
-            expect(multiSelect.autocomplete).toBe('off');
-            expect(multiSelect.tooltipPosition).toBe('right');
-            expect(multiSelect.tooltipPositionStyle).toBe('absolute');
-            expect(multiSelect.tooltip).toBe('' as any);
-            expect(multiSelect.tabindex).toBe(0);
+            expect(multiSelect.filter()).toBe(true);
+            expect(multiSelect.showToggleAll()).toBe(true);
+            expect(multiSelect.resetFilterOnHide()).toBe(false);
+            expect(multiSelect.filterMatchMode()).toBe('contains');
+            expect(multiSelect.scrollHeight()).toBe('200px');
+            expect(multiSelect.lazy()).toBe(false);
+            expect(multiSelect.loading()).toBe(false);
+            expect(multiSelect.autofocusFilter()).toBe(false);
+            expect(multiSelect.display()).toBe('comma');
+            expect(multiSelect.showClear()).toBe(true);
+            expect(multiSelect.autoOptionFocus()).toBe(false);
+            expect(multiSelect.selectOnFocus()).toBe(false);
+            expect(multiSelect.focusOnHover()).toBe(true);
+            expect(multiSelect.highlightOnSelect()).toBe(true);
+            expect(multiSelect.displaySelectedLabel()).toBe(true);
+            expect(multiSelect.maxSelectedLabels()).toBe(3);
+            expect(multiSelect.showHeader()).toBe(true);
+            expect(multiSelect.optionGroupLabel()).toBe('label');
+            expect(multiSelect.optionGroupChildren()).toBe('items');
+            expect(multiSelect.emptyFilterMessage()).toBe('' as any);
+            expect(multiSelect.emptyMessage()).toBe('' as any);
+            expect(multiSelect.autocomplete()).toBe('off');
+            expect(multiSelect.tooltipPosition()).toBe('right');
+            expect(multiSelect.tooltipPositionStyle()).toBe('absolute');
+            expect(multiSelect.tooltip()).toBe('' as any);
+            expect(multiSelect.tabindex()).toBe(0);
         });
 
         it('should accept custom values', () => {
@@ -451,25 +453,25 @@ describe('MultiSelect', () => {
             fixture.detectChanges();
 
             expect(multiSelect.placeholder()).toBe('Custom Placeholder');
-            expect(multiSelect.filter).toBe(false);
-            expect(multiSelect.showToggleAll).toBe(false);
-            expect(multiSelect.maxSelectedLabels).toBe(5);
-            expect(multiSelect.display).toBe('chip');
-            expect(multiSelect.showClear).toBe(false);
-            expect(multiSelect.scrollHeight).toBe('300px');
+            expect(multiSelect.filter()).toBe(false);
+            expect(multiSelect.showToggleAll()).toBe(false);
+            expect(multiSelect.maxSelectedLabels()).toBe(5);
+            expect(multiSelect.display()).toBe('chip');
+            expect(multiSelect.showClear()).toBe(false);
+            expect(multiSelect.scrollHeight()).toBe('300px');
         });
 
         it('should initialize with options', () => {
-            expect(multiSelect.options).toBeDefined();
-            expect(multiSelect.options!.length).toBe(6);
-            expect(multiSelect.options![0]).toEqual({ name: 'New York', code: 'NY', country: 'USA' });
+            expect(multiSelect.options()).toBeDefined();
+            expect(multiSelect.options()!.length).toBe(6);
+            expect(multiSelect.options()![0]).toEqual({ name: 'New York', code: 'NY', country: 'USA' });
         });
 
         it('should handle empty options', () => {
             component.options = [];
             fixture.detectChanges();
 
-            expect(multiSelect.options!.length).toBe(0);
+            expect(multiSelect.options()!.length).toBe(0);
             expect(multiSelect.isEmpty()).toBe(true);
         });
 
@@ -617,7 +619,8 @@ describe('MultiSelect', () => {
 
         it('should emit onSelectAllChange event', () => {
             spyOn(component, 'onSelectAllChange');
-            multiSelect.selectAll = true;
+            component.selectAll = true;
+            fixture.changeDetectorRef.markForCheck();
 
             multiSelect.onToggleAll({
                 originalEvent: { preventDefault: () => {}, stopPropagation: () => {} },
@@ -844,7 +847,7 @@ describe('MultiSelect', () => {
             const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
             expect(hiddenInput.nativeElement.getAttribute('aria-expanded')).toBe('true');
 
-            const listId = multiSelect.id + '_list';
+            const listId = multiSelect.$id() + '_list';
             expect(hiddenInput.nativeElement.getAttribute('aria-controls')).toBe(listId);
         });
 
@@ -906,7 +909,6 @@ describe('MultiSelect', () => {
                 filterInput.nativeElement.dispatchEvent(new Event('input'));
             } else {
                 // If no filter input, use component method directly
-                multiSelect.filterValue = 'New';
                 multiSelect.onFilterInputChange({ target: { value: 'New' } } as any);
             }
             await fixture.whenStable();
@@ -934,7 +936,6 @@ describe('MultiSelect', () => {
                 fixture.detectChanges();
             } else {
                 // If no filter input, set filter value directly
-                multiSelect.filterValue = 'NY';
                 multiSelect.onFilterInputChange({ target: { value: 'NY' } } as any);
                 await fixture.whenStable();
                 fixture.detectChanges();
@@ -961,7 +962,6 @@ describe('MultiSelect', () => {
                 filterInput.nativeElement.dispatchEvent(new Event('input'));
             } else {
                 // Use component method if no filter input found
-                multiSelect.filterValue = 'test';
                 multiSelect.onFilterInputChange({ target: { value: 'test' } } as any);
             }
             await fixture.whenStable();
@@ -976,7 +976,6 @@ describe('MultiSelect', () => {
 
         it('should show empty filter message', async () => {
             component.emptyFilterMessage = 'No results found';
-            multiSelect.filter = true;
             multiSelect.show();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1072,7 +1071,7 @@ describe('MultiSelect', () => {
 
             const clearIcon = fixture.debugElement.query(By.css('.p-multiselect-clear-icon'));
             // Clear icon might not be rendered immediately or use different CSS class
-            expect(clearIcon || fixture.debugElement.query(By.css('[data-pc-section="clearicon"]')) || multiSelect.showClear).toBeTruthy();
+            expect(clearIcon || fixture.debugElement.query(By.css('[data-pc-section="clearicon"]')) || multiSelect.showClear()).toBeTruthy();
         });
 
         it('should display selected items as comma-separated list', async () => {
@@ -1183,7 +1182,7 @@ describe('MultiSelect', () => {
                 fixture.detectChanges();
             }).not.toThrow();
 
-            expect(multiSelect.options![0].name).toContain('<script>');
+            expect(multiSelect.options()![0].name).toContain('<script>');
         });
 
         it('should handle invalid option data', () => {
@@ -1463,12 +1462,12 @@ describe('MultiSelect Content Child Templates', () => {
         await fixture.whenStable();
 
         // After content init should process templates - check if they exist or component is initialized
-        const hasItemTemplate = !!(multiSelect.itemTemplate || multiSelect._itemTemplate);
-        const hasSelectedItemsTemplate = !!(multiSelect.selectedItemsTemplate || multiSelect._selectedItemsTemplate);
-        const hasHeaderTemplate = !!(multiSelect.headerTemplate || multiSelect._headerTemplate);
-        const hasFooterTemplate = !!(multiSelect.footerTemplate || multiSelect._footerTemplate);
-        const hasEmptyTemplate = !!(multiSelect.emptyTemplate || multiSelect._emptyTemplate);
-        const hasEmptyFilterTemplate = !!(multiSelect.emptyFilterTemplate || multiSelect._emptyFilterTemplate);
+        const hasItemTemplate = !!(multiSelect.itemTemplate() || multiSelect._itemTemplate);
+        const hasSelectedItemsTemplate = !!(multiSelect.selectedItemsTemplate() || multiSelect._selectedItemsTemplate);
+        const hasHeaderTemplate = !!(multiSelect.headerTemplate() || multiSelect._headerTemplate);
+        const hasFooterTemplate = !!(multiSelect.footerTemplate() || multiSelect._footerTemplate);
+        const hasEmptyTemplate = !!(multiSelect.emptyTemplate() || multiSelect._emptyTemplate);
+        const hasEmptyFilterTemplate = !!(multiSelect.emptyFilterTemplate() || multiSelect._emptyFilterTemplate);
 
         // At least some templates should be processed, or component should be properly initialized
         expect(hasItemTemplate || hasSelectedItemsTemplate || hasHeaderTemplate || hasFooterTemplate || hasEmptyTemplate || hasEmptyFilterTemplate || multiSelect).toBeDefined();
@@ -1553,7 +1552,6 @@ describe('MultiSelect Content Child Templates', () => {
             expect(customEmptyFilter.nativeElement.textContent).toBe('No filter results');
         } else {
             // If no filter input, just check that empty filter template renders when needed
-            multiSelect.filterValue = 'nonexistent';
             multiSelect.onFilterInputChange({ target: { value: 'nonexistent' } } as any);
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -1645,7 +1643,7 @@ describe('MultiSelect Grouped Options', () => {
             }
         } else {
             // Filter input not available, skip detailed assertions
-            expect(multiSelect.filter).toBe(true);
+            expect(multiSelect.filter()).toBe(true);
         }
     });
 });
@@ -1669,9 +1667,9 @@ describe('MultiSelect Virtual Scrolling', () => {
     });
 
     it('should initialize virtual scrolling', () => {
-        expect(multiSelect.virtualScroll).toBe(true);
-        expect(multiSelect.virtualScrollItemSize).toBe(40);
-        expect(multiSelect.scrollHeight).toBe('200px');
+        expect(multiSelect.virtualScroll()).toBe(true);
+        expect(multiSelect.virtualScrollItemSize()).toBe(40);
+        expect(multiSelect.scrollHeight()).toBe('200px');
         expect(multiSelect.virtualScrollerDisabled).toBe(false);
     });
 
@@ -1697,8 +1695,8 @@ describe('MultiSelect Virtual Scrolling', () => {
         fixture.detectChanges();
 
         // Virtual scroller should emit lazy load events
-        if (multiSelect.scroller) {
-            multiSelect.scroller.onLazyLoad.emit({
+        if (multiSelect.scroller()) {
+            multiSelect.scroller()!.onLazyLoad.emit({
                 first: 0,
                 last: 10
             });
@@ -1716,8 +1714,8 @@ describe('MultiSelect Virtual Scrolling', () => {
         fixture.detectChanges();
 
         // First check if scroller exists and if scrollInView method exists
-        if (multiSelect.scroller && typeof multiSelect.scroller.scrollToIndex === 'function') {
-            const scrollSpy = spyOn(multiSelect.scroller, 'scrollToIndex');
+        if (multiSelect.scroller() && typeof multiSelect.scroller()!.scrollToIndex === 'function') {
+            const scrollSpy = spyOn(multiSelect.scroller()!, 'scrollToIndex');
 
             if (typeof multiSelect.scrollInView === 'function') {
                 // scrollInView uses setTimeout(0) internally, so we need to wait
@@ -1733,7 +1731,7 @@ describe('MultiSelect Virtual Scrolling', () => {
                 }
             } else {
                 // Call scrollToIndex directly if scrollInView doesn't exist
-                multiSelect.scroller.scrollToIndex(500);
+                multiSelect.scroller()!.scrollToIndex(500);
                 expect(scrollSpy).toHaveBeenCalledWith(500);
             }
         } else if (typeof multiSelect.scrollInView === 'function') {
@@ -1808,12 +1806,12 @@ describe('MultiSelect Virtual Scrolling', () => {
     `
 })
 class TestDynamicDataSourcesMultiSelectComponent {
-    @ViewChild('signalMultiSelect') signalMultiSelect!: MultiSelect;
-    @ViewChild('asyncMultiSelect') asyncMultiSelect!: MultiSelect;
-    @ViewChild('getterMultiSelect') getterMultiSelect!: MultiSelect;
-    @ViewChild('functionMultiSelect') functionMultiSelect!: MultiSelect;
-    @ViewChild('lateLoadMultiSelect') lateLoadMultiSelect!: MultiSelect;
-    @ViewChild('computedMultiSelect') computedMultiSelect!: MultiSelect;
+    readonly signalMultiSelect = viewChild<MultiSelect>('signalMultiSelect');
+    readonly asyncMultiSelect = viewChild<MultiSelect>('asyncMultiSelect');
+    readonly getterMultiSelect = viewChild<MultiSelect>('getterMultiSelect');
+    readonly functionMultiSelect = viewChild<MultiSelect>('functionMultiSelect');
+    readonly lateLoadMultiSelect = viewChild<MultiSelect>('lateLoadMultiSelect');
+    readonly computedMultiSelect = viewChild<MultiSelect>('computedMultiSelect');
 
     // Signals
     citySignal = signal<City[]>([
@@ -2043,13 +2041,13 @@ class TestDynamicDataSourcesMultiSelectComponent {
     `
 })
 class TestComprehensiveFormMultiSelectComponent {
-    @ViewChild('reactiveMultiSelect') reactiveMultiSelect!: MultiSelect;
-    @ViewChild('validatedMultiSelect') validatedMultiSelect!: MultiSelect;
-    @ViewChild('ngModelMultiSelect') ngModelMultiSelect!: MultiSelect;
-    @ViewChild('ngModelValidatedMultiSelect') ngModelValidatedMultiSelect!: MultiSelect;
-    @ViewChild('templateForm') templateForm!: NgForm;
-    @ViewChild('citiesModel') citiesModel!: NgModel;
-    @ViewChild('validatedModel') validatedModel!: NgModel;
+    readonly reactiveMultiSelect = viewChild<MultiSelect>('reactiveMultiSelect');
+    readonly validatedMultiSelect = viewChild<MultiSelect>('validatedMultiSelect');
+    readonly ngModelMultiSelect = viewChild<MultiSelect>('ngModelMultiSelect');
+    readonly ngModelValidatedMultiSelect = viewChild<MultiSelect>('ngModelValidatedMultiSelect');
+    readonly templateForm = viewChild<NgForm>('templateForm');
+    readonly citiesModel = viewChild<NgModel>('citiesModel');
+    readonly validatedModel = viewChild<NgModel>('validatedModel');
 
     allCities: City[] = [
         { name: 'New York', code: 'NY' },
@@ -2136,7 +2134,7 @@ class TestComprehensiveFormMultiSelectComponent {
     standalone: false,
     template: `
         <div class="viewchild-tests">
-            <p-multiselect #mainMultiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Test ViewChild properties" [showClear]="true" [filter]="true" [virtualScroll]="false" class="main-multiselect">
+            <p-multiselect #mainMultiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Test ViewChild properties" [showClear]="true" [filter]="true" [virtualScroll]="false" [selectionLimit]="selectionLimit" class="main-multiselect">
                 <ng-template pTemplate="selectedItems" let-value>
                     <div class="custom-selected-template">{{ value?.length || 0 }} selected</div>
                 </ng-template>
@@ -2161,7 +2159,9 @@ class TestComprehensiveFormMultiSelectComponent {
     `
 })
 class TestViewChildMultiSelectComponent {
-    @ViewChild('mainMultiSelect') mainMultiSelect!: MultiSelect;
+    readonly mainMultiSelect = viewChild<MultiSelect>('mainMultiSelect');
+
+    selectionLimit: number | undefined = undefined;
 
     cities: City[] = [
         { name: 'ViewChild City 1', code: 'VC1' },
@@ -2173,80 +2173,80 @@ class TestViewChildMultiSelectComponent {
 
     // Methods to test ViewChild properties
     getOverlayViewChild() {
-        return this.mainMultiSelect.overlayViewChild;
+        return this.mainMultiSelect()!.overlayViewChild();
     }
 
     getFilterInputChild() {
-        return this.mainMultiSelect.filterInputChild;
+        return this.mainMultiSelect()!.filterInputChild();
     }
 
     getFocusInputViewChild() {
-        return this.mainMultiSelect.focusInputViewChild;
+        return this.mainMultiSelect()!.focusInputViewChild();
     }
 
     getItemsViewChild() {
-        return this.mainMultiSelect.itemsViewChild;
+        return this.mainMultiSelect()!.itemsViewChild();
     }
 
     getScroller() {
-        return this.mainMultiSelect.scroller;
+        return this.mainMultiSelect()!.scroller();
     }
 
     getLastHiddenFocusableElement() {
-        return this.mainMultiSelect.lastHiddenFocusableElementOnOverlay;
+        return this.mainMultiSelect()!.lastHiddenFocusableElementOnOverlay();
     }
 
     getFirstHiddenFocusableElement() {
-        return this.mainMultiSelect.firstHiddenFocusableElementOnOverlay;
+        return this.mainMultiSelect()!.firstHiddenFocusableElementOnOverlay();
     }
 
     getHeaderCheckbox() {
-        return this.mainMultiSelect.headerCheckboxViewChild;
+        return this.mainMultiSelect()!.headerCheckboxViewChild();
     }
 
     // Test method access
     callShowMethod() {
-        this.mainMultiSelect.show();
+        this.mainMultiSelect()!.show();
     }
 
     callHideMethod() {
-        this.mainMultiSelect.hide();
+        this.mainMultiSelect()!.hide();
     }
 
     callClearMethod() {
-        this.mainMultiSelect.clear(new Event('click'));
+        this.mainMultiSelect()!.clear(new Event('click'));
     }
 
     callUpdateModelMethod(value: City[]) {
-        this.mainMultiSelect.updateModel(value);
+        this.mainMultiSelect()!.updateModel(value);
     }
 
     callResetFilterMethod() {
-        this.mainMultiSelect.resetFilter();
+        this.mainMultiSelect()!.resetFilter();
     }
 
     getModelValue() {
-        return this.mainMultiSelect.modelValue();
+        return this.mainMultiSelect()!.modelValue();
     }
 
     isMaxSelectionLimitReached() {
-        return this.mainMultiSelect.maxSelectionLimitReached?.() ?? (this.mainMultiSelect.selectionLimit && this.mainMultiSelect.modelValue() && this.mainMultiSelect.modelValue().length >= this.mainMultiSelect.selectionLimit);
+        return this.mainMultiSelect()!.maxSelectionLimitReached?.() ?? (this.mainMultiSelect()!.selectionLimit() && this.mainMultiSelect()!.modelValue() && this.mainMultiSelect()!.modelValue().length >= this.mainMultiSelect()!.selectionLimit()!);
     }
 
     isEmpty() {
-        return this.mainMultiSelect.isEmpty?.() ?? (!this.mainMultiSelect.modelValue() || (Array.isArray(this.mainMultiSelect.modelValue()) && this.mainMultiSelect.modelValue().length === 0));
+        return this.mainMultiSelect()!.isEmpty?.() ?? (!this.mainMultiSelect()!.modelValue() || (Array.isArray(this.mainMultiSelect()!.modelValue()) && this.mainMultiSelect()!.modelValue().length === 0));
     }
 
     getVisibleOptions() {
-        return this.mainMultiSelect.visibleOptions();
+        return this.mainMultiSelect()!.visibleOptions();
     }
 
     getFocusedOptionIndex() {
-        return this.mainMultiSelect.focusedOptionIndex();
+        return this.mainMultiSelect()!.focusedOptionIndex();
     }
 
     getFilterValue() {
-        return this.mainMultiSelect._filterValue();
+        return this.mainMultiSelect()!._filterValue();
     }
 }
 
@@ -2299,12 +2299,12 @@ class TestViewChildMultiSelectComponent {
     `
 })
 class TestComplexEdgeCasesMultiSelectComponent {
-    @ViewChild('largeDataMultiSelect') largeDataMultiSelect!: MultiSelect;
-    @ViewChild('unicodeMultiSelect') unicodeMultiSelect!: MultiSelect;
-    @ViewChild('xssMultiSelect') xssMultiSelect!: MultiSelect;
-    @ViewChild('memoryMultiSelect') memoryMultiSelect!: MultiSelect;
-    @ViewChild('nullHandlingMultiSelect') nullHandlingMultiSelect!: MultiSelect;
-    @ViewChild('circularMultiSelect') circularMultiSelect!: MultiSelect;
+    readonly largeDataMultiSelect = viewChild<MultiSelect>('largeDataMultiSelect');
+    readonly unicodeMultiSelect = viewChild<MultiSelect>('unicodeMultiSelect');
+    readonly xssMultiSelect = viewChild<MultiSelect>('xssMultiSelect');
+    readonly memoryMultiSelect = viewChild<MultiSelect>('memoryMultiSelect');
+    readonly nullHandlingMultiSelect = viewChild<MultiSelect>('nullHandlingMultiSelect');
+    readonly circularMultiSelect = viewChild<MultiSelect>('circularMultiSelect');
 
     // Large dataset for performance testing
     largeDataset: City[] = [];
@@ -2475,57 +2475,57 @@ describe('MultiSelect Dynamic Data Sources', () => {
 
     describe('Signal-based Data Sources', () => {
         it('should work with signal options', async () => {
-            expect(component.signalMultiSelect.options!.length).toBe(3);
-            expect(component.signalMultiSelect.options![0].name).toBe('Signal City 1');
+            expect(component.signalMultiSelect()!.options()!.length).toBe(3);
+            expect(component.signalMultiSelect()!.options()![0].name).toBe('Signal City 1');
 
             // Test signal updates
             component.updateSignalData();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.signalMultiSelect.options!.length).toBe(2);
-            expect(component.signalMultiSelect.options![0].name).toBe('Updated Signal 1');
+            expect(component.signalMultiSelect()!.options()!.length).toBe(2);
+            expect(component.signalMultiSelect()!.options()![0].name).toBe('Updated Signal 1');
         });
 
         it('should work with signal placeholder', async () => {
-            expect(component.signalMultiSelect.placeholder()).toBe('Select from signal');
+            expect(component.signalMultiSelect()!.placeholder()).toBe('Select from signal');
 
             component.updatePlaceholder();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.signalMultiSelect.placeholder()).toBe('Updated placeholder');
+            expect(component.signalMultiSelect()!.placeholder()).toBe('Updated placeholder');
         });
 
         it('should work with signal disabled state', async () => {
-            expect(component.signalMultiSelect.$disabled()).toBe(false);
+            expect(component.signalMultiSelect()!.$disabled()).toBe(false);
 
             component.toggleDisabled();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.signalMultiSelect.$disabled()).toBe(true);
+            expect(component.signalMultiSelect()!.$disabled()).toBe(true);
         });
 
         it('should work with signal filter state', async () => {
-            expect(component.signalMultiSelect.filter).toBe(true);
+            expect(component.signalMultiSelect()!.filter()).toBe(true);
 
             component.toggleFilter();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.signalMultiSelect.filter).toBe(false);
+            expect(component.signalMultiSelect()!.filter()).toBe(false);
         });
 
         it('should add items to signal dynamically', async () => {
-            const initialCount = component.signalMultiSelect.options!.length;
+            const initialCount = component.signalMultiSelect()!.options()!.length;
 
             component.addToSignal();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.signalMultiSelect.options!.length).toBe(initialCount + 1);
-            expect(component.signalMultiSelect.options![initialCount].name).toContain('New City');
+            expect(component.signalMultiSelect()!.options()!.length).toBe(initialCount + 1);
+            expect(component.signalMultiSelect()!.options()![initialCount].name).toContain('New City');
         });
     });
 
@@ -2575,8 +2575,8 @@ describe('MultiSelect Dynamic Data Sources', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.asyncMultiSelect.options?.length).toBe(2);
-            expect(component.asyncMultiSelect.options?.[0].name).toBe('Observable City 1');
+            expect(component.asyncMultiSelect()!.options()?.length).toBe(2);
+            expect(component.asyncMultiSelect()!.options()?.[0].name).toBe('Observable City 1');
         });
 
         it('should update when observable data changes', async () => {
@@ -2588,8 +2588,8 @@ describe('MultiSelect Dynamic Data Sources', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.asyncMultiSelect.options?.length).toBe(3);
-            expect(component.asyncMultiSelect.options?.[0].name).toBe('Updated Observable 1');
+            expect(component.asyncMultiSelect()!.options()?.length).toBe(3);
+            expect(component.asyncMultiSelect()!.options()?.[0].name).toBe('Updated Observable 1');
         });
 
         it('should work with observable placeholder via async pipe', async () => {
@@ -2597,7 +2597,7 @@ describe('MultiSelect Dynamic Data Sources', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const placeholder = component.asyncMultiSelect.placeholder();
+            const placeholder = component.asyncMultiSelect()!.placeholder();
             // Async pipe may not have resolved yet, so allow for null/undefined
             if (placeholder !== null && placeholder !== undefined) {
                 expect(placeholder).toBe('Select from observable');
@@ -2610,64 +2610,64 @@ describe('MultiSelect Dynamic Data Sources', () => {
 
     describe('Getter-based Data Sources', () => {
         it('should work with getter options', async () => {
-            expect(component.getterMultiSelect.options!.length).toBe(2);
-            expect(component.getterMultiSelect.options![0].name).toBe('Getter City 1');
+            expect(component.getterMultiSelect()!.options()!.length).toBe(2);
+            expect(component.getterMultiSelect()!.options()![0].name).toBe('Getter City 1');
 
             component.updateGetterData();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.getterMultiSelect.options![0].name).toBe('Updated Getter 1');
+            expect(component.getterMultiSelect()!.options()![0].name).toBe('Updated Getter 1');
         });
 
         it('should work with getter placeholder', () => {
-            expect(component.getterMultiSelect.placeholder()).toBe('Select from getter');
+            expect(component.getterMultiSelect()!.placeholder()).toBe('Select from getter');
         });
 
         it('should work with getter disabled state', async () => {
-            expect(component.getterMultiSelect.$disabled()).toBe(false);
+            expect(component.getterMultiSelect()!.$disabled()).toBe(false);
 
             component.toggleGetterDisabled();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.getterMultiSelect.$disabled()).toBe(true);
+            expect(component.getterMultiSelect()!.$disabled()).toBe(true);
         });
     });
 
     describe('Function-based Property Data Sources', () => {
         it('should work with function options', () => {
-            const options = component.functionMultiSelect.options;
+            const options = component.functionMultiSelect()!.options();
             expect(options!.length).toBe(3);
             expect(options![0].name).toBe('Function City 1');
             expect(options![1].disabled).toBe(true);
         });
 
         it('should work with function optionLabel', () => {
-            expect(component.functionMultiSelect.optionLabel).toBe('name');
+            expect(component.functionMultiSelect()!.optionLabel()).toBe('name');
         });
 
         it('should work with function optionValue', () => {
-            expect(component.functionMultiSelect.optionValue).toBeUndefined();
+            expect(component.functionMultiSelect()!.optionValue()).toBeUndefined();
         });
 
         it('should work with function optionDisabled', () => {
-            expect(component.functionMultiSelect.optionDisabled).toBe('disabled');
+            expect(component.functionMultiSelect()!.optionDisabled()).toBe('disabled');
         });
 
         it('should work with function placeholder', () => {
-            expect(component.functionMultiSelect.placeholder()).toBe('Select from function');
+            expect(component.functionMultiSelect()!.placeholder()).toBe('Select from function');
         });
 
         it('should work with function filter', () => {
-            expect(component.functionMultiSelect.filter).toBe(true);
+            expect(component.functionMultiSelect()!.filter()).toBe(true);
         });
     });
 
     describe('Late-loaded Data Sources', () => {
         it('should handle initially empty late-loaded data', () => {
-            expect(component.lateLoadMultiSelect.options!.length).toBe(0);
-            expect(component.lateLoadMultiSelect.loading).toBe(true);
+            expect(component.lateLoadMultiSelect()!.options()!.length).toBe(0);
+            expect(component.lateLoadMultiSelect()!.loading()).toBe(true);
         });
 
         it('should populate late-loaded data after timeout', async () => {
@@ -2678,9 +2678,9 @@ describe('MultiSelect Dynamic Data Sources', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.lateLoadMultiSelect.options!.length).toBe(3);
-            expect(component.lateLoadMultiSelect.loading).toBe(false);
-            expect(component.lateLoadMultiSelect.options![0].name).toBe('Late Loaded City 1');
+            expect(component.lateLoadMultiSelect()!.options()!.length).toBe(3);
+            expect(component.lateLoadMultiSelect()!.loading()).toBe(false);
+            expect(component.lateLoadMultiSelect()!.options()![0].name).toBe('Late Loaded City 1');
         });
     });
 });
@@ -2715,7 +2715,7 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.reactiveMultiSelect.modelValue()).toEqual(cities);
+            expect(component.reactiveMultiSelect()!.modelValue()).toEqual(cities);
             expect(component.reactiveForm.get('cities')?.value).toEqual(cities);
         });
 
@@ -2725,7 +2725,7 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.reactiveMultiSelect.modelValue()).toEqual(cities);
+            expect(component.reactiveMultiSelect()!.modelValue()).toEqual(cities);
         });
 
         it('should work with FormControl reset', async () => {
@@ -2736,24 +2736,24 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.reactiveMultiSelect.modelValue()).toBeNull();
+            expect(component.reactiveMultiSelect()!.modelValue()).toBeNull();
             expect(component.reactiveForm.get('cities')?.pristine).toBe(true);
         });
 
         it('should work with FormControl disable/enable', async () => {
-            expect(component.reactiveMultiSelect.$disabled()).toBe(false);
+            expect(component.reactiveMultiSelect()!.$disabled()).toBe(false);
 
             component.disableReactiveControl();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.reactiveMultiSelect.$disabled()).toBe(true);
+            expect(component.reactiveMultiSelect()!.$disabled()).toBe(true);
 
             component.enableReactiveControl();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.reactiveMultiSelect.$disabled()).toBe(false);
+            expect(component.reactiveMultiSelect()!.$disabled()).toBe(false);
         });
 
         it('should work with FormControl markAsTouched', async () => {
@@ -2849,13 +2849,13 @@ describe('MultiSelect Comprehensive Form Integration', () => {
 
     describe('Template-driven Forms (NgModel) Integration', () => {
         it('should work with NgModel', async () => {
-            expect(component.ngModelMultiSelect.modelValue()).toEqual([]);
+            expect(component.ngModelMultiSelect()!.modelValue()).toEqual([]);
 
             component.ngModelValue = [component.allCities[0]];
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.ngModelMultiSelect.modelValue()).toEqual([component.allCities[0]]);
+            expect(component.ngModelMultiSelect()!.modelValue()).toEqual([component.allCities[0]]);
         });
 
         it('should work with NgModel validation', async () => {
@@ -2863,28 +2863,28 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             await fixture.whenStable();
 
             // Should be invalid initially due to required
-            expect(component.citiesModel?.invalid).toBe(true);
-            expect(component.citiesModel?.errors?.['required']).toBe(true);
+            expect(component.citiesModel()?.invalid).toBe(true);
+            expect(component.citiesModel()?.errors?.['required']).toBe(true);
 
             // Add a value
             component.ngModelValue = [component.allCities[0]];
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.citiesModel?.valid).toBe(true);
+            expect(component.citiesModel()?.valid).toBe(true);
         });
 
         it('should work with NgModel required validation', async () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.citiesModel?.hasError('required')).toBe(true);
+            expect(component.citiesModel()?.hasError('required')).toBe(true);
 
             component.ngModelValue = [component.allCities[0]];
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(component.citiesModel?.hasError('required')).toBe(false);
+            expect(component.citiesModel()?.hasError('required')).toBe(false);
         });
 
         it('should track form validity through template form', async () => {
@@ -2892,7 +2892,7 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             await fixture.whenStable();
 
             // Initially should be invalid due to required fields
-            expect(component.templateForm?.valid).toBe(false);
+            expect(component.templateForm()?.valid).toBe(false);
 
             // Set both required fields
             component.ngModelValue = [component.allCities[0]];
@@ -2905,12 +2905,12 @@ describe('MultiSelect Comprehensive Form Integration', () => {
             await fixture.whenStable();
 
             // Check if valid or at least not still false due to async validation
-            if (component.templateForm?.valid !== undefined) {
+            if (component.templateForm()?.valid !== undefined) {
                 // Template form validation might be async, check that values are set at least
                 expect(component.ngModelValue.length).toBeGreaterThan(0);
                 expect(component.ngModelValidatedValue.length).toBeGreaterThan(0);
                 // Form validity depends on all controls being valid, just check it exists
-                expect(typeof component.templateForm.valid).toBe('boolean');
+                expect(typeof component.templateForm()!.valid).toBe('boolean');
             } else {
                 // Fallback: just check that values are set
                 expect(component.ngModelValue.length).toBeGreaterThan(0);
@@ -2939,7 +2939,7 @@ describe('MultiSelect ViewChild Properties', () => {
 
     it('should expose ViewChild properties correctly', async () => {
         // Test initial ViewChild access
-        expect(component.mainMultiSelect).toBeTruthy();
+        expect(component.mainMultiSelect()).toBeTruthy();
 
         // Show overlay to ensure ViewChild elements are rendered
         component.callShowMethod();
@@ -2969,15 +2969,15 @@ describe('MultiSelect ViewChild Properties', () => {
 
     it('should allow method calls through ViewChild', async () => {
         // Test show method
-        expect(component.mainMultiSelect.overlayVisible).toBeFalsy();
+        expect(component.mainMultiSelect()!.overlayVisible).toBeFalsy();
         component.callShowMethod();
         await fixture.whenStable();
-        expect(component.mainMultiSelect.overlayVisible).toBe(true);
+        expect(component.mainMultiSelect()!.overlayVisible).toBe(true);
 
         // Test hide method
         component.callHideMethod();
         await fixture.whenStable();
-        expect(component.mainMultiSelect.overlayVisible).toBe(false);
+        expect(component.mainMultiSelect()!.overlayVisible).toBe(false);
     });
 
     it('should allow model manipulation through ViewChild', async () => {
@@ -3033,7 +3033,7 @@ describe('MultiSelect ViewChild Properties', () => {
         await fixture.whenStable();
 
         // Set filter value
-        component.mainMultiSelect._filterValue.set('ViewChild City 1');
+        component.mainMultiSelect()!._filterValue.set('ViewChild City 1');
         await fixture.whenStable();
 
         expect(component.getFilterValue()).toBe('ViewChild City 1');
@@ -3050,14 +3050,18 @@ describe('MultiSelect ViewChild Properties', () => {
             expect(limitResult).toBe(false);
 
             // Set selection limit
-            component.mainMultiSelect.selectionLimit = 2;
+            component.selectionLimit = 2;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             component.callUpdateModelMethod([component.cities[0], component.cities[1]]);
             await fixture.whenStable();
 
             expect(component.isMaxSelectionLimitReached()).toBe(true);
         } else {
             // Method doesn't exist, test selection limit directly
-            component.mainMultiSelect.selectionLimit = 2;
+            component.selectionLimit = 2;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             component.callUpdateModelMethod([component.cities[0], component.cities[1]]);
             await fixture.whenStable();
 
@@ -3088,9 +3092,9 @@ describe('MultiSelect Complex Edge Cases', () => {
     describe('Performance and Large Datasets', () => {
         it('should handle large datasets efficiently', async () => {
             expect(component.largeDataset.length).toBe(10000);
-            expect(component.largeDataMultiSelect.virtualScroll).toBe(true);
+            expect(component.largeDataMultiSelect()!.virtualScroll()).toBe(true);
 
-            component.largeDataMultiSelect.show();
+            component.largeDataMultiSelect()!.show();
             await fixture.whenStable();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -3139,7 +3143,7 @@ describe('MultiSelect Complex Edge Cases', () => {
         it('should handle Unicode characters correctly', async () => {
             expect(component.unicodeOptions.length).toBe(7);
 
-            component.unicodeMultiSelect.show();
+            component.unicodeMultiSelect()!.show();
             await fixture.whenStable();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -3195,7 +3199,7 @@ describe('MultiSelect Complex Edge Cases', () => {
         });
 
         it('should render XSS content safely in the DOM', async () => {
-            component.xssMultiSelect.show();
+            component.xssMultiSelect()!.show();
             await fixture.whenStable();
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -3211,7 +3215,7 @@ describe('MultiSelect Complex Edge Cases', () => {
     describe('Null and Undefined Handling', () => {
         it('should handle null options gracefully', async () => {
             expect(() => {
-                component.nullHandlingMultiSelect.show();
+                component.nullHandlingMultiSelect()!.show();
             }).not.toThrow();
 
             await fixture.whenStable();
@@ -3244,7 +3248,7 @@ describe('MultiSelect Complex Edge Cases', () => {
 
         it('should not crash with circular object references', async () => {
             expect(() => {
-                component.circularMultiSelect.show();
+                component.circularMultiSelect()!.show();
             }).not.toThrow();
 
             await fixture.whenStable();
@@ -3342,11 +3346,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3379,11 +3382,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3413,11 +3415,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3444,11 +3445,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.componentRef.setInput('disabled', true);
             fixture.detectChanges();
             await fixture.whenStable();
@@ -3478,11 +3478,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3499,11 +3498,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.componentRef.setInput('pt', { root: 'INLINE_TEST_CLASS' });
             fixture.detectChanges();
             await fixture.whenStable();
@@ -3535,11 +3533,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3569,11 +3566,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
 
             expect(hookSpy).toHaveBeenCalled();
@@ -3600,11 +3596,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3635,11 +3630,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2, disabled: true }
-            ];
+            ]);
             fixture.detectChanges();
 
             // Open dropdown
@@ -3676,11 +3670,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.detectChanges();
             await fixture.whenStable();
 
@@ -3713,11 +3706,10 @@ describe('MultiSelect Complex Edge Cases', () => {
             }).compileComponents();
 
             const fixture = TestBed.createComponent(MultiSelect);
-            const instance = fixture.componentInstance;
-            instance.options = [
+            fixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 1 },
                 { label: 'Option 2', value: 2 }
-            ];
+            ]);
             fixture.componentRef.setInput('display', 'chip');
             fixture.componentRef.setInput('filter', true);
             fixture.componentInstance.value = [1];
