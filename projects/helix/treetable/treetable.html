@@ -1,9 +1,9 @@
 @if (loading() && showLoader()) {
   <div [hBind]="ptm('mask')" [class]="cx('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
-    @if (loadingIcon) {
-      <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon)"></i>
+    @if (loadingIcon()) {
+      <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())"></i>
     }
-    @if (!loadingIcon) {
+    @if (!loadingIcon()) {
       @if (!loadingIconTemplate && !_loadingIconTemplate) {
         <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" />
       }
@@ -23,9 +23,9 @@
 @if (paginator() && (paginatorPosition() === 'top' || paginatorPosition() == 'both')) {
   <h-paginator
     [pt]="ptm('pcPaginator')"
-    [rows]="rows"
-    [first]="first"
-    [totalRecords]="totalRecords"
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
     [pageLinkSize]="pageLinks()"
     [styleClass]="cx('pcPaginator')"
     [alwaysShow]="alwaysShowPaginator()"
@@ -83,11 +83,11 @@
 
 @if (scrollable()) {
   <div [hBind]="ptm('scrollableWrapper')" [class]="cx('scrollableWrapper')">
-    @if (frozenColumns || frozenBodyTemplate || _frozenBodyTemplate()) {
+    @if (frozenColumns() || frozenBodyTemplate || _frozenBodyTemplate()) {
       <div
         [ngClass]="[cx('scrollableView'), cx('frozenView')]"
         #scrollableFrozenView
-        [ttScrollableView]="frozenColumns"
+        [ttScrollableView]="frozenColumns()"
         [unstyled]="unstyled()"
         [frozen]="true"
         [ngStyle]="{ width: frozenWidth() }"
@@ -111,9 +111,9 @@
 @if (paginator() && (paginatorPosition() === 'bottom' || paginatorPosition() == 'both')) {
   <h-paginator
     [pt]="ptm('pcPaginator')"
-    [rows]="rows"
-    [first]="first"
-    [totalRecords]="totalRecords"
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
     [pageLinkSize]="pageLinks()"
     [styleClass]="cx('pcPaginator')"
     [alwaysShow]="alwaysShowPaginator()"
