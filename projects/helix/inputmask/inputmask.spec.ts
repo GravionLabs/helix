@@ -161,17 +161,17 @@ describe('InputMask', () => {
         });
 
         it('should initialize mask when mask property is set', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
-            expect(component._mask).toBe('999-99-9999');
+            expect(component.mask()).toBe('999-99-9999');
             expect(component.tests).toBeDefined();
             expect(component.buffer).toBeDefined();
             expect(component.len).toBe(11);
         });
 
         it('should set input properties correctly', () => {
-            component.mask = '999-99-9999'; // Set mask first to avoid initialization errors
+            fixture.componentRef.setInput('mask', '999-99-9999'); // Set mask first to avoid initialization errors
             component.type = 'tel';
             component.slotChar = '*';
             component.placeholder = 'Enter phone';
@@ -190,7 +190,7 @@ describe('InputMask', () => {
 
     describe('Mask Pattern Processing', () => {
         it('should process numeric mask pattern correctly', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
             expect(component.len).toBe(11);
@@ -200,7 +200,7 @@ describe('InputMask', () => {
         });
 
         it('should process alpha mask pattern correctly', () => {
-            component.mask = 'aaa-aaa';
+            fixture.componentRef.setInput('mask', 'aaa-aaa');
             fixture.detectChanges();
 
             expect(component.len).toBe(7);
@@ -209,7 +209,7 @@ describe('InputMask', () => {
         });
 
         it('should process mixed mask pattern correctly', () => {
-            component.mask = '***-999';
+            fixture.componentRef.setInput('mask', '***-999');
             fixture.detectChanges();
 
             expect(component.len).toBe(7);
@@ -217,7 +217,7 @@ describe('InputMask', () => {
         });
 
         it('should handle optional characters with ? correctly', () => {
-            component.mask = '999-99-9999?';
+            fixture.componentRef.setInput('mask', '999-99-9999?');
             fixture.detectChanges();
 
             expect(component.len).toBe(11); // Original length before '?' processing
@@ -226,7 +226,7 @@ describe('InputMask', () => {
 
         it('should handle custom character pattern', () => {
             component.characterPattern = '[0-9A-Fa-f]';
-            component.mask = 'aaa';
+            fixture.componentRef.setInput('mask', 'aaa');
             fixture.detectChanges();
 
             expect(component.characterPattern).toBe('[0-9A-Fa-f]');
@@ -236,7 +236,7 @@ describe('InputMask', () => {
 
     describe('Public Methods', () => {
         beforeEach(() => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.inputViewChild = {
                 nativeElement: {
                     value: '',
@@ -279,7 +279,7 @@ describe('InputMask', () => {
 
         it('should check if mask is completed', () => {
             // Ensure mask is initialized properly first
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
             component.buffer = ['1', '2', '3', '-', '4', '5', '-', '6', '7', '8', '9'];
@@ -291,7 +291,7 @@ describe('InputMask', () => {
 
         it('should get unmasked value correctly', () => {
             // Ensure mask is initialized properly first
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
             component.buffer = ['1', '2', '3', '-', '4', '5', '-', '6', '7', '8', '9'];
@@ -413,7 +413,7 @@ describe('InputMask', () => {
 
     describe('Keyboard Input Processing', () => {
         beforeEach(() => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.inputViewChild = {
                 nativeElement: {
                     value: '',
@@ -623,23 +623,23 @@ describe('InputMask', () => {
     describe('Edge Cases and Error Handling', () => {
         it('should handle null/undefined mask gracefully', () => {
             // Initially set a valid mask, then set to null
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
-            component.mask = null as any;
+            fixture.componentRef.setInput('mask', null as any);
             expect(() => component.initMask()).not.toThrow(); // Now gracefully handled
 
-            component.mask = undefined as any;
+            fixture.componentRef.setInput('mask', undefined as any);
             expect(() => component.initMask()).not.toThrow(); // Now gracefully handled
         });
 
         it('should handle empty mask string', () => {
-            component.mask = '';
+            fixture.componentRef.setInput('mask', '');
             expect(() => component.initMask()).not.toThrow(); // Empty string is handled gracefully
         });
 
         it('should handle invalid mask patterns', () => {
-            component.mask = 'invalid-pattern-with-no-valid-chars';
+            fixture.componentRef.setInput('mask', 'invalid-pattern-with-no-valid-chars');
             fixture.detectChanges();
 
             // With no valid mask chars, firstNonMaskPos might be set to a position
@@ -684,7 +684,7 @@ describe('InputMask', () => {
         });
 
         it('should handle shift operations correctly', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             fixture.detectChanges();
 
             component.buffer = ['1', '2', '3', '-', '_', '_', '-', '_', '_', '_', '_'];
@@ -700,7 +700,7 @@ describe('InputMask', () => {
         });
 
         it('should handle keepBuffer option correctly', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.keepBuffer = true;
             fixture.detectChanges();
 
@@ -714,7 +714,7 @@ describe('InputMask', () => {
         });
 
         it('should handle autoClear behavior on blur', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.autoClear = true;
             component.inputViewChild = {
                 nativeElement: {
@@ -732,7 +732,7 @@ describe('InputMask', () => {
         });
 
         it('should handle writeControlValue correctly', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.inputViewChild = {
                 nativeElement: {
                     value: ''
@@ -751,7 +751,7 @@ describe('InputMask', () => {
         });
 
         it('should handle null value in writeControlValue', () => {
-            component.mask = '999-99-9999';
+            fixture.componentRef.setInput('mask', '999-99-9999');
             component.inputViewChild = {
                 nativeElement: {
                     value: 'test'
@@ -832,7 +832,7 @@ describe('InputMask', () => {
 
     describe('Complex Mask Patterns', () => {
         it('should handle phone number mask correctly', async () => {
-            component.mask = '(999) 999-9999';
+            fixture.componentRef.setInput('mask', '(999) 999-9999');
             component.inputViewChild = {
                 nativeElement: {
                     value: '',
@@ -851,7 +851,7 @@ describe('InputMask', () => {
         });
 
         it('should handle date mask correctly', () => {
-            component.mask = '99/99/9999';
+            fixture.componentRef.setInput('mask', '99/99/9999');
             fixture.detectChanges();
 
             expect(component.defaultBuffer).toBe('__/__/____');
@@ -859,7 +859,7 @@ describe('InputMask', () => {
         });
 
         it('should handle credit card mask correctly', () => {
-            component.mask = '9999-9999-9999-9999';
+            fixture.componentRef.setInput('mask', '9999-9999-9999-9999');
             fixture.detectChanges();
 
             expect(component.defaultBuffer).toBe('____-____-____-____');
@@ -867,7 +867,7 @@ describe('InputMask', () => {
         });
 
         it('should handle custom alphanumeric mask correctly', () => {
-            component.mask = '***-***-999';
+            fixture.componentRef.setInput('mask', '***-***-999');
             fixture.detectChanges();
 
             expect(component.defaultBuffer).toBe('___-___-___');

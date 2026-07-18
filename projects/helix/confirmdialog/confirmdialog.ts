@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, NgZone, numberAttribute, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, output, contentChild, contentChildren, EventEmitter } from '@angular/core';
+import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, output, contentChild, contentChildren, EventEmitter } from '@angular/core';
 import { findSingle, setAttribute, uuid } from '@primeuix/utils';
 import { Confirmation, ConfirmationService, ConfirmEventType, Footer, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -198,19 +198,13 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
      * Current visible state as a boolean.
      * @group Props
      */
-    @Input() get visible(): any {
-        return this._visible;
-    }
+    readonly visible = model<any>(false);
 
-    set visible(value: any) {
-        this._visible = value;
-
-        if (this._visible && !this.maskVisible) {
+    _visibleEffect = effect(() => {
+        if (this.visible() && !this.maskVisible) {
             this.maskVisible = true;
         }
-
-        this.cd.markForCheck();
-    }
+    });
     /**
      *  Allows getting the position of the component.
      * @group Props
@@ -294,9 +288,6 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
 
     confirmation: Nullable<Confirmation>;
 
-    _visible: boolean | undefined;
-
-
     maskVisible: boolean | undefined;
 
     dialog: Nullable<Dialog>;
@@ -346,7 +337,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
                     this.confirmation.rejectEvent.subscribe(this.confirmation.reject);
                 }
 
-                this.visible = true;
+                this.visible.set(true);
             }
         });
     }
@@ -357,7 +348,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
         }
 
         this.translationSubscription = this.config.translationObserver.subscribe(() => {
-            if (this.visible) {
+            if (this.visible()) {
                 this.cd.markForCheck();
             }
         });
@@ -472,7 +463,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
 
     hide(type?: ConfirmEventType) {
         this.onHide.emit(type);
-        this.visible = false;
+        this.visible.set(false);
         // Unsubscribe from confirmation events when the dialogue is closed, because events are created when the dialogue is opened.
         this.unsubscribeConfirmationEvents();
     }
@@ -504,7 +495,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
         if (!value) {
             this.close();
         } else {
-            this.visible = value;
+            this.visible.set(value);
         }
     }
 

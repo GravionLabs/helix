@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
 import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -80,7 +80,7 @@ export class Timeline extends BaseComponent<TimelinePassThrough> implements Bloc
      * @see {@link TimelineItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('marker', { descendants: false }) markerTemplate: Nullable<TemplateRef<TimelineItemTemplateContext>>;
+    readonly markerTemplate = contentChild<TemplateRef<TimelineItemTemplateContext>>('marker', { descendants: false });
 
     readonly templates = contentChildren(PrimeTemplate);
 

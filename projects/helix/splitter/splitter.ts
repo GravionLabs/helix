@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, contentChild, ElementRef, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChild, effect, ElementRef, forwardRef, inject, InjectionToken, model, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
 import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -91,25 +91,22 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
      * Size of the elements relative to 100%.
      * @group Props
      */
-    @Input() get panelSizes(): number[] {
-        return this._panelSizes;
-    }
-    set panelSizes(val: number[]) {
-        this._panelSizes = val;
+    readonly panelSizes = model<number[]>([]);
+
+    _panelSizesEffect = effect(() => {
+        const sizes = this.panelSizes();
 
         if (this.el && this.el.nativeElement && this.panels.length > 0) {
-            let children = [...this.el.nativeElement.children].filter((child) => child.getAttribute('data-pc-section') === 'panel');
-            let _panelSizes: any = [];
+            let children = [...(this.el.nativeElement as HTMLElement).children].filter((child) => child.getAttribute('data-pc-section') === 'panel');
 
             this.panels.map((panel, i) => {
-                let panelInitialSize = this.panelSizes.length - 1 >= i ? this.panelSizes[i] : null;
+                let panelInitialSize = sizes.length - 1 >= i ? sizes[i] : null;
                 let panelSize = panelInitialSize || 100 / this.panels.length;
 
-                _panelSizes[i] = panelSize;
-                children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
+                (children[i] as HTMLElement).style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             });
         }
-    }
+    });
     /**
      * Callback to invoke when resize ends.
      * @param {SplitterResizeEndEvent} event - Custom panel resize end event
@@ -157,8 +154,6 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
 
     prevPanelSize: Nullable<number>;
 
-    _panelSizes: number[] = [];
-
     prevPanelIndex: Nullable<number>;
 
     timer: any;
@@ -202,14 +197,14 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
                     let _panelSizes: any = [];
 
                     this.panels.map((panel, i) => {
-                        let panelInitialSize = this.panelSizes.length - 1 >= i ? this.panelSizes[i] : null;
+                        let panelInitialSize = this.panelSizes().length - 1 >= i ? this.panelSizes()[i] : null;
                         let panelSize = panelInitialSize || 100 / this.panels.length;
 
                         _panelSizes[i] = panelSize;
                         children[i].style.flexBasis = 'calc(' + panelSize + '% - ' + (this.panels.length - 1) * (this.gutterSize() as number) + 'px)';
                     });
 
-                    this._panelSizes = _panelSizes;
+                    this.panelSizes.set(_panelSizes);
 
                     this.prevSize = parseFloat(_panelSizes[0]).toFixed(4);
                 }
@@ -242,7 +237,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         this.gutterElement.setAttribute('data-p-gutter-resizing', 'true');
         addClass((this.el as ElementRef).nativeElement, 'p-splitter-resizing');
         this.el.nativeElement.setAttribute('data-p-resizing', 'true');
-        this.onResizeStart.emit({ originalEvent: event, sizes: this._panelSizes as number[] });
+        this.onResizeStart.emit({ originalEvent: event, sizes: this.panelSizes() });
     }
 
     onResize(event: MouseEvent, step?: number, isKeyDown?: boolean) {
@@ -276,8 +271,10 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         if (this.validateResize(newPrevPanelSize, newNextPanelSize)) {
             (this.prevPanelElement as HTMLElement).style.flexBasis = 'calc(' + newPrevPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             (this.nextPanelElement as HTMLElement).style.flexBasis = 'calc(' + newNextPanelSize + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
-            this._panelSizes[this.prevPanelIndex as number] = newPrevPanelSize;
-            this._panelSizes[(this.prevPanelIndex as number) + 1] = newNextPanelSize;
+            const sizes = [...this.panelSizes()];
+            sizes[this.prevPanelIndex as number] = newPrevPanelSize;
+            sizes[(this.prevPanelIndex as number) + 1] = newNextPanelSize;
+            this.panelSizes.set(sizes);
         }
     }
 
@@ -286,7 +283,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
             this.saveState();
         }
 
-        this.onResizeEnd.emit({ originalEvent: event, sizes: this._panelSizes });
+        this.onResizeEnd.emit({ originalEvent: event, sizes: this.panelSizes() });
         removeClass(this.gutterElement as any, 'p-splitter-gutter-resizing');
         removeClass((this.el as ElementRef).nativeElement, 'p-splitter-resizing');
         this.clear();
@@ -488,7 +485,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
     }
 
     saveState() {
-        this.getStorage()?.setItem(this.stateKey() as string, JSON.stringify(this._panelSizes));
+        this.getStorage()?.setItem(this.stateKey() as string, JSON.stringify(this.panelSizes()));
     }
 
     restoreState() {
@@ -496,10 +493,10 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         const stateString = storage?.getItem(this.stateKey() as string);
 
         if (stateString) {
-            this._panelSizes = JSON.parse(stateString);
+            this.panelSizes.set(JSON.parse(stateString));
             let children = [...(this.el as ElementRef).nativeElement.children].filter((child) => child.getAttribute('data-pc-section') === 'panel');
             children.forEach((child, i) => {
-                child.style.flexBasis = 'calc(' + this._panelSizes[i] + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
+                child.style.flexBasis = 'calc(' + this.panelSizes()[i] + '% - ' + (this.panels.length - 1) * this.gutterSize() + 'px)';
             });
 
             return true;

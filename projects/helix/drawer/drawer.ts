@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, InjectionToken, input, model, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addClass, appendChild, removeClass, setAttribute } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -128,16 +128,13 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
      * @defaultValue false
      * @group Props
      */
-    @Input() get visible(): boolean {
-        return this._visible ?? false;
-    }
-    set visible(value: boolean) {
-        this._visible = value;
+    readonly visible = model<boolean>(false);
 
-        if (this._visible && !this.modalVisible) {
+    _visibleEffect = effect(() => {
+        if (this.visible() && !this.modalVisible) {
             this.modalVisible = true;
         }
-    }
+    });
 
     /**
      * Specifies the position of the drawer, valid values are "left", "right", "bottom" and "top".
@@ -189,15 +186,11 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
      * @param {boolean} value - Visible value.
      * @group Emits
      */
-    readonly visibleChange = output<boolean>();
-
     readonly containerViewChild = viewChild<ElementRef>('container');
 
     readonly closeButtonViewChild = viewChild<ElementRef>('closeButton');
 
     initialized: boolean | undefined;
-
-    _visible: boolean | undefined;
 
     _position: string = 'left';
 
@@ -303,8 +296,8 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
             this.enableModality();
         }
 
+        this.visible.set(true);
         this.onShow.emit({});
-        this.visibleChange.emit(true);
     }
 
     hide(emit: boolean = true) {
@@ -318,8 +311,8 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
     }
 
     close(event: Event) {
+        this.visible.set(false);
         this.hide();
-        this.visibleChange.emit(false);
         this.cd.markForCheck();
         event.preventDefault();
     }
@@ -455,7 +448,7 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
     onDestroy() {
         this.initialized = false;
 
-        if (this.visible && this.modal()) {
+        if (this.visible() && this.modal()) {
             this.destroyModal();
         }
 
@@ -476,7 +469,7 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
         return this.cn({
             'full-screen': this.position() === 'full',
             [this.position()]: this.position(),
-            open: this.visible,
+            open: this.visible(),
             modal: this.modal()
         });
     }

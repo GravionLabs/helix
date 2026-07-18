@@ -6,11 +6,12 @@ import {
   Component,
   computed,
   ContentChild,
+  effect,
   ElementRef,
   inject,
   InjectionToken,
   input,
-  Input,
+  model,
   NgModule,
   NgZone,
   numberAttribute,
@@ -268,31 +269,28 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * Specifies the visibility of the dialog.
      * @group Props
      */
-    @Input() get visible(): boolean {
-        return this._visible;
-    }
-    set visible(value: boolean) {
-        this._visible = value;
+    readonly visible = model<boolean>(false);
 
-        if (this._visible && !this.maskVisible) {
+    _visibleEffect = effect(() => {
+        if (this.visible() && !this.maskVisible) {
             this.maskVisible = true;
             this.renderMask.set(true);
             this.renderDialog.set(true);
         }
-    }
+    });
     /**
      * Inline style of the component.
      * @group Props
      */
-    @Input() get style(): any {
-        return this._style;
-    }
-    set style(value: any) {
+    readonly style = input<any>(undefined);
+
+    _styleEffect = effect(() => {
+        const value = this.style();
         if (value) {
             this._style = { ...value };
             this.originalStyle = value;
         }
-    }
+    });
     /**
      * Position of the dialog.
      * @group Props
@@ -319,12 +317,6 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
      * @group Emits
      */
     readonly onHide = output<any>();
-    /**
-     * This EventEmitter is used to notify changes in the visibility state of a component.
-     * @param {boolean} value - New value.
-     * @group Emits
-     */
-    readonly visibleChange = output<boolean>();
     /**
      * Callback to invoke when dialog resizing is initiated.
      * @param {MouseEvent} event - Mouse event.
@@ -437,8 +429,6 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     renderMask = signal<boolean>(false);
 
     renderDialog = signal<boolean>(false);
-
-    _visible: boolean = false;
 
     maskVisible: boolean | undefined;
 
@@ -633,8 +623,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     }
 
     close(event: Event) {
-        this.visible = false;
-        this.visibleChange.emit(this.visible);
+        this.visible.set(false);
         event.preventDefault();
     }
 

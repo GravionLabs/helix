@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ContentChild, inject, InjectionToken, Input, NgModule, QueryList, TemplateRef, ViewEncapsulation, contentChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, contentChild, contentChildren, input } from '@angular/core';
 import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -42,12 +42,12 @@ export class Toolbar extends BaseComponent<ToolbarPassThrough> implements Blocka
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string | undefined>(undefined);
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string | undefined>(undefined);
 
     _componentStyle = inject(ToolbarStyle);
 
@@ -58,19 +58,19 @@ export class Toolbar extends BaseComponent<ToolbarPassThrough> implements Blocka
      * Custom start template.
      * @group Templates
      */
-    @ContentChild('start', { descendants: false }) startTemplate: TemplateRef<void> | undefined;
+    readonly startTemplate = contentChild<TemplateRef<void>>('start', { descendants: false });
 
     /**
      * Custom end template.
      * @group Templates
      */
-    @ContentChild('end', { descendants: false }) endTemplate: TemplateRef<void> | undefined;
+    readonly endTemplate = contentChild<TemplateRef<void>>('end', { descendants: false });
 
     /**
      * Custom center template.
      * @group Templates
      */
-    @ContentChild('center', { descendants: false }) centerTemplate: TemplateRef<void> | undefined;
+    readonly centerTemplate = contentChild<TemplateRef<void>>('center', { descendants: false });
 
     readonly templates = contentChildren(PrimeTemplate);
 

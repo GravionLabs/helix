@@ -26,7 +26,7 @@
     OTHER DEALINGS IN THE SOFTWARE.
 */
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Directive, effect, ElementRef, forwardRef, inject, InjectionToken, input, Input, NgModule, output, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Directive, effect, ElementRef, forwardRef, inject, InjectionToken, input, NgModule, output, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getUserAgent, isClient } from '@primeuix/utils';
 import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -795,16 +795,7 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
      * Mask pattern.
      * @group Props
      */
-    @Input() get mask(): string | undefined | null {
-        return this._mask;
-    }
-    set mask(val: string | undefined | null) {
-        this._mask = val;
-
-        this.initMask();
-        this.writeValue('');
-        this.onModelChange(this.value);
-    }
+    readonly mask = input<string | undefined | null>();
     /**
      * Callback to invoke when the mask is completed.
      * @group Emits
@@ -851,8 +842,6 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
 
     value: Nullable<string>;
 
-    _mask: Nullable<string>;
-
     input: Nullable<HTMLInputElement>;
 
     defs: Nullable<{ [klass: string]: any }>;
@@ -881,6 +870,17 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
 
     focused: Nullable<boolean>;
 
+    constructor() {
+        super();
+        effect(() => {
+            this.mask();
+
+            this.initMask();
+            this.writeValue('');
+            this.onModelChange(this.value);
+        });
+    }
+
     onInit() {
         if (isPlatformBrowser(this.platformId)) {
             let ua = navigator.userAgent;
@@ -902,13 +902,13 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
     }
 
     initMask() {
-        if (!this.mask) {
+        if (!this.mask()) {
             return;
         }
 
         this.tests = [];
-        this.partialPosition = (this.mask as string).length;
-        this.len = (this.mask as string).length;
+        this.partialPosition = (this.mask() as string).length;
+        this.len = (this.mask() as string).length;
         this.firstNonMaskPos = null;
         this.defs = {
             '9': '[0-9]',
@@ -916,7 +916,7 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
             '*': `${this.characterPattern()}|[0-9]`
         };
 
-        let maskTokens = (this.mask as string).split('');
+        let maskTokens = (this.mask() as string).split('');
         for (let i = 0; i < maskTokens.length; i++) {
             let c = maskTokens[i];
             if (c == '?') {
@@ -1301,7 +1301,7 @@ export class InputMask extends BaseInput<InputMaskPassThrough> {
                 return;
             }
             this.writeBuffer();
-            if (pos == this.mask?.replace('?', '').length) {
+            if (pos == this.mask()?.replace('?', '').length) {
                 this.caret(0, pos);
             } else {
                 this.caret(pos);

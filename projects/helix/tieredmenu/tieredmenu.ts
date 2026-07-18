@@ -10,8 +10,8 @@ import {
   Inject,
   inject,
   InjectionToken,
-  Input,
   input,
+  model,
   NgModule,
   numberAttribute,
   Renderer2,
@@ -57,25 +57,11 @@ const TIEREDMENUSUB_INSTANCE = new InjectionToken<TieredMenuSub>('TIEREDMENUSUB_
     hostDirectives: [Bind]
 })
 export class TieredMenuSub extends BaseComponent<TieredMenuPassThrough> {
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get visible(): boolean {
-        return this._visible;
-    }
-    set visible(value: boolean) {
-        this._visible = value;
-
-        if (this._visible || this.root()) {
-            this.render.set(true);
-        }
-    }
+    readonly visible = model<boolean>(false);
 
     readonly items = input<any[]>(undefined!);
 
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() itemTemplate: TemplateRef<TieredMenuItemTemplateContext> | undefined;
+    readonly itemTemplate = input<TemplateRef<TieredMenuItemTemplateContext> | undefined>(undefined);
 
     readonly root = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
 
@@ -129,7 +115,7 @@ export class TieredMenuSub extends BaseComponent<TieredMenuPassThrough> {
 
     $pcTieredMenuSub: TieredMenuSub | undefined = inject(TIEREDMENUSUB_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    _visible: boolean = false;
+
 
     onAfterViewChecked(): void {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
@@ -141,6 +127,11 @@ export class TieredMenuSub extends BaseComponent<TieredMenuPassThrough> {
         @Inject(forwardRef(() => TieredMenu)) public tieredMenu: TieredMenu
     ) {
         super();
+        effect(() => {
+            if (this.visible() || this.root()) {
+                this.render.set(true);
+            }
+        });
     }
 
     positionSubmenu(sublist) {
@@ -264,23 +255,12 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() set model(value: MenuItem[] | undefined) {
-        this._model = value;
-        this._processedItems = this.createProcessedItems(this._model || []);
-    }
-    get model(): MenuItem[] | undefined {
-        return this._model;
-    }
+    readonly model = input<MenuItem[] | undefined>(undefined);
     /**
      * Defines if menu would displayed as a popup.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input({ transform: booleanAttribute }) popup: boolean | undefined;
+    readonly popup = input<boolean | undefined, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Inline style of the component.
      * @group Props
@@ -330,9 +310,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
      * Current id state as a string.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() id: string | undefined;
+    readonly id = input<string | undefined>(undefined);
     /**
      * Defines a string value that labels an interactive element.
      * @group Props
@@ -434,7 +412,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
 
     _processedItems: any[];
 
-    _model: MenuItem[] | undefined;
+
 
     _componentStyle = inject(TieredMenuStyle);
 
@@ -457,18 +435,21 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
 
     get processedItems() {
         if (!this._processedItems || !this._processedItems.length) {
-            this._processedItems = this.createProcessedItems(this.model || []);
+            this._processedItems = this.createProcessedItems(this.model() || []);
         }
         return this._processedItems;
     }
 
     get focusedItemId() {
         const focusedItemInfo = this.focusedItemInfo();
-        return focusedItemInfo.item?.id ? focusedItemInfo.item.id : focusedItemInfo.index !== -1 ? `${this.id}${isNotEmpty(focusedItemInfo.parentKey) ? '_' + focusedItemInfo.parentKey : ''}_${focusedItemInfo.index}` : null;
+        return focusedItemInfo.item?.id ? focusedItemInfo.item.id : focusedItemInfo.index !== -1 ? `${this.id()}${isNotEmpty(focusedItemInfo.parentKey) ? '_' + focusedItemInfo.parentKey : ''}_${focusedItemInfo.index}` : null;
     }
 
     constructor(public overlayService: OverlayService) {
         super();
+        effect(() => {
+            this._processedItems = this.createProcessedItems(this.model() || []);
+        });
         effect(() => {
             const path = this.activeItemPath();
 
@@ -488,7 +469,6 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
 
     onInit() {
         this.bindMatchMediaListener();
-        this.id = this.id || uuid('pn_id_');
     }
 
     onAfterContentInit() {
@@ -604,7 +584,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
     }
 
     onOverlayClick(event: MouseEvent) {
-        if (this.popup) {
+        if (this.popup()) {
             this.overlayService.add({
                 originalEvent: event,
                 target: this.el.nativeElement
@@ -741,7 +721,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
                 !grouped && this.onItemChange({ originalEvent: event, processedItem });
             }
 
-            this.popup && this.hide(event, true);
+            this.popup() && this.hide(event, true);
             event.preventDefault();
         } else {
             const itemIndex = this.focusedItemInfo().index !== -1 ? this.findPrevItemIndex(this.focusedItemInfo().index) : this.findLastFocusedItemIndex();
@@ -811,7 +791,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
 
             anchorElement ? anchorElement.click() : element && element.click();
 
-            if (!this.popup) {
+            if (!this.popup()) {
                 const processedItem = this.visibleItems[this.focusedItemInfo().index];
                 const grouped = this.isProccessedItemGroup(processedItem);
 
@@ -846,7 +826,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
 
     onMenuFocus(event: any) {
         this.focused = true;
-        if (this.focusedItemInfo().index === -1 && !this.popup) {
+        if (this.focusedItemInfo().index === -1 && !this.popup()) {
             // this.onArrowDownKey(event);
         }
     }
@@ -859,7 +839,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
     }
 
     onOverlayBeforeEnter(event: MotionEvent) {
-        if (this.popup) {
+        if (this.popup()) {
             this.container = event.element as HTMLElement;
             addStyle(this.container!, { position: 'absolute' });
             this.moveOnTop();
@@ -871,7 +851,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
     }
 
     onOverlayAfterEnter() {
-        if (this.popup) {
+        if (this.popup()) {
             this.bindOutsideClickListener();
             this.bindResizeListener();
             this.bindScrollListener();
@@ -930,7 +910,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
      * @group Method
      */
     hide(event?, isFocus?: boolean) {
-        if (this.popup) {
+        if (this.popup()) {
             this.onHide.emit({});
             this.visible = false;
         }
@@ -956,7 +936,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
      * @group Method
      */
     show(event: any, isFocus?) {
-        if (this.popup) {
+        if (this.popup()) {
             this.visible = true;
             this.target = this.target || event.currentTarget;
             this.relatedTarget = event.relatedTarget || null;
@@ -1053,7 +1033,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
     }
 
     scrollInView(index: number = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedItemId;
+        const id = index !== -1 ? `${this.id()}_${index}` : this.focusedItemId;
         const element = findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${id}"]`);
 
         if (element) {
@@ -1098,7 +1078,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
                 this.outsideClickListener = this.renderer.listen(this.document, 'click', (event) => {
                     const containerViewChild = this.containerViewChild();
                     const isOutsideContainer = containerViewChild && !containerViewChild.nativeElement.contains(event.target);
-                    const isOutsideTarget = this.popup ? !(this.target && (this.target === event.target || this.target.contains(event.target))) : true;
+                    const isOutsideTarget = this.popup() ? !(this.target && (this.target === event.target || this.target.contains(event.target))) : true;
                     if (isOutsideContainer && isOutsideTarget) {
                         this.hide();
                     }
@@ -1136,7 +1116,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
     }
 
     onDestroy() {
-        if (this.popup) {
+        if (this.popup()) {
             if (this.scrollHandler) {
                 this.scrollHandler.destroy();
                 this.scrollHandler = null;

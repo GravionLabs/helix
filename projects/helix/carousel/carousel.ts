@@ -3,9 +3,10 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  effect,
   ElementRef,
   inject,
-  Input,
+  model,
   NgModule,
   NgZone,
   numberAttribute,
@@ -60,51 +61,21 @@ export class Carousel extends BaseComponent {
      * @defaultValue 0
      * @group Props
      */
-    @Input() get page(): number {
-        return this._page;
-    }
-
-    set page(val: number) {
-        if (this.isCreated && val !== this._page) {
-            if (this.autoplayInterval()) {
-                this.stopAutoplay();
-            }
-
-            if (val > this._page && val <= this.totalDots() - 1) {
-                this.step(-1, val);
-            } else if (val < this._page) {
-                this.step(1, val);
-            }
-        }
-
-        this._page = val;
-    }
+    readonly page = model<number>(0);
 
     /**
      * Number of items per page.
      * @defaultValue 1
      * @group Props
      */
-    @Input() get numVisible(): number {
-        return this._numVisible;
-    }
-
-    set numVisible(val: number) {
-        this._numVisible = val;
-    }
+    readonly numVisible = model<number>(1);
 
     /**
      * Number of items to scroll.
      * @defaultValue 1
      * @group Props
      */
-    @Input() get numScroll(): number {
-        return this._numVisible;
-    }
-
-    set numScroll(val: number) {
-        this._numScroll = val;
-    }
+    readonly numScroll = model<number>(1);
 
     /**
      * An array of options for responsive design.
@@ -218,10 +189,6 @@ export class Carousel extends BaseComponent {
 
     readonly footerFacet = contentChild(Footer);
 
-    _numVisible: number = 1;
-
-    _numScroll: number = 1;
-
     _oldNumScroll: number = 0;
 
     prevState: any = {
@@ -318,8 +285,26 @@ export class Carousel extends BaseComponent {
         public zone: NgZone
     ) {
         super();
-        this.totalShiftedItems = this.page * this.numScroll * -1;
+        this.totalShiftedItems = this.page() * this.numScroll() * -1;
         this.window = this.document.defaultView as Window;
+
+        let oldPage = 0;
+        effect(() => {
+            const val = this.page();
+            if (this.isCreated && val !== oldPage) {
+                if (this.autoplayInterval()) {
+                    this.stopAutoplay();
+                }
+
+                if (val > oldPage && val <= this.totalDots() - 1) {
+                    this.step(-1, val);
+                } else if (val < oldPage) {
+                    this.step(1, val);
+                }
+            }
+            this._page = val;
+            oldPage = val;
+        });
     }
 
     onChanges(simpleChange: SimpleChanges) {
@@ -334,7 +319,7 @@ export class Carousel extends BaseComponent {
                 const responsiveOptions = this.responsiveOptions();
                 if (simpleChange.numVisible) {
                     if (responsiveOptions) {
-                        this.defaultNumVisible = this.numVisible;
+                        this.defaultNumVisible = this.numVisible();
                     }
 
                     if (this.isCircular()) {
@@ -347,7 +332,7 @@ export class Carousel extends BaseComponent {
 
                 if (simpleChange.numScroll) {
                     if (responsiveOptions) {
-                        this.defaultNumScroll = this.numScroll;
+                        this.defaultNumScroll = this.numScroll();
                     }
                 }
             }
@@ -368,8 +353,8 @@ export class Carousel extends BaseComponent {
 
             const responsiveOptions = this.responsiveOptions();
             if (responsiveOptions) {
-                this.defaultNumScroll = this._numScroll;
-                this.defaultNumVisible = this._numVisible;
+                this.defaultNumScroll = this.numScroll();
+                this.defaultNumVisible = this.numVisible();
             }
 
             this.createStyle();
@@ -417,30 +402,30 @@ export class Carousel extends BaseComponent {
             let totalShiftedItems = this.totalShiftedItems;
 
             const itemsContainer = this.itemsContainer();
-            if (this.value() && itemsContainer && (this.prevState.numScroll !== this._numScroll || this.prevState.numVisible !== this._numVisible || this.prevState.value.length !== this.value().length)) {
+            if (this.value() && itemsContainer && (this.prevState.numScroll !== this.numScroll() || this.prevState.numVisible !== this.numVisible() || this.prevState.value.length !== this.value().length)) {
                 const autoplayInterval = this.autoplayInterval();
                 if (autoplayInterval) {
                     this.stopAutoplay(false);
                 }
 
-                this.remainingItems = (this.value().length - this._numVisible) % this._numScroll;
+                this.remainingItems = (this.value().length - this.numVisible()) % this.numScroll();
 
                 let page = this._page;
                 if (this.totalDots() !== 0 && page >= this.totalDots()) {
                     page = this.totalDots() - 1;
                     this._page = page;
                     this.onPage.emit({
-                        page: this.page
+                        page: this.page()
                     });
                 }
 
-                totalShiftedItems = page * this._numScroll * -1;
+                totalShiftedItems = page * this.numScroll() * -1;
                 if (isCircular) {
-                    totalShiftedItems -= this._numVisible;
+                    totalShiftedItems -= this.numVisible();
                 }
 
                 if (page === this.totalDots() - 1 && this.remainingItems > 0) {
-                    totalShiftedItems += -1 * this.remainingItems + this._numScroll;
+                    totalShiftedItems += -1 * this.remainingItems + this.numScroll();
                     this.isRemainingItemsAdded = true;
                 } else {
                     this.isRemainingItemsAdded = false;
@@ -450,13 +435,13 @@ export class Carousel extends BaseComponent {
                     this.totalShiftedItems = totalShiftedItems;
                 }
 
-                this._oldNumScroll = this._numScroll;
-                this.prevState.numScroll = this._numScroll;
-                this.prevState.numVisible = this._numVisible;
+                this._oldNumScroll = this.numScroll();
+                this.prevState.numScroll = this.numScroll();
+                this.prevState.numVisible = this.numVisible();
                 this.prevState.value = [...(this.value() as any[])];
 
                 if (this.totalDots() > 0 && itemsContainer.nativeElement) {
-                    itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+                    itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.numVisible())}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.numVisible())}%, 0, 0)`;
                 }
 
                 this.isCreated = true;
@@ -467,8 +452,8 @@ export class Carousel extends BaseComponent {
             }
 
             if (isCircular) {
-                if (this.page === 0) {
-                    totalShiftedItems = -1 * this._numVisible;
+                if (this.page() === 0) {
+                    totalShiftedItems = -1 * this.numVisible();
                 } else if (totalShiftedItems === 0) {
                     totalShiftedItems = -1 * this.value().length;
                     if (this.remainingItems > 0) {
@@ -494,7 +479,7 @@ export class Carousel extends BaseComponent {
 
         let innerHTML = `
             #${this.id} .p-carousel-item {
-				flex: 1 0 ${100 / this.numVisible}%
+				flex: 1 0 ${100 / this.numVisible()}%
 			}
         `;
 
@@ -549,27 +534,27 @@ export class Carousel extends BaseComponent {
                 }
             }
 
-            if (this._numScroll !== matchedResponsiveData.numScroll) {
+            if (this.numScroll() !== matchedResponsiveData.numScroll) {
                 let page = this._page;
-                page = Math.floor((page * this._numScroll) / matchedResponsiveData.numScroll);
+                page = Math.floor((page * this.numScroll()) / matchedResponsiveData.numScroll);
 
-                let totalShiftedItems = matchedResponsiveData.numScroll * this.page * -1;
+                let totalShiftedItems = matchedResponsiveData.numScroll * this.page() * -1;
 
                 if (this.isCircular()) {
                     totalShiftedItems -= matchedResponsiveData.numVisible;
                 }
 
                 this.totalShiftedItems = totalShiftedItems;
-                this._numScroll = matchedResponsiveData.numScroll;
+                this.numScroll.set(matchedResponsiveData.numScroll);
 
                 this._page = page;
                 this.onPage.emit({
-                    page: this.page
+                    page: this.page()
                 });
             }
 
-            if (this._numVisible !== matchedResponsiveData.numVisible) {
-                this._numVisible = matchedResponsiveData.numVisible;
+            if (this.numVisible() !== matchedResponsiveData.numVisible) {
+                this.numVisible.set(matchedResponsiveData.numVisible);
                 this.setCloneItems();
             }
 
@@ -581,21 +566,21 @@ export class Carousel extends BaseComponent {
         this.clonedItemsForStarting = [];
         this.clonedItemsForFinishing = [];
         if (this.isCircular()) {
-            this.clonedItemsForStarting.push(...this.value().slice(-1 * this._numVisible));
-            this.clonedItemsForFinishing.push(...this.value().slice(0, this._numVisible));
+            this.clonedItemsForStarting.push(...this.value().slice(-1 * this.numVisible()));
+            this.clonedItemsForFinishing.push(...this.value().slice(0, this.numVisible()));
         }
     }
 
     firstIndex() {
-        return this.isCircular() ? -1 * (this.totalShiftedItems + this.numVisible) : this.totalShiftedItems * -1;
+        return this.isCircular() ? -1 * (this.totalShiftedItems + this.numVisible()) : this.totalShiftedItems * -1;
     }
 
     lastIndex() {
-        return this.firstIndex() + this.numVisible - 1;
+        return this.firstIndex() + this.numVisible() - 1;
     }
 
     totalDots() {
-        return this.value()?.length ? Math.ceil((this.value().length - this._numVisible) / this._numScroll) + 1 : 0;
+        return this.value()?.length ? Math.ceil((this.value().length - this.numVisible()) / this.numScroll()) + 1 : 0;
     }
 
     totalDotsArray() {
@@ -608,7 +593,7 @@ export class Carousel extends BaseComponent {
     }
 
     isCircular() {
-        return this.circular() && this.value() && this.value().length >= this.numVisible;
+        return this.circular() && this.value() && this.value().length >= this.numVisible();
     }
 
     isAutoplay() {
@@ -740,46 +725,46 @@ export class Carousel extends BaseComponent {
         const isCircular = this.isCircular();
 
         if (page != null) {
-            totalShiftedItems = this._numScroll * page * -1;
+            totalShiftedItems = this.numScroll() * page * -1;
 
             if (isCircular) {
-                totalShiftedItems -= this._numVisible;
+                totalShiftedItems -= this.numVisible();
             }
 
             this.isRemainingItemsAdded = false;
         } else {
-            totalShiftedItems += this._numScroll * dir;
+            totalShiftedItems += this.numScroll() * dir;
             if (this.isRemainingItemsAdded) {
-                totalShiftedItems += this.remainingItems - this._numScroll * dir;
+                totalShiftedItems += this.remainingItems - this.numScroll() * dir;
                 this.isRemainingItemsAdded = false;
             }
 
-            let originalShiftedItems = isCircular ? totalShiftedItems + this._numVisible : totalShiftedItems;
-            page = Math.abs(Math.floor(originalShiftedItems / this._numScroll));
+            let originalShiftedItems = isCircular ? totalShiftedItems + this.numVisible() : totalShiftedItems;
+            page = Math.abs(Math.floor(originalShiftedItems / this.numScroll()));
         }
 
-        if (isCircular && this.page === this.totalDots() - 1 && dir === -1) {
-            totalShiftedItems = -1 * (this.value().length + this._numVisible);
+        if (isCircular && this.page() === this.totalDots() - 1 && dir === -1) {
+            totalShiftedItems = -1 * (this.value().length + this.numVisible());
             page = 0;
-        } else if (isCircular && this.page === 0 && dir === 1) {
+        } else if (isCircular && this.page() === 0 && dir === 1) {
             totalShiftedItems = 0;
             page = this.totalDots() - 1;
         } else if (page === this.totalDots() - 1 && this.remainingItems > 0) {
-            totalShiftedItems += this.remainingItems * -1 - this._numScroll * dir;
+            totalShiftedItems += this.remainingItems * -1 - this.numScroll() * dir;
             this.isRemainingItemsAdded = true;
         }
 
         const itemsContainer = this.itemsContainer();
         if (itemsContainer) {
             !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
-            itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+            itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.numVisible())}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.numVisible())}%, 0, 0)`;
             itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
         }
 
         this.totalShiftedItems = totalShiftedItems;
         this._page = page;
         this.onPage.emit({
-            page: this.page
+            page: this.page()
         });
         this.cd.markForCheck();
     }
@@ -787,10 +772,10 @@ export class Carousel extends BaseComponent {
     startAutoplay() {
         this.interval = setInterval(() => {
             if (this.totalDots() > 0) {
-                if (this.page === this.totalDots() - 1) {
+                if (this.page() === this.totalDots() - 1) {
                     this.step(-1, 0);
                 } else {
-                    this.step(-1, this.page + 1);
+                    this.step(-1, this.page() + 1);
                 }
             }
         }, this.autoplayInterval());
@@ -819,8 +804,8 @@ export class Carousel extends BaseComponent {
             !this.$unstyled() && addClass(itemsContainer.nativeElement, 'p-items-hidden');
             itemsContainer.nativeElement.style.transition = '';
 
-            if ((this.page === 0 || this.page === this.totalDots() - 1) && this.isCircular()) {
-                itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${this.totalShiftedItems * (100 / this._numVisible)}%, 0)` : `translate3d(${this.totalShiftedItems * (100 / this._numVisible)}%, 0, 0)`;
+            if ((this.page() === 0 || this.page() === this.totalDots() - 1) && this.isCircular()) {
+                itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${this.totalShiftedItems * (100 / this.numVisible())}%, 0)` : `translate3d(${this.totalShiftedItems * (100 / this.numVisible())}%, 0, 0)`;
             }
         }
     }

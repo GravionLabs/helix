@@ -1,5 +1,5 @@
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, Inject, inject, Injectable, InjectionToken, Input, NgModule, numberAttribute, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, Inject, inject, Injectable, InjectionToken, NgModule, numberAttribute, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
 import { MenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
@@ -211,13 +211,7 @@ export class Menubar extends BaseComponent<MenubarPassThrough> {
      * An array of menuitems.
      * @group Props
      */
-    @Input() set model(value: MenuItem[] | undefined) {
-        this._model = value;
-        this._processedItems = this.createProcessedItems(this._model || []);
-    }
-    get model(): MenuItem[] | undefined {
-        return this._model;
-    }
+    readonly model = input<MenuItem[] | undefined>();
     /**
      * Class of the element.
      * @deprecated since v20.0.0, use `class` instead.
@@ -323,8 +317,6 @@ export class Menubar extends BaseComponent<MenubarPassThrough> {
 
     _componentStyle = inject(MenuBarStyle);
 
-    _model: MenuItem[] | undefined;
-
     get visibleItems() {
         const processedItem = this.activeItemPath().find((p) => p.key === this.focusedItemInfo().parentKey);
 
@@ -333,7 +325,7 @@ export class Menubar extends BaseComponent<MenubarPassThrough> {
 
     get processedItems() {
         if (!this._processedItems || !this._processedItems.length) {
-            this._processedItems = this.createProcessedItems(this.model || []);
+            this._processedItems = this.createProcessedItems(this.model() || []);
         }
         return this._processedItems;
     }
@@ -362,6 +354,10 @@ export class Menubar extends BaseComponent<MenubarPassThrough> {
                 this.unbindOutsideClickListener();
                 this.unbindResizeListener();
             }
+        });
+        effect(() => {
+            const model = this.model();
+            this._processedItems = this.createProcessedItems(model || []);
         });
     }
 

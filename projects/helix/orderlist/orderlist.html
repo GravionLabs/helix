@@ -50,7 +50,7 @@
   [pt]="ptm('pcListbox')"
   #listelement
   [multiple]="true"
-  [options]="value"
+  [options]="value()"
   [(ngModel)]="d_selection"
   [optionLabel]="dataKey() ?? 'name'"
   [id]="id + '_list'"

@@ -3,7 +3,6 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
   ElementRef,
   forwardRef,
   inject,
@@ -15,6 +14,7 @@ import {
   ViewEncapsulation,
   output,
   viewChild,
+  contentChild,
   contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -132,7 +132,7 @@ export class ToggleSwitch extends BaseEditableHolder<ToggleSwitchPassThrough> {
      * @see {@link ToggleSwitchHandleTemplateContext}
      * @group Templates
      */
-    @ContentChild('handle', { descendants: false }) handleTemplate: TemplateRef<ToggleSwitchHandleTemplateContext> | undefined;
+    readonly handleTemplate = contentChild<TemplateRef<ToggleSwitchHandleTemplateContext>>('handle', { descendants: false });
 
     _handleTemplate: TemplateRef<ToggleSwitchHandleTemplateContext> | undefined;
 

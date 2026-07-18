@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, input, Input, NgModule, NgZone, numberAttribute, output, TemplateRef, ViewEncapsulation, contentChild, viewChild, contentChildren } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, output, TemplateRef, ViewEncapsulation, contentChild, viewChild, contentChildren } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { addClass, removeClass } from '@primeuix/utils';
 import { BlockableUI, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
@@ -416,35 +416,15 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
     readonly content = viewChild<ElementRef>('content');
 
-    @Input() set files(files) {
-        this._files = [];
-
-        for (let i = 0; i < files.length; i++) {
-            let file = files[i];
-
-            if (this.validate(file)) {
-                if (this.isImage(file)) {
-                    (<any>file).objectURL = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(files[i]));
-                }
-
-                this._files.push(files[i]);
-            }
-        }
-    }
-
-    get files(): File[] {
-        return this._files;
-    }
+    readonly files = model<File[]>([]);
 
     public get basicButtonLabel(): string {
         if (this.auto() || !this.hasFiles()) {
             return this.chooseLabel() as string;
         }
 
-        return this.uploadLabel() ?? this.files[0].name;
+        return this.uploadLabel() ?? this.files()[0].name;
     }
-
-    public _files: File[] = [];
 
     public progress: number = 0;
 
@@ -562,9 +542,9 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
     basicFileChosenLabel() {
         if (this.auto()) return this.chooseButtonLabel;
         else if (this.hasFiles()) {
-            if (this.files && this.files.length === 1) return this.files[0].name;
+            if (this.files() && this.files().length === 1) return this.files()[0].name;
 
-            return this.config.getTranslation('fileChosenMessage')?.replace('{0}', this.files.length);
+            return this.config.getTranslation('fileChosenMessage')?.replace('{0}', this.files().length);
         }
 
         return this.config.getTranslation('noFileChosenMessage') || '';
@@ -589,11 +569,10 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
         }
 
         if (!this.multiple()) {
-            this.files = [];
+            this.files.set([]);
         }
 
         this.msgs = [];
-        this.files = this.files || [];
         let files = event.dataTransfer ? event.dataTransfer.files : event.target.files;
 
         for (let i = 0; i < files.length; i++) {
@@ -605,12 +584,12 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
                         file.objectURL = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(files[i]));
                     }
 
-                    this.files.push(files[i]);
+                    this.files().push(files[i]);
                 }
             }
         }
 
-        this.onSelect.emit({ originalEvent: event, files: files, currentFiles: this.files });
+        this.onSelect.emit({ originalEvent: event, files: files, currentFiles: this.files() });
 
         // this will check the fileLimit with the uploaded files
         this.checkFileLimit(files);
@@ -627,7 +606,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
     }
 
     isFileSelected(file: File): boolean {
-        for (let sFile of this.files) {
+        for (let sFile of this.files()) {
             if (sFile.name + sFile.type + sFile.size === file.name + file.type + file.size) {
                 return true;
             }
@@ -706,11 +685,11 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
     uploader() {
         if (this.customUpload()) {
             if (this.fileLimit()) {
-                this.uploadedFileCount += this.files.length;
+                this.uploadedFileCount += this.files().length;
             }
 
             this.uploadHandler.emit({
-                files: this.files
+                files: this.files()
             });
 
             this.cd.markForCheck();
@@ -723,8 +702,8 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
                 formData: formData
             });
 
-            for (let i = 0; i < this.files.length; i++) {
-                formData.append(this.name()!, this.files[i], this.files[i].name);
+            for (let i = 0; i < this.files().length; i++) {
+                formData.append(this.name()!, this.files()[i], this.files()[i].name);
             }
 
             this.http
@@ -750,14 +729,14 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
                                 if (event['status'] >= 200 && event['status'] < 300) {
                                     if (this.fileLimit()) {
-                                        this.uploadedFileCount += this.files.length;
+                                        this.uploadedFileCount += this.files().length;
                                     }
 
-                                    this.onUpload.emit({ originalEvent: event, files: this.files });
+                                    this.onUpload.emit({ originalEvent: event, files: this.files() });
                                 } else {
-                                    this.onError.emit({ files: this.files });
+                                    this.onError.emit({ files: this.files() });
                                 }
-                                this.uploadedFiles = [...this.uploadedFiles, ...this.files];
+                                this.uploadedFiles = [...this.uploadedFiles, ...this.files()];
                                 this.clear();
                                 break;
                             case HttpEventType.UploadProgress: {
@@ -774,7 +753,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
                     },
                     (error: ErrorEvent) => {
                         this.uploading = false;
-                        this.onError.emit({ files: this.files, error: error });
+                        this.onError.emit({ files: this.files(), error: error });
                     }
                 );
         }
@@ -796,7 +775,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
      * @group Method
      */
     clear() {
-        this.files = [];
+        this.files.set([]);
         this.onClear.emit();
         this.clearInputElement();
         this.msgs = [];
@@ -810,9 +789,9 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
      */
     remove(event: Event, index: number) {
         this.clearInputElement();
-        this.onRemove.emit({ originalEvent: event, file: this.files[index] });
-        this.files.splice(index, 1);
-        this.checkFileLimit(this.files);
+        this.onRemove.emit({ originalEvent: event, file: this.files()[index] });
+        this.files().splice(index, 1);
+        this.checkFileLimit(this.files());
     }
     /**
      * Removes uploaded file.
@@ -827,7 +806,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
     isFileLimitExceeded() {
         const isAutoMode = this.auto();
-        const totalFileCount = isAutoMode ? this.files.length : this.files.length + this.uploadedFileCount;
+        const totalFileCount = isAutoMode ? this.files().length : this.files().length + this.uploadedFileCount;
 
         const fileLimit = this.fileLimit();
         if (fileLimit && fileLimit <= totalFileCount && this.focus) {
@@ -840,10 +819,10 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
     isChooseDisabled() {
         if (this.auto()) {
             const fileLimit = this.fileLimit();
-            return fileLimit && fileLimit <= this.files.length;
+            return fileLimit && fileLimit <= this.files().length;
         } else {
             const fileLimit = this.fileLimit();
-            return fileLimit && fileLimit <= this.files.length + this.uploadedFileCount;
+            return fileLimit && fileLimit <= this.files().length + this.uploadedFileCount;
         }
     }
 
@@ -882,7 +861,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
     }
 
     hasFiles(): boolean {
-        return this.files && this.files.length > 0;
+        return this.files() && this.files().length > 0;
     }
 
     hasUploadedFiles() {

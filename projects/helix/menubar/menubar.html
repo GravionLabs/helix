@@ -3,12 +3,12 @@
     <ng-container *ngTemplateOutlet="startTemplate() || _startTemplate"></ng-container>
   </div>
 }
-@if (model && model.length > 0) {
+@if (model() && model()!.length > 0) {
   <a
     #menubutton
     tabindex="0"
     role="button"
-    [attr.aria-haspopup]="model.length && model.length > 0 ? true : false"
+    [attr.aria-haspopup]="model()!.length && model()!.length > 0 ? true : false"
     [attr.aria-expanded]="mobileActive"
     [attr.aria-controls]="$id()"
     [attr.aria-label]="config.translation.aria.navigation"

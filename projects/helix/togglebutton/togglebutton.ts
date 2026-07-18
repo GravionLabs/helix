@@ -7,7 +7,6 @@ import {
   inject,
   InjectionToken,
   input,
-  Input,
   NgModule,
   numberAttribute,
   TemplateRef,
@@ -112,18 +111,12 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
      * Icon for the on state.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() onIcon: string | undefined;
+    readonly onIcon = input<string | undefined>(undefined);
     /**
      * Icon for the off state.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() offIcon: string | undefined;
+    readonly offIcon = input<string | undefined>(undefined);
     /**
      * Defines a string that labels the input for accessibility.
      * @group Props
