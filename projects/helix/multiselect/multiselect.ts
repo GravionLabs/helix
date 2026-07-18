@@ -86,17 +86,17 @@ export const MULTISELECT_VALUE_ACCESSOR: any = {
     providers: [MultiSelectStyle],
     changeDetection: ChangeDetectionStrategy.Eager,
     host: {
-        '[style.height.px]': 'itemSize',
-        '[attr.aria-label]': 'label',
+        '[style.height.px]': 'itemSize()',
+        '[attr.aria-label]': 'label()',
         role: 'option',
-        '[attr.aria-setsize]': 'ariaSetSize',
-        '[attr.aria-posinset]': 'ariaPosInset',
-        '[attr.aria-selected]': 'selected',
-        '[attr.data-p-selected]': 'selected',
-        '[attr.data-p-focused]': 'focused',
-        '[attr.data-p-highlight]': 'selected',
-        '[attr.data-p-disabled]': 'disabled',
-        '[attr.aria-checked]': 'selected',
+        '[attr.aria-setsize]': 'ariaSetSize()',
+        '[attr.aria-posinset]': 'ariaPosInset()',
+        '[attr.aria-selected]': 'selected()',
+        '[attr.data-p-selected]': 'selected()',
+        '[attr.data-p-focused]': 'focused()',
+        '[attr.data-p-highlight]': 'selected()',
+        '[attr.data-p-disabled]': 'disabled()',
+        '[attr.aria-checked]': 'selected()',
         '(click)': 'onOptionClick($event)',
         '(mouseenter)': 'onOptionMouseEnter($event)',
         '[class]': "cx('option')"
@@ -110,38 +110,41 @@ export class MultiSelectItem extends BaseComponent {
     getPTOptions(key) {
         return this.ptm(key, {
             context: {
-                selected: this.selected,
-                focused: this.focused,
-                disabled: this.disabled
+                selected: this.selected(),
+                focused: this.focused(),
+                disabled: this.disabled()
             }
         });
     }
 
-    @Input() option: any;
+    readonly option = input<any>();
 
-    @Input({ transform: booleanAttribute }) selected: boolean | undefined;
+    readonly selected = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() label: string | undefined;
+    readonly label = input<string>();
 
-    @Input({ transform: booleanAttribute }) disabled: boolean | undefined;
+    readonly disabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: numberAttribute }) itemSize: number | undefined;
+    readonly itemSize = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input({ transform: booleanAttribute }) focused: boolean | undefined;
+    readonly focused = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() ariaPosInset: string | undefined;
+    readonly ariaPosInset = input<string>();
 
-    @Input() ariaSetSize: string | undefined;
+    readonly ariaSetSize = input<string>();
 
-    @Input() variant: 'outlined' | 'filled';
+    readonly variant = input<'outlined' | 'filled'>(undefined!);
 
-    @Input() template: TemplateRef<MultiSelectItemTemplateContext> | undefined;
+    readonly template = input<TemplateRef<MultiSelectItemTemplateContext>>();
 
-    @Input() checkIconTemplate: TemplateRef<MultiSelectItemCheckboxIconTemplateContext> | undefined;
+    readonly checkIconTemplate = input<TemplateRef<MultiSelectItemCheckboxIconTemplateContext>>();
 
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() itemCheckboxIconTemplate: TemplateRef<MultiSelectItemCheckboxIconTemplateContext> | undefined;
 
-    @Input({ transform: booleanAttribute }) highlightOnSelect: boolean | undefined;
+    readonly highlightOnSelect = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
     @Output() onClick: EventEmitter<any> = new EventEmitter();
 
@@ -152,8 +155,8 @@ export class MultiSelectItem extends BaseComponent {
     onOptionClick(event: Event) {
         this.onClick.emit({
             originalEvent: event,
-            option: this.option,
-            selected: this.selected
+            option: this.option(),
+            selected: this.selected()
         });
         event.stopPropagation();
         event.preventDefault();
@@ -162,8 +165,8 @@ export class MultiSelectItem extends BaseComponent {
     onOptionMouseEnter(event: Event) {
         this.onMouseEnter.emit({
             originalEvent: event,
-            option: this.option,
-            selected: this.selected
+            option: this.option(),
+            selected: this.selected()
         });
     }
 }
@@ -185,7 +188,7 @@ export class MultiSelectItem extends BaseComponent {
         '[attr.id]': 'id',
         '[attr.data-p]': 'containerDataP',
         '(click)': 'onContainerClick($event)',
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')"
     }
 })
@@ -196,83 +199,89 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Unique identifier of the component
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() id: string | undefined;
     /**
      * Defines a string that labels the input for accessibility.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Style class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Inline style of the overlay panel.
      * @group Props
      */
-    @Input() panelStyle: any;
+    readonly panelStyle = input<any>();
     /**
      * Style class of the overlay panel element.
      * @group Props
      */
-    @Input() panelStyleClass: string | undefined;
+    readonly panelStyleClass = input<string>();
     /**
      * Identifier of the focus input to match a label defined for the component.
      * @group Props
      */
-    @Input() inputId: string | undefined;
+    readonly inputId = input<string>();
     /**
      * When present, it specifies that the component cannot be edited.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) readonly: boolean | undefined;
+    readonly readonly = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Whether to display options as grouped when nested options are provided.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) group: boolean | undefined;
+    readonly group = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * When specified, displays an input field to filter the items on keyup.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) filter: boolean = true;
+    readonly filter = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Defines placeholder of the filter input.
      * @group Props
      */
-    @Input() filterPlaceHolder: string | undefined;
+    readonly filterPlaceHolder = input<string>();
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
      */
-    @Input() filterLocale: string | undefined;
+    readonly filterLocale = input<string>();
     /**
      * Specifies the visibility of the options panel.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input({ transform: booleanAttribute }) overlayVisible: boolean | undefined = false;
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number | undefined = 0;
+    readonly tabindex = input<number | undefined, unknown>(0, { transform: numberAttribute });
     /**
      * A property to uniquely identify a value in options.
      * @group Props
      */
-    @Input() dataKey: string | undefined;
+    readonly dataKey = input<string>();
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Whether to show labels of selected item labels or use default label.
      * @group Props
      * @defaultValue true
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set displaySelectedLabel(val: boolean) {
         this._displaySelectedLabel = val;
     }
@@ -284,6 +293,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * @group Props
      * @defaultValue 3
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set maxSelectedLabels(val: number | null | undefined) {
         this._maxSelectedLabels = val;
     }
@@ -294,176 +305,184 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Maximum number of selectable items.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) selectionLimit: number | undefined;
+    readonly selectionLimit = input<number, unknown>(undefined, { transform: numberAttribute });
     /**
      * Label to display after exceeding max selected labels e.g. ({0} items selected), defaults "ellipsis" keyword to indicate a text-overflow.
      * @group Props
      */
-    @Input() selectedItemsLabel: string | undefined;
+    readonly selectedItemsLabel = input<string>();
     /**
      * Whether to show the checkbox at header to toggle all items at once.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showToggleAll: boolean = true;
+    readonly showToggleAll = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Text to display when filtering does not return any results.
      * @group Props
      */
-    @Input() emptyFilterMessage: string = '';
+    readonly emptyFilterMessage = input<string>('');
     /**
      * Text to display when there is no data. Defaults to global value in i18n translation configuration.
      * @group Props
      */
-    @Input() emptyMessage: string = '';
+    readonly emptyMessage = input<string>('');
     /**
      * Clears the filter value when hiding the dropdown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resetFilterOnHide: boolean = false;
+    readonly resetFilterOnHide = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Icon class of the dropdown icon.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() dropdownIcon: string | undefined;
     /**
      * Icon class of the chip icon.
      * @group Props
      */
-    @Input() chipIcon: string | undefined;
+    readonly chipIcon = input<string>();
     /**
      * Name of the label field of an option.
      * @group Props
      */
-    @Input() optionLabel: string | undefined;
+    readonly optionLabel = input<string>();
     /**
      * Name of the value field of an option.
      * @group Props
      */
-    @Input() optionValue: string | undefined;
+    readonly optionValue = input<string>();
     /**
      * Name of the disabled field of an option.
      * @group Props
      */
-    @Input() optionDisabled: string | undefined;
+    readonly optionDisabled = input<string>();
     /**
      * Name of the label field of an option group.
      * @group Props
      */
-    @Input() optionGroupLabel: string | undefined = 'label';
+    readonly optionGroupLabel = input<string | undefined>('label');
     /**
      * Name of the options field of an option group.
      * @group Props
      */
-    @Input() optionGroupChildren: string = 'items';
+    readonly optionGroupChildren = input<string>('items');
     /**
      * Whether to show the header.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showHeader: boolean = true;
+    readonly showHeader = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
      * @group Props
      */
-    @Input() filterBy: string | undefined;
+    readonly filterBy = input<string>();
     /**
      * Height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value.
      * @group Props
      */
-    @Input() scrollHeight: string = '200px';
+    readonly scrollHeight = input<string>('200px');
     /**
      * Defines if data is loaded and interacted with in lazy manner.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) lazy: boolean = false;
+    readonly lazy = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether the data should be loaded on demand during scroll.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) virtualScroll: boolean | undefined;
+    readonly virtualScroll = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Whether the multiselect is in loading state.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) loading: boolean | undefined = false;
+    readonly loading = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
     /**
      * Height of an item in the list for VirtualScrolling.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) virtualScrollItemSize: number | undefined;
+    readonly virtualScrollItemSize = input<number, unknown>(undefined, { transform: numberAttribute });
     /**
      * Icon to display in loading state.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() loadingIcon: string | undefined;
     /**
      * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
      * @group Props
      */
-    @Input() virtualScrollOptions: ScrollerOptions | undefined;
+    readonly virtualScrollOptions = input<ScrollerOptions>();
     /**
      * Whether to use overlay API feature. The properties of overlay API can be used like an object in it.
      * @group Props
      */
-    @Input() overlayOptions: OverlayOptions | undefined;
+    readonly overlayOptions = input<OverlayOptions>();
     /**
      * Defines a string that labels the filter input.
      * @group Props
      */
-    @Input() ariaFilterLabel: string | undefined;
+    readonly ariaFilterLabel = input<string>();
     /**
      * Defines how the items are filtered.
      * @group Props
      */
-    @Input() filterMatchMode: 'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte' = 'contains';
+    readonly filterMatchMode = input<'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte'>('contains');
     /**
      * Advisory information to display in a tooltip on hover.
      * @group Props
      */
-    @Input() tooltip: string = '';
+    readonly tooltip = input<string>('');
     /**
      * Position of the tooltip.
      * @group Props
      */
-    @Input() tooltipPosition: 'top' | 'left' | 'right' | 'bottom' = 'right';
+    readonly tooltipPosition = input<'top' | 'left' | 'right' | 'bottom'>('right');
     /**
      * Type of CSS position.
      * @group Props
      */
-    @Input() tooltipPositionStyle: string = 'absolute';
+    readonly tooltipPositionStyle = input<string>('absolute');
     /**
      * Style class of the tooltip.
      * @group Props
      */
-    @Input() tooltipStyleClass: string | undefined;
+    readonly tooltipStyleClass = input<string>();
     /**
      * Applies focus to the filter element when the overlay is shown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocusFilter: boolean = false;
+    readonly autofocusFilter = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Defines how the selected items are displayed.
      * @group Props
      */
-    @Input() display: string | 'comma' | 'chip' = 'comma';
+    readonly display = input<string | 'comma' | 'chip'>('comma');
     /**
      * Defines the autocomplete is active.
      * @group Props
      */
-    @Input() autocomplete: string = 'off';
+    readonly autocomplete = input<string>('off');
     /**
      * When enabled, a clear icon is displayed to clear the value.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showClear: boolean = false;
+    readonly showClear = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Label to display when there are no selections.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set placeholder(val: string | undefined) {
         this._placeholder.set(val);
     }
@@ -474,6 +493,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * An array of objects to display as the available options.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get options(): any[] | undefined {
         return this._options();
     }
@@ -486,6 +507,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * When specified, filter displays with this value.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get filterValue(): string | undefined | null {
         return this._filterValue();
     }
@@ -496,6 +519,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Whether all data is selected.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get selectAll(): boolean | undefined | null {
         return this._selectAll;
     }
@@ -506,27 +531,27 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
      * Indicates whether to focus on options when hovering over them, defaults to optionLabel.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) focusOnHover: boolean = true;
+    readonly focusOnHover = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Fields used when filtering the options, defaults to optionLabel.
      * @group Props
      */
-    @Input() filterFields: any[] | undefined;
+    readonly filterFields = input<any[]>();
     /**
      * Determines if the option will be selected on focus.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) selectOnFocus: boolean = false;
+    readonly selectOnFocus = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to focus on the first visible or selected element when the overlay panel is shown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoOptionFocus: boolean = false;
+    readonly autoOptionFocus = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether the selected option will be add highlight class.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) highlightOnSelect: boolean = true;
+    readonly highlightOnSelect = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Specifies the size of the component.
      * @defaultValue undefined
@@ -922,15 +947,15 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     clickInProgress: boolean = false;
 
     get emptyMessageLabel(): string {
-        return this.emptyMessage || this.config.getTranslation(TranslationKeys.EMPTY_MESSAGE);
+        return this.emptyMessage() || this.config.getTranslation(TranslationKeys.EMPTY_MESSAGE);
     }
 
     get emptyFilterMessageLabel(): string {
-        return this.emptyFilterMessage || this.config.getTranslation(TranslationKeys.EMPTY_FILTER_MESSAGE);
+        return this.emptyFilterMessage() || this.config.getTranslation(TranslationKeys.EMPTY_FILTER_MESSAGE);
     }
 
     get isVisibleClearIcon(): boolean | undefined {
-        return this.modelValue() != null && this.modelValue() !== '' && isNotEmpty(this.modelValue()) && this.showClear && !this.$disabled() && !this.readonly && this.$filled();
+        return this.modelValue() != null && this.modelValue() !== '' && isNotEmpty(this.modelValue()) && this.showClear() && !this.$disabled() && !this.readonly() && this.$filled();
     }
 
     get toggleAllAriaLabel() {
@@ -942,7 +967,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     private getAllVisibleAndNonVisibleOptions() {
-        return this.group ? this.flatOptions(this.options) : this.options || [];
+        return this.group() ? this.flatOptions(this.options) : this.options || [];
     }
 
     visibleOptions = computed(() => {
@@ -953,12 +978,12 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
             let filteredOptions;
 
             if (isArrayOfObjects) {
-                filteredOptions = this.filterService.filter(options, this.searchFields(), this._filterValue(), this.filterMatchMode, this.filterLocale);
+                filteredOptions = this.filterService.filter(options, this.searchFields(), this._filterValue(), this.filterMatchMode(), this.filterLocale());
             } else {
                 filteredOptions = options.filter((option) => option.toString().toLocaleLowerCase().includes(this._filterValue().toLocaleLowerCase()));
             }
 
-            if (this.group) {
+            if (this.group()) {
                 const optionGroups = this.options || [];
                 const filtered: any[] = [];
 
@@ -966,10 +991,11 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
                     const groupChildren = this.getOptionGroupChildren(group);
                     const filteredItems = groupChildren.filter((item) => filteredOptions.includes(item));
 
+                    const optionGroupChildren = this.optionGroupChildren();
                     if (filteredItems.length > 0)
                         filtered.push({
                             ...group,
-                            [typeof this.optionGroupChildren === 'string' ? this.optionGroupChildren : 'items']: [...filteredItems]
+                            [typeof optionGroupChildren === 'string' ? optionGroupChildren : 'items']: [...filteredItems]
                         });
                 });
 
@@ -1020,8 +1046,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
             const allVisibleAndNonVisibleOptions = this.getAllVisibleAndNonVisibleOptions();
             if (allVisibleAndNonVisibleOptions && isNotEmpty(allVisibleAndNonVisibleOptions)) {
-                if (this.optionValue && this.optionLabel && modelValue) {
-                    this.selectedOptions = allVisibleAndNonVisibleOptions.filter((option) => modelValue.includes(option[this.optionLabel!]) || modelValue.includes(option[this.optionValue!]));
+                if (this.optionValue() && this.optionLabel() && modelValue) {
+                    this.selectedOptions = allVisibleAndNonVisibleOptions.filter((option) => modelValue.includes(option[this.optionLabel()!]) || modelValue.includes(option[this.optionValue()!]));
                 } else {
                     this.selectedOptions = modelValue;
                 }
@@ -1034,7 +1060,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         this.id = this.id || uuid('pn_id_');
         this.autoUpdateModel();
 
-        if (this.filterBy) {
+        if (this.filterBy()) {
             this.filterOptions = {
                 filter: (value) => this.onFilterInputChange(value),
                 reset: () => this.resetFilter()
@@ -1043,7 +1069,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     maxSelectionLimitReached() {
-        return this.selectionLimit && this.modelValue() && this.modelValue().length === this.selectionLimit;
+        const selectionLimit = this.selectionLimit();
+        return selectionLimit && this.modelValue() && this.modelValue().length === selectionLimit;
     }
 
     onAfterViewInit() {
@@ -1077,7 +1104,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     autoUpdateModel() {
-        if (this.selectOnFocus && this.autoOptionFocus && !this.hasSelectedOption()) {
+        if (this.selectOnFocus() && this.autoOptionFocus() && !this.hasSelectedOption()) {
             this.focusedOptionIndex.set(this.findFirstFocusedOptionIndex());
             const value = this.getOptionValue(this.visibleOptions()[this.focusedOptionIndex()]);
             this.onOptionSelect({ originalEvent: null, option: [value] });
@@ -1148,7 +1175,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     searchFields() {
-        return (this.filterBy || this.optionLabel || 'label').split(',');
+        return (this.filterBy() || this.optionLabel() || 'label').split(',');
     }
 
     findNearestSelectedOptionIndex(index, firstCheckUp = false) {
@@ -1199,7 +1226,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     equalityKey() {
-        return this.optionValue ? null : this.dataKey;
+        return this.optionValue() ? null : this.dataKey();
     }
 
     hasSelectedOption() {
@@ -1211,7 +1238,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     isOptionGroup(option) {
-        return option && (this.group || this.optionGroupLabel) && option.optionGroup && option.group;
+        return option && (this.group() || this.optionGroupLabel()) && option.optionGroup && option.group;
     }
 
     isValidOption(option) {
@@ -1222,7 +1249,8 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         if (this.maxSelectionLimitReached() && !this.isSelected(option)) {
             return true;
         }
-        return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option && option.disabled !== undefined ? option.disabled : false;
+        const optionDisabled = this.optionDisabled();
+        return optionDisabled ? resolveFieldData(option, optionDisabled) : option && option.disabled !== undefined ? option.disabled : false;
     }
 
     isSelected(option) {
@@ -1231,7 +1259,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     isOptionMatched(option) {
-        return this.isValidOption(option) && this.getOptionLabel(option).toString().toLocaleLowerCase(this.filterLocale).startsWith(this.searchValue?.toLocaleLowerCase(this.filterLocale));
+        return this.isValidOption(option) && this.getOptionLabel(option).toString().toLocaleLowerCase(this.filterLocale()).startsWith(this.searchValue?.toLocaleLowerCase(this.filterLocale()));
     }
 
     isEmpty() {
@@ -1244,7 +1272,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
     getAriaPosInset(index) {
         return (
-            (this.optionGroupLabel
+            (this.optionGroupLabel()
                 ? index -
                   this.visibleOptions()
                       .slice(0, index)
@@ -1258,14 +1286,15 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     getLabelByValue(value) {
-        const options = this.group ? this.flatOptions(this._options()) : this._options() || [];
+        const options = this.group() ? this.flatOptions(this._options()) : this._options() || [];
         const matchedOption = options.find((option) => !this.isOptionGroup(option) && equals(this.getOptionValue(option), value, this.equalityKey() || ''));
         return matchedOption ? this.getOptionLabel(matchedOption) : null;
     }
 
     getSelectedItemsLabel() {
         let pattern = /{(.*?)}/;
-        let message = this.selectedItemsLabel ? this.selectedItemsLabel : this.config.getTranslation(TranslationKeys.SELECTION_MESSAGE);
+        const selectedItemsLabel = this.selectedItemsLabel();
+        let message = selectedItemsLabel ? selectedItemsLabel : this.config.getTranslation(TranslationKeys.SELECTION_MESSAGE);
 
         if (pattern.test(message)) {
             return message.replace(message.match(pattern)[0], this.modelValue().length + '');
@@ -1275,19 +1304,23 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     getOptionLabel(option: any) {
-        return this.optionLabel ? resolveFieldData(option, this.optionLabel) : option && option.label != undefined ? option.label : option;
+        const optionLabel = this.optionLabel();
+        return optionLabel ? resolveFieldData(option, optionLabel) : option && option.label != undefined ? option.label : option;
     }
 
     getOptionValue(option: any) {
-        return this.optionValue ? resolveFieldData(option, this.optionValue) : !this.optionLabel && option && option.value !== undefined ? option.value : option;
+        const optionValue = this.optionValue();
+        return optionValue ? resolveFieldData(option, optionValue) : !this.optionLabel() && option && option.value !== undefined ? option.value : option;
     }
 
     getOptionGroupLabel(optionGroup: any) {
-        return this.optionGroupLabel ? resolveFieldData(optionGroup, this.optionGroupLabel) : optionGroup && optionGroup.label != undefined ? optionGroup.label : optionGroup;
+        const optionGroupLabel = this.optionGroupLabel();
+        return optionGroupLabel ? resolveFieldData(optionGroup, optionGroupLabel) : optionGroup && optionGroup.label != undefined ? optionGroup.label : optionGroup;
     }
 
     getOptionGroupChildren(optionGroup: any) {
-        return optionGroup ? (this.optionGroupChildren ? resolveFieldData(optionGroup, this.optionGroupChildren) : optionGroup.items) : [];
+        const optionGroupChildren = this.optionGroupChildren();
+        return optionGroup ? (optionGroupChildren ? resolveFieldData(optionGroup, optionGroupChildren) : optionGroup.items) : [];
     }
 
     onKeyDown(event: KeyboardEvent) {
@@ -1538,7 +1571,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
                     !this.isSelected(option) && this.onOptionSelect({ originalEvent: event, option });
                 }
 
-                this.overlayVisible && this.hide(this.filter);
+                this.overlayVisible && this.hide(this.filter());
             }
         }
     }
@@ -1548,7 +1581,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onContainerClick(event: any) {
-        if (this.$disabled() || this.loading || this.readonly || event.target?.isSameNode?.(this.focusInputViewChild?.nativeElement)) {
+        if (this.$disabled() || this.loading() || this.readonly() || event.target?.isSameNode?.(this.focusInputViewChild?.nativeElement)) {
             return;
         }
 
@@ -1579,7 +1612,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
     onInputFocus(event: Event) {
         this.focused = true;
-        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.overlayVisible && this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : -1;
+        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.overlayVisible && this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : -1;
         this.focusedOptionIndex.set(focusedOptionIndex);
         this.overlayVisible && this.scrollInView(this.focusedOptionIndex());
         this.onFocus.emit({ originalEvent: event });
@@ -1615,7 +1648,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onOptionMouseEnter(event, index) {
-        if (this.focusOnHover) {
+        if (this.focusOnHover()) {
             this.changeFocusedOptionIndex(event, index);
         }
     }
@@ -1625,7 +1658,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onToggleAll(event) {
-        if (this.$disabled() || this.readonly) {
+        if (this.$disabled() || this.readonly()) {
             return;
         }
 
@@ -1637,14 +1670,17 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         } else {
             // pre-selected disabled options should always be selected.
             const selectedDisabledOptions = this.getAllVisibleAndNonVisibleOptions().filter(
-                (option) => this.isSelected(option) && (this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option && option.disabled !== undefined ? option.disabled : false)
+                (option) => {
+              const optionDisabled = this.optionDisabled();
+              return this.isSelected(option) && (optionDisabled ? resolveFieldData(option, optionDisabled) : option && option.disabled !== undefined ? option.disabled : false);
+            }
             );
 
             const visibleOptions = this.allSelected()
                 ? this.visibleOptions().filter((option) => !this.isValidOption(option) && this.isSelected(option))
                 : this.visibleOptions().filter((option) => this.isSelected(option) || this.isValidOption(option));
 
-            const selectedOptionsBeforeSearch = this.filter && !this.allSelected() ? this.getAllVisibleAndNonVisibleOptions().filter((option) => this.isSelected(option) && this.isValidOption(option)) : [];
+            const selectedOptionsBeforeSearch = this.filter() && !this.allSelected() ? this.getAllVisibleAndNonVisibleOptions().filter((option) => this.isSelected(option) && this.isValidOption(option)) : [];
 
             const optionValues = [...selectedOptionsBeforeSearch, ...selectedDisabledOptions, ...visibleOptions].map((option) => this.getOptionValue(option));
             const value = [...new Set(optionValues)];
@@ -1681,7 +1717,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     get virtualScrollerDisabled() {
-        return !this.virtualScroll;
+        return !this.virtualScroll();
     }
 
     scrollInView(index = -1) {
@@ -1692,7 +1728,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
                 element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             } else if (!this.virtualScrollerDisabled) {
                 setTimeout(() => {
-                    this.virtualScroll && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+                    this.virtualScroll() && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
                 }, 0);
             }
         }
@@ -1717,7 +1753,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     public show(isFocus?) {
         this.overlayVisible = true;
 
-        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : this.findSelectedOptionIndex();
+        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : this.findSelectedOptionIndex();
         this.focusedOptionIndex.set(focusedOptionIndex);
 
         if (isFocus) {
@@ -1735,10 +1771,10 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         this.overlayVisible = false;
         this.focusedOptionIndex.set(-1);
 
-        if (this.filter && this.resetFilterOnHide) {
+        if (this.filter() && this.resetFilterOnHide()) {
             this.resetFilter();
         }
-        if (this.overlayOptions?.mode === 'modal') {
+        if (this.overlayOptions()?.mode === 'modal') {
             unblockBodyScroll();
         }
 
@@ -1747,11 +1783,11 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     onOverlayBeforeEnter(event: any) {
-        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
-        this.virtualScroll && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
+        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
+        this.virtualScroll() && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
 
         if (this.options && this.options.length) {
-            if (this.virtualScroll) {
+            if (this.virtualScroll()) {
                 const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
                 if (selectedIndex !== -1) {
                     this.scroller?.scrollToIndex(selectedIndex);
@@ -1768,7 +1804,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         if (this.filterInputChild && this.filterInputChild.nativeElement) {
             this.preventModelTouched = true;
 
-            if (this.autofocusFilter) {
+            if (this.autofocusFilter()) {
                 this.filterInputChild.nativeElement.focus();
             }
         }
@@ -1795,7 +1831,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
         // Called when overlay completes its hide animation
         // Don't call hide() again to avoid recursive calls
         this.focusedOptionIndex.set(-1);
-        if (this.filter && this.resetFilterOnHide) {
+        if (this.filter() && this.resetFilterOnHide()) {
             this.resetFilter();
         }
     }
@@ -1933,10 +1969,10 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     get labelDataP() {
         return this.cn({
             placeholder: this.label === this.placeholder,
-            clearable: this.showClear,
+            clearable: this.showClear(),
             disabled: this.disabled,
             [this.size() as string]: this.size(),
-            'has-chip': this.display === 'chip' && this.value && this.value.length && (this.maxSelectedLabels ? this.value.length <= this.maxSelectedLabels : true),
+            'has-chip': this.display() === 'chip' && this.value && this.value.length && (this.maxSelectedLabels ? this.value.length <= this.maxSelectedLabels : true),
             empty: !this.placeholder && !this.$filled
         });
     }

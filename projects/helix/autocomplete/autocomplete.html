@@ -1,20 +1,20 @@
-@if (!multiple) {
+@if (!multiple()) {
   <input
     #focusInput
-    [hAutoFocus]="autofocus"
+    [hAutoFocus]="autofocus()"
     hInputText
     [pt]="ptm('pcInputText')"
-    [class]="cn(cx('pcInputText'), inputStyleClass)"
-    [ngStyle]="inputStyle"
-    [attr.type]="type"
+    [class]="cn(cx('pcInputText'), inputStyleClass())"
+    [ngStyle]="inputStyle()"
+    [attr.type]="type()"
     [attr.value]="inputValue()"
     [variant]="$variant()"
     [invalid]="invalid()"
-    [attr.id]="inputId"
-    [attr.autocomplete]="autocomplete"
+    [attr.id]="inputId()"
+    [attr.autocomplete]="autocomplete()"
     aria-autocomplete="list"
     role="combobox"
-    [attr.placeholder]="placeholder"
+    [attr.placeholder]="placeholder()"
     [attr.name]="name()"
     [attr.minlength]="minlength()"
     [pSize]="size()"
@@ -23,12 +23,12 @@
     [attr.pattern]="pattern()"
     [attr.size]="inputSize()"
     [attr.maxlength]="maxlength()"
-    [attr.tabindex]="!$disabled() ? tabindex : -1"
+    [attr.tabindex]="!$disabled() ? tabindex() : -1"
     [attr.required]="required() ? '' : undefined"
-    [attr.readonly]="readonly ? '' : undefined"
+    [attr.readonly]="readonly() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
-    [attr.aria-label]="ariaLabel"
-    [attr.aria-labelledby]="ariaLabelledBy"
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-required]="required()"
     [attr.aria-expanded]="overlayVisible ?? false"
     [attr.aria-controls]="overlayVisible ? id + '_list' : null"
@@ -44,7 +44,7 @@
     [pInputTextUnstyled]="unstyled()"
     />
 }
-@if ($filled() && !$disabled() && showClear && !loading) {
+@if ($filled() && !$disabled() && showClear() && !loading) {
   @if (!clearIconTemplate && !_clearIconTemplate) {
     <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true" />
   }
@@ -55,7 +55,7 @@
   }
 }
 
-@if (multiple) {
+@if (multiple()) {
   <ul
     #multiContainer
     [hBind]="ptm('inputMultiple')"
@@ -87,13 +87,13 @@
           [label]="!selectedItemTemplate && !_selectedItemTemplate && getOptionLabel(option)"
           [disabled]="$disabled()"
           [removable]="true"
-          (onRemove)="!readonly ? removeOption($event, i) : ''"
+          (onRemove)="!readonly() ? removeOption($event, i) : ''"
           [unstyled]="unstyled()"
           >
           <ng-container *ngTemplateOutlet="selectedItemTemplate || _selectedItemTemplate; context: { $implicit: option }"></ng-container>
           <ng-template #removeicon>
             @if (!removeIconTemplate && !_removeIconTemplate) {
-              <span [hBind]="ptm('chipIcon')" [class]="cx('chipIcon')" (click)="!readonly && !$disabled() ? removeOption($event, i) : ''">
+              <span [hBind]="ptm('chipIcon')" [class]="cx('chipIcon')" (click)="!readonly() && !$disabled() ? removeOption($event, i) : ''">
                 <svg data-p-icon="times-circle" [class]="cx('chipIcon')" [attr.aria-hidden]="true" />
               </span>
             }
@@ -110,13 +110,13 @@
       <input
         #focusInput
         #multiIn
-        [hAutoFocus]="autofocus"
+        [hAutoFocus]="autofocus()"
         [hBind]="ptm('input')"
         [class]="cx('pcInputText')"
-        [ngStyle]="inputStyle"
-        [attr.type]="type"
-        [attr.id]="inputId"
-        [attr.autocomplete]="autocomplete"
+        [ngStyle]="inputStyle()"
+        [attr.type]="type()"
+        [attr.id]="inputId()"
+        [attr.autocomplete]="autocomplete()"
         [attr.name]="name()"
         [attr.minlength]="minlength()"
         [attr.maxlength]="maxlength()"
@@ -125,14 +125,14 @@
         [attr.max]="max()"
         [attr.pattern]="pattern()"
         role="combobox"
-        [attr.placeholder]="!$filled() ? placeholder : null"
+        [attr.placeholder]="!$filled() ? placeholder() : null"
         aria-autocomplete="list"
-        [attr.tabindex]="!$disabled() ? tabindex : -1"
+        [attr.tabindex]="!$disabled() ? tabindex() : -1"
         [attr.required]="required() ? '' : undefined"
-        [attr.readonly]="readonly ? '' : undefined"
+        [attr.readonly]="readonly() ? '' : undefined"
         [attr.disabled]="$disabled() ? '' : undefined"
-        [attr.aria-label]="ariaLabel"
-        [attr.aria-labelledby]="ariaLabelledBy"
+        [attr.aria-label]="ariaLabel()"
+        [attr.aria-labelledby]="ariaLabelledBy()"
         [attr.aria-required]="required()"
         [attr.aria-expanded]="overlayVisible ?? false"
         [attr.aria-controls]="overlayVisible ? id + '_list' : null"
@@ -158,8 +158,8 @@
     </span>
   }
 }
-@if (dropdown) {
-  <button #ddBtn type="button" [hBind]="ptm('dropdown')" [attr.aria-label]="dropdownAriaLabel" [class]="cx('dropdown')" [disabled]="$disabled()" hRipple (click)="handleDropdownClick($event)" [attr.tabindex]="tabindex">
+@if (dropdown()) {
+  <button #ddBtn type="button" [hBind]="ptm('dropdown')" [attr.aria-label]="dropdownAriaLabel()" [class]="cx('dropdown')" [disabled]="$disabled()" hRipple (click)="handleDropdownClick($event)" [attr.tabindex]="tabindex()">
     @if (dropdownIcon) {
       <span [ngClass]="dropdownIcon" [attr.aria-hidden]="true"></span>
     }
@@ -175,7 +175,7 @@
   #overlay
   [hostAttrSelector]="$attrSelector"
   [(visible)]="overlayVisible"
-  [options]="overlayOptions"
+  [options]="overlayOptions()"
   [target]="'@parent'"
   [appendTo]="$appendTo()"
   [unstyled]="unstyled()"
@@ -186,21 +186,21 @@
   [attr.data-p]="overlayDataP"
   >
   <ng-template #content>
-    <div [hBind]="ptm('overlay')" [class]="cn(cx('overlay'), panelStyleClass)" [ngStyle]="panelStyle">
+    <div [hBind]="ptm('overlay')" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
       <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-      <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll ? 'auto' : scrollHeight" [tabindex]="-1">
-        @if (virtualScroll) {
+      <div [hBind]="ptm('listContainer')" [class]="cx('listContainer')" [style.max-height]="virtualScroll() ? 'auto' : scrollHeight()" [tabindex]="-1">
+        @if (virtualScroll()) {
           <h-scroller
             #scroller
             [tabindex]="-1"
             [pt]="ptm('virtualScroller')"
             [items]="visibleOptions()"
-            [style]="{ height: scrollHeight }"
-            [itemSize]="virtualScrollItemSize"
+            [style]="{ height: scrollHeight() }"
+            [itemSize]="virtualScrollItemSize()"
             [autoSize]="true"
-            [lazy]="lazy"
+            [lazy]="lazy()"
             (onLazyLoad)="onLazyLoad.emit($event)"
-            [options]="virtualScrollOptions"
+            [options]="virtualScrollOptions()"
             >
             <ng-template #content let-items let-scrollerOptions="options">
               <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
@@ -212,7 +212,7 @@
             }
           </h-scroller>
         }
-        @if (!virtualScroll) {
+        @if (!virtualScroll()) {
           <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
         }
       </div>
@@ -261,7 +261,7 @@
             </li>
           }
         }
-        @if (!items || (items && items.length === 0 && showEmptyMessage)) {
+        @if (!items || (items && items.length === 0 && showEmptyMessage())) {
           <li [hBind]="ptm('emptyMessage')" [class]="cx('emptyMessage')" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
             @if (!emptyTemplate && !_emptyTemplate) {
               {{ searchResultMessageText }}

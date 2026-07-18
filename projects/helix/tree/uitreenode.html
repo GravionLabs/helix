@@ -1,16 +1,16 @@
 @if (node) {
   <li
     [class]="cn(cx('node'), node.styleClass)"
-    [ngStyle]="{ height: itemSize + 'px' }"
+    [ngStyle]="{ height: itemSize() + 'px' }"
     [style]="node.style"
     [attr.aria-label]="node.label"
     [attr.aria-checked]="checked"
     [attr.aria-setsize]="node.children ? node.children.length : 0"
     [attr.aria-selected]="selected"
     [attr.aria-expanded]="node.expanded"
-    [attr.aria-posinset]="index + 1"
-    [attr.aria-level]="level + 1"
-    [attr.tabindex]="index === 0 ? 0 : -1"
+    [attr.aria-posinset]="index() + 1"
+    [attr.aria-level]="level() + 1"
+    [attr.tabindex]="index() === 0 ? 0 : -1"
     [attr.data-id]="node.key"
     role="treeitem"
     (keydown)="onKeyDown($event)"
@@ -21,7 +21,7 @@
     }
     <div
       [class]="cx('nodeContent')"
-      [style.paddingLeft]="level * indentation + 'rem'"
+      [style.paddingLeft]="level() * indentation() + 'rem'"
       (click)="onNodeClick($event)"
       (contextmenu)="onNodeRightClick($event)"
       (dblclick)="onNodeDblClick($event)"
@@ -31,7 +31,7 @@
       (dragover)="onNodeDragOver($event)"
       (dragleave)="onNodeDragLeave($event)"
       (dragend)="onNodeDragEnd($event)"
-      [draggable]="tree.draggableNodes"
+      [draggable]="tree.draggableNodes()"
       [hBind]="getPTOptions('nodeContent')"
       >
       <button type="button" [class]="cx('nodeToggleButton')" (click)="toggle($event)" hRipple tabindex="-1" [hBind]="getPTOptions('nodeToggleButton')">
@@ -44,7 +44,7 @@
               <svg data-p-icon="chevron-down" [class]="cx('nodeToggleIcon')" [hBind]="getPTOptions('nodeToggleIcon')" />
             }
           }
-          @if (loadingMode === 'icon' && node.loading) {
+          @if (loadingMode() === 'icon' && node.loading) {
             <svg data-p-icon="spinner" [class]="cx('nodeToggleIcon')" spin [hBind]="getPTOptions('nodeToggleIcon')" />
           }
         }
@@ -103,18 +103,18 @@
   @if (isNextDropPointActive()) {
     <div [class]="cx('dropPoint', { next: true })" [attr.aria-hidden]="true" [hBind]="getPTOptions('dropPoint')"></div>
   }
-  @if (!tree.virtualScroll && node.children && node.expanded) {
+  @if (!tree.virtualScroll() && node.children && node.expanded) {
     <ul [class]="cx('nodeChildren')" role="group" [hBind]="ptm('nodeChildren')">
-      @for (childNode of node.children; track tree.trackBy.bind(this)(index, childNode); let firstChild = $first; let lastChild = $last; let index = $index) {
+      @for (childNode of node.children; track tree.trackBy().bind(this)(index, childNode); let firstChild = $first; let lastChild = $last; let index = $index) {
         <h-treeNode
           [node]="childNode"
           [parentNode]="node"
           [firstChild]="firstChild"
           [lastChild]="lastChild"
           [index]="index"
-          [itemSize]="itemSize"
-          [level]="level + 1"
-          [loadingMode]="loadingMode"
+          [itemSize]="itemSize()"
+          [level]="level() + 1"
+          [loadingMode]="loadingMode()"
           [pt]="pt"
           [unstyled]="unstyled()"
         ></h-treeNode>

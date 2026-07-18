@@ -84,33 +84,33 @@ export class SelectItem extends BaseComponent {
 
     $pcSelect: Select | undefined = inject(SELECT_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    @Input() id: string | undefined;
+    readonly id = input<string>();
 
-    @Input() option: any;
+    readonly option = input<any>();
 
-    @Input({ transform: booleanAttribute }) selected: boolean | undefined;
+    readonly selected = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) focused: boolean | undefined;
+    readonly focused = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input() label: string | undefined;
+    readonly label = input<string>();
 
-    @Input({ transform: booleanAttribute }) disabled: boolean | undefined;
+    readonly disabled = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: booleanAttribute }) visible: boolean | undefined;
+    readonly visible = input<boolean, unknown>(undefined, { transform: booleanAttribute });
 
-    @Input({ transform: numberAttribute }) itemSize: number | undefined;
+    readonly itemSize = input<number, unknown>(undefined, { transform: numberAttribute });
 
-    @Input() ariaPosInset: string | undefined;
+    readonly ariaPosInset = input<string>();
 
-    @Input() ariaSetSize: string | undefined;
+    readonly ariaSetSize = input<string>();
 
-    @Input() template: TemplateRef<any> | undefined;
+    readonly template = input<TemplateRef<any>>();
 
-    @Input({ transform: booleanAttribute }) checkmark: boolean;
+    readonly checkmark = input<boolean, unknown>(undefined!, { transform: booleanAttribute });
 
-    @Input() index: number | undefined;
+    readonly index = input<number>();
 
-    @Input() scrollerOptions: any;
+    readonly scrollerOptions = input<any>();
 
     @Output() onClick: EventEmitter<any> = new EventEmitter();
 
@@ -127,14 +127,15 @@ export class SelectItem extends BaseComponent {
     }
 
     getPTOptions() {
+        const option = this.option();
         return (
-            this.$pcSelect?.getPTItemOptions?.(this.option, this.scrollerOptions, this.index ?? 0, 'option') ??
+            this.$pcSelect?.getPTItemOptions?.(option, this.scrollerOptions(), this.index() ?? 0, 'option') ??
             this.$pcSelect?.ptm('option', {
                 context: {
-                    option: this.option,
-                    selected: this.selected,
-                    focused: this.focused,
-                    disabled: this.disabled
+                    option: option,
+                    selected: this.selected(),
+                    focused: this.focused(),
+                    disabled: this.disabled()
                 }
             })
         );
@@ -152,7 +153,7 @@ export class SelectItem extends BaseComponent {
     imports: [CommonModule, SelectItem, Overlay, Tooltip, AutoFocus, TimesIcon, ChevronDownIcon, SearchIcon, InputText, IconField, InputIcon, Scroller, SharedModule, BindModule],
     templateUrl: './select.html',
     host: {
-        '[class]': "cn(cx('root'), styleClass)",
+        '[class]': "cn(cx('root'), styleClass())",
         '[attr.id]': 'id',
         '[attr.data-p]': 'containerDataP',
         '(click)': 'onContainerClick($event)'
@@ -170,52 +171,58 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * Unique identifier of the component
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Your application code writes to the input. This prevents migration.
     @Input() id: string | undefined;
     /**
      * Height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value.
      * @group Props
      */
-    @Input() scrollHeight: string = '200px';
+    readonly scrollHeight = input<string>('200px');
     /**
      * When specified, displays an input field to filter the items on keyup.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) filter: boolean | undefined;
+    readonly filter = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Inline style of the overlay panel element.
      * @group Props
      */
-    @Input() panelStyle: { [klass: string]: any } | null | undefined;
+    readonly panelStyle = input<{
+    [klass: string]: any;
+} | null>();
     /**
      * Style class of the element.
      * @deprecated since v20.0.0, use `class` instead.
      * @group Props
      */
-    @Input() styleClass: string | undefined;
+    readonly styleClass = input<string>();
     /**
      * Style class of the overlay panel element.
      * @group Props
      */
-    @Input() panelStyleClass: string | undefined;
+    readonly panelStyleClass = input<string>();
     /**
      * When present, it specifies that the component cannot be edited.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) readonly: boolean | undefined;
+    readonly readonly = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * When present, custom value instead of predefined options can be entered using the editable input field.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) editable: boolean | undefined;
+    readonly editable = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Index of the element in tabbing order.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) tabindex: number | undefined = 0;
+    readonly tabindex = input<number | undefined, unknown>(0, { transform: numberAttribute });
     /**
      * Default text to display when no option is selected.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() set placeholder(val: string | undefined) {
         this._placeholder.set(val);
     }
@@ -226,196 +233,204 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * Icon to display in loading state.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() loadingIcon: string | undefined;
     /**
      * Placeholder text to show when filter input is empty.
      * @group Props
      */
-    @Input() filterPlaceholder: string | undefined;
+    readonly filterPlaceholder = input<string>();
     /**
      * Locale to use in filtering. The default locale is the host environment's current locale.
      * @group Props
      */
-    @Input() filterLocale: string | undefined;
+    readonly filterLocale = input<string>();
     /**
      * Identifier of the accessible input element.
      * @group Props
      */
-    @Input() inputId: string | undefined;
+    readonly inputId = input<string>();
     /**
      * A property to uniquely identify a value in options.
      * @group Props
      */
-    @Input() dataKey: string | undefined;
+    readonly dataKey = input<string>();
     /**
      * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
      * @group Props
      */
-    @Input() filterBy: string | undefined;
+    readonly filterBy = input<string>();
     /**
      * Fields used when filtering the options, defaults to optionLabel.
      * @group Props
      */
-    @Input() filterFields: any[] | undefined;
+    readonly filterFields = input<any[]>();
     /**
      * When present, it specifies that the component should automatically get focus on load.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocus: boolean | undefined;
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Clears the filter value when hiding the select.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) resetFilterOnHide: boolean = false;
+    readonly resetFilterOnHide = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether the selected option will be shown with a check mark.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) checkmark: boolean = false;
+    readonly checkmark = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Icon class of the select icon.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+    //  and migrating would break narrowing currently.
     @Input() dropdownIcon: string | undefined;
     /**
      * Whether the select is in loading state.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) loading: boolean | undefined = false;
+    readonly loading = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
     /**
      * Name of the label field of an option.
      * @group Props
      */
-    @Input() optionLabel: string | undefined;
+    readonly optionLabel = input<string>();
     /**
      * Name of the value field of an option.
      * @group Props
      */
-    @Input() optionValue: string | undefined;
+    readonly optionValue = input<string>();
     /**
      * Name of the disabled field of an option.
      * @group Props
      */
-    @Input() optionDisabled: string | undefined;
+    readonly optionDisabled = input<string>();
     /**
      * Name of the label field of an option group.
      * @group Props
      */
-    @Input() optionGroupLabel: string | undefined = 'label';
+    readonly optionGroupLabel = input<string | undefined>('label');
     /**
      * Name of the options field of an option group.
      * @group Props
      */
-    @Input() optionGroupChildren: string = 'items';
+    readonly optionGroupChildren = input<string>('items');
     /**
      * Whether to display options as grouped when nested options are provided.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) group: boolean | undefined;
+    readonly group = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * When enabled, a clear icon is displayed to clear the value.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) showClear: boolean | undefined;
+    readonly showClear = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Text to display when filtering does not return any results. Defaults to global value in i18n translation configuration.
      * @group Props
      */
-    @Input() emptyFilterMessage: string = '';
+    readonly emptyFilterMessage = input<string>('');
     /**
      * Text to display when there is no data. Defaults to global value in i18n translation configuration.
      * @group Props
      */
-    @Input() emptyMessage: string = '';
+    readonly emptyMessage = input<string>('');
     /**
      * Defines if data is loaded and interacted with in lazy manner.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) lazy: boolean = false;
+    readonly lazy = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether the data should be loaded on demand during scroll.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) virtualScroll: boolean | undefined;
+    readonly virtualScroll = input<boolean, unknown>(undefined, { transform: booleanAttribute });
     /**
      * Height of an item in the list for VirtualScrolling.
      * @group Props
      */
-    @Input({ transform: numberAttribute }) virtualScrollItemSize: number | undefined;
+    readonly virtualScrollItemSize = input<number, unknown>(undefined, { transform: numberAttribute });
     /**
      * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
      * @group Props
      */
-    @Input() virtualScrollOptions: ScrollerOptions | undefined;
+    readonly virtualScrollOptions = input<ScrollerOptions>();
     /**
      * Whether to use overlay API feature. The properties of overlay API can be used like an object in it.
      * @group Props
      */
-    @Input() overlayOptions: OverlayOptions | undefined;
+    readonly overlayOptions = input<OverlayOptions>();
     /**
      * Defines a string that labels the filter input.
      * @group Props
      */
-    @Input() ariaFilterLabel: string | undefined;
+    readonly ariaFilterLabel = input<string>();
     /**
      * Used to define a aria label attribute the current element.
      * @group Props
      */
-    @Input() ariaLabel: string | undefined;
+    readonly ariaLabel = input<string>();
     /**
      * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
      * @group Props
      */
-    @Input() ariaLabelledBy: string | undefined;
+    readonly ariaLabelledBy = input<string>();
     /**
      * Defines how the items are filtered.
      * @group Props
      */
-    @Input() filterMatchMode: 'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte' = 'contains';
+    readonly filterMatchMode = input<'contains' | 'startsWith' | 'endsWith' | 'equals' | 'notEquals' | 'in' | 'lt' | 'lte' | 'gt' | 'gte'>('contains');
     /**
      * Advisory information to display in a tooltip on hover.
      * @group Props
      */
-    @Input() tooltip: string = '';
+    readonly tooltip = input<string>('');
     /**
      * Position of the tooltip.
      * @group Props
      */
-    @Input() tooltipPosition: 'top' | 'left' | 'right' | 'bottom' = 'right';
+    readonly tooltipPosition = input<'top' | 'left' | 'right' | 'bottom'>('right');
     /**
      * Type of CSS position.
      * @group Props
      */
-    @Input() tooltipPositionStyle: string = 'absolute';
+    readonly tooltipPositionStyle = input<string>('absolute');
     /**
      * Style class of the tooltip.
      * @group Props
      */
-    @Input() tooltipStyleClass: string | undefined;
+    readonly tooltipStyleClass = input<string>();
     /**
      * Fields used when filtering the options, defaults to optionLabel.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) focusOnHover: boolean = true;
+    readonly focusOnHover = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * Determines if the option will be selected on focus.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) selectOnFocus: boolean = false;
+    readonly selectOnFocus = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Whether to focus on the first visible or selected element when the overlay panel is shown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autoOptionFocus: boolean = false;
+    readonly autoOptionFocus = input<boolean, unknown>(false, { transform: booleanAttribute });
     /**
      * Applies focus to the filter element when the overlay is shown.
      * @group Props
      */
-    @Input({ transform: booleanAttribute }) autofocusFilter: boolean = true;
+    readonly autofocusFilter = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
      * When specified, filter displays with this value.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get filterValue(): string | undefined | null {
         return this._filterValue();
     }
@@ -428,6 +443,8 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * An array of objects to display as the available options.
      * @group Props
      */
+    // TODO: Skipped for migration because:
+    //  Accessor inputs cannot be migrated as they are too complex.
     @Input() get options(): any[] | null | undefined {
         const options = this._options();
         return options;
@@ -702,15 +719,15 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     clicked = signal<boolean>(false);
 
     get emptyMessageLabel(): string {
-        return this.emptyMessage || this.config.getTranslation(TranslationKeys.EMPTY_MESSAGE);
+        return this.emptyMessage() || this.config.getTranslation(TranslationKeys.EMPTY_MESSAGE);
     }
 
     get emptyFilterMessageLabel(): string {
-        return this.emptyFilterMessage || this.config.getTranslation(TranslationKeys.EMPTY_FILTER_MESSAGE);
+        return this.emptyFilterMessage() || this.config.getTranslation(TranslationKeys.EMPTY_FILTER_MESSAGE);
     }
 
     get isVisibleClearIcon(): boolean | undefined {
-        return this.modelValue() != null && this.hasSelectedOption() && this.showClear && !this.$disabled();
+        return this.modelValue() != null && this.hasSelectedOption() && this.showClear() && !this.$disabled();
     }
 
     get listLabel(): string {
@@ -725,19 +742,19 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         const options = this.getAllVisibleAndNonVisibleOptions();
 
         if (this._filterValue()) {
-            const _filterBy = this.filterBy || this.optionLabel;
+            const _filterBy = this.filterBy() || this.optionLabel();
 
             const filteredOptions =
-                !_filterBy && !this.filterFields && !this.optionValue
+                !_filterBy && !this.filterFields() && !this.optionValue()
                     ? this.options?.filter((option) => {
                           if (option.label) {
                               return option.label.toString().toLowerCase().indexOf(this._filterValue().toLowerCase().trim()) !== -1;
                           }
                           return option.toString().toLowerCase().indexOf(this._filterValue().toLowerCase().trim()) !== -1;
                       })
-                    : this.filterService.filter(options, this.searchFields(), this._filterValue().trim(), this.filterMatchMode, this.filterLocale);
+                    : this.filterService.filter(options, this.searchFields(), this._filterValue().trim(), this.filterMatchMode(), this.filterLocale());
 
-            if (this.group) {
+            if (this.group()) {
                 const optionGroups = this.options || [];
                 const filtered: any[] = [];
 
@@ -745,10 +762,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                     const groupChildren = this.getOptionGroupChildren(group);
                     const filteredItems = groupChildren.filter((item) => filteredOptions?.includes(item));
 
+                    const optionGroupChildren = this.optionGroupChildren();
                     if (filteredItems.length > 0)
                         filtered.push({
                             ...group,
-                            [typeof this.optionGroupChildren === 'string' ? this.optionGroupChildren : 'items']: [...filteredItems]
+                            [typeof optionGroupChildren === 'string' ? optionGroupChildren : 'items']: [...filteredItems]
                         });
                 });
 
@@ -791,10 +809,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             const modelValue = this.modelValue();
             const visibleOptions = this.visibleOptions();
 
+            const editable = this.editable();
             if (visibleOptions && isNotEmpty(visibleOptions)) {
                 const selectedOptionIndex = this.findSelectedOptionIndex();
 
-                if (selectedOptionIndex !== -1 || modelValue === undefined || (typeof modelValue === 'string' && modelValue.length === 0) || this.isModelValueNotSet() || this.editable) {
+                if (selectedOptionIndex !== -1 || modelValue === undefined || (typeof modelValue === 'string' && modelValue.length === 0) || this.isModelValueNotSet() || editable) {
                     this.selectedOption = visibleOptions[selectedOptionIndex];
                 } else {
                     // If no valid selected option found but we have a model value,
@@ -810,7 +829,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                 this.selectedOption = null;
             }
 
-            if (modelValue !== undefined && this.editable) {
+            if (modelValue !== undefined && editable) {
                 this.updateEditableLabel();
             }
             this.cd.markForCheck();
@@ -822,14 +841,14 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     private getAllVisibleAndNonVisibleOptions() {
-        return this.group ? this.flatOptions(this.options) : this.options || [];
+        return this.group() ? this.flatOptions(this.options) : this.options || [];
     }
 
     onInit() {
         this.id = this.id || uuid('pn_id_');
         this.autoUpdateModel();
 
-        if (this.filterBy) {
+        if (this.filterBy()) {
             this.filterOptions = {
                 filter: (value) => this.onFilterInputChange(value),
                 reset: () => this.resetFilter()
@@ -948,7 +967,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     autoUpdateModel() {
-        if (this.selectOnFocus && this.autoOptionFocus && !this.hasSelectedOption()) {
+        if (this.selectOnFocus() && this.autoOptionFocus() && !this.hasSelectedOption()) {
             this.focusedOptionIndex.set(this.findFirstFocusedOptionIndex());
             this.onOptionSelect(null, this.visibleOptions()[this.focusedOptionIndex()], false);
         }
@@ -972,7 +991,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onOptionMouseEnter(event, index) {
-        if (this.focusOnHover) {
+        if (this.focusOnHover()) {
             this.changeFocusedOptionIndex(event, index);
         }
     }
@@ -985,7 +1004,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     allowModelChange() {
-        return !!this.modelValue() && !this.placeholder() && (this.modelValue() === undefined || this.modelValue() === null) && !this.editable && this.options && this.options.length;
+        return !!this.modelValue() && !this.placeholder() && (this.modelValue() === undefined || this.modelValue() === null) && !this.editable() && this.options && this.options.length;
     }
 
     isSelected(option) {
@@ -998,7 +1017,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onAfterViewInit() {
-        if (this.editable) {
+        if (this.editable()) {
             this.updateEditableLabel();
         }
         this.updatePlaceHolderForFloatingLabel();
@@ -1032,11 +1051,13 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     getOptionLabel(option: any) {
-        return this.optionLabel !== undefined && this.optionLabel !== null ? resolveFieldData(option, this.optionLabel) : option && option.label !== undefined ? option.label : option;
+        const optionLabel = this.optionLabel();
+        return optionLabel !== undefined && optionLabel !== null ? resolveFieldData(option, optionLabel) : option && option.label !== undefined ? option.label : option;
     }
 
     getOptionValue(option: any) {
-        return this.optionValue && this.optionValue !== null ? resolveFieldData(option, this.optionValue) : !this.optionLabel && option && option.value !== undefined ? option.value : option;
+        const optionValue = this.optionValue();
+        return optionValue && optionValue !== null ? resolveFieldData(option, optionValue) : !this.optionLabel() && option && option.value !== undefined ? option.value : option;
     }
 
     getPTItemOptions(option: any, itemOptions: any, index: number, key: string) {
@@ -1056,20 +1077,23 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     isOptionDisabled(option: any) {
-        return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : option && option.disabled !== undefined ? option.disabled : false;
+        const optionDisabled = this.optionDisabled();
+        return optionDisabled ? resolveFieldData(option, optionDisabled) : option && option.disabled !== undefined ? option.disabled : false;
     }
 
     getOptionGroupLabel(optionGroup: any) {
-        return this.optionGroupLabel !== undefined && this.optionGroupLabel !== null ? resolveFieldData(optionGroup, this.optionGroupLabel) : optionGroup && optionGroup.label !== undefined ? optionGroup.label : optionGroup;
+        const optionGroupLabel = this.optionGroupLabel();
+        return optionGroupLabel !== undefined && optionGroupLabel !== null ? resolveFieldData(optionGroup, optionGroupLabel) : optionGroup && optionGroup.label !== undefined ? optionGroup.label : optionGroup;
     }
 
     getOptionGroupChildren(optionGroup: any) {
-        return this.optionGroupChildren !== undefined && this.optionGroupChildren !== null ? resolveFieldData(optionGroup, this.optionGroupChildren) : optionGroup.items;
+        const optionGroupChildren = this.optionGroupChildren();
+        return optionGroupChildren !== undefined && optionGroupChildren !== null ? resolveFieldData(optionGroup, optionGroupChildren) : optionGroup.items;
     }
 
     getAriaPosInset(index) {
         return (
-            (this.optionGroupLabel
+            (this.optionGroupLabel()
                 ? index -
                   this.visibleOptions()
                       .slice(0, index)
@@ -1095,7 +1119,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onContainerClick(event: any) {
-        if (this.$disabled() || this.readonly || this.loading) {
+        if (this.$disabled() || this.readonly() || this.loading()) {
             return;
         }
 
@@ -1136,7 +1160,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     public show(isFocus?) {
         this.overlayVisible = true;
 
-        this.focusedOptionIndex.set(this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : this.editable ? -1 : this.findSelectedOptionIndex());
+        this.focusedOptionIndex.set(this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : this.editable() ? -1 : this.findSelectedOptionIndex());
 
         if (isFocus) {
             focus(this.focusInputViewChild?.nativeElement);
@@ -1146,11 +1170,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onOverlayBeforeEnter(event: any) {
-        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
-        this.virtualScroll && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
+        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
+        this.virtualScroll() && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
 
         if (this.options && this.options.length) {
-            if (this.virtualScroll) {
+            if (this.virtualScroll()) {
                 const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
                 if (selectedIndex !== -1) {
                     setTimeout(() => {
@@ -1168,7 +1192,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         if (this.filterViewChild && this.filterViewChild.nativeElement) {
             this.preventModelTouched = true;
 
-            if (this.autofocusFilter && !this.editable) {
+            if (this.autofocusFilter() && !this.editable()) {
                 this.filterViewChild.nativeElement.focus();
             }
         }
@@ -1190,17 +1214,17 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         this.clicked.set(false);
         this.searchValue = '';
 
-        if (this.overlayOptions?.mode === 'modal') {
+        if (this.overlayOptions()?.mode === 'modal') {
             unblockBodyScroll();
         }
-        if (this.filter && this.resetFilterOnHide) {
+        if (this.filter() && this.resetFilterOnHide()) {
             this.resetFilter();
         }
         if (isFocus) {
             if (this.focusInputViewChild) {
                 focus(this.focusInputViewChild?.nativeElement);
             }
-            if (this.editable && this.editableInputViewChild) {
+            if (this.editable() && this.editableInputViewChild) {
                 focus(this.editableInputViewChild?.nativeElement);
             }
         }
@@ -1214,7 +1238,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         }
 
         this.focused = true;
-        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.overlayVisible && this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : -1;
+        const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.overlayVisible && this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : -1;
         this.focusedOptionIndex.set(focusedOptionIndex);
         this.overlayVisible && this.scrollInView(this.focusedOptionIndex());
 
@@ -1232,7 +1256,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onKeyDown(event: KeyboardEvent, search: boolean = false) {
-        if (this.$disabled() || this.readonly || this.loading) {
+        if (this.$disabled() || this.readonly() || this.loading()) {
             return;
         }
 
@@ -1244,12 +1268,12 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
 
             //up
             case 'ArrowUp':
-                this.onArrowUpKey(event, this.editable);
+                this.onArrowUpKey(event, this.editable());
                 break;
 
             case 'ArrowLeft':
             case 'ArrowRight':
-                this.onArrowLeftKey(event, this.editable);
+                this.onArrowLeftKey(event, this.editable());
                 break;
 
             case 'Delete':
@@ -1257,11 +1281,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                 break;
 
             case 'Home':
-                this.onHomeKey(event, this.editable);
+                this.onHomeKey(event, this.editable());
                 break;
 
             case 'End':
-                this.onEndKey(event, this.editable);
+                this.onEndKey(event, this.editable());
                 break;
 
             case 'PageDown':
@@ -1293,7 +1317,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                 break;
 
             case 'Backspace':
-                this.onBackspaceKey(event, this.editable);
+                this.onBackspaceKey(event, this.editable());
                 break;
 
             case 'ShiftLeft':
@@ -1304,7 +1328,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             default:
                 if (!event.metaKey && isPrintableCharacter(event.key)) {
                     !this.overlayVisible && this.show();
-                    !this.editable && this.searchOptions(event, event.key);
+                    !this.editable() && this.searchOptions(event, event.key);
                 }
 
                 break;
@@ -1361,7 +1385,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     onArrowDownKey(event: KeyboardEvent) {
         if (!this.overlayVisible) {
             this.show();
-            this.editable && this.changeFocusedOptionIndex(event, this.findSelectedOptionIndex());
+            this.editable() && this.changeFocusedOptionIndex(event, this.findSelectedOptionIndex());
         } else {
             const optionIndex = this.focusedOptionIndex() !== -1 ? this.findNextOptionIndex(this.focusedOptionIndex()) : this.clicked() ? this.findFirstOptionIndex() : this.findFirstFocusedOptionIndex();
 
@@ -1380,7 +1404,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             this.focusedOptionIndex.set(index);
             this.scrollInView();
 
-            if (this.selectOnFocus) {
+            if (this.selectOnFocus()) {
                 const option = this.visibleOptions()[index];
                 this.onOptionSelect(event, option, false);
             }
@@ -1388,7 +1412,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     get virtualScrollerDisabled() {
-        return !this.virtualScroll;
+        return !this.virtualScroll();
     }
 
     scrollInView(index = -1) {
@@ -1400,7 +1424,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                 element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             } else if (!this.virtualScrollerDisabled) {
                 setTimeout(() => {
-                    this.virtualScroll && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+                    this.virtualScroll() && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
                 }, 0);
             }
         }
@@ -1415,7 +1439,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     equalityKey() {
-        return this.optionValue ? undefined : this.dataKey;
+        return this.optionValue() ? undefined : this.dataKey();
     }
 
     findFirstFocusedOptionIndex() {
@@ -1462,7 +1486,8 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     isOptionGroup(option) {
-        return this.optionGroupLabel !== undefined && this.optionGroupLabel !== null && option.optionGroup !== undefined && option.optionGroup !== null && option.group;
+        const optionGroupLabel = this.optionGroupLabel();
+        return optionGroupLabel !== undefined && optionGroupLabel !== null && option.optionGroup !== undefined && option.optionGroup !== null && option.group;
     }
 
     onArrowUpKey(event: KeyboardEvent, pressedInInputText: boolean = false) {
@@ -1489,7 +1514,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onDeleteKey(event: KeyboardEvent) {
-        if (this.showClear) {
+        if (this.showClear()) {
             this.clear(event);
             event.preventDefault();
         }
@@ -1545,7 +1570,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onSpaceKey(event: KeyboardEvent, pressedInInputText: boolean = false) {
-        !this.editable && !pressedInInputText && this.onEnterKey(event);
+        !this.editable() && !pressedInInputText && this.onEnterKey(event);
     }
 
     onEnterKey(event, pressedInInput = false) {
@@ -1582,7 +1607,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                     const option = this.visibleOptions()[this.focusedOptionIndex()];
                     this.onOptionSelect(event, option);
                 }
-                this.overlayVisible && this.hide(this.filter);
+                this.overlayVisible && this.hide(this.filter());
             }
         }
         event.stopPropagation();
@@ -1611,7 +1636,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     searchFields() {
-        return this.filterBy?.split(',') || this.filterFields || [this.optionLabel];
+        return this.filterBy()?.split(',') || this.filterFields() || [this.optionLabel()];
     }
 
     searchOptions(event, char) {
@@ -1649,7 +1674,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     isOptionMatched(option) {
-        return this.isValidOption(option) && this.getOptionLabel(option).toString().toLocaleLowerCase(this.filterLocale).startsWith(this.searchValue?.toLocaleLowerCase(this.filterLocale));
+        return this.isValidOption(option) && this.getOptionLabel(option).toString().toLocaleLowerCase(this.filterLocale()).startsWith(this.searchValue?.toLocaleLowerCase(this.filterLocale()));
     }
 
     onFilterInputChange(event: Event | any): void {
@@ -1665,7 +1690,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     applyFocus(): void {
-        if (this.editable) (findSingle(this.el.nativeElement, '[data-pc-section="label"]') as any).focus();
+        if (this.editable()) (findSingle(this.el.nativeElement, '[data-pc-section="label"]') as any).focus();
         else focus(this.focusInputViewChild?.nativeElement);
     }
     /**
@@ -1695,7 +1720,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * Writes the value to the control.
      */
     writeControlValue(value: any, setModelValue: (value: any) => void): void {
-        if (this.filter) {
+        if (this.filter()) {
             this.resetFilter();
         }
 
@@ -1720,10 +1745,10 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     get labelDataP() {
         return this.cn({
             placeholder: this.label === this.placeholder,
-            clearable: this.showClear,
+            clearable: this.showClear(),
             disabled: this.$disabled(),
             [this.size() as string]: this.size(),
-            empty: !this.editable && !this.selectedItemTemplate && (!this.label?.() || this.label() === 'p-emptylabel' || this.label()?.length === 0)
+            empty: !this.editable() && !this.selectedItemTemplate && (!this.label?.() || this.label() === 'p-emptylabel' || this.label()?.length === 0)
         });
     }
 

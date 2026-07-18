@@ -1,5 +1,5 @@
 <div [hBind]="ptm('thumbnailContent')" [class]="cx('thumbnailContent')">
-  @if (showThumbnailNavigators) {
+  @if (showThumbnailNavigators()) {
     <button
       type="button"
       [hBind]="ptm('thumbnailPrevButton')"
@@ -10,24 +10,24 @@
       data-pc-group-section="thumbnailnavigator"
       >
       @if (!galleria.previousThumbnailIconTemplate && !galleria._previousThumbnailIconTemplate) {
-        @if (!isVertical) {
+        @if (!isVertical()) {
           <svg data-p-icon="chevron-left" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
         }
-        @if (isVertical) {
+        @if (isVertical()) {
           <svg data-p-icon="chevron-up" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
         }
       }
       <ng-template *ngTemplateOutlet="galleria.previousThumbnailIconTemplate || galleria._previousThumbnailIconTemplate"></ng-template>
     </button>
   }
-  <div [hBind]="ptm('thumbnailsViewport')" [class]="cx('thumbnailsViewport')" [ngStyle]="{ height: isVertical ? contentHeight : '' }">
+  <div [hBind]="ptm('thumbnailsViewport')" [class]="cx('thumbnailsViewport')" [ngStyle]="{ height: isVertical() ? contentHeight() : '' }">
     <div #itemsContainer [hBind]="ptm('thumbnailItems')" [class]="cx('thumbnailItems')" (transitionend)="onTransitionEnd()" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" role="tablist">
-      @for (item of value; track item; let index = $index) {
+      @for (item of value(); track item; let index = $index) {
         <div
           [hBind]="ptm('thumbnailItem')"
           [class]="cx('thumbnailItem', { index, activeIndex })"
           [attr.aria-selected]="activeIndex === index"
-          [attr.aria-controls]="containerId + '_item_' + index"
+          [attr.aria-controls]="containerId() + '_item_' + index"
           (keydown)="onThumbnailKeydown($event, index)"
           [attr.data-p-active]="activeIndex === index"
           >
@@ -41,13 +41,13 @@
             (touchend)="onItemClick(index)"
             (keydown.enter)="onItemClick(index)"
             >
-            <div hGalleriaItemSlot type="thumbnail" [hBind]="ptm('thumbnailItem')" [item]="item" [templates]="templates" [unstyled]="unstyled()"></div>
+            <div hGalleriaItemSlot type="thumbnail" [hBind]="ptm('thumbnailItem')" [item]="item" [templates]="templates()" [unstyled]="unstyled()"></div>
           </div>
         </div>
       }
     </div>
   </div>
-  @if (showThumbnailNavigators) {
+  @if (showThumbnailNavigators()) {
     <button
       type="button"
       [hBind]="ptm('thumbnailNextButton')"
@@ -58,10 +58,10 @@
       data-pc-group-section="thumbnailnavigator"
       >
       @if (!galleria.nextThumbnailIconTemplate && !galleria._nextThumbnailIconTemplate) {
-        @if (!isVertical) {
+        @if (!isVertical()) {
           <svg data-p-icon="chevron-right" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
         }
-        @if (isVertical) {
+        @if (isVertical()) {
           <svg data-p-icon="chevron-down" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
         }
       }

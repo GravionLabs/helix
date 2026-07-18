@@ -1,5 +1,5 @@
-<div [ngStyle]="style" [class]="cn(cx('root'), styleClass)" cdkDropListGroup [hBind]="ptm('root')">
-  @if (showSourceControls) {
+<div [ngStyle]="style()" [class]="cn(cx('root'), styleClass())" cdkDropListGroup [hBind]="ptm('root')">
+  @if (showSourceControls()) {
     <div [class]="cx('sourceControls')" [hBind]="ptm('sourceControls')" [attr.data-pc-group-section]="'controls'">
       <button
         type="button"
@@ -76,30 +76,30 @@
   <div [class]="cx('sourceListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('sourceListContainer')">
     <h-listbox
       #sourcelist
-      [ariaLabel]="sourceAriaLabel"
+      [ariaLabel]="sourceAriaLabel()"
       [multiple]="true"
       [options]="sourceOptions"
       [(ngModel)]="selectedItemsSource"
-      [optionLabel]="dataKey ?? 'name'"
+      [optionLabel]="dataKey() ?? 'name'"
       [id]="idSource + '_list'"
-      [listStyle]="sourceStyle"
-      [striped]="stripedRows"
-      [tabindex]="tabindex"
+      [listStyle]="sourceStyle()"
+      [striped]="stripedRows()"
+      [tabindex]="tabindex()"
       (onFocus)="onListFocus($event, SOURCE_LIST)"
       (onBlur)="onListBlur($event, SOURCE_LIST)"
       (onChange)="onChangeSelection($event, SOURCE_LIST)"
       (onDblClick)="onSourceItemDblClick()"
-      [disabled]="disabled"
-      [optionDisabled]="sourceOptionDisabled"
-      [metaKeySelection]="metaKeySelection"
-      [scrollHeight]="scrollHeight"
-      [autoOptionFocus]="autoOptionFocus"
-      [filter]="filterBy && showSourceFilter"
-      [filterBy]="filterBy"
-      [filterLocale]="filterLocale"
-      [filterMatchMode]="filterMatchMode"
-      [filterPlaceHolder]="sourceFilterPlaceholder"
-      [dragdrop]="dragdrop"
+      [disabled]="disabled()"
+      [optionDisabled]="sourceOptionDisabled()"
+      [metaKeySelection]="metaKeySelection()"
+      [scrollHeight]="scrollHeight()"
+      [autoOptionFocus]="autoOptionFocus()"
+      [filter]="filterBy() && showSourceFilter()"
+      [filterBy]="filterBy()"
+      [filterLocale]="filterLocale()"
+      [filterMatchMode]="filterMatchMode()"
+      [filterPlaceHolder]="sourceFilterPlaceholder()"
+      [dragdrop]="dragdrop()"
       [dropListData]="source()"
       (onDrop)="onDrop($event, SOURCE_LIST)"
       (onFilter)="onFilter($event.originalEvent, SOURCE_LIST)"
@@ -237,30 +237,30 @@
   <div [class]="cx('targetListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('targetListContainer')">
     <h-listbox
       #targetlist
-      [ariaLabel]="targetAriaLabel"
+      [ariaLabel]="targetAriaLabel()"
       [multiple]="true"
       [options]="targetOptions"
       [(ngModel)]="selectedItemsTarget"
-      [optionLabel]="dataKey ?? 'name'"
+      [optionLabel]="dataKey() ?? 'name'"
       [id]="idTarget + '_list'"
-      [listStyle]="targetStyle"
-      [striped]="stripedRows"
-      [tabindex]="tabindex"
+      [listStyle]="targetStyle()"
+      [striped]="stripedRows()"
+      [tabindex]="tabindex()"
       (onFocus)="onListFocus($event, TARGET_LIST)"
       (onBlur)="onListBlur($event, TARGET_LIST)"
       (onChange)="onChangeSelection($event, TARGET_LIST)"
       (onDblClick)="onTargetItemDblClick()"
-      [disabled]="disabled"
-      [optionDisabled]="targetOptionDisabled"
-      [metaKeySelection]="metaKeySelection"
-      [scrollHeight]="scrollHeight"
-      [autoOptionFocus]="autoOptionFocus"
-      [filter]="filterBy && showTargetFilter"
-      [filterBy]="filterBy"
-      [filterLocale]="filterLocale"
-      [filterMatchMode]="filterMatchMode"
-      [filterPlaceHolder]="targetFilterPlaceholder"
-      [dragdrop]="dragdrop"
+      [disabled]="disabled()"
+      [optionDisabled]="targetOptionDisabled()"
+      [metaKeySelection]="metaKeySelection()"
+      [scrollHeight]="scrollHeight()"
+      [autoOptionFocus]="autoOptionFocus()"
+      [filter]="filterBy() && showTargetFilter()"
+      [filterBy]="filterBy()"
+      [filterLocale]="filterLocale()"
+      [filterMatchMode]="filterMatchMode()"
+      [filterPlaceHolder]="targetFilterPlaceholder()"
+      [dragdrop]="dragdrop()"
       [dropListData]="target()"
       (onDrop)="onDrop($event, TARGET_LIST)"
       (onFilter)="onFilter($event.originalEvent, TARGET_LIST)"
@@ -302,7 +302,7 @@
       }
     </h-listbox>
   </div>
-  @if (showTargetControls) {
+  @if (showTargetControls()) {
     <div [class]="cx('targetControls')" [attr.data-pc-group-section]="'controls'" [hBind]="ptm('targetControls')">
       <button
         type="button"

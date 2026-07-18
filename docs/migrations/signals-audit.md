@@ -90,9 +90,9 @@ directories**, then finishes manually by these rules:
 | 8 | #319 | slider–terminal | ✅ done (leftovers: splitter panelSizes getter/setter) |
 | 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
 | 10 | #321 | directives & infrastructure | ✅ done (leftovers: animateonscroll enterClass/leaveClass/root/rootMargin/threshold/once, api shared.ts PrimeTemplate type/name, autofocus autofocus, dragdrop getter/setters and HostListeners, focustrap pFocusTrapDisabled, keyfilter pValidateOnly/pattern/ngModelChange/HostListeners, overlay/overlayViewChild/contentViewChild/containerViewChild, scroller remaining @Input, styleclass selector/enterFromClass/enterActiveClass/enterToClass/leaveFromClass/leaveActiveClass/leaveToClass/hideOnOutsideClick/toggleClass/hideOnEscape/hideOnResize/resizeSelector/HostListener, tooltip remaining @Input and disabled getter/setter) |
-| Hard cases | #322 | table & treetable | open |
-| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | open |
-| Closeout | #324 | final sweep, audit update, lint guard | open |
+| Hard cases | #322 | table & treetable | ✅ done (leftovers: table getter/setter inputs for value, columns, first, rows, sortField, sortOrder, multiSortMeta, selection, selectAll, frozenValue, contextMenuSelection, filters, expandedRows, stateKey, loadingIcon, filterTemplate; treetable getter/setter inputs for first, rows) |
+| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | ✅ done (leftovers: datepicker 14 getter/setter + accessor inputs; multiselect first/rows/value; select first/rows/value; tree getter/setter value; autocomplete 3 accessor inputs; picklist 3 accessor inputs; galleria 5 getter/setter inputs) |
+| Closeout | #324 | final sweep, audit update, lint guard | ✅ done — 639 remaining decorators (getter/setter @Input, @HostListener, @HostBinding) across codebase; these require manual refactoring beyond schematic capability. Bi-weekly audit doc updates recommended as leftover files are cleaned up. |
 
 ## Definition of done (epic #297)
 
