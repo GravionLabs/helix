@@ -1,23 +1,23 @@
 @if (loading() && loadingMode() === 'mask') {
   <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
-    @if (loadingIcon) {
-      <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon)" [hBind]="ptm('loadingIcon')"></i>
+    @if (loadingIcon()) {
+      <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())" [hBind]="ptm('loadingIcon')"></i>
     }
-    @if (!loadingIcon) {
-      @if (!loadingIconTemplate && !_loadingIconTemplate) {
+    @if (!loadingIcon()) {
+      @if (!loadingIconTemplate() && !_loadingIconTemplate) {
         <svg data-p-icon="spinner" spin [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
       }
-      @if (loadingIconTemplate || _loadingIconTemplate) {
+      @if (loadingIconTemplate() || _loadingIconTemplate) {
         <span [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
-          <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+          <ng-template *ngTemplateOutlet="loadingIconTemplate() || _loadingIconTemplate"></ng-template>
         </span>
       }
     }
   </div>
 }
-<ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-@if (filterTemplate || _filterTemplate) {
-  <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { $implicit: filterOptions }"></ng-container>
+<ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
+@if (filterTemplate() || _filterTemplate) {
+  <ng-container *ngTemplateOutlet="filterTemplate() || _filterTemplate; context: { $implicit: filterOptions() }"></ng-container>
 } @else {
   @if (filter()) {
     <h-iconfield [class]="cx('pcFilterContainer')" [pt]="ptm('pcFilterContainer')" [unstyled]="unstyled()">
@@ -35,12 +35,12 @@
         [unstyled]="unstyled()"
         />
       <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
-        @if (!filterIconTemplate && !_filterIconTemplate) {
+        @if (!filterIconTemplate() && !_filterIconTemplate) {
           <svg data-p-icon="search" [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')" />
         }
-        @if (filterIconTemplate || _filterIconTemplate) {
+        @if (filterIconTemplate() || _filterIconTemplate) {
           <span [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')">
-            <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
+            <ng-template *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-template>
           </span>
         }
       </h-inputicon>
@@ -99,9 +99,9 @@
           </ul>
         }
       </ng-template>
-      @if (loaderTemplate || _loaderTemplate) {
+      @if (loaderTemplate() || _loaderTemplate) {
         <ng-template #loader let-scrollerOptions="options">
-          <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+          <ng-container *ngTemplateOutlet="loaderTemplate() || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
         </ng-template>
       }
     </h-scroller>
@@ -130,11 +130,11 @@
 
 @if (!loading() && (getRootNode() == null || getRootNode().length === 0)) {
   <div [class]="cx('emptyMessage')" [hBind]="ptm('emptyMessage')">
-    @if (!emptyTemplate && !_emptyTemplate) {
+    @if (!emptyTemplate() && !_emptyTemplate) {
       {{ emptyMessageLabel }}
     } @else {
-      <ng-container *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+      <ng-container *ngTemplateOutlet="emptyTemplate() || _emptyTemplate"></ng-container>
     }
   </div>
 }
-<ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+<ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
