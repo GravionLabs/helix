@@ -391,14 +391,14 @@ describe('Tree', () => {
         it('should have default values', () => {
             fixture.detectChanges();
 
-            expect(tree.selectionMode).toBeNull();
-            expect(tree.metaKeySelection).toBe(false);
-            expect(tree.propagateSelectionUp).toBe(true);
-            expect(tree.propagateSelectionDown).toBe(true);
-            expect(tree.filterMode).toBe('lenient');
-            expect(tree.filterBy).toBe('label');
-            expect(tree.lazy).toBe(false);
-            expect(tree.indentation).toBe(1.5);
+            expect(tree.selectionMode()).toBeNull();
+            expect(tree.metaKeySelection()).toBe(false);
+            expect(tree.propagateSelectionUp()).toBe(true);
+            expect(tree.propagateSelectionDown()).toBe(true);
+            expect(tree.filterMode()).toBe('lenient');
+            expect(tree.filterBy()).toBe('label');
+            expect(tree.lazy()).toBe(false);
+            expect(tree.indentation()).toBe(1.5);
         });
 
         it('should accept custom values', async () => {
