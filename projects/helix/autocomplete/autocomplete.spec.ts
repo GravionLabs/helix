@@ -482,7 +482,7 @@ describe('AutoComplete', () => {
             await testFixture.whenStable();
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-            expect(autocompleteInstance.suggestions.every((item) => typeof item === 'string')).toBe(true);
+            expect(autocompleteInstance.suggestions().every((item) => typeof item === 'string')).toBe(true);
         });
 
         it('should work with number array', async () => {
@@ -491,7 +491,7 @@ describe('AutoComplete', () => {
             await testFixture.whenStable();
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-            expect(autocompleteInstance.suggestions.every((item) => typeof item === 'number')).toBe(true);
+            expect(autocompleteInstance.suggestions().every((item) => typeof item === 'number')).toBe(true);
         });
 
         it('should work with object array', async () => {
@@ -501,7 +501,7 @@ describe('AutoComplete', () => {
             await testFixture.whenStable();
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-            expect(autocompleteInstance.suggestions.every((item) => typeof item === 'object')).toBe(true);
+            expect(autocompleteInstance.suggestions().every((item) => typeof item === 'object')).toBe(true);
             expect(autocompleteInstance.optionLabel).toBe('name');
         });
 
@@ -911,7 +911,7 @@ describe('AutoComplete', () => {
             } else {
                 // Verify template is processed even if not rendered
                 const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-                expect(autocompleteInstance.itemTemplate).toBeDefined();
+                expect(autocompleteInstance.itemTemplate()).toBeDefined();
             }
         });
 
@@ -928,7 +928,8 @@ describe('AutoComplete', () => {
                 { getType: () => 'group', template: {} }
             ];
 
-            autocompleteInstance.templates = {
+            const mockTemplatesSignal = signal(mockTemplates as any);
+            (autocompleteInstance as any).templates = mockTemplatesSignal;
                 forEach: (callback: (template: any) => void) => {
                     mockTemplates.forEach(callback);
                 }
@@ -1099,7 +1100,7 @@ describe('AutoComplete', () => {
                 const autocompleteInstance = pTemplateFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
 
                 // Mock grouped data
-                autocompleteInstance.suggestions = groupedData;
+                pTemplateComponent.suggestions = groupedData;
                 pTemplateFixture.changeDetectorRef.markForCheck();
                 await pTemplateFixture.whenStable();
 
@@ -1292,8 +1293,8 @@ describe('AutoComplete', () => {
         it('should have ViewChild properties properly rendered', () => {
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
 
-            expect(autocompleteInstance.inputEL).toBeDefined();
-            expect(autocompleteInstance.overlayViewChild).toBeDefined();
+            expect(autocompleteInstance.inputEL()).toBeDefined();
+            expect(autocompleteInstance.overlayViewChild()).toBeDefined();
         });
 
         it('should handle multiple mode ViewChild properties', async () => {
@@ -1302,7 +1303,7 @@ describe('AutoComplete', () => {
             await testFixture.whenStable();
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-            expect(autocompleteInstance.multiContainerEL).toBeDefined();
+            expect(autocompleteInstance.multiContainerEL()).toBeDefined();
         });
 
         it('should handle dropdown ViewChild properties', async () => {
@@ -1311,7 +1312,7 @@ describe('AutoComplete', () => {
             await testFixture.whenStable();
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
-            expect(autocompleteInstance.dropdownButton).toBeDefined();
+            expect(autocompleteInstance.dropdownButton()).toBeDefined();
         });
     });
 
@@ -1504,7 +1505,7 @@ describe('AutoComplete', () => {
 
             const autocompleteInstance = testFixture.debugElement.query(By.directive(AutoComplete)).componentInstance;
             expect(autocompleteInstance.virtualScroll).toBe(true);
-            expect(autocompleteInstance.suggestions.length).toBe(1000);
+            expect(autocompleteInstance.suggestions().length).toBe(1000);
         });
 
         it('should handle disabled and readonly states', async () => {
@@ -2229,7 +2230,7 @@ describe('AutoComplete', () => {
 
                 // Setup component to have visible options
                 testComponent.suggestions = ['Option 1', 'Option 2'];
-                autocompleteComponent.suggestions = ['Option 1', 'Option 2'];
+                testComponent.suggestions = ['Option 1', 'Option 2'];
                 autocompleteComponent.overlayVisible = true;
                 testFixture.changeDetectorRef.markForCheck();
                 await testFixture.whenStable();
@@ -2627,7 +2628,7 @@ describe('AutoComplete', () => {
                 fixture.componentRef.setInput('pt', {
                     dropdown: ({ instance }) => ({
                         class: 'FUNC_DROPDOWN',
-                        'data-has-suggestions': instance?.suggestions?.length > 0
+                        'data-has-suggestions': instance?.suggestions()?.length > 0
                     })
                 });
                 fixture.changeDetectorRef.markForCheck();
