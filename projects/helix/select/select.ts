@@ -6,30 +6,27 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
-    ContentChild,
-    ContentChildren,
+    contentChild,
+    contentChildren,
     effect,
     ElementRef,
-    EventEmitter,
     forwardRef,
     inject,
     InjectionToken,
     input,
-    Input,
+    model,
     NgModule,
     NgZone,
     numberAttribute,
-    Output,
-    QueryList,
-    Signal,
+    output,
     signal,
     TemplateRef,
-    ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
+    viewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
-import { deepEquals, equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, scrollInView, uuid } from '@primeuix/utils';
+import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, scrollInView, uuid } from '@primeuix/utils';
 import { FilterService, OverlayOptions, PrimeTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -112,9 +109,9 @@ export class SelectItem extends BaseComponent {
 
     readonly scrollerOptions = input<any>();
 
-    @Output() onClick: EventEmitter<any> = new EventEmitter();
+    readonly onClick = output<any>();
 
-    @Output() onMouseEnter: EventEmitter<any> = new EventEmitter();
+    readonly onMouseEnter = output<any>();
 
     _componentStyle = inject(SelectStyle);
 
@@ -154,7 +151,7 @@ export class SelectItem extends BaseComponent {
     templateUrl: './select.html',
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.id]': 'id',
+        '[attr.id]': 'id()',
         '[attr.data-p]': 'containerDataP',
         '(click)': 'onContainerClick($event)'
     },
@@ -173,7 +170,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      */
     // TODO: Skipped for migration because:
     //  Your application code writes to the input. This prevents migration.
-    @Input() id: string | undefined;
+    readonly id = model<string | undefined>(undefined);
     /**
      * Height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value.
      * @group Props
@@ -223,12 +220,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      */
     // TODO: Skipped for migration because:
     //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() set placeholder(val: string | undefined) {
-        this._placeholder.set(val);
-    }
-    get placeholder(): Signal<string | undefined> {
-        return this._placeholder.asReadonly();
-    }
+    readonly placeholder = model<string | undefined>(undefined);
     /**
      * Icon to display in loading state.
      * @group Props
@@ -236,7 +228,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     // TODO: Skipped for migration because:
     //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
     //  and migrating would break narrowing currently.
-    @Input() loadingIcon: string | undefined;
+    readonly loadingIcon = input<string | undefined>(undefined);
     /**
      * Placeholder text to show when filter input is empty.
      * @group Props
@@ -289,7 +281,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     // TODO: Skipped for migration because:
     //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
     //  and migrating would break narrowing currently.
-    @Input() dropdownIcon: string | undefined;
+    readonly dropdownIcon = input<string | undefined>(undefined);
     /**
      * Whether the select is in loading state.
      * @group Props
@@ -431,29 +423,14 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      */
     // TODO: Skipped for migration because:
     //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get filterValue(): string | undefined | null {
-        return this._filterValue();
-    }
-    set filterValue(val: string | undefined | null) {
-        setTimeout(() => {
-            this._filterValue.set(val);
-        });
-    }
+    readonly filterValue = input<string | undefined | null>();
     /**
      * An array of objects to display as the available options.
      * @group Props
      */
     // TODO: Skipped for migration because:
     //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get options(): any[] | null | undefined {
-        const options = this._options();
-        return options;
-    }
-    set options(val: any[] | null | undefined) {
-        if (!deepEquals(val, this._options())) {
-            this._options.set(val);
-        }
-    }
+    readonly options = input<any[] | null | undefined>();
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'
@@ -470,73 +447,73 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * @param {SelectChangeEvent} event - custom change event.
      * @group Emits
      */
-    @Output() onChange: EventEmitter<SelectChangeEvent> = new EventEmitter<SelectChangeEvent>();
+    readonly onChange = output<SelectChangeEvent>();
     /**
      * Callback to invoke when data is filtered.
      * @param {SelectFilterEvent} event - custom filter event.
      * @group Emits
      */
-    @Output() onFilter: EventEmitter<SelectFilterEvent> = new EventEmitter<SelectFilterEvent>();
+    readonly onFilter = output<SelectFilterEvent>();
     /**
      * Callback to invoke when select gets focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onFocus = output<Event>();
     /**
      * Callback to invoke when select loses focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onBlur = output<Event>();
     /**
      * Callback to invoke when component is clicked.
      * @param {MouseEvent} event - Mouse event.
      * @group Emits
      */
-    @Output() onClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    readonly onClick = output<MouseEvent>();
     /**
      * Callback to invoke when select overlay gets visible.
      * @param {AnimationEvent} event - Animation event.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<AnimationEvent> = new EventEmitter<AnimationEvent>();
+    readonly onShow = output<AnimationEvent>();
     /**
      * Callback to invoke when select overlay gets hidden.
      * @param {AnimationEvent} event - Animation event.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<AnimationEvent> = new EventEmitter<AnimationEvent>();
+    readonly onHide = output<AnimationEvent>();
     /**
      * Callback to invoke when select clears the value.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onClear: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onClear = output<Event>();
     /**
      * Callback to invoke in lazy mode to load new data.
      * @param {SelectLazyLoadEvent} event - Lazy load event.
      * @group Emits
      */
-    @Output() onLazyLoad: EventEmitter<SelectLazyLoadEvent> = new EventEmitter<SelectLazyLoadEvent>();
+    readonly onLazyLoad = output<SelectLazyLoadEvent>();
 
     _componentStyle = inject(SelectStyle);
 
-    @ViewChild('filter') filterViewChild: Nullable<ElementRef>;
+    readonly filterViewChild = viewChild<ElementRef>('filter');
 
-    @ViewChild('focusInput') focusInputViewChild: Nullable<ElementRef>;
+    readonly focusInputViewChild = viewChild<ElementRef>('focusInput');
 
-    @ViewChild('editableInput') editableInputViewChild: Nullable<ElementRef>;
+    readonly editableInputViewChild = viewChild<ElementRef>('editableInput');
 
-    @ViewChild('items') itemsViewChild: Nullable<ElementRef>;
+    readonly itemsViewChild = viewChild<ElementRef>('items');
 
-    @ViewChild('scroller') scroller: Nullable<Scroller>;
+    readonly scroller = viewChild<Scroller>('scroller');
 
-    @ViewChild('overlay') overlayViewChild: Nullable<Overlay>;
+    readonly overlayViewChild = viewChild<Overlay>('overlay');
 
-    @ViewChild('firstHiddenFocusableEl') firstHiddenFocusableElementOnOverlay: Nullable<ElementRef>;
+    readonly firstHiddenFocusableElementOnOverlay = viewChild<ElementRef>('firstHiddenFocusableEl');
 
-    @ViewChild('lastHiddenFocusableEl') lastHiddenFocusableElementOnOverlay: Nullable<ElementRef>;
+    readonly lastHiddenFocusableElementOnOverlay = viewChild<ElementRef>('lastHiddenFocusableEl');
 
     itemsWrapper: Nullable<HTMLDivElement>;
 
@@ -546,99 +523,99 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: Nullable<TemplateRef<SelectItemTemplateContext>>;
+    readonly itemTemplate = contentChild<TemplateRef<SelectItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom group template.
      * @group Templates
      */
-    @ContentChild('group', { descendants: false }) groupTemplate: Nullable<TemplateRef<SelectGroupTemplateContext>>;
+    readonly groupTemplate = contentChild<TemplateRef<SelectGroupTemplateContext>>('group', { descendants: false });
 
     /**
      * Custom loader template.
      * @group Templates
      */
-    @ContentChild('loader', { descendants: false }) loaderTemplate: Nullable<TemplateRef<SelectLoaderTemplateContext>>;
+    readonly loaderTemplate = contentChild<TemplateRef<SelectLoaderTemplateContext>>('loader', { descendants: false });
 
     /**
      * Custom selected item template.
      * @group Templates
      */
-    @ContentChild('selectedItem', { descendants: false }) selectedItemTemplate: Nullable<TemplateRef<SelectSelectedItemTemplateContext>>;
+    readonly selectedItemTemplate = contentChild<TemplateRef<SelectSelectedItemTemplateContext>>('selectedItem', { descendants: false });
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header', { descendants: false }) headerTemplate: Nullable<TemplateRef<void>>;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header', { descendants: false });
 
     /**
      * Custom filter template.
      * @group Templates
      */
-    @ContentChild('filter', { descendants: false }) filterTemplate: Nullable<TemplateRef<SelectFilterTemplateContext>>;
+    readonly filterTemplate = contentChild<TemplateRef<SelectFilterTemplateContext>>('filter', { descendants: false });
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer', { descendants: false }) footerTemplate: Nullable<TemplateRef<void>>;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer', { descendants: false });
 
     /**
      * Custom empty filter template.
      * @group Templates
      */
-    @ContentChild('emptyfilter', { descendants: false }) emptyFilterTemplate: Nullable<TemplateRef<void>>;
+    readonly emptyFilterTemplate = contentChild<TemplateRef<void>>('emptyfilter', { descendants: false });
 
     /**
      * Custom empty template.
      * @group Templates
      */
-    @ContentChild('empty', { descendants: false }) emptyTemplate: Nullable<TemplateRef<void>>;
+    readonly emptyTemplate = contentChild<TemplateRef<void>>('empty', { descendants: false });
 
     /**
      * Custom dropdown icon template.
      * @group Templates
      */
-    @ContentChild('dropdownicon', { descendants: false }) dropdownIconTemplate: Nullable<TemplateRef<SelectIconTemplateContext>>;
+    readonly dropdownIconTemplate = contentChild<TemplateRef<SelectIconTemplateContext>>('dropdownicon', { descendants: false });
 
     /**
      * Custom loading icon template.
      * @group Templates
      */
-    @ContentChild('loadingicon', { descendants: false }) loadingIconTemplate: Nullable<TemplateRef<void>>;
+    readonly loadingIconTemplate = contentChild<TemplateRef<void>>('loadingicon', { descendants: false });
 
     /**
      * Custom clear icon template.
      * @group Templates
      */
-    @ContentChild('clearicon', { descendants: false }) clearIconTemplate: Nullable<TemplateRef<SelectIconTemplateContext>>;
+    readonly clearIconTemplate = contentChild<TemplateRef<SelectIconTemplateContext>>('clearicon', { descendants: false });
 
     /**
      * Custom filter icon template.
      * @group Templates
      */
-    @ContentChild('filtericon', { descendants: false }) filterIconTemplate: Nullable<TemplateRef<void>>;
+    readonly filterIconTemplate = contentChild<TemplateRef<void>>('filtericon', { descendants: false });
 
     /**
      * Custom on icon template.
      * @group Templates
      */
-    @ContentChild('onicon', { descendants: false }) onIconTemplate: Nullable<TemplateRef<void>>;
+    readonly onIconTemplate = contentChild<TemplateRef<void>>('onicon', { descendants: false });
 
     /**
      * Custom off icon template.
      * @group Templates
      */
-    @ContentChild('officon', { descendants: false }) offIconTemplate: Nullable<TemplateRef<void>>;
+    readonly offIconTemplate = contentChild<TemplateRef<void>>('officon', { descendants: false });
 
     /**
      * Custom cancel icon template.
      * @group Templates
      */
-    @ContentChild('cancelicon', { descendants: false }) cancelIconTemplate: Nullable<TemplateRef<void>>;
+    readonly cancelIconTemplate = contentChild<TemplateRef<void>>('cancelicon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _itemTemplate: TemplateRef<SelectItemTemplateContext> | undefined;
 
@@ -675,8 +652,6 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     filterOptions: SelectFilterOptions | undefined;
 
     _options = signal<any[] | null | undefined>(null);
-
-    _placeholder = signal<string | undefined>(undefined);
 
     value: any;
 
@@ -735,7 +710,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     get focusedOptionId() {
-        return this.focusedOptionIndex() !== -1 ? `${this.id}_${this.focusedOptionIndex()}` : null;
+        return this.focusedOptionIndex() !== -1 ? `${this.id()}_${this.focusedOptionIndex()}` : null;
     }
 
     visibleOptions = computed(() => {
@@ -746,7 +721,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
 
             const filteredOptions =
                 !_filterBy && !this.filterFields() && !this.optionValue()
-                    ? this.options?.filter((option) => {
+                    ? this.options()?.filter((option) => {
                           if (option.label) {
                               return option.label.toString().toLowerCase().indexOf(this._filterValue().toLowerCase().trim()) !== -1;
                           }
@@ -755,7 +730,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                     : this.filterService.filter(options, this.searchFields(), this._filterValue().trim(), this.filterMatchMode(), this.filterLocale());
 
             if (this.group()) {
-                const optionGroups = this.options || [];
+                const optionGroups = this.options() || [];
                 const filtered: any[] = [];
 
                 optionGroups.forEach((group) => {
@@ -834,6 +809,13 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             }
             this.cd.markForCheck();
         });
+
+        effect(() => {
+            const val = this.filterValue();
+            if (val !== undefined) {
+                this._filterValue.set(val);
+            }
+        });
     }
 
     private isModelValueNotSet(): boolean {
@@ -841,11 +823,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     private getAllVisibleAndNonVisibleOptions() {
-        return this.group() ? this.flatOptions(this.options) : this.options || [];
+        return this.group() ? this.flatOptions(this.options()) : this.options() || [];
     }
 
     onInit() {
-        this.id = this.id || uuid('pn_id_');
+        if (!this.id()) this.id.set(uuid('pn_id_'));
         this.autoUpdateModel();
 
         if (this.filterBy()) {
@@ -857,7 +839,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -938,15 +920,15 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
 
             this.zone.runOutsideAngular(() => {
                 setTimeout(() => {
-                    if (this.overlayViewChild) {
-                        this.overlayViewChild.alignOverlay();
+                    if (this.overlayViewChild()) {
+                        this.overlayViewChild()!.alignOverlay();
                     }
                 }, 1);
             });
         }
 
         if (this.selectedOptionUpdated && this.itemsWrapper) {
-            let selectedItem = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, 'li[data-p-selected="true"]');
+            let selectedItem = <any>findSingle(this.overlayViewChild()?.overlayViewChild()?.nativeElement, 'li[data-p-selected="true"]');
             if (selectedItem) {
                 scrollInView(this.itemsWrapper, selectedItem);
             }
@@ -1004,7 +986,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     allowModelChange() {
-        return !!this.modelValue() && !this.placeholder() && (this.modelValue() === undefined || this.modelValue() === null) && !this.editable() && this.options && this.options.length;
+        return !!this.modelValue() && !this.placeholder() && (this.modelValue() === undefined || this.modelValue() === null) && !this.editable() && this.options() && this.options()?.length;
     }
 
     isSelected(option) {
@@ -1029,20 +1011,20 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         if (parentElement && isInFloatingLabel && !this.selectedOption) {
             const label = parentElement.querySelector('label');
             if (label) {
-                this._placeholder.set(label.textContent);
+                this.placeholder.set(label.textContent);
             }
         }
     }
 
     updateEditableLabel(): void {
-        if (this.editableInputViewChild) {
-            this.editableInputViewChild.nativeElement.value = this.getOptionLabel(this.selectedOption) || this.modelValue() || '';
+        if (this.editableInputViewChild()) {
+            this.editableInputViewChild()!.nativeElement.value = this.getOptionLabel(this.selectedOption) || this.modelValue() || '';
         }
     }
 
     clearEditableLabel(): void {
-        if (this.editableInputViewChild) {
-            this.editableInputViewChild.nativeElement.value = '';
+        if (this.editableInputViewChild()) {
+            this.editableInputViewChild()!.nativeElement.value = '';
         }
     }
 
@@ -1113,8 +1095,8 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     public resetFilter(): void {
         this._filterValue.set(null);
 
-        if (this.filterViewChild && this.filterViewChild.nativeElement) {
-            this.filterViewChild.nativeElement.value = '';
+        if (this.filterViewChild() && this.filterViewChild()?.nativeElement) {
+            this.filterViewChild()!.nativeElement.value = '';
         }
     }
 
@@ -1125,18 +1107,18 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
 
         if (event.target.tagName === 'INPUT' || event.target.getAttribute('data-pc-section') === 'clearicon' || event.target.closest('[data-pc-section="clearicon"]')) {
             return;
-        } else if (!this.overlayViewChild || !this.overlayViewChild.el.nativeElement.contains(event.target)) {
+        } else if (!this.overlayViewChild() || !this.overlayViewChild()!.el.nativeElement.contains(event.target)) {
             this.overlayVisible ? this.hide(true) : this.show(true);
         }
 
-        this.focusInputViewChild?.nativeElement.focus({ preventScroll: true });
+        this.focusInputViewChild()?.nativeElement.focus({ preventScroll: true });
         this.onClick.emit(event);
         this.clicked.set(true);
         this.cd.detectChanges();
     }
 
     isEmpty() {
-        return !this._options() || (this.visibleOptions() && this.visibleOptions().length === 0);
+        return !this.options() || (this.visibleOptions() && this.visibleOptions().length === 0);
     }
 
     onEditableInput(event: Event) {
@@ -1163,22 +1145,22 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         this.focusedOptionIndex.set(this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : this.editable() ? -1 : this.findSelectedOptionIndex());
 
         if (isFocus) {
-            focus(this.focusInputViewChild?.nativeElement);
+            focus(this.focusInputViewChild()?.nativeElement);
         }
 
         this.cd.markForCheck();
     }
 
     onOverlayBeforeEnter(event: any) {
-        this.itemsWrapper = <any>findSingle(this.overlayViewChild?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
-        this.virtualScroll() && this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
+        this.itemsWrapper = <any>findSingle(this.overlayViewChild()?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-section="listcontainer"]');
+        this.virtualScroll() && this.scroller()?.setContentEl(this.itemsViewChild()?.nativeElement);
 
-        if (this.options && this.options.length) {
+        if (this.options() && this.options()?.length) {
             if (this.virtualScroll()) {
                 const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
                 if (selectedIndex !== -1) {
                     setTimeout(() => {
-                        this.scroller?.scrollToIndex(selectedIndex);
+                        this.scroller()?.scrollToIndex(selectedIndex);
                     }, 10);
                 }
             } else {
@@ -1189,11 +1171,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             }
         }
 
-        if (this.filterViewChild && this.filterViewChild.nativeElement) {
+        if (this.filterViewChild() && this.filterViewChild()?.nativeElement) {
             this.preventModelTouched = true;
 
             if (this.autofocusFilter() && !this.editable()) {
-                this.filterViewChild.nativeElement.focus();
+                this.filterViewChild()!.nativeElement.focus();
             }
         }
         this.onShow.emit(event);
@@ -1221,11 +1203,11 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             this.resetFilter();
         }
         if (isFocus) {
-            if (this.focusInputViewChild) {
-                focus(this.focusInputViewChild?.nativeElement);
+            if (this.focusInputViewChild()) {
+                focus(this.focusInputViewChild()?.nativeElement);
             }
-            if (this.editable() && this.editableInputViewChild) {
-                focus(this.editableInputViewChild?.nativeElement);
+            if (this.editable() && this.editableInputViewChild()) {
+                focus(this.editableInputViewChild()?.nativeElement);
             }
         }
         this.cd.markForCheck();
@@ -1416,15 +1398,15 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     scrollInView(index = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedOptionId;
+        const id = index !== -1 ? `${this.id()}_${index}` : this.focusedOptionId;
 
-        if (this.itemsViewChild && this.itemsViewChild.nativeElement) {
-            const element = findSingle(this.itemsViewChild.nativeElement, `li[id="${id}"]`);
+        if (this.itemsViewChild() && this.itemsViewChild()?.nativeElement) {
+            const element = findSingle(this.itemsViewChild()!.nativeElement, `li[id="${id}"]`);
             if (element) {
                 element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             } else if (!this.virtualScrollerDisabled) {
                 setTimeout(() => {
-                    this.virtualScroll() && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+                    this.virtualScroll() && this.scroller()?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
                 }, 0);
             }
         }
@@ -1600,7 +1582,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     onTabKey(event, pressedInInputText = false) {
         if (!pressedInInputText) {
             if (this.overlayVisible && this.hasFocusableElements()) {
-                focus(event.shiftKey ? this.lastHiddenFocusableElementOnOverlay?.nativeElement : this.firstHiddenFocusableElementOnOverlay?.nativeElement);
+                focus(event.shiftKey ? this.lastHiddenFocusableElementOnOverlay()?.nativeElement : this.firstHiddenFocusableElementOnOverlay()?.nativeElement);
                 event.preventDefault();
             } else {
                 if (this.focusedOptionIndex() !== -1 && this.overlayVisible) {
@@ -1614,19 +1596,19 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onFirstHiddenFocus(event) {
-        const focusableEl = event.relatedTarget === this.focusInputViewChild?.nativeElement ? getFirstFocusableElement(this.overlayViewChild?.el?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild?.nativeElement;
+        const focusableEl = event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.el?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
         focus(focusableEl);
     }
 
     onLastHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild?.nativeElement ? getLastFocusableElement(this.overlayViewChild?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
 
     hasFocusableElements() {
-        return getFocusableElements(this.overlayViewChild?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
     }
 
     onBackspaceKey(event: KeyboardEvent, pressedInInputText = false) {
@@ -1682,16 +1664,16 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         this._filterValue.set(value);
         this.focusedOptionIndex.set(-1);
         this.onFilter.emit({ originalEvent: event, filter: this._filterValue() });
-        !this.virtualScrollerDisabled && this.scroller?.scrollToIndex(0);
+        !this.virtualScrollerDisabled && this.scroller()?.scrollToIndex(0);
         setTimeout(() => {
-            this.overlayViewChild?.alignOverlay();
+            this.overlayViewChild()?.alignOverlay();
         });
         this.cd.markForCheck();
     }
 
     applyFocus(): void {
         if (this.editable()) (findSingle(this.el.nativeElement, '[data-pc-section="label"]') as any).focus();
-        else focus(this.focusInputViewChild?.nativeElement);
+        else focus(this.focusInputViewChild()?.nativeElement);
     }
     /**
      * Applies focus.
@@ -1708,8 +1690,8 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         this.updateModel(null, event);
         this.clearEditableLabel();
         this.onModelTouched();
-        this.onChange.emit({ originalEvent: event, value: this.value });
-        this.onClear.emit(event);
+        this.onChange.emit({ originalEvent: event!, value: this.value });
+        this.onClear.emit(event!);
         this.resetFilter();
     }
 
@@ -1748,7 +1730,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             clearable: this.showClear(),
             disabled: this.$disabled(),
             [this.size() as string]: this.size(),
-            empty: !this.editable() && !this.selectedItemTemplate && (!this.label?.() || this.label() === 'p-emptylabel' || this.label()?.length === 0)
+            empty: !this.editable() && !this.selectedItemTemplate() && (!this.label?.() || this.label() === 'p-emptylabel' || this.label()?.length === 0)
         });
     }
 
