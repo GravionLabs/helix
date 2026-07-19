@@ -13,10 +13,10 @@
         [pt]="ptm('pcSourceMoveUpButton')"
         [unstyled]="unstyled()"
         >
-        @if (!moveUpIconTemplate && !_moveUpIconTemplate) {
+        @if (!moveUpIconTemplate() && !_moveUpIconTemplate) {
           <svg data-p-icon="angle-up" [pt]="ptm('pcSourceMoveUpButton')['icon']" hButtonIcon />
         }
-        <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveUpIconTemplate() || _moveUpIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -30,10 +30,10 @@
         [pt]="ptm('pcSourceMoveTopButton')"
         [unstyled]="unstyled()"
         >
-        @if (!moveTopIconTemplate && !_moveTopIconTemplate) {
+        @if (!moveTopIconTemplate() && !_moveTopIconTemplate) {
           <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcSourceMoveTopButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveTopIconTemplate || _moveTopIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveTopIconTemplate() || _moveTopIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -48,10 +48,10 @@
         [unstyled]="unstyled()"
         hostName="picklist"
         >
-        @if (!moveDownIconTemplate && !_moveDownIconTemplate) {
+        @if (!moveDownIconTemplate() && !_moveDownIconTemplate) {
           <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcSourceMoveDownButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveDownIconTemplate() || _moveDownIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -66,10 +66,10 @@
         [unstyled]="unstyled()"
         hostName="picklist"
         >
-        @if (!moveBottomIconTemplate || _moveBottomIconTemplate) {
+        @if (!moveBottomIconTemplate() || _moveBottomIconTemplate) {
           <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcSourceMoveBottomButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveBottomIconTemplate() || _moveBottomIconTemplate"></ng-template>
       </button>
     </div>
   }
@@ -108,35 +108,35 @@
       [attr.data-pc-group-section]="'list'"
       [unstyled]="unstyled()"
       >
-      @if (sourceHeaderTemplate || _sourceHeaderTemplate || sourceHeader) {
+      @if (sourceHeaderTemplate() || _sourceHeaderTemplate || sourceHeader()) {
         <ng-template #header>
-          @if (!sourceHeaderTemplate && !_sourceHeaderTemplate) {
-            <div>{{ sourceHeader }}</div>
+          @if (!sourceHeaderTemplate() && !_sourceHeaderTemplate) {
+            <div>{{ sourceHeader() }}</div>
           }
-          <ng-template *ngTemplateOutlet="sourceHeaderTemplate || _sourceHeaderTemplate"></ng-template>
+          <ng-template *ngTemplateOutlet="sourceHeaderTemplate() || _sourceHeaderTemplate"></ng-template>
         </ng-template>
       }
-      @if (sourceFilterTemplate || _sourceFilterTemplate) {
+      @if (sourceFilterTemplate() || _sourceFilterTemplate) {
         <ng-template #filter>
-          <ng-template *ngTemplateOutlet="sourceFilterTemplate || _sourceFilterTemplate; context: { options: sourceFilterOptions }"></ng-template>
+          <ng-template *ngTemplateOutlet="sourceFilterTemplate() || _sourceFilterTemplate; context: { options: sourceFilterOptions }"></ng-template>
         </ng-template>
       }
-      @if (sourceFilterIconTemplate || _sourceFilterIconTemplate) {
-        <ng-container *ngTemplateOutlet="sourceFilterIconTemplate || _sourceFilterIconTemplate"></ng-container>
+      @if (sourceFilterIconTemplate() || _sourceFilterIconTemplate) {
+        <ng-container *ngTemplateOutlet="sourceFilterIconTemplate() || _sourceFilterIconTemplate"></ng-container>
       }
-      @if (itemTemplate || _itemTemplate) {
+      @if (itemTemplate() || _itemTemplate) {
         <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
-          <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
+          <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
         </ng-template>
       }
-      @if (emptyMessageSourceTemplate || _emptyMessageSourceTemplate) {
+      @if (emptyMessageSourceTemplate() || _emptyMessageSourceTemplate) {
         <ng-template #empty>
-          <ng-container *ngTemplateOutlet="emptyMessageSourceTemplate || _emptyMessageSourceTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="emptyMessageSourceTemplate() || _emptyMessageSourceTemplate"></ng-container>
         </ng-template>
       }
-      @if (emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate) {
+      @if (emptyFilterMessageSourceTemplate() || _emptyFilterMessageSourceTemplate) {
         <ng-template #emptyfilter>
-          <ng-container *ngTemplateOutlet="emptyFilterMessageSourceTemplate || _emptyFilterMessageSourceTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="emptyFilterMessageSourceTemplate() || _emptyFilterMessageSourceTemplate"></ng-container>
         </ng-template>
       }
     </h-listbox>
@@ -155,7 +155,7 @@
       hostName="picklist"
       [unstyled]="unstyled()"
       >
-      @if (!moveToTargetIconTemplate && !_moveToTargetIconTemplate) {
+      @if (!moveToTargetIconTemplate() && !_moveToTargetIconTemplate) {
         @if (!viewChanged) {
           <svg data-p-icon="angle-right" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
         }
@@ -163,7 +163,7 @@
           <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
         }
       }
-      <ng-template *ngTemplateOutlet="moveToTargetIconTemplate || _moveToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+      <ng-template *ngTemplateOutlet="moveToTargetIconTemplate() || _moveToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
     </button>
     <button
       type="button"
@@ -177,7 +177,7 @@
       [pt]="ptm('pcMoveAllToTargetButton')"
       [unstyled]="unstyled()"
       >
-      @if (!moveAllToTargetIconTemplate && !_moveAllToTargetIconTemplate) {
+      @if (!moveAllToTargetIconTemplate() && !_moveAllToTargetIconTemplate) {
         @if (!viewChanged) {
           <svg data-p-icon="angle-double-right" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
         }
@@ -185,7 +185,7 @@
           <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
         }
       }
-      <ng-template *ngTemplateOutlet="moveAllToTargetIconTemplate || _moveAllToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+      <ng-template *ngTemplateOutlet="moveAllToTargetIconTemplate() || _moveAllToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
     </button>
     <button
       type="button"
@@ -200,7 +200,7 @@
       hostName="picklist"
       [unstyled]="unstyled()"
       >
-      @if (!moveToSourceIconTemplate && !_moveToSourceIconTemplate) {
+      @if (!moveToSourceIconTemplate() && !_moveToSourceIconTemplate) {
         @if (!viewChanged) {
           <svg data-p-icon="angle-left" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
         }
@@ -208,7 +208,7 @@
           <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
         }
       }
-      <ng-template *ngTemplateOutlet="moveToSourceIconTemplate || _moveToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+      <ng-template *ngTemplateOutlet="moveToSourceIconTemplate() || _moveToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
     </button>
     <button
       type="button"
@@ -223,7 +223,7 @@
       hostName="picklist"
       [unstyled]="unstyled()"
       >
-      @if (!moveAllToSourceIconTemplate && !_moveAllToSourceIconTemplate) {
+      @if (!moveAllToSourceIconTemplate() && !_moveAllToSourceIconTemplate) {
         @if (!viewChanged) {
           <svg data-p-icon="angle-double-left" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
         }
@@ -231,7 +231,7 @@
           <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
         }
       }
-      <ng-template *ngTemplateOutlet="moveAllToSourceIconTemplate || _moveAllToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
+      <ng-template *ngTemplateOutlet="moveAllToSourceIconTemplate() || _moveAllToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
     </button>
   </div>
   <div [class]="cx('targetListContainer')" [attr.data-pc-group-section]="'listcontainer'" [hBind]="ptm('targetListContainer')">
@@ -269,35 +269,35 @@
       hostName="picklist"
       [unstyled]="unstyled()"
       >
-      @if (targetHeaderTemplate || _targetHeaderTemplate || targetHeader) {
+      @if (targetHeaderTemplate() || _targetHeaderTemplate || targetHeader()) {
         <ng-template #header>
-          @if (!targetHeaderTemplate && !_targetHeaderTemplate) {
-            <div>{{ targetHeader }}</div>
+          @if (!targetHeaderTemplate() && !_targetHeaderTemplate) {
+            <div>{{ targetHeader() }}</div>
           }
-          <ng-template *ngTemplateOutlet="targetHeaderTemplate || _targetHeaderTemplate"></ng-template>
+          <ng-template *ngTemplateOutlet="targetHeaderTemplate() || _targetHeaderTemplate"></ng-template>
         </ng-template>
       }
-      @if (targetFilterTemplate || _targetFilterTemplate) {
+      @if (targetFilterTemplate() || _targetFilterTemplate) {
         <ng-template #filter>
-          <ng-template *ngTemplateOutlet="targetFilterTemplate || _targetFilterTemplate; context: { options: targetFilterOptions }"></ng-template>
+          <ng-template *ngTemplateOutlet="targetFilterTemplate() || _targetFilterTemplate; context: { options: targetFilterOptions }"></ng-template>
         </ng-template>
       }
-      @if (targetFilterIconTemplate || _targetFilterIconTemplate) {
-        <ng-container *ngTemplateOutlet="targetFilterIconTemplate || _targetFilterIconTemplate"></ng-container>
+      @if (targetFilterIconTemplate() || _targetFilterIconTemplate) {
+        <ng-container *ngTemplateOutlet="targetFilterIconTemplate() || _targetFilterIconTemplate"></ng-container>
       }
-      @if (itemTemplate || _itemTemplate) {
+      @if (itemTemplate() || _itemTemplate) {
         <ng-template #item let-item let-index="index" let-selected="selected" let-disabled="disabled">
-          <ng-container *ngTemplateOutlet="itemTemplate || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
+          <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item, index: index, selected: selected, disabled: disabled }"></ng-container>
         </ng-template>
       }
-      @if (emptyMessageTargetTemplate || _emptyMessageTargetTemplate) {
+      @if (emptyMessageTargetTemplate() || _emptyMessageTargetTemplate) {
         <ng-template #empty>
-          <ng-container *ngTemplateOutlet="emptyMessageTargetTemplate || _emptyMessageTargetTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="emptyMessageTargetTemplate() || _emptyMessageTargetTemplate"></ng-container>
         </ng-template>
       }
-      @if (emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate) {
+      @if (emptyFilterMessageTargetTemplate() || _emptyFilterMessageTargetTemplate) {
         <ng-template #emptyfilter>
-          <ng-container *ngTemplateOutlet="emptyFilterMessageTargetTemplate || _emptyFilterMessageTargetTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="emptyFilterMessageTargetTemplate() || _emptyFilterMessageTargetTemplate"></ng-container>
         </ng-template>
       }
     </h-listbox>
@@ -317,10 +317,10 @@
         hostName="picklist"
         [unstyled]="unstyled()"
         >
-        @if (!moveUpIconTemplate && !_moveUpIconTemplate) {
+        @if (!moveUpIconTemplate() && !_moveUpIconTemplate) {
           <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcTargetMoveUpButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveUpIconTemplate || _moveUpIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveUpIconTemplate() || _moveUpIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -335,10 +335,10 @@
         hostName="picklist"
         [unstyled]="unstyled()"
         >
-        @if (!moveTopIconTemplate && !_moveTopIconTemplate) {
+        @if (!moveTopIconTemplate() && !_moveTopIconTemplate) {
           <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcTargetMoveTopButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveTopIconTemplate || moveTopIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveTopIconTemplate() || moveTopIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -353,10 +353,10 @@
         hostName="picklist"
         [unstyled]="unstyled()"
         >
-        @if (!moveDownIconTemplate && !_moveDownIconTemplate) {
+        @if (!moveDownIconTemplate() && !_moveDownIconTemplate) {
           <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcTargetMoveDownButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveDownIconTemplate || _moveDownIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveDownIconTemplate() || _moveDownIconTemplate"></ng-template>
       </button>
       <button
         type="button"
@@ -371,10 +371,10 @@
         hostName="picklist"
         [unstyled]="unstyled()"
         >
-        @if (!moveBottomIconTemplate && !_moveBottomIconTemplate) {
+        @if (!moveBottomIconTemplate() && !_moveBottomIconTemplate) {
           <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcTargetMoveBottomButton')['icon']" />
         }
-        <ng-template *ngTemplateOutlet="moveBottomIconTemplate || _moveBottomIconTemplate"></ng-template>
+        <ng-template *ngTemplateOutlet="moveBottomIconTemplate() || _moveBottomIconTemplate"></ng-template>
       </button>
     </div>
   }
