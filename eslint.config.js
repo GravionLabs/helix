@@ -45,4 +45,23 @@ module.exports = [
             '@angular-eslint/template/eqeqeq': 'off',
         },
     },
+
+    // Guard against reintroducing decorator-based Input/Output/Query/Host APIs
+    // now that projects/helix has been migrated to signals (#373). Spec files
+    // are exempt: test-host components there legitimately use classic decorators.
+    {
+        files: ['projects/helix/**/*.ts'],
+        ignores: ['projects/helix/**/*.spec.ts'],
+        rules: {
+            'no-restricted-syntax': [
+                'error',
+                {
+                    selector:
+                        "Decorator > CallExpression > Identifier.callee[name=/^(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)$/]",
+                    message:
+                        'Decorator-based Input/Output/ViewChild/ContentChild/ContentChildren/HostListener/HostBinding are banned here — use input()/model()/output()/viewChild()/contentChild()/contentChildren()/host metadata instead. If this is a documented exception, add an inline eslint-disable-next-line with justification.',
+                },
+            ],
+        },
+    },
 ];
