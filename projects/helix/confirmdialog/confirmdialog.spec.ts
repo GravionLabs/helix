@@ -1010,7 +1010,8 @@ describe('ConfirmDialog', () => {
         });
 
         it('should have option method for accessing properties', () => {
-            confirmDialogInstance.message = 'test message';
+            fixture.componentInstance.message = 'test message';
+            fixture.detectChanges();
 
             expect(confirmDialogInstance.option('message')).toBe('test message');
         });

@@ -8,7 +8,7 @@ import { MeterGroup, MeterGroupLabel, MeterGroupModule } from './metergroup';
 @Component({
     standalone: false,
     selector: 'test-basic-metergroup',
-    template: `<p-metergroup [value]="value" [min]="min" [max]="max"></p-metergroup>`
+    template: `<p-metergroup [value]="value" [min]="min" [max]="max" [orientation]="orientation"></p-metergroup>`
 })
 class TestBasicMeterGroupComponent {
     value: MeterItem[] = [
@@ -19,6 +19,7 @@ class TestBasicMeterGroupComponent {
     ];
     min = 0;
     max = 100;
+    orientation: 'horizontal' | 'vertical' = 'horizontal';
 }
 
 @Component({
@@ -88,10 +89,12 @@ class TestMeterGroupWithIconsComponent {
 @Component({
     standalone: false,
     selector: 'test-metergroup-empty',
-    template: `<p-metergroup [value]="value"></p-metergroup>`
+    template: `<p-metergroup [value]="value" [min]="min" [max]="max"></p-metergroup>`
 })
 class TestMeterGroupEmptyComponent {
-    value: MeterItem[] = [];
+    value: MeterItem[] | undefined | null = [];
+    min = 0;
+    max = 100;
 }
 
 @Component({
@@ -189,8 +192,9 @@ describe('MeterGroup', () => {
             expect(percent).toBe(16);
 
             // Test with different min/max
-            meterGroup.min = 10;
-            meterGroup.max = 110;
+            component.min = 10;
+            component.max = 110;
+            fixture.detectChanges();
             const percent2 = meterGroup.percent(60);
             expect(percent2).toBe(50);
         });
@@ -219,7 +223,8 @@ describe('MeterGroup', () => {
         });
 
         it('should apply meter styles correctly for vertical orientation', () => {
-            meterGroup.orientation = 'vertical';
+            component.orientation = 'vertical';
+            fixture.detectChanges();
             const meterStyle = meterGroup.meterStyle({ value: 40, color: '#00ff00' });
             expect(meterStyle.backgroundColor).toBe('#00ff00');
             expect(meterStyle.height).toBe('40%');
@@ -697,12 +702,14 @@ describe('MeterGroup', () => {
         });
 
         it('should handle undefined value', () => {
-            meterGroup.value = undefined as any;
+            component.value = undefined;
+            fixture.detectChanges();
             expect(meterGroup.totalPercent()).toBe(0);
         });
 
         it('should handle null value gracefully', () => {
-            meterGroup.value = null as any;
+            component.value = null;
+            fixture.detectChanges();
             expect(meterGroup.percentages()).toEqual([]);
         });
 
@@ -737,14 +744,16 @@ describe('MeterGroup', () => {
 
         it('should handle boundary values', () => {
             // Test with min = max
-            meterGroup.min = 50;
-            meterGroup.max = 50;
+            component.min = 50;
+            component.max = 50;
+            fixture.detectChanges();
             const percent = meterGroup.percent(50);
             expect(percent).toBe(100); // When min = max, any value should be 100%
 
             // Reset to normal
-            meterGroup.min = 0;
-            meterGroup.max = 100;
+            component.min = 0;
+            component.max = 100;
+            fixture.detectChanges();
 
             // Test with very large numbers
             const largePercent = meterGroup.percent(Number.MAX_SAFE_INTEGER);

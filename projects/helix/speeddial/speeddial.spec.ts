@@ -515,11 +515,13 @@ describe('SpeedDial', () => {
             expect(speedDialInstance.buttonClassName()).toBe('custom-button');
         });
 
-        it('should update icon properties', () => {
-            // Set properties directly on the component instance
-            speedDialInstance.showIcon = 'pi pi-plus';
-            speedDialInstance.hideIcon = 'pi pi-times';
-            speedDialInstance.rotateAnimation = false;
+        it('should update icon properties', async () => {
+            // Set properties via the host component and flush inputs down to the child
+            component.showIcon = 'pi pi-plus';
+            component.hideIcon = 'pi pi-times';
+            component.rotateAnimation = false;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             expect(speedDialInstance.showIcon()).toBe('pi pi-plus');
             expect(speedDialInstance.hideIcon()).toBe('pi pi-times');
@@ -1275,16 +1277,20 @@ describe('SpeedDial', () => {
             expect(speedDialInstance.maskClassName()).toBe('custom-mask-class');
         });
 
-        it('should have correct button icon class based on state', () => {
+        it('should have correct button icon class based on state', async () => {
             // Test buttonIconClass getter logic directly
-            speedDialInstance.showIcon = 'pi pi-plus';
-            speedDialInstance.hideIcon = undefined as any;
-            speedDialInstance._visible = false;
+            component.showIcon = 'pi pi-plus';
+            component.hideIcon = undefined as any;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
+            speedDialInstance.visible.set(false);
             expect(speedDialInstance.buttonIconClass).toBe('pi pi-plus');
 
             // When visible and hideIcon is set
-            speedDialInstance.hideIcon = 'pi pi-times';
-            speedDialInstance._visible = true;
+            component.hideIcon = 'pi pi-times';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
+            speedDialInstance.visible.set(true);
             expect(speedDialInstance.buttonIconClass).toBe('pi pi-times');
         });
     });
@@ -1371,7 +1377,9 @@ describe('SpeedDial', () => {
         });
 
         it('should handle missing container element gracefully', () => {
-            speedDialInstance.container = undefined as any;
+            // container is a viewChild() signal; simulate the "not resolved" case by
+            // stubbing the signal function itself.
+            (speedDialInstance as unknown as { container: () => undefined }).container = () => undefined;
 
             expect(() => {
                 speedDialInstance.isOutsideClicked(new Event('click'));
@@ -1583,7 +1591,7 @@ describe('SpeedDial', () => {
             it('should apply string class to mask when visible', async () => {
                 ptComponent.visible = true;
                 ptFixture.componentRef.setInput('pt', { mask: 'MASK_CLASS' });
-                ptSpeedDialInstance.mask = true;
+                ptFixture.componentRef.setInput('mask', true);
                 ptFixture.detectChanges();
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
@@ -1678,7 +1686,7 @@ describe('SpeedDial', () => {
                         'data-p-mask': true
                     }
                 });
-                ptSpeedDialInstance.mask = true;
+                ptFixture.componentRef.setInput('mask', true);
                 ptFixture.detectChanges();
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
@@ -2073,7 +2081,7 @@ describe('SpeedDial', () => {
                 expect(ptOptions).toBeDefined();
 
                 // Test visibility property exists
-                expect(ptSpeedDialInstance._visible).toBeDefined();
+                expect(ptSpeedDialInstance.visible()).toBeDefined();
             });
         });
 
@@ -2087,7 +2095,7 @@ describe('SpeedDial', () => {
                     list: 'LIST_ALL',
                     item: 'ITEM_ALL'
                 });
-                ptSpeedDialInstance.mask = true;
+                ptFixture.componentRef.setInput('mask', true);
                 ptFixture.detectChanges();
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();

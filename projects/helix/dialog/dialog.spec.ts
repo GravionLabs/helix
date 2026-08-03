@@ -44,6 +44,7 @@ import { Dialog } from './dialog';
             [closeButtonProps]="closeButtonProps"
             [maximizeButtonProps]="maximizeButtonProps"
             [role]="role"
+            [breakpoints]="breakpoints"
             (onShow)="onShowEvent($event)"
             (onHide)="onHideEvent($event)"
             (onMaximize)="onMaximizeEvent($event)"
@@ -477,7 +478,7 @@ describe('Dialog', () => {
         });
 
         it('should emit visibleChange event when close method is called', async () => {
-            spyOn(dialogInstance.visibleChange, 'emit');
+            spyOn(component, 'onVisibleChangeEvent');
 
             component.visible = true;
             fixture.changeDetectorRef.markForCheck();
@@ -486,7 +487,7 @@ describe('Dialog', () => {
 
             dialogInstance.close(new MouseEvent('click'));
 
-            expect(dialogInstance.visibleChange.emit).toHaveBeenCalledWith(false);
+            expect(component.onVisibleChangeEvent).toHaveBeenCalledWith(false);
         });
 
         it('should emit onMaximize event when maximize button is clicked', async () => {
@@ -569,7 +570,7 @@ describe('Dialog', () => {
                 dialogInstance.enableModality();
                 await new Promise((resolve) => setTimeout(resolve, 50));
 
-                spyOn(dialogInstance.visibleChange, 'emit');
+                spyOn(component, 'onVisibleChangeEvent');
 
                 // Simulate mousedown on wrapper (which is what the mask click listener listens to)
                 const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true });
@@ -583,7 +584,7 @@ describe('Dialog', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                expect(dialogInstance.visibleChange.emit).toHaveBeenCalledWith(false);
+                expect(component.onVisibleChangeEvent).toHaveBeenCalledWith(false);
             } else {
                 // If no wrapper, just test that dismissableMask property is set correctly
                 expect(dialogInstance.dismissableMask()).toBe(true);
@@ -1233,7 +1234,8 @@ describe('Dialog', () => {
 
         it('should create breakpoint styles when breakpoints are provided', () => {
             // Set breakpoints on dialogInstance directly since it's an input property
-            dialogInstance.breakpoints = { '960px': '75vw', '640px': '90vw' };
+            component.breakpoints = { '960px': '75vw', '640px': '90vw' };
+            fixture.changeDetectorRef.markForCheck();
 
             spyOn(dialogInstance, 'createStyle');
             dialogInstance.ngOnInit();

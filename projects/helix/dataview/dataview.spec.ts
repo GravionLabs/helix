@@ -414,11 +414,13 @@ describe('DataView', () => {
             expect(dataview.hasFilter()).toBeFalsy();
         });
 
-        it('should create lazy load metadata', () => {
+        it('should create lazy load metadata', async () => {
             dataview.first.set(10);
             dataview.rows.set(5);
-            dataview.sortField = 'name';
-            dataview.sortOrder = -1;
+            component.sortField = 'name';
+            component.sortOrder = -1;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             const metadata = dataview.createLazyLoadMetadata();
 
@@ -436,14 +438,16 @@ describe('DataView', () => {
             expect(element).toBe(dataview.el.nativeElement.children[0]);
         });
 
-        it('should update totalRecords', () => {
+        it('should update totalRecords', async () => {
             dataview.totalRecords.set(undefined as any);
             dataview._value = component.products;
             dataview.updateTotalRecords();
 
             expect(dataview.totalRecords()).toBe(5);
 
-            dataview.lazy = true;
+            component.lazy = true;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             dataview.totalRecords.set(100);
             dataview.updateTotalRecords();
 
@@ -1054,28 +1058,34 @@ describe('DataView', () => {
     describe('TrackBy Function', () => {
         it('should use default trackBy function', () => {
             const item = { id: 1, name: 'Test' };
-            const result = dataview.trackBy(0, item);
+            const result = dataview.trackBy()(0, item);
             expect(result).toBe(item);
         });
 
-        it('should use custom trackBy function', () => {
+        it('should use custom trackBy function', async () => {
             const customTrackBy = (index: number, item: any) => item.id;
-            dataview.trackBy = customTrackBy;
+            component.trackBy = customTrackBy;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             const item = { id: 1, name: 'Test' };
-            const result = dataview.trackBy(0, item);
+            const result = dataview.trackBy()(0, item);
             expect(result).toBe(1);
         });
     });
 
     describe('Empty Message Label', () => {
-        it('should return custom empty message when provided', () => {
-            dataview.emptyMessage = 'Custom empty message';
+        it('should return custom empty message when provided', async () => {
+            component.emptyMessage = 'Custom empty message';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(dataview.emptyMessageLabel).toBe('Custom empty message');
         });
 
-        it('should return translation when no custom message', () => {
-            dataview.emptyMessage = '';
+        it('should return translation when no custom message', async () => {
+            component.emptyMessage = '';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(dataview.emptyMessageLabel).toBeTruthy();
         });
     });

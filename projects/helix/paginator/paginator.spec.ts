@@ -232,13 +232,17 @@ describe('Paginator', () => {
     });
 
     describe('Public Methods', () => {
-        it('should calculate page count correctly', () => {
+        it('should calculate page count correctly', async () => {
             expect(paginator.getPageCount()).toBe(10);
 
-            paginator.totalRecords = 55;
+            component.totalRecords = 55;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(paginator.getPageCount()).toBe(6);
 
-            paginator.totalRecords = 0;
+            component.totalRecords = 0;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(paginator.getPageCount()).toBe(0);
         });
 
@@ -281,37 +285,47 @@ describe('Paginator', () => {
             expect(paginator.pageLinks).toEqual([2, 3, 4, 5, 6]);
         });
 
-        it('should check empty state', () => {
+        it('should check empty state', async () => {
             expect(paginator.empty()).toBe(false);
 
-            paginator.totalRecords = 0;
+            component.totalRecords = 0;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(paginator.empty()).toBe(true);
         });
 
-        it('should get current page number (1-based)', () => {
+        it('should get current page number (1-based)', async () => {
             expect(paginator.currentPage()).toBe(1);
 
             paginator.first.set(20);
             expect(paginator.currentPage()).toBe(3);
 
-            paginator.totalRecords = 0;
+            component.totalRecords = 0;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(paginator.currentPage()).toBe(0);
         });
 
-        it('should generate current page report correctly', () => {
+        it('should generate current page report correctly', async () => {
             expect(paginator.currentPageReport).toBe('1 of 10');
 
             paginator.first.set(20);
-            paginator.currentPageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
+            component.currentPageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             expect(paginator.currentPageReport).toBe('Showing 21 to 30 of 100 entries');
         });
 
-        it('should handle locale-specific number formatting', () => {
-            paginator.locale = 'ar';
+        it('should handle locale-specific number formatting', async () => {
+            component.locale = 'ar';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             const arabicNumber = paginator.getLocalization(5);
             expect(arabicNumber).toBeDefined();
 
-            paginator.locale = 'en-US';
+            component.locale = 'en-US';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             const englishNumber = paginator.getLocalization(5);
             expect(englishNumber).toBe('5');
         });
@@ -460,10 +474,12 @@ describe('Paginator', () => {
             expect(paginator.onPageChange.emit).not.toHaveBeenCalled();
         });
 
-        it('should handle total records changes appropriately', () => {
+        it('should handle total records changes appropriately', async () => {
             // Test scenario where total records decrease
             paginator.first.set(90); // Page 9
-            paginator.totalRecords = 50; // Now only 5 pages (0-4)
+            component.totalRecords = 50; // Now only 5 pages (0-4)
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             // The component should recognize the inconsistency
             const currentPage = paginator.getPage(); // 9
@@ -518,8 +534,10 @@ describe('Paginator', () => {
             expect(result).toBeDefined();
         });
 
-        it('should validate page boundaries', () => {
-            paginator.totalRecords = 25;
+        it('should validate page boundaries', async () => {
+            component.totalRecords = 25;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             paginator.rows.set(10);
 
             paginator.changePage(5); // Invalid page
@@ -723,8 +741,6 @@ describe('Paginator', () => {
             component.alwaysShow = false;
             component.totalRecords = 5;
             component.rows = 10;
-            paginator.alwaysShow = false;
-            paginator.totalRecords = 5;
             paginator.rows.set(10);
             paginator.updatePageLinks();
             fixture.detectChanges();
@@ -837,8 +853,10 @@ describe('Paginator', () => {
             expect(paginator.paginatorState.rows).toBe(20);
         });
 
-        it('should update state when totalRecords change', () => {
-            paginator.totalRecords = 200;
+        it('should update state when totalRecords change', async () => {
+            component.totalRecords = 200;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             paginator.ngOnChanges({
                 totalRecords: {
                     currentValue: 200,
@@ -852,8 +870,10 @@ describe('Paginator', () => {
             expect(paginator.paginatorState.totalRecords).toBe(200);
         });
 
-        it('should handle pageLinkSize changes', () => {
-            paginator.pageLinkSize = 7;
+        it('should handle pageLinkSize changes', async () => {
+            component.pageLinkSize = 7;
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
             paginator.ngOnChanges({
                 pageLinkSize: {
                     currentValue: 7,

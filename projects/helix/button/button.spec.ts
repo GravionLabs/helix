@@ -394,9 +394,10 @@ describe('Button', () => {
             expect(buttonInstance.style()).toEqual({ backgroundColor: 'red', color: 'white' });
 
             // Manually apply styles to test the style binding works as expected
-            if (buttonInstance.style()) {
-                Object.keys(buttonInstance.style()).forEach((key) => {
-                    buttonElement.style[key] = buttonInstance.style()![key];
+            const buttonStyle = buttonInstance.style();
+            if (buttonStyle) {
+                Object.keys(buttonStyle).forEach((key) => {
+                    buttonElement.style[key] = buttonStyle[key];
                 });
             }
 
@@ -1565,12 +1566,14 @@ describe('ButtonDirective', () => {
 
         it('should update styles when properties change', () => {
             // Test that severity property can be set
-            buttonDirective.severity = 'danger';
-            expect(buttonDirective.severity).toBe('danger');
+            component.severity = 'danger';
+            fixture.detectChanges();
+            expect(buttonDirective.severity()).toBe('danger');
 
             // Test that raised property can be changed
-            buttonDirective.raised = true;
-            expect(buttonDirective.raised).toBe(true);
+            component.raised = true;
+            fixture.detectChanges();
+            expect(buttonDirective.raised()).toBe(true);
         });
     });
 });

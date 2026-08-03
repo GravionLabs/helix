@@ -1049,7 +1049,7 @@ describe('Drawer', () => {
 
         it('should handle empty content projection', async () => {
             const emptyFixture = TestBed.createComponent(Drawer);
-            emptyFixture.componentInstance.visible = true;
+            emptyFixture.componentRef.setInput('visible', true);
             emptyFixture.changeDetectorRef.markForCheck();
             await emptyFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));

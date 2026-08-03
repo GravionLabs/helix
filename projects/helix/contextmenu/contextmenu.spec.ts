@@ -674,11 +674,11 @@ describe('ContextMenu', () => {
             contextMenuInstance.focusedItemInfo.set({ index: 0, level: 0, parentKey: '', item: null });
 
             // Mock the rootmenu property to prevent undefined errors
-            contextMenuInstance.rootmenu = {
+            spyOn(contextMenuInstance, 'rootmenu').and.returnValue({
                 el: {
                     nativeElement: document.createElement('div')
                 }
-            } as any;
+            } as any);
 
             // Create mock menu items structure
             const mockMenuDiv = document.createElement('div');

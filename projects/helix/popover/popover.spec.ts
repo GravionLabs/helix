@@ -114,7 +114,7 @@ class TestPTemplatePopoverComponent {
     standalone: false,
     template: `
         <button #targetButton (click)="popover.toggle($event)">Toggle</button>
-        <p-popover #popover [focusOnShow]="true">
+        <p-popover #popover [focusOnShow]="true" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy">
             <input autofocus type="text" class="focus-input" />
             <button tabindex="0">Button</button>
             <div tabindex="0">Focusable div</div>
@@ -124,6 +124,8 @@ class TestPTemplatePopoverComponent {
 class TestKeyboardNavigationComponent {
     @ViewChild('popover') popover!: Popover;
     @ViewChild('targetButton', { read: ElementRef }) targetButton!: ElementRef;
+    ariaLabel: string | undefined;
+    ariaLabelledBy: string | undefined;
 }
 
 describe('Popover', () => {
@@ -428,8 +430,8 @@ describe('Popover', () => {
             const mockEvent = new MouseEvent('click');
             const target = component.targetButton.nativeElement;
 
-            popoverInstance.ariaLabel = 'Test popover';
-            popoverInstance.ariaLabelledBy = 'test-label';
+            component.ariaLabel = 'Test popover';
+            component.ariaLabelledBy = 'test-label';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
@@ -757,7 +759,8 @@ describe('Popover', () => {
             popoverInstance.overlaySubscription = mockSubscription as any;
 
             popoverInstance.container = document.createElement('div');
-            popoverInstance.autoZIndex = true;
+            component.autoZIndex = true;
+            fixture.changeDetectorRef.markForCheck();
 
             popoverInstance.ngOnDestroy();
 

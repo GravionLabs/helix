@@ -926,7 +926,7 @@ describe('TieredMenu', () => {
 
             // Find the directive bound via the `tooltip` property on the MenuItem:
             // `content` is the @Input('pTooltip') property set directly by Angular
-            const directiveViaTooltipProp = tooltipDirectives.find((d) => d.content === 'Save the file');
+            const directiveViaTooltipProp = tooltipDirectives.find((d) => d.content() === 'Save the file');
             expect(directiveViaTooltipProp).withContext('Tooltip directive not found for item with tooltip property').toBeTruthy();
 
             // Find the directive bound via `tooltipOptions.tooltipLabel`:

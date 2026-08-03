@@ -97,7 +97,7 @@ class TestNestedSplitterComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-splitter [pt]="pt">
+        <p-splitter [pt]="pt" [layout]="layout">
             <ng-template #panel>
                 <div>PT Test Panel 1</div>
             </ng-template>
@@ -109,6 +109,7 @@ class TestNestedSplitterComponent {}
 })
 class TestPTSplitterComponent {
     @Input() pt: any;
+    layout: string | undefined = 'horizontal';
 }
 
 describe('Splitter', () => {
@@ -261,7 +262,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            expect(splitterInstance._panelSizes).toEqual([30, 70]);
+            expect(splitterInstance.panelSizes()).toEqual([30, 70]);
         });
 
         xit('should handle custom percentage values', async () => {
@@ -270,7 +271,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            expect(splitterInstance._panelSizes).toEqual([25, 75]);
+            expect(splitterInstance.panelSizes()).toEqual([25, 75]);
         });
 
         xit('should split equally when no sizes provided', async () => {
@@ -283,7 +284,7 @@ describe('Splitter', () => {
             splitterInstance.ngAfterViewInit();
 
             // When no sizes provided, should split equally
-            expect(splitterInstance._panelSizes.length).toBeGreaterThan(0);
+            expect(splitterInstance.panelSizes().length).toBeGreaterThan(0);
         });
     });
 
@@ -311,7 +312,7 @@ describe('Splitter', () => {
 
             expect(testComponent.resizeStartEvent).toBeDefined();
             expect(testComponent.resizeStartEvent.originalEvent).toBe(mouseEvent);
-            expect(testComponent.resizeStartEvent.sizes).toEqual(splitterInstance._panelSizes);
+            expect(testComponent.resizeStartEvent.sizes).toEqual(splitterInstance.panelSizes());
         });
 
         xit('should emit onResizeEnd event', () => {
@@ -518,7 +519,7 @@ describe('Splitter', () => {
 
             const restored = splitterInstance.restoreState();
             expect(restored).toBe(true);
-            expect(splitterInstance._panelSizes).toEqual([25, 75]);
+            expect(splitterInstance.panelSizes()).toEqual([25, 75]);
         });
 
         xit('should restore state from localStorage', async () => {
@@ -532,7 +533,7 @@ describe('Splitter', () => {
 
             const restored = splitterInstance.restoreState();
             expect(restored).toBe(true);
-            expect(splitterInstance._panelSizes).toEqual([20, 80]);
+            expect(splitterInstance.panelSizes()).toEqual([20, 80]);
         });
 
         xit('should return false when no state exists', async () => {
@@ -629,9 +630,10 @@ describe('Splitter', () => {
             const element = panelElements[0].nativeElement;
 
             // In testing environment, we simulate the ngStyle behavior
-            if (splitterInstance.panelStyle()) {
-                Object.keys(splitterInstance.panelStyle()).forEach((key) => {
-                    element.style[key] = splitterInstance.panelStyle()![key];
+            const splitterPanelStyle = splitterInstance.panelStyle();
+            if (splitterPanelStyle) {
+                Object.keys(splitterPanelStyle).forEach((key) => {
+                    element.style[key] = splitterPanelStyle[key];
                 });
             }
 
@@ -707,7 +709,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            expect(splitterInstance._panelSizes).toBeDefined();
+            expect(splitterInstance.panelSizes()).toBeDefined();
         });
 
         xit('should handle invalid minSizes gracefully', async () => {
@@ -961,7 +963,8 @@ describe('Splitter', () => {
 
         xit('should use instance variables in PT functions', async () => {
             ptSplitter = ptFixture.debugElement.query(By.directive(Splitter)).componentInstance;
-            ptSplitter.layout = 'vertical';
+            ptComponent.layout = 'vertical';
+            ptFixture.detectChanges();
             ptSplitter.dragging = true;
 
             ptComponent.pt = {

@@ -32,13 +32,14 @@ class TestSkeletonShapesComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-dimensions',
-    template: ` <p-skeleton [width]="width" [height]="height" [size]="size" [shape]="shape"> </p-skeleton> `
+    template: ` <p-skeleton [width]="width" [height]="height" [size]="size" [shape]="shape" [borderRadius]="borderRadius"> </p-skeleton> `
 })
 class TestSkeletonDimensionsComponent {
     width = '200px';
     height = '50px';
     size: string | undefined;
     shape = 'rectangle';
+    borderRadius: string | undefined;
 }
 
 @Component({
@@ -110,9 +111,17 @@ class TestSkeletonDataTableComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-empty',
-    template: `<p-skeleton></p-skeleton>`
+    template: `<p-skeleton [width]="width" [height]="height" [shape]="shape" [borderRadius]="borderRadius" [size]="size"></p-skeleton>`
 })
-class TestSkeletonEmptyComponent {}
+class TestSkeletonEmptyComponent {
+    // Mirror the component's own defaults so binding these (instead of leaving
+    // them fully unbound) doesn't change the initial rendered state.
+    width = '100%';
+    height = '1rem';
+    shape = 'rectangle';
+    borderRadius: string | undefined;
+    size: string | undefined;
+}
 
 @Component({
     standalone: false,
@@ -450,8 +459,9 @@ describe('Skeleton', () => {
         });
 
         it('should calculate container style with size property', () => {
-            skeleton.size = '80px';
-            skeleton.borderRadius = '5px';
+            fixture.componentInstance.size = '80px';
+            fixture.componentInstance.borderRadius = '5px';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
 
@@ -461,10 +471,11 @@ describe('Skeleton', () => {
         });
 
         it('should calculate container style with width and height', () => {
-            skeleton.size = undefined as any;
-            skeleton.width = '150px';
-            skeleton.height = '30px';
-            skeleton.borderRadius = '3px';
+            fixture.componentInstance.size = undefined as any;
+            fixture.componentInstance.width = '150px';
+            fixture.componentInstance.height = '30px';
+            fixture.componentInstance.borderRadius = '3px';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
 
@@ -482,7 +493,8 @@ describe('Skeleton', () => {
         });
 
         it('should handle missing borderRadius', () => {
-            skeleton.borderRadius = undefined as any;
+            fixture.componentInstance.borderRadius = undefined as any;
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
 
@@ -647,8 +659,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle zero dimensions', () => {
-            skeleton.width = '0px';
-            skeleton.height = '0px';
+            fixture.componentInstance.width = '0px';
+            fixture.componentInstance.height = '0px';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
             expect(style.width).toBe('0px');
@@ -656,8 +669,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle very large dimensions', () => {
-            skeleton.width = '9999px';
-            skeleton.height = '9999px';
+            fixture.componentInstance.width = '9999px';
+            fixture.componentInstance.height = '9999px';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
             expect(style.width).toBe('9999px');
@@ -665,8 +679,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle empty strings', () => {
-            skeleton.width = '';
-            skeleton.height = '';
+            fixture.componentInstance.width = '';
+            fixture.componentInstance.height = '';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
             expect(style.width).toBe('' as any);
@@ -674,8 +689,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle null/undefined values gracefully', () => {
-            skeleton.borderRadius = undefined as any;
-            skeleton.size = undefined as any;
+            fixture.componentInstance.borderRadius = undefined as any;
+            fixture.componentInstance.size = undefined as any;
+            fixture.detectChanges();
 
             expect(() => {
                 const style = skeleton.containerStyle;
@@ -684,8 +700,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle invalid CSS values', () => {
-            skeleton.width = 'invalid-value';
-            skeleton.height = 'another-invalid';
+            fixture.componentInstance.width = 'invalid-value';
+            fixture.componentInstance.height = 'another-invalid';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
             expect(style.width).toBe('invalid-value');
@@ -693,20 +710,17 @@ describe('Skeleton', () => {
         });
 
         it('should handle rapid property updates', async () => {
-            skeleton.shape = 'rectangle';
-            skeleton.cd.markForCheck();
+            fixture.componentInstance.shape = 'rectangle';
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            skeleton.shape = 'circle';
-            skeleton.cd.markForCheck();
+            fixture.componentInstance.shape = 'circle';
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            skeleton.shape = 'square';
-            skeleton.cd.markForCheck();
+            fixture.componentInstance.shape = 'square';
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
@@ -715,8 +729,9 @@ describe('Skeleton', () => {
         });
 
         it('should handle complex CSS calc expressions', () => {
-            skeleton.width = 'calc(100% - 20px)';
-            skeleton.height = 'calc(50vh - 10px)';
+            fixture.componentInstance.width = 'calc(100% - 20px)';
+            fixture.componentInstance.height = 'calc(50vh - 10px)';
+            fixture.detectChanges();
 
             const style = skeleton.containerStyle;
             expect(style.width).toBe('calc(100% - 20px)');

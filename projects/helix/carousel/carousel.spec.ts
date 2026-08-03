@@ -282,21 +282,21 @@ describe('Carousel', () => {
         it('should check if carousel is vertical', () => {
             expect(carouselInstance.isVertical()).toBe(false);
 
-            carouselInstance.orientation = 'vertical';
+            Object.defineProperty(carouselInstance, 'orientation', { value: () => 'vertical', writable: true, configurable: true });
             expect(carouselInstance.isVertical()).toBe(true);
         });
 
         it('should check if carousel is circular', () => {
             expect(carouselInstance.isCircular()).toBe(false);
 
-            carouselInstance.circular = true;
+            Object.defineProperty(carouselInstance, 'circular', { value: () => true, writable: true, configurable: true });
             expect(carouselInstance.isCircular()).toBe(true);
         });
 
         it('should check if autoplay is enabled', () => {
             expect(carouselInstance.isAutoplay()).toBeFalsy();
 
-            carouselInstance.autoplayInterval = 1000;
+            Object.defineProperty(carouselInstance, 'autoplayInterval', { value: () => 1000, writable: true, configurable: true });
             carouselInstance.allowAutoplay = true;
             expect(carouselInstance.isAutoplay()).toBeTruthy();
         });
@@ -304,10 +304,10 @@ describe('Carousel', () => {
         it('should check if carousel is empty', () => {
             expect(carouselInstance.isEmpty()).toBe(false);
 
-            carouselInstance.value = [];
+            Object.defineProperty(carouselInstance, 'value', { value: () => [], writable: true, configurable: true });
             expect(carouselInstance.isEmpty()).toBe(true);
 
-            carouselInstance.value = null as any;
+            Object.defineProperty(carouselInstance, 'value', { value: () => null, writable: true, configurable: true });
             expect(carouselInstance.isEmpty()).toBe(true);
         });
 
@@ -848,7 +848,7 @@ describe('Carousel', () => {
         });
 
         it('should stop autoplay on destroy', () => {
-            carouselInstance.autoplayInterval = 1000;
+            Object.defineProperty(carouselInstance, 'autoplayInterval', { value: () => 1000, writable: true, configurable: true });
             carouselInstance.startAutoplay();
 
             spyOn(carouselInstance, 'stopAutoplay').and.callThrough();
@@ -859,7 +859,7 @@ describe('Carousel', () => {
         });
 
         it('should handle destroy when no responsive options', () => {
-            carouselInstance.responsiveOptions = undefined as any;
+            Object.defineProperty(carouselInstance, 'responsiveOptions', { value: () => undefined, writable: true, configurable: true });
 
             expect(() => {
                 carouselInstance.ngOnDestroy();
@@ -912,7 +912,7 @@ describe('Carousel', () => {
             const initialPage = carouselInstance.page;
 
             // Try to set page beyond bounds
-            carouselInstance.page = 999;
+            carouselInstance.page.set(999);
 
             expect(carouselInstance.page).toBe(999); // Should still set the value but not trigger navigation
         });
@@ -946,9 +946,9 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should accept string class PT for root', () => {
@@ -961,7 +961,7 @@ describe('Carousel', () => {
             });
 
             it('should apply string class to header', () => {
-                carouselInstance.headerTemplate = {} as any;
+                Object.defineProperty(carouselInstance, 'headerTemplate', { value: () => ({}), writable: true, configurable: true });
                 fixture.componentRef.setInput('pt', { header: 'HEADER_CLASS' });
                 fixture.detectChanges();
 
@@ -972,7 +972,7 @@ describe('Carousel', () => {
             });
 
             it('should apply string class to footer', () => {
-                carouselInstance.footerTemplate = {} as any;
+                Object.defineProperty(carouselInstance, 'footerTemplate', { value: () => ({}), writable: true, configurable: true });
                 fixture.componentRef.setInput('pt', { footer: 'FOOTER_CLASS' });
                 fixture.detectChanges();
 
@@ -1042,9 +1042,9 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should apply object with class, style, and data attributes to root', () => {
@@ -1102,13 +1102,13 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should apply mixed PT values', () => {
-                carouselInstance.headerTemplate = {} as any;
+                Object.defineProperty(carouselInstance, 'headerTemplate', { value: () => ({}), writable: true, configurable: true });
                 fixture.componentRef.setInput('pt', {
                     root: {
                         class: 'ROOT_MIXED_CLASS'
@@ -1145,13 +1145,13 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should accept PT functions based on instance properties', () => {
-                carouselInstance.circular = true;
+                fixture.componentRef.setInput('circular', true);
                 fixture.componentRef.setInput('pt', {
                     root: ({ instance }: any) => ({
                         class: {
@@ -1179,7 +1179,7 @@ describe('Carousel', () => {
                         }
                     })
                 });
-                carouselInstance.showIndicators = true;
+                fixture.componentRef.setInput('showIndicators', true);
                 fixture.detectChanges();
 
                 // Function-based PT with dynamic values may not be fully supported
@@ -1195,9 +1195,9 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should bind click event through PT', () => {
@@ -1259,9 +1259,9 @@ describe('Carousel', () => {
 
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
                 fixture.detectChanges();
             });
 
@@ -1286,9 +1286,9 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should call PT hooks during lifecycle', () => {
@@ -1317,9 +1317,9 @@ describe('Carousel', () => {
             beforeEach(() => {
                 fixture = TestBed.createComponent(Carousel);
                 carouselInstance = fixture.componentInstance;
-                carouselInstance.value = mockProducts;
-                carouselInstance.numVisible = 3;
-                carouselInstance.numScroll = 1;
+                fixture.componentRef.setInput('value', mockProducts);
+                fixture.componentRef.setInput('numVisible', 3);
+                fixture.componentRef.setInput('numScroll', 1);
             });
 
             it('should apply PT to items with context', () => {

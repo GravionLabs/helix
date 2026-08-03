@@ -280,12 +280,12 @@ describe('Password', () => {
         });
 
         it('should initialize properties correctly', () => {
-            component.promptLabel = 'Custom prompt';
-            component.weakLabel = 'Custom weak';
-            component.mediumLabel = 'Custom medium';
-            component.strongLabel = 'Custom strong';
-            component.inputId = 'pwd-input';
-            component.placeholder = 'Password placeholder';
+            fixture.componentRef.setInput('promptLabel', 'Custom prompt');
+            fixture.componentRef.setInput('weakLabel', 'Custom weak');
+            fixture.componentRef.setInput('mediumLabel', 'Custom medium');
+            fixture.componentRef.setInput('strongLabel', 'Custom strong');
+            fixture.componentRef.setInput('inputId', 'pwd-input');
+            fixture.componentRef.setInput('placeholder', 'Password placeholder');
 
             fixture.detectChanges();
 
@@ -331,8 +331,8 @@ describe('Password', () => {
         });
 
         it('should handle custom regex patterns', () => {
-            component.mediumRegex = '^(?=.{4,})';
-            component.strongRegex = '^(?=.{8,})';
+            fixture.componentRef.setInput('mediumRegex', '^(?=.{4,})');
+            fixture.componentRef.setInput('strongRegex', '^(?=.{8,})');
             component.ngOnInit();
 
             expect(component.testStrength('abc')).toBe(1);
@@ -409,16 +409,16 @@ describe('Password', () => {
         });
 
         it('should get translation texts', () => {
-            component.promptLabel = 'Custom prompt';
+            fixture.componentRef.setInput('promptLabel', 'Custom prompt');
             expect(component.promptText()).toBe('Custom prompt');
 
-            component.weakLabel = 'Custom weak';
+            fixture.componentRef.setInput('weakLabel', 'Custom weak');
             expect(component.weakText()).toBe('Custom weak');
 
-            component.mediumLabel = 'Custom medium';
+            fixture.componentRef.setInput('mediumLabel', 'Custom medium');
             expect(component.mediumText()).toBe('Custom medium');
 
-            component.strongLabel = 'Custom strong';
+            fixture.componentRef.setInput('strongLabel', 'Custom strong');
             expect(component.strongText()).toBe('Custom strong');
         });
     });
@@ -1062,7 +1062,7 @@ describe('Password', () => {
 
         it('should handle invalid regex patterns gracefully', () => {
             expect(() => {
-                component.mediumRegex = '[invalid regex';
+                fixture.componentRef.setInput('mediumRegex', '[invalid regex');
                 component.ngOnInit();
             }).toThrow();
         });
@@ -1084,7 +1084,7 @@ describe('Password', () => {
             spyOn(component, 'updateUI');
             const mockSetValue = jasmine.createSpy('setModelValue');
 
-            component.feedback = true;
+            fixture.componentRef.setInput('feedback', true);
             component.writeControlValue('testPassword', mockSetValue);
 
             expect(component.value).toBe('testPassword');
@@ -1108,21 +1108,21 @@ describe('Password', () => {
 
     describe('Input Properties', () => {
         it('should handle maxLength property', () => {
-            component.maxLength = 20;
-            expect(component.maxLength).toBe(20);
+            fixture.componentRef.setInput('maxLength', 20);
+            expect(component.maxLength()).toBe(20);
         });
 
         it('should handle transition options', () => {
-            component.showTransitionOptions = '.2s ease-in';
-            component.hideTransitionOptions = '.1s ease-out';
+            fixture.componentRef.setInput('showTransitionOptions', '.2s ease-in');
+            fixture.componentRef.setInput('hideTransitionOptions', '.1s ease-out');
 
-            expect(component.showTransitionOptions).toBe('.2s ease-in');
-            expect(component.hideTransitionOptions).toBe('.1s ease-out');
+            expect(component.showTransitionOptions()).toBe('.2s ease-in');
+            expect(component.hideTransitionOptions()).toBe('.1s ease-out');
         });
 
         it('should handle autocomplete attribute', () => {
-            component.autocomplete = 'new-password';
-            expect(component.autocomplete).toBe('new-password');
+            fixture.componentRef.setInput('autocomplete', 'new-password');
+            expect(component.autocomplete()).toBe('new-password');
         });
     });
 
@@ -1161,7 +1161,7 @@ describe('Password', () => {
         });
 
         it('should handle rapid UI updates efficiently', async () => {
-            component.feedback = true;
+            fixture.componentRef.setInput('feedback', true);
             const passwords = ['a', 'aB', 'aB1', 'aB1!', 'aB1!cD2@'];
 
             const startTime = performance.now();
@@ -1178,10 +1178,10 @@ describe('Password', () => {
 
     describe('Internationalization Tests', () => {
         it('should handle RTL languages', () => {
-            component.promptLabel = 'أدخل كلمة مرور';
-            component.weakLabel = 'ضعيف';
-            component.mediumLabel = 'متوسط';
-            component.strongLabel = 'قوي';
+            fixture.componentRef.setInput('promptLabel', 'أدخل كلمة مرور');
+            fixture.componentRef.setInput('weakLabel', 'ضعيف');
+            fixture.componentRef.setInput('mediumLabel', 'متوسط');
+            fixture.componentRef.setInput('strongLabel', 'قوي');
 
             expect(component.promptText()).toBe('أدخل كلمة مرور');
             expect(component.weakText()).toBe('ضعيف');
@@ -1213,7 +1213,7 @@ describe('Password', () => {
 
             malformedPatterns.forEach((pattern) => {
                 expect(() => {
-                    component.mediumRegex = pattern;
+                    fixture.componentRef.setInput('mediumRegex', pattern);
                     component.ngOnInit();
                 }).toThrow();
             });

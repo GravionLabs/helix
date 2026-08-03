@@ -819,7 +819,7 @@ describe('InputOtp PassThrough Tests', () => {
 
     describe('PT Case 3: Instance variables', () => {
         it('should access instance variables in PT function', () => {
-            component.length = 6;
+            fixture.componentRef.setInput('length', 6);
             fixture.componentRef.setInput('pt', {
                 root: ({ instance }: any) => ({
                     class: instance?.length === 6 ? 'LENGTH_SIX' : ''

@@ -1369,10 +1369,12 @@ describe('Menu', () => {
         });
 
         it('should get tab index value correctly', () => {
-            menuInstance.tabindex = 0;
+            component.tabindex = 0;
+            fixture.detectChanges();
             expect(menuInstance.getTabIndexValue()).toBe('0');
 
-            menuInstance.tabindex = -1;
+            component.tabindex = -1;
+            fixture.detectChanges();
             expect(menuInstance.getTabIndexValue()).toBe('-1');
         });
 
