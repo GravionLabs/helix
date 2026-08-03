@@ -293,7 +293,8 @@ describe('PanelMenu', () => {
             expect(panelMenuInstance.transitionOptions() || '400ms cubic-bezier(0.86, 0, 0.07, 1)').toBe('400ms cubic-bezier(0.86, 0, 0.07, 1)');
 
             // tabindex can be undefined, 0, or NaN in test environment
-            expect(panelMenuInstance.tabindex() === undefined || panelMenuInstance.tabindex() === 0 || isNaN(panelMenuInstance.tabindex())).toBe(true);
+            const tabindexValue = panelMenuInstance.tabindex();
+            expect(tabindexValue === undefined || tabindexValue === 0 || isNaN(tabindexValue)).toBe(true);
         });
 
         it('should generate unique id if not provided', () => {
@@ -1179,7 +1180,7 @@ describe('PanelMenu', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(PanelMenu);
             panelMenu = fixture.componentInstance;
-            panelMenu.model = [
+            fixture.componentRef.setInput('model', [
                 {
                     label: 'Documents',
                     icon: 'pi pi-file',
@@ -1188,7 +1189,7 @@ describe('PanelMenu', () => {
                         { label: 'Personal', icon: 'pi pi-user' }
                     ]
                 }
-            ];
+            ]);
         });
 
         describe('Case 1: Simple string classes', () => {
@@ -1290,7 +1291,7 @@ describe('PanelMenu', () => {
 
         describe('Case 4: Instance variables', () => {
             it('should use instance variables in PT', async () => {
-                panelMenu.multiple = true;
+                fixture.componentRef.setInput('multiple', true);
 
                 fixture.componentRef.setInput('pt', {
                     root: ({ instance }: any) => ({
@@ -1336,7 +1337,7 @@ describe('PanelMenu', () => {
                 const testFixture = TestBed.createComponent(PanelMenu);
                 const testComponent = testFixture.componentInstance;
 
-                testComponent.model = [{ label: 'Test', items: [{ label: 'Item' }] }];
+                testFixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Item' }] }]);
                 testFixture.componentRef.setInput('pt', { root: 'INLINE_TEST_CLASS' });
 
                 testFixture.detectChanges();
@@ -1351,7 +1352,7 @@ describe('PanelMenu', () => {
                 const testFixture = TestBed.createComponent(PanelMenu);
                 const testComponent = testFixture.componentInstance;
 
-                testComponent.model = [{ label: 'Test', items: [{ label: 'Item' }] }];
+                testFixture.componentRef.setInput('model', [{ label: 'Test', items: [{ label: 'Item' }] }]);
                 testFixture.componentRef.setInput('pt', {
                     root: { class: 'INLINE_OBJECT_CLASS' }
                 });

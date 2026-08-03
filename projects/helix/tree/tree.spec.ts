@@ -497,16 +497,16 @@ describe('Tree', () => {
         });
 
         it('should get template for node', () => {
-            tree._templateMap = {
+            tree._templateMap.set({
                 default: {} as any,
                 custom: {} as any
-            };
+            });
 
             const defaultNode = { label: 'Test' } as TreeNode;
             const customNode = { label: 'Test', type: 'custom' } as TreeNode;
 
-            expect(tree.getTemplateForNode(defaultNode)).toBe(tree._templateMap['default']);
-            expect(tree.getTemplateForNode(customNode)).toBe(tree._templateMap['custom']);
+            expect(tree.getTemplateForNode(defaultNode)).toBe(tree._templateMap()['default']);
+            expect(tree.getTemplateForNode(customNode)).toBe(tree._templateMap()['custom']);
         });
 
         it('should handle trackBy function', () => {

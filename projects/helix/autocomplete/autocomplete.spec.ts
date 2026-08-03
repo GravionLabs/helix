@@ -2269,8 +2269,8 @@ describe('AutoComplete', () => {
                 await testFixture.whenStable();
 
                 // Set the multiInputEl value directly since we're in multiple mode
-                if (autocompleteComponent.multiInputEl) {
-                    autocompleteComponent.multiInputEl.nativeElement.value = 'Test Item';
+                if (autocompleteComponent.multiInputEl()) {
+                    autocompleteComponent.multiInputEl()!.nativeElement.value = 'Test Item';
                 } else {
                     inputElement.value = 'Test Item';
                 }

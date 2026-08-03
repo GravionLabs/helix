@@ -8,9 +8,11 @@ import { BlockUI, BlockUIModule } from './blockui';
 @Component({
     standalone: false,
     selector: 'test-basic-blockui',
-    template: `<p-blockui></p-blockui>`
+    template: `<p-blockui [blocked]="blocked"></p-blockui>`
 })
-class TestBasicBlockUIComponent {}
+class TestBasicBlockUIComponent {
+    blocked = false;
+}
 
 @Component({
     standalone: false,
@@ -193,7 +195,7 @@ describe('BlockUI', () => {
 
         it('should apply base CSS classes', async () => {
             // Block to apply overlay classes
-            component.blocked = true;
+            fixture.componentInstance.blocked = true;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();

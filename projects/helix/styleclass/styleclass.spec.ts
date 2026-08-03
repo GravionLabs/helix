@@ -8,7 +8,7 @@ import { StyleClass } from './styleclass';
     standalone: false,
     template: `
         <button
-            pStyleClass="@next"
+            [pStyleClass]="selector"
             [enterFromClass]="enterFromClass"
             [enterActiveClass]="enterActiveClass"
             [enterToClass]="enterToClass"
@@ -27,6 +27,7 @@ import { StyleClass } from './styleclass';
     `
 })
 class TestBasicStyleClassComponent {
+    selector = '@next';
     enterFromClass: string | undefined;
     enterActiveClass: string | undefined;
     enterToClass: string | undefined;
@@ -92,12 +93,13 @@ class TestSlidedownStyleClassComponent {}
 @Component({
     standalone: false,
     template: `
-        <button pStyleClass="#resize-target" [hideOnResize]="true" [toggleClass]="toggleClass">Resize Toggle</button>
+        <button pStyleClass="#resize-target" [hideOnResize]="true" [toggleClass]="toggleClass" [resizeSelector]="resizeSelector">Resize Toggle</button>
         <div id="resize-target" class="resize-target">Resize Target</div>
     `
 })
 class TestResizeStyleClassComponent {
     toggleClass = 'expanded';
+    resizeSelector: string | undefined;
 }
 
 describe('StyleClass', () => {
@@ -606,7 +608,9 @@ describe('StyleClass', () => {
             await fixture.whenStable();
 
             // Change selector to CSS selector
-            styleClassInstance.selector = '.target-element';
+            component.selector = '.target-element';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             buttonElement.nativeElement.click();
 
@@ -758,7 +762,8 @@ describe('StyleClass', () => {
             spyOn(resizeInstance, 'bindElementResizeListener');
             spyOn(resizeInstance, 'bindWindowResizeListener');
 
-            resizeInstance.resizeSelector = '#resize-target';
+            resizeFixture.componentInstance.resizeSelector = '#resize-target';
+            resizeFixture.detectChanges();
             resizeInstance.bindResizeListener();
 
             expect(resizeInstance.bindElementResizeListener).toHaveBeenCalled();
@@ -871,7 +876,8 @@ describe('StyleClass', () => {
 
     describe('Edge Cases', () => {
         it('should handle null/undefined selector', () => {
-            styleClassInstance.selector = undefined as any;
+            component.selector = undefined as any;
+            fixture.changeDetectorRef.markForCheck();
 
             expect(() => buttonElement.nativeElement.click()).not.toThrow();
         });

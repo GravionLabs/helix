@@ -9,13 +9,14 @@ import { TerminalService } from './terminalservice';
 
 @Component({
     standalone: false,
-    template: ` <p-terminal [welcomeMessage]="welcomeMessage" [prompt]="prompt" [styleClass]="styleClass" [style]="style"> </p-terminal> `
+    template: ` <p-terminal [welcomeMessage]="welcomeMessage" [prompt]="prompt" [styleClass]="styleClass" [style]="style" [response]="response"> </p-terminal> `
 })
 class TestBasicTerminalComponent {
     welcomeMessage: string | undefined = 'Welcome to PrimeNG Terminal';
     prompt: string | undefined = 'prime$ ';
     styleClass: string | undefined;
     style: { [key: string]: any } | undefined;
+    response: string | undefined;
 }
 
 @Component({
@@ -419,20 +420,24 @@ describe('Terminal', () => {
             expect(terminalInstance.commands[2].response).toBe('Response 2');
         });
 
-        it('should set response via property setter', () => {
+        it('should set response via property setter', async () => {
             terminalInstance.commands.push({ text: 'test' });
 
-            terminalInstance.response = 'Direct response';
+            component.response = 'Direct response';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             expect(terminalInstance.commands[0].response).toBe('Direct response');
             expect(terminalInstance.commandProcessed).toBe(true);
         });
 
-        it('should not set response when value is empty', () => {
+        it('should not set response when value is empty', async () => {
             terminalInstance.commands.push({ text: 'test' });
             terminalInstance.commandProcessed = false;
 
-            terminalInstance.response = '';
+            component.response = '';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             expect(terminalInstance.commands[0].response).toBeUndefined();
             expect(terminalInstance.commandProcessed).toBe(false);
@@ -868,10 +873,12 @@ describe('Terminal', () => {
             expect(terminalInstance.commandProcessed).toBe(false);
         });
 
-        it('should handle response setter programmatically', () => {
+        it('should handle response setter programmatically', async () => {
             terminalInstance.commands.push({ text: 'test' });
 
-            terminalInstance.response = 'Test Response';
+            component.response = 'Test Response';
+            fixture.changeDetectorRef.markForCheck();
+            await fixture.whenStable();
 
             expect(terminalInstance.commands[0].response).toBe('Test Response');
             expect(terminalInstance.commandProcessed).toBe(true);

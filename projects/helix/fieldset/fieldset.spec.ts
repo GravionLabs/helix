@@ -192,9 +192,10 @@ describe('Fieldset', () => {
             const element = fieldsetElement.nativeElement;
 
             // In testing environment, we simulate the ngStyle behavior
-            if (fieldset.style()) {
-                Object.keys(fieldset.style()).forEach((key) => {
-                    element.style[key] = fieldset.style()![key];
+            const fieldsetStyle = fieldset.style();
+            if (fieldsetStyle) {
+                Object.keys(fieldsetStyle).forEach((key) => {
+                    element.style[key] = fieldsetStyle[key];
                 });
             }
 
