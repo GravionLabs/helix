@@ -235,9 +235,9 @@ describe('InputNumber', () => {
         // });
 
         it('should format currency correctly', () => {
-            component.mode = 'currency';
-            component.currency = 'USD';
-            component.locale = 'en-US';
+            fixture.componentRef.setInput('mode', 'currency');
+            fixture.componentRef.setInput('currency', 'USD');
+            fixture.componentRef.setInput('locale', 'en-US');
             fixture.detectChanges();
 
             const formatted = component.formatValue(1234.56);
@@ -245,9 +245,9 @@ describe('InputNumber', () => {
         });
 
         it('should handle prefix and suffix', () => {
-            component.prefix = '$ ';
-            component.suffix = ' USD';
-            component.format = true;
+            fixture.componentRef.setInput('prefix', '$ ');
+            fixture.componentRef.setInput('suffix', ' USD');
+            fixture.componentRef.setInput('format', true);
             component.value = 100;
             fixture.detectChanges();
 
@@ -272,8 +272,8 @@ describe('InputNumber', () => {
         });
 
         it('should handle fraction digits correctly', () => {
-            component.minFractionDigits = 2;
-            component.maxFractionDigits = 4;
+            fixture.componentRef.setInput('minFractionDigits', 2);
+            fixture.componentRef.setInput('maxFractionDigits', 4);
             component.value = 123.1;
             fixture.detectChanges();
 

@@ -10,11 +10,12 @@ import { ScrollTop, ScrollTopModule } from './scrolltop';
 @Component({
     standalone: false,
     selector: 'test-basic-scrolltop',
-    template: `<p-scrolltop [threshold]="threshold" [target]="target"></p-scrolltop>`
+    template: `<p-scrolltop [threshold]="threshold" [target]="target" [behavior]="behavior"></p-scrolltop>`
 })
 class TestBasicScrollTopComponent {
     threshold = 400;
     target: 'window' | 'parent' = 'window';
+    behavior: 'auto' | 'smooth' | undefined = 'smooth';
 }
 
 @Component({
@@ -165,7 +166,6 @@ describe('ScrollTop', () => {
             fixture.detectChanges();
 
             spyOn(scrollTop, 'bindParentScrollListener');
-            scrollTop.target = 'parent';
             scrollTop.ngOnInit();
             expect(scrollTop.bindParentScrollListener).toHaveBeenCalled();
         });
@@ -253,7 +253,8 @@ describe('ScrollTop', () => {
         });
 
         it('should scroll to top with auto behavior', () => {
-            scrollTop.behavior = 'auto';
+            fixture.componentInstance.behavior = 'auto';
+            fixture.detectChanges();
             const scrollSpy = jasmine.createSpy('scroll');
             const mockWindow = { scroll: scrollSpy };
             spyOnProperty(scrollTop.document, 'defaultView').and.returnValue(mockWindow as any);
@@ -267,7 +268,8 @@ describe('ScrollTop', () => {
         });
 
         it('should scroll parent element when target is parent', () => {
-            scrollTop.target = 'parent';
+            fixture.componentInstance.target = 'parent';
+            fixture.detectChanges();
             const parentElement = document.createElement('div');
             const scrollSpy = jasmine.createSpy('scroll');
             parentElement.scroll = scrollSpy;
@@ -618,7 +620,8 @@ describe('ScrollTop', () => {
         });
 
         it('should clean up on destroy for parent target', () => {
-            scrollTop.target = 'parent';
+            fixture.componentInstance.target = 'parent';
+            fixture.detectChanges();
             spyOn(scrollTop, 'unbindParentScrollListener');
 
             scrollTop.ngOnDestroy();
@@ -650,7 +653,8 @@ describe('ScrollTop', () => {
         });
 
         it('should handle zero threshold', () => {
-            scrollTop.threshold = 0;
+            fixture.componentInstance.threshold = 0;
+            fixture.detectChanges();
             scrollTop.checkVisibility(1);
             expect(scrollTop.visible()).toBe(true);
 
@@ -680,7 +684,8 @@ describe('ScrollTop', () => {
         });
 
         it('should handle missing parent element', () => {
-            scrollTop.target = 'parent';
+            fixture.componentInstance.target = 'parent';
+            fixture.detectChanges();
             spyOnProperty(scrollTop.el.nativeElement, 'parentElement').and.returnValue(null);
 
             // Mock the scroll method on parent element to avoid null access
@@ -735,15 +740,15 @@ describe('ScrollTop', () => {
         });
 
         it('should set and get icon property', () => {
-            scrollTop.icon = 'pi pi-chevron-up';
+            fixture.componentInstance.icon = 'pi pi-chevron-up';
+            fixture.detectChanges();
             expect(scrollTop.icon()).toBe('pi pi-chevron-up');
-            expect(scrollTop._icon).toBe('pi pi-chevron-up');
         });
 
         it('should handle undefined icon', () => {
-            scrollTop.icon = undefined as any;
+            fixture.componentInstance.icon = undefined as any;
+            fixture.detectChanges();
             expect(scrollTop.icon()).toBeUndefined();
-            expect(scrollTop._icon).toBeUndefined();
         });
     });
 

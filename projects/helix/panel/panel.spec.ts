@@ -520,7 +520,7 @@ describe('Panel', () => {
         it('should use provided ID', () => {
             const fixture = TestBed.createComponent(Panel);
             const panel = fixture.componentInstance;
-            panel.id = 'my-custom-panel-id';
+            fixture.componentRef.setInput('id', 'my-custom-panel-id');
             fixture.detectChanges();
 
             expect(panel.id()).toBe('my-custom-panel-id');
@@ -704,7 +704,9 @@ describe('Panel', () => {
         });
 
         it('should handle missing contentWrapper in updateTabIndex', () => {
-            panelInstance.contentWrapperViewChild = undefined as any;
+            // contentWrapperViewChild is a required viewChild() signal; simulate the
+            // "not resolved" branch by stubbing the signal function itself.
+            (panelInstance as unknown as { contentWrapperViewChild: () => undefined }).contentWrapperViewChild = () => undefined;
 
             expect(() => panelInstance.updateTabIndex()).not.toThrow();
         });
@@ -876,7 +878,7 @@ describe('Panel', () => {
             expect(contentContainer).toBeTruthy();
 
             // Disable animations to prevent ExpressionChangedAfterItHasBeenCheckedError
-            panelInstance.transitionOptions = '0ms';
+            testComponent.transitionOptions = '0ms';
             testFixture.detectChanges();
 
             // Toggle to collapse
@@ -1075,7 +1077,7 @@ describe('Panel', () => {
             it('should apply PT class to header section', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test Header';
+                fixture.componentRef.setInput('header', 'Test Header');
                 fixture.componentRef.setInput('pt', { header: 'HEADER_CLASS' });
                 fixture.detectChanges();
 
@@ -1086,7 +1088,7 @@ describe('Panel', () => {
             it('should apply PT class to title section', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test Title';
+                fixture.componentRef.setInput('header', 'Test Title');
                 fixture.componentRef.setInput('pt', { title: 'TITLE_CLASS' });
                 fixture.detectChanges();
 
@@ -1097,8 +1099,8 @@ describe('Panel', () => {
             it('should apply PT class to icons section', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
-                panel.toggleable = true;
+                fixture.componentRef.setInput('header', 'Test');
+                fixture.componentRef.setInput('toggleable', true);
                 fixture.componentRef.setInput('pt', { headerActions: 'ICONS_CLASS' });
                 fixture.detectChanges();
 
@@ -1150,7 +1152,7 @@ describe('Panel', () => {
             it('should apply PT object with attributes to title', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
+                fixture.componentRef.setInput('header', 'Test');
                 fixture.componentRef.setInput('pt', {
                     title: {
                         class: 'TITLE_OBJECT_CLASS',
@@ -1185,7 +1187,7 @@ describe('Panel', () => {
             it('should apply mixed PT values to multiple sections', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
+                fixture.componentRef.setInput('header', 'Test');
                 fixture.componentRef.setInput('pt', {
                     root: {
                         class: 'ROOT_MIXED_CLASS'
@@ -1231,7 +1233,7 @@ describe('Panel', () => {
             it('should apply PT with dynamic styles', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
+                fixture.componentRef.setInput('header', 'Test');
                 fixture.componentRef.setInput('pt', {
                     title: {
                         style: { 'background-color': 'yellow' }
@@ -1246,8 +1248,8 @@ describe('Panel', () => {
             it('should update classes when state changes', async () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
-                panel.toggleable = true;
+                fixture.componentRef.setInput('header', 'Test');
+                fixture.componentRef.setInput('toggleable', true);
                 panel.collapsed.set(false);
                 fixture.componentRef.setInput('pt', {
                     root: {
@@ -1272,7 +1274,7 @@ describe('Panel', () => {
             it('should handle onclick event through PT on title section', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
+                fixture.componentRef.setInput('header', 'Test');
                 let clicked = false;
 
                 fixture.componentRef.setInput('pt', {
@@ -1297,7 +1299,7 @@ describe('Panel', () => {
             it('should handle onclick event through PT on header section', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
+                fixture.componentRef.setInput('header', 'Test');
                 let headerClicked = false;
 
                 fixture.componentRef.setInput('pt', {
@@ -1343,8 +1345,8 @@ describe('Panel', () => {
             it('should apply PT to multiple sections simultaneously', () => {
                 const fixture = TestBed.createComponent(Panel);
                 const panel = fixture.componentInstance;
-                panel._header = 'Test';
-                panel.toggleable = true;
+                fixture.componentRef.setInput('header', 'Test');
+                fixture.componentRef.setInput('toggleable', true);
 
                 fixture.componentRef.setInput('pt', {
                     root: { class: 'MULTI_ROOT_CLASS' },

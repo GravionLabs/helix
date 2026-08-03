@@ -1471,10 +1471,10 @@ describe('CascadeSelect', () => {
         beforeEach(async () => {
             ptFixture = TestBed.createComponent(CascadeSelect);
             ptComponent = ptFixture.componentInstance;
-            ptComponent.options = mockCountries as any;
-            ptComponent.optionLabel = 'cname';
-            ptComponent.optionGroupLabel = 'name';
-            ptComponent.optionGroupChildren = ['states', 'cities'];
+            ptFixture.componentRef.setInput('options', mockCountries as any);
+            ptFixture.componentRef.setInput('optionLabel', 'cname');
+            ptFixture.componentRef.setInput('optionGroupLabel', 'name');
+            ptFixture.componentRef.setInput('optionGroupChildren', ['states', 'cities']);
         });
 
         describe('Case 1: Simple string classes', () => {
@@ -1551,7 +1551,7 @@ describe('CascadeSelect', () => {
             });
 
             it('should apply PT string classes to clearIcon', async () => {
-                ptComponent.showClear = true;
+                ptFixture.componentRef.setInput('showClear', true);
                 ptComponent.writeValue(mockCountries[0].states[0].cities[0]);
                 ptFixture.componentRef.setInput('pt', {
                     clearIcon: 'CLEAR_ICON_CLASS'
@@ -1768,7 +1768,7 @@ describe('CascadeSelect', () => {
 
         describe('Case 4: Use variables from instance', () => {
             it('should apply PT using instance properties', async () => {
-                ptComponent.showClear = true;
+                ptFixture.componentRef.setInput('showClear', true);
                 await ptFixture.whenStable(); // Apply showClear first
 
                 ptFixture.componentRef.setInput('pt', {
@@ -1785,7 +1785,7 @@ describe('CascadeSelect', () => {
             });
 
             it('should apply PT with instance-based styling', async () => {
-                ptComponent.placeholder = 'Test';
+                ptFixture.componentRef.setInput('placeholder', 'Test');
                 await ptFixture.whenStable(); // Apply placeholder first
 
                 ptFixture.componentRef.setInput('pt', {
@@ -1816,7 +1816,7 @@ describe('CascadeSelect', () => {
             });
 
             it('should apply PT based on showClear property', async () => {
-                ptComponent.showClear = true;
+                ptFixture.componentRef.setInput('showClear', true);
                 await ptFixture.whenStable(); // Apply showClear first
 
                 ptFixture.componentRef.setInput('pt', {
@@ -1854,7 +1854,7 @@ describe('CascadeSelect', () => {
 
             it('should handle PT event binding with instance access', async () => {
                 let instanceValue: any;
-                ptComponent.placeholder = 'Test Placeholder';
+                ptFixture.componentRef.setInput('placeholder', 'Test Placeholder');
                 await ptFixture.whenStable(); // Apply placeholder first
 
                 ptFixture.componentRef.setInput('pt', {
@@ -2081,7 +2081,7 @@ describe('CascadeSelect', () => {
 
             it('should preserve PT when component state changes', async () => {
                 // Set placeholder BEFORE PT binding so instance-based PT function can evaluate correctly
-                ptComponent.placeholder = 'Test Placeholder';
+                ptFixture.componentRef.setInput('placeholder', 'Test Placeholder');
 
                 ptFixture.componentRef.setInput('pt', {
                     root: 'PERSISTENT_PT',

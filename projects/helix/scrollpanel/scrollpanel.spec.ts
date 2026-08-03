@@ -289,9 +289,10 @@ describe('ScrollPanel', () => {
 
         it('should programmatically scroll to top position', async () => {
             // Mock scrollTop behavior since test environment doesn't scroll
-            if (scrollPanel.contentViewChild()) {
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'scrollHeight', { value: 600, writable: true });
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'clientHeight', { value: 200, writable: true });
+            const contentEl = scrollPanel.contentViewChild();
+            if (contentEl) {
+                Object.defineProperty(contentEl.nativeElement, 'scrollHeight', { value: 600, writable: true });
+                Object.defineProperty(contentEl.nativeElement, 'clientHeight', { value: 200, writable: true });
             }
 
             scrollPanel.scrollTop(100);
@@ -829,11 +830,12 @@ describe('ScrollPanel', () => {
 
         it('should handle zero dimensions gracefully', async () => {
             // Mock content with zero dimensions
-            if (scrollPanel.contentViewChild()) {
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'scrollWidth', { value: 0, writable: true });
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'scrollHeight', { value: 0, writable: true });
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'clientWidth', { value: 0, writable: true });
-                Object.defineProperty(scrollPanel.contentViewChild().nativeElement, 'clientHeight', { value: 0, writable: true });
+            const zeroContentEl = scrollPanel.contentViewChild();
+            if (zeroContentEl) {
+                Object.defineProperty(zeroContentEl.nativeElement, 'scrollWidth', { value: 0, writable: true });
+                Object.defineProperty(zeroContentEl.nativeElement, 'scrollHeight', { value: 0, writable: true });
+                Object.defineProperty(zeroContentEl.nativeElement, 'clientWidth', { value: 0, writable: true });
+                Object.defineProperty(zeroContentEl.nativeElement, 'clientHeight', { value: 0, writable: true });
             }
 
             await expect(async () => {

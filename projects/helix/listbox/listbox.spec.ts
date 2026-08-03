@@ -2043,11 +2043,11 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
             ptFixture = TestBed.createComponent(Listbox);
             listbox = ptFixture.componentInstance;
-            listbox.options = [
+            ptFixture.componentRef.setInput('options', [
                 { label: 'Option 1', value: 'opt1' },
                 { label: 'Option 2', value: 'opt2' },
                 { label: 'Option 3', value: 'opt3' }
-            ];
+            ]);
         });
 
         describe('Case 1: Simple string classes', () => {
@@ -2060,7 +2060,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply string class to header', () => {
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', { header: 'HEADER_CLASS' });
                 ptFixture.detectChanges();
 
@@ -2161,7 +2161,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply object to header', () => {
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', {
                     header: {
                         class: 'HEADER_OBJECT_CLASS',
@@ -2182,7 +2182,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
         describe('Case 3: Mixed object and string values', () => {
             it('should handle mixed PT configuration', () => {
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', {
                     host: { class: 'HOST_MIXED_CLASS' },
                     header: 'HEADER_STRING_CLASS',
@@ -2230,7 +2230,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                         }
                     })
                 });
-                listbox.multiple = true;
+                ptFixture.componentRef.setInput('multiple', true);
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
@@ -2263,7 +2263,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                         }
                     })
                 });
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
@@ -2317,7 +2317,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
             it('should bind onclick event via PT to header', async () => {
                 let headerClicked = false;
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', {
                     header: {
                         onclick: () => {
@@ -2553,12 +2553,12 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
             it('should export correct context via getPTOptions for disabled option', async () => {
                 // Add disabled option
-                listbox.options = [
+                ptFixture.componentRef.setInput('options', [
                     { label: 'Option 1', value: 'opt1' },
                     { label: 'Option 2', value: 'opt2', disabled: true },
                     { label: 'Option 3', value: 'opt3' }
-                ];
-                listbox.optionDisabled = 'disabled';
+                ]);
+                ptFixture.componentRef.setInput('optionDisabled', 'disabled');
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
@@ -2605,12 +2605,12 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
             it('should export combined context states via getPTOptions', async () => {
                 // Setup: select first option, disable second, focus third
-                listbox.options = [
+                ptFixture.componentRef.setInput('options', [
                     { label: 'Option 1', value: 'opt1' },
                     { label: 'Option 2', value: 'opt2', disabled: true },
                     { label: 'Option 3', value: 'opt3' }
-                ];
-                listbox.optionDisabled = 'disabled';
+                ]);
+                ptFixture.componentRef.setInput('optionDisabled', 'disabled');
                 listbox.value = 'opt1';
                 listbox.focusedOptionIndex.set(2);
                 ptFixture.changeDetectorRef.markForCheck();
@@ -2652,8 +2652,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to optionGroup when using grouped options', async () => {
-                listbox.group = true;
-                listbox.options = [
+                ptFixture.componentRef.setInput('group', true);
+                ptFixture.componentRef.setInput('options', [
                     {
                         label: 'Group 1',
                         value: 'g1',
@@ -2662,7 +2662,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                             { label: 'Item 1.2', value: 'i1_2' }
                         ]
                     }
-                ];
+                ]);
                 ptFixture.componentRef.setInput('pt', {
                     optionGroup: 'OPTION_GROUP_CLASS'
                 });
@@ -2676,7 +2676,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to filter elements', async () => {
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', {
                     pcFilter: 'FILTER_INPUT_CLASS',
                     pcFilterContainer: 'FILTER_CONTAINER_CLASS'
@@ -2690,8 +2690,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to checkbox elements', async () => {
-                listbox.multiple = true;
-                listbox.checkbox = true;
+                ptFixture.componentRef.setInput('multiple', true);
+                ptFixture.componentRef.setInput('checkbox', true);
                 ptFixture.componentRef.setInput('pt', {
                     pcCheckbox: { class: 'CHECKBOX_CLASS' }
                 });
@@ -2704,8 +2704,8 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to virtualScroller', async () => {
-                listbox.virtualScroll = true;
-                listbox.scrollHeight = '200px';
+                ptFixture.componentRef.setInput('virtualScroll', true);
+                ptFixture.componentRef.setInput('scrollHeight', '200px');
                 ptFixture.componentRef.setInput('pt', {
                     virtualScroller: { class: 'VIRTUAL_SCROLLER_CLASS' }
                 });
@@ -2718,7 +2718,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to emptyMessage', async () => {
-                listbox.options = [];
+                ptFixture.componentRef.setInput('options', []);
                 ptFixture.componentRef.setInput('pt', {
                     emptyMessage: 'EMPTY_MESSAGE_CLASS'
                 });
@@ -2759,7 +2759,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
 
         describe('Additional PT sections coverage', () => {
             it('should apply PT to optionCheckIcon and optionBlankIcon', async () => {
-                listbox.checkmark = true;
+                ptFixture.componentRef.setInput('checkmark', true);
                 ptFixture.componentRef.setInput('pt', {
                     optionCheckIcon: 'CHECK_ICON_CLASS',
                     optionBlankIcon: 'BLANK_ICON_CLASS'
@@ -2774,7 +2774,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to hiddenFilterResult', async () => {
-                listbox.filter = true;
+                ptFixture.componentRef.setInput('filter', true);
                 ptFixture.componentRef.setInput('pt', {
                     hiddenFilterResult: 'FILTER_RESULT_CLASS'
                 });
@@ -2801,7 +2801,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
 
             it('should apply PT to hiddenEmptyMessage', async () => {
-                listbox.options = [];
+                ptFixture.componentRef.setInput('options', []);
                 ptFixture.componentRef.setInput('pt', {
                     hiddenEmptyMessage: 'EMPTY_HIDDEN_CLASS'
                 });
