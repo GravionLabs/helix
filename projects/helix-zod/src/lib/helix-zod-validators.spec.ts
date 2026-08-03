@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { HelixValidatorKey } from '@gravionlabs/helix-shell';
+import { ValidatorKey } from '@gravionlabs/helix/validators';
 import { z } from 'zod';
 import { HelixZodValidators } from './helix-zod-validators';
 
@@ -20,7 +20,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Email error for an invalid email', () => {
         expect(validator(new FormControl('notanemail'))).toEqual({
-          [HelixValidatorKey.Email]: 'Invalid email',
+          [ValidatorKey.Email]: 'Invalid email',
         });
       });
     });
@@ -35,7 +35,7 @@ describe('HelixZodValidators', () => {
       it('should return MinLength error for empty string', () => {
         // '' passes the string type check but fails min(1) → too_small → MinLength
         expect(validator(new FormControl(''))).toEqual({
-          [HelixValidatorKey.MinLength]: 'Required',
+          [ValidatorKey.MinLength]: 'Required',
         });
       });
 
@@ -44,13 +44,13 @@ describe('HelixZodValidators', () => {
         // invalid_type message, not the .min() message (different error code).
         const result = validator(new FormControl(null));
         expect(result).not.toBeNull();
-        expect(Object.keys(result!)).toContain(HelixValidatorKey.Required);
+        expect(Object.keys(result!)).toContain(ValidatorKey.Required);
       });
 
       it('should return Required error key for undefined', () => {
         const result = validator(new FormControl(undefined));
         expect(result).not.toBeNull();
-        expect(Object.keys(result!)).toContain(HelixValidatorKey.Required);
+        expect(Object.keys(result!)).toContain(ValidatorKey.Required);
       });
 
       it('should return null for a valid non-empty value', () => {
@@ -69,7 +69,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Email error for an invalid email', () => {
         expect(validator(new FormControl('bad'))).toEqual({
-          [HelixValidatorKey.Email]: 'Invalid email',
+          [ValidatorKey.Email]: 'Invalid email',
         });
       });
     });
@@ -89,7 +89,7 @@ describe('HelixZodValidators', () => {
 
       it('should return MinLength error below minimum length', () => {
         expect(validator(new FormControl('ab'))).toEqual({
-          [HelixValidatorKey.MinLength]: 'Too short',
+          [ValidatorKey.MinLength]: 'Too short',
         });
       });
     });
@@ -105,7 +105,7 @@ describe('HelixZodValidators', () => {
 
       it('should return MaxLength error above maximum length', () => {
         expect(validator(new FormControl('toolong'))).toEqual({
-          [HelixValidatorKey.MaxLength]: 'Too long',
+          [ValidatorKey.MaxLength]: 'Too long',
         });
       });
     });
@@ -125,7 +125,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Min error below minimum value', () => {
         expect(validator(new FormControl(4))).toEqual({
-          [HelixValidatorKey.Min]: 'Too small',
+          [ValidatorKey.Min]: 'Too small',
         });
       });
     });
@@ -141,7 +141,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Max error above maximum value', () => {
         expect(validator(new FormControl(11))).toEqual({
-          [HelixValidatorKey.Max]: 'Too large',
+          [ValidatorKey.Max]: 'Too large',
         });
       });
     });
@@ -157,7 +157,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Integer error for a float', () => {
         expect(validator(new FormControl(3.14))).toEqual({
-          [HelixValidatorKey.Integer]: 'Not an integer',
+          [ValidatorKey.Integer]: 'Not an integer',
         });
       });
     });
@@ -173,7 +173,7 @@ describe('HelixZodValidators', () => {
 
       it('should return Pattern error for a non-matching value', () => {
         expect(validator(new FormControl('abc'))).toEqual({
-          [HelixValidatorKey.Pattern]: 'Digits only',
+          [ValidatorKey.Pattern]: 'Digits only',
         });
       });
     });
@@ -191,7 +191,7 @@ describe('HelixZodValidators', () => {
       it('should return Number error key for a non-number value', () => {
         const result = validator(new FormControl('text'));
         expect(result).not.toBeNull();
-        expect(Object.keys(result!)).toContain(HelixValidatorKey.Number);
+        expect(Object.keys(result!)).toContain(ValidatorKey.Number);
       });
     });
 
@@ -206,7 +206,7 @@ describe('HelixZodValidators', () => {
 
       it('should return MinLength error when array is too short', () => {
         expect(validator(new FormControl(['a']))).toEqual({
-          [HelixValidatorKey.MinLength]: 'Select at least 2',
+          [ValidatorKey.MinLength]: 'Select at least 2',
         });
       });
     });
@@ -222,8 +222,8 @@ describe('HelixZodValidators', () => {
       it('should return all mapped error keys for multiple issues', () => {
         const result = validator(new FormControl('ab'));
         expect(result).toEqual({
-          [HelixValidatorKey.MinLength]: 'Too short',
-          [HelixValidatorKey.Email]: 'Bad email',
+          [ValidatorKey.MinLength]: 'Too short',
+          [ValidatorKey.Email]: 'Bad email',
         });
       });
     });
@@ -237,7 +237,7 @@ describe('HelixZodValidators', () => {
       it('should map email field schema to Email error', () => {
         const validator = HelixZodValidators.fromZod(emailSchema);
         expect(validator(new FormControl('bad'))).toEqual({
-          [HelixValidatorKey.Email]: 'Please enter a valid email address',
+          [ValidatorKey.Email]: 'Please enter a valid email address',
         });
         expect(validator(new FormControl('alice@example.com'))).toBeNull();
       });
@@ -245,7 +245,7 @@ describe('HelixZodValidators', () => {
       it('should map name field schema to MinLength error with allowEmpty=false', () => {
         const validator = HelixZodValidators.fromZod(nameSchema, { allowEmpty: false });
         expect(validator(new FormControl(''))).toEqual({
-          [HelixValidatorKey.MinLength]: 'Name is required',
+          [ValidatorKey.MinLength]: 'Name is required',
         });
         expect(validator(new FormControl('Alice'))).toBeNull();
       });
@@ -257,7 +257,7 @@ describe('HelixZodValidators', () => {
       const banned = ['admin', 'root'];
       const validator = HelixZodValidators.fromZod(
         z.string().refine((v) => !banned.includes(v), 'Username not allowed'),
-        { fallbackKey: HelixValidatorKey.Pattern },
+        { fallbackKey: ValidatorKey.Pattern },
       );
 
       it('should return null for an allowed value', () => {
@@ -266,7 +266,7 @@ describe('HelixZodValidators', () => {
 
       it('should return fallbackKey error for a banned value', () => {
         expect(validator(new FormControl('admin'))).toEqual({
-          [HelixValidatorKey.Pattern]: 'Username not allowed',
+          [ValidatorKey.Pattern]: 'Username not allowed',
         });
       });
     });

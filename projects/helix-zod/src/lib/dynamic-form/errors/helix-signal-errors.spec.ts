@@ -1,5 +1,5 @@
 import { requiredError, standardSchemaError } from '@angular/forms/signals';
-import { HelixValidatorKey } from '@gravionlabs/helix-shell';
+import { ValidatorKey } from '@gravionlabs/helix/validators';
 import { z } from 'zod';
 import { helixErrorKey, helixFirstErrorMessage } from './helix-signal-errors';
 
@@ -10,24 +10,24 @@ function zodIssuesFor(schema: z.ZodType, value: unknown) {
 }
 
 describe('helixErrorKey', () => {
-  it('maps standard-schema zod issues to HelixValidatorKeys', () => {
+  it('maps standard-schema zod issues to ValidatorKeys', () => {
     const [tooShort] = zodIssuesFor(z.string().min(3, 'Too short'), 'ab');
-    expect(helixErrorKey(standardSchemaError(tooShort), 'ab')).toBe(HelixValidatorKey.MinLength);
+    expect(helixErrorKey(standardSchemaError(tooShort), 'ab')).toBe(ValidatorKey.MinLength);
 
     const [badEmail] = zodIssuesFor(z.email('Invalid'), 'nope');
-    expect(helixErrorKey(standardSchemaError(badEmail), 'nope')).toBe(HelixValidatorKey.Email);
+    expect(helixErrorKey(standardSchemaError(badEmail), 'nope')).toBe(ValidatorKey.Email);
 
     const [tooSmall] = zodIssuesFor(z.number().min(5), 2);
-    expect(helixErrorKey(standardSchemaError(tooSmall), 2)).toBe(HelixValidatorKey.Min);
+    expect(helixErrorKey(standardSchemaError(tooSmall), 2)).toBe(ValidatorKey.Min);
   });
 
   it('maps invalid_type on empty values to Required using the field value', () => {
     const [issue] = zodIssuesFor(z.string(), undefined);
-    expect(helixErrorKey(standardSchemaError(issue), undefined)).toBe(HelixValidatorKey.Required);
+    expect(helixErrorKey(standardSchemaError(issue), undefined)).toBe(ValidatorKey.Required);
   });
 
   it('maps built-in signal-forms error kinds', () => {
-    expect(helixErrorKey(requiredError())).toBe(HelixValidatorKey.Required);
+    expect(helixErrorKey(requiredError())).toBe(ValidatorKey.Required);
   });
 
   it('returns null for unmapped kinds', () => {
@@ -59,7 +59,7 @@ describe('helixFirstErrorMessage', () => {
 
     const message = helixFirstErrorMessage([standardSchemaError(issue)], {
       value: 'ab',
-      resolver: (_error, key) => (key === HelixValidatorKey.MinLength ? 'Custom!' : null),
+      resolver: (_error, key) => (key === ValidatorKey.MinLength ? 'Custom!' : null),
     });
 
     expect(message).toBe('Custom!');

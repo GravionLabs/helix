@@ -10,10 +10,6 @@ export { HelixFirstError } from './lib/form/pipes/helix-first-error.pipe';
 export { HelixSelect } from './lib/form/select/select';
 // Form — utils
 export { HelixFormArrayWithFactory, helixFormErrorMap } from './lib/form/utils/form.utils';
-// Form — validators
-export { HelixValidatorKey } from './lib/form/validators/helix-validator-key.enum';
-export type { HelixValidatorMessage } from './lib/form/validators/helix-validators';
-export { HelixValidators } from './lib/form/validators/helix-validators';
 // Breadcrumb
 export type { HelixBreadcrumb } from './lib/layout/breadcrumb.model';
 export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
