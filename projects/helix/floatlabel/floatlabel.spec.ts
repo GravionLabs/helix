@@ -94,7 +94,7 @@ describe('FloatLabel', () => {
         });
 
         it('should apply variant "in"', async () => {
-            component.variant = 'in';
+            fixture.componentRef.setInput('variant', 'in');
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
@@ -113,7 +113,7 @@ describe('FloatLabel', () => {
             const floatLabelElement = fixture.debugElement.query(By.directive(FloatLabel));
 
             // Test 'in' variant
-            component.variant = 'in';
+            fixture.componentRef.setInput('variant', 'in');
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-in')).toBe(true);
@@ -125,7 +125,7 @@ describe('FloatLabel', () => {
             expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-on')).toBe(true);
 
             // Test 'over' variant (default)
-            component.variant = 'over';
+            fixture.componentRef.setInput('variant', 'over');
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-over')).toBe(true);
@@ -289,7 +289,7 @@ describe('FloatLabel PassThrough Tests', () => {
 
     describe('PT Case 4: Use variables from instance', () => {
         it('should access instance variables in PT function', () => {
-            component.variant = 'in';
+            fixture.componentRef.setInput('variant', 'in');
             fixture.componentRef.setInput('pt', {
                 root: ({ instance }: any) => ({
                     class: instance?.variant === 'in' ? 'VARIANT_IN' : ''
@@ -301,7 +301,7 @@ describe('FloatLabel PassThrough Tests', () => {
         });
 
         it('should conditionally apply styles based on instance state', () => {
-            component.variant = 'over';
+            fixture.componentRef.setInput('variant', 'over');
             fixture.componentRef.setInput('pt', {
                 root: ({ instance }: any) => ({
                     style: {

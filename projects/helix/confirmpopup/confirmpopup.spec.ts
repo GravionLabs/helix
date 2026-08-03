@@ -466,7 +466,8 @@ describe('ConfirmPopup', () => {
         });
 
         it('should only respond to confirmations with matching key', async () => {
-            confirmPopupInstance.key = 'specificKey';
+            component.key = 'specificKey';
+            fixture.detectChanges();
 
             confirmationService.confirm({
                 key: 'differentKey',
