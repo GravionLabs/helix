@@ -1,23 +1,23 @@
-@if (value && value.length > 0) {
-  @if (galleria.fullScreen) {
+@if (value() && value().length > 0) {
+  @if (galleria.fullScreen()) {
     <button type="button" [hBind]="getPTOptions('closeButton')" [class]="cx('closeButton')" (click)="maskHide.emit()" [attr.aria-label]="closeAriaLabel()">
-      @if (!galleria.closeIconTemplate && !galleria._closeIconTemplate) {
+      @if (!galleria.closeIconTemplate && !galleria._closeIconTemplate()) {
         <svg data-p-icon="times" [hBind]="getPTOptions('closeIcon')" [class]="cx('closeIcon')" />
       }
-      <ng-template *ngTemplateOutlet="galleria.closeIconTemplate || galleria._closeIconTemplate"></ng-template>
+      <ng-template *ngTemplateOutlet="galleria.closeIconTemplate || galleria._closeIconTemplate()"></ng-template>
     </button>
   }
-  @if (galleria.templates && (galleria.headerFacet || galleria.headerTemplate)) {
-    <div hGalleriaItemSlot [unstyled]="unstyled()" type="header" [templates]="galleria.templates" [hBind]="getPTOptions('header')" [class]="cx('header')"></div>
+  @if (galleria.templates() && (galleria.headerFacet || galleria.headerTemplate())) {
+    <div hGalleriaItemSlot [unstyled]="unstyled()" type="header" [templates]="galleria.templates()" [hBind]="getPTOptions('header')" [class]="cx('header')"></div>
   }
   <div [hBind]="getPTOptions('content')" [class]="cx('content')" [attr.aria-live]="galleria.autoPlay() ? 'polite' : 'off'">
     <div
       hGalleriaItem
       [id]="id"
-      [value]="value"
-      [activeIndex]="activeIndex"
+      [value]="value()"
+      [activeIndex]="_activeIndex"
       [circular]="galleria.circular()"
-      [templates]="galleria.templates"
+      [templates]="galleria.templates()"
       (onActiveIndexChange)="onActiveIndexChange($event)"
       [showIndicators]="galleria.showIndicators()"
       [changeItemOnIndicatorHover]="galleria.changeItemOnIndicatorHover()"
@@ -36,10 +36,10 @@
       <div
         hGalleriaThumbnails
         [containerId]="id"
-        [value]="value"
+        [value]="value()"
         (onActiveIndexChange)="onActiveIndexChange($event)"
-        [activeIndex]="activeIndex"
-        [templates]="galleria.templates"
+        [activeIndex]="_activeIndex"
+        [templates]="galleria.templates()"
         [numVisible]="numVisible()"
         [responsiveOptions]="galleria.responsiveOptions()"
         [circular]="galleria.circular()"
@@ -54,6 +54,6 @@
     }
   </div>
   @if (shouldRenderFooter()) {
-    <div hGalleriaItemSlot [hBind]="getPTOptions('footer')" [class]="cx('footer')" type="footer" [templates]="galleria.templates" [unstyled]="unstyled()"></div>
+    <div hGalleriaItemSlot [hBind]="getPTOptions('footer')" [class]="cx('footer')" type="footer" [templates]="galleria.templates()" [unstyled]="unstyled()"></div>
   }
 }
