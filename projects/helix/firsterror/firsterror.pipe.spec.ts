@@ -1,7 +1,7 @@
-import { HelixFirstError } from './helix-first-error.pipe';
+import { FirstErrorPipe } from './firsterror.pipe';
 
-describe('HelixFirstError', () => {
-  const pipe = new HelixFirstError();
+describe('FirstErrorPipe', () => {
+  const pipe = new FirstErrorPipe();
 
   it('should return empty string for null', () => {
     expect(pipe.transform(null)).toBe('');
