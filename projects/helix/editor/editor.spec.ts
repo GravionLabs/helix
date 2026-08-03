@@ -115,10 +115,11 @@ class TestPTemplateComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-editor [(ngModel)]="text" [readonly]="true"> </p-editor> `
+    template: ` <p-editor [(ngModel)]="text" [readonly]="readonly"> </p-editor> `
 })
 class TestReadonlyComponent {
     text: string = '<div>Readonly editor content</div>';
+    readonly = true;
 }
 
 @Component({
@@ -265,22 +266,30 @@ describe('Editor', () => {
             expect(editorInstance.getQuill).toBeDefined();
         });
 
-        it('should handle readonly mode toggle', () => {
+        it('should handle readonly mode toggle', async () => {
             if (editorInstance.quill) {
                 spyOn(editorInstance.quill, 'disable').and.stub();
                 spyOn(editorInstance.quill, 'enable').and.stub();
 
-                editorInstance.readonly = true;
+                component.readonly = true;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
                 expect(editorInstance.quill.disable).toHaveBeenCalled();
 
-                editorInstance.readonly = false;
+                component.readonly = false;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
                 expect(editorInstance.quill.enable).toHaveBeenCalled();
             } else {
                 // If quill is not initialized, just test the property
-                editorInstance.readonly = true;
+                component.readonly = true;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
                 expect(editorInstance.readonly()).toBe(true);
 
-                editorInstance.readonly = false;
+                component.readonly = false;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
                 expect(editorInstance.readonly()).toBe(false);
             }
         });
@@ -475,10 +484,11 @@ describe('Editor', () => {
 
             // Simulate ngStyle behavior in test environment
             const contentElement = fixture.debugElement.query(By.css('.p-editor-content'));
-            if (contentElement && editorInstance.style()) {
+            const editorStyle = editorInstance.style();
+            if (contentElement && editorStyle) {
                 const element = contentElement.nativeElement;
-                Object.keys(editorInstance.style()).forEach((key) => {
-                    element.style[key] = editorInstance.style()![key];
+                Object.keys(editorStyle).forEach((key) => {
+                    element.style[key] = editorStyle[key];
                 });
 
                 expect(element.style.border).toBe('2px solid red');
@@ -505,17 +515,22 @@ describe('Editor', () => {
             expect(editorInstance.readonly()).toBe(true);
         });
 
-        it('should disable editor when readonly is true', () => {
+        it('should disable editor when readonly is true', async () => {
             const editorEl = fixture.debugElement.query(By.css('p-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             if (editorInstance.quill) {
+                component.readonly = false;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
+
                 spyOn(editorInstance.quill, 'disable');
-                editorInstance.readonly = true;
+                component.readonly = true;
+                fixture.changeDetectorRef.markForCheck();
+                await fixture.whenStable();
                 expect(editorInstance.quill.disable).toHaveBeenCalled();
             } else {
                 // Test readonly property setting if quill is not available
-                editorInstance.readonly = true;
                 expect(editorInstance.readonly()).toBe(true);
             }
         });

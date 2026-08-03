@@ -475,12 +475,12 @@ describe('Menubar', () => {
 
             const menuButton = fixture.debugElement.query(By.css('a[data-pc-section="button"]'));
 
-            expect(menubarInstance.mobileActive()).toBeFalsy();
+            expect(menubarInstance.mobileActive).toBeFalsy();
 
             menuButton.nativeElement.click();
             fixture.detectChanges();
 
-            expect(menubarInstance.mobileActive()).toBe(true);
+            expect(menubarInstance.mobileActive).toBe(true);
         });
 
         it('should show and hide menu programmatically', () => {
@@ -612,12 +612,14 @@ describe('Menubar', () => {
             menubarInstance.focused = true;
             menubarInstance.focusedItemInfo.set({ index: 0, level: 0, parentKey: '', item: null });
 
-            // Mock the rootmenu property to prevent undefined errors
-            menubarInstance.rootmenu = {
-                el: {
-                    nativeElement: document.createElement('ul')
-                }
-            } as any;
+            // Mock the rootmenu property to prevent undefined errors.
+            // rootmenu is a viewChild() signal; stub the signal function itself.
+            (menubarInstance as unknown as { rootmenu: () => unknown }).rootmenu = () =>
+                ({
+                    el: {
+                        nativeElement: document.createElement('ul')
+                    }
+                }) as any;
         });
 
         it('should handle arrow right key', () => {
@@ -1012,10 +1014,10 @@ describe('Menubar', () => {
             const mockEvent = new MouseEvent('click');
             spyOn(mockEvent, 'preventDefault');
 
-            expect(menubarInstance.mobileActive()).toBeFalsy();
+            expect(menubarInstance.mobileActive).toBeFalsy();
 
             menubarInstance.toggle(mockEvent);
-            expect(menubarInstance.mobileActive()).toBe(true);
+            expect(menubarInstance.mobileActive).toBe(true);
             expect(mockEvent.preventDefault).toHaveBeenCalled();
         });
 

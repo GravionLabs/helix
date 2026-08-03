@@ -985,20 +985,22 @@ describe('Select', () => {
             ];
 
             // Create a new select instance with grouped options
-            selectInstance.group = true;
-            selectInstance.options = groupedOptions;
-            selectInstance.optionGroupChildren = 'items';
-            selectInstance.optionLabel = 'label';
-            selectInstance.optionValue = 'value';
+            const groupFixture = TestBed.createComponent(Select);
+            const groupSelect = groupFixture.componentInstance;
+            groupFixture.componentRef.setInput('group', true);
+            groupFixture.componentRef.setInput('options', groupedOptions);
+            groupFixture.componentRef.setInput('optionGroupChildren', 'items');
+            groupFixture.componentRef.setInput('optionLabel', 'label');
+            groupFixture.componentRef.setInput('optionValue', 'value');
 
             // Set disabled option as initial value
-            selectInstance.writeModelValue('Berlin');
-            fixture.detectChanges();
+            groupSelect.writeModelValue('Berlin');
+            groupFixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
-            await fixture.whenStable();
+            await groupFixture.whenStable();
 
             // Check the DOM element with p-select-label class
-            const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+            const labelElement = groupFixture.debugElement.query(By.css('.p-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('Berlin');
         });
@@ -1312,7 +1314,7 @@ describe('Select', () => {
             fixture.detectChanges();
 
             // Only reset if resetFilterOnHide is enabled
-            if (selectInstance.resetFilterOnHide) {
+            if (selectInstance.resetFilterOnHide()) {
                 expect(selectInstance._filterValue()).toBeNull();
             } else {
                 expect(selectInstance._filterValue()).toBe('test');
@@ -1944,14 +1946,15 @@ describe('Select - #template Reference Content Projection', () => {
 
     it('should render clear icon template reference with class context when showClear is true', () => {
         component.selectedValue = 'ref1';
-        selectInstance.showClear = true;
+        component.showClear = true;
         fixture.detectChanges();
 
         expect(selectInstance.clearIconTemplate).toBeDefined();
     });
 
     it('should render filter icon template reference', async () => {
-        selectInstance.filter = true;
+        component.filter = true;
+        fixture.detectChanges();
         selectInstance.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
         await fixture.whenStable();
@@ -3226,6 +3229,9 @@ describe('Select PT (PassThrough)', () => {
                 [optionGroupLabel]="optionGroupLabel"
                 [optionGroupChildren]="optionGroupChildren"
                 [group]="group"
+                [loading]="loading"
+                [virtualScroll]="virtualScroll"
+                [virtualScrollItemSize]="virtualScrollItemSize"
             >
             </p-select>
         `
@@ -3246,6 +3252,9 @@ describe('Select PT (PassThrough)', () => {
         optionGroupLabel: string | undefined;
         optionGroupChildren: string | undefined;
         group = false;
+        loading = false;
+        virtualScroll = false;
+        virtualScrollItemSize: number | undefined;
     }
 
     let fixture: ComponentFixture<TestPTSelectComponent>;
@@ -3894,7 +3903,7 @@ describe('Select PT (PassThrough)', () => {
             component.pt = {
                 loadingIcon: { class: 'CUSTOM_LOADING_ICON' }
             };
-            selectInstance.loading = true;
+            component.loading = true;
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
@@ -4060,8 +4069,8 @@ describe('Select PT (PassThrough)', () => {
                     spacer: { class: 'CUSTOM_VSCROLLER_SPACER', 'data-vscroller': 'spacer' }
                 }
             };
-            selectInstance.virtualScroll = true;
-            selectInstance.virtualScrollItemSize = 38;
+            component.virtualScroll = true;
+            component.virtualScrollItemSize = 38;
             fixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();

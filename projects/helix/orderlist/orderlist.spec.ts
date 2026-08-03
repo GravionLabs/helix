@@ -1212,7 +1212,8 @@ describe('OrderList', () => {
 
         it('should update selection through setter', () => {
             const newSelection = [component.products[1], component.products[3]];
-            orderList.selection = newSelection;
+            component.selection = newSelection;
+            fixture.detectChanges();
 
             expect(orderList.d_selection).toEqual(newSelection);
             expect(orderList.selection()).toEqual(newSelection);
@@ -1473,8 +1474,9 @@ describe('OrderList', () => {
         it('should handle ngOnInit correctly', () => {
             spyOn(orderList, 'createStyle');
 
-            orderList.responsive = true;
-            orderList.filterBy = 'name';
+            component.responsive = true;
+            component.filterBy = 'name';
+            fixture.detectChanges();
             orderList.ngOnInit();
 
             expect(orderList.createStyle).toHaveBeenCalled();
@@ -1492,7 +1494,8 @@ describe('OrderList', () => {
         });
 
         it('should destroy style on destroy', () => {
-            orderList.responsive = true;
+            component.responsive = true;
+            fixture.detectChanges();
             orderList.ngOnInit();
             orderList.createStyle();
 
@@ -1511,7 +1514,8 @@ describe('OrderList', () => {
         });
 
         it('should handle value changes with filter', () => {
-            orderList.filterBy = 'name';
+            component.filterBy = 'name';
+            fixture.detectChanges();
             orderList.filterValue = 'test';
             spyOn(orderList, 'filter');
 
@@ -1526,7 +1530,7 @@ describe('OrderList', () => {
     describe('TrackBy Function', () => {
         it('should use default trackBy function', () => {
             const item = { id: '1', name: 'Test' };
-            const result = orderList.trackBy(0, item);
+            const result = orderList.trackBy()(0, item);
             expect(result).toBe(item.id);
         });
 
@@ -1536,7 +1540,7 @@ describe('OrderList', () => {
             fixture.detectChanges();
 
             const item = { id: '1', code: 'TEST', name: 'Test' };
-            const result = orderList.trackBy(0, item);
+            const result = orderList.trackBy()(0, item);
             expect(result).toBe('TEST');
         });
     });
@@ -1588,7 +1592,6 @@ describe('OrderList', () => {
 
             it('should apply item template with selection context', async () => {
                 comprehensiveComponent.selection = [comprehensiveComponent.products[0]];
-                comprehensiveOrderList.selection = [comprehensiveComponent.products[0]];
                 comprehensiveFixture.changeDetectorRef.markForCheck();
                 comprehensiveFixture.detectChanges();
                 await comprehensiveFixture.whenStable();
@@ -1849,7 +1852,6 @@ describe('OrderList', () => {
 
                 // Add selection - set both component and orderList selection
                 comprehensiveComponent.selection = [comprehensiveComponent.products[0]];
-                comprehensiveOrderList.selection = [comprehensiveComponent.products[0]];
                 comprehensiveFixture.changeDetectorRef.markForCheck();
                 comprehensiveFixture.detectChanges();
                 await comprehensiveFixture.whenStable();
