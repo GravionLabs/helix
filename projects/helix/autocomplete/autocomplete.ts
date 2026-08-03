@@ -4,24 +4,22 @@ import {
     ChangeDetectionStrategy,
     Component,
     computed,
-    ContentChild,
-    ContentChildren,
+    contentChild,
+    contentChildren,
+    effect,
     ElementRef,
-    EventEmitter,
     forwardRef,
-    HostListener,
     inject,
     InjectionToken,
     input,
-    Input,
+    model,
     NgModule,
     NgZone,
     numberAttribute,
-    Output,
-    QueryList,
+    output,
     signal,
     TemplateRef,
-    ViewChild,
+    viewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -79,7 +77,8 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p]': 'containerDataP'
+        '[attr.data-p]': 'containerDataP',
+        '(click)': 'onHostClick($event)'
     },
     hostDirectives: [Bind]
 })
@@ -220,10 +219,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
      * Icon class of the dropdown icon.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() dropdownIcon: string | undefined;
+    readonly dropdownIcon = input<string | undefined>(undefined);
     /**
      * Ensures uniqueness of selected items on multiple mode.
      * @group Props
@@ -326,16 +322,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
      * An array of suggestions to display.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get suggestions(): any[] {
-        return this._suggestions();
-    }
-
-    set suggestions(value: any[]) {
-        this._suggestions.set(value);
-        this.handleSuggestionsChange();
-    }
+    readonly suggestions = input<any[] | null>(null);
 
     /**
      * Property name or getter function to use as the label of an option.
@@ -351,9 +338,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
      * Unique identifier of the component.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Your application code writes to the input. This prevents migration.
-    @Input() id: string | undefined;
+    readonly id = model<string | undefined>(undefined);
     /**
      * Text to display when the search is active. Defaults to global value in i18n translation configuration.
      * @group Props
@@ -430,93 +415,93 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
      * @param {AutoCompleteCompleteEvent} event - Custom complete event.
      * @group Emits
      */
-    @Output() completeMethod: EventEmitter<AutoCompleteCompleteEvent> = new EventEmitter<AutoCompleteCompleteEvent>();
+    readonly completeMethod = output<AutoCompleteCompleteEvent>();
     /**
      * Callback to invoke when a suggestion is selected.
      * @param {AutoCompleteSelectEvent} event - custom select event.
      * @group Emits
      */
-    @Output() onSelect: EventEmitter<AutoCompleteSelectEvent> = new EventEmitter<AutoCompleteSelectEvent>();
+    readonly onSelect = output<AutoCompleteSelectEvent>();
     /**
      * Callback to invoke when a selected value is removed.
      * @param {AutoCompleteUnselectEvent} event - custom unselect event.
      * @group Emits
      */
-    @Output() onUnselect: EventEmitter<AutoCompleteUnselectEvent> = new EventEmitter<AutoCompleteUnselectEvent>();
+    readonly onUnselect = output<AutoCompleteUnselectEvent>();
     /**
      * Callback to invoke when an item is added via addOnBlur or separator features.
      * @param {AutoCompleteAddEvent} event - Custom add event.
      * @group Emits
      */
-    @Output() onAdd: EventEmitter<AutoCompleteAddEvent> = new EventEmitter<AutoCompleteAddEvent>();
+    readonly onAdd = output<AutoCompleteAddEvent>();
     /**
      * Callback to invoke when the component receives focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter();
+    readonly onFocus = output<Event>();
     /**
      * Callback to invoke when the component loses focus.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter();
+    readonly onBlur = output<Event>();
     /**
      * Callback to invoke to when dropdown button is clicked.
      * @param {AutoCompleteDropdownClickEvent} event - custom dropdown click event.
      * @group Emits
      */
-    @Output() onDropdownClick: EventEmitter<AutoCompleteDropdownClickEvent> = new EventEmitter<AutoCompleteDropdownClickEvent>();
+    readonly onDropdownClick = output<AutoCompleteDropdownClickEvent>();
     /**
      * Callback to invoke when clear button is clicked.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onClear: EventEmitter<Event | undefined> = new EventEmitter<Event | undefined>();
+    readonly onClear = output<Event | undefined>();
     /**
      * Callback to invoke on input key down.
      * @param {KeyboardEvent} event - Keyboard event.
      * @group Emits
      */
-    @Output() onInputKeydown: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
+    readonly onInputKeydown = output<KeyboardEvent>();
     /**
      * Callback to invoke on input key up.
      * @param {KeyboardEvent} event - Keyboard event.
      * @group Emits
      */
-    @Output() onKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
+    readonly onKeyUp = output<KeyboardEvent>();
     /**
      * Callback to invoke on overlay is shown.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onShow: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onShow = output<Event | undefined>();
     /**
      * Callback to invoke on overlay is hidden.
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onHide: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onHide = output<Event | undefined>();
     /**
      * Callback to invoke on lazy load data.
      * @param {AutoCompleteLazyLoadEvent} event - Lazy load event.
      * @group Emits
      */
-    @Output() onLazyLoad: EventEmitter<AutoCompleteLazyLoadEvent> = new EventEmitter<AutoCompleteLazyLoadEvent>();
+    readonly onLazyLoad = output<AutoCompleteLazyLoadEvent>();
 
-    @ViewChild('focusInput') inputEL: Nullable<ElementRef>;
+    readonly inputEL = viewChild<ElementRef>('focusInput');
 
-    @ViewChild('multiIn') multiInputEl: Nullable<ElementRef>;
+    readonly multiInputEl = viewChild<ElementRef>('multiIn');
 
-    @ViewChild('multiContainer') multiContainerEL: Nullable<ElementRef>;
+    readonly multiContainerEL = viewChild<ElementRef>('multiContainer');
 
-    @ViewChild('ddBtn') dropdownButton: Nullable<ElementRef>;
+    readonly dropdownButton = viewChild<ElementRef>('ddBtn');
 
-    @ViewChild('items') itemsViewChild: Nullable<ElementRef>;
+    readonly itemsViewChild = viewChild<ElementRef>('items');
 
-    @ViewChild('scroller') scroller: Nullable<Scroller>;
+    readonly scroller = viewChild<Scroller>('scroller');
 
-    @ViewChild('overlay') overlayViewChild!: Overlay;
+    readonly overlayViewChild = viewChild<Overlay>('overlay');
 
     itemsWrapper: Nullable<HTMLDivElement>;
 
@@ -524,69 +509,68 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
      * Custom item template.
      * @group Templates
      */
-    @ContentChild('item') itemTemplate: Nullable<TemplateRef<AutoCompleteItemTemplateContext>>;
+    readonly itemTemplate = contentChild<TemplateRef<AutoCompleteItemTemplateContext>>('item');
 
     /**
      * Custom empty message template.
      * @group Templates
      */
-    @ContentChild('empty') emptyTemplate: Nullable<TemplateRef<void>>;
+    readonly emptyTemplate = contentChild<TemplateRef<void>>('empty');
 
     /**
      * Custom header template.
      * @group Templates
      */
-    @ContentChild('header') headerTemplate: Nullable<TemplateRef<void>>;
+    readonly headerTemplate = contentChild<TemplateRef<void>>('header');
 
     /**
      * Custom footer template.
      * @group Templates
      */
-    @ContentChild('footer') footerTemplate: Nullable<TemplateRef<void>>;
+    readonly footerTemplate = contentChild<TemplateRef<void>>('footer');
 
     /**
      * Custom selected item template.
      * @group Templates
      */
-    @ContentChild('selecteditem') selectedItemTemplate: Nullable<TemplateRef<AutoCompleteSelectedItemTemplateContext>>;
+    readonly selectedItemTemplate = contentChild<TemplateRef<AutoCompleteSelectedItemTemplateContext>>('selecteditem');
 
     /**
      * Custom group template.
      * @group Templates
      */
-    @ContentChild('group') groupTemplate: Nullable<TemplateRef<AutoCompleteGroupTemplateContext>>;
+    readonly groupTemplate = contentChild<TemplateRef<AutoCompleteGroupTemplateContext>>('group');
 
     /**
      * Custom loader template.
      * @group Templates
      */
-    @ContentChild('loader') loaderTemplate: Nullable<TemplateRef<AutoCompleteLoaderTemplateContext>>;
+    readonly loaderTemplate = contentChild<TemplateRef<AutoCompleteLoaderTemplateContext>>('loader');
 
     /**
      * Custom remove icon template.
      * @group Templates
      */
-    @ContentChild('removeicon') removeIconTemplate: Nullable<TemplateRef<AutoCompleteRemoveIconTemplateContext>>;
+    readonly removeIconTemplate = contentChild<TemplateRef<AutoCompleteRemoveIconTemplateContext>>('removeicon');
 
     /**
      * Custom loading icon template.
      * @group Templates
      */
-    @ContentChild('loadingicon') loadingIconTemplate: Nullable<TemplateRef<void>>;
+    readonly loadingIconTemplate = contentChild<TemplateRef<void>>('loadingicon');
 
     /**
      * Custom clear icon template.
      * @group Templates
      */
-    @ContentChild('clearicon') clearIconTemplate: Nullable<TemplateRef<void>>;
+    readonly clearIconTemplate = contentChild<TemplateRef<void>>('clearicon');
 
     /**
      * Custom dropdown icon template.
      * @group Templates
      */
-    @ContentChild('dropdownicon') dropdownIconTemplate: Nullable<TemplateRef<void>>;
+    readonly dropdownIconTemplate = contentChild<TemplateRef<void>>('dropdownicon');
 
-    @HostListener('click', ['$event'])
     onHostClick(event: MouseEvent) {
         this.onContainerClick(event);
     }
@@ -653,7 +637,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
     inputValue = computed(() => {
         const modelValue = this.modelValue();
-        const selectedOption = this.optionValueSelected ? (this.suggestions || []).find((option: any) => equals(option, modelValue, this.equalityKey())) : modelValue;
+        const selectedOption = this.optionValueSelected ? (this.suggestions() || []).find((option: any) => equals(option, modelValue, this.equalityKey())) : modelValue;
 
         if (isNotEmpty(modelValue)) {
             if (typeof modelValue === 'object' || this.optionValueSelected) {
@@ -669,11 +653,11 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     });
 
     get focusedMultipleOptionId() {
-        return this.focusedMultipleOptionIndex() !== -1 ? `${this.id}_multiple_option_${this.focusedMultipleOptionIndex()}` : null;
+        return this.focusedMultipleOptionIndex() !== -1 ? `${this.id()}_multiple_option_${this.focusedMultipleOptionIndex()}` : null;
     }
 
     get focusedOptionId() {
-        return this.focusedOptionIndex() !== -1 ? `${this.id}_${this.focusedOptionIndex()}` : null;
+        return this.focusedOptionIndex() !== -1 ? `${this.id()}_${this.focusedOptionIndex()}` : null;
     }
 
     get searchResultMessageText() {
@@ -725,17 +709,22 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         private zone: NgZone
     ) {
         super();
+        effect(() => {
+            const value = this.suggestions();
+            this._suggestions.set(value);
+            this.handleSuggestionsChange();
+        });
     }
 
     onInit() {
-        this.id = this.id || uuid('pn_id_');
+        if (!this.id()) this.id.set(uuid('pn_id_'));
         this.cd.detectChanges();
     }
 
-    @ContentChildren(PrimeTemplate) templates: QueryList<PrimeTemplate> | undefined;
+    readonly templates = contentChildren(PrimeTemplate);
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -795,11 +784,11 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     onAfterViewChecked() {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
         //Use timeouts as since Angular 4.2, AfterViewChecked is broken and not called after panel is updated
-        if (this.suggestionsUpdated && this.overlayViewChild) {
+        if (this.suggestionsUpdated && this.overlayViewChild()) {
             this.zone.runOutsideAngular(() => {
                 setTimeout(() => {
-                    if (this.overlayViewChild) {
-                        this.overlayViewChild.alignOverlay();
+                    if (this.overlayViewChild()) {
+                        this.overlayViewChild()!.alignOverlay();
                     }
                 }, 1);
                 this.suggestionsUpdated = false;
@@ -809,7 +798,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
     handleSuggestionsChange() {
         if (this.loading) {
-            this._suggestions()?.length > 0 || this.showEmptyMessage() || !!this.emptyTemplate ? this.show() : this.hide();
+            this._suggestions()?.length > 0 || this.showEmptyMessage() || !!this.emptyTemplate() ? this.show() : this.hide();
             const focusedOptionIndex = this.overlayVisible && this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : -1;
             this.focusedOptionIndex.set(focusedOptionIndex);
             this.suggestionsUpdated = true;
@@ -900,11 +889,12 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     }
 
     isInputClicked(event) {
-        return event.target === this.inputEL?.nativeElement;
+        return event.target === this.inputEL()?.nativeElement;
     }
 
     isDropdownClicked(event) {
-        return this.dropdownButton?.nativeElement ? event.target === this.dropdownButton.nativeElement || this.dropdownButton.nativeElement.contains(event.target) : false;
+        const ddBtn = this.dropdownButton();
+        return ddBtn?.nativeElement ? event.target === ddBtn.nativeElement || ddBtn.nativeElement.contains(event.target) : false;
     }
 
     equalityKey() {
@@ -916,19 +906,21 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
             return;
         }
 
-        if (!this.overlayViewChild || !this.overlayViewChild.overlayViewChild()?.nativeElement.contains(event.target)) {
-            focus(this.inputEL?.nativeElement);
+        const ovc = this.overlayViewChild();
+        if (!ovc || !ovc.overlayViewChild()?.nativeElement.contains(event.target)) {
+            focus(this.inputEL()?.nativeElement);
         }
     }
 
     handleDropdownClick(event) {
         let query: string | undefined = undefined;
+        const inputEl = this.inputEL();
 
         if (this.overlayVisible) {
             this.hide(true);
         } else {
-            focus(this.inputEL?.nativeElement);
-            query = this.inputEL?.nativeElement?.value as string;
+            focus(inputEl?.nativeElement);
+            query = inputEl?.nativeElement?.value as string;
 
             const dropdownMode = this.dropdownMode();
             if (dropdownMode === 'blank') this.search(event, '', 'dropdown');
@@ -957,8 +949,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
             }
 
             if (query.length === 0 && !multiple) {
-                // TODO: The 'emit' function requires a mandatory Event | undefined argument
-                this.onClear.emit();
+                this.onClear.emit(undefined);
 
                 setTimeout(() => {
                     this.hide();
@@ -1043,12 +1034,13 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         this.focusedOptionIndex.set(-1);
 
         if (this.addOnBlur() && this.multiple() && !this.typeahead()) {
-            const inputValue = (this.multiInputEl?.nativeElement?.value || event.target.value || '').trim();
+            const multiInput = this.multiInputEl();
+            const inputValue = (multiInput?.nativeElement?.value || event.target.value || '').trim();
             if (inputValue && !this.isSelected(inputValue)) {
                 this.updateModel([...(this.modelValue() || []), inputValue]);
                 this.onAdd.emit({ originalEvent: event, value: inputValue });
-                if (this.multiInputEl?.nativeElement) {
-                    this.multiInputEl.nativeElement.value = '';
+                if (multiInput?.nativeElement) {
+                    multiInput.nativeElement.value = '';
                 } else {
                     event.target.value = '';
                 }
@@ -1080,8 +1072,9 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
                     addedValues.forEach((addedValue) => {
                         this.onAdd.emit({ originalEvent: event, value: addedValue });
                     });
-                    if (this.multiInputEl?.nativeElement) {
-                        this.multiInputEl.nativeElement.value = '';
+                    const multiInput = this.multiInputEl();
+                    if (multiInput?.nativeElement) {
+                        multiInput.nativeElement.value = '';
                     } else {
                         event.target.value = '';
                     }
@@ -1172,12 +1165,13 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         const separator = this.separator();
         if (separator && this.multiple() && !this.typeahead()) {
             if (separator === event.key || (typeof separator === 'string' && event.key === separator) || (separator instanceof RegExp && event.key.match(separator))) {
-                const inputValue = (this.multiInputEl?.nativeElement?.value || event.target.value || '').trim();
+                const multiInput = this.multiInputEl();
+                const inputValue = (multiInput?.nativeElement?.value || event.target.value || '').trim();
                 if (inputValue && !this.isSelected(inputValue)) {
                     this.updateModel([...(this.modelValue() || []), inputValue]);
                     this.onAdd.emit({ originalEvent: event, value: inputValue });
-                    if (this.multiInputEl?.nativeElement) {
-                        this.multiInputEl.nativeElement.value = '';
+                    if (multiInput?.nativeElement) {
+                        multiInput.nativeElement.value = '';
                     } else {
                         event.target.value = '';
                     }
@@ -1227,7 +1221,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         this.focusedOptionIndex.set(-1);
         if (this.multiple()) {
             if (isEmpty(target.value) && this.hasSelectedOption()) {
-                focus(this.multiContainerEL?.nativeElement);
+                focus(this.multiContainerEL()?.nativeElement);
                 this.focusedMultipleOptionIndex.set(this.modelValue().length);
             } else {
                 event.stopPropagation(); // To prevent onArrowLeftKeyOnMultiple method
@@ -1278,7 +1272,8 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
                 if (inputValue && !this.isSelected(inputValue)) {
                     this.updateModel([...(this.modelValue() || []), inputValue]);
                     this.onAdd.emit({ originalEvent: event, value: inputValue });
-                    this.inputEL?.nativeElement && (this.inputEL.nativeElement.value = '');
+                    const inputEl2 = this.inputEL();
+                    inputEl2?.nativeElement && (inputEl2.nativeElement.value = '');
                 }
             }
         }
@@ -1309,17 +1304,19 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
         // Handle tab key behavior for multiple mode without typeahead
         if (this.multiple() && !this.typeahead()) {
-            const inputValue = (this.multiInputEl?.nativeElement?.value || this.inputEL?.nativeElement?.value || '').trim();
+            const multiInput = this.multiInputEl();
+            const inputEl = this.inputEL();
+            const inputValue = (multiInput?.nativeElement?.value || inputEl?.nativeElement?.value || '').trim();
 
             if (this.addOnTab()) {
                 if (inputValue && !this.isSelected(inputValue)) {
                     // Add the value and keep focus
                     this.updateModel([...(this.modelValue() || []), inputValue]);
                     this.onAdd.emit({ originalEvent: event, value: inputValue });
-                    if (this.multiInputEl?.nativeElement) {
-                        this.multiInputEl.nativeElement.value = '';
-                    } else if (this.inputEL?.nativeElement) {
-                        this.inputEL.nativeElement.value = '';
+                    if (multiInput?.nativeElement) {
+                        multiInput.nativeElement.value = '';
+                    } else if (inputEl?.nativeElement) {
+                        inputEl.nativeElement.value = '';
                     }
 
                     this.updateInputValue();
@@ -1338,7 +1335,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
     onBackspaceKey(event) {
         if (this.multiple()) {
-            if (isNotEmpty(this.modelValue()) && !this.inputEL?.nativeElement?.value) {
+            if (isNotEmpty(this.modelValue()) && !this.inputEL()?.nativeElement?.value) {
                 const removedValue = this.modelValue()[this.modelValue().length - 1];
                 const newValue = this.modelValue().slice(0, -1);
                 this.updateModel(newValue);
@@ -1361,7 +1358,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         this.focusedMultipleOptionIndex.set(optionIndex);
         if (optionIndex > this.modelValue().length - 1) {
             this.focusedMultipleOptionIndex.set(-1);
-            focus(this.inputEL?.nativeElement);
+            focus(this.inputEL()?.nativeElement);
         }
     }
 
@@ -1373,8 +1370,8 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
     onOptionSelect(event, option, isHide = true) {
         if (this.multiple()) {
-            this.inputEL?.nativeElement && (this.inputEL.nativeElement.value = '');
-
+            const inputEl = this.inputEL();
+            inputEl && (inputEl.nativeElement.value = '');
             if (!this.isSelected(option)) {
                 this.updateModel([...(this.modelValue() || []), option]);
             }
@@ -1415,7 +1412,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
         this.updateModel(value);
         this.onUnselect.emit({ originalEvent: event, value: removedOption });
-        focus(this.inputEL?.nativeElement);
+        focus(this.inputEL()?.nativeElement);
     }
 
     updateModel(options) {
@@ -1432,17 +1429,18 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     }
 
     updateInputValue() {
-        if (this.inputEL && this.inputEL.nativeElement) {
+        const inputEl = this.inputEL();
+        if (inputEl?.nativeElement) {
             if (!this.multiple()) {
-                this.inputEL.nativeElement.value = this.inputValue();
+                inputEl.nativeElement.value = this.inputValue();
             } else {
-                this.inputEL.nativeElement.value = '';
+                inputEl.nativeElement.value = '';
             }
         }
     }
 
     updateInputWithForceSelection(event: any) {
-        const input = this.inputEL?.nativeElement;
+        const input = this.inputEL()?.nativeElement;
         const inputCleared = !input?.value && isNotEmpty(this.modelValue());
 
         if (!this.forceSelection() || this.overlayVisible || (!input?.value && !inputCleared)) {
@@ -1479,14 +1477,15 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     }
 
     scrollInView(index = -1) {
-        const id = index !== -1 ? `${this.id}_${index}` : this.focusedOptionId;
-        if (this.itemsViewChild && this.itemsViewChild.nativeElement) {
-            const element = findSingle(this.itemsViewChild.nativeElement, `li[id="${id}"]`);
+        const id = index !== -1 ? `${this.id()}_${index}` : this.focusedOptionId;
+        const itemsChild = this.itemsViewChild();
+        if (itemsChild?.nativeElement) {
+            const element = findSingle(itemsChild.nativeElement, `li[id="${id}"]`);
             if (element) {
                 element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             } else if (!this.virtualScrollerDisabled) {
                 setTimeout(() => {
-                    this.virtualScroll() && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+                    this.virtualScroll() && this.scroller()?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
                 }, 0);
             }
         }
@@ -1508,12 +1507,11 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
         this.overlayVisible = true;
         const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus() ? this.findFirstFocusedOptionIndex() : -1;
         this.focusedOptionIndex.set(focusedOptionIndex);
-        isFocus && focus(this.inputEL?.nativeElement);
+        isFocus && focus(this.inputEL()?.nativeElement);
         if (isFocus) {
-            focus(this.inputEL?.nativeElement);
+            focus(this.inputEL()?.nativeElement);
         }
-        // TODO: The 'emit' function requires a mandatory Event argument
-        this.onShow.emit();
+        this.onShow.emit(undefined);
         this.cd.markForCheck();
     }
 
@@ -1522,9 +1520,8 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
             this.dirty = isFocus;
             this.overlayVisible = false;
             this.focusedOptionIndex.set(-1);
-            isFocus && focus(this.inputEL?.nativeElement);
-            // TODO: The 'emit' function requires a mandatory Event argument
-            this.onHide.emit();
+            isFocus && focus(this.inputEL()?.nativeElement);
+            this.onHide.emit(undefined);
             this.updateInputWithForceSelection(null);
             this.cd.markForCheck();
         };
@@ -1536,9 +1533,9 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
 
     clear() {
         this.updateModel(null);
-        this.inputEL?.nativeElement && (this.inputEL.nativeElement.value = '');
-        // TODO: The 'emit' function requires a mandatory Event | undefined argument
-        this.onClear.emit();
+        const inputEl = this.inputEL();
+        inputEl?.nativeElement && (inputEl.nativeElement.value = '');
+        this.onClear.emit(undefined);
     }
 
     hasSelectedOption() {
@@ -1593,19 +1590,22 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
     }
 
     onOverlayBeforeEnter() {
-        this.itemsWrapper = <any>findSingle(this.overlayViewChild.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-name="pcoverlay"]');
+        const ovc = this.overlayViewChild();
+        const scrl = this.scroller();
+        const itemsChild = this.itemsViewChild();
+        this.itemsWrapper = <any>findSingle(ovc?.overlayViewChild()?.nativeElement, this.virtualScroll() ? '[data-pc-name="virtualscroller"]' : '[data-pc-name="pcoverlay"]');
 
         const virtualScroll = this.virtualScroll();
         if (virtualScroll) {
-            this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
-            this.scroller?.viewInit();
+            scrl?.setContentEl(itemsChild?.nativeElement);
+            scrl?.viewInit();
         }
         if (this.visibleOptions() && this.visibleOptions().length) {
             if (virtualScroll) {
                 const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
 
                 if (selectedIndex !== -1) {
-                    this.scroller?.scrollToIndex(selectedIndex);
+                    scrl?.scrollToIndex(selectedIndex);
                 }
             } else {
                 let selectedListItem = findSingle(this.itemsWrapper as HTMLElement, '[data-pc-section="option"][data-p-selected="true"]');
