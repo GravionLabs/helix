@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, booleanAttribute, computed, forwardRef, inject, input, numberAttribute, signal, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, isEmpty, isFunction, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
-import { FilterService, Footer, Header, PrimeTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix/api';
+import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -509,7 +509,7 @@ export class Listbox extends BaseEditableHolder<ListBoxPassThrough> {
      */
     readonly loaderTemplate = contentChild<TemplateRef<ListboxLoaderTemplateContext>>('loader', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _itemTemplate: TemplateRef<ListboxItemTemplateContext> | undefined;
 

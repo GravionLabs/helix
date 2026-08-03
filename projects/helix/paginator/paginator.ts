@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, numberAttribute, OnChanges, OnInit,  SimpleChanges, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Aria, PrimeTemplate, SelectItem, SharedModule } from '@gravionlabs/helix/api';
+import { Aria, HelixTemplate, SelectItem, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { Select, SelectChangeEvent } from '@gravionlabs/helix/select';
@@ -196,7 +196,7 @@ export class Paginator extends BaseComponent<PaginatorPassThrough> {
      */
     readonly nextPageLinkIconTemplate = contentChild<Nullable<TemplateRef<void>>>('nextpagelinkicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _dropdownIconTemplate: TemplateRef<void> | undefined;
 

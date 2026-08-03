@@ -27,7 +27,7 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, scrollInView, uuid } from '@primeuix/utils';
-import { FilterService, OverlayOptions, PrimeTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { FilterService, OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseInput } from '@gravionlabs/helix/baseinput';
@@ -615,7 +615,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
      */
     readonly cancelIconTemplate = contentChild<TemplateRef<void>>('cancelicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _itemTemplate: TemplateRef<SelectItemTemplateContext> | undefined;
 

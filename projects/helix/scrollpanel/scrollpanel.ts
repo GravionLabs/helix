@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, NgModule, NgZone, numberAttribute,  TemplateRef, ViewEncapsulation, input, viewChild, contentChild, contentChildren } from '@angular/core';
 import { addClass, getHeight, removeClass, uuid } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { Nullable } from '@gravionlabs/helix/ts-helpers';
@@ -60,7 +60,7 @@ export class ScrollPanel extends BaseComponent<ScrollPanelPassThrough> {
      */
     readonly contentTemplate = contentChild<TemplateRef<void>>('content', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<void> | undefined;
 

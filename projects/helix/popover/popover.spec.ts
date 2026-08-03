@@ -3,7 +3,7 @@ import { Component, ElementRef, provideZonelessChangeDetection, ViewChild } from
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { OverlayService, PrimeTemplate } from '@gravionlabs/helix/api';
+import { OverlayService, HelixTemplate } from '@gravionlabs/helix/api';
 import { Popover } from './popover';
 
 // function createMockAnimationEvent(toState: string, fromState: string = 'void'): AnimationEvent {
@@ -137,7 +137,7 @@ describe('Popover', () => {
         });
 
         await TestBed.configureTestingModule({
-            imports: [CommonModule, Popover, PrimeTemplate],
+            imports: [CommonModule, Popover, HelixTemplate],
             declarations: [TestBasicPopoverComponent, TestTemplatePopoverComponent, TestPTemplatePopoverComponent, TestKeyboardNavigationComponent],
             providers: [provideZonelessChangeDetection(), { provide: OverlayService, useValue: overlayServiceSpy }]
         }).compileComponents();

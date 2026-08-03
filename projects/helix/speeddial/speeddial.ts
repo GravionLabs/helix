@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed, model, effect, untracked } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { find, findSingle, focus, hasClass, uuid } from '@primeuix/utils';
-import { MenuItem, PrimeTemplate, SharedModule, TooltipOptions } from '@gravionlabs/helix/api';
+import { MenuItem, HelixTemplate, SharedModule, TooltipOptions } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { ButtonModule, ButtonProps } from '@gravionlabs/helix/button';
@@ -213,7 +213,7 @@ export class SpeedDial extends BaseComponent<SpeedDialPassThrough> {
      */
     readonly iconTemplate = contentChild<TemplateRef<void>>('icon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _buttonTemplate: TemplateRef<SpeedDialButtonTemplateContext> | undefined;
 

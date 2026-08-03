@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { ProgressBarContentTemplateContext, ProgressBarPassThrough } from '@gravionlabs/helix/types/progressbar';
@@ -89,7 +89,7 @@ export class ProgressBar extends BaseComponent<ProgressBarPassThrough> {
 
     _componentStyle = inject(ProgressBarStyle);
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<ProgressBarContentTemplateContext> | undefined;
 

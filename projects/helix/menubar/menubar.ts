@@ -2,7 +2,7 @@ import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, Inject, inject, Injectable, InjectionToken, NgModule, numberAttribute, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -400,7 +400,7 @@ export class Menubar extends BaseComponent<MenubarPassThrough> {
      */
     readonly submenuIconTemplate = contentChild<TemplateRef<void>>('submenuicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _startTemplate: TemplateRef<void> | undefined;
 

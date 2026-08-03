@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, inject, InjectionToken, Injector, Input, NgModule, numberAttribute, SimpleChanges, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, viewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { getSelection } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseInput } from '@gravionlabs/helix/baseinput';
@@ -264,7 +264,7 @@ export class InputNumber extends BaseInput<InputNumberPassThrough> {
      */
     readonly decrementButtonIconTemplate = contentChild<Nullable<TemplateRef<void>>>('decrementbuttonicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     readonly input = viewChild.required<ElementRef<HTMLInputElement>>('input');
 

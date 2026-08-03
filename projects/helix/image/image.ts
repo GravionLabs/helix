@@ -3,7 +3,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { SafeUrl } from '@angular/platform-browser';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { appendChild, focus } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { blockBodyScroll, unblockBodyScroll } from '@gravionlabs/helix/dom';
@@ -276,7 +276,7 @@ export class Image extends BaseComponent<ImagePassThrough> {
         min: 0.5
     };
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _indicatorTemplate: TemplateRef<void> | undefined;
 

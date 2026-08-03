@@ -671,7 +671,7 @@ describe('MegaMenu', () => {
             expect(pTemplateMegaMenu.templates).toBeDefined();
         });
 
-        it('should process PrimeTemplate types correctly', async () => {
+        it('should process HelixTemplate types correctly', async () => {
             const pTemplateFixture = TestBed.createComponent(TestPTemplateMegaMenuComponent);
             pTemplateFixture.changeDetectorRef.markForCheck();
             await pTemplateFixture.whenStable();

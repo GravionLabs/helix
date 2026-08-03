@@ -21,7 +21,7 @@ import {
     resolve,
     uuid
 } from '@primeuix/utils';
-import { MenuItem, OverlayService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BindModule } from '@gravionlabs/helix/bind';
@@ -487,7 +487,7 @@ export class ContextMenu extends BaseComponent<ContextMenuPassThrough> {
      */
     readonly submenuIconTemplate = contentChild<TemplateRef<ContextMenuSubmenuIconTemplateContext>>('submenuicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _submenuIconTemplate: TemplateRef<ContextMenuSubmenuIconTemplateContext> | undefined;
 

@@ -2,7 +2,7 @@ import { CommonModule, isPlatformServer } from '@angular/common';
 import { afterNextRender, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, effect } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { findSingle } from '@primeuix/utils';
-import { Header, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { Header, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -147,7 +147,7 @@ export class Editor extends BaseEditableHolder<EditorPassThrough> {
      */
     readonly headerTemplate = contentChild<Nullable<TemplateRef<any>>>('header', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _headerTemplate: TemplateRef<any> | undefined;
 

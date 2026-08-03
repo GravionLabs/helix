@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { isEmpty, setAttribute, uuid } from '@primeuix/utils';
-import { MessageService, PrimeTemplate, SharedModule, ToastMessageOptions } from '@gravionlabs/helix/api';
+import { MessageService, HelixTemplate, SharedModule, ToastMessageOptions } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { CheckIcon, ExclamationTriangleIcon, InfoCircleIcon, TimesCircleIcon, TimesIcon } from '@gravionlabs/helix/icons';
@@ -322,7 +322,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
 
     id: string = uuid('pn_id_');
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     clearAllTrigger = signal<{} | null>(null);
 

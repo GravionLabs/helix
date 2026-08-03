@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addClass, find, findSingle, focus, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { blockBodyScroll, unblockBodyScroll } from '@gravionlabs/helix/dom';
@@ -327,7 +327,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
 
     mask: HTMLElement;
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     constructor(public element: ElementRef) {
         super();
@@ -627,7 +627,7 @@ export class GalleriaContent extends BaseComponent<GalleriaPassThrough> {
 export class GalleriaItemSlot extends BaseComponent<GalleriaPassThrough> {
     hostName: string = 'Galleria';
 
-    readonly templates = input<readonly PrimeTemplate[]>();
+    readonly templates = input<readonly HelixTemplate[]>();
 
     readonly index = input<number, unknown>(undefined, { transform: numberAttribute });
 
@@ -785,7 +785,7 @@ export class GalleriaItem extends BaseComponent<GalleriaPassThrough> {
 
     readonly autoPlay = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-    readonly templates = input<readonly PrimeTemplate[]>();
+    readonly templates = input<readonly HelixTemplate[]>();
 
     readonly indicatorFacet = input<any>();
 
@@ -974,7 +974,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
     readonly showThumbnailNavigators = input(true);
 
-    readonly templates = input<readonly PrimeTemplate[]>();
+    readonly templates = input<readonly HelixTemplate[]>();
 
     readonly onActiveIndexChange = output<number>();
 

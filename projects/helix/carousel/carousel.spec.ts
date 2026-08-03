@@ -3,7 +3,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
 import { providePrimeNG } from '@gravionlabs/helix/config';
 import type { CarouselPageEvent, CarouselResponsiveOptions } from '@gravionlabs/helix/types/carousel';
@@ -194,7 +194,7 @@ describe('Carousel', () => {
         });
 
         await TestBed.configureTestingModule({
-            imports: [CommonModule, Carousel, SharedModule, PrimeTemplate, ButtonModule],
+            imports: [CommonModule, Carousel, SharedModule, HelixTemplate, ButtonModule],
             declarations: [TestBasicCarouselComponent, TestCircularCarouselComponent, TestVerticalCarouselComponent, TestResponsiveCarouselComponent, TestAutoplayCarouselComponent, TestTemplateCarouselComponent, TestPTemplateCarouselComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();
@@ -1243,7 +1243,7 @@ describe('Carousel', () => {
             beforeEach(async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
-                    imports: [CommonModule, Carousel, SharedModule, PrimeTemplate, ButtonModule],
+                    imports: [CommonModule, Carousel, SharedModule, HelixTemplate, ButtonModule],
                     providers: [
                         provideZonelessChangeDetection(),
                         providePrimeNG({

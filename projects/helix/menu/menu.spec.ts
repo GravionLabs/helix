@@ -619,7 +619,7 @@ describe('Menu', () => {
             expect(pTemplateMenu.templates).toBeDefined();
         });
 
-        it('should process PrimeTemplate types correctly', async () => {
+        it('should process HelixTemplate types correctly', async () => {
             const pTemplateFixture = TestBed.createComponent(TestPTemplateMenuComponent);
             pTemplateFixture.changeDetectorRef.markForCheck();
             await pTemplateFixture.whenStable();

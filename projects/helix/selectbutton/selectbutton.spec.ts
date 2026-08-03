@@ -15,7 +15,7 @@ describe('SelectButton', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [SelectButton, SelectButtonModule, FormsModule, ReactiveFormsModule, CommonModule, SharedModule, TestSelectButtonPTemplateComponent, TestSelectButtonRefTemplateComponent],
-            declarations: [TestFormSelectButtonComponent, TestPrimeTemplateSelectButtonComponent],
+            declarations: [TestFormSelectButtonComponent, TestHelixTemplateSelectButtonComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();
 
@@ -253,7 +253,7 @@ describe('SelectButton', () => {
 
     describe('Template and Content Projection', () => {
         it('should process templates in ngAfterContentInit', () => {
-            const templateComponent = TestBed.createComponent(TestPrimeTemplateSelectButtonComponent);
+            const templateComponent = TestBed.createComponent(TestHelixTemplateSelectButtonComponent);
             const selectButtonInstance = templateComponent.debugElement.query(By.css('p-selectbutton')).componentInstance;
 
             templateComponent.detectChanges();
@@ -451,7 +451,7 @@ class TestFormSelectButtonComponent {
         </p-selectbutton>
     `
 })
-class TestPrimeTemplateSelectButtonComponent {
+class TestHelixTemplateSelectButtonComponent {
     options = [
         { label: 'Option A', value: 'optionA' },
         { label: 'Option B', value: 'optionB' }

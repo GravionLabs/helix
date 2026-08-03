@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, effect, ElementRef, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
 import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { BlockUIPassThrough } from '@gravionlabs/helix/types/blockui';
@@ -98,7 +98,7 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
 
     _contentTemplate: TemplateRef<any> | undefined;
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates().forEach((item) => {

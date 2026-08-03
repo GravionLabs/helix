@@ -895,7 +895,7 @@ describe('AutoComplete', () => {
             expect(autocompleteInstance.ngAfterContentInit).toBeDefined();
         });
 
-        it('should handle PrimeTemplate with context parameters', async () => {
+        it('should handle HelixTemplate with context parameters', async () => {
             testComponent.suggestions = mockCountries;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();

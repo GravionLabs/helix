@@ -22,7 +22,7 @@ import {
 
 import { MotionOptions } from '@primeuix/motion';
 import { find, findIndexInList, uuid } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { MotionModule } from '@gravionlabs/helix/motion';
@@ -262,7 +262,7 @@ export class Step extends BaseComponent<StepPassThrough> {
      */
     readonly content = contentChild.required<TemplateRef<StepContentTemplateContext>>('content', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<any> | undefined;
 
@@ -359,7 +359,7 @@ export class StepPanel extends BaseComponent<StepPanelPassThrough> {
      */
     readonly contentTemplate = contentChild.required<TemplateRef<StepPanelContentTemplateContext>>('content');
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<any> | undefined;
 

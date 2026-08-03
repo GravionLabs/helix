@@ -1,6 +1,6 @@
 
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, model } from '@angular/core';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -167,7 +167,7 @@ export class Inplace extends BaseComponent<InplacePassThrough> {
         }
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _displayTemplate: TemplateRef<void> | undefined;
 

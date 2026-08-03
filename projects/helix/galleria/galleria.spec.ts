@@ -3,7 +3,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { GalleriaResponsiveOptions } from '@gravionlabs/helix/types/galleria';
 import { Galleria, GalleriaModule } from './galleria';
 
@@ -218,7 +218,7 @@ class TestPTemplateGalleriaComponent {
 describe('Galleria', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, GalleriaModule, SharedModule, PrimeTemplate],
+            imports: [CommonModule, GalleriaModule, SharedModule, HelixTemplate],
             declarations: [TestBasicGalleriaComponent, TestFullScreenGalleriaComponent, TestAutoPlayGalleriaComponent, TestResponsiveGalleriaComponent, TestIndicatorsGalleriaComponent, TestTemplateGalleriaComponent, TestPTemplateGalleriaComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();

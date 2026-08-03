@@ -784,7 +784,7 @@ describe('Tag', () => {
             expect(() => pTemplateTag.ngAfterContentInit()).not.toThrow();
         });
 
-        it('should set _iconTemplate when processing PrimeTemplate', async () => {
+        it('should set _iconTemplate when processing HelixTemplate', async () => {
             const pTemplateFixture = TestBed.createComponent(TestPTemplateTagComponent);
             pTemplateFixture.detectChanges();
             await new Promise((resolve) => setTimeout(resolve, 100));

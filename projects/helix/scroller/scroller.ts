@@ -18,7 +18,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { findSingle, getHeight, getWidth, isTouchDevice, isVisible } from '@primeuix/utils';
-import { PrimeTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { SpinnerIcon } from '@gravionlabs/helix/icons';
@@ -250,7 +250,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
      */
     readonly loaderIconTemplate = contentChild<Nullable<TemplateRef<ScrollerLoaderIconTemplateContext>>>('loadericon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<ScrollerContentTemplateContext> | undefined;
 

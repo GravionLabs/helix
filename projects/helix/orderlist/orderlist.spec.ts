@@ -781,7 +781,7 @@ describe('OrderList', () => {
             expect(emptyTemplate.nativeElement.textContent).toBe('No products available');
         });
 
-        it('should process PrimeTemplate directives correctly', () => {
+        it('should process HelixTemplate directives correctly', () => {
             const templateFixture = TestBed.createComponent(TestTemplatesOrderListComponent);
             const templateOrderList = templateFixture.debugElement.query(By.directive(OrderList)).componentInstance;
             templateFixture.detectChanges();

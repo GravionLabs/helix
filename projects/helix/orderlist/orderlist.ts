@@ -3,7 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, input, model, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { findIndexInList, setAttribute, uuid } from '@primeuix/utils';
-import { FilterService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { FilterService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { ButtonModule, ButtonProps } from '@gravionlabs/helix/button';
@@ -416,7 +416,7 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
         }
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _itemTemplate: TemplateRef<OrderListItemTemplateContext> | undefined;
 

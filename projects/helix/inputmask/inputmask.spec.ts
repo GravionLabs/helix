@@ -969,7 +969,7 @@ describe('InputMask', () => {
             }).not.toThrow();
         });
 
-        it('should process templates through PrimeTemplate system', () => {
+        it('should process templates through HelixTemplate system', () => {
             const inputMaskComponent = templatesInputMaskElement.componentInstance;
 
             // Verify that component can handle template processing

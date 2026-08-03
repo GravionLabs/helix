@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule,  TemplateRef, ViewEncapsulation, output, contentChild, viewChild, contentChildren, model } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { uuid } from '@primeuix/utils';
-import { BlockableUI, Footer, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { BlockableUI, Footer, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ButtonModule } from '@gravionlabs/helix/button';
@@ -258,7 +258,7 @@ export class Panel extends BaseComponent<PanelPassThrough> implements BlockableU
         this.onAfterToggle.emit({ originalEvent: event as any, collapsed: this.collapsed() });
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates().forEach((item) => {
