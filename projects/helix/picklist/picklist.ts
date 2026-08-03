@@ -4,22 +4,19 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
-  ContentChildren,
+  contentChild,
+  contentChildren,
   ElementRef,
-  EventEmitter,
   inject,
   InjectionToken,
-  Input,
+  input,
   model,
   NgModule,
   numberAttribute,
-  Output,
-  QueryList,
+  output,
   TemplateRef,
-  ViewChild,
   ViewEncapsulation,
-  input
+  viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@primeuix/utils';
@@ -113,10 +110,7 @@ export class PickList extends BaseComponent {
      * Text for the source list caption
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() sourceHeader: string | undefined;
+    readonly sourceHeader = input<string | undefined>(undefined);
     /**
      * Index of the element in tabbing order.
      * @group Props
@@ -176,10 +170,7 @@ export class PickList extends BaseComponent {
      * Text for the target list caption
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-    //  and migrating would break narrowing currently.
-    @Input() targetHeader: string | undefined;
+    readonly targetHeader = input<string | undefined>(undefined);
     /**
      * When enabled orderlist adjusts its controls based on screen size.
      * @group Props
@@ -375,102 +366,89 @@ export class PickList extends BaseComponent {
      * Indicates the width of the screen at which the component should change its behavior.
      * @group Props
      */
-    // TODO: Skipped for migration because:
-    //  Accessor inputs cannot be migrated as they are too complex.
-    @Input() get breakpoint(): string {
-        return this._breakpoint;
-    }
-    set breakpoint(value: string) {
-        if (value !== this._breakpoint) {
-            this._breakpoint = value;
-            if (isPlatformBrowser(this.platformId)) {
-                this.destroyMedia();
-                this.initMedia();
-            }
-        }
-    }
+    readonly breakpoint = model<string>('960px');
     /**
      * Callback to invoke when items are moved from target to source.
      * @param {PickListMoveToSourceEvent} event - Custom move to source event.
      * @group Emits
      */
-    @Output() onMoveToSource: EventEmitter<PickListMoveToSourceEvent> = new EventEmitter<PickListMoveToSourceEvent>();
+    readonly onMoveToSource = output<PickListMoveToSourceEvent>();
     /**
      * Callback to invoke when all items are moved from target to source.
      * @param {PickListMoveAllToSourceEvent} event - Custom move all to source event.
      * @group Emits
      */
-    @Output() onMoveAllToSource: EventEmitter<PickListMoveAllToSourceEvent> = new EventEmitter<PickListMoveAllToSourceEvent>();
+    readonly onMoveAllToSource = output<PickListMoveAllToSourceEvent>();
     /**
      * Callback to invoke when all items are moved from source to target.
      * @param {PickListMoveAllToTargetEvent} event - Custom move all to target event.
      * @group Emits
      */
-    @Output() onMoveAllToTarget: EventEmitter<PickListMoveAllToTargetEvent> = new EventEmitter<PickListMoveAllToTargetEvent>();
+    readonly onMoveAllToTarget = output<PickListMoveAllToTargetEvent>();
     /**
      * Callback to invoke when items are moved from source to target.
      * @param {PickListMoveToTargetEvent} event - Custom move to target event.
      * @group Emits
      */
-    @Output() onMoveToTarget: EventEmitter<PickListMoveToTargetEvent> = new EventEmitter<PickListMoveToTargetEvent>();
+    readonly onMoveToTarget = output<PickListMoveToTargetEvent>();
     /**
      * Callback to invoke when items are reordered within source list.
      * @param {PickListSourceReorderEvent} event - Custom source reorder event.
      * @group Emits
      */
-    @Output() onSourceReorder: EventEmitter<PickListSourceReorderEvent> = new EventEmitter<PickListSourceReorderEvent>();
+    readonly onSourceReorder = output<PickListSourceReorderEvent>();
     /**
      * Callback to invoke when items are reordered within target list.
      * @param {PickListTargetReorderEvent} event - Custom target reorder event.
      * @group Emits
      */
-    @Output() onTargetReorder: EventEmitter<PickListTargetReorderEvent> = new EventEmitter<PickListTargetReorderEvent>();
+    readonly onTargetReorder = output<PickListTargetReorderEvent>();
     /**
      * Callback to invoke when items are selected within source list.
      * @param {PickListSourceSelectEvent} event - Custom source select event.
      * @group Emits
      */
-    @Output() onSourceSelect: EventEmitter<PickListSourceSelectEvent> = new EventEmitter<PickListSourceSelectEvent>();
+    readonly onSourceSelect = output<PickListSourceSelectEvent>();
     /**
      * Callback to invoke when items are selected within target list.
      * @param {PickListTargetSelectEvent} event - Custom target select event.
      * @group Emits
      */
-    @Output() onTargetSelect: EventEmitter<PickListTargetSelectEvent> = new EventEmitter<PickListTargetSelectEvent>();
+    readonly onTargetSelect = output<PickListTargetSelectEvent>();
     /**
      * Callback to invoke when the source list is filtered
      * @param {PickListSourceFilterEvent} event - Custom source filter event.
      * @group Emits
      */
-    @Output() onSourceFilter: EventEmitter<PickListSourceFilterEvent> = new EventEmitter<PickListSourceFilterEvent>();
+    readonly onSourceFilter = output<PickListSourceFilterEvent>();
     /**
      * Callback to invoke when the target list is filtered
      * @param {PickListTargetFilterEvent} event - Custom target filter event.
      * @group Emits
      */
-    @Output() onTargetFilter: EventEmitter<PickListTargetFilterEvent> = new EventEmitter<PickListTargetFilterEvent>();
+    readonly onTargetFilter = output<PickListTargetFilterEvent>();
 
     /**
      * Callback to invoke when the list is focused
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onFocus: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onFocus = output<Event>();
 
     /**
      * Callback to invoke when the list is blurred
      * @param {Event} event - Browser event.
      * @group Emits
      */
-    @Output() onBlur: EventEmitter<Event> = new EventEmitter<Event>();
+    readonly onBlur = output<Event>();
 
-    @ViewChild('sourcelist') listViewSourceChild: Listbox;
+    readonly listViewSourceChild = viewChild<Listbox>('sourcelist');
 
-    @ViewChild('targetlist') listViewTargetChild: Listbox;
+    readonly listViewTargetChild = viewChild<Listbox>('targetlist');
 
-    @ViewChild('sourceFilter') sourceFilterViewChild: Nullable<ElementRef>;
+    readonly sourceFilterViewChild = viewChild<ElementRef>('sourceFilter');
 
-    @ViewChild('targetFilter') targetFilterViewChild: Nullable<ElementRef>;
+    readonly targetFilterViewChild = viewChild<ElementRef>('targetFilter');
 
     getButtonProps(direction: string) {
         switch (direction) {
@@ -551,8 +529,6 @@ export class PickList extends BaseComponent {
         return this.id + '_target';
     }
 
-    _breakpoint: string = '960px';
-
     public visibleOptionsSource: any[] | undefined | null;
 
     public visibleOptionsTarget: any[] | undefined | null;
@@ -624,19 +600,19 @@ export class PickList extends BaseComponent {
      * @see {@link PickListItemTemplateContext}
      * @group Templates
      */
-    @ContentChild('item', { descendants: false }) itemTemplate: TemplateRef<PickListItemTemplateContext>;
+    readonly itemTemplate = contentChild<TemplateRef<PickListItemTemplateContext>>('item', { descendants: false });
 
     /**
      * Custom source header template.
      * @group Templates
      */
-    @ContentChild('sourceHeader', { descendants: false }) sourceHeaderTemplate: TemplateRef<void>;
+    readonly sourceHeaderTemplate = contentChild<TemplateRef<void>>('sourceHeader', { descendants: false });
 
     /**
      * Custom target header template.
      * @group Templates
      */
-    @ContentChild('targetHeader', { descendants: false }) targetHeaderTemplate: TemplateRef<void>;
+    readonly targetHeaderTemplate = contentChild<TemplateRef<void>>('targetHeader', { descendants: false });
 
     /**
      * Custom source filter template.
@@ -644,7 +620,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListFilterTemplateContext}
      * @group Templates
      */
-    @ContentChild('sourceFilter', { descendants: false }) sourceFilterTemplate: TemplateRef<PickListFilterTemplateContext>;
+    readonly sourceFilterTemplate = contentChild<TemplateRef<PickListFilterTemplateContext>>('sourceFilter', { descendants: false });
 
     /**
      * Custom target filter template.
@@ -652,55 +628,55 @@ export class PickList extends BaseComponent {
      * @see {@link PickListFilterTemplateContext}
      * @group Templates
      */
-    @ContentChild('targetFilter', { descendants: false }) targetFilterTemplate: TemplateRef<PickListFilterTemplateContext>;
+    readonly targetFilterTemplate = contentChild<TemplateRef<PickListFilterTemplateContext>>('targetFilter', { descendants: false });
 
     /**
      * Custom empty message when source is empty template.
      * @group Templates
      */
-    @ContentChild('emptymessagesource', { descendants: false }) emptyMessageSourceTemplate: TemplateRef<void>;
+    readonly emptyMessageSourceTemplate = contentChild<TemplateRef<void>>('emptymessagesource', { descendants: false });
 
     /**
      * Custom empty filter message when source is empty template.
      * @group Templates
      */
-    @ContentChild('emptyfiltermessagesource', { descendants: false }) emptyFilterMessageSourceTemplate: TemplateRef<void>;
+    readonly emptyFilterMessageSourceTemplate = contentChild<TemplateRef<void>>('emptyfiltermessagesource', { descendants: false });
 
     /**
      * Custom empty message when target is empty template.
      * @group Templates
      */
-    @ContentChild('emptymessagetarget', { descendants: false }) emptyMessageTargetTemplate: TemplateRef<void>;
+    readonly emptyMessageTargetTemplate = contentChild<TemplateRef<void>>('emptymessagetarget', { descendants: false });
 
     /**
      * Custom empty filter message when target is empty template.
      * @group Templates
      */
-    @ContentChild('emptyfiltermessagetarget', { descendants: false }) emptyFilterMessageTargetTemplate: TemplateRef<void>;
+    readonly emptyFilterMessageTargetTemplate = contentChild<TemplateRef<void>>('emptyfiltermessagetarget', { descendants: false });
 
     /**
      * Custom move up icon template.
      * @group Templates
      */
-    @ContentChild('moveupicon', { descendants: false }) moveUpIconTemplate: TemplateRef<void>;
+    readonly moveUpIconTemplate = contentChild<TemplateRef<void>>('moveupicon', { descendants: false });
 
     /**
      * Custom move top icon template.
      * @group Templates
      */
-    @ContentChild('movetopicon', { descendants: false }) moveTopIconTemplate: TemplateRef<void>;
+    readonly moveTopIconTemplate = contentChild<TemplateRef<void>>('movetopicon', { descendants: false });
 
     /**
      * Custom move down icon template.
      * @group Templates
      */
-    @ContentChild('movedownicon', { descendants: false }) moveDownIconTemplate: TemplateRef<void>;
+    readonly moveDownIconTemplate = contentChild<TemplateRef<void>>('movedownicon', { descendants: false });
 
     /**
      * Custom move bottom icon template.
      * @group Templates
      */
-    @ContentChild('movebottomicon', { descendants: false }) moveBottomIconTemplate: TemplateRef<void>;
+    readonly moveBottomIconTemplate = contentChild<TemplateRef<void>>('movebottomicon', { descendants: false });
 
     /**
      * Custom move to target icon template.
@@ -708,7 +684,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movetotargeticon', { descendants: false }) moveToTargetIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveToTargetIconTemplate = contentChild<TemplateRef<PickListTransferIconTemplateContext>>('movetotargeticon', { descendants: false });
 
     /**
      * Custom move all to target icon template.
@@ -716,7 +692,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movealltotargeticon', { descendants: false }) moveAllToTargetIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveAllToTargetIconTemplate = contentChild<TemplateRef<PickListTransferIconTemplateContext>>('movealltotargeticon', { descendants: false });
 
     /**
      * Custom move to source icon template.
@@ -724,7 +700,7 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movetosourceicon', { descendants: false }) moveToSourceIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveToSourceIconTemplate = contentChild<TemplateRef<PickListTransferIconTemplateContext>>('movetosourceicon', { descendants: false });
 
     /**
      * Custom move all to source icon template.
@@ -732,21 +708,21 @@ export class PickList extends BaseComponent {
      * @see {@link PickListTransferIconTemplateContext}
      * @group Templates
      */
-    @ContentChild('movealltosourceicon', { descendants: false }) moveAllToSourceIconTemplate: TemplateRef<PickListTransferIconTemplateContext>;
+    readonly moveAllToSourceIconTemplate = contentChild<TemplateRef<PickListTransferIconTemplateContext>>('movealltosourceicon', { descendants: false });
 
     /**
      * Custom target filter icon template.
      * @group Templates
      */
-    @ContentChild('targetfiltericon', { descendants: false }) targetFilterIconTemplate: TemplateRef<void>;
+    readonly targetFilterIconTemplate = contentChild<TemplateRef<void>>('targetfiltericon', { descendants: false });
 
     /**
      * Custom source filter icon template.
      * @group Templates
      */
-    @ContentChild('sourcefiltericon', { descendants: false }) sourceFilterIconTemplate: TemplateRef<void>;
+    readonly sourceFilterIconTemplate = contentChild<TemplateRef<void>>('sourcefiltericon', { descendants: false });
 
-    @ContentChildren(PrimeTemplate) templates!: QueryList<PrimeTemplate>;
+    readonly templates = contentChildren(PrimeTemplate);
 
     _itemTemplate: TemplateRef<PickListItemTemplateContext> | undefined;
 
@@ -787,7 +763,7 @@ export class PickList extends BaseComponent {
     _sourceFilterIconTemplate: TemplateRef<void> | undefined;
 
     onAfterContentInit() {
-        (this.templates as QueryList<PrimeTemplate>).forEach((item) => {
+        this.templates().forEach((item) => {
             switch (item.getType()) {
                 case 'item':
                     this._itemTemplate = item.template;
@@ -966,11 +942,11 @@ export class PickList extends BaseComponent {
     }
 
     triggerChangeDetection() {
-        this.listViewTargetChild.cd.markForCheck();
-        this.listViewSourceChild.cd.markForCheck();
+        this.listViewTargetChild()?.cd.markForCheck();
+        this.listViewSourceChild()?.cd.markForCheck();
     }
 
-    moveUp(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveUp(listElement: any, list: any[], selectedItems: any[], callback: { emit: (value: any) => void }, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = 0; i < selectedItems.length; i++) {
@@ -996,7 +972,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveTop(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveTop(listElement: any, list: any[], selectedItems: any[], callback: { emit: (value: any) => void }, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = 0; i < selectedItems.length; i++) {
@@ -1019,7 +995,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveDown(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveDown(listElement: any, list: any[], selectedItems: any[], callback: { emit: (value: any) => void }, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = selectedItems.length - 1; i >= 0; i--) {
@@ -1045,7 +1021,7 @@ export class PickList extends BaseComponent {
         }
     }
 
-    moveBottom(listElement: any, list: any[], selectedItems: any[], callback: EventEmitter<any>, listType: number) {
+    moveBottom(listElement: any, list: any[], selectedItems: any[], callback: { emit: (value: any) => void }, listType: number) {
         if (selectedItems && selectedItems.length) {
             selectedItems = this.sortByIndexInList(selectedItems, list);
             for (let i = selectedItems.length - 1; i >= 0; i--) {
@@ -1336,7 +1312,7 @@ export class PickList extends BaseComponent {
     }
 
     getListElement(listType: number) {
-        return listType === this.SOURCE_LIST ? this.listViewSourceChild?.el.nativeElement : this.listViewTargetChild?.el.nativeElement;
+        return listType === this.SOURCE_LIST ? this.listViewSourceChild()?.el.nativeElement : this.listViewTargetChild()?.el.nativeElement;
     }
 
     getListItems(listType: number) {
@@ -1393,13 +1369,13 @@ export class PickList extends BaseComponent {
     resetSourceFilter() {
         this.visibleOptionsSource = null;
         this.filterValueSource = null;
-        this.sourceFilterViewChild && ((<HTMLInputElement>this.sourceFilterViewChild.nativeElement).value = '');
+        this.sourceFilterViewChild() && ((<HTMLInputElement>this.sourceFilterViewChild()!.nativeElement).value = '');
     }
 
     resetTargetFilter() {
         this.visibleOptionsTarget = null;
         this.filterValueTarget = null;
-        this.targetFilterViewChild && ((<HTMLInputElement>this.targetFilterViewChild.nativeElement).value = '');
+        this.targetFilterViewChild() && ((<HTMLInputElement>this.targetFilterViewChild()!.nativeElement).value = '');
     }
 
     resetFilter() {
@@ -1409,7 +1385,7 @@ export class PickList extends BaseComponent {
 
     initMedia() {
         if (isPlatformBrowser(this.platformId)) {
-            this.media = this.document.defaultView?.matchMedia(`(max-width: ${this.breakpoint})`) || null;
+            this.media = this.document.defaultView?.matchMedia(`(max-width: ${this.breakpoint()})`) || null;
             this.viewChanged = this.media?.matches || false;
             this.bindMediaChangeListener();
         }
@@ -1446,7 +1422,7 @@ export class PickList extends BaseComponent {
                 this.renderer.appendChild(this.document.head, this.styleElement);
 
                 let innerHTML = `
-                @media screen and (max-width: ${this.breakpoint}) {
+                @media screen and (max-width: ${this.breakpoint()}) {
                     .p-picklist[${this.id}] {
                         flex-direction: column;
                     }
