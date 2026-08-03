@@ -930,10 +930,6 @@ describe('AutoComplete', () => {
 
             const mockTemplatesSignal = signal(mockTemplates as any);
             (autocompleteInstance as any).templates = mockTemplatesSignal;
-                forEach: (callback: (template: any) => void) => {
-                    mockTemplates.forEach(callback);
-                }
-            } as any;
 
             autocompleteInstance.ngAfterContentInit();
 
