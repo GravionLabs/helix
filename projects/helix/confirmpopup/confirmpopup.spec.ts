@@ -1768,7 +1768,7 @@ describe('ConfirmPopup', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: false,
                 template: `
@@ -1791,7 +1791,7 @@ describe('ConfirmPopup', () => {
                 }
             }
 
-            it('should apply global PT configuration from PrimeNGConfig', async () => {
+            it('should apply global PT configuration from HelixConfig', async () => {
                 TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     declarations: [TestPTCase7GlobalComponent],
@@ -1801,7 +1801,7 @@ describe('ConfirmPopup', () => {
                         OverlayService,
                         provideZonelessChangeDetection(),
                         {
-                            provide: 'providePrimeNG',
+                            provide: 'provideHelix',
                             useValue: {
                                 pt: {
                                     confirmpopup: {

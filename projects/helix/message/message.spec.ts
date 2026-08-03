@@ -3,7 +3,7 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Message } from './message';
 
 @Component({
@@ -1481,7 +1481,7 @@ describe('Message', () => {
         });
     });
 
-    describe('PassThrough - Case 7: Test from PrimeNGConfig', () => {
+    describe('PassThrough - Case 7: Test from HelixConfig', () => {
         @Component({
             standalone: false,
             template: `
@@ -1491,13 +1491,13 @@ describe('Message', () => {
         })
         class TestGlobalPtComponent {}
 
-        it('should apply global pt configuration from PrimeNGConfig', async () => {
+        it('should apply global pt configuration from HelixConfig', async () => {
             await TestBed.configureTestingModule({
                 imports: [Message],
                 declarations: [TestGlobalPtComponent],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             message: {
                                 host: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },
@@ -1525,13 +1525,13 @@ describe('Message', () => {
             expect(secondHost.classList.contains('GLOBAL_ROOT_CLASS')).toBe(true);
         });
 
-        it('should apply global css from PrimeNGConfig', async () => {
+        it('should apply global css from HelixConfig', async () => {
             await TestBed.configureTestingModule({
                 imports: [Message],
                 declarations: [TestGlobalPtComponent],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             message: {
                                 root: {
@@ -1565,7 +1565,7 @@ describe('Message', () => {
                 declarations: [TestMergedPtComponent],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             message: {
                                 root: 'GLOBAL_ROOT_CLASS',
@@ -1598,7 +1598,7 @@ describe('Message', () => {
                 declarations: [TestGlobalPtComponent],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             message: {
                                 root: {

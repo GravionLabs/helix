@@ -4,7 +4,7 @@ import { Theme, ThemeService } from '@primeuix/styled';
 import { cn, getKeyValue, isArray, isFunction, isNotEmpty, isString, mergeProps, resolve, toFlatCase, uuid } from '@primeuix/utils';
 import type { Lifecycle, PassThroughOptions } from '@gravionlabs/helix/api';
 import { Base, BaseStyle } from '@gravionlabs/helix/base';
-import { PrimeNG } from '@gravionlabs/helix/config';
+import { HelixConfig } from '@gravionlabs/helix/config';
 import { BaseComponentStyle } from './style/basecomponentstyle';
 
 export const PARENT_INSTANCE = new InjectionToken<BaseComponent>('PARENT_INSTANCE');
@@ -26,7 +26,7 @@ export class BaseComponent<PT = any> implements Lifecycle {
 
     public renderer: Renderer2 = inject(Renderer2);
 
-    public config: PrimeNG = inject(PrimeNG);
+    public config: HelixConfig = inject(HelixConfig);
 
     public $parentInstance: BaseComponent | undefined = inject(PARENT_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 

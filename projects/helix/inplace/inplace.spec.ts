@@ -170,7 +170,7 @@ class TestInplaceTemplatesComponent {}
     template: `
         <p-inplace>
             <ng-template pTemplate="display">
-                <span class="p-template-display">PrimeNG Template Display</span>
+                <span class="p-template-display">HelixConfig Template Display</span>
             </ng-template>
             <ng-template pTemplate="content" let-closeCallback="closeCallback">
                 <div class="p-template-content">
@@ -184,7 +184,7 @@ class TestInplaceTemplatesComponent {}
         </p-inplace>
     `
 })
-class TestInplacePrimeNGTemplatesComponent {}
+class TestInplaceHelixConfigTemplatesComponent {}
 
 @Component({
     standalone: false,
@@ -278,7 +278,7 @@ describe('Inplace', () => {
                 TestInplaceActiveStateComponent,
                 TestInplaceStyleClassComponent,
                 TestInplaceTemplatesComponent,
-                TestInplacePrimeNGTemplatesComponent,
+                TestInplaceHelixConfigTemplatesComponent,
                 TestInplaceKeyboardComponent,
                 TestInplaceComplexContentComponent,
                 TestInplaceDynamicComponent
@@ -848,13 +848,13 @@ describe('Inplace', () => {
         });
     });
 
-    describe('PrimeNG Templates', () => {
-        let fixture: ComponentFixture<TestInplacePrimeNGTemplatesComponent>;
+    describe('HelixConfig Templates', () => {
+        let fixture: ComponentFixture<TestInplaceHelixConfigTemplatesComponent>;
         let inplaceComponent: Inplace;
         let element: HTMLElement;
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(TestInplacePrimeNGTemplatesComponent);
+            fixture = TestBed.createComponent(TestInplaceHelixConfigTemplatesComponent);
             fixture.detectChanges();
 
             const inplaceDebugElement = fixture.debugElement.query(By.directive(Inplace));
@@ -871,7 +871,7 @@ describe('Inplace', () => {
         it('should render pTemplate display', () => {
             const pTemplateDisplay = element.querySelector('.p-template-display');
             expect(pTemplateDisplay).toBeTruthy();
-            expect(pTemplateDisplay?.textContent?.trim()).toBe('PrimeNG Template Display');
+            expect(pTemplateDisplay?.textContent?.trim()).toBe('HelixConfig Template Display');
         });
 
         it('should render pTemplate content when activated', async () => {

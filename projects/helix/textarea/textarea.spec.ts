@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { TextareaPassThrough } from '@gravionlabs/helix/types/textarea';
 import { Textarea } from './textarea';
 
@@ -580,14 +580,14 @@ describe('Textarea', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             it('should apply global pt configuration', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     imports: [TestPTTextareaComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 textarea: {
                                     host: { 'aria-label': 'GLOBAL_ARIA_LABEL' }
@@ -608,13 +608,13 @@ describe('Textarea', () => {
                 expect(el.getAttribute('aria-label')).toBe('GLOBAL_ARIA_LABEL');
             });
 
-            it('should apply global css from PrimeNGConfig', async () => {
+            it('should apply global css from HelixConfig', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     imports: [TestPTTextareaComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 textarea: {
                                     root: 'GLOBAL_CLASS',

@@ -5,7 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { By } from '@angular/platform-browser';
 
 import { SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { ToggleButtonChangeEvent } from '@gravionlabs/helix/types/togglebutton';
 import { ToggleButton } from './togglebutton';
 
@@ -1278,7 +1278,7 @@ describe('ToggleButton', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             it('should apply global PT configuration', async () => {
                 @Component({
                     standalone: true,
@@ -1294,7 +1294,7 @@ describe('ToggleButton', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 toggleButton: {
                                     root: { 'data-test': 'global-togglebutton' },

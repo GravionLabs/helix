@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { SharedModule, TreeNode } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { TreeSelectNodeCollapseEvent, TreeSelectNodeExpandEvent } from '@gravionlabs/helix/types/treeselect';
 import { BehaviorSubject } from 'rxjs';
 import { TreeSelect, TreeSelectModule } from './treeselect';
@@ -1420,7 +1420,7 @@ describe('TreeSelect', () => {
                 imports: [TreeSelectModule, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             treeSelect: {
                                 root: 'custom-root-class',
@@ -1447,7 +1447,7 @@ describe('TreeSelect', () => {
                 imports: [TreeSelectModule, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             treeSelect: {
                                 root: { class: 'pt-root-test' },
@@ -1472,7 +1472,7 @@ describe('TreeSelect', () => {
                 imports: [TreeSelectModule, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             treeSelect: {
                                 root: 'string-root',
@@ -1501,7 +1501,7 @@ describe('TreeSelect', () => {
                 imports: [TreeSelectModule, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             treeSelect: {
                                 root: {
@@ -1530,7 +1530,7 @@ describe('TreeSelect', () => {
                 imports: [TreeSelectModule, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             treeSelect: {
                                 root: 'global-root',

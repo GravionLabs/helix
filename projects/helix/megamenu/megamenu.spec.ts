@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { MegaMenuItem, SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { MegaMenu } from './megamenu';
 
 @Component({
@@ -1540,15 +1540,15 @@ describe('MegaMenu', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
-            it('should apply global PT configuration from PrimeNG config', async () => {
+        describe('Case 7: Test from HelixConfig', () => {
+            it('should apply global PT configuration from HelixConfig config', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     declarations: [TestBasicMegaMenuComponent],
                     imports: [MegaMenu, SharedModule, RouterTestingModule],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 megamenu: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL', class: 'GLOBAL_MEGAMENU_CLASS' }
@@ -1568,14 +1568,14 @@ describe('MegaMenu', () => {
                 expect(hostElement.getAttribute('aria-label')).toBe('TEST_GLOBAL_ARIA_LABEL');
             });
 
-            it('should apply global CSS from PrimeNG config', async () => {
+            it('should apply global CSS from HelixConfig config', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     declarations: [TestBasicMegaMenuComponent],
                     imports: [MegaMenu, SharedModule, RouterTestingModule],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 megamenu: {
                                     root: { class: 'GLOBAL_CSS_CLASS' },
@@ -1606,7 +1606,7 @@ describe('MegaMenu', () => {
                     imports: [MegaMenu, SharedModule, RouterTestingModule],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 megamenu: {
                                     root: { class: 'GLOBAL_CLASS' }

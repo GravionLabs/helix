@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { ColorPickerChangeEvent } from '@gravionlabs/helix/types/colorpicker';
 import { ColorPicker } from './colorpicker';
 
@@ -810,7 +810,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: 'PT_ROOT_CLASS',
@@ -863,7 +863,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: 'PT_ROOT_OVERLAY',
@@ -892,7 +892,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -962,7 +962,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -1028,7 +1028,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: ({ instance }: any) => ({
@@ -1073,7 +1073,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: ({ instance }: any) => ({
@@ -1121,7 +1121,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: ({ instance }: any) => ({
@@ -1173,7 +1173,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -1237,7 +1237,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 colorHandle: ({ instance }: any) => ({
@@ -1280,7 +1280,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: ({ instance }: any) => {
@@ -1392,13 +1392,13 @@ describe('ColorPicker', () => {
             expect(panel?.getAttribute('data-p-inline')).toBe('true');
         });
 
-        // Case 8: Test from PrimeNGConfig (global PT)
-        it('PT Case 8a: should apply global PT configuration from PrimeNGConfig', async () => {
+        // Case 8: Test from HelixConfig (global PT)
+        it('PT Case 8a: should apply global PT configuration from HelixConfig', async () => {
             TestBed.configureTestingModule({
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -1446,7 +1446,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -1484,7 +1484,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: {
@@ -1546,7 +1546,7 @@ describe('ColorPicker', () => {
                 imports: [TestMultiplePTComponent],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: 'GLOBAL_MULTI_ROOT',
@@ -1582,7 +1582,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: 'HOOKS_ROOT_CLASS',
@@ -1618,7 +1618,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 hooks: {
@@ -1655,7 +1655,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 hooks: {
@@ -1698,7 +1698,7 @@ describe('ColorPicker', () => {
                 imports: [ColorPicker, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             colorPicker: {
                                 root: ({ instance }: any) => ({

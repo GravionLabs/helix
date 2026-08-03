@@ -1921,9 +1921,9 @@ describe('SpeedDial', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
-            it('should apply global PT configuration from PrimeNGConfig', async () => {
-                // Create a new test module with PrimeNG config
+        describe('Case 7: Test from HelixConfig', () => {
+            it('should apply global PT configuration from HelixConfig', async () => {
+                // Create a new test module with HelixConfig config
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     declarations: [TestPTSpeedDialComponent],
@@ -1931,7 +1931,7 @@ describe('SpeedDial', () => {
                     providers: [
                         provideZonelessChangeDetection(),
                         {
-                            provide: 'providePrimeNG',
+                            provide: 'provideHelix',
                             useValue: {
                                 pt: {
                                     speeddial: {
@@ -1948,7 +1948,7 @@ describe('SpeedDial', () => {
                 configFixture.detectChanges();
 
                 // Note: This test verifies the configuration structure
-                // Actual global PT merging depends on PrimeNG configuration implementation
+                // Actual global PT merging depends on HelixConfig configuration implementation
                 expect(configFixture.componentInstance).toBeTruthy();
             });
         });

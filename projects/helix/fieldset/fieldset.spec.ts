@@ -2,7 +2,7 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { FieldsetAfterToggleEvent, FieldsetBeforeToggleEvent } from '@gravionlabs/helix/types/fieldset';
 import { Fieldset } from './fieldset';
 
@@ -1073,7 +1073,7 @@ describe('Fieldset', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [Fieldset],
@@ -1090,7 +1090,7 @@ describe('Fieldset', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 fieldset: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },
@@ -1102,7 +1102,7 @@ describe('Fieldset', () => {
                 });
             });
 
-            it('should apply global PT configuration from PrimeNG config', () => {
+            it('should apply global PT configuration from HelixConfig config', () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.detectChanges();
 

@@ -3,7 +3,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FloatLabel } from './floatlabel';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 
 @Component({
     standalone: true,
@@ -366,13 +366,13 @@ describe('FloatLabel PassThrough Tests', () => {
         });
     });
 
-    describe('PT Case 7: Global PT from PrimeNGConfig', () => {
+    describe('PT Case 7: Global PT from HelixConfig', () => {
         it('should apply global PT configuration to all instances', async () => {
             TestBed.resetTestingModule();
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 host: { 'aria-label': 'GLOBAL_ARIA_LABEL' },
@@ -397,7 +397,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule, TestMultipleInstancesComponent],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 root: {
@@ -431,7 +431,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 hooks: {
@@ -458,7 +458,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 hooks: {
@@ -485,7 +485,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 hooks: {
@@ -514,7 +514,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 hooks: {
@@ -543,7 +543,7 @@ describe('FloatLabel PassThrough Tests', () => {
             await TestBed.configureTestingModule({
                 imports: [FloatLabel, FormsModule],
                 providers: [
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             floatLabel: {
                                 hooks: {

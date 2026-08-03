@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { SharedModule } from '@gravionlabs/helix/api';
 import { Rating } from './rating';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 
 // Basic Rating test component
 @Component({
@@ -1337,7 +1337,7 @@ describe('Rating', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             @Component({
                 standalone: false,
                 template: `<p-rating [(ngModel)]="value"></p-rating>`
@@ -1353,7 +1353,7 @@ describe('Rating', () => {
                     declarations: [TestPTCase7GlobalComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 rating: {
                                     host: 'GLOBAL_HOST_CLASS',

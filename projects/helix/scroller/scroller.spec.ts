@@ -3,7 +3,7 @@ import { Component, DebugElement, input, provideZonelessChangeDetection } from '
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import type { ScrollerLazyLoadEvent, ScrollerScrollEvent, ScrollerScrollIndexChangeEvent } from '@gravionlabs/helix/types/scroller';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Scroller } from './scroller';
@@ -4191,7 +4191,7 @@ describe('Scroller', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [Scroller],
@@ -4209,13 +4209,13 @@ describe('Scroller', () => {
                 items2 = ['B1', 'B2'];
             }
 
-            it('should apply global PT from PrimeNGConfig', async () => {
+            it('should apply global PT from HelixConfig', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 virtualScroller: {
                                     root: { 'aria-label': 'GLOBAL_SCROLLER_LABEL', class: 'GLOBAL_CLASS' }
@@ -4243,7 +4243,7 @@ describe('Scroller', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 virtualScroller: {
                                     root: { class: 'GLOBAL_ROOT' },

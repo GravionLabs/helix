@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { ButtonModule } from '@gravionlabs/helix/button';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import type { CarouselPageEvent, CarouselResponsiveOptions } from '@gravionlabs/helix/types/carousel';
 import { Carousel } from './carousel';
 
@@ -1236,7 +1236,7 @@ describe('Carousel', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             let fixture: ComponentFixture<Carousel>;
             let carouselInstance: Carousel;
 
@@ -1246,7 +1246,7 @@ describe('Carousel', () => {
                     imports: [CommonModule, Carousel, SharedModule, HelixTemplate, ButtonModule],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 carousel: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL', class: 'GLOBAL_CAROUSEL_CLASS' },
@@ -1265,7 +1265,7 @@ describe('Carousel', () => {
                 fixture.detectChanges();
             });
 
-            it('should apply global PT from PrimeNGConfig', () => {
+            it('should apply global PT from HelixConfig', () => {
                 const rootElement = fixture.nativeElement;
                 expect(rootElement.getAttribute('aria-label')).toBe('TEST_GLOBAL_ARIA_LABEL');
                 expect(rootElement.className).toContain('GLOBAL_CAROUSEL_CLASS');

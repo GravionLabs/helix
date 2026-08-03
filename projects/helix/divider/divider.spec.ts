@@ -2,7 +2,7 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Divider, DividerModule } from './divider';
 
 @Component({
@@ -1117,7 +1117,7 @@ describe('Divider', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: false,
                 template: `
@@ -1134,7 +1134,7 @@ describe('Divider', () => {
                     declarations: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 divider: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },
@@ -1146,7 +1146,7 @@ describe('Divider', () => {
                 });
             });
 
-            it('should apply global PT configuration from PrimeNG config', async () => {
+            it('should apply global PT configuration from HelixConfig config', async () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.changeDetectorRef.markForCheck();
                 await globalFixture.whenStable();

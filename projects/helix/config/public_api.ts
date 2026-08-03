@@ -1,4 +1,4 @@
-export * from './primeng';
+export * from './helixconfig';
 export * from './primeng.types';
-export * from './provideprimeng';
+export * from './providehelix';
 export * from './themeprovider';

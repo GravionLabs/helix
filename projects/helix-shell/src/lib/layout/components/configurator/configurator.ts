@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PrimeNG } from '@gravionlabs/helix/config';
+import { HelixConfig } from '@gravionlabs/helix/config';
 import { SelectButtonModule } from '@gravionlabs/helix/selectbutton';
 import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
@@ -54,7 +54,7 @@ declare type SurfacesType = {
 })
 export class HelixConfigurator implements OnInit {
   router = inject(Router);
-  primeng = inject(PrimeNG);
+  primeng = inject(HelixConfig);
   store = inject(LayoutStore);
   platformId = inject(PLATFORM_ID);
 

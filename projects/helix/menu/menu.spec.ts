@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MenuItem, OverlayService, SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Menu } from './menu';
 
 @Component({
@@ -1712,7 +1712,7 @@ describe('Menu', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [Menu],
@@ -1729,7 +1729,7 @@ describe('Menu', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 menu: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },
@@ -1741,7 +1741,7 @@ describe('Menu', () => {
                 });
             });
 
-            it('should apply global PT configuration from PrimeNG config', () => {
+            it('should apply global PT configuration from HelixConfig config', () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.detectChanges();
 

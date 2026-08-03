@@ -1389,15 +1389,15 @@ describe('InputMask', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
-            it('should apply global PT configuration from PrimeNGConfig', async () => {
+        describe('Case 7: Test from HelixConfig', () => {
+            it('should apply global PT configuration from HelixConfig', async () => {
                 await TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     imports: [InputMask, FormsModule],
                     providers: [
                         provideZonelessChangeDetection(),
                         {
-                            provide: 'providePrimeNG',
+                            provide: 'provideHelix',
                             useValue: {
                                 pt: {
                                     inputmask: {
