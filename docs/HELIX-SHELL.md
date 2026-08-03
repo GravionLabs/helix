@@ -919,7 +919,7 @@ Small inline badge with color-coded severity and optional icon / label.
 |------|------|---------|-------------|
 | `severity` | `BadgeSeverity` | — | `'info'` \| `'warn'` \| `'error'` \| `'success'` |
 | `label` | `string` | — | Text label inside the badge |
-| `icon` | `string` | — | PrimeIcons class, e.g. `'pi pi-check'` |
+| `icon` | `string` | — | HelixIcons class (`pi pi-*`), e.g. `'pi pi-check'` |
 | `size` | `'sm' \| 'md'` | `'md'` | Badge size variant |
 
 #### Example
@@ -1192,7 +1192,7 @@ Used by [`HelixTopbar`](#helixtopbar) `topbarActions` input.
 
 ```ts
 interface HelixTopbarAction {
-  /** PrimeIcons class, e.g. 'pi pi-search' */
+  /** HelixIcons class (pi pi-*), e.g. 'pi pi-search' */
   icon: string;
   /** Accessible label for the button */
   label: string;
@@ -1276,7 +1276,7 @@ Used by [`HelixFeaturesWidget`](#helixfeatureswidget) `features` input.
 
 ```ts
 interface HelixFeature {
-  /** PrimeIcon class, e.g. 'pi pi-bolt' */
+  /** HelixIcons class (pi pi-*), e.g. 'pi pi-bolt' */
   icon: string;
   /** Tailwind background class for the icon container, e.g. 'bg-yellow-200' */
   iconBgClass: string;
@@ -1313,7 +1313,7 @@ Used by [`HelixHighlightsWidget`](#helixhighlightswidget) `highlights` input.
 
 ```ts
 interface HelixHighlight {
-  /** PrimeIcon class */
+  /** HelixIcons class (pi pi-*) */
   icon: string;
   /** Tailwind background class for the icon container */
   iconBgClass: string;
