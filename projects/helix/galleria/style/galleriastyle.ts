@@ -11,9 +11,9 @@ const classes = {
         return [
             'p-galleria p-component',
             {
-                'p-galleria-fullscreen': instance.galleria.fullScreen,
+                'p-galleria-fullscreen': instance.galleria.fullScreen(),
                 'p-galleria-inset-indicators': instance.galleria.showIndicatorsOnItem,
-                'p-galleria-hover-navigators': instance.galleria.showItemNavigatorsOnHover && !instance.galleria.fullScreen
+                'p-galleria-hover-navigators': instance.galleria.showItemNavigatorsOnHover && !instance.galleria.fullScreen()
             },
             thumbnailsPosClass,
             indicatorPosClass
