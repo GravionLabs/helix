@@ -41,16 +41,16 @@ describe('FileUpload', () => {
         });
 
         it('should accept custom values', () => {
-            component.method = 'put';
-            component.mode = 'basic';
-            component.showUploadButton = false;
-            component.showCancelButton = false;
-            component.previewWidth = 100;
-            component.name = 'test-files';
-            component.url = 'https://test.com/upload';
-            component.multiple = true;
-            component.accept = 'image/*';
-            component.maxFileSize = 1000000;
+            fixture.componentRef.setInput('method', 'put');
+            fixture.componentRef.setInput('mode', 'basic');
+            fixture.componentRef.setInput('showUploadButton', false);
+            fixture.componentRef.setInput('showCancelButton', false);
+            fixture.componentRef.setInput('previewWidth', 100);
+            fixture.componentRef.setInput('name', 'test-files');
+            fixture.componentRef.setInput('url', 'https://test.com/upload');
+            fixture.componentRef.setInput('multiple', true);
+            fixture.componentRef.setInput('accept', 'image/*');
+            fixture.componentRef.setInput('maxFileSize', 1000000);
 
             fixture.detectChanges();
 
@@ -69,18 +69,18 @@ describe('FileUpload', () => {
 
     describe('Public Methods', () => {
         beforeEach(() => {
-            component.name = 'test';
-            component.url = 'https://test.com/upload';
+            fixture.componentRef.setInput('name', 'test');
+            fixture.componentRef.setInput('url', 'https://test.com/upload');
         });
 
         it('should choose files programmatically', () => {
-            component.mode = 'advanced';
+            fixture.componentRef.setInput('mode', 'advanced');
             fixture.detectChanges();
 
-            if (component.advancedFileInput?.nativeElement) {
-                spyOn(component.advancedFileInput.nativeElement, 'click');
+            if (component.advancedFileInput()?.nativeElement) {
+                spyOn(component.advancedFileInput()!.nativeElement, 'click');
                 component.choose();
-                expect(component.advancedFileInput.nativeElement.click).toHaveBeenCalled();
+                expect(component.advancedFileInput()!.nativeElement.click).toHaveBeenCalled();
             } else {
                 // If element doesn't exist, just verify the method doesn't throw
                 expect(() => component.choose()).not.toThrow();
@@ -124,13 +124,13 @@ describe('FileUpload', () => {
         });
 
         it('should handle basic uploader click', () => {
-            component.mode = 'basic';
+            fixture.componentRef.setInput('mode', 'basic');
             fixture.detectChanges();
 
-            if (component.basicFileInput?.nativeElement) {
-                spyOn(component.basicFileInput.nativeElement, 'click');
+            if (component.basicFileInput()?.nativeElement) {
+                spyOn(component.basicFileInput()!.nativeElement, 'click');
                 component.onBasicUploaderClick();
-                expect(component.basicFileInput.nativeElement.click).toHaveBeenCalled();
+                expect(component.basicFileInput()!.nativeElement.click).toHaveBeenCalled();
             } else {
                 // If element doesn't exist, just verify the method doesn't throw
                 expect(() => component.onBasicUploaderClick()).not.toThrow();
@@ -140,7 +140,7 @@ describe('FileUpload', () => {
 
     describe('File Validation', () => {
         it('should validate file type', () => {
-            component.accept = 'image/*';
+            fixture.componentRef.setInput('accept', 'image/*');
             const validFile = new File(['test'], 'test.png', { type: 'image/png' });
             const invalidFile = new File(['test'], 'test.txt', { type: 'text/plain' });
 
@@ -149,7 +149,7 @@ describe('FileUpload', () => {
         });
 
         it('should validate file size', () => {
-            component.maxFileSize = 1000;
+            fixture.componentRef.setInput('maxFileSize', 1000);
             const validFile = new File(['test'], 'test.txt', { type: 'text/plain' });
             const invalidFile = new File([new ArrayBuffer(2000)], 'large.txt', { type: 'text/plain' });
 
@@ -158,7 +158,7 @@ describe('FileUpload', () => {
         });
 
         it('should validate file limit', () => {
-            component.fileLimit = 2;
+            fixture.componentRef.setInput('fileLimit', 2);
             fixture.componentRef.setInput('files', []); // Start with empty files
             const files = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })];
 
@@ -176,9 +176,9 @@ describe('FileUpload', () => {
         });
 
         it('should show invalid file type message', () => {
-            component.accept = 'image/*';
-            component.invalidFileTypeMessageSummary = '{0}: Invalid file type, ';
-            component.invalidFileTypeMessageDetail = 'allowed file types: {0}.';
+            fixture.componentRef.setInput('accept', 'image/*');
+            fixture.componentRef.setInput('invalidFileTypeMessageSummary', '{0}: Invalid file type, ');
+            fixture.componentRef.setInput('invalidFileTypeMessageDetail', 'allowed file types: {0}.');
 
             const invalidFile = new File(['test'], 'test.txt', { type: 'text/plain' });
 
@@ -190,9 +190,9 @@ describe('FileUpload', () => {
         });
 
         it('should show invalid file size message', () => {
-            component.maxFileSize = 100;
-            component.invalidFileSizeMessageSummary = '{0}: Invalid file size, ';
-            component.invalidFileSizeMessageDetail = 'maximum upload size is {0}.';
+            fixture.componentRef.setInput('maxFileSize', 100);
+            fixture.componentRef.setInput('invalidFileSizeMessageSummary', '{0}: Invalid file size, ');
+            fixture.componentRef.setInput('invalidFileSizeMessageDetail', 'maximum upload size is {0}.');
 
             const invalidFile = new File([new ArrayBuffer(200)], 'large.txt', { type: 'text/plain' });
 
@@ -207,7 +207,7 @@ describe('FileUpload', () => {
     describe('File Selection Events', () => {
         it('should emit onSelect event when files are selected', async () => {
             spyOn(component.onSelect, 'emit');
-            component.multiple = true;
+            fixture.componentRef.setInput('multiple', true);
 
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
             const event = {
@@ -221,7 +221,7 @@ describe('FileUpload', () => {
         });
 
         it('should handle multiple file selection', async () => {
-            component.multiple = true;
+            fixture.componentRef.setInput('multiple', true);
             const files = [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' })];
 
             const event = {
@@ -235,7 +235,7 @@ describe('FileUpload', () => {
         });
 
         it('should replace files when multiple is false', async () => {
-            component.multiple = false;
+            fixture.componentRef.setInput('multiple', false);
             fixture.componentRef.setInput('files', [new File(['existing'], 'existing.txt', { type: 'text/plain' })]);
 
             const newFile = new File(['new'], 'new.txt', { type: 'text/plain' });
@@ -251,9 +251,9 @@ describe('FileUpload', () => {
         });
 
         it('should auto upload when auto is enabled', async () => {
-            component.auto = true;
-            component.name = 'test';
-            component.url = 'https://test.com/upload';
+            fixture.componentRef.setInput('auto', true);
+            fixture.componentRef.setInput('name', 'test');
+            fixture.componentRef.setInput('url', 'https://test.com/upload');
             spyOn(component, 'upload');
 
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
@@ -272,13 +272,13 @@ describe('FileUpload', () => {
         let contentElement: HTMLElement;
 
         beforeEach(() => {
-            component.mode = 'advanced';
+            fixture.componentRef.setInput('mode', 'advanced');
             fixture.detectChanges();
             contentElement = fixture.debugElement.query(By.css('[data-pc-section="content"]'))?.nativeElement;
         });
 
         it('should handle drag enter event', () => {
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             const dragEvent = new DragEvent('dragenter');
             spyOn(dragEvent, 'stopPropagation');
             spyOn(dragEvent, 'preventDefault');
@@ -290,7 +290,7 @@ describe('FileUpload', () => {
         });
 
         it('should handle drag over event', () => {
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             const dragEvent = new DragEvent('dragover');
             spyOn(dragEvent, 'stopPropagation');
             spyOn(dragEvent, 'preventDefault');
@@ -303,7 +303,7 @@ describe('FileUpload', () => {
         });
 
         it('should handle drag leave event', () => {
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             component.dragHighlight = true;
 
             const dragEvent = new DragEvent('dragleave');
@@ -315,8 +315,8 @@ describe('FileUpload', () => {
         });
 
         it('should handle drop event', async () => {
-            component.disabled = false;
-            component.multiple = true;
+            fixture.componentRef.setInput('disabled', false);
+            fixture.componentRef.setInput('multiple', true);
             spyOn(component, 'onFileSelect');
 
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
@@ -335,7 +335,7 @@ describe('FileUpload', () => {
         });
 
         it('should not handle drag events when disabled', () => {
-            component.disabled = true;
+            fixture.componentRef.setInput('disabled', true);
             const dragEvent = new DragEvent('dragenter');
             spyOn(dragEvent, 'stopPropagation');
 
@@ -350,9 +350,9 @@ describe('FileUpload', () => {
 
         beforeEach(() => {
             httpMock = TestBed.inject(HttpTestingController);
-            component.name = 'testFile';
-            component.url = 'https://test.com/upload';
-            component.method = 'post';
+            fixture.componentRef.setInput('name', 'testFile');
+            fixture.componentRef.setInput('url', 'https://test.com/upload');
+            fixture.componentRef.setInput('method', 'post');
         });
 
         afterEach(() => {
@@ -409,7 +409,7 @@ describe('FileUpload', () => {
         });
 
         it('should handle custom upload', async () => {
-            component.customUpload = true;
+            fixture.componentRef.setInput('customUpload', true);
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
             fixture.componentRef.setInput('files', [testFile]);
 
@@ -427,7 +427,7 @@ describe('FileUpload', () => {
             // Recreate component to ensure clean state
             fixture = TestBed.createComponent(FileUpload);
             component = fixture.componentInstance;
-            component.mode = 'advanced';
+            fixture.componentRef.setInput('mode', 'advanced');
             fixture.detectChanges();
         });
 
@@ -437,8 +437,8 @@ describe('FileUpload', () => {
         });
 
         it('should show upload button when not auto and showUploadButton is true', () => {
-            component.auto = false;
-            component.showUploadButton = true;
+            fixture.componentRef.setInput('auto', false);
+            fixture.componentRef.setInput('showUploadButton', true);
             fixture.detectChanges();
 
             const uploadButton = fixture.debugElement.query(By.css('.p-fileupload-upload'));
@@ -447,15 +447,15 @@ describe('FileUpload', () => {
         });
 
         it('should show cancel button when not auto and showCancelButton is true', () => {
-            component.auto = false;
-            component.showCancelButton = true;
+            fixture.componentRef.setInput('auto', false);
+            fixture.componentRef.setInput('showCancelButton', true);
             fixture.detectChanges();
 
             expect(component.showCancelButton).toBe(true);
         });
 
         it('should disable choose button when disabled', () => {
-            component.disabled = true;
+            fixture.componentRef.setInput('disabled', true);
             fixture.detectChanges();
 
             // Simply verify that the component disabled property is set correctly
@@ -475,7 +475,7 @@ describe('FileUpload', () => {
 
     describe('Basic Mode UI', () => {
         beforeEach(() => {
-            component.mode = 'basic';
+            fixture.componentRef.setInput('mode', 'basic');
             fixture.detectChanges();
         });
 
@@ -554,7 +554,7 @@ describe('FileUpload', () => {
         });
 
         it('should check if file limit is exceeded', () => {
-            component.fileLimit = 2;
+            fixture.componentRef.setInput('fileLimit', 2);
             component.uploadedFileCount = 0;
             fixture.componentRef.setInput('files', [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })]);
 
@@ -562,7 +562,7 @@ describe('FileUpload', () => {
         });
 
         it('should check if choose is disabled', () => {
-            component.fileLimit = 2;
+            fixture.componentRef.setInput('fileLimit', 2);
             component.uploadedFileCount = 0;
             fixture.componentRef.setInput('files', [new File(['test1'], 'test1.txt', { type: 'text/plain' }), new File(['test2'], 'test2.txt', { type: 'text/plain' }), new File(['test3'], 'test3.txt', { type: 'text/plain' })]);
 
@@ -572,7 +572,7 @@ describe('FileUpload', () => {
 
     describe('File Type Validation', () => {
         it('should validate wildcard file types', () => {
-            component.accept = 'image/*';
+            fixture.componentRef.setInput('accept', 'image/*');
 
             const imageFile = new File(['test'], 'test.png', { type: 'image/png' });
             const textFile = new File(['test'], 'test.txt', { type: 'text/plain' });
@@ -582,7 +582,7 @@ describe('FileUpload', () => {
         });
 
         it('should validate specific file extensions', () => {
-            component.accept = '.pdf,.doc';
+            fixture.componentRef.setInput('accept', '.pdf,.doc');
 
             const pdfFile = new File(['test'], 'test.pdf', { type: 'application/pdf' });
             const docFile = new File(['test'], 'test.doc', { type: 'application/msword' });
@@ -594,7 +594,7 @@ describe('FileUpload', () => {
         });
 
         it('should validate exact MIME types', () => {
-            component.accept = 'text/plain,application/json';
+            fixture.componentRef.setInput('accept', 'text/plain,application/json');
 
             const textFile = new File(['test'], 'test.txt', { type: 'text/plain' });
             const jsonFile = new File(['{}'], 'test.json', { type: 'application/json' });
@@ -608,9 +608,9 @@ describe('FileUpload', () => {
 
     describe('Getters and Computed Properties', () => {
         it('should return correct button labels', () => {
-            component.chooseLabel = 'Custom Choose';
-            component.uploadLabel = 'Custom Upload';
-            component.cancelLabel = 'Custom Cancel';
+            fixture.componentRef.setInput('chooseLabel', 'Custom Choose');
+            fixture.componentRef.setInput('uploadLabel', 'Custom Upload');
+            fixture.componentRef.setInput('cancelLabel', 'Custom Cancel');
 
             expect(component.chooseButtonLabel).toBe('Custom Choose');
             expect(component.uploadButtonLabel).toBe('Custom Upload');
@@ -626,13 +626,13 @@ describe('FileUpload', () => {
 
         it('should return correct basic button label', () => {
             // Initialize labels properly
-            component.chooseLabel = 'Choose';
+            fixture.componentRef.setInput('chooseLabel', 'Choose');
             fixture.detectChanges();
 
-            component.auto = true;
+            fixture.componentRef.setInput('auto', true);
             expect(component.basicButtonLabel).toBe('Choose');
 
-            component.auto = false;
+            fixture.componentRef.setInput('auto', false);
             fixture.componentRef.setInput('files', []);
             expect(component.basicButtonLabel).toBe('Choose');
 
@@ -646,7 +646,7 @@ describe('FileUpload', () => {
 
     describe('Edge Cases', () => {
         it('should handle rapid file selection', async () => {
-            component.multiple = true;
+            fixture.componentRef.setInput('multiple', true);
             let selectCount = 0;
             component.onSelect.subscribe(() => selectCount++);
 
@@ -662,9 +662,9 @@ describe('FileUpload', () => {
         });
 
         it('should handle null/undefined values gracefully', () => {
-            component.accept = undefined as any;
-            component.maxFileSize = undefined as any;
-            component.fileLimit = undefined as any;
+            fixture.componentRef.setInput('accept', undefined as any);
+            fixture.componentRef.setInput('maxFileSize', undefined as any);
+            fixture.componentRef.setInput('fileLimit', undefined as any);
 
             const testFile = new File(['test'], 'test.txt', { type: 'text/plain' });
 
@@ -700,7 +700,7 @@ describe('FileUpload', () => {
         });
 
         it('should handle large number of files', async () => {
-            component.multiple = true;
+            fixture.componentRef.setInput('multiple', true);
             const files = Array.from({ length: 100 }, (_, i) => new File([`content${i}`], `file${i}.txt`, { type: 'text/plain' }));
 
             const event = { target: { files } };
@@ -1426,7 +1426,7 @@ describe('FileUpload CSS Classes and Styling', () => {
 
         fixture = TestBed.createComponent(FileUpload);
         component = fixture.componentInstance;
-        component.mode = 'advanced';
+        fixture.componentRef.setInput('mode', 'advanced');
         fixture.detectChanges();
     });
 
@@ -1436,7 +1436,7 @@ describe('FileUpload CSS Classes and Styling', () => {
     });
 
     it('should apply custom styleClass', () => {
-        component.styleClass = 'custom-fileupload';
+        fixture.componentRef.setInput('styleClass', 'custom-fileupload');
         fixture.detectChanges();
 
         const fileUploadElement = fixture.debugElement.query(By.css('[data-pc-name="fileupload"]'));
@@ -1456,7 +1456,7 @@ describe('FileUpload CSS Classes and Styling', () => {
     });
 
     it('should apply custom styles', () => {
-        component.style = { border: '2px solid red', padding: '10px' };
+        fixture.componentRef.setInput('style', { border: '2px solid red', padding: '10px' });
         fixture.detectChanges();
 
         const fileUploadElement = fixture.debugElement.query(By.css('[data-pc-name="fileupload"]'));
@@ -1485,9 +1485,9 @@ describe('FileUpload CSS Classes and Styling', () => {
     });
 
     it('should apply button style classes', () => {
-        component.chooseStyleClass = 'custom-choose-btn';
-        component.uploadStyleClass = 'custom-upload-btn';
-        component.cancelStyleClass = 'custom-cancel-btn';
+        fixture.componentRef.setInput('chooseStyleClass', 'custom-choose-btn');
+        fixture.componentRef.setInput('uploadStyleClass', 'custom-upload-btn');
+        fixture.componentRef.setInput('cancelStyleClass', 'custom-cancel-btn');
         fixture.detectChanges();
 
         expect(component.chooseStyleClass).toBe('custom-choose-btn');
@@ -1496,7 +1496,7 @@ describe('FileUpload CSS Classes and Styling', () => {
     });
 
     it('should show drag highlight class on drag over', () => {
-        component.disabled = false;
+        fixture.componentRef.setInput('disabled', false);
         const dragEvent = new DragEvent('dragover');
         spyOn(dragEvent, 'stopPropagation');
         spyOn(dragEvent, 'preventDefault');
@@ -1537,7 +1537,7 @@ describe('FileUpload Accessibility', () => {
     });
 
     it('should support keyboard navigation', () => {
-        component.mode = 'basic';
+        fixture.componentRef.setInput('mode', 'basic');
         fixture.detectChanges();
 
         spyOn(component, 'onBasicUploaderClick');
@@ -1939,127 +1939,127 @@ describe('FileUpload Input Properties - Static Values', () => {
 
     describe('String Input Properties', () => {
         it('should set and get name property', () => {
-            component.name = 'test-files[]';
+            fixture.componentRef.setInput('name', 'test-files[]');
             fixture.detectChanges();
             expect(component.name).toBe('test-files[]');
         });
 
         it('should set and get url property', () => {
-            component.url = 'https://api.example.com/upload';
+            fixture.componentRef.setInput('url', 'https://api.example.com/upload');
             fixture.detectChanges();
             expect(component.url).toBe('https://api.example.com/upload');
         });
 
         it('should set and get accept property', () => {
-            component.accept = 'image/*,.pdf,.doc';
+            fixture.componentRef.setInput('accept', 'image/*,.pdf,.doc');
             fixture.detectChanges();
             expect(component.accept).toBe('image/*,.pdf,.doc');
         });
 
         it('should set and get chooseLabel property', () => {
-            component.chooseLabel = 'Select Files';
+            fixture.componentRef.setInput('chooseLabel', 'Select Files');
             fixture.detectChanges();
             expect(component.chooseLabel).toBe('Select Files');
         });
 
         it('should set and get uploadLabel property', () => {
-            component.uploadLabel = 'Start Upload';
+            fixture.componentRef.setInput('uploadLabel', 'Start Upload');
             fixture.detectChanges();
             expect(component.uploadLabel).toBe('Start Upload');
         });
 
         it('should set and get cancelLabel property', () => {
-            component.cancelLabel = 'Abort Upload';
+            fixture.componentRef.setInput('cancelLabel', 'Abort Upload');
             fixture.detectChanges();
             expect(component.cancelLabel).toBe('Abort Upload');
         });
 
         it('should set and get chooseIcon property', () => {
-            component.chooseIcon = 'pi pi-folder-open';
+            fixture.componentRef.setInput('chooseIcon', 'pi pi-folder-open');
             fixture.detectChanges();
             expect(component.chooseIcon).toBe('pi pi-folder-open');
         });
 
         it('should set and get uploadIcon property', () => {
-            component.uploadIcon = 'pi pi-cloud-upload';
+            fixture.componentRef.setInput('uploadIcon', 'pi pi-cloud-upload');
             fixture.detectChanges();
             expect(component.uploadIcon).toBe('pi pi-cloud-upload');
         });
 
         it('should set and get cancelIcon property', () => {
-            component.cancelIcon = 'pi pi-stop-circle';
+            fixture.componentRef.setInput('cancelIcon', 'pi pi-stop-circle');
             fixture.detectChanges();
             expect(component.cancelIcon).toBe('pi pi-stop-circle');
         });
 
         it('should set and get styleClass property', () => {
-            component.styleClass = 'custom-file-upload';
+            fixture.componentRef.setInput('styleClass', 'custom-file-upload');
             fixture.detectChanges();
             expect(component.styleClass).toBe('custom-file-upload');
         });
 
         it('should set and get uploadStyleClass property', () => {
-            component.uploadStyleClass = 'custom-upload-btn';
+            fixture.componentRef.setInput('uploadStyleClass', 'custom-upload-btn');
             fixture.detectChanges();
             expect(component.uploadStyleClass).toBe('custom-upload-btn');
         });
 
         it('should set and get cancelStyleClass property', () => {
-            component.cancelStyleClass = 'custom-cancel-btn';
+            fixture.componentRef.setInput('cancelStyleClass', 'custom-cancel-btn');
             fixture.detectChanges();
             expect(component.cancelStyleClass).toBe('custom-cancel-btn');
         });
 
         it('should set and get removeStyleClass property', () => {
-            component.removeStyleClass = 'custom-remove-btn';
+            fixture.componentRef.setInput('removeStyleClass', 'custom-remove-btn');
             fixture.detectChanges();
             expect(component.removeStyleClass).toBe('custom-remove-btn');
         });
 
         it('should set and get chooseStyleClass property', () => {
-            component.chooseStyleClass = 'custom-choose-btn';
+            fixture.componentRef.setInput('chooseStyleClass', 'custom-choose-btn');
             fixture.detectChanges();
             expect(component.chooseStyleClass).toBe('custom-choose-btn');
         });
 
         it('should set and get invalidFileSizeMessageSummary property', () => {
             const message = 'File size error: {0}';
-            component.invalidFileSizeMessageSummary = message;
+            fixture.componentRef.setInput('invalidFileSizeMessageSummary', message);
             fixture.detectChanges();
             expect(component.invalidFileSizeMessageSummary).toBe(message);
         });
 
         it('should set and get invalidFileSizeMessageDetail property', () => {
             const message = 'File exceeds maximum size of {0}';
-            component.invalidFileSizeMessageDetail = message;
+            fixture.componentRef.setInput('invalidFileSizeMessageDetail', message);
             fixture.detectChanges();
             expect(component.invalidFileSizeMessageDetail).toBe(message);
         });
 
         it('should set and get invalidFileTypeMessageSummary property', () => {
             const message = 'Invalid file type: {0}';
-            component.invalidFileTypeMessageSummary = message;
+            fixture.componentRef.setInput('invalidFileTypeMessageSummary', message);
             fixture.detectChanges();
             expect(component.invalidFileTypeMessageSummary).toBe(message);
         });
 
         it('should set and get invalidFileTypeMessageDetail property', () => {
             const message = 'Allowed types: {0}';
-            component.invalidFileTypeMessageDetail = message;
+            fixture.componentRef.setInput('invalidFileTypeMessageDetail', message);
             fixture.detectChanges();
             expect(component.invalidFileTypeMessageDetail).toBe(message);
         });
 
         it('should set and get invalidFileLimitMessageSummary property', () => {
             const message = 'File limit exceeded: {0}';
-            component.invalidFileLimitMessageSummary = message;
+            fixture.componentRef.setInput('invalidFileLimitMessageSummary', message);
             fixture.detectChanges();
             expect(component.invalidFileLimitMessageSummary).toBe(message);
         });
 
         it('should set and get invalidFileLimitMessageDetail property', () => {
             const message = 'Maximum {0} files allowed';
-            component.invalidFileLimitMessageDetail = message;
+            fixture.componentRef.setInput('invalidFileLimitMessageDetail', message);
             fixture.detectChanges();
             expect(component.invalidFileLimitMessageDetail).toBe(message);
         });
@@ -2067,71 +2067,71 @@ describe('FileUpload Input Properties - Static Values', () => {
 
     describe('Boolean Input Properties', () => {
         it('should set and get multiple property', () => {
-            component.multiple = true;
+            fixture.componentRef.setInput('multiple', true);
             fixture.detectChanges();
             expect(component.multiple).toBe(true);
 
-            component.multiple = false;
+            fixture.componentRef.setInput('multiple', false);
             fixture.detectChanges();
             expect(component.multiple).toBe(false);
         });
 
         it('should set and get disabled property', () => {
-            component.disabled = true;
+            fixture.componentRef.setInput('disabled', true);
             fixture.detectChanges();
             expect(component.disabled).toBe(true);
 
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             fixture.detectChanges();
             expect(component.disabled).toBe(false);
         });
 
         it('should set and get auto property', () => {
-            component.auto = true;
+            fixture.componentRef.setInput('auto', true);
             fixture.detectChanges();
             expect(component.auto).toBe(true);
 
-            component.auto = false;
+            fixture.componentRef.setInput('auto', false);
             fixture.detectChanges();
             expect(component.auto).toBe(false);
         });
 
         it('should set and get withCredentials property', () => {
-            component.withCredentials = true;
+            fixture.componentRef.setInput('withCredentials', true);
             fixture.detectChanges();
             expect(component.withCredentials).toBe(true);
 
-            component.withCredentials = false;
+            fixture.componentRef.setInput('withCredentials', false);
             fixture.detectChanges();
             expect(component.withCredentials).toBe(false);
         });
 
         it('should set and get showUploadButton property', () => {
-            component.showUploadButton = false;
+            fixture.componentRef.setInput('showUploadButton', false);
             fixture.detectChanges();
             expect(component.showUploadButton).toBe(false);
 
-            component.showUploadButton = true;
+            fixture.componentRef.setInput('showUploadButton', true);
             fixture.detectChanges();
             expect(component.showUploadButton).toBe(true);
         });
 
         it('should set and get showCancelButton property', () => {
-            component.showCancelButton = false;
+            fixture.componentRef.setInput('showCancelButton', false);
             fixture.detectChanges();
             expect(component.showCancelButton).toBe(false);
 
-            component.showCancelButton = true;
+            fixture.componentRef.setInput('showCancelButton', true);
             fixture.detectChanges();
             expect(component.showCancelButton).toBe(true);
         });
 
         it('should set and get customUpload property', () => {
-            component.customUpload = true;
+            fixture.componentRef.setInput('customUpload', true);
             fixture.detectChanges();
             expect(component.customUpload).toBe(true);
 
-            component.customUpload = false;
+            fixture.componentRef.setInput('customUpload', false);
             fixture.detectChanges();
             expect(component.customUpload).toBe(false);
         });
@@ -2139,31 +2139,31 @@ describe('FileUpload Input Properties - Static Values', () => {
 
     describe('Number Input Properties', () => {
         it('should set and get maxFileSize property', () => {
-            component.maxFileSize = 1000000;
+            fixture.componentRef.setInput('maxFileSize', 1000000);
             fixture.detectChanges();
             expect(component.maxFileSize).toBe(1000000);
 
-            component.maxFileSize = 5000000;
+            fixture.componentRef.setInput('maxFileSize', 5000000);
             fixture.detectChanges();
             expect(component.maxFileSize).toBe(5000000);
         });
 
         it('should set and get previewWidth property', () => {
-            component.previewWidth = 100;
+            fixture.componentRef.setInput('previewWidth', 100);
             fixture.detectChanges();
             expect(component.previewWidth).toBe(100);
 
-            component.previewWidth = 75;
+            fixture.componentRef.setInput('previewWidth', 75);
             fixture.detectChanges();
             expect(component.previewWidth).toBe(75);
         });
 
         it('should set and get fileLimit property', () => {
-            component.fileLimit = 5;
+            fixture.componentRef.setInput('fileLimit', 5);
             fixture.detectChanges();
             expect(component.fileLimit).toBe(5);
 
-            component.fileLimit = 10;
+            fixture.componentRef.setInput('fileLimit', 10);
             fixture.detectChanges();
             expect(component.fileLimit).toBe(10);
         });
@@ -2171,21 +2171,21 @@ describe('FileUpload Input Properties - Static Values', () => {
 
     describe('Enum Input Properties', () => {
         it('should set and get method property', () => {
-            component.method = 'post';
+            fixture.componentRef.setInput('method', 'post');
             fixture.detectChanges();
             expect(component.method).toBe('post');
 
-            component.method = 'put';
+            fixture.componentRef.setInput('method', 'put');
             fixture.detectChanges();
             expect(component.method).toBe('put');
         });
 
         it('should set and get mode property', () => {
-            component.mode = 'advanced';
+            fixture.componentRef.setInput('mode', 'advanced');
             fixture.detectChanges();
             expect(component.mode).toBe('advanced');
 
-            component.mode = 'basic';
+            fixture.componentRef.setInput('mode', 'basic');
             fixture.detectChanges();
             expect(component.mode).toBe('basic');
         });
@@ -2194,32 +2194,32 @@ describe('FileUpload Input Properties - Static Values', () => {
     describe('Object Input Properties', () => {
         it('should set and get style property', () => {
             const customStyle = { width: '100%', border: '2px solid red' };
-            component.style = customStyle;
+            fixture.componentRef.setInput('style', customStyle);
             fixture.detectChanges();
             expect(component.style).toEqual(customStyle);
 
-            component.style = null as any;
+            fixture.componentRef.setInput('style', null as any);
             fixture.detectChanges();
             expect(component.style).toBeNull();
         });
 
         it('should set and get chooseButtonProps property', () => {
             const buttonProps = { size: 'large' as const, outlined: true };
-            component.chooseButtonProps = buttonProps;
+            fixture.componentRef.setInput('chooseButtonProps', buttonProps);
             fixture.detectChanges();
             expect(component.chooseButtonProps).toEqual(buttonProps);
         });
 
         it('should set and get uploadButtonProps property', () => {
             const buttonProps = { severity: 'success' as const, size: 'small' as const };
-            component.uploadButtonProps = buttonProps;
+            fixture.componentRef.setInput('uploadButtonProps', buttonProps);
             fixture.detectChanges();
             expect(component.uploadButtonProps).toEqual(buttonProps);
         });
 
         it('should set and get cancelButtonProps property', () => {
             const buttonProps = { severity: 'danger' as const, text: true };
-            component.cancelButtonProps = buttonProps;
+            fixture.componentRef.setInput('cancelButtonProps', buttonProps);
             fixture.detectChanges();
             expect(component.cancelButtonProps).toEqual(buttonProps);
         });
@@ -2251,12 +2251,12 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
     describe('Dynamic String Properties', () => {
         it('should handle dynamic name changes', () => {
             let dynamicName = 'initial-name';
-            component.name = dynamicName;
+            fixture.componentRef.setInput('name', dynamicName);
             fixture.detectChanges();
             expect(component.name).toBe('initial-name');
 
             dynamicName = 'updated-name[]';
-            component.name = dynamicName;
+            fixture.componentRef.setInput('name', dynamicName);
             fixture.detectChanges();
             expect(component.name).toBe('updated-name[]');
         });
@@ -2265,7 +2265,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const urls = ['https://dev.api.com/upload', 'https://staging.api.com/upload', 'https://prod.api.com/upload'];
 
             urls.forEach((url) => {
-                component.url = url;
+                fixture.componentRef.setInput('url', url);
                 fixture.detectChanges();
                 expect(component.url).toBe(url);
             });
@@ -2275,7 +2275,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const acceptTypes = ['image/*', '.pdf,.doc,.docx', 'text/plain,text/csv', '*/*'];
 
             acceptTypes.forEach((accept) => {
-                component.accept = accept;
+                fixture.componentRef.setInput('accept', accept);
                 fixture.detectChanges();
                 expect(component.accept).toBe(accept);
             });
@@ -2285,7 +2285,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const labels = ['Choose', 'Browse', 'Select Files', 'Pick Files'];
 
             labels.forEach((label) => {
-                component.chooseLabel = label;
+                fixture.componentRef.setInput('chooseLabel', label);
                 fixture.detectChanges();
                 expect(component.chooseLabel).toBe(label);
             });
@@ -2295,7 +2295,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const classes = ['style-1', 'style-2 additional', 'final-style'];
 
             classes.forEach((styleClass) => {
-                component.styleClass = styleClass;
+                fixture.componentRef.setInput('styleClass', styleClass);
                 fixture.detectChanges();
                 expect(component.styleClass).toBe(styleClass);
             });
@@ -2307,45 +2307,45 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const states = [false, true, false, true];
 
             states.forEach((state) => {
-                component.multiple = state;
+                fixture.componentRef.setInput('multiple', state);
                 fixture.detectChanges();
                 expect(component.multiple).toBe(state);
             });
         });
 
         it('should handle dynamic disabled state changes', () => {
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             fixture.detectChanges();
             expect(component.disabled).toBe(false);
 
-            component.disabled = true;
+            fixture.componentRef.setInput('disabled', true);
             fixture.detectChanges();
             expect(component.disabled).toBe(true);
 
-            component.disabled = false;
+            fixture.componentRef.setInput('disabled', false);
             fixture.detectChanges();
             expect(component.disabled).toBe(false);
         });
 
         it('should handle dynamic auto upload changes', () => {
-            component.auto = false;
+            fixture.componentRef.setInput('auto', false);
             fixture.detectChanges();
             expect(component.auto).toBe(false);
 
-            component.auto = true;
+            fixture.componentRef.setInput('auto', true);
             fixture.detectChanges();
             expect(component.auto).toBe(true);
         });
 
         it('should handle dynamic button visibility changes', () => {
-            component.showUploadButton = true;
-            component.showCancelButton = true;
+            fixture.componentRef.setInput('showUploadButton', true);
+            fixture.componentRef.setInput('showCancelButton', true);
             fixture.detectChanges();
             expect(component.showUploadButton).toBe(true);
             expect(component.showCancelButton).toBe(true);
 
-            component.showUploadButton = false;
-            component.showCancelButton = false;
+            fixture.componentRef.setInput('showUploadButton', false);
+            fixture.componentRef.setInput('showCancelButton', false);
             fixture.detectChanges();
             expect(component.showUploadButton).toBe(false);
             expect(component.showCancelButton).toBe(false);
@@ -2357,7 +2357,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const sizes = [1000000, 5000000, 10000000, 0];
 
             sizes.forEach((size) => {
-                component.maxFileSize = size;
+                fixture.componentRef.setInput('maxFileSize', size);
                 fixture.detectChanges();
                 expect(component.maxFileSize).toBe(size);
             });
@@ -2367,7 +2367,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const limits = [1, 5, 10, 100];
 
             limits.forEach((limit) => {
-                component.fileLimit = limit;
+                fixture.componentRef.setInput('fileLimit', limit);
                 fixture.detectChanges();
                 expect(component.fileLimit).toBe(limit);
             });
@@ -2377,7 +2377,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const widths = [25, 50, 75, 100, 150];
 
             widths.forEach((width) => {
-                component.previewWidth = width;
+                fixture.componentRef.setInput('previewWidth', width);
                 fixture.detectChanges();
                 expect(component.previewWidth).toBe(width);
             });
@@ -2389,7 +2389,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const styles = [{ width: '100%' }, { width: '50%', height: '200px' } as any, { border: '1px solid red', padding: '10px' }, null];
 
             styles.forEach((style) => {
-                component.style = style;
+                fixture.componentRef.setInput('style', style);
                 fixture.detectChanges();
                 expect(component.style).toEqual(style);
             });
@@ -2399,7 +2399,7 @@ describe('FileUpload Input Properties - Dynamic Values', () => {
             const props = [{ severity: 'primary' as const }, { severity: 'success' as const, size: 'large' as const }, { outlined: true, text: false }, {}];
 
             props.forEach((prop) => {
-                component.chooseButtonProps = prop;
+                fixture.componentRef.setInput('chooseButtonProps', prop);
                 fixture.detectChanges();
                 expect(component.chooseButtonProps).toEqual(prop);
             });
@@ -2439,7 +2439,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const urlSubject = new BehaviorSubject('https://initial.com/upload');
 
             urlSubject.subscribe((url) => {
-                component.url = url;
+                fixture.componentRef.setInput('url', url);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2458,7 +2458,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const delayedUrl$ = of('https://delayed.com/upload').pipe(delay(1000));
 
             delayedUrl$.subscribe((url) => {
-                component.url = url;
+                fixture.componentRef.setInput('url', url);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2473,7 +2473,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const acceptSubject = new BehaviorSubject('image/*');
 
             acceptSubject.subscribe((accept) => {
-                component.accept = accept;
+                fixture.componentRef.setInput('accept', accept);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2494,7 +2494,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const disabledSubject = new BehaviorSubject(false);
 
             disabledSubject.subscribe((disabled) => {
-                component.disabled = disabled;
+                fixture.componentRef.setInput('disabled', disabled);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2513,7 +2513,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const multipleSubject = new BehaviorSubject(false);
 
             multipleSubject.subscribe((multiple) => {
-                component.multiple = multiple;
+                fixture.componentRef.setInput('multiple', multiple);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2529,7 +2529,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
 
             timer(500).subscribe(() => {
                 autoUpload = true;
-                component.auto = autoUpload;
+                fixture.componentRef.setInput('auto', autoUpload);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2545,7 +2545,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const sizeSubject = new BehaviorSubject(1000000);
 
             sizeSubject.subscribe((size) => {
-                component.maxFileSize = size;
+                fixture.componentRef.setInput('maxFileSize', size);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2564,7 +2564,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const limitSubject = new BehaviorSubject(5);
 
             limitSubject.subscribe((limit) => {
-                component.fileLimit = limit;
+                fixture.componentRef.setInput('fileLimit', limit);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2583,7 +2583,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const delayedWidth$ = of(100).pipe(delay(2000));
 
             delayedWidth$.subscribe((width) => {
-                component.previewWidth = width;
+                fixture.componentRef.setInput('previewWidth', width);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2599,7 +2599,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const styleSubject = new BehaviorSubject({ width: '100%' });
 
             styleSubject.subscribe((style) => {
-                component.style = style;
+                fixture.componentRef.setInput('style', style);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2618,7 +2618,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             const propsSubject = new BehaviorSubject<any>({ severity: 'primary' as const });
 
             propsSubject.subscribe((props) => {
-                component.uploadButtonProps = props;
+                fixture.componentRef.setInput('uploadButtonProps', props);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2660,10 +2660,10 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             });
 
             configSubject.subscribe((config) => {
-                component.url = config.url;
-                component.multiple = config.multiple;
-                component.maxFileSize = config.maxFileSize;
-                component.disabled = config.disabled;
+                fixture.componentRef.setInput('url', config.url);
+                fixture.componentRef.setInput('multiple', config.multiple);
+                fixture.componentRef.setInput('maxFileSize', config.maxFileSize);
+                fixture.componentRef.setInput('disabled', config.disabled);
                 fixture.changeDetectorRef.markForCheck();
             });
 
@@ -2692,12 +2692,12 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
 
             errorSubject.subscribe({
                 next: (url) => {
-                    component.url = url;
+                    fixture.componentRef.setInput('url', url);
                     fixture.changeDetectorRef.markForCheck();
                 },
                 error: () => {
                     errorOccurred = true;
-                    component.url = 'fallback-url';
+                    fixture.componentRef.setInput('url', 'fallback-url');
                     fixture.changeDetectorRef.markForCheck();
                 }
             });

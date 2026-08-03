@@ -276,20 +276,20 @@ describe('Scroller', () => {
         });
 
         it('should have default values', async () => {
-            expect(scroller._tabindex).toBe(0);
-            expect(scroller._itemSize).toBe(50); // Default itemSize in test component is 50
-            expect(scroller._orientation).toBe('vertical');
-            expect(scroller._step).toBe(0);
-            expect(scroller._delay).toBe(0);
-            expect(scroller._resizeDelay).toBe(10);
-            expect(scroller._appendOnly).toBe(false);
-            expect(scroller._inline).toBe(false);
-            expect(scroller._lazy).toBe(false);
-            expect(scroller._disabled).toBe(false);
-            expect(scroller._loaderDisabled).toBe(false);
-            expect(scroller._showSpacer).toBe(true);
-            expect(scroller._showLoader).toBe(false);
-            expect(scroller._autoSize).toBe(false);
+            expect(scroller.tabindex()).toBe(0);
+            expect(scroller.itemSize()).toBe(50); // Default itemSize in test component is 50
+            expect(scroller.orientation()).toBe('vertical');
+            expect(scroller.step()).toBe(0);
+            expect(scroller.delay()).toBe(0);
+            expect(scroller.resizeDelay()).toBe(10);
+            expect(scroller.appendOnly()).toBe(false);
+            expect(scroller.inline()).toBe(false);
+            expect(scroller.lazy()).toBe(false);
+            expect(scroller.disabled()).toBe(false);
+            expect(scroller.loaderDisabled()).toBe(false);
+            expect(scroller.showSpacer()).toBe(true);
+            expect(scroller.showLoader()).toBe(false);
+            expect(scroller.autoSize()).toBe(false);
         });
 
         it('should accept custom values', async () => {
@@ -303,11 +303,11 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(scroller._id).toBe('test-scroller');
-            expect(scroller._tabindex).toBe(5);
-            expect(scroller._itemSize).toBe(100);
-            expect(scroller._scrollHeight).toBe('300px');
-            expect(scroller._orientation).toBe('horizontal');
+            expect(scroller.id()).toBe('test-scroller');
+            expect(scroller.tabindex()).toBe(5);
+            expect(scroller.itemSize()).toBe(100);
+            expect(scroller.scrollHeight()).toBe('300px');
+            expect(scroller.orientation()).toBe('horizontal');
         });
     });
 
@@ -336,7 +336,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.id).toBe('custom-scroller-id');
-            expect(scroller._id).toBe('custom-scroller-id');
+            expect(scroller.id()).toBe('custom-scroller-id');
         });
 
         it('should handle style property', async () => {
@@ -347,7 +347,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.style).toEqual(customStyle);
-            expect(scroller._style).toEqual(customStyle);
+            expect(scroller.style()).toEqual(customStyle);
         });
 
         it('should handle styleClass property', async () => {
@@ -357,7 +357,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.styleClass).toBe('custom-scroller-class');
-            expect(scroller._styleClass).toBe('custom-scroller-class');
+            expect(scroller.styleClass()).toBe('custom-scroller-class');
         });
 
         it('should handle tabindex property', async () => {
@@ -367,7 +367,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.tabindex).toBe(10);
-            expect(scroller._tabindex).toBe(10);
+            expect(scroller.tabindex()).toBe(10);
         });
 
         it('should handle items property', async () => {
@@ -378,7 +378,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.items).toEqual(testItems);
-            expect(scroller._items).toEqual(testItems);
+            expect(scroller.items()).toEqual(testItems);
         });
 
         it('should handle itemSize property with number', async () => {
@@ -388,7 +388,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.itemSize).toBe(75);
-            expect(scroller._itemSize).toBe(75);
+            expect(scroller.itemSize()).toBe(75);
         });
 
         it('should handle itemSize property with number array', async () => {
@@ -399,7 +399,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.itemSize).toEqual(itemSizeArray);
-            expect(scroller._itemSize).toEqual(itemSizeArray);
+            expect(scroller.itemSize()).toEqual(itemSizeArray);
         });
 
         it('should handle scrollHeight property', async () => {
@@ -409,7 +409,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.scrollHeight).toBe('400px');
-            expect(scroller._scrollHeight).toBe('400px');
+            expect(scroller.scrollHeight()).toBe('400px');
         });
 
         it('should handle scrollWidth property', async () => {
@@ -419,7 +419,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.scrollWidth).toBe('600px');
-            expect(scroller._scrollWidth).toBe('600px');
+            expect(scroller.scrollWidth()).toBe('600px');
         });
 
         it('should handle orientation property', async () => {
@@ -429,7 +429,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.orientation).toBe('horizontal');
-            expect(scroller._orientation).toBe('horizontal');
+            expect(scroller.orientation()).toBe('horizontal');
 
             component.orientation = 'both';
 
@@ -437,7 +437,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.orientation).toBe('both');
-            expect(scroller._orientation).toBe('both');
+            expect(scroller.orientation()).toBe('both');
         });
 
         it('should handle step property', async () => {
@@ -447,7 +447,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.step).toBe(20);
-            expect(scroller._step).toBe(20);
+            expect(scroller.step()).toBe(20);
         });
 
         it('should handle delay property', async () => {
@@ -457,7 +457,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.delay).toBe(500);
-            expect(scroller._delay).toBe(500);
+            expect(scroller.delay()).toBe(500);
         });
 
         it('should handle resizeDelay property', async () => {
@@ -467,7 +467,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.resizeDelay).toBe(100);
-            expect(scroller._resizeDelay).toBe(100);
+            expect(scroller.resizeDelay()).toBe(100);
         });
 
         it('should handle boolean properties', async () => {
@@ -478,7 +478,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.appendOnly).toBe(true);
-            expect(scroller._appendOnly).toBe(true);
+            expect(scroller.appendOnly()).toBe(true);
 
             // Test inline
             component.inline = true;
@@ -487,7 +487,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.inline).toBe(true);
-            expect(scroller._inline).toBe(true);
+            expect(scroller.inline()).toBe(true);
 
             // Test lazy
             component.lazy = true;
@@ -496,7 +496,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.lazy).toBe(true);
-            expect(scroller._lazy).toBe(true);
+            expect(scroller.lazy()).toBe(true);
 
             // Test disabled
             component.disabled = true;
@@ -505,7 +505,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.disabled).toBe(true);
-            expect(scroller._disabled).toBe(true);
+            expect(scroller.disabled()).toBe(true);
 
             // Test loaderDisabled
             component.loaderDisabled = true;
@@ -514,7 +514,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.loaderDisabled).toBe(true);
-            expect(scroller._loaderDisabled).toBe(true);
+            expect(scroller.loaderDisabled()).toBe(true);
 
             // Test showSpacer
             component.showSpacer = false;
@@ -523,7 +523,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.showSpacer).toBe(false);
-            expect(scroller._showSpacer).toBe(false);
+            expect(scroller.showSpacer()).toBe(false);
 
             // Test showLoader
             component.showLoader = true;
@@ -532,7 +532,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.showLoader).toBe(true);
-            expect(scroller._showLoader).toBe(true);
+            expect(scroller.showLoader()).toBe(true);
 
             // Test autoSize
             component.autoSize = true;
@@ -541,7 +541,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.autoSize).toBe(true);
-            expect(scroller._autoSize).toBe(true);
+            expect(scroller.autoSize()).toBe(true);
         });
 
         it('should handle columns property', async () => {
@@ -552,7 +552,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.columns).toEqual(testColumns);
-            expect(scroller._columns).toEqual(testColumns);
+            expect(scroller.columns()).toEqual(testColumns);
         });
 
         it('should handle numToleratedItems property', async () => {
@@ -562,7 +562,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.numToleratedItems).toBe(5);
-            expect(scroller._numToleratedItems).toBe(5);
+            expect(scroller.numToleratedItems()).toBe(5);
         });
 
         it('should handle loading property', async () => {
@@ -572,7 +572,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.loading).toBe(true);
-            expect(scroller._loading).toBe(true);
+            expect(scroller.loading()).toBe(true);
         });
 
         it('should handle trackBy property', async () => {
@@ -583,7 +583,7 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.trackBy).toBe(trackByFn);
-            expect(scroller._trackBy).toBe(trackByFn);
+            expect(scroller.trackBy()).toBe(trackByFn);
         });
 
         it('should handle options property', async () => {
@@ -599,11 +599,11 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.options).toEqual(testOptions);
-            expect(scroller._options).toEqual(testOptions);
+            expect(scroller.options()).toEqual(testOptions);
             // Options should update internal properties
-            expect(scroller._itemSize).toBe(60);
-            expect(scroller._lazy).toBe(true);
-            expect(scroller._step).toBe(15);
+            expect(scroller.itemSize()).toBe(60);
+            expect(scroller.lazy()).toBe(true);
+            expect(scroller.step()).toBe(15);
         });
     });
 
@@ -702,7 +702,7 @@ describe('Scroller', () => {
 
             // Test loading state - when d_loading is true and loaderDisabled is true, return loaderArr
             scroller.d_loading = true;
-            scroller._loaderDisabled = true;
+            Object.defineProperty(scroller, 'loaderDisabled', { value: () => true, writable: true, configurable: true });
             scroller.loaderArr = ['loader1', 'loader2'];
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -710,7 +710,7 @@ describe('Scroller', () => {
             expect(scroller.loadedRows).toEqual(['loader1', 'loader2']);
 
             // Test loading state with loaderDisabled false - should return empty array
-            scroller._loaderDisabled = false;
+            Object.defineProperty(scroller, 'loaderDisabled', { value: () => false, writable: true, configurable: true });
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -773,7 +773,7 @@ describe('Scroller', () => {
         });
 
         it('should calculate page by first index', async () => {
-            scroller._step = 10;
+            Object.defineProperty(scroller, 'step', { value: () => 10, writable: true, configurable: true });
             scroller.d_numToleratedItems = 2;
 
             const page = scroller.getPageByFirst(0);
@@ -784,7 +784,7 @@ describe('Scroller', () => {
         });
 
         it('should detect page changes', async () => {
-            scroller._step = 10;
+            Object.defineProperty(scroller, 'step', { value: () => 10, writable: true, configurable: true });
             scroller.page = 0;
             scroller.d_numToleratedItems = 2;
 
@@ -796,7 +796,7 @@ describe('Scroller', () => {
         });
 
         it('should scroll to specified options', async () => {
-            const scrollToSpy = spyOn(scroller.elementViewChild?.nativeElement, 'scrollTo');
+            const scrollToSpy = spyOn(scroller.elementViewChild()?.nativeElement, 'scrollTo');
             const scrollOptions: ScrollToOptions = { left: 100, top: 200, behavior: 'smooth' };
 
             scroller.scrollTo(scrollOptions);
@@ -1058,9 +1058,9 @@ describe('Scroller', () => {
         it('should emit onLazyLoad event', async () => {
             spyOn(component, 'onLazyLoad');
 
-            scroller._lazy = true;
-            scroller._step = 10;
-            scroller._items = [];
+            Object.defineProperty(scroller, 'lazy', { value: () => true, writable: true, configurable: true });
+            Object.defineProperty(scroller, 'step', { value: () => 10, writable: true, configurable: true });
+            Object.defineProperty(scroller, 'items', { value: () => [], writable: true, configurable: true });
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1155,8 +1155,8 @@ describe('Scroller', () => {
 
             // Verify the scroller component is properly configured
             expect(scroller).toBeTruthy();
-            expect(scroller._items).toBeDefined();
-            expect(scroller._items.length).toBeGreaterThan(0);
+            expect(scroller.items()).toBeDefined();
+            expect(scroller.items().length).toBeGreaterThan(0);
 
             // Check that the custom content template exists in the DOM
             // Note: Virtual scrolling may not render all items immediately
@@ -1200,9 +1200,9 @@ describe('Scroller', () => {
 
             // Set up the scroller for loading state
             const scroller = fixture.debugElement.query(By.directive(Scroller)).componentInstance;
-            scroller._items = component.items;
+            Object.defineProperty(scroller, 'items', { value: () => component.items, writable: true, configurable: true });
             scroller.d_loading = true;
-            scroller._showLoader = true;
+            Object.defineProperty(scroller, 'showLoader', { value: () => true, writable: true, configurable: true });
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1215,7 +1215,7 @@ describe('Scroller', () => {
 
             // Verify loading state is set up correctly
             expect(scroller.d_loading).toBe(true);
-            expect(scroller._showLoader).toBe(true);
+            expect(scroller.showLoader()).toBe(true);
             expect(scroller.loaderArr.length).toBeGreaterThan(0);
         });
 
@@ -1266,8 +1266,8 @@ describe('Scroller', () => {
             expect(component.items.length).toBe(0);
 
             // Set up for lazy loading
-            scroller._lazy = true;
-            scroller._items = component.items;
+            Object.defineProperty(scroller, 'lazy', { value: () => true, writable: true, configurable: true });
+            Object.defineProperty(scroller, 'items', { value: () => component.items, writable: true, configurable: true });
             scroller.first = 0;
             scroller.last = 10;
             fixture.changeDetectorRef.markForCheck();
@@ -1281,7 +1281,7 @@ describe('Scroller', () => {
             fixture.detectChanges();
 
             // The lazy load event should be emitted, but items are loaded by the component's onLazyLoad handler
-            expect(scroller._lazy).toBe(true);
+            expect(scroller.lazy()).toBe(true);
         });
 
         it('should handle scroll position changes', async () => {
@@ -1313,11 +1313,11 @@ describe('Scroller', () => {
             });
 
             // Mock element dimensions
-            Object.defineProperty(scroller.elementViewChild?.nativeElement, 'offsetHeight', {
+            Object.defineProperty(scroller.elementViewChild()?.nativeElement, 'offsetHeight', {
                 value: 200,
                 writable: true
             });
-            Object.defineProperty(scroller.elementViewChild?.nativeElement, 'offsetWidth', {
+            Object.defineProperty(scroller.elementViewChild()?.nativeElement, 'offsetWidth', {
                 value: 300,
                 writable: true
             });
@@ -1334,8 +1334,8 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            scroller._items = component.items;
-            scroller._itemSize = 50;
+            Object.defineProperty(scroller, 'items', { value: () => component.items, writable: true, configurable: true });
+            Object.defineProperty(scroller, 'itemSize', { value: () => 50, writable: true, configurable: true });
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -1347,9 +1347,8 @@ describe('Scroller', () => {
 
         it('should update content position', async () => {
             scroller.first = 5;
-            scroller._itemSize = 50;
-            scroller._appendOnly = false;
-
+            Object.defineProperty(scroller, 'itemSize', { value: () => 50, writable: true, configurable: true });
+            Object.defineProperty(scroller, 'appendOnly', { value: () => false, writable: true, configurable: true });
             scroller.setContentPosition({ first: 5 });
             expect(scroller.contentStyle).toBeDefined();
             expect(scroller.contentStyle?.transform).toContain('translate3d');
@@ -1453,7 +1452,7 @@ describe('Scroller', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(scroller._items).toEqual(newItems);
+            expect(scroller.items()).toEqual(newItems);
         });
 
         it('should handle dynamic itemSize updates', async () => {
@@ -1461,7 +1460,7 @@ describe('Scroller', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(scroller._itemSize).toBe(75);
+            expect(scroller.itemSize()).toBe(75);
         });
 
         it('should handle dynamic scrollHeight updates', async () => {
@@ -1469,7 +1468,7 @@ describe('Scroller', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(scroller._scrollHeight).toBe('300px');
+            expect(scroller.scrollHeight()).toBe('300px');
         });
 
         it('should handle dynamic orientation updates', async () => {
@@ -1480,7 +1479,7 @@ describe('Scroller', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(scroller._orientation).toBe('horizontal');
+            expect(scroller.orientation()).toBe('horizontal');
             expect(scroller.horizontal).toBe(true);
         });
 
@@ -1489,7 +1488,7 @@ describe('Scroller', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(scroller._loading).toBe(true);
+            expect(scroller.loading()).toBe(true);
         });
 
         it('should handle dynamic disabled state updates', async () => {
@@ -1497,7 +1496,7 @@ describe('Scroller', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             fixture.detectChanges();
-            expect(scroller._disabled).toBe(true);
+            expect(scroller.disabled()).toBe(true);
         });
     });
 
@@ -1658,7 +1657,7 @@ describe('Scroller', () => {
         });
 
         it('should handle resize without element', async () => {
-            scroller.elementViewChild = null as any;
+            Object.defineProperty(scroller, 'elementViewChild', { value: () => null, writable: true, configurable: true });
             expect(() => scroller.onWindowResize()).not.toThrow();
         });
 
@@ -1707,9 +1706,9 @@ describe('Scroller', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            expect(scroller._itemSize).toBe(100);
-            expect(scroller._scrollHeight).toBe('400px');
-            expect(scroller._orientation).toBe('both');
+            expect(scroller.itemSize()).toBe(100);
+            expect(scroller.scrollHeight()).toBe('400px');
+            expect(scroller.orientation()).toBe('both');
         });
 
         it('should handle large datasets without performance issues', async () => {
@@ -1728,7 +1727,7 @@ describe('Scroller', () => {
             const endTime = performance.now();
 
             expect(endTime - startTime).toBeLessThan(1000); // Should complete within 1 second
-            expect(scroller._items?.length).toBe(10000);
+            expect(scroller.items()?.length).toBe(10000);
         });
 
         it('should handle window resize gracefully', async () => {
@@ -1869,7 +1868,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.id).toBe('scroller-123');
-                expect(scroller._id).toBe('scroller-123');
+                expect(scroller.id()).toBe('scroller-123');
 
                 // Test empty string
                 component.id = '';
@@ -1899,7 +1898,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.styleClass).toBe('custom-class');
-                expect(scroller._styleClass).toBe('custom-class');
+                expect(scroller.styleClass()).toBe('custom-class');
 
                 // Test multiple classes
                 component.styleClass = 'class1 class2 class3';
@@ -1934,7 +1933,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.scrollHeight).toBe('300px');
-                expect(scroller._scrollHeight).toBe('300px');
+                expect(scroller.scrollHeight()).toBe('300px');
 
                 // Test string value with %
                 component.scrollHeight = '100%';
@@ -1969,7 +1968,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.scrollWidth).toBe('400px');
-                expect(scroller._scrollWidth).toBe('400px');
+                expect(scroller.scrollWidth()).toBe('400px');
 
                 // Test string value with %
                 component.scrollWidth = '50%';
@@ -1998,7 +1997,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.tabindex).toBe(5);
-                expect(scroller._tabindex).toBe(5);
+                expect(scroller.tabindex()).toBe(5);
 
                 // Test zero
                 component.tabindex = 0;
@@ -2033,7 +2032,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.step).toBe(10);
-                expect(scroller._step).toBe(10);
+                expect(scroller.step()).toBe(10);
 
                 // Test zero
                 component.step = 0;
@@ -2060,7 +2059,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.delay).toBe(500);
-                expect(scroller._delay).toBe(500);
+                expect(scroller.delay()).toBe(500);
 
                 // Test zero
                 component.delay = 0;
@@ -2087,7 +2086,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.resizeDelay).toBe(100);
-                expect(scroller._resizeDelay).toBe(100);
+                expect(scroller.resizeDelay()).toBe(100);
 
                 // Test zero
                 component.resizeDelay = 0;
@@ -2114,7 +2113,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.numToleratedItems).toBe(5);
-                expect(scroller._numToleratedItems).toBe(5);
+                expect(scroller.numToleratedItems()).toBe(5);
 
                 // Test zero
                 component.numToleratedItems = 0;
@@ -2143,7 +2142,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.appendOnly).toBe(true);
-                expect(scroller._appendOnly).toBe(true);
+                expect(scroller.appendOnly()).toBe(true);
 
                 // Test false
                 component.appendOnly = false;
@@ -2152,7 +2151,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.appendOnly).toBe(false);
-                expect(scroller._appendOnly).toBe(false);
+                expect(scroller.appendOnly()).toBe(false);
             });
 
             it('should handle inline input property changes', async () => {
@@ -2163,7 +2162,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.inline).toBe(true);
-                expect(scroller._inline).toBe(true);
+                expect(scroller.inline()).toBe(true);
 
                 // Test false
                 component.inline = false;
@@ -2172,7 +2171,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.inline).toBe(false);
-                expect(scroller._inline).toBe(false);
+                expect(scroller.inline()).toBe(false);
             });
 
             it('should handle lazy input property changes', async () => {
@@ -2183,7 +2182,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.lazy).toBe(true);
-                expect(scroller._lazy).toBe(true);
+                expect(scroller.lazy()).toBe(true);
 
                 // Test false
                 component.lazy = false;
@@ -2192,7 +2191,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.lazy).toBe(false);
-                expect(scroller._lazy).toBe(false);
+                expect(scroller.lazy()).toBe(false);
             });
 
             it('should handle disabled input property changes', async () => {
@@ -2203,7 +2202,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.disabled).toBe(true);
-                expect(scroller._disabled).toBe(true);
+                expect(scroller.disabled()).toBe(true);
 
                 // Test false
                 component.disabled = false;
@@ -2212,7 +2211,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.disabled).toBe(false);
-                expect(scroller._disabled).toBe(false);
+                expect(scroller.disabled()).toBe(false);
             });
 
             it('should handle loaderDisabled input property changes', async () => {
@@ -2223,7 +2222,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.loaderDisabled).toBe(true);
-                expect(scroller._loaderDisabled).toBe(true);
+                expect(scroller.loaderDisabled()).toBe(true);
 
                 // Test false
                 component.loaderDisabled = false;
@@ -2232,7 +2231,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.loaderDisabled).toBe(false);
-                expect(scroller._loaderDisabled).toBe(false);
+                expect(scroller.loaderDisabled()).toBe(false);
             });
 
             it('should handle showSpacer input property changes', async () => {
@@ -2243,7 +2242,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.showSpacer).toBe(true);
-                expect(scroller._showSpacer).toBe(true);
+                expect(scroller.showSpacer()).toBe(true);
 
                 // Test false
                 component.showSpacer = false;
@@ -2252,7 +2251,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.showSpacer).toBe(false);
-                expect(scroller._showSpacer).toBe(false);
+                expect(scroller.showSpacer()).toBe(false);
             });
 
             it('should handle showLoader input property changes', async () => {
@@ -2263,7 +2262,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.showLoader).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
 
                 // Test false (default)
                 component.showLoader = false;
@@ -2272,7 +2271,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.showLoader).toBe(false);
-                expect(scroller._showLoader).toBe(false);
+                expect(scroller.showLoader()).toBe(false);
             });
 
             it('should handle loading input property changes', async () => {
@@ -2283,7 +2282,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.loading).toBe(true);
-                expect(scroller._loading).toBe(true);
+                expect(scroller.loading()).toBe(true);
 
                 // Test false
                 component.loading = false;
@@ -2292,7 +2291,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.loading).toBe(false);
-                expect(scroller._loading).toBe(false);
+                expect(scroller.loading()).toBe(false);
 
                 // Test undefined
                 component.loading = undefined as any;
@@ -2301,7 +2300,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.loading).toBeUndefined();
-                expect(scroller._loading).toBeUndefined();
+                expect(scroller.loading()).toBeUndefined();
             });
 
             it('should handle autoSize input property changes', async () => {
@@ -2312,7 +2311,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.autoSize).toBe(true);
-                expect(scroller._autoSize).toBe(true);
+                expect(scroller.autoSize()).toBe(true);
 
                 // Test false (default)
                 component.autoSize = false;
@@ -2321,7 +2320,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.autoSize).toBe(false);
-                expect(scroller._autoSize).toBe(false);
+                expect(scroller.autoSize()).toBe(false);
             });
         });
 
@@ -2334,7 +2333,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.orientation).toBe('vertical');
-                expect(scroller._orientation).toBe('vertical');
+                expect(scroller.orientation()).toBe('vertical');
                 expect(scroller.vertical).toBe(true);
                 expect(scroller.horizontal).toBe(false);
                 expect(scroller.both).toBe(false);
@@ -2346,7 +2345,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.orientation).toBe('horizontal');
-                expect(scroller._orientation).toBe('horizontal');
+                expect(scroller.orientation()).toBe('horizontal');
                 expect(scroller.vertical).toBe(false);
                 expect(scroller.horizontal).toBe(true);
                 expect(scroller.both).toBe(false);
@@ -2358,7 +2357,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.orientation).toBe('both');
-                expect(scroller._orientation).toBe('both');
+                expect(scroller.orientation()).toBe('both');
                 expect(scroller.vertical).toBe(false);
                 expect(scroller.horizontal).toBe(false);
                 expect(scroller.both).toBe(true);
@@ -2375,7 +2374,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.style).toEqual(style1);
-                expect(scroller._style).toEqual(style1);
+                expect(scroller.style()).toEqual(style1);
 
                 // Test object with multiple properties
                 const style2 = {
@@ -2390,7 +2389,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.style).toEqual(style2);
-                expect(scroller._style).toEqual(style2);
+                expect(scroller.style()).toEqual(style2);
 
                 // Test undefined
                 component.style = undefined as any;
@@ -2421,7 +2420,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.items).toEqual(items1);
-                expect(scroller._items).toEqual(items1);
+                expect(scroller.items()).toEqual(items1);
 
                 // Test array of primitives
                 const items2 = ['A', 'B', 'C', 'D', 'E'];
@@ -2431,7 +2430,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.items).toEqual(items2);
-                expect(scroller._items).toEqual(items2);
+                expect(scroller.items()).toEqual(items2);
 
                 // Test empty array
                 component.items = [];
@@ -2440,7 +2439,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.items).toEqual([]);
-                expect(scroller._items).toEqual([]);
+                expect(scroller.items()).toEqual([]);
 
                 // Test undefined
                 component.items = undefined as any;
@@ -2449,7 +2448,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.items).toBeUndefined();
-                expect(scroller._items).toBeUndefined();
+                expect(scroller.items()).toBeUndefined();
 
                 // Test null
                 component.items = null as any;
@@ -2458,7 +2457,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.items).toBeNull();
-                expect(scroller._items).toBeNull();
+                expect(scroller.items()).toBeNull();
             });
 
             it('should handle columns input property changes', async () => {
@@ -2470,7 +2469,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.columns).toEqual(columns1);
-                expect(scroller._columns).toEqual(columns1);
+                expect(scroller.columns()).toEqual(columns1);
 
                 // Test array of objects
                 const columns2 = [
@@ -2483,7 +2482,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.columns).toEqual(columns2);
-                expect(scroller._columns).toEqual(columns2);
+                expect(scroller.columns()).toEqual(columns2);
 
                 // Test empty array
                 component.columns = [];
@@ -2492,7 +2491,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.columns).toEqual([]);
-                expect(scroller._columns).toEqual([]);
+                expect(scroller.columns()).toEqual([]);
 
                 // Test undefined
                 component.columns = undefined as any;
@@ -2501,7 +2500,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.columns).toBeUndefined();
-                expect(scroller._columns).toBeUndefined();
+                expect(scroller.columns()).toBeUndefined();
 
                 // Test null
                 component.columns = null as any;
@@ -2510,7 +2509,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.columns).toBeNull();
-                expect(scroller._columns).toBeNull();
+                expect(scroller.columns()).toBeNull();
             });
 
             it('should handle itemSize input property changes', async () => {
@@ -2521,7 +2520,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.itemSize).toBe(50);
-                expect(scroller._itemSize).toBe(50);
+                expect(scroller.itemSize()).toBe(50);
 
                 // Test array of numbers (for both orientation)
                 const itemSizes = [40, 80];
@@ -2531,7 +2530,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.itemSize).toEqual(itemSizes);
-                expect(scroller._itemSize).toEqual(itemSizes);
+                expect(scroller.itemSize()).toEqual(itemSizes);
 
                 // Test zero
                 component.itemSize = 0;
@@ -2540,7 +2539,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.itemSize).toBe(0);
-                expect(scroller._itemSize).toBe(0);
+                expect(scroller.itemSize()).toBe(0);
 
                 // Test large number
                 component.itemSize = 1000;
@@ -2549,7 +2548,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.itemSize).toBe(1000);
-                expect(scroller._itemSize).toBe(1000);
+                expect(scroller.itemSize()).toBe(1000);
             });
 
             it('should handle trackBy input property changes', async () => {
@@ -2561,7 +2560,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.trackBy).toBe(trackByFn);
-                expect(scroller._trackBy).toBe(trackByFn);
+                expect(scroller.trackBy()).toBe(trackByFn);
 
                 // Test different function
                 const trackByIndex = (index: number) => index;
@@ -2571,7 +2570,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.trackBy).toBe(trackByIndex);
-                expect(scroller._trackBy).toBe(trackByIndex);
+                expect(scroller.trackBy()).toBe(trackByIndex);
             });
 
             it('should handle options input property changes', async () => {
@@ -2587,10 +2586,10 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.options).toEqual(options1);
-                expect(scroller._options).toEqual(options1);
+                expect(scroller.options()).toEqual(options1);
                 // Options should update internal properties
-                expect(scroller._itemSize).toBe(60);
-                expect(scroller._lazy).toBe(true);
+                expect(scroller.itemSize()).toBe(60);
+                expect(scroller.lazy()).toBe(true);
 
                 // Test complex options
                 const options2 = {
@@ -2607,12 +2606,12 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.options).toEqual(options2);
-                expect(scroller._itemSize).toEqual([50, 100]);
-                expect(scroller._orientation).toBe('both');
-                expect(scroller._step).toBe(20);
-                expect(scroller._delay).toBe(300);
-                expect(scroller._appendOnly).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.itemSize()).toEqual([50, 100]);
+                expect(scroller.orientation()).toBe('both');
+                expect(scroller.step()).toBe(20);
+                expect(scroller.delay()).toBe(300);
+                expect(scroller.appendOnly()).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
 
                 // Test undefined
                 component.options = undefined as any;
@@ -2621,7 +2620,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
                 expect(scroller.options).toBeUndefined();
-                expect(scroller._options).toBeUndefined();
+                expect(scroller.options()).toBeUndefined();
             });
         });
     });
@@ -2964,11 +2963,11 @@ describe('Scroller', () => {
             fixture.detectChanges();
             expect(scroller.options).toEqual(options);
             // Verify that options update internal properties
-            expect(scroller._itemSize).toBe(75);
-            expect(scroller._orientation).toBe('horizontal');
-            expect(scroller._lazy).toBe(true);
-            expect(scroller._step).toBe(15);
-            expect(scroller._showLoader).toBe(true);
+            expect(scroller.itemSize()).toBe(75);
+            expect(scroller.orientation()).toBe('horizontal');
+            expect(scroller.lazy()).toBe(true);
+            expect(scroller.step()).toBe(15);
+            expect(scroller.showLoader()).toBe(true);
 
             // Test updating options
             const updatedOptions = {
@@ -2982,10 +2981,10 @@ describe('Scroller', () => {
             await fixture.whenStable();
             fixture.detectChanges();
             expect(scroller.options).toEqual(updatedOptions);
-            expect(scroller._itemSize).toEqual([60, 120]);
-            expect(scroller._orientation).toBe('both');
-            expect(scroller._delay).toBe(200);
-            expect(scroller._appendOnly).toBe(true);
+            expect(scroller.itemSize()).toEqual([60, 120]);
+            expect(scroller.orientation()).toBe('both');
+            expect(scroller.delay()).toBe(200);
+            expect(scroller.appendOnly()).toBe(true);
         });
 
         it('should handle rapid observable updates', async () => {
@@ -3441,7 +3440,7 @@ describe('Scroller', () => {
 
                 const scroller = fixture.debugElement.query(By.directive(Scroller)).componentInstance;
                 expect(scroller).toBeTruthy();
-                expect(scroller._items).toBeDefined();
+                expect(scroller.items()).toBeDefined();
 
                 // Test context generation even if template detection doesn't work in test environment
                 expect(scroller.getContentOptions).toBeDefined();
@@ -3487,10 +3486,10 @@ describe('Scroller', () => {
                 expect(itemOptions.odd).toBe(false);
 
                 // Test last item options if items exist
-                if (scroller._items && scroller._items.length > 1) {
-                    const lastOptions = scroller.getOptions(scroller._items.length - 1);
+                if (scroller.items() && scroller.items().length > 1) {
+                    const lastOptions = scroller.getOptions(scroller.items().length - 1);
                     expect(lastOptions.last).toBe(true);
-                    expect(lastOptions.index).toBe(scroller._items.length - 1);
+                    expect(lastOptions.index).toBe(scroller.items().length - 1);
                 }
             });
 
@@ -3519,8 +3518,8 @@ describe('Scroller', () => {
                 expect(typeof loaderOptions.loading).toBe('boolean');
 
                 // Verify loading state
-                expect(scroller._loading).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.loading()).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
             });
 
             it('should render pTemplate="loadericon" with correct context objects', async () => {
@@ -3538,11 +3537,11 @@ describe('Scroller', () => {
                 expect(scroller).toBeTruthy();
 
                 // Verify loader icon configuration
-                expect(scroller._loading).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.loading()).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
 
                 // Test that component is configured for loader icon template
-                expect(scroller.templates || scroller._loaderIconTemplate || scroller.loaderIconTemplate).toBeTruthy();
+                expect(scroller.templates || scroller.loaderIconTemplate() || scroller.loaderIconTemplate).toBeTruthy();
             });
         });
 
@@ -3688,8 +3687,8 @@ describe('Scroller', () => {
                 expect(itemOptions.first).toBe(true);
                 expect(itemOptions.last).toBe(false);
 
-                if (scroller._items && scroller._items.length > 1) {
-                    const lastItemOptions = scroller.getOptions(scroller._items.length - 1);
+                if (scroller.items() && scroller.items().length > 1) {
+                    const lastItemOptions = scroller.getOptions(scroller.items().length - 1);
                     expect(lastItemOptions.last).toBe(true);
                     expect(lastItemOptions.first).toBe(false);
                 }
@@ -3710,8 +3709,8 @@ describe('Scroller', () => {
                 expect(scroller).toBeTruthy();
 
                 // Verify loader state
-                expect(scroller._loading).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.loading()).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
             });
 
             it('should render #loadericon template with correct context objects', async () => {
@@ -3729,8 +3728,8 @@ describe('Scroller', () => {
                 expect(scroller).toBeTruthy();
 
                 // Verify loader icon template configuration
-                expect(scroller._loading).toBe(true);
-                expect(scroller._showLoader).toBe(true);
+                expect(scroller.loading()).toBe(true);
+                expect(scroller.showLoader()).toBe(true);
             });
         });
 
@@ -3784,7 +3783,7 @@ describe('Scroller', () => {
                 expect(scroller).toBeTruthy();
 
                 // Test that component is properly initialized with mixed templates
-                expect(scroller._items).toBeDefined();
+                expect(scroller.items()).toBeDefined();
                 expect(scroller.getContentOptions).toBeDefined();
                 expect(scroller.getOptions).toBeDefined();
 
@@ -3844,8 +3843,8 @@ describe('Scroller', () => {
                 const scroller = fixture.debugElement.query(By.directive(Scroller)).componentInstance;
 
                 // Ensure scroller is properly initialized
-                scroller._items = component.items;
-                scroller._orientation = 'vertical'; // Explicitly set orientation before initialization
+                Object.defineProperty(scroller, 'items', { value: () => component.items, writable: true, configurable: true });
+                Object.defineProperty(scroller, 'orientation', { value: () => 'vertical', writable: true, configurable: true }); // Explicitly set orientation before initialization
                 scroller.setInitialState();
                 scroller.first = 0; // Explicitly ensure first is set to 0 for tests
 
@@ -3862,7 +3861,7 @@ describe('Scroller', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                scroller._orientation = 'horizontal';
+                Object.defineProperty(scroller, 'orientation', { value: () => 'horizontal', writable: true, configurable: true });
                 scroller.setInitialState();
                 contentOptions = scroller.getContentOptions();
                 expect(contentOptions.orientation).toBe('horizontal');
@@ -3876,7 +3875,7 @@ describe('Scroller', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                scroller._orientation = 'both';
+                Object.defineProperty(scroller, 'orientation', { value: () => 'both', writable: true, configurable: true });
                 scroller.setInitialState();
                 contentOptions = scroller.getContentOptions();
                 expect(contentOptions.orientation).toBe('both');
@@ -3890,7 +3889,7 @@ describe('Scroller', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
                 fixture.detectChanges();
-                scroller._orientation = 'vertical';
+                Object.defineProperty(scroller, 'orientation', { value: () => 'vertical', writable: true, configurable: true });
                 scroller.setInitialState();
 
                 // Test item context for different positions
@@ -3908,7 +3907,7 @@ describe('Scroller', () => {
                 expect(itemOptions.even).toBe(false);
                 expect(itemOptions.odd).toBe(true);
 
-                itemOptions = scroller.getOptions(scroller._items.length - 1);
+                itemOptions = scroller.getOptions(scroller.items().length - 1);
                 expect(itemOptions.last).toBe(true);
                 expect(itemOptions.first).toBe(false);
             });
@@ -3926,14 +3925,14 @@ describe('Scroller', () => {
                 const scroller = fixture.debugElement.query(By.directive(Scroller)).componentInstance;
 
                 // Ensure scroller is properly initialized
-                scroller._items = fixture.componentInstance.items;
-                scroller._orientation = 'vertical'; // Explicitly set orientation before initialization
+                Object.defineProperty(scroller, 'items', { value: () => fixture.componentInstance.items, writable: true, configurable: true });
+                Object.defineProperty(scroller, 'orientation', { value: () => 'vertical', writable: true, configurable: true }); // Explicitly set orientation before initialization
                 scroller.setInitialState();
                 scroller.first = 0; // Explicitly ensure first is set to 0 for tests
 
                 // Test that count matches items length
                 const itemOptions = scroller.getOptions(5);
-                expect(itemOptions.count).toBe(scroller._items.length);
+                expect(itemOptions.count).toBe(scroller.items().length);
                 expect(itemOptions.count).toBe(10);
 
                 // Test index boundaries
