@@ -1,4 +1,4 @@
-export class PrimeIcons {
+export class HelixIcons {
     public static readonly ADDRESS_BOOK = 'pi pi-address-book';
     public static readonly ALIGN_CENTER = 'pi pi-align-center';
     public static readonly ALIGN_JUSTIFY = 'pi pi-align-justify';
