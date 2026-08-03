@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
@@ -124,7 +124,7 @@ export class InputOtp extends BaseEditableHolder<InputOtpPassThrough> implements
      */
     readonly inputTemplate = contentChild<TemplateRef<InputOtpInputTemplateContext>>('input', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _inputTemplate: TemplateRef<InputOtpInputTemplateContext> | undefined;
 

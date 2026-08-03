@@ -23,7 +23,7 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addClass, addStyle, appendChild, find, findSingle, getFocusableElements, getIndex, getOuterWidth, hasClass, isDate, isNotEmpty, isTouchDevice, relativePosition, setAttribute, uuid } from '@primeuix/utils';
-import { OverlayService, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseInput } from '@gravionlabs/helix/baseinput';
@@ -851,7 +851,7 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
         this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates().forEach((item) => {

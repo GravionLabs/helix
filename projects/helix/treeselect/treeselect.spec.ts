@@ -898,7 +898,7 @@ describe('TreeSelect', () => {
             expect(treeSelectInstance.ngAfterContentInit).toBeDefined();
         });
 
-        it('should handle PrimeTemplate with context parameters', async () => {
+        it('should handle HelixTemplate with context parameters', async () => {
             const dropdown = testFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
             dropdown.nativeElement.click();
             testFixture.detectChanges();

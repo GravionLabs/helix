@@ -20,7 +20,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { addClass, find, findSingle, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { Footer, Header, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { Footer, Header, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ButtonModule, ButtonProps } from '@gravionlabs/helix/button';
@@ -340,7 +340,7 @@ export class Carousel extends BaseComponent {
         this.cd.markForCheck();
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.id = uuid('pn_id_');

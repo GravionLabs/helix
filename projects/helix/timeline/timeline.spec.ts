@@ -62,7 +62,7 @@ class TestTemplatesTimelineComponent {
     align: string = 'left';
 }
 
-// PrimeTemplate test component
+// HelixTemplate test component
 @Component({
     standalone: false,
     template: `
@@ -83,7 +83,7 @@ class TestTemplatesTimelineComponent {
         </p-timeline>
     `
 })
-class TestPrimeTemplateTimelineComponent {
+class TestHelixTemplateTimelineComponent {
     events: EventItem[] = [{ status: 'Ordered', date: '15/10/2020 10:30', icon: 'pi pi-shopping-cart', color: '#9C27B0' }];
 }
 
@@ -146,7 +146,7 @@ describe('Timeline', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [CommonModule, Timeline],
-            declarations: [TestBasicTimelineComponent, TestTemplatesTimelineComponent, TestPrimeTemplateTimelineComponent, TestEmptyTimelineComponent, TestComplexTimelineComponent],
+            declarations: [TestBasicTimelineComponent, TestTemplatesTimelineComponent, TestHelixTemplateTimelineComponent, TestEmptyTimelineComponent, TestComplexTimelineComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();
 
@@ -240,8 +240,8 @@ describe('Timeline', () => {
             expect(customMarker.length).toBe(2);
         });
 
-        it('should process PrimeTemplate directives correctly', () => {
-            const templateFixture = TestBed.createComponent(TestPrimeTemplateTimelineComponent);
+        it('should process HelixTemplate directives correctly', () => {
+            const templateFixture = TestBed.createComponent(TestHelixTemplateTimelineComponent);
             const templateComponent = templateFixture.componentInstance;
             templateFixture.detectChanges();
 
@@ -612,7 +612,7 @@ describe('Timeline', () => {
 
     describe('Lifecycle and Cleanup', () => {
         it('should handle ngAfterContentInit correctly', () => {
-            const templateFixture = TestBed.createComponent(TestPrimeTemplateTimelineComponent);
+            const templateFixture = TestBed.createComponent(TestHelixTemplateTimelineComponent);
             const templateTimeline = templateFixture.debugElement.query(By.directive(Timeline)).componentInstance;
             templateFixture.detectChanges();
 

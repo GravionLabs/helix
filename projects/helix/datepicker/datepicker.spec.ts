@@ -1404,7 +1404,7 @@ describe('DatePicker', () => {
             }).not.toThrow();
         });
 
-        it('should process templates through PrimeTemplate system', async () => {
+        it('should process templates through HelixTemplate system', async () => {
             const datePickerComponent = templatesDatePickerElement.componentInstance;
 
             // Verify that templates can be processed

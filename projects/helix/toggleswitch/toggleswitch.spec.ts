@@ -17,7 +17,7 @@ describe('ToggleSwitch', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ToggleSwitch, ToggleSwitchModule, FormsModule, ReactiveFormsModule, CommonModule, SharedModule, AutoFocus, TestToggleSwitchPTemplateComponent, TestToggleSwitchRefTemplateComponent],
-            declarations: [TestBasicToggleSwitchComponent, TestFormToggleSwitchComponent, TestTemplateToggleSwitchComponent, TestPrimeTemplateToggleSwitchComponent, TestRequiredToggleSwitchComponent, TestNamedToggleSwitchComponent],
+            declarations: [TestBasicToggleSwitchComponent, TestFormToggleSwitchComponent, TestTemplateToggleSwitchComponent, TestHelixTemplateToggleSwitchComponent, TestRequiredToggleSwitchComponent, TestNamedToggleSwitchComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();
 
@@ -249,8 +249,8 @@ describe('ToggleSwitch', () => {
             }
         });
 
-        it('should support custom handle template using PrimeTemplate', () => {
-            const primeTemplateFixture = TestBed.createComponent(TestPrimeTemplateToggleSwitchComponent);
+        it('should support custom handle template using HelixTemplate', () => {
+            const primeTemplateFixture = TestBed.createComponent(TestHelixTemplateToggleSwitchComponent);
             primeTemplateFixture.detectChanges();
 
             const customHandle = primeTemplateFixture.debugElement.query(By.css('.prime-template-handle'));
@@ -275,7 +275,7 @@ describe('ToggleSwitch', () => {
         });
 
         it('should handle template processing in ngAfterContentInit', () => {
-            const primeTemplateFixture = TestBed.createComponent(TestPrimeTemplateToggleSwitchComponent);
+            const primeTemplateFixture = TestBed.createComponent(TestHelixTemplateToggleSwitchComponent);
             const toggleSwitchInstance = primeTemplateFixture.debugElement.query(By.css('p-toggleswitch')).componentInstance;
 
             primeTemplateFixture.detectChanges();
@@ -674,7 +674,7 @@ class TestTemplateToggleSwitchComponent {
         </p-toggleswitch>
     `
 })
-class TestPrimeTemplateToggleSwitchComponent {
+class TestHelixTemplateToggleSwitchComponent {
     checked: boolean = false;
 }
 

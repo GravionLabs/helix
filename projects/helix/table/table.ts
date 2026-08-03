@@ -29,7 +29,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, find, findSingle, getAttribute, isClickable, setAttribute } from '@primeuix/utils';
-import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, PrimeTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@gravionlabs/helix/api';
+import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, HelixTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -695,7 +695,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     readonly scroller = viewChild<Nullable<Scroller>>('scroller');
 
-    readonly _templates = contentChildren(PrimeTemplate);
+    readonly _templates = contentChildren(HelixTemplate);
 
     filteredValue: any[] | undefined | null;
 
@@ -4349,7 +4349,7 @@ export class CancelEditableRow extends BaseComponent {
     encapsulation: ViewEncapsulation.None
 })
 export class CellEditor extends BaseComponent {
-    readonly _templates = contentChildren(PrimeTemplate);
+    readonly _templates = contentChildren(HelixTemplate);
 
     readonly _inputTemplate = contentChild.required<TemplateRef<any>>('input');
 
@@ -5008,7 +5008,7 @@ export class ColumnFilter extends BaseComponent {
 
     readonly clearButtonViewChild = viewChild<Nullable<ElementRef>>('clearBtn');
 
-    readonly _templates = contentChildren(PrimeTemplate);
+    readonly _templates = contentChildren(HelixTemplate);
 
     overlaySubscription: Subscription | undefined;
 

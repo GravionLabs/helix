@@ -22,7 +22,7 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isNotEmpty, uuid } from '@primeuix/utils';
-import { OverlayOptions, PrimeTemplate, ScrollerOptions, SharedModule, TreeNode } from '@gravionlabs/helix/api';
+import { OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TreeNode } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
@@ -479,7 +479,7 @@ export class TreeSelect extends BaseEditableHolder<TreeSelectPassThrough> {
      */
     readonly itemLoadingIconTemplate = contentChild<Nullable<TemplateRef<void>>>('itemloadingicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _valueTemplate: TemplateRef<TreeSelectValueTemplateContext> | undefined;
 

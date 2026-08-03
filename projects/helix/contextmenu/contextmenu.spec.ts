@@ -580,7 +580,7 @@ describe('ContextMenu', () => {
             expect(submenuContextMenu.submenuIconTemplate).toBeDefined();
         });
 
-        it('should process PrimeTemplate types correctly', async () => {
+        it('should process HelixTemplate types correctly', async () => {
             const pTemplateFixture = TestBed.createComponent(TestPTemplateContextMenuComponent);
             await pTemplateFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));

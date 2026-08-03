@@ -24,7 +24,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findSingle, focus, getOuterHeight, getOuterWidth, removeAccents, resolveFieldData } from '@primeuix/utils';
-import { BlockableUI, PrimeTemplate, ScrollerOptions, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from '@gravionlabs/helix/api';
+import { BlockableUI, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from '@gravionlabs/helix/api';
 import { AutoFocusModule } from '@gravionlabs/helix/autofocus';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -982,7 +982,7 @@ export class Tree extends BaseComponent<TreePassThrough> implements BlockableUI 
 
     readonly contentViewChild = viewChild<ElementRef>('content');
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _headerTemplate: TemplateRef<void> | undefined;
 

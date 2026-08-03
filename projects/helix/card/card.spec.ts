@@ -431,7 +431,7 @@ describe('Card', () => {
         });
     });
 
-    describe('PrimeTemplate Support', () => {
+    describe('HelixTemplate Support', () => {
         let templateFixture: ComponentFixture<TestTemplateCardComponent>;
 
         beforeEach(async () => {

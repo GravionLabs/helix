@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, inject, InjectionToken, signal, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
 import { findSingle, getOffset, getOuterWidth, getWidth, isRTL } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ChevronLeftIcon, ChevronRightIcon } from '@gravionlabs/helix/icons';
@@ -52,7 +52,7 @@ export class TabList extends BaseComponent<TabListPassThrough> {
      */
     readonly nextIconTemplate = contentChild<TemplateRef<any>>('nexticon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     readonly content = viewChild.required<ElementRef<HTMLDivElement>>('content');
 

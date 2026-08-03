@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { providePrimeNG } from '@gravionlabs/helix/config';
 import type { EditorBlurEvent, EditorChangeEvent, EditorFocusEvent, EditorInitEvent, EditorSelectionChangeEvent, EditorTextChangeEvent } from '@gravionlabs/helix/types/editor';
 import { Editor } from './editor';
@@ -183,7 +183,7 @@ describe('Editor', () => {
         };
 
         await TestBed.configureTestingModule({
-            imports: [CommonModule, Editor, SharedModule, PrimeTemplate, FormsModule],
+            imports: [CommonModule, Editor, SharedModule, HelixTemplate, FormsModule],
             declarations: [TestBasicEditorComponent, TestCustomToolbarComponent, TestPTemplateComponent, TestReadonlyComponent, TestCustomConfigurationComponent],
             providers: [provideZonelessChangeDetection()]
         }).compileComponents();

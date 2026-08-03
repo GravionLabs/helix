@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChildren, model, contentChild, booleanAttribute } from '@angular/core';
-import { PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { TimesCircleIcon } from '@gravionlabs/helix/icons';
@@ -112,7 +112,7 @@ export class Chip extends BaseComponent<ChipPassThrough> {
      */
     readonly removeIconTemplate = contentChild<TemplateRef<void>>('removeicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _removeIconTemplate: TemplateRef<void> | undefined;
 

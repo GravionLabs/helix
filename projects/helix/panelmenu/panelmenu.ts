@@ -3,7 +3,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { RouterModule } from '@angular/router';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLast, findSingle, focus, getAttribute, isEmpty, isNotEmpty, isPrintableCharacter, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ChevronDownIcon, ChevronRightIcon } from '@gravionlabs/helix/icons';
@@ -680,7 +680,7 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
      */
     readonly itemTemplate = contentChild<TemplateRef<PanelMenuItemTemplateContext>>('item', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _submenuIconTemplate: TemplateRef<void> | undefined;
 

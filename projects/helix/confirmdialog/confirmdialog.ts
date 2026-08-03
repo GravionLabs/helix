@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, output, contentChild, contentChildren, EventEmitter } from '@angular/core';
 import { findSingle, setAttribute, uuid } from '@primeuix/utils';
-import { Confirmation, ConfirmationService, ConfirmEventType, Footer, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { Confirmation, ConfirmationService, ConfirmEventType, Footer, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { Button } from '@gravionlabs/helix/button';
@@ -268,7 +268,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
      */
     readonly headlessTemplate = contentChild<Nullable<TemplateRef<ConfirmDialogHeadlessTemplateContext>>>('headless', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     $appendTo = computed(() => this.appendTo() || this.config.overlayAppendTo());
 

@@ -881,7 +881,7 @@ describe('Password', () => {
             }).not.toThrow();
         });
 
-        it('should process templates through PrimeTemplate system', () => {
+        it('should process templates through HelixTemplate system', () => {
             const passwordComponent = templatesPasswordElement.componentInstance;
 
             // Verify that templates can be processed

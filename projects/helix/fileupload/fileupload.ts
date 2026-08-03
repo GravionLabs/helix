@@ -3,7 +3,7 @@ import { HttpClient, HttpEvent, HttpEventType, HttpHeaders } from '@angular/comm
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, output, TemplateRef, ViewEncapsulation, contentChild, viewChild, contentChildren } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { addClass, removeClass } from '@primeuix/utils';
-import { BlockableUI, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { BlockableUI, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { Badge } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -491,7 +491,7 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
     _fileLabelTemplate: TemplateRef<FileUploadFileLabelTemplateContext> | undefined;
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates()?.forEach((item) => {

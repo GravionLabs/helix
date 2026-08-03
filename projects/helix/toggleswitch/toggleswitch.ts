@@ -18,7 +18,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
@@ -140,7 +140,7 @@ export class ToggleSwitch extends BaseEditableHolder<ToggleSwitchPassThrough> {
 
     _componentStyle = inject(ToggleSwitchStyle);
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onHostClick(event: MouseEvent) {
         this.onClick(event);

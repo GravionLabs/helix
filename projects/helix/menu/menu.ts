@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, find, findSingle, focus, isTouchDevice, uuid } from '@primeuix/utils';
-import { MenuItem, OverlayService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -335,7 +335,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     readonly submenuHeaderTemplate = contentChild<TemplateRef<MenuSubmenuHeaderTemplateContext>>('submenuheader', { descendants: false });
     _submenuHeaderTemplate: TemplateRef<MenuSubmenuHeaderTemplateContext> | undefined;
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates()?.forEach((item) => {

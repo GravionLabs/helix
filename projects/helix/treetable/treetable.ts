@@ -46,7 +46,7 @@ import {
     reorderArray,
     resolveFieldData
 } from '@primeuix/utils';
-import { BlockableUI, FilterMetadata, FilterService, PrimeTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@gravionlabs/helix/api';
+import { BlockableUI, FilterMetadata, FilterService, HelixTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -733,7 +733,7 @@ export class TreeTable extends BaseComponent<TreeTablePassThrough> implements Bl
         this.initialized = true;
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates().forEach((item) => {
@@ -3424,7 +3424,7 @@ export class TreeTableCellEditor extends BaseComponent {
         this.bindDirectiveInstance.setAttrs(this.ptm('cellEditor'));
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     inputTemplate: Nullable<TemplateRef<any>>;
 

@@ -924,7 +924,7 @@ describe('SpeedDial', () => {
     });
 
     describe('Templates', () => {
-        // pTemplate Approach - @ContentChildren(PrimeTemplate) testleri
+        // pTemplate Approach - @ContentChildren(HelixTemplate) testleri
         describe('pTemplate Approach Tests', () => {
             it('should handle pTemplate content processing', async () => {
                 const templateFixture = TestBed.createComponent(TestTemplateSpeedDialComponent);

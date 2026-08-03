@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { uuid } from '@primeuix/utils';
-import { BlockableUI, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { BlockableUI, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { MinusIcon, PlusIcon } from '@gravionlabs/helix/icons';
@@ -197,7 +197,7 @@ export class Fieldset extends BaseComponent<FieldsetPassThrough> implements Bloc
 
     _contentTemplate: TemplateRef<void> | undefined;
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates().forEach((item) => {

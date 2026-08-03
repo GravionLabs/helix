@@ -613,7 +613,7 @@ describe('ProgressBar', () => {
             expect(typeof templateProgressBar.ngAfterContentInit).toBe('function');
         });
 
-        it('should set _contentTemplate when processing PrimeTemplate', () => {
+        it('should set _contentTemplate when processing HelixTemplate', () => {
             const templateFixture = TestBed.createComponent(TestPTemplateProgressBarComponent);
             templateFixture.detectChanges();
 

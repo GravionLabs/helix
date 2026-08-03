@@ -27,7 +27,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, findLastIndex, findSingle, focus, getOuterWidth, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, nestedPosition, relativePosition, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, OverlayService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix/dom';
@@ -376,7 +376,7 @@ export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
      */
     readonly itemTemplate = contentChild<TemplateRef<TieredMenuItemTemplateContext>>('item', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     $appendTo = computed(() => this.appendTo() || this.config.overlayAppendTo());
 

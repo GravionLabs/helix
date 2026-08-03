@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, effect, ElementRef, forwardRef, inject, InjectionToken, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, viewChild, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
-import { MegaMenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MegaMenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BadgeModule } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -298,7 +298,7 @@ export class MegaMenu extends BaseComponent<MegaMenuPassThrough> {
      */
     readonly buttonIconTemplate = contentChild<TemplateRef<void>>('buttonicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     readonly menubuttonViewChild = viewChild<ElementRef>('menubutton');
 

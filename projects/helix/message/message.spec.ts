@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { providePrimeNG } from '@gravionlabs/helix/config';
 import { Message } from './message';
 
@@ -124,7 +124,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -189,7 +189,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -230,7 +230,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -282,7 +282,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -334,7 +334,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -383,7 +383,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -436,7 +436,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -478,7 +478,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestContainerTemplateComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -525,7 +525,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestIconTemplatesComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -554,7 +554,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestPTemplateComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -637,7 +637,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -708,7 +708,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestKeyboardNavigationComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -753,7 +753,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();
@@ -865,7 +865,7 @@ describe('Message', () => {
 
         beforeEach(async () => {
             await TestBed.configureTestingModule({
-                imports: [CommonModule, Message, SharedModule, PrimeTemplate],
+                imports: [CommonModule, Message, SharedModule, HelixTemplate],
                 declarations: [TestBasicMessageComponent],
                 providers: [provideZonelessChangeDetection()]
             }).compileComponents();

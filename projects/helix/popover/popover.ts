@@ -3,7 +3,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { $dt } from '@primeuix/styled';
 import { absolutePosition, addClass, appendChild, findSingle, getOffset, isIOS, isTouchDevice } from '@primeuix/utils';
-import { OverlayService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix/dom';
@@ -160,7 +160,7 @@ export class Popover extends BaseComponent<PopoverPassThrough> {
      */
     readonly contentTemplate = contentChild<Nullable<TemplateRef<PopoverContentTemplateContext>>>('content', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _contentTemplate: TemplateRef<PopoverContentTemplateContext> | undefined;
 

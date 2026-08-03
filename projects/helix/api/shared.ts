@@ -21,7 +21,7 @@ export class Footer {}
     selector: '[hTemplate]',
     standalone: true
 })
-export class PrimeTemplate {
+export class HelixTemplate {
     readonly type = input<string>();
 
     readonly name = input<string>(undefined, { alias: "hTemplate" });
@@ -34,8 +34,8 @@ export class PrimeTemplate {
 }
 
 @NgModule({
-    imports: [CommonModule, PrimeTemplate],
-    exports: [Header, Footer, PrimeTemplate],
+    imports: [CommonModule, HelixTemplate],
+    exports: [Header, Footer, HelixTemplate],
     declarations: [Header, Footer]
 })
 export class SharedModule {}

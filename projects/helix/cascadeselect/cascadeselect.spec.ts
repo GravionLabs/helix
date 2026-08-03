@@ -773,7 +773,7 @@ describe('CascadeSelect', () => {
             expect(cascadeSelectInstance.ngAfterContentInit).toBeDefined();
         });
 
-        it('should handle PrimeTemplate with context parameters', async () => {
+        it('should handle HelixTemplate with context parameters', async () => {
             testComponent.options = mockCountries;
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();

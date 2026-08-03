@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, inject, InjectionToken, Input, NgModule,  TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild, model, effect, untracked } from '@angular/core';
 import { hasClass, isAttributeEquals } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule, TreeNode } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule, TreeNode } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ChevronDownIcon, ChevronUpIcon } from '@gravionlabs/helix/icons';
@@ -185,7 +185,7 @@ export class OrganizationChart extends BaseComponent<OrganizationChartPassThroug
      */
     readonly onNodeCollapse = output<OrganizationChartNodeCollapseEvent>();
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     readonly togglerIconTemplate = contentChild<TemplateRef<any>>('togglericon', { descendants: false });
 

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { focus, getFirstFocusableElement, uuid } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { AutoFocus } from '@gravionlabs/helix/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
@@ -122,7 +122,7 @@ export class Rating extends BaseEditableHolder<RatingPassThrough> {
      */
     readonly offIconTemplate = contentChild<Nullable<TemplateRef<RatingIconTemplateContext>>>('officon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     value: Nullable<number>;
 

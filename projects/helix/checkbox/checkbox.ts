@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { contains, equals } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
@@ -192,7 +192,7 @@ export class Checkbox extends BaseEditableHolder<CheckboxPassThrough> {
      */
     readonly checkboxIconTemplate = contentChild<TemplateRef<CheckboxIconTemplateContext>>('icon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _checkboxIconTemplate: TemplateRef<CheckboxIconTemplateContext> | undefined;
 

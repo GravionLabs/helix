@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { OverlayService, PrimeTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
+import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { Button, ButtonProps } from '@gravionlabs/helix/button';
@@ -530,7 +530,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         }
     }
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     onAfterContentInit() {
         this.templates()?.forEach((item) => {

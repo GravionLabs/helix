@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, InjectionToken, input, Input, NgModule, signal, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild } from '@angular/core';
 import { MotionOptions } from '@primeuix/motion';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
 import { TimesIcon } from '@gravionlabs/helix/icons';
@@ -172,7 +172,7 @@ export class Message extends BaseComponent<MessagePassThrough> {
      */
     readonly closeIconTemplate = contentChild<TemplateRef<void>>('closeicon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _containerTemplate: TemplateRef<MessageContainerTemplateContext> | undefined;
 

@@ -15,7 +15,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -190,7 +190,7 @@ export class ToggleButton extends BaseEditableHolder<ToggleButtonPassThrough> {
      */
     readonly contentTemplate = contentChild<Nullable<TemplateRef<ToggleButtonContentTemplateContext>>>('content', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     checked: boolean = false;
 

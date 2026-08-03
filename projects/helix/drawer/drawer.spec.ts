@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { PrimeTemplate } from '@gravionlabs/helix/api';
+import { HelixTemplate } from '@gravionlabs/helix/api';
 import { Drawer } from './drawer';
 
 @Component({
@@ -212,7 +212,7 @@ describe('Drawer', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [Drawer, PrimeTemplate],
+            imports: [Drawer, HelixTemplate],
             declarations: [
                 TestDrawerBasicComponent,
                 TestDrawerTemplatesComponent,

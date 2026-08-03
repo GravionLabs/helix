@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@primeuix/utils';
-import { FilterService, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { FilterService, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { ButtonModule, ButtonProps } from '@gravionlabs/helix/button';
@@ -722,7 +722,7 @@ export class PickList extends BaseComponent {
      */
     readonly sourceFilterIconTemplate = contentChild<TemplateRef<void>>('sourcefiltericon', { descendants: false });
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _itemTemplate: TemplateRef<PickListItemTemplateContext> | undefined;
 

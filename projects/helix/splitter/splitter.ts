@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, contentChild, effect, ElementRef, forwardRef, inject, InjectionToken, model, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
 import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@primeuix/utils';
-import { PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix/bind';
 import { Nullable, VoidListener } from '@gravionlabs/helix/ts-helpers';
@@ -120,7 +120,7 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
      */
     readonly onResizeStart = output<SplitterResizeStartEvent>();
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     readonly panelChildren = contentChildren<ElementRef>('panel');
 

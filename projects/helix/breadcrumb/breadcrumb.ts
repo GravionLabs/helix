@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { MenuItem, PrimeTemplate, SharedModule } from '@gravionlabs/helix/api';
+import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix/api';
 import { Badge } from '@gravionlabs/helix/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix/basecomponent';
 import { Bind } from '@gravionlabs/helix/bind';
@@ -103,7 +103,7 @@ export class Breadcrumb extends BaseComponent<BreadcrumbPassThrough> {
      */
     readonly separatorTemplate = contentChild<TemplateRef<void>>('separator');
 
-    readonly templates = contentChildren(PrimeTemplate);
+    readonly templates = contentChildren(HelixTemplate);
 
     _separatorTemplate: TemplateRef<void> | undefined;
 
