@@ -1,4 +1,4 @@
-export enum HelixValidatorKey {
+export enum ValidatorKey {
   Required = 'Required',
   Email = 'Email',
   Number = 'Number',

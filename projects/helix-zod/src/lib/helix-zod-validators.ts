@@ -1,5 +1,5 @@
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import type { HelixValidatorKey } from '@gravionlabs/helix-shell';
+import type { ValidatorKey } from '@gravionlabs/helix/validators';
 import type { ZodSchema } from 'zod';
 import { isEmptyValue, zodIssueToHelixKey } from './internal/zod-issue-map';
 
@@ -9,21 +9,21 @@ declare const ngDevMode: boolean | undefined;
 export interface ZodHelixOptions {
   /**
    * Required when the schema contains `.refine()` or `.superRefine()`.
-   * Those produce `ZodIssueCode.custom` which has no automatic `HelixValidatorKey`
+   * Those produce `ZodIssueCode.custom` which has no automatic `ValidatorKey`
    * mapping. The bridge throws a descriptive error in development (`ngDevMode`)
    * and skips silently in production when this is missing and a custom issue occurs.
    *
    * @example
    * HelixZodValidators.fromZod(
    *   z.string().refine(v => !banned.includes(v), 'Not allowed'),
-   *   { fallbackKey: HelixValidatorKey.Pattern },
+   *   { fallbackKey: ValidatorKey.Pattern },
    * )
    */
-  fallbackKey?: HelixValidatorKey;
+  fallbackKey?: ValidatorKey;
 
   /**
    * When `true` (default), empty values (`''`, `null`, `undefined`) bypass Zod
-   * and return `null` — matching `HelixValidators`' default `allowEmpty = true`.
+   * and return `null` — matching `Validators`' default `allowEmpty = true`.
    * Set to `false` to let Zod validate empty values (e.g. for required fields).
    */
   allowEmpty?: boolean;
@@ -33,19 +33,19 @@ export const HelixZodValidators = {
   /**
    * Converts a Zod field schema into a Helix-compatible Angular `ValidatorFn`.
    *
-   * Each `ZodIssue` is mapped to its `HelixValidatorKey`. `HelixFormField` reads
+   * Each `ZodIssue` is mapped to its `ValidatorKey`. `HelixFormField` reads
    * those keys directly — no template changes required.
    *
    * All issues from a single `safeParse` are processed simultaneously, producing
    * one `ValidationErrors` key per issue — equivalent to stacking multiple
-   * `HelixValidators` calls.
+   * `Validators` calls.
    *
    * ### Known gaps
-   * - `HelixValidatorKey.OneOf` / `AllOf` — `z.enum()` produces `invalid_value`,
+   * - `ValidatorKey.OneOf` / `AllOf` — `z.enum()` produces `invalid_value`,
    *   which has no automatic mapping. Use `fallbackKey` or continue using
-   *   `HelixValidators.oneOf` / `HelixValidators.allOf`.
+   *   `Validators.oneOf` / `Validators.allOf`.
    * - `invalid_type` for `boolean` expected — Helix has no `Boolean` key.
-   *   Use `fallbackKey` or `HelixValidators.pattern`.
+   *   Use `fallbackKey` or `Validators.pattern`.
    *
    * @param schema    A Zod field schema (e.g. `UserSchema.shape.email`).
    *                  Do NOT pass schemas with `.transform()` — use the
@@ -61,7 +61,7 @@ export const HelixZodValidators = {
    * // Schema with .refine() — fallbackKey required (Option B)
    * HelixZodValidators.fromZod(
    *   z.string().refine(v => !banned.includes(v), 'Username not allowed'),
-   *   { fallbackKey: HelixValidatorKey.Pattern },
+   *   { fallbackKey: ValidatorKey.Pattern },
    * )
    *
    * @example
@@ -74,7 +74,7 @@ export const HelixZodValidators = {
     return (control: AbstractControl): ValidationErrors | null => {
       const value: unknown = control.value;
 
-      // Replicate HelixValidators' allowEmpty = true default:
+      // Replicate Validators' allowEmpty = true default:
       // skip Zod entirely for empty values unless the caller opts out.
       if (allowEmpty && isEmptyValue(value)) {
         return null;
@@ -102,8 +102,8 @@ export const HelixZodValidators = {
           if (typeof ngDevMode !== 'undefined' && ngDevMode) {
             throw new Error(
               `[HelixZodValidators.fromZod] Zod issue code "${issue.code}" has no ` +
-                `automatic HelixValidatorKey mapping.\n` +
-                `Pass { fallbackKey: HelixValidatorKey.xxx } as the second argument.\n` +
+                `automatic ValidatorKey mapping.\n` +
+                `Pass { fallbackKey: ValidatorKey.xxx } as the second argument.\n` +
                 `Failing issue: ${JSON.stringify(issue, null, 2)}`,
             );
           }

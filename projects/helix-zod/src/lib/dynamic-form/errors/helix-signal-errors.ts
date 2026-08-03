@@ -1,5 +1,5 @@
 import type { ValidationError } from '@angular/forms/signals';
-import { HelixValidatorKey } from '@gravionlabs/helix-shell';
+import { ValidatorKey } from '@gravionlabs/helix/validators';
 import type { ZodIssue } from 'zod';
 import { zodIssueToHelixKey } from '../../internal/zod-issue-map';
 
@@ -10,22 +10,22 @@ import { zodIssueToHelixKey } from '../../internal/zod-issue-map';
  */
 export type HelixErrorMessageResolver = (
   error: ValidationError,
-  helixKey: HelixValidatorKey | null,
+  helixKey: ValidatorKey | null,
 ) => string | null | undefined;
 
-/** Built-in signal-forms error kinds → HelixValidatorKey. */
-const NG_KIND_TO_HELIX: Record<string, HelixValidatorKey> = {
-  required: HelixValidatorKey.Required,
-  min: HelixValidatorKey.Min,
-  max: HelixValidatorKey.Max,
-  minLength: HelixValidatorKey.MinLength,
-  maxLength: HelixValidatorKey.MaxLength,
-  pattern: HelixValidatorKey.Pattern,
-  email: HelixValidatorKey.Email,
+/** Built-in signal-forms error kinds → ValidatorKey. */
+const NG_KIND_TO_HELIX: Record<string, ValidatorKey> = {
+  required: ValidatorKey.Required,
+  min: ValidatorKey.Min,
+  max: ValidatorKey.Max,
+  minLength: ValidatorKey.MinLength,
+  maxLength: ValidatorKey.MaxLength,
+  pattern: ValidatorKey.Pattern,
+  email: ValidatorKey.Email,
 };
 
 /**
- * Maps a signal-forms `ValidationError` to the `HelixValidatorKey` message
+ * Maps a signal-forms `ValidationError` to the `ValidatorKey` message
  * convention shared with `HelixZodValidators.fromZod`.
  *
  * @param error The signal-forms validation error.
@@ -33,7 +33,7 @@ const NG_KIND_TO_HELIX: Record<string, HelixValidatorKey> = {
  *              type errors on Zod `invalid_type` issues (Zod v4 dropped the
  *              `received` field).
  */
-export function helixErrorKey(error: ValidationError, value?: unknown): HelixValidatorKey | null {
+export function helixErrorKey(error: ValidationError, value?: unknown): ValidatorKey | null {
   if (error.kind === 'standardSchema') {
     const issue = (error as unknown as { issue: unknown }).issue as ZodIssue;
     return zodIssueToHelixKey(issue, value);

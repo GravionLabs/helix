@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
-import { HelixValidators } from '../validators/helix-validators';
+import { Validators } from '@gravionlabs/helix/validators';
 import { HelixFormField } from './form-field';
 
 describe('HelixFormField', () => {
@@ -106,7 +106,7 @@ describe('HelixFormField', () => {
 
   describe('renders error', () => {
     it('should show error from control when touched and invalid', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
@@ -125,7 +125,7 @@ describe('HelixFormField', () => {
     });
 
     it('should show external error over control error', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
@@ -137,7 +137,7 @@ describe('HelixFormField', () => {
     });
 
     it('should not show error when control is untouched', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
       fixture.detectChanges();
@@ -146,7 +146,7 @@ describe('HelixFormField', () => {
     });
 
     it('should not show hint when error is active', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
@@ -158,7 +158,7 @@ describe('HelixFormField', () => {
     });
 
     it('should not show hint or error when showHint is false', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
@@ -183,13 +183,13 @@ describe('HelixFormField', () => {
     });
 
     it('should return null when control is invalid but untouched', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       fixture.componentRef.setInput('control', ctrl);
       expect(component.activeError()).toBeNull();
     });
 
     it('should return error message when control is touched and invalid', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);
@@ -203,7 +203,7 @@ describe('HelixFormField', () => {
     });
 
     it('should prefer external error over control error', () => {
-      const ctrl = new FormControl('', [HelixValidators.required('Required')]);
+      const ctrl = new FormControl('', [Validators.required('Required')]);
       ctrl.markAsTouched();
       ctrl.updateValueAndValidity();
       fixture.componentRef.setInput('control', ctrl);

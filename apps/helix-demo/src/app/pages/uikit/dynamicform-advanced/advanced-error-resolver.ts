@@ -1,4 +1,4 @@
-import { HelixValidatorKey } from '@gravionlabs/helix-shell';
+import { ValidatorKey } from '@gravionlabs/helix/validators';
 import type { HelixErrorMessageResolver } from '@gravionlabs/helix-zod';
 
 /**
@@ -8,9 +8,9 @@ import type { HelixErrorMessageResolver } from '@gravionlabs/helix-zod';
  */
 export const advancedErrorResolver: HelixErrorMessageResolver = (_error, helixKey) => {
   switch (helixKey) {
-    case HelixValidatorKey.Required:
+    case ValidatorKey.Required:
       return 'This field is required (message from the central resolver)';
-    case HelixValidatorKey.Email:
+    case ValidatorKey.Email:
       return 'That does not look like an e-mail address';
     default:
       return null;

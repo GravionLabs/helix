@@ -1,5 +1,5 @@
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { HelixValidators } from '../validators/helix-validators';
+import { FormArray, FormControl, FormGroup, Validators as NgValidators } from '@angular/forms';
+import { Validators } from '@gravionlabs/helix/validators';
 import { HelixFormArrayWithFactory, helixFormErrorMap } from './form.utils';
 
 describe('helixFormErrorMap', () => {
@@ -10,8 +10,8 @@ describe('helixFormErrorMap', () => {
 
   it('should return errors from flat form group', () => {
     const form = new FormGroup({
-      email: new FormControl('bad', HelixValidators.email('Invalid email')),
-      name: new FormControl('', HelixValidators.required('Required')),
+      email: new FormControl('bad', Validators.email('Invalid email')),
+      name: new FormControl('', Validators.required('Required')),
     });
     expect(helixFormErrorMap(form)).toEqual({ email: 'Invalid email', name: 'Required' });
   });
@@ -19,7 +19,7 @@ describe('helixFormErrorMap', () => {
   it('should return errors from nested form group using inner control name', () => {
     const form = new FormGroup({
       user: new FormGroup({
-        email: new FormControl('bad', HelixValidators.email('Bad email')),
+        email: new FormControl('bad', Validators.email('Bad email')),
       }),
     });
     expect(helixFormErrorMap(form)).toEqual({ email: 'Bad email' });
@@ -28,8 +28,8 @@ describe('helixFormErrorMap', () => {
   it('should return errors from form array with indexed keys', () => {
     const form = new FormGroup({
       items: new FormArray([
-        new FormControl('', HelixValidators.required('Required')),
-        new FormControl('', HelixValidators.required('Required')),
+        new FormControl('', Validators.required('Required')),
+        new FormControl('', Validators.required('Required')),
       ]),
     });
     expect(helixFormErrorMap(form)).toEqual({ 'items[0]': 'Required', 'items[1]': 'Required' });
@@ -37,7 +37,7 @@ describe('helixFormErrorMap', () => {
 
   it('should skip non-string error values', () => {
     const form = new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', NgValidators.required),
     });
     expect(helixFormErrorMap(form)).toEqual({});
   });
@@ -82,7 +82,7 @@ describe('HelixFormArrayWithFactory', () => {
   });
 
   it('should accept validators', () => {
-    const arr = new HelixFormArrayWithFactory(() => new FormControl(''), [Validators.required]);
+    const arr = new HelixFormArrayWithFactory(() => new FormControl(''), [NgValidators.required]);
     expect(arr.valid).toBe(false);
     arr.push(new FormControl('hello'));
     expect(arr.valid).toBe(true);
