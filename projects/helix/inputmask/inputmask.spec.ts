@@ -172,11 +172,11 @@ describe('InputMask', () => {
 
         it('should set input properties correctly', () => {
             fixture.componentRef.setInput('mask', '999-99-9999'); // Set mask first to avoid initialization errors
-            component.type = 'tel';
-            component.slotChar = '*';
-            component.placeholder = 'Enter phone';
-            component.styleClass = 'custom-mask';
-            component.inputId = 'phone-input';
+            fixture.componentRef.setInput('type', 'tel');
+            fixture.componentRef.setInput('slotChar', '*');
+            fixture.componentRef.setInput('placeholder', 'Enter phone');
+            fixture.componentRef.setInput('styleClass', 'custom-mask');
+            fixture.componentRef.setInput('inputId', 'phone-input');
 
             fixture.detectChanges();
 
@@ -225,7 +225,7 @@ describe('InputMask', () => {
         });
 
         it('should handle custom character pattern', () => {
-            component.characterPattern = '[0-9A-Fa-f]';
+            fixture.componentRef.setInput('characterPattern', '[0-9A-Fa-f]');
             fixture.componentRef.setInput('mask', 'aaa');
             fixture.detectChanges();
 
@@ -237,24 +237,28 @@ describe('InputMask', () => {
     describe('Public Methods', () => {
         beforeEach(() => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.inputViewChild = {
-                nativeElement: {
-                    value: '',
-                    focus: jasmine.createSpy('focus'),
-                    setSelectionRange: jasmine.createSpy('setSelectionRange'),
-                    selectionStart: 0,
-                    selectionEnd: 0,
-                    offsetParent: {},
-                    ownerDocument: { activeElement: {} }
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: '',
+                        focus: jasmine.createSpy('focus'),
+                        setSelectionRange: jasmine.createSpy('setSelectionRange'),
+                        selectionStart: 0,
+                        selectionEnd: 0,
+                        offsetParent: {},
+                        ownerDocument: { activeElement: {} }
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
         });
 
         it('should get placeholder character correctly', () => {
             expect(component.getPlaceholder(0)).toBe('_');
 
-            component.slotChar = '***';
+            fixture.componentRef.setInput('slotChar', '***');
             expect(component.getPlaceholder(0)).toBe('*');
             expect(component.getPlaceholder(1)).toBe('*');
             expect(component.getPlaceholder(2)).toBe('*');
@@ -301,7 +305,7 @@ describe('InputMask', () => {
 
         it('should focus input element', () => {
             component.focus();
-            expect(component.inputViewChild?.nativeElement.focus).toHaveBeenCalled();
+            expect(component.inputViewChild()?.nativeElement.focus).toHaveBeenCalled();
         });
 
         it('should clear input value', () => {
@@ -310,7 +314,7 @@ describe('InputMask', () => {
 
             component.clear();
 
-            expect(component.inputViewChild?.nativeElement.value).toBe('' as any);
+            expect(component.inputViewChild()?.nativeElement.value).toBe('' as any);
             expect(component.value).toBeNull();
             expect(component.onModelChange).toHaveBeenCalledWith(null);
             expect(component.onClear.emit).toHaveBeenCalled();
@@ -414,18 +418,22 @@ describe('InputMask', () => {
     describe('Keyboard Input Processing', () => {
         beforeEach(() => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.inputViewChild = {
-                nativeElement: {
-                    value: '',
-                    focus: jasmine.createSpy('focus'),
-                    setSelectionRange: jasmine.createSpy('setSelectionRange'),
-                    selectionStart: 0,
-                    selectionEnd: 0,
-                    offsetParent: {},
-                    ownerDocument: { activeElement: {} },
-                    dispatchEvent: jasmine.createSpy('dispatchEvent')
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: '',
+                        focus: jasmine.createSpy('focus'),
+                        setSelectionRange: jasmine.createSpy('setSelectionRange'),
+                        selectionStart: 0,
+                        selectionEnd: 0,
+                        offsetParent: {},
+                        ownerDocument: { activeElement: {} },
+                        dispatchEvent: jasmine.createSpy('dispatchEvent')
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
         });
 
@@ -478,7 +486,7 @@ describe('InputMask', () => {
             const escapeEvent = new KeyboardEvent('keydown', { keyCode: 27 });
             component.onInputKeydown(escapeEvent as any);
 
-            expect(component.inputViewChild?.nativeElement.value).toBe('123-45-');
+            expect(component.inputViewChild()?.nativeElement.value).toBe('123-45-');
             expect(component.caret).toHaveBeenCalledWith(0, 7);
         });
 
@@ -511,7 +519,7 @@ describe('InputMask', () => {
         });
 
         it('should not process input when readonly', () => {
-            component.readonly = true;
+            fixture.componentRef.setInput('readonly', true);
             spyOn(component, 'updateModel');
 
             const keyEvent = new KeyboardEvent('keypress', { keyCode: 49 });
@@ -655,12 +663,16 @@ describe('InputMask', () => {
         });
 
         it('should handle caret positioning when input is not focused', () => {
-            component.inputViewChild = {
-                nativeElement: {
-                    offsetParent: null,
-                    ownerDocument: { activeElement: null }
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        offsetParent: null,
+                        ownerDocument: { activeElement: null }
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
 
             const result = component.caret(0, 5);
             expect(result).toBeUndefined();
@@ -668,11 +680,15 @@ describe('InputMask', () => {
 
         it('should handle android chrome specific behavior', () => {
             component.androidChrome = true;
-            component.inputViewChild = {
-                nativeElement: {
-                    value: '123'
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: '123'
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
 
             spyOn(component, 'handleAndroidInput');
             spyOn(component, 'handleInputChange');
@@ -701,7 +717,7 @@ describe('InputMask', () => {
 
         it('should handle keepBuffer option correctly', () => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.keepBuffer = true;
+            fixture.componentRef.setInput('keepBuffer', true);
             fixture.detectChanges();
 
             component.buffer = ['1', '2', '3', '-', '4', '5', '-', '6', '7', '8', '9'];
@@ -715,12 +731,16 @@ describe('InputMask', () => {
 
         it('should handle autoClear behavior on blur', () => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.autoClear = true;
-            component.inputViewChild = {
-                nativeElement: {
-                    value: '12_-__-____'
-                }
-            } as any;
+            fixture.componentRef.setInput('autoClear', true);
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: '12_-__-____'
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
 
             spyOn(component, 'clearBuffer');
@@ -733,11 +753,15 @@ describe('InputMask', () => {
 
         it('should handle writeControlValue correctly', () => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.inputViewChild = {
-                nativeElement: {
-                    value: ''
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: ''
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
 
             spyOn(component, 'checkVal');
@@ -752,17 +776,22 @@ describe('InputMask', () => {
 
         it('should handle null value in writeControlValue', () => {
             fixture.componentRef.setInput('mask', '999-99-9999');
-            component.inputViewChild = {
+            const mockInputRef = {
                 nativeElement: {
                     value: 'test'
                 }
-            } as any;
+            };
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => mockInputRef,
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
 
             const mockSetValue = jasmine.createSpy('setModelValue');
             component.writeControlValue(null, mockSetValue);
 
-            expect(component.inputViewChild!.nativeElement.value).toBe('' as any);
+            expect(component.inputViewChild()!.nativeElement.value).toBe('' as any);
             expect(component.value).toBeNull();
         });
     });
@@ -833,17 +862,21 @@ describe('InputMask', () => {
     describe('Complex Mask Patterns', () => {
         it('should handle phone number mask correctly', async () => {
             fixture.componentRef.setInput('mask', '(999) 999-9999');
-            component.inputViewChild = {
-                nativeElement: {
-                    value: '',
-                    focus: jasmine.createSpy('focus'),
-                    setSelectionRange: jasmine.createSpy('setSelectionRange'),
-                    selectionStart: 0,
-                    selectionEnd: 0,
-                    offsetParent: {},
-                    ownerDocument: { activeElement: {} }
-                }
-            } as any;
+            Object.defineProperty(component, 'inputViewChild', {
+                value: () => ({
+                    nativeElement: {
+                        value: '',
+                        focus: jasmine.createSpy('focus'),
+                        setSelectionRange: jasmine.createSpy('setSelectionRange'),
+                        selectionStart: 0,
+                        selectionEnd: 0,
+                        offsetParent: {},
+                        ownerDocument: { activeElement: {} }
+                    }
+                }),
+                writable: true,
+                configurable: true
+            });
             fixture.detectChanges();
 
             expect(component.defaultBuffer).toBe('(___) ___-____');
@@ -1554,7 +1587,7 @@ describe('InputMask', () => {
 @Component({
     standalone: true,
     imports: [InputMaskDirective, FormsModule],
-    template: `<input [pInputMask]="mask" [(ngModel)]="value" />`
+    template: `<input [hInputMask]="mask" [(ngModel)]="value" />`
 })
 class DirectiveBasicTestComponent {
     mask = '999-99-9999';
@@ -1564,7 +1597,7 @@ class DirectiveBasicTestComponent {
 @Component({
     standalone: true,
     imports: [InputMaskDirective, ReactiveFormsModule],
-    template: `<input [pInputMask]="mask" [formControl]="control" />`
+    template: `<input [hInputMask]="mask" [formControl]="control" />`
 })
 class DirectiveReactiveFormTestComponent {
     mask = '(999) 999-9999';
@@ -1574,7 +1607,7 @@ class DirectiveReactiveFormTestComponent {
 @Component({
     standalone: true,
     imports: [InputMaskDirective, FormsModule],
-    template: ` <input [pInputMask]="mask" [(ngModel)]="value" [slotChar]="slotChar" [autoClear]="autoClear" [attr.readonly]="readonly ? '' : null" [keepBuffer]="keepBuffer" [characterPattern]="characterPattern" (onComplete)="onComplete()" /> `
+    template: ` <input [hInputMask]="mask" [(ngModel)]="value" [slotChar]="slotChar" [autoClear]="autoClear" [attr.readonly]="readonly ? '' : null" [keepBuffer]="keepBuffer" [characterPattern]="characterPattern" (onComplete)="onComplete()" /> `
 })
 class DirectiveFullFeaturedTestComponent {
     mask = '99/99/9999';
@@ -1644,7 +1677,7 @@ describe('InputMaskDirective', () => {
             const inputEl = fixture.debugElement.query(By.css('input'));
             const directive = inputEl.injector.get(InputMaskDirective);
 
-            expect(directive.pInputMask()).toBe('999-99-9999');
+            expect(directive.hInputMask()).toBe('999-99-9999');
         });
     });
 
@@ -2022,7 +2055,7 @@ describe('InputMaskDirective', () => {
             const inputEl = fixture.debugElement.query(By.css('input'));
             const directive = inputEl.injector.get(InputMaskDirective);
 
-            expect(directive.pInputMask()).toBe('999-99-9999');
+            expect(directive.hInputMask()).toBe('999-99-9999');
             expect(directive.len).toBe(11);
 
             // Change mask
@@ -2030,7 +2063,7 @@ describe('InputMaskDirective', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(directive.pInputMask()).toBe('(999) 999-9999');
+            expect(directive.hInputMask()).toBe('(999) 999-9999');
             expect(directive.len).toBe(14);
         });
 

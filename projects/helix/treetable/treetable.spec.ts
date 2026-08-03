@@ -509,7 +509,7 @@ describe('TreeTable', () => {
         it('should apply global filter', async () => {
             treetable.filterGlobal('File', 'contains');
 
-            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
+            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay() + 10));
             await fixture.whenStable();
 
             expect(treetable.filteredNodes).toBeDefined();
@@ -517,11 +517,11 @@ describe('TreeTable', () => {
 
         it('should clear global filter', async () => {
             treetable.filterGlobal('File', 'contains');
-            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
+            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay() + 10));
             await fixture.whenStable();
 
             treetable.filterGlobal('', 'contains');
-            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
+            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay() + 10));
             await fixture.whenStable();
 
             expect(treetable.filteredNodes).toBeNull();
@@ -532,7 +532,7 @@ describe('TreeTable', () => {
 
             treetable.filterGlobal('File', 'contains');
 
-            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
+            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay() + 10));
             await fixture.whenStable();
 
             expect(treetable.onFilter.emit).toHaveBeenCalled();
@@ -546,7 +546,7 @@ describe('TreeTable', () => {
 
             treetable.filter('File', 'type', 'contains');
 
-            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay + 10));
+            await new Promise((resolve) => setTimeout(resolve, treetable.filterDelay() + 10));
             await fixture.whenStable();
 
             expect(treetable.filters()['type']).toEqual(
@@ -1789,7 +1789,7 @@ describe('TreeTable', () => {
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
             dynamicFixture.detectChanges();
-            dynamicTreetable = dynamicComponent.treetable;
+            dynamicTreetable = dynamicComponent.treetable();
         });
 
         describe('Observable Data Updates', () => {
@@ -2335,7 +2335,7 @@ describe('TreeTable', () => {
                     // Test pageLinks
                     [3, 5, 7, 10].forEach((links) => {
                         if (dynamicTreetable.hasOwnProperty('pageLinks')) {
-                            dynamicTreetable.pageLinks = links;
+                            (dynamicTreetable as any).pageLinks = links;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.pageLinks).toBe(links);
@@ -2345,7 +2345,7 @@ describe('TreeTable', () => {
                     // Test filterDelay
                     [100, 300, 500, 1000].forEach((delay) => {
                         if (dynamicTreetable.hasOwnProperty('filterDelay')) {
-                            dynamicTreetable.filterDelay = delay;
+                            (dynamicTreetable as any).filterDelay = delay;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.filterDelay).toBe(delay);
@@ -2355,7 +2355,7 @@ describe('TreeTable', () => {
                     // Test virtualScrollDelay
                     [50, 100, 150, 300].forEach((delay) => {
                         if (dynamicTreetable.hasOwnProperty('virtualScrollDelay')) {
-                            dynamicTreetable.virtualScrollDelay = delay;
+                            (dynamicTreetable as any).virtualScrollDelay = delay;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.virtualScrollDelay).toBe(delay);
@@ -2370,7 +2370,7 @@ describe('TreeTable', () => {
                     const styleClasses = ['class1', 'class2 class3', 'dynamic-class', ''];
                     for (const styleClass of styleClasses) {
                         if (dynamicTreetable.hasOwnProperty('styleClass')) {
-                            dynamicTreetable.styleClass = styleClass;
+                            (dynamicTreetable as any).styleClass = styleClass;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2382,7 +2382,7 @@ describe('TreeTable', () => {
                     // Test tableStyleClass
                     ['table-class', 'responsive-table', ''].forEach((tableClass) => {
                         if (dynamicTreetable.hasOwnProperty('tableStyleClass')) {
-                            dynamicTreetable.tableStyleClass = tableClass;
+                            (dynamicTreetable as any).tableStyleClass = tableClass;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.tableStyleClass).toBe(tableClass);
@@ -2416,7 +2416,7 @@ describe('TreeTable', () => {
                     // Test columnResizeMode
                     ['fit', 'expand'].forEach((mode) => {
                         if (dynamicTreetable.hasOwnProperty('columnResizeMode')) {
-                            dynamicTreetable.columnResizeMode = mode;
+                            (dynamicTreetable as any).columnResizeMode = mode;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.columnResizeMode).toBe(mode);
@@ -2426,7 +2426,7 @@ describe('TreeTable', () => {
                     // Test contextMenuSelectionMode
                     ['separate', 'joint'].forEach((mode) => {
                         if (dynamicTreetable.hasOwnProperty('contextMenuSelectionMode')) {
-                            dynamicTreetable.contextMenuSelectionMode = mode;
+                            (dynamicTreetable as any).contextMenuSelectionMode = mode;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.contextMenuSelectionMode).toBe(mode);
@@ -2466,7 +2466,7 @@ describe('TreeTable', () => {
 
                     for (const style of styleObjects) {
                         if (dynamicTreetable.hasOwnProperty('tableStyle')) {
-                            dynamicTreetable.tableStyle = style;
+                            (dynamicTreetable as any).tableStyle = style;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2480,7 +2480,7 @@ describe('TreeTable', () => {
 
                     for (const options of rowOptions) {
                         if (dynamicTreetable.hasOwnProperty('rowsPerPageOptions')) {
-                            dynamicTreetable.rowsPerPageOptions = options;
+                            (dynamicTreetable as any).rowsPerPageOptions = options;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2494,7 +2494,7 @@ describe('TreeTable', () => {
 
                     for (const fields of filterFieldSets) {
                         if (dynamicTreetable.hasOwnProperty('globalFilterFields')) {
-                            dynamicTreetable.globalFilterFields = fields;
+                            (dynamicTreetable as any).globalFilterFields = fields;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2515,7 +2515,7 @@ describe('TreeTable', () => {
 
                     for (const filters of filterObjects) {
                         if (dynamicTreetable.hasOwnProperty('filters')) {
-                            dynamicTreetable.filters = filters;
+                            (dynamicTreetable as any).filters = filters;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2551,14 +2551,14 @@ describe('TreeTable', () => {
                     await dynamicFixture.whenStable();
 
                     if (dynamicTreetable.hasOwnProperty('selection')) {
-                        dynamicTreetable.selection = testData[0];
+                        dynamicTreetable.selection.set(testData[0]);
                         dynamicFixture.changeDetectorRef.markForCheck();
                         await dynamicFixture.whenStable();
                         dynamicFixture.detectChanges();
                         await dynamicFixture.whenStable();
                         expect(dynamicTreetable.selection).toEqual(testData[0]);
 
-                        dynamicTreetable.selection = null as any;
+                        dynamicTreetable.selection.set(null);
                         dynamicFixture.changeDetectorRef.markForCheck();
                         await dynamicFixture.whenStable();
                         dynamicFixture.detectChanges();
@@ -2574,21 +2574,21 @@ describe('TreeTable', () => {
                     await dynamicFixture.whenStable();
 
                     if (dynamicTreetable.hasOwnProperty('selection')) {
-                        dynamicTreetable.selection = [testData[0]];
+                        dynamicTreetable.selection.set([testData[0]]);
                         dynamicFixture.changeDetectorRef.markForCheck();
                         await dynamicFixture.whenStable();
                         dynamicFixture.detectChanges();
                         await dynamicFixture.whenStable();
                         expect(dynamicTreetable.selection).toEqual([testData[0]]);
 
-                        dynamicTreetable.selection = testData;
+                        dynamicTreetable.selection.set(testData);
                         dynamicFixture.changeDetectorRef.markForCheck();
                         await dynamicFixture.whenStable();
                         dynamicFixture.detectChanges();
                         await dynamicFixture.whenStable();
                         expect(dynamicTreetable.selection).toEqual(testData);
 
-                        dynamicTreetable.selection = [];
+                        dynamicTreetable.selection.set([]);
                         dynamicFixture.changeDetectorRef.markForCheck();
                         await dynamicFixture.whenStable();
                         dynamicFixture.detectChanges();
@@ -2601,7 +2601,7 @@ describe('TreeTable', () => {
 
                     for (const keys of selectionKeySets) {
                         if (dynamicTreetable.hasOwnProperty('selectionKeys')) {
-                            dynamicTreetable.selectionKeys = keys;
+                            dynamicTreetable.selectionKeys.set(keys);
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2621,7 +2621,7 @@ describe('TreeTable', () => {
                     const sortFields = ['name', 'size', 'type', null];
                     for (const field of sortFields) {
                         if (dynamicTreetable.hasOwnProperty('sortField')) {
-                            dynamicTreetable.sortField = field;
+                            dynamicTreetable.sortField.set(field);
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2634,7 +2634,7 @@ describe('TreeTable', () => {
                     const sortOrders = [1, -1, 0];
                     for (const order of sortOrders) {
                         if (dynamicTreetable.hasOwnProperty('sortOrder')) {
-                            dynamicTreetable.sortOrder = order;
+                            dynamicTreetable.sortOrder.set(order);
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2660,7 +2660,7 @@ describe('TreeTable', () => {
 
                     for (const sortMeta of multiSortSets) {
                         if (dynamicTreetable.hasOwnProperty('multiSortMeta')) {
-                            dynamicTreetable.multiSortMeta = sortMeta;
+                            dynamicTreetable.multiSortMeta.set(sortMeta);
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2672,7 +2672,7 @@ describe('TreeTable', () => {
                     // Test defaultSortOrder
                     [-1, 1].forEach((order) => {
                         if (dynamicTreetable.hasOwnProperty('defaultSortOrder')) {
-                            dynamicTreetable.defaultSortOrder = order;
+                            (dynamicTreetable as any).defaultSortOrder = order;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             dynamicFixture.detectChanges();
                             expect(dynamicTreetable.defaultSortOrder).toBe(order);
@@ -2687,7 +2687,7 @@ describe('TreeTable', () => {
                     const itemSizes = [30, 40, 50, 60, 100];
                     for (const size of itemSizes) {
                         if (dynamicTreetable.hasOwnProperty('virtualScrollItemSize')) {
-                            dynamicTreetable.virtualScrollItemSize = size;
+                            (dynamicTreetable as any).virtualScrollItemSize = size;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2701,7 +2701,7 @@ describe('TreeTable', () => {
 
                     for (const options of scrollOptions) {
                         if (dynamicTreetable.hasOwnProperty('virtualScrollOptions')) {
-                            dynamicTreetable.virtualScrollOptions = options as any;
+                            (dynamicTreetable as any).virtualScrollOptions = options;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();
@@ -2714,7 +2714,7 @@ describe('TreeTable', () => {
                     const heights = ['200px', '400px', '100vh', 'auto'];
                     for (const height of heights) {
                         if (dynamicTreetable.hasOwnProperty('scrollHeight')) {
-                            dynamicTreetable.scrollHeight = height;
+                            (dynamicTreetable as any).scrollHeight = height;
                             dynamicFixture.changeDetectorRef.markForCheck();
                             await dynamicFixture.whenStable();
                             dynamicFixture.detectChanges();

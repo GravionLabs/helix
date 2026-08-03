@@ -108,14 +108,14 @@ describe('Slider', () => {
         });
 
         it('should accept custom values', async () => {
-            component.min = 10;
-            component.max = 200;
-            component.step = 5;
-            component.orientation = 'vertical';
-            component.range = true;
-            component.animate = true;
+            fixture.componentRef.setInput('min', 10);
+            fixture.componentRef.setInput('max', 200);
+            fixture.componentRef.setInput('step', 5);
+            fixture.componentRef.setInput('orientation', 'vertical');
+            fixture.componentRef.setInput('range', true);
+            fixture.componentRef.setInput('animate', true);
             // component.styleClass = 'custom-slider'; // deprecated property
-            component.tabindex = 2;
+            fixture.componentRef.setInput('tabindex', 2);
 
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -132,9 +132,9 @@ describe('Slider', () => {
         });
 
         it('should handle boolean attributes correctly', () => {
-            component.animate = true;
-            component.range = true;
-            component.autofocus = true;
+            fixture.componentRef.setInput('animate', true);
+            fixture.componentRef.setInput('range', true);
+            fixture.componentRef.setInput('autofocus', true);
 
             expect(component.animate).toBe(true);
             expect(component.range).toBe(true);
@@ -147,8 +147,8 @@ describe('Slider', () => {
         });
 
         it('should set aria attributes correctly', async () => {
-            component.ariaLabel = 'Volume slider';
-            component.ariaLabelledBy = 'volume-label';
+            fixture.componentRef.setInput('ariaLabel', 'Volume slider');
+            fixture.componentRef.setInput('ariaLabelledBy', 'volume-label');
 
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -164,15 +164,15 @@ describe('Slider', () => {
         });
 
         it('should check if orientation is vertical', () => {
-            component.orientation = 'horizontal';
+            fixture.componentRef.setInput('orientation', 'horizontal');
             expect(component.isVertical()).toBe(false);
 
-            component.orientation = 'vertical';
+            fixture.componentRef.setInput('orientation', 'vertical');
             expect(component.isVertical()).toBe(true);
         });
 
         it('should calculate handle value correctly for horizontal orientation', () => {
-            component.orientation = 'horizontal';
+            fixture.componentRef.setInput('orientation', 'horizontal');
             component.initX = 100;
             component.barWidth = 200;
 
@@ -183,7 +183,7 @@ describe('Slider', () => {
         });
 
         it('should calculate handle value correctly for vertical orientation', () => {
-            component.orientation = 'vertical';
+            fixture.componentRef.setInput('orientation', 'vertical');
             component.initY = 100;
             component.barHeight = 200;
 
@@ -194,8 +194,8 @@ describe('Slider', () => {
         });
 
         it('should get value from handle correctly', () => {
-            component.min = 0;
-            component.max = 100;
+            fixture.componentRef.setInput('min', 0);
+            fixture.componentRef.setInput('max', 100);
 
             expect(component.getValueFromHandle(0)).toBe(0);
             expect(component.getValueFromHandle(50)).toBe(50);
@@ -203,8 +203,8 @@ describe('Slider', () => {
         });
 
         it('should get value from handle with custom min/max', async () => {
-            component.min = 10;
-            component.max = 90;
+            fixture.componentRef.setInput('min', 10);
+            fixture.componentRef.setInput('max', 90);
 
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
@@ -222,18 +222,18 @@ describe('Slider', () => {
         });
 
         it('should normalize value correctly', () => {
-            component.step = 1;
+            fixture.componentRef.setInput('step', 1);
             expect(component.getNormalizedValue(1.7)).toBe(1);
 
-            component.step = 0.1;
+            fixture.componentRef.setInput('step', 0.1);
             expect(component.getNormalizedValue(1.75)).toBe(1.8);
 
-            component.step = 0.01;
+            fixture.componentRef.setInput('step', 0.01);
             expect(component.getNormalizedValue(1.786)).toBe(1.79);
         });
 
         it('should handle step change correctly', () => {
-            component.step = 10;
+            fixture.componentRef.setInput('step', 10);
             spyOn(component, 'updateValue');
             spyOn(component, 'updateHandleValue');
 
@@ -679,8 +679,8 @@ describe('Slider', () => {
 
     describe('Edge Cases', () => {
         it('should handle min/max boundary values correctly', () => {
-            component.min = 10;
-            component.max = 90;
+            fixture.componentRef.setInput('min', 10);
+            fixture.componentRef.setInput('max', 90);
 
             component.updateValue(-5);
             expect(component.value).toBe(10);
@@ -690,31 +690,31 @@ describe('Slider', () => {
         });
 
         it('should handle range slider boundary values', () => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             component.values = [20, 80];
-            component.min = 0;
-            component.max = 100;
+            fixture.componentRef.setInput('min', 0);
+            fixture.componentRef.setInput('max', 100);
             component.handleIndex = 0;
 
             component.updateValue(-10);
-            expect(component.values![0]).toBeGreaterThanOrEqual(component.min);
+            expect(component.values![0]).toBeGreaterThanOrEqual(component.min());
 
             component.handleIndex = 1;
             component.updateValue(150);
-            expect(component.values![1]).toBeLessThanOrEqual(component.max);
+            expect(component.values![1]).toBeLessThanOrEqual(component.max());
         });
 
         it('should handle decimal step values', () => {
-            component.step = 0.1;
-            component.min = 0;
-            component.max = 10;
+            fixture.componentRef.setInput('step', 0.1);
+            fixture.componentRef.setInput('min', 0);
+            fixture.componentRef.setInput('max', 10);
 
             const normalized = component.getNormalizedValue(5.75);
             expect(normalized).toBe(5.8);
         });
 
         it('should handle zero step value', () => {
-            component.step = undefined as any;
+            fixture.componentRef.setInput('step', undefined as any);
             spyOn(component, 'updateValue');
 
             const mockEvent = new Event('keydown');
@@ -737,7 +737,7 @@ describe('Slider', () => {
         });
 
         it('should handle writeControlValue for range slider', () => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             spyOn(component, 'updateHandleValue');
             spyOn(component, 'updateDiffAndOffset');
             spyOn(component.cd, 'markForCheck');
@@ -754,14 +754,14 @@ describe('Slider', () => {
             component.writeControlValue(null);
             expect(component.value).toBe(0);
 
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             component.writeControlValue(null);
             expect(component.values).toEqual([0, 0]);
         });
 
         it('should handle touch events correctly', () => {
             spyOn(component, 'updateDomData');
-            component.orientation = 'horizontal';
+            fixture.componentRef.setInput('orientation', 'horizontal');
 
             const mockTouchEvent = {
                 changedTouches: [{ clientX: 100, clientY: 100 }],
@@ -776,7 +776,7 @@ describe('Slider', () => {
         });
 
         it('should handle mouse down with animation', () => {
-            component.animate = true;
+            fixture.componentRef.setInput('animate', true);
             spyOn(component, 'updateDomData');
 
             const mockEvent = {
@@ -817,7 +817,7 @@ describe('Slider', () => {
         });
 
         it('should handle min value enforcement', () => {
-            component.min = 20;
+            fixture.componentRef.setInput('min', 20);
             fixture.detectChanges();
 
             component.updateValue(10); // Below minimum
@@ -825,7 +825,7 @@ describe('Slider', () => {
         });
 
         it('should handle max value enforcement', () => {
-            component.max = 90;
+            fixture.componentRef.setInput('max', 90);
             fixture.detectChanges();
 
             component.updateValue(95); // Above maximum
@@ -833,7 +833,7 @@ describe('Slider', () => {
         });
 
         it('should handle step values correctly with mouse interaction', () => {
-            component.step = 5;
+            fixture.componentRef.setInput('step', 5);
             component.value = 20;
             fixture.detectChanges();
 
@@ -847,8 +847,8 @@ describe('Slider', () => {
         });
 
         it('should handle decimal precision with small step values', () => {
-            component.step = 0.01;
-            component.max = 2.5;
+            fixture.componentRef.setInput('step', 0.01);
+            fixture.componentRef.setInput('max', 2.5);
             component.value = 2.4;
             fixture.detectChanges();
 
@@ -857,8 +857,8 @@ describe('Slider', () => {
         });
 
         it('should maintain step precision with range sliders', () => {
-            component.range = true;
-            component.step = 2;
+            fixture.componentRef.setInput('range', true);
+            fixture.componentRef.setInput('step', 2);
             component.values = [20, 80];
             component.handleValues = [20, 80];
             component.handleIndex = 0;
@@ -882,7 +882,7 @@ describe('Slider', () => {
         });
 
         it('should handle range slider onSlideEnd event emission', async () => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             component.values = [30, 70];
             let slideEndEvent: any;
             component.onSlideEnd.subscribe((event) => (slideEndEvent = event));
@@ -898,7 +898,7 @@ describe('Slider', () => {
         it('should handle RTL orientation in calculation', () => {
             // This is a complex test that would require DOM manipulation
             // For now, we'll test that the method exists and can be called
-            component.orientation = 'horizontal';
+            fixture.componentRef.setInput('orientation', 'horizontal');
             component.initX = 100;
             component.barWidth = 200;
 
@@ -909,14 +909,14 @@ describe('Slider', () => {
 
     describe('Range Slider Specifics', () => {
         beforeEach(() => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             component.values = [20, 80];
             component.handleValues = [20, 80];
             fixture.detectChanges();
         });
 
         it('should calculate range positions correctly', () => {
-            component.orientation = 'horizontal';
+            fixture.componentRef.setInput('orientation', 'horizontal');
 
             expect(component.rangeStartLeft).toBe('20%');
             expect(component.rangeEndLeft).toBe('80%');
@@ -925,7 +925,7 @@ describe('Slider', () => {
         });
 
         it('should calculate range positions for vertical slider', () => {
-            component.orientation = 'vertical';
+            fixture.componentRef.setInput('orientation', 'vertical');
 
             expect(component.rangeStartLeft).toBeNull();
             expect(component.rangeEndLeft).toBeNull();
@@ -959,8 +959,8 @@ describe('Slider', () => {
 
         it('should update handle values correctly for range', () => {
             component.values = [25, 75];
-            component.min = 0;
-            component.max = 100;
+            fixture.componentRef.setInput('min', 0);
+            fixture.componentRef.setInput('max', 100);
 
             component.updateHandleValue();
 
@@ -1002,7 +1002,7 @@ describe('Slider', () => {
         });
 
         it('should handle setValueFromHandle with step', () => {
-            component.step = 5;
+            fixture.componentRef.setInput('step', 5);
             component.value = 50;
             fixture.detectChanges();
 
@@ -1011,7 +1011,7 @@ describe('Slider', () => {
         });
 
         it('should handle range slider setValueFromHandle', () => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             component.values = [20, 80];
             component.handleValues = [20, 80];
             component.handleIndex = 1;
@@ -1048,19 +1048,27 @@ describe('Slider', () => {
         });
 
         it('should handle focus on slider handles', () => {
-            component.range = true;
-            component.sliderHandleStart = { nativeElement: { focus: jasmine.createSpy('focus') } } as any;
-            component.sliderHandleEnd = { nativeElement: { focus: jasmine.createSpy('focus') } } as any;
+            fixture.componentRef.setInput('range', true);
+            Object.defineProperty(component, 'sliderHandleStart', {
+                value: () => ({ nativeElement: { focus: jasmine.createSpy('focus') } }),
+                writable: true,
+                configurable: true
+            });
+            Object.defineProperty(component, 'sliderHandleEnd', {
+                value: () => ({ nativeElement: { focus: jasmine.createSpy('focus') } }),
+                writable: true,
+                configurable: true
+            });
             component.values = [20, 80];
             component.handleIndex = 0;
 
             component.updateValue(30);
 
-            expect(component.sliderHandleStart!.nativeElement.focus).toHaveBeenCalled();
+            expect(component.sliderHandleStart()!.nativeElement.focus).toHaveBeenCalled();
         });
 
         it('should handle animation removal and addition', () => {
-            component.animate = true;
+            fixture.componentRef.setInput('animate', true);
             component.el = {
                 nativeElement: {
                     classList: {
@@ -1094,7 +1102,7 @@ describe('Slider', () => {
 
     describe('Input Properties', () => {
         it('should handle animate input', () => {
-            component.animate = true;
+            fixture.componentRef.setInput('animate', true);
             expect(component.animate).toBe(true);
         });
 
@@ -1104,9 +1112,9 @@ describe('Slider', () => {
         });
 
         it('should handle min/max/step numeric inputs', () => {
-            component.min = 5;
-            component.max = 95;
-            component.step = 2.5;
+            fixture.componentRef.setInput('min', 5);
+            fixture.componentRef.setInput('max', 95);
+            fixture.componentRef.setInput('step', 2.5);
 
             expect(component.min).toBe(5);
             expect(component.max).toBe(95);
@@ -1114,13 +1122,13 @@ describe('Slider', () => {
         });
 
         it('should handle orientation input', () => {
-            component.orientation = 'vertical';
+            fixture.componentRef.setInput('orientation', 'vertical');
             expect(component.orientation).toBe('vertical');
             expect(component.isVertical()).toBe(true);
         });
 
         it('should handle range boolean input', () => {
-            component.range = true;
+            fixture.componentRef.setInput('range', true);
             expect(component.range).toBe(true);
         });
     });
