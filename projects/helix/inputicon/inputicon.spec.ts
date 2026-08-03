@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { InputIcon } from './inputicon';
 import { IconField } from '@gravionlabs/helix/iconfield';
 import { InputText } from '@gravionlabs/helix/inputtext';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 
 @Component({
     standalone: true,
@@ -186,14 +186,14 @@ describe('InputIcon PassThrough Tests', () => {
         });
     });
 
-    describe('PT Case 5: Global PT from PrimeNGConfig', () => {
+    describe('PT Case 5: Global PT from HelixConfig', () => {
         it('should apply global PT configuration', async () => {
             TestBed.resetTestingModule();
             await TestBed.configureTestingModule({
                 imports: [InputIcon, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             inputIcon: {
                                 host: { 'aria-label': 'GLOBAL_LABEL' },
@@ -221,7 +221,7 @@ describe('InputIcon PassThrough Tests', () => {
                 imports: [InputIcon, FormsModule],
                 providers: [
                     provideZonelessChangeDetection(),
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             inputIcon: {
                                 hooks: {

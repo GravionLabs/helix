@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Terminal } from './terminal';
 import { TerminalService } from './terminalservice';
 
@@ -12,7 +12,7 @@ import { TerminalService } from './terminalservice';
     template: ` <p-terminal [welcomeMessage]="welcomeMessage" [prompt]="prompt" [styleClass]="styleClass" [style]="style" [response]="response"> </p-terminal> `
 })
 class TestBasicTerminalComponent {
-    welcomeMessage: string | undefined = 'Welcome to PrimeNG Terminal';
+    welcomeMessage: string | undefined = 'Welcome to HelixConfig Terminal';
     prompt: string | undefined = 'prime$ ';
     styleClass: string | undefined;
     style: { [key: string]: any } | undefined;
@@ -1205,7 +1205,7 @@ describe('Terminal', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: false,
                 template: `
@@ -1215,7 +1215,7 @@ describe('Terminal', () => {
             })
             class TestPTCase7GlobalComponent {}
 
-            it('should apply global PT configuration from PrimeNGConfig to multiple instances', async () => {
+            it('should apply global PT configuration from HelixConfig to multiple instances', async () => {
                 TestBed.resetTestingModule();
                 await TestBed.configureTestingModule({
                     declarations: [TestPTCase7GlobalComponent],
@@ -1223,7 +1223,7 @@ describe('Terminal', () => {
                     providers: [
                         TerminalService,
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 terminal: {
                                     host: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },

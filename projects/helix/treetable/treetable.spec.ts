@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TreeNode } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { of } from 'rxjs';
 import { TreeTable, TreeTableModule } from './treetable';
 
@@ -3758,7 +3758,7 @@ describe('TreeTable PT', () => {
     });
 });
 
-// Case 11: Global PT from PrimeNGConfig
+// Case 11: Global PT from HelixConfig
 describe('TreeTable Global PT', () => {
     let fixture: ComponentFixture<TreeTable>;
 
@@ -3767,7 +3767,7 @@ describe('TreeTable Global PT', () => {
             imports: [TreeTableModule],
             providers: [
                 provideZonelessChangeDetection(),
-                providePrimeNG({
+                provideHelix({
                     pt: {
                         treeTable: {
                             host: { 'aria-label': 'GLOBAL_ARIA_LABEL' },

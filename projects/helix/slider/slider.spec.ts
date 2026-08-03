@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { SliderChangeEvent, SliderSlideEndEvent } from '@gravionlabs/helix/types/slider';
 import { Slider, SliderModule } from './slider';
 
@@ -1436,7 +1436,7 @@ describe('Slider', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             it('should apply global PT configuration', async () => {
                 @Component({
                     standalone: true,
@@ -1452,7 +1452,7 @@ describe('Slider', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 slider: {
                                     root: { 'data-test': 'global-slider' },

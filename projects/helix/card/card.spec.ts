@@ -1334,8 +1334,8 @@ describe('Card', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
-            it('should apply global PT configuration from PrimeNGConfig', async () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
+            it('should apply global PT configuration from HelixConfig', async () => {
                 @Component({
                     standalone: false,
                     template: `
@@ -1352,7 +1352,7 @@ describe('Card', () => {
                     providers: [
                         provideZonelessChangeDetection(),
                         {
-                            provide: 'providePrimeNG',
+                            provide: 'provideHelix',
                             useValue: {
                                 pt: {
                                     card: {

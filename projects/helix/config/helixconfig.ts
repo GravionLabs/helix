@@ -1,11 +1,11 @@
 import { ElementRef, inject, Injectable, PLATFORM_ID, signal, TemplateRef } from '@angular/core';
 import { FilterMatchMode, OverlayOptions, Translation } from '@gravionlabs/helix/api';
 import { Subject } from 'rxjs';
-import type { PrimeNGConfigType, ThemeConfigType, ZIndex } from './primeng.types';
+import type { HelixConfigType, ThemeConfigType, ZIndex } from './primeng.types';
 import { ThemeProvider } from './themeprovider';
 
 @Injectable({ providedIn: 'root' })
-export class PrimeNG extends ThemeProvider {
+export class HelixConfig extends ThemeProvider {
     ripple = signal<boolean>(false);
 
     public platformId: any = inject(PLATFORM_ID);
@@ -24,9 +24,9 @@ export class PrimeNG extends ThemeProvider {
 
     unstyled = signal<boolean | undefined>(undefined);
 
-    pt = signal<PrimeNGConfigType['pt']>(undefined);
+    pt = signal<HelixConfigType['pt']>(undefined);
 
-    ptOptions = signal<PrimeNGConfigType['ptOptions']>(undefined);
+    ptOptions = signal<HelixConfigType['ptOptions']>(undefined);
 
     filterMatchModeOptions = {
         text: [FilterMatchMode.STARTS_WITH, FilterMatchMode.CONTAINS, FilterMatchMode.NOT_CONTAINS, FilterMatchMode.ENDS_WITH, FilterMatchMode.EQUALS, FilterMatchMode.NOT_EQUALS],
@@ -185,7 +185,7 @@ export class PrimeNG extends ThemeProvider {
         this.translationSource.next(this.translation);
     }
 
-    setConfig(config: PrimeNGConfigType): void {
+    setConfig(config: HelixConfigType): void {
         const { csp, ripple, inputStyle, inputVariant, theme, overlayOptions, translation, filterMatchModeOptions, overlayAppendTo, zIndex, ptOptions, pt, unstyled } = config || {};
 
         if (csp) this.csp.set(csp);

@@ -1366,9 +1366,9 @@ describe('PanelMenu', () => {
             });
         });
 
-        describe('Case 7: Global PT from PrimeNGConfig', () => {
+        describe('Case 7: Global PT from HelixConfig', () => {
             it('should accept global PT configuration structure', async () => {
-                // Note: Full global PT testing requires PrimeNG service setup
+                // Note: Full global PT testing requires HelixConfig service setup
                 // This test verifies the PT structure is accepted
                 fixture.componentRef.setInput('pt', {
                     root: { 'data-global-test': 'true' }

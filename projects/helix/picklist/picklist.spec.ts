@@ -4,7 +4,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import {
     PickListMoveAllToSourceEvent,
     PickListMoveAllToTargetEvent,
@@ -1317,7 +1317,7 @@ describe('PickList', () => {
             });
         });
 
-        describe('Case 5: Test from PrimeNGConfig', () => {
+        describe('Case 5: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [PickList],
@@ -1339,7 +1339,7 @@ describe('PickList', () => {
                     imports: [PickList],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 picklist: {
                                     host: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' }
@@ -1366,7 +1366,7 @@ describe('PickList', () => {
                     imports: [PickList],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 picklist: {
                                     host: { class: 'GLOBAL_CLASS' },

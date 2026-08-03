@@ -24,7 +24,7 @@ describe('HelixAppLayout', () => {
 
   beforeEach(async () => {
     // Override template, imports and styles BEFORE compileComponents() to prevent jsdom from
-    // choking on PrimeNG CSS that uses `border: solid var(--surface-border)`. The computed
+    // choking on HelixConfig CSS that uses `border: solid var(--surface-border)`. The computed
     // signals under test live on the class and need no rendered child components.
     await TestBed.configureTestingModule({
       imports: [HelixAppLayout],

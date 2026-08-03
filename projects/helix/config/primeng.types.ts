@@ -187,7 +187,7 @@ export interface GlobalPassThrough {
     [key: string]: any;
 }
 
-export type PrimeNGConfigType = {
+export type HelixConfigType = {
     ripple?: boolean;
     overlayAppendTo?: HTMLElement | ElementRef | TemplateRef<any> | string | null | undefined | any;
     /**

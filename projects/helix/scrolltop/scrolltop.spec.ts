@@ -1234,9 +1234,9 @@ describe('ScrollTop', () => {
         });
     });
 
-    describe('PassThrough - Case 7: Test from PrimeNGConfig', () => {
-        it('should apply global pt configuration from PrimeNGConfig', () => {
-            const { providePrimeNG } = require('@gravionlabs/helix/config');
+    describe('PassThrough - Case 7: Test from HelixConfig', () => {
+        it('should apply global pt configuration from HelixConfig', () => {
+            const { provideHelix } = require('@gravionlabs/helix/config');
 
             @Component({
                 standalone: false,
@@ -1254,7 +1254,7 @@ describe('ScrollTop', () => {
                 providers: [
                     provideZonelessChangeDetection(),
                     { provide: PLATFORM_ID, useValue: 'browser' },
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             scrolltop: {
                                 host: 'GLOBAL_HOST_CLASS',
@@ -1279,7 +1279,7 @@ describe('ScrollTop', () => {
         });
 
         it('should merge local pt with global pt configuration', () => {
-            const { providePrimeNG } = require('@gravionlabs/helix/config');
+            const { provideHelix } = require('@gravionlabs/helix/config');
 
             @Component({
                 standalone: false,
@@ -1294,7 +1294,7 @@ describe('ScrollTop', () => {
                 providers: [
                     provideZonelessChangeDetection(),
                     { provide: PLATFORM_ID, useValue: 'browser' },
-                    providePrimeNG({
+                    provideHelix({
                         pt: {
                             scrolltop: {
                                 host: 'GLOBAL_HOST_CLASS'

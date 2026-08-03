@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { ListboxChangeEvent } from '@gravionlabs/helix/types/listbox';
 import { BehaviorSubject, Observable, delay, of } from 'rxjs';
 import { Listbox } from './listbox';
@@ -2382,7 +2382,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [Listbox, FormsModule],
@@ -2405,7 +2405,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                     providers: [
                         provideZonelessChangeDetection(),
                         provideNoopAnimations(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 listbox: {
                                     host: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' }
@@ -2433,7 +2433,7 @@ describe('Listbox ViewChild and Advanced Scenarios', () => {
                     providers: [
                         provideZonelessChangeDetection(),
                         provideNoopAnimations(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 listbox: {
                                     host: { class: 'GLOBAL_CLASS' },

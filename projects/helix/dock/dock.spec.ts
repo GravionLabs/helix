@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { MenuItem, SharedModule } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Dock } from './dock';
 
 @Component({
@@ -1283,7 +1283,7 @@ describe('Dock', () => {
             expect(contentEls.length).toBeGreaterThan(0);
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [Dock],
@@ -1302,7 +1302,7 @@ describe('Dock', () => {
                     imports: [TestGlobalPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 dock: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL' },
@@ -1318,7 +1318,7 @@ describe('Dock', () => {
                 });
             });
 
-            it('should apply global PT configuration from PrimeNG config', async () => {
+            it('should apply global PT configuration from HelixConfig config', async () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.changeDetectorRef.markForCheck();
                 await globalFixture.whenStable();
@@ -1356,7 +1356,7 @@ describe('Dock', () => {
                     imports: [TestMergedPTComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 dock: {
                                     root: { 'aria-label': 'GLOBAL_LABEL' }

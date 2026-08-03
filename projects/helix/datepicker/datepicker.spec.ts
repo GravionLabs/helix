@@ -819,7 +819,7 @@ describe('DatePicker', () => {
 
     describe('Locale and Internationalization', () => {
         it('should handle locale via configuration service', () => {
-            // Locale is handled via PrimeNG config service, not direct input
+            // Locale is handled via HelixConfig config service, not direct input
             expect(true).toBe(true);
         });
 

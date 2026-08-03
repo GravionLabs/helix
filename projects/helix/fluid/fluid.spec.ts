@@ -88,7 +88,7 @@ class TestNestedFluidComponent {}
         </p-fluid>
     `
 })
-class TestFluidWithPrimeNGComponentsComponent {}
+class TestFluidWithHelixConfigComponentsComponent {}
 
 @Component({
     standalone: false,
@@ -192,7 +192,7 @@ describe('Fluid', () => {
                 TestFluidWithContentComponent,
                 TestFluidWithFormControlsComponent,
                 TestNestedFluidComponent,
-                TestFluidWithPrimeNGComponentsComponent,
+                TestFluidWithHelixConfigComponentsComponent,
                 TestFluidResponsiveComponent,
                 TestFluidDynamicContentComponent,
                 TestFluidComplexLayoutComponent
@@ -363,17 +363,17 @@ describe('Fluid', () => {
         });
     });
 
-    describe('PrimeNG Components Integration', () => {
-        let fixture: ComponentFixture<TestFluidWithPrimeNGComponentsComponent>;
+    describe('HelixConfig Components Integration', () => {
+        let fixture: ComponentFixture<TestFluidWithHelixConfigComponentsComponent>;
         let element: HTMLElement;
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(TestFluidWithPrimeNGComponentsComponent);
+            fixture = TestBed.createComponent(TestFluidWithHelixConfigComponentsComponent);
             fixture.detectChanges();
             element = fixture.debugElement.query(By.directive(Fluid)).nativeElement;
         });
 
-        it('should work with PrimeNG styled components', () => {
+        it('should work with HelixConfig styled components', () => {
             const button = element.querySelector('.p-button');
             const input = element.querySelector('.p-inputtext');
             const dropdown = element.querySelector('.p-dropdown');

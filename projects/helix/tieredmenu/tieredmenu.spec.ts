@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MenuItem } from '@gravionlabs/helix/api';
-import { providePrimeNG } from '@gravionlabs/helix/config';
+import { provideHelix } from '@gravionlabs/helix/config';
 import { Tooltip } from '@gravionlabs/helix/tooltip';
 import { TieredMenu } from './tieredmenu';
 
@@ -1337,7 +1337,7 @@ describe('TieredMenu', () => {
             });
         });
 
-        describe('Case 7: Test from PrimeNGConfig', () => {
+        describe('Case 7: Test from HelixConfig', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
@@ -1357,7 +1357,7 @@ describe('TieredMenu', () => {
                     imports: [PTGlobalConfigTestComponent],
                     providers: [
                         provideZonelessChangeDetection(),
-                        providePrimeNG({
+                        provideHelix({
                             pt: {
                                 tieredMenu: {
                                     root: { 'aria-label': 'TEST_GLOBAL_ARIA_LABEL', class: 'GLOBAL_ROOT_CLASS' },
