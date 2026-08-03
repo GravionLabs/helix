@@ -94,11 +94,65 @@ directories**, then finishes manually by these rules:
 | Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | ✅ done (leftovers: datepicker 14 getter/setter + accessor inputs; multiselect first/rows/value; select first/rows/value; tree getter/setter value; autocomplete 3 accessor inputs; picklist 3 accessor inputs; galleria 5 getter/setter inputs) |
 | Closeout | #324 | final sweep, audit update, lint guard | ✅ done — 639 remaining decorators (getter/setter @Input, @HostListener, @HostBinding) across codebase; these require manual refactoring beyond schematic capability. Bi-weekly audit doc updates recommended as leftover files are cleaned up. |
 
-## Definition of done (epic #297)
+## Feature #359 — manual decorator leftovers (2026-07 to 2026-08)
+
+#324's closeout still left ~509 non-spec decorators in `projects/helix`,
+concentrated in the largest components (table, multiselect, treeselect,
+select, datepicker, picklist, treetable, tree, autocomplete, galleria,
+scroller, overlay) plus ~50 scattered small leftovers. Epic #358 opened
+feature #359 to finish these as one PBI per directory group, each carrying
+the same rule block above and a grep-based DoD.
+
+| PBI | Scope | Status |
+|---|---|---|
+| #360 | remaining small-component leftovers | ✅ done |
+| #361 | directives (dragdrop, keyfilter, styleclass, tooltip, icons) | ✅ done |
+| #362 | scroller & overlay | ✅ done |
+| #363 | table | ✅ done |
+| #364 | treetable | ✅ done |
+| #365 | multiselect | ✅ done |
+| #366 | select | ✅ done |
+| #367 | treeselect | ✅ done |
+| #368 | datepicker | ✅ done |
+| #369 | tree | ✅ done |
+| #370 | autocomplete | ✅ done |
+| #371 | picklist | ✅ done |
+| #372 | galleria | ✅ done |
+| #373 | closeout — sweep, spec input-writes, real lint guard, audit update | ✅ done (this update) |
+
+**#373 closeout findings:**
+
+- Epic-level decorator sweep (`grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\(' projects/helix --include='*.ts'`,
+  excluding `*.spec.ts`) is **empty**. The only remaining decorator hits live
+  in `*.spec.ts` test-host components (plain Angular test fixtures that
+  legitimately use classic decorators) or are inside comments/strings — none
+  are library-source leftovers.
+- The fork's own spec files were never type-checked by any build or test
+  script (`projects/helix` has no `tsconfig.spec.json`, unlike
+  `helix-shell`/`helix-zod`/`helix-ag-grid`). As components converted to
+  signals, ~900 spec call sites across 51 files silently broke
+  (`component.x = y` on a now-read-only `input()`/`model()`, or reading a
+  signal without calling it) without anything catching it. These were found
+  by type-checking `projects/helix/**/*.ts` against a temporary standalone
+  tsconfig and fixed per rule 7 above (`component.x = y` →
+  `fixture.componentRef.setInput('x', y)`; signal reads get `()`). A
+  handful of pre-existing, unrelated jasmine→vitest typing gaps (`done()`
+  callback typing, `jasmine`'s `withContext`, one `IntersectionObserver`
+  mock) were left untouched — they predate this migration and are a
+  separate cleanup.
+- Real eslint guard added in `eslint.config.js`: a `no-restricted-syntax`
+  rule bans `@Input`/`@Output`/`@ViewChild`/`@ContentChild`/
+  `@ContentChildren`/`@HostListener`/`@HostBinding` decorators in
+  `projects/helix/**/*.ts`, excluding `*.spec.ts`. Verified to fail `pnpm
+  lint` when a decorator is (temporarily) reintroduced into a fork source
+  file. #324 had claimed this guard but never landed it.
+
+## Definition of done (epic #297, closed out by feature #359 / #373)
 
 `grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\('
-projects/helix --include='*.ts'` returns nothing (or only documented
-exceptions); builds and CI green; a lint guard prevents reintroduction (#324).
+projects/helix --include='*.ts'` returns nothing outside `*.spec.ts` test
+hosts; builds and CI green; a real lint guard prevents reintroduction (added
+by #373, see above).
 
 Related: [css-class-prefix-decision.md](css-class-prefix-decision.md) records
 the epic-#297 decision that the `.p-*` CSS class names stay even though this
