@@ -4,12 +4,8 @@
 
 // Form — form field
 export { HelixFormField } from './lib/form/form-field/form-field';
-// Form — pipes
-export { HelixFirstError } from './lib/form/pipes/helix-first-error.pipe';
 // Form — select
 export { HelixSelect } from './lib/form/select/select';
-// Form — utils
-export { HelixFormArrayWithFactory, helixFormErrorMap } from './lib/form/utils/form.utils';
 // Breadcrumb
 export type { HelixBreadcrumb } from './lib/layout/breadcrumb.model';
 export { HELIX_BREADCRUMB } from './lib/layout/breadcrumb.model';
