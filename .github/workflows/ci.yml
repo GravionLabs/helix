@@ -69,7 +69,9 @@ jobs:
   publish:
     name: Publish
     needs: [determine-version, build-test]
-    if: github.ref == 'refs/heads/main' || inputs.force-publish == true
+    # Temporarily disabled for #381 (release cleanup + @helix scope rename) — publishing
+    # only via manual workflow_dispatch with force-publish until the rename lands.
+    if: inputs.force-publish == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -123,7 +125,8 @@ jobs:
   release:
     name: Release
     needs: [determine-version, publish]
-    if: github.ref == 'refs/heads/main' || inputs.force-publish == true
+    # Temporarily disabled for #381 (release cleanup + @helix scope rename) — see publish job.
+    if: inputs.force-publish == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
