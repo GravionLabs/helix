@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ImageCompare } from '@gravionlabs/helix/imagecompare';
+import { ImageCompare } from '@helix/core/imagecompare';
 ```
 
 ## Components
@@ -26,4 +26,4 @@ Compare two images side by side with a slider.
 
 ## Source
 
-[`projects/helix/imagecompare`](../../projects/helix/imagecompare)
+[`projects/core/imagecompare`](../../projects/core/imagecompare)

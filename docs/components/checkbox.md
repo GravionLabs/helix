@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Checkbox } from '@gravionlabs/helix/checkbox';
+import { Checkbox } from '@helix/core/checkbox';
 ```
 
 ## Components
@@ -50,4 +50,4 @@ Checkbox is an extension to standard checkbox element with theming.
 
 ## Source
 
-[`projects/helix/checkbox`](../../projects/helix/checkbox)
+[`projects/core/checkbox`](../../projects/core/checkbox)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Config } from '@gravionlabs/helix/config';
+import { Config } from '@helix/core/config';
 ```
 
 ## Services
@@ -28,4 +28,4 @@ import { Config } from '@gravionlabs/helix/config';
 
 ## Source
 
-[`projects/helix/config`](../../projects/helix/config)
+[`projects/core/config`](../../projects/core/config)

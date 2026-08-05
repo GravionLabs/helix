@@ -1,0 +1,30 @@
+{
+  "name": "@helix/core",
+  "version": "1.0.0",
+  "description": "Helix base component library for Angular — a fork of PrimeNG 21.1.9 (last MIT community version) with h- selectors.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/core"
+  },
+  "peerDependencies": {
+    "@angular/cdk": ">=22",
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/forms": ">=22",
+    "@angular/router": ">=22",
+    "@angular/platform-browser": ">=22",
+    "rxjs": "^6.0.0 || ^7.8.1"
+  },
+  "dependencies": {
+    "@primeuix/styled": "0.7.4",
+    "@primeuix/utils": "0.7.2",
+    "@primeuix/styles": "2.0.3",
+    "@primeuix/motion": "0.0.10",
+    "tslib": "^2.3.0"
+  }
+}

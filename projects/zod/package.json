@@ -1,0 +1,19 @@
+{
+  "name": "@helix/zod",
+  "version": "0.2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/forms": ">=22",
+    "@helix/core": ">=22",
+    "@helix/shell": ">=22",
+    "zod": "^4.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

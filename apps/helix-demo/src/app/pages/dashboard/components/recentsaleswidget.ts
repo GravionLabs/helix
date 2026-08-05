@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { RippleModule } from '@gravionlabs/helix/ripple';
-import { TableModule } from '@gravionlabs/helix/table';
+import { ButtonModule } from '@helix/core/button';
+import { RippleModule } from '@helix/core/ripple';
+import { TableModule } from '@helix/core/table';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

@@ -5,9 +5,9 @@
 ## Import
 
 ```ts
-import { Passthrough } from '@gravionlabs/helix/passthrough';
+import { Passthrough } from '@helix/core/passthrough';
 ```
 
 ## Source
 
-[`projects/helix/passthrough`](../../projects/helix/passthrough)
+[`projects/core/passthrough`](../../projects/core/passthrough)

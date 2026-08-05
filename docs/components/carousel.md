@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Carousel } from '@gravionlabs/helix/carousel';
+import { Carousel } from '@helix/core/carousel';
 ```
 
 ## Components
@@ -44,4 +44,4 @@ Carousel is a content slider featuring various customization options.
 
 ## Source
 
-[`projects/helix/carousel`](../../projects/helix/carousel)
+[`projects/core/carousel`](../../projects/core/carousel)

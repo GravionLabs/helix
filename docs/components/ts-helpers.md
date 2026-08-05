@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TSHelpers } from '@gravionlabs/helix/ts-helpers';
+import { TSHelpers } from '@helix/core/ts-helpers';
 ```
 
 ## Interfaces & Types
@@ -17,4 +17,4 @@ import { TSHelpers } from '@gravionlabs/helix/ts-helpers';
 
 ## Source
 
-[`projects/helix/ts-helpers`](../../projects/helix/ts-helpers)
+[`projects/core/ts-helpers`](../../projects/core/ts-helpers)

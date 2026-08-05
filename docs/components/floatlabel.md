@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FloatLabel } from '@gravionlabs/helix/floatlabel';
+import { FloatLabel } from '@helix/core/floatlabel';
 ```
 
 ## Components
@@ -24,4 +24,4 @@ FloatLabel appears on top of the input field when focused.
 
 ## Source
 
-[`projects/helix/floatlabel`](../../projects/helix/floatlabel)
+[`projects/core/floatlabel`](../../projects/core/floatlabel)

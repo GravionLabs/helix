@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { KeyFilter } from '@gravionlabs/helix/keyfilter';
+import { KeyFilter } from '@helix/core/keyfilter';
 ```
 
 ## Directives
@@ -34,4 +34,4 @@ KeyFilter Directive is a built-in feature of InputText to restrict user input ba
 
 ## Source
 
-[`projects/helix/keyfilter`](../../projects/helix/keyfilter)
+[`projects/core/keyfilter`](../../projects/core/keyfilter)

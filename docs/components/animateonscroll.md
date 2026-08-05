@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AnimateOnScroll } from '@gravionlabs/helix/animateonscroll';
+import { AnimateOnScroll } from '@helix/core/animateonscroll';
 ```
 
 ## Directives
@@ -29,4 +29,4 @@ AnimateOnScroll is used to apply animations to elements when entering or leaving
 
 ## Source
 
-[`projects/helix/animateonscroll`](../../projects/helix/animateonscroll)
+[`projects/core/animateonscroll`](../../projects/core/animateonscroll)

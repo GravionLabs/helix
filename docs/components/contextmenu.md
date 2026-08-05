@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ContextMenu, ContextMenuSub } from '@gravionlabs/helix/contextmenu';
+import { ContextMenu, ContextMenuSub } from '@helix/core/contextmenu';
 ```
 
 ## Components
@@ -77,4 +77,4 @@ Selector: `h-contextMenuSub, h-contextmenu-sub`
 
 ## Source
 
-[`projects/helix/contextmenu`](../../projects/helix/contextmenu)
+[`projects/core/contextmenu`](../../projects/core/contextmenu)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Draggable, Droppable } from '@gravionlabs/helix/dragdrop';
+import { Draggable, Droppable } from '@helix/core/dragdrop';
 ```
 
 ## Components
@@ -55,4 +55,4 @@ hDroppable directive apply droppable behavior to any element.
 
 ## Source
 
-[`projects/helix/dragdrop`](../../projects/helix/dragdrop)
+[`projects/core/dragdrop`](../../projects/core/dragdrop)

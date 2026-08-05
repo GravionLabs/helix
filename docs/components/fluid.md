@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Fluid } from '@gravionlabs/helix/fluid';
+import { Fluid } from '@helix/core/fluid';
 ```
 
 ## Components
@@ -18,4 +18,4 @@ Fluid is a layout component to make descendant components span full width of the
 
 ## Source
 
-[`projects/helix/fluid`](../../projects/helix/fluid)
+[`projects/core/fluid`](../../projects/core/fluid)

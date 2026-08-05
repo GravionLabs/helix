@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Chip } from '@gravionlabs/helix/chip';
+import { Chip } from '@helix/core/chip';
 ```
 
 ## Components
@@ -38,4 +38,4 @@ Chip represents people using icons, labels and images.
 
 ## Source
 
-[`projects/helix/chip`](../../projects/helix/chip)
+[`projects/core/chip`](../../projects/core/chip)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dom } from '@gravionlabs/helix/dom';
+import { Dom } from '@helix/core/dom';
 ```
 
 ## Classes
@@ -20,4 +20,4 @@ import { Dom } from '@gravionlabs/helix/dom';
 
 ## Source
 
-[`projects/helix/dom`](../../projects/helix/dom)
+[`projects/core/dom`](../../projects/core/dom)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Menu, MenuItemContent } from '@gravionlabs/helix/menu';
+import { Menu, MenuItemContent } from '@helix/core/menu';
 ```
 
 ## Components
@@ -69,4 +69,4 @@ Selector: `[hMenuItemContent]`
 
 ## Source
 
-[`projects/helix/menu`](../../projects/helix/menu)
+[`projects/core/menu`](../../projects/core/menu)

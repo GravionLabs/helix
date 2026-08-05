@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tag } from '@gravionlabs/helix/tag';
+import { Tag } from '@helix/core/tag';
 ```
 
 ## Components
@@ -28,4 +28,4 @@ Tag component is used to categorize content.
 
 ## Source
 
-[`projects/helix/tag`](../../projects/helix/tag)
+[`projects/core/tag`](../../projects/core/tag)

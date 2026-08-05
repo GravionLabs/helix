@@ -86,41 +86,46 @@ jobs:
           name: node-build
           path: .
 
-      - name: Publish @gravionlabs/helix
+      # NOTE: publishing now targets the public npm registry (registry.npmjs.org)
+      # instead of GitHub Packages, since the @helix scope isn't usable on GH
+      # Packages (scope must equal the repo owner there). This requires an
+      # NPM_TOKEN secret (npmjs automation token) — it does not exist yet as
+      # of this change and must be added before force-publish is used again.
+      - name: Publish @helix/core
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
           package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: helix
+          publish-directory: core
           version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.GH_PAT }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @gravionlabs/helix-shell
+      - name: Publish @helix/shell
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
           package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: helix-shell
+          publish-directory: shell
           version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.GH_PAT }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @gravionlabs/helix-zod
+      - name: Publish @helix/zod
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
           package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: helix-zod
+          publish-directory: zod
           version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.GH_PAT }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @gravionlabs/helix-ag-grid
+      - name: Publish @helix/ag-grid
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
           package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: helix-ag-grid
+          publish-directory: ag-grid
           version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.GH_PAT }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
 
   release:
     name: Release

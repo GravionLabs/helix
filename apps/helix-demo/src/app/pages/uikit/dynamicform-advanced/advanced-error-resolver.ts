@@ -1,5 +1,5 @@
-import { ValidatorKey } from '@gravionlabs/helix/validators';
-import type { HelixErrorMessageResolver } from '@gravionlabs/helix-zod';
+import { ValidatorKey } from '@helix/core/validators';
+import type { HelixErrorMessageResolver } from '@helix/zod';
 
 /**
  * Central error-message hook passed to `provideHelixDynamicForms`. Handles a

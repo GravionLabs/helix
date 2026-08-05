@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Breadcrumb } from '@gravionlabs/helix/breadcrumb';
+import { Breadcrumb } from '@helix/core/breadcrumb';
 ```
 
 ## Components
@@ -34,4 +34,4 @@ Breadcrumb provides contextual information about page hierarchy.
 
 ## Source
 
-[`projects/helix/breadcrumb`](../../projects/helix/breadcrumb)
+[`projects/core/breadcrumb`](../../projects/core/breadcrumb)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DataView } from '@gravionlabs/helix/dataview';
+import { DataView } from '@helix/core/dataview';
 ```
 
 ## Components
@@ -62,4 +62,4 @@ DataView displays data in grid or list layout with pagination and sorting featur
 
 ## Source
 
-[`projects/helix/dataview`](../../projects/helix/dataview)
+[`projects/core/dataview`](../../projects/core/dataview)

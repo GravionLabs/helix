@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Table, TableBody, RowGroupHeader } from '@gravionlabs/helix/table';
+import { Table, TableBody, RowGroupHeader } from '@helix/core/table';
 ```
 
 ## Components
@@ -418,4 +418,4 @@ Selector: `h-columnFilterFormElement`
 
 ## Source
 
-[`projects/helix/table`](../../projects/helix/table)
+[`projects/core/table`](../../projects/core/table)

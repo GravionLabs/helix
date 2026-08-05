@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MeterGroup, MeterGroupLabel } from '@gravionlabs/helix/metergroup';
+import { MeterGroup, MeterGroupLabel } from '@helix/core/metergroup';
 ```
 
 ## Components
@@ -45,4 +45,4 @@ Selector: `h-meterGroupLabel, h-metergrouplabel`
 
 ## Source
 
-[`projects/helix/metergroup`](../../projects/helix/metergroup)
+[`projects/core/metergroup`](../../projects/core/metergroup)

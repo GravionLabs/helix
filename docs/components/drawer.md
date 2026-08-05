@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Drawer } from '@gravionlabs/helix/drawer';
+import { Drawer } from '@helix/core/drawer';
 ```
 
 ## Components
@@ -50,4 +50,4 @@ Sidebar is a panel component displayed as an overlay at the edges of the screen.
 
 ## Source
 
-[`projects/helix/drawer`](../../projects/helix/drawer)
+[`projects/core/drawer`](../../projects/core/drawer)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputOtp } from '@gravionlabs/helix/inputotp';
+import { InputOtp } from '@helix/core/inputotp';
 ```
 
 ## Components
@@ -40,4 +40,4 @@ Input Otp is used to enter one time passwords.
 
 ## Source
 
-[`projects/helix/inputotp`](../../projects/helix/inputotp)
+[`projects/core/inputotp`](../../projects/core/inputotp)

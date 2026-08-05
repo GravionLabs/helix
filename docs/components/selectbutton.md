@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SelectButton } from '@gravionlabs/helix/selectbutton';
+import { SelectButton } from '@helix/core/selectbutton';
 ```
 
 ## Components
@@ -43,4 +43,4 @@ SelectButton is used to choose single or multiple items from a list using button
 
 ## Source
 
-[`projects/helix/selectbutton`](../../projects/helix/selectbutton)
+[`projects/core/selectbutton`](../../projects/core/selectbutton)

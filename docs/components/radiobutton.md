@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { RadioButton } from '@gravionlabs/helix/radiobutton';
+import { RadioButton } from '@helix/core/radiobutton';
 ```
 
 ## Components
@@ -45,4 +45,4 @@ RadioButton is an extension to standard radio button element with theming.
 
 ## Source
 
-[`projects/helix/radiobutton`](../../projects/helix/radiobutton)
+[`projects/core/radiobutton`](../../projects/core/radiobutton)

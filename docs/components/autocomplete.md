@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AutoComplete } from '@gravionlabs/helix/autocomplete';
+import { AutoComplete } from '@helix/core/autocomplete';
 ```
 
 ## Components
@@ -101,4 +101,4 @@ AutoComplete is an input component that provides real-time suggestions when bein
 
 ## Source
 
-[`projects/helix/autocomplete`](../../projects/helix/autocomplete)
+[`projects/core/autocomplete`](../../projects/core/autocomplete)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { StyleClass } from '@gravionlabs/helix/styleclass';
+import { StyleClass } from '@helix/core/styleclass';
 ```
 
 ## Directives
@@ -35,4 +35,4 @@ StyleClass manages css classes declaratively to during enter/leave animations or
 
 ## Source
 
-[`projects/helix/styleclass`](../../projects/helix/styleclass)
+[`projects/core/styleclass`](../../projects/core/styleclass)

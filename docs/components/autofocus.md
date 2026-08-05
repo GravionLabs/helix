@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AutoFocus } from '@gravionlabs/helix/autofocus';
+import { AutoFocus } from '@helix/core/autofocus';
 ```
 
 ## Directives
@@ -24,4 +24,4 @@ AutoFocus manages focus on focusable element on load.
 
 ## Source
 
-[`projects/helix/autofocus`](../../projects/helix/autofocus)
+[`projects/core/autofocus`](../../projects/core/autofocus)

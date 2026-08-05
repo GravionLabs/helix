@@ -1,0 +1,197 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, effect, ElementRef, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
+import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
+import { HelixTemplate, SharedModule } from '@helix/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
+import { Bind } from '@helix/core/bind';
+import { BlockUIPassThrough } from '@helix/core/types/blockui';
+import { ZIndexUtils } from '@helix/core/utils';
+import { BlockUiStyle } from './style/blockuistyle';
+
+const BLOCKUI_INSTANCE = new InjectionToken<BlockUI>('BLOCKUI_INSTANCE');
+
+/**
+ * BlockUI can either block other components or the whole page.
+ * @group Components
+ */
+@Component({
+    selector: 'h-blockUI, h-blockui, h-block-ui',
+    standalone: true,
+    imports: [CommonModule, SharedModule],
+    templateUrl: './blockui.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    providers: [BlockUiStyle, { provide: BLOCKUI_INSTANCE, useExisting: BlockUI }, { provide: PARENT_INSTANCE, useExisting: BlockUI }],
+    host: {
+        '[attr.aria-busy]': 'blocked()',
+        '[class]': "cn(cx('root'), styleClass())"
+    },
+    hostDirectives: [Bind]
+})
+export class BlockUI extends BaseComponent<BlockUIPassThrough> {
+    componentName = 'BlockUI';
+
+    $pcBlockUI: BlockUI | undefined = inject(BLOCKUI_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+    /**
+     * Name of the local ng-template variable referring to another component.
+     * @group Props
+     */
+    readonly target = input<any>();
+    /**
+     * Whether to automatically manage layering.
+     * @group Props
+     */
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
+    /**
+     * Base zIndex value to use in layering.
+     * @group Props
+     */
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
+    /**
+     * Class of the element.
+     * @deprecated since v20.0.0, use `class` instead.
+     * @group Props
+     */
+    readonly styleClass = input<string>();
+    /**
+     * Current blocked state as a boolean.
+     * @group Props
+     */
+    readonly blocked = input<boolean, unknown>(false, { transform: booleanAttribute });
+    /**
+     * template of the content
+     * @group Templates
+     */
+    readonly contentTemplate = contentChild<TemplateRef<any>>('content', { descendants: false });
+
+    _blocked: boolean = false;
+
+    animationEndListener: VoidFunction | null | undefined;
+
+    _componentStyle = inject(BlockUiStyle);
+
+    constructor() {
+        super();
+        effect(() => {
+            if (this.blocked()) {
+                this.block();
+            } else if (this._blocked) {
+                this.unblock();
+            }
+        });
+    }
+
+    onAfterViewInit() {
+        if (this._blocked) this.block();
+
+        const target = this.target();
+        if (target && !target.getBlockableElement) {
+            throw 'Target of BlockUI must implement BlockableUI interface';
+        }
+    }
+
+    _contentTemplate: TemplateRef<any> | undefined;
+
+    readonly templates = contentChildren(HelixTemplate);
+
+    onAfterContentInit() {
+        this.templates().forEach((item) => {
+            switch (item.getType()) {
+                case 'content':
+                    this._contentTemplate = item.template;
+                    break;
+
+                default:
+                    this._contentTemplate = item.template;
+                    break;
+            }
+        });
+    }
+
+    block() {
+        if (isPlatformBrowser(this.platformId)) {
+            this._blocked = true;
+            (this.el as ElementRef).nativeElement.style.display = 'flex';
+
+            const target = this.target();
+            if (target) {
+                target.getBlockableElement().appendChild((this.el as ElementRef).nativeElement);
+                target.getBlockableElement().style.position = 'relative';
+            } else {
+                this.renderer.appendChild(this.document.body, (this.el as ElementRef).nativeElement);
+                //@ts-ignore
+                blockBodyScroll();
+            }
+
+            if (this.autoZIndex()) {
+                ZIndexUtils.set('modal', (this.el as ElementRef).nativeElement, this.baseZIndex() + this.config.zIndex.modal);
+            }
+
+            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask');
+            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask-enter-active');
+        }
+    }
+
+    unblock() {
+        if (isPlatformBrowser(this.platformId) && this.el && this._blocked) {
+            this._blocked = false;
+            if (!this.animationEndListener) {
+                this.animationEndListener = this.renderer.listen(this.el.nativeElement, 'animationend', this.destroyModal.bind(this));
+            }
+            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask-enter-active');
+            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask-leave-active');
+        }
+    }
+
+    destroyModal() {
+        this._blocked = false;
+        if (this.el && isPlatformBrowser(this.platformId)) {
+            this.el.nativeElement.style.display = 'none';
+            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask');
+            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask-leave-active');
+            ZIndexUtils.clear(this.el.nativeElement);
+
+            if (!this.target()) {
+                this.document.body.removeChild(this.el.nativeElement);
+                //@ts-ignore
+                unblockBodyScroll();
+            }
+        }
+        this.unbindAnimationEndListener();
+        this.cd.markForCheck();
+    }
+
+    unbindAnimationEndListener() {
+        if (this.animationEndListener && this.el) {
+            this.animationEndListener();
+            this.animationEndListener = null;
+        }
+    }
+
+    onDestroy() {
+        if (this._blocked) {
+            // Skip animation on destroy, just cleanup
+            this._blocked = false;
+            if (this.el && isPlatformBrowser(this.platformId)) {
+                ZIndexUtils.clear(this.el.nativeElement);
+                if (!this.target()) {
+                    //@ts-ignore
+                    unblockBodyScroll();
+                }
+            }
+            this.unbindAnimationEndListener();
+        }
+    }
+}
+
+@NgModule({
+    imports: [BlockUI, SharedModule],
+    exports: [BlockUI, SharedModule]
+})
+export class BlockUIModule {}

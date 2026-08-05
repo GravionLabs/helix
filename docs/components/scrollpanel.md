@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ScrollPanel } from '@gravionlabs/helix/scrollpanel';
+import { ScrollPanel } from '@helix/core/scrollpanel';
 ```
 
 ## Components
@@ -25,4 +25,4 @@ ScrollPanel is a cross browser, lightweight and themable alternative to native b
 
 ## Source
 
-[`projects/helix/scrollpanel`](../../projects/helix/scrollpanel)
+[`projects/core/scrollpanel`](../../projects/core/scrollpanel)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
+import { BaseEditableHolder } from '@helix/core/baseeditableholder';
 ```
 
 ## Components
@@ -24,4 +24,4 @@ import { BaseEditableHolder } from '@gravionlabs/helix/baseeditableholder';
 
 ## Source
 
-[`projects/helix/baseeditableholder`](../../projects/helix/baseeditableholder)
+[`projects/core/baseeditableholder`](../../projects/core/baseeditableholder)

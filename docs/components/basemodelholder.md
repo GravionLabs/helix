@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseModelHolder } from '@gravionlabs/helix/basemodelholder';
+import { BaseModelHolder } from '@helix/core/basemodelholder';
 ```
 
 ## Components
@@ -15,4 +15,4 @@ import { BaseModelHolder } from '@gravionlabs/helix/basemodelholder';
 
 ## Source
 
-[`projects/helix/basemodelholder`](../../projects/helix/basemodelholder)
+[`projects/core/basemodelholder`](../../projects/core/basemodelholder)

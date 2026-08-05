@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { UseStyle } from '@gravionlabs/helix/usestyle';
+import { UseStyle } from '@helix/core/usestyle';
 ```
 
 ## Services
@@ -14,4 +14,4 @@ import { UseStyle } from '@gravionlabs/helix/usestyle';
 
 ## Source
 
-[`projects/helix/usestyle`](../../projects/helix/usestyle)
+[`projects/core/usestyle`](../../projects/core/usestyle)

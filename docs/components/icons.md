@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon } from '@gravionlabs/helix/icons';
+import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon } from '@helix/core/icons';
 ```
 
 ## Components
@@ -237,4 +237,4 @@ Selector: `[data-p-icon="window-minimize"]`
 
 ## Source
 
-[`projects/helix/icons`](../../projects/helix/icons)
+[`projects/core/icons`](../../projects/core/icons)

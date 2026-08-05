@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MegaMenu, MegaMenuSub } from '@gravionlabs/helix/megamenu';
+import { MegaMenu, MegaMenuSub } from '@helix/core/megamenu';
 ```
 
 ## Components
@@ -69,4 +69,4 @@ Selector: `h-megaMenuSub, h-megamenu-sub, ul[hMegaMenuSub]`
 
 ## Source
 
-[`projects/helix/megamenu`](../../projects/helix/megamenu)
+[`projects/core/megamenu`](../../projects/core/megamenu)

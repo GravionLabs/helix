@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { IconField } from '@gravionlabs/helix/iconfield';
+import { IconField } from '@helix/core/iconfield';
 ```
 
 ## Components
@@ -26,4 +26,4 @@ IconField wraps an input and an icon.
 
 ## Source
 
-[`projects/helix/iconfield`](../../projects/helix/iconfield)
+[`projects/core/iconfield`](../../projects/core/iconfield)

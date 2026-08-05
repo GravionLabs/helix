@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DatePicker } from '@gravionlabs/helix/datepicker';
+import { DatePicker } from '@helix/core/datepicker';
 ```
 
 ## Components
@@ -88,4 +88,4 @@ DatePicker is a form component to work with dates.
 
 ## Source
 
-[`projects/helix/datepicker`](../../projects/helix/datepicker)
+[`projects/core/datepicker`](../../projects/core/datepicker)

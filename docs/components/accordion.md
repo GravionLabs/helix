@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Accordion, AccordionPanel, AccordionHeader } from '@gravionlabs/helix/accordion';
+import { Accordion, AccordionPanel, AccordionHeader } from '@helix/core/accordion';
 ```
 
 ## Components
@@ -67,4 +67,4 @@ Selector: `h-accordion-content, h-accordioncontent`
 
 ## Source
 
-[`projects/helix/accordion`](../../projects/helix/accordion)
+[`projects/core/accordion`](../../projects/core/accordion)

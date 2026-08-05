@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { CascadeSelect, CascadeSelectSub } from '@gravionlabs/helix/cascadeselect';
+import { CascadeSelect, CascadeSelectSub } from '@helix/core/cascadeselect';
 ```
 
 ## Components
@@ -106,4 +106,4 @@ Selector: `ul[hCascadeSelectSub]`
 
 ## Source
 
-[`projects/helix/cascadeselect`](../../projects/helix/cascadeselect)
+[`projects/core/cascadeselect`](../../projects/core/cascadeselect)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Textarea } from '@gravionlabs/helix/textarea';
+import { Textarea } from '@helix/core/textarea';
 ```
 
 ## Components
@@ -36,4 +36,4 @@ Textarea adds styling and autoResize functionality to standard textarea element.
 
 ## Source
 
-[`projects/helix/textarea`](../../projects/helix/textarea)
+[`projects/core/textarea`](../../projects/core/textarea)

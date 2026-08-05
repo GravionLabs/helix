@@ -19,7 +19,7 @@ attributes, and `--p-*` tokens keep their upstream names.**
 2. **The theme layer cannot rename classes.** The `@primeuix/styled` theme
    `prefix` option renames only `--p-*` CSS variables, never class names.
    On the component side, `BaseStyle`/`cx()` emit the `classes`-map strings
-   verbatim (`projects/helix/basecomponent/basecomponent.ts`, `cx()`), so
+   verbatim (`projects/core/basecomponent/basecomponent.ts`, `cx()`), so
    there is no central hook to remap them either.
 3. **A rename therefore requires vendoring the entire `@primeuix` styles
    layer** (~100 stylesheets) and touching, as counted on 2026-07-15:
@@ -28,7 +28,7 @@ attributes, and `--p-*` tokens keep their upstream names.**
    - `p-hidden-accessible` in 15 files,
    - `ng-content select="p-header|p-footer"` in 11 files,
    - plus 18 downstream `.p-` references in `apps/helix-demo` and
-     `projects/helix-shell`.
+     `projects/shell`.
 
 ## Cost/benefit
 

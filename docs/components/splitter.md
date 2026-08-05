@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Splitter } from '@gravionlabs/helix/splitter';
+import { Splitter } from '@helix/core/splitter';
 ```
 
 ## Components
@@ -39,4 +39,4 @@ Splitter is utilized to separate and resize panels.
 
 ## Source
 
-[`projects/helix/splitter`](../../projects/helix/splitter)
+[`projects/core/splitter`](../../projects/core/splitter)

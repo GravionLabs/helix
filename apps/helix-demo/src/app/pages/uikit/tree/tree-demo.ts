@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import type { TreeNode } from '@gravionlabs/helix/api';
-import { TreeModule } from '@gravionlabs/helix/tree';
-import { TreeTableModule } from '@gravionlabs/helix/treetable';
+import type { TreeNode } from '@helix/core/api';
+import { TreeModule } from '@helix/core/tree';
+import { TreeTableModule } from '@helix/core/treetable';
 import { NodeService } from '@/app/pages/service/node.service';
 
 @Component({

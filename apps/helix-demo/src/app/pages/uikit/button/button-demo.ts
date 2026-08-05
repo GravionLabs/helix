@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-import type { MenuItem } from '@gravionlabs/helix/api';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { ButtonGroupModule } from '@gravionlabs/helix/buttongroup';
-import { SplitButtonModule } from '@gravionlabs/helix/splitbutton';
+import type { MenuItem } from '@helix/core/api';
+import { ButtonModule } from '@helix/core/button';
+import { ButtonGroupModule } from '@helix/core/buttongroup';
+import { SplitButtonModule } from '@helix/core/splitbutton';
 
 @Component({
   selector: 'app-button-demo',

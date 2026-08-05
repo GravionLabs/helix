@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { CarouselModule } from '@gravionlabs/helix/carousel';
-import { GalleriaModule } from '@gravionlabs/helix/galleria';
-import { ImageModule } from '@gravionlabs/helix/image';
-import { TagModule } from '@gravionlabs/helix/tag';
+import { ButtonModule } from '@helix/core/button';
+import { CarouselModule } from '@helix/core/carousel';
+import { GalleriaModule } from '@helix/core/galleria';
+import { ImageModule } from '@helix/core/image';
+import { TagModule } from '@helix/core/tag';
 import { PhotoService } from '@/app/pages/service/photo.service';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 

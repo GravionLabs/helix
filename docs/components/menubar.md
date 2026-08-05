@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Menubar, MenubarSub } from '@gravionlabs/helix/menubar';
+import { Menubar, MenubarSub } from '@helix/core/menubar';
 ```
 
 ## Components
@@ -78,4 +78,4 @@ Selector: `h-menubarSub, h-menubarsub, [hMenubarSub]`
 
 ## Source
 
-[`projects/helix/menubar`](../../projects/helix/menubar)
+[`projects/core/menubar`](../../projects/core/menubar)

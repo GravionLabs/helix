@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Skeleton } from '@gravionlabs/helix/skeleton';
+import { Skeleton } from '@helix/core/skeleton';
 ```
 
 ## Components
@@ -30,4 +30,4 @@ Skeleton is a placeholder to display instead of the actual content.
 
 ## Source
 
-[`projects/helix/skeleton`](../../projects/helix/skeleton)
+[`projects/core/skeleton`](../../projects/core/skeleton)

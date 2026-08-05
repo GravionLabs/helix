@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Motion, MotionDirective } from '@gravionlabs/helix/motion';
+import { Motion, MotionDirective } from '@helix/core/motion';
 ```
 
 ## Components
@@ -101,4 +101,4 @@ Motion Directive is directive to apply motion effects to elements.
 
 ## Source
 
-[`projects/helix/motion`](../../projects/helix/motion)
+[`projects/core/motion`](../../projects/core/motion)

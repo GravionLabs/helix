@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Galleria, GalleriaContent, GalleriaItemSlot } from '@gravionlabs/helix/galleria';
+import { Galleria, GalleriaContent, GalleriaItemSlot } from '@helix/core/galleria';
 ```
 
 ## Components
@@ -141,4 +141,4 @@ Selector: `div[hGalleriaThumbnails]`
 
 ## Source
 
-[`projects/helix/galleria`](../../projects/helix/galleria)
+[`projects/core/galleria`](../../projects/core/galleria)

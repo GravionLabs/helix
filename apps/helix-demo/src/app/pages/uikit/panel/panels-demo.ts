@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AccordionModule } from '@gravionlabs/helix/accordion';
-import type { MenuItem } from '@gravionlabs/helix/api';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { DividerModule } from '@gravionlabs/helix/divider';
-import { FieldsetModule } from '@gravionlabs/helix/fieldset';
-import { IconFieldModule } from '@gravionlabs/helix/iconfield';
-import { InputIconModule } from '@gravionlabs/helix/inputicon';
-import { InputTextModule } from '@gravionlabs/helix/inputtext';
-import { MenuModule } from '@gravionlabs/helix/menu';
-import { PanelModule } from '@gravionlabs/helix/panel';
-import { RippleModule } from '@gravionlabs/helix/ripple';
-import { SplitButtonModule } from '@gravionlabs/helix/splitbutton';
-import { SplitterModule } from '@gravionlabs/helix/splitter';
-import { TabsModule } from '@gravionlabs/helix/tabs';
-import { ToolbarModule } from '@gravionlabs/helix/toolbar';
+import { AccordionModule } from '@helix/core/accordion';
+import type { MenuItem } from '@helix/core/api';
+import { ButtonModule } from '@helix/core/button';
+import { DividerModule } from '@helix/core/divider';
+import { FieldsetModule } from '@helix/core/fieldset';
+import { IconFieldModule } from '@helix/core/iconfield';
+import { InputIconModule } from '@helix/core/inputicon';
+import { InputTextModule } from '@helix/core/inputtext';
+import { MenuModule } from '@helix/core/menu';
+import { PanelModule } from '@helix/core/panel';
+import { RippleModule } from '@helix/core/ripple';
+import { SplitButtonModule } from '@helix/core/splitbutton';
+import { SplitterModule } from '@helix/core/splitter';
+import { TabsModule } from '@helix/core/tabs';
+import { ToolbarModule } from '@helix/core/toolbar';
 
 @Component({
   selector: 'app-panels-demo',

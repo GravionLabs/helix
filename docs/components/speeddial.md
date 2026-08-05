@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SpeedDial } from '@gravionlabs/helix/speeddial';
+import { SpeedDial } from '@helix/core/speeddial';
 ```
 
 ## Components
@@ -55,4 +55,4 @@ When pressed, a floating action button can display multiple primary actions that
 
 ## Source
 
-[`projects/helix/speeddial`](../../projects/helix/speeddial)
+[`projects/core/speeddial`](../../projects/core/speeddial)

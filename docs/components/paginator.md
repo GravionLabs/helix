@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Paginator } from '@gravionlabs/helix/paginator';
+import { Paginator } from '@helix/core/paginator';
 ```
 
 ## Components
@@ -49,4 +49,4 @@ Paginator is a generic component to display content in paged format.
 
 ## Source
 
-[`projects/helix/paginator`](../../projects/helix/paginator)
+[`projects/core/paginator`](../../projects/core/paginator)

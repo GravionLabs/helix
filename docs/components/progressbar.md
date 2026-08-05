@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ProgressBar } from '@gravionlabs/helix/progressbar';
+import { ProgressBar } from '@helix/core/progressbar';
 ```
 
 ## Components
@@ -30,4 +30,4 @@ ProgressBar is a process status indicator.
 
 ## Source
 
-[`projects/helix/progressbar`](../../projects/helix/progressbar)
+[`projects/core/progressbar`](../../projects/core/progressbar)

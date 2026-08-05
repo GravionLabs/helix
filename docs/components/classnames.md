@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ClassNames } from '@gravionlabs/helix/classnames';
+import { ClassNames } from '@helix/core/classnames';
 ```
 
 ## Components
@@ -28,4 +28,4 @@ PClass directive provides extends class binding functionality. Supports strings,
 
 ## Source
 
-[`projects/helix/classnames`](../../projects/helix/classnames)
+[`projects/core/classnames`](../../projects/core/classnames)

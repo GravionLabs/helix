@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Stepper, StepList, StepperSeparator } from '@gravionlabs/helix/stepper';
+import { Stepper, StepList, StepperSeparator } from '@helix/core/stepper';
 ```
 
 ## Components
@@ -83,4 +83,4 @@ Selector: `h-step-panels`
 
 ## Source
 
-[`projects/helix/stepper`](../../projects/helix/stepper)
+[`projects/core/stepper`](../../projects/core/stepper)

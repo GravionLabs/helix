@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseComponent } from '@gravionlabs/helix/basecomponent';
+import { BaseComponent } from '@helix/core/basecomponent';
 ```
 
 ## Components
@@ -24,4 +24,4 @@ import { BaseComponent } from '@gravionlabs/helix/basecomponent';
 
 ## Source
 
-[`projects/helix/basecomponent`](../../projects/helix/basecomponent)
+[`projects/core/basecomponent`](../../projects/core/basecomponent)

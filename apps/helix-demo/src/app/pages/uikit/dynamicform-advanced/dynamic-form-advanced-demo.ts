@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { validate } from '@angular/forms/signals';
-import { HelixDynamicForm, helixMeta } from '@gravionlabs/helix-zod';
+import { HelixDynamicForm, helixMeta } from '@helix/zod';
 import { z } from 'zod';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { TaskSchema } from './domain-schema';

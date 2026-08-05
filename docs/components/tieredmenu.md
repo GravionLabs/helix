@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TieredMenu, TieredMenuSub } from '@gravionlabs/helix/tieredmenu';
+import { TieredMenu, TieredMenuSub } from '@helix/core/tieredmenu';
 ```
 
 ## Components
@@ -81,4 +81,4 @@ Selector: `h-tieredMenuSub, h-tieredmenusub`
 
 ## Source
 
-[`projects/helix/tieredmenu`](../../projects/helix/tieredmenu)
+[`projects/core/tieredmenu`](../../projects/core/tieredmenu)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputNumber } from '@gravionlabs/helix/inputnumber';
+import { InputNumber } from '@helix/core/inputnumber';
 ```
 
 ## Components
@@ -66,4 +66,4 @@ InputNumber is an input component to provide numerical input.
 
 ## Source
 
-[`projects/helix/inputnumber`](../../projects/helix/inputnumber)
+[`projects/core/inputnumber`](../../projects/core/inputnumber)

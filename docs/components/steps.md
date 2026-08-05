@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Steps } from '@gravionlabs/helix/steps';
+import { Steps } from '@helix/core/steps';
 ```
 
 ## Components
@@ -35,4 +35,4 @@ Steps components is an indicator for the steps in a wizard workflow.
 
 ## Source
 
-[`projects/helix/steps`](../../projects/helix/steps)
+[`projects/core/steps`](../../projects/core/steps)

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { MenuModule } from '@gravionlabs/helix/menu';
+import { ButtonModule } from '@helix/core/button';
+import { MenuModule } from '@helix/core/menu';
 
 @Component({
   standalone: true,

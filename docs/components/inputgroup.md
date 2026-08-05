@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputGroup } from '@gravionlabs/helix/inputgroup';
+import { InputGroup } from '@helix/core/inputgroup';
 ```
 
 ## Components
@@ -24,4 +24,4 @@ InputGroup displays text, icon, buttons and other content can be grouped next to
 
 ## Source
 
-[`projects/helix/inputgroup`](../../projects/helix/inputgroup)
+[`projects/core/inputgroup`](../../projects/core/inputgroup)

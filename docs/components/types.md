@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Types } from '@gravionlabs/helix/types';
+import { Types } from '@helix/core/types';
 ```
 
 ## Interfaces & Types
@@ -54,4 +54,4 @@ import { Types } from '@gravionlabs/helix/types';
 
 ## Source
 
-[`projects/helix/types`](../../projects/helix/types)
+[`projects/core/types`](../../projects/core/types)

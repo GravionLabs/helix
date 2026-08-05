@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputGroupAddon } from '@gravionlabs/helix/inputgroupaddon';
+import { InputGroupAddon } from '@helix/core/inputgroupaddon';
 ```
 
 ## Components
@@ -25,4 +25,4 @@ InputGroupAddon displays text, icon, buttons and other content can be grouped ne
 
 ## Source
 
-[`projects/helix/inputgroupaddon`](../../projects/helix/inputgroupaddon)
+[`projects/core/inputgroupaddon`](../../projects/core/inputgroupaddon)

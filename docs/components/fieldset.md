@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Fieldset } from '@gravionlabs/helix/fieldset';
+import { Fieldset } from '@helix/core/fieldset';
 ```
 
 ## Components
@@ -37,4 +37,4 @@ Fieldset is a grouping component with the optional content toggle feature.
 
 ## Source
 
-[`projects/helix/fieldset`](../../projects/helix/fieldset)
+[`projects/core/fieldset`](../../projects/core/fieldset)

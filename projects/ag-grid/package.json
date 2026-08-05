@@ -1,0 +1,18 @@
+{
+  "name": "@helix/ag-grid",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=22",
+    "ag-grid-angular": ">=33",
+    "ag-grid-community": ">=33"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
+}

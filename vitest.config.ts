@@ -8,9 +8,9 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   resolve: {
     alias: {
-      '@gravionlabs/helix-shell': resolve(__dirname, 'projects/helix-shell/src/public-api.ts'),
-      '@gravionlabs/helix-zod': resolve(__dirname, 'projects/helix-zod/src/public-api.ts'),
-      '@gravionlabs/helix-ag-grid': resolve(__dirname, 'projects/helix-ag-grid/src/public-api.ts'),
+      '@helix/shell': resolve(__dirname, 'projects/shell/src/public-api.ts'),
+      '@helix/zod': resolve(__dirname, 'projects/zod/src/public-api.ts'),
+      '@helix/ag-grid': resolve(__dirname, 'projects/ag-grid/src/public-api.ts'),
     },
   },
   test: {

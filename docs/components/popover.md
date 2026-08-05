@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Popover } from '@gravionlabs/helix/popover';
+import { Popover } from '@helix/core/popover';
 ```
 
 ## Components
@@ -43,4 +43,4 @@ Popover is a container component that can overlay other components on page.
 
 ## Source
 
-[`projects/helix/popover`](../../projects/helix/popover)
+[`projects/core/popover`](../../projects/core/popover)

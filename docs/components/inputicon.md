@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputIcon } from '@gravionlabs/helix/inputicon';
+import { InputIcon } from '@helix/core/inputicon';
 ```
 
 ## Components
@@ -25,4 +25,4 @@ InputIcon displays an icon.
 
 ## Source
 
-[`projects/helix/inputicon`](../../projects/helix/inputicon)
+[`projects/core/inputicon`](../../projects/core/inputicon)

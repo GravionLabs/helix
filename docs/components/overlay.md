@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Overlay } from '@gravionlabs/helix/overlay';
+import { Overlay } from '@helix/core/overlay';
 ```
 
 ## Components
@@ -46,4 +46,4 @@ This API allows overlay components to be controlled from the Helix configuration
 
 ## Source
 
-[`projects/helix/overlay`](../../projects/helix/overlay)
+[`projects/core/overlay`](../../projects/core/overlay)

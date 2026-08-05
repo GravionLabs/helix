@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Listbox } from '@gravionlabs/helix/listbox';
+import { Listbox } from '@helix/core/listbox';
 ```
 
 ## Components
@@ -84,4 +84,4 @@ ListBox is used to select one or more values from a list of items.
 
 ## Source
 
-[`projects/helix/listbox`](../../projects/helix/listbox)
+[`projects/core/listbox`](../../projects/core/listbox)

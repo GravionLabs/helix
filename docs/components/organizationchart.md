@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OrganizationChart, OrganizationChartNode } from '@gravionlabs/helix/organizationchart';
+import { OrganizationChart, OrganizationChartNode } from '@helix/core/organizationchart';
 ```
 
 ## Components
@@ -52,4 +52,4 @@ Selector: `[hOrganizationChartNode]`
 
 ## Source
 
-[`projects/helix/organizationchart`](../../projects/helix/organizationchart)
+[`projects/core/organizationchart`](../../projects/core/organizationchart)

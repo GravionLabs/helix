@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DynamicDialog, DynamicDialogContent } from '@gravionlabs/helix/dynamicdialog';
+import { DynamicDialog, DynamicDialogContent } from '@helix/core/dynamicdialog';
 ```
 
 ## Components
@@ -30,4 +30,4 @@ Dynamic Dialog component methods.
 
 ## Source
 
-[`projects/helix/dynamicdialog`](../../projects/helix/dynamicdialog)
+[`projects/core/dynamicdialog`](../../projects/core/dynamicdialog)

@@ -1,6 +1,6 @@
 import type { EnvironmentProviders, Provider, Type } from '@angular/core';
 import type { Routes } from '@angular/router';
-import { provideHelixDynamicForms } from '@gravionlabs/helix-zod';
+import { provideHelixDynamicForms } from '@helix/zod';
 import { ButtonDemo } from './button/button-demo';
 import { ChartDemo } from './charts/chart-demo';
 import { DynamicFormDemo } from './dynamicform/dynamic-form-demo';

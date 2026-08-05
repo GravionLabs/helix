@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { ChartModule } from '@gravionlabs/helix/chart';
-import { FluidModule } from '@gravionlabs/helix/fluid';
-import { LayoutStore } from '@gravionlabs/helix-shell';
+import { ChartModule } from '@helix/core/chart';
+import { FluidModule } from '@helix/core/fluid';
+import { LayoutStore } from '@helix/shell';
 
 @Component({
   selector: 'app-chart-demo',
