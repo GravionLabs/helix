@@ -1,9 +1,9 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ImageComparePassThrough } from '@helix/core/types/imagecompare';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ImageComparePassThrough } from '@helix-ui/core/types/imagecompare';
 import { ImageCompareStyle } from './style/imagecomparestyle';
 
 const IMAGECOMPARE_INSTANCE = new InjectionToken<ImageCompare>('IMAGECOMPARE_INSTANCE');

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Utils } from '@helix/core/utils';
+import { Utils } from '@helix-ui/core/utils';
 ```
 
 ## Classes

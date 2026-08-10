@@ -2,10 +2,10 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, OnDestroy, ViewEncapsulation, input, viewChild, effect, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find } from '@primeuix/utils';
-import { SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { TerminalPassThrough } from '@helix/core/types/terminal';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { TerminalPassThrough } from '@helix-ui/core/types/terminal';
 import { Subscription } from 'rxjs';
 import { TerminalStyle } from './style/terminalstyle';
 import { TerminalService } from './terminalservice';

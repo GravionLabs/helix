@@ -1,10 +1,10 @@
 import { booleanAttribute, computed, Directive, effect, inject, InjectionToken, input, NgModule, output } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseModelHolder } from '@helix/core/basemodelholder';
-import { Bind } from '@helix/core/bind';
-import { Fluid } from '@helix/core/fluid';
-import { TextareaPassThrough } from '@helix/core/types/textarea';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseModelHolder } from '@helix-ui/core/basemodelholder';
+import { Bind } from '@helix-ui/core/bind';
+import { Fluid } from '@helix-ui/core/fluid';
+import { TextareaPassThrough } from '@helix-ui/core/types/textarea';
 import { Subscription } from 'rxjs';
 import { TextareaStyle } from './style/textareastyle';
 

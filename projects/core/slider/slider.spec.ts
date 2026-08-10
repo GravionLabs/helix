@@ -4,9 +4,9 @@ import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { By } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
-import { SliderChangeEvent, SliderSlideEndEvent } from '@helix/core/types/slider';
+import { SharedModule } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
+import { SliderChangeEvent, SliderSlideEndEvent } from '@helix-ui/core/types/slider';
 import { Slider, SliderModule } from './slider';
 
 // Test Components

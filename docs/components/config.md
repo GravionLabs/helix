@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Config } from '@helix/core/config';
+import { Config } from '@helix-ui/core/config';
 ```
 
 ## Services

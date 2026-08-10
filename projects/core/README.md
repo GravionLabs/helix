@@ -1,10 +1,10 @@
-# @helix/core
+# @helix-ui/core
 
 Helix base component library for Angular — 90 UI components, 7 directives, and
 20 infrastructure modules, each exposed as its own secondary entry point:
 
 ```ts
-import { Button } from '@helix/core/button';
+import { Button } from '@helix-ui/core/button';
 ```
 
 ```html

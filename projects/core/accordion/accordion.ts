@@ -18,14 +18,14 @@ import {
 } from '@angular/core';
 import { MotionOptions } from '@primeuix/motion';
 import { findSingle, focus, getAttribute, uuid } from '@primeuix/utils';
-import { BlockableUI, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ChevronDownIcon, ChevronUpIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import { Ripple } from '@helix/core/ripple';
-import { AccordionContentPassThrough, AccordionHeaderPassThrough, AccordionPanelPassThrough, AccordionPassThrough } from '@helix/core/types/accordion';
-import { transformToBoolean } from '@helix/core/utils';
+import { BlockableUI, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ChevronDownIcon, ChevronUpIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Ripple } from '@helix-ui/core/ripple';
+import { AccordionContentPassThrough, AccordionHeaderPassThrough, AccordionPanelPassThrough, AccordionPassThrough } from '@helix-ui/core/types/accordion';
+import { transformToBoolean } from '@helix-ui/core/utils';
 import { AccordionStyle } from './style/accordionstyle';
 
 /**

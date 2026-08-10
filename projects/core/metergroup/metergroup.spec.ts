@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { MeterItem } from '@helix/core/types/metergroup';
+import { MeterItem } from '@helix-ui/core/types/metergroup';
 import { MeterGroup, MeterGroupLabel, MeterGroupModule } from './metergroup';
 
 @Component({

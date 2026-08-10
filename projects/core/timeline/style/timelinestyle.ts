@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/timeline';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const classes = {
     root: ({ instance }) => ['p-timeline p-component', 'p-timeline-' + instance.align, 'p-timeline-' + instance.layout],

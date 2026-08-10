@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { BaseIcon } from '@helix/core/icons/baseicon';
+import { BaseIcon } from '@helix-ui/core/icons/baseicon';
 
 @Component({
     selector: '[data-p-icon="angle-down"]',

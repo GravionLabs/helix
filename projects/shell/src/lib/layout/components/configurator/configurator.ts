@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HelixConfig } from '@helix/core/config';
-import { SelectButtonModule } from '@helix/core/selectbutton';
+import { HelixConfig } from '@helix-ui/core/config';
+import { SelectButtonModule } from '@helix-ui/core/selectbutton';
 import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';

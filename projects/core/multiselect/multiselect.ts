@@ -24,23 +24,23 @@ import {
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { deepEquals, equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isArray, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
-import { FilterService, Footer, Header, OverlayOptions, OverlayService, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Checkbox } from '@helix/core/checkbox';
-import { Chip } from '@helix/core/chip';
-import { DomHandler, unblockBodyScroll } from '@helix/core/dom';
-import { Fluid } from '@helix/core/fluid';
-import { IconField } from '@helix/core/iconfield';
-import { CheckIcon, ChevronDownIcon, SearchIcon, TimesIcon } from '@helix/core/icons';
-import { InputIcon } from '@helix/core/inputicon';
-import { InputText } from '@helix/core/inputtext';
-import { Overlay } from '@helix/core/overlay';
-import { Scroller } from '@helix/core/scroller';
-import { Tooltip } from '@helix/core/tooltip';
-import { Nullable } from '@helix/core/ts-helpers';
+import { FilterService, Footer, Header, OverlayOptions, OverlayService, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Checkbox } from '@helix-ui/core/checkbox';
+import { Chip } from '@helix-ui/core/chip';
+import { DomHandler, unblockBodyScroll } from '@helix-ui/core/dom';
+import { Fluid } from '@helix-ui/core/fluid';
+import { IconField } from '@helix-ui/core/iconfield';
+import { CheckIcon, ChevronDownIcon, SearchIcon, TimesIcon } from '@helix-ui/core/icons';
+import { InputIcon } from '@helix-ui/core/inputicon';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Overlay } from '@helix-ui/core/overlay';
+import { Scroller } from '@helix-ui/core/scroller';
+import { Tooltip } from '@helix-ui/core/tooltip';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     MultiSelectBlurEvent,
     MultiSelectChangeEvent,
@@ -60,8 +60,8 @@ import {
     MultiSelectRemoveEvent,
     MultiSelectSelectAllChangeEvent,
     MultiSelectSelectedItemsTemplateContext
-} from '@helix/core/types/multiselect';
-import { ObjectUtils } from '@helix/core/utils';
+} from '@helix-ui/core/types/multiselect';
+import { ObjectUtils } from '@helix-ui/core/utils';
 import { MultiSelectStyle } from './style/multiselectstyle';
 
 const MULTISELECT_INSTANCE = new InjectionToken<MultiSelect>('MULTISELECT_INSTANCE');

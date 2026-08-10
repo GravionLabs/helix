@@ -13,7 +13,7 @@
 ## Project Overview
 
 This is an Angular 21 workspace containing:
-- **`@helix/shell`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
+- **`@helix-ui/shell`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
 - **`demo`** – A demo application showcasing the library
 
 ## Code Style
@@ -31,7 +31,7 @@ This is an Angular 21 workspace containing:
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
 - Avoid using `LayoutService` – always use `LayoutStore` from the library
-- Import from `@helix/shell`, never from local demo layout copies
+- Import from `@helix-ui/shell`, never from local demo layout copies
 
 ### Dependency Injection
 - Use `inject()` function instead of constructor injection
@@ -54,7 +54,7 @@ projects/shell/src/lib/
 
 ## Exports
 - All public library exports go through `projects/shell/src/public-api.ts`
-- Never import directly from library source paths in the demo app – always use `@helix/shell`
+- Never import directly from library source paths in the demo app – always use `@helix-ui/shell`
 
 ## Testing
 - Unit tests use the `*.spec.ts` naming convention

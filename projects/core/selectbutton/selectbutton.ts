@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, input, Input, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, output, contentChildren, contentChild, computed } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { equals, resolveFieldData } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ToggleButton } from '@helix/core/togglebutton';
-import { SelectButtonChangeEvent, SelectButtonItemTemplateContext, SelectButtonOptionClickEvent, SelectButtonPassThrough } from '@helix/core/types/selectbutton';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ToggleButton } from '@helix-ui/core/togglebutton';
+import { SelectButtonChangeEvent, SelectButtonItemTemplateContext, SelectButtonOptionClickEvent, SelectButtonPassThrough } from '@helix-ui/core/types/selectbutton';
 import { SelectButtonStyle } from './style/selectbuttonstyle';
 
 const SELECTBUTTON_INSTANCE = new InjectionToken<SelectButton>('SELECTBUTTON_INSTANCE');

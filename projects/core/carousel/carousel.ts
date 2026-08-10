@@ -20,12 +20,12 @@ import {
   contentChildren
 } from '@angular/core';
 import { addClass, find, findSingle, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { Footer, Header, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ButtonModule, ButtonProps } from '@helix/core/button';
-import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from '@helix/core/icons';
-import { CarouselItemTemplateContext, CarouselPageEvent, CarouselResponsiveOptions } from '@helix/core/types/carousel';
+import { Footer, Header, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ButtonModule, ButtonProps } from '@helix-ui/core/button';
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from '@helix-ui/core/icons';
+import { CarouselItemTemplateContext, CarouselPageEvent, CarouselResponsiveOptions } from '@helix-ui/core/types/carousel';
 import { CarouselStyle } from './style/carouselstyle';
 
 /**

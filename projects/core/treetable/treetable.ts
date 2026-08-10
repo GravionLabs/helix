@@ -46,17 +46,17 @@ import {
     reorderArray,
     resolveFieldData
 } from '@primeuix/utils';
-import { BlockableUI, FilterMetadata, FilterService, HelixTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@helix/core/api';
-import { BadgeModule } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Checkbox } from '@helix/core/checkbox';
-import { DomHandler } from '@helix/core/dom';
-import { ArrowDownIcon, ArrowUpIcon, CheckIcon, ChevronDownIcon, ChevronRightIcon, SortAltIcon, SortAmountDownIcon, SortAmountUpAltIcon, SpinnerIcon } from '@helix/core/icons';
-import { PaginatorModule } from '@helix/core/paginator';
-import { Ripple } from '@helix/core/ripple';
-import { Scroller } from '@helix/core/scroller';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
+import { BlockableUI, FilterMetadata, FilterService, HelixTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@helix-ui/core/api';
+import { BadgeModule } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Checkbox } from '@helix-ui/core/checkbox';
+import { DomHandler } from '@helix-ui/core/dom';
+import { ArrowDownIcon, ArrowUpIcon, CheckIcon, ChevronDownIcon, ChevronRightIcon, SortAltIcon, SortAmountDownIcon, SortAmountUpAltIcon, SpinnerIcon } from '@helix-ui/core/icons';
+import { PaginatorModule } from '@helix-ui/core/paginator';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Scroller } from '@helix-ui/core/scroller';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
 import {
     TreeTableBodyTemplateContext,
     TreeTableCheckboxIconTemplateContext,
@@ -79,7 +79,7 @@ import {
     TreeTableSortEvent,
     TreeTableSortIconTemplateContext,
     TreeTableTogglerIconTemplateContext
-} from '@helix/core/types/treetable';
+} from '@helix-ui/core/types/treetable';
 import { Subject, Subscription } from 'rxjs';
 import { TreeTableStyle } from './style/treetablestyle';
 

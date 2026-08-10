@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { By } from '@angular/platform-browser';
 import { RadioButton } from './radiobutton';
 
-import { provideHelix } from '@helix/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 
 // Basic RadioButton test component
 @Component({

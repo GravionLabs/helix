@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Table, TableBody, RowGroupHeader } from '@helix/core/table';
+import { Table, TableBody, RowGroupHeader } from '@helix-ui/core/table';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tabs, Tab, TabList } from '@helix/core/tabs';
+import { Tabs, Tab, TabList } from '@helix-ui/core/tabs';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FloatLabel } from '@helix/core/floatlabel';
+import { FloatLabel } from '@helix-ui/core/floatlabel';
 ```
 
 ## Components

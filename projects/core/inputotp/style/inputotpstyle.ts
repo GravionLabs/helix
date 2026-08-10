@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/inputotp';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const classes = {
     root: 'p-inputotp p-component',

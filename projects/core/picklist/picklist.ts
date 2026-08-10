@@ -20,14 +20,14 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@primeuix/utils';
-import { FilterService, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ButtonModule, ButtonProps } from '@helix/core/button';
-import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon, AngleDoubleUpIcon, AngleDownIcon, AngleLeftIcon, AngleRightIcon, AngleUpIcon } from '@helix/core/icons';
-import { Listbox, ListboxChangeEvent } from '@helix/core/listbox';
-import { Ripple } from '@helix/core/ripple';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
+import { FilterService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ButtonModule, ButtonProps } from '@helix-ui/core/button';
+import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon, AngleDoubleUpIcon, AngleDownIcon, AngleLeftIcon, AngleRightIcon, AngleUpIcon } from '@helix-ui/core/icons';
+import { Listbox, ListboxChangeEvent } from '@helix-ui/core/listbox';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
 import {
     PickListFilterOptions,
     PickListFilterTemplateContext,
@@ -43,7 +43,7 @@ import {
     PickListTargetReorderEvent,
     PickListTargetSelectEvent,
     PickListTransferIconTemplateContext
-} from '@helix/core/types/picklist';
+} from '@helix-ui/core/types/picklist';
 import { PickListStyle } from './style/pickliststyle';
 
 const PICKLIST_INSTANCE = new InjectionToken<PickList>('PICKLIST_INSTANCE');

@@ -1,7 +1,7 @@
 import { Component, DebugElement, ElementRef, input, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SharedModule } from '@helix/core/api';
+import { SharedModule } from '@helix-ui/core/api';
 import { Badge, BadgeDirective, BadgeModule } from './badge';
 
 @Component({

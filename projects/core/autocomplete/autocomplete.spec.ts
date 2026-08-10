@@ -2,8 +2,8 @@ import { Component, provideZonelessChangeDetection, signal } from '@angular/core
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { SharedModule } from '@helix/core/api';
-import { AutoCompleteCompleteEvent, AutoCompleteDropdownClickEvent, AutoCompleteSelectEvent, AutoCompleteUnselectEvent } from '@helix/core/types/autocomplete';
+import { SharedModule } from '@helix-ui/core/api';
+import { AutoCompleteCompleteEvent, AutoCompleteDropdownClickEvent, AutoCompleteSelectEvent, AutoCompleteUnselectEvent } from '@helix-ui/core/types/autocomplete';
 import { BehaviorSubject } from 'rxjs';
 import { AUTOCOMPLETE_VALUE_ACCESSOR, AutoComplete, AutoCompleteModule } from './autocomplete';
 

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ColorPicker } from '@helix/core/colorpicker';
+import { ColorPicker } from '@helix-ui/core/colorpicker';
 ```
 
 ## Components

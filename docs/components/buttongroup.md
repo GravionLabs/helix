@@ -3,7 +3,7 @@
 ## Import
 
 ```ts
-import { ButtonGroup } from '@helix/core/buttongroup';
+import { ButtonGroup } from '@helix-ui/core/buttongroup';
 ```
 
 ## Components

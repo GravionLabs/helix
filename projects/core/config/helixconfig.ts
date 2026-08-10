@@ -1,5 +1,5 @@
 import { ElementRef, inject, Injectable, PLATFORM_ID, signal, TemplateRef } from '@angular/core';
-import { FilterMatchMode, OverlayOptions, Translation } from '@helix/core/api';
+import { FilterMatchMode, OverlayOptions, Translation } from '@helix-ui/core/api';
 import { Subject } from 'rxjs';
 import type { HelixConfigType, ThemeConfigType, ZIndex } from './primeng.types';
 import { ThemeProvider } from './themeprovider';

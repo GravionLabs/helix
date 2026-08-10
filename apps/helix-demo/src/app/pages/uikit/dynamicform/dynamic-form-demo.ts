@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { HelixDynamicForm, helixMeta } from '@helix/zod';
+import { HelixDynamicForm, helixMeta } from '@helix-ui/zod';
 import { z } from 'zod';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 

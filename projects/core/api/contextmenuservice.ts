@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Nullable } from '@helix/core/ts-helpers';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import { Subject } from 'rxjs';
 
 @Injectable()

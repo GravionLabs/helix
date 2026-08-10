@@ -1,6 +1,6 @@
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
 import { TemplateRef } from '@angular/core';
-import { PaginatorPassThrough } from '@helix/core/types/paginator';
+import { PaginatorPassThrough } from '@helix-ui/core/types/paginator';
 
 /**
  * Custom pass-through(pt) options.

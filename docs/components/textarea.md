@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Textarea } from '@helix/core/textarea';
+import { Textarea } from '@helix-ui/core/textarea';
 ```
 
 ## Components

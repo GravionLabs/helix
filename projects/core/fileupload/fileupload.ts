@@ -3,15 +3,15 @@ import { HttpClient, HttpEvent, HttpEventType, HttpHeaders } from '@angular/comm
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, output, TemplateRef, ViewEncapsulation, contentChild, viewChild, contentChildren } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { addClass, removeClass } from '@primeuix/utils';
-import { BlockableUI, HelixTemplate, SharedModule, TranslationKeys } from '@helix/core/api';
-import { Badge } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { Button, ButtonProps } from '@helix/core/button';
-import { PlusIcon, TimesIcon, UploadIcon } from '@helix/core/icons';
-import { Message } from '@helix/core/message';
-import { ProgressBar } from '@helix/core/progressbar';
-import { VoidListener } from '@helix/core/ts-helpers';
+import { BlockableUI, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { Badge } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { Button, ButtonProps } from '@helix-ui/core/button';
+import { PlusIcon, TimesIcon, UploadIcon } from '@helix-ui/core/icons';
+import { Message } from '@helix-ui/core/message';
+import { ProgressBar } from '@helix-ui/core/progressbar';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
 import {
     FileBeforeUploadEvent,
     FileProgressEvent,
@@ -26,7 +26,7 @@ import {
     FileUploadHeaderTemplateContext,
     FileUploadPassThrough,
     RemoveUploadedFileEvent
-} from '@helix/core/types/fileupload';
+} from '@helix-ui/core/types/fileupload';
 import { Subscription } from 'rxjs';
 import { FileUploadStyle } from './style/fileuploadstyle';
 

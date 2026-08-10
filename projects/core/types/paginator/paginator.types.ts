@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import { InputNumberPassThrough } from '@helix/core/types/inputnumber';
-import { SelectPassThrough } from '@helix/core/types/select';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import { InputNumberPassThrough } from '@helix-ui/core/types/inputnumber';
+import { SelectPassThrough } from '@helix-ui/core/types/select';
 
 /**
  * Custom pass-through(pt) options.

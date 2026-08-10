@@ -21,17 +21,17 @@ import {
     resolve,
     uuid
 } from '@primeuix/utils';
-import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BadgeModule } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BindModule } from '@helix/core/bind';
-import { AngleRightIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import { Ripple } from '@helix/core/ripple';
-import { TooltipModule } from '@helix/core/tooltip';
-import { VoidListener } from '@helix/core/ts-helpers';
-import { ContextMenuItemTemplateContext, ContextMenuPassThrough, ContextMenuSubmenuIconTemplateContext } from '@helix/core/types/contextmenu';
-import { ZIndexUtils } from '@helix/core/utils';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BadgeModule } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BindModule } from '@helix-ui/core/bind';
+import { AngleRightIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Ripple } from '@helix-ui/core/ripple';
+import { TooltipModule } from '@helix-ui/core/tooltip';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
+import { ContextMenuItemTemplateContext, ContextMenuPassThrough, ContextMenuSubmenuIconTemplateContext } from '@helix-ui/core/types/contextmenu';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { ContextMenuStyle } from './style/contextmenustyle';
 
 const CONTEXTMENU_INSTANCE = new InjectionToken<ContextMenu>('CONTEXTMENU_INSTANCE');

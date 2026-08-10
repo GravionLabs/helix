@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { uuid } from '@primeuix/utils';
-import { BlockableUI, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { MinusIcon, PlusIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import type { FieldsetAfterToggleEvent, FieldsetBeforeToggleEvent, FieldsetPassThrough } from '@helix/core/types/fieldset';
+import { BlockableUI, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { MinusIcon, PlusIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import type { FieldsetAfterToggleEvent, FieldsetBeforeToggleEvent, FieldsetPassThrough } from '@helix-ui/core/types/fieldset';
 import { FieldsetStyle } from './style/fieldsetstyle';
 
 const FIELDSET_INSTANCE = new InjectionToken<Fieldset>('FIELDSET_INSTANCE');

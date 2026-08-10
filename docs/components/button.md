@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Button, ButtonLabel, ButtonIcon } from '@helix/core/button';
+import { Button, ButtonLabel, ButtonIcon } from '@helix-ui/core/button';
 ```
 
 ## Components

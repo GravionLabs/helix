@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputText } from '@helix/core/inputtext';
+import { InputText } from '@helix-ui/core/inputtext';
 ```
 
 ## Components

@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix/core/config';
-import { TextareaPassThrough } from '@helix/core/types/textarea';
+import { provideHelix } from '@helix-ui/core/config';
+import { TextareaPassThrough } from '@helix-ui/core/types/textarea';
 import { Textarea } from './textarea';
 
 @Component({

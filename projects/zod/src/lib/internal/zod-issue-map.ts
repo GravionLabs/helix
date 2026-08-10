@@ -1,8 +1,8 @@
-import { ValidatorKey } from '@helix/core/validators';
+import { ValidatorKey } from '@helix-ui/core/validators';
 import { type ZodIssue, ZodIssueCode } from 'zod';
 
 // Mirrors Validators' internal EMPTY_VALUES — defined locally to avoid
-// depending on unexported internals of @helix/core.
+// depending on unexported internals of @helix-ui/core.
 export const EMPTY_VALUES: unknown[] = ['', null, undefined];
 export const isEmptyValue = (v: unknown): boolean => EMPTY_VALUES.includes(v);
 

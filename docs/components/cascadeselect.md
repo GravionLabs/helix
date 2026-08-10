@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { CascadeSelect, CascadeSelectSub } from '@helix/core/cascadeselect';
+import { CascadeSelect, CascadeSelectSub } from '@helix-ui/core/cascadeselect';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Fieldset } from '@helix/core/fieldset';
+import { Fieldset } from '@helix-ui/core/fieldset';
 ```
 
 ## Components

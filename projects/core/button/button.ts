@@ -1,15 +1,15 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, contentChild, Directive, effect, inject, InjectionToken, input, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, output, contentChildren } from '@angular/core';
 import { addClass, createElement, findSingle, isEmpty } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { BadgeModule } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { Fluid } from '@helix/core/fluid';
-import { SpinnerIcon } from '@helix/core/icons';
-import { Ripple } from '@helix/core/ripple';
-import type { ButtonIconTemplateContext, ButtonLoadingIconTemplateContext, ButtonPassThrough, ButtonProps, ButtonSeverity } from '@helix/core/types/button';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { BadgeModule } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { Fluid } from '@helix-ui/core/fluid';
+import { SpinnerIcon } from '@helix-ui/core/icons';
+import { Ripple } from '@helix-ui/core/ripple';
+import type { ButtonIconTemplateContext, ButtonLoadingIconTemplateContext, ButtonPassThrough, ButtonProps, ButtonSeverity } from '@helix-ui/core/types/button';
 import { ButtonStyle } from './style/buttonstyle';
 
 const BUTTON_INSTANCE = new InjectionToken<Button>('BUTTON_INSTANCE');

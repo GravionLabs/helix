@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ContextMenu, ContextMenuSub } from '@helix/core/contextmenu';
+import { ContextMenu, ContextMenuSub } from '@helix-ui/core/contextmenu';
 ```
 
 ## Components

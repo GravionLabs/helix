@@ -1,13 +1,13 @@
 import { TemplateRef } from '@angular/core';
-import type { FilterMetadata, LazyLoadMeta, PassThrough, PassThroughOption } from '@helix/core/api';
-import type { ButtonPassThrough, ButtonProps } from '@helix/core/types/button';
-import type { CheckboxPassThrough } from '@helix/core/types/checkbox';
-import type { PaginatorPassThrough } from '@helix/core/types/paginator';
-import type { VirtualScrollerPassThrough } from '@helix/core/types/scroller';
-import type { InputTextPassThrough } from '@helix/core/types/inputtext';
-import type { SelectPassThrough } from '@helix/core/types/select';
-import type { InputNumberPassThrough } from '@helix/core/types/inputnumber';
-import type { DatePickerPassThrough } from '@helix/core/types/datepicker';
+import type { FilterMetadata, LazyLoadMeta, PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { ButtonPassThrough, ButtonProps } from '@helix-ui/core/types/button';
+import type { CheckboxPassThrough } from '@helix-ui/core/types/checkbox';
+import type { PaginatorPassThrough } from '@helix-ui/core/types/paginator';
+import type { VirtualScrollerPassThrough } from '@helix-ui/core/types/scroller';
+import type { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
+import type { SelectPassThrough } from '@helix-ui/core/types/select';
+import type { InputNumberPassThrough } from '@helix-ui/core/types/inputnumber';
+import type { DatePickerPassThrough } from '@helix-ui/core/types/datepicker';
 import type { MotionOptions } from '@primeuix/motion';
 
 /**

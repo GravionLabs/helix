@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TSHelpers } from '@helix/core/ts-helpers';
+import { TSHelpers } from '@helix-ui/core/ts-helpers';
 ```
 
 ## Interfaces & Types

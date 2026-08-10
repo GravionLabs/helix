@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Popover } from '@helix/core/popover';
+import { Popover } from '@helix-ui/core/popover';
 ```
 
 ## Components

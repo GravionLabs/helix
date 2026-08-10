@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TreeTable, TTBody, TTScrollableView } from '@helix/core/treetable';
+import { TreeTable, TTBody, TTScrollableView } from '@helix-ui/core/treetable';
 ```
 
 ## Components

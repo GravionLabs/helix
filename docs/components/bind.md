@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Bind } from '@helix/core/bind';
+import { Bind } from '@helix-ui/core/bind';
 ```
 
 ## Components

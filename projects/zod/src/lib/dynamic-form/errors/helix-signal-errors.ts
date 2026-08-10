@@ -1,5 +1,5 @@
 import type { ValidationError } from '@angular/forms/signals';
-import { ValidatorKey } from '@helix/core/validators';
+import { ValidatorKey } from '@helix-ui/core/validators';
 import type { ZodIssue } from 'zod';
 import { zodIssueToHelixKey } from '../../internal/zod-issue-map';
 

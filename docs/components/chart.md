@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { UIChart } from '@helix/core/chart';
+import { UIChart } from '@helix-ui/core/chart';
 ```
 
 ## Components

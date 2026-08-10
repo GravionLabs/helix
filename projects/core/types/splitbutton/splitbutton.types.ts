@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import type { ButtonPassThrough } from '@helix/core/types/button';
-import { MenuPassThrough } from '@helix/core/types/menu';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { ButtonPassThrough } from '@helix-ui/core/types/button';
+import { MenuPassThrough } from '@helix-ui/core/types/menu';
 
 /**
  * Custom pass-through(pt) options.

@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BreadcrumbModule } from '@helix/core/breadcrumb';
-import { ButtonModule } from '@helix/core/button';
-import { ContextMenuModule } from '@helix/core/contextmenu';
-import { IconField, IconFieldModule } from '@helix/core/iconfield';
-import { InputIcon, InputIconModule } from '@helix/core/inputicon';
-import { InputTextModule } from '@helix/core/inputtext';
-import { MegaMenuModule } from '@helix/core/megamenu';
-import { MenuModule } from '@helix/core/menu';
-import { MenubarModule } from '@helix/core/menubar';
-import { PanelMenuModule } from '@helix/core/panelmenu';
-import { StepperModule } from '@helix/core/stepper';
-import { TabsModule } from '@helix/core/tabs';
-import { TieredMenuModule } from '@helix/core/tieredmenu';
+import { BreadcrumbModule } from '@helix-ui/core/breadcrumb';
+import { ButtonModule } from '@helix-ui/core/button';
+import { ContextMenuModule } from '@helix-ui/core/contextmenu';
+import { IconField, IconFieldModule } from '@helix-ui/core/iconfield';
+import { InputIcon, InputIconModule } from '@helix-ui/core/inputicon';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MegaMenuModule } from '@helix-ui/core/megamenu';
+import { MenuModule } from '@helix-ui/core/menu';
+import { MenubarModule } from '@helix-ui/core/menubar';
+import { PanelMenuModule } from '@helix-ui/core/panelmenu';
+import { StepperModule } from '@helix-ui/core/stepper';
+import { TabsModule } from '@helix-ui/core/tabs';
+import { TieredMenuModule } from '@helix-ui/core/tieredmenu';
 
 @Component({
   selector: 'app-menu-demo',

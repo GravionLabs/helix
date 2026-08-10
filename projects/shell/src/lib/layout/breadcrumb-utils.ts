@@ -1,5 +1,5 @@
 import type { ActivatedRoute } from '@angular/router';
-import type { MenuItem } from '@helix/core/api';
+import type { MenuItem } from '@helix-ui/core/api';
 
 export function helixBreadcrumbsFromRoutes(route: ActivatedRoute): MenuItem[] {
   let deepest: ActivatedRoute | null = route;

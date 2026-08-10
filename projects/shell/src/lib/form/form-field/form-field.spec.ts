@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
-import { Validators } from '@helix/core/validators';
+import { Validators } from '@helix-ui/core/validators';
 import { HelixFormField } from './form-field';
 
 describe('HelixFormField', () => {

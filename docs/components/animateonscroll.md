@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AnimateOnScroll } from '@helix/core/animateonscroll';
+import { AnimateOnScroll } from '@helix-ui/core/animateonscroll';
 ```
 
 ## Directives

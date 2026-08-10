@@ -3,10 +3,10 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { SharedModule } from '@helix/core/api';
+import { SharedModule } from '@helix-ui/core/api';
 import { Rating } from './rating';
 
-import { provideHelix } from '@helix/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 
 // Basic Rating test component
 @Component({

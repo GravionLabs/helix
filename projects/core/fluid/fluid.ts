@@ -1,8 +1,8 @@
 
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation } from '@angular/core';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { FluidPassThrough } from '@helix/core/types/fluid';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { FluidPassThrough } from '@helix-ui/core/types/fluid';
 import { FluidStyle } from './style/fluidstyle';
 
 const FLUID_INSTANCE = new InjectionToken<Fluid>('FLUID_INSTANCE');

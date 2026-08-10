@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Checkbox } from '@helix/core/checkbox';
+import { Checkbox } from '@helix-ui/core/checkbox';
 ```
 
 ## Components

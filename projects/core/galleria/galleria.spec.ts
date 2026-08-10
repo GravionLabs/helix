@@ -3,8 +3,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { GalleriaResponsiveOptions } from '@helix/core/types/galleria';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { GalleriaResponsiveOptions } from '@helix-ui/core/types/galleria';
 import { Galleria, GalleriaModule } from './galleria';
 
 // Mock data for testing

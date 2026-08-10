@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { style as badge_style } from '@primeuix/styles/badge';
 import { isEmpty, isNotEmpty } from '@primeuix/utils';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${badge_style}

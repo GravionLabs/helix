@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { MenuItem, HelixTemplate, SharedModule } from '@helix/core/api';
-import { Badge } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { ChevronRightIcon, HomeIcon } from '@helix/core/icons';
-import { TooltipModule } from '@helix/core/tooltip';
-import { BreadcrumbItemClickEvent, BreadcrumbItemTemplateContext, BreadcrumbPassThrough } from '@helix/core/types/breadcrumb';
+import { MenuItem, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { Badge } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { ChevronRightIcon, HomeIcon } from '@helix-ui/core/icons';
+import { TooltipModule } from '@helix-ui/core/tooltip';
+import { BreadcrumbItemClickEvent, BreadcrumbItemTemplateContext, BreadcrumbPassThrough } from '@helix-ui/core/types/breadcrumb';
 import { BreadCrumbStyle } from './style/breadcrumbstyle';
 
 const BREADCRUMB_INSTANCE = new InjectionToken<Breadcrumb>('BREADCRUMB_INSTANCE');

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Menu, MenuItemContent } from '@helix/core/menu';
+import { Menu, MenuItemContent } from '@helix-ui/core/menu';
 ```
 
 ## Components

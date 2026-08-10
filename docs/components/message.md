@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Message } from '@helix/core/message';
+import { Message } from '@helix-ui/core/message';
 ```
 
 ## Components

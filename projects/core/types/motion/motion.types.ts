@@ -1,4 +1,4 @@
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
 
 /**
  * Custom passthrough(pt) options.

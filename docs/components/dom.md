@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dom } from '@helix/core/dom';
+import { Dom } from '@helix-ui/core/dom';
 ```
 
 ## Classes

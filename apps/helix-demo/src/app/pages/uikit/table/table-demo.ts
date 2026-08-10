@@ -7,22 +7,22 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@helix/core/api';
-import { ButtonModule } from '@helix/core/button';
-import { IconFieldModule } from '@helix/core/iconfield';
-import { InputIconModule } from '@helix/core/inputicon';
-import { InputTextModule } from '@helix/core/inputtext';
-import { MultiSelectModule } from '@helix/core/multiselect';
-import { ProgressBarModule } from '@helix/core/progressbar';
-import { RatingModule } from '@helix/core/rating';
-import { RippleModule } from '@helix/core/ripple';
-import { SelectModule } from '@helix/core/select';
-import { SliderModule } from '@helix/core/slider';
-import { type Table, TableModule } from '@helix/core/table';
-import { TagModule } from '@helix/core/tag';
-import { ToastModule } from '@helix/core/toast';
-import { ToggleButtonModule } from '@helix/core/togglebutton';
-import { ObjectUtils } from '@helix/core/utils';
+import { ConfirmationService, MessageService } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
+import { IconFieldModule } from '@helix-ui/core/iconfield';
+import { InputIconModule } from '@helix-ui/core/inputicon';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MultiSelectModule } from '@helix-ui/core/multiselect';
+import { ProgressBarModule } from '@helix-ui/core/progressbar';
+import { RatingModule } from '@helix-ui/core/rating';
+import { RippleModule } from '@helix-ui/core/ripple';
+import { SelectModule } from '@helix-ui/core/select';
+import { SliderModule } from '@helix-ui/core/slider';
+import { type Table, TableModule } from '@helix-ui/core/table';
+import { TagModule } from '@helix-ui/core/tag';
+import { ToastModule } from '@helix-ui/core/toast';
+import { ToggleButtonModule } from '@helix-ui/core/togglebutton';
+import { ObjectUtils } from '@helix-ui/core/utils';
 import {
   type Customer,
   CustomerService,

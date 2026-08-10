@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as scrollpanel_style } from '@primeuix/styles/scrollpanel';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${scrollpanel_style}

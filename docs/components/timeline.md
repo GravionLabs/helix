@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Timeline } from '@helix/core/timeline';
+import { Timeline } from '@helix-ui/core/timeline';
 ```
 
 ## Components

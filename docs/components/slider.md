@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Slider } from '@helix/core/slider';
+import { Slider } from '@helix-ui/core/slider';
 ```
 
 ## Components

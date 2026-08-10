@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 import { Terminal } from './terminal';
 import { TerminalService } from './terminalservice';
 

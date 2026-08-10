@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Image } from '@helix/core/image';
+import { Image } from '@helix-ui/core/image';
 ```
 
 ## Components

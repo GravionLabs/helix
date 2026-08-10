@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PanelMenu, PanelMenuSub, PanelMenuList } from '@helix/core/panelmenu';
+import { PanelMenu, PanelMenuSub, PanelMenuList } from '@helix-ui/core/panelmenu';
 ```
 
 ## Components

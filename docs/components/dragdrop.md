@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Draggable, Droppable } from '@helix/core/dragdrop';
+import { Draggable, Droppable } from '@helix-ui/core/dragdrop';
 ```
 
 ## Components

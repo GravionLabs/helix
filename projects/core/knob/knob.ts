@@ -2,13 +2,13 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, NgModule, numberAttribute, signal, ViewEncapsulation, input, output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { $dt } from '@primeuix/styled';
-import { SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind } from '@helix/core/bind';
-import { BindModule } from '@helix/core/bind';
-import { VoidListener } from '@helix/core/ts-helpers';
-import { KnobPassThrough } from '@helix/core/types/knob';
+import { SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind } from '@helix-ui/core/bind';
+import { BindModule } from '@helix-ui/core/bind';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
+import { KnobPassThrough } from '@helix-ui/core/types/knob';
 import { KnobStyle } from './style/knobstyle';
 
 const KNOB_INSTANCE = new InjectionToken<Knob>('KNOB_INSTANCE');

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, contentChild, contentChildren, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { BlockableUI, Footer, Header, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
+import { BlockableUI, Footer, Header, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
 import { CardStyle } from './style/cardstyle';
-import { CardPassThrough } from '@helix/core/types/card';
+import { CardPassThrough } from '@helix-ui/core/types/card';
 
 const CARD_INSTANCE = new InjectionToken<Card>('CARD_INSTANCE');
 

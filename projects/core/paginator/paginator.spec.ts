@@ -4,11 +4,11 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Paginator, PaginatorModule } from './paginator';
-import { Select } from '@helix/core/select';
-import { InputNumber } from '@helix/core/inputnumber';
-import { Ripple } from '@helix/core/ripple';
-import { SharedModule } from '@helix/core/api';
-import { PaginatorState } from '@helix/core/types/paginator';
+import { Select } from '@helix-ui/core/select';
+import { InputNumber } from '@helix-ui/core/inputnumber';
+import { Ripple } from '@helix-ui/core/ripple';
+import { SharedModule } from '@helix-ui/core/api';
+import { PaginatorState } from '@helix-ui/core/types/paginator';
 
 // Test component for basic paginator functionality
 @Component({

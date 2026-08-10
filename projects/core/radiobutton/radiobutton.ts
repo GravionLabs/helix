@@ -19,15 +19,15 @@ import {
   viewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
-import { SharedModule } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind } from '@helix/core/bind';
-import { BindModule } from '@helix/core/bind';
-import { Nullable } from '@helix/core/ts-helpers';
-import { RadioButtonPassThrough } from '@helix/core/types/radiobutton';
-import type { RadioButtonClickEvent } from '@helix/core/types/radiobutton';
+import { SharedModule } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind } from '@helix-ui/core/bind';
+import { BindModule } from '@helix-ui/core/bind';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { RadioButtonPassThrough } from '@helix-ui/core/types/radiobutton';
+import type { RadioButtonClickEvent } from '@helix-ui/core/types/radiobutton';
 import { RadioButtonStyle } from './style/radiobuttonstyle';
 
 const RADIOBUTTON_INSTANCE = new InjectionToken<RadioButton>('RADIOBUTTON_INSTANCE');

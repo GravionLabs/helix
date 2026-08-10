@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SpeedDial } from '@helix/core/speeddial';
+import { SpeedDial } from '@helix-ui/core/speeddial';
 ```
 
 ## Components

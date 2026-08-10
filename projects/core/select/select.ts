@@ -27,21 +27,21 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, scrollInView, uuid } from '@primeuix/utils';
-import { FilterService, OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseInput } from '@helix/core/baseinput';
-import { Bind, BindModule } from '@helix/core/bind';
-import { unblockBodyScroll } from '@helix/core/dom';
-import { IconField } from '@helix/core/iconfield';
-import { BlankIcon, CheckIcon, ChevronDownIcon, SearchIcon, TimesIcon } from '@helix/core/icons';
-import { InputIcon } from '@helix/core/inputicon';
-import { InputText } from '@helix/core/inputtext';
-import { Overlay } from '@helix/core/overlay';
-import { Ripple } from '@helix/core/ripple';
-import { Scroller } from '@helix/core/scroller';
-import { Tooltip } from '@helix/core/tooltip';
-import { Nullable } from '@helix/core/ts-helpers';
+import { FilterService, OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseInput } from '@helix-ui/core/baseinput';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { unblockBodyScroll } from '@helix-ui/core/dom';
+import { IconField } from '@helix-ui/core/iconfield';
+import { BlankIcon, CheckIcon, ChevronDownIcon, SearchIcon, TimesIcon } from '@helix-ui/core/icons';
+import { InputIcon } from '@helix-ui/core/inputicon';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Overlay } from '@helix-ui/core/overlay';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Scroller } from '@helix-ui/core/scroller';
+import { Tooltip } from '@helix-ui/core/tooltip';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     SelectChangeEvent,
     SelectFilterEvent,
@@ -54,7 +54,7 @@ import {
     SelectLoaderTemplateContext,
     SelectPassThrough,
     SelectSelectedItemTemplateContext
-} from '@helix/core/types/select';
+} from '@helix-ui/core/types/select';
 import { SelectStyle } from './style/selectstyle';
 
 const SELECT_INSTANCE = new InjectionToken<Select>('SELECT_INSTANCE');

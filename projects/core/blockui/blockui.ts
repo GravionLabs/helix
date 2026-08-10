@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, effect, ElementRef, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
 import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { BlockUIPassThrough } from '@helix/core/types/blockui';
-import { ZIndexUtils } from '@helix/core/utils';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { BlockUIPassThrough } from '@helix-ui/core/types/blockui';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { BlockUiStyle } from './style/blockuistyle';
 
 const BLOCKUI_INSTANCE = new InjectionToken<BlockUI>('BLOCKUI_INSTANCE');

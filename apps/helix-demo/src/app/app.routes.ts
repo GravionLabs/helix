@@ -1,5 +1,5 @@
 import type { Routes } from '@angular/router';
-import { authRoutes, HelixLanding, HelixNotfound, helixRoutesFrom } from '@helix/shell';
+import { authRoutes, HelixLanding, HelixNotfound, helixRoutesFrom } from '@helix-ui/shell';
 import { AppShell } from './shell/app-shell';
 import { DEMO_MENU_MODEL } from './shell/menu.model';
 

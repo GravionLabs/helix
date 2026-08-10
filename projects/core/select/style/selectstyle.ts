@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as select_style } from '@primeuix/styles/select';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${select_style}

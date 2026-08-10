@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/menu';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const inlineStyles = {
     root: ({ instance }) => ({ position: instance.popup() ? 'absolute' : 'relative' })

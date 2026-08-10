@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { <MainExports> } from '@helix/core/<module>';
+import { <MainExports> } from '@helix-ui/core/<module>';
 ```
 
 ## Components <!-- or "## Directives" for directive-only modules -->

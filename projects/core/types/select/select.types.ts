@@ -1,10 +1,10 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption, ScrollerOptions } from '@helix/core/api';
-import type { IconFieldPassThrough } from '@helix/core/types/iconfield';
-import type { InputIconPassThrough } from '@helix/core/types/inputicon';
-import type { InputTextPassThrough } from '@helix/core/types/inputtext';
-import type { OverlayPassThrough } from '@helix/core/types/overlay';
-import type { VirtualScrollerPassThrough } from '@helix/core/types/scroller';
+import type { PassThrough, PassThroughOption, ScrollerOptions } from '@helix-ui/core/api';
+import type { IconFieldPassThrough } from '@helix-ui/core/types/iconfield';
+import type { InputIconPassThrough } from '@helix-ui/core/types/inputicon';
+import type { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
+import type { OverlayPassThrough } from '@helix-ui/core/types/overlay';
+import type { VirtualScrollerPassThrough } from '@helix-ui/core/types/scroller';
 
 /**
  * Custom pass-through(pt) options.

@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import { TreeNode } from '@helix/core/api';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import { TreeNode } from '@helix-ui/core/api';
 
 /**
  * Custom pass-through(pt) options.

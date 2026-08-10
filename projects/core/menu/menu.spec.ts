@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem, OverlayService, SharedModule } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
+import { MenuItem, OverlayService, SharedModule } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
 import { Menu } from './menu';
 
 @Component({

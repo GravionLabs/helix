@@ -1,3 +1,3 @@
-export * from '@helix/core/types/blockui';
+export * from '@helix-ui/core/types/blockui';
 export * from './blockui';
 export * from './style/blockuistyle';

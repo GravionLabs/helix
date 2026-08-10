@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import type { MotionOptions } from '@primeuix/motion';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import type { ButtonPassThrough } from '@helix/core/types/button';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { ButtonPassThrough } from '@helix-ui/core/types/button';
 
 /**
  * Custom pass-through(pt) options.

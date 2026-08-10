@@ -1,8 +1,8 @@
 import { TemplateRef } from '@angular/core';
 import type { MotionOptions } from '@primeuix/motion';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import type { InputTextPassThrough } from '@helix/core/types/inputtext';
-import type { OverlayPassThrough } from '@helix/core/types/overlay';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
+import type { OverlayPassThrough } from '@helix-ui/core/types/overlay';
 
 /**
  * Custom pass-through(pt) options.

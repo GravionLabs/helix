@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Paginator } from '@helix/core/paginator';
+import { Paginator } from '@helix-ui/core/paginator';
 ```
 
 ## Components

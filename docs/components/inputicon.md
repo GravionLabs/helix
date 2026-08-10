@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputIcon } from '@helix/core/inputicon';
+import { InputIcon } from '@helix-ui/core/inputicon';
 ```
 
 ## Components

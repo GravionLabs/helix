@@ -2,8 +2,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { SharedModule } from '@helix/core/api';
-import { CheckboxChangeEvent } from '@helix/core/types/checkbox';
+import { SharedModule } from '@helix-ui/core/api';
+import { CheckboxChangeEvent } from '@helix-ui/core/types/checkbox';
 import { Checkbox } from './checkbox';
 
 // Mock data for testing

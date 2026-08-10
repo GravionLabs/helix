@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, Directive, NgModule, numberAttribute, input } from '@angular/core';
 import { addClass, removeClass } from '@primeuix/utils';
-import { BaseComponent } from '@helix/core/basecomponent';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
 
 interface AnimateOnScrollOptions {
     root?: HTMLElement | null;

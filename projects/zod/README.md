@@ -1,6 +1,6 @@
-# @helix/zod
+# @helix-ui/zod
 
-Zod v4 adapter for `@helix/core` forms. Two independent features:
+Zod v4 adapter for `@helix-ui/core` forms. Two independent features:
 
 1. **Reactive-forms validator bridge** — `HelixZodValidators.fromZod()` converts a Zod field schema into an Angular `ValidatorFn` that emits `HelixValidatorKey`-keyed `ValidationErrors` — compatible with `HelixFormField`, `HelixFirstError`, and `helixFormErrorMap` out of the box.
 2. **Dynamic forms** — `HelixDynamicForm` generates a complete, validated form from a single annotated Zod object schema, built on Angular's experimental signal forms (`@angular/forms/signals`, requires Angular **≥ 21.2**).
@@ -12,7 +12,7 @@ Zod v4 adapter for `@helix/core` forms. Two independent features:
 | Package | Version |
 |---|---|
 | `zod` | `^4.0.0` |
-| `@helix/core` | `>=0.2.0` |
+| `@helix-ui/core` | `>=0.2.0` |
 | `@angular/core` / `@angular/common` / `@angular/forms` | `>=21` (dynamic forms: `>=21.2`) |
 
 ---
@@ -25,7 +25,7 @@ Zod v4 adapter for `@helix/core` forms. Two independent features:
 
 ```ts
 import { z } from 'zod';
-import { HelixDynamicForm, helixMeta, provideHelixDynamicForms } from '@helix/zod';
+import { HelixDynamicForm, helixMeta, provideHelixDynamicForms } from '@helix-ui/zod';
 
 const UserSchema = z.object({
   email: helixMeta(z.email('Invalid email'), { label: 'E-mail', placeholder: 'you@example.com' }),
@@ -98,13 +98,13 @@ Custom widgets extend `HelixFieldWidgetBase` (inputs `field` + `descriptor`, com
 This is a workspace library — no `npm install` needed. The path alias is already registered in `tsconfig.json`:
 
 ```json
-"@helix/zod": ["./projects/zod/src/public-api.ts"]
+"@helix-ui/zod": ["./projects/zod/src/public-api.ts"]
 ```
 
 Import directly in your application:
 
 ```ts
-import { HelixZodValidators } from '@helix/zod';
+import { HelixZodValidators } from '@helix-ui/zod';
 ```
 
 ---
@@ -113,7 +113,7 @@ import { HelixZodValidators } from '@helix/zod';
 
 ```ts
 import { z } from 'zod';
-import { HelixZodValidators } from '@helix/zod';
+import { HelixZodValidators } from '@helix-ui/zod';
 
 // Wrap any Zod field schema in a reactive form control
 form = this.fb.group({
@@ -135,7 +135,7 @@ Converts a Zod field schema into a Helix-compatible Angular `ValidatorFn`.
 ```ts
 import type { ValidatorFn } from '@angular/forms';
 import type { ZodSchema } from 'zod';
-import type { ZodHelixOptions } from '@helix/zod';
+import type { ZodHelixOptions } from '@helix-ui/zod';
 
 fromZod(schema: ZodSchema, options?: ZodHelixOptions): ValidatorFn
 ```
@@ -246,8 +246,8 @@ HelixZodValidators.fromZod(
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { z } from 'zod';
-import { HelixFormField, HelixValidators, HelixValidatorKey } from '@helix/core';
-import { HelixZodValidators } from '@helix/zod';
+import { HelixFormField, HelixValidators, HelixValidatorKey } from '@helix-ui/core';
+import { HelixZodValidators } from '@helix-ui/zod';
 
 // Define your schema once — reuse it for both API parsing and form validation
 const UserSchema = z.object({
@@ -329,7 +329,7 @@ export class RegisterComponent {
 
 ```ts
 // helixFormErrorMap also works identically
-import { helixFormErrorMap } from '@helix/core';
+import { helixFormErrorMap } from '@helix-ui/core';
 const errors = helixFormErrorMap(this.form);
 // → { email: 'Invalid email', name: 'Name is required' }
 ```
@@ -369,7 +369,7 @@ Tests are written with [Vitest](https://vitest.dev) and cover all mapped issue c
 
 ## Architecture Notes
 
-This library is the `@helix/zod` portion of the broader Zod integration architecture documented in [`ZOD_ARCHITECTURE_HELIX.md`](../../ZOD_ARCHITECTURE_HELIX.md) at the repo root. The arch doc also covers:
+This library is the `@helix-ui/zod` portion of the broader Zod integration architecture documented in [`ZOD_ARCHITECTURE_HELIX.md`](../../ZOD_ARCHITECTURE_HELIX.md) at the repo root. The arch doc also covers:
 
 - App-level patterns: domain schemas, `UserSchema.shape`, schema composition
 - REST endpoint validation with `HttpClient` and `httpResource`

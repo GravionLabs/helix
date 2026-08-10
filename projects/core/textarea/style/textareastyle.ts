@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as textarea_style } from '@primeuix/styles/textarea';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${textarea_style}

@@ -1,6 +1,6 @@
 import { booleanAttribute, computed, Directive, input, signal } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { BaseModelHolder } from '@helix/core/basemodelholder';
+import { BaseModelHolder } from '@helix-ui/core/basemodelholder';
 
 @Directive({ standalone: true })
 export class BaseEditableHolder<PT = any> extends BaseModelHolder<PT> implements ControlValueAccessor {

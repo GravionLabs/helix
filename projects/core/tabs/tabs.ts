@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, input, model, numberAttribute, signal, ViewEncapsulation } from '@angular/core';
 import { uuid } from '@primeuix/utils';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { TabsPassThrough } from '@helix/core/types/tabs';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { TabsPassThrough } from '@helix-ui/core/types/tabs';
 import { TabsStyle } from './style/tabsstyle';
 
 const TABS_INSTANCE = new InjectionToken<Tabs>('TABS_INSTANCE');

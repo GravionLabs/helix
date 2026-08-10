@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
-import { Tooltip } from '@helix/core/tooltip';
+import { MenuItem } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
+import { Tooltip } from '@helix-ui/core/tooltip';
 import { TieredMenu } from './tieredmenu';
 
 @Component({

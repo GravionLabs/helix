@@ -1,4 +1,4 @@
-import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@helix/shell';
+import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@helix-ui/shell';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { Documentation } from '../pages/documentation/documentation';
 import { PAGES_MENU_ITEMS } from '../pages/pages-menu-items';

@@ -1,9 +1,9 @@
 
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
-import { SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { AvatarGroupPassThrough } from '@helix/core/types/avatargroup';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { AvatarGroupPassThrough } from '@helix-ui/core/types/avatargroup';
 import { AvatarGroupStyle } from './style/avatargroupstyle';
 
 const AVATARGROUP_INSTANCE = new InjectionToken<AvatarGroup>('AVATARGROUP_INSTANCE');

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputGroupAddon } from '@helix/core/inputgroupaddon';
+import { InputGroupAddon } from '@helix-ui/core/inputgroupaddon';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FocusTrap } from '@helix/core/focustrap';
+import { FocusTrap } from '@helix-ui/core/focustrap';
 ```
 
 ## Directives

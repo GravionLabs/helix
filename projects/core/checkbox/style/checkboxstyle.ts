@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as checkbox_style } from '@primeuix/styles/checkbox';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${checkbox_style}

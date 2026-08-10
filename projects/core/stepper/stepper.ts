@@ -22,12 +22,12 @@ import {
 
 import { MotionOptions } from '@primeuix/motion';
 import { find, findIndexInList, uuid } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { MotionModule } from '@helix/core/motion';
-import { StepItemPassThrough, StepListPassThrough, StepPanelPassThrough, StepPanelsPassThrough, StepPassThrough, StepperPassThrough, StepperSeparatorPassThrough } from '@helix/core/types/stepper';
-import { transformToBoolean } from '@helix/core/utils';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { MotionModule } from '@helix-ui/core/motion';
+import { StepItemPassThrough, StepListPassThrough, StepPanelPassThrough, StepPanelsPassThrough, StepPassThrough, StepperPassThrough, StepperSeparatorPassThrough } from '@helix-ui/core/types/stepper';
+import { transformToBoolean } from '@helix-ui/core/utils';
 import { StepItemStyle } from './style/stepitemstyle';
 import { StepListStyle } from './style/stepliststyle';
 import { StepPanelsStyle } from './style/steppanelsstyle';

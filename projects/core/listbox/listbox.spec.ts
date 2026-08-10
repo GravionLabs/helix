@@ -4,8 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { provideHelix } from '@helix/core/config';
-import { ListboxChangeEvent } from '@helix/core/types/listbox';
+import { provideHelix } from '@helix-ui/core/config';
+import { ListboxChangeEvent } from '@helix-ui/core/types/listbox';
 import { BehaviorSubject, Observable, delay, of } from 'rxjs';
 import { Listbox } from './listbox';
 

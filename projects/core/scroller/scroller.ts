@@ -18,11 +18,11 @@ import {
   contentChildren
 } from '@angular/core';
 import { findSingle, getHeight, getWidth, isTouchDevice, isVisible } from '@primeuix/utils';
-import { HelixTemplate, ScrollerOptions, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { SpinnerIcon } from '@helix/core/icons';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
+import { HelixTemplate, ScrollerOptions, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { SpinnerIcon } from '@helix-ui/core/icons';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
 import {
     ScrollerContentTemplateContext,
     ScrollerItemTemplateContext,
@@ -33,7 +33,7 @@ import {
     ScrollerScrollIndexChangeEvent,
     ScrollerToType,
     VirtualScrollerPassThrough
-} from '@helix/core/types/scroller';
+} from '@helix-ui/core/types/scroller';
 import { ScrollerStyle } from './style/scrollerstyle';
 
 const SCROLLER_INSTANCE = new InjectionToken<Scroller>('SCROLLER_INSTANCE');

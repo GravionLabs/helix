@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { IftaLabel } from '@helix/core/iftalabel';
+import { IftaLabel } from '@helix-ui/core/iftalabel';
 ```
 
 ## Components

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as datepicker_style } from '@primeuix/styles/datepicker';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
 ${datepicker_style}

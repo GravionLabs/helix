@@ -3,7 +3,7 @@ import { Component, ViewChild, signal, provideZonelessChangeDetection } from '@a
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { DataView } from './dataview';
-import { PaginatorModule } from '@helix/core/paginator';
+import { PaginatorModule } from '@helix-ui/core/paginator';
 
 @Component({
     standalone: false,

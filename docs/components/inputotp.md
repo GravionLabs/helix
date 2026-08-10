@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputOtp } from '@helix/core/inputotp';
+import { InputOtp } from '@helix-ui/core/inputotp';
 ```
 
 ## Components

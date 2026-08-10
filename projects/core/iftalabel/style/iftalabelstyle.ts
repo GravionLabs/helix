@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as iftalabel_style } from '@primeuix/styles/iftalabel';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${iftalabel_style}

@@ -25,19 +25,19 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLastIndex, findSingle, focus, isEmpty, isNotEmpty, resolveFieldData, uuid } from '@primeuix/utils';
-import { OverlayOptions, OverlayService, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseInput } from '@helix/core/baseinput';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Chip } from '@helix/core/chip';
-import { ConnectedOverlayScrollHandler } from '@helix/core/dom';
-import { ChevronDownIcon, SpinnerIcon, TimesCircleIcon, TimesIcon } from '@helix/core/icons';
-import { InputText } from '@helix/core/inputtext';
-import { Overlay } from '@helix/core/overlay';
-import { Ripple } from '@helix/core/ripple';
-import { Scroller } from '@helix/core/scroller';
-import { Nullable } from '@helix/core/ts-helpers';
+import { OverlayOptions, OverlayService, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseInput } from '@helix-ui/core/baseinput';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Chip } from '@helix-ui/core/chip';
+import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
+import { ChevronDownIcon, SpinnerIcon, TimesCircleIcon, TimesIcon } from '@helix-ui/core/icons';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Overlay } from '@helix-ui/core/overlay';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Scroller } from '@helix-ui/core/scroller';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     AutoCompleteAddEvent,
     AutoCompleteCompleteEvent,
@@ -51,7 +51,7 @@ import {
     AutoCompleteSelectedItemTemplateContext,
     AutoCompleteSelectEvent,
     AutoCompleteUnselectEvent
-} from '@helix/core/types/autocomplete';
+} from '@helix-ui/core/types/autocomplete';
 import { AutoCompleteStyle } from './style/autocompletestyle';
 
 const AUTOCOMPLETE_INSTANCE = new InjectionToken<AutoComplete>('AUTOCOMPLETE_INSTANCE');

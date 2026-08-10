@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DialogStyle } from '@helix/core/dialog';
+import { DialogStyle } from '@helix-ui/core/dialog';
 
 @Injectable()
 export class DynamicDialogStyle extends DialogStyle {

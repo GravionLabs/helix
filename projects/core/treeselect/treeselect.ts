@@ -22,17 +22,17 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isNotEmpty, uuid } from '@primeuix/utils';
-import { OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TreeNode } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind } from '@helix/core/bind';
-import { Chip } from '@helix/core/chip';
-import { Fluid } from '@helix/core/fluid';
-import { ChevronDownIcon, TimesIcon } from '@helix/core/icons';
-import { Overlay } from '@helix/core/overlay';
-import { Tree, TreeFilterEvent, TreeNodeSelectEvent, TreeNodeUnSelectEvent } from '@helix/core/tree';
-import { Nullable } from '@helix/core/ts-helpers';
+import { OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TreeNode } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind } from '@helix-ui/core/bind';
+import { Chip } from '@helix-ui/core/chip';
+import { Fluid } from '@helix-ui/core/fluid';
+import { ChevronDownIcon, TimesIcon } from '@helix-ui/core/icons';
+import { Overlay } from '@helix-ui/core/overlay';
+import { Tree, TreeFilterEvent, TreeNodeSelectEvent, TreeNodeUnSelectEvent } from '@helix-ui/core/tree';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     TreeSelectHeaderTemplateContext,
     TreeSelectItemCheckboxIconTemplateContext,
@@ -41,7 +41,7 @@ import {
     TreeSelectNodeExpandEvent,
     TreeSelectPassThrough,
     TreeSelectValueTemplateContext
-} from '@helix/core/types/treeselect';
+} from '@helix-ui/core/types/treeselect';
 import { TreeSelectStyle } from './style/treeselectstyle';
 
 export const TREESELECT_VALUE_ACCESSOR: any = {

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Base } from '@helix/core/base';
+import { Base } from '@helix-ui/core/base';
 ```
 
 ## Source

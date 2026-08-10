@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PickList } from '@helix/core/picklist';
+import { PickList } from '@helix-ui/core/picklist';
 ```
 
 ## Components

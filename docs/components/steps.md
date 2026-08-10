@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Steps } from '@helix/core/steps';
+import { Steps } from '@helix-ui/core/steps';
 ```
 
 ## Components

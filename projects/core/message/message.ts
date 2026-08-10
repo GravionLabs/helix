@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, inject, InjectionToken, input, Input, NgModule, signal, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild } from '@angular/core';
 import { MotionOptions } from '@primeuix/motion';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { TimesIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import { Ripple } from '@helix/core/ripple';
-import { MessageContainerTemplateContext, MessagePassThrough } from '@helix/core/types/message';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { TimesIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Ripple } from '@helix-ui/core/ripple';
+import { MessageContainerTemplateContext, MessagePassThrough } from '@helix-ui/core/types/message';
 import { MessageStyle } from './style/messagestyle';
 
 const MESSAGE_INSTANCE = new InjectionToken<Message>('MESSAGE_INSTANCE');

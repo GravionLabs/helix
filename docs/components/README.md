@@ -1,7 +1,7 @@
-# @helix/core — Module Documentation
+# @helix-ui/core — Module Documentation
 
-One page per entry point of `@helix/core`. Import paths follow the pattern
-`@helix/core/<module>`; all selectors use the `h-` prefix.
+One page per entry point of `@helix-ui/core`. Import paths follow the pattern
+`@helix-ui/core/<module>`; all selectors use the `h-` prefix.
 
 Pages are generated from the module sources (JSDoc, selectors, inputs/outputs) using the shared
 structure in [_TEMPLATE.md](_TEMPLATE.md).

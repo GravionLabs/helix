@@ -2,9 +2,9 @@ import { DOCUMENT, isPlatformServer } from '@angular/common';
 import { ChangeDetectorRef, computed, Directive, effect, ElementRef, inject, InjectionToken, Injector, input, PLATFORM_ID, Renderer2, signal, SimpleChanges } from '@angular/core';
 import { Theme, ThemeService } from '@primeuix/styled';
 import { cn, getKeyValue, isArray, isFunction, isNotEmpty, isString, mergeProps, resolve, toFlatCase, uuid } from '@primeuix/utils';
-import type { Lifecycle, PassThroughOptions } from '@helix/core/api';
-import { Base, BaseStyle } from '@helix/core/base';
-import { HelixConfig } from '@helix/core/config';
+import type { Lifecycle, PassThroughOptions } from '@helix-ui/core/api';
+import { Base, BaseStyle } from '@helix-ui/core/base';
+import { HelixConfig } from '@helix-ui/core/config';
 import { BaseComponentStyle } from './style/basecomponentstyle';
 
 export const PARENT_INSTANCE = new InjectionToken<BaseComponent>('PARENT_INSTANCE');

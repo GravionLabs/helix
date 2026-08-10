@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix/core/button';
-import { RippleModule } from '@helix/core/ripple';
+import { ButtonModule } from '@helix-ui/core/button';
+import { RippleModule } from '@helix-ui/core/ripple';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 @Component({

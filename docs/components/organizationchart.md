@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OrganizationChart, OrganizationChartNode } from '@helix/core/organizationchart';
+import { OrganizationChart, OrganizationChartNode } from '@helix-ui/core/organizationchart';
 ```
 
 ## Components

@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import type { MenuItem, PassThrough, PassThroughOption } from '@helix/core/api';
+import type { MenuItem, PassThrough, PassThroughOption } from '@helix-ui/core/api';
 
 /**
  * Custom pass-through(pt) options.

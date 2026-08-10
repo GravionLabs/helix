@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tag } from '@helix/core/tag';
+import { Tag } from '@helix-ui/core/tag';
 ```
 
 ## Components

@@ -2,12 +2,12 @@ import { CommonModule, isPlatformServer } from '@angular/common';
 import { afterNextRender, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, effect } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { findSingle } from '@primeuix/utils';
-import { Header, HelixTemplate, SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Nullable } from '@helix/core/ts-helpers';
-import { EditorBlurEvent, EditorChangeEvent, EditorFocusEvent, EditorInitEvent, EditorPassThrough, EditorSelectionChangeEvent, EditorTextChangeEvent } from '@helix/core/types/editor';
+import { Header, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { EditorBlurEvent, EditorChangeEvent, EditorFocusEvent, EditorInitEvent, EditorPassThrough, EditorSelectionChangeEvent, EditorTextChangeEvent } from '@helix-ui/core/types/editor';
 import { EditorStyle } from './style/editorstyle';
 
 const EDITOR_INSTANCE = new InjectionToken<Editor>('EDITOR_INSTANCE');

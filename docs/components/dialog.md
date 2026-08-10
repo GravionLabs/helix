@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dialog } from '@helix/core/dialog';
+import { Dialog } from '@helix-ui/core/dialog';
 ```
 
 ## Components

@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix/core/button';
-import { CheckboxModule } from '@helix/core/checkbox';
-import { InputTextModule } from '@helix/core/inputtext';
-import { PasswordModule } from '@helix/core/password';
-import { RippleModule } from '@helix/core/ripple';
+import { ButtonModule } from '@helix-ui/core/button';
+import { CheckboxModule } from '@helix-ui/core/checkbox';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { PasswordModule } from '@helix-ui/core/password';
+import { RippleModule } from '@helix-ui/core/ripple';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 export interface HelixLoginCredentials {

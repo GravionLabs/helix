@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DataView } from '@helix/core/dataview';
+import { DataView } from '@helix-ui/core/dataview';
 ```
 
 ## Components

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as stepper_style } from '@primeuix/styles/stepper';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
 ${stepper_style}

@@ -1,5 +1,5 @@
 /*
- * Public API Surface of @helix/zod
+ * Public API Surface of @helix-ui/zod
  */
 
 // Dynamic forms — components

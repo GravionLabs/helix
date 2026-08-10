@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, Directive, effect, inject, InjectionToken, input, NgModule, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { addClass, createElement, hasClass, isNotEmpty, removeClass, uuid } from '@primeuix/utils';
-import { SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import type { BadgePassThrough } from '@helix/core/types/badge';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import type { BadgePassThrough } from '@helix-ui/core/types/badge';
 import { BadgeStyle } from './style/badgestyle';
 
 const BADGE_INSTANCE = new InjectionToken<Badge>('BADGE_INSTANCE');

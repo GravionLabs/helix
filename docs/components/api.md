@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Header, Footer, PrimeTemplate } from '@helix/core/api';
+import { Header, Footer, PrimeTemplate } from '@helix-ui/core/api';
 ```
 
 ## Components

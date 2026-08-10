@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem } from '@helix/core/api';
-import { ButtonModule } from '@helix/core/button';
+import { MenuItem } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
 import { SpeedDial } from './speeddial';
 
 // Basic SpeedDial Test Component

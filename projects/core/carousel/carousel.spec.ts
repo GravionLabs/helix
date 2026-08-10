@@ -3,10 +3,10 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { ButtonModule } from '@helix/core/button';
-import { provideHelix } from '@helix/core/config';
-import type { CarouselPageEvent, CarouselResponsiveOptions } from '@helix/core/types/carousel';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
+import { provideHelix } from '@helix-ui/core/config';
+import type { CarouselPageEvent, CarouselResponsiveOptions } from '@helix-ui/core/types/carousel';
 import { Carousel } from './carousel';
 
 // Mock data for testing

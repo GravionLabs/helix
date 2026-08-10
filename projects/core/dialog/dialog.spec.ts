@@ -2,8 +2,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ButtonModule } from '@helix/core/button';
-import { FocusTrap } from '@helix/core/focustrap';
+import { ButtonModule } from '@helix-ui/core/button';
+import { FocusTrap } from '@helix-ui/core/focustrap';
 import { Dialog } from './dialog';
 
 // Basic Dialog Test Component

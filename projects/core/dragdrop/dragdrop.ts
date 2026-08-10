@@ -1,7 +1,7 @@
 import { AfterViewInit, booleanAttribute, Directive, effect, ElementRef, NgModule, NgZone, OnDestroy, Renderer2, input, output } from '@angular/core';
 import { addClass, removeClass } from '@primeuix/utils';
-import { DomHandler } from '@helix/core/dom';
-import { VoidListener } from '@helix/core/ts-helpers';
+import { DomHandler } from '@helix-ui/core/dom';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
 
 /**
  * hDraggable directive apply draggable behavior to any element.

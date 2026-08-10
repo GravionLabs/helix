@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FileUpload, FileContent } from '@helix/core/fileupload';
+import { FileUpload, FileContent } from '@helix-ui/core/fileupload';
 ```
 
 ## Components

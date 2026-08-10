@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Ripple } from '@helix/core/ripple';
+import { Ripple } from '@helix-ui/core/ripple';
 ```
 
 ## Directives

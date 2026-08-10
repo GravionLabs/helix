@@ -1,9 +1,9 @@
 import { TemplateRef } from '@angular/core';
-import type { FilterMetadata, LazyLoadMeta, PassThrough, PassThroughOption, SortMeta, TreeNode, TreeTableNode } from '@helix/core/api';
-import type { BadgePassThrough } from '@helix/core/types/badge';
-import type { CheckboxPassThrough } from '@helix/core/types/checkbox';
-import type { PaginatorPassThrough } from '@helix/core/types/paginator';
-import type { VirtualScrollerPassThrough } from '@helix/core/types/scroller';
+import type { FilterMetadata, LazyLoadMeta, PassThrough, PassThroughOption, SortMeta, TreeNode, TreeTableNode } from '@helix-ui/core/api';
+import type { BadgePassThrough } from '@helix-ui/core/types/badge';
+import type { CheckboxPassThrough } from '@helix-ui/core/types/checkbox';
+import type { PaginatorPassThrough } from '@helix-ui/core/types/paginator';
+import type { VirtualScrollerPassThrough } from '@helix-ui/core/types/scroller';
 
 /**
  * Custom pass-through(pt) options.

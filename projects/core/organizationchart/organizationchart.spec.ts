@@ -2,8 +2,8 @@ import { Component, provideZonelessChangeDetection, TemplateRef } from '@angular
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { TreeNode } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
+import { TreeNode } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
 import { OrganizationChart, OrganizationChartNode } from './organizationchart';
 
 // Test component for basic use cases

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix/core/button';
+import { ButtonModule } from '@helix-ui/core/button';
 import { HelixFloatingConfigurator } from '../../layout/components/floating-configurator/floating-configurator';
 
 export interface HelixNotfoundSuggestion {

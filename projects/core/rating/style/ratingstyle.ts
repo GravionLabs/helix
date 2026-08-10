@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as rating_style } from '@primeuix/styles/rating';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${rating_style}

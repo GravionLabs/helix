@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Terminal } from '@helix/core/terminal';
+import { Terminal } from '@helix-ui/core/terminal';
 ```
 
 ## Components

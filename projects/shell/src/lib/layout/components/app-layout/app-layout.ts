@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import type { MenuItem } from '@helix/core/api';
+import type { MenuItem } from '@helix-ui/core/api';
 import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';

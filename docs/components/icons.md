@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon } from '@helix/core/icons';
+import { AngleDoubleDownIcon, AngleDoubleLeftIcon, AngleDoubleRightIcon } from '@helix-ui/core/icons';
 ```
 
 ## Components

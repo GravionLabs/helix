@@ -14,7 +14,7 @@ community version. Record kept for future diffing against upstream.
 
 ## Local modifications
 
-- Import specifiers rewritten: `primeng/<entry>` → `@helix/core/<entry>`.
+- Import specifiers rewritten: `primeng/<entry>` → `@helix-ui/core/<entry>`.
 - All component/directive selectors renamed `p-` → `h-` (`p-button` → `h-button`,
   `pButton` → `hButton`), including template usages and input aliases.
 - **Not renamed:** `.p-*` CSS class names and `--p-*` design tokens — they are

@@ -2,7 +2,7 @@ import { Component, ElementRef, input, provideZonelessChangeDetection, viewChild
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix/core/api';
+import { SharedModule } from '@helix-ui/core/api';
 import { BlockUI, BlockUIModule } from './blockui';
 
 @Component({

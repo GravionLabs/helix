@@ -3,7 +3,7 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { FormsModule, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { InputOtp, InputOtpChangeEvent } from './inputotp';
-import { provideHelix } from '@helix/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 
 // Temel test component'i
 @Component({

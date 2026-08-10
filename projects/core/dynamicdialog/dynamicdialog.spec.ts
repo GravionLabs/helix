@@ -1,8 +1,8 @@
 import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DomHandler } from '@helix/core/dom';
-import { ZIndexUtils } from '@helix/core/utils';
+import { DomHandler } from '@helix-ui/core/dom';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { Subject } from 'rxjs';
 import { DynamicDialog } from './dynamicdialog';
 import { DynamicDialogConfig } from './dynamicdialog-config';

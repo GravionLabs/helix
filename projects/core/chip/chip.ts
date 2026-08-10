@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChildren, model, contentChild, booleanAttribute } from '@angular/core';
-import { HelixTemplate, SharedModule, TranslationKeys } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { TimesCircleIcon } from '@helix/core/icons';
-import { ChipProps, ChipPassThrough } from '@helix/core/types/chip';
+import { HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { TimesCircleIcon } from '@helix-ui/core/icons';
+import { ChipProps, ChipPassThrough } from '@helix-ui/core/types/chip';
 import { ChipStyle } from './style/chipstyle';
 
 const CHIP_INSTANCE = new InjectionToken<Chip>('CHIP_INSTANCE');

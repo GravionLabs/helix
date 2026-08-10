@@ -1,5 +1,5 @@
 import type { MotionOptions } from '@primeuix/motion';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
 
 /**
  * Defines valid pass-through options in Accordion component.

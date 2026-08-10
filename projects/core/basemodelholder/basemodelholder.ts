@@ -1,6 +1,6 @@
 import { computed, Directive, signal } from '@angular/core';
 import { isNotEmpty } from '@primeuix/utils';
-import { BaseComponent } from '@helix/core/basecomponent';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
 
 @Directive({ standalone: true })
 export class BaseModelHolder<PT = any> extends BaseComponent<PT> {

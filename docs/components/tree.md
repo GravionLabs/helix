@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tree, UITreeNode } from '@helix/core/tree';
+import { Tree, UITreeNode } from '@helix-ui/core/tree';
 ```
 
 ## Components

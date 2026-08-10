@@ -2,8 +2,8 @@ import { Component, input, provideZonelessChangeDetection } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix/core/api';
-import { ChipProps } from '@helix/core/types/chip';
+import { SharedModule } from '@helix-ui/core/api';
+import { ChipProps } from '@helix-ui/core/types/chip';
 import { Chip, ChipModule } from './chip';
 
 @Component({

@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem } from '@helix/core/api';
-import { BreadcrumbItemClickEvent } from '@helix/core/types/breadcrumb';
+import { MenuItem } from '@helix-ui/core/api';
+import { BreadcrumbItemClickEvent } from '@helix-ui/core/types/breadcrumb';
 import { Breadcrumb } from './breadcrumb';
 
 @Component({

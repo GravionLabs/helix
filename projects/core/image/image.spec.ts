@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix/core/api';
+import { SharedModule } from '@helix-ui/core/api';
 import { Image, ImageModule } from './image';
 
 // Using image paths from photoservice.ts to ensure consistency
@@ -965,7 +965,7 @@ describe('Image', () => {
             });
 
             it('should apply global PT configuration from HelixConfig', async () => {
-                const { provideHelix } = await import('@helix/core/config');
+                const { provideHelix } = await import('@helix-ui/core/config');
 
                 @Component({
                     standalone: false,

@@ -24,18 +24,18 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { find, findSingle, focus, getOuterHeight, getOuterWidth, removeAccents, resolveFieldData } from '@primeuix/utils';
-import { BlockableUI, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from '@helix/core/api';
-import { AutoFocusModule } from '@helix/core/autofocus';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Checkbox } from '@helix/core/checkbox';
-import { IconField } from '@helix/core/iconfield';
-import { ChevronDownIcon, ChevronRightIcon, SearchIcon, SpinnerIcon } from '@helix/core/icons';
-import { InputIcon } from '@helix/core/inputicon';
-import { InputText } from '@helix/core/inputtext';
-import { Ripple } from '@helix/core/ripple';
-import { Scroller } from '@helix/core/scroller';
-import { Nullable } from '@helix/core/ts-helpers';
+import { BlockableUI, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys, TreeDragDropService, TreeNode } from '@helix-ui/core/api';
+import { AutoFocusModule } from '@helix-ui/core/autofocus';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Checkbox } from '@helix-ui/core/checkbox';
+import { IconField } from '@helix-ui/core/iconfield';
+import { ChevronDownIcon, ChevronRightIcon, SearchIcon, SpinnerIcon } from '@helix-ui/core/icons';
+import { InputIcon } from '@helix-ui/core/inputicon';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Scroller } from '@helix-ui/core/scroller';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     TreeCheckboxIconTemplateContext,
     TreeFilterEvent,
@@ -53,7 +53,7 @@ import {
     TreeScrollEvent,
     TreeScrollIndexChangeEvent,
     TreeTogglerIconTemplateContext
-} from '@helix/core/types/tree';
+} from '@helix-ui/core/types/tree';
 import { Subscription } from 'rxjs';
 import { TreeStyle } from './style/treestyle';
 

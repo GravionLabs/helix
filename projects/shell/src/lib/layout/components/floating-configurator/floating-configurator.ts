@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { ButtonModule } from '@helix/core/button';
-import { StyleClassModule } from '@helix/core/styleclass';
+import { ButtonModule } from '@helix-ui/core/button';
+import { StyleClassModule } from '@helix-ui/core/styleclass';
 import { LayoutStore } from '../../store';
 import { HelixConfigurator } from '../configurator/configurator';
 

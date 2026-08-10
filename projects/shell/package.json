@@ -1,5 +1,5 @@
 {
-  "name": "@helix/shell",
+  "name": "@helix-ui/shell",
   "version": "0.2.0",
   "publishConfig": {
     "access": "public"
@@ -9,7 +9,7 @@
     "@angular/core": ">=22",
     "@angular/router": ">=22",
     "@ngrx/signals": ">=21",
-    "@helix/core": ">=22",
+    "@helix-ui/core": ">=22",
     "@primeuix/themes": ">=2",
     "primeicons": ">=7"
   },

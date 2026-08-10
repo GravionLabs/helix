@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Card } from '@helix/core/card';
+import { Card } from '@helix-ui/core/card';
 ```
 
 ## Components

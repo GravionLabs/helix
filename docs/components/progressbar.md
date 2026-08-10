@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ProgressBar } from '@helix/core/progressbar';
+import { ProgressBar } from '@helix-ui/core/progressbar';
 ```
 
 ## Components

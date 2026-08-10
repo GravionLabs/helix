@@ -4,8 +4,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { By } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
+import { SharedModule } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
 import { MapperPipe, Password, PasswordDirective, PasswordModule } from './password';
 
 // Test Components

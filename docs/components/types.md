@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Types } from '@helix/core/types';
+import { Types } from '@helix-ui/core/types';
 ```
 
 ## Interfaces & Types

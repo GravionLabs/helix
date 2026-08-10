@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Breadcrumb } from '@helix/core/breadcrumb';
+import { Breadcrumb } from '@helix-ui/core/breadcrumb';
 ```
 
 ## Components

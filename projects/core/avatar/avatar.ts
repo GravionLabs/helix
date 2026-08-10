@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input, output } from '@angular/core';
-import { SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { AvatarPassThrough } from '@helix/core/types/avatar';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { AvatarPassThrough } from '@helix-ui/core/types/avatar';
 import { AvatarStyle } from './style/avatarstyle';
 
 const AVATAR_INSTANCE = new InjectionToken<Avatar>('AVATAR_INSTANCE');

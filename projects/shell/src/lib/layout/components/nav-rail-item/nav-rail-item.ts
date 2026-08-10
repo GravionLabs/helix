@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RippleModule } from '@helix/core/ripple';
+import { RippleModule } from '@helix-ui/core/ripple';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 

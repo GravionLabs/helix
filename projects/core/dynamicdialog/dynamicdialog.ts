@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, inject, InjectionToken, NgModule, Type, ViewEncapsulation, viewChild } from '@angular/core';
 import { uuid } from '@primeuix/utils';
-import { SharedModule, TranslationKeys } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Dialog, DialogPassThrough } from '@helix/core/dialog';
-import { Nullable } from '@helix/core/ts-helpers';
+import { SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Dialog, DialogPassThrough } from '@helix-ui/core/dialog';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import { DynamicDialogConfig } from './dynamicdialog-config';
 import { DynamicDialogRef } from './dynamicdialog-ref';
 import { DynamicDialogContent } from './dynamicdialogcontent';

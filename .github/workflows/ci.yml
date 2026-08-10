@@ -69,7 +69,7 @@ jobs:
   publish:
     name: Publish
     needs: [determine-version, build-test]
-    # Temporarily disabled for #381 (release cleanup + @helix scope rename) — publishing
+    # Temporarily disabled for #381 (release cleanup + @helix-ui scope rename) — publishing
     # only via manual workflow_dispatch with force-publish until the rename lands.
     if: inputs.force-publish == true
     runs-on: ubuntu-latest
@@ -87,11 +87,11 @@ jobs:
           path: .
 
       # NOTE: publishing now targets the public npm registry (registry.npmjs.org)
-      # instead of GitHub Packages, since the @helix scope isn't usable on GH
+      # instead of GitHub Packages, since the @helix-ui scope isn't usable on GH
       # Packages (scope must equal the repo owner there). This requires an
       # NPM_TOKEN secret (npmjs automation token) — it does not exist yet as
       # of this change and must be added before force-publish is used again.
-      - name: Publish @helix/core
+      - name: Publish @helix-ui/core
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
@@ -100,7 +100,7 @@ jobs:
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @helix/shell
+      - name: Publish @helix-ui/shell
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
@@ -109,7 +109,7 @@ jobs:
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @helix/zod
+      - name: Publish @helix-ui/zod
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
@@ -118,7 +118,7 @@ jobs:
           version: ${{ needs.determine-version.outputs.npm-version }}
           npm-token: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @helix/ag-grid
+      - name: Publish @helix-ui/ag-grid
         uses: GravionLabs/ci/node/publish@main
         with:
           package-manager: pnpm
@@ -130,7 +130,7 @@ jobs:
   release:
     name: Release
     needs: [determine-version, publish]
-    # Temporarily disabled for #381 (release cleanup + @helix scope rename) — see publish job.
+    # Temporarily disabled for #381 (release cleanup + @helix-ui scope rename) — see publish job.
     if: inputs.force-publish == true
     runs-on: ubuntu-latest
     permissions:

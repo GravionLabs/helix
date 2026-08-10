@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { TreeNode } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
+import { TreeNode } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
 import { of } from 'rxjs';
 import { TreeTable, TreeTableModule } from './treetable';
 

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { UseStyle } from '@helix/core/usestyle';
+import { UseStyle } from '@helix-ui/core/usestyle';
 ```
 
 ## Services

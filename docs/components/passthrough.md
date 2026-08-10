@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Passthrough } from '@helix/core/passthrough';
+import { Passthrough } from '@helix-ui/core/passthrough';
 ```
 
 ## Source

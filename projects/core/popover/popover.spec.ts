@@ -3,7 +3,7 @@ import { Component, ElementRef, provideZonelessChangeDetection, ViewChild } from
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { OverlayService, HelixTemplate } from '@helix/core/api';
+import { OverlayService, HelixTemplate } from '@helix-ui/core/api';
 import { Popover } from './popover';
 
 // function createMockAnimationEvent(toState: string, fromState: string = 'void'): AnimationEvent {

@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
-import type { ToggleButtonPassThrough } from '@helix/core/types/togglebutton';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { ToggleButtonPassThrough } from '@helix-ui/core/types/togglebutton';
 
 /**
  * Custom pass-through(pt) options.

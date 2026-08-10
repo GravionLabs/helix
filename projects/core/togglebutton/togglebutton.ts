@@ -15,14 +15,14 @@ import {
   contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind } from '@helix/core/bind';
-import { BindModule } from '@helix/core/bind';
-import { Ripple } from '@helix/core/ripple';
-import { Nullable } from '@helix/core/ts-helpers';
-import { ToggleButtonChangeEvent, ToggleButtonContentTemplateContext, ToggleButtonIconTemplateContext, ToggleButtonPassThrough } from '@helix/core/types/togglebutton';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind } from '@helix-ui/core/bind';
+import { BindModule } from '@helix-ui/core/bind';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { ToggleButtonChangeEvent, ToggleButtonContentTemplateContext, ToggleButtonIconTemplateContext, ToggleButtonPassThrough } from '@helix-ui/core/types/togglebutton';
 import { ToggleButtonStyle } from './style/togglebuttonstyle';
 
 const TOGGLEBUTTON_INSTANCE = new InjectionToken<ToggleButton>('TOGGLEBUTTON_INSTANCE');

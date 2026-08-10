@@ -2,8 +2,8 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix/core/config';
-import { FieldsetAfterToggleEvent, FieldsetBeforeToggleEvent } from '@helix/core/types/fieldset';
+import { provideHelix } from '@helix-ui/core/config';
+import { FieldsetAfterToggleEvent, FieldsetBeforeToggleEvent } from '@helix-ui/core/types/fieldset';
 import { Fieldset } from './fieldset';
 
 @Component({

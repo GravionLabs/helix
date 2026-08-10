@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Inplace, InplaceDisplay, InplaceContent } from '@helix/core/inplace';
+import { Inplace, InplaceDisplay, InplaceContent } from '@helix-ui/core/inplace';
 ```
 
 ## Components

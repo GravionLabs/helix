@@ -2,17 +2,17 @@
 
 Angular UI component ecosystem by Gravion Labs. Helix is a maintained fork of
 [PrimeNG](https://github.com/primefaces/primeng) 21.1.9 — the last MIT community
-version — rebranded as `@helix/core` with `h-` selectors, plus an
+version — rebranded as `@helix-ui/core` with `h-` selectors, plus an
 application shell, form utilities, and AG Grid helpers built on top of it.
 
 ## Packages
 
 | Package | Description |
 | --- | --- |
-| [`@helix/core`](projects/core) | Base component library — 90 components, 7 directives, and theming/infra modules, one secondary entry point each (`@helix/core/button`). |
-| [`@helix/shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
-| [`@helix/zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
-| [`@helix/ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
+| [`@helix-ui/core`](projects/core) | Base component library — 90 components, 7 directives, and theming/infra modules, one secondary entry point each (`@helix-ui/core/button`). |
+| [`@helix-ui/shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
+| [`@helix-ui/zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
+| [`@helix-ui/ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
 
 The workspace also contains [`apps/helix-demo`](apps/helix-demo), the showcase
 application used for development.
@@ -20,11 +20,11 @@ application used for development.
 ## Quick Start
 
 ```bash
-npm install @helix/core
+npm install @helix-ui/core
 ```
 
 ```ts
-import { Button } from '@helix/core/button';
+import { Button } from '@helix-ui/core/button';
 ```
 
 ```html
@@ -37,7 +37,7 @@ unchanged:
 ```ts
 // app.config.ts
 import Aura from '@primeuix/themes/aura';
-import { providePrimeNG } from '@helix/core/config';
+import { providePrimeNG } from '@helix-ui/core/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [providePrimeNG({ theme: { preset: Aura } })],
@@ -46,7 +46,7 @@ export const appConfig: ApplicationConfig = {
 
 ## Documentation
 
-- [Module docs](docs/components/README.md) — one page per `@helix/core` entry point
+- [Module docs](docs/components/README.md) — one page per `@helix-ui/core` entry point
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
 - [Roadmap](docs/ROADMAP.md)
 - [File structure conventions](docs/CONTRIBUTING-file-structure.md)

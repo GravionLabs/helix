@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input, contentChild, contentChildren } from '@angular/core';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { ProgressBarContentTemplateContext, ProgressBarPassThrough } from '@helix/core/types/progressbar';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { ProgressBarContentTemplateContext, ProgressBarPassThrough } from '@helix-ui/core/types/progressbar';
 import { ProgressBarStyle } from './style/progressbarstyle';
 
 const PROGRESSBAR_INSTANCE = new InjectionToken<ProgressBar>('PROGRESSBAR_INSTANCE');

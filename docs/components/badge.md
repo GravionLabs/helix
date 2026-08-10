@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Badge, BadgeDirective } from '@helix/core/badge';
+import { Badge, BadgeDirective } from '@helix-ui/core/badge';
 ```
 
 ## Components

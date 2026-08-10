@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RatingModule } from '@helix/core/rating';
-import { HelixFormField } from '@helix/shell';
-import { HelixFieldWidgetBase } from '@helix/zod';
+import { RatingModule } from '@helix-ui/core/rating';
+import { HelixFormField } from '@helix-ui/shell';
+import { HelixFieldWidgetBase } from '@helix-ui/zod';
 
 /**
  * Custom dynamic-form widget registered under the kind `'rating'` via

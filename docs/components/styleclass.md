@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { StyleClass } from '@helix/core/styleclass';
+import { StyleClass } from '@helix-ui/core/styleclass';
 ```
 
 ## Directives

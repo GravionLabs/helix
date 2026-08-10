@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as multiselect_style } from '@primeuix/styles/multiselect';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${multiselect_style}

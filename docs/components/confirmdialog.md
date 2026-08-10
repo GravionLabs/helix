@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ConfirmDialog } from '@helix/core/confirmdialog';
+import { ConfirmDialog } from '@helix-ui/core/confirmdialog';
 ```
 
 ## Components

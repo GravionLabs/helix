@@ -1,4 +1,4 @@
-# @helix/ag-grid
+# @helix-ui/ag-grid
 
 AG Grid helpers for Helix applications: locale-aware value formatters, robust
 number parsing for editable cells, and shared cell styles.
@@ -6,7 +6,7 @@ number parsing for editable cells, and shared cell styles.
 ## Installation
 
 ```bash
-npm install @helix/ag-grid
+npm install @helix-ui/ag-grid
 ```
 
 Peer dependencies: `@angular/core >=22`, `ag-grid-angular >=33`, `ag-grid-community >=33`.
@@ -15,7 +15,7 @@ The package ships a prebuilt stylesheet; add it to your global styles:
 
 ```json
 // angular.json
-"styles": ["node_modules/@helix/ag-grid/styles.css", "src/styles.scss"]
+"styles": ["node_modules/@helix-ui/ag-grid/styles.css", "src/styles.scss"]
 ```
 
 ## Formatters
@@ -29,7 +29,7 @@ The package ships a prebuilt stylesheet; add it to your global styles:
 | `cetDateFormatter` / `cetTimeFormatter` / `cetDateTimeFormatter` | Dates/times in CET |
 
 ```ts
-import { currencyFormatter } from '@helix/ag-grid';
+import { currencyFormatter } from '@helix-ui/ag-grid';
 
 const columnDefs: ColDef[] = [
   { field: 'price', valueFormatter: currencyFormatter('EUR') },

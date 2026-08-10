@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AccordionModule } from '@helix/core/accordion';
-import type { MenuItem } from '@helix/core/api';
-import { ButtonModule } from '@helix/core/button';
-import { DividerModule } from '@helix/core/divider';
-import { FieldsetModule } from '@helix/core/fieldset';
-import { IconFieldModule } from '@helix/core/iconfield';
-import { InputIconModule } from '@helix/core/inputicon';
-import { InputTextModule } from '@helix/core/inputtext';
-import { MenuModule } from '@helix/core/menu';
-import { PanelModule } from '@helix/core/panel';
-import { RippleModule } from '@helix/core/ripple';
-import { SplitButtonModule } from '@helix/core/splitbutton';
-import { SplitterModule } from '@helix/core/splitter';
-import { TabsModule } from '@helix/core/tabs';
-import { ToolbarModule } from '@helix/core/toolbar';
+import { AccordionModule } from '@helix-ui/core/accordion';
+import type { MenuItem } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
+import { DividerModule } from '@helix-ui/core/divider';
+import { FieldsetModule } from '@helix-ui/core/fieldset';
+import { IconFieldModule } from '@helix-ui/core/iconfield';
+import { InputIconModule } from '@helix-ui/core/inputicon';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MenuModule } from '@helix-ui/core/menu';
+import { PanelModule } from '@helix-ui/core/panel';
+import { RippleModule } from '@helix-ui/core/ripple';
+import { SplitButtonModule } from '@helix-ui/core/splitbutton';
+import { SplitterModule } from '@helix-ui/core/splitter';
+import { TabsModule } from '@helix-ui/core/tabs';
+import { ToolbarModule } from '@helix-ui/core/toolbar';
 
 @Component({
   selector: 'app-panels-demo',

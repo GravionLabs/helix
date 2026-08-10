@@ -6,8 +6,8 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ChartModule } from '@helix/core/chart';
-import { LayoutStore } from '@helix/shell';
+import { ChartModule } from '@helix-ui/core/chart';
+import { LayoutStore } from '@helix-ui/shell';
 
 @Component({
   standalone: true,

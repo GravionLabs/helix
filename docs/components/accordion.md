@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Accordion, AccordionPanel, AccordionHeader } from '@helix/core/accordion';
+import { Accordion, AccordionPanel, AccordionHeader } from '@helix-ui/core/accordion';
 ```
 
 ## Components

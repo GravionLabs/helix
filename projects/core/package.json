@@ -1,5 +1,5 @@
 {
-  "name": "@helix/core",
+  "name": "@helix-ui/core",
   "version": "1.0.0",
   "description": "Helix base component library for Angular — a fork of PrimeNG 21.1.9 (last MIT community version) with h- selectors.",
   "license": "SEE LICENSE IN LICENSE.md",

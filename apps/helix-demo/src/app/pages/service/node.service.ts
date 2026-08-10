@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import type { TreeNode } from '@helix/core/api';
+import type { TreeNode } from '@helix-ui/core/api';
 
 @Injectable()
 export class NodeService {

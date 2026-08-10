@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseInput } from '@helix/core/baseinput';
+import { BaseInput } from '@helix-ui/core/baseinput';
 ```
 
 ## Components

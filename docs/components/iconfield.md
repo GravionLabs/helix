@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { IconField } from '@helix/core/iconfield';
+import { IconField } from '@helix-ui/core/iconfield';
 ```
 
 ## Components

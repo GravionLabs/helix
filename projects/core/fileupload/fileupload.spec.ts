@@ -4,7 +4,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { MessageService } from '@helix/core/api';
+import { MessageService } from '@helix-ui/core/api';
 import { BehaviorSubject, delay, of, timer } from 'rxjs';
 import { FileUpload } from './fileupload';
 

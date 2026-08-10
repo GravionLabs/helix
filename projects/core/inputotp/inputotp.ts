@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { AutoFocus } from '@helix/core/autofocus';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { InputText } from '@helix/core/inputtext';
-import { Nullable } from '@helix/core/ts-helpers';
-import { InputOtpChangeEvent, InputOtpInputTemplateContext, InputOtpPassThrough } from '@helix/core/types/inputotp';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { InputOtpChangeEvent, InputOtpInputTemplateContext, InputOtpPassThrough } from '@helix-ui/core/types/inputotp';
 import { InputOtpStyle } from './style/inputotpstyle';
 
 const INPUTOTP_INSTANCE = new InjectionToken<InputOtp>('INPUTOTP_INSTANCE');
@@ -20,7 +20,7 @@ export const INPUT_OTP_VALUE_ACCESSOR: any = {
 };
 
 // Re-export interfaces from types for backwards compatibility
-export { InputOtpChangeEvent, InputOtpInputTemplateContext, InputOtpTemplateEvents } from '@helix/core/types/inputotp';
+export { InputOtpChangeEvent, InputOtpInputTemplateContext, InputOtpTemplateEvents } from '@helix-ui/core/types/inputotp';
 
 /**
  * Input Otp is used to enter one time passwords.

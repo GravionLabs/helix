@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { RadioButton } from '@helix/core/radiobutton';
+import { RadioButton } from '@helix-ui/core/radiobutton';
 ```
 
 ## Components

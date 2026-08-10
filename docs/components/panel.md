@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Panel } from '@helix/core/panel';
+import { Panel } from '@helix-ui/core/panel';
 ```
 
 ## Components

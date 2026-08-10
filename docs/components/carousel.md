@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Carousel } from '@helix/core/carousel';
+import { Carousel } from '@helix-ui/core/carousel';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Avatar } from '@helix/core/avatar';
+import { Avatar } from '@helix-ui/core/avatar';
 ```
 
 ## Components

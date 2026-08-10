@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Knob } from '@helix/core/knob';
+import { Knob } from '@helix-ui/core/knob';
 ```
 
 ## Components

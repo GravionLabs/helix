@@ -1,9 +1,9 @@
 
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
-import { SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { SkeletonPassThrough } from '@helix/core/types/skeleton';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { SkeletonPassThrough } from '@helix-ui/core/types/skeleton';
 import { SkeletonStyle } from './style/skeletonstyle';
 
 const SKELETON_INSTANCE = new InjectionToken<Skeleton>('SKELETON_INSTANCE');

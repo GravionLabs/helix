@@ -4,8 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix/core/api';
-import { Select } from '@helix/core/select';
+import { SharedModule } from '@helix-ui/core/api';
+import { Select } from '@helix-ui/core/select';
 import { Table, TableModule, TableService } from './table';
 
 describe('Table', () => {

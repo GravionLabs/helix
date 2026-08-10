@@ -1,10 +1,10 @@
 import { booleanAttribute, computed, Directive, effect, inject, InjectionToken, input, NgModule } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseModelHolder } from '@helix/core/basemodelholder';
-import { Bind } from '@helix/core/bind';
-import { Fluid } from '@helix/core/fluid';
-import { InputTextPassThrough } from '@helix/core/types/inputtext';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseModelHolder } from '@helix-ui/core/basemodelholder';
+import { Bind } from '@helix-ui/core/bind';
+import { Fluid } from '@helix-ui/core/fluid';
+import { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
 import { InputTextStyle } from './style/inputtextstyle';
 
 const INPUTTEXT_INSTANCE = new InjectionToken<InputText>('INPUTTEXT_INSTANCE');

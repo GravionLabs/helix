@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as inputnumber_style } from '@primeuix/styles/inputnumber';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const style = /*css*/ `
     ${inputnumber_style}

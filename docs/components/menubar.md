@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Menubar, MenubarSub } from '@helix/core/menubar';
+import { Menubar, MenubarSub } from '@helix-ui/core/menubar';
 ```
 
 ## Components

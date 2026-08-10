@@ -23,14 +23,14 @@ import {
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { contains, equals } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind, BindModule } from '@helix/core/bind';
-import { CheckIcon } from '@helix/core/icons/check';
-import { MinusIcon } from '@helix/core/icons/minus';
-import { Nullable } from '@helix/core/ts-helpers';
-import { CheckboxChangeEvent, CheckboxIconTemplateContext, CheckboxPassThrough } from '@helix/core/types/checkbox';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { CheckIcon } from '@helix-ui/core/icons/check';
+import { MinusIcon } from '@helix-ui/core/icons/minus';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { CheckboxChangeEvent, CheckboxIconTemplateContext, CheckboxPassThrough } from '@helix-ui/core/types/checkbox';
 import { CheckboxStyle } from './style/checkboxstyle';
 
 const CHECKBOX_INSTANCE = new InjectionToken<Checkbox>('CHECKBOX_INSTANCE');

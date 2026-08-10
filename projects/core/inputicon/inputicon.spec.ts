@@ -3,9 +3,9 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { InputIcon } from './inputicon';
-import { IconField } from '@helix/core/iconfield';
-import { InputText } from '@helix/core/inputtext';
-import { provideHelix } from '@helix/core/config';
+import { IconField } from '@helix-ui/core/iconfield';
+import { InputText } from '@helix-ui/core/inputtext';
+import { provideHelix } from '@helix-ui/core/config';
 
 @Component({
     standalone: true,

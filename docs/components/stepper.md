@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Stepper, StepList, StepperSeparator } from '@helix/core/stepper';
+import { Stepper, StepList, StepperSeparator } from '@helix-ui/core/stepper';
 ```
 
 ## Components

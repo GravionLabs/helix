@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule, numberAttribute, OnChanges, OnInit,  SimpleChanges, TemplateRef, ViewEncapsulation, output, contentChildren, contentChild, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Aria, HelixTemplate, SelectItem, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { Select, SelectChangeEvent } from '@helix/core/select';
-import { AngleDoubleLeftIcon, AngleDoubleRightIcon, AngleLeftIcon, AngleRightIcon } from '@helix/core/icons';
-import { InputNumber } from '@helix/core/inputnumber';
-import { Ripple } from '@helix/core/ripple';
-import { Nullable } from '@helix/core/ts-helpers';
-import { PaginatorDropdownItemTemplateContext, PaginatorPassThrough, PaginatorState, PaginatorTemplateContext } from '@helix/core/types/paginator';
+import { Aria, HelixTemplate, SelectItem, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { Select, SelectChangeEvent } from '@helix-ui/core/select';
+import { AngleDoubleLeftIcon, AngleDoubleRightIcon, AngleLeftIcon, AngleRightIcon } from '@helix-ui/core/icons';
+import { InputNumber } from '@helix-ui/core/inputnumber';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { PaginatorDropdownItemTemplateContext, PaginatorPassThrough, PaginatorState, PaginatorTemplateContext } from '@helix-ui/core/types/paginator';
 import { PaginatorStyle } from './style/paginatorstyle';
 
 const PAGINATOR_INSTANCE = new InjectionToken<Paginator>('PAGINATOR_INSTANCE');

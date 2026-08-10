@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, NgModule, numberAttribute, OnDestroy, OnInit, ViewEncapsulation, input, output, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { find, findSingle } from '@primeuix/utils';
-import { MenuItem, SharedModule } from '@helix/core/api';
-import { BaseComponent } from '@helix/core/basecomponent';
-import { TooltipModule } from '@helix/core/tooltip';
-import { Nullable } from '@helix/core/ts-helpers';
+import { MenuItem, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { TooltipModule } from '@helix-ui/core/tooltip';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import { Subscription } from 'rxjs';
 import { StepsStyle } from './style/stepsstyle';
 

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Password, PasswordDirective } from '@helix/core/password';
+import { Password, PasswordDirective } from '@helix-ui/core/password';
 ```
 
 ## Components

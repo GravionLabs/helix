@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import type { DialogPassThrough } from '@helix/core/types/dialog';
+import type { DialogPassThrough } from '@helix-ui/core/types/dialog';
 
 /**
  * Dialogs can be created dynamically with any component as the content using a DialogService.

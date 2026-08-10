@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Directive, ElementRef, inject, NgModule, PLATFORM_ID, input } from '@angular/core';
-import { BaseComponent } from '@helix/core/basecomponent';
-import { DomHandler } from '@helix/core/dom';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { DomHandler } from '@helix-ui/core/dom';
 
 /**
  * AutoFocus manages focus on focusable element on load.

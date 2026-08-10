@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/colorpicker';
-import { BaseStyle } from '@helix/core/base';
+import { BaseStyle } from '@helix-ui/core/base';
 
 const classes = {
     root: ({ instance }) => ['p-colorpicker p-component', { 'p-colorpicker-overlay': !instance.inline(), 'p-colorpicker-dragging': instance.colorDragging || instance.hueDragging }],

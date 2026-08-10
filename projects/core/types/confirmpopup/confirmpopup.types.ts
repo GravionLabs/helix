@@ -1,5 +1,5 @@
-import type { Confirmation, PassThrough, PassThroughOption } from '@helix/core/api';
-import type { ButtonPassThrough } from '@helix/core/types/button';
+import type { Confirmation, PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { ButtonPassThrough } from '@helix-ui/core/types/button';
 import { TemplateRef } from '@angular/core';
 import type { MotionOptions } from '@primeuix/motion';
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FormField } from '@angular/forms/signals';
-import { HelixFormField, HelixSelect } from '@helix/shell';
+import { HelixFormField, HelixSelect } from '@helix-ui/shell';
 import { HelixFieldWidgetBase } from '../widget-base';
 
 /**

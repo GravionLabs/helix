@@ -27,17 +27,17 @@ import {
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, findLastIndex, findSingle, focus, getOuterWidth, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, nestedPosition, relativePosition, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix/core/dom';
-import { AngleRightIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import { Ripple } from '@helix/core/ripple';
-import { TooltipModule } from '@helix/core/tooltip';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
-import { TieredMenuItemTemplateContext, TieredMenuPassThrough } from '@helix/core/types/tieredmenu';
-import { ZIndexUtils } from '@helix/core/utils';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
+import { AngleRightIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Ripple } from '@helix-ui/core/ripple';
+import { TooltipModule } from '@helix-ui/core/tooltip';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { TieredMenuItemTemplateContext, TieredMenuPassThrough } from '@helix-ui/core/types/tieredmenu';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { TieredMenuStyle } from './style/tieredmenustyle';
 
 const TIEREDMENU_INSTANCE = new InjectionToken<TieredMenu>('TIEREDMENU_INSTANCE');

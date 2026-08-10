@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, inject, InjectionToken, Input, NgModule,  TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild, model, effect, untracked } from '@angular/core';
 import { hasClass, isAttributeEquals } from '@primeuix/utils';
-import { HelixTemplate, SharedModule, TreeNode } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { ChevronDownIcon, ChevronUpIcon } from '@helix/core/icons';
-import { Nullable } from '@helix/core/ts-helpers';
-import { OrganizationChartNodeCollapseEvent, OrganizationChartNodeExpandEvent, OrganizationChartNodeSelectEvent, OrganizationChartNodeUnSelectEvent, OrganizationChartPassThrough } from '@helix/core/types/organizationchart';
+import { HelixTemplate, SharedModule, TreeNode } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ChevronDownIcon, ChevronUpIcon } from '@helix-ui/core/icons';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { OrganizationChartNodeCollapseEvent, OrganizationChartNodeExpandEvent, OrganizationChartNodeSelectEvent, OrganizationChartNodeUnSelectEvent, OrganizationChartPassThrough } from '@helix-ui/core/types/organizationchart';
 import { Subject, Subscription } from 'rxjs';
 import { OrganizationChartStyle } from './style/organizationchartstyle';
 

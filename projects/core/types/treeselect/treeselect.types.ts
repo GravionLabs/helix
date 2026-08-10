@@ -1,8 +1,8 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption, TreeNode } from '@helix/core/api';
-import { ChipPassThrough } from '@helix/core/types/chip';
-import { OverlayPassThrough } from '@helix/core/types/overlay';
-import { TreePassThrough } from '@helix/core/types/tree';
+import type { PassThrough, PassThroughOption, TreeNode } from '@helix-ui/core/api';
+import { ChipPassThrough } from '@helix-ui/core/types/chip';
+import { OverlayPassThrough } from '@helix-ui/core/types/overlay';
+import { TreePassThrough } from '@helix-ui/core/types/tree';
 
 /**
  * Custom pass-through(pt) options.

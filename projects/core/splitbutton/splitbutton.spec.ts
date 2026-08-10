@@ -2,9 +2,9 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { MenuItem } from '@helix/core/api';
-import { ButtonDirective } from '@helix/core/button';
-import { TieredMenu } from '@helix/core/tieredmenu';
+import { MenuItem } from '@helix-ui/core/api';
+import { ButtonDirective } from '@helix-ui/core/button';
+import { TieredMenu } from '@helix-ui/core/tieredmenu';
 import { SplitButton } from './splitbutton';
 
 // Basic SplitButton Test Component

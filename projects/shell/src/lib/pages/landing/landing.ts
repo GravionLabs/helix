@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix/core/button';
-import { DividerModule } from '@helix/core/divider';
-import { RippleModule } from '@helix/core/ripple';
-import { StyleClassModule } from '@helix/core/styleclass';
+import { ButtonModule } from '@helix-ui/core/button';
+import { DividerModule } from '@helix-ui/core/divider';
+import { RippleModule } from '@helix-ui/core/ripple';
+import { StyleClassModule } from '@helix-ui/core/styleclass';
 import { HelixFeaturesWidget } from './components/features-widget/features-widget';
 import { HelixFooterWidget } from './components/footer-widget/footer-widget';
 import { HelixHeroWidget } from './components/hero-widget/hero-widget';

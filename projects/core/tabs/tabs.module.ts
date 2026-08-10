@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BindModule } from '@helix/core/bind';
+import { BindModule } from '@helix-ui/core/bind';
 import { Tab } from './tab';
 import { TabList } from './tablist';
 import { TabPanel } from './tabpanel';

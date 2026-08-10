@@ -23,15 +23,15 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addClass, appendChild, focus, getOuterWidth, getTargetElement, isTouchDevice, relativePosition, removeClass } from '@primeuix/utils';
-import { OverlayModeType, OverlayOnBeforeHideEvent, OverlayOnBeforeShowEvent, OverlayOnHideEvent, OverlayOnShowEvent, OverlayOptions, OverlayService, HelixTemplate, ResponsiveOverlayOptions, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix/core/dom';
-import { MotionModule } from '@helix/core/motion';
+import { OverlayModeType, OverlayOnBeforeHideEvent, OverlayOnBeforeShowEvent, OverlayOnHideEvent, OverlayOnShowEvent, OverlayOptions, OverlayService, HelixTemplate, ResponsiveOverlayOptions, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
+import { MotionModule } from '@helix-ui/core/motion';
 import { Subscription } from 'rxjs';
-import { VoidListener } from '@helix/core/ts-helpers';
-import { ObjectUtils, ZIndexUtils } from '@helix/core/utils';
-import { OverlayContentTemplateContext } from '@helix/core/types/overlay';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
+import { ObjectUtils, ZIndexUtils } from '@helix-ui/core/utils';
+import { OverlayContentTemplateContext } from '@helix-ui/core/types/overlay';
 import { OverlayStyle } from './style/overlaystyle';
 
 const OVERLAY_INSTANCE = new InjectionToken<Overlay>('OVERLAY_INSTANCE');

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ScrollTop } from '@helix/core/scrolltop';
+import { ScrollTop } from '@helix-ui/core/scrolltop';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ConfirmPopup } from '@helix/core/confirmpopup';
+import { ConfirmPopup } from '@helix-ui/core/confirmpopup';
 ```
 
 ## Components

@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { SharedModule } from '@helix/core/api';
-import { CascadeSelectBeforeHideEvent, CascadeSelectBeforeShowEvent, CascadeSelectChangeEvent, CascadeSelectHideEvent, CascadeSelectShowEvent } from '@helix/core/types/cascadeselect';
+import { SharedModule } from '@helix-ui/core/api';
+import { CascadeSelectBeforeHideEvent, CascadeSelectBeforeShowEvent, CascadeSelectChangeEvent, CascadeSelectHideEvent, CascadeSelectShowEvent } from '@helix-ui/core/types/cascadeselect';
 import { BehaviorSubject } from 'rxjs';
 import { CASCADESELECT_VALUE_ACCESSOR, CascadeSelect, CascadeSelectModule } from './cascadeselect';
 

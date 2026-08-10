@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Directive, effect, inject, NgModule, NgZone } from '@angular/core';
 import { addClass, getHeight, getOffset, getOuterHeight, getOuterWidth, getWidth, removeClass, remove as utils_remove } from '@primeuix/utils';
-import { BaseComponent } from '@helix/core/basecomponent';
-import { VoidListener } from '@helix/core/ts-helpers';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { VoidListener } from '@helix-ui/core/ts-helpers';
 import { RippleStyle } from './style/ripplestyle';
 
 /**

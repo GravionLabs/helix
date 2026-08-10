@@ -2,9 +2,9 @@ import { Component, DebugElement, PLATFORM_ID, provideZonelessChangeDetection } 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { BaseComponent } from '@helix/core/basecomponent';
-import { Button } from '@helix/core/button';
-import { ZIndexUtils } from '@helix/core/utils';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { Button } from '@helix-ui/core/button';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { ScrollTop, ScrollTopModule } from './scrolltop';
 
 @Component({
@@ -1236,7 +1236,7 @@ describe('ScrollTop', () => {
 
     describe('PassThrough - Case 7: Test from HelixConfig', () => {
         it('should apply global pt configuration from HelixConfig', () => {
-            const { provideHelix } = require('@helix/core/config');
+            const { provideHelix } = require('@helix-ui/core/config');
 
             @Component({
                 standalone: false,
@@ -1279,7 +1279,7 @@ describe('ScrollTop', () => {
         });
 
         it('should merge local pt with global pt configuration', () => {
-            const { provideHelix } = require('@helix/core/config');
+            const { provideHelix } = require('@helix-ui/core/config');
 
             @Component({
                 standalone: false,

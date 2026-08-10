@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, NgModule, NgZone, numberAttribute,  TemplateRef, ViewEncapsulation, input, viewChild, contentChild, contentChildren } from '@angular/core';
 import { addClass, getHeight, removeClass, uuid } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Nullable } from '@helix/core/ts-helpers';
-import { ScrollPanelPassThrough } from '@helix/core/types/scrollpanel';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { ScrollPanelPassThrough } from '@helix-ui/core/types/scrollpanel';
 import { ScrollPanelStyle } from './style/scrollpanelstyle';
 
 const SCROLLPANEL_INSTANCE = new InjectionToken<ScrollPanel>('SCROLLPANEL_INSTANCE');

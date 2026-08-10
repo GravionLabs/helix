@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix/core/api';
-import { ButtonModule } from '@helix/core/button';
+import { SharedModule } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
 import { Inplace, InplaceContent, InplaceDisplay, InplaceModule } from './inplace';
 
 @Component({

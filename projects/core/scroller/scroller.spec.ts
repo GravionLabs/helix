@@ -3,8 +3,8 @@ import { Component, DebugElement, input, provideZonelessChangeDetection } from '
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix/core/config';
-import type { ScrollerLazyLoadEvent, ScrollerScrollEvent, ScrollerScrollIndexChangeEvent } from '@helix/core/types/scroller';
+import { provideHelix } from '@helix-ui/core/config';
+import type { ScrollerLazyLoadEvent, ScrollerScrollEvent, ScrollerScrollIndexChangeEvent } from '@helix-ui/core/types/scroller';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Scroller } from './scroller';
 @Component({

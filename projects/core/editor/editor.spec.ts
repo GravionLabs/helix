@@ -4,9 +4,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { HelixTemplate, SharedModule } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
-import type { EditorBlurEvent, EditorChangeEvent, EditorFocusEvent, EditorInitEvent, EditorSelectionChangeEvent, EditorTextChangeEvent } from '@helix/core/types/editor';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
+import type { EditorBlurEvent, EditorChangeEvent, EditorFocusEvent, EditorInitEvent, EditorSelectionChangeEvent, EditorTextChangeEvent } from '@helix-ui/core/types/editor';
 import { Editor } from './editor';
 // Test Components for different scenarios
 @Component({

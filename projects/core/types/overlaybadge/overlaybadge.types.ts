@@ -1,5 +1,5 @@
-import type { BadgePassThrough } from '@helix/core/types/badge';
-import type { PassThrough, PassThroughOption } from '@helix/core/api';
+import type { BadgePassThrough } from '@helix-ui/core/types/badge';
+import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
 
 /**
  * Custom pass-through(pt) options.

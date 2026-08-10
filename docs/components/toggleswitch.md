@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ToggleSwitch } from '@helix/core/toggleswitch';
+import { ToggleSwitch } from '@helix-ui/core/toggleswitch';
 ```
 
 ## Components

@@ -4,8 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix/core/config';
-import type { InputNumberInputEvent } from '@helix/core/types/inputnumber';
+import { provideHelix } from '@helix-ui/core/config';
+import type { InputNumberInputEvent } from '@helix-ui/core/types/inputnumber';
 import { InputNumber, InputNumberModule } from './inputnumber';
 
 // Test Components

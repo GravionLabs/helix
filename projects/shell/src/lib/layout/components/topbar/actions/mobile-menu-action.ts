@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StyleClassModule } from '@helix/core/styleclass';
+import { StyleClassModule } from '@helix-ui/core/styleclass';
 
 @Component({
   selector: 'helix-mobile-menu-action',

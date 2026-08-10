@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from '@helix/core/button';
-import { FluidModule } from '@helix/core/fluid';
-import { InputTextModule } from '@helix/core/inputtext';
-import { SelectModule } from '@helix/core/select';
-import { TextareaModule } from '@helix/core/textarea';
+import { ButtonModule } from '@helix-ui/core/button';
+import { FluidModule } from '@helix-ui/core/fluid';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { SelectModule } from '@helix-ui/core/select';
+import { TextareaModule } from '@helix-ui/core/textarea';
 
 @Component({
   selector: 'app-formlayout-demo',

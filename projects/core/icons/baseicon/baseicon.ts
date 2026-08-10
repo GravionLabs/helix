@@ -1,6 +1,6 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input, ViewEncapsulation } from '@angular/core';
 import { cn } from '@primeuix/utils';
-import { BaseComponent } from '@helix/core/basecomponent';
+import { BaseComponent } from '@helix-ui/core/basecomponent';
 import { BaseIconStyle } from './style/baseiconstyle';
 
 @Component({

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Toolbar } from '@helix/core/toolbar';
+import { Toolbar } from '@helix-ui/core/toolbar';
 ```
 
 ## Components

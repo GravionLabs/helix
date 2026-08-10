@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, booleanAttribute, computed, forwardRef, inject, input, numberAttribute, signal, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, isEmpty, isFunction, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
-import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@helix/core/api';
-import { PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { BaseEditableHolder } from '@helix/core/baseeditableholder';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Checkbox } from '@helix/core/checkbox';
-import { IconField } from '@helix/core/iconfield';
-import { BlankIcon, CheckIcon, SearchIcon } from '@helix/core/icons';
-import { InputIcon } from '@helix/core/inputicon';
-import { InputText } from '@helix/core/inputtext';
-import { Ripple } from '@helix/core/ripple';
-import { Scroller, ScrollerLazyLoadEvent } from '@helix/core/scroller';
-import { Nullable } from '@helix/core/ts-helpers';
+import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@helix-ui/core/api';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Checkbox } from '@helix-ui/core/checkbox';
+import { IconField } from '@helix-ui/core/iconfield';
+import { BlankIcon, CheckIcon, SearchIcon } from '@helix-ui/core/icons';
+import { InputIcon } from '@helix-ui/core/inputicon';
+import { InputText } from '@helix-ui/core/inputtext';
+import { Ripple } from '@helix-ui/core/ripple';
+import { Scroller, ScrollerLazyLoadEvent } from '@helix-ui/core/scroller';
+import { Nullable } from '@helix-ui/core/ts-helpers';
 import {
     ListBoxPassThrough,
     ListboxChangeEvent,
@@ -31,7 +31,7 @@ import {
     ListboxItemTemplateContext,
     ListboxLoaderTemplateContext,
     ListboxSelectAllChangeEvent
-} from '@helix/core/types/listbox';
+} from '@helix-ui/core/types/listbox';
 import { Subscription } from 'rxjs';
 import { ListBoxStyle } from './style/listboxstyle';
 

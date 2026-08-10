@@ -28,17 +28,17 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@helix/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind } from '@helix/core/bind';
-import { Button, ButtonProps } from '@helix/core/button';
-import { blockBodyScroll, DomHandler, unblockBodyScroll } from '@helix/core/dom';
-import { FocusTrap } from '@helix/core/focustrap';
-import { TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon } from '@helix/core/icons';
-import { MotionModule } from '@helix/core/motion';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
-import { DialogPassThrough } from '@helix/core/types/dialog';
-import { ZIndexUtils } from '@helix/core/utils';
+import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { Button, ButtonProps } from '@helix-ui/core/button';
+import { blockBodyScroll, DomHandler, unblockBodyScroll } from '@helix-ui/core/dom';
+import { FocusTrap } from '@helix-ui/core/focustrap';
+import { TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { DialogPassThrough } from '@helix-ui/core/types/dialog';
+import { ZIndexUtils } from '@helix-ui/core/utils';
 import { DialogStyle } from './style/dialogstyle';
 
 const DIALOG_INSTANCE = new InjectionToken<Dialog>('DIALOG_INSTANCE');

@@ -2,9 +2,9 @@ import { Component, provideZonelessChangeDetection, signal } from '@angular/core
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { SharedModule, TreeNode } from '@helix/core/api';
-import { provideHelix } from '@helix/core/config';
-import { TreeSelectNodeCollapseEvent, TreeSelectNodeExpandEvent } from '@helix/core/types/treeselect';
+import { SharedModule, TreeNode } from '@helix-ui/core/api';
+import { provideHelix } from '@helix-ui/core/config';
+import { TreeSelectNodeCollapseEvent, TreeSelectNodeExpandEvent } from '@helix-ui/core/types/treeselect';
 import { BehaviorSubject } from 'rxjs';
 import { TreeSelect, TreeSelectModule } from './treeselect';
 

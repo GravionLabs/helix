@@ -29,34 +29,34 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, find, findSingle, getAttribute, isClickable, setAttribute } from '@primeuix/utils';
-import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, HelixTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@helix/core/api';
-import { BadgeModule } from '@helix/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix/core/basecomponent';
-import { Bind, BindModule } from '@helix/core/bind';
-import { Button, ButtonModule } from '@helix/core/button';
-import { CheckboxChangeEvent, CheckboxModule } from '@helix/core/checkbox';
-import { DatePickerModule } from '@helix/core/datepicker';
-import { ConnectedOverlayScrollHandler, DomHandler } from '@helix/core/dom';
-import { ArrowDownIcon } from '@helix/core/icons/arrowdown';
-import { ArrowUpIcon } from '@helix/core/icons/arrowup';
-import { FilterIcon } from '@helix/core/icons/filter';
-import { FilterFillIcon } from '@helix/core/icons/filterfill';
-import { FilterSlashIcon } from '@helix/core/icons/filterslash';
-import { PlusIcon } from '@helix/core/icons/plus';
-import { SortAltIcon } from '@helix/core/icons/sortalt';
-import { SortAmountDownIcon } from '@helix/core/icons/sortamountdown';
-import { SortAmountUpAltIcon } from '@helix/core/icons/sortamountupalt';
-import { SpinnerIcon } from '@helix/core/icons/spinner';
-import { TrashIcon } from '@helix/core/icons/trash';
-import { InputNumberModule } from '@helix/core/inputnumber';
-import { InputTextModule } from '@helix/core/inputtext';
-import { MotionModule } from '@helix/core/motion';
-import { PaginatorModule } from '@helix/core/paginator';
-import { RadioButton, RadioButtonClickEvent, RadioButtonModule } from '@helix/core/radiobutton';
-import { Scroller, ScrollerModule } from '@helix/core/scroller';
-import { SelectModule } from '@helix/core/select';
-import { SelectButtonModule } from '@helix/core/selectbutton';
-import { Nullable, VoidListener } from '@helix/core/ts-helpers';
+import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, HelixTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@helix-ui/core/api';
+import { BadgeModule } from '@helix-ui/core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { Button, ButtonModule } from '@helix-ui/core/button';
+import { CheckboxChangeEvent, CheckboxModule } from '@helix-ui/core/checkbox';
+import { DatePickerModule } from '@helix-ui/core/datepicker';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@helix-ui/core/dom';
+import { ArrowDownIcon } from '@helix-ui/core/icons/arrowdown';
+import { ArrowUpIcon } from '@helix-ui/core/icons/arrowup';
+import { FilterIcon } from '@helix-ui/core/icons/filter';
+import { FilterFillIcon } from '@helix-ui/core/icons/filterfill';
+import { FilterSlashIcon } from '@helix-ui/core/icons/filterslash';
+import { PlusIcon } from '@helix-ui/core/icons/plus';
+import { SortAltIcon } from '@helix-ui/core/icons/sortalt';
+import { SortAmountDownIcon } from '@helix-ui/core/icons/sortamountdown';
+import { SortAmountUpAltIcon } from '@helix-ui/core/icons/sortamountupalt';
+import { SpinnerIcon } from '@helix-ui/core/icons/spinner';
+import { TrashIcon } from '@helix-ui/core/icons/trash';
+import { InputNumberModule } from '@helix-ui/core/inputnumber';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MotionModule } from '@helix-ui/core/motion';
+import { PaginatorModule } from '@helix-ui/core/paginator';
+import { RadioButton, RadioButtonClickEvent, RadioButtonModule } from '@helix-ui/core/radiobutton';
+import { Scroller, ScrollerModule } from '@helix-ui/core/scroller';
+import { SelectModule } from '@helix-ui/core/select';
+import { SelectButtonModule } from '@helix-ui/core/selectbutton';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
 import {
     ColumnFilterPassThrough,
     ExportCSVOptions,
@@ -77,8 +77,8 @@ import {
     TableRowReorderEvent,
     TableRowSelectEvent,
     TableRowUnSelectEvent
-} from '@helix/core/types/table';
-import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@helix/core/utils';
+} from '@helix-ui/core/types/table';
+import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@helix-ui/core/utils';
 import { Subject, Subscription } from 'rxjs';
 import { TableStyle } from './style/tablestyle';
 

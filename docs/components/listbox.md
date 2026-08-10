@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Listbox } from '@helix/core/listbox';
+import { Listbox } from '@helix-ui/core/listbox';
 ```
 
 ## Components

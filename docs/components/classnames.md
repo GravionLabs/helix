@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ClassNames } from '@helix/core/classnames';
+import { ClassNames } from '@helix-ui/core/classnames';
 ```
 
 ## Components

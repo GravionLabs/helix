@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TreeSelect } from '@helix/core/treeselect';
+import { TreeSelect } from '@helix-ui/core/treeselect';
 ```
 
 ## Components

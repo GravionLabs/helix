@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Select, SelectItem } from '@helix/core/select';
+import { Select, SelectItem } from '@helix-ui/core/select';
 ```
 
 ## Components
