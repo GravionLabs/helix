@@ -1,9 +1,9 @@
 @if (loading() && showLoader()) {
   <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
-    @if (loadingIcon) {
-      <i [class]="cn(cx('loadingIcon'), loadingIcon)" [hBind]="ptm('loadingIcon')"></i>
+    @if (loadingIcon()) {
+      <i [class]="cn(cx('loadingIcon'), loadingIcon())" [hBind]="ptm('loadingIcon')"></i>
     }
-    @if (!loadingIcon) {
+    @if (!loadingIcon()) {
       @if (!loadingIconTemplate && !_loadingIconTemplate) {
         <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
       }
@@ -22,9 +22,9 @@
 }
 @if (paginator() && (paginatorPosition() === 'top' || paginatorPosition() == 'both')) {
   <h-paginator
-    [rows]="rows"
-    [first]="first"
-    [totalRecords]="totalRecords"
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
     [pageLinkSize]="pageLinks()"
     [alwaysShow]="alwaysShowPaginator()"
     (onPageChange)="onPageChange($event)"
@@ -78,13 +78,13 @@
     <h-scroller
       #scroller
       [items]="processedData"
-      [columns]="columns"
+      [columns]="columns()"
         [style]="{
             height: scrollHeight() !== 'flex' ? scrollHeight() : undefined
         }"
       [scrollHeight]="scrollHeight() !== 'flex' ? undefined : '100%'"
       [itemSize]="virtualScrollItemSize()"
-      [step]="rows"
+      [step]="rows()"
       [delay]="lazy() ? virtualScrollDelay() : 0"
       [inline]="true"
       [autoSize]="true"
@@ -115,7 +115,7 @@
                 buildInTable;
                 context: {
                     $implicit: processedData,
-                    options: { columns }
+                    options: { columns: columns() }
                 }
             "
 ></ng-container>
@@ -134,12 +134,12 @@
                     "
     ></ng-container>
   </thead>
-  @if (frozenValue || frozenBodyTemplate || _frozenBodyTemplate) {
+  @if (frozenValue() || frozenBodyTemplate || _frozenBodyTemplate) {
     <tbody
       role="rowgroup"
       [class]="cx('tbody')"
       [hBind]="ptm('tbody')"
-      [value]="frozenValue"
+      [value]="frozenValue()"
       [frozenRows]="true"
       [hTableBody]="scrollerOptions.columns"
       [pTableBodyTemplate]="frozenBodyTemplate || _frozenBodyTemplate"
@@ -186,9 +186,9 @@
 
 @if (paginator() && (paginatorPosition() === 'bottom' || paginatorPosition() == 'both')) {
   <h-paginator
-    [rows]="rows"
-    [first]="first"
-    [totalRecords]="totalRecords"
+    [rows]="rows()"
+    [first]="first()"
+    [totalRecords]="totalRecords()"
     [pageLinkSize]="pageLinks()"
     [alwaysShow]="alwaysShowPaginator()"
     (onPageChange)="onPageChange($event)"

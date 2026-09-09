@@ -7,7 +7,7 @@
     "start": "pnpm build:core:ensure && pnpm demo:generate-sources && pnpm build:lib:css && pnpm build:lib:css:ag-grid && concurrently \"tailwindcss -i projects/shell/styles-src.css -o dist/shell/styles.css --watch\" \"tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css --watch\" \"ng serve helix-demo\"",
     "build": "pnpm demo:generate-sources && pnpm build:lib && ng build helix-demo",
     "build:core": "ng build core",
-    "build:core:ensure": "test -d dist/core || ng build core",
+    "build:core:ensure": "test -d dist/core/config || ng build core",
     "build:lib": "ng build core && ng build shell && ng build zod && ng build ag-grid && pnpm build:lib:css && pnpm build:lib:css:ag-grid",
     "build:lib:css": "tailwindcss -i projects/shell/styles-src.css -o dist/shell/styles.css --content \"projects/shell/src/**/*.{html,ts}\"",
     "build:lib:css:ag-grid": "tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css",

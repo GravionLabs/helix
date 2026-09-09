@@ -1,6 +1,6 @@
 @if (!dataTable.expandedRowTemplate && !dataTable._expandedRowTemplate) {
-  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
-    @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+  @for (rowData of value(); track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
+    @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value(), rowData, getRowIndex(rowIndex))) {
       <ng-container
         role="row"
         >
@@ -42,13 +42,13 @@
                         columns: columns(),
                         editing: dataTable.editMode() === 'row' && dataTable.isRowEditing(rowData),
                         frozen: frozen(),
-                        rowgroup: shouldRenderRowspan(value, rowData, rowIndex),
-                        rowspan: calculateRowGroupSize(value, rowData, rowIndex)
+                        rowgroup: shouldRenderRowspan(value(), rowData, rowIndex),
+                        rowspan: calculateRowGroupSize(value(), rowData, rowIndex)
                     }
                 "
 ></ng-container>
 }
-@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && !dataTable.virtualScroll() && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value(), rowData, getRowIndex(rowIndex))) {
   <ng-container
     role="row"
     >
@@ -69,7 +69,7 @@
 }
 }
 @if ((dataTable.expandedRowTemplate || dataTable._expandedRowTemplate) && !(frozen() && (dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate))) {
-  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
+  @for (rowData of value(); track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
     @if (!(dataTable.groupHeaderTemplate && dataTable._groupHeaderTemplate)) {
       <ng-container
                 *ngTemplateOutlet="
@@ -85,7 +85,7 @@
                 "
     ></ng-container>
   }
-  @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value, rowData, getRowIndex(rowIndex))) {
+  @if ((dataTable.groupHeaderTemplate || dataTable._groupHeaderTemplate) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupHeader(value(), rowData, getRowIndex(rowIndex))) {
     <ng-container role="row">
       <ng-container
                 *ngTemplateOutlet="
@@ -114,7 +114,7 @@
                     }
                 "
 ></ng-container>
-@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value, rowData, getRowIndex(rowIndex))) {
+@if ((dataTable.groupFooterTemplate || dataTable._groupFooterTemplate) && dataTable.rowGroupMode() === 'subheader' && shouldRenderRowGroupFooter(value(), rowData, getRowIndex(rowIndex))) {
   <ng-container role="row">
     <ng-container
                     *ngTemplateOutlet="
@@ -135,7 +135,7 @@
 }
 }
 @if ((dataTable.frozenExpandedRowTemplate || dataTable._frozenExpandedRowTemplate) && frozen()) {
-  @for (rowData of value; track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
+  @for (rowData of value(); track dataTable.rowTrackBy()(rowIndex, rowData); let rowIndex = $index) {
     <ng-container
             *ngTemplateOutlet="
                 template();
