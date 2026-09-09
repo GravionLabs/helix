@@ -9,6 +9,7 @@
     (click)="onInputClick()"
     (keydown)="onInputKeydown($event)"
     (focus)="onInputFocus()"
+    (blur)="onInputBlur($event)"
     [attr.id]="inputId()"
     [style.backgroundColor]="inputBgColor"
     [attr.aria-label]="ariaLabel"

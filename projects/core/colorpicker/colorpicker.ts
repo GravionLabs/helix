@@ -264,6 +264,29 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
         this.el.nativeElement.setAttribute('p-colorpicker-dragging', 'false');
         this.unbindDocumentMousemoveListener();
         this.unbindDocumentMouseupListener();
+        this.hideOnColorChosen();
+    }
+
+    hideOnColorChosen() {
+        if (!this.inline()) {
+            this.hide();
+        }
+    }
+
+    onInputBlur(event: FocusEvent) {
+        this.onModelTouched();
+
+        if (this.inline() || this.colorDragging || this.hueDragging) {
+            return;
+        }
+
+        const relatedTarget = event.relatedTarget as Node | null;
+        const overlayEl = this.overlayViewChild()?.nativeElement;
+        if (relatedTarget && (this.el.nativeElement.contains(relatedTarget) || overlayEl?.contains(relatedTarget))) {
+            return;
+        }
+
+        this.hide();
     }
 
     pickColor(event: MouseEvent | TouchEvent, position?: any) {
@@ -424,6 +447,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
                 this.hueDragging = false;
                 this.unbindDocumentMousemoveListener();
                 this.unbindDocumentMouseupListener();
+                this.hideOnColorChosen();
             });
         }
     }
