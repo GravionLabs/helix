@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Toolbar } from '@gravionlabs/helix/toolbar';
+import { Toolbar } from '@helix-ui/core/toolbar';
 ```
 
 ## Components
@@ -25,4 +25,4 @@ Toolbar is a grouping component for buttons and other content.
 
 ## Source
 
-[`projects/helix/toolbar`](../../projects/helix/toolbar)
+[`projects/core/toolbar`](../../projects/core/toolbar)

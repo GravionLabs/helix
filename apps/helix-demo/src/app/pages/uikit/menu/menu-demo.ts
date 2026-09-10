@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BreadcrumbModule } from '@gravionlabs/helix/breadcrumb';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { ContextMenuModule } from '@gravionlabs/helix/contextmenu';
-import { IconField, IconFieldModule } from '@gravionlabs/helix/iconfield';
-import { InputIcon, InputIconModule } from '@gravionlabs/helix/inputicon';
-import { InputTextModule } from '@gravionlabs/helix/inputtext';
-import { MegaMenuModule } from '@gravionlabs/helix/megamenu';
-import { MenuModule } from '@gravionlabs/helix/menu';
-import { MenubarModule } from '@gravionlabs/helix/menubar';
-import { PanelMenuModule } from '@gravionlabs/helix/panelmenu';
-import { StepperModule } from '@gravionlabs/helix/stepper';
-import { TabsModule } from '@gravionlabs/helix/tabs';
-import { TieredMenuModule } from '@gravionlabs/helix/tieredmenu';
+import { BreadcrumbModule } from '@helix-ui/core/breadcrumb';
+import { ButtonModule } from '@helix-ui/core/button';
+import { ContextMenuModule } from '@helix-ui/core/contextmenu';
+import { IconField, IconFieldModule } from '@helix-ui/core/iconfield';
+import { InputIcon, InputIconModule } from '@helix-ui/core/inputicon';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MegaMenuModule } from '@helix-ui/core/megamenu';
+import { MenuModule } from '@helix-ui/core/menu';
+import { MenubarModule } from '@helix-ui/core/menubar';
+import { PanelMenuModule } from '@helix-ui/core/panelmenu';
+import { StepperModule } from '@helix-ui/core/stepper';
+import { TabsModule } from '@helix-ui/core/tabs';
+import { TieredMenuModule } from '@helix-ui/core/tieredmenu';
 
 @Component({
   selector: 'app-menu-demo',

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TreeTable, TTBody, TTScrollableView } from '@gravionlabs/helix/treetable';
+import { TreeTable, TTBody, TTScrollableView } from '@helix-ui/core/treetable';
 ```
 
 ## Components
@@ -258,4 +258,4 @@ Selector: `h-treeTableToggler, h-treetabletoggler, h-treetable-toggler`
 
 ## Source
 
-[`projects/helix/treetable`](../../projects/helix/treetable)
+[`projects/core/treetable`](../../projects/core/treetable)

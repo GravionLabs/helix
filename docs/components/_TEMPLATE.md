@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { <MainExports> } from '@gravionlabs/helix/<module>';
+import { <MainExports> } from '@helix-ui/core/<module>';
 ```
 
 ## Components <!-- or "## Directives" for directive-only modules -->
@@ -36,7 +36,7 @@ Class-level JSDoc description.
 
 ## Source
 
-[`projects/helix/<module>`](../../projects/helix/<module>)
+[`projects/core/<module>`](../../projects/core/<module>)
 
 <!--
 Conventions:

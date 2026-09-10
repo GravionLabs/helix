@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Toast, ToastItem } from '@gravionlabs/helix/toast';
+import { Toast, ToastItem } from '@helix-ui/core/toast';
 ```
 
 ## Components
@@ -70,4 +70,4 @@ Selector: `h-toastItem`
 
 ## Source
 
-[`projects/helix/toast`](../../projects/helix/toast)
+[`projects/core/toast`](../../projects/core/toast)

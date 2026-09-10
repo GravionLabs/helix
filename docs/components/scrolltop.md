@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ScrollTop } from '@gravionlabs/helix/scrolltop';
+import { ScrollTop } from '@helix-ui/core/scrolltop';
 ```
 
 ## Components
@@ -33,4 +33,4 @@ ScrollTop gets displayed after a certain scroll position and used to navigates t
 
 ## Source
 
-[`projects/helix/scrolltop`](../../projects/helix/scrolltop)
+[`projects/core/scrolltop`](../../projects/core/scrolltop)

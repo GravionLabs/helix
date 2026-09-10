@@ -3,7 +3,7 @@
 ## Import
 
 ```ts
-import { ButtonGroup } from '@gravionlabs/helix/buttongroup';
+import { ButtonGroup } from '@helix-ui/core/buttongroup';
 ```
 
 ## Components
@@ -14,4 +14,4 @@ Selector: `h-buttonGroup, h-buttongroup, h-button-group`
 
 ## Source
 
-[`projects/helix/buttongroup`](../../projects/helix/buttongroup)
+[`projects/core/buttongroup`](../../projects/core/buttongroup)

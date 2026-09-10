@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { CardModule } from '@gravionlabs/helix/card';
-import { TimelineModule } from '@gravionlabs/helix/timeline';
+import { ButtonModule } from '@helix-ui/core/button';
+import { CardModule } from '@helix-ui/core/card';
+import { TimelineModule } from '@helix-ui/core/timeline';
 
 @Component({
   selector: 'app-timeline-demo',

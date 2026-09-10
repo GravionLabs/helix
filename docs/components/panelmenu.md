@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PanelMenu, PanelMenuSub, PanelMenuList } from '@gravionlabs/helix/panelmenu';
+import { PanelMenu, PanelMenuSub, PanelMenuList } from '@helix-ui/core/panelmenu';
 ```
 
 ## Components
@@ -86,4 +86,4 @@ Selector: `ul[hPanelMenuList]`
 
 ## Source
 
-[`projects/helix/panelmenu`](../../projects/helix/panelmenu)
+[`projects/core/panelmenu`](../../projects/core/panelmenu)

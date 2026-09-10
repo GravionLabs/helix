@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { MenuModule } from '@gravionlabs/helix/menu';
+import { ButtonModule } from '@helix-ui/core/button';
+import { MenuModule } from '@helix-ui/core/menu';
 
 @Component({
   standalone: true,

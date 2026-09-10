@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Utils } from '@gravionlabs/helix/utils';
+import { Utils } from '@helix-ui/core/utils';
 ```
 
 ## Classes
@@ -18,4 +18,4 @@ import { Utils } from '@gravionlabs/helix/utils';
 
 ## Source
 
-[`projects/helix/utils`](../../projects/helix/utils)
+[`projects/core/utils`](../../projects/core/utils)

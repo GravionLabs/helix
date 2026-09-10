@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Message } from '@gravionlabs/helix/message';
+import { Message } from '@helix-ui/core/message';
 ```
 
 ## Components
@@ -43,4 +43,4 @@ Message groups a collection of contents in tabs.
 
 ## Source
 
-[`projects/helix/message`](../../projects/helix/message)
+[`projects/core/message`](../../projects/core/message)

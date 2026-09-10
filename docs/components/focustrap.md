@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FocusTrap } from '@gravionlabs/helix/focustrap';
+import { FocusTrap } from '@helix-ui/core/focustrap';
 ```
 
 ## Directives
@@ -24,4 +24,4 @@ Focus Trap keeps focus within a certain DOM element while tabbing.
 
 ## Source
 
-[`projects/helix/focustrap`](../../projects/helix/focustrap)
+[`projects/core/focustrap`](../../projects/core/focustrap)

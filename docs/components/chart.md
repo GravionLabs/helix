@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { UIChart } from '@gravionlabs/helix/chart';
+import { UIChart } from '@helix-ui/core/chart';
 ```
 
 ## Components
@@ -36,4 +36,4 @@ Chart groups a collection of contents in tabs.
 
 ## Source
 
-[`projects/helix/chart`](../../projects/helix/chart)
+[`projects/core/chart`](../../projects/core/chart)

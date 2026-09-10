@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tooltip } from '@gravionlabs/helix/tooltip';
+import { Tooltip } from '@helix-ui/core/tooltip';
 ```
 
 ## Directives
@@ -44,4 +44,4 @@ Tooltip directive provides advisory information for a component.
 
 ## Source
 
-[`projects/helix/tooltip`](../../projects/helix/tooltip)
+[`projects/core/tooltip`](../../projects/core/tooltip)

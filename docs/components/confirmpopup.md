@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ConfirmPopup } from '@gravionlabs/helix/confirmpopup';
+import { ConfirmPopup } from '@helix-ui/core/confirmpopup';
 ```
 
 ## Components
@@ -34,4 +34,4 @@ ConfirmPopup displays a confirmation overlay displayed relatively to its target.
 
 ## Source
 
-[`projects/helix/confirmpopup`](../../projects/helix/confirmpopup)
+[`projects/core/confirmpopup`](../../projects/core/confirmpopup)

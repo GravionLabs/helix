@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Knob } from '@gravionlabs/helix/knob';
+import { Knob } from '@helix-ui/core/knob';
 ```
 
 ## Components
@@ -44,4 +44,4 @@ Knob is a form component to define number inputs with a dial.
 
 ## Source
 
-[`projects/helix/knob`](../../projects/helix/knob)
+[`projects/core/knob`](../../projects/core/knob)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Ripple } from '@gravionlabs/helix/ripple';
+import { Ripple } from '@helix-ui/core/ripple';
 ```
 
 ## Directives
@@ -18,4 +18,4 @@ Ripple directive adds ripple effect to the host element.
 
 ## Source
 
-[`projects/helix/ripple`](../../projects/helix/ripple)
+[`projects/core/ripple`](../../projects/core/ripple)

@@ -40,18 +40,18 @@ module.exports = [
 
     // Vendored PrimeNG fork mirrors upstream sources; don't force `===` there
     {
-        files: ['projects/helix/**/*.html'],
+        files: ['projects/core/**/*.html'],
         rules: {
             '@angular-eslint/template/eqeqeq': 'off',
         },
     },
 
     // Guard against reintroducing decorator-based Input/Output/Query/Host APIs
-    // now that projects/helix has been migrated to signals (#373). Spec files
+    // now that projects/core has been migrated to signals (#373). Spec files
     // are exempt: test-host components there legitimately use classic decorators.
     {
-        files: ['projects/helix/**/*.ts'],
-        ignores: ['projects/helix/**/*.spec.ts'],
+        files: ['projects/core/**/*.ts'],
+        ignores: ['projects/core/**/*.spec.ts'],
         rules: {
             'no-restricted-syntax': [
                 'error',

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dock } from '@gravionlabs/helix/dock';
+import { Dock } from '@helix-ui/core/dock';
 ```
 
 ## Components
@@ -37,4 +37,4 @@ Dock is a navigation component consisting of menuitems.
 
 ## Source
 
-[`projects/helix/dock`](../../projects/helix/dock)
+[`projects/core/dock`](../../projects/core/dock)

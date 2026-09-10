@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputMask, InputMaskDirective } from '@gravionlabs/helix/inputmask';
+import { InputMask, InputMaskDirective } from '@helix-ui/core/inputmask';
 ```
 
 ## Components
@@ -78,4 +78,4 @@ InputMask directive is applied directly to input elements to enable masked input
 
 ## Source
 
-[`projects/helix/inputmask`](../../projects/helix/inputmask)
+[`projects/core/inputmask`](../../projects/core/inputmask)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Slider } from '@gravionlabs/helix/slider';
+import { Slider } from '@helix-ui/core/slider';
 ```
 
 ## Components
@@ -41,4 +41,4 @@ Slider is a component to provide input with a drag handle.
 
 ## Source
 
-[`projects/helix/slider`](../../projects/helix/slider)
+[`projects/core/slider`](../../projects/core/slider)

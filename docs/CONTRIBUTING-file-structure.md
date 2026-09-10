@@ -14,14 +14,14 @@ the fork no longer tracks upstream, so fork components now also use separate
   `component-name.scss` via `styleUrl` when the component has its own styles
   (Tailwind-utility-only components usually don't need one).
 - One directory per component, files share the component's kebab-case name
-  (see `projects/helix-shell/src/lib/layout/components/` for the reference
+  (see `projects/shell/src/lib/layout/components/` for the reference
   layout).
 
-## Vendored fork (`projects/helix`)
+## Vendored fork (`projects/core`)
 
 Fork components use separate `.html` template files (epic #297); styles stay
 in the TS token system (`style/*style.ts`), unchanged. Reference example:
-`projects/helix/knob/`.
+`projects/core/knob/`.
 
 Extraction rules:
 
@@ -31,7 +31,7 @@ Extraction rules:
   templates go to `<dir>/<lowercased-class-name>.html` (e.g. class
   `TableBody` in `table.ts` → `table/tablebody.html`).
 - **Secondary components with templates under 10 lines** may stay inline.
-- **Exempt:** the 55 SVG icon components under `projects/helix/icons/`
+- **Exempt:** the 55 SVG icon components under `projects/core/icons/`
   (tiny static templates) keep their inline templates.
 - Template text moves **verbatim**, only re-indented to the new file's
   baseline. No refactoring, no formatting changes, no attribute reordering.

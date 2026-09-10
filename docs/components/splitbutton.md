@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SplitButton } from '@gravionlabs/helix/splitbutton';
+import { SplitButton } from '@helix-ui/core/splitbutton';
 ```
 
 ## Components
@@ -61,4 +61,4 @@ SplitButton groups a set of commands in an overlay with a default command.
 
 ## Source
 
-[`projects/helix/splitbutton`](../../projects/helix/splitbutton)
+[`projects/core/splitbutton`](../../projects/core/splitbutton)

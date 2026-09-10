@@ -1,0 +1,23 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { StyleClassModule } from '@helix-ui/core/styleclass';
+
+@Component({
+  selector: 'helix-mobile-menu-action',
+  standalone: true,
+  imports: [StyleClassModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <button
+      class="layout-topbar-menu-button layout-topbar-action"
+      hStyleClass="@next"
+      enterFromClass="hidden"
+      enterActiveClass="animate-scalein"
+      leaveToClass="hidden"
+      leaveActiveClass="animate-fadeout"
+      [hideOnOutsideClick]="true"
+    >
+      <i class="pi pi-ellipsis-v"></i>
+    </button>
+  `,
+})
+export class HelixMobileMenuAction {}

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ConfirmDialog } from '@gravionlabs/helix/confirmdialog';
+import { ConfirmDialog } from '@helix-ui/core/confirmdialog';
 ```
 
 ## Components
@@ -61,4 +61,4 @@ ConfirmDialog uses a Dialog UI that is integrated with the Confirmation API.
 
 ## Source
 
-[`projects/helix/confirmdialog`](../../projects/helix/confirmdialog)
+[`projects/core/confirmdialog`](../../projects/core/confirmdialog)

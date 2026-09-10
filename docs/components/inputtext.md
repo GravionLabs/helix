@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputText } from '@gravionlabs/helix/inputtext';
+import { InputText } from '@helix-ui/core/inputtext';
 ```
 
 ## Components
@@ -31,4 +31,4 @@ InputText directive is an extension to standard input element with theming.
 
 ## Source
 
-[`projects/helix/inputtext`](../../projects/helix/inputtext)
+[`projects/core/inputtext`](../../projects/core/inputtext)

@@ -7,7 +7,7 @@ Part of epic #233 / feature #241. Analyzed 2026-07-14.
 > PrimeNG, which voids criterion 2 (upstream diffability) — the load-bearing
 > reason for keeping the fork single-file. Epic #297 (feature #298) extracts
 > all fork inline templates to separate `.html` files before the first
-> 22.0.0 publish; the 55 SVG icon components under `projects/helix/icons/`
+> 22.0.0 publish; the 55 SVG icon components under `projects/core/icons/`
 > and secondary components with templates under 10 lines stay inline. The
 > extraction convention lives in
 > [../CONTRIBUTING-file-structure.md](../CONTRIBUTING-file-structure.md).
@@ -29,7 +29,7 @@ A split is worth it only when **all** of these hold:
 
 ## Verdicts by area
 
-### `projects/helix` (vendored PrimeNG fork, 110 components) — keep inline
+### `projects/core` (vendored PrimeNG fork, 110 components) — keep inline
 
 Criterion 2 fails for every fork component, and criterion 3 fails as well
 (styles are TS token files under `style/*style.ts`, explicitly out of scope
@@ -59,12 +59,12 @@ uniform and not enumerated; the ten largest are listed for the record:
 | listbox | 1,791 | keep inline (vendored) |
 | galleria | 1,742 | keep inline (vendored) |
 
-### `projects/helix-shell` — already split, keep as is
+### `projects/shell` — already split, keep as is
 
 All 8 layout components already use separate `.html` files (23 templates) with
 Tailwind styling. Matches the convention below; no action.
 
-### `projects/helix-zod`, `projects/helix-ag-grid` — keep current layout
+### `projects/zod`, `projects/ag-grid` — keep current layout
 
 Small widget components with short templates; existing per-component layout
 already follows the convention. No splits warranted.

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dialog } from '@gravionlabs/helix/dialog';
+import { Dialog } from '@helix-ui/core/dialog';
 ```
 
 ## Components
@@ -80,4 +80,4 @@ Dialog is a container to display content in an overlay window.
 
 ## Source
 
-[`projects/helix/dialog`](../../projects/helix/dialog)
+[`projects/core/dialog`](../../projects/core/dialog)

@@ -1,0 +1,76 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind } from '@helix-ui/core/bind';
+import { ProgressSpinnerPassThrough } from '@helix-ui/core/types/progressspinner';
+import { ProgressSpinnerStyle } from './style/progressspinnerstyle';
+
+const PROGRESSSPINNER_INSTANCE = new InjectionToken<ProgressSpinner>('PROGRESSSPINNER_INSTANCE');
+
+/**
+ * ProgressSpinner is a process status indicator.
+ * @group Components
+ */
+@Component({
+    selector: 'h-progressSpinner, h-progress-spinner, h-progressspinner',
+    standalone: true,
+    imports: [CommonModule, SharedModule, Bind],
+    templateUrl: './progressspinner.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    providers: [ProgressSpinnerStyle, { provide: PROGRESSSPINNER_INSTANCE, useExisting: ProgressSpinner }, { provide: PARENT_INSTANCE, useExisting: ProgressSpinner }],
+    host: {
+        '[attr.aria-label]': 'ariaLabel()',
+        '[attr.role]': "'progressbar'",
+        '[attr.aria-busy]': 'true',
+        '[class]': "cn(cx('root'), styleClass())"
+    },
+    hostDirectives: [Bind]
+})
+export class ProgressSpinner extends BaseComponent<ProgressSpinnerPassThrough> {
+    componentName = 'ProgressSpinner';
+
+    $pcProgressSpinner: ProgressSpinner | undefined = inject(PROGRESSSPINNER_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    /**
+     * Class of the element.
+     * @deprecated since v20.0.0, use `class` instead.
+     * @group Props
+     */
+    readonly styleClass = input<string>();
+    /**
+     * Width of the circle stroke.
+     * @group Props
+     */
+    readonly strokeWidth = input<string>('2');
+    /**
+     * Color for the background of the circle.
+     * @group Props
+     */
+    readonly fill = input<string>('none');
+    /**
+     * Duration of the rotate animation.
+     * @group Props
+     */
+    readonly animationDuration = input<string>('2s');
+    /**
+     * Used to define a aria label attribute the current element.
+     * @group Props
+     */
+    readonly ariaLabel = input<string>();
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+
+    _componentStyle = inject(ProgressSpinnerStyle);
+}
+
+@NgModule({
+    imports: [ProgressSpinner, SharedModule],
+    exports: [ProgressSpinner, SharedModule]
+})
+export class ProgressSpinnerModule {}

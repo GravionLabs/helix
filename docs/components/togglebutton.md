@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ToggleButton } from '@gravionlabs/helix/togglebutton';
+import { ToggleButton } from '@helix-ui/core/togglebutton';
 ```
 
 ## Components
@@ -43,4 +43,4 @@ ToggleButton is used to select a boolean value using a button.
 
 ## Source
 
-[`projects/helix/togglebutton`](../../projects/helix/togglebutton)
+[`projects/core/togglebutton`](../../projects/core/togglebutton)

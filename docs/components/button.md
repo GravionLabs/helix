@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Button, ButtonLabel, ButtonIcon } from '@gravionlabs/helix/button';
+import { Button, ButtonLabel, ButtonIcon } from '@helix-ui/core/button';
 ```
 
 ## Components
@@ -110,4 +110,4 @@ Button directive is an extension to button component.
 
 ## Source
 
-[`projects/helix/button`](../../projects/helix/button)
+[`projects/core/button`](../../projects/core/button)

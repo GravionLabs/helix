@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OrderList } from '@gravionlabs/helix/orderlist';
+import { OrderList } from '@helix-ui/core/orderlist';
 ```
 
 ## Components
@@ -61,4 +61,4 @@ OrderList is used to manage the order of a collection.
 
 ## Source
 
-[`projects/helix/orderlist`](../../projects/helix/orderlist)
+[`projects/core/orderlist`](../../projects/core/orderlist)

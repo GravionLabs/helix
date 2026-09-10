@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
-import type { HelixStatusBarVersion } from '@gravionlabs/helix-shell';
-import { HelixAppLayout, LayoutStore } from '@gravionlabs/helix-shell';
+import type { HelixStatusBarVersion } from '@helix-ui/shell';
+import { HelixAppLayout, LayoutStore } from '@helix-ui/shell';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { DEMO_MENU_MODEL } from './menu.model';
 

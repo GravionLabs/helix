@@ -5,7 +5,7 @@ import {
   withEnabledBlockingInitialNavigation,
   withInMemoryScrolling,
 } from '@angular/router';
-import { provideHelix } from '@gravionlabs/helix/config';
+import { provideHelix } from '@helix-ui/core/config';
 import Aura from '@primeuix/themes/aura';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { appRoutes } from './app.routes';

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseInput } from '@gravionlabs/helix/baseinput';
+import { BaseInput } from '@helix-ui/core/baseinput';
 ```
 
 ## Components
@@ -30,4 +30,4 @@ import { BaseInput } from '@gravionlabs/helix/baseinput';
 
 ## Source
 
-[`projects/helix/baseinput`](../../projects/helix/baseinput)
+[`projects/core/baseinput`](../../projects/core/baseinput)

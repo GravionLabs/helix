@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Timeline } from '@gravionlabs/helix/timeline';
+import { Timeline } from '@helix-ui/core/timeline';
 ```
 
 ## Components
@@ -27,4 +27,4 @@ Timeline visualizes a series of chained events.
 
 ## Source
 
-[`projects/helix/timeline`](../../projects/helix/timeline)
+[`projects/core/timeline`](../../projects/core/timeline)

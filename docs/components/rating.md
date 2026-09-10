@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Rating } from '@gravionlabs/helix/rating';
+import { Rating } from '@helix-ui/core/rating';
 ```
 
 ## Components
@@ -38,4 +38,4 @@ Rating is an extension to standard radio button element with theming.
 
 ## Source
 
-[`projects/helix/rating`](../../projects/helix/rating)
+[`projects/core/rating`](../../projects/core/rating)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tabs, Tab, TabList } from '@gravionlabs/helix/tabs';
+import { Tabs, Tab, TabList } from '@helix-ui/core/tabs';
 ```
 
 ## Components
@@ -67,4 +67,4 @@ TabPanels is a helper component for Tabs component.
 
 ## Source
 
-[`projects/helix/tabs`](../../projects/helix/tabs)
+[`projects/core/tabs`](../../projects/core/tabs)

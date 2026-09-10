@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TreeSelect } from '@gravionlabs/helix/treeselect';
+import { TreeSelect } from '@helix-ui/core/treeselect';
 ```
 
 ## Components
@@ -77,4 +77,4 @@ TreeSelect is a form component to choose from hierarchical data.
 
 ## Source
 
-[`projects/helix/treeselect`](../../projects/helix/treeselect)
+[`projects/core/treeselect`](../../projects/core/treeselect)

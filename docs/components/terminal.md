@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Terminal } from '@gravionlabs/helix/terminal';
+import { Terminal } from '@helix-ui/core/terminal';
 ```
 
 ## Components
@@ -30,4 +30,4 @@ Terminal is a text based user interface.
 
 ## Source
 
-[`projects/helix/terminal`](../../projects/helix/terminal)
+[`projects/core/terminal`](../../projects/core/terminal)

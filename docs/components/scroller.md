@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Scroller } from '@gravionlabs/helix/scroller';
+import { Scroller } from '@helix-ui/core/scroller';
 ```
 
 ## Components
@@ -32,4 +32,4 @@ Scroller is a performance-approach to handle huge data efficiently.
 
 ## Source
 
-[`projects/helix/scroller`](../../projects/helix/scroller)
+[`projects/core/scroller`](../../projects/core/scroller)

@@ -26,7 +26,7 @@ reversed by this epic — class names stay `.p-*`.
 
 ## Scope
 
-Inventory at time of reversal (non-spec `.ts` files, `projects/helix`):
+Inventory at time of reversal (non-spec `.ts` files, `projects/core`):
 
 | API | Occurrences | Files | Signal replacement |
 |---|---|---|---|
@@ -48,7 +48,7 @@ directories**, then finishes manually by these rules:
 
 1. **Schematics first.** Run per component path:
    `@angular/core:signal-input-migration`, `@angular/core:output-migration`,
-   `@angular/core:signal-queries-migration` (with `--path projects/helix/<dir>`).
+   `@angular/core:signal-queries-migration` (with `--path projects/core/<dir>`).
    *Pilot finding:* the output/queries schematics analyze the whole program and
    may edit or insert `// TODO` comments in files **outside** `--path` — revert
    every change outside the batch's directories before committing.
@@ -69,8 +69,8 @@ directories**, then finishes manually by these rules:
    `fixture.componentRef.setInput('x', y)`; input *reads* become signal calls
    (`component.x()`); non-input members keep direct assignment.
 8. **Verification per batch:** `pnpm build:lib` and the demo build pass;
-   `pnpm ng test helix-shell --watch=false` passes **after** rebuilding
-   `dist/helix` (the shell consumes the built package — it is the only
+   `pnpm ng test shell --watch=false` passes **after** rebuilding
+   `dist/core` (the shell consumes the built package — it is the only
    runnable consumer test suite and catches cross-component signal leaks
    like the `$hostName` PT-key regression); decorator grep over the batch's
    directories is empty (documented exceptions listed in the PR body).
@@ -96,7 +96,7 @@ directories**, then finishes manually by these rules:
 
 ## Feature #359 — manual decorator leftovers (2026-07 to 2026-08)
 
-#324's closeout still left ~509 non-spec decorators in `projects/helix`,
+#324's closeout still left ~509 non-spec decorators in `projects/core`,
 concentrated in the largest components (table, multiselect, treeselect,
 select, datepicker, picklist, treetable, tree, autocomplete, galleria,
 scroller, overlay) plus ~50 scattered small leftovers. Epic #358 opened
@@ -122,18 +122,18 @@ the same rule block above and a grep-based DoD.
 
 **#373 closeout findings:**
 
-- Epic-level decorator sweep (`grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\(' projects/helix --include='*.ts'`,
+- Epic-level decorator sweep (`grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\(' projects/core --include='*.ts'`,
   excluding `*.spec.ts`) is **empty**. The only remaining decorator hits live
   in `*.spec.ts` test-host components (plain Angular test fixtures that
   legitimately use classic decorators) or are inside comments/strings — none
   are library-source leftovers.
 - The fork's own spec files were never type-checked by any build or test
-  script (`projects/helix` has no `tsconfig.spec.json`, unlike
+  script (`projects/core` has no `tsconfig.spec.json`, unlike
   `helix-shell`/`helix-zod`/`helix-ag-grid`). As components converted to
   signals, ~900 spec call sites across 51 files silently broke
   (`component.x = y` on a now-read-only `input()`/`model()`, or reading a
   signal without calling it) without anything catching it. These were found
-  by type-checking `projects/helix/**/*.ts` against a temporary standalone
+  by type-checking `projects/core/**/*.ts` against a temporary standalone
   tsconfig and fixed per rule 7 above (`component.x = y` →
   `fixture.componentRef.setInput('x', y)`; signal reads get `()`). A
   handful of pre-existing, unrelated jasmine→vitest typing gaps (`done()`
@@ -143,14 +143,14 @@ the same rule block above and a grep-based DoD.
 - Real eslint guard added in `eslint.config.js`: a `no-restricted-syntax`
   rule bans `@Input`/`@Output`/`@ViewChild`/`@ContentChild`/
   `@ContentChildren`/`@HostListener`/`@HostBinding` decorators in
-  `projects/helix/**/*.ts`, excluding `*.spec.ts`. Verified to fail `pnpm
+  `projects/core/**/*.ts`, excluding `*.spec.ts`. Verified to fail `pnpm
   lint` when a decorator is (temporarily) reintroduced into a fork source
   file. #324 had claimed this guard but never landed it.
 
 ## Definition of done (epic #297, closed out by feature #359 / #373)
 
 `grep -rE '@(Input|Output|ViewChild|ContentChild|ContentChildren|HostListener|HostBinding)\('
-projects/helix --include='*.ts'` returns nothing outside `*.spec.ts` test
+projects/core --include='*.ts'` returns nothing outside `*.spec.ts` test
 hosts; builds and CI green; a real lint guard prevents reintroduction (added
 by #373, see above).
 

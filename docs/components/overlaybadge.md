@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OverlayBadge } from '@gravionlabs/helix/overlaybadge';
+import { OverlayBadge } from '@helix-ui/core/overlaybadge';
 ```
 
 ## Components
@@ -29,4 +29,4 @@ OverlayPanel is a container component positioned as connected to its target.
 
 ## Source
 
-[`projects/helix/overlaybadge`](../../projects/helix/overlaybadge)
+[`projects/core/overlaybadge`](../../projects/core/overlaybadge)

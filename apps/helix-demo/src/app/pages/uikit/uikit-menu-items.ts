@@ -1,4 +1,4 @@
-import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
+import type { HelixRouteMenuItem } from '@helix-ui/shell';
 
 /**
  * Menu metadata for the uikit section.

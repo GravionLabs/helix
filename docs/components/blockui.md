@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BlockUI } from '@gravionlabs/helix/blockui';
+import { BlockUI } from '@helix-ui/core/blockui';
 ```
 
 ## Components
@@ -27,4 +27,4 @@ BlockUI can either block other components or the whole page.
 
 ## Source
 
-[`projects/helix/blockui`](../../projects/helix/blockui)
+[`projects/core/blockui`](../../projects/core/blockui)

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ColorPicker } from '@gravionlabs/helix/colorpicker';
+import { ColorPicker } from '@helix-ui/core/colorpicker';
 ```
 
 ## Components
@@ -44,4 +44,4 @@ ColorPicker groups a collection of contents in tabs.
 
 ## Source
 
-[`projects/helix/colorpicker`](../../projects/helix/colorpicker)
+[`projects/core/colorpicker`](../../projects/core/colorpicker)

@@ -1,0 +1,1136 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  forwardRef,
+  Inject,
+  inject,
+  InjectionToken,
+  input,
+  model,
+  NgModule,
+  numberAttribute,
+  Renderer2,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+  ViewRef,
+  output,
+  viewChild,
+  contentChild,
+  contentChildren
+} from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { MotionEvent, MotionOptions } from '@primeuix/motion';
+import { absolutePosition, addStyle, appendChild, findLastIndex, findSingle, focus, getOuterWidth, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, nestedPosition, relativePosition, resolve, uuid } from '@primeuix/utils';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
+import { AngleRightIcon } from '@helix-ui/core/icons';
+import { MotionModule } from '@helix-ui/core/motion';
+import { Ripple } from '@helix-ui/core/ripple';
+import { TooltipModule } from '@helix-ui/core/tooltip';
+import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { TieredMenuItemTemplateContext, TieredMenuPassThrough } from '@helix-ui/core/types/tieredmenu';
+import { ZIndexUtils } from '@helix-ui/core/utils';
+import { TieredMenuStyle } from './style/tieredmenustyle';
+
+const TIEREDMENU_INSTANCE = new InjectionToken<TieredMenu>('TIEREDMENU_INSTANCE');
+const TIEREDMENUSUB_INSTANCE = new InjectionToken<TieredMenuSub>('TIEREDMENUSUB_INSTANCE');
+
+@Component({
+    selector: 'h-tieredMenuSub, h-tieredmenusub',
+    standalone: true,
+    imports: [CommonModule, RouterModule, Ripple, TooltipModule, AngleRightIcon, SharedModule, BindModule, MotionModule],
+    templateUrl: './tieredmenusub.html',
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: TIEREDMENUSUB_INSTANCE, useExisting: forwardRef(() => TieredMenuSub) },
+        { provide: PARENT_INSTANCE, useExisting: forwardRef(() => TieredMenuSub) }
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    hostDirectives: [Bind]
+})
+export class TieredMenuSub extends BaseComponent<TieredMenuPassThrough> {
+    readonly visible = model<boolean>(false);
+
+    readonly items = input<any[]>(undefined!);
+
+    readonly itemTemplate = input<TemplateRef<TieredMenuItemTemplateContext> | undefined>(undefined);
+
+    readonly root = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
+
+    readonly autoDisplay = input<boolean, unknown>(undefined, { transform: booleanAttribute });
+
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
+
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
+
+    readonly popup = input<boolean, unknown>(undefined, { transform: booleanAttribute });
+
+    readonly menuId = input<string>();
+
+    readonly ariaLabel = input<string>();
+
+    readonly ariaLabelledBy = input<string>();
+
+    readonly level = input<number, unknown>(0, { transform: numberAttribute });
+
+    readonly focusedItemId = input<string>();
+
+    activeItemPath = input<any[]>([]);
+
+    readonly motionOptions = input<MotionOptions[]>();
+
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
+
+    readonly inlineStyles = input<{
+    [klass: string]: any;
+} | null>();
+
+    readonly itemClick = output<any>();
+
+    readonly itemMouseEnter = output<any>();
+
+    readonly menuFocus = output<any>();
+
+    readonly menuBlur = output<any>();
+
+    readonly menuKeydown = output<any>();
+
+    readonly sublistViewChild = viewChild.required<ElementRef>('sublist');
+
+    render = signal<boolean>(false);
+
+    _componentStyle = inject(TieredMenuStyle);
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    $pcTieredMenu: TieredMenu | undefined = inject(TIEREDMENU_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+    $pcTieredMenuSub: TieredMenuSub | undefined = inject(TIEREDMENUSUB_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+
+    constructor(
+        public el: ElementRef,
+        public renderer: Renderer2,
+        @Inject(forwardRef(() => TieredMenu)) public tieredMenu: TieredMenu
+    ) {
+        super();
+        effect(() => {
+            if (this.visible() || this.root()) {
+                this.render.set(true);
+            }
+        });
+    }
+
+    positionSubmenu(sublist) {
+        if (isPlatformBrowser(this.tieredMenu.platformId)) {
+            if (sublist) {
+                nestedPosition(sublist, this.level());
+            }
+        }
+    }
+
+    getItemProp(processedItem: any, name: string, params: any | null = null): any {
+        return processedItem && processedItem.item ? resolve(processedItem.item[name], params) : undefined;
+    }
+
+    getItemId(processedItem: any): string {
+        return processedItem.item?.id ?? `${this.menuId()}_${processedItem.key}`;
+    }
+
+    getItemKey(processedItem: any): string {
+        return this.getItemId(processedItem);
+    }
+
+    getItemLabel(processedItem: any): string {
+        return this.getItemProp(processedItem, 'label');
+    }
+
+    getAriaSetSize() {
+        return this.items().filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, 'separator')).length;
+    }
+
+    getAriaPosInset(index: number) {
+        return (
+            index -
+            this.items().slice(0, index).filter((processedItem) => {
+                const isItemVisible = this.isItemVisible(processedItem);
+                const isVisibleSeparator = isItemVisible && this.getItemProp(processedItem, 'separator');
+                return !isItemVisible || isVisibleSeparator;
+            }).length +
+            1
+        );
+    }
+
+    isItemVisible(processedItem: any): boolean {
+        return this.getItemProp(processedItem, 'visible') !== false;
+    }
+
+    isItemActive(processedItem: any): boolean {
+        if (this.activeItemPath()) {
+            return this.activeItemPath().some((path) => path.key === processedItem.key);
+        }
+        return false;
+    }
+
+    isItemDisabled(processedItem: any): boolean {
+        return this.getItemProp(processedItem, 'disabled');
+    }
+
+    isItemFocused(processedItem: any): boolean {
+        return this.focusedItemId() === this.getItemId(processedItem);
+    }
+
+    isItemGroup(processedItem: any): boolean {
+        return isNotEmpty(processedItem.items);
+    }
+
+    // TODO: will be removed later. Helper method to get PT from parent ContextMenu if available, otherwise use own PT
+    _ptm(section: string, options?: any) {
+        return this.$pcTieredMenu ? this.$pcTieredMenu.ptm(section, options) : this.ptm(section, options);
+    }
+
+    getPTOptions(processedItem: any, index: number, key: string) {
+        return this._ptm(key, {
+            context: {
+                item: processedItem.item,
+                index,
+                active: this.isItemActive(processedItem),
+                focused: this.isItemFocused(processedItem),
+                disabled: this.isItemDisabled(processedItem)
+            }
+        });
+    }
+
+    onItemMouseEnter(param: any) {
+        if (this.autoDisplay()) {
+            const { event, processedItem } = param;
+            this.itemMouseEnter.emit({ originalEvent: event, processedItem });
+        }
+    }
+
+    onItemClick(event: any, processedItem: any) {
+        this.getItemProp(processedItem, 'command', { originalEvent: event, item: processedItem.item });
+        this.itemClick.emit({ originalEvent: event, processedItem, isFocus: true });
+    }
+
+    onBeforeEnter(event: MotionEvent) {
+        this.positionSubmenu(event.element);
+    }
+
+    onAfterLeave() {
+        this.render.set(false);
+    }
+}
+/**
+ * TieredMenu displays submenus in nested overlays.
+ * @group Components
+ */
+@Component({
+    selector: 'h-tieredMenu, h-tieredmenu, h-tiered-menu',
+    standalone: true,
+    imports: [CommonModule, TieredMenuSub, RouterModule, TooltipModule, SharedModule, BindModule, MotionModule],
+    templateUrl: './tieredmenu.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    providers: [TieredMenuStyle, { provide: TIEREDMENU_INSTANCE, useExisting: TieredMenu }, { provide: PARENT_INSTANCE, useExisting: TieredMenu }],
+    hostDirectives: [Bind]
+})
+export class TieredMenu extends BaseComponent<TieredMenuPassThrough> {
+    componentName = 'TieredMenu';
+
+    /**
+     * An array of menuitems.
+     * @group Props
+     */
+    readonly model = input<MenuItem[] | undefined>(undefined);
+    /**
+     * Defines if menu would displayed as a popup.
+     * @group Props
+     */
+    readonly popup = input<boolean | undefined, unknown>(undefined, { transform: booleanAttribute });
+    /**
+     * Inline style of the component.
+     * @group Props
+     */
+    readonly style = input<{
+    [klass: string]: any;
+} | null>();
+    /**
+     * Style class of the component.
+     * @group Props
+     */
+    readonly styleClass = input<string>();
+    /**
+     * The breakpoint to define the maximum width boundary.
+     * @group Props
+     */
+    readonly breakpoint = input<string>('960px');
+    /**
+     * Whether to automatically manage layering.
+     * @group Props
+     */
+    readonly autoZIndex = input<boolean, unknown>(true, { transform: booleanAttribute });
+    /**
+     * Base zIndex value to use in layering.
+     * @group Props
+     */
+    readonly baseZIndex = input<number, unknown>(0, { transform: numberAttribute });
+    /**
+     * Whether to show a root submenu on mouse over.
+     * @defaultValue true
+     * @group Props
+     */
+    readonly autoDisplay = input<boolean | undefined, unknown>(true, { transform: booleanAttribute });
+    /**
+     * Transition options of the show animation.
+     * @group Props
+     * @deprecated since v21.0.0, use `motionOptions` instead.
+     */
+    readonly showTransitionOptions = input<string>('.12s cubic-bezier(0, 0, 0.2, 1)');
+    /**
+     * Transition options of the hide animation.
+     * @group Props
+     * @deprecated since v21.0.0, use `motionOptions` instead.
+     */
+    readonly hideTransitionOptions = input<string>('.1s linear');
+    /**
+     * Current id state as a string.
+     * @group Props
+     */
+    readonly id = input<string | undefined>(undefined);
+    /**
+     * Defines a string value that labels an interactive element.
+     * @group Props
+     */
+    readonly ariaLabel = input<string>();
+    /**
+     * Identifier of the underlying input element.
+     * @group Props
+     */
+    readonly ariaLabelledBy = input<string>();
+    /**
+     * When present, it specifies that the component should be disabled.
+     * @group Props
+     */
+    readonly disabled = input<boolean, unknown>(false, { transform: booleanAttribute });
+    /**
+     * Index of the element in tabbing order.
+     * @group Props
+     */
+    readonly tabindex = input<number, unknown>(0, { transform: numberAttribute });
+    /**
+     * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
+     * @defaultValue 'self'
+     * @group Props
+     */
+    appendTo = input<HTMLElement | ElementRef | TemplateRef<any> | 'self' | 'body' | null | undefined | any>(undefined);
+    /**
+     * The motion options.
+     * @group Props
+     */
+    motionOptions = input<MotionOptions | undefined>(undefined);
+
+    computedMotionOptions = computed<MotionOptions>(() => {
+        return {
+            ...this.ptm('motion'),
+            ...this.motionOptions()
+        };
+    });
+    /**
+     * Callback to invoke when overlay menu is shown.
+     * @group Emits
+     */
+    readonly onShow = output<any>();
+    /**
+     * Callback to invoke when overlay menu is hidden.
+     * @group Emits
+     */
+    readonly onHide = output<any>();
+
+    readonly rootmenu = viewChild<TieredMenuSub>('rootmenu');
+
+    readonly containerViewChild = viewChild<ElementRef<any>>('container');
+    /**
+     * Custom submenu icon template.
+     * @group Templates
+     */
+    readonly submenuIconTemplate = contentChild<TemplateRef<void>>('submenuicon', { descendants: false });
+    /**
+     * Custom item template.
+     * @param {TieredMenuItemTemplateContext} context - item context.
+     * @see {@link TieredMenuItemTemplateContext}
+     * @group Templates
+     */
+    readonly itemTemplate = contentChild<TemplateRef<TieredMenuItemTemplateContext>>('item', { descendants: false });
+
+    readonly templates = contentChildren(HelixTemplate);
+
+    $appendTo = computed(() => this.appendTo() || this.config.overlayAppendTo());
+
+    render = signal<boolean>(false);
+
+    container: HTMLElement | undefined;
+
+    outsideClickListener: VoidListener;
+
+    resizeListener: VoidListener;
+
+    scrollHandler: Nullable<ConnectedOverlayScrollHandler>;
+
+    target: any;
+
+    relatedTarget: any;
+
+    visible: boolean | undefined;
+
+    dirty: boolean = false;
+
+    focused: boolean = false;
+
+    activeItemPath = signal<any>([]);
+
+    number = signal<number>(0);
+
+    focusedItemInfo = signal<any>({ index: -1, level: 0, parentKey: '', item: null });
+
+    searchValue: string = '';
+
+    searchTimeout: any;
+
+    _processedItems: any[];
+
+
+
+    _componentStyle = inject(TieredMenuStyle);
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    private matchMediaListener: () => void;
+
+    private query: MediaQueryList;
+
+    public queryMatches = signal<boolean>(false);
+
+    _submenuIconTemplate: TemplateRef<void> | undefined;
+
+    _itemTemplate: TemplateRef<TieredMenuItemTemplateContext> | undefined;
+
+    get visibleItems() {
+        const processedItem = this.activeItemPath().find((p) => p.key === this.focusedItemInfo().parentKey);
+        return processedItem ? processedItem.items : this.processedItems;
+    }
+
+    get processedItems() {
+        if (!this._processedItems || !this._processedItems.length) {
+            this._processedItems = this.createProcessedItems(this.model() || []);
+        }
+        return this._processedItems;
+    }
+
+    get focusedItemId() {
+        const focusedItemInfo = this.focusedItemInfo();
+        return focusedItemInfo.item?.id ? focusedItemInfo.item.id : focusedItemInfo.index !== -1 ? `${this.id()}${isNotEmpty(focusedItemInfo.parentKey) ? '_' + focusedItemInfo.parentKey : ''}_${focusedItemInfo.index}` : null;
+    }
+
+    constructor(public overlayService: OverlayService) {
+        super();
+        effect(() => {
+            this._processedItems = this.createProcessedItems(this.model() || []);
+        });
+        effect(() => {
+            const path = this.activeItemPath();
+
+            if (isNotEmpty(path)) {
+                this.bindOutsideClickListener();
+                this.bindResizeListener();
+            } else {
+                this.unbindOutsideClickListener();
+                this.unbindResizeListener();
+            }
+        });
+    }
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+
+    onInit() {
+        this.bindMatchMediaListener();
+    }
+
+    onAfterContentInit() {
+        this.templates()?.forEach((item) => {
+            switch (item.getType()) {
+                case 'submenuicon':
+                    this._submenuIconTemplate = item.template;
+                    break;
+
+                case 'item':
+                    this._itemTemplate = item.template;
+                    break;
+
+                default:
+                    this._itemTemplate = item.template;
+                    break;
+            }
+        });
+    }
+
+    bindMatchMediaListener() {
+        if (isPlatformBrowser(this.platformId)) {
+            if (!this.matchMediaListener) {
+                const query = window.matchMedia(`(max-width: ${this.breakpoint()})`);
+
+                this.query = query;
+                this.queryMatches.set(query.matches);
+
+                this.matchMediaListener = () => {
+                    this.queryMatches.set(query.matches);
+                };
+
+                query.addEventListener('change', this.matchMediaListener);
+            }
+        }
+    }
+
+    unbindMatchMediaListener() {
+        if (this.matchMediaListener) {
+            this.query.removeEventListener('change', this.matchMediaListener);
+            this.matchMediaListener = null as any;
+        }
+    }
+
+    createProcessedItems(items: any, level: number = 0, parent: any = {}, parentKey: any = '') {
+        const processedItems: any = [];
+
+        items &&
+            items.forEach((item, index) => {
+                const key = (parentKey !== '' ? parentKey + '_' : '') + index;
+                const newItem = {
+                    item,
+                    index,
+                    level,
+                    key,
+                    parent,
+                    parentKey
+                };
+
+                newItem['items'] = this.createProcessedItems(item.items, level + 1, newItem, key);
+                processedItems.push(newItem);
+            });
+
+        return processedItems;
+    }
+
+    getItemProp(item: any, name: string) {
+        return item ? resolve(item[name]) : undefined;
+    }
+
+    getProccessedItemLabel(processedItem: any) {
+        return processedItem ? this.getItemLabel(processedItem.item) : undefined;
+    }
+
+    getItemLabel(item: any) {
+        return this.getItemProp(item, 'label');
+    }
+
+    isProcessedItemGroup(processedItem: any): boolean {
+        return processedItem && isNotEmpty(processedItem.items);
+    }
+
+    isSelected(processedItem: any): boolean {
+        return this.activeItemPath().some((p) => p.key === processedItem.key);
+    }
+
+    isValidSelectedItem(processedItem: any): boolean {
+        return this.isValidItem(processedItem) && this.isSelected(processedItem);
+    }
+
+    isValidItem(processedItem: any): boolean {
+        return !!processedItem && !this.isItemDisabled(processedItem.item) && !this.isItemSeparator(processedItem.item) && this.isItemVisible(processedItem.item);
+    }
+
+    isItemDisabled(item: any): boolean {
+        return this.getItemProp(item, 'disabled');
+    }
+
+    isItemVisible(item: any): boolean {
+        return this.getItemProp(item, 'visible') !== false;
+    }
+
+    isItemSeparator(item: any): boolean {
+        return this.getItemProp(item, 'separator');
+    }
+
+    isItemMatched(processedItem: any): boolean {
+        return this.isValidItem(processedItem) && this.getProccessedItemLabel(processedItem).toLocaleLowerCase().startsWith(this.searchValue.toLocaleLowerCase());
+    }
+
+    isProccessedItemGroup(processedItem: any): boolean {
+        return processedItem && isNotEmpty(processedItem.items);
+    }
+
+    onOverlayClick(event: MouseEvent) {
+        if (this.popup()) {
+            this.overlayService.add({
+                originalEvent: event,
+                target: this.el.nativeElement
+            });
+        }
+    }
+
+    onItemClick(event: any) {
+        const { originalEvent, processedItem } = event;
+        const grouped = this.isProcessedItemGroup(processedItem);
+        const root = isEmpty(processedItem.parent);
+        const selected = this.isSelected(processedItem);
+
+        if (selected) {
+            const { index, key, level, parentKey, item } = processedItem;
+
+            this.activeItemPath.set(this.activeItemPath().filter((p) => key !== p.key && key.startsWith(p.key)));
+            this.focusedItemInfo.set({ index, level, parentKey, item });
+
+            this.dirty = true;
+            focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
+        } else {
+            if (grouped) {
+                this.onItemChange(event);
+            } else {
+                const rootProcessedItem = root ? processedItem : this.activeItemPath().find((p) => p.parentKey === '');
+                this.hide(originalEvent);
+                this.changeFocusedItemIndex(originalEvent, rootProcessedItem?.index ?? -1);
+
+                focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
+            }
+        }
+    }
+
+    onItemMouseEnter(event: any) {
+        if (!isTouchDevice()) {
+            if (this.dirty) {
+                this.onItemChange(event, 'hover');
+            }
+        } else {
+            this.onItemChange({ event, processedItem: event.processedItem, focus: this.autoDisplay() }, 'hover');
+        }
+    }
+
+    onKeyDown(event: KeyboardEvent) {
+        const metaKey = event.metaKey || event.ctrlKey;
+
+        switch (event.code) {
+            case 'ArrowDown':
+                this.onArrowDownKey(event);
+                break;
+
+            case 'ArrowUp':
+                this.onArrowUpKey(event);
+                break;
+
+            case 'ArrowLeft':
+                this.onArrowLeftKey(event);
+                break;
+
+            case 'ArrowRight':
+                this.onArrowRightKey(event);
+                break;
+
+            case 'Home':
+                this.onHomeKey(event);
+                break;
+
+            case 'End':
+                this.onEndKey(event);
+                break;
+
+            case 'Space':
+                this.onSpaceKey(event);
+                break;
+
+            case 'Enter':
+                this.onEnterKey(event);
+                break;
+
+            case 'Escape':
+                this.onEscapeKey(event);
+                break;
+
+            case 'Tab':
+                this.onTabKey(event);
+                break;
+
+            case 'PageDown':
+            case 'PageUp':
+            case 'Backspace':
+            case 'ShiftLeft':
+            case 'ShiftRight':
+                //NOOP
+                break;
+
+            default:
+                if (!metaKey && isPrintableCharacter(event.key)) {
+                    this.searchItems(event, event.key);
+                }
+
+                break;
+        }
+    }
+
+    onArrowDownKey(event: KeyboardEvent) {
+        const itemIndex = this.focusedItemInfo().index !== -1 ? this.findNextItemIndex(this.focusedItemInfo().index) : this.findFirstFocusedItemIndex();
+
+        this.changeFocusedItemIndex(event, itemIndex);
+        event.preventDefault();
+    }
+
+    onArrowRightKey(event: KeyboardEvent) {
+        const processedItem = this.visibleItems[this.focusedItemInfo().index];
+        const grouped = this.isProccessedItemGroup(processedItem);
+        const item = processedItem?.item;
+
+        if (grouped) {
+            this.onItemChange({ originalEvent: event, processedItem });
+            this.focusedItemInfo.set({ index: -1, parentKey: processedItem.key, item });
+            this.searchValue = '';
+            this.onArrowDownKey(event);
+        }
+
+        event.preventDefault();
+    }
+
+    onArrowUpKey(event: KeyboardEvent) {
+        if (event.altKey) {
+            if (this.focusedItemInfo().index !== -1) {
+                const processedItem = this.visibleItems[this.focusedItemInfo().index];
+                const grouped = this.isProccessedItemGroup(processedItem);
+
+                !grouped && this.onItemChange({ originalEvent: event, processedItem });
+            }
+
+            this.popup() && this.hide(event, true);
+            event.preventDefault();
+        } else {
+            const itemIndex = this.focusedItemInfo().index !== -1 ? this.findPrevItemIndex(this.focusedItemInfo().index) : this.findLastFocusedItemIndex();
+
+            this.changeFocusedItemIndex(event, itemIndex);
+            event.preventDefault();
+        }
+    }
+
+    onArrowLeftKey(event: KeyboardEvent) {
+        const processedItem = this.visibleItems[this.focusedItemInfo().index];
+        if (!processedItem) {
+            event.preventDefault();
+            return;
+        }
+        const parentItem = this.activeItemPath().find((p) => p.key === processedItem.parentKey);
+        const root = isEmpty(processedItem.parent);
+
+        if (!root) {
+            this.focusedItemInfo.set({ index: -1, parentKey: parentItem ? parentItem.parentKey : '', item: processedItem.item });
+            this.searchValue = '';
+            this.onArrowDownKey(event);
+        }
+
+        const activeItemPath = this.activeItemPath().filter((p) => p.parentKey !== this.focusedItemInfo().parentKey);
+        this.activeItemPath.set(activeItemPath);
+
+        event.preventDefault();
+    }
+
+    onHomeKey(event: KeyboardEvent) {
+        this.changeFocusedItemIndex(event, this.findFirstItemIndex());
+        event.preventDefault();
+    }
+
+    onEndKey(event: KeyboardEvent) {
+        this.changeFocusedItemIndex(event, this.findLastItemIndex());
+        event.preventDefault();
+    }
+
+    onSpaceKey(event: KeyboardEvent) {
+        this.onEnterKey(event);
+    }
+
+    onEscapeKey(event: KeyboardEvent) {
+        this.hide(event, true);
+        this.focusedItemInfo().index = this.findFirstFocusedItemIndex();
+
+        event.preventDefault();
+    }
+
+    onTabKey(event: KeyboardEvent) {
+        if (this.focusedItemInfo().index !== -1) {
+            const processedItem = this.visibleItems[this.focusedItemInfo().index];
+            const grouped = this.isProccessedItemGroup(processedItem);
+
+            !grouped && this.onItemChange({ originalEvent: event, processedItem });
+        }
+
+        this.hide();
+    }
+
+    onEnterKey(event: KeyboardEvent) {
+        if (this.focusedItemInfo().index !== -1) {
+            const element = <any>findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+            const anchorElement = element && (<any>findSingle(element, '[data-pc-section="itemlink"]') || findSingle(element, 'a,button'));
+
+            anchorElement ? anchorElement.click() : element && element.click();
+
+            if (!this.popup()) {
+                const processedItem = this.visibleItems[this.focusedItemInfo().index];
+                const grouped = this.isProccessedItemGroup(processedItem);
+
+                !grouped && (this.focusedItemInfo().index = this.findFirstFocusedItemIndex());
+            }
+        }
+
+        event.preventDefault();
+    }
+
+    onItemChange(event: any, type?: string | undefined) {
+        const { processedItem, isFocus } = event;
+
+        if (isEmpty(processedItem)) return;
+
+        const { index, key, level, parentKey, items, item } = processedItem;
+        const grouped = isNotEmpty(items);
+        const activeItemPath = this.activeItemPath().filter((p) => p.parentKey !== parentKey && p.parentKey !== key);
+
+        grouped && activeItemPath.push(processedItem);
+        this.focusedItemInfo.set({ index, level, parentKey, item });
+
+        grouped && (this.dirty = true);
+        isFocus && focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
+
+        if (type === 'hover' && this.queryMatches()) {
+            return;
+        }
+
+        this.activeItemPath.set(activeItemPath);
+    }
+
+    onMenuFocus(event: any) {
+        this.focused = true;
+        if (this.focusedItemInfo().index === -1 && !this.popup()) {
+            // this.onArrowDownKey(event);
+        }
+    }
+
+    onMenuBlur(event: any) {
+        this.focused = false;
+        this.focusedItemInfo.set({ index: -1, level: 0, parentKey: '', item: null });
+        this.searchValue = '';
+        this.dirty = false;
+    }
+
+    onOverlayBeforeEnter(event: MotionEvent) {
+        if (this.popup()) {
+            this.container = event.element as HTMLElement;
+            addStyle(this.container!, { position: 'absolute' });
+            this.moveOnTop();
+            this.onShow.emit({});
+            this.$attrSelector && this.container?.setAttribute(this.$attrSelector, '');
+            this.appendOverlay();
+            this.alignOverlay();
+        }
+    }
+
+    onOverlayAfterEnter() {
+        if (this.popup()) {
+            this.bindOutsideClickListener();
+            this.bindResizeListener();
+            this.bindScrollListener();
+
+            this.scrollInView();
+        }
+
+        focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
+    }
+
+    onOverlayAfterLeave() {
+        this.restoreOverlayAppend();
+        this.onOverlayHide();
+        this.render.set(false);
+        this.onHide.emit({});
+    }
+
+    relativeAlign: boolean = false;
+
+    alignOverlay() {
+        if (this.container && this.target) {
+            if (this.relativeAlign) relativePosition(this.container!, this.target);
+            else absolutePosition(this.container!, this.target);
+            const targetWidth = getOuterWidth(this.target);
+
+            if (targetWidth > getOuterWidth(this.container)) {
+                this.container.style.minWidth = getOuterWidth(this.target) + 'px';
+            }
+        }
+    }
+
+    appendOverlay() {
+        if (this.$appendTo() && this.$appendTo() !== 'self') {
+            if (this.$appendTo() === 'body') {
+                appendChild(this.document.body, this.container!);
+            } else {
+                appendChild(this.$appendTo(), this.container!);
+            }
+        }
+    }
+
+    restoreOverlayAppend() {
+        if (this.container && this.$appendTo() !== 'self') {
+            appendChild(this.el.nativeElement, this.container!);
+        }
+    }
+
+    moveOnTop() {
+        if (this.autoZIndex()) {
+            ZIndexUtils.set('menu', this.container, this.baseZIndex() + this.config.zIndex.menu);
+        }
+    }
+
+    /**
+     * Hides the popup menu.
+     * @group Method
+     */
+    hide(event?, isFocus?: boolean) {
+        if (this.popup()) {
+            this.onHide.emit({});
+            this.visible = false;
+        }
+        this.activeItemPath.set([]);
+        this.focusedItemInfo.set({ index: -1, level: 0, parentKey: '' });
+
+        isFocus && focus(this.relatedTarget || this.target || this.rootmenu()?.sublistViewChild()?.nativeElement);
+        this.dirty = false;
+    }
+
+    /**
+     * Toggles the visibility of the popup menu.
+     * @param {Event} event - Browser event.
+     * @group Method
+     */
+    toggle(event: any) {
+        this.visible ? this.hide(event, true) : this.show(event);
+    }
+
+    /**
+     * Displays the popup menu.
+     * @param {Event} even - Browser event.
+     * @group Method
+     */
+    show(event: any, isFocus?) {
+        if (this.popup()) {
+            this.visible = true;
+            this.target = this.target || event.currentTarget;
+            this.relatedTarget = event.relatedTarget || null;
+            this.relativeAlign = event?.relativeAlign || null;
+        }
+
+        this.render.set(true);
+
+        this.focusedItemInfo.set({ index: -1, level: 0, parentKey: '' });
+
+        isFocus && focus(this.rootmenu()?.sublistViewChild()?.nativeElement);
+
+        this.cd.markForCheck();
+    }
+
+    searchItems(event: any, char: string) {
+        this.searchValue = (this.searchValue || '') + char;
+
+        let itemIndex = -1;
+        let matched = false;
+
+        if (this.focusedItemInfo().index !== -1) {
+            itemIndex = this.visibleItems.slice(this.focusedItemInfo().index).findIndex((processedItem) => this.isItemMatched(processedItem));
+            itemIndex = itemIndex === -1 ? this.visibleItems.slice(0, this.focusedItemInfo().index).findIndex((processedItem) => this.isItemMatched(processedItem)) : itemIndex + this.focusedItemInfo().index;
+        } else {
+            itemIndex = this.visibleItems.findIndex((processedItem) => this.isItemMatched(processedItem));
+        }
+
+        if (itemIndex !== -1) {
+            matched = true;
+        }
+
+        if (itemIndex === -1 && this.focusedItemInfo().index === -1) {
+            itemIndex = this.findFirstFocusedItemIndex();
+        }
+
+        if (itemIndex !== -1) {
+            this.changeFocusedItemIndex(event, itemIndex);
+        }
+
+        if (this.searchTimeout) {
+            clearTimeout(this.searchTimeout);
+        }
+
+        this.searchTimeout = setTimeout(() => {
+            this.searchValue = '';
+            this.searchTimeout = null;
+        }, 500);
+
+        return matched;
+    }
+
+    findLastFocusedItemIndex() {
+        const selectedIndex = this.findSelectedItemIndex();
+        return selectedIndex < 0 ? this.findLastItemIndex() : selectedIndex;
+    }
+
+    findLastItemIndex() {
+        return findLastIndex(this.visibleItems, (processedItem) => this.isValidItem(processedItem));
+    }
+
+    findPrevItemIndex(index: number) {
+        const matchedItemIndex = index > 0 ? findLastIndex(this.visibleItems.slice(0, index), (processedItem) => this.isValidItem(processedItem)) : -1;
+
+        return matchedItemIndex > -1 ? matchedItemIndex : index;
+    }
+
+    findNextItemIndex(index: number) {
+        const matchedItemIndex = index < this.visibleItems.length - 1 ? this.visibleItems.slice(index + 1).findIndex((processedItem) => this.isValidItem(processedItem)) : -1;
+
+        return matchedItemIndex > -1 ? matchedItemIndex + index + 1 : index;
+    }
+
+    findFirstFocusedItemIndex() {
+        const selectedIndex = this.findSelectedItemIndex();
+
+        return selectedIndex < 0 ? this.findFirstItemIndex() : selectedIndex;
+    }
+
+    findFirstItemIndex() {
+        return this.visibleItems.findIndex((processedItem) => this.isValidItem(processedItem));
+    }
+
+    findSelectedItemIndex() {
+        return this.visibleItems.findIndex((processedItem) => this.isValidSelectedItem(processedItem));
+    }
+
+    changeFocusedItemIndex(event: any, index: number) {
+        if (this.focusedItemInfo().index !== index) {
+            const focusedItemInfo = this.focusedItemInfo();
+            this.focusedItemInfo.set({ ...focusedItemInfo, item: this.visibleItems[index].item, index });
+            this.scrollInView();
+        }
+    }
+
+    scrollInView(index: number = -1) {
+        const id = index !== -1 ? `${this.id()}_${index}` : this.focusedItemId;
+        const element = findSingle(this.rootmenu()?.el?.nativeElement, `li[id="${id}"]`);
+
+        if (element) {
+            element.scrollIntoView && element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        }
+    }
+
+    bindScrollListener() {
+        if (!this.scrollHandler) {
+            this.scrollHandler = new ConnectedOverlayScrollHandler(this.target, (event) => {
+                if (this.visible) {
+                    this.hide(event, true);
+                }
+            });
+        }
+
+        this.scrollHandler.bindScrollListener();
+    }
+
+    unbindScrollListener() {
+        if (this.scrollHandler) {
+            this.scrollHandler.unbindScrollListener();
+            this.scrollHandler = null;
+        }
+    }
+
+    bindResizeListener() {
+        if (isPlatformBrowser(this.platformId)) {
+            if (!this.resizeListener) {
+                this.resizeListener = this.renderer.listen(this.document.defaultView, 'resize', (event) => {
+                    if (!isTouchDevice()) {
+                        this.hide(event, true);
+                    }
+                });
+            }
+        }
+    }
+
+    bindOutsideClickListener() {
+        if (isPlatformBrowser(this.platformId)) {
+            if (!this.outsideClickListener) {
+                this.outsideClickListener = this.renderer.listen(this.document, 'click', (event) => {
+                    const containerViewChild = this.containerViewChild();
+                    const isOutsideContainer = containerViewChild && !containerViewChild.nativeElement.contains(event.target);
+                    const isOutsideTarget = this.popup() ? !(this.target && (this.target === event.target || this.target.contains(event.target))) : true;
+                    if (isOutsideContainer && isOutsideTarget) {
+                        this.hide();
+                    }
+                });
+            }
+        }
+    }
+
+    unbindOutsideClickListener() {
+        if (this.outsideClickListener) {
+            document.removeEventListener('click', this.outsideClickListener);
+            this.outsideClickListener = null;
+        }
+    }
+
+    unbindResizeListener() {
+        if (this.resizeListener) {
+            this.resizeListener();
+            this.resizeListener = null;
+        }
+    }
+
+    onOverlayHide() {
+        this.unbindOutsideClickListener();
+        this.unbindResizeListener();
+        this.unbindScrollListener();
+
+        if (!(this.cd as ViewRef).destroyed) {
+            this.target = null;
+        }
+
+        if (this.container && this.autoZIndex()) {
+            ZIndexUtils.clear(this.container);
+        }
+    }
+
+    onDestroy() {
+        if (this.popup()) {
+            if (this.scrollHandler) {
+                this.scrollHandler.destroy();
+                this.scrollHandler = null;
+            }
+
+            this.restoreOverlayAppend();
+            this.onOverlayHide();
+        }
+        this.unbindMatchMediaListener();
+    }
+}
+
+@NgModule({
+    imports: [TieredMenu, SharedModule],
+    exports: [TieredMenu, SharedModule]
+})
+export class TieredMenuModule {}

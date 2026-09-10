@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Bind } from '@gravionlabs/helix/bind';
+import { Bind } from '@helix-ui/core/bind';
 ```
 
 ## Components
@@ -24,4 +24,4 @@ Bind directive provides dynamic attribute, property, and event listener binding 
 
 ## Source
 
-[`projects/helix/bind`](../../projects/helix/bind)
+[`projects/core/bind`](../../projects/core/bind)

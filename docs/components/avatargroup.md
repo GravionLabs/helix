@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AvatarGroup } from '@gravionlabs/helix/avatargroup';
+import { AvatarGroup } from '@helix-ui/core/avatargroup';
 ```
 
 ## Components
@@ -25,4 +25,4 @@ AvatarGroup is a helper component for Avatar.
 
 ## Source
 
-[`projects/helix/avatargroup`](../../projects/helix/avatargroup)
+[`projects/core/avatargroup`](../../projects/core/avatargroup)

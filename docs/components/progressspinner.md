@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ProgressSpinner } from '@gravionlabs/helix/progressspinner';
+import { ProgressSpinner } from '@helix-ui/core/progressspinner';
 ```
 
 ## Components
@@ -28,4 +28,4 @@ ProgressSpinner is a process status indicator.
 
 ## Source
 
-[`projects/helix/progressspinner`](../../projects/helix/progressspinner)
+[`projects/core/progressspinner`](../../projects/core/progressspinner)

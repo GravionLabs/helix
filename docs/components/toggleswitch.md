@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ToggleSwitch } from '@gravionlabs/helix/toggleswitch';
+import { ToggleSwitch } from '@helix-ui/core/toggleswitch';
 ```
 
 ## Components
@@ -39,4 +39,4 @@ ToggleSwitch is used to select a boolean value.
 
 ## Source
 
-[`projects/helix/toggleswitch`](../../projects/helix/toggleswitch)
+[`projects/core/toggleswitch`](../../projects/core/toggleswitch)

@@ -1,0 +1,252 @@
+import { CommonModule } from '@angular/common';
+import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { focus, getFirstFocusableElement, uuid } from '@primeuix/utils';
+import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
+import { AutoFocus } from '@helix-ui/core/autofocus';
+import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { Bind } from '@helix-ui/core/bind';
+import { BindModule } from '@helix-ui/core/bind';
+import { StarFillIcon, StarIcon } from '@helix-ui/core/icons';
+import { Nullable } from '@helix-ui/core/ts-helpers';
+import { RatingIconTemplateContext, RatingPassThrough } from '@helix-ui/core/types/rating';
+import type { RatingRateEvent } from '@helix-ui/core/types/rating';
+import { RatingStyle } from './style/ratingstyle';
+
+const RATING_INSTANCE = new InjectionToken<Rating>('RATING_INSTANCE');
+
+export const RATING_VALUE_ACCESSOR: any = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => Rating),
+    multi: true
+};
+/**
+ * Rating is an extension to standard radio button element with theming.
+ * @group Components
+ */
+@Component({
+    selector: 'h-rating',
+    imports: [CommonModule, AutoFocus, StarFillIcon, StarIcon, SharedModule, BindModule],
+    standalone: true,
+    templateUrl: './rating.html',
+    providers: [RATING_VALUE_ACCESSOR, RatingStyle, { provide: RATING_INSTANCE, useExisting: Rating }, { provide: PARENT_INSTANCE, useExisting: Rating }],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        '[class]': "cx('root')",
+        '[attr.data-p]': 'dataP'
+    },
+    hostDirectives: [Bind]
+})
+export class Rating extends BaseEditableHolder<RatingPassThrough> {
+    componentName = 'Rating';
+
+    $pcRating: Rating | undefined = inject(RATING_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+
+    /**
+     * When present, changing the value is not possible.
+     * @group Props
+     */
+    readonly readonly = input<boolean, unknown>(undefined, { transform: booleanAttribute });
+    /**
+     * Number of stars.
+     * @group Props
+     */
+    readonly stars = input<number, unknown>(5, { transform: numberAttribute });
+    /**
+     * Style class of the on icon.
+     * @group Props
+     */
+    readonly iconOnClass = input<string>();
+    /**
+     * Inline style of the on icon.
+     * @group Props
+     */
+    readonly iconOnStyle = input<{
+    [klass: string]: any;
+} | null>();
+    /**
+     * Style class of the off icon.
+     * @group Props
+     */
+    readonly iconOffClass = input<string>();
+    /**
+     * Inline style of the off icon.
+     * @group Props
+     */
+    readonly iconOffStyle = input<{
+    [klass: string]: any;
+} | null>();
+    /**
+     * When present, it specifies that the component should automatically get focus on load.
+     * @group Props
+     */
+    readonly autofocus = input<boolean, unknown>(undefined, { transform: booleanAttribute });
+    /**
+     * Emitted on value change.
+     * @param {RatingRateEvent} value - Custom rate event.
+     * @group Emits
+     */
+    readonly onRate = output<RatingRateEvent>();
+    /**
+     * Emitted when the rating receives focus.
+     * @param {Event} value - Browser event.
+     * @group Emits
+     */
+    readonly onFocus = output<FocusEvent>();
+    /**
+     * Emitted when the rating loses focus.
+     * @param {Event} value - Browser event.
+     * @group Emits
+     */
+    readonly onBlur = output<FocusEvent>();
+    /**
+     * Custom on icon template.
+     * @param {RatingIconTemplateContext} context - icon context.
+     * @see {@link RatingIconTemplateContext}
+     * @group Templates
+     */
+    readonly onIconTemplate = contentChild<Nullable<TemplateRef<RatingIconTemplateContext>>>('onicon', { descendants: false });
+    /**
+     * Custom off icon template.
+     * @param {RatingIconTemplateContext} context - icon context.
+     * @see {@link RatingIconTemplateContext}
+     * @group Templates
+     */
+    readonly offIconTemplate = contentChild<Nullable<TemplateRef<RatingIconTemplateContext>>>('officon', { descendants: false });
+
+    readonly templates = contentChildren(HelixTemplate);
+
+    value: Nullable<number>;
+
+    public starsArray: Nullable<number[]>;
+
+    isFocusVisibleItem: boolean = true;
+
+    focusedOptionIndex = signal<number>(-1);
+
+    nameattr: string | undefined;
+
+    _componentStyle = inject(RatingStyle);
+
+    _onIconTemplate: TemplateRef<RatingIconTemplateContext> | undefined;
+
+    _offIconTemplate: TemplateRef<RatingIconTemplateContext> | undefined;
+
+    onInit() {
+        this.nameattr = this.nameattr || uuid('pn_id_');
+        this.starsArray = [];
+        for (let i = 0; i < this.stars(); i++) {
+            this.starsArray[i] = i;
+        }
+    }
+
+    onAfterContentInit() {
+        this.templates().forEach((item) => {
+            switch (item.getType()) {
+                case 'onicon':
+                    this._onIconTemplate = item.template;
+                    break;
+
+                case 'officon':
+                    this._offIconTemplate = item.template;
+                    break;
+            }
+        });
+    }
+
+    onOptionClick(event, value) {
+        if (!this.readonly() && !this.$disabled()) {
+            this.onOptionSelect(event, value);
+            this.isFocusVisibleItem = false;
+            const firstFocusableEl = <any>getFirstFocusableElement(event.currentTarget, '');
+
+            firstFocusableEl && focus(firstFocusableEl);
+        }
+    }
+
+    onOptionSelect(event, value) {
+        if (!this.readonly() && !this.$disabled()) {
+            if (this.focusedOptionIndex() === value || value === this.value) {
+                this.focusedOptionIndex.set(-1);
+                this.updateModel(event, null);
+            } else {
+                this.focusedOptionIndex.set(value);
+                this.updateModel(event, value || null);
+            }
+        }
+    }
+
+    onChange(event, value) {
+        this.onOptionSelect(event, value);
+        this.isFocusVisibleItem = true;
+    }
+
+    onInputBlur(event) {
+        this.focusedOptionIndex.set(-1);
+        this.onBlur.emit(event);
+    }
+
+    onInputFocus(event, value) {
+        if (!this.readonly() && !this.$disabled()) {
+            this.focusedOptionIndex.set(value);
+            this.isFocusVisibleItem = event.sourceCapabilities?.firesTouchEvents === false;
+
+            this.onFocus.emit(event);
+        }
+    }
+
+    updateModel(event, value) {
+        this.writeValue(value);
+        this.onModelChange(this.value);
+        this.onModelTouched();
+
+        this.onRate.emit({
+            originalEvent: event,
+            value
+        });
+    }
+
+    starAriaLabel(value) {
+        return value === 1 ? this.config.translation.aria?.star : this.config.translation.aria?.stars?.replace(/{star}/g, value);
+    }
+
+    getIconTemplate(i: number): Nullable<TemplateRef<RatingIconTemplateContext>> {
+        return !this.value || i >= this.value ? this.offIconTemplate() || this._offIconTemplate : this.onIconTemplate() || this.offIconTemplate();
+    }
+
+    /**
+     * @override
+     *
+     * @see {@link BaseEditableHolder.writeControlValue}
+     * Writes the value to the control.
+     */
+    writeControlValue(value: any, setModelValue: (value: any) => void): void {
+        this.value = value;
+        setModelValue(value);
+    }
+
+    get isCustomIcon(): boolean {
+        return !!(this.onIconTemplate || this._onIconTemplate || this.offIconTemplate || this._offIconTemplate);
+    }
+
+    get dataP() {
+        return this.cn({
+            readonly: this.readonly(),
+            disabled: this.$disabled()
+        });
+    }
+}
+
+@NgModule({
+    imports: [Rating, SharedModule],
+    exports: [Rating, SharedModule]
+})
+export class RatingModule {}

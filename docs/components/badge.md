@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Badge, BadgeDirective } from '@gravionlabs/helix/badge';
+import { Badge, BadgeDirective } from '@helix-ui/core/badge';
 ```
 
 ## Components
@@ -49,4 +49,4 @@ Badge Directive is directive usage of badge component.
 
 ## Source
 
-[`projects/helix/badge`](../../projects/helix/badge)
+[`projects/core/badge`](../../projects/core/badge)

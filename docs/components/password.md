@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Password, PasswordDirective } from '@gravionlabs/helix/password';
+import { Password, PasswordDirective } from '@helix-ui/core/password';
 ```
 
 ## Components
@@ -82,4 +82,4 @@ Password directive.
 
 ## Source
 
-[`projects/helix/password`](../../projects/helix/password)
+[`projects/core/password`](../../projects/core/password)

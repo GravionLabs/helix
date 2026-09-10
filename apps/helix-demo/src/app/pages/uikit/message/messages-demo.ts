@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService, type ToastMessageOptions } from '@gravionlabs/helix/api';
-import { ButtonModule } from '@gravionlabs/helix/button';
-import { InputTextModule } from '@gravionlabs/helix/inputtext';
-import { MessageModule } from '@gravionlabs/helix/message';
-import { ToastModule } from '@gravionlabs/helix/toast';
+import { MessageService, type ToastMessageOptions } from '@helix-ui/core/api';
+import { ButtonModule } from '@helix-ui/core/button';
+import { InputTextModule } from '@helix-ui/core/inputtext';
+import { MessageModule } from '@helix-ui/core/message';
+import { ToastModule } from '@helix-ui/core/toast';
 
 @Component({
   selector: 'app-messages-demo',

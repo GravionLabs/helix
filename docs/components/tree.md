@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tree, UITreeNode } from '@gravionlabs/helix/tree';
+import { Tree, UITreeNode } from '@helix-ui/core/tree';
 ```
 
 ## Components
@@ -98,4 +98,4 @@ Selector: `h-treeNode`
 
 ## Source
 
-[`projects/helix/tree`](../../projects/helix/tree)
+[`projects/core/tree`](../../projects/core/tree)

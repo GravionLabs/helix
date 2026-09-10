@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PickList } from '@gravionlabs/helix/picklist';
+import { PickList } from '@helix-ui/core/picklist';
 ```
 
 ## Components
@@ -94,4 +94,4 @@ PickList is used to reorder items between different lists.
 
 ## Source
 
-[`projects/helix/picklist`](../../projects/helix/picklist)
+[`projects/core/picklist`](../../projects/core/picklist)

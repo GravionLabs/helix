@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Avatar } from '@gravionlabs/helix/avatar';
+import { Avatar } from '@helix-ui/core/avatar';
 ```
 
 ## Components
@@ -37,4 +37,4 @@ Avatar represents people using icons, labels and images.
 
 ## Source
 
-[`projects/helix/avatar`](../../projects/helix/avatar)
+[`projects/core/avatar`](../../projects/core/avatar)

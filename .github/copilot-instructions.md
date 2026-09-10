@@ -13,7 +13,7 @@
 ## Project Overview
 
 This is an Angular 21 workspace containing:
-- **`@gravionlabs/helix-shell`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
+- **`@helix-ui/shell`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
 - **`demo`** – A demo application showcasing the library
 
 ## Code Style
@@ -31,7 +31,7 @@ This is an Angular 21 workspace containing:
 ### State Management
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
 - Avoid using `LayoutService` – always use `LayoutStore` from the library
-- Import from `@gravionlabs/helix-shell`, never from local demo layout copies
+- Import from `@helix-ui/shell`, never from local demo layout copies
 
 ### Dependency Injection
 - Use `inject()` function instead of constructor injection
@@ -40,7 +40,7 @@ This is an Angular 21 workspace containing:
 ## File Structure
 
 ```
-projects/helix-shell/src/lib/
+projects/shell/src/lib/
 ├── layout/
 │   ├── components/        # Layout components (HelixAppLayout, HelixTopbar, etc.)
 │   ├── store/             # NgRx Signal Store (LayoutStore, LayoutModels)
@@ -53,8 +53,8 @@ projects/helix-shell/src/lib/
 ```
 
 ## Exports
-- All public library exports go through `projects/helix-shell/src/public-api.ts`
-- Never import directly from library source paths in the demo app – always use `@gravionlabs/helix-shell`
+- All public library exports go through `projects/shell/src/public-api.ts`
+- Never import directly from library source paths in the demo app – always use `@helix-ui/shell`
 
 ## Testing
 - Unit tests use the `*.spec.ts` naming convention

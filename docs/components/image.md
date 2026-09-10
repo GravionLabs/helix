@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Image } from '@gravionlabs/helix/image';
+import { Image } from '@helix-ui/core/image';
 ```
 
 ## Components
@@ -52,4 +52,4 @@ Displays an image with preview and tranformation options. For multiple image, se
 
 ## Source
 
-[`projects/helix/image`](../../projects/helix/image)
+[`projects/core/image`](../../projects/core/image)

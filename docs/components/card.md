@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Card } from '@gravionlabs/helix/card';
+import { Card } from '@helix-ui/core/card';
 ```
 
 ## Components
@@ -26,4 +26,4 @@ Card is a flexible container component.
 
 ## Source
 
-[`projects/helix/card`](../../projects/helix/card)
+[`projects/core/card`](../../projects/core/card)

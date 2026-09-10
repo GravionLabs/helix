@@ -6,43 +6,43 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "helix": {
+    "core": {
       "projectType": "library",
-      "root": "projects/helix",
-      "sourceRoot": "projects/helix",
+      "root": "projects/core",
+      "sourceRoot": "projects/core",
       "prefix": "h",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/helix/ng-package.json"
+            "project": "projects/core/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/helix/tsconfig.lib.prod.json"
+              "tsConfig": "projects/core/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/helix/tsconfig.lib.json"
+              "tsConfig": "projects/core/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
         }
       }
     },
-    "helix-shell": {
+    "shell": {
       "projectType": "library",
-      "root": "projects/helix-shell",
-      "sourceRoot": "projects/helix-shell/src",
+      "root": "projects/shell",
+      "sourceRoot": "projects/shell/src",
       "prefix": "helix",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/helix-shell/tsconfig.lib.prod.json"
+              "tsConfig": "projects/shell/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/helix-shell/tsconfig.lib.json"
+              "tsConfig": "projects/shell/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -50,7 +50,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/helix-shell/tsconfig.spec.json"
+            "tsConfig": "projects/shell/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -63,20 +63,20 @@
         }
       }
     },
-    "helix-zod": {
+    "zod": {
       "projectType": "library",
-      "root": "projects/helix-zod",
-      "sourceRoot": "projects/helix-zod/src",
+      "root": "projects/zod",
+      "sourceRoot": "projects/zod/src",
       "prefix": "helix-zod",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/helix-zod/tsconfig.lib.prod.json"
+              "tsConfig": "projects/zod/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/helix-zod/tsconfig.lib.json"
+              "tsConfig": "projects/zod/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -84,7 +84,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/helix-zod/tsconfig.spec.json"
+            "tsConfig": "projects/zod/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -97,20 +97,20 @@
         }
       }
     },
-    "helix-ag-grid": {
+    "ag-grid": {
       "projectType": "library",
-      "root": "projects/helix-ag-grid",
-      "sourceRoot": "projects/helix-ag-grid/src",
+      "root": "projects/ag-grid",
+      "sourceRoot": "projects/ag-grid/src",
       "prefix": "helix",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "projects/helix-ag-grid/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ag-grid/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/helix-ag-grid/tsconfig.lib.json"
+              "tsConfig": "projects/ag-grid/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -118,7 +118,7 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "projects/helix-ag-grid/tsconfig.spec.json"
+            "tsConfig": "projects/ag-grid/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -162,8 +162,8 @@
             "styles": [
               "node_modules/primeicons/primeicons.css",
               "apps/helix-demo/src/styles.scss",
-              "dist/helix-shell/styles.css",
-              "dist/helix-ag-grid/styles.css"
+              "dist/shell/styles.css",
+              "dist/ag-grid/styles.css"
             ]
           },
           "configurations": {

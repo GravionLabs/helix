@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Inplace, InplaceDisplay, InplaceContent } from '@gravionlabs/helix/inplace';
+import { Inplace, InplaceDisplay, InplaceContent } from '@helix-ui/core/inplace';
 ```
 
 ## Components
@@ -45,4 +45,4 @@ Selector: `h-inplacecontent, h-inplaceContent`
 
 ## Source
 
-[`projects/helix/inplace`](../../projects/helix/inplace)
+[`projects/core/inplace`](../../projects/core/inplace)

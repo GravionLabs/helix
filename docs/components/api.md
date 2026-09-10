@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Header, Footer, PrimeTemplate } from '@gravionlabs/helix/api';
+import { Header, Footer, PrimeTemplate } from '@helix-ui/core/api';
 ```
 
 ## Components
@@ -89,4 +89,4 @@ Message service used in messages and toast components.
 
 ## Source
 
-[`projects/helix/api`](../../projects/helix/api)
+[`projects/core/api`](../../projects/core/api)

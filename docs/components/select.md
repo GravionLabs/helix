@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Select, SelectItem } from '@gravionlabs/helix/select';
+import { Select, SelectItem } from '@helix-ui/core/select';
 ```
 
 ## Components
@@ -116,4 +116,4 @@ Selector: `h-selectItem`
 
 ## Source
 
-[`projects/helix/select`](../../projects/helix/select)
+[`projects/core/select`](../../projects/core/select)

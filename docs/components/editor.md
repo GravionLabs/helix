@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Editor } from '@gravionlabs/helix/editor';
+import { Editor } from '@helix-ui/core/editor';
 ```
 
 ## Components
@@ -42,4 +42,4 @@ Editor groups a collection of contents in tabs.
 
 ## Source
 
-[`projects/helix/editor`](../../projects/helix/editor)
+[`projects/core/editor`](../../projects/core/editor)

@@ -1,4 +1,4 @@
-import { helixMeta } from '@gravionlabs/helix-zod';
+import { helixMeta } from '@helix-ui/zod';
 import { z } from 'zod';
 
 /**

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Panel } from '@gravionlabs/helix/panel';
+import { Panel } from '@helix-ui/core/panel';
 ```
 
 ## Components
@@ -41,4 +41,4 @@ Panel is a container with the optional content toggle feature.
 
 ## Source
 
-[`projects/helix/panel`](../../projects/helix/panel)
+[`projects/core/panel`](../../projects/core/panel)

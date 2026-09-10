@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { IftaLabel } from '@gravionlabs/helix/iftalabel';
+import { IftaLabel } from '@helix-ui/core/iftalabel';
 ```
 
 ## Components
@@ -18,4 +18,4 @@ IftaLabel is used to create infield top aligned labels.
 
 ## Source
 
-[`projects/helix/iftalabel`](../../projects/helix/iftalabel)
+[`projects/core/iftalabel`](../../projects/core/iftalabel)

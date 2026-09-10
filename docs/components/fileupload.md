@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FileUpload, FileContent } from '@gravionlabs/helix/fileupload';
+import { FileUpload, FileContent } from '@helix-ui/core/fileupload';
 ```
 
 ## Components
@@ -96,4 +96,4 @@ Selector: `[hFileContent]`
 
 ## Source
 
-[`projects/helix/fileupload`](../../projects/helix/fileupload)
+[`projects/core/fileupload`](../../projects/core/fileupload)

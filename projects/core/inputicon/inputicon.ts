@@ -1,0 +1,54 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
+import { SharedModule } from '@helix-ui/core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
+import { Bind, BindModule } from '@helix-ui/core/bind';
+import { InputIconPassThrough } from '@helix-ui/core/types/inputicon';
+import { InputIconStyle } from './style/inputiconstyle';
+
+const INPUTICON_INSTANCE = new InjectionToken<InputIcon>('INPUTICON_INSTANCE');
+
+/**
+ * InputIcon displays an icon.
+ * @group Components
+ */
+@Component({
+    selector: 'h-inputicon, h-inputIcon',
+    standalone: true,
+    imports: [CommonModule, SharedModule, BindModule],
+    templateUrl: './inputicon.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [InputIconStyle, { provide: INPUTICON_INSTANCE, useExisting: InputIcon }, { provide: PARENT_INSTANCE, useExisting: InputIcon }],
+    hostDirectives: [Bind],
+    host: {
+        '[class]': "cn(cx('root'), styleClass())"
+    }
+})
+export class InputIcon extends BaseComponent<InputIconPassThrough> {
+    componentName = 'InputIcon';
+
+    readonly hostName = input<any>('');
+    /**
+     * Style class of the element.
+     * @deprecated since v20.0.0, use `class` instead.
+     * @group Props
+     */
+    readonly styleClass = input<string>();
+
+    _componentStyle = inject(InputIconStyle);
+
+    $pcInputIcon: InputIcon | undefined = inject(INPUTICON_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
+
+    bindDirectiveInstance = inject(Bind, { self: true });
+
+    onAfterViewChecked(): void {
+        this.bindDirectiveInstance.setAttrs(this.ptms(['host', 'root']));
+    }
+}
+
+@NgModule({
+    imports: [InputIcon, SharedModule],
+    exports: [InputIcon, SharedModule]
+})
+export class InputIconModule {}

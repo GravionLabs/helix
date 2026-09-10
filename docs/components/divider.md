@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Divider } from '@gravionlabs/helix/divider';
+import { Divider } from '@helix-ui/core/divider';
 ```
 
 ## Components
@@ -27,4 +27,4 @@ Divider is used to separate contents.
 
 ## Source
 
-[`projects/helix/divider`](../../projects/helix/divider)
+[`projects/core/divider`](../../projects/core/divider)
