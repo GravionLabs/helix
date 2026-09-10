@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "demo:generate-sources": "node scripts/generate-source-assets.mjs",
+    "docs:components": "node scripts/generate-component-docs.mjs",
     "start": "pnpm build:core:ensure && pnpm demo:generate-sources && pnpm build:lib:css && pnpm build:lib:css:ag-grid && concurrently \"tailwindcss -i projects/shell/styles-src.css -o dist/shell/styles.css --watch\" \"tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css --watch\" \"ng serve helix-demo\"",
     "build": "pnpm demo:generate-sources && pnpm build:lib && ng build helix-demo",
     "build:core": "ng build core",

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Terminal } from '@helix-ui/core/terminal';
+import { Terminal, TerminalService } from '@helix-ui/core/terminal';
 ```
 
 ## Components
@@ -23,6 +23,7 @@ Terminal is a text based user interface.
 | `welcomeMessage` | `string \| undefined` | — | Initial text to display on terminal. |
 | `prompt` | `string \| undefined` | — | Prompt text for each command. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
+| `response` | `string \| undefined` | — | — |
 
 ## Services
 

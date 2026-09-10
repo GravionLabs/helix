@@ -1,6 +1,6 @@
 # ClassNames
 
-> Utility for composing CSS class strings from arbitrary values.
+> PClass directive provides extends class binding functionality.
 
 ## Import
 
@@ -8,19 +8,19 @@
 import { ClassNames } from '@helix-ui/core/classnames';
 ```
 
-## Components
+## Directives
 
 ### ClassNames
 
 Selector: `[hClass]`
 
-PClass directive provides extends class binding functionality. Supports strings, arrays, objects, and mixed combinations.
+PClass directive provides extends class binding functionality.
 
 #### Inputs
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `classNames` | `PClassValue` | `undefined` | Class value(s) to be applied. Can be a string, array, object, or combination. |
+| `classNames` | `any` | — | Class value(s) to be applied. Can be a string, array, object, or combination. |
 
 ## Interfaces & Types
 

@@ -5,10 +5,44 @@
 ## Import
 
 ```ts
-import { Menubar, MenubarSub } from '@helix-ui/core/menubar';
+import { MenubarSub, Menubar, MenubarService } from '@helix-ui/core/menubar';
 ```
 
 ## Components
+
+### MenubarSub
+
+Selector: `h-menubarSub, h-menubarsub, [hMenubarSub]`
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `any[]` | `undefined!` | — |
+| `itemTemplate` | `TemplateRef&lt;MenubarItemTemplateContext&gt; \| undefined` | — | — |
+| `root` | `boolean` | `false` | — |
+| `autoZIndex` | `boolean` | `true` | — |
+| `baseZIndex` | `number` | `0` | — |
+| `mobileActive` | `boolean \| undefined` | — | — |
+| `autoDisplay` | `boolean \| undefined` | — | — |
+| `menuId` | `string \| undefined` | — | — |
+| `ariaLabel` | `string \| undefined` | — | — |
+| `ariaLabelledBy` | `string \| undefined` | — | — |
+| `level` | `number` | `0` | — |
+| `focusedItemId` | `string \| undefined` | — | — |
+| `activeItemPath` | `any[]` | `undefined!` | — |
+| `inlineStyles` | `any` | — | — |
+| `submenuiconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | — |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `itemClick` | `output&lt;any&gt;()` | — |
+| `itemMouseEnter` | `output&lt;any&gt;()` | — |
+| `menuFocus` | `output&lt;any&gt;()` | — |
+| `menuBlur` | `output&lt;any&gt;()` | — |
+| `menuKeydown` | `output&lt;any&gt;()` | — |
 
 ### Menubar
 
@@ -20,6 +54,7 @@ Menubar is a horizontal menu component.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `model` | `MenuItem[] \| undefined` | — | An array of menuitems. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
 | `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
 | `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
@@ -35,42 +70,8 @@ Menubar is a horizontal menu component.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onFocus` | `EventEmitter&lt;FocusEvent&gt;` | Callback to execute when button is focused. |
-| `onBlur` | `EventEmitter&lt;FocusEvent&gt;` | Callback to execute when button loses focus. |
-
-### MenubarSub
-
-Selector: `h-menubarSub, h-menubarsub, [hMenubarSub]`
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `any[]` | — | — |
-| `itemTemplate` | `TemplateRef&lt;MenubarItemTemplateContext&gt; \| undefined` | — | — |
-| `root` | `boolean` | `false` | — |
-| `autoZIndex` | `boolean` | `true` | — |
-| `baseZIndex` | `number` | `0` | — |
-| `mobileActive` | `boolean \| undefined` | — | — |
-| `autoDisplay` | `boolean \| undefined` | — | — |
-| `menuId` | `string \| undefined` | — | — |
-| `ariaLabel` | `string \| undefined` | — | — |
-| `ariaLabelledBy` | `string \| undefined` | — | — |
-| `level` | `number` | `0` | — |
-| `focusedItemId` | `string \| undefined` | — | — |
-| `activeItemPath` | `any[]` | — | — |
-| `inlineStyles` | `any` | — | — |
-| `submenuiconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `itemClick` | `EventEmitter&lt;any&gt;` | — |
-| `itemMouseEnter` | `EventEmitter&lt;any&gt;` | — |
-| `menuFocus` | `EventEmitter&lt;any&gt;` | — |
-| `menuBlur` | `EventEmitter&lt;any&gt;` | — |
-| `menuKeydown` | `EventEmitter&lt;any&gt;` | — |
+| `onFocus` | `output&lt;FocusEvent&gt;()` | Callback to execute when button is focused. |
+| `onBlur` | `output&lt;FocusEvent&gt;()` | Callback to execute when button loses focus. |
 
 ## Services
 

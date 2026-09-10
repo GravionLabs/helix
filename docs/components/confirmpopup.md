@@ -26,11 +26,11 @@ ConfirmPopup displays a confirmation overlay displayed relatively to its target.
 | `hideTransitionOptions` | `string` | `'.1s linear'` | Transition options of the hide animation. |
 | `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
 | `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
-| `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the component. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `visible` | `boolean` | — | Defines if the component is visible. |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
-| `appendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| 'self' \| 'body' \| null \| undefined \| any` | `'body'` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `visible` | `boolean \| undefined` | — | Defines if the component is visible. |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
+| `appendTo` | `any` | `'body'` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
 
 ## Source
 

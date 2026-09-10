@@ -27,7 +27,7 @@ ToggleSwitch is used to select a boolean value.
 | `trueValue` | `any` | `true` | Value in checked state. |
 | `falseValue` | `any` | `false` | Value in unchecked state. |
 | `ariaLabel` | `string \| undefined` | — | Used to define a string that autocomplete attribute the current element. |
-| `size` | `'large' \| 'small' \| undefined` | — | Specifies the size of the component. |
+| `size` | `"large" \| "small" \| undefined` | — | Specifies the size of the component. |
 | `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
 | `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
 
@@ -35,7 +35,7 @@ ToggleSwitch is used to select a boolean value.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;ToggleSwitchChangeEvent&gt;` | Callback to invoke when the on value change. |
+| `onChange` | `output&lt;ToggleSwitchChangeEvent&gt;()` | Callback to invoke when the on value change. |
 
 ## Source
 

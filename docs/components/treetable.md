@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TreeTable, TTBody, TTScrollableView } from '@helix-ui/core/treetable';
+import { TreeTable, TTBody, TTScrollableView, TTSortableColumn, TTSortIcon, TTResizableColumn, TTReorderableColumn, TTSelectableRow, TTSelectableRowDblClick, TTContextMenuRow, TTCheckbox, TTHeaderCheckbox, TTEditableColumn, TreeTableCellEditor, TTRow, TreeTableToggler, TreeTableService } from '@helix-ui/core/treetable';
 ```
 
 ## Components
@@ -22,27 +22,27 @@ TreeTable is used to display hierarchical data in tabular format.
 | --- | --- | --- | --- |
 | `columns` | `any[] \| undefined` | — | An array of objects to represent dynamic columns. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `tableStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the table. |
+| `tableStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the table. |
 | `tableStyleClass` | `string \| undefined` | — | Style class of the table. |
 | `autoLayout` | `boolean \| undefined` | — | Whether the cell widths scale according to their content or not. |
 | `lazy` | `boolean` | `false` | Defines if data is loaded and interacted with in lazy manner. |
 | `lazyLoadOnInit` | `boolean` | `true` | Whether to call lazy loading on initialization. |
 | `paginator` | `boolean \| undefined` | — | When specified as true, enables the pagination. |
 | `rows` | `number \| undefined` | — | Number of rows to display per page. |
-| `first` | `number` | `0` | Index of the first row to be displayed. |
+| `first` | `number \| null \| undefined` | `0` | Index of the first row to be displayed. |
 | `pageLinks` | `number` | `5` | Number of page links to display in paginator. |
 | `rowsPerPageOptions` | `any[] \| undefined` | — | Array of integer/object values to display inside rows per page dropdown of paginator |
 | `alwaysShowPaginator` | `boolean` | `true` | Whether to show it even there is only one page. |
-| `paginatorPosition` | `'top' \| 'bottom' \| 'both'` | `'bottom'` | Position of the paginator. |
+| `paginatorPosition` | `"top" \| "bottom" \| "both"` | `'bottom'` | Position of the paginator. |
 | `paginatorStyleClass` | `string \| undefined` | — | Custom style class for paginator |
-| `paginatorDropdownAppendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| string \| null \| undefined \| any` | — | Target element to attach the paginator dropdown overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `paginatorDropdownAppendTo` | `any` | — | Target element to attach the paginator dropdown overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
 | `currentPageReportTemplate` | `string` | `'{currentPage} of {totalPages}'` | Template of the current page report element. Available placeholders are {currentPage},{totalPages},{rows},{first},{last} and {totalRecords} |
 | `showCurrentPageReport` | `boolean \| undefined` | — | Whether to display current page report. |
 | `showJumpToPageDropdown` | `boolean \| undefined` | — | Whether to display a dropdown to navigate to any page. |
 | `showFirstLastIcon` | `boolean` | `true` | When enabled, icons are displayed on paginator to go first and last page. |
 | `showPageLinks` | `boolean` | `true` | Whether to show page links. |
 | `defaultSortOrder` | `number` | `1` | Sort order to use when an unsorted column gets sorted by user interaction. |
-| `sortMode` | `'single' \| 'multiple'` | `'single'` | Defines whether sorting works on single column or on multiple columns. |
+| `sortMode` | `"single" \| "multiple"` | `'single'` | Defines whether sorting works on single column or on multiple columns. |
 | `resetPageOnSort` | `boolean` | `true` | When true, resets paginator to first page after sorting. |
 | `customSort` | `boolean \| undefined` | — | Whether to use the default sorting or a custom one using sortFunction. |
 | `selectionMode` | `string \| undefined` | — | Specifies the selection mode, valid values are "single" and "multiple". |
@@ -62,43 +62,48 @@ TreeTable is used to display hierarchical data in tabular format.
 | `virtualScrollOptions` | `ScrollerOptions \| undefined` | — | Whether to use the scroller feature. The properties of scroller component can be used like an object in it. |
 | `virtualScrollDelay` | `number` | `150` | The delay (in milliseconds) before triggering the virtual scroll. This determines the time gap between the user's scroll action and the actual rendering of the next set of items in the virtual scroll. |
 | `frozenWidth` | `string \| undefined` | — | Width of the frozen columns container. |
-| `frozenColumns` | `{ [klass: string]: any } \| null \| undefined` | — | An array of objects to represent dynamic columns that are frozen. |
+| `frozenColumns` | `{ [klass: string]: any; } \| null \| undefined` | — | An array of objects to represent dynamic columns that are frozen. |
 | `resizableColumns` | `boolean \| undefined` | — | When enabled, columns can be resized using drag and drop. |
 | `columnResizeMode` | `string` | `'fit'` | Defines whether the overall table width should change on column resize, valid values are "fit" and "expand". |
 | `reorderableColumns` | `boolean \| undefined` | — | When enabled, columns can be reordered using drag and drop. |
 | `contextMenu` | `any` | — | Local ng-template varilable of a ContextMenu. |
 | `rowTrackBy` | `Function` | `(index: number, item: any) =&gt; item` | Function to optimize the dom operations by delegating to ngForTrackBy, default algorithm checks for object identity. |
-| `filters` | `{ [s: string]: FilterMetadata \| undefined }` | `{}` | An array of FilterMetadata objects to provide external filters. |
+| `filters` | `{ [s: string]: FilterMetadata \| undefined; }` | `{}` | An array of FilterMetadata objects to provide external filters. |
 | `globalFilterFields` | `string[] \| undefined` | — | An array of fields as string to use in global filtering. |
 | `filterDelay` | `number` | `300` | Delay in milliseconds before filtering the data. |
 | `filterMode` | `string` | `'lenient'` | Mode for filtering valid values are "lenient" and "strict". Default is lenient. |
 | `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
 | `paginatorLocale` | `string \| undefined` | — | Locale to be used in paginator formatting. |
+| `totalRecords` | `number` | `0` | Number of total records, defaults to length of value when not defined. |
+| `sortField` | `string \| null \| undefined` | — | Name of the field to sort data by default. |
+| `sortOrder` | `number` | `1` | Order to sort when default sorting is enabled. |
+| `multiSortMeta` | `SortMeta[] \| null \| undefined` | — | An array of SortMeta objects to sort the data by default in multiple sort mode. |
+| `selection` | `any` | — | Selected row in single mode or an array of values in multiple mode. |
+| `value` | `TreeNode&lt;any&gt;[] \| undefined` | `[]` | An array of objects to display. |
+| `virtualRowHeight` | `number` | `28` | Indicates the height of rows to be scrolled. |
+| `selectionKeys` | `any` | — | A map of keys to control the selection state. |
 | `showGridlines` | `boolean` | `false` | Whether to show grid lines between cells. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `selectionChange` | `EventEmitter&lt;TreeTableNode&lt;any&gt; \| TreeTableNode&lt;any&gt;[] \| null&gt;` | Callback to invoke on selected node change. |
-| `contextMenuSelectionChange` | `EventEmitter&lt;TreeTableNode&gt;` | Callback to invoke on context menu selection change. |
-| `onFilter` | `EventEmitter&lt;TreeTableFilterEvent&gt;` | Callback to invoke when data is filtered. |
-| `onNodeExpand` | `EventEmitter&lt;TreeTableNodeExpandEvent&gt;` | Callback to invoke when a node is expanded. |
-| `onNodeCollapse` | `EventEmitter&lt;TreeTableNodeCollapseEvent&gt;` | Callback to invoke when a node is collapsed. |
-| `onPage` | `EventEmitter&lt;TreeTablePaginatorState&gt;` | Callback to invoke when pagination occurs. |
-| `onSort` | `EventEmitter&lt;any&gt;` | Callback to invoke when a column gets sorted. |
-| `onLazyLoad` | `EventEmitter&lt;TreeTableLazyLoadEvent&gt;` | Callback to invoke when paging, sorting or filtering happens in lazy mode. |
-| `sortFunction` | `EventEmitter&lt;TreeTableSortEvent&gt;` | An event emitter to invoke on custom sorting, refer to sorting section for details. |
-| `onColResize` | `EventEmitter&lt;TreeTableColResizeEvent&gt;` | Callback to invoke when a column is resized. |
-| `onColReorder` | `EventEmitter&lt;TreeTableColumnReorderEvent&gt;` | Callback to invoke when a column is reordered. |
-| `onNodeSelect` | `EventEmitter&lt;TreeTableNode&gt;` | Callback to invoke when a node is selected. |
-| `onNodeUnselect` | `EventEmitter&lt;TreeTableNodeUnSelectEvent&gt;` | Callback to invoke when a node is unselected. |
-| `onContextMenuSelect` | `EventEmitter&lt;TreeTableContextMenuSelectEvent&gt;` | Callback to invoke when a node is selected with right click. |
-| `onHeaderCheckboxToggle` | `EventEmitter&lt;TreeTableHeaderCheckboxToggleEvent&gt;` | Callback to invoke when state of header checkbox changes. |
-| `onEditInit` | `EventEmitter&lt;TreeTableEditEvent&gt;` | Callback to invoke when a cell switches to edit mode. |
-| `onEditComplete` | `EventEmitter&lt;TreeTableEditEvent&gt;` | Callback to invoke when cell edit is completed. |
-| `onEditCancel` | `EventEmitter&lt;TreeTableEditEvent&gt;` | Callback to invoke when cell edit is cancelled with escape key. |
-| `selectionKeysChange` | `EventEmitter&lt;any&gt;` | Callback to invoke when selectionKeys are changed. |
+| `onFilter` | `output&lt;TreeTableFilterEvent&gt;()` | Callback to invoke when data is filtered. |
+| `onNodeExpand` | `output&lt;TreeTableNodeExpandEvent&lt;any&gt;&gt;()` | Callback to invoke when a node is expanded. |
+| `onNodeCollapse` | `output&lt;TreeTableNodeCollapseEvent&lt;any&gt;&gt;()` | Callback to invoke when a node is collapsed. |
+| `onPage` | `output&lt;TreeTablePaginatorState&gt;()` | Callback to invoke when pagination occurs. |
+| `onSort` | `output&lt;any&gt;()` | Callback to invoke when a column gets sorted. |
+| `onLazyLoad` | `output&lt;TreeTableLazyLoadEvent&gt;()` | Callback to invoke when paging, sorting or filtering happens in lazy mode. |
+| `sortFunction` | `output&lt;TreeTableSortEvent&gt;()` | An event emitter to invoke on custom sorting, refer to sorting section for details. |
+| `onColResize` | `output&lt;TreeTableColResizeEvent&gt;()` | Callback to invoke when a column is resized. |
+| `onColReorder` | `output&lt;TreeTableColumnReorderEvent&gt;()` | Callback to invoke when a column is reordered. |
+| `onNodeSelect` | `output&lt;TreeTableNode&lt;any&gt;&gt;()` | Callback to invoke when a node is selected. |
+| `onNodeUnselect` | `output&lt;TreeTableNodeUnSelectEvent&gt;()` | Callback to invoke when a node is unselected. |
+| `onContextMenuSelect` | `output&lt;TreeTableContextMenuSelectEvent&gt;()` | Callback to invoke when a node is selected with right click. |
+| `onHeaderCheckboxToggle` | `output&lt;TreeTableHeaderCheckboxToggleEvent&gt;()` | Callback to invoke when state of header checkbox changes. |
+| `onEditInit` | `output&lt;TreeTableEditEvent&gt;()` | Callback to invoke when a cell switches to edit mode. |
+| `onEditComplete` | `output&lt;TreeTableEditEvent&gt;()` | Callback to invoke when cell edit is completed. |
+| `onEditCancel` | `output&lt;TreeTableEditEvent&gt;()` | Callback to invoke when cell edit is cancelled with escape key. |
 
 ### TTBody
 
@@ -124,6 +129,7 @@ Selector: `[ttScrollableView]`
 | --- | --- | --- | --- |
 | `columns` | `any[] \| undefined` | — | — |
 | `frozen` | `boolean \| undefined` | — | — |
+| `scrollHeight` | `string \| null \| undefined` | — | — |
 
 ### TTSortableColumn
 
@@ -198,7 +204,7 @@ Selector: `[ttContextMenuRow]`
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `rowNode` | `any \| undefined` | — | — |
+| `rowNode` | `any` | — | — |
 | `ttContextMenuRowDisabled` | `boolean \| undefined` | — | — |
 
 ### TTCheckbox

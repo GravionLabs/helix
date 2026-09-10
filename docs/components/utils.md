@@ -1,20 +1,17 @@
 # Utils
 
-> Shared utility functions (value transforms, ARIA helpers, misc guards).
+> Object, input-transform, and unique-id helpers shared across components.
 
 ## Import
 
 ```ts
-import { Utils } from '@helix-ui/core/utils';
+import { ZIndexUtils, UniqueComponentId, ObjectUtils, transformToNumber, transformToBoolean, HelixFormArrayWithFactory, helixFormErrorMap } from '@helix-ui/core/utils';
 ```
-
-## Classes
-
-- `ObjectUtils`
 
 ## Functions
 
-- `UniqueComponentId()`
+- `helixFormErrorMap`
+- `UniqueComponentId`
 
 ## Source
 

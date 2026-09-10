@@ -21,12 +21,13 @@ KeyFilter Directive is a built-in feature of InputText to restrict user input ba
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `pValidateOnly` | `boolean \| undefined` | — | When enabled, instead of blocking keys, input is validated internally to test against the regular expression. |
+| `pattern` | `RegExp \| KeyFilterPattern \| null \| undefined` | — | Sets the pattern for key filtering. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `ngModelChange` | `EventEmitter&lt;string \| number&gt;` | Emits a value whenever the ngModel of the component changes. |
+| `ngModelChange` | `output&lt;string \| number&gt;()` | Emits a value whenever the ngModel of the component changes. |
 
 ## Interfaces & Types
 

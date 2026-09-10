@@ -23,10 +23,10 @@ AutoComplete is an input component that provides real-time suggestions when bein
 | `minLength` | `number` | `1` | Minimum number of characters to initiate a search. |
 | `minQueryLength` | `number \| undefined` | — | Minimum number of characters to initiate a search. |
 | `delay` | `number` | `300` | Delay between keystrokes to wait before sending a query. |
-| `panelStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the overlay panel element. |
+| `panelStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the overlay panel element. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
 | `panelStyleClass` | `string \| undefined` | — | Style class of the overlay panel element. |
-| `inputStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the input field. |
+| `inputStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the input field. |
 | `inputId` | `string \| undefined` | — | Identifier of the focus input to match a label defined for the component. |
 | `inputStyleClass` | `string \| undefined` | — | Inline style of the input field. |
 | `placeholder` | `string \| undefined` | — | Hint text for the input field. |
@@ -64,6 +64,7 @@ AutoComplete is an input component that provides real-time suggestions when bein
 | `optionGroupChildren` | `string \| undefined` | `'items'` | Name of the options field of an option group. |
 | `optionGroupLabel` | `string \| undefined` | `'label'` | Name of the label field of an option group. |
 | `overlayOptions` | `OverlayOptions \| undefined` | — | Options for the overlay element. |
+| `suggestions` | `any[] \| null` | `null` | An array of suggestions to display. |
 | `optionLabel` | `string \| ((item: any) =&gt; string) \| undefined` | — | Property name or getter function to use as the label of an option. |
 | `optionValue` | `string \| ((item: any) =&gt; string) \| undefined` | — | Property name or getter function to use as the value of an option. |
 | `id` | `string \| undefined` | — | Unique identifier of the component. |
@@ -78,26 +79,26 @@ AutoComplete is an input component that provides real-time suggestions when bein
 | `typeahead` | `boolean` | `true` | Whether typeahead is active or not. |
 | `addOnBlur` | `boolean` | `false` | Whether to add an item on blur event if the input has value and typeahead is false with multiple mode. |
 | `separator` | `string \| RegExp \| undefined` | — | Separator char to add item when typeahead is false and multiple mode is enabled. |
-| `appendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| 'self' \| 'body' \| null \| undefined \| any` | `undefined` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
+| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `completeMethod` | `EventEmitter&lt;AutoCompleteCompleteEvent&gt;` | Callback to invoke to search for suggestions. |
-| `onSelect` | `EventEmitter&lt;AutoCompleteSelectEvent&gt;` | Callback to invoke when a suggestion is selected. |
-| `onUnselect` | `EventEmitter&lt;AutoCompleteUnselectEvent&gt;` | Callback to invoke when a selected value is removed. |
-| `onAdd` | `EventEmitter&lt;AutoCompleteAddEvent&gt;` | Callback to invoke when an item is added via addOnBlur or separator features. |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component receives focus. |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component loses focus. |
-| `onDropdownClick` | `EventEmitter&lt;AutoCompleteDropdownClickEvent&gt;` | Callback to invoke to when dropdown button is clicked. |
-| `onClear` | `EventEmitter&lt;Event \| undefined&gt;` | Callback to invoke when clear button is clicked. |
-| `onInputKeydown` | `EventEmitter&lt;KeyboardEvent&gt;` | Callback to invoke on input key down. |
-| `onKeyUp` | `EventEmitter&lt;KeyboardEvent&gt;` | Callback to invoke on input key up. |
-| `onShow` | `EventEmitter&lt;Event&gt;` | Callback to invoke on overlay is shown. |
-| `onHide` | `EventEmitter&lt;Event&gt;` | Callback to invoke on overlay is hidden. |
-| `onLazyLoad` | `EventEmitter&lt;AutoCompleteLazyLoadEvent&gt;` | Callback to invoke on lazy load data. |
+| `completeMethod` | `output&lt;AutoCompleteCompleteEvent&gt;()` | Callback to invoke to search for suggestions. |
+| `onSelect` | `output&lt;AutoCompleteSelectEvent&gt;()` | Callback to invoke when a suggestion is selected. |
+| `onUnselect` | `output&lt;AutoCompleteUnselectEvent&gt;()` | Callback to invoke when a selected value is removed. |
+| `onAdd` | `output&lt;AutoCompleteAddEvent&gt;()` | Callback to invoke when an item is added via addOnBlur or separator features. |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when the component receives focus. |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the component loses focus. |
+| `onDropdownClick` | `output&lt;AutoCompleteDropdownClickEvent&gt;()` | Callback to invoke to when dropdown button is clicked. |
+| `onClear` | `output&lt;Event \| undefined&gt;()` | Callback to invoke when clear button is clicked. |
+| `onInputKeydown` | `output&lt;KeyboardEvent&gt;()` | Callback to invoke on input key down. |
+| `onKeyUp` | `output&lt;KeyboardEvent&gt;()` | Callback to invoke on input key up. |
+| `onShow` | `output&lt;Event \| undefined&gt;()` | Callback to invoke on overlay is shown. |
+| `onHide` | `output&lt;Event \| undefined&gt;()` | Callback to invoke on overlay is hidden. |
+| `onLazyLoad` | `output&lt;AutoCompleteLazyLoadEvent&gt;()` | Callback to invoke on lazy load data. |
 
 ## Source
 

@@ -22,8 +22,8 @@ Dock is a navigation component consisting of menuitems.
 | --- | --- | --- | --- |
 | `id` | `string \| undefined` | — | Current id state as a string. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
-| `model` | `MenuItem[] \| undefined \| null` | `null` | MenuModel instance to define the action items. |
-| `position` | `'bottom' \| 'top' \| 'left' \| 'right'` | `'bottom'` | Position of element. |
+| `model` | `MenuItem[] \| null \| undefined` | `null` | MenuModel instance to define the action items. |
+| `position` | `"left" \| "right" \| "top" \| "bottom"` | `'bottom'` | Position of element. |
 | `ariaLabel` | `string \| undefined` | — | Defines a string that labels the input for accessibility. |
 | `breakpoint` | `string \| undefined` | `'960px'` | The breakpoint to define the maximum width boundary. |
 | `ariaLabelledBy` | `string \| undefined` | — | Defines a string that labels the dropdown button for accessibility. |
@@ -32,8 +32,8 @@ Dock is a navigation component consisting of menuitems.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onFocus` | `EventEmitter&lt;FocusEvent&gt;` | Callback to execute when button is focused. |
-| `onBlur` | `EventEmitter&lt;FocusEvent&gt;` | Callback to invoke when the component loses focus. |
+| `onFocus` | `output&lt;FocusEvent&gt;()` | Callback to execute when button is focused. |
+| `onBlur` | `output&lt;FocusEvent&gt;()` | Callback to invoke when the component loses focus. |
 
 ## Source
 

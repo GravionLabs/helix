@@ -4,9 +4,12 @@ One page per entry point of `@helix-ui/core`. Import paths follow the pattern
 `@helix-ui/core/<module>`; all selectors use the `h-` prefix.
 
 Pages are generated from the module sources (JSDoc, selectors, inputs/outputs) using the shared
-structure in [_TEMPLATE.md](_TEMPLATE.md).
+structure in [_TEMPLATE.md](_TEMPLATE.md). Regenerate with `pnpm docs:components`.
 
-## Components (90)
+Output convention: signal outputs are documented as `output<T>()`, matching the source call — not
+`EventEmitter<T>` (the pre-signal-migration convention).
+
+## Components (89)
 
 | Module | Description |
 | --- | --- |
@@ -22,13 +25,13 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [Card](card.md) | Card is a flexible container component. |
 | [Carousel](carousel.md) | Carousel is a content slider featuring various customization options. |
 | [CascadeSelect](cascadeselect.md) | CascadeSelect is a form component to select a value from a nested structure of options. |
-| [Chart](chart.md) | Chart groups a collection of contents in tabs. |
+| [Chart](chart.md) |  |
 | [Checkbox](checkbox.md) | Checkbox is an extension to standard checkbox element with theming. |
 | [Chip](chip.md) | Chip represents people using icons, labels and images. |
 | [ColorPicker](colorpicker.md) | ColorPicker groups a collection of contents in tabs. |
 | [ConfirmDialog](confirmdialog.md) | ConfirmDialog uses a Dialog UI that is integrated with the Confirmation API. |
 | [ConfirmPopup](confirmpopup.md) | ConfirmPopup displays a confirmation overlay displayed relatively to its target. |
-| [ContextMenu](contextmenu.md) | ContextMenu displays an overlay menu on right click of its target. |
+| [ContextMenu](contextmenu.md) | ContextMenu displays an overlay menu on right click of its target. Note that components like Table has special integration with ContextMenu. |
 | [DataView](dataview.md) | DataView displays data in grid or list layout with pagination and sorting features. |
 | [DatePicker](datepicker.md) | DatePicker is a form component to work with dates. |
 | [Dialog](dialog.md) | Dialog is a container to display content in an overlay window. |
@@ -38,12 +41,13 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [Editor](editor.md) | Editor groups a collection of contents in tabs. |
 | [Fieldset](fieldset.md) | Fieldset is a grouping component with the optional content toggle feature. |
 | [FileUpload](fileupload.md) | FileUpload is an advanced uploader with dragdrop support, multi file uploads, auto uploading, progress tracking and validations. |
+| [Firsterror](firsterror.md) |  |
 | [FloatLabel](floatlabel.md) | FloatLabel appears on top of the input field when focused. |
 | [Fluid](fluid.md) | Fluid is a layout component to make descendant components span full width of their container. |
 | [Galleria](galleria.md) | Galleria is an advanced content gallery component. |
 | [IconField](iconfield.md) | IconField wraps an input and an icon. |
 | [IftaLabel](iftalabel.md) | IftaLabel is used to create infield top aligned labels. |
-| [Image](image.md) | Displays an image with preview and tranformation options. |
+| [Image](image.md) | Displays an image with preview and tranformation options. For multiple image, see Galleria. |
 | [ImageCompare](imagecompare.md) | Compare two images side by side with a slider. |
 | [Inplace](inplace.md) | Inplace provides an easy to do editing and display at the same time where clicking the output displays the actual content. |
 | [InputGroup](inputgroup.md) | InputGroup displays text, icon, buttons and other content can be grouped next to an input. |
@@ -52,7 +56,6 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [InputMask](inputmask.md) | InputMask component is used to enter input in a certain format such as numeric, date, currency, email and phone. |
 | [InputNumber](inputnumber.md) | InputNumber is an input component to provide numerical input. |
 | [InputOtp](inputotp.md) | Input Otp is used to enter one time passwords. |
-| [InputText](inputtext.md) | InputText directive is an extension to standard input element with theming. |
 | [Knob](knob.md) | Knob is a form component to define number inputs with a dial. |
 | [Listbox](listbox.md) | ListBox is used to select one or more values from a list of items. |
 | [MegaMenu](megamenu.md) | MegaMenu is navigation component that displays submenus together. |
@@ -90,7 +93,6 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [Tabs](tabs.md) | Tabs facilitates seamless switching between different views. |
 | [Tag](tag.md) | Tag component is used to categorize content. |
 | [Terminal](terminal.md) | Terminal is a text based user interface. |
-| [Textarea](textarea.md) | Textarea adds styling and autoResize functionality to standard textarea element. |
 | [TieredMenu](tieredmenu.md) | TieredMenu displays submenus in nested overlays. |
 | [Timeline](timeline.md) | Timeline visualizes a series of chained events. |
 | [Toast](toast.md) | Toast is used to display messages in an overlay. |
@@ -101,19 +103,21 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [TreeSelect](treeselect.md) | TreeSelect is a form component to choose from hierarchical data. |
 | [TreeTable](treetable.md) | TreeTable is used to display hierarchical data in tabular format. |
 
-## Directives (7)
+## Directives (9)
 
 | Module | Description |
 | --- | --- |
 | [AnimateOnScroll](animateonscroll.md) | AnimateOnScroll is used to apply animations to elements when entering or leaving the viewport during scrolling. |
 | [AutoFocus](autofocus.md) | AutoFocus manages focus on focusable element on load. |
 | [FocusTrap](focustrap.md) | Focus Trap keeps focus within a certain DOM element while tabbing. |
+| [InputText](inputtext.md) | InputText directive is an extension to standard input element with theming. |
 | [KeyFilter](keyfilter.md) | KeyFilter Directive is a built-in feature of InputText to restrict user input based on a regular expression. |
 | [Ripple](ripple.md) | Ripple directive adds ripple effect to the host element. |
 | [StyleClass](styleclass.md) | StyleClass manages css classes declaratively to during enter/leave animations or just to toggle classes on an element. |
+| [Textarea](textarea.md) | Textarea adds styling and autoResize functionality to standard textarea element. |
 | [Tooltip](tooltip.md) | Tooltip directive provides advisory information for a component. |
 
-## Infrastructure (20)
+## Infrastructure (21)
 
 | Module | Description |
 | --- | --- |
@@ -123,17 +127,18 @@ structure in [_TEMPLATE.md](_TEMPLATE.md).
 | [BaseEditableHolder](baseeditableholder.md) | Abstract base class for form components that hold an editable value. |
 | [BaseInput](baseinput.md) | Abstract base class for input components (name, size, invalid, fluid state). |
 | [BaseModelHolder](basemodelholder.md) | Abstract base class for components that hold a model value via writable signals. |
-| [Bind](bind.md) | Directive that binds arbitrary attribute/class/style maps to a host element (pass-through backbone). |
-| [ClassNames](classnames.md) | Utility for composing CSS class strings from arbitrary values. |
-| [Config](config.md) | Global Helix configuration: `providePrimeNG()`, theme, locale/translations, z-index, and filter modes. |
+| [Bind](bind.md) | Bind directive provides dynamic attribute, property, and event listener binding functionality. |
+| [ClassNames](classnames.md) | PClass directive provides extends class binding functionality. |
+| [Config](config.md) | Global Helix configuration: `provideHelix()`, theme, locale/translations, z-index, and filter modes. |
 | [Dom](dom.md) | Low-level DOM helper classes (connected-overlay scroll handling, DomHandler). |
 | [DragDrop](dragdrop.md) | Drag-and-drop directives (`hDraggable`, `hDroppable`). |
 | [DynamicDialog](dynamicdialog.md) | Service-based dialogs: open any component in a dialog at runtime via `DialogService`. |
 | [Icons](icons.md) | Built-in SVG icon components used internally by Helix components. |
-| [Motion](motion.md) | Enter/leave animation directive built on `@primeuix/motion`. |
-| [Overlay](overlay.md) | Generic overlay container with configurable positioning, transitions, and pass-through. |
+| [Motion](motion.md) | Motion component is a container to apply motion effects to its content. |
+| [Overlay](overlay.md) | This API allows overlay components to be controlled from the Helix configuration. In this way, all overlay components in the application can have the same behavior. |
 | [Passthrough](passthrough.md) | Pass-through (`pt`) infrastructure: merge and provide attribute maps for component internals. |
 | [TS Helpers](ts-helpers.md) | Tiny TypeScript runtime helpers shared by the library. |
 | [Types](types.md) | Shared pass-through type definitions for every Helix component module. |
 | [UseStyle](usestyle.md) | Runtime CSS injection service used by the theming layer. |
-| [Utils](utils.md) | Shared utility functions (value transforms, ARIA helpers, misc guards). |
+| [Utils](utils.md) | Object, input-transform, and unique-id helpers shared across components. |
+| [Validators](validators.md) | Reactive-forms `Validators` extensions with translatable error messages. |

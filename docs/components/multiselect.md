@@ -5,10 +5,39 @@
 ## Import
 
 ```ts
-import { MultiSelect, MultiSelectItem } from '@helix-ui/core/multiselect';
+import { MultiSelectItem, MultiSelect } from '@helix-ui/core/multiselect';
 ```
 
 ## Components
+
+### MultiSelectItem
+
+Selector: `li[hMultiSelectItem]`
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `option` | `any` | — | — |
+| `selected` | `boolean \| undefined` | — | — |
+| `label` | `string \| undefined` | — | — |
+| `disabled` | `boolean \| undefined` | — | — |
+| `itemSize` | `number \| undefined` | — | — |
+| `focused` | `boolean \| undefined` | — | — |
+| `ariaPosInset` | `string \| undefined` | — | — |
+| `ariaSetSize` | `string \| undefined` | — | — |
+| `variant` | `"filled" \| "outlined"` | `undefined!` | — |
+| `template` | `TemplateRef&lt;MultiSelectItemTemplateContext&lt;any&gt;&gt; \| undefined` | — | — |
+| `checkIconTemplate` | `TemplateRef&lt;MultiSelectItemCheckboxIconTemplateContext&gt; \| undefined` | — | — |
+| `itemCheckboxIconTemplate` | `TemplateRef&lt;MultiSelectItemCheckboxIconTemplateContext&gt; \| undefined` | — | — |
+| `highlightOnSelect` | `boolean \| undefined` | — | — |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `onClick` | `output&lt;any&gt;()` | — |
+| `onMouseEnter` | `output&lt;any&gt;()` | — |
 
 ### MultiSelect
 
@@ -31,10 +60,11 @@ MultiSelect is used to select multiple items from a collection.
 | `filter` | `boolean` | `true` | When specified, displays an input field to filter the items on keyup. |
 | `filterPlaceHolder` | `string \| undefined` | — | Defines placeholder of the filter input. |
 | `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
-| `overlayVisible` | `boolean \| undefined` | `false` | Specifies the visibility of the options panel. |
 | `tabindex` | `number \| undefined` | `0` | Index of the element in tabbing order. |
 | `dataKey` | `string \| undefined` | — | A property to uniquely identify a value in options. |
 | `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
+| `displaySelectedLabel` | `boolean` | `true` | Whether to show labels of selected item labels or use default label. |
+| `maxSelectedLabels` | `number \| null \| undefined` | `3` | Decides how many selected item labels to show at most. |
 | `selectionLimit` | `number \| undefined` | — | Maximum number of selectable items. |
 | `selectedItemsLabel` | `string \| undefined` | — | Label to display after exceeding max selected labels e.g. ({0} items selected), defaults "ellipsis" keyword to indicate a text-overflow. |
 | `showToggleAll` | `boolean` | `true` | Whether to show the checkbox at header to toggle all items at once. |
@@ -59,71 +89,46 @@ MultiSelect is used to select multiple items from a collection.
 | `virtualScrollOptions` | `ScrollerOptions \| undefined` | — | Whether to use the scroller feature. The properties of scroller component can be used like an object in it. |
 | `overlayOptions` | `OverlayOptions \| undefined` | — | Whether to use overlay API feature. The properties of overlay API can be used like an object in it. |
 | `ariaFilterLabel` | `string \| undefined` | — | Defines a string that labels the filter input. |
-| `filterMatchMode` | `'contains' \| 'startsWith' \| 'endsWith' \| 'equals' \| 'notEquals' \| 'in' \| 'lt' \| 'lte' \| 'gt' \| 'gte'` | `'contains'` | Defines how the items are filtered. |
+| `filterMatchMode` | `"in" \| "contains" \| "startsWith" \| "endsWith" \| "equals" \| "notEquals" \| "lt" \| "lte" \| "gt" \| "gte"` | `'contains'` | Defines how the items are filtered. |
 | `tooltip` | `string` | `''` | Advisory information to display in a tooltip on hover. |
-| `tooltipPosition` | `'top' \| 'left' \| 'right' \| 'bottom'` | `'right'` | Position of the tooltip. |
+| `tooltipPosition` | `"left" \| "right" \| "top" \| "bottom"` | `'right'` | Position of the tooltip. |
 | `tooltipPositionStyle` | `string` | `'absolute'` | Type of CSS position. |
 | `tooltipStyleClass` | `string \| undefined` | — | Style class of the tooltip. |
 | `autofocusFilter` | `boolean` | `false` | Applies focus to the filter element when the overlay is shown. |
-| `display` | `string \| 'comma' \| 'chip'` | `'comma'` | Defines how the selected items are displayed. |
+| `display` | `string` | `'comma'` | Defines how the selected items are displayed. |
 | `autocomplete` | `string` | `'off'` | Defines the autocomplete is active. |
 | `showClear` | `boolean` | `false` | When enabled, a clear icon is displayed to clear the value. |
 | `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
+| `placeholder` | `string \| undefined` | — | Label to display when there are no selections. |
+| `options` | `any[] \| undefined` | — | An array of objects to display as the available options. |
+| `filterValue` | `string \| null \| undefined` | `null` | When specified, filter displays with this value. |
+| `selectAll` | `boolean \| null \| undefined` | `null` | Whether all data is selected. |
 | `focusOnHover` | `boolean` | `true` | Indicates whether to focus on options when hovering over them, defaults to optionLabel. |
 | `filterFields` | `any[] \| undefined` | — | Fields used when filtering the options, defaults to optionLabel. |
 | `selectOnFocus` | `boolean` | `false` | Determines if the option will be selected on focus. |
 | `autoOptionFocus` | `boolean` | `false` | Whether to focus on the first visible or selected element when the overlay panel is shown. |
 | `highlightOnSelect` | `boolean` | `true` | Whether the selected option will be add highlight class. |
-| `size` | `'large' \| 'small' \| undefined` | — | Specifies the size of the component. |
-| `variant` | `'filled' \| 'outlined' \| undefined` | — | Specifies the input variant of the component. |
-| `fluid` | `unknown` | `undefined` | Spans 100% width of the container when enabled. |
-| `appendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| 'self' \| 'body' \| null \| undefined \| any` | `undefined` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
+| `size` | `"large" \| "small" \| undefined` | — | Specifies the size of the component. |
+| `variant` | `"filled" \| "outlined" \| undefined` | — | Specifies the input variant of the component. |
+| `fluid` | `boolean \| undefined` | — | Spans 100% width of the container when enabled. |
+| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;MultiSelectChangeEvent&gt;` | Callback to invoke when value changes. |
-| `onFilter` | `EventEmitter&lt;MultiSelectFilterEvent&gt;` | Callback to invoke when data is filtered. |
-| `onFocus` | `EventEmitter&lt;MultiSelectFocusEvent&gt;` | Callback to invoke when multiselect receives focus. |
-| `onBlur` | `EventEmitter&lt;MultiSelectBlurEvent&gt;` | Callback to invoke when multiselect loses focus. |
-| `onClick` | `EventEmitter&lt;Event&gt;` | Callback to invoke when component is clicked. |
-| `onClear` | `EventEmitter&lt;void&gt;` | Callback to invoke when input field is cleared. |
-| `onPanelShow` | `EventEmitter&lt;AnimationEvent&gt;` | Callback to invoke when overlay panel becomes visible. |
-| `onPanelHide` | `EventEmitter&lt;AnimationEvent&gt;` | Callback to invoke when overlay panel becomes hidden. |
-| `onLazyLoad` | `EventEmitter&lt;MultiSelectLazyLoadEvent&gt;` | Callback to invoke in lazy mode to load new data. |
-| `onRemove` | `EventEmitter&lt;MultiSelectRemoveEvent&gt;` | Callback to invoke in lazy mode to load new data. |
-| `onSelectAllChange` | `EventEmitter&lt;MultiSelectSelectAllChangeEvent&gt;` | Callback to invoke when all data is selected. |
-
-### MultiSelectItem
-
-Selector: `li[hMultiSelectItem]`
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `option` | `any` | — | — |
-| `selected` | `boolean \| undefined` | — | — |
-| `label` | `string \| undefined` | — | — |
-| `disabled` | `boolean \| undefined` | — | — |
-| `itemSize` | `number \| undefined` | — | — |
-| `focused` | `boolean \| undefined` | — | — |
-| `ariaPosInset` | `string \| undefined` | — | — |
-| `ariaSetSize` | `string \| undefined` | — | — |
-| `variant` | `'outlined' \| 'filled'` | — | — |
-| `template` | `TemplateRef&lt;MultiSelectItemTemplateContext&gt; \| undefined` | — | — |
-| `checkIconTemplate` | `TemplateRef&lt;MultiSelectItemCheckboxIconTemplateContext&gt; \| undefined` | — | — |
-| `itemCheckboxIconTemplate` | `TemplateRef&lt;MultiSelectItemCheckboxIconTemplateContext&gt; \| undefined` | — | — |
-| `highlightOnSelect` | `boolean \| undefined` | — | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClick` | `EventEmitter&lt;any&gt;` | — |
-| `onMouseEnter` | `EventEmitter&lt;any&gt;` | — |
+| `onChange` | `output&lt;MultiSelectChangeEvent&gt;()` | Callback to invoke when value changes. |
+| `onFilter` | `output&lt;MultiSelectFilterEvent&gt;()` | Callback to invoke when data is filtered. |
+| `onFocus` | `output&lt;MultiSelectFocusEvent&gt;()` | Callback to invoke when multiselect receives focus. |
+| `onBlur` | `output&lt;MultiSelectBlurEvent&gt;()` | Callback to invoke when multiselect loses focus. |
+| `onClick` | `output&lt;Event&gt;()` | Callback to invoke when component is clicked. |
+| `onClear` | `output&lt;void&gt;()` | Callback to invoke when input field is cleared. |
+| `onPanelShow` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when overlay panel becomes visible. |
+| `onPanelHide` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when overlay panel becomes hidden. |
+| `onLazyLoad` | `output&lt;MultiSelectLazyLoadEvent&gt;()` | Callback to invoke in lazy mode to load new data. |
+| `onRemove` | `output&lt;MultiSelectRemoveEvent&gt;()` | Callback to invoke in lazy mode to load new data. |
+| `onSelectAllChange` | `output&lt;MultiSelectSelectAllChangeEvent&gt;()` | Callback to invoke when all data is selected. |
 
 ## Source
 

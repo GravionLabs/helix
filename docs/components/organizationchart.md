@@ -5,36 +5,10 @@
 ## Import
 
 ```ts
-import { OrganizationChart, OrganizationChartNode } from '@helix-ui/core/organizationchart';
+import { OrganizationChartNode, OrganizationChart } from '@helix-ui/core/organizationchart';
 ```
 
 ## Components
-
-### OrganizationChart
-
-Selector: `h-organizationChart, h-organization-chart, h-organizationchart`
-
-OrganizationChart visualizes hierarchical organization data.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `TreeNode[] \| undefined` | — | An array of nested TreeNodes. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `selectionMode` | `'single' \| 'multiple' \| null \| undefined` | — | Defines the selection mode. |
-| `collapsible` | `boolean \| undefined` | — | Whether the nodes can be expanded or toggled. |
-| `preserveSpace` | `boolean` | `true` | Whether the space allocated by a node is preserved when hidden. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `selectionChange` | `EventEmitter&lt;any&gt;` | Callback to invoke on selection change. |
-| `onNodeSelect` | `EventEmitter&lt;OrganizationChartNodeSelectEvent&gt;` | Callback to invoke when a node is selected. |
-| `onNodeUnselect` | `EventEmitter&lt;OrganizationChartNodeUnSelectEvent&gt;` | Callback to invoke when a node is unselected. |
-| `onNodeExpand` | `EventEmitter&lt;OrganizationChartNodeExpandEvent&gt;` | Callback to invoke when a node is expanded. |
-| `onNodeCollapse` | `EventEmitter&lt;OrganizationChartNodeCollapseEvent&gt;` | Callback to invoke when a node is collapsed. |
 
 ### OrganizationChartNode
 
@@ -49,6 +23,32 @@ Selector: `[hOrganizationChartNode]`
 | `first` | `boolean \| undefined` | — | — |
 | `last` | `boolean \| undefined` | — | — |
 | `collapsible` | `boolean \| undefined` | — | — |
+
+### OrganizationChart
+
+Selector: `h-organizationChart, h-organization-chart, h-organizationchart`
+
+OrganizationChart visualizes hierarchical organization data.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `TreeNode&lt;any&gt;[] \| undefined` | — | An array of nested TreeNodes. |
+| `styleClass` | `string \| undefined` | — | Style class of the component. |
+| `selectionMode` | `"single" \| "multiple" \| null \| undefined` | — | Defines the selection mode. |
+| `collapsible` | `boolean \| undefined` | — | Whether the nodes can be expanded or toggled. |
+| `preserveSpace` | `boolean` | `true` | Whether the space allocated by a node is preserved when hidden. |
+| `selection` | `any` | — | A single treenode instance or an array to refer to the selections. |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `onNodeSelect` | `output&lt;OrganizationChartNodeSelectEvent&gt;()` | Callback to invoke when a node is selected. |
+| `onNodeUnselect` | `output&lt;OrganizationChartNodeUnSelectEvent&gt;()` | Callback to invoke when a node is unselected. |
+| `onNodeExpand` | `output&lt;OrganizationChartNodeExpandEvent&gt;()` | Callback to invoke when a node is expanded. |
+| `onNodeCollapse` | `output&lt;OrganizationChartNodeCollapseEvent&gt;()` | Callback to invoke when a node is collapsed. |
 
 ## Source
 

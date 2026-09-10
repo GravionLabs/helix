@@ -1,6 +1,6 @@
 # Bind
 
-> Directive that binds arbitrary attribute/class/style maps to a host element (pass-through backbone).
+> Bind directive provides dynamic attribute, property, and event listener binding functionality.
 
 ## Import
 
@@ -8,7 +8,7 @@
 import { Bind } from '@helix-ui/core/bind';
 ```
 
-## Components
+## Directives
 
 ### Bind
 
@@ -20,7 +20,7 @@ Bind directive provides dynamic attribute, property, and event listener binding 
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `hBind` | `{ [key: string]: any } \| undefined` | `undefined` | Dynamic attributes, properties, and event listeners to be applied to the host element. |
+| `hBind` | `{ [key: string]: any; } \| undefined` | — | Dynamic attributes, properties, and event listeners to be applied to the host element. |
 
 ## Source
 

@@ -23,7 +23,7 @@ Slider is a component to provide input with a drag handle.
 | `animate` | `boolean \| undefined` | — | When enabled, displays an animation on click of the slider bar. |
 | `min` | `number` | `0` | Mininum boundary value. |
 | `max` | `number` | `100` | Maximum boundary value. |
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Orientation of the slider. |
+| `orientation` | `"horizontal" \| "vertical"` | `'horizontal'` | Orientation of the slider. |
 | `step` | `number \| undefined` | — | Step factor to increment/decrement the value. |
 | `range` | `boolean \| undefined` | — | When specified, allows two boundary values to be picked. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
@@ -36,8 +36,8 @@ Slider is a component to provide input with a drag handle.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;SliderChangeEvent&gt;` | Callback to invoke on value change. |
-| `onSlideEnd` | `EventEmitter&lt;SliderSlideEndEvent&gt;` | Callback to invoke when slide ended. |
+| `onChange` | `output&lt;SliderChangeEvent&gt;()` | Callback to invoke on value change. |
+| `onSlideEnd` | `output&lt;SliderSlideEndEvent&gt;()` | Callback to invoke when slide ended. |
 
 ## Source
 

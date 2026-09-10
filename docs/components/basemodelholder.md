@@ -8,10 +8,11 @@
 import { BaseModelHolder } from '@helix-ui/core/basemodelholder';
 ```
 
-## Components
+## Directives
 
 ### BaseModelHolder
 
+Selector: `—`
 
 ## Source
 

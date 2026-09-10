@@ -24,6 +24,7 @@ BlockUI can either block other components or the whole page.
 | `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
 | `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
+| `blocked` | `boolean` | `false` | Current blocked state as a boolean. |
 
 ## Source
 

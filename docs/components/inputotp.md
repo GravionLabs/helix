@@ -20,23 +20,23 @@ Input Otp is used to enter one time passwords.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `readonly` | `boolean` | — | When present, it specifies that an input field is read-only. |
+| `readonly` | `boolean` | `undefined!` | When present, it specifies that an input field is read-only. |
 | `tabindex` | `number \| null` | `null` | Index of the element in tabbing order. |
 | `length` | `number` | `4` | Number of characters to initiate. |
 | `styleClass` | `string \| undefined` | — | Style class of the input element. |
 | `mask` | `boolean` | `false` | Mask pattern. |
 | `integerOnly` | `boolean` | `false` | When present, it specifies that an input field is integer-only. |
 | `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
-| `variant` | `'filled' \| 'outlined' \| undefined` | — | Specifies the input variant of the component. |
-| `size` | `'large' \| 'small' \| undefined` | — | Specifies the size of the component. |
+| `variant` | `"filled" \| "outlined" \| undefined` | — | Specifies the input variant of the component. |
+| `size` | `"large" \| "small" \| undefined` | — | Specifies the size of the component. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;InputOtpChangeEvent&gt;` | Callback to invoke on value change. |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component receives focus. |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component loses focus. |
+| `onChange` | `output&lt;InputOtpChangeEvent&gt;()` | Callback to invoke on value change. |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when the component receives focus. |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the component loses focus. |
 
 ## Source
 

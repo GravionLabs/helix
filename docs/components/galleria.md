@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Galleria, GalleriaContent, GalleriaItemSlot } from '@helix-ui/core/galleria';
+import { Galleria, GalleriaContent, GalleriaItemSlot, GalleriaItem, GalleriaThumbnails } from '@helix-ui/core/galleria';
 ```
 
 ## Components
@@ -20,6 +20,7 @@ Galleria is an advanced content gallery component.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `activeIndex` | `number` | `0` | Index of the first item. |
 | `fullScreen` | `boolean` | `false` | Whether to display the component on fullscreen. |
 | `id` | `string \| undefined` | — | Unique identifier of the element. |
 | `value` | `any[] \| undefined` | — | An array of objects to display. |
@@ -34,26 +35,20 @@ Galleria is an advanced content gallery component.
 | `shouldStopAutoplayByClick` | `boolean` | `true` | When enabled, autorun should stop by click. |
 | `transitionInterval` | `number` | `4000` | Time in milliseconds to scroll items. |
 | `showThumbnails` | `boolean` | `true` | Whether to display thumbnail container. |
-| `thumbnailsPosition` | `'bottom' \| 'top' \| 'left' \| 'right' \| undefined` | `'bottom'` | Position of thumbnails. |
+| `thumbnailsPosition` | `"left" \| "right" \| "top" \| "bottom" \| undefined` | `'bottom'` | Position of thumbnails. |
 | `verticalThumbnailViewPortHeight` | `string` | `'300px'` | Height of the viewport in vertical thumbnail. |
 | `showIndicators` | `boolean` | `false` | Whether to display indicator container. |
 | `showIndicatorsOnItem` | `boolean` | `false` | When enabled, indicator container is displayed on item container. |
-| `indicatorsPosition` | `'bottom' \| 'top' \| 'left' \| 'right' \| undefined` | `'bottom'` | Position of indicators. |
+| `indicatorsPosition` | `"left" \| "right" \| "top" \| "bottom" \| undefined` | `'bottom'` | Position of indicators. |
 | `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
 | `maskClass` | `string \| undefined` | — | Style class of the mask on fullscreen mode. |
 | `containerClass` | `string \| undefined` | — | Style class of the component on fullscreen mode. Otherwise, the 'class' property can be used. |
-| `containerStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the component on fullscreen mode. Otherwise, the 'style' property can be used. |
+| `containerStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component on fullscreen mode. Otherwise, the 'style' property can be used. |
 | `showTransitionOptions` | `string` | `'150ms cubic-bezier(0, 0, 0.2, 1)'` | Transition options of the show animation. |
 | `hideTransitionOptions` | `string` | `'150ms cubic-bezier(0, 0, 0.2, 1)'` | Transition options of the hide animation. |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
-| `maskMotionOptions` | `MotionOptions \| undefined` | `undefined` | The mask motion options. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `activeIndexChange` | `EventEmitter&lt;number&gt;` | Callback to invoke on active index change. |
-| `visibleChange` | `EventEmitter&lt;boolean&gt;` | Callback to invoke on visiblity change. |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
+| `maskMotionOptions` | `MotionOptions \| undefined` | — | The mask motion options. |
+| `visible` | `boolean` | `false` | Specifies the visibility of the mask on fullscreen mode. |
 
 ### GalleriaContent
 
@@ -63,16 +58,17 @@ Selector: `div[hGalleriaContent]`
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `activeIndex` | `number` | `0` | — |
 | `value` | `any[]` | `[]` | — |
 | `numVisible` | `number \| undefined` | — | — |
-| `fullScreen` | `boolean` | — | — |
+| `fullScreen` | `boolean` | `false` | — |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `maskHide` | `EventEmitter&lt;boolean&gt;` | — |
-| `activeItemChange` | `EventEmitter&lt;number&gt;` | — |
+| `maskHide` | `output&lt;void&gt;()` | — |
+| `activeItemChange` | `output&lt;number&gt;()` | — |
 
 ### GalleriaItemSlot
 
@@ -82,8 +78,9 @@ Selector: `div[hGalleriaItemSlot]`
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `templates` | `QueryList&lt;PrimeTemplate&gt; \| undefined` | — | — |
+| `templates` | `readonly HelixTemplate[] \| undefined` | — | — |
 | `index` | `number \| undefined` | — | — |
+| `item` | `any` | — | — |
 | `type` | `string \| undefined` | — | — |
 
 ### GalleriaItem
@@ -102,17 +99,18 @@ Selector: `div[hGalleriaItem]`
 | `slideShowActive` | `boolean` | `true` | — |
 | `changeItemOnIndicatorHover` | `boolean` | `true` | — |
 | `autoPlay` | `boolean` | `false` | — |
-| `templates` | `QueryList&lt;PrimeTemplate&gt; \| undefined` | — | — |
+| `templates` | `readonly HelixTemplate[] \| undefined` | — | — |
 | `indicatorFacet` | `any` | — | — |
 | `captionFacet` | `any` | — | — |
+| `activeIndex` | `number` | `0` | — |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `startSlideShow` | `EventEmitter&lt;Event&gt;` | — |
-| `stopSlideShow` | `EventEmitter&lt;Event&gt;` | — |
-| `onActiveIndexChange` | `EventEmitter&lt;number&gt;` | — |
+| `startSlideShow` | `output&lt;void&gt;()` | — |
+| `stopSlideShow` | `output&lt;void&gt;()` | — |
+| `onActiveIndexChange` | `output&lt;number&gt;()` | — |
 
 ### GalleriaThumbnails
 
@@ -129,15 +127,17 @@ Selector: `div[hGalleriaThumbnails]`
 | `circular` | `boolean` | `false` | — |
 | `responsiveOptions` | `GalleriaResponsiveOptions[] \| undefined` | — | — |
 | `contentHeight` | `string` | `'300px'` | — |
-| `showThumbnailNavigators` | `unknown` | `true` | — |
-| `templates` | `QueryList&lt;PrimeTemplate&gt; \| undefined` | — | — |
+| `showThumbnailNavigators` | `boolean` | `true` | — |
+| `templates` | `readonly HelixTemplate[] \| undefined` | — | — |
+| `numVisible` | `number` | `0` | — |
+| `activeIndex` | `number` | `0` | — |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onActiveIndexChange` | `EventEmitter&lt;number&gt;` | — |
-| `stopSlideShow` | `EventEmitter&lt;Event&gt;` | — |
+| `onActiveIndexChange` | `output&lt;number&gt;()` | — |
+| `stopSlideShow` | `output&lt;void&gt;()` | — |
 
 ## Source
 
