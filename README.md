@@ -37,10 +37,10 @@ unchanged:
 ```ts
 // app.config.ts
 import Aura from '@primeuix/themes/aura';
-import { providePrimeNG } from '@helix-ui/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [providePrimeNG({ theme: { preset: Aura } })],
+  providers: [provideHelix({ theme: { preset: Aura } })],
 };
 ```
 
