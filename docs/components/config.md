@@ -1,22 +1,22 @@
 # Config
 
-> Global Helix configuration: `providePrimeNG()`, theme, locale/translations, z-index, and filter modes.
+> Global Helix configuration: `provideHelix()`, theme, locale/translations, z-index, and filter modes.
 
 ## Import
 
 ```ts
-import { Config } from '@helix-ui/core/config';
+import { HelixConfig, ThemeProvider } from '@helix-ui/core/config';
 ```
 
 ## Services
 
-### PrimeNG
+### HelixConfig
 
 ### ThemeProvider
 
 ## Functions
 
-- `providePrimeNG()`
+- `provideHelix`
 
 ## Interfaces & Types
 
@@ -24,7 +24,7 @@ import { Config } from '@helix-ui/core/config';
 - `ThemeType` — Theme configuration
 - `ThemeConfigType`
 - `GlobalPassThrough`
-- `PrimeNGConfigType`
+- `HelixConfigType`
 
 ## Source
 

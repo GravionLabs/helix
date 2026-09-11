@@ -40,8 +40,6 @@
    - [HelixBadge](#helixbadge)
    - [HelixEnvironmentBadge](#helixenviromentbadge)
 10. [Form Infrastructure](#form-infrastructure)
-    - [HelixValidators](#helixvalidators)
-    - [helixFirstError](#helixfirsterror)
     - [HelixFormField](#helixformfield)
     - [HelixFormArrayWithFactory](#helixformarraywithfactory)
     - [helixFormErrorMap](#helixformerrormap)
@@ -965,80 +963,26 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 
 ## Form Infrastructure
 
-Validators, pipes, and structural components for building reactive forms with human-readable error messages.
-
-### HelixValidators
-
-**File:** `projects/shell/src/lib/form/validators/helix-validators.ts`
-
-A namespace of `ValidatorFn` factories that produce human-readable error messages instead of the boolean flags used by Angular's built-in validators.
-
-Every method accepts a static string or a `(value: any) => string` function for the error message, and most accept an `allowEmpty` parameter (default `true`).
-
-#### Available validators
-
-| Validator | Signature | Description |
-|-----------|-----------|-------------|
-| `required` | `(msg)` | Fails when value is `''`, `null`, or `undefined` |
-| `email` | `(msg, allowEmpty?)` | Validates email format |
-| `pattern` | `(msg, regex, allowEmpty?)` | Validates value matches the given regex |
-| `date` | `(msg, allowEmpty?)` | Validates value is a parseable, non-NaN date |
-| `number` | `(msg, allowEmpty?)` | Passes if value is coercible to a finite number (booleans excluded) |
-| `integer` | `(msg, allowEmpty?)` | Passes if value is a whole number |
-| `min` | `(msg, minimum, allowEmpty?)` | Passes if numeric value >= minimum |
-| `max` | `(msg, maximum, allowEmpty?)` | Passes if numeric value <= maximum |
-| `minLength` | `(msg, min, allowEmpty?)` | Passes if string/array length >= min |
-| `maxLength` | `(msg, max, allowEmpty?)` | Passes if string/array length <= max |
-| `oneOf` | `(msg, options)` | Passes if value is strictly contained in `options[]` |
-| `allOf` | `(msg, options, allowEmpty?)` | Passes if value is an array where every element is in `options[]` |
-
-#### Example
+Structural components for building reactive forms with human-readable error messages. The
+validators and error-message pipe that used to live here moved to `@helix-ui/core` (#378) — see
+[`Validators`](components/validators.md) and [`FirstErrorPipe`](components/firsterror.md):
 
 ```ts
-import { HelixValidators } from '@helix-ui/shell';
+import { Validators } from '@helix-ui/core/validators';
+import { FirstErrorPipe } from '@helix-ui/core/firsterror';
 import { FormControl } from '@angular/forms';
 
 const emailCtrl = new FormControl('', [
-  HelixValidators.required('Email is required'),
-  HelixValidators.email('Invalid email address'),
-  HelixValidators.maxLength((v) => `Max 100 characters (you entered ${v?.length})`, 100),
+  Validators.required('Email is required'),
+  Validators.email('Invalid email address'),
 ]);
 ```
 
-The error object produced by these validators uses the validator name as the key and the message as the value:
-
-```ts
-emailCtrl.errors
-// → { Email: 'Invalid email address' }
-```
-
----
-
-### helixFirstError
-
-**Pipe name:** `helixFirstError`  
-**File:** `projects/shell/src/lib/form/pipes/helix-first-error.pipe.ts`
-
-A pure, standalone pipe that extracts the first human-readable error message from a `ValidationErrors | null` object. Designed to pair with `HelixValidators` (which produce string values), but also safe against Angular's built-in validators (non-string values are ignored).
-
-#### Template usage
-
 ```html
 @if (ctrl.touched && ctrl.invalid) {
-  <small class="p-error">{{ ctrl.errors | helixFirstError }}</small>
+  <small class="p-error">{{ ctrl.errors | firstError }}</small>
 }
 ```
-
-#### Behaviour
-
-| Input | Output |
-|-------|--------|
-| `null` | `''` |
-| `undefined` | `''` |
-| `{}` | `''` |
-| `{ Required: 'Field is required' }` | `'Field is required'` |
-| `{ Email: 'Bad email', MaxLength: 'Too long' }` | `'Bad email'` (first key) |
-| `{ required: true }` | `''` (non-string value) |
 
 ---
 
@@ -1087,12 +1031,12 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 
 ### HelixFormArrayWithFactory
 
-**File:** `projects/shell/src/lib/form/utils/form.utils.ts`
+**File:** `projects/core/utils/form.utils.ts` (moved from `shell` in #378)
 
 Extends Angular's `FormArray` with a factory function that produces new controls on demand — ideal for dynamic form lists.
 
 ```ts
-import { HelixFormArrayWithFactory } from '@helix-ui/shell';
+import { HelixFormArrayWithFactory } from '@helix-ui/core/utils';
 import { FormControl, Validators } from '@angular/forms';
 
 const emails = new HelixFormArrayWithFactory(
@@ -1128,12 +1072,12 @@ emails.setValue(['a@b.com', 'c@d.com']);
 
 ### helixFormErrorMap
 
-**File:** `projects/shell/src/lib/form/utils/form.utils.ts`
+**File:** `projects/core/utils/form.utils.ts` (moved from `shell` in #378)
 
 Recursively walks an `AbstractControl` tree and produces a flat map of field-name → first error message.
 
 ```ts
-import { helixFormErrorMap } from '@helix-ui/shell';
+import { helixFormErrorMap } from '@helix-ui/core/utils';
 
 const errors = helixFormErrorMap(myForm);
 // → { email: 'Invalid email address', 'items[0]': 'Required' }

@@ -40,7 +40,7 @@ Knob is a form component to define number inputs with a dial.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;number&gt;` | Callback to invoke on value change. |
+| `onChange` | `output&lt;number&gt;()` | Callback to invoke on value change. |
 
 ## Source
 

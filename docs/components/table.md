@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Table, TableBody, RowGroupHeader } from '@helix-ui/core/table';
+import { Table, TableBody, RowGroupHeader, FrozenColumn, SortableColumn, SortIcon, SelectableRow, SelectableRowDblClick, ContextMenuRow, RowToggler, ResizableColumn, ReorderableColumn, EditableColumn, EditableRow, InitEditableRow, SaveEditableRow, CancelEditableRow, CellEditor, TableRadioButton, TableCheckbox, TableHeaderCheckbox, ReorderableRowHandle, ReorderableRow, ColumnFilter, ColumnFilterFormElement, TableService } from '@helix-ui/core/table';
 ```
 
 ## Components
@@ -23,15 +23,15 @@ Table displays data in tabular format.
 | `frozenColumns` | `any[] \| undefined` | — | An array of objects to represent dynamic columns that are frozen. |
 | `frozenValue` | `any[] \| undefined` | — | An array of objects to display as frozen. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `tableStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the table. |
+| `tableStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the table. |
 | `tableStyleClass` | `string \| undefined` | — | Style class of the table. |
 | `paginator` | `boolean \| undefined` | — | When specified as true, enables the pagination. |
 | `pageLinks` | `number` | `5` | Number of page links to display in paginator. |
 | `rowsPerPageOptions` | `any[] \| undefined` | — | Array of integer/object values to display inside rows per page dropdown of paginator |
 | `alwaysShowPaginator` | `boolean` | `true` | Whether to show it even there is only one page. |
-| `paginatorPosition` | `'top' \| 'bottom' \| 'both'` | `'bottom'` | Position of the paginator, options are "top", "bottom" or "both". |
+| `paginatorPosition` | `"top" \| "bottom" \| "both"` | `'bottom'` | Position of the paginator, options are "top", "bottom" or "both". |
 | `paginatorStyleClass` | `string \| undefined` | — | Custom style class for paginator |
-| `paginatorDropdownAppendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| string \| null \| undefined \| any` | — | Target element to attach the paginator dropdown overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `paginatorDropdownAppendTo` | `any` | — | Target element to attach the paginator dropdown overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
 | `paginatorDropdownScrollHeight` | `string` | `'200px'` | Paginator dropdown height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value. |
 | `currentPageReportTemplate` | `string` | `'{currentPage} of {totalPages}'` | Template of the current page report element. Available placeholders are {currentPage},{totalPages},{rows},{first},{last} and {totalRecords} |
 | `showCurrentPageReport` | `boolean \| undefined` | — | Whether to display current page report. |
@@ -40,30 +40,30 @@ Table displays data in tabular format.
 | `showFirstLastIcon` | `boolean` | `true` | When enabled, icons are displayed on paginator to go first and last page. |
 | `showPageLinks` | `boolean` | `true` | Whether to show page links. |
 | `defaultSortOrder` | `number` | `1` | Sort order to use when an unsorted column gets sorted by user interaction. |
-| `sortMode` | `'single' \| 'multiple'` | `'single'` | Defines whether sorting works on single column or on multiple columns. |
+| `sortMode` | `"single" \| "multiple"` | `'single'` | Defines whether sorting works on single column or on multiple columns. |
 | `resetPageOnSort` | `boolean` | `true` | When true, resets paginator to first page after sorting. Available only when sortMode is set to single. |
-| `selectionMode` | `'single' \| 'multiple' \| undefined \| null` | — | Specifies the selection mode, valid values are "single" and "multiple". |
+| `selectionMode` | `"single" \| "multiple" \| null \| undefined` | — | Specifies the selection mode, valid values are "single" and "multiple". |
 | `selectionPageOnly` | `boolean \| undefined` | — | When enabled with paginator and checkbox selection mode, the select all checkbox in the header will select all rows on the current page. |
 | `contextMenuSelection` | `any` | — | Selected row with a context menu. |
 | `contextMenuSelectionMode` | `string` | `'separate'` | Defines the behavior of context menu selection, in "separate" mode context menu updates contextMenuSelection property whereas in joint mode selection property is used instead so that when row selection is enabled, both row selection and context menu selection use the same property. |
 | `dataKey` | `string \| undefined` | — | A property to uniquely identify a record in data. |
 | `metaKeySelection` | `boolean \| undefined` | `false` | Defines whether metaKey should be considered for the selection. On touch enabled devices, metaKeySelection is turned off automatically. |
-| `rowSelectable` | `(row: { data: any; index: number }) =&gt; boolean \| undefined` | — | Defines if the row is selectable. |
+| `rowSelectable` | `(row: { data: any; index: number; }) =&gt; boolean \| undefined` | `undefined!` | Defines if the row is selectable. |
 | `rowTrackBy` | `Function` | `(index: number, item: any) =&gt; item` | Function to optimize the dom operations by delegating to ngForTrackBy, default algorithm checks for object identity. |
 | `lazy` | `boolean` | `false` | Defines if data is loaded and interacted with in lazy manner. |
 | `lazyLoadOnInit` | `boolean` | `true` | Whether to call lazy loading on initialization. |
-| `compareSelectionBy` | `'equals' \| 'deepEquals'` | `'deepEquals'` | Algorithm to define if a row is selected, valid values are "equals" that compares by reference and "deepEquals" that compares all fields. |
+| `compareSelectionBy` | `"equals" \| "deepEquals"` | `'deepEquals'` | Algorithm to define if a row is selected, valid values are "equals" that compares by reference and "deepEquals" that compares all fields. |
 | `csvSeparator` | `string` | `','` | Character to use as the csv separator. |
 | `exportFilename` | `string` | `'download'` | Name of the exported file. |
-| `filters` | `{ [s: string]: FilterMetadata \| FilterMetadata[] }` | `{}` | An array of FilterMetadata objects to provide external filters. |
+| `filters` | `{ [s: string]: FilterMetadata \| FilterMetadata[]; }` | `{}` | An array of FilterMetadata objects to provide external filters. |
 | `globalFilterFields` | `string[] \| undefined` | — | An array of fields as string to use in global filtering. |
 | `filterDelay` | `number` | `300` | Delay in milliseconds before filtering the data. |
 | `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
-| `expandedRowKeys` | `{ [s: string]: boolean }` | `{}` | Map instance to keep the expanded rows where key of the map is the data key of the row. |
-| `editingRowKeys` | `{ [s: string]: boolean }` | `{}` | Map instance to keep the rows being edited where key of the map is the data key of the row. |
-| `rowExpandMode` | `'multiple' \| 'single'` | `'multiple'` | Whether multiple rows can be expanded at any time. Valid values are "multiple" and "single". |
+| `expandedRowKeys` | `{ [s: string]: boolean; }` | `{}` | Map instance to keep the expanded rows where key of the map is the data key of the row. |
+| `editingRowKeys` | `{ [s: string]: boolean; }` | `{}` | Map instance to keep the rows being edited where key of the map is the data key of the row. |
+| `rowExpandMode` | `"single" \| "multiple"` | `'multiple'` | Whether multiple rows can be expanded at any time. Valid values are "multiple" and "single". |
 | `scrollable` | `boolean \| undefined` | — | Enables scrollable tables. |
-| `rowGroupMode` | `'subheader' \| 'rowspan' \| undefined` | — | Type of the row grouping, valid values are "subheader" and "rowspan". |
+| `rowGroupMode` | `"subheader" \| "rowspan" \| undefined` | — | Type of the row grouping, valid values are "subheader" and "rowspan". |
 | `scrollHeight` | `string \| undefined` | — | Height of the scroll viewport in fixed pixels or the "flex" keyword for a dynamic size. |
 | `virtualScroll` | `boolean \| undefined` | — | Whether the data should be loaded on demand during scroll. |
 | `virtualScrollItemSize` | `number \| undefined` | — | Height of a row to use in calculations of virtual scrolling. |
@@ -83,46 +83,50 @@ Table displays data in tabular format.
 | `exportFunction` | `Function \| undefined` | — | Export function. |
 | `exportHeader` | `string \| undefined` | — | Custom export header of the column to be exported as CSV. |
 | `stateKey` | `string \| undefined` | — | Unique identifier of a stateful table to use in state storage. |
-| `stateStorage` | `'session' \| 'local'` | `'session'` | Defines where a stateful table keeps its state, valid values are "session" for sessionStorage and "local" for localStorage. |
-| `editMode` | `'cell' \| 'row'` | `'cell'` | Defines the editing mode, valid values are "cell" and "row". |
+| `stateStorage` | `"session" \| "local"` | `'session'` | Defines where a stateful table keeps its state, valid values are "session" for sessionStorage and "local" for localStorage. |
+| `editMode` | `"cell" \| "row"` | `'cell'` | Defines the editing mode, valid values are "cell" and "row". |
 | `groupRowsBy` | `any` | — | Field name to use in row grouping. |
-| `size` | `'small' \| 'large' \| undefined` | — | Defines the size of the table. |
+| `size` | `"large" \| "small" \| undefined` | — | Defines the size of the table. |
 | `showGridlines` | `boolean \| undefined` | — | Whether to show grid lines between cells. |
 | `stripedRows` | `boolean \| undefined` | — | Whether to display rows with alternating colors. |
 | `groupRowsByOrder` | `number` | `1` | Order to sort when default row grouping is enabled. |
 | `responsiveLayout` | `string` | `'scroll'` | Defines the responsive mode, valid options are "stack" and "scroll". |
 | `breakpoint` | `string` | `'960px'` | The breakpoint to define the maximum width boundary when using stack responsive layout. |
 | `paginatorLocale` | `string \| undefined` | — | Locale to be used in paginator formatting. |
+| `value` | `RowData[]` | `[]` | An array of objects to display. |
+| `columns` | `any[] \| undefined` | — | An array of objects to represent dynamic columns. |
+| `first` | `number \| null \| undefined` | `0` | Index of the first row to be displayed. |
+| `rows` | `number \| undefined` | — | Number of rows to display per page. |
 | `totalRecords` | `number` | `0` | Number of total records, defaults to length of value when not defined. |
+| `sortField` | `string \| null \| undefined` | — | Name of the field to sort data by default. |
+| `sortOrder` | `number` | `1` | Order to sort when default sorting is enabled. |
+| `multiSortMeta` | `SortMeta[] \| null \| undefined` | — | An array of SortMeta objects to sort the data by default in multiple sort mode. |
+| `selection` | `any` | — | Selected row in single mode or an array of values in multiple mode. |
+| `selectAll` | `boolean \| null` | `null` | Whether all data is selected. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `contextMenuSelectionChange` | `EventEmitter&lt;any&gt;` | Callback to invoke on context menu selection change. |
-| `selectAllChange` | `EventEmitter&lt;TableSelectAllChangeEvent&gt;` | Emits when the all of the items selected or unselected. |
-| `selectionChange` | `EventEmitter&lt;any \| null&gt;` | Callback to invoke on selection changed. |
-| `onRowSelect` | `EventEmitter&lt;TableRowSelectEvent&lt;RowData&gt;&gt;` | Callback to invoke when a row is selected. |
-| `onRowUnselect` | `EventEmitter&lt;TableRowUnSelectEvent&lt;RowData&gt;&gt;` | Callback to invoke when a row is unselected. |
-| `onPage` | `EventEmitter&lt;TablePageEvent&gt;` | Callback to invoke when pagination occurs. |
-| `onSort` | `EventEmitter&lt;{ multisortmeta: SortMeta[] } \| any&gt;` | Callback to invoke when a column gets sorted. |
-| `onFilter` | `EventEmitter&lt;TableFilterEvent&gt;` | Callback to invoke when data is filtered. |
-| `onLazyLoad` | `EventEmitter&lt;TableLazyLoadEvent&gt;` | Callback to invoke when paging, sorting or filtering happens in lazy mode. |
-| `onRowExpand` | `EventEmitter&lt;TableRowExpandEvent&lt;RowData&gt;&gt;` | Callback to invoke when a row is expanded. |
-| `onRowCollapse` | `EventEmitter&lt;TableRowCollapseEvent&gt;` | Callback to invoke when a row is collapsed. |
-| `onContextMenuSelect` | `EventEmitter&lt;TableContextMenuSelectEvent&lt;RowData&gt;&gt;` | Callback to invoke when a row is selected with right click. |
-| `onColResize` | `EventEmitter&lt;TableColResizeEvent&gt;` | Callback to invoke when a column is resized. |
-| `onColReorder` | `EventEmitter&lt;TableColumnReorderEvent&gt;` | Callback to invoke when a column is reordered. |
-| `onRowReorder` | `EventEmitter&lt;TableRowReorderEvent&gt;` | Callback to invoke when a row is reordered. |
-| `onEditInit` | `EventEmitter&lt;TableEditInitEvent&gt;` | Callback to invoke when a cell switches to edit mode. |
-| `onEditComplete` | `EventEmitter&lt;TableEditCompleteEvent&gt;` | Callback to invoke when cell edit is completed. |
-| `onEditCancel` | `EventEmitter&lt;TableEditCancelEvent&gt;` | Callback to invoke when cell edit is cancelled with escape key. |
-| `onHeaderCheckboxToggle` | `EventEmitter&lt;TableHeaderCheckboxToggleEvent&gt;` | Callback to invoke when state of header checkbox changes. |
-| `sortFunction` | `EventEmitter&lt;any&gt;` | A function to implement custom sorting, refer to sorting section for details. |
-| `firstChange` | `EventEmitter&lt;number&gt;` | Callback to invoke on pagination. |
-| `rowsChange` | `EventEmitter&lt;number&gt;` | Callback to invoke on rows change. |
-| `onStateSave` | `EventEmitter&lt;TableState&gt;` | Callback to invoke table state is saved. |
-| `onStateRestore` | `EventEmitter&lt;TableState&gt;` | Callback to invoke table state is restored. |
+| `onRowSelect` | `output&lt;TableRowSelectEvent&lt;RowData&gt;&gt;()` | Callback to invoke when a row is selected. |
+| `onRowUnselect` | `output&lt;TableRowUnSelectEvent&lt;RowData&gt;&gt;()` | Callback to invoke when a row is unselected. |
+| `onPage` | `output&lt;TablePageEvent&gt;()` | Callback to invoke when pagination occurs. |
+| `onSort` | `output&lt;any&gt;()` | Callback to invoke when a column gets sorted. |
+| `onFilter` | `output&lt;TableFilterEvent&gt;()` | Callback to invoke when data is filtered. |
+| `onLazyLoad` | `output&lt;TableLazyLoadEvent&gt;()` | Callback to invoke when paging, sorting or filtering happens in lazy mode. |
+| `onRowExpand` | `output&lt;TableRowExpandEvent&lt;RowData&gt;&gt;()` | Callback to invoke when a row is expanded. |
+| `onRowCollapse` | `output&lt;TableRowCollapseEvent&gt;()` | Callback to invoke when a row is collapsed. |
+| `onContextMenuSelect` | `output&lt;TableContextMenuSelectEvent&lt;RowData&gt;&gt;()` | Callback to invoke when a row is selected with right click. |
+| `onColResize` | `output&lt;TableColResizeEvent&gt;()` | Callback to invoke when a column is resized. |
+| `onColReorder` | `output&lt;TableColumnReorderEvent&gt;()` | Callback to invoke when a column is reordered. |
+| `onRowReorder` | `output&lt;TableRowReorderEvent&gt;()` | Callback to invoke when a row is reordered. |
+| `onEditInit` | `output&lt;TableEditInitEvent&gt;()` | Callback to invoke when a cell switches to edit mode. |
+| `onEditComplete` | `output&lt;TableEditCompleteEvent&gt;()` | Callback to invoke when cell edit is completed. |
+| `onEditCancel` | `output&lt;TableEditCancelEvent&gt;()` | Callback to invoke when cell edit is cancelled with escape key. |
+| `onHeaderCheckboxToggle` | `output&lt;TableHeaderCheckboxToggleEvent&gt;()` | Callback to invoke when state of header checkbox changes. |
+| `sortFunction` | `output&lt;any&gt;()` | A function to implement custom sorting, refer to sorting section for details. |
+| `onStateSave` | `output&lt;TableState&gt;()` | Callback to invoke table state is saved. |
+| `onStateRestore` | `output&lt;TableState&gt;()` | Callback to invoke table state is restored. |
 
 ### TableBody
 
@@ -134,6 +138,7 @@ Selector: `[hTableBody]`
 | --- | --- | --- | --- |
 | `columns` | `any[] \| undefined` | — | — |
 | `template` | `Nullable&lt;TemplateRef&lt;any&gt;&gt;` | — | — |
+| `value` | `any[]` | `[]` | — |
 | `frozen` | `boolean \| undefined` | — | — |
 | `frozenRows` | `boolean \| undefined` | — | — |
 | `scrollerOptions` | `any` | — | — |
@@ -150,6 +155,7 @@ Selector: `[hFrozenColumn]`
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `frozen` | `boolean` | `true` | — |
 | `alignFrozen` | `string` | `'left'` | — |
 
 ### SortableColumn
@@ -290,8 +296,8 @@ Selector: `h-tableRadioButton`
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `any` | — | — |
-| `disabled` | `boolean \| undefined` | `undefined` | — |
-| `index` | `number \| undefined` | `undefined` | — |
+| `disabled` | `boolean \| undefined` | — | — |
+| `index` | `number \| undefined` | — | — |
 | `inputId` | `string \| undefined` | — | — |
 | `name` | `string \| undefined` | — | — |
 | `ariaLabel` | `string \| undefined` | — | — |
@@ -305,9 +311,9 @@ Selector: `h-tableCheckbox`
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `value` | `any` | — | — |
-| `disabled` | `boolean \| undefined` | `undefined` | — |
-| `required` | `boolean \| undefined` | `undefined` | — |
-| `index` | `number \| undefined` | `undefined` | — |
+| `disabled` | `boolean \| undefined` | — | — |
+| `required` | `boolean \| undefined` | — | — |
+| `index` | `number \| undefined` | — | — |
 | `inputId` | `string \| undefined` | — | — |
 | `name` | `string \| undefined` | — | — |
 | `ariaLabel` | `string \| undefined` | — | — |
@@ -320,7 +326,7 @@ Selector: `h-tableHeaderCheckbox`
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `disabled` | `boolean \| undefined` | `undefined` | — |
+| `disabled` | `boolean \| undefined` | — | — |
 | `inputId` | `string \| undefined` | — | — |
 | `name` | `string \| undefined` | — | — |
 | `ariaLabel` | `string \| undefined` | — | — |
@@ -363,7 +369,7 @@ Column Filter Component.
 | `showAddButton` | `boolean` | `true` | Decides whether to display add filter button when display is menu. |
 | `hideOnClear` | `boolean` | `true` | Decides whether to close popup on clear button click. |
 | `placeholder` | `string \| undefined` | — | Filter placeholder. |
-| `matchModeOptions` | `SelectItem[] \| undefined` | — | Filter match mode options. |
+| `matchModeOptions` | `SelectItem&lt;any&gt;[] \| undefined` | — | Filter match mode options. |
 | `maxConstraints` | `number` | `2` | Defines maximum amount of constraints. |
 | `minFractionDigits` | `number \| undefined` | — | Defines minimum fraction of digits. |
 | `maxFractionDigits` | `number \| undefined` | — | Defines maximum fraction of digits. |
@@ -377,15 +383,26 @@ Column Filter Component.
 | `useGrouping` | `boolean` | `true` | Defines if filter grouping will be enabled. |
 | `showButtons` | `boolean` | `true` | Defines the visibility of buttons. |
 | `ariaLabel` | `string \| undefined` | — | Defines the aria-label of the form element. |
-| `filterButtonProps` | `TableFilterButtonPropsOptions` | `{ filter: { severity: 'secondary', text: true, rounded: true }, inline: { clear: { severity: 'secondary', text: true, rounded: true } }, popover: { addRule: { severity: 'info', text: true, size: 'small' }, removeRule: { severity: 'danger', text: true, size: 'small' }, apply: { size: 'small' }, clear: { outlined: true, size: 'small' } } }` | Used to pass all filter button property object filter: { severity: 'secondary', text: true, rounded: true }, inline: { clear: { severity: 'secondary', text: true, rounded: true } }, popover: { addRule: { severity: 'info', text: true, size: 'small' }, removeRule: { severity: 'danger', text: true, size: 'small' }, apply: { size: 'small' }, clear: { outlined: true, size: 'small' } } } |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | — |
+| `filterButtonProps` | `TableFilterButtonPropsOptions` | `{
+    filter: { severity: 'secondary', text: true, rounded: true },
+    inline: {
+        clear: { severity: 'secondary', text: true, rounded: true }
+    },
+    popover: {
+        addRule: { severity: 'info', text: true, size: 'small' },
+        removeRule: { severity: 'danger', text: true, size: 'small' },
+        apply: { size: 'small' },
+        clear: { outlined: true, size: 'small' }
+    }
+}` | Used to pass all filter button property object |
+| `motionOptions` | `MotionOptions \| undefined` | — | — |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onShow` | `EventEmitter&lt;{ originalEvent: AnimationEvent }&gt;` | Callback to invoke on overlay is shown. |
-| `onHide` | `EventEmitter&lt;{ originalEvent: AnimationEvent }&gt;` | Callback to invoke on overlay is hidden. |
+| `onShow` | `output&lt;{ originalEvent: AnimationEvent; }&gt;()` | Callback to invoke on overlay is shown. |
+| `onHide` | `output&lt;{ originalEvent: AnimationEvent; }&gt;()` | Callback to invoke on overlay is hidden. |
 
 ### ColumnFilterFormElement
 

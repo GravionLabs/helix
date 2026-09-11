@@ -40,13 +40,13 @@ ListBox is used to select one or more values from a list of items.
 | `tabindex` | `number \| undefined` | `0` | Index of the element in tabbing order. |
 | `multiple` | `boolean \| undefined` | — | When specified, allows selecting multiple values. |
 | `styleClass` | `string \| undefined` | — | Style class of the container. |
-| `listStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the list element. |
+| `listStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the list element. |
 | `listStyleClass` | `string \| undefined` | — | Style class of the list element. |
 | `readonly` | `boolean \| undefined` | — | When present, it specifies that the element value cannot be changed. |
 | `checkbox` | `boolean` | `false` | When specified, allows selecting items with checkboxes. |
 | `filter` | `boolean` | `false` | When specified, displays a filter input at header. |
 | `filterBy` | `string \| undefined` | — | When filtering is enabled, filterBy decides which field or fields (comma separated) to search against. |
-| `filterMatchMode` | `'contains' \| 'startsWith' \| 'endsWith' \| 'equals' \| 'notEquals' \| 'in' \| 'lt' \| 'lte' \| 'gt' \| 'gte' \| string` | `'contains'` | Defines how the items are filtered. |
+| `filterMatchMode` | `string` | `'contains'` | Defines how the items are filtered. |
 | `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
 | `metaKeySelection` | `boolean` | `false` | Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically. |
 | `dataKey` | `string \| undefined` | — | A property to uniquely identify a value in options. |
@@ -61,26 +61,29 @@ ListBox is used to select one or more values from a list of items.
 | `emptyFilterMessage` | `string \| undefined` | — | Text to display when filtering does not return any results. |
 | `emptyMessage` | `string \| undefined` | — | Text to display when there is no data. Defaults to global value in i18n translation configuration. |
 | `group` | `boolean \| undefined` | — | Whether to display options as grouped when nested options are provided. |
+| `options` | `any[]` | `undefined!` | An array of selectitems to display as the available options. |
+| `filterValue` | `string \| undefined` | — | When specified, filter displays with this value. |
+| `selectAll` | `boolean \| null \| undefined` | `null` | Whether all data is selected. |
 | `striped` | `boolean \| undefined` | `false` | Whether to displays rows with alternating colors. |
 | `highlightOnSelect` | `boolean` | `true` | Whether the selected option will be add highlight class. |
 | `checkmark` | `boolean` | `false` | Whether the selected option will be shown with a check mark. |
 | `dragdrop` | `boolean` | `false` | Whether to enable dragdrop based reordering. |
 | `dropListData` | `any[] \| undefined` | — | Array to use for CDK drop list data binding. When not provided, uses options array. |
-| `fluid` | `unknown` | `undefined` | Spans 100% width of the container when enabled. |
+| `fluid` | `boolean \| undefined` | — | Spans 100% width of the container when enabled. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;ListboxChangeEvent&gt;` | Callback to invoke on value change. |
-| `onClick` | `EventEmitter&lt;ListboxClickEvent&gt;` | Callback to invoke when option is clicked. |
-| `onDblClick` | `EventEmitter&lt;ListboxDoubleClickEvent&gt;` | Callback to invoke when option is double clicked. |
-| `onFilter` | `EventEmitter&lt;ListboxFilterEvent&gt;` | Callback to invoke when data is filtered. |
-| `onFocus` | `EventEmitter&lt;FocusEvent&gt;` | Callback to invoke when component receives focus. |
-| `onBlur` | `EventEmitter&lt;FocusEvent&gt;` | Callback to invoke when component loses focus. |
-| `onSelectAllChange` | `EventEmitter&lt;ListboxSelectAllChangeEvent&gt;` | Callback to invoke when all data is selected. |
-| `onLazyLoad` | `EventEmitter&lt;ScrollerLazyLoadEvent&gt;` | Emits on lazy load. |
-| `onDrop` | `EventEmitter&lt;CdkDragDrop&lt;string[]&gt;&gt;` | Emits on item is dropped. |
+| `onChange` | `output&lt;ListboxChangeEvent&gt;()` | Callback to invoke on value change. |
+| `onClick` | `output&lt;ListboxClickEvent&gt;()` | Callback to invoke when option is clicked. |
+| `onDblClick` | `output&lt;ListboxDoubleClickEvent&gt;()` | Callback to invoke when option is double clicked. |
+| `onFilter` | `output&lt;ListboxFilterEvent&gt;()` | Callback to invoke when data is filtered. |
+| `onFocus` | `output&lt;FocusEvent&gt;()` | Callback to invoke when component receives focus. |
+| `onBlur` | `output&lt;FocusEvent&gt;()` | Callback to invoke when component loses focus. |
+| `onSelectAllChange` | `output&lt;ListboxSelectAllChangeEvent&gt;()` | Callback to invoke when all data is selected. |
+| `onLazyLoad` | `output&lt;ScrollerLazyLoadEvent&gt;()` | Emits on lazy load. |
+| `onDrop` | `output&lt;CdkDragDrop&lt;string[], string[], any&gt;&gt;()` | Emits on item is dropped. |
 
 ## Source
 

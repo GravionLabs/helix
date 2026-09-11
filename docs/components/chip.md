@@ -28,13 +28,14 @@ Chip represents people using icons, labels and images.
 | `disabled` | `boolean \| undefined` | `false` | When present, it specifies that the element should be disabled. |
 | `removable` | `boolean \| undefined` | `false` | Whether to display a remove icon. |
 | `removeIcon` | `string \| undefined` | — | Icon of the remove element. |
+| `chipProps` | `ChipProps \| undefined` | — | Used to pass all properties of the chipProps to the Chip component. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onRemove` | `EventEmitter&lt;MouseEvent&gt;` | Callback to invoke when a chip is removed. |
-| `onImageError` | `EventEmitter&lt;Event&gt;` | This event is triggered if an error occurs while loading an image file. |
+| `onRemove` | `output&lt;MouseEvent&gt;()` | Callback to invoke when a chip is removed. |
+| `onImageError` | `output&lt;Event&gt;()` | This event is triggered if an error occurs while loading an image file. |
 
 ## Source
 

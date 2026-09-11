@@ -31,13 +31,13 @@ npm install @helix-ui/shell
 ```typescript
 // app.config.ts
 import Aura from '@primeuix/themes/aura';
-import { providePrimeNG } from '@helix-ui/core/config';
+import { provideHelix } from '@helix-ui/core/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideHttpClient(),
-    providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } })
+    provideHelix({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } })
   ]
 };
 ```

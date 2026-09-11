@@ -5,10 +5,35 @@
 ## Import
 
 ```ts
-import { InputMask, InputMaskDirective } from '@helix-ui/core/inputmask';
+import { InputMaskDirective, InputMask } from '@helix-ui/core/inputmask';
 ```
 
 ## Components
+
+### InputMaskDirective
+
+Selector: `[hInputMask]`
+
+InputMask directive is applied directly to input elements to enable masked input.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `pInputMaskPT` | `any` | — | Used to pass attributes to DOM elements inside the InputMask directive. |
+| `pInputMaskUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
+| `hInputMask` | `string \| undefined` | — | Mask pattern. |
+| `slotChar` | `string` | `'_'` | Placeholder character in mask, default is underscore. |
+| `autoClear` | `boolean` | `true` | Clears the incomplete value on blur. |
+| `characterPattern` | `string` | `'[A-Za-z]'` | Regex pattern for alpha characters. |
+| `keepBuffer` | `boolean` | `false` | When present, it specifies that whether to clean buffer value from model. |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `onCompleteEvent` | `output&lt;void&gt;()` | Callback to invoke when the mask is completed. |
+| `onUnmaskedChange` | `output&lt;string&gt;()` | Callback to invoke when value changes, emits unmasked value. |
 
 ### InputMask
 
@@ -24,7 +49,7 @@ InputMask component is used to enter input in a certain format such as numeric, 
 | `slotChar` | `string` | `'_'` | Placeholder character in mask, default is underscore. |
 | `autoClear` | `boolean` | `true` | Clears the incomplete value on blur. |
 | `showClear` | `boolean` | `false` | When enabled, a clear icon is displayed to clear the value. |
-| `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the input field. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the input field. |
 | `inputId` | `string \| undefined` | — | Identifier of the focus input to match a label defined for the component. |
 | `styleClass` | `string \| undefined` | — | Style class of the input field. |
 | `placeholder` | `string \| undefined` | — | Advisory information to display on input. |
@@ -39,42 +64,18 @@ InputMask component is used to enter input in a certain format such as numeric, 
 | `autofocus` | `boolean \| undefined` | — | When present, the input gets a focus automatically on load. |
 | `autocomplete` | `string \| undefined` | — | Used to define a string that autocomplete attribute the current element. |
 | `keepBuffer` | `boolean` | `false` | When present, it specifies that whether to clean buffer value from model. |
+| `mask` | `string \| null \| undefined` | — | Mask pattern. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onComplete` | `EventEmitter&lt;any&gt;` | Callback to invoke when the mask is completed. |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component receives focus. |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the component loses focus. |
-| `onInput` | `EventEmitter&lt;Event&gt;` | Callback to invoke on input. |
-| `onKeydown` | `EventEmitter&lt;Event&gt;` | Callback to invoke on input key press. |
-| `onClear` | `EventEmitter&lt;any&gt;` | Callback to invoke when input field is cleared. |
-
-### InputMaskDirective
-
-Selector: `[hInputMask]`
-
-InputMask directive is applied directly to input elements to enable masked input.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `pInputMaskPT` | `any` | — | Used to pass attributes to DOM elements inside the InputMask directive. |
-| `pInputMaskUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
-| `hInputMask` | `string` | — | Mask pattern. |
-| `slotChar` | `string` | `'_'` | Placeholder character in mask, default is underscore. |
-| `autoClear` | `boolean` | `true` | Clears the incomplete value on blur. |
-| `characterPattern` | `string` | `'[A-Za-z]'` | Regex pattern for alpha characters. |
-| `keepBuffer` | `boolean` | `false` | When present, it specifies that whether to clean buffer value from model. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onCompleteEvent` | `void` | Callback to invoke when the mask is completed. |
-| `onUnmaskedChange` | `string` | Callback to invoke when value changes, emits unmasked value. |
+| `onComplete` | `output&lt;void&gt;()` | Callback to invoke when the mask is completed. |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when the component receives focus. |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the component loses focus. |
+| `onInput` | `output&lt;Event&gt;()` | Callback to invoke on input. |
+| `onKeydown` | `output&lt;Event&gt;()` | Callback to invoke on input key press. |
+| `onClear` | `output&lt;void&gt;()` | Callback to invoke when input field is cleared. |
 
 ## Source
 

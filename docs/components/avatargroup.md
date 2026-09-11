@@ -21,7 +21,7 @@ AvatarGroup is a helper component for Avatar.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `styleClass` | `string \| undefined` | — | Style class of the component |
-| `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the component. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
 
 ## Source
 

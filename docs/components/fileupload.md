@@ -5,10 +5,30 @@
 ## Import
 
 ```ts
-import { FileUpload, FileContent } from '@helix-ui/core/fileupload';
+import { FileContent, FileUpload } from '@helix-ui/core/fileupload';
 ```
 
 ## Components
+
+### FileContent
+
+Selector: `[hFileContent]`
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `files` | `any` | — | — |
+| `badgeSeverity` | `"secondary" \| "info" \| "success" \| "warn" \| "danger" \| "contrast"` | `'warn'` | — |
+| `badgeValue` | `string \| undefined` | — | — |
+| `previewWidth` | `number` | `50` | — |
+| `fileRemoveIconTemplate` | `any` | — | — |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `onRemove` | `output&lt;any&gt;()` | — |
 
 ### FileUpload
 
@@ -22,7 +42,7 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | --- | --- | --- | --- |
 | `name` | `string \| undefined` | — | Name of the request parameter to identify the files at backend. |
 | `url` | `string \| undefined` | — | Remote url to upload the files. |
-| `method` | `'post' \| 'put' \| undefined` | `'post'` | HTTP method to send the files to the url such as "post" and "put". |
+| `method` | `"post" \| "put" \| undefined` | `'post'` | HTTP method to send the files to the url such as "post" and "put". |
 | `multiple` | `boolean \| undefined` | — | Used to select multiple files at once from file dialog. |
 | `accept` | `string \| undefined` | — | Comma-separated list of pattern to restrict the allowed file types. Can be any combination of either the MIME types (such as "image/*") or the file extensions (such as ".jpg"). |
 | `disabled` | `boolean \| undefined` | — | Disables the upload functionality. |
@@ -35,7 +55,7 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | `invalidFileTypeMessageDetail` | `string` | `'allowed file types: {0}.'` | Detail message of the invalid file type. |
 | `invalidFileLimitMessageDetail` | `string` | `'limit is {0} at most.'` | Detail message of the invalid file type. |
 | `invalidFileLimitMessageSummary` | `string` | `'Maximum number of files exceeded, '` | Summary message of the invalid file type. |
-| `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the element. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the element. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
 | `previewWidth` | `number` | `50` | Width of the image thumbnail in pixels. |
 | `chooseLabel` | `string \| undefined` | — | Label of the choose button. Defaults to Helix Locale configuration. |
@@ -46,7 +66,7 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | `cancelIcon` | `string \| undefined` | — | Icon of the cancel button. |
 | `showUploadButton` | `boolean` | `true` | Whether to show the upload button. |
 | `showCancelButton` | `boolean` | `true` | Whether to show the cancel button. |
-| `mode` | `'advanced' \| 'basic' \| undefined` | `'advanced'` | Defines the UI of the component. |
+| `mode` | `"advanced" \| "basic" \| undefined` | `'advanced'` | Defines the UI of the component. |
 | `headers` | `HttpHeaders \| undefined` | — | HttpHeaders class represents the header configuration options for an HTTP request. |
 | `customUpload` | `boolean \| undefined` | — | Whether to use the default upload or a manual implementation defined in uploadHandler callback. Defaults to Helix Locale configuration. |
 | `fileLimit` | `number \| undefined` | — | Maximum number of files that can be uploaded. |
@@ -54,45 +74,26 @@ FileUpload is an advanced uploader with dragdrop support, multi file uploads, au
 | `cancelStyleClass` | `string \| undefined` | — | Style class of the cancel button. |
 | `removeStyleClass` | `string \| undefined` | — | Style class of the remove button. |
 | `chooseStyleClass` | `string \| undefined` | — | Style class of the choose button. |
-| `chooseButtonProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the choose button inside the component. |
+| `chooseButtonProps` | `ButtonProps` | `undefined!` | Used to pass all properties of the ButtonProps to the choose button inside the component. |
 | `uploadButtonProps` | `ButtonProps` | `{ severity: 'secondary' }` | Used to pass all properties of the ButtonProps to the upload button inside the component. |
 | `cancelButtonProps` | `ButtonProps` | `{ severity: 'secondary' }` | Used to pass all properties of the ButtonProps to the cancel button inside the component. |
+| `files` | `File[]` | `[]` | — |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onBeforeUpload` | `EventEmitter&lt;FileBeforeUploadEvent&gt;` | Callback to invoke before file upload is initialized. |
-| `onSend` | `EventEmitter&lt;FileSendEvent&gt;` | An event indicating that the request was sent to the server. Useful when a request may be retried multiple times, to distinguish between retries on the final event stream. |
-| `onUpload` | `EventEmitter&lt;FileUploadEvent&gt;` | Callback to invoke when file upload is complete. |
-| `onError` | `EventEmitter&lt;FileUploadErrorEvent&gt;` | Callback to invoke if file upload fails. |
-| `onClear` | `EventEmitter&lt;Event&gt;` | Callback to invoke when files in queue are removed without uploading using clear all button. |
-| `onRemove` | `EventEmitter&lt;FileRemoveEvent&gt;` | Callback to invoke when a file is removed without uploading using clear button of a file. |
-| `onSelect` | `EventEmitter&lt;FileSelectEvent&gt;` | Callback to invoke when files are selected. |
-| `onProgress` | `EventEmitter&lt;FileProgressEvent&gt;` | Callback to invoke when files are being uploaded. |
-| `uploadHandler` | `EventEmitter&lt;FileUploadHandlerEvent&gt;` | Callback to invoke in custom upload mode to upload the files manually. |
-| `onImageError` | `EventEmitter&lt;Event&gt;` | This event is triggered if an error occurs while loading an image file. |
-| `onRemoveUploadedFile` | `EventEmitter&lt;RemoveUploadedFileEvent&gt;` | This event is triggered if an error occurs while loading an image file. |
-
-### FileContent
-
-Selector: `[hFileContent]`
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `files` | `any` | — | — |
-| `badgeSeverity` | `'secondary' \| 'info' \| 'success' \| 'warn' \| 'danger' \| 'contrast'` | `'warn'` | — |
-| `badgeValue` | `string` | — | — |
-| `previewWidth` | `number` | `50` | — |
-| `fileRemoveIconTemplate` | `any` | — | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onRemove` | `any` | — |
+| `onBeforeUpload` | `output&lt;FileBeforeUploadEvent&gt;()` | Callback to invoke before file upload is initialized. |
+| `onSend` | `output&lt;FileSendEvent&gt;()` | An event indicating that the request was sent to the server. Useful when a request may be retried multiple times, to distinguish between retries on the final event stream. |
+| `onUpload` | `output&lt;FileUploadEvent&gt;()` | Callback to invoke when file upload is complete. |
+| `onError` | `output&lt;FileUploadErrorEvent&gt;()` | Callback to invoke if file upload fails. |
+| `onClear` | `output&lt;void&gt;()` | Callback to invoke when files in queue are removed without uploading using clear all button. |
+| `onRemove` | `output&lt;FileRemoveEvent&gt;()` | Callback to invoke when a file is removed without uploading using clear button of a file. |
+| `onSelect` | `output&lt;FileSelectEvent&gt;()` | Callback to invoke when files are selected. |
+| `onProgress` | `output&lt;FileProgressEvent&gt;()` | Callback to invoke when files are being uploaded. |
+| `uploadHandler` | `output&lt;FileUploadHandlerEvent&gt;()` | Callback to invoke in custom upload mode to upload the files manually. |
+| `onImageError` | `output&lt;Event&gt;()` | This event is triggered if an error occurs while loading an image file. |
+| `onRemoveUploadedFile` | `output&lt;RemoveUploadedFileEvent&gt;()` | This event is triggered if an error occurs while loading an image file. |
 
 ## Source
 

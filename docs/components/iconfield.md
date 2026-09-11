@@ -21,8 +21,8 @@ IconField wraps an input and an icon.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `hostName` | `any` | `''` | — |
-| `iconPosition` | `'right' \| 'left'` | `'left'` | Position of the icon. |
-| `styleClass` | `string` | — | Style class of the component. |
+| `iconPosition` | `"left" \| "right"` | `'left'` | Position of the icon. |
+| `styleClass` | `string` | `undefined!` | Style class of the component. |
 
 ## Source
 

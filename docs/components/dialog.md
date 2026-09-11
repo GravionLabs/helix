@@ -34,7 +34,7 @@ Dialog is a container to display content in an overlay window.
 | `breakpoints` | `any` | — | Object literal to define widths per screen size. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
 | `maskStyleClass` | `string \| undefined` | — | Style class of the mask. |
-| `maskStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Style of the mask. |
+| `maskStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Style of the mask. |
 | `showHeader` | `boolean` | `true` | Whether to show the header or not. |
 | `blockScroll` | `boolean` | `false` | Whether background scroll should be blocked when dialog is visible. |
 | `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
@@ -46,18 +46,28 @@ Dialog is a container to display content in an overlay window.
 | `keepInViewport` | `boolean` | `true` | Keeps dialog in the viewport. |
 | `focusTrap` | `boolean` | `true` | When enabled, can only focus on elements inside the dialog. |
 | `transitionOptions` | `string` | `'150ms cubic-bezier(0, 0, 0.2, 1)'` | Transition options of the animation. |
-| `maskMotionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options for the mask. |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
+| `maskMotionOptions` | `MotionOptions \| undefined` | — | The motion options for the mask. |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
 | `closeIcon` | `string \| undefined` | — | Name of the close icon. |
 | `closeAriaLabel` | `string \| undefined` | — | Defines a string that labels the close button for accessibility. |
 | `closeTabindex` | `string` | `'0'` | Index of the close button in tabbing order. |
 | `minimizeIcon` | `string \| undefined` | — | Name of the minimize icon. |
 | `maximizeIcon` | `string \| undefined` | — | Name of the maximize icon. |
-| `closeButtonProps` | `ButtonProps` | `{ severity: 'secondary', variant: 'text', rounded: true }` | Used to pass all properties of the ButtonProps to the Button component. |
-| `maximizeButtonProps` | `ButtonProps` | `{ severity: 'secondary', variant: 'text', rounded: true }` | Used to pass all properties of the ButtonProps to the Button component. |
-| `position` | `'center' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'topleft' \| 'topright' \| 'bottomleft' \| 'bottomright'` | — | Position of the dialog. |
+| `closeButtonProps` | `ButtonProps` | `{
+    severity: 'secondary',
+    variant: 'text',
+    rounded: true
+}` | Used to pass all properties of the ButtonProps to the Button component. |
+| `maximizeButtonProps` | `ButtonProps` | `{
+    severity: 'secondary',
+    variant: 'text',
+    rounded: true
+}` | Used to pass all properties of the ButtonProps to the Button component. |
+| `visible` | `boolean` | `false` | Specifies the visibility of the dialog. |
+| `style` | `any` | — | Inline style of the component. |
+| `position` | `"left" \| "right" \| "top" \| "bottom" \| "center" \| "topleft" \| "topright" \| "bottomleft" \| "bottomright"` | `undefined!` | Position of the dialog. |
 | `role` | `string` | `'dialog'` | Role attribute of html element. |
-| `appendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| 'self' \| 'body' \| null \| undefined \| any` | `undefined` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
 | `headerTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Header template. |
 | `contentTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Content template. |
 | `footerTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Footer template. |
@@ -70,13 +80,12 @@ Dialog is a container to display content in an overlay window.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onShow` | `EventEmitter&lt;any&gt;` | Callback to invoke when dialog is shown. |
-| `onHide` | `EventEmitter&lt;any&gt;` | Callback to invoke when dialog is hidden. |
-| `visibleChange` | `EventEmitter&lt;boolean&gt;` | This EventEmitter is used to notify changes in the visibility state of a component. |
-| `onResizeInit` | `EventEmitter&lt;MouseEvent&gt;` | Callback to invoke when dialog resizing is initiated. |
-| `onResizeEnd` | `EventEmitter&lt;MouseEvent&gt;` | Callback to invoke when dialog resizing is completed. |
-| `onDragEnd` | `EventEmitter&lt;DragEvent&gt;` | Callback to invoke when dialog dragging is completed. |
-| `onMaximize` | `EventEmitter&lt;any&gt;` | Callback to invoke when dialog maximized or unmaximized. |
+| `onShow` | `output&lt;any&gt;()` | Callback to invoke when dialog is shown. |
+| `onHide` | `output&lt;any&gt;()` | Callback to invoke when dialog is hidden. |
+| `onResizeInit` | `output&lt;MouseEvent&gt;()` | Callback to invoke when dialog resizing is initiated. |
+| `onResizeEnd` | `output&lt;MouseEvent&gt;()` | Callback to invoke when dialog resizing is completed. |
+| `onDragEnd` | `output&lt;DragEvent&gt;()` | Callback to invoke when dialog dragging is completed. |
+| `onMaximize` | `output&lt;any&gt;()` | Callback to invoke when dialog maximized or unmaximized. |
 
 ## Source
 

@@ -5,10 +5,40 @@
 ## Import
 
 ```ts
-import { Select, SelectItem } from '@helix-ui/core/select';
+import { SelectItem, Select } from '@helix-ui/core/select';
 ```
 
 ## Components
+
+### SelectItem
+
+Selector: `h-selectItem`
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string \| undefined` | — | — |
+| `option` | `any` | — | — |
+| `selected` | `boolean \| undefined` | — | — |
+| `focused` | `boolean \| undefined` | — | — |
+| `label` | `string \| undefined` | — | — |
+| `disabled` | `boolean \| undefined` | — | — |
+| `visible` | `boolean \| undefined` | — | — |
+| `itemSize` | `number \| undefined` | — | — |
+| `ariaPosInset` | `string \| undefined` | — | — |
+| `ariaSetSize` | `string \| undefined` | — | — |
+| `template` | `TemplateRef&lt;any&gt; \| undefined` | — | — |
+| `checkmark` | `boolean` | `undefined!` | — |
+| `index` | `number \| undefined` | — | — |
+| `scrollerOptions` | `any` | — | — |
+
+#### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `onClick` | `output&lt;any&gt;()` | — |
+| `onMouseEnter` | `output&lt;any&gt;()` | — |
 
 ### Select
 
@@ -23,12 +53,13 @@ Select is used to choose an item from a collection of options.
 | `id` | `string \| undefined` | — | Unique identifier of the component |
 | `scrollHeight` | `string` | `'200px'` | Height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value. |
 | `filter` | `boolean \| undefined` | — | When specified, displays an input field to filter the items on keyup. |
-| `panelStyle` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the overlay panel element. |
+| `panelStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the overlay panel element. |
 | `styleClass` | `string \| undefined` | — | Style class of the element. |
 | `panelStyleClass` | `string \| undefined` | — | Style class of the overlay panel element. |
 | `readonly` | `boolean \| undefined` | — | When present, it specifies that the component cannot be edited. |
 | `editable` | `boolean \| undefined` | — | When present, custom value instead of predefined options can be entered using the editable input field. |
 | `tabindex` | `number \| undefined` | `0` | Index of the element in tabbing order. |
+| `placeholder` | `string \| undefined` | — | Default text to display when no option is selected. |
 | `loadingIcon` | `string \| undefined` | — | Icon to display in loading state. |
 | `filterPlaceholder` | `string \| undefined` | — | Placeholder text to show when filter input is empty. |
 | `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
@@ -58,61 +89,33 @@ Select is used to choose an item from a collection of options.
 | `ariaFilterLabel` | `string \| undefined` | — | Defines a string that labels the filter input. |
 | `ariaLabel` | `string \| undefined` | — | Used to define a aria label attribute the current element. |
 | `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
-| `filterMatchMode` | `'contains' \| 'startsWith' \| 'endsWith' \| 'equals' \| 'notEquals' \| 'in' \| 'lt' \| 'lte' \| 'gt' \| 'gte'` | `'contains'` | Defines how the items are filtered. |
+| `filterMatchMode` | `"in" \| "contains" \| "startsWith" \| "endsWith" \| "equals" \| "notEquals" \| "lt" \| "lte" \| "gt" \| "gte"` | `'contains'` | Defines how the items are filtered. |
 | `tooltip` | `string` | `''` | Advisory information to display in a tooltip on hover. |
-| `tooltipPosition` | `'top' \| 'left' \| 'right' \| 'bottom'` | `'right'` | Position of the tooltip. |
+| `tooltipPosition` | `"left" \| "right" \| "top" \| "bottom"` | `'right'` | Position of the tooltip. |
 | `tooltipPositionStyle` | `string` | `'absolute'` | Type of CSS position. |
 | `tooltipStyleClass` | `string \| undefined` | — | Style class of the tooltip. |
 | `focusOnHover` | `boolean` | `true` | Fields used when filtering the options, defaults to optionLabel. |
 | `selectOnFocus` | `boolean` | `false` | Determines if the option will be selected on focus. |
 | `autoOptionFocus` | `boolean` | `false` | Whether to focus on the first visible or selected element when the overlay panel is shown. |
 | `autofocusFilter` | `boolean` | `true` | Applies focus to the filter element when the overlay is shown. |
-| `appendTo` | `HTMLElement \| ElementRef \| TemplateRef&lt;any&gt; \| 'self' \| 'body' \| null \| undefined \| any` | `undefined` | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `motionOptions` | `MotionOptions \| undefined` | `undefined` | The motion options. |
+| `filterValue` | `string \| null \| undefined` | — | When specified, filter displays with this value. |
+| `options` | `any[] \| null \| undefined` | — | An array of objects to display as the available options. |
+| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
+| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onChange` | `EventEmitter&lt;SelectChangeEvent&gt;` | Callback to invoke when value of select changes. |
-| `onFilter` | `EventEmitter&lt;SelectFilterEvent&gt;` | Callback to invoke when data is filtered. |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when select gets focus. |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when select loses focus. |
-| `onClick` | `EventEmitter&lt;MouseEvent&gt;` | Callback to invoke when component is clicked. |
-| `onShow` | `EventEmitter&lt;AnimationEvent&gt;` | Callback to invoke when select overlay gets visible. |
-| `onHide` | `EventEmitter&lt;AnimationEvent&gt;` | Callback to invoke when select overlay gets hidden. |
-| `onClear` | `EventEmitter&lt;Event&gt;` | Callback to invoke when select clears the value. |
-| `onLazyLoad` | `EventEmitter&lt;SelectLazyLoadEvent&gt;` | Callback to invoke in lazy mode to load new data. |
-
-### SelectItem
-
-Selector: `h-selectItem`
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string \| undefined` | — | — |
-| `option` | `any` | — | — |
-| `selected` | `boolean \| undefined` | — | — |
-| `focused` | `boolean \| undefined` | — | — |
-| `label` | `string \| undefined` | — | — |
-| `disabled` | `boolean \| undefined` | — | — |
-| `visible` | `boolean \| undefined` | — | — |
-| `itemSize` | `number \| undefined` | — | — |
-| `ariaPosInset` | `string \| undefined` | — | — |
-| `ariaSetSize` | `string \| undefined` | — | — |
-| `template` | `TemplateRef&lt;any&gt; \| undefined` | — | — |
-| `checkmark` | `boolean` | — | — |
-| `index` | `number \| undefined` | — | — |
-| `scrollerOptions` | `any` | — | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClick` | `EventEmitter&lt;any&gt;` | — |
-| `onMouseEnter` | `EventEmitter&lt;any&gt;` | — |
+| `onChange` | `output&lt;SelectChangeEvent&gt;()` | Callback to invoke when value of select changes. |
+| `onFilter` | `output&lt;SelectFilterEvent&gt;()` | Callback to invoke when data is filtered. |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when select gets focus. |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when select loses focus. |
+| `onClick` | `output&lt;MouseEvent&gt;()` | Callback to invoke when component is clicked. |
+| `onShow` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when select overlay gets visible. |
+| `onHide` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when select overlay gets hidden. |
+| `onClear` | `output&lt;Event&gt;()` | Callback to invoke when select clears the value. |
+| `onLazyLoad` | `output&lt;SelectLazyLoadEvent&gt;()` | Callback to invoke in lazy mode to load new data. |
 
 ## Source
 

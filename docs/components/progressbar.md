@@ -25,7 +25,7 @@ ProgressBar is a process status indicator.
 | `styleClass` | `string \| undefined` | — | Style class of the element. |
 | `valueStyleClass` | `string \| undefined` | — | Style class of the value element. |
 | `unit` | `string` | `'%'` | Unit sign appended to the value. |
-| `mode` | `'determinate' \| 'indeterminate'` | `'determinate'` | Defines the mode of the progress |
+| `mode` | `"determinate" \| "indeterminate"` | `'determinate'` | Defines the mode of the progress |
 | `color` | `string \| undefined` | — | Color for the background of the progress. |
 
 ## Source

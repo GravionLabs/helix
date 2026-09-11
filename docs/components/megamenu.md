@@ -5,30 +5,10 @@
 ## Import
 
 ```ts
-import { MegaMenu, MegaMenuSub } from '@helix-ui/core/megamenu';
+import { MegaMenuSub, MegaMenu } from '@helix-ui/core/megamenu';
 ```
 
 ## Components
-
-### MegaMenu
-
-Selector: `h-megaMenu, h-megamenu, h-mega-menu`
-
-MegaMenu is navigation component that displays submenus together.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `orientation` | `'horizontal' \| 'vertical' \| string` | `'horizontal'` | Defines the orientation. |
-| `id` | `string \| undefined` | — | Current id state as a string. |
-| `ariaLabel` | `string \| undefined` | — | Defines a string value that labels an interactive element. |
-| `ariaLabelledBy` | `string \| undefined` | — | Identifier of the underlying input element. |
-| `breakpoint` | `string` | `'960px'` | The breakpoint to define the maximum width boundary. |
-| `scrollHeight` | `string` | `'20rem'` | Height of the viewport, a scrollbar is defined if height of list exceeds this value. |
-| `disabled` | `boolean` | `false` | When present, it specifies that the component should be disabled. |
-| `tabindex` | `number` | `0` | Index of the element in tabbing order. |
 
 ### MegaMenuSub
 
@@ -52,7 +32,7 @@ Selector: `h-megaMenuSub, h-megamenu-sub, ul[hMegaMenuSub]`
 | `submenu` | `any` | — | — |
 | `queryMatches` | `boolean` | `false` | — |
 | `mobileActive` | `boolean` | `false` | — |
-| `scrollHeight` | `string` | — | — |
+| `scrollHeight` | `string` | `undefined!` | — |
 | `tabindex` | `number` | `0` | — |
 | `root` | `boolean` | `false` | — |
 
@@ -60,12 +40,33 @@ Selector: `h-megaMenuSub, h-megamenu-sub, ul[hMegaMenuSub]`
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `itemClick` | `EventEmitter&lt;any&gt;` | — |
-| `itemMouseEnter` | `EventEmitter&lt;any&gt;` | — |
-| `menuFocus` | `EventEmitter&lt;any&gt;` | — |
-| `menuBlur` | `EventEmitter&lt;any&gt;` | — |
-| `menuKeydown` | `EventEmitter&lt;any&gt;` | — |
-| `menuMouseDown` | `EventEmitter&lt;any&gt;` | — |
+| `itemClick` | `output&lt;any&gt;()` | — |
+| `itemMouseEnter` | `output&lt;any&gt;()` | — |
+| `menuFocus` | `output&lt;any&gt;()` | — |
+| `menuBlur` | `output&lt;any&gt;()` | — |
+| `menuKeydown` | `output&lt;any&gt;()` | — |
+| `menuMouseDown` | `output&lt;any&gt;()` | — |
+
+### MegaMenu
+
+Selector: `h-megaMenu, h-megamenu, h-mega-menu`
+
+MegaMenu is navigation component that displays submenus together.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `model` | `MegaMenuItem[] \| undefined` | — | An array of menuitems. |
+| `styleClass` | `string \| undefined` | — | Class of the element. |
+| `orientation` | `string` | `'horizontal'` | Defines the orientation. |
+| `id` | `string \| undefined` | — | Current id state as a string. |
+| `ariaLabel` | `string \| undefined` | — | Defines a string value that labels an interactive element. |
+| `ariaLabelledBy` | `string \| undefined` | — | Identifier of the underlying input element. |
+| `breakpoint` | `string` | `'960px'` | The breakpoint to define the maximum width boundary. |
+| `scrollHeight` | `string` | `'20rem'` | Height of the viewport, a scrollbar is defined if height of list exceeds this value. |
+| `disabled` | `boolean` | `false` | When present, it specifies that the component should be disabled. |
+| `tabindex` | `number` | `0` | Index of the element in tabbing order. |
 
 ## Source
 

@@ -8,18 +8,19 @@
 import { BaseInput } from '@helix-ui/core/baseinput';
 ```
 
-## Components
+## Directives
 
 ### BaseInput
 
+Selector: `—`
 
 #### Inputs
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `fluid` | `unknown` | `undefined` | Spans 100% width of the container when enabled. |
-| `variant` | `'filled' \| 'outlined' \| undefined` | — | Specifies the input variant of the component. |
-| `size` | `'large' \| 'small' \| undefined` | — | Specifies the size of the component. |
+| `fluid` | `boolean \| undefined` | — | Spans 100% width of the container when enabled. |
+| `variant` | `"filled" \| "outlined" \| undefined` | — | Specifies the input variant of the component. |
+| `size` | `"large" \| "small" \| undefined` | — | Specifies the size of the component. |
 | `inputSize` | `number \| null \| undefined` | — | Specifies the visible width of the input element in characters. |
 | `pattern` | `string \| null \| undefined` | — | Specifies the value must match the pattern. |
 | `min` | `number \| null \| undefined` | — | The value must be greater than or equal to the value. |

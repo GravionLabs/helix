@@ -22,6 +22,7 @@ Card is a flexible container component.
 | --- | --- | --- | --- |
 | `header` | `string \| undefined` | — | Header of the card. |
 | `subheader` | `string \| undefined` | — | Subheader of the card. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | `null` | Inline style of the element. |
 | `styleClass` | `string \| undefined` | — | Class of the element. |
 
 ## Source

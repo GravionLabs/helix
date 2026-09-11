@@ -20,7 +20,7 @@ FloatLabel appears on top of the input field when focused.
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `variant` | `'in' \| 'over' \| 'on'` | `'over'` | Defines the positioning of the label relative to the input. |
+| `variant` | `"in" \| "over" \| "on"` | `'over'` | Defines the positioning of the label relative to the input. |
 
 ## Source
 

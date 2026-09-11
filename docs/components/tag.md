@@ -21,7 +21,7 @@ Tag component is used to categorize content.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `severity` | `'success' \| 'secondary' \| 'info' \| 'warn' \| 'danger' \| 'contrast' \| undefined \| null` | — | Severity type of the tag. |
+| `severity` | `"secondary" \| "info" \| "success" \| "warn" \| "danger" \| "contrast" \| null \| undefined` | — | Severity type of the tag. |
 | `value` | `string \| undefined` | — | Value to display inside the tag. |
 | `icon` | `string \| undefined` | — | Icon of the tag to display next to the value. |
 | `rounded` | `boolean \| undefined` | — | Whether the corners of the tag are rounded. |

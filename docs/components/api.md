@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Header, Footer, PrimeTemplate } from '@helix-ui/core/api';
+import { Header, Footer, HelixTemplate, ConfirmationService, ContextMenuService, FilterService, MessageService, OverlayService, TreeDragDropService } from '@helix-ui/core/api';
 ```
 
 ## Components
@@ -18,7 +18,7 @@ Selector: `h-header`
 
 Selector: `h-footer`
 
-### PrimeTemplate
+### HelixTemplate
 
 Selector: `[hTemplate]`
 
@@ -57,7 +57,7 @@ Message service used in messages and toast components.
 - `Lifecycle`
 - `LifecycleHooks`
 - `MegaMenuItem` — MegaMenuItem API provides the following properties.
-- `MenuItem` — MenuItem provides the following properties.
+- `MenuItem` — MenuItem provides the following properties. Note that not all of them may be utilized by the tabmenu component.
 - `MenuItemCommandEvent` — Custom command event
 - `OverlayModeType` — Represents the type of overlay mode, which can be 'modal', 'overlay', or undefined.
 - `ResponsiveOverlayDirectionType` — Represents the type of direction for a responsive overlay, which can be one of the specified values or undefined.

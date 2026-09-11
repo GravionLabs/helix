@@ -8,18 +8,19 @@
 import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
 ```
 
-## Components
+## Directives
 
 ### BaseEditableHolder
 
+Selector: `—`
 
 #### Inputs
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `required` | `unknown` | `undefined` | There must be a value (if set). |
-| `invalid` | `unknown` | `undefined` | When present, it specifies that the component should have invalid state style. |
-| `disabled` | `unknown` | `undefined` | When present, it specifies that the component should have disabled state style. |
+| `required` | `boolean \| undefined` | — | There must be a value (if set). |
+| `invalid` | `boolean \| undefined` | — | When present, it specifies that the component should have invalid state style. |
+| `disabled` | `boolean \| undefined` | — | When present, it specifies that the component should have disabled state style. |
 | `name` | `string \| undefined` | — | When present, it specifies that the name of the input. |
 
 ## Source

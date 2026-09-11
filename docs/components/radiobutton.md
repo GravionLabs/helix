@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { RadioButton } from '@helix-ui/core/radiobutton';
+import { RadioButton, RadioControlRegistry } from '@helix-ui/core/radiobutton';
 ```
 
 ## Components
@@ -28,16 +28,16 @@ RadioButton is an extension to standard radio button element with theming.
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
 | `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
 | `binary` | `boolean \| undefined` | — | Allows to select a boolean value. |
-| `variant` | `'filled' \| 'outlined' \| undefined` | — | Specifies the input variant of the component. |
-| `size` | `'large' \| 'small' \| undefined` | — | Specifies the size of the component. |
+| `variant` | `"filled" \| "outlined" \| undefined` | — | Specifies the input variant of the component. |
+| `size` | `"large" \| "small" \| undefined` | — | Specifies the size of the component. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onClick` | `EventEmitter&lt;RadioButtonClickEvent&gt;` | Callback to invoke on radio button click. |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the receives focus. |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the loses focus. |
+| `onClick` | `output&lt;RadioButtonClickEvent&gt;()` | Callback to invoke on radio button click. |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when the receives focus. |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the loses focus. |
 
 ## Services
 

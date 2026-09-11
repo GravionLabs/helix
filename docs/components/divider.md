@@ -21,9 +21,9 @@ Divider is used to separate contents.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `layout` | `'horizontal' \| 'vertical' \| undefined` | `'horizontal'` | Specifies the orientation. |
-| `type` | `'solid' \| 'dashed' \| 'dotted' \| undefined` | `'solid'` | Border style type. |
-| `align` | `'left' \| 'center' \| 'right' \| 'top' \| 'bottom' \| undefined` | — | Alignment of the content. |
+| `layout` | `"horizontal" \| "vertical" \| undefined` | `'horizontal'` | Specifies the orientation. |
+| `type` | `"solid" \| "dashed" \| "dotted" \| undefined` | `'solid'` | Border style type. |
+| `align` | `"left" \| "right" \| "top" \| "bottom" \| "center" \| undefined` | — | Alignment of the content. |
 
 ## Source
 

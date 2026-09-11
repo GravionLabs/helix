@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DynamicDialog, DynamicDialogContent } from '@helix-ui/core/dynamicdialog';
+import { DynamicDialog, DynamicDialogContent, DialogService } from '@helix-ui/core/dynamicdialog';
 ```
 
 ## Components

@@ -8,10 +8,11 @@
 import { BaseComponent } from '@helix-ui/core/basecomponent';
 ```
 
-## Components
+## Directives
 
 ### BaseComponent
 
+Selector: `—`
 
 #### Inputs
 

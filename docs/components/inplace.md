@@ -5,10 +5,18 @@
 ## Import
 
 ```ts
-import { Inplace, InplaceDisplay, InplaceContent } from '@helix-ui/core/inplace';
+import { InplaceDisplay, InplaceContent, Inplace } from '@helix-ui/core/inplace';
 ```
 
 ## Components
+
+### InplaceDisplay
+
+Selector: `h-inplacedisplay, h-inplaceDisplay`
+
+### InplaceContent
+
+Selector: `h-inplacecontent, h-inplaceContent`
 
 ### Inplace
 
@@ -32,16 +40,8 @@ Inplace provides an easy to do editing and display at the same time where clicki
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onActivate` | `EventEmitter&lt;Event&gt;` | Callback to invoke when inplace is opened. |
-| `onDeactivate` | `EventEmitter&lt;Event&gt;` | Callback to invoke when inplace is closed. |
-
-### InplaceDisplay
-
-Selector: `h-inplacedisplay, h-inplaceDisplay`
-
-### InplaceContent
-
-Selector: `h-inplacecontent, h-inplaceContent`
+| `onActivate` | `output&lt;Event \| undefined&gt;()` | Callback to invoke when inplace is opened. |
+| `onDeactivate` | `output&lt;Event \| undefined&gt;()` | Callback to invoke when inplace is closed. |
 
 ## Source
 

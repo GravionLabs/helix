@@ -47,7 +47,7 @@ PickList is used to reorder items between different lists.
 | `showTargetFilter` | `boolean` | `true` | Whether to show filter input for target list when filterBy is enabled. |
 | `metaKeySelection` | `boolean` | `false` | Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically. |
 | `dragdrop` | `boolean` | `false` | Whether to enable dragdrop based reordering. |
-| `style` | `{ [klass: string]: any } \| null \| undefined` | — | Inline style of the component. |
+| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
 | `styleClass` | `string \| undefined` | — | Style class of the component. |
 | `sourceStyle` | `any` | — | Inline style of the source list element. |
 | `targetStyle` | `any` | — | Inline style of the target list element. |
@@ -55,42 +55,43 @@ PickList is used to reorder items between different lists.
 | `showTargetControls` | `boolean` | `true` | Whether to show buttons of target list. |
 | `sourceFilterPlaceholder` | `string \| undefined` | — | Placeholder text on source filter input. |
 | `targetFilterPlaceholder` | `string \| undefined` | — | Placeholder text on target filter input. |
-| `disabled` | `boolean` | — | When present, it specifies that the component should be disabled. |
+| `disabled` | `boolean` | `undefined!` | When present, it specifies that the component should be disabled. |
 | `sourceOptionDisabled` | `string \| ((item: any) =&gt; boolean) \| undefined` | — | Name of the disabled field of a target option or function to determine disabled state. |
 | `targetOptionDisabled` | `string \| ((item: any) =&gt; boolean) \| undefined` | — | Name of the disabled field of a target option or function to determine disabled state. |
 | `ariaSourceFilterLabel` | `string \| undefined` | — | Defines a string that labels the filter input of source list. |
 | `ariaTargetFilterLabel` | `string \| undefined` | — | Defines a string that labels the filter input of target list. |
-| `filterMatchMode` | `'contains' \| 'startsWith' \| 'endsWith' \| 'equals' \| 'notEquals' \| 'in' \| 'lt' \| 'lte' \| 'gt' \| 'gte' \| string` | `'contains'` | Defines how the items are filtered. |
+| `filterMatchMode` | `string` | `'contains'` | Defines how the items are filtered. |
 | `stripedRows` | `boolean \| undefined` | — | Whether to displays rows with alternating colors. |
 | `keepSelection` | `boolean` | `false` | Keeps selection on the transfer list. |
 | `scrollHeight` | `string` | `'14rem'` | Height of the viewport, a scrollbar is defined if height of list exceeds this value. |
 | `autoOptionFocus` | `boolean` | `true` | Whether to focus on the first visible or selected element. |
 | `buttonProps` | `ButtonProps` | `{ severity: 'secondary' }` | Used to pass all properties of the ButtonProps to the Button component. |
-| `moveUpButtonProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move up button inside the component. |
-| `moveTopButtonProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move top button inside the component. |
-| `moveDownButtonProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move down button inside the component. |
-| `moveBottomButtonProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move bottom button inside the component. |
-| `moveToTargetProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move to target button inside the component. |
-| `moveAllToTargetProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move all to target button inside the component. |
-| `moveToSourceProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move to source button inside the component. |
-| `moveAllToSourceProps` | `ButtonProps` | — | Used to pass all properties of the ButtonProps to the move all to source button inside the component. |
+| `moveUpButtonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move up button inside the component. |
+| `moveTopButtonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move top button inside the component. |
+| `moveDownButtonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move down button inside the component. |
+| `moveBottomButtonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move bottom button inside the component. |
+| `moveToTargetProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move to target button inside the component. |
+| `moveAllToTargetProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move all to target button inside the component. |
+| `moveToSourceProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move to source button inside the component. |
+| `moveAllToSourceProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the move all to source button inside the component. |
+| `breakpoint` | `string` | `'960px'` | Indicates the width of the screen at which the component should change its behavior. |
 
 #### Outputs
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `onMoveToSource` | `EventEmitter&lt;PickListMoveToSourceEvent&gt;` | Callback to invoke when items are moved from target to source. |
-| `onMoveAllToSource` | `EventEmitter&lt;PickListMoveAllToSourceEvent&gt;` | Callback to invoke when all items are moved from target to source. |
-| `onMoveAllToTarget` | `EventEmitter&lt;PickListMoveAllToTargetEvent&gt;` | Callback to invoke when all items are moved from source to target. |
-| `onMoveToTarget` | `EventEmitter&lt;PickListMoveToTargetEvent&gt;` | Callback to invoke when items are moved from source to target. |
-| `onSourceReorder` | `EventEmitter&lt;PickListSourceReorderEvent&gt;` | Callback to invoke when items are reordered within source list. |
-| `onTargetReorder` | `EventEmitter&lt;PickListTargetReorderEvent&gt;` | Callback to invoke when items are reordered within target list. |
-| `onSourceSelect` | `EventEmitter&lt;PickListSourceSelectEvent&gt;` | Callback to invoke when items are selected within source list. |
-| `onTargetSelect` | `EventEmitter&lt;PickListTargetSelectEvent&gt;` | Callback to invoke when items are selected within target list. |
-| `onSourceFilter` | `EventEmitter&lt;PickListSourceFilterEvent&gt;` | Callback to invoke when the source list is filtered |
-| `onTargetFilter` | `EventEmitter&lt;PickListTargetFilterEvent&gt;` | Callback to invoke when the target list is filtered |
-| `onFocus` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the list is focused |
-| `onBlur` | `EventEmitter&lt;Event&gt;` | Callback to invoke when the list is blurred |
+| `onMoveToSource` | `output&lt;PickListMoveToSourceEvent&gt;()` | Callback to invoke when items are moved from target to source. |
+| `onMoveAllToSource` | `output&lt;PickListMoveAllToSourceEvent&gt;()` | Callback to invoke when all items are moved from target to source. |
+| `onMoveAllToTarget` | `output&lt;PickListMoveAllToTargetEvent&gt;()` | Callback to invoke when all items are moved from source to target. |
+| `onMoveToTarget` | `output&lt;PickListMoveToTargetEvent&gt;()` | Callback to invoke when items are moved from source to target. |
+| `onSourceReorder` | `output&lt;PickListSourceReorderEvent&gt;()` | Callback to invoke when items are reordered within source list. |
+| `onTargetReorder` | `output&lt;PickListTargetReorderEvent&gt;()` | Callback to invoke when items are reordered within target list. |
+| `onSourceSelect` | `output&lt;PickListSourceSelectEvent&gt;()` | Callback to invoke when items are selected within source list. |
+| `onTargetSelect` | `output&lt;PickListTargetSelectEvent&gt;()` | Callback to invoke when items are selected within target list. |
+| `onSourceFilter` | `output&lt;PickListSourceFilterEvent&gt;()` | Callback to invoke when the source list is filtered |
+| `onTargetFilter` | `output&lt;PickListTargetFilterEvent&gt;()` | Callback to invoke when the target list is filtered |
+| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when the list is focused |
+| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the list is blurred |
 
 ## Source
 
