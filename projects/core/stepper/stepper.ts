@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 
 import { MotionOptions } from '@primeuix/motion';
-import { find, findIndexInList, uuid } from '@primeuix/utils';
+import { find, findIndexInList, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformServer } from '@angular/common';
 import { afterNextRender, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, effect } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { findSingle } from '@primeuix/utils';
+import { findSingle } from '@gravionlabs/helix-core/uix/utils';
 import { Header, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';

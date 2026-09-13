@@ -19,7 +19,7 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@primeuix/utils';
+import { find, findIndexInList, isEmpty, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { FilterService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

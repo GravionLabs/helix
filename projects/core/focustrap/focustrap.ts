@@ -1,6 +1,6 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, Directive, inject, NgModule, PLATFORM_ID, SimpleChanges, input } from '@angular/core';
-import { createElement, focus, getFirstFocusableElement, getLastFocusableElement } from '@primeuix/utils';
+import { createElement, focus, getFirstFocusableElement, getLastFocusableElement } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 
 /**

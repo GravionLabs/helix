@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, contentChild, effect, ElementRef, forwardRef, inject, InjectionToken, model, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
-import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@primeuix/utils';
+import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

@@ -33,3 +33,23 @@ community version. Record kept for future diffing against upstream.
 git clone --depth 1 --branch 21.1.9 https://github.com/primefaces/primeng
 diff -r primeng/packages/primeng/src projects/core
 ```
+
+# Vendored source: primeuix
+
+The `@primeuix/*` packages PrimeNG 21.1.9 depends on for styling and theming
+(`utils`, `motion`, `styled`, `styles`, `themes`) are also vendored in, one at
+a time, as they no longer publish MIT versions past the pins below (epic #421).
+Each is copied from `github.com/primefaces/primeuix` (MIT) into a new
+`uix/<pkg>` (or `themes`) secondary entry point of this library, keeping
+upstream's internal file layout for future diffing.
+
+| Package | Pinned version | Upstream commit | Notes |
+| --- | --- | --- | --- |
+| `utils` | 0.7.2 | [`main`](https://github.com/primefaces/primeuix) @ 0.6.4, hand-ported to 0.7.2 | `isCssSupported` (new in 0.7.x), `toElement` (ref-unwrapping superset), `setAttribute` (style-object handling) manually ported on top of the 0.6.4 source — see doc comments on the touched files under `uix/utils/dom/methods/`. |
+
+## Diffing against upstream primeuix
+
+```sh
+git clone --depth 1 --branch main https://github.com/primefaces/primeuix
+diff -r primeuix/packages/utils/src projects/core/uix/utils
+```

@@ -20,7 +20,7 @@ import {
     isPrintableCharacter,
     resolve,
     uuid
-} from '@primeuix/utils';
+} from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

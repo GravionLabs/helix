@@ -1,7 +1,7 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, OnDestroy, ViewEncapsulation, input, viewChild, effect, untracked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { find } from '@primeuix/utils';
+import { find } from '@gravionlabs/helix-core/uix/utils';
 import { SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

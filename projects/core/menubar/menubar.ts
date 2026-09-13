@@ -1,7 +1,7 @@
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, ElementRef, Inject, inject, Injectable, InjectionToken, NgModule, numberAttribute, PLATFORM_ID, Renderer2, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@primeuix/utils';
+import { findLastIndex, findSingle, focus, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, resolve, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

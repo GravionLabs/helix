@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ComponentRef, inject, InjectionToken, NgModule, Type, ViewEncapsulation, viewChild } from '@angular/core';
-import { uuid } from '@primeuix/utils';
+import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

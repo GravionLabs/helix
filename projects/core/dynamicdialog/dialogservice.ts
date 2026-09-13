@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ApplicationRef, ComponentRef, EmbeddedViewRef, Inject, Injectable, Injector, Type, createComponent } from '@angular/core';
-import { appendChild } from '@primeuix/utils';
+import { appendChild } from '@gravionlabs/helix-core/uix/utils';
 import { DynamicDialog } from './dynamicdialog';
 import { DynamicDialogConfig } from './dynamicdialog-config';
 import { DynamicDialogInjector } from './dynamicdialog-injector';

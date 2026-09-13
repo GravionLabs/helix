@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { uuid } from '@primeuix/utils';
+import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({

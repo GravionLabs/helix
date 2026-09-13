@@ -17,7 +17,7 @@ import {
   output
 } from '@angular/core';
 import { MotionOptions } from '@primeuix/motion';
-import { findSingle, focus, getAttribute, uuid } from '@primeuix/utils';
+import { findSingle, focus, getAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

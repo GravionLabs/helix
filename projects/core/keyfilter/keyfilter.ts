@@ -1,7 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, Directive, effect, ElementRef, forwardRef, Inject, NgModule, PLATFORM_ID, Provider, input, output } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { getBrowser, isAndroid } from '@primeuix/utils';
+import { getBrowser, isAndroid } from '@gravionlabs/helix-core/uix/utils';
 
 export type KeyFilterPattern = 'pint' | 'int' | 'pnum' | 'money' | 'num' | 'hex' | 'email' | 'alpha' | 'alphanum';
 

@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, effect, ElementRef, inject, InjectionToken, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, input } from '@angular/core';
-import { blockBodyScroll, unblockBodyScroll } from '@primeuix/utils';
+import { blockBodyScroll, unblockBodyScroll } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

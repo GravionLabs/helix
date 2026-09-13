@@ -27,7 +27,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
-import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@primeuix/utils';
+import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Directive, effect, ElementRef, forwardRef, inject, InjectionToken, input, Input, NgModule, NgZone, numberAttribute, Pipe, PipeTransform, signal, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
-import { absolutePosition, addClass, hasClass, isTouchDevice, removeClass } from '@primeuix/utils';
+import { absolutePosition, addClass, hasClass, isTouchDevice, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { OverlayOptions, OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

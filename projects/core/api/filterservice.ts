@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { equals, removeAccents, resolveFieldData } from '@primeuix/utils';
+import { equals, removeAccents, resolveFieldData } from '@gravionlabs/helix-core/uix/utils';
 
 @Injectable({ providedIn: 'root' })
 export class FilterService {
