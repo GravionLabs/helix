@@ -16,7 +16,7 @@ import {
   ViewEncapsulation,
   output
 } from '@angular/core';
-import { MotionOptions } from '@primeuix/motion';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { findSingle, focus, getAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

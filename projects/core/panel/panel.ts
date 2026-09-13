@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, Input, NgModule,  TemplateRef, ViewEncapsulation, output, contentChild, viewChild, contentChildren, model } from '@angular/core';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, Footer, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

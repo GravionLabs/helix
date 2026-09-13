@@ -29,7 +29,7 @@ const INFRA_DESCRIPTIONS = {
   dragdrop: "Drag-and-drop directives (`hDraggable`, `hDroppable`).",
   dynamicdialog: 'Service-based dialogs: open any component in a dialog at runtime via `DialogService`.',
   icons: 'Built-in SVG icon components used internally by Helix components.',
-  motion: 'Enter/leave animation directive built on `@primeuix/motion`.',
+  motion: 'Enter/leave animation directive built on the vendored `@gravionlabs/helix-core/uix/motion`.',
   overlay: 'Generic overlay container with configurable positioning, transitions, and pass-through.',
   passthrough: "Pass-through (`pt`) infrastructure: merge and provide attribute maps for component internals.",
   'ts-helpers': 'Tiny TypeScript runtime helpers shared by the library.',

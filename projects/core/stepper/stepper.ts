@@ -20,7 +20,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { MotionOptions } from '@primeuix/motion';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { find, findIndexInList, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
