@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as card_style } from '@primeuix/styles/card';
+import { style as card_style } from './card.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

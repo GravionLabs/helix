@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as stepper_style } from '@primeuix/styles/stepper';
+import { style as stepper_style } from './stepper.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

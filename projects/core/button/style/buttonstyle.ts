@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/button';
+import { style } from './button.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const unwrap = (value: any) => (typeof value === 'function' ? value() : value);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as floatlabel_style } from '@primeuix/styles/floatlabel';
+import { style as floatlabel_style } from './floatlabel.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

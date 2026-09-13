@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/chip';
+import { style } from './chip.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const inlineStyles = {

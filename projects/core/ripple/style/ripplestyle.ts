@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as ripple_style } from '@primeuix/styles/ripple';
+import { style as ripple_style } from './ripple.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

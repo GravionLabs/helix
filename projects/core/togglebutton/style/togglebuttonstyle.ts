@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as togglebutton_style } from '@primeuix/styles/togglebutton';
+import { style as togglebutton_style } from './togglebutton.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/divider';
+import { style } from './divider.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 /* Position */

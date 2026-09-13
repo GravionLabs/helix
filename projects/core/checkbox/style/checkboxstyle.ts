@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as checkbox_style } from '@primeuix/styles/checkbox';
+import { style as checkbox_style } from './checkbox.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

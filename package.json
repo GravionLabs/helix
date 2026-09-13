@@ -36,7 +36,6 @@
     "@angular/platform-browser": "^22.1.2",
     "@angular/router": "^22.1.2",
     "@ngrx/signals": "^21.0.1",
-    "@primeuix/styles": "2.0.3",
     "@primeuix/themes": "2.0.3",
     "@tailwindcss/postcss": "^4.3.3",
     "chart.js": "^4.4.2",
