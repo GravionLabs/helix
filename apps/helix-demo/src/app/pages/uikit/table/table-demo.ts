@@ -7,22 +7,22 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@helix-ui/core/api';
-import { ButtonModule } from '@helix-ui/core/button';
-import { IconFieldModule } from '@helix-ui/core/iconfield';
-import { InputIconModule } from '@helix-ui/core/inputicon';
-import { InputTextModule } from '@helix-ui/core/inputtext';
-import { MultiSelectModule } from '@helix-ui/core/multiselect';
-import { ProgressBarModule } from '@helix-ui/core/progressbar';
-import { RatingModule } from '@helix-ui/core/rating';
-import { RippleModule } from '@helix-ui/core/ripple';
-import { SelectModule } from '@helix-ui/core/select';
-import { SliderModule } from '@helix-ui/core/slider';
-import { type Table, TableModule } from '@helix-ui/core/table';
-import { TagModule } from '@helix-ui/core/tag';
-import { ToastModule } from '@helix-ui/core/toast';
-import { ToggleButtonModule } from '@helix-ui/core/togglebutton';
-import { ObjectUtils } from '@helix-ui/core/utils';
+import { ConfirmationService, MessageService } from '@gravionlabs/helix-core/api';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { IconFieldModule } from '@gravionlabs/helix-core/iconfield';
+import { InputIconModule } from '@gravionlabs/helix-core/inputicon';
+import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
+import { MultiSelectModule } from '@gravionlabs/helix-core/multiselect';
+import { ProgressBarModule } from '@gravionlabs/helix-core/progressbar';
+import { RatingModule } from '@gravionlabs/helix-core/rating';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
+import { SelectModule } from '@gravionlabs/helix-core/select';
+import { SliderModule } from '@gravionlabs/helix-core/slider';
+import { type Table, TableModule } from '@gravionlabs/helix-core/table';
+import { TagModule } from '@gravionlabs/helix-core/tag';
+import { ToastModule } from '@gravionlabs/helix-core/toast';
+import { ToggleButtonModule } from '@gravionlabs/helix-core/togglebutton';
+import { ObjectUtils } from '@gravionlabs/helix-core/utils';
 import {
   type Customer,
   CustomerService,

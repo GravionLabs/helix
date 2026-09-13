@@ -4,10 +4,10 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { By } from '@angular/platform-browser';
 
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '@helix-ui/core/api';
-import { AutoFocus } from '@helix-ui/core/autofocus';
-import { provideHelix } from '@helix-ui/core/config';
-import { ToggleSwitchChangeEvent } from '@helix-ui/core/types/toggleswitch';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
+import { provideHelix } from '@gravionlabs/helix-core/config';
+import { ToggleSwitchChangeEvent } from '@gravionlabs/helix-core/types/toggleswitch';
 import { ToggleSwitch, ToggleSwitchModule } from './toggleswitch';
 
 describe('ToggleSwitch', () => {

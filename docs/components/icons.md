@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/icons';
+import '@gravionlabs/helix-core/icons';
 ```
 
 ## Source

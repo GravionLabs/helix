@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputText } from '@helix-ui/core/inputtext';
+import { InputText } from '@gravionlabs/helix-core/inputtext';
 ```
 
 ## Directives

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { FirstErrorPipe } from '@helix-ui/core/firsterror';
+import { FirstErrorPipe } from '@gravionlabs/helix-core/firsterror';
 ```
 
 ## Components

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as selectbutton_style } from '@primeuix/styles/selectbutton';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
     ${selectbutton_style}

@@ -1,15 +1,15 @@
 import { isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, computed, Directive, effect, ElementRef, inject, InjectionToken, input, NgModule, NgZone, numberAttribute, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 import { appendChild, createElement, fadeIn, findSingle, getOuterHeight, getOuterWidth, getViewport, getWindowScrollLeft, getWindowScrollTop, hasClass, removeChild, uuid } from '@primeuix/utils';
-import { TooltipOptions } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BindModule } from '@helix-ui/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
-import { Nullable } from '@helix-ui/core/ts-helpers';
-import { TooltipPassThroughOptions } from '@helix-ui/core/types/tooltip';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { TooltipOptions } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BindModule } from '@gravionlabs/helix-core/bind';
+import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix-core/dom';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
+import { TooltipPassThroughOptions } from '@gravionlabs/helix-core/types/tooltip';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { TooltipStyle } from './style/tooltipstyle';
-import type { TooltipPassThrough } from '@helix-ui/core/types/tooltip';
+import type { TooltipPassThrough } from '@gravionlabs/helix-core/types/tooltip';
 
 const TOOLTIP_INSTANCE = new InjectionToken<Tooltip>('TOOLTIP_INSTANCE');
 

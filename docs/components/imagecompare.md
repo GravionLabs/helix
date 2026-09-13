@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ImageCompare } from '@helix-ui/core/imagecompare';
+import { ImageCompare } from '@gravionlabs/helix-core/imagecompare';
 ```
 
 ## Components

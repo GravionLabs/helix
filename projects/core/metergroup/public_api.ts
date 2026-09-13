@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/metergroup';
+export * from '@gravionlabs/helix-core/types/metergroup';
 export * from './metergroup';
 export * from './style/metergroupstyle';

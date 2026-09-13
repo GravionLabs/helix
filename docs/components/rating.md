@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Rating } from '@helix-ui/core/rating';
+import { Rating } from '@gravionlabs/helix-core/rating';
 ```
 
 ## Components

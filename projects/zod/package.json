@@ -1,6 +1,19 @@
 {
-  "name": "@helix-ui/zod",
+  "name": "@gravionlabs/helix-zod",
   "version": "0.2.0",
+  "description": "Helix Zod v4 adapter for Angular — reactive-forms validator bridge and dynamic forms from annotated Zod schemas.",
+  "keywords": [
+    "helix",
+    "angular",
+    "zod",
+    "forms",
+    "validation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/zod"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -8,8 +21,8 @@
     "@angular/common": ">=22",
     "@angular/core": ">=22",
     "@angular/forms": ">=22",
-    "@helix-ui/core": ">=22",
-    "@helix-ui/shell": ">=22",
+    "@gravionlabs/helix-core": ">=22",
+    "@gravionlabs/helix-shell": ">=22",
     "zod": "^4.0.0"
   },
   "dependencies": {

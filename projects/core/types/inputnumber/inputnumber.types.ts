@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
-import type { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
+import type { InputTextPassThrough } from '@gravionlabs/helix-core/types/inputtext';
 
 /**
  * Custom pass-through(pt) options.

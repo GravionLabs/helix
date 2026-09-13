@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Scroller } from '@helix-ui/core/scroller';
+import { Scroller } from '@gravionlabs/helix-core/scroller';
 ```
 
 ## Components

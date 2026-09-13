@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { KeyFilter } from '@helix-ui/core/keyfilter';
+import { KeyFilter } from '@gravionlabs/helix-core/keyfilter';
 ```
 
 ## Directives

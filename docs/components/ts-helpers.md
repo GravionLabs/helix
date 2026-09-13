@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/ts-helpers';
+import '@gravionlabs/helix-core/ts-helpers';
 ```
 
 ## Interfaces & Types

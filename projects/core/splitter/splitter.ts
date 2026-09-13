@@ -1,13 +1,13 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, contentChild, effect, ElementRef, forwardRef, inject, InjectionToken, model, NgModule, numberAttribute, ViewEncapsulation, input, output, contentChildren } from '@angular/core';
 import { addClass, getHeight, getOuterHeight, getOuterWidth, getWidth, hasClass, isRTL, removeClass } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
-import type { SplitterResizeEndEvent, SplitterResizeStartEvent } from '@helix-ui/core/types/splitter';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import type { SplitterResizeEndEvent, SplitterResizeStartEvent } from '@gravionlabs/helix-core/types/splitter';
 import { SplitterStyle } from './style/splitterstyle';
-import { SplitterPassThrough } from '@helix-ui/core/types/splitter';
+import { SplitterPassThrough } from '@gravionlabs/helix-core/types/splitter';
 
 const SPLITTER_INSTANCE = new InjectionToken<Splitter>('SPLITTER_INSTANCE');
 

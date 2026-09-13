@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnDestroy, type OnInit } from '@angular/core';
-import { AvatarModule } from '@helix-ui/core/avatar';
-import { AvatarGroupModule } from '@helix-ui/core/avatargroup';
-import { BadgeModule } from '@helix-ui/core/badge';
-import { ButtonModule } from '@helix-ui/core/button';
-import { ChipModule } from '@helix-ui/core/chip';
-import { OverlayBadgeModule } from '@helix-ui/core/overlaybadge';
-import { ProgressBarModule } from '@helix-ui/core/progressbar';
-import { ScrollPanelModule } from '@helix-ui/core/scrollpanel';
-import { ScrollTopModule } from '@helix-ui/core/scrolltop';
-import { SkeletonModule } from '@helix-ui/core/skeleton';
-import { TagModule } from '@helix-ui/core/tag';
+import { AvatarModule } from '@gravionlabs/helix-core/avatar';
+import { AvatarGroupModule } from '@gravionlabs/helix-core/avatargroup';
+import { BadgeModule } from '@gravionlabs/helix-core/badge';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { ChipModule } from '@gravionlabs/helix-core/chip';
+import { OverlayBadgeModule } from '@gravionlabs/helix-core/overlaybadge';
+import { ProgressBarModule } from '@gravionlabs/helix-core/progressbar';
+import { ScrollPanelModule } from '@gravionlabs/helix-core/scrollpanel';
+import { ScrollTopModule } from '@gravionlabs/helix-core/scrolltop';
+import { SkeletonModule } from '@gravionlabs/helix-core/skeleton';
+import { TagModule } from '@gravionlabs/helix-core/tag';
 
 @Component({
   selector: 'app-misc-demo',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { ButtonModule } from '@helix-ui/core/button';
-import { RippleModule } from '@helix-ui/core/ripple';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
 
 @Component({
   selector: 'helix-hero-widget',

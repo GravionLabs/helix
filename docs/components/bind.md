@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Bind } from '@helix-ui/core/bind';
+import { Bind } from '@gravionlabs/helix-core/bind';
 ```
 
 ## Directives

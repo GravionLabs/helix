@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Overlay } from '@helix-ui/core/overlay';
+import { Overlay } from '@gravionlabs/helix-core/overlay';
 ```
 
 ## Components

@@ -1,10 +1,10 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
-import { ScrollerOptions } from '@helix-ui/core/api';
-import type { ChipPassThrough } from '@helix-ui/core/types/chip';
-import type { InputTextPassThrough } from '@helix-ui/core/types/inputtext';
-import type { OverlayPassThrough } from '@helix-ui/core/types/overlay';
-import type { VirtualScrollerPassThrough } from '@helix-ui/core/types/scroller';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
+import { ScrollerOptions } from '@gravionlabs/helix-core/api';
+import type { ChipPassThrough } from '@gravionlabs/helix-core/types/chip';
+import type { InputTextPassThrough } from '@gravionlabs/helix-core/types/inputtext';
+import type { OverlayPassThrough } from '@gravionlabs/helix-core/types/overlay';
+import type { VirtualScrollerPassThrough } from '@gravionlabs/helix-core/types/scroller';
 
 /**
  * Custom pass-through(pt) options.

@@ -1,10 +1,10 @@
 import { HttpEvent } from '@angular/common/http';
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
-import type { BadgePassThrough } from '@helix-ui/core/types/badge';
-import type { ButtonPassThrough } from '@helix-ui/core/types/button';
-import type { MessagePassThrough } from '@helix-ui/core/types/message';
-import type { ProgressBarPassThrough } from '@helix-ui/core/types/progressbar';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
+import type { BadgePassThrough } from '@gravionlabs/helix-core/types/badge';
+import type { ButtonPassThrough } from '@gravionlabs/helix-core/types/button';
+import type { MessagePassThrough } from '@gravionlabs/helix-core/types/message';
+import type { ProgressBarPassThrough } from '@gravionlabs/helix-core/types/progressbar';
 
 /**
  * Custom pass-through(pt) options.

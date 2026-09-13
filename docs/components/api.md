@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Header, Footer, HelixTemplate, ConfirmationService, ContextMenuService, FilterService, MessageService, OverlayService, TreeDragDropService } from '@helix-ui/core/api';
+import { Header, Footer, HelixTemplate, ConfirmationService, ContextMenuService, FilterService, MessageService, OverlayService, TreeDragDropService } from '@gravionlabs/helix-core/api';
 ```
 
 ## Components

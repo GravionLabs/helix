@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Splitter } from '@helix-ui/core/splitter';
+import { Splitter } from '@gravionlabs/helix-core/splitter';
 ```
 
 ## Components

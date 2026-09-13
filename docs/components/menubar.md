@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MenubarSub, Menubar, MenubarService } from '@helix-ui/core/menubar';
+import { MenubarSub, Menubar, MenubarService } from '@gravionlabs/helix-core/menubar';
 ```
 
 ## Components

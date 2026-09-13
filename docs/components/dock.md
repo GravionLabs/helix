@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Dock } from '@helix-ui/core/dock';
+import { Dock } from '@gravionlabs/helix-core/dock';
 ```
 
 ## Components

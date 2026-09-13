@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Skeleton } from '@helix-ui/core/skeleton';
+import { Skeleton } from '@gravionlabs/helix-core/skeleton';
 ```
 
 ## Components

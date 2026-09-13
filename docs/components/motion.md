@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Motion, MotionDirective } from '@helix-ui/core/motion';
+import { Motion, MotionDirective } from '@gravionlabs/helix-core/motion';
 ```
 
 ## Components

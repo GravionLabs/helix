@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
-import type { Confirmation, PassThrough, PassThroughOption } from '@helix-ui/core/api';
-import { DialogPassThrough } from '@helix-ui/core/types/dialog';
-import type { ButtonPassThrough } from '@helix-ui/core/types/button';
+import type { Confirmation, PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
+import { DialogPassThrough } from '@gravionlabs/helix-core/types/dialog';
+import type { ButtonPassThrough } from '@gravionlabs/helix-core/types/button';
 
 /**
  * Custom pass-through(pt) options.

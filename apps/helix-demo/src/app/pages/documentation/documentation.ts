@@ -14,7 +14,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         21.1.9 rebranded with <i>h-</i> selectors, plus an application shell, form utilities, and
         AG Grid helpers built on top of it.
       </p>
-      <pre class="app-code"><code>npm install &#64;helix-ui/core</code></pre>
+      <pre class="app-code"><code>npm install &#64;gravionlabs/helix-core</code></pre>
       <p class="text-lg mb-2">
         This demo app (<i>apps/helix-demo</i>) is a monorepo workspace app used to develop and
         showcase the libraries below. To run it locally, clone the repo and use pnpm:
@@ -25,21 +25,21 @@ pnpm start</code></pre>
       <div class="font-semibold text-xl mb-2">Packages</div>
       <ul class="leading-normal list-disc pl-8 text-lg mb-2">
         <li>
-          <span class="text-primary font-medium">&#64;helix-ui/core</span>: Base component
+          <span class="text-primary font-medium">&#64;gravionlabs/helix-core</span>: Base component
           library — the vendored PrimeNG fork, one secondary entry point per component
-          (<i>&#64;helix-ui/core/button</i>).
+          (<i>&#64;gravionlabs/helix-core/button</i>).
         </li>
         <li>
-          <span class="text-primary font-medium">&#64;helix-ui/shell</span>: Application shell —
+          <span class="text-primary font-medium">&#64;gravionlabs/helix-shell</span>: Application shell —
           layout (topbar, nav rail, footer), auth pages, landing widgets, and the layout signal
           store.
         </li>
         <li>
-          <span class="text-primary font-medium">&#64;helix-ui/zod</span>: Zod v4 adapter —
+          <span class="text-primary font-medium">&#64;gravionlabs/helix-zod</span>: Zod v4 adapter —
           reactive-forms validator bridge and dynamic forms from annotated Zod schemas.
         </li>
         <li>
-          <span class="text-primary font-medium">&#64;helix-ui/ag-grid</span>: AG Grid helpers —
+          <span class="text-primary font-medium">&#64;gravionlabs/helix-ag-grid</span>: AG Grid helpers —
           value formatters, number parsers, and cell styles.
         </li>
       </ul>
@@ -76,7 +76,7 @@ pnpm start</code></pre>
       <p class="text-lg mb-2">
         The layout state (dark mode, theme preset, menu mode) is managed by
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base">LayoutStore</span
-        >, an NgRx Signal Store exported from <i>&#64;helix-ui/shell</i>.
+        >, an NgRx Signal Store exported from <i>&#64;gravionlabs/helix-shell</i>.
       </p>
 
       <div class="font-semibold text-xl mb-2">Tailwind CSS</div>
@@ -88,7 +88,7 @@ pnpm start</code></pre>
       <div class="font-semibold text-xl mb-2">More docs</div>
       <p class="text-lg mb-2">
         Full API references live in the repository under <i>docs/</i> — one page per
-        <i>&#64;helix-ui/core</i> module, plus the <i>&#64;helix-ui/shell</i> API reference and
+        <i>&#64;gravionlabs/helix-core</i> module, plus the <i>&#64;gravionlabs/helix-shell</i> API reference and
         project roadmap.
       </p>
     </div>

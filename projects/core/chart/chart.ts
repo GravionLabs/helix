@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, effect, ElementRef, inject, InjectionToken, NgModule, NgZone, untracked, ViewEncapsulation, input, output } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 import { ChartStyle } from './style/chartstyle';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import type { ChartPassThrough } from '@helix-ui/core/types/chart';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import type { ChartPassThrough } from '@gravionlabs/helix-core/types/chart';
 
 const CHART_INSTANCE = new InjectionToken<UIChart>('CHART_INSTANCE');
 

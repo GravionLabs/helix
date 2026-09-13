@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, SimpleChanges, TemplateRef, ViewEncapsulation, input, output, contentChild, model } from '@angular/core';
 import { resolveFieldData } from '@primeuix/utils';
-import { BlockableUI, FilterService, Footer, Header, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { SpinnerIcon } from '@helix-ui/core/icons';
-import { PaginatorModule } from '@helix-ui/core/paginator';
-import { Nullable } from '@helix-ui/core/ts-helpers';
+import { BlockableUI, FilterService, Footer, Header, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { SpinnerIcon } from '@gravionlabs/helix-core/icons';
+import { PaginatorModule } from '@gravionlabs/helix-core/paginator';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
 import {
     DataViewGridTemplateContext,
     DataViewLayoutChangeEvent,
@@ -19,7 +19,7 @@ import {
     DataViewPaginatorState,
     DataViewPassThrough,
     DataViewSortEvent
-} from '@helix-ui/core/types/dataview';
+} from '@gravionlabs/helix-core/types/dataview';
 import { Subscription } from 'rxjs';
 import { DataViewStyle } from './style/dataviewstyle';
 

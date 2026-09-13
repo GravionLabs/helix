@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Editor } from '@helix-ui/core/editor';
+import { Editor } from '@gravionlabs/helix-core/editor';
 ```
 
 ## Components

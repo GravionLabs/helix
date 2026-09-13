@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, output, contentChild, contentChildren, EventEmitter } from '@angular/core';
 import { findSingle, setAttribute, uuid } from '@primeuix/utils';
-import { Confirmation, ConfirmationService, ConfirmEventType, Footer, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { Button } from '@helix-ui/core/button';
-import { Dialog } from '@helix-ui/core/dialog';
-import { Nullable } from '@helix-ui/core/ts-helpers';
-import { ConfirmDialogHeadlessTemplateContext, ConfirmDialogMessageTemplateContext, ConfirmDialogPassThrough } from '@helix-ui/core/types/confirmdialog';
+import { Confirmation, ConfirmationService, ConfirmEventType, Footer, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { Button } from '@gravionlabs/helix-core/button';
+import { Dialog } from '@gravionlabs/helix-core/dialog';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
+import { ConfirmDialogHeadlessTemplateContext, ConfirmDialogMessageTemplateContext, ConfirmDialogPassThrough } from '@gravionlabs/helix-core/types/confirmdialog';
 import { Subscription } from 'rxjs';
 import { ConfirmDialogStyle } from './style/confirmdialogstyle';
 

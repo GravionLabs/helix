@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OrderList } from '@helix-ui/core/orderlist';
+import { OrderList } from '@gravionlabs/helix-core/orderlist';
 ```
 
 ## Components

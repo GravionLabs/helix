@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as password_style } from '@primeuix/styles/password';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
 ${password_style}

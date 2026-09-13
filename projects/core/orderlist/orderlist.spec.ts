@@ -5,10 +5,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { SharedModule } from '@helix-ui/core/api';
-import { ButtonModule } from '@helix-ui/core/button';
-import { ListboxModule } from '@helix-ui/core/listbox';
-import { RippleModule } from '@helix-ui/core/ripple';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { ListboxModule } from '@gravionlabs/helix-core/listbox';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { OrderList } from './orderlist';
 
 interface Product {

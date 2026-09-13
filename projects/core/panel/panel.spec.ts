@@ -2,9 +2,9 @@ import { Component, DebugElement, provideZonelessChangeDetection } from '@angula
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { ButtonModule } from '@helix-ui/core/button';
-import { MinusIcon, PlusIcon } from '@helix-ui/core/icons';
-import { PanelAfterToggleEvent, PanelBeforeToggleEvent } from '@helix-ui/core/types/panel';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { MinusIcon, PlusIcon } from '@gravionlabs/helix-core/icons';
+import { PanelAfterToggleEvent, PanelBeforeToggleEvent } from '@gravionlabs/helix-core/types/panel';
 import { Panel } from './panel';
 
 @Component({

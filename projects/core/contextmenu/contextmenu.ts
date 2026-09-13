@@ -21,17 +21,17 @@ import {
     resolve,
     uuid
 } from '@primeuix/utils';
-import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BadgeModule } from '@helix-ui/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BindModule } from '@helix-ui/core/bind';
-import { AngleRightIcon } from '@helix-ui/core/icons';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Ripple } from '@helix-ui/core/ripple';
-import { TooltipModule } from '@helix-ui/core/tooltip';
-import { VoidListener } from '@helix-ui/core/ts-helpers';
-import { ContextMenuItemTemplateContext, ContextMenuPassThrough, ContextMenuSubmenuIconTemplateContext } from '@helix-ui/core/types/contextmenu';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BadgeModule } from '@gravionlabs/helix-core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BindModule } from '@gravionlabs/helix-core/bind';
+import { AngleRightIcon } from '@gravionlabs/helix-core/icons';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { TooltipModule } from '@gravionlabs/helix-core/tooltip';
+import { VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import { ContextMenuItemTemplateContext, ContextMenuPassThrough, ContextMenuSubmenuIconTemplateContext } from '@gravionlabs/helix-core/types/contextmenu';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { ContextMenuStyle } from './style/contextmenustyle';
 
 const CONTEXTMENU_INSTANCE = new InjectionToken<ContextMenu>('CONTEXTMENU_INSTANCE');

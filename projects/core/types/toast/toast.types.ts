@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import type { MotionOptions } from '@primeuix/motion';
-import type { PassThrough, PassThroughOption, ToastMessageOptions } from '@helix-ui/core/api';
+import type { PassThrough, PassThroughOption, ToastMessageOptions } from '@gravionlabs/helix-core/api';
 
 /**
  * Custom pass-through(pt) options for Toast.

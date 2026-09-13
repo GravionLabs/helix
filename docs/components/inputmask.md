@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputMaskDirective, InputMask } from '@helix-ui/core/inputmask';
+import { InputMaskDirective, InputMask } from '@gravionlabs/helix-core/inputmask';
 ```
 
 ## Components

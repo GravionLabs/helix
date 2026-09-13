@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { CascadeSelectSub, CascadeSelect } from '@helix-ui/core/cascadeselect';
+import { CascadeSelectSub, CascadeSelect } from '@gravionlabs/helix-core/cascadeselect';
 ```
 
 ## Components

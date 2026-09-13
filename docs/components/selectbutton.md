@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SelectButton } from '@helix-ui/core/selectbutton';
+import { SelectButton } from '@gravionlabs/helix-core/selectbutton';
 ```
 
 ## Components

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ColorPicker } from '@helix-ui/core/colorpicker';
+import { ColorPicker } from '@gravionlabs/helix-core/colorpicker';
 ```
 
 ## Components

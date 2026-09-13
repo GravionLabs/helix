@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as inputgroup_style } from '@primeuix/styles/inputgroup';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
     ${inputgroup_style}

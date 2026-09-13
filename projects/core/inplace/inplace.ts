@@ -1,12 +1,12 @@
 
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input, output, contentChild, contentChildren, model } from '@angular/core';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { ButtonModule } from '@helix-ui/core/button';
-import { TimesIcon } from '@helix-ui/core/icons';
-import { Ripple } from '@helix-ui/core/ripple';
-import { InplaceContentTemplateContext, InplacePassThrough } from '@helix-ui/core/types/inplace';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { TimesIcon } from '@gravionlabs/helix-core/icons';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { InplaceContentTemplateContext, InplacePassThrough } from '@gravionlabs/helix-core/types/inplace';
 import { InplaceStyle } from './style/inplacestyle';
 
 const INPLACE_INSTANCE = new InjectionToken<Inplace>('INPLACE_INSTANCE');

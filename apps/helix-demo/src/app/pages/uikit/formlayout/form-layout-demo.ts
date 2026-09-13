@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from '@helix-ui/core/button';
-import { FluidModule } from '@helix-ui/core/fluid';
-import { InputTextModule } from '@helix-ui/core/inputtext';
-import { SelectModule } from '@helix-ui/core/select';
-import { TextareaModule } from '@helix-ui/core/textarea';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { FluidModule } from '@gravionlabs/helix-core/fluid';
+import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
+import { SelectModule } from '@gravionlabs/helix-core/select';
+import { TextareaModule } from '@gravionlabs/helix-core/textarea';
 
 @Component({
   selector: 'app-formlayout-demo',

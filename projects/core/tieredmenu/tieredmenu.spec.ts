@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem } from '@helix-ui/core/api';
-import { provideHelix } from '@helix-ui/core/config';
-import { Tooltip } from '@helix-ui/core/tooltip';
+import { MenuItem } from '@gravionlabs/helix-core/api';
+import { provideHelix } from '@gravionlabs/helix-core/config';
+import { Tooltip } from '@gravionlabs/helix-core/tooltip';
 import { TieredMenu } from './tieredmenu';
 
 @Component({

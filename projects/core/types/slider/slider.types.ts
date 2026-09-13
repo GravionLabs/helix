@@ -1,4 +1,4 @@
-import { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
 
 /**
  * Custom passthrough(pt) options.

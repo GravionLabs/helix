@@ -1,4 +1,4 @@
-# `@helix-ui/shell` — Component API Reference
+# `@gravionlabs/helix-shell` — Component API Reference
 
 > All inputs use the Angular 17+ `input()` signal API and ship with defaults, so adding a new input is never a breaking change for consumers.
 
@@ -51,10 +51,10 @@
 ## Installation
 
 ```bash
-npm install @helix-ui/shell
+npm install @gravionlabs/helix-shell
 ```
 
-Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@helix-ui/core >=22`, `@primeuix/themes >=2`, `primeicons >=7`.
+Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`, `@primeuix/themes >=2`, `primeicons >=7`.
 
 ---
 
@@ -63,7 +63,7 @@ Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@helix-ui/core >
 ```ts
 // app.component.ts
 import { Component } from '@angular/core';
-import { HelixAppLayout, type HelixRouteMenuItem } from '@helix-ui/shell';
+import { HelixAppLayout, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const MENU: HelixRouteMenuItem[] = [
   { label: 'Dashboard', icon: 'pi pi-home', routerLink: ['/dashboard'] },
@@ -302,7 +302,7 @@ section headers grouping multiple expandable items.
 #### Example
 
 ```ts
-import { helixNavGroupsFromMenu, type HelixRouteMenuItem } from '@helix-ui/shell';
+import { helixNavGroupsFromMenu, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   {
@@ -347,7 +347,7 @@ Built-in helpers for deriving Angular routes, menu link models, and breadcrumbs 
 Converts a `HelixRouteMenuItem` tree into Angular `Routes` for use with the Router.
 
 ```ts
-import { helixRoutesFrom, type HelixRouteMenuItem } from '@helix-ui/shell';
+import { helixRoutesFrom, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   {
@@ -386,7 +386,7 @@ Behaviour:
 Recursively copies a `HelixRouteMenuItem[]` tree and auto-populates `routerLink` from each item's `path`, relative to a `basePath`.
 
 ```ts
-import { helixMenuLinksFrom, type HelixRouteMenuItem } from '@helix-ui/shell';
+import { helixMenuLinksFrom, type HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 
 const menu: HelixRouteMenuItem[] = [
   { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', path: 'formlayout' },
@@ -416,7 +416,7 @@ Builds a breadcrumb trail from the current Angular `ActivatedRoute` tree. Reads 
 ```ts
 import { inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { helixBreadcrumbsFromRoutes } from '@helix-ui/shell';
+import { helixBreadcrumbsFromRoutes } from '@gravionlabs/helix-shell';
 
 const route = inject(ActivatedRoute);
 const crumbs = helixBreadcrumbsFromRoutes(route);
@@ -455,7 +455,7 @@ Where `breadcrumb` can be a static string or a function:
 ### Setup
 
 ```ts
-import { LayoutStore } from '@helix-ui/shell';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 
 @Component({
   standalone: true,
@@ -571,7 +571,7 @@ Access-denied / forbidden page (e.g. 403).
 Pre-configured lazy route definitions for all auth pages. Import into your router config to automatically register `/auth/login`, `/auth/error`, and `/auth/access`.
 
 ```ts
-import { authRoutes } from '@helix-ui/shell';
+import { authRoutes } from '@gravionlabs/helix-shell';
 
 export const appRoutes: Routes = [
   {
@@ -964,12 +964,12 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 ## Form Infrastructure
 
 Structural components for building reactive forms with human-readable error messages. The
-validators and error-message pipe that used to live here moved to `@helix-ui/core` (#378) — see
+validators and error-message pipe that used to live here moved to `@gravionlabs/helix-core` (#378) — see
 [`Validators`](components/validators.md) and [`FirstErrorPipe`](components/firsterror.md):
 
 ```ts
-import { Validators } from '@helix-ui/core/validators';
-import { FirstErrorPipe } from '@helix-ui/core/firsterror';
+import { Validators } from '@gravionlabs/helix-core/validators';
+import { FirstErrorPipe } from '@gravionlabs/helix-core/firsterror';
 import { FormControl } from '@angular/forms';
 
 const emailCtrl = new FormControl('', [
@@ -1036,7 +1036,7 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 Extends Angular's `FormArray` with a factory function that produces new controls on demand — ideal for dynamic form lists.
 
 ```ts
-import { HelixFormArrayWithFactory } from '@helix-ui/core/utils';
+import { HelixFormArrayWithFactory } from '@gravionlabs/helix-core/utils';
 import { FormControl, Validators } from '@angular/forms';
 
 const emails = new HelixFormArrayWithFactory(
@@ -1077,7 +1077,7 @@ emails.setValue(['a@b.com', 'c@d.com']);
 Recursively walks an `AbstractControl` tree and produces a flat map of field-name → first error message.
 
 ```ts
-import { helixFormErrorMap } from '@helix-ui/core/utils';
+import { helixFormErrorMap } from '@gravionlabs/helix-core/utils';
 
 const errors = helixFormErrorMap(myForm);
 // → { email: 'Invalid email address', 'items[0]': 'Required' }

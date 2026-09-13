@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Table, TableBody, RowGroupHeader, FrozenColumn, SortableColumn, SortIcon, SelectableRow, SelectableRowDblClick, ContextMenuRow, RowToggler, ResizableColumn, ReorderableColumn, EditableColumn, EditableRow, InitEditableRow, SaveEditableRow, CancelEditableRow, CellEditor, TableRadioButton, TableCheckbox, TableHeaderCheckbox, ReorderableRowHandle, ReorderableRow, ColumnFilter, ColumnFilterFormElement, TableService } from '@helix-ui/core/table';
+import { Table, TableBody, RowGroupHeader, FrozenColumn, SortableColumn, SortIcon, SelectableRow, SelectableRowDblClick, ContextMenuRow, RowToggler, ResizableColumn, ReorderableColumn, EditableColumn, EditableRow, InitEditableRow, SaveEditableRow, CancelEditableRow, CellEditor, TableRadioButton, TableCheckbox, TableHeaderCheckbox, ReorderableRowHandle, ReorderableRow, ColumnFilter, ColumnFilterFormElement, TableService } from '@gravionlabs/helix-core/table';
 ```
 
 ## Components

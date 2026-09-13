@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/dom';
+import '@gravionlabs/helix-core/dom';
 ```
 
 ## Functions

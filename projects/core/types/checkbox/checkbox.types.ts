@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
 
 /**
  * Custom change event.

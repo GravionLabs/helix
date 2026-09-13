@@ -3,14 +3,14 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { $dt } from '@primeuix/styled';
 import { absolutePosition, addClass, appendChild, findSingle, getOffset, isIOS, isTouchDevice } from '@primeuix/utils';
-import { OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
-import { PopoverContentTemplateContext, PopoverPassThrough } from '@helix-ui/core/types/popover';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix-core/dom';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import { PopoverContentTemplateContext, PopoverPassThrough } from '@gravionlabs/helix-core/types/popover';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { Subscription } from 'rxjs';
 import { PopoverStyle } from './style/popoverstyle';
 

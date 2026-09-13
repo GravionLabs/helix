@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Textarea } from '@helix-ui/core/textarea';
+import { Textarea } from '@gravionlabs/helix-core/textarea';
 ```
 
 ## Directives

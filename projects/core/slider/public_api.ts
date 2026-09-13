@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/slider';
+export * from '@gravionlabs/helix-core/types/slider';
 export * from './slider';
 export * from './style/sliderstyle';

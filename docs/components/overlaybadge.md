@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { OverlayBadge } from '@helix-ui/core/overlaybadge';
+import { OverlayBadge } from '@gravionlabs/helix-core/overlaybadge';
 ```
 
 ## Components

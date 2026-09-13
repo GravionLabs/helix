@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputGroup } from '@helix-ui/core/inputgroup';
+import { InputGroup } from '@gravionlabs/helix-core/inputgroup';
 ```
 
 ## Components

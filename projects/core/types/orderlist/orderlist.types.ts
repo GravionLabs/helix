@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
-import type { ButtonPassThrough } from '@helix-ui/core/types/button';
-import type { ListBoxPassThrough } from '@helix-ui/core/types/listbox';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
+import type { ButtonPassThrough } from '@gravionlabs/helix-core/types/button';
+import type { ListBoxPassThrough } from '@gravionlabs/helix-core/types/listbox';
 
 /**
  * Custom pass-through(pt) options.

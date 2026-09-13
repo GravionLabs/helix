@@ -4,7 +4,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { provideHelix } from '@helix-ui/core/config';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 import {
     PickListMoveAllToSourceEvent,
     PickListMoveAllToTargetEvent,
@@ -14,7 +14,7 @@ import {
     PickListSourceSelectEvent,
     PickListTargetReorderEvent,
     PickListTargetSelectEvent
-} from '@helix-ui/core/types/picklist';
+} from '@gravionlabs/helix-core/types/picklist';
 import { PickList } from './picklist';
 
 @Component({

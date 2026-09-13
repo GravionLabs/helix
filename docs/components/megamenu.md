@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MegaMenuSub, MegaMenu } from '@helix-ui/core/megamenu';
+import { MegaMenuSub, MegaMenu } from '@gravionlabs/helix-core/megamenu';
 ```
 
 ## Components

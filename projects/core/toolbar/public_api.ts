@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/toolbar';
+export * from '@gravionlabs/helix-core/types/toolbar';
 export * from './toolbar';
 export * from './style/toolbarstyle';

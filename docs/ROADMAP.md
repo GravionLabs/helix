@@ -1,4 +1,4 @@
-# @helix-ui/core – Roadmap
+# @gravionlabs/helix-core – Roadmap
 
 Angular 22 UI ecosystem extending a vendored fork of [PrimeNG](https://github.com/primefaces/primeng)
 21.1.9 with NgRx Signal Store state management. Originally scaffolded from
@@ -9,18 +9,19 @@ Angular 22 UI ecosystem extending a vendored fork of [PrimeNG](https://github.co
 ## ✅ Phase 1 – Workspace & Library Setup
 
 - [x] Angular workspace `helix` (Angular 21 initially, upgraded to 22 in epic #233)
-- [x] Library `@helix-ui/core` (vendored PrimeNG fork, `h-` selectors)
+- [x] Library `@gravionlabs/helix-core` (vendored PrimeNG fork, `h-` selectors)
 - [x] Demo app `apps/helix-demo`
 - [x] Dependencies: `@ngrx/signals`, `@primeuix/*`, `tailwindcss@^4`
 - [x] GitHub Actions CI/CD workflow (build + test; publish via manual `workflow_dispatch`)
-- [x] Public npm registry publishing under the `@helix-ui` scope (moved off GitHub Packages —
-      that registry requires the scope to equal the repo owner, which `@helix-ui` doesn't)
+- [x] Public npm registry publishing under the `@gravionlabs` scope (moved off GitHub Packages,
+      which has no anonymous read; `@gravionlabs` matches the repo owner so GitHub Packages
+      would also work, but npmjs is the target so installs don't need an authenticated `.npmrc`)
 
 ---
 
 ## ✅ Phase 2 – Layout Components
 
-NgRx Signal Store-backed layout, in `@helix-ui/shell`. All components use separate
+NgRx Signal Store-backed layout, in `@gravionlabs/helix-shell`. All components use separate
 `.ts` / `.html` / `.scss` files, no `.component` postfix.
 
 ### Store
@@ -43,7 +44,7 @@ NgRx Signal Store-backed layout, in `@helix-ui/shell`. All components use separa
 
 ## ✅ Phase 3 – Pages
 
-Generic, reusable page templates in `@helix-ui/shell`.
+Generic, reusable page templates in `@gravionlabs/helix-shell`.
 
 #### Auth Pages
 - [x] `HelixLogin`, `HelixError`, `HelixAccess`, `authRoutes`
@@ -69,7 +70,7 @@ Generic, reusable page templates in `@helix-ui/shell`.
 - [x] `@Input()` customization for all page components (titles, logos, links)
 - [x] Unit tests for `LayoutStore`
 - [ ] Secondary entry points beyond the existing per-component ones (e.g. a combined
-      `@helix-ui/core/pages` barrel)
+      `@gravionlabs/helix-core/pages` barrel)
 - [ ] Storybook integration
 - [ ] `CHANGELOG.md` + semantic versioning via GitVersion
 
@@ -85,10 +86,12 @@ epic were deleted, so every API break here was free — no external consumers ex
 - [x] #374 – Rename remaining `Prime*` symbols to `Helix*` (`PrimeTemplate` → `HelixTemplate`,
       `PrimeIcons` → `HelixIcons`, `providePrimeNG` → `provideHelix`, …)
 - [x] #378 – Move framework-only form utilities (`Validators`, `FirstErrorPipe`,
-      `HelixFormArrayWithFactory`, `helixFormErrorMap`) from `@helix-ui/shell` into
-      `@helix-ui/core`
-- [x] #381 – Package restructure: `@gravionlabs/*` → `@helix-ui/*`, `core`/`shell`/`zod`/`ag-grid`
-      naming, release cleanup (all sub-issues closed; parent issue still open pending closeout)
+      `HelixFormArrayWithFactory`, `helixFormErrorMap`) from `@gravionlabs/helix-shell` into
+      `@gravionlabs/helix-core`
+- [x] #381 – Package restructure: `core`/`shell`/`zod`/`ag-grid` naming, release cleanup. The
+      npm scope moved twice — first to `@helix-ui/*` (#384), then back to `@gravionlabs/*` with
+      `helix-` prefixed names (#418) once `@helix-ui` turned out to be unclaimable on npmjs
+      (parent issue still open pending closeout)
 - [ ] #385 – Documentation refresh: committed component-docs generator
       (`scripts/generate-component-docs.mjs`) + regenerated `docs/components/*`, manual docs swept
       for stale symbol names / import paths
@@ -100,22 +103,22 @@ epic were deleted, so every API break here was free — no external consumers ex
 ```
 helix/
 ├── projects/
-│   ├── core/                  # @helix-ui/core — vendored PrimeNG fork
-│   ├── shell/                 # @helix-ui/shell — app shell, auth/landing pages, layout store
-│   ├── zod/                   # @helix-ui/zod — Zod v4 reactive-forms adapter
-│   └── ag-grid/               # @helix-ui/ag-grid — AG Grid helpers
+│   ├── core/                  # @gravionlabs/helix-core — vendored PrimeNG fork
+│   ├── shell/                 # @gravionlabs/helix-shell — app shell, auth/landing pages, layout store
+│   ├── zod/                   # @gravionlabs/helix-zod — Zod v4 reactive-forms adapter
+│   └── ag-grid/               # @gravionlabs/helix-ag-grid — AG Grid helpers
 ├── apps/
 │   └── helix-demo/            # Showcase app (dashboard, uikit, crud, docs)
 └── docs/
     ├── ROADMAP.md
     ├── COMPONENTS.md
     ├── HELIX-SHELL.md
-    └── components/            # One generated page per @helix-ui/core entry point
+    └── components/            # One generated page per @gravionlabs/helix-core entry point
 ```
 
 ## Published to
 
-The public npm registry, under the `@helix-ui` scope (`@helix-ui/core`, `@helix-ui/shell`,
-`@helix-ui/zod`, `@helix-ui/ag-grid`). Publishing is currently manual
+The public npm registry, under the `@gravionlabs` scope (`@gravionlabs/helix-core`, `@gravionlabs/helix-shell`,
+`@gravionlabs/helix-zod`, `@gravionlabs/helix-ag-grid`). Publishing is currently manual
 (`workflow_dispatch` with `force-publish`) until #381's rename has settled — see
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).

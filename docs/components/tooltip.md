@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Tooltip } from '@helix-ui/core/tooltip';
+import { Tooltip } from '@gravionlabs/helix-core/tooltip';
 ```
 
 ## Directives

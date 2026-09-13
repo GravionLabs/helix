@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ButtonModule } from '@helix-ui/core/button';
-import { DataViewModule } from '@helix-ui/core/dataview';
-import { OrderListModule } from '@helix-ui/core/orderlist';
-import { PickListModule } from '@helix-ui/core/picklist';
-import { SelectButtonModule } from '@helix-ui/core/selectbutton';
-import { TagModule } from '@helix-ui/core/tag';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { DataViewModule } from '@gravionlabs/helix-core/dataview';
+import { OrderListModule } from '@gravionlabs/helix-core/orderlist';
+import { PickListModule } from '@gravionlabs/helix-core/picklist';
+import { SelectButtonModule } from '@gravionlabs/helix-core/selectbutton';
+import { TagModule } from '@gravionlabs/helix-core/tag';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

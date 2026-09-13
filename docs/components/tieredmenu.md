@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { TieredMenuSub, TieredMenu } from '@helix-ui/core/tieredmenu';
+import { TieredMenuSub, TieredMenu } from '@gravionlabs/helix-core/tieredmenu';
 ```
 
 ## Components

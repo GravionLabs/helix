@@ -18,12 +18,12 @@ import {
   contentChildren
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { AutoFocus } from '@helix-ui/core/autofocus';
-import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { ToggleSwitchChangeEvent, ToggleSwitchHandleTemplateContext, ToggleSwitchPassThrough } from '@helix-ui/core/types/toggleswitch';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
+import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { ToggleSwitchChangeEvent, ToggleSwitchHandleTemplateContext, ToggleSwitchPassThrough } from '@gravionlabs/helix-core/types/toggleswitch';
 import { ToggleSwitchStyle } from './style/toggleswitchstyle';
 
 const TOGGLESWITCH_INSTANCE = new InjectionToken<ToggleSwitch>('TOGGLESWITCH_INSTANCE');

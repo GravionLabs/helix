@@ -1,5 +1,5 @@
 /*
- * Public API Surface of @helix-ui/core
+ * Public API Surface of @gravionlabs/helix-core
  */
 
 // Form — form field

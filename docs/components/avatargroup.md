@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AvatarGroup } from '@helix-ui/core/avatargroup';
+import { AvatarGroup } from '@gravionlabs/helix-core/avatargroup';
 ```
 
 ## Components

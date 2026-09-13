@@ -2,8 +2,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { provideHelix } from '@helix-ui/core/config';
-import { ColorPickerChangeEvent } from '@helix-ui/core/types/colorpicker';
+import { provideHelix } from '@gravionlabs/helix-core/config';
+import { ColorPickerChangeEvent } from '@gravionlabs/helix-core/types/colorpicker';
 import { ColorPicker } from './colorpicker';
 
 @Component({

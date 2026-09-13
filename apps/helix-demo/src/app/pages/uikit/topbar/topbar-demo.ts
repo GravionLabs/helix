@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix-ui/core/button';
-import { LayoutStore } from '@helix-ui/shell';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 
 @Component({
   selector: 'app-topbar-demo',

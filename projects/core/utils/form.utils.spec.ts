@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup, Validators as NgValidators } from '@angular/forms';
-import { Validators } from '@helix-ui/core/validators';
+import { Validators } from '@gravionlabs/helix-core/validators';
 import { HelixFormArrayWithFactory, helixFormErrorMap } from './form.utils';
 
 describe('helixFormErrorMap', () => {

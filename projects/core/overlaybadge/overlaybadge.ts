@@ -1,10 +1,10 @@
 
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, Input, NgModule, ViewEncapsulation, input, effect } from '@angular/core';
-import { SharedModule } from '@helix-ui/core/api';
-import { BadgeModule } from '@helix-ui/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { OverlayBadgePassThrough } from '@helix-ui/core/types/overlaybadge';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BadgeModule } from '@gravionlabs/helix-core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { OverlayBadgePassThrough } from '@gravionlabs/helix-core/types/overlaybadge';
 import { OverlayBadgeStyle } from './style/overlaybadgestyle';
 
 const OVERLAYBADGE_INSTANCE = new InjectionToken<OverlayBadge>('OVERLAYBADGE_INSTANCE');

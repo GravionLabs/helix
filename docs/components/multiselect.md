@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MultiSelectItem, MultiSelect } from '@helix-ui/core/multiselect';
+import { MultiSelectItem, MultiSelect } from '@gravionlabs/helix-core/multiselect';
 ```
 
 ## Components

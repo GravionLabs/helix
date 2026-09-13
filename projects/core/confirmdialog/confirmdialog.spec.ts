@@ -2,9 +2,9 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ConfirmationService } from '@helix-ui/core/api';
-import { Button } from '@helix-ui/core/button';
-import { Dialog } from '@helix-ui/core/dialog';
+import { ConfirmationService } from '@gravionlabs/helix-core/api';
+import { Button } from '@gravionlabs/helix-core/button';
+import { Dialog } from '@gravionlabs/helix-core/dialog';
 import { ConfirmDialog } from './confirmdialog';
 
 // Basic ConfirmDialog Component Test

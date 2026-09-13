@@ -1,4 +1,4 @@
-import type { PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
 
 /**
  * Defines valid pass-through options in Tabs component.

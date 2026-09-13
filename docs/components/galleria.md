@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Galleria, GalleriaContent, GalleriaItemSlot, GalleriaItem, GalleriaThumbnails } from '@helix-ui/core/galleria';
+import { Galleria, GalleriaContent, GalleriaItemSlot, GalleriaItem, GalleriaThumbnails } from '@gravionlabs/helix-core/galleria';
 ```
 
 ## Components

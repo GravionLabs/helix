@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DataView } from '@helix-ui/core/dataview';
+import { DataView } from '@gravionlabs/helix-core/dataview';
 ```
 
 ## Components

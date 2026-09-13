@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Divider } from '@helix-ui/core/divider';
+import { Divider } from '@gravionlabs/helix-core/divider';
 ```
 
 ## Components
