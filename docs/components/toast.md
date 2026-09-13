@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ToastItem, Toast } from '@helix-ui/core/toast';
+import { ToastItem, Toast } from '@gravionlabs/helix-core/toast';
 ```
 
 ## Components

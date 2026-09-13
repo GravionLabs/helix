@@ -1,14 +1,14 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, inject, InjectionToken, signal, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
 import { findSingle, getOffset, getOuterWidth, getWidth, isRTL } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { ChevronLeftIcon, ChevronRightIcon } from '@helix-ui/core/icons';
-import { RippleModule } from '@helix-ui/core/ripple';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { ChevronLeftIcon, ChevronRightIcon } from '@gravionlabs/helix-core/icons';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { TabListStyle } from './style/tabliststyle';
 import { Tabs } from './tabs';
-import { TabListPassThrough } from '@helix-ui/core/types/tabs';
+import { TabListPassThrough } from '@gravionlabs/helix-core/types/tabs';
 
 const TABLIST_INSTANCE = new InjectionToken<TabList>('TABLIST_INSTANCE');
 

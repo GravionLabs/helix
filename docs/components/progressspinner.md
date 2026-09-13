@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ProgressSpinner } from '@helix-ui/core/progressspinner';
+import { ProgressSpinner } from '@gravionlabs/helix-core/progressspinner';
 ```
 
 ## Components

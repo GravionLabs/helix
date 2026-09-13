@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/togglebutton';
+export * from '@gravionlabs/helix-core/types/togglebutton';
 export * from './style/togglebuttonstyle';
 export * from './togglebutton';

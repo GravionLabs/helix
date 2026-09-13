@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Image } from '@helix-ui/core/image';
+import { Image } from '@gravionlabs/helix-core/image';
 ```
 
 ## Components

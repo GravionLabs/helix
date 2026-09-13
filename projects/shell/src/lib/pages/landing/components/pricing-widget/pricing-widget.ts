@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { ButtonModule } from '@helix-ui/core/button';
-import { DividerModule } from '@helix-ui/core/divider';
-import { RippleModule } from '@helix-ui/core/ripple';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { DividerModule } from '@gravionlabs/helix-core/divider';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import type { HelixPricingPlan } from '../../landing.model';
 
 const DEFAULT_PLANS: HelixPricingPlan[] = [

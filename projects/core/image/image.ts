@@ -3,16 +3,16 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { SafeUrl } from '@angular/platform-browser';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { appendChild, focus } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { blockBodyScroll, unblockBodyScroll } from '@helix-ui/core/dom';
-import { FocusTrap } from '@helix-ui/core/focustrap';
-import { EyeIcon, RefreshIcon, SearchMinusIcon, SearchPlusIcon, TimesIcon, UndoIcon } from '@helix-ui/core/icons';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Nullable } from '@helix-ui/core/ts-helpers';
-import { ImageImageTemplateContext, ImagePassThrough, ImagePreviewTemplateContext } from '@helix-ui/core/types/image';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { blockBodyScroll, unblockBodyScroll } from '@gravionlabs/helix-core/dom';
+import { FocusTrap } from '@gravionlabs/helix-core/focustrap';
+import { EyeIcon, RefreshIcon, SearchMinusIcon, SearchPlusIcon, TimesIcon, UndoIcon } from '@gravionlabs/helix-core/icons';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
+import { ImageImageTemplateContext, ImagePassThrough, ImagePreviewTemplateContext } from '@gravionlabs/helix-core/types/image';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { ImageStyle } from './style/imagestyle';
 
 const IMAGE_INSTANCE = new InjectionToken<Image>('IMAGE_INSTANCE');

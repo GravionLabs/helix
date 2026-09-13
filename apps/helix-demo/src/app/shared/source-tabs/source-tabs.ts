@@ -8,7 +8,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { TabsModule } from '@helix-ui/core/tabs';
+import { TabsModule } from '@gravionlabs/helix-core/tabs';
 import { Highlight } from 'ngx-highlightjs';
 
 interface SourceTab {

@@ -29,34 +29,34 @@ import {
 import { FormsModule } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, find, findSingle, getAttribute, isClickable, setAttribute } from '@primeuix/utils';
-import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, HelixTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@helix-ui/core/api';
-import { BadgeModule } from '@helix-ui/core/badge';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { Button, ButtonModule } from '@helix-ui/core/button';
-import { CheckboxChangeEvent, CheckboxModule } from '@helix-ui/core/checkbox';
-import { DatePickerModule } from '@helix-ui/core/datepicker';
-import { ConnectedOverlayScrollHandler, DomHandler } from '@helix-ui/core/dom';
-import { ArrowDownIcon } from '@helix-ui/core/icons/arrowdown';
-import { ArrowUpIcon } from '@helix-ui/core/icons/arrowup';
-import { FilterIcon } from '@helix-ui/core/icons/filter';
-import { FilterFillIcon } from '@helix-ui/core/icons/filterfill';
-import { FilterSlashIcon } from '@helix-ui/core/icons/filterslash';
-import { PlusIcon } from '@helix-ui/core/icons/plus';
-import { SortAltIcon } from '@helix-ui/core/icons/sortalt';
-import { SortAmountDownIcon } from '@helix-ui/core/icons/sortamountdown';
-import { SortAmountUpAltIcon } from '@helix-ui/core/icons/sortamountupalt';
-import { SpinnerIcon } from '@helix-ui/core/icons/spinner';
-import { TrashIcon } from '@helix-ui/core/icons/trash';
-import { InputNumberModule } from '@helix-ui/core/inputnumber';
-import { InputTextModule } from '@helix-ui/core/inputtext';
-import { MotionModule } from '@helix-ui/core/motion';
-import { PaginatorModule } from '@helix-ui/core/paginator';
-import { RadioButton, RadioButtonClickEvent, RadioButtonModule } from '@helix-ui/core/radiobutton';
-import { Scroller, ScrollerModule } from '@helix-ui/core/scroller';
-import { SelectModule } from '@helix-ui/core/select';
-import { SelectButtonModule } from '@helix-ui/core/selectbutton';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { BlockableUI, FilterMatchMode, FilterMetadata, FilterOperator, FilterService, LazyLoadMeta, OverlayService, HelixTemplate, ScrollerOptions, SelectItem, SharedModule, SortMeta, TableState, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { BadgeModule } from '@gravionlabs/helix-core/badge';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { Button, ButtonModule } from '@gravionlabs/helix-core/button';
+import { CheckboxChangeEvent, CheckboxModule } from '@gravionlabs/helix-core/checkbox';
+import { DatePickerModule } from '@gravionlabs/helix-core/datepicker';
+import { ConnectedOverlayScrollHandler, DomHandler } from '@gravionlabs/helix-core/dom';
+import { ArrowDownIcon } from '@gravionlabs/helix-core/icons/arrowdown';
+import { ArrowUpIcon } from '@gravionlabs/helix-core/icons/arrowup';
+import { FilterIcon } from '@gravionlabs/helix-core/icons/filter';
+import { FilterFillIcon } from '@gravionlabs/helix-core/icons/filterfill';
+import { FilterSlashIcon } from '@gravionlabs/helix-core/icons/filterslash';
+import { PlusIcon } from '@gravionlabs/helix-core/icons/plus';
+import { SortAltIcon } from '@gravionlabs/helix-core/icons/sortalt';
+import { SortAmountDownIcon } from '@gravionlabs/helix-core/icons/sortamountdown';
+import { SortAmountUpAltIcon } from '@gravionlabs/helix-core/icons/sortamountupalt';
+import { SpinnerIcon } from '@gravionlabs/helix-core/icons/spinner';
+import { TrashIcon } from '@gravionlabs/helix-core/icons/trash';
+import { InputNumberModule } from '@gravionlabs/helix-core/inputnumber';
+import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { PaginatorModule } from '@gravionlabs/helix-core/paginator';
+import { RadioButton, RadioButtonClickEvent, RadioButtonModule } from '@gravionlabs/helix-core/radiobutton';
+import { Scroller, ScrollerModule } from '@gravionlabs/helix-core/scroller';
+import { SelectModule } from '@gravionlabs/helix-core/select';
+import { SelectButtonModule } from '@gravionlabs/helix-core/selectbutton';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 import {
     ColumnFilterPassThrough,
     ExportCSVOptions,
@@ -77,8 +77,8 @@ import {
     TableRowReorderEvent,
     TableRowSelectEvent,
     TableRowUnSelectEvent
-} from '@helix-ui/core/types/table';
-import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@helix-ui/core/utils';
+} from '@gravionlabs/helix-core/types/table';
+import { ObjectUtils, UniqueComponentId, ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { Subject, Subscription } from 'rxjs';
 import { TableStyle } from './style/tablestyle';
 

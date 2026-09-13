@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { MeterGroupLabel, MeterGroup } from '@helix-ui/core/metergroup';
+import { MeterGroupLabel, MeterGroup } from '@gravionlabs/helix-core/metergroup';
 ```
 
 ## Components

@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { MenuItem, SharedModule } from '@helix-ui/core/api';
-import { provideHelix } from '@helix-ui/core/config';
+import { MenuItem, SharedModule } from '@gravionlabs/helix-core/api';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 import { Dock } from './dock';
 
 @Component({

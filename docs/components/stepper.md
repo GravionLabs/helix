@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { StepList, StepperSeparator, StepItem, Step, StepPanel, StepPanels, Stepper } from '@helix-ui/core/stepper';
+import { StepList, StepperSeparator, StepItem, Step, StepPanel, StepPanels, Stepper } from '@gravionlabs/helix-core/stepper';
 ```
 
 ## Components

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ImageCompare, ImageCompareModule } from './imagecompare';
-import { SharedModule } from '@helix-ui/core/api';
+import { SharedModule } from '@gravionlabs/helix-core/api';
 
 // Using image paths from photoservice.ts to ensure consistency
 const mockImages = {

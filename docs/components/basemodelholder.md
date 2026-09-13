@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseModelHolder } from '@helix-ui/core/basemodelholder';
+import { BaseModelHolder } from '@gravionlabs/helix-core/basemodelholder';
 ```
 
 ## Directives

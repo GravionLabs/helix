@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Drawer } from '@helix-ui/core/drawer';
+import { Drawer } from '@gravionlabs/helix-core/drawer';
 ```
 
 ## Components

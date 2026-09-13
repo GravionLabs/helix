@@ -10,9 +10,9 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import type { MenuItem } from '@helix-ui/core/api';
-import { Breadcrumb } from '@helix-ui/core/breadcrumb';
-import { StyleClassModule } from '@helix-ui/core/styleclass';
+import type { MenuItem } from '@gravionlabs/helix-core/api';
+import { Breadcrumb } from '@gravionlabs/helix-core/breadcrumb';
+import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';

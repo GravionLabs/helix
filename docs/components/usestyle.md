@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { UseStyle } from '@helix-ui/core/usestyle';
+import { UseStyle } from '@gravionlabs/helix-core/usestyle';
 ```
 
 ## Services

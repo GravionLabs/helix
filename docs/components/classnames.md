@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ClassNames } from '@helix-ui/core/classnames';
+import { ClassNames } from '@gravionlabs/helix-core/classnames';
 ```
 
 ## Directives

@@ -1,4 +1,4 @@
-# @helix-ui/shell
+# @gravionlabs/helix-shell
 
 Angular application shell for [Helix](../../README.md), extending
 [sakai-ng](https://github.com/primefaces/sakai-ng) with
@@ -18,12 +18,12 @@ Angular application shell for [Helix](../../README.md), extending
 ## Installation
 
 ```bash
-npm install @helix-ui/shell
+npm install @gravionlabs/helix-shell
 ```
 
 ### Peer Dependencies
 
-`@angular/core >=22`, `@ngrx/signals >=21`, `@helix-ui/core >=22`,
+`@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`,
 `@primeuix/themes >=2`, `primeicons >=7`.
 
 ## Setup
@@ -31,7 +31,7 @@ npm install @helix-ui/shell
 ```typescript
 // app.config.ts
 import Aura from '@primeuix/themes/aura';
-import { provideHelix } from '@helix-ui/core/config';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,7 +44,7 @@ export const appConfig: ApplicationConfig = {
 
 ```typescript
 // app.routes.ts
-import { HelixAppLayout } from '@helix-ui/shell';
+import { HelixAppLayout } from '@gravionlabs/helix-shell';
 
 export const appRoutes: Routes = [
   {
@@ -65,7 +65,7 @@ app's global styles, since Tailwind's content scanning does not look inside
 ```json
 // angular.json
 "styles": [
-  "node_modules/@helix-ui/shell/styles.css",
+  "node_modules/@gravionlabs/helix-shell/styles.css",
   "src/styles.scss"
 ]
 ```
@@ -74,7 +74,7 @@ app's global styles, since Tailwind's content scanning does not look inside
 
 ```typescript
 import { inject } from '@angular/core';
-import { LayoutStore } from '@helix-ui/shell';
+import { LayoutStore } from '@gravionlabs/helix-shell';
 
 layoutStore = inject(LayoutStore);
 layoutStore.toggleDarkMode();

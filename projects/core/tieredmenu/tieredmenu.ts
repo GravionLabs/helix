@@ -27,17 +27,17 @@ import {
 import { RouterModule } from '@angular/router';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addStyle, appendChild, findLastIndex, findSingle, focus, getOuterWidth, isEmpty, isNotEmpty, isPrintableCharacter, isTouchDevice, nestedPosition, relativePosition, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
-import { AngleRightIcon } from '@helix-ui/core/icons';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Ripple } from '@helix-ui/core/ripple';
-import { TooltipModule } from '@helix-ui/core/tooltip';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
-import { TieredMenuItemTemplateContext, TieredMenuPassThrough } from '@helix-ui/core/types/tieredmenu';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix-core/dom';
+import { AngleRightIcon } from '@gravionlabs/helix-core/icons';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { TooltipModule } from '@gravionlabs/helix-core/tooltip';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import { TieredMenuItemTemplateContext, TieredMenuPassThrough } from '@gravionlabs/helix-core/types/tieredmenu';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { TieredMenuStyle } from './style/tieredmenustyle';
 
 const TIEREDMENU_INSTANCE = new InjectionToken<TieredMenu>('TIEREDMENU_INSTANCE');

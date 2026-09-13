@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { RadioButton, RadioControlRegistry } from '@helix-ui/core/radiobutton';
+import { RadioButton, RadioControlRegistry } from '@gravionlabs/helix-core/radiobutton';
 ```
 
 ## Components

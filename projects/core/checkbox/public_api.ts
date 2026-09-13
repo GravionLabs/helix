@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/checkbox';
+export * from '@gravionlabs/helix-core/types/checkbox';
 export * from './checkbox';
 export * from './style/checkboxstyle';

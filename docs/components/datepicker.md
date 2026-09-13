@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { DatePicker } from '@helix-ui/core/datepicker';
+import { DatePicker } from '@gravionlabs/helix-core/datepicker';
 ```
 
 ## Components

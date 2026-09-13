@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { HelixConfig, ThemeProvider } from '@helix-ui/core/config';
+import { HelixConfig, ThemeProvider } from '@gravionlabs/helix-core/config';
 ```
 
 ## Services

@@ -23,14 +23,14 @@ import {
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { contains, equals } from '@primeuix/utils';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { CheckIcon } from '@helix-ui/core/icons/check';
-import { MinusIcon } from '@helix-ui/core/icons/minus';
-import { Nullable } from '@helix-ui/core/ts-helpers';
-import { CheckboxChangeEvent, CheckboxIconTemplateContext, CheckboxPassThrough } from '@helix-ui/core/types/checkbox';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { CheckIcon } from '@gravionlabs/helix-core/icons/check';
+import { MinusIcon } from '@gravionlabs/helix-core/icons/minus';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
+import { CheckboxChangeEvent, CheckboxIconTemplateContext, CheckboxPassThrough } from '@gravionlabs/helix-core/types/checkbox';
 import { CheckboxStyle } from './style/checkboxstyle';
 
 const CHECKBOX_INSTANCE = new InjectionToken<Checkbox>('CHECKBOX_INSTANCE');

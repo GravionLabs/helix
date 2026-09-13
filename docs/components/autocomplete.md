@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AutoComplete } from '@helix-ui/core/autocomplete';
+import { AutoComplete } from '@gravionlabs/helix-core/autocomplete';
 ```
 
 ## Components

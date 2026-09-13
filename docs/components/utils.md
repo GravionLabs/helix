@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ZIndexUtils, UniqueComponentId, ObjectUtils, transformToNumber, transformToBoolean, HelixFormArrayWithFactory, helixFormErrorMap } from '@helix-ui/core/utils';
+import { ZIndexUtils, UniqueComponentId, ObjectUtils, transformToNumber, transformToBoolean, HelixFormArrayWithFactory, helixFormErrorMap } from '@gravionlabs/helix-core/utils';
 ```
 
 ## Functions

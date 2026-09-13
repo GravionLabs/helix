@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/steps';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => ['p-steps p-component', { 'p-readonly': instance.readonly }],

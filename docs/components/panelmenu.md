@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PanelMenuSub, PanelMenuList, PanelMenu } from '@helix-ui/core/panelmenu';
+import { PanelMenuSub, PanelMenuList, PanelMenu } from '@gravionlabs/helix-core/panelmenu';
 ```
 
 ## Components

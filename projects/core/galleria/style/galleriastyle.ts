@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/galleria';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     mask: 'p-galleria-mask p-overlay-mask',

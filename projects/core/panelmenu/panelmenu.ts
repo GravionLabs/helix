@@ -3,13 +3,13 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Element
 import { RouterModule } from '@angular/router';
 import { MotionOptions } from '@primeuix/motion';
 import { equals, findLast, findSingle, focus, getAttribute, isEmpty, isNotEmpty, isPrintableCharacter, resolve, uuid } from '@primeuix/utils';
-import { MenuItem, HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { ChevronDownIcon, ChevronRightIcon } from '@helix-ui/core/icons';
-import { MotionModule } from '@helix-ui/core/motion';
-import { TooltipModule } from '@helix-ui/core/tooltip';
-import { PanelMenuItemTemplateContext, PanelMenuPassThrough } from '@helix-ui/core/types/panelmenu';
+import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { ChevronDownIcon, ChevronRightIcon } from '@gravionlabs/helix-core/icons';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { TooltipModule } from '@gravionlabs/helix-core/tooltip';
+import { PanelMenuItemTemplateContext, PanelMenuPassThrough } from '@gravionlabs/helix-core/types/panelmenu';
 import { PanelMenuStyle } from './style/panelmenustyle';
 
 const PANELMENU_INSTANCE = new InjectionToken<PanelMenu>('PANELMENU_INSTANCE');

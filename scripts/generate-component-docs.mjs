@@ -310,7 +310,7 @@ function renderModule(moduleDir, analysis, primary) {
   const title = moduleTitle(moduleDir, primary);
   const description = primary?.description || INFRA_DESCRIPTIONS[moduleDir] || '';
   const importNames = importSpecifier(moduleDir, analysis);
-  const importLine = importNames ? `import ${importNames} from '@helix-ui/core/${moduleDir}';` : `import '@helix-ui/core/${moduleDir}';`;
+  const importLine = importNames ? `import ${importNames} from '@gravionlabs/helix-core/${moduleDir}';` : `import '@gravionlabs/helix-core/${moduleDir}';`;
   const sections = [`# ${title}`, '', `> ${description}`, '', '## Import', '', '```ts', importLine, '```', ''];
 
   if (analysis.components.length) {
@@ -370,10 +370,10 @@ function renderReadme(entries) {
   for (const group of Object.values(groups)) group.sort((a, b) => a.title.localeCompare(b.title));
 
   const lines = [
-    '# @helix-ui/core — Module Documentation',
+    '# @gravionlabs/helix-core — Module Documentation',
     '',
-    'One page per entry point of `@helix-ui/core`. Import paths follow the pattern',
-    "`@helix-ui/core/<module>`; all selectors use the `h-` prefix.",
+    'One page per entry point of `@gravionlabs/helix-core`. Import paths follow the pattern',
+    "`@gravionlabs/helix-core/<module>`; all selectors use the `h-` prefix.",
     '',
     'Pages are generated from the module sources (JSDoc, selectors, inputs/outputs) using the shared',
     'structure in [_TEMPLATE.md](_TEMPLATE.md). Regenerate with `pnpm docs:components`.',

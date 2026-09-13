@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { HelixTemplate } from '@helix-ui/core/api';
+import { HelixTemplate } from '@gravionlabs/helix-core/api';
 import { Drawer } from './drawer';
 
 @Component({

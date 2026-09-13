@@ -1,6 +1,17 @@
 {
-  "name": "@helix-ui/ag-grid",
+  "name": "@gravionlabs/helix-ag-grid",
   "version": "0.1.0",
+  "description": "Helix AG Grid helpers for Angular — value formatters, number parsers, and cell styles.",
+  "keywords": [
+    "helix",
+    "angular",
+    "ag-grid"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/ag-grid"
+  },
   "publishConfig": {
     "access": "public"
   },

@@ -23,18 +23,18 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { absolutePosition, addClass, addStyle, appendChild, find, findSingle, getFocusableElements, getIndex, getOuterWidth, hasClass, isDate, isNotEmpty, isTouchDevice, relativePosition, setAttribute, uuid } from '@primeuix/utils';
-import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { AutoFocus } from '@helix-ui/core/autofocus';
-import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseInput } from '@helix-ui/core/baseinput';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { Button } from '@helix-ui/core/button';
-import { blockBodyScroll, ConnectedOverlayScrollHandler, unblockBodyScroll } from '@helix-ui/core/dom';
-import { CalendarIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, TimesIcon } from '@helix-ui/core/icons';
-import { InputText } from '@helix-ui/core/inputtext';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Ripple } from '@helix-ui/core/ripple';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
+import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseInput } from '@gravionlabs/helix-core/baseinput';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { Button } from '@gravionlabs/helix-core/button';
+import { blockBodyScroll, ConnectedOverlayScrollHandler, unblockBodyScroll } from '@gravionlabs/helix-core/dom';
+import { CalendarIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, TimesIcon } from '@gravionlabs/helix-core/icons';
+import { InputText } from '@gravionlabs/helix-core/inputtext';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 import {
     DatePickerButtonBarTemplateContext,
     DatePickerDateTemplateContext,
@@ -49,8 +49,8 @@ import {
     LocaleSettings,
     Month,
     NavigationState
-} from '@helix-ui/core/types/datepicker';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+} from '@gravionlabs/helix-core/types/datepicker';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { Subscription } from 'rxjs';
 import { DatePickerStyle } from './style/datepickerstyle';
 

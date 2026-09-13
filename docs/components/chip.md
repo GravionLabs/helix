@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Chip } from '@helix-ui/core/chip';
+import { Chip } from '@gravionlabs/helix-core/chip';
 ```
 
 ## Components

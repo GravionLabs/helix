@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/tieredmenu';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const inlineStyles = {
     submenu: ({ instance, processedItem }) => ({ display: instance.isItemActive(processedItem) ? 'flex' : 'none' })

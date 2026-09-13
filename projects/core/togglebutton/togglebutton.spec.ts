@@ -4,9 +4,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { SharedModule } from '@helix-ui/core/api';
-import { provideHelix } from '@helix-ui/core/config';
-import { ToggleButtonChangeEvent } from '@helix-ui/core/types/togglebutton';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { provideHelix } from '@gravionlabs/helix-core/config';
+import { ToggleButtonChangeEvent } from '@gravionlabs/helix-core/types/togglebutton';
 import { ToggleButton } from './togglebutton';
 
 @Component({

@@ -1,3 +1,3 @@
 export * from './inputnumber';
-export * from '@helix-ui/core/types/inputnumber';
+export * from '@gravionlabs/helix-core/types/inputnumber';
 export * from './style/inputnumberstyle';

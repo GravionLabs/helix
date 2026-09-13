@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InputNumber } from '@helix-ui/core/inputnumber';
+import { InputNumber } from '@gravionlabs/helix-core/inputnumber';
 ```
 
 ## Components

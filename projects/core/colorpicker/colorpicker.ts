@@ -2,18 +2,18 @@
 import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
-import { OverlayOptions, OverlayService, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { AutoFocusModule } from '@helix-ui/core/autofocus';
-import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Bind } from '@helix-ui/core/bind';
-import { ConnectedOverlayScrollHandler } from '@helix-ui/core/dom';
-import { MotionModule } from '@helix-ui/core/motion';
-import { OverlayModule } from '@helix-ui/core/overlay';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
-import type { ColorPickerChangeEvent } from '@helix-ui/core/types/colorpicker';
-import { ColorPickerPassThrough } from '@helix-ui/core/types/colorpicker';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { OverlayOptions, OverlayService, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { AutoFocusModule } from '@gravionlabs/helix-core/autofocus';
+import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { ConnectedOverlayScrollHandler } from '@gravionlabs/helix-core/dom';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { OverlayModule } from '@gravionlabs/helix-core/overlay';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import type { ColorPickerChangeEvent } from '@gravionlabs/helix-core/types/colorpicker';
+import { ColorPickerPassThrough } from '@gravionlabs/helix-core/types/colorpicker';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { ColorPickerStyle } from './style/colorpickerstyle';
 
 export const COLORPICKER_VALUE_ACCESSOR: any = {

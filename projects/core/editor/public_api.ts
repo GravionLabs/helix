@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/editor';
+export * from '@gravionlabs/helix-core/types/editor';
 export * from './editor';
 export * from './style/editorstyle';

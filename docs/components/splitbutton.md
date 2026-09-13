@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SplitButton } from '@helix-ui/core/splitbutton';
+import { SplitButton } from '@gravionlabs/helix-core/splitbutton';
 ```
 
 ## Components

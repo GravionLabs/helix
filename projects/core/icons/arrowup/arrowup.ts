@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { uuid } from '@primeuix/utils';
-import { BaseIcon } from '@helix-ui/core/icons/baseicon';
+import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({
     selector: '[data-p-icon="arrow-up"]',

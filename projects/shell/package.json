@@ -1,6 +1,19 @@
 {
-  "name": "@helix-ui/shell",
+  "name": "@gravionlabs/helix-shell",
   "version": "0.2.0",
+  "description": "Helix application shell for Angular — layout (topbar, nav rail, footer), auth pages, landing widgets, and a signal-store-backed layout state.",
+  "keywords": [
+    "helix",
+    "angular",
+    "ui",
+    "layout",
+    "shell"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/shell"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +22,7 @@
     "@angular/core": ">=22",
     "@angular/router": ">=22",
     "@ngrx/signals": ">=21",
-    "@helix-ui/core": ">=22",
+    "@gravionlabs/helix-core": ">=22",
     "@primeuix/themes": ">=2",
     "primeicons": ">=7"
   },

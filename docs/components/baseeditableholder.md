@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
 ```
 
 ## Directives

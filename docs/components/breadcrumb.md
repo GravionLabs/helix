@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Breadcrumb } from '@helix-ui/core/breadcrumb';
+import { Breadcrumb } from '@gravionlabs/helix-core/breadcrumb';
 ```
 
 ## Components

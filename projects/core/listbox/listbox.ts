@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, booleanAttribute, computed, forwardRef, inject, input, numberAttribute, signal, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, isEmpty, isFunction, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
-import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@helix-ui/core/api';
-import { PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { Checkbox } from '@helix-ui/core/checkbox';
-import { IconField } from '@helix-ui/core/iconfield';
-import { BlankIcon, CheckIcon, SearchIcon } from '@helix-ui/core/icons';
-import { InputIcon } from '@helix-ui/core/inputicon';
-import { InputText } from '@helix-ui/core/inputtext';
-import { Ripple } from '@helix-ui/core/ripple';
-import { Scroller, ScrollerLazyLoadEvent } from '@helix-ui/core/scroller';
-import { Nullable } from '@helix-ui/core/ts-helpers';
+import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix-core/api';
+import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { Checkbox } from '@gravionlabs/helix-core/checkbox';
+import { IconField } from '@gravionlabs/helix-core/iconfield';
+import { BlankIcon, CheckIcon, SearchIcon } from '@gravionlabs/helix-core/icons';
+import { InputIcon } from '@gravionlabs/helix-core/inputicon';
+import { InputText } from '@gravionlabs/helix-core/inputtext';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { Scroller, ScrollerLazyLoadEvent } from '@gravionlabs/helix-core/scroller';
+import { Nullable } from '@gravionlabs/helix-core/ts-helpers';
 import {
     ListBoxPassThrough,
     ListboxChangeEvent,
@@ -31,7 +31,7 @@ import {
     ListboxItemTemplateContext,
     ListboxLoaderTemplateContext,
     ListboxSelectAllChangeEvent
-} from '@helix-ui/core/types/listbox';
+} from '@gravionlabs/helix-core/types/listbox';
 import { Subscription } from 'rxjs';
 import { ListBoxStyle } from './style/listboxstyle';
 

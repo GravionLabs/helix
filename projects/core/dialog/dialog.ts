@@ -28,17 +28,17 @@ import {
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
 import { addStyle, appendChild, getOuterHeight, getOuterWidth, getViewport, hasClass, removeClass, setAttribute, uuid } from '@primeuix/utils';
-import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { Button, ButtonProps } from '@helix-ui/core/button';
-import { blockBodyScroll, DomHandler, unblockBodyScroll } from '@helix-ui/core/dom';
-import { FocusTrap } from '@helix-ui/core/focustrap';
-import { TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon } from '@helix-ui/core/icons';
-import { MotionModule } from '@helix-ui/core/motion';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
-import { DialogPassThrough } from '@helix-ui/core/types/dialog';
-import { ZIndexUtils } from '@helix-ui/core/utils';
+import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { Button, ButtonProps } from '@gravionlabs/helix-core/button';
+import { blockBodyScroll, DomHandler, unblockBodyScroll } from '@gravionlabs/helix-core/dom';
+import { FocusTrap } from '@gravionlabs/helix-core/focustrap';
+import { TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon } from '@gravionlabs/helix-core/icons';
+import { MotionModule } from '@gravionlabs/helix-core/motion';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
+import { DialogPassThrough } from '@gravionlabs/helix-core/types/dialog';
+import { ZIndexUtils } from '@gravionlabs/helix-core/utils';
 import { DialogStyle } from './style/dialogstyle';
 
 const DIALOG_INSTANCE = new InjectionToken<Dialog>('DIALOG_INSTANCE');

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style as drawer_style } from '@primeuix/styles/drawer';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
 ${drawer_style}

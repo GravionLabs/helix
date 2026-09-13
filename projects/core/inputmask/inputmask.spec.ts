@@ -3,7 +3,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { InputMask, InputMaskModule, InputMaskDirective } from './inputmask';
-import { SharedModule } from '@helix-ui/core/api';
+import { SharedModule } from '@gravionlabs/helix-core/api';
 import { CommonModule } from '@angular/common';
 
 // Test Components

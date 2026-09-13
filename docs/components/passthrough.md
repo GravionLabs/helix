@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/passthrough';
+import '@gravionlabs/helix-core/passthrough';
 ```
 
 ## Source

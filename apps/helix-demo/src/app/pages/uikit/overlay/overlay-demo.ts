@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@helix-ui/core/api';
-import { ButtonModule } from '@helix-ui/core/button';
-import { ConfirmPopupModule } from '@helix-ui/core/confirmpopup';
-import { DialogModule } from '@helix-ui/core/dialog';
-import { DrawerModule } from '@helix-ui/core/drawer';
-import { InputTextModule } from '@helix-ui/core/inputtext';
-import { type Popover, PopoverModule } from '@helix-ui/core/popover';
-import { TableModule } from '@helix-ui/core/table';
-import { ToastModule } from '@helix-ui/core/toast';
-import { TooltipModule } from '@helix-ui/core/tooltip';
+import { ConfirmationService, MessageService } from '@gravionlabs/helix-core/api';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { ConfirmPopupModule } from '@gravionlabs/helix-core/confirmpopup';
+import { DialogModule } from '@gravionlabs/helix-core/dialog';
+import { DrawerModule } from '@gravionlabs/helix-core/drawer';
+import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
+import { type Popover, PopoverModule } from '@gravionlabs/helix-core/popover';
+import { TableModule } from '@gravionlabs/helix-core/table';
+import { ToastModule } from '@gravionlabs/helix-core/toast';
+import { TooltipModule } from '@gravionlabs/helix-core/tooltip';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({

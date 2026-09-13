@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { FloatLabelPassThrough } from '@helix-ui/core/types/floatlabel';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { FloatLabelPassThrough } from '@gravionlabs/helix-core/types/floatlabel';
 import { FloatLabelStyle } from './style/floatlabelstyle';
 
 const FLOATLABEL_INSTANCE = new InjectionToken<FloatLabel>('FLOATLABEL_INSTANCE');

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { AutoFocus } from '@helix-ui/core/autofocus';
+import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 ```
 
 ## Directives

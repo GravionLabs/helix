@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, contentChild, contentChildren, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, input } from '@angular/core';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind } from '@helix-ui/core/bind';
-import { TagPassThrough } from '@helix-ui/core/types/tag';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { TagPassThrough } from '@gravionlabs/helix-core/types/tag';
 import { TagStyle } from './style/tagstyle';
 
 const TAG_INSTANCE = new InjectionToken<Tag>('TAG_INSTANCE');

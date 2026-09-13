@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 // biome-ignore lint/style/useImportType: DI token, must be value import
 import { Router, RouterModule } from '@angular/router';
-import { ButtonModule } from '@helix-ui/core/button';
-import { RippleModule } from '@helix-ui/core/ripple';
-import { StyleClassModule } from '@helix-ui/core/styleclass';
+import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { RippleModule } from '@gravionlabs/helix-core/ripple';
+import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { HelixFloatingConfigurator } from '../../../../layout/components/floating-configurator/floating-configurator';
 import type { HelixNavLink } from '../../landing.model';
 

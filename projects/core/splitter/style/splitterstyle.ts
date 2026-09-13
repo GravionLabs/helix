@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/splitter';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => ['p-splitter p-component', 'p-splitter-' + instance.layout()],

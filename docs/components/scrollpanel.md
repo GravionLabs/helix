@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ScrollPanel } from '@helix-ui/core/scrollpanel';
+import { ScrollPanel } from '@gravionlabs/helix-core/scrollpanel';
 ```
 
 ## Components

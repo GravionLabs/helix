@@ -1,6 +1,6 @@
 
 import { ChangeDetectionStrategy, Component, inject, NgModule, ViewEncapsulation } from '@angular/core';
-import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 import { ButtonGroupStyle } from './style/buttongroupstyle';
 
 @Component({

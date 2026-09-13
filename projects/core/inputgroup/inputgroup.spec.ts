@@ -3,8 +3,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { InputGroup } from './inputgroup';
-import { InputGroupAddon } from '@helix-ui/core/inputgroupaddon';
-import { provideHelix } from '@helix-ui/core/config';
+import { InputGroupAddon } from '@gravionlabs/helix-core/inputgroupaddon';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 
 @Component({
     standalone: true,

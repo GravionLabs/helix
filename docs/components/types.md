@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/types';
+import '@gravionlabs/helix-core/types';
 ```
 
 ## Source

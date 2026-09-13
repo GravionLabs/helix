@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import '@helix-ui/core/validators';
+import '@gravionlabs/helix-core/validators';
 ```
 
 ## Interfaces & Types

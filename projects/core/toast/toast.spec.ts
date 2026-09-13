@@ -3,8 +3,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { MessageService, HelixTemplate, SharedModule, ToastMessageOptions } from '@helix-ui/core/api';
-import { provideHelix } from '@helix-ui/core/config';
+import { MessageService, HelixTemplate, SharedModule, ToastMessageOptions } from '@gravionlabs/helix-core/api';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 import { Toast, ToastItem } from './toast';
 
 // Test Components for different scenarios

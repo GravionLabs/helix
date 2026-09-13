@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ToggleSwitch } from '@helix-ui/core/toggleswitch';
+import { ToggleSwitch } from '@gravionlabs/helix-core/toggleswitch';
 ```
 
 ## Components

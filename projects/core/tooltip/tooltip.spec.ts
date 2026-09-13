@@ -2,7 +2,7 @@ import { Component, ElementRef, TemplateRef, ViewChild, provideZonelessChangeDet
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { TooltipOptions } from '@helix-ui/core/api';
+import { TooltipOptions } from '@gravionlabs/helix-core/api';
 import { Tooltip } from './tooltip';
 
 @Component({

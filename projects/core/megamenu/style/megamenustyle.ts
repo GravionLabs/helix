@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { style } from '@primeuix/styles/megamenu';
-import { BaseStyle } from '@helix-ui/core/base';
+import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const inlineStyles = {
     rootList: ({ instance }) => ({ 'max-height': instance.scrollHeight(), overflow: 'auto' })

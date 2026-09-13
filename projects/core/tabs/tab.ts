@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, model, ViewEncapsulation } from '@angular/core';
 import { equals, focus, getAttribute } from '@primeuix/utils';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { Ripple } from '@helix-ui/core/ripple';
-import { TabPassThrough } from '@helix-ui/core/types/tabs';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { TabPassThrough } from '@gravionlabs/helix-core/types/tabs';
 import { TabStyle } from './style/tabstyle';
 import { TabList } from './tablist';
 import { Tabs } from './tabs';

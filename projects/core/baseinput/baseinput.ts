@@ -1,6 +1,6 @@
 import { booleanAttribute, computed, Directive, inject, input } from '@angular/core';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Fluid } from '@helix-ui/core/fluid';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Fluid } from '@gravionlabs/helix-core/fluid';
 
 @Directive({ standalone: true })
 export class BaseInput<PT = any> extends BaseEditableHolder<PT> {

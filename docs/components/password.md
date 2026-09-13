@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { PasswordDirective, MapperPipe, Password } from '@helix-ui/core/password';
+import { PasswordDirective, MapperPipe, Password } from '@gravionlabs/helix-core/password';
 ```
 
 ## Components

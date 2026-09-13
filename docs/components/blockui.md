@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BlockUI } from '@helix-ui/core/blockui';
+import { BlockUI } from '@gravionlabs/helix-core/blockui';
 ```
 
 ## Components

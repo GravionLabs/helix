@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { SafeHtmlPipe, MenuItemContent, Menu } from '@helix-ui/core/menu';
+import { SafeHtmlPipe, MenuItemContent, Menu } from '@gravionlabs/helix-core/menu';
 ```
 
 ## Components

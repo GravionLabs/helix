@@ -12,11 +12,11 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "paths": {
-      "@helix-ui/core": ["./dist/core"],
-      "@helix-ui/core/*": ["./dist/core/*"],
-      "@helix-ui/shell": ["./projects/shell/src/public-api.ts"],
-      "@helix-ui/zod": ["./projects/zod/src/public-api.ts"],
-      "@helix-ui/ag-grid": ["./projects/ag-grid/src/public-api.ts"],
+      "@gravionlabs/helix-core": ["./dist/core"],
+      "@gravionlabs/helix-core/*": ["./dist/core/*"],
+      "@gravionlabs/helix-shell": ["./projects/shell/src/public-api.ts"],
+      "@gravionlabs/helix-zod": ["./projects/zod/src/public-api.ts"],
+      "@gravionlabs/helix-ag-grid": ["./projects/ag-grid/src/public-api.ts"],
       "@/*": ["./apps/helix-demo/src/*"]
     },
     "importHelpers": true,

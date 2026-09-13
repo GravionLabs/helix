@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { provideHelix } from '@helix-ui/core/config';
+import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 import { Message } from './message';
 
 @Component({

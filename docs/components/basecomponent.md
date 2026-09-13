@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { BaseComponent } from '@helix-ui/core/basecomponent';
+import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 ```
 
 ## Directives

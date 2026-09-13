@@ -1,6 +1,6 @@
 import { booleanAttribute, Directive, ElementRef, NgModule, NgZone, OnDestroy, Renderer2, input } from '@angular/core';
 import { addClass, getTargetElement, hasClass, isElement, removeClass } from '@primeuix/utils';
-import { VoidListener } from '@helix-ui/core/ts-helpers';
+import { VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 
 /**
  * StyleClass manages css classes declaratively to during enter/leave animations or just to toggle classes on an element.

@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Message } from '@helix-ui/core/message';
+import { Message } from '@gravionlabs/helix-core/message';
 ```
 
 ## Components

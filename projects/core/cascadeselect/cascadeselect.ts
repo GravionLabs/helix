@@ -27,16 +27,16 @@ import {
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MotionOptions } from '@primeuix/motion';
 import { calculateScrollbarWidth, equals, findLastIndex, findSingle, focus, getHiddenElementOuterWidth, getOffset, getOuterWidth, getViewport, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
-import { OverlayOptions, OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@helix-ui/core/api';
-import { AutoFocus } from '@helix-ui/core/autofocus';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { BaseEditableHolder } from '@helix-ui/core/baseeditableholder';
-import { Bind } from '@helix-ui/core/bind';
-import { Fluid } from '@helix-ui/core/fluid';
-import { AngleRightIcon, ChevronDownIcon, TimesIcon } from '@helix-ui/core/icons';
-import { Overlay } from '@helix-ui/core/overlay';
-import { Ripple } from '@helix-ui/core/ripple';
-import { Nullable, VoidListener } from '@helix-ui/core/ts-helpers';
+import { OverlayOptions, OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
+import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
+import { Bind } from '@gravionlabs/helix-core/bind';
+import { Fluid } from '@gravionlabs/helix-core/fluid';
+import { AngleRightIcon, ChevronDownIcon, TimesIcon } from '@gravionlabs/helix-core/icons';
+import { Overlay } from '@gravionlabs/helix-core/overlay';
+import { Ripple } from '@gravionlabs/helix-core/ripple';
+import { Nullable, VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 import {
     CascadeSelectBeforeHideEvent,
     CascadeSelectBeforeShowEvent,
@@ -46,7 +46,7 @@ import {
     CascadeSelectPassThrough,
     CascadeSelectShowEvent,
     CascadeSelectValueTemplateContext
-} from '@helix-ui/core/types/cascadeselect';
+} from '@gravionlabs/helix-core/types/cascadeselect';
 import { CascadeSelectStyle } from './style/cascadeselectstyle';
 
 const CASCADESELECT_INSTANCE = new InjectionToken<CascadeSelect>('CASCADESELECT_INSTANCE');

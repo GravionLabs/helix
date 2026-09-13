@@ -3,8 +3,8 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { IconField } from './iconfield';
-import { InputIcon } from '@helix-ui/core/inputicon';
-import { provideHelix } from '@helix-ui/core/config';
+import { InputIcon } from '@gravionlabs/helix-core/inputicon';
+import { provideHelix } from '@gravionlabs/helix-core/config';
 
 @Component({
     standalone: true,

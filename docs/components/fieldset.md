@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Fieldset } from '@helix-ui/core/fieldset';
+import { Fieldset } from '@gravionlabs/helix-core/fieldset';
 ```
 
 ## Components

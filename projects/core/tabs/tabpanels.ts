@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, ViewEncapsulation } from '@angular/core';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
 import { TabPanelsStyle } from './style/tabpanelsstyle';
-import { TabPanelsPassThrough } from '@helix-ui/core/types/tabs';
+import { TabPanelsPassThrough } from '@gravionlabs/helix-core/types/tabs';
 
 const TABPANELS_INSTANCE = new InjectionToken<TabPanels>('TABPANELS_INSTANCE');
 

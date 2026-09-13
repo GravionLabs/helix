@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { InplaceDisplay, InplaceContent, Inplace } from '@helix-ui/core/inplace';
+import { InplaceDisplay, InplaceContent, Inplace } from '@gravionlabs/helix-core/inplace';
 ```
 
 ## Components

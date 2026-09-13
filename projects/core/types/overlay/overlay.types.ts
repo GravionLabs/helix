@@ -1,6 +1,6 @@
 import type { TemplateRef } from '@angular/core';
 import type { MotionOptions } from '@primeuix/motion';
-import type { OverlayModeType, PassThrough, PassThroughOption } from '@helix-ui/core/api';
+import type { OverlayModeType, PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
 
 /**
  * Custom content template context.

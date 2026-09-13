@@ -1,8 +1,8 @@
 import { Component, inject, InjectionToken, NgModule, ChangeDetectionStrategy, input } from '@angular/core';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { InputGroupPassThrough } from '@helix-ui/core/types/inputgroup';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { InputGroupPassThrough } from '@gravionlabs/helix-core/types/inputgroup';
 import { InputGroupStyle } from './style/inputgroupstyle';
 
 const INPUTGROUP_INSTANCE = new InjectionToken<InputGroup>('INPUTGROUP_INSTANCE');

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation, input } from '@angular/core';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
 import { DividerStyle } from './style/dividerstyle';
-import { DividerPassThrough } from '@helix-ui/core/types/divider';
+import { DividerPassThrough } from '@gravionlabs/helix-core/types/divider';
 
 const DIVIDER_INSTANCE = new InjectionToken<Divider>('DIVIDER_INSTANCE');
 

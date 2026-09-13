@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewChecked, ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
-import { IftaLabelPassThrough } from '@helix-ui/core/types/iftalabel';
+import { SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
+import { IftaLabelPassThrough } from '@gravionlabs/helix-core/types/iftalabel';
 import { IftaLabelStyle } from './style/iftalabelstyle';
 
 const IFTALABEL_INSTANCE = new InjectionToken<IftaLabel>('IFTALABEL_INSTANCE');

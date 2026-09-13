@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { Fluid } from '@helix-ui/core/fluid';
+import { Fluid } from '@gravionlabs/helix-core/fluid';
 ```
 
 ## Components

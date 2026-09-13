@@ -1,3 +1,3 @@
-export * from '@helix-ui/core/types/fluid';
+export * from '@gravionlabs/helix-core/types/fluid';
 export * from './fluid';
 export * from './style/fluidstyle';

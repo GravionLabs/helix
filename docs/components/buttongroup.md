@@ -5,7 +5,7 @@
 ## Import
 
 ```ts
-import { ButtonGroup } from '@helix-ui/core/buttongroup';
+import { ButtonGroup } from '@gravionlabs/helix-core/buttongroup';
 ```
 
 ## Components

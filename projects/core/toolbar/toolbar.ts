@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, InjectionToken, NgModule, TemplateRef, ViewEncapsulation, contentChild, contentChildren, input } from '@angular/core';
-import { BlockableUI, HelixTemplate, SharedModule } from '@helix-ui/core/api';
-import { BaseComponent, PARENT_INSTANCE } from '@helix-ui/core/basecomponent';
-import { Bind, BindModule } from '@helix-ui/core/bind';
+import { BlockableUI, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
+import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
+import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
 import { ToolbarStyle } from './style/toolbarstyle';
-import { ToolbarPassThrough } from '@helix-ui/core/types/toolbar';
+import { ToolbarPassThrough } from '@gravionlabs/helix-core/types/toolbar';
 
 const TOOLBAR_INSTANCE = new InjectionToken<Toolbar>('TOOLBAR_INSTANCE');
 
