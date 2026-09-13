@@ -54,7 +54,7 @@
 npm install @gravionlabs/helix-shell
 ```
 
-Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`, `@primeuix/themes >=2`, `primeicons >=7`.
+Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`, `primeicons >=7`.
 
 ---
 

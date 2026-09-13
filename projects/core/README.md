@@ -11,10 +11,11 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Selectors use the `h-` prefix (`h-button`, `hTooltip`, `hRipple`). Styling is
-provided by the pinned `@primeuix` MIT layer, so CSS classes (`.p-*`) and
-design tokens (`--p-*`) keep their upstream names and all existing PrimeNG
-themes/presets work unchanged (decision rationale:
+Selectors use the `h-` prefix (`h-button`, `hTooltip`, `hRipple`). Styling and
+theming (the former `@primeuix/{utils,motion,styled,styles,themes}` MIT layer)
+are vendored into this library — see [VENDOR.md](VENDOR.md). CSS classes
+(`.p-*`) and design tokens (`--p-*`) still keep their upstream names for now
+(decision rationale, now superseded — see the update note:
 [docs/migrations/css-class-prefix-decision.md](../../docs/migrations/css-class-prefix-decision.md)).
 
 ## Documentation

@@ -2,6 +2,16 @@
 
 Part of epic #297. Decided 2026-07-15.
 
+> **Update (epic #421, 2026-09):** the blocking dependency described below —
+> the un-forked `@primeuix/styles`/`@primeuix/styled` layer hardcoding
+> `.p-*` — no longer holds. Epic #421 vendors `styles`, `styled`, `utils`,
+> `motion` and `themes` into `helix-core`, making the CSS ours to edit
+> directly. The rename itself is tracked as a follow-up, epic #421's
+> feature #431 ("Rename `.p-*`/`--p-*` to `.h-*`/`--h-*`"), blocked on the
+> vendoring landing first. This document's cost/benefit analysis below is
+> preserved as the historical record of why the rename was infeasible
+> before #421.
+
 Question: should the fork rename the `.p-*` CSS class names (and `data-p-*`
 attributes, `--p-*` design tokens) to `h-*`, matching the `p-` → `h-` element
 selector rename?
