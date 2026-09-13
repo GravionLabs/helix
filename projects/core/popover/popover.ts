@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, inject, InjectionToken, input, NgModule, NgZone, numberAttribute, TemplateRef, ViewEncapsulation, ViewRef, output, contentChild, contentChildren } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
-import { $dt } from '@primeuix/styled';
+import { $dt } from '@gravionlabs/helix-core/uix/styled';
 import { absolutePosition, addClass, appendChild, findSingle, getOffset, isIOS, isTouchDevice } from '@gravionlabs/helix-core/uix/utils';
 import { OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

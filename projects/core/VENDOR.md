@@ -47,6 +47,7 @@ upstream's internal file layout for future diffing.
 | --- | --- | --- | --- |
 | `utils` | 0.7.2 | [`main`](https://github.com/primefaces/primeuix) @ 0.6.4, hand-ported to 0.7.2 | `isCssSupported` (new in 0.7.x), `toElement` (ref-unwrapping superset), `setAttribute` (style-object handling) manually ported on top of the 0.6.4 source — see doc comments on the touched files under `uix/utils/dom/methods/`. |
 | `motion` | 0.0.10 | [`6835ef4347`](https://github.com/primefaces/primeuix/commit/6835ef4347) (the 0.0.10 version-bump commit; `main` had since moved to 0.0.11 with unrelated new features, deliberately not picked up) | Vendored unmodified apart from import rewrites (`@primeuix/utils` → `uix/utils`) and flattening the package's `types/index.ts` into a sibling `types.ts`. |
+| `styled` | 0.7.4 | [`main`](https://github.com/primefaces/primeuix) @ 0.7.4 (matches the pin exactly) | Vendored unmodified apart from import rewrites (`@primeuix/utils`(`/eventbus`, `/object`) → `uix/utils`). The entry point keeps upstream's `public_api.ts` (renamed from `index.ts`) at its root; two files (`helpers/css.ts`, `helpers/color/palette.ts`) that did a bare directory import of the package root were pointed at `./public_api` explicitly, since ng-packagr refuses an `index.ts` living alongside a differently-named entry file. |
 
 ## Diffing against upstream primeuix
 

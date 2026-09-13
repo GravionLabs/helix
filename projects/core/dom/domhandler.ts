@@ -853,7 +853,7 @@ export class DomHandler {
     }
 }
 
-import { $dt } from '@primeuix/styled';
+import { $dt } from '@gravionlabs/helix-core/uix/styled';
 import * as utils from '@gravionlabs/helix-core/uix/utils';
 
 // @todo: update this when we remove the old domhandler
