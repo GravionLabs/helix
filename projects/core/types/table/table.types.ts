@@ -8,7 +8,7 @@ import type { InputTextPassThrough } from '@gravionlabs/helix-core/types/inputte
 import type { SelectPassThrough } from '@gravionlabs/helix-core/types/select';
 import type { InputNumberPassThrough } from '@gravionlabs/helix-core/types/inputnumber';
 import type { DatePickerPassThrough } from '@gravionlabs/helix-core/types/datepicker';
-import type { MotionOptions } from '@primeuix/motion';
+import type { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 
 /**
  * Custom pass-through(pt) options for ColumnFilter.

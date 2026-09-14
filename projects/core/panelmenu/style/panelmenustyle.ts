@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as panelmenu_style } from '@primeuix/styles/panelmenu';
+import { style as panelmenu_style } from './panelmenu.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, Input, NgModule, numberAttribute, signal, SimpleChanges, TemplateRef, ViewEncapsulation, output, viewChild, contentChild, contentChildren } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MotionOptions } from '@primeuix/motion';
-import { equals, findLast, findSingle, focus, getAttribute, isEmpty, isNotEmpty, isPrintableCharacter, resolve, uuid } from '@primeuix/utils';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
+import { equals, findLast, findSingle, focus, getAttribute, isEmpty, isNotEmpty, isPrintableCharacter, resolve, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

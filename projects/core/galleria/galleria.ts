@@ -22,8 +22,8 @@ import {
     viewChild,
     ViewEncapsulation
 } from '@angular/core';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
-import { addClass, find, findSingle, focus, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
+import { addClass, find, findSingle, focus, getAttribute, removeClass, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

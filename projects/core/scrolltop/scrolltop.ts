@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, InjectionToken, input, Input, NgModule, numberAttribute,  signal, TemplateRef, ViewEncapsulation, contentChild, contentChildren } from '@angular/core';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
-import { getWindowScrollTop } from '@primeuix/utils';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
+import { getWindowScrollTop } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

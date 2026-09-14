@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Directive, effect, inject, NgModule, NgZone } from '@angular/core';
-import { addClass, getHeight, getOffset, getOuterHeight, getOuterWidth, getWidth, removeClass, remove as utils_remove } from '@primeuix/utils';
+import { addClass, getHeight, getOffset, getOuterHeight, getOuterWidth, getWidth, removeClass, remove as utils_remove } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 import { VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 import { RippleStyle } from './style/ripplestyle';

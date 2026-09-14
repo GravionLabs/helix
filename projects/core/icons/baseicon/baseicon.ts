@@ -1,5 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input, ViewEncapsulation } from '@angular/core';
-import { cn } from '@primeuix/utils';
+import { cn } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 import { BaseIconStyle } from './style/baseiconstyle';
 

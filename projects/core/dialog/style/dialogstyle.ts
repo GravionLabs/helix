@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/dialog';
+import { style } from './dialog.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 /* Position */

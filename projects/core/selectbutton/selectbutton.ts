@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, input, Input, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, output, contentChildren, contentChild, computed } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { equals, resolveFieldData } from '@primeuix/utils';
+import { equals, resolveFieldData } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';

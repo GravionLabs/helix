@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import type { MotionOptions } from '@primeuix/motion';
+import type { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import type { PassThrough, PassThroughOption, ToastMessageOptions } from '@gravionlabs/helix-core/api';
 
 /**

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, InjectionToken, Input, NgModule, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
-import { find, findSingle, resolve, uuid } from '@primeuix/utils';
+import { find, findSingle, resolve, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { Badge } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

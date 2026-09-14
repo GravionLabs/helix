@@ -1,5 +1,5 @@
 import { Directive, NgModule, computed, input } from '@angular/core';
-import { cn } from '@primeuix/utils';
+import { cn } from '@gravionlabs/helix-core/uix/utils';
 /**
  * Represents the suitable value types of hClass directive.
  * @group Types

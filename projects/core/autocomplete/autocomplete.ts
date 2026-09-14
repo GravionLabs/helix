@@ -23,8 +23,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MotionOptions } from '@primeuix/motion';
-import { equals, findLastIndex, findSingle, focus, isEmpty, isNotEmpty, resolveFieldData, uuid } from '@primeuix/utils';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
+import { equals, findLastIndex, findSingle, focus, isEmpty, isNotEmpty, resolveFieldData, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { OverlayOptions, OverlayService, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

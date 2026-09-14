@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as inputtext_style } from '@primeuix/styles/inputtext';
+import { style as inputtext_style } from './inputtext.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

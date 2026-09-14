@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as listbox_style } from '@primeuix/styles/listbox';
+import { style as listbox_style } from './listbox.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

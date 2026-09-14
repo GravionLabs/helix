@@ -6,7 +6,7 @@ import {
   withInMemoryScrolling,
 } from '@angular/router';
 import { provideHelix } from '@gravionlabs/helix-core/config';
-import Aura from '@primeuix/themes/aura';
+import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { appRoutes } from './app.routes';
 
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     provideZonelessChangeDetection(),
-    provideHelix({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } }),
+    provideHelix({ theme: { preset: auraPreset, options: { darkModeSelector: '.app-dark' } } }),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),
       languages: {

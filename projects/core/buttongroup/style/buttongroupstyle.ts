@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as buttongroup_style } from '@primeuix/styles/buttongroup';
+import { style as buttongroup_style } from './buttongroup.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

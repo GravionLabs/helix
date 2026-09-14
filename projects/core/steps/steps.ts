@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, NgModule, numberAttribute, OnDestroy, OnInit, ViewEncapsulation, input, output, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { find, findSingle } from '@primeuix/utils';
+import { find, findSingle } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 import { TooltipModule } from '@gravionlabs/helix-core/tooltip';

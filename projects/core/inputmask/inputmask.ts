@@ -28,7 +28,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, Directive, effect, ElementRef, forwardRef, inject, InjectionToken, input, NgModule, output, TemplateRef, ViewEncapsulation, contentChildren, viewChild, contentChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { getUserAgent, isClient } from '@primeuix/utils';
+import { getUserAgent, isClient } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

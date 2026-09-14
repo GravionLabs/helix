@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpEvent, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, output, TemplateRef, ViewEncapsulation, contentChild, viewChild, contentChildren } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { addClass, removeClass } from '@primeuix/utils';
+import { addClass, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { Badge } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

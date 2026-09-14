@@ -21,8 +21,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
-import { absolutePosition, addClass, addStyle, appendChild, find, findSingle, getFocusableElements, getIndex, getOuterWidth, hasClass, isDate, isNotEmpty, isTouchDevice, relativePosition, setAttribute, uuid } from '@primeuix/utils';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
+import { absolutePosition, addClass, addStyle, appendChild, find, findSingle, getFocusableElements, getIndex, getOuterWidth, hasClass, isDate, isNotEmpty, isTouchDevice, relativePosition, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { OverlayService, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

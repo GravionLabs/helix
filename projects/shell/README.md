@@ -24,20 +24,20 @@ npm install @gravionlabs/helix-shell
 ### Peer Dependencies
 
 `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`,
-`@primeuix/themes >=2`, `primeicons >=7`.
+`primeicons >=7`.
 
 ## Setup
 
 ```typescript
 // app.config.ts
-import Aura from '@primeuix/themes/aura';
+import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideHttpClient(),
-    provideHelix({ theme: { preset: Aura, options: { darkModeSelector: '.app-dark' } } })
+    provideHelix({ theme: { preset: auraPreset, options: { darkModeSelector: '.app-dark' } } })
   ]
 };
 ```

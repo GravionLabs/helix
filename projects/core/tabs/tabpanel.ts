@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, contentChild, forwardRef, inject, InjectionToken, input, model, ViewEncapsulation } from '@angular/core';
-import { equals } from '@primeuix/utils';
+import { equals } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
 import { TabPanelStyle } from './style/tabpanelstyle';

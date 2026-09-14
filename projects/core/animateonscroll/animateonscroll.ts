@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, Directive, NgModule, numberAttribute, input } from '@angular/core';
-import { addClass, removeClass } from '@primeuix/utils';
+import { addClass, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 
 interface AnimateOnScrollOptions {

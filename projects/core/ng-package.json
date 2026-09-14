@@ -5,6 +5,5 @@
   "lib": {
     "entryFile": "public_api.ts"
   },
-  "assets": ["LICENSE.md", "VENDOR.md"],
-  "allowedNonPeerDependencies": ["@primeuix/styled", "@primeuix/utils", "@primeuix/styles", "@primeuix/motion"]
+  "assets": ["LICENSE.md", "VENDOR.md"]
 }

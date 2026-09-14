@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, forwardRef, Inject, inject, InjectionToken, input, NgModule, numberAttribute, Renderer2, signal, TemplateRef, ViewEncapsulation, ViewRef, output, viewChild, contentChild, contentChildren, model } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import {
     appendChild,
     calculateScrollbarWidth,
@@ -20,7 +20,7 @@ import {
     isPrintableCharacter,
     resolve,
     uuid
-} from '@primeuix/utils';
+} from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

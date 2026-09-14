@@ -1,5 +1,5 @@
 import { AfterViewInit, booleanAttribute, Directive, effect, ElementRef, NgModule, NgZone, OnDestroy, Renderer2, input, output } from '@angular/core';
-import { addClass, removeClass } from '@primeuix/utils';
+import { addClass, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { DomHandler } from '@gravionlabs/helix-core/dom';
 import { VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 

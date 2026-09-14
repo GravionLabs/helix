@@ -19,7 +19,7 @@ import {
   contentChild,
   contentChildren
 } from '@angular/core';
-import { addClass, find, findSingle, getAttribute, removeClass, setAttribute, uuid } from '@primeuix/utils';
+import { addClass, find, findSingle, getAttribute, removeClass, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { Footer, Header, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

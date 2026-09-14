@@ -20,8 +20,9 @@
     "test:ci": "ng test shell --configuration=ci",
     "format": "biome format --write .",
     "format:check": "biome format .",
-    "lint": "biome check . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" && pnpm lint:no-primeng",
+    "lint": "biome check . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" && pnpm lint:no-primeng && pnpm lint:no-primeuix",
     "lint:no-primeng": "! grep -rn \"from 'primeng\" --include='*.ts' --include='*.html' projects/shell projects/zod projects/ag-grid apps/helix-demo/src",
+    "lint:no-primeuix": "! grep -rnE \"from '@primeuix/|require\\('@primeuix/\" --include='*.ts' --include='*.html' projects apps",
     "lint:fix": "biome check --write . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" --fix",
     "prepare": "husky"
   },

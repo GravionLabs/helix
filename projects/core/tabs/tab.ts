@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, model, ViewEncapsulation } from '@angular/core';
-import { equals, focus, getAttribute } from '@primeuix/utils';
+import { equals, focus, getAttribute } from '@gravionlabs/helix-core/uix/utils';
 import { SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

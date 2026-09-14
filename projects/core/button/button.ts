@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, contentChild, Directive, effect, inject, InjectionToken, input, NgModule, numberAttribute, TemplateRef, ViewEncapsulation, output, contentChildren } from '@angular/core';
-import { addClass, createElement, findSingle, isEmpty } from '@primeuix/utils';
+import { addClass, createElement, findSingle, isEmpty } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';

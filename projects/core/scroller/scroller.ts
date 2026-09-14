@@ -17,7 +17,7 @@ import {
   contentChild,
   contentChildren
 } from '@angular/core';
-import { findSingle, getHeight, getWidth, isTouchDevice, isVisible } from '@primeuix/utils';
+import { findSingle, getHeight, getWidth, isTouchDevice, isVisible } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';
