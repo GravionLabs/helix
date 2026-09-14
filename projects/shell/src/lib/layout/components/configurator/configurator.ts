@@ -12,13 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HelixConfig } from '@gravionlabs/helix-core/config';
 import { SelectButtonModule } from '@gravionlabs/helix-core/selectbutton';
-import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
-import Aura from '@primeuix/themes/aura';
-import Lara from '@primeuix/themes/lara';
-import Nora from '@primeuix/themes/nora';
+import { $t, updatePreset, updateSurfacePalette } from '@gravionlabs/helix-core/themes';
+import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
+import { laraPreset } from '@gravionlabs/helix-core/themes/lara';
+import { noraPreset } from '@gravionlabs/helix-core/themes/nora';
 import { LayoutStore } from '../../store/layout.store';
 
-const presets = { Aura, Lara, Nora } as const;
+const presets = { Aura: auraPreset, Lara: laraPreset, Nora: noraPreset } as const;
 
 declare type KeyOfType<T> = keyof T extends infer U ? U : never;
 

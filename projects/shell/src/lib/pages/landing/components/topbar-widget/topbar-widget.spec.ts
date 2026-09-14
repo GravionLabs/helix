@@ -1,4 +1,4 @@
-vi.mock('@primeuix/themes', () => ({
+vi.mock('@gravionlabs/helix-core/themes', () => ({
   $t: vi.fn(() => ({
     preset: vi.fn().mockReturnThis(),
     surfacePalette: vi.fn().mockReturnThis(),
@@ -7,9 +7,9 @@ vi.mock('@primeuix/themes', () => ({
   updatePreset: vi.fn(),
   updateSurfacePalette: vi.fn(),
 }));
-vi.mock('@primeuix/themes/aura', () => ({ default: { primitive: {} } }));
-vi.mock('@primeuix/themes/lara', () => ({ default: { primitive: {} } }));
-vi.mock('@primeuix/themes/nora', () => ({ default: { primitive: {} } }));
+vi.mock('@gravionlabs/helix-core/themes/aura', () => ({ auraPreset: { primitive: {} } }));
+vi.mock('@gravionlabs/helix-core/themes/lara', () => ({ laraPreset: { primitive: {} } }));
+vi.mock('@gravionlabs/helix-core/themes/nora', () => ({ noraPreset: { primitive: {} } }));
 
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';

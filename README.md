@@ -31,16 +31,15 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Theming uses the `@primeuix` layer, so existing presets (Aura, Lara, Nora) work
-unchanged:
+Theming ships the Aura, Lara and Nora presets vendored into `helix-core`:
 
 ```ts
 // app.config.ts
-import Aura from '@primeuix/themes/aura';
+import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHelix({ theme: { preset: Aura } })],
+  providers: [provideHelix({ theme: { preset: auraPreset } })],
 };
 ```
 

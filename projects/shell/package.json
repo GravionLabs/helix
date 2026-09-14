@@ -23,7 +23,6 @@
     "@angular/router": ">=22",
     "@ngrx/signals": ">=21",
     "@gravionlabs/helix-core": ">=22",
-    "@primeuix/themes": ">=2",
     "primeicons": ">=7"
   },
   "dependencies": {
