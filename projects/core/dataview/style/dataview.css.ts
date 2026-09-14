@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-dataview {
+    .h-dataview {
         position: relative;
         display: block;
         border-color: dt('dataview.border.color');
@@ -9,7 +9,7 @@ export const style = /*css*/ `
         padding: dt('dataview.padding');
     }
 
-    .p-dataview-header {
+    .h-dataview-header {
         background: dt('dataview.header.background');
         color: dt('dataview.header.color');
         border-color: dt('dataview.header.border.color');
@@ -19,7 +19,7 @@ export const style = /*css*/ `
         border-radius: dt('dataview.header.border.radius');
     }
 
-    .p-dataview-content {
+    .h-dataview-content {
         background: dt('dataview.content.background');
         border-color: dt('dataview.content.border.color');
         border-width: dt('dataview.content.border.width');
@@ -29,7 +29,7 @@ export const style = /*css*/ `
         border-radius: dt('dataview.content.border.radius');
     }
 
-    .p-dataview-footer {
+    .h-dataview-footer {
         background: dt('dataview.footer.background');
         color: dt('dataview.footer.color');
         border-color: dt('dataview.footer.border.color');
@@ -39,19 +39,19 @@ export const style = /*css*/ `
         border-radius: dt('dataview.footer.border.radius');
     }
 
-    .p-dataview-paginator-top {
+    .h-dataview-paginator-top {
         border-width: dt('dataview.paginator.top.border.width');
         border-color: dt('dataview.paginator.top.border.color');
         border-style: solid;
     }
 
-    .p-dataview-paginator-bottom {
+    .h-dataview-paginator-bottom {
         border-width: dt('dataview.paginator.bottom.border.width');
         border-color: dt('dataview.paginator.bottom.border.color');
         border-style: solid;
     }
 
-    .p-dataview-loading-overlay {
+    .h-dataview-loading-overlay {
         position: absolute;
         display: flex;
         align-items: center;

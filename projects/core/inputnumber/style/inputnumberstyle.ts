@@ -6,53 +6,53 @@ const style = /*css*/ `
     ${inputnumber_style}
 
     /* For Helix */
-    p-inputNumber.ng-invalid.ng-dirty > .p-inputtext,
-    p-input-number.ng-invalid.ng-dirty > .p-inputtext,
-    p-inputnumber.ng-invalid.ng-dirty > .p-inputtext {
+    h-inputNumber.ng-invalid.ng-dirty > .h-inputtext,
+    h-input-number.ng-invalid.ng-dirty > .h-inputtext,
+    h-inputnumber.ng-invalid.ng-dirty > .h-inputtext {
         border-color: dt('inputtext.invalid.border.color');
     }
 
-    p-inputNumber.ng-invalid.ng-dirty > .p-inputtext:enabled:focus,
-    p-input-number.ng-invalid.ng-dirty > .p-inputtext:enabled:focus,
-    p-inputnumber.ng-invalid.ng-dirty > .p-inputtext:enabled:focus {
+    h-inputNumber.ng-invalid.ng-dirty > .h-inputtext:enabled:focus,
+    h-input-number.ng-invalid.ng-dirty > .h-inputtext:enabled:focus,
+    h-inputnumber.ng-invalid.ng-dirty > .h-inputtext:enabled:focus {
         border-color: dt('inputtext.focus.border.color');
     }
 
-    p-inputNumber.ng-invalid.ng-dirty > .p-inputtext::placeholder,
-    p-input-number.ng-invalid.ng-dirty > .p-inputtext::placeholder,
-    p-inputnumber.ng-invalid.ng-dirty > .p-inputtext::placeholder {
+    h-inputNumber.ng-invalid.ng-dirty > .h-inputtext::placeholder,
+    h-input-number.ng-invalid.ng-dirty > .h-inputtext::placeholder,
+    h-inputnumber.ng-invalid.ng-dirty > .h-inputtext::placeholder {
         color: dt('inputtext.invalid.placeholder.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-inputnumber p-component p-inputwrapper',
+        'h-inputnumber h-component h-inputwrapper',
         {
-            'p-inputwrapper-filled': instance.$filled() || instance.allowEmpty() === false,
-            'p-inputwrapper-focus': instance.focused,
-            'p-inputnumber-stacked': instance.showButtons() && instance.buttonLayout() === 'stacked',
-            'p-inputnumber-horizontal': instance.showButtons() && instance.buttonLayout() === 'horizontal',
-            'p-inputnumber-vertical': instance.showButtons() && instance.buttonLayout() === 'vertical',
-            'p-inputnumber-fluid': instance.hasFluid,
-            'p-invalid': instance.invalid()
+            'h-inputwrapper-filled': instance.$filled() || instance.allowEmpty() === false,
+            'h-inputwrapper-focus': instance.focused,
+            'h-inputnumber-stacked': instance.showButtons() && instance.buttonLayout() === 'stacked',
+            'h-inputnumber-horizontal': instance.showButtons() && instance.buttonLayout() === 'horizontal',
+            'h-inputnumber-vertical': instance.showButtons() && instance.buttonLayout() === 'vertical',
+            'h-inputnumber-fluid': instance.hasFluid,
+            'h-invalid': instance.invalid()
         }
     ],
-    pcInputText: 'p-inputnumber-input',
-    buttonGroup: 'p-inputnumber-button-group',
+    pcInputText: 'h-inputnumber-input',
+    buttonGroup: 'h-inputnumber-button-group',
     incrementButton: ({ instance }) => [
-        'p-inputnumber-button p-inputnumber-increment-button',
+        'h-inputnumber-button h-inputnumber-increment-button',
         {
-            'p-disabled': instance.showButtons() && instance.max() != null && instance.maxlength()
+            'h-disabled': instance.showButtons() && instance.max() != null && instance.maxlength()
         }
     ],
     decrementButton: ({ instance }) => [
-        'p-inputnumber-button p-inputnumber-decrement-button',
+        'h-inputnumber-button h-inputnumber-decrement-button',
         {
-            'p-disabled': instance.showButtons() && instance.min() != null && instance.minlength()
+            'h-disabled': instance.showButtons() && instance.min() != null && instance.minlength()
         }
     ],
-    clearIcon: 'p-inputnumber-clear-icon'
+    clearIcon: 'h-inputnumber-clear-icon'
 };
 
 @Injectable()
@@ -78,27 +78,27 @@ export enum InputNumberClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-inputnumber',
+    root = 'h-inputnumber',
     /**
      * Class name of the input element
      */
-    pcInputText = 'p-inputnumber-input',
+    pcInputText = 'h-inputnumber-input',
     /**
      * Class name of the button group element
      */
-    buttonGroup = 'p-inputnumber-button-group',
+    buttonGroup = 'h-inputnumber-button-group',
     /**
      * Class name of the increment button element
      */
-    incrementButton = 'p-inputnumber-increment-button',
+    incrementButton = 'h-inputnumber-increment-button',
     /**
      * Class name of the decrement button element
      */
-    decrementButton = 'p-inputnumber-decrement-button',
+    decrementButton = 'h-inputnumber-decrement-button',
     /**
      * Class name of the clear icon
      */
-    clearIcon = 'p-autocomplete-clear-icon'
+    clearIcon = 'h-autocomplete-clear-icon'
 }
 
 export interface InputNumberStyle extends BaseStyle {}

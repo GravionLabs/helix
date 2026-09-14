@@ -11,7 +11,7 @@ import { ConfirmDialog } from './confirmdialog';
 @Component({
     standalone: false,
     template: `
-        <p-confirmdialog
+        <h-confirmdialog
             [header]="header"
             [icon]="icon"
             [message]="message"
@@ -45,7 +45,7 @@ import { ConfirmDialog } from './confirmdialog';
             [draggable]="draggable"
             (onHide)="onHide($event)"
         >
-        </p-confirmdialog>
+        </h-confirmdialog>
     `
 })
 class TestBasicConfirmDialogComponent {
@@ -92,7 +92,7 @@ class TestBasicConfirmDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmdialog>
+        <h-confirmdialog>
             <ng-template pTemplate="header">
                 <div class="custom-header">
                     <i class="pi pi-info-circle custom-header-icon"></i>
@@ -129,7 +129,7 @@ class TestBasicConfirmDialogComponent {
                     </div>
                 </div>
             </ng-template>
-        </p-confirmdialog>
+        </h-confirmdialog>
     `
 })
 class TestTemplatePConfirmDialogComponent {}
@@ -138,7 +138,7 @@ class TestTemplatePConfirmDialogComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-confirmdialog>
+        <h-confirmdialog>
             <ng-template #header>
                 <div class="content-header">
                     <span class="content-header-text">Content Header</span>
@@ -174,7 +174,7 @@ class TestTemplatePConfirmDialogComponent {}
                     </div>
                 </div>
             </ng-template>
-        </p-confirmdialog>
+        </h-confirmdialog>
     `
 })
 class TestContentTemplateConfirmDialogComponent {}
@@ -182,7 +182,7 @@ class TestContentTemplateConfirmDialogComponent {}
 // ConfirmDialog Position Test
 @Component({
     standalone: false,
-    template: ` <p-confirmdialog [position]="position" [visible]="visible"> </p-confirmdialog> `
+    template: ` <h-confirmdialog [position]="position" [visible]="visible"> </h-confirmdialog> `
 })
 class TestPositionConfirmDialogComponent {
     position: 'center' | 'top' | 'bottom' | 'left' | 'right' | 'topleft' | 'topright' | 'bottomleft' | 'bottomright' = 'center';
@@ -193,7 +193,7 @@ class TestPositionConfirmDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmdialog></p-confirmdialog>
+        <h-confirmdialog></h-confirmdialog>
         <button (click)="confirm()" class="confirm-btn">Confirm</button>
     `,
     providers: [ConfirmationService]
@@ -231,7 +231,7 @@ class TestConfirmationServiceComponent {
 // ConfirmDialog Accessibility Test
 @Component({
     standalone: false,
-    template: ` <p-confirmdialog [visible]="true" [acceptAriaLabel]="acceptAriaLabel" [rejectAriaLabel]="rejectAriaLabel" [closeAriaLabel]="closeAriaLabel" header="Accessibility Test" message="Test message"> </p-confirmdialog> `
+    template: ` <h-confirmdialog [visible]="true" [acceptAriaLabel]="acceptAriaLabel" [rejectAriaLabel]="rejectAriaLabel" [closeAriaLabel]="closeAriaLabel" header="Accessibility Test" message="Test message"> </h-confirmdialog> `
 })
 class TestAccessibilityConfirmDialogComponent {
     acceptAriaLabel = 'Accept confirmation';
@@ -243,7 +243,7 @@ class TestAccessibilityConfirmDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmdialog
+        <h-confirmdialog
             [visible]="visible"
             [acceptVisible]="acceptVisible"
             [rejectVisible]="rejectVisible"
@@ -252,7 +252,7 @@ class TestAccessibilityConfirmDialogComponent {
             [acceptButtonStyleClass]="acceptButtonStyleClass"
             [rejectButtonStyleClass]="rejectButtonStyleClass"
         >
-        </p-confirmdialog>
+        </h-confirmdialog>
     `
 })
 class TestButtonPropertiesComponent {
@@ -268,7 +268,7 @@ class TestButtonPropertiesComponent {
 // ConfirmDialog Events Test
 @Component({
     standalone: false,
-    template: ` <p-confirmdialog [visible]="visible" (onHide)="onHide($event)"> </p-confirmdialog> `
+    template: ` <h-confirmdialog [visible]="visible" (onHide)="onHide($event)"> </h-confirmdialog> `
 })
 class TestEventsConfirmDialogComponent {
     visible = false;
@@ -321,13 +321,13 @@ describe('ConfirmDialog', () => {
             expect(confirmDialogInstance.position()).toBe('center');
         });
 
-        it('should render p-dialog component', () => {
+        it('should render h-dialog component', () => {
             const dialogElement = fixture.debugElement.query(By.directive(Dialog));
             expect(dialogElement).toBeTruthy();
         });
 
         it('should have proper data attributes', () => {
-            const dialogElement = fixture.debugElement.query(By.css('p-dialog'));
+            const dialogElement = fixture.debugElement.query(By.css('h-dialog'));
             expect(dialogElement.nativeElement.getAttribute('role')).toBe('alertdialog');
         });
     });
@@ -485,7 +485,7 @@ describe('ConfirmDialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const acceptButton = fixture.debugElement.queryAll(By.css('p-button')).find((btn) => btn.nativeElement.textContent?.includes('Yes') || btn.componentInstance.ariaLabel?.includes('accept'));
+            const acceptButton = fixture.debugElement.queryAll(By.css('h-button')).find((btn) => btn.nativeElement.textContent?.includes('Yes') || btn.componentInstance.ariaLabel?.includes('accept'));
 
             expect(acceptButton).toBeTruthy();
         });
@@ -497,7 +497,7 @@ describe('ConfirmDialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const buttons = fixture.debugElement.queryAll(By.css('p-button'));
+            const buttons = fixture.debugElement.queryAll(By.css('h-button'));
             const acceptButton = buttons.find((btn) => btn.componentInstance.ariaLabel?.includes('accept') || btn.nativeElement.textContent?.includes('Yes'));
 
             expect(acceptButton).toBeFalsy();
@@ -510,7 +510,7 @@ describe('ConfirmDialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const rejectButton = fixture.debugElement.queryAll(By.css('p-button')).find((btn) => btn.nativeElement.textContent?.includes('No') || btn.componentInstance.ariaLabel?.includes('reject'));
+            const rejectButton = fixture.debugElement.queryAll(By.css('h-button')).find((btn) => btn.nativeElement.textContent?.includes('No') || btn.componentInstance.ariaLabel?.includes('reject'));
 
             expect(rejectButton).toBeTruthy();
         });
@@ -522,7 +522,7 @@ describe('ConfirmDialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const buttons = fixture.debugElement.queryAll(By.css('p-button'));
+            const buttons = fixture.debugElement.queryAll(By.css('h-button'));
             const rejectButton = buttons.find((btn) => btn.componentInstance.ariaLabel?.includes('reject') || btn.nativeElement.textContent?.includes('No'));
 
             expect(rejectButton).toBeFalsy();
@@ -765,7 +765,7 @@ describe('ConfirmDialog', () => {
 
             it('should use default templates when custom ones are not provided', () => {
                 // Test default behavior without custom templates
-                const dialogElement = fixture.debugElement.query(By.css('p-dialog'));
+                const dialogElement = fixture.debugElement.query(By.css('h-dialog'));
                 expect(dialogElement).toBeTruthy();
             });
 
@@ -847,7 +847,7 @@ describe('ConfirmDialog', () => {
             await accessibilityFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const dialog = accessibilityFixture.debugElement.query(By.css('p-dialog'));
+            const dialog = accessibilityFixture.debugElement.query(By.css('h-dialog'));
             expect(dialog.nativeElement.getAttribute('role')).toBe('alertdialog');
         });
 
@@ -881,7 +881,7 @@ describe('ConfirmDialog', () => {
             await new Promise((resolve) => setTimeout(resolve, 0));
 
             // Dialog should be present and focusable
-            const dialog = fixture.debugElement.query(By.css('p-dialog'));
+            const dialog = fixture.debugElement.query(By.css('h-dialog'));
             expect(dialog).toBeTruthy();
         });
     });
@@ -893,7 +893,7 @@ describe('ConfirmDialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const dialog = fixture.debugElement.query(By.css('p-dialog'));
+            const dialog = fixture.debugElement.query(By.css('h-dialog'));
             expect(dialog).toBeTruthy();
         });
 
@@ -1049,7 +1049,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1102,7 +1102,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1164,7 +1164,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1219,7 +1219,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test" [visible]="isVisible"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test" [visible]="isVisible"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1279,7 +1279,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1339,7 +1339,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="{ pcDialog: 'INLINE_DIALOG_CLASS', message: 'INLINE_MESSAGE_CLASS' }" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="{ pcDialog: 'INLINE_DIALOG_CLASS', message: 'INLINE_MESSAGE_CLASS' }" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1358,7 +1358,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="{ pcDialog: { class: 'INLINE_DIALOG_OBJECT_CLASS' }, icon: { class: 'INLINE_ICON_CLASS' } }" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="{ pcDialog: { class: 'INLINE_DIALOG_OBJECT_CLASS' }, icon: { class: 'INLINE_ICON_CLASS' } }" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })
@@ -1435,9 +1435,9 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog key="test1"></p-confirmdialog>
+                    <h-confirmdialog key="test1"></h-confirmdialog>
                     <button (click)="confirm('test1')">Confirm 1</button>
-                    <p-confirmdialog key="test2"></p-confirmdialog>
+                    <h-confirmdialog key="test2"></h-confirmdialog>
                     <button (click)="confirm('test2')">Confirm 2</button>
                 `
             })
@@ -1488,7 +1488,7 @@ describe('ConfirmDialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmdialog [pt]="pt" key="test"></p-confirmdialog>
+                    <h-confirmdialog [pt]="pt" key="test"></h-confirmdialog>
                     <button (click)="confirm()">Confirm</button>
                 `
             })

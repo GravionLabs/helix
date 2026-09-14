@@ -14,7 +14,7 @@ import { PaginatorState } from '@gravionlabs/helix-core/types/paginator';
 @Component({
     standalone: false,
     template: `
-        <p-paginator
+        <h-paginator
             [rows]="rows"
             [totalRecords]="totalRecords"
             [first]="first"
@@ -35,7 +35,7 @@ import { PaginatorState } from '@gravionlabs/helix-core/types/paginator';
             [templateRight]="rightTemplate"
             (onPageChange)="onPageChange($event)"
         >
-        </p-paginator>
+        </h-paginator>
 
         <ng-template #leftTemplate let-state>
             <span class="custom-left-template">Left: Page {{ state.page + 1 }}</span>
@@ -76,7 +76,7 @@ class TestBasicPaginatorComponent {
 @Component({
     standalone: false,
     template: `
-        <p-paginator [rows]="10" [totalRecords]="100" [first]="0">
+        <h-paginator [rows]="10" [totalRecords]="100" [first]="0">
             <ng-template pTemplate="dropdownicon">
                 <span class="custom-dropdown-icon">▼</span>
             </ng-template>
@@ -96,7 +96,7 @@ class TestBasicPaginatorComponent {
             <ng-template pTemplate="lastpagelinkicon">
                 <span class="custom-last-icon">⏭</span>
             </ng-template>
-        </p-paginator>
+        </h-paginator>
     `
 })
 class TestPTemplatePaginatorComponent {
@@ -107,7 +107,7 @@ class TestPTemplatePaginatorComponent {
 @Component({
     standalone: false,
     template: `
-        <p-paginator [rows]="10" [totalRecords]="100" [first]="0" [rowsPerPageOptions]="[5, 10, 20]">
+        <h-paginator [rows]="10" [totalRecords]="100" [first]="0" [rowsPerPageOptions]="[5, 10, 20]">
             <ng-template #dropdownicon>
                 <span class="contentchild-dropdown-icon">⬇</span>
             </ng-template>
@@ -127,7 +127,7 @@ class TestPTemplatePaginatorComponent {
             <ng-template #lastpagelinkicon>
                 <span class="contentchild-last-icon">⏭️</span>
             </ng-template>
-        </p-paginator>
+        </h-paginator>
     `
 })
 class TestContentChildPaginatorComponent {
@@ -138,7 +138,7 @@ class TestContentChildPaginatorComponent {
 @Component({
     standalone: false,
     template: `
-        <p-paginator [rows]="10" [totalRecords]="100" [first]="0" [showJumpToPageDropdown]="true" [jumpToPageItemTemplate]="jumpTemplate" [dropdownItemTemplate]="dropdownTemplate" [rowsPerPageOptions]="rowsPerPageOptions">
+        <h-paginator [rows]="10" [totalRecords]="100" [first]="0" [showJumpToPageDropdown]="true" [jumpToPageItemTemplate]="jumpTemplate" [dropdownItemTemplate]="dropdownTemplate" [rowsPerPageOptions]="rowsPerPageOptions">
             <ng-template #jumpTemplate let-item>
                 <span class="custom-jump-item">Jump to {{ item.label }}</span>
             </ng-template>
@@ -146,7 +146,7 @@ class TestContentChildPaginatorComponent {
             <ng-template #dropdownTemplate let-item>
                 <span class="custom-dropdown-item">{{ item.label }} items</span>
             </ng-template>
-        </p-paginator>
+        </h-paginator>
     `
 })
 class TestDropdownPaginatorComponent {
@@ -208,7 +208,7 @@ describe('Paginator', () => {
         });
 
         it('should render page links', () => {
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             expect(pageLinks.length).toBe(5);
         });
 
@@ -220,13 +220,13 @@ describe('Paginator', () => {
         });
 
         it('should show/hide elements based on configuration', () => {
-            const currentPageReport = fixture.debugElement.query(By.css('.p-paginator-current'));
+            const currentPageReport = fixture.debugElement.query(By.css('.h-paginator-current'));
             expect(currentPageReport).toBeTruthy();
 
-            const firstButton = fixture.debugElement.query(By.css('.p-paginator-first'));
+            const firstButton = fixture.debugElement.query(By.css('.h-paginator-first'));
             expect(firstButton).toBeTruthy();
 
-            const lastButton = fixture.debugElement.query(By.css('.p-paginator-last'));
+            const lastButton = fixture.debugElement.query(By.css('.h-paginator-last'));
             expect(lastButton).toBeTruthy();
         });
     });
@@ -351,7 +351,7 @@ describe('Paginator', () => {
             paginator.first.set(50);
             fixture.detectChanges();
 
-            const firstButton = fixture.debugElement.query(By.css('.p-paginator-first'));
+            const firstButton = fixture.debugElement.query(By.css('.h-paginator-first'));
             firstButton.nativeElement.click();
             await fixture.whenStable();
 
@@ -363,7 +363,7 @@ describe('Paginator', () => {
             paginator.first.set(20);
             fixture.detectChanges();
 
-            const prevButton = fixture.debugElement.query(By.css('.p-paginator-prev'));
+            const prevButton = fixture.debugElement.query(By.css('.h-paginator-prev'));
             prevButton.nativeElement.click();
             await fixture.whenStable();
 
@@ -372,7 +372,7 @@ describe('Paginator', () => {
         });
 
         it('should change to next page', async () => {
-            const nextButton = fixture.debugElement.query(By.css('.p-paginator-next'));
+            const nextButton = fixture.debugElement.query(By.css('.h-paginator-next'));
             nextButton.nativeElement.click();
             await fixture.whenStable();
 
@@ -381,7 +381,7 @@ describe('Paginator', () => {
         });
 
         it('should change to last page', async () => {
-            const lastButton = fixture.debugElement.query(By.css('.p-paginator-last'));
+            const lastButton = fixture.debugElement.query(By.css('.h-paginator-last'));
             lastButton.nativeElement.click();
             await fixture.whenStable();
 
@@ -390,7 +390,7 @@ describe('Paginator', () => {
         });
 
         it('should handle page link click', async () => {
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             pageLinks[2].nativeElement.click(); // Click page 3
             await fixture.whenStable();
 
@@ -406,7 +406,7 @@ describe('Paginator', () => {
             await fixture.whenStable();
 
             // First page - prev should be disabled
-            const prevButton = fixture.debugElement.query(By.css('.p-paginator-prev'));
+            const prevButton = fixture.debugElement.query(By.css('.h-paginator-prev'));
             expect(prevButton.nativeElement.disabled).toBe(true);
 
             prevButton.nativeElement.click();
@@ -420,7 +420,7 @@ describe('Paginator', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const nextButton = fixture.debugElement.query(By.css('.p-paginator-next'));
+            const nextButton = fixture.debugElement.query(By.css('.h-paginator-next'));
             expect(nextButton.nativeElement.disabled).toBe(true);
 
             nextButton.nativeElement.click();
@@ -716,24 +716,24 @@ describe('Paginator', () => {
 
     describe('CSS and Styling', () => {
         it('should apply correct CSS classes', () => {
-            const paginatorElement = fixture.debugElement.query(By.css('p-paginator'));
+            const paginatorElement = fixture.debugElement.query(By.css('h-paginator'));
             expect(paginatorElement).toBeTruthy();
 
-            const firstButton = fixture.debugElement.query(By.css('.p-paginator-first'));
+            const firstButton = fixture.debugElement.query(By.css('.h-paginator-first'));
             expect(firstButton).toBeTruthy();
 
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             expect(pageLinks.length).toBeGreaterThan(0);
         });
 
         it('should apply active state to current page', () => {
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             expect(pageLinks[0].nativeElement.getAttribute('aria-current')).toBe('page');
 
             paginator.changePage(2);
             fixture.detectChanges();
 
-            const updatedPageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const updatedPageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             expect(updatedPageLinks[2].nativeElement.getAttribute('aria-current')).toBe('page');
         });
 
@@ -760,21 +760,21 @@ describe('Paginator', () => {
 
     describe('Accessibility', () => {
         it('should have proper ARIA labels', () => {
-            const firstButton = fixture.debugElement.query(By.css('.p-paginator-first'));
+            const firstButton = fixture.debugElement.query(By.css('.h-paginator-first'));
             expect(firstButton.nativeElement.hasAttribute('aria-label')).toBe(true);
 
-            const prevButton = fixture.debugElement.query(By.css('.p-paginator-prev'));
+            const prevButton = fixture.debugElement.query(By.css('.h-paginator-prev'));
             expect(prevButton.nativeElement.hasAttribute('aria-label')).toBe(true);
 
-            const nextButton = fixture.debugElement.query(By.css('.p-paginator-next'));
+            const nextButton = fixture.debugElement.query(By.css('.h-paginator-next'));
             expect(nextButton.nativeElement.hasAttribute('aria-label')).toBe(true);
 
-            const lastButton = fixture.debugElement.query(By.css('.p-paginator-last'));
+            const lastButton = fixture.debugElement.query(By.css('.h-paginator-last'));
             expect(lastButton.nativeElement.hasAttribute('aria-label')).toBe(true);
         });
 
         it('should have proper ARIA labels for page links', () => {
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             pageLinks.forEach((link, index) => {
                 expect(link.nativeElement.hasAttribute('aria-label')).toBe(true);
                 expect(link.nativeElement.getAttribute('aria-label')).toContain((index + 1).toString());
@@ -782,7 +782,7 @@ describe('Paginator', () => {
         });
 
         it('should mark current page with aria-current', () => {
-            const pageLinks = fixture.debugElement.queryAll(By.css('.p-paginator-page'));
+            const pageLinks = fixture.debugElement.queryAll(By.css('.h-paginator-page'));
             expect(pageLinks[0].nativeElement.getAttribute('aria-current')).toBe('page');
 
             pageLinks.forEach((link, index) => {
@@ -794,25 +794,25 @@ describe('Paginator', () => {
 
         it('should disable navigation buttons appropriately', () => {
             // First page
-            const prevButton = fixture.debugElement.query(By.css('.p-paginator-prev'));
+            const prevButton = fixture.debugElement.query(By.css('.h-paginator-prev'));
             expect(prevButton.nativeElement.disabled).toBe(true);
 
-            const firstButton = fixture.debugElement.query(By.css('.p-paginator-first'));
+            const firstButton = fixture.debugElement.query(By.css('.h-paginator-first'));
             expect(firstButton.nativeElement.disabled).toBe(false);
 
             // Last page
             paginator.first.set(90);
             fixture.detectChanges();
 
-            const nextButton = fixture.debugElement.query(By.css('.p-paginator-next'));
+            const nextButton = fixture.debugElement.query(By.css('.h-paginator-next'));
             expect(nextButton.nativeElement.disabled).toBe(true);
 
-            const lastButton = fixture.debugElement.query(By.css('.p-paginator-last'));
+            const lastButton = fixture.debugElement.query(By.css('.h-paginator-last'));
             expect(lastButton.nativeElement.disabled).toBe(true);
         });
 
         it('should support keyboard navigation', async () => {
-            const pageLink = fixture.debugElement.query(By.css('.p-paginator-page'));
+            const pageLink = fixture.debugElement.query(By.css('.h-paginator-page'));
             const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
 
             spyOn(paginator, 'onPageLinkClick').and.callThrough();
@@ -892,7 +892,7 @@ describe('Paginator', () => {
             component.showJumpToPageDropdown = true;
             fixture.detectChanges();
 
-            const dropdown = fixture.debugElement.query(By.css('.p-select'));
+            const dropdown = fixture.debugElement.query(By.css('.h-select'));
             expect(dropdown).toBeTruthy();
         });
 
@@ -934,7 +934,7 @@ describe('Paginator', () => {
 
     describe('Current Page Report', () => {
         it('should display default current page report', () => {
-            const report = fixture.debugElement.query(By.css('.p-paginator-current'));
+            const report = fixture.debugElement.query(By.css('.h-paginator-current'));
             expect(report.nativeElement.textContent).toBe('1 of 10');
         });
 
@@ -943,7 +943,7 @@ describe('Paginator', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const report = fixture.debugElement.query(By.css('.p-paginator-current'));
+            const report = fixture.debugElement.query(By.css('.h-paginator-current'));
             expect(report.nativeElement.textContent).toBe('5 of 10');
         });
 
@@ -1350,7 +1350,7 @@ describe('Paginator', () => {
 @Component({
     standalone: false,
     template: `
-        <p-paginator
+        <h-paginator
             #paginator
             [totalRecords]="totalRecords"
             [rows]="rows"
@@ -1360,7 +1360,7 @@ describe('Paginator', () => {
             [currentPageReportTemplate]="currentPageReportTemplate"
             [showCurrentPageReport]="true"
         >
-        </p-paginator>
+        </h-paginator>
     `
 })
 class TestDynamicPaginatorComponent {

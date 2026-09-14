@@ -20,7 +20,7 @@ const mockItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
 @Component({
     standalone: false,
     template: `
-        <p-autocomplete
+        <h-autocomplete
           [(ngModel)]="selectedValue"
           [suggestions]="suggestions"
           [optionLabel]="optionLabel"
@@ -88,12 +88,12 @@ const mockItems = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
           <ng-template #group let-group>
             <div class="custom-group">{{ group.label }}</div>
           </ng-template>
-        </p-autocomplete>
+        </h-autocomplete>
         
         <!-- Reactive Forms test -->
         @if (showReactiveForm) {
           <form [formGroup]="reactiveForm">
-            <p-autocomplete formControlName="selectedItems" [suggestions]="formSuggestions" [optionLabel]="'name'" [multiple]="true" (completeMethod)="onFormSearch($event)"> </p-autocomplete>
+            <h-autocomplete formControlName="selectedItems" [suggestions]="formSuggestions" [optionLabel]="'name'" [multiple]="true" (completeMethod)="onFormSearch($event)"> </h-autocomplete>
           </form>
         }
         `
@@ -284,7 +284,7 @@ class TestAutocompleteComponent {
 @Component({
     standalone: false,
     template: `
-        <p-autocomplete [(ngModel)]="selectedValue" [suggestions]="suggestions" [optionLabel]="'name'" [multiple]="multiple" (completeMethod)="onSearch($event)">
+        <h-autocomplete [(ngModel)]="selectedValue" [suggestions]="suggestions" [optionLabel]="'name'" [multiple]="multiple" (completeMethod)="onSearch($event)">
             <!-- Item Template with pTemplate -->
             <ng-template pTemplate="item" let-item let-index="index">
                 <div class="ptemplate-item" [attr.data-index]="index">
@@ -367,7 +367,7 @@ class TestAutocompleteComponent {
                     <span class="dropdown-arrow">⬇️</span>
                 </div>
             </ng-template>
-        </p-autocomplete>
+        </h-autocomplete>
     `
 })
 class TestPTemplateAutocompleteComponent {
@@ -567,7 +567,7 @@ describe('AutoComplete', () => {
             const formControl = testComponent.reactiveForm.get('selectedItems');
             expect(formControl).toBeTruthy();
 
-            const autocompleteElement = testFixture.debugElement.query(By.css('form p-autocomplete'));
+            const autocompleteElement = testFixture.debugElement.query(By.css('form h-autocomplete'));
             expect(autocompleteElement).toBeTruthy();
         });
 
@@ -2426,7 +2426,7 @@ describe('AutoComplete', () => {
             //     fixture.detectChanges();
             //     tick(300);
 
-            //     const overlay = document.querySelector('.p-overlay') as HTMLElement;
+            //     const overlay = document.querySelector('.h-overlay') as HTMLElement;
             //     expect(overlay.classList).toContain('PC_OVERLAY_CLASS');
             // }));
 
@@ -2437,7 +2437,7 @@ describe('AutoComplete', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const chip = autocompleteElement.querySelector('p-chip') as HTMLElement;
+                const chip = autocompleteElement.querySelector('h-chip') as HTMLElement;
                 expect(chip).toBeTruthy();
             });
         });
@@ -2467,12 +2467,12 @@ describe('AutoComplete', () => {
             //     fixture.detectChanges();
             //     tick(300);
 
-            //     const hostElement = document.body.querySelector('p-overlay[data-pc-section="host"]') as HTMLElement;
+            //     const hostElement = document.body.querySelector('h-overlay[data-pc-section="host"]') as HTMLElement;
             //     expect(hostElement).toBeTruthy();
             //     expect(hostElement?.classList.contains('PC_OVERLAY_HOST')).toBe(true);
             //     expect(hostElement?.getAttribute('data-host')).toBe('true');
 
-            //     const rootElement = document.body.querySelector('.p-overlay[data-pc-section="root"]') as HTMLElement;
+            //     const rootElement = document.body.querySelector('.h-overlay[data-pc-section="root"]') as HTMLElement;
             //     expect(rootElement).toBeTruthy();
             //     expect(rootElement?.classList.contains('PC_OVERLAY_ROOT')).toBe(true);
             //     expect(rootElement?.getAttribute('data-root')).toBe('true');
@@ -2508,7 +2508,7 @@ describe('AutoComplete', () => {
                 fixture.componentInstance.show();
                 await fixture.whenStable();
 
-                const listContainer = document.body.querySelector('.p-autocomplete-list-container') as HTMLElement;
+                const listContainer = document.body.querySelector('.h-autocomplete-list-container') as HTMLElement;
                 expect(listContainer?.classList.contains('LIST_CONTAINER_CLASS')).toBe(true);
             });
 
@@ -2523,7 +2523,7 @@ describe('AutoComplete', () => {
                 fixture.componentInstance.show();
                 await fixture.whenStable();
 
-                const emptyMessage = document.body.querySelector('.p-autocomplete-empty-message') as HTMLElement;
+                const emptyMessage = document.body.querySelector('.h-autocomplete-empty-message') as HTMLElement;
                 expect(emptyMessage?.classList.contains('EMPTY_MESSAGE_CLASS')).toBe(true);
             });
         });

@@ -9,7 +9,7 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
 @Component({
     standalone: true,
     imports: [InputOtp, FormsModule],
-    template: `<p-inputotp [(ngModel)]="value" [length]="length" />`
+    template: `<h-inputotp [(ngModel)]="value" [length]="length" />`
 })
 class TestBasicInputOtpComponent {
     value: string = '';
@@ -20,7 +20,7 @@ class TestBasicInputOtpComponent {
 @Component({
     standalone: true,
     imports: [InputOtp, ReactiveFormsModule],
-    template: ` <p-inputotp [formControl]="otpControl" [length]="length" (onChange)="onOtpChange($event)" /> `
+    template: ` <h-inputotp [formControl]="otpControl" [length]="length" (onChange)="onOtpChange($event)" /> `
 })
 class TestReactiveFormInputOtpComponent {
     otpControl = new FormControl('', [Validators.required, Validators.minLength(4)]);
@@ -37,7 +37,7 @@ class TestReactiveFormInputOtpComponent {
     standalone: true,
     imports: [InputOtp, FormsModule],
     template: `
-        <p-inputotp
+        <h-inputotp
             [(ngModel)]="value"
             [length]="length"
             [mask]="mask"
@@ -84,7 +84,7 @@ class TestAdvancedInputOtpComponent {
     standalone: true,
     imports: [InputOtp, FormsModule],
     template: `
-        <p-inputotp [(ngModel)]="value" [length]="length">
+        <h-inputotp [(ngModel)]="value" [length]="length">
             <!-- Input template with pTemplate directive -->
             <ng-template pTemplate="input" let-value let-events="events" let-index="index">
                 <input
@@ -101,7 +101,7 @@ class TestAdvancedInputOtpComponent {
                     maxlength="1"
                 />
             </ng-template>
-        </p-inputotp>
+        </h-inputotp>
     `
 })
 class TestInputOtpPTemplateComponent {
@@ -114,7 +114,7 @@ class TestInputOtpPTemplateComponent {
     standalone: true,
     imports: [InputOtp, FormsModule],
     template: `
-        <p-inputotp [(ngModel)]="value" [length]="length">
+        <h-inputotp [(ngModel)]="value" [length]="length">
             <!-- Input template with #template reference -->
             <ng-template #input let-value let-events="events" let-index="index">
                 <input
@@ -131,7 +131,7 @@ class TestInputOtpPTemplateComponent {
                     maxlength="1"
                 />
             </ng-template>
-        </p-inputotp>
+        </h-inputotp>
     `
 })
 class TestInputOtpRefTemplateComponent {
@@ -608,7 +608,7 @@ describe('InputOtp', () => {
 
             fixture = TestBed.createComponent(TestInputOtpPTemplateComponent);
             component = fixture.componentInstance;
-            inputOtpElement = fixture.debugElement.query(By.css('p-inputotp'));
+            inputOtpElement = fixture.debugElement.query(By.css('h-inputotp'));
             inputOtpInstance = inputOtpElement.componentInstance;
             fixture.detectChanges();
         });
@@ -694,7 +694,7 @@ describe('InputOtp', () => {
 
             fixture = TestBed.createComponent(TestInputOtpRefTemplateComponent);
             component = fixture.componentInstance;
-            inputOtpElement = fixture.debugElement.query(By.css('p-inputotp'));
+            inputOtpElement = fixture.debugElement.query(By.css('h-inputotp'));
             inputOtpInstance = inputOtpElement.componentInstance;
             fixture.detectChanges();
         });

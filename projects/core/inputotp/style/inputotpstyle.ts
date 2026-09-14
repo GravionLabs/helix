@@ -3,8 +3,8 @@ import { style } from './inputotp.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-inputotp p-component',
-    pcInputText: 'p-inputotp-input'
+    root: 'h-inputotp h-component',
+    pcInputText: 'h-inputotp-input'
 };
 
 @Injectable()
@@ -30,11 +30,11 @@ export enum InputOtpClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-inputotp',
+    root = 'h-inputotp',
     /**
      * Class name of the input element
      */
-    pcInputText = 'p-inputotp-input'
+    pcInputText = 'h-inputotp-input'
 }
 
 export interface InputOtpStyle extends BaseStyle {}

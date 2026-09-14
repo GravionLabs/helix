@@ -8,10 +8,10 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-skeleton p-component',
+        'h-skeleton h-component',
         {
-            'p-skeleton-circle': instance.shape === 'circle',
-            'p-skeleton-animation-none': instance.animation === 'none'
+            'h-skeleton-circle': instance.shape === 'circle',
+            'h-skeleton-animation-none': instance.animation === 'none'
         }
     ]
 };
@@ -40,7 +40,7 @@ export enum SkeletonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-skeleton'
+    root = 'h-skeleton'
 }
 
 export interface SkeletonStyle extends BaseStyle {}

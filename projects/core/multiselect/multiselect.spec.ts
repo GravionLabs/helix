@@ -27,7 +27,7 @@ interface Country {
 @Component({
     standalone: false,
     template: `
-        <p-multiselect
+        <h-multiselect
             [options]="options"
             [(ngModel)]="selectedCities"
             [placeholder]="placeholder"
@@ -79,7 +79,7 @@ interface Country {
             (onLazyLoad)="onLazyLoad($event)"
             (onRemove)="onRemove($event)"
             (onSelectAllChange)="onSelectAllChange($event)"
-        ></p-multiselect>
+        ></h-multiselect>
     `
 })
 class TestBasicMultiSelectComponent {
@@ -195,7 +195,7 @@ class TestBasicMultiSelectComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-multiselect formControlName="selectedCities" [options]="options" optionLabel="name" placeholder="Select Cities" [showClear]="true" [filter]="true"></p-multiselect>
+            <h-multiselect formControlName="selectedCities" [options]="options" optionLabel="name" placeholder="Select Cities" [showClear]="true" [filter]="true"></h-multiselect>
         </form>
 
         <div class="form-status">
@@ -227,7 +227,7 @@ class TestFormMultiSelectComponent {
 @Component({
     standalone: false,
     template: `
-        <p-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
+        <h-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
           <ng-template pTemplate="selectedItems" let-value let-removeChip="removeChip">
             <div class="custom-selected-items">
               @for (city of value; track city) {
@@ -261,7 +261,7 @@ class TestFormMultiSelectComponent {
           <ng-template pTemplate="emptyfilter">
             <div class="custom-empty-filter">No results found</div>
           </ng-template>
-        </p-multiselect>
+        </h-multiselect>
         `
 })
 class TestTemplateMultiSelectComponent {
@@ -279,7 +279,7 @@ class TestTemplateMultiSelectComponent {
 // Grouped options test component
 @Component({
     standalone: false,
-    template: ` <p-multiselect [options]="groupedOptions" [(ngModel)]="selectedCities" [group]="true" optionLabel="name" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select Cities"></p-multiselect> `
+    template: ` <h-multiselect [options]="groupedOptions" [(ngModel)]="selectedCities" [group]="true" optionLabel="name" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select Cities"></h-multiselect> `
 })
 class TestGroupedMultiSelectComponent {
     selectedCities: City[] = [];
@@ -310,7 +310,7 @@ class TestGroupedMultiSelectComponent {
 @Component({
     standalone: false,
     template: `
-        <p-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
+        <h-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name">
           <ng-template #selecteditems let-value let-removeChip="removeChip">
             <div class="content-child-selected">
               @for (city of value; track city) {
@@ -338,7 +338,7 @@ class TestGroupedMultiSelectComponent {
           <ng-template #emptyfilter>
             <div class="content-child-empty-filter">No filter results</div>
           </ng-template>
-        </p-multiselect>
+        </h-multiselect>
         `
 })
 class TestContentChildMultiSelectComponent {
@@ -353,7 +353,7 @@ class TestContentChildMultiSelectComponent {
 // Virtual scroll test component
 @Component({
     standalone: false,
-    template: ` <p-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name" [virtualScroll]="true" [virtualScrollItemSize]="40" [scrollHeight]="'200px'" [lazy]="lazy" (onLazyLoad)="onLazyLoad($event)"></p-multiselect> `
+    template: ` <h-multiselect [options]="options" [(ngModel)]="selectedCities" optionLabel="name" [virtualScroll]="true" [virtualScrollItemSize]="40" [scrollHeight]="'200px'" [lazy]="lazy" (onLazyLoad)="onLazyLoad($event)"></h-multiselect> `
 })
 class TestVirtualScrollMultiSelectComponent {
     options: City[] = [];
@@ -635,7 +635,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const headerCheckbox = fixture.debugElement.query(By.css('.p-multiselect-header .p-checkbox'));
+            const headerCheckbox = fixture.debugElement.query(By.css('.h-multiselect-header .h-checkbox'));
             expect(headerCheckbox).toBeTruthy();
 
             multiSelect.onToggleAll({
@@ -831,7 +831,7 @@ describe('MultiSelect', () => {
         });
 
         it('should have proper ARIA attributes', () => {
-            const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = fixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput).toBeTruthy();
 
             expect(hiddenInput.nativeElement.getAttribute('role')).toBe('combobox');
@@ -844,7 +844,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = fixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput.nativeElement.getAttribute('aria-expanded')).toBe('true');
 
             const listId = multiSelect.$id() + '_list';
@@ -862,7 +862,7 @@ describe('MultiSelect', () => {
         });
 
         it('should handle focus and blur properly', () => {
-            const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = fixture.debugElement.query(By.css('.h-hidden-accessible input'));
 
             // Dispatch focus event to trigger onInputFocus
             hiddenInput.nativeElement.dispatchEvent(new FocusEvent('focus'));
@@ -875,7 +875,7 @@ describe('MultiSelect', () => {
         });
 
         it('should manage tabindex correctly', async () => {
-            const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = fixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput.nativeElement.tabIndex).toBe(0);
 
             component.disabled = true;
@@ -901,7 +901,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+            const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
             if (filterInput?.nativeElement) {
                 expect(filterInput).toBeTruthy();
 
@@ -928,7 +928,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+            const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
             if (filterInput?.nativeElement) {
                 filterInput.nativeElement.value = 'NY';
                 filterInput.nativeElement.dispatchEvent(new Event('input'));
@@ -956,7 +956,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+            const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
             if (filterInput?.nativeElement) {
                 filterInput.nativeElement.value = 'test';
                 filterInput.nativeElement.dispatchEvent(new Event('input'));
@@ -986,13 +986,13 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const emptyMessage = fixture.debugElement.query(By.css('.p-multiselect-empty-message'));
+            const emptyMessage = fixture.debugElement.query(By.css('.h-multiselect-empty-message'));
             expect(emptyMessage).toBeTruthy();
             expect(emptyMessage.nativeElement.textContent.trim()).toBe('No results found');
         });
 
         it('should handle filter keydown events', async () => {
-            const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+            const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
 
             const enterEvent = new KeyboardEvent('keydown', { code: 'Enter' });
             spyOn(enterEvent, 'preventDefault');
@@ -1005,15 +1005,15 @@ describe('MultiSelect', () => {
 
     describe('CSS Classes and Styling', () => {
         it('should apply basic CSS classes', () => {
-            const multiSelectElement = fixture.debugElement.query(By.css('p-multiselect'));
-            expect(multiSelectElement.nativeElement.classList.contains('p-multiselect')).toBe(true);
+            const multiSelectElement = fixture.debugElement.query(By.css('h-multiselect'));
+            expect(multiSelectElement.nativeElement.classList.contains('h-multiselect')).toBe(true);
         });
 
         it('should apply custom styleClass', () => {
             component.styleClass = 'custom-multiselect';
             fixture.detectChanges();
 
-            const multiSelectElement = fixture.debugElement.query(By.css('p-multiselect'));
+            const multiSelectElement = fixture.debugElement.query(By.css('h-multiselect'));
             expect(multiSelectElement.nativeElement.classList.contains('custom-multiselect')).toBe(true);
         });
 
@@ -1024,7 +1024,7 @@ describe('MultiSelect', () => {
             expect(component.style).toEqual({ border: '2px solid red', padding: '10px' });
 
             // Simulate ngStyle behavior
-            const element = fixture.debugElement.query(By.css('p-multiselect')).nativeElement;
+            const element = fixture.debugElement.query(By.css('h-multiselect')).nativeElement;
             if (component.style) {
                 Object.keys(component.style).forEach((key) => {
                     element.style[key] = component.style[key];
@@ -1044,7 +1044,7 @@ describe('MultiSelect', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const panel = fixture.debugElement.query(By.css('.p-multiselect-overlay'));
+            const panel = fixture.debugElement.query(By.css('.h-multiselect-overlay'));
             expect(panel).toBeTruthy();
         });
 
@@ -1052,7 +1052,7 @@ describe('MultiSelect', () => {
             component.loading = true;
             fixture.detectChanges();
 
-            const loadingIcon = fixture.debugElement.query(By.css('.p-multiselect-loading-icon'));
+            const loadingIcon = fixture.debugElement.query(By.css('.h-multiselect-loading-icon'));
             expect(loadingIcon).toBeTruthy();
         });
 
@@ -1060,8 +1060,8 @@ describe('MultiSelect', () => {
             component.disabled = true;
             fixture.detectChanges();
 
-            const multiSelectElement = fixture.debugElement.query(By.css('p-multiselect'));
-            expect(multiSelectElement.nativeElement.classList.contains('p-disabled')).toBe(true);
+            const multiSelectElement = fixture.debugElement.query(By.css('h-multiselect'));
+            expect(multiSelectElement.nativeElement.classList.contains('h-disabled')).toBe(true);
         });
 
         it('should show clear icon when showClear is true and has value', () => {
@@ -1069,7 +1069,7 @@ describe('MultiSelect', () => {
             component.selectedCities = [component.options[0]];
             fixture.detectChanges();
 
-            const clearIcon = fixture.debugElement.query(By.css('.p-multiselect-clear-icon'));
+            const clearIcon = fixture.debugElement.query(By.css('.h-multiselect-clear-icon'));
             // Clear icon might not be rendered immediately or use different CSS class
             expect(clearIcon || fixture.debugElement.query(By.css('[data-pc-section="clearicon"]')) || multiSelect.showClear()).toBeTruthy();
         });
@@ -1084,7 +1084,7 @@ describe('MultiSelect', () => {
             // Check if model value was updated
             expect(multiSelect.modelValue()).toEqual([component.options[0], component.options[1]]);
 
-            const label = fixture.debugElement.query(By.css('.p-multiselect-label'));
+            const label = fixture.debugElement.query(By.css('.h-multiselect-label'));
             if (label?.nativeElement) {
                 const labelText = label.nativeElement.textContent.trim();
                 // The label should contain selected items, not placeholder
@@ -1106,9 +1106,9 @@ describe('MultiSelect', () => {
             // Verify model value is set
             expect(multiSelect.modelValue()).toEqual([component.options[0]]);
 
-            const chip = fixture.debugElement.query(By.css('p-chip'));
+            const chip = fixture.debugElement.query(By.css('h-chip'));
             // Chip might not be rendered or use different selector
-            expect(chip || fixture.debugElement.query(By.css('.p-multiselect-chip')) || component.display === 'chip').toBeTruthy();
+            expect(chip || fixture.debugElement.query(By.css('.h-multiselect-chip')) || component.display === 'chip').toBeTruthy();
         });
     });
 
@@ -1147,7 +1147,7 @@ describe('MultiSelect', () => {
                 return true;
             });
 
-            const element = fixture.debugElement.query(By.css('p-multiselect')).nativeElement;
+            const element = fixture.debugElement.query(By.css('h-multiselect')).nativeElement;
 
             element.click();
             element.click();
@@ -1402,7 +1402,7 @@ describe('MultiSelect Templates', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+        const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
         if (filterInput) {
             filterInput.nativeElement.value = 'xyz';
             filterInput.nativeElement.dispatchEvent(new Event('input'));
@@ -1539,7 +1539,7 @@ describe('MultiSelect Content Child Templates', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+        const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
         if (filterInput?.nativeElement) {
             filterInput.nativeElement.value = 'nonexistent';
             filterInput.nativeElement.dispatchEvent(new Event('input'));
@@ -1587,7 +1587,7 @@ describe('MultiSelect Grouped Options', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const optionGroups = fixture.debugElement.queryAll(By.css('.p-multiselect-option-group'));
+        const optionGroups = fixture.debugElement.queryAll(By.css('.h-multiselect-option-group'));
         expect(optionGroups.length).toBe(2); // USA and Italy
 
         expect(optionGroups[0].nativeElement.textContent.trim()).toBe('USA');
@@ -1624,7 +1624,7 @@ describe('MultiSelect Grouped Options', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const filterInput = fixture.debugElement.query(By.css('.p-multiselect-filter input'));
+        const filterInput = fixture.debugElement.query(By.css('.h-multiselect-filter input'));
         if (filterInput?.nativeElement) {
             filterInput.nativeElement.value = 'New';
             filterInput.nativeElement.dispatchEvent(new Event('input'));
@@ -1680,7 +1680,7 @@ describe('MultiSelect Virtual Scrolling', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const scroller = fixture.debugElement.query(By.css('p-scroller'));
+        const scroller = fixture.debugElement.query(By.css('h-scroller'));
         expect(scroller).toBeTruthy();
     });
 
@@ -1751,7 +1751,7 @@ describe('MultiSelect Virtual Scrolling', () => {
     template: `
         <div class="test-dynamic-data">
             <!-- Signal-based options -->
-            <p-multiselect
+            <h-multiselect
                 #signalMultiSelect
                 [options]="citySignal()"
                 [(ngModel)]="selectedCitiesSignal"
@@ -1760,10 +1760,10 @@ describe('MultiSelect Virtual Scrolling', () => {
                 [disabled]="disabledSignal()"
                 [filter]="filterSignal()"
                 class="signal-multiselect"
-            ></p-multiselect>
+            ></h-multiselect>
 
             <!-- Observable with async pipe -->
-            <p-multiselect
+            <h-multiselect
                 #asyncMultiSelect
                 [options]="citiesObservable$ | async"
                 [(ngModel)]="selectedCitiesAsync"
@@ -1771,13 +1771,13 @@ describe('MultiSelect Virtual Scrolling', () => {
                 [placeholder]="placeholderObservable$ | async"
                 [loading]="loadingObservable$ | async"
                 class="async-multiselect"
-            ></p-multiselect>
+            ></h-multiselect>
 
             <!-- Getter-based options -->
-            <p-multiselect #getterMultiSelect [options]="getCities()" [(ngModel)]="selectedCitiesGetter" optionLabel="name" [placeholder]="getPlaceholder()" [disabled]="getDisabled()" class="getter-multiselect"></p-multiselect>
+            <h-multiselect #getterMultiSelect [options]="getCities()" [(ngModel)]="selectedCitiesGetter" optionLabel="name" [placeholder]="getPlaceholder()" [disabled]="getDisabled()" class="getter-multiselect"></h-multiselect>
 
             <!-- Function-based properties -->
-            <p-multiselect
+            <h-multiselect
                 #functionMultiSelect
                 [options]="getFunctionOptions()"
                 [(ngModel)]="selectedCitiesFunction"
@@ -1787,13 +1787,13 @@ describe('MultiSelect Virtual Scrolling', () => {
                 [placeholder]="getFunctionPlaceholder()"
                 [filter]="getFunctionFilter()"
                 class="function-multiselect"
-            ></p-multiselect>
+            ></h-multiselect>
 
             <!-- Late-loaded data (simulating HTTP requests) -->
-            <p-multiselect #lateLoadMultiSelect [options]="lateLoadedOptions" [(ngModel)]="selectedCitiesLateLoad" optionLabel="name" [loading]="isLoadingLateData" [placeholder]="lateLoadPlaceholder" class="late-load-multiselect"></p-multiselect>
+            <h-multiselect #lateLoadMultiSelect [options]="lateLoadedOptions" [(ngModel)]="selectedCitiesLateLoad" optionLabel="name" [loading]="isLoadingLateData" [placeholder]="lateLoadPlaceholder" class="late-load-multiselect"></h-multiselect>
 
             <!-- Computed signal based on other signals -->
-            <p-multiselect
+            <h-multiselect
                 #computedMultiSelect
                 [options]="computedOptions()"
                 [(ngModel)]="selectedCitiesComputed"
@@ -1801,7 +1801,7 @@ describe('MultiSelect Virtual Scrolling', () => {
                 [placeholder]="computedPlaceholder()"
                 [maxSelectedLabels]="computedMaxLabels()"
                 class="computed-multiselect"
-            ></p-multiselect>
+            ></h-multiselect>
         </div>
     `
 })
@@ -1977,14 +1977,14 @@ class TestDynamicDataSourcesMultiSelectComponent {
         <div class="comprehensive-form-tests">
             <!-- Reactive Form with all Angular FormControl APIs -->
             <form [formGroup]="reactiveForm" class="reactive-form">
-                <p-multiselect #reactiveMultiSelect formControlName="cities" [options]="allCities" optionLabel="name" placeholder="Select cities (Reactive)" [showClear]="true" [filter]="true" class="reactive-multiselect"></p-multiselect>
+                <h-multiselect #reactiveMultiSelect formControlName="cities" [options]="allCities" optionLabel="name" placeholder="Select cities (Reactive)" [showClear]="true" [filter]="true" class="reactive-multiselect"></h-multiselect>
 
-                <p-multiselect #validatedMultiSelect formControlName="validatedCities" [options]="allCities" optionLabel="name" placeholder="Required cities (Reactive)" [showClear]="true" [filter]="true" class="validated-multiselect"></p-multiselect>
+                <h-multiselect #validatedMultiSelect formControlName="validatedCities" [options]="allCities" optionLabel="name" placeholder="Required cities (Reactive)" [showClear]="true" [filter]="true" class="validated-multiselect"></h-multiselect>
             </form>
 
             <!-- Template-driven form with NgModel -->
             <form #templateForm="ngForm" class="template-form">
-                <p-multiselect
+                <h-multiselect
                     #ngModelMultiSelect
                     [(ngModel)]="ngModelValue"
                     name="templateCities"
@@ -1996,9 +1996,9 @@ class TestDynamicDataSourcesMultiSelectComponent {
                     #citiesModel="ngModel"
                     [required]="true"
                     class="ngmodel-multiselect"
-                ></p-multiselect>
+                ></h-multiselect>
 
-                <p-multiselect
+                <h-multiselect
                     #ngModelValidatedMultiSelect
                     [(ngModel)]="ngModelValidatedValue"
                     name="validatedTemplateCities"
@@ -2010,7 +2010,7 @@ class TestDynamicDataSourcesMultiSelectComponent {
                     [required]="true"
                     [minlength]="2"
                     class="ngmodel-validated-multiselect"
-                ></p-multiselect>
+                ></h-multiselect>
             </form>
 
             <!-- Form status display -->
@@ -2134,7 +2134,7 @@ class TestComprehensiveFormMultiSelectComponent {
     standalone: false,
     template: `
         <div class="viewchild-tests">
-            <p-multiselect #mainMultiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Test ViewChild properties" [showClear]="true" [filter]="true" [virtualScroll]="false" [selectionLimit]="selectionLimit" class="main-multiselect">
+            <h-multiselect #mainMultiSelect [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" placeholder="Test ViewChild properties" [showClear]="true" [filter]="true" [virtualScroll]="false" [selectionLimit]="selectionLimit" class="main-multiselect">
                 <ng-template pTemplate="selectedItems" let-value>
                     <div class="custom-selected-template">{{ value?.length || 0 }} selected</div>
                 </ng-template>
@@ -2154,7 +2154,7 @@ class TestComprehensiveFormMultiSelectComponent {
                 <ng-template pTemplate="empty">
                     <div class="custom-empty-template">No cities available</div>
                 </ng-template>
-            </p-multiselect>
+            </h-multiselect>
         </div>
     `
 })
@@ -2256,7 +2256,7 @@ class TestViewChildMultiSelectComponent {
     template: `
         <div class="edge-cases-tests">
             <!-- Large dataset performance test -->
-            <p-multiselect
+            <h-multiselect
                 #largeDataMultiSelect
                 [options]="largeDataset"
                 [(ngModel)]="selectedLargeData"
@@ -2269,16 +2269,16 @@ class TestViewChildMultiSelectComponent {
                 [showToggleAll]="true"
                 [maxSelectedLabels]="5"
                 class="large-data-multiselect"
-            ></p-multiselect>
+            ></h-multiselect>
 
             <!-- Unicode and special characters test -->
-            <p-multiselect #unicodeMultiSelect [options]="unicodeOptions" [(ngModel)]="selectedUnicode" optionLabel="name" placeholder="Unicode & Special chars" [filter]="true" class="unicode-multiselect"></p-multiselect>
+            <h-multiselect #unicodeMultiSelect [options]="unicodeOptions" [(ngModel)]="selectedUnicode" optionLabel="name" placeholder="Unicode & Special chars" [filter]="true" class="unicode-multiselect"></h-multiselect>
 
             <!-- XSS protection test -->
-            <p-multiselect #xssMultiSelect [options]="xssTestOptions" [(ngModel)]="selectedXss" optionLabel="name" placeholder="XSS Protection Test" [filter]="true" class="xss-multiselect"></p-multiselect>
+            <h-multiselect #xssMultiSelect [options]="xssTestOptions" [(ngModel)]="selectedXss" optionLabel="name" placeholder="XSS Protection Test" [filter]="true" class="xss-multiselect"></h-multiselect>
 
             <!-- Memory management test -->
-            <p-multiselect
+            <h-multiselect
                 #memoryMultiSelect
                 [options]="memoryTestOptions"
                 [(ngModel)]="selectedMemory"
@@ -2288,13 +2288,13 @@ class TestViewChildMultiSelectComponent {
                 [lazy]="true"
                 class="memory-multiselect"
                 (onLazyLoad)="handleLazyLoad($event)"
-            ></p-multiselect>
+            ></h-multiselect>
 
             <!-- Null/undefined handling test -->
-            <p-multiselect #nullHandlingMultiSelect [options]="nullTestOptions" [(ngModel)]="selectedNull" optionLabel="name" placeholder="Null handling test" class="null-handling-multiselect"></p-multiselect>
+            <h-multiselect #nullHandlingMultiSelect [options]="nullTestOptions" [(ngModel)]="selectedNull" optionLabel="name" placeholder="Null handling test" class="null-handling-multiselect"></h-multiselect>
 
             <!-- Circular reference test -->
-            <p-multiselect #circularMultiSelect [options]="circularOptions" [(ngModel)]="selectedCircular" optionLabel="name" placeholder="Circular reference test" class="circular-multiselect"></p-multiselect>
+            <h-multiselect #circularMultiSelect [options]="circularOptions" [(ngModel)]="selectedCircular" optionLabel="name" placeholder="Circular reference test" class="circular-multiselect"></h-multiselect>
         </div>
     `
 })
@@ -3100,7 +3100,7 @@ describe('MultiSelect Complex Edge Cases', () => {
             await fixture.whenStable();
 
             // Should only render visible items due to virtual scrolling
-            const renderedItems = fixture.debugElement.queryAll(By.css('.p-multiselect-option'));
+            const renderedItems = fixture.debugElement.queryAll(By.css('.h-multiselect-option'));
             expect(renderedItems.length).toBeLessThan(100); // Much less than 10k
         });
 
@@ -3369,7 +3369,7 @@ describe('MultiSelect Complex Edge Cases', () => {
                                 root: {
                                     class: 'pt-root-test',
                                     style: { 'background-color': 'red' },
-                                    'data-p-test': true,
+                                    'data-h-test': true,
                                     'aria-label': 'TEST ARIA LABEL'
                                 },
                                 label: {
@@ -3392,7 +3392,7 @@ describe('MultiSelect Complex Edge Cases', () => {
             const root = fixture.nativeElement;
             expect(root.classList.contains('pt-root-test')).toBe(true);
             expect(root.style.backgroundColor).toBe('red');
-            expect(root.getAttribute('data-p-test')).toBe('true');
+            expect(root.getAttribute('data-h-test')).toBe('true');
             expect(root.getAttribute('aria-label')).toBe('TEST ARIA LABEL');
         });
 
@@ -3637,7 +3637,7 @@ describe('MultiSelect Complex Edge Cases', () => {
             fixture.detectChanges();
 
             // Open dropdown
-            const dropdown = fixture.debugElement.query(By.css('.p-multiselect-dropdown'));
+            const dropdown = fixture.debugElement.query(By.css('.h-multiselect-dropdown'));
             dropdown.nativeElement.click();
             fixture.detectChanges();
 

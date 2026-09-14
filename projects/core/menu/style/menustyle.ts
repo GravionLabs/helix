@@ -8,28 +8,28 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-menu p-component',
+        'h-menu h-component',
         {
-            'p-menu-overlay': instance.popup()
+            'h-menu-overlay': instance.popup()
         }
     ],
-    start: 'p-menu-start',
-    list: 'p-menu-list',
-    submenuLabel: 'p-menu-submenu-label',
-    separator: 'p-menu-separator',
-    end: 'p-menu-end',
+    start: 'h-menu-start',
+    list: 'h-menu-list',
+    submenuLabel: 'h-menu-submenu-label',
+    separator: 'h-menu-separator',
+    end: 'h-menu-end',
     item: ({ instance, item, id }) => [
-        'p-menu-item',
+        'h-menu-item',
         {
-            'p-focus': instance.focusedOptionId() && id === instance.focusedOptionId(),
-            'p-disabled': instance.disabled(item.disabled)
+            'h-focus': instance.focusedOptionId() && id === instance.focusedOptionId(),
+            'h-disabled': instance.disabled(item.disabled)
         },
         item.styleClass
     ],
-    itemContent: 'p-menu-item-content',
-    itemLink: 'p-menu-item-link',
-    itemIcon: ({ item }) => ['p-menu-item-icon', item.icon, item.iconClass],
-    itemLabel: 'p-menu-item-label'
+    itemContent: 'h-menu-item-content',
+    itemLink: 'h-menu-item-link',
+    itemIcon: ({ item }) => ['h-menu-item-icon', item.icon, item.iconClass],
+    itemLabel: 'h-menu-item-label'
 };
 
 @Injectable()
@@ -57,47 +57,47 @@ export enum MenuClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-menu',
+    root = 'h-menu',
     /**
      * Class name of the start element
      */
-    start = 'p-menu-start',
+    start = 'h-menu-start',
     /**
      * Class name of the list element
      */
-    list = 'p-menu-list',
+    list = 'h-menu-list',
     /**
      * Class name of the submenu item element
      */
-    submenuItem = 'p-menu-submenu-item',
+    submenuItem = 'h-menu-submenu-item',
     /**
      * Class name of the separator element
      */
-    separator = 'p-menu-separator',
+    separator = 'h-menu-separator',
     /**
      * Class name of the end element
      */
-    end = 'p-menu-end',
+    end = 'h-menu-end',
     /**
      * Class name of the item element
      */
-    item = 'p-menu-item',
+    item = 'h-menu-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-menu-item-content',
+    itemContent = 'h-menu-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-menu-item-link',
+    itemLink = 'h-menu-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-menu-item-icon',
+    itemIcon = 'h-menu-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-menu-item-label'
+    itemLabel = 'h-menu-item-label'
 }
 
 export interface MenuStyle extends BaseStyle {}

@@ -12,17 +12,17 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-divider p-component',
-        'p-divider-' + instance.layout(),
-        'p-divider-' + instance.type(),
-        { 'p-divider-left': instance.layout() === 'horizontal' && (!instance.align() || instance.align() === 'left') },
-        { 'p-divider-center': instance.layout() === 'horizontal' && instance.align() === 'center' },
-        { 'p-divider-right': instance.layout() === 'horizontal' && instance.align() === 'right' },
-        { 'p-divider-top': instance.layout() === 'vertical' && instance.align() === 'top' },
-        { 'p-divider-center': instance.layout() === 'vertical' && (!instance.align() || instance.align() === 'center') },
-        { 'p-divider-bottom': instance.layout() === 'vertical' && instance.align() === 'bottom' }
+        'h-divider h-component',
+        'h-divider-' + instance.layout(),
+        'h-divider-' + instance.type(),
+        { 'h-divider-left': instance.layout() === 'horizontal' && (!instance.align() || instance.align() === 'left') },
+        { 'h-divider-center': instance.layout() === 'horizontal' && instance.align() === 'center' },
+        { 'h-divider-right': instance.layout() === 'horizontal' && instance.align() === 'right' },
+        { 'h-divider-top': instance.layout() === 'vertical' && instance.align() === 'top' },
+        { 'h-divider-center': instance.layout() === 'vertical' && (!instance.align() || instance.align() === 'center') },
+        { 'h-divider-bottom': instance.layout() === 'vertical' && instance.align() === 'bottom' }
     ],
-    content: 'p-divider-content'
+    content: 'h-divider-content'
 };
 
 @Injectable()
@@ -49,11 +49,11 @@ export enum DividerClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-divider',
+    root = 'h-divider',
     /**
      * Class name of the content element
      */
-    content = 'p-divider-content'
+    content = 'h-divider-content'
 }
 
 export interface DividerStyle extends BaseStyle {}

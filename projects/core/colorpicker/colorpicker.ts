@@ -216,7 +216,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
 
         this.colorDragging = true;
         this.pickColor(event, (event as TouchEvent).changedTouches[0]);
-        this.el.nativeElement.setAttribute('p-colorpicker-dragging', 'true');
+        this.el.nativeElement.setAttribute('h-colorpicker-dragging', 'true');
     }
 
     pickHue(event: MouseEvent | TouchEvent, position?: any) {
@@ -261,7 +261,7 @@ export class ColorPicker extends BaseEditableHolder<ColorPickerPassThrough> impl
     onDragEnd() {
         this.colorDragging = false;
         this.hueDragging = false;
-        this.el.nativeElement.setAttribute('p-colorpicker-dragging', 'false');
+        this.el.nativeElement.setAttribute('h-colorpicker-dragging', 'false');
         this.unbindDocumentMousemoveListener();
         this.unbindDocumentMouseupListener();
         this.hideOnColorChosen();

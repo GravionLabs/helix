@@ -3,10 +3,10 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-tab',
+        'h-tab',
         {
-            'p-tab-active': instance.active(),
-            'p-disabled': instance.disabled()
+            'h-tab-active': instance.active(),
+            'h-disabled': instance.disabled()
         }
     ]
 };
@@ -32,7 +32,7 @@ export enum TabClasses {
     /**
      * Class name of the tab list element
      */
-    tab = 'p-tab'
+    tab = 'h-tab'
 }
 
 export interface TabStyle extends BaseStyle {}

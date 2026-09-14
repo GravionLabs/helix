@@ -16,8 +16,8 @@
       [hTooltip]="getItemProp(processedItem, 'tooltip')"
       [pTooltipUnstyled]="unstyled()"
       [hBind]="getPTOptions(processedItem, index, 'item')"
-      [attr.data-p-disabled]="isItemDisabled(processedItem)"
-      [attr.data-p-focused]="isItemFocused(processedItem)"
+      [attr.data-h-disabled]="isItemDisabled(processedItem)"
+      [attr.data-h-focused]="isItemFocused(processedItem)"
       [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
       >
       <div [class]="cx('itemContent')" [hBind]="getPTOptions(processedItem, index, 'itemContent')" (click)="onItemClick($event, processedItem)">
@@ -37,7 +37,7 @@
                 @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
                   @if (isItemActive(processedItem)) {
                     <svg
-                      data-p-icon="chevron-down"
+                      data-h-icon="chevron-down"
                       [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
                       [ngStyle]="getItemProp(processedItem, 'iconStyle')"
                       [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
@@ -45,7 +45,7 @@
                   }
                   @if (!isItemActive(processedItem)) {
                     <svg
-                      data-p-icon="chevron-right"
+                      data-h-icon="chevron-right"
                       [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
                       [ngStyle]="getItemProp(processedItem, 'iconStyle')"
                       [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
@@ -83,7 +83,7 @@
                 <a
                   [routerLink]="getItemProp(processedItem, 'routerLink')"
                   [queryParams]="getItemProp(processedItem, 'queryParams')"
-                  [routerLinkActive]="'p-panelmenu-item-link-active'"
+                  [routerLinkActive]="'h-panelmenu-item-link-active'"
                   [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
                   [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
                   [ngStyle]="getItemProp(processedItem, 'linkStyle')"
@@ -103,7 +103,7 @@
                     @if (!panelMenu.submenuIconTemplate() && !panelMenu._submenuIconTemplate) {
                       @if (isItemActive(processedItem)) {
                         <svg
-                          data-p-icon="chevron-down"
+                          data-h-icon="chevron-down"
                           [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
                           [ngStyle]="getItemProp(processedItem, 'iconStyle')"
                           [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
@@ -111,7 +111,7 @@
                       }
                       @if (!isItemActive(processedItem)) {
                         <svg
-                          data-p-icon="chevron-right"
+                          data-h-icon="chevron-right"
                           [class]="cn(cx('submenuIcon'), getItemProp(processedItem, 'icon'))"
                           [ngStyle]="getItemProp(processedItem, 'iconStyle')"
                           [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
@@ -147,7 +147,7 @@
           </div>
           <div
             [class]="cx('contentContainer', { processedItem: processedItem })"
-            pMotionName="p-collapsible"
+            pMotionName="h-collapsible"
             [hMotion]="isItemVisible(processedItem) && isItemGroup(processedItem) && isItemExpanded(processedItem)"
             [pMotionOptions]="motionOptions()"
             >

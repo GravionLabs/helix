@@ -54,7 +54,7 @@ const INPUTMASK_DIRECTIVE_INSTANCE = new InjectionToken<InputMaskDirective>('INP
     standalone: true,
     providers: [InputMaskStyle, { provide: INPUTMASK_DIRECTIVE_INSTANCE, useExisting: InputMaskDirective }, { provide: PARENT_INSTANCE, useExisting: InputMaskDirective }],
     host: {
-        '[class.p-inputmask]': '!$unstyled()'
+        '[class.h-inputmask]': '!$unstyled()'
     }
 })
 export class InputMaskDirective extends BaseComponent<InputMaskPassThrough> {
@@ -143,7 +143,7 @@ export class InputMaskDirective extends BaseComponent<InputMaskPassThrough> {
     private get inputElement(): HTMLInputElement {
         if (!this._inputElement) {
             const host = this.el.nativeElement;
-            this._inputElement = host.querySelector('[data-p-maskable]') || Array.from(host.querySelectorAll('input')).find((input: HTMLInputElement) => this.isInputVisible(input)) || host;
+            this._inputElement = host.querySelector('[data-h-maskable]') || Array.from(host.querySelectorAll('input')).find((input: HTMLInputElement) => this.isInputVisible(input)) || host;
         }
         return this._inputElement as HTMLInputElement;
     }

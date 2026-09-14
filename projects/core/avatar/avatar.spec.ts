@@ -7,14 +7,14 @@ import { Avatar, AvatarModule } from './avatar';
 @Component({
     standalone: false,
     selector: 'test-basic-avatar',
-    template: `<p-avatar></p-avatar>`
+    template: `<h-avatar></h-avatar>`
 })
 class TestBasicAvatarComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-label-avatar',
-    template: `<p-avatar [label]="label"></p-avatar>`
+    template: `<h-avatar [label]="label"></h-avatar>`
 })
 class TestLabelAvatarComponent {
     label = 'JD';
@@ -23,7 +23,7 @@ class TestLabelAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-icon-avatar',
-    template: `<p-avatar [icon]="icon"></p-avatar>`
+    template: `<h-avatar [icon]="icon"></h-avatar>`
 })
 class TestIconAvatarComponent {
     icon = 'pi pi-user';
@@ -32,7 +32,7 @@ class TestIconAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-image-avatar',
-    template: `<p-avatar [image]="image" [ariaLabel]="ariaLabel" (onImageError)="onImageError($event)"></p-avatar>`
+    template: `<h-avatar [image]="image" [ariaLabel]="ariaLabel" (onImageError)="onImageError($event)"></h-avatar>`
 })
 class TestImageAvatarComponent {
     image = '/path/to/avatar.jpg';
@@ -47,7 +47,7 @@ class TestImageAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-size-avatar',
-    template: `<p-avatar [label]="label" [size]="size"></p-avatar>`
+    template: `<h-avatar [label]="label" [size]="size"></h-avatar>`
 })
 class TestSizeAvatarComponent {
     label = 'AB';
@@ -57,7 +57,7 @@ class TestSizeAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-shape-avatar',
-    template: `<p-avatar [label]="label" [shape]="shape"></p-avatar>`
+    template: `<h-avatar [label]="label" [shape]="shape"></h-avatar>`
 })
 class TestShapeAvatarComponent {
     label = 'CD';
@@ -67,7 +67,7 @@ class TestShapeAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-style-class-avatar',
-    template: `<p-avatar [label]="label" [styleClass]="styleClass"></p-avatar>`
+    template: `<h-avatar [label]="label" [styleClass]="styleClass"></h-avatar>`
 })
 class TestStyleClassAvatarComponent {
     label = 'EF';
@@ -77,7 +77,7 @@ class TestStyleClassAvatarComponent {
 @Component({
     standalone: false,
     selector: 'test-aria-avatar',
-    template: `<p-avatar [label]="label" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy"></p-avatar>`
+    template: `<h-avatar [label]="label" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy"></h-avatar>`
 })
 class TestAriaAvatarComponent {
     label = 'GH';
@@ -89,9 +89,9 @@ class TestAriaAvatarComponent {
     standalone: false,
     selector: 'test-content-avatar',
     template: `
-        <p-avatar>
+        <h-avatar>
             <span class="custom-content">Custom</span>
-        </p-avatar>
+        </h-avatar>
     `
 })
 class TestContentAvatarComponent {}
@@ -99,7 +99,7 @@ class TestContentAvatarComponent {}
 @Component({
     standalone: false,
     selector: 'test-dynamic-avatar',
-    template: ` <p-avatar [label]="label" [icon]="icon" [image]="image" [size]="size" [shape]="shape" [styleClass]="styleClass" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" (onImageError)="onImageError($event)"> </p-avatar> `
+    template: ` <h-avatar [label]="label" [icon]="icon" [image]="image" [size]="size" [shape]="shape" [styleClass]="styleClass" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" (onImageError)="onImageError($event)"> </h-avatar> `
 })
 class TestDynamicAvatarComponent {
     label: string | undefined;
@@ -120,7 +120,7 @@ class TestDynamicAvatarComponent {
 @Component({
     standalone: true,
     imports: [Avatar],
-    template: `<p-avatar [label]="label()" [icon]="icon()" [image]="image()" [size]="size()" [shape]="shape()" [ariaLabel]="ariaLabel()" [pt]="pt()"></p-avatar>`
+    template: `<h-avatar [label]="label()" [icon]="icon()" [image]="image()" [size]="size()" [shape]="shape()" [ariaLabel]="ariaLabel()" [pt]="pt()"></h-avatar>`
 })
 class TestPTAvatarComponent {
     label = input<string | undefined>('PT');
@@ -182,8 +182,8 @@ describe('Avatar', () => {
         });
 
         it('should apply base CSS classes', () => {
-            expect(element.classList.contains('p-avatar')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
+            expect(element.classList.contains('h-avatar')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
         });
 
         it('should have correct data attributes', () => {
@@ -191,8 +191,8 @@ describe('Avatar', () => {
         });
 
         it('should not display any content when empty', () => {
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
             const imageElement = fixture.debugElement.query(By.css('img'));
 
             expect(labelElement).toBeFalsy();
@@ -214,7 +214,7 @@ describe('Avatar', () => {
         });
 
         it('should display label text', () => {
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('JD');
         });
@@ -224,7 +224,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent.trim()).toBe('AB');
         });
 
@@ -233,7 +233,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement).toBeFalsy();
         });
 
@@ -242,7 +242,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement).toBeFalsy();
         });
 
@@ -255,7 +255,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent.trim()).toBe('ABCDEFGH');
         });
     });
@@ -273,7 +273,7 @@ describe('Avatar', () => {
         });
 
         it('should display icon', () => {
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
             expect(iconElement).toBeTruthy();
             expect(iconElement.nativeElement.classList.contains('pi')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('pi-user')).toBe(true);
@@ -284,7 +284,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
             expect(iconElement.nativeElement.classList.contains('pi-star')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('pi-user')).toBe(false);
         });
@@ -294,7 +294,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
             expect(iconElement).toBeFalsy();
         });
 
@@ -303,7 +303,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
             expect(iconElement.nativeElement.classList.contains('pi')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('pi-user')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('custom-icon')).toBe(true);
@@ -376,16 +376,16 @@ describe('Avatar', () => {
             expect(imageElement).toBeFalsy();
         });
 
-        it('should have p-avatar-image class when image is present', () => {
-            expect(element.classList.contains('p-avatar-image')).toBe(true);
+        it('should have h-avatar-image class when image is present', () => {
+            expect(element.classList.contains('h-avatar-image')).toBe(true);
         });
 
-        it('should remove p-avatar-image class when image is removed', async () => {
+        it('should remove h-avatar-image class when image is removed', async () => {
             component.image = undefined as any;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar-image')).toBe(false);
+            expect(element.classList.contains('h-avatar-image')).toBe(false);
         });
     });
 
@@ -402,8 +402,8 @@ describe('Avatar', () => {
         });
 
         it('should have no size class for normal size', () => {
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(false);
         });
 
         it('should apply large size class', async () => {
@@ -411,8 +411,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar-lg')).toBe(true);
-            expect(element.classList.contains('p-avatar-xl')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(true);
+            expect(element.classList.contains('h-avatar-xl')).toBe(false);
         });
 
         it('should apply xlarge size class', async () => {
@@ -420,27 +420,27 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(true);
         });
 
         it('should switch between sizes correctly', async () => {
             component.size = 'large';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-lg')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(true);
 
             component.size = 'xlarge';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(true);
 
             component.size = 'normal';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(false);
         });
     });
 
@@ -457,7 +457,7 @@ describe('Avatar', () => {
         });
 
         it('should have no shape class for square shape', () => {
-            expect(element.classList.contains('p-avatar-circle')).toBe(false);
+            expect(element.classList.contains('h-avatar-circle')).toBe(false);
         });
 
         it('should apply circle shape class', async () => {
@@ -465,19 +465,19 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar-circle')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(true);
         });
 
         it('should switch between shapes correctly', async () => {
             component.shape = 'circle';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-circle')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(true);
 
             component.shape = 'square';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-circle')).toBe(false);
+            expect(element.classList.contains('h-avatar-circle')).toBe(false);
         });
     });
 
@@ -506,8 +506,8 @@ describe('Avatar', () => {
         });
 
         it('should maintain base classes with custom style class', () => {
-            expect(element.classList.contains('p-avatar')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
+            expect(element.classList.contains('h-avatar')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
             expect(element.classList.contains('custom-avatar')).toBe(true);
         });
 
@@ -526,8 +526,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
+            expect(element.classList.contains('h-avatar')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
         });
     });
 
@@ -620,8 +620,8 @@ describe('Avatar', () => {
             await fixture.whenStable();
 
             const imageElement = fixture.debugElement.query(By.css('img'));
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
 
             expect(labelElement).toBeTruthy();
             expect(iconElement).toBeFalsy();
@@ -634,8 +634,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
 
             expect(labelElement).toBeTruthy();
             expect(iconElement).toBeFalsy();
@@ -646,8 +646,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
 
             expect(iconElement).toBeTruthy();
             expect(labelElement).toBeFalsy();
@@ -659,8 +659,8 @@ describe('Avatar', () => {
             await fixture.whenStable();
 
             const imageElement = fixture.debugElement.query(By.css('img'));
-            const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
 
             expect(imageElement).toBeTruthy();
             expect(iconElement).toBeFalsy();
@@ -675,11 +675,11 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar-lg')).toBe(true);
-            expect(element.classList.contains('p-avatar-circle')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(true);
             expect(element.classList.contains('custom-class')).toBe(true);
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent.trim()).toBe('XY');
         });
     });
@@ -700,13 +700,13 @@ describe('Avatar', () => {
             component.label = 'AB';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(fixture.debugElement.query(By.css('.p-avatar-label'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-label'))).toBeTruthy();
 
             component.icon = 'pi pi-user';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(fixture.debugElement.query(By.css('.p-avatar-label'))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('.p-avatar-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-label'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-icon'))).toBeFalsy();
         });
 
         it('should show image only when no label and no icon', async () => {
@@ -714,14 +714,14 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
             expect(fixture.debugElement.query(By.css('img'))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('.p-avatar-icon'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-avatar-label'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-label'))).toBeFalsy();
 
             // Adding icon should hide image
             component.icon = 'pi pi-user';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(fixture.debugElement.query(By.css('.p-avatar-icon'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-icon'))).toBeTruthy();
             expect(fixture.debugElement.query(By.css('img'))).toBeFalsy();
         });
 
@@ -738,7 +738,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent.trim()).toBe('C');
         });
 
@@ -782,8 +782,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-avatar-label'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-avatar-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-label'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-icon'))).toBeFalsy();
             expect(fixture.debugElement.query(By.css('img'))).toBeFalsy();
         });
 
@@ -792,7 +792,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('' as any);
         });
@@ -805,8 +805,8 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-avatar-label'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-avatar-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-label'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-avatar-icon'))).toBeFalsy();
             expect(fixture.debugElement.query(By.css('img'))).toBeFalsy();
         });
 
@@ -816,8 +816,8 @@ describe('Avatar', () => {
             await fixture.whenStable();
 
             // Should not apply any size classes for invalid values
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(false);
         });
 
         it('should handle invalid shape values', async () => {
@@ -826,7 +826,7 @@ describe('Avatar', () => {
             await fixture.whenStable();
 
             // Should not apply circle class for invalid values
-            expect(element.classList.contains('p-avatar-circle')).toBe(false);
+            expect(element.classList.contains('h-avatar-circle')).toBe(false);
         });
 
         it('should handle special characters in label', async () => {
@@ -834,7 +834,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent).toBe('<>&"\'');
         });
 
@@ -843,7 +843,7 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
             expect(labelElement.nativeElement.textContent).toBe('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
         });
 
@@ -878,48 +878,48 @@ describe('Avatar', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-avatar')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
-            expect(element.classList.contains('p-avatar-image')).toBe(true);
-            expect(element.classList.contains('p-avatar-lg')).toBe(true);
-            expect(element.classList.contains('p-avatar-circle')).toBe(true);
+            expect(element.classList.contains('h-avatar')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
+            expect(element.classList.contains('h-avatar-image')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(true);
             expect(element.classList.contains('custom-1')).toBe(true);
             expect(element.classList.contains('custom-2')).toBe(true);
         });
 
-        it('should remove p-avatar-image class when image is removed', async () => {
+        it('should remove h-avatar-image class when image is removed', async () => {
             component.image = '/path/to/image.jpg';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-image')).toBe(true);
+            expect(element.classList.contains('h-avatar-image')).toBe(true);
 
             component.image = undefined as any;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-image')).toBe(false);
+            expect(element.classList.contains('h-avatar-image')).toBe(false);
         });
 
         it('should handle class transitions smoothly', async () => {
             // Start with normal square
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-circle')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-circle')).toBe(false);
 
             // Change to large circle
             component.size = 'large';
             component.shape = 'circle';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-lg')).toBe(true);
-            expect(element.classList.contains('p-avatar-circle')).toBe(true);
+            expect(element.classList.contains('h-avatar-lg')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(true);
 
             // Change to xlarge square
             component.size = 'xlarge';
             component.shape = 'square';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(element.classList.contains('p-avatar-lg')).toBe(false);
-            expect(element.classList.contains('p-avatar-xl')).toBe(true);
-            expect(element.classList.contains('p-avatar-circle')).toBe(false);
+            expect(element.classList.contains('h-avatar-lg')).toBe(false);
+            expect(element.classList.contains('h-avatar-xl')).toBe(true);
+            expect(element.classList.contains('h-avatar-circle')).toBe(false);
         });
     });
 
@@ -955,7 +955,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_CLASS')).toBe(true);
             });
 
@@ -966,7 +966,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
                 expect(iconElement.nativeElement.classList.contains('ICON_CLASS')).toBe(true);
             });
 
@@ -997,7 +997,7 @@ describe('Avatar', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1006,7 +1006,7 @@ describe('Avatar', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.backgroundColor).toBe('red');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -1015,17 +1015,17 @@ describe('Avatar', () => {
                     label: {
                         class: 'LABEL_OBJECT_CLASS',
                         style: { color: 'blue' },
-                        'data-p-label': 'test',
+                        'data-h-label': 'test',
                         'aria-hidden': 'true'
                     }
                 });
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_OBJECT_CLASS')).toBe(true);
                 expect(labelElement.nativeElement.style.color).toBe('blue');
-                expect(labelElement.nativeElement.getAttribute('data-p-label')).toBe('test');
+                expect(labelElement.nativeElement.getAttribute('data-h-label')).toBe('test');
                 expect(labelElement.nativeElement.getAttribute('aria-hidden')).toBe('true');
             });
 
@@ -1038,17 +1038,17 @@ describe('Avatar', () => {
                     icon: {
                         class: 'ICON_OBJECT_CLASS',
                         style: { 'font-size': '2rem' },
-                        'data-p-icon': 'custom',
+                        'data-h-icon': 'custom',
                         'aria-hidden': 'false'
                     }
                 });
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
                 expect(iconElement.nativeElement.classList.contains('ICON_OBJECT_CLASS')).toBe(true);
                 expect(iconElement.nativeElement.style.fontSize).toBe('2rem');
-                expect(iconElement.nativeElement.getAttribute('data-p-icon')).toBe('custom');
+                expect(iconElement.nativeElement.getAttribute('data-h-icon')).toBe('custom');
                 expect(iconElement.nativeElement.getAttribute('aria-hidden')).toBe('false');
             });
 
@@ -1061,7 +1061,7 @@ describe('Avatar', () => {
                     image: {
                         class: 'IMAGE_OBJECT_CLASS',
                         style: { border: '2px solid black' },
-                        'data-p-image': 'avatar',
+                        'data-h-image': 'avatar',
                         'aria-label': 'IMAGE_ARIA_LABEL'
                     }
                 });
@@ -1071,7 +1071,7 @@ describe('Avatar', () => {
                 const imageElement = fixture.debugElement.query(By.css('img'));
                 expect(imageElement.nativeElement.classList.contains('IMAGE_OBJECT_CLASS')).toBe(true);
                 expect(imageElement.nativeElement.style.border).toBe('2px solid black');
-                expect(imageElement.nativeElement.getAttribute('data-p-image')).toBe('avatar');
+                expect(imageElement.nativeElement.getAttribute('data-h-image')).toBe('avatar');
                 expect(imageElement.nativeElement.getAttribute('aria-label')).toBe('IMAGE_ARIA_LABEL');
             });
         });
@@ -1098,7 +1098,7 @@ describe('Avatar', () => {
 
                 expect(element.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
 
-                const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_MIXED_CLASS')).toBe(true);
             });
 
@@ -1118,7 +1118,7 @@ describe('Avatar', () => {
                 expect(element.classList.contains('HOST_STRING')).toBe(true);
                 expect(element.classList.contains('ROOT_OBJECT')).toBe(true);
 
-                const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
                 expect(iconElement.nativeElement.classList.contains('ICON_STRING')).toBe(true);
             });
         });
@@ -1167,7 +1167,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
                 expect(labelElement.nativeElement.style.backgroundColor).toBe('yellow');
             });
 
@@ -1192,7 +1192,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
                 expect(iconElement.nativeElement.classList.contains('HAS_LABEL')).toBe(false);
             });
 
@@ -1239,7 +1239,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-avatar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-avatar-label'));
                 labelElement.nativeElement.click();
 
                 expect(clicked).toBe(true);
@@ -1279,7 +1279,7 @@ describe('Avatar', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-avatar-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-avatar-icon'));
                 iconElement.nativeElement.click();
 
                 expect(iconClicked).toBe(true);

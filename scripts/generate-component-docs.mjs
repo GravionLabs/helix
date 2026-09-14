@@ -32,26 +32,38 @@ const INFRA_DESCRIPTIONS = {
   motion: 'Enter/leave animation directive built on the vendored `@gravionlabs/helix-core/uix/motion`.',
   overlay: 'Generic overlay container with configurable positioning, transitions, and pass-through.',
   passthrough: "Pass-through (`pt`) infrastructure: merge and provide attribute maps for component internals.",
+  themes: 'Theme preset engine ($t, definePreset, updatePreset) plus the Aura/Lara/Nora presets (themes/aura, themes/lara, themes/nora) and their design-token types (themes/types), vendored from @primeuix/themes.',
   'ts-helpers': 'Tiny TypeScript runtime helpers shared by the library.',
   types: 'Shared pass-through type definitions for every Helix component module.',
+  uix: 'Vendored @primeuix/{utils,motion,styled} — DOM/object helpers, enter/leave animation, and the theming/CSS-variable engine (epic #421).',
   usestyle: 'Runtime CSS injection service used by the theming layer.',
   utils: 'Object, input-transform, and unique-id helpers shared across components.',
   validators: 'Reactive-forms `Validators` extensions with translatable error messages.',
 };
 
+// `uix` (epic #421) is a pure namespacing folder — `uix/utils`, `uix/motion`
+// and `uix/styled` are the real nested secondary entry points, each already
+// documented on its own; `uix` itself is never an importable path.
+const SKIP_MODULE_DIRS = new Set(['uix']);
+
+// Modules whose `public_api.ts` holds real implementation directly (rather
+// than only re-exporting sibling files) need it included, not filtered out.
+const INCLUDE_PUBLIC_API = new Set(['themes']);
+
 function listModuleDirs() {
   return fs
     .readdirSync(CORE_DIR, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
+    .filter((e) => e.isDirectory() && !SKIP_MODULE_DIRS.has(e.name))
     .map((e) => e.name)
     .sort((a, b) => a.localeCompare(b));
 }
 
 function moduleFiles(moduleDir) {
   const dir = path.join(CORE_DIR, moduleDir);
+  const includePublicApi = INCLUDE_PUBLIC_API.has(moduleDir);
   return fs
     .readdirSync(dir)
-    .filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts') && f !== 'public_api.ts')
+    .filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts') && (includePublicApi || f !== 'public_api.ts'))
     .map((f) => path.join(dir, f));
 }
 
@@ -208,8 +220,21 @@ function collectExportedFunctions(sourceFile) {
   const fns = [];
   for (const stmt of sourceFile.statements) {
     const isExported = stmt.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword);
-    if (!isExported || !ts.isFunctionDeclaration(stmt) || !stmt.name) continue;
-    fns.push({ name: stmt.name.text, description: jsDocDescription(stmt) });
+    if (!isExported) continue;
+
+    if (ts.isFunctionDeclaration(stmt) && stmt.name) {
+      fns.push({ name: stmt.name.text, description: jsDocDescription(stmt) });
+      continue;
+    }
+
+    // export const x = (...) => ...  (e.g. projects/core/themes/public_api.ts)
+    if (ts.isVariableStatement(stmt)) {
+      for (const decl of stmt.declarationList.declarations) {
+        if (ts.isIdentifier(decl.name) && decl.initializer && ts.isArrowFunction(decl.initializer)) {
+          fns.push({ name: decl.name.text, description: jsDocDescription(stmt) });
+        }
+      }
+    }
   }
   return fns;
 }

@@ -72,8 +72,8 @@ describe('Ripple', () => {
             expect(rippleInstance).toBeTruthy();
         });
 
-        it('should add p-ripple class to host element', () => {
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+        it('should add h-ripple class to host element', () => {
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should have required dependencies injected', () => {
@@ -96,8 +96,8 @@ describe('Ripple', () => {
     });
 
     describe('CSS Classes and Styling', () => {
-        it('should apply p-ripple class to host element', () => {
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+        it('should apply h-ripple class to host element', () => {
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should work with styled components', () => {
@@ -105,7 +105,7 @@ describe('Ripple', () => {
             styledFixture.detectChanges();
 
             const styledRippleElement = styledFixture.debugElement.query(By.directive(Ripple));
-            expect(styledRippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(styledRippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(styledRippleElement.nativeElement.classList.contains('test-div')).toBe(true);
         });
 
@@ -114,12 +114,12 @@ describe('Ripple', () => {
             customFixture.detectChanges();
 
             const customRippleElement = customFixture.debugElement.query(By.directive(Ripple));
-            expect(customRippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(customRippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(customRippleElement.nativeElement.classList.contains('custom-ripple-class')).toBe(true);
         });
 
-        it('should preserve existing classes while adding p-ripple', () => {
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+        it('should preserve existing classes while adding h-ripple', () => {
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(rippleElement.nativeElement.classList.contains('test-button')).toBe(true);
         });
 
@@ -131,7 +131,7 @@ describe('Ripple', () => {
             expect(rippleElements.length).toBe(3);
 
             rippleElements.forEach((element, index) => {
-                expect(element.nativeElement.classList.contains('p-ripple')).toBe(true);
+                expect(element.nativeElement.classList.contains('h-ripple')).toBe(true);
                 expect(element.nativeElement.classList.contains(`multiple-ripple-${index + 1}`)).toBe(true);
             });
         });
@@ -141,15 +141,15 @@ describe('Ripple', () => {
             rippleElement.nativeElement.style.height = '50px';
             rippleElement.nativeElement.style.position = 'relative';
 
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(rippleElement.nativeElement.style.width).toBe('100px');
             expect(rippleElement.nativeElement.style.height).toBe('50px');
         });
 
         it('should handle elements with complex class structures', () => {
-            rippleElement.nativeElement.className = 'p-ripple test-button btn btn-primary custom-class';
+            rippleElement.nativeElement.className = 'h-ripple test-button btn btn-primary custom-class';
 
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(rippleElement.nativeElement.classList.contains('test-button')).toBe(true);
             expect(rippleElement.nativeElement.classList.contains('btn')).toBe(true);
             expect(rippleElement.nativeElement.classList.contains('btn-primary')).toBe(true);
@@ -166,7 +166,7 @@ describe('Ripple', () => {
             const nestedRippleInstance = nestedRippleElement.injector.get(Ripple);
 
             expect(nestedRippleInstance).toBeTruthy();
-            expect(nestedRippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(nestedRippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(nestedRippleElement.nativeElement.classList.contains('nested-container')).toBe(true);
 
             // Check that nested content is preserved
@@ -188,7 +188,7 @@ describe('Ripple', () => {
             fixtures.forEach(({ fixture: testFixture, expectedTag }) => {
                 testFixture.detectChanges();
                 const rippleEl = testFixture.debugElement.query(By.directive(Ripple));
-                expect(rippleEl.nativeElement.classList.contains('p-ripple')).toBe(true);
+                expect(rippleEl.nativeElement.classList.contains('h-ripple')).toBe(true);
                 expect(rippleEl.nativeElement.tagName.toLowerCase()).toBe(expectedTag);
             });
         });
@@ -252,7 +252,7 @@ describe('Ripple', () => {
 
             expect(rippleElement.nativeElement.getAttribute('aria-label')).toBe('Test Button');
             expect(rippleElement.nativeElement.getAttribute('role')).toBe('button');
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should not interfere with keyboard navigation', () => {
@@ -292,7 +292,7 @@ describe('Ripple', () => {
             const emptyRippleElement = emptyFixture.debugElement.query(By.directive(Ripple));
             emptyRippleElement.nativeElement.textContent = '';
 
-            expect(emptyRippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(emptyRippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should handle rapid component creation and destruction', () => {
@@ -320,7 +320,7 @@ describe('Ripple', () => {
             newChild.textContent = 'New child';
             rippleElement!.nativeElement.appendChild(newChild);
 
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(rippleElement.nativeElement.querySelector('div')).toBeTruthy();
         });
     });
@@ -330,7 +330,7 @@ describe('Ripple', () => {
             // Test basic functionality that should work across browsers
             expect(rippleInstance).toBeTruthy();
             expect(rippleElement.nativeElement.classList).toBeTruthy();
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should handle basic DOM operations', () => {
@@ -359,7 +359,7 @@ describe('Ripple', () => {
 
             fixtures.forEach((testFixture) => {
                 const rippleEl = testFixture.debugElement.query(By.directive(Ripple));
-                expect(rippleEl.nativeElement.classList.contains('p-ripple')).toBe(true);
+                expect(rippleEl.nativeElement.classList.contains('h-ripple')).toBe(true);
                 testFixture.destroy();
             });
 
@@ -389,7 +389,7 @@ describe('Ripple', () => {
             const rippleEl = complexTemplate.debugElement.query(By.directive(Ripple));
             const children = rippleEl.nativeElement.children;
 
-            expect(rippleEl.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleEl.nativeElement.classList.contains('h-ripple')).toBe(true);
             expect(children.length).toBeGreaterThan(0);
 
             // Ensure children are preserved
@@ -418,17 +418,17 @@ describe('Ripple', () => {
             boundFixture.detectChanges();
 
             const boundRippleElement = boundFixture.debugElement.query(By.directive(Ripple));
-            expect(boundRippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(boundRippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
 
         it('should support conditional rendering', () => {
             // Test that ripple works even when parent component changes
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
 
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            expect(rippleElement.nativeElement.classList.contains('p-ripple')).toBe(true);
+            expect(rippleElement.nativeElement.classList.contains('h-ripple')).toBe(true);
         });
     });
 

@@ -3,9 +3,9 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-tabpanel',
+        'h-tabpanel',
         {
-            'p-tabpanel-active': instance.active()
+            'h-tabpanel-active': instance.active()
         }
     ]
 };
@@ -31,7 +31,7 @@ export enum TabPanelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tabpanel'
+    root = 'h-tabpanel'
 }
 
 export interface TabPanelStyle extends BaseStyle {}

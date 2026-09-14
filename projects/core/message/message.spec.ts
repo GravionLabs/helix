@@ -9,7 +9,7 @@ import { Message } from './message';
 @Component({
     standalone: false,
     template: `
-        <p-message
+        <h-message
             [severity]="severity"
             [text]="text"
             [escape]="escape"
@@ -26,7 +26,7 @@ import { Message } from './message';
             (onClose)="onClose($event)"
         >
             <div class="message-content">{{ content }}</div>
-        </p-message>
+        </h-message>
     `
 })
 class TestBasicMessageComponent {
@@ -55,14 +55,14 @@ class TestBasicMessageComponent {
 @Component({
     standalone: false,
     template: `
-        <p-message [closable]="true">
+        <h-message [closable]="true">
             <ng-template #container let-closeCallback="closeCallback">
                 <div class="custom-container">
                     Custom Container Content
                     <button class="custom-close-button" (click)="closeCallback($event)">Close</button>
                 </div>
             </ng-template>
-        </p-message>
+        </h-message>
     `
 })
 class TestContainerTemplateComponent {}
@@ -70,7 +70,7 @@ class TestContainerTemplateComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-message [closable]="true">
+        <h-message [closable]="true">
             <ng-template #icon>
                 <i class="custom-icon">🔔</i>
             </ng-template>
@@ -78,7 +78,7 @@ class TestContainerTemplateComponent {}
                 <i class="custom-close-icon">✖</i>
             </ng-template>
             Custom Message Content
-        </p-message>
+        </h-message>
     `
 })
 class TestIconTemplatesComponent {}
@@ -86,7 +86,7 @@ class TestIconTemplatesComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-message [closable]="true">
+        <h-message [closable]="true">
             <ng-template pTemplate="container" let-closeCallback="closeCallback">
                 <div class="ptemplate-container">
                     PTemplate Container
@@ -99,7 +99,7 @@ class TestIconTemplatesComponent {}
             <ng-template pTemplate="closeicon">
                 <i class="ptemplate-close-icon">❌</i>
             </ng-template>
-        </p-message>
+        </h-message>
     `
 })
 class TestPTemplateComponent {}
@@ -107,11 +107,11 @@ class TestPTemplateComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-message [closable]="true" [severity]="'error'">
+        <h-message [closable]="true" [severity]="'error'">
             <input type="text" class="focusable-input" />
             <button class="focusable-button">Button</button>
             <div tabindex="0" class="focusable-div">Focusable Div</div>
-        </p-message>
+        </h-message>
     `
 })
 class TestKeyboardNavigationComponent {}
@@ -132,7 +132,7 @@ describe('Message', () => {
             fixture = TestBed.createComponent(TestBasicMessageComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
         });
 
         it('should create the component', () => {
@@ -175,7 +175,7 @@ describe('Message', () => {
         });
 
         it('should render with correct ARIA attributes', () => {
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv.nativeElement.getAttribute('aria-live')).toBe('polite');
             expect(messageDiv.nativeElement.getAttribute('role')).toBe('alert');
         });
@@ -197,7 +197,7 @@ describe('Message', () => {
             fixture = TestBed.createComponent(TestBasicMessageComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
             messageInstance = messageEl.componentInstance as Message;
         });
 
@@ -217,9 +217,9 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            // In v21, the message gets p-message-leave-active class when closing
-            const messageElement = fixture.debugElement.query(By.css('p-message'));
-            expect(messageElement.nativeElement.classList.contains('p-message-leave-active')).toBe(true);
+            // In v21, the message gets h-message-leave-active class when closing
+            const messageElement = fixture.debugElement.query(By.css('h-message'));
+            expect(messageElement.nativeElement.classList.contains('h-message-leave-active')).toBe(true);
         });
     });
 
@@ -239,7 +239,7 @@ describe('Message', () => {
             component = fixture.componentInstance;
             component.closable = true;
             fixture.detectChanges();
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
         });
 
         it('should emit onClose event when close button is clicked', async () => {
@@ -294,7 +294,7 @@ describe('Message', () => {
             component.life = 1000;
             fixture.detectChanges();
 
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
             messageInstance = messageEl.componentInstance as Message;
 
             expect(messageInstance.visible()).toBe(true);
@@ -315,7 +315,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
             messageInstance = messageEl.componentInstance as Message;
 
             expect(messageInstance.visible()).toBe(true);
@@ -352,7 +352,7 @@ describe('Message', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const messageEl = fixture.debugElement.query(By.css('p-message'));
+                const messageEl = fixture.debugElement.query(By.css('h-message'));
                 const messageInstance = messageEl.componentInstance as Message;
                 expect(messageInstance.severity()).toBe(severity);
             }
@@ -364,7 +364,7 @@ describe('Message', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            let messageEl = fixture.debugElement.query(By.css('p-message'));
+            let messageEl = fixture.debugElement.query(By.css('h-message'));
             expect(messageEl).toBeTruthy();
 
             component.severity = undefined as any;
@@ -372,7 +372,7 @@ describe('Message', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            messageEl = fixture.debugElement.query(By.css('p-message'));
+            messageEl = fixture.debugElement.query(By.css('h-message'));
             expect(messageEl).toBeTruthy();
         });
     });
@@ -416,7 +416,7 @@ describe('Message', () => {
             component.escape = false;
             fixture.detectChanges();
 
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv.nativeElement.innerHTML).toContain('<strong>Bold text</strong>');
         });
 
@@ -467,7 +467,7 @@ describe('Message', () => {
             component.closeIcon = undefined as any;
             fixture.detectChanges();
 
-            const defaultCloseIcon = fixture.debugElement.query(By.css('button svg[data-p-icon="times"]'));
+            const defaultCloseIcon = fixture.debugElement.query(By.css('button svg[data-h-icon="times"]'));
             expect(defaultCloseIcon).toBeTruthy();
         });
     });
@@ -495,7 +495,7 @@ describe('Message', () => {
         });
 
         it('should provide closeCallback context to container template', async () => {
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             // Spy on close method before ngAfterContentInit
@@ -565,7 +565,7 @@ describe('Message', () => {
         });
 
         it('should process pTemplate container in ngAfterContentInit', () => {
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             messageInstance.ngAfterContentInit();
@@ -573,7 +573,7 @@ describe('Message', () => {
         });
 
         it('should process pTemplate icon in ngAfterContentInit', () => {
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             messageInstance.ngAfterContentInit();
@@ -581,7 +581,7 @@ describe('Message', () => {
         });
 
         it('should process pTemplate closeicon in ngAfterContentInit', () => {
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             messageInstance.ngAfterContentInit();
@@ -607,7 +607,7 @@ describe('Message', () => {
         });
 
         it('should handle closeCallback in pTemplate container', async () => {
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             // Spy on close method before ngAfterContentInit
@@ -650,7 +650,7 @@ describe('Message', () => {
             component.styleClass = 'custom-message-class';
             fixture.detectChanges();
 
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv.nativeElement.classList).toContain('custom-message-class');
         });
 
@@ -658,7 +658,7 @@ describe('Message', () => {
             component.style = { border: '2px solid red', padding: '10px' };
             fixture.detectChanges();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             expect(messageInstance.style()).toEqual({ border: '2px solid red', padding: '10px' });
@@ -675,7 +675,7 @@ describe('Message', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
             expect(messageInstance.size()).toBe('large');
 
@@ -695,7 +695,7 @@ describe('Message', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const messageEl = fixture.debugElement.query(By.css('p-message'));
+                const messageEl = fixture.debugElement.query(By.css('h-message'));
                 const messageInstance = messageEl.componentInstance as Message;
                 expect(messageInstance.variant()).toBe(variant);
             }
@@ -719,7 +719,7 @@ describe('Message', () => {
         });
 
         it('should have correct ARIA attributes', () => {
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv.nativeElement.getAttribute('aria-live')).toBe('polite');
             expect(messageDiv.nativeElement.getAttribute('role')).toBe('alert');
         });
@@ -770,7 +770,7 @@ describe('Message', () => {
             component.styleClass = undefined as any;
             fixture.detectChanges();
 
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv).toBeTruthy();
         });
 
@@ -778,7 +778,7 @@ describe('Message', () => {
             component.text = '';
             fixture.detectChanges();
 
-            const messageDiv = fixture.debugElement.query(By.css('.p-message'));
+            const messageDiv = fixture.debugElement.query(By.css('.h-message'));
             expect(messageDiv).toBeTruthy();
         });
 
@@ -787,7 +787,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
             spyOn(messageInstance.onClose, 'emit');
 
@@ -816,8 +816,8 @@ describe('Message', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const message1 = fixture.debugElement.query(By.css('p-message')).componentInstance as Message;
-            const message2 = fixture2.debugElement.query(By.css('p-message')).componentInstance as Message;
+            const message1 = fixture.debugElement.query(By.css('h-message')).componentInstance as Message;
+            const message2 = fixture2.debugElement.query(By.css('h-message')).componentInstance as Message;
 
             expect(message1.severity()).toBe('error');
             expect(message2.severity()).toBe('success');
@@ -828,7 +828,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             await fixture.whenStable();
@@ -878,7 +878,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
 
             // Destroy component before timeout
@@ -906,7 +906,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const messageEl = fixture.debugElement.query(By.css('p-message'));
+            const messageEl = fixture.debugElement.query(By.css('h-message'));
             const messageInstance = messageEl.componentInstance as Message;
             expect(messageInstance.visible()).toBe(true);
         });
@@ -938,7 +938,7 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             expect(rootElement.classList.contains('ROOT_CLASS')).toBe(true);
         });
@@ -948,7 +948,7 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             expect(contentElement.nativeElement.classList.contains('CONTENT_CLASS')).toBe(true);
         });
 
@@ -1003,7 +1003,7 @@ describe('Message', () => {
 
             // In v21, host and root are both on the host element
             const hostElement = fixture.nativeElement;
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             const textElement = fixture.debugElement.query(By.css('span'));
 
             expect(hostElement.classList.contains('HOST_CLASS')).toBe(true);
@@ -1030,18 +1030,18 @@ describe('Message', () => {
                 root: {
                     class: 'ROOT_OBJECT_CLASS',
                     style: { 'background-color': 'red' },
-                    'data-p-test': true,
+                    'data-h-test': true,
                     'aria-label': 'TEST_ARIA_LABEL'
                 }
             });
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             expect(rootElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
             expect(rootElement.style.backgroundColor).toBe('red');
-            expect(rootElement.getAttribute('data-p-test')).toBe('true');
+            expect(rootElement.getAttribute('data-h-test')).toBe('true');
             expect(rootElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
         });
 
@@ -1050,16 +1050,16 @@ describe('Message', () => {
                 content: {
                     class: 'CONTENT_OBJECT_CLASS',
                     style: { padding: '20px' },
-                    'data-p-content': true
+                    'data-h-content': true
                 }
             });
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             expect(contentElement.nativeElement.classList.contains('CONTENT_OBJECT_CLASS')).toBe(true);
             expect(contentElement.nativeElement.style.padding).toBe('20px');
-            expect(contentElement.nativeElement.getAttribute('data-p-content')).toBe('true');
+            expect(contentElement.nativeElement.getAttribute('data-h-content')).toBe('true');
         });
 
         it('should apply pt icon with object properties', () => {
@@ -1083,7 +1083,7 @@ describe('Message', () => {
                 text: {
                     class: 'TEXT_OBJECT_CLASS',
                     style: { 'font-weight': 'bold' },
-                    'data-p-text': true
+                    'data-h-text': true
                 }
             });
             fixture.componentRef.setInput('text', 'Test');
@@ -1092,7 +1092,7 @@ describe('Message', () => {
             const textElement = fixture.debugElement.query(By.css('span'));
             expect(textElement.nativeElement.classList.contains('TEXT_OBJECT_CLASS')).toBe(true);
             expect(textElement.nativeElement.style.fontWeight).toBe('bold');
-            expect(textElement.nativeElement.getAttribute('data-p-text')).toBe('true');
+            expect(textElement.nativeElement.getAttribute('data-h-text')).toBe('true');
         });
 
         it('should apply pt closeButton with object properties', () => {
@@ -1156,9 +1156,9 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             const textElement = fixture.debugElement.query(By.css('span'));
 
             expect(rootElement.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
@@ -1215,7 +1215,7 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             expect(rootElement.classList.contains('SEVERITY_ERROR')).toBe(true);
             expect(rootElement.classList.contains('SEVERITY_SUCCESS')).toBe(false);
@@ -1235,7 +1235,7 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             expect(contentElement.nativeElement.style.backgroundColor).toBe('yellow');
         });
 
@@ -1306,7 +1306,7 @@ describe('Message', () => {
             fixture.componentRef.setInput('text', 'Test');
             fixture.detectChanges();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             expect(rootElement.classList.contains('VISIBLE')).toBe(true);
 
@@ -1315,7 +1315,7 @@ describe('Message', () => {
             fixture.detectChanges();
 
             // Message should have leave animation class
-            expect(rootElement.classList.contains('p-message-leave-active')).toBe(true);
+            expect(rootElement.classList.contains('h-message-leave-active')).toBe(true);
         });
     });
 
@@ -1347,7 +1347,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             rootElement.click();
             await fixture.whenStable();
@@ -1374,7 +1374,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const contentElement = fixture.debugElement.query(By.css('.p-message-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-message-content'));
             contentElement.nativeElement.click();
             await fixture.whenStable();
             fixture.changeDetectorRef.markForCheck();
@@ -1403,7 +1403,7 @@ describe('Message', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            // In v21, .p-message class is on the host element itself
+            // In v21, .h-message class is on the host element itself
             const rootElement = fixture.debugElement.nativeElement;
             rootElement.dispatchEvent(new MouseEvent('mouseenter'));
             await fixture.whenStable();
@@ -1441,13 +1441,13 @@ describe('Message', () => {
     describe('PassThrough - Case 6: Inline test', () => {
         @Component({
             standalone: false,
-            template: `<p-message [pt]="{ root: 'INLINE_ROOT_CLASS' }" [text]="'Inline Test'"></p-message>`
+            template: `<h-message [pt]="{ root: 'INLINE_ROOT_CLASS' }" [text]="'Inline Test'"></h-message>`
         })
         class TestInlineStringComponent {}
 
         @Component({
             standalone: false,
-            template: `<p-message [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid blue' } } }" [text]="'Inline Test'"></p-message>`
+            template: `<h-message [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid blue' } } }" [text]="'Inline Test'"></h-message>`
         })
         class TestInlineObjectComponent {}
 
@@ -1461,7 +1461,7 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestInlineStringComponent);
             fixture.detectChanges();
 
-            const rootElement = fixture.debugElement.query(By.css('.p-message'));
+            const rootElement = fixture.debugElement.query(By.css('.h-message'));
             expect(rootElement.nativeElement.classList.contains('INLINE_ROOT_CLASS')).toBe(true);
         });
 
@@ -1475,7 +1475,7 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestInlineObjectComponent);
             fixture.detectChanges();
 
-            const rootElement = fixture.debugElement.query(By.css('.p-message'));
+            const rootElement = fixture.debugElement.query(By.css('.h-message'));
             expect(rootElement.nativeElement.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
             expect(rootElement.nativeElement.style.border).toBe('2px solid blue');
         });
@@ -1485,8 +1485,8 @@ describe('Message', () => {
         @Component({
             standalone: false,
             template: `
-                <p-message [text]="'First Message'" [closable]="true"></p-message>
-                <p-message [text]="'Second Message'" [closable]="true"></p-message>
+                <h-message [text]="'First Message'" [closable]="true"></h-message>
+                <h-message [text]="'Second Message'" [closable]="true"></h-message>
             `
         })
         class TestGlobalPtComponent {}
@@ -1511,10 +1511,10 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestGlobalPtComponent);
             fixture.detectChanges();
 
-            const messages = fixture.debugElement.queryAll(By.css('p-message'));
+            const messages = fixture.debugElement.queryAll(By.css('h-message'));
             expect(messages.length).toBe(2);
 
-            // Check first message - host element has both p-message class and aria-label
+            // Check first message - host element has both h-message class and aria-label
             const firstHost = messages[0].nativeElement;
             expect(firstHost.getAttribute('aria-label')).toBe('TEST_GLOBAL_ARIA_LABEL');
             expect(firstHost.classList.contains('GLOBAL_ROOT_CLASS')).toBe(true);
@@ -1546,17 +1546,17 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestGlobalPtComponent);
             fixture.detectChanges();
 
-            const messages = fixture.debugElement.queryAll(By.css('p-message'));
+            const messages = fixture.debugElement.queryAll(By.css('h-message'));
             const firstRoot = messages[0].nativeElement;
 
-            // Verify global pt is applied - host element has p-message class
+            // Verify global pt is applied - host element has h-message class
             expect(firstRoot.classList.contains('GLOBAL_WITH_CSS')).toBe(true);
         });
 
         it('should merge local pt with global pt configuration', async () => {
             @Component({
                 standalone: false,
-                template: `<p-message [pt]="{ root: 'LOCAL_ROOT_CLASS', content: 'LOCAL_CONTENT_CLASS' }" [text]="'Test'"></p-message>`
+                template: `<h-message [pt]="{ root: 'LOCAL_ROOT_CLASS', content: 'LOCAL_CONTENT_CLASS' }" [text]="'Test'"></h-message>`
             })
             class TestMergedPtComponent {}
 
@@ -1579,10 +1579,10 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestMergedPtComponent);
             fixture.detectChanges();
 
-            // In v21, .p-message is on the host element itself - query p-message component
-            const messageComponent = fixture.debugElement.query(By.css('p-message'));
+            // In v21, .h-message is on the host element itself - query h-message component
+            const messageComponent = fixture.debugElement.query(By.css('h-message'));
             const rootElement = messageComponent.nativeElement;
-            const contentElement = messageComponent.query(By.css('.p-message-content'));
+            const contentElement = messageComponent.query(By.css('.h-message-content'));
             const textElement = messageComponent.query(By.css('span'));
 
             // Local pt should override global pt for root
@@ -1618,8 +1618,8 @@ describe('Message', () => {
             const fixture = TestBed.createComponent(TestGlobalPtComponent);
             fixture.detectChanges();
 
-            // In v21, .p-message is on the host element itself - query p-message component
-            const messageComponent = fixture.debugElement.query(By.css('p-message'));
+            // In v21, .h-message is on the host element itself - query h-message component
+            const messageComponent = fixture.debugElement.query(By.css('h-message'));
             const rootElement = messageComponent.nativeElement;
             const closeButton = messageComponent.query(By.css('button'));
 

@@ -1,21 +1,21 @@
 export const style = /*css*/ `
-    .p-inputotp {
+    .h-inputotp {
         display: flex;
         align-items: center;
         gap: dt('inputotp.gap');
     }
 
-    .p-inputotp-input {
+    .h-inputotp-input {
         text-align: center;
         width: dt('inputotp.input.width');
     }
 
-    .p-inputotp-input.p-inputtext-sm {
+    .h-inputotp-input.h-inputtext-sm {
         text-align: center;
         width: dt('inputotp.input.sm.width');
     }
 
-    .p-inputotp-input.p-inputtext-lg {
+    .h-inputotp-input.h-inputtext-lg {
         text-align: center;
         width: dt('inputotp.input.lg.width');
     }

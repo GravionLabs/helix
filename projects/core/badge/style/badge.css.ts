@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-badge {
+    .h-badge {
         display: inline-flex;
         border-radius: dt('badge.border.radius');
         align-items: center;
@@ -13,7 +13,7 @@ export const style = /*css*/ `
         height: dt('badge.height');
     }
 
-    .p-badge-dot {
+    .h-badge-dot {
         width: dt('badge.dot.size');
         min-width: dt('badge.dot.size');
         height: dt('badge.dot.size');
@@ -21,54 +21,54 @@ export const style = /*css*/ `
         padding: 0;
     }
 
-    .p-badge-circle {
+    .h-badge-circle {
         padding: 0;
         border-radius: 50%;
     }
 
-    .p-badge-secondary {
+    .h-badge-secondary {
         background: dt('badge.secondary.background');
         color: dt('badge.secondary.color');
     }
 
-    .p-badge-success {
+    .h-badge-success {
         background: dt('badge.success.background');
         color: dt('badge.success.color');
     }
 
-    .p-badge-info {
+    .h-badge-info {
         background: dt('badge.info.background');
         color: dt('badge.info.color');
     }
 
-    .p-badge-warn {
+    .h-badge-warn {
         background: dt('badge.warn.background');
         color: dt('badge.warn.color');
     }
 
-    .p-badge-danger {
+    .h-badge-danger {
         background: dt('badge.danger.background');
         color: dt('badge.danger.color');
     }
 
-    .p-badge-contrast {
+    .h-badge-contrast {
         background: dt('badge.contrast.background');
         color: dt('badge.contrast.color');
     }
 
-    .p-badge-sm {
+    .h-badge-sm {
         font-size: dt('badge.sm.font.size');
         min-width: dt('badge.sm.min.width');
         height: dt('badge.sm.height');
     }
 
-    .p-badge-lg {
+    .h-badge-lg {
         font-size: dt('badge.lg.font.size');
         min-width: dt('badge.lg.min.width');
         height: dt('badge.lg.height');
     }
 
-    .p-badge-xl {
+    .h-badge-xl {
         font-size: dt('badge.xl.font.size');
         min-width: dt('badge.xl.min.width');
         height: dt('badge.xl.height');

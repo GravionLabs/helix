@@ -253,16 +253,16 @@ export class DynamicDialog extends BaseComponent<DialogPassThrough> {
     }
 
     get _parent() {
-        const domElements = Array.from(this.document.getElementsByClassName('p-dialog'));
+        const domElements = Array.from(this.document.getElementsByClassName('h-dialog'));
         if (domElements.length > 1) {
             return domElements.pop();
         }
     }
 
     get parentContent() {
-        const domElements = Array.from(this.document.getElementsByClassName('p-dialog'));
+        const domElements = Array.from(this.document.getElementsByClassName('h-dialog'));
         if (domElements.length > 0) {
-            const contentElements = domElements[domElements.length - 1].querySelector('.p-dialog-content');
+            const contentElements = domElements[domElements.length - 1].querySelector('.h-dialog-content');
             if (contentElements) return Array.isArray(contentElements) ? contentElements[0] : contentElements;
         }
     }
@@ -339,7 +339,7 @@ export class DynamicDialog extends BaseComponent<DialogPassThrough> {
         // Don't initialize drag when clicking on header icons
         if (event.target instanceof HTMLElement) {
             const target = event.target;
-            if (target.closest('.p-dialog-header-icon') || target.closest('.p-dialog-header-icons')) {
+            if (target.closest('.h-dialog-header-icon') || target.closest('.h-dialog-header-icons')) {
                 return;
             }
         }
@@ -480,7 +480,7 @@ export class DynamicDialog extends BaseComponent<DialogPassThrough> {
             for (let breakpoint in this.breakpoints) {
                 innerHTML += `
                     @media screen and (max-width: ${breakpoint}) {
-                        .p-dialog[${this.dialogId}] {
+                        .h-dialog[${this.dialogId}] {
                             width: ${this.breakpoints[breakpoint]} !important;
                         }
                     }

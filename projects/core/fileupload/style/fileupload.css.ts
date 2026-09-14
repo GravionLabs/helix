@@ -1,16 +1,16 @@
 export const style = /*css*/ `
-    .p-fileupload input[type='file'] {
+    .h-fileupload input[type='file'] {
         display: none;
     }
 
-    .p-fileupload-advanced {
+    .h-fileupload-advanced {
         border: 1px solid dt('fileupload.border.color');
         border-radius: dt('fileupload.border.radius');
         background: dt('fileupload.background');
         color: dt('fileupload.color');
     }
 
-    .p-fileupload-header {
+    .h-fileupload-header {
         display: flex;
         align-items: center;
         padding: dt('fileupload.header.padding');
@@ -23,7 +23,7 @@ export const style = /*css*/ `
         gap: dt('fileupload.header.gap');
     }
 
-    .p-fileupload-content {
+    .h-fileupload-content {
         border: 1px solid transparent;
         display: flex;
         flex-direction: column;
@@ -32,18 +32,18 @@ export const style = /*css*/ `
         padding: dt('fileupload.content.padding');
     }
 
-    .p-fileupload-content .p-progressbar {
+    .h-fileupload-content .h-progressbar {
         width: 100%;
         height: dt('fileupload.progressbar.height');
     }
 
-    .p-fileupload-file-list {
+    .h-fileupload-file-list {
         display: flex;
         flex-direction: column;
         gap: dt('fileupload.filelist.gap');
     }
 
-    .p-fileupload-file {
+    .h-fileupload-file {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -52,33 +52,33 @@ export const style = /*css*/ `
         gap: dt('fileupload.file.gap');
     }
 
-    .p-fileupload-file:last-child {
+    .h-fileupload-file:last-child {
         border-block-end: 0;
     }
 
-    .p-fileupload-file-info {
+    .h-fileupload-file-info {
         display: flex;
         flex-direction: column;
         gap: dt('fileupload.file.info.gap');
     }
 
-    .p-fileupload-file-thumbnail {
+    .h-fileupload-file-thumbnail {
         flex-shrink: 0;
     }
 
-    .p-fileupload-file-actions {
+    .h-fileupload-file-actions {
         margin-inline-start: auto;
     }
 
-    .p-fileupload-highlight {
+    .h-fileupload-highlight {
         border: 1px dashed dt('fileupload.content.highlight.border.color');
     }
 
-    .p-fileupload-basic .p-message {
+    .h-fileupload-basic .h-message {
         margin-block-end: dt('fileupload.basic.gap');
     }
 
-    .p-fileupload-basic-content {
+    .h-fileupload-basic-content {
         display: flex;
         flex-wrap: wrap;
         align-items: center;

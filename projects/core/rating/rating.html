@@ -1,6 +1,6 @@
 @for (star of starsArray; track star; let i = $index) {
   <div [class]="cx('option', { star, value })" (click)="onOptionClick($event, star + 1)" [hBind]="ptm('option')">
-    <span class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true" [hBind]="ptm('hiddenOptionInputContainer')">
+    <span class="h-hidden-accessible" [attr.data-h-hidden-accessible]="true" [hBind]="ptm('hiddenOptionInputContainer')">
       <input
         type="radio"
         [value]="star + 1"
@@ -26,7 +26,7 @@
           <span [class]="cx('onIcon')" [ngStyle]="iconOnStyle()" [ngClass]="iconOnClass()" [hBind]="ptm('onIcon')"></span>
         }
         @if (!iconOnClass()) {
-          <svg data-p-icon="star-fill" [ngStyle]="iconOnStyle()" [class]="cx('onIcon')" [hBind]="ptm('onIcon')" />
+          <svg data-h-icon="star-fill" [ngStyle]="iconOnStyle()" [class]="cx('onIcon')" [hBind]="ptm('onIcon')" />
         }
       }
     } @else {
@@ -37,7 +37,7 @@
           <span [class]="cx('offIcon')" [ngStyle]="iconOffStyle()" [ngClass]="iconOffClass()" [hBind]="ptm('offIcon')"></span>
         }
         @if (!iconOffClass()) {
-          <svg data-p-icon="star" [ngStyle]="iconOffStyle()" [class]="cx('offIcon')" [hBind]="ptm('offIcon')" />
+          <svg data-h-icon="star" [ngStyle]="iconOffStyle()" [class]="cx('offIcon')" [hBind]="ptm('offIcon')" />
         }
       }
     }

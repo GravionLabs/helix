@@ -1,26 +1,26 @@
 export const style = /*css*/ `
-    .p-imagecompare {
+    .h-imagecompare {
         position: relative;
         overflow: hidden;
         width: 100%;
         aspect-ratio: 16 / 9;
     }
 
-    .p-imagecompare img {
+    .h-imagecompare img {
         width: 100%;
         height: 100%;
         position: absolute;
     }
 
-    .p-imagecompare img + img {
+    .h-imagecompare img + img {
         clip-path: polygon(0 0, dt('imagecompare.scope.x', '50%') 0, dt('imagecompare.scope.x', '50%') 100%, 0 100%);
     }
 
-    .p-imagecompare:dir(rtl) img + img {
+    .h-imagecompare:dir(rtl) img + img {
         clip-path: polygon(calc(100% - dt('imagecompare.scope.x', '50%')) 0, 100% 0, 100% 100%, calc(100% - dt('imagecompare.scope.x', '50%')) 100%);
     }
 
-    .p-imagecompare-slider {
+    .h-imagecompare-slider {
         position: relative;
         -webkit-appearance: none;
         width: calc(100% + dt('imagecompare.handle.size'));
@@ -31,7 +31,7 @@ export const style = /*css*/ `
         transition: all dt('imagecompare.handle.transition.duration');
     }
 
-    .p-imagecompare-slider::-webkit-slider-thumb {
+    .h-imagecompare-slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         height: dt('imagecompare.handle.size');
         width: dt('imagecompare.handle.size');
@@ -43,7 +43,7 @@ export const style = /*css*/ `
         transition: all dt('imagecompare.handle.transition.duration');
     }
 
-    .p-imagecompare-slider::-moz-range-thumb {
+    .h-imagecompare-slider::-moz-range-thumb {
         height: dt('imagecompare.handle.size');
         width: dt('imagecompare.handle.size');
         background: dt('imagecompare.handle.background');
@@ -53,31 +53,31 @@ export const style = /*css*/ `
         cursor: ew-resize;
     }
 
-    .p-imagecompare-slider:focus-visible::-webkit-slider-thumb {
+    .h-imagecompare-slider:focus-visible::-webkit-slider-thumb {
         box-shadow: dt('imagecompare.handle.focus.ring.shadow');
         outline: dt('imagecompare.handle.focus.ring.width') dt('imagecompare.handle.focus.ring.style') dt('imagecompare.handle.focus.ring.color');
         outline-offset: dt('imagecompare.handle.focus.ring.offset');
     }
 
-    .p-imagecompare-slider:focus-visible::-moz-range-thumb {
+    .h-imagecompare-slider:focus-visible::-moz-range-thumb {
         box-shadow: dt('imagecompare.handle.focus.ring.shadow');
         outline: dt('imagecompare.handle.focus.ring.width') dt('imagecompare.handle.focus.ring.style') dt('imagecompare.handle.focus.ring.color');
         outline-offset: dt('imagecompare.handle.focus.ring.offset');
     }
 
-    .p-imagecompare-slider:hover {
+    .h-imagecompare-slider:hover {
         width: calc(100% + dt('imagecompare.handle.hover.size'));
         margin-inline-start: calc(-1 * calc(dt('imagecompare.handle.hover.size') / 2));
     }
 
-    .p-imagecompare-slider:hover::-webkit-slider-thumb {
+    .h-imagecompare-slider:hover::-webkit-slider-thumb {
         background: dt('imagecompare.handle.hover.background');
         border-color: dt('imagecompare.handle.hover.border.color');
         height: dt('imagecompare.handle.hover.size');
         width: dt('imagecompare.handle.hover.size');
     }
 
-    .p-imagecompare-slider:hover::-moz-range-thumb {
+    .h-imagecompare-slider:hover::-moz-range-thumb {
         background: dt('imagecompare.handle.hover.background');
         border-color: dt('imagecompare.handle.hover.border.color');
         height: dt('imagecompare.handle.hover.size');

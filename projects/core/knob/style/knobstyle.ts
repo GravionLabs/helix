@@ -3,10 +3,10 @@ import { style } from './knob.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-knob p-component', { 'p-disabled': instance.$disabled() }],
-    range: 'p-knob-range',
-    value: 'p-knob-value',
-    text: 'p-knob-text'
+    root: ({ instance }) => ['h-knob h-component', { 'h-disabled': instance.$disabled() }],
+    range: 'h-knob-range',
+    value: 'h-knob-value',
+    text: 'h-knob-text'
 };
 
 @Injectable()
@@ -31,19 +31,19 @@ export enum KnobClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-knob',
+    root = 'h-knob',
     /**
      * Class name of the range element
      */
-    range = 'p-knob-range',
+    range = 'h-knob-range',
     /**
      * Class name of the value element
      */
-    value = 'p-knob-value',
+    value = 'h-knob-value',
     /**
      * Class name of the text element
      */
-    text = 'p-knob-text'
+    text = 'h-knob-text'
 }
 
 export interface KnobStyle extends BaseStyle {}

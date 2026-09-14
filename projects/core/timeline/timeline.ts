@@ -23,7 +23,7 @@ const TIMELINE_INSTANCE = new InjectionToken<Timeline>('TIMELINE_INSTANCE');
     providers: [TimelineStyle, { provide: TIMELINE_INSTANCE, useExisting: Timeline }, { provide: PARENT_INSTANCE, useExisting: Timeline }],
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

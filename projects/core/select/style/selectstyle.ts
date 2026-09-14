@@ -6,66 +6,66 @@ const style = /*css*/ `
     ${select_style}
 
     /* For Helix */
-    .p-select-label.p-placeholder {
+    .h-select-label.h-placeholder {
         color: dt('select.placeholder.color');
     }
 
-    .p-select.ng-invalid.ng-dirty {
+    .h-select.ng-invalid.ng-dirty {
         border-color: dt('select.invalid.border.color');
     }
 
-    .p-dropdown.ng-invalid.ng-dirty .p-dropdown-label.p-placeholder,
-    .p-select.ng-invalid.ng-dirty .p-select-label.p-placeholder {
+    .h-dropdown.ng-invalid.ng-dirty .h-dropdown-label.h-placeholder,
+    .h-select.ng-invalid.ng-dirty .h-select-label.h-placeholder {
         color: dt('select.invalid.placeholder.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-select p-component p-inputwrapper',
+        'h-select h-component h-inputwrapper',
         {
-            'p-disabled': instance.$disabled(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-focus': instance.focused,
-            'p-invalid': instance.invalid(),
-            'p-inputwrapper-filled': instance.$filled(),
-            'p-inputwrapper-focus': instance.focused || instance.overlayVisible,
-            'p-select-open': instance.overlayVisible,
-            'p-select-fluid': instance.hasFluid,
-            'p-select-sm p-inputfield-sm': instance.size() === 'small',
-            'p-select-lg p-inputfield-lg': instance.size() === 'large'
+            'h-disabled': instance.$disabled(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-focus': instance.focused,
+            'h-invalid': instance.invalid(),
+            'h-inputwrapper-filled': instance.$filled(),
+            'h-inputwrapper-focus': instance.focused || instance.overlayVisible,
+            'h-select-open': instance.overlayVisible,
+            'h-select-fluid': instance.hasFluid,
+            'h-select-sm h-inputfield-sm': instance.size() === 'small',
+            'h-select-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
     label: ({ instance }) => [
-        'p-select-label',
+        'h-select-label',
         {
-            'p-placeholder': instance.placeholder() && instance.label() === instance.placeholder(),
-            'p-select-label-empty': !instance.editable && !instance.selectedItemTemplate && (instance.label() === undefined || instance.label() === null || instance.label() === 'p-emptylabel' || instance.label().length === 0)
+            'h-placeholder': instance.placeholder() && instance.label() === instance.placeholder(),
+            'h-select-label-empty': !instance.editable && !instance.selectedItemTemplate && (instance.label() === undefined || instance.label() === null || instance.label() === 'h-emptylabel' || instance.label().length === 0)
         }
     ],
-    clearIcon: 'p-select-clear-icon',
-    dropdown: 'p-select-dropdown',
-    loadingIcon: 'p-select-loading-icon',
-    dropdownIcon: 'p-select-dropdown-icon',
-    overlay: 'p-select-overlay p-component-overlay p-component',
-    header: 'p-select-header',
-    pcFilter: 'p-select-filter',
-    listContainer: 'p-select-list-container',
-    list: 'p-select-list',
-    optionGroup: 'p-select-option-group',
-    optionGroupLabel: 'p-select-option-group-label',
+    clearIcon: 'h-select-clear-icon',
+    dropdown: 'h-select-dropdown',
+    loadingIcon: 'h-select-loading-icon',
+    dropdownIcon: 'h-select-dropdown-icon',
+    overlay: 'h-select-overlay h-component-overlay h-component',
+    header: 'h-select-header',
+    pcFilter: 'h-select-filter',
+    listContainer: 'h-select-list-container',
+    list: 'h-select-list',
+    optionGroup: 'h-select-option-group',
+    optionGroupLabel: 'h-select-option-group-label',
     option: ({ instance }) => [
-        'p-select-option',
+        'h-select-option',
         {
-            'p-select-option-selected': instance.selected && !instance.checkmark,
-            'p-disabled': instance.disabled,
-            'p-focus': instance.focused
+            'h-select-option-selected': instance.selected && !instance.checkmark,
+            'h-disabled': instance.disabled,
+            'h-focus': instance.focused
         }
     ],
-    optionLabel: 'p-select-option-label',
-    optionCheckIcon: 'p-select-option-check-icon',
-    optionBlankIcon: 'p-select-option-blank-icon',
-    emptyMessage: 'p-select-empty-message'
+    optionLabel: 'h-select-option-label',
+    optionCheckIcon: 'h-select-option-check-icon',
+    optionBlankIcon: 'h-select-option-blank-icon',
+    emptyMessage: 'h-select-empty-message'
 };
 
 @Injectable()
@@ -90,75 +90,75 @@ export enum SelectClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-select',
+    root = 'h-select',
     /**
      * Class name of the label element
      */
-    label = 'p-select-label',
+    label = 'h-select-label',
     /**
      * Class name of the clear icon element
      */
-    clearIcon = 'p-select-clear-icon',
+    clearIcon = 'h-select-clear-icon',
     /**
      * Class name of the dropdown element
      */
-    dropdown = 'p-select-dropdown',
+    dropdown = 'h-select-dropdown',
     /**
      * Class name of the loadingicon element
      */
-    loadingIcon = 'p-select-loading-icon',
+    loadingIcon = 'h-select-loading-icon',
     /**
      * Class name of the dropdown icon element
      */
-    dropdownIcon = 'p-select-dropdown-icon',
+    dropdownIcon = 'h-select-dropdown-icon',
     /**
      * Class name of the overlay element
      */
-    overlay = 'p-select-overlay',
+    overlay = 'h-select-overlay',
     /**
      * Class name of the header element
      */
-    header = 'p-select-header',
+    header = 'h-select-header',
     /**
      * Class name of the filter element
      */
-    pcFilter = 'p-select-filter',
+    pcFilter = 'h-select-filter',
     /**
      * Class name of the list container element
      */
-    listContainer = 'p-select-list-container',
+    listContainer = 'h-select-list-container',
     /**
      * Class name of the list element
      */
-    list = 'p-select-list',
+    list = 'h-select-list',
     /**
      * Class name of the option group element
      */
-    optionGroup = 'p-select-option-group',
+    optionGroup = 'h-select-option-group',
     /**
      * Class name of the option group label element
      */
-    optionGroupLabel = 'p-select-option-group-label',
+    optionGroupLabel = 'h-select-option-group-label',
     /**
      * Class name of the option element
      */
-    option = 'p-select-option',
+    option = 'h-select-option',
     /**
      * Class name of the option label element
      */
-    optionLabel = 'p-select-option-label',
+    optionLabel = 'h-select-option-label',
     /**
      * Class name of the option check icon element
      */
-    optionCheckIcon = 'p-select-option-check-icon',
+    optionCheckIcon = 'h-select-option-check-icon',
     /**
      * Class name of the option blank icon element
      */
-    optionBlankIcon = 'p-select-option-blank-icon',
+    optionBlankIcon = 'h-select-option-blank-icon',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-select-empty-message'
+    emptyMessage = 'h-select-empty-message'
 }
 
 export interface SelectStyle extends BaseStyle {}

@@ -417,7 +417,7 @@ describe('InputText', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'border-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 };
@@ -426,7 +426,7 @@ describe('InputText', () => {
 
                 expect(inputEl.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(inputEl.style.borderColor).toBe('red');
-                expect(inputEl.getAttribute('data-p-test')).toBe('true');
+                expect(inputEl.getAttribute('data-h-test')).toBe('true');
                 expect(inputEl.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
         });

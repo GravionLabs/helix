@@ -17,9 +17,10 @@ community version. Record kept for future diffing against upstream.
 - Import specifiers rewritten: `primeng/<entry>` → `@gravionlabs/helix-core/<entry>`.
 - All component/directive selectors renamed `p-` → `h-` (`p-button` → `h-button`,
   `pButton` → `hButton`), including template usages and input aliases.
-- **Not renamed:** `.p-*` CSS class names and `--p-*` design tokens — they are
-  produced by the pinned `@primeuix/styles`/`@primeuix/styled` layer, which is
-  an external dependency, not part of the fork (see #212).
+- `.p-*` CSS class names, `--p-*` design tokens, and `data-p-*`/`data-p` state
+  attributes were renamed to `.h-*`/`--h-*`/`data-h-*`/`data-h` once the
+  styling layer producing them was vendored in (epic #421 feature #431,
+  2026-09-14) — see the "Vendored source: primeuix" section below.
 - Build adapted from the upstream Nx/prebuild setup to this workspace's plain
   ng-packagr configuration (`ng build core`); the per-entry-point
   `ng-package.json` files are upstream's, with `$schema` paths adjusted.
@@ -54,6 +55,16 @@ upstream's internal file layout for future diffing.
 ### Gotcha: `export default` is silently dropped from unconsumed ng-packagr entry points
 
 While vendoring `themes`, a bare `export default {...}` (or `export { x as default }`) on a secondary entry point's `public_api.ts` was silently stripped from the built FESM bundle — with no build error — whenever nothing else in the **same** `ng build core` invocation imported that entry point. A plain named export (`export const x = {...}`) on the exact same file survives correctly. Confirmed by bisecting with a minimal throwaway entry point. Since `themes`/`themes/aura`/`themes/lara`/`themes/nora` have no consumers within `projects/core` itself (only `helix-shell`/`helix-demo`, built as separate `ng build` invocations against the *published* dist), any `export default` here would ship broken. **Conclusion: never use `export default` in a `projects/core` secondary entry point** — use named exports throughout.
+
+## `.p-*` → `.h-*` rename (feature #431, 2026-09-14)
+
+Once the styling layer above was fully vendored, the `.p-*` CSS class names, `--p-*` design tokens, and `data-p-*`/bare `data-p` state attributes it produces (previously kept unrenamed per the now-superseded [css-class-prefix-decision.md](../../docs/migrations/css-class-prefix-decision.md)) were mechanically renamed to `.h-*`/`--h-*`/`data-h-*`/`data-h`:
+
+- The rename regex was word-boundary-safe (`\bp-[a-zA-Z][\w-]*` → `h-...`, plus a separate `\bdata-p\b` → `data-h` pass for the bare multi-value state attribute): it cannot match Tailwind's own `p-4`/`px-2` spacing utilities (digit, or a different letter, immediately follows the hyphen) or `pi-*` primeicons classes.
+- Applied across `projects/core` (all 84 vendored `*.css.ts` style modules, component/directive logic, templates, and the `themes/aura` preset's inline `css` override module), `projects/shell`, `projects/zod`, `projects/ag-grid`, and `apps/helix-demo/src` (not `apps/helix-demo/public/source`, which is generated — see `pnpm demo:generate-sources`).
+- `uix/styled`'s `prefix` default (`config/index.ts`) changed from `'p'` to `'h'`, so the `dt()`/`$dt()` token-key generator and `toVariables()` now emit `--h-*` variable names at runtime, matching the renamed static CSS.
+- `projects/shell`'s `tailwindcss-primeui` Tailwind plugin dependency was vendored and renamed too, since it hardcodes `--p-*`/`data-p-*` throughout its utilities and `@custom-variant`s — see `projects/shell/VENDOR.md`.
+- `docs/components/*` regenerated (`pnpm docs:components`) to reflect renamed default values and doc comments.
 
 ## Diffing against upstream primeuix
 

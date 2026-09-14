@@ -189,22 +189,22 @@ export class ScrollPanel extends BaseComponent<ScrollPanelPassThrough> {
 
         this.requestAnimationFrame(() => {
             if ((this.scrollXRatio as number) >= 1) {
-                xBar.setAttribute('data-p-scrollpanel-hidden', 'true');
-                !this.$unstyled() && addClass(xBar, 'p-scrollpanel-hidden');
+                xBar.setAttribute('data-h-scrollpanel-hidden', 'true');
+                !this.$unstyled() && addClass(xBar, 'h-scrollpanel-hidden');
             } else {
-                xBar.setAttribute('data-p-scrollpanel-hidden', 'false');
-                !this.$unstyled() && removeClass(xBar, 'p-scrollpanel-hidden');
+                xBar.setAttribute('data-h-scrollpanel-hidden', 'false');
+                !this.$unstyled() && removeClass(xBar, 'h-scrollpanel-hidden');
                 const xBarWidth = Math.max((this.scrollXRatio as number) * 100, 10);
                 const xBarLeft = Math.abs((content.scrollLeft * (100 - xBarWidth)) / (totalWidth - ownWidth));
                 xBar.style.cssText = 'width:' + xBarWidth + '%; inset-inline-start:' + xBarLeft + '%;bottom:' + bottom + 'px;';
             }
 
             if ((this.scrollYRatio as number) >= 1) {
-                yBar.setAttribute('data-p-scrollpanel-hidden', 'true');
-                !this.$unstyled() && addClass(yBar, 'p-scrollpanel-hidden');
+                yBar.setAttribute('data-h-scrollpanel-hidden', 'true');
+                !this.$unstyled() && addClass(yBar, 'h-scrollpanel-hidden');
             } else {
-                yBar.setAttribute('data-p-scrollpanel-hidden', 'false');
-                !this.$unstyled() && removeClass(yBar, 'p-scrollpanel-hidden');
+                yBar.setAttribute('data-h-scrollpanel-hidden', 'false');
+                !this.$unstyled() && removeClass(yBar, 'h-scrollpanel-hidden');
                 const yBarHeight = Math.max((this.scrollYRatio as number) * 100, 10);
                 const yBarTop = (content.scrollTop * (100 - yBarHeight)) / (totalHeight - ownHeight);
                 yBar.style.cssText = 'height:' + yBarHeight + '%; top: calc(' + yBarTop + '% - ' + xBar.clientHeight + 'px); inset-inline-end:' + right + 'px;';
@@ -334,11 +334,11 @@ export class ScrollPanel extends BaseComponent<ScrollPanelPassThrough> {
         this.yBarViewChild()?.nativeElement?.focus();
         this.lastPageY = e.pageY;
 
-        this.yBarViewChild()?.nativeElement?.setAttribute('data-p-scrollpanel-grabbed', 'true');
-        !this.$unstyled() && addClass(this.yBarViewChild()!.nativeElement, 'p-scrollpanel-grabbed');
+        this.yBarViewChild()?.nativeElement?.setAttribute('data-h-scrollpanel-grabbed', 'true');
+        !this.$unstyled() && addClass(this.yBarViewChild()!.nativeElement, 'h-scrollpanel-grabbed');
 
-        this.document.body.setAttribute('data-p-scrollpanel-grabbed', 'true');
-        !this.$unstyled() && addClass(this.document.body, 'p-scrollpanel-grabbed');
+        this.document.body.setAttribute('data-h-scrollpanel-grabbed', 'true');
+        !this.$unstyled() && addClass(this.document.body, 'h-scrollpanel-grabbed');
         this.bindDocumentMouseListeners();
         e.preventDefault();
     }
@@ -348,11 +348,11 @@ export class ScrollPanel extends BaseComponent<ScrollPanelPassThrough> {
         this.xBarViewChild()?.nativeElement?.focus();
         this.lastPageX = e.pageX;
 
-        this.xBarViewChild()?.nativeElement?.setAttribute('data-p-scrollpanel-grabbed', 'false');
-        !this.$unstyled() && addClass(this.xBarViewChild()!.nativeElement, 'p-scrollpanel-grabbed');
+        this.xBarViewChild()?.nativeElement?.setAttribute('data-h-scrollpanel-grabbed', 'false');
+        !this.$unstyled() && addClass(this.xBarViewChild()!.nativeElement, 'h-scrollpanel-grabbed');
 
-        this.document.body.setAttribute('data-p-scrollpanel-grabbed', 'false');
-        !this.$unstyled() && addClass(this.document.body, 'p-scrollpanel-grabbed');
+        this.document.body.setAttribute('data-h-scrollpanel-grabbed', 'false');
+        !this.$unstyled() && addClass(this.document.body, 'h-scrollpanel-grabbed');
 
         this.bindDocumentMouseListeners();
         e.preventDefault();
@@ -412,12 +412,12 @@ export class ScrollPanel extends BaseComponent<ScrollPanelPassThrough> {
     }
 
     onDocumentMouseUp(e: Event) {
-        this.yBarViewChild()?.nativeElement?.setAttribute('data-p-scrollpanel-grabbed', 'false');
-        !this.$unstyled() && removeClass(this.yBarViewChild()!.nativeElement, 'p-scrollpanel-grabbed');
-        this.xBarViewChild()?.nativeElement?.setAttribute('data-p-scrollpanel-grabbed', 'false');
-        !this.$unstyled() && removeClass(this.xBarViewChild()!.nativeElement, 'p-scrollpanel-grabbed');
-        this.document.body.setAttribute('data-p-scrollpanel-grabbed', 'false');
-        !this.$unstyled() && removeClass(this.document.body, 'p-scrollpanel-grabbed');
+        this.yBarViewChild()?.nativeElement?.setAttribute('data-h-scrollpanel-grabbed', 'false');
+        !this.$unstyled() && removeClass(this.yBarViewChild()!.nativeElement, 'h-scrollpanel-grabbed');
+        this.xBarViewChild()?.nativeElement?.setAttribute('data-h-scrollpanel-grabbed', 'false');
+        !this.$unstyled() && removeClass(this.xBarViewChild()!.nativeElement, 'h-scrollpanel-grabbed');
+        this.document.body.setAttribute('data-h-scrollpanel-grabbed', 'false');
+        !this.$unstyled() && removeClass(this.document.body, 'h-scrollpanel-grabbed');
 
         this.unbindDocumentMouseListeners();
         this.isXBarClicked = false;

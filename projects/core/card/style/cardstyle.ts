@@ -5,20 +5,20 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 const style = /*css*/ `
     ${card_style}
 
-    .p-card {
+    .h-card {
         display: block;
     }
 `;
 
 const classes = {
-    root: 'p-card p-component',
-    header: 'p-card-header',
-    body: 'p-card-body',
-    caption: 'p-card-caption',
-    title: 'p-card-title',
-    subtitle: 'p-card-subtitle',
-    content: 'p-card-content',
-    footer: 'p-card-footer'
+    root: 'h-card h-component',
+    header: 'h-card-header',
+    body: 'h-card-body',
+    caption: 'h-card-caption',
+    title: 'h-card-title',
+    subtitle: 'h-card-subtitle',
+    content: 'h-card-content',
+    footer: 'h-card-footer'
 };
 
 @Injectable()
@@ -43,35 +43,35 @@ export enum CardClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-card',
+    root = 'h-card',
     /**
      * Class name of the header element
      */
-    header = 'p-card-header',
+    header = 'h-card-header',
     /**
      * Class name of the body element
      */
-    body = 'p-card-body',
+    body = 'h-card-body',
     /**
      * Class name of the caption element
      */
-    caption = 'p-card-caption',
+    caption = 'h-card-caption',
     /**
      * Class name of the title element
      */
-    title = 'p-card-title',
+    title = 'h-card-title',
     /**
      * Class name of the subtitle element
      */
-    subtitle = 'p-card-subtitle',
+    subtitle = 'h-card-subtitle',
     /**
      * Class name of the content element
      */
-    content = 'p-card-content',
+    content = 'h-card-content',
     /**
      * Class name of the footer element
      */
-    footer = 'p-card-footer'
+    footer = 'h-card-footer'
 }
 
 export interface CardStyle extends BaseStyle {}

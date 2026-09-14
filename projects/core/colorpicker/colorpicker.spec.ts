@@ -9,7 +9,7 @@ import { ColorPicker } from './colorpicker';
 @Component({
     standalone: false,
     template: `
-        <p-colorpicker
+        <h-colorpicker
             [(ngModel)]="color"
             [format]="format"
             [inline]="inline"
@@ -24,7 +24,7 @@ import { ColorPicker } from './colorpicker';
             (onShow)="onShowEvent($event)"
             (onHide)="onHideEvent($event)"
         >
-        </p-colorpicker>
+        </h-colorpicker>
     `
 })
 class TestBasicColorPickerComponent {
@@ -62,7 +62,7 @@ class TestBasicColorPickerComponent {
     standalone: false,
     template: `
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <p-colorpicker formControlName="selectedColor" [format]="format" [defaultColor]="defaultColor" (onChange)="onColorChange($event)"> </p-colorpicker>
+            <h-colorpicker formControlName="selectedColor" [format]="format" [defaultColor]="defaultColor" (onChange)="onColorChange($event)"> </h-colorpicker>
         </form>
     `
 })
@@ -89,13 +89,13 @@ class TestReactiveFormColorPickerComponent {
     standalone: false,
     template: `
         <div>
-            <p-colorpicker [(ngModel)]="hexColor" format="hex" inputId="hex-picker"> </p-colorpicker>
+            <h-colorpicker [(ngModel)]="hexColor" format="hex" inputId="hex-picker"> </h-colorpicker>
         </div>
         <div>
-            <p-colorpicker [(ngModel)]="rgbColor" format="rgb" inputId="rgb-picker"> </p-colorpicker>
+            <h-colorpicker [(ngModel)]="rgbColor" format="rgb" inputId="rgb-picker"> </h-colorpicker>
         </div>
         <div>
-            <p-colorpicker [(ngModel)]="hsbColor" format="hsb" inputId="hsb-picker"> </p-colorpicker>
+            <h-colorpicker [(ngModel)]="hsbColor" format="hsb" inputId="hsb-picker"> </h-colorpicker>
         </div>
     `
 })
@@ -107,7 +107,7 @@ class TestFormatColorPickerComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-colorpicker [(ngModel)]="color" [inline]="true" [disabled]="disabled" (onChange)="onColorChange($event)"> </p-colorpicker> `
+    template: ` <h-colorpicker [(ngModel)]="color" [inline]="true" [disabled]="disabled" (onChange)="onColorChange($event)"> </h-colorpicker> `
 })
 class TestInlineColorPickerComponent {
     color: string = '#ff0000';
@@ -122,7 +122,7 @@ class TestInlineColorPickerComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-colorpicker [(ngModel)]="color" [disabled]="disabled" [autofocus]="autofocus" [inputId]="inputId" [tabindex]="tabindex" [defaultColor]="defaultColor" (onChange)="onColorChange($event)"> </p-colorpicker> `
+    template: ` <h-colorpicker [(ngModel)]="color" [disabled]="disabled" [autofocus]="autofocus" [inputId]="inputId" [tabindex]="tabindex" [defaultColor]="defaultColor" (onChange)="onColorChange($event)"> </h-colorpicker> `
 })
 class TestStyledColorPickerComponent {
     color: string = '#ff0000';
@@ -161,12 +161,12 @@ describe('ColorPicker', () => {
         it('should create the component', () => {
             expect(testComponent).toBeTruthy();
 
-            const colorPickerComponent = testFixture.debugElement.query(By.css('p-colorpicker'));
+            const colorPickerComponent = testFixture.debugElement.query(By.css('h-colorpicker'));
             expect(colorPickerComponent).toBeTruthy();
         });
 
         it('should have default values', () => {
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             expect(colorPickerInstance.format()).toBe('hex');
             expect(colorPickerInstance.inline()).toBeFalsy();
@@ -184,7 +184,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             expect(colorPickerInstance.format()).toBe('rgb');
             expect(colorPickerInstance.inline()).toBe(true);
@@ -203,7 +203,7 @@ describe('ColorPicker', () => {
             testFixture = TestBed.createComponent(TestBasicColorPickerComponent);
             testComponent = testFixture.componentInstance;
             await testFixture.whenStable();
-            colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
         });
 
         it('should display color picker input when not inline', async () => {
@@ -328,7 +328,7 @@ describe('ColorPicker', () => {
         });
 
         it('should display color picker panel when inline', () => {
-            const panel = testFixture.debugElement.query(By.css('.p-colorpicker-panel'));
+            const panel = testFixture.debugElement.query(By.css('.h-colorpicker-panel'));
             expect(panel).toBeTruthy();
         });
 
@@ -338,8 +338,8 @@ describe('ColorPicker', () => {
         });
 
         it('should display color selector and hue controls', () => {
-            const colorSelector = testFixture.debugElement.query(By.css('.p-colorpicker-color-selector'));
-            const hueControl = testFixture.debugElement.query(By.css('.p-colorpicker-hue'));
+            const colorSelector = testFixture.debugElement.query(By.css('.h-colorpicker-color-selector'));
+            const hueControl = testFixture.debugElement.query(By.css('.h-colorpicker-hue'));
 
             expect(colorSelector).toBeTruthy();
             expect(hueControl).toBeTruthy();
@@ -350,7 +350,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
             expect(colorPickerInstance.disabled()).toBe(true);
         });
     });
@@ -420,7 +420,7 @@ describe('ColorPicker', () => {
         });
 
         it('should emit onChange event', async () => {
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             const newColor = '#00ff00';
             const mockEvent = new Event('change');
@@ -442,7 +442,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             colorPickerInstance.onShow.emit({});
             testFixture.changeDetectorRef.markForCheck();
@@ -456,7 +456,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             colorPickerInstance.onHide.emit({});
             testFixture.changeDetectorRef.markForCheck();
@@ -486,7 +486,7 @@ describe('ColorPicker', () => {
 
         it('should handle keyboard navigation', async () => {
             const inputElement = testFixture.debugElement.query(By.css('input[type="text"]'));
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
 
             // Focus the element
             inputElement.nativeElement.focus();
@@ -518,7 +518,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
             expect(colorPickerInstance.autofocus()).toBe(true);
         });
     });
@@ -572,7 +572,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
             const input = testFixture.debugElement.query(By.css('input[type="text"]'));
 
             // Rapid clicks
@@ -594,7 +594,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
             expect(colorPickerInstance.defaultColor()).toBe('00ff00');
         });
     });
@@ -715,7 +715,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+            const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
             let changeCount = 0;
 
             colorPickerInstance.onChange.subscribe(() => {
@@ -749,7 +749,7 @@ describe('ColorPicker', () => {
 
             expect(endTime - startTime).toBeLessThan(1000); // Should render in less than 1 second
 
-            const colorPickers = multipleTestComponent.debugElement.queryAll(By.css('p-colorpicker'));
+            const colorPickers = multipleTestComponent.debugElement.queryAll(By.css('h-colorpicker'));
             expect(colorPickers.length).toBe(3);
             await multipleTestComponent.whenStable();
         });
@@ -782,7 +782,7 @@ describe('ColorPicker', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const colorPickerComponent = testFixture.debugElement.query(By.css('p-colorpicker'));
+            const colorPickerComponent = testFixture.debugElement.query(By.css('h-colorpicker'));
             expect(colorPickerComponent).toBeTruthy();
         });
 
@@ -797,7 +797,7 @@ describe('ColorPicker', () => {
                 testFixture.changeDetectorRef.markForCheck();
                 await testFixture.whenStable();
 
-                const colorPickerInstance = testFixture.debugElement.query(By.css('p-colorpicker')).componentInstance;
+                const colorPickerInstance = testFixture.debugElement.query(By.css('h-colorpicker')).componentInstance;
                 expect(colorPickerInstance).toBeTruthy();
             }
         });
@@ -836,25 +836,25 @@ describe('ColorPicker', () => {
             const rootEl = fixture.nativeElement;
             expect(rootEl.className).toContain('PT_ROOT_CLASS');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('PT_PANEL_CLASS');
 
-            const content = fixture.nativeElement.querySelector('.p-colorpicker-content');
+            const content = fixture.nativeElement.querySelector('.h-colorpicker-content');
             expect(content?.className).toContain('PT_CONTENT_CLASS');
 
-            const colorSelector = fixture.nativeElement.querySelector('.p-colorpicker-color-selector');
+            const colorSelector = fixture.nativeElement.querySelector('.h-colorpicker-color-selector');
             expect(colorSelector?.className).toContain('PT_COLOR_SELECTOR_CLASS');
 
-            const colorBackground = fixture.nativeElement.querySelector('.p-colorpicker-color-background');
+            const colorBackground = fixture.nativeElement.querySelector('.h-colorpicker-color-background');
             expect(colorBackground?.className).toContain('PT_COLOR_BACKGROUND_CLASS');
 
-            const colorHandle = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             expect(colorHandle?.className).toContain('PT_COLOR_HANDLE_CLASS');
 
-            const hue = fixture.nativeElement.querySelector('.p-colorpicker-hue');
+            const hue = fixture.nativeElement.querySelector('.h-colorpicker-hue');
             expect(hue?.className).toContain('PT_HUE_CLASS');
 
-            const hueHandle = fixture.nativeElement.querySelector('.p-colorpicker-hue-handle');
+            const hueHandle = fixture.nativeElement.querySelector('.h-colorpicker-hue-handle');
             expect(hueHandle?.className).toContain('PT_HUE_HANDLE_CLASS');
         });
 
@@ -898,26 +898,26 @@ describe('ColorPicker', () => {
                                 root: {
                                     class: 'PT_ROOT_OBJ_CLASS',
                                     style: { 'background-color': 'yellow', padding: '10px' } as any,
-                                    'data-p-root-test': true,
+                                    'data-h-root-test': true,
                                     'aria-label': 'PT_ROOT_ARIA_LABEL'
                                 },
                                 panel: {
                                     class: 'PT_PANEL_OBJ_CLASS',
                                     style: { border: '2px solid red' } as any,
-                                    'data-p-panel-test': 'panel-value'
+                                    'data-h-panel-test': 'panel-value'
                                 },
                                 content: {
                                     class: 'PT_CONTENT_OBJ_CLASS',
-                                    'data-p-content': true
+                                    'data-h-content': true
                                 },
                                 colorSelector: {
                                     class: 'PT_SELECTOR_OBJ_CLASS',
                                     style: { cursor: 'crosshair' } as any,
-                                    'data-p-selector': 'selector-value'
+                                    'data-h-selector': 'selector-value'
                                 },
                                 hue: {
                                     class: 'PT_HUE_OBJ_CLASS',
-                                    'data-p-hue': 'hue-test'
+                                    'data-h-hue': 'hue-test'
                                 }
                             }
                         }
@@ -934,26 +934,26 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('PT_ROOT_OBJ_CLASS');
             expect(rootEl.style.backgroundColor).toBe('yellow');
             expect(rootEl.style.padding).toBe('10px');
-            expect(rootEl.getAttribute('data-p-root-test')).toBe('true');
+            expect(rootEl.getAttribute('data-h-root-test')).toBe('true');
             expect(rootEl.getAttribute('aria-label')).toBe('PT_ROOT_ARIA_LABEL');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('PT_PANEL_OBJ_CLASS');
             expect(panel?.style.border).toBe('2px solid red');
-            expect(panel?.getAttribute('data-p-panel-test')).toBe('panel-value');
+            expect(panel?.getAttribute('data-h-panel-test')).toBe('panel-value');
 
-            const content = fixture.nativeElement.querySelector('.p-colorpicker-content');
+            const content = fixture.nativeElement.querySelector('.h-colorpicker-content');
             expect(content?.className).toContain('PT_CONTENT_OBJ_CLASS');
-            expect(content?.getAttribute('data-p-content')).toBe('true');
+            expect(content?.getAttribute('data-h-content')).toBe('true');
 
-            const colorSelector = fixture.nativeElement.querySelector('.p-colorpicker-color-selector');
+            const colorSelector = fixture.nativeElement.querySelector('.h-colorpicker-color-selector');
             expect(colorSelector?.className).toContain('PT_SELECTOR_OBJ_CLASS');
             expect(colorSelector?.style.cursor).toBe('crosshair');
-            expect(colorSelector?.getAttribute('data-p-selector')).toBe('selector-value');
+            expect(colorSelector?.getAttribute('data-h-selector')).toBe('selector-value');
 
-            const hue = fixture.nativeElement.querySelector('.p-colorpicker-hue');
+            const hue = fixture.nativeElement.querySelector('.h-colorpicker-hue');
             expect(hue?.className).toContain('PT_HUE_OBJ_CLASS');
-            expect(hue?.getAttribute('data-p-hue')).toBe('hue-test');
+            expect(hue?.getAttribute('data-h-hue')).toBe('hue-test');
         });
 
         // Case 3: Mixed object and string values
@@ -971,7 +971,7 @@ describe('ColorPicker', () => {
                                 preview: 'PT_PREVIEW_MIXED_STRING',
                                 panel: {
                                     class: 'PT_PANEL_MIXED_OBJ',
-                                    'data-p-panel-mixed': 'mixed-value'
+                                    'data-h-panel-mixed': 'mixed-value'
                                 },
                                 content: 'PT_CONTENT_MIXED_STRING',
                                 colorSelector: {
@@ -999,26 +999,26 @@ describe('ColorPicker', () => {
             const rootEl = fixture.nativeElement;
             expect(rootEl.className).toContain('PT_ROOT_MIXED_OBJ');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('PT_PANEL_MIXED_OBJ');
-            expect(panel?.getAttribute('data-p-panel-mixed')).toBe('mixed-value');
+            expect(panel?.getAttribute('data-h-panel-mixed')).toBe('mixed-value');
 
-            const content = fixture.nativeElement.querySelector('.p-colorpicker-content');
+            const content = fixture.nativeElement.querySelector('.h-colorpicker-content');
             expect(content?.className).toContain('PT_CONTENT_MIXED_STRING');
 
-            const colorSelector = fixture.nativeElement.querySelector('.p-colorpicker-color-selector');
+            const colorSelector = fixture.nativeElement.querySelector('.h-colorpicker-color-selector');
             expect(colorSelector?.className).toContain('PT_SELECTOR_MIXED_OBJ');
 
-            const colorBackground = fixture.nativeElement.querySelector('.p-colorpicker-color-background');
+            const colorBackground = fixture.nativeElement.querySelector('.h-colorpicker-color-background');
             expect(colorBackground?.className).toContain('PT_BACKGROUND_MIXED_STRING');
 
-            const colorHandle = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             expect(colorHandle?.className).toContain('PT_HANDLE_MIXED_OBJ');
 
-            const hue = fixture.nativeElement.querySelector('.p-colorpicker-hue');
+            const hue = fixture.nativeElement.querySelector('.h-colorpicker-hue');
             expect(hue?.className).toContain('PT_HUE_MIXED_STRING');
 
-            const hueHandle = fixture.nativeElement.querySelector('.p-colorpicker-hue-handle');
+            const hueHandle = fixture.nativeElement.querySelector('.h-colorpicker-hue-handle');
             expect(hueHandle?.className).toContain('PT_HUE_HANDLE_MIXED_OBJ');
         });
 
@@ -1040,7 +1040,7 @@ describe('ColorPicker', () => {
                                     } as any
                                 }),
                                 preview: ({ instance }: any) => ({
-                                    'data-p-format': instance?.format
+                                    'data-h-format': instance?.format
                                 }),
                                 content: ({ instance }: any) => ({
                                     class: instance?.format ? `PT_FORMAT_${instance.format.toUpperCase()}` : 'PT_NO_FORMAT'
@@ -1061,10 +1061,10 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('PT_INLINE_MODE');
             expect(rootEl.className).not.toContain('PT_OVERLAY_MODE');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.style.backgroundColor).toBe('lightblue');
 
-            const content = fixture.nativeElement.querySelector('.p-colorpicker-content');
+            const content = fixture.nativeElement.querySelector('.h-colorpicker-content');
             expect(content?.className).toContain('PT_FORMAT_HEX');
         });
 
@@ -1078,10 +1078,10 @@ describe('ColorPicker', () => {
                             colorPicker: {
                                 root: ({ instance }: any) => ({
                                     class: instance?.inline ? 'PT_INLINE' : 'PT_OVERLAY',
-                                    'data-p-disabled': instance?.$disabled()
+                                    'data-h-disabled': instance?.$disabled()
                                 }),
                                 preview: ({ instance }: any) => ({
-                                    'data-p-format': instance?.format,
+                                    'data-h-format': instance?.format,
                                     style: {
                                         'border-color': instance?.format === 'rgb' ? 'blue' : 'red'
                                     } as any
@@ -1103,7 +1103,7 @@ describe('ColorPicker', () => {
             expect(rootEl.className).not.toContain('PT_INLINE');
 
             const preview = fixture.nativeElement.querySelector('input[type="text"]');
-            expect(preview?.getAttribute('data-p-format')).toBe('rgb');
+            expect(preview?.getAttribute('data-h-format')).toBe('rgb');
             expect(preview?.style.borderColor).toBe('blue');
 
             // Change format
@@ -1112,7 +1112,7 @@ describe('ColorPicker', () => {
             await fixture.whenStable();
 
             const preview2 = fixture.nativeElement.querySelector('input[type="text"]');
-            expect(preview2?.getAttribute('data-p-format')).toBe('hsb');
+            expect(preview2?.getAttribute('data-h-format')).toBe('hsb');
             expect(preview2?.style.borderColor).toBe('red');
         });
 
@@ -1148,7 +1148,7 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('PT_ENABLED');
             expect(rootEl.className).not.toContain('PT_DISABLED');
 
-            const colorHandle = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             expect(colorHandle?.style.pointerEvents).toBe('auto');
 
             // Change to disabled
@@ -1160,7 +1160,7 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('PT_DISABLED');
             expect(rootEl.className).not.toContain('PT_ENABLED');
 
-            const colorHandle2 = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle2 = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             expect(colorHandle2?.style.pointerEvents).toBe('none');
         });
 
@@ -1216,15 +1216,15 @@ describe('ColorPicker', () => {
             rootEl.click();
             expect(clickedSections).toContain('root');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             panel?.click();
             expect(clickedSections).toContain('panel');
 
-            const colorSelector = fixture.nativeElement.querySelector('.p-colorpicker-color-selector');
+            const colorSelector = fixture.nativeElement.querySelector('.h-colorpicker-color-selector');
             colorSelector?.click();
             expect(clickedSections).toContain('colorSelector');
 
-            const hue = fixture.nativeElement.querySelector('.p-colorpicker-hue');
+            const hue = fixture.nativeElement.querySelector('.h-colorpicker-hue');
             hue?.dispatchEvent(new MouseEvent('mouseover'));
             expect(mouseoverSection).toBe('hue');
 
@@ -1263,11 +1263,11 @@ describe('ColorPicker', () => {
 
             const colorPickerInstance = fixture.componentInstance;
 
-            const colorHandle = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             colorHandle?.click();
             expect((colorPickerInstance as any)._testProperty).toBe('HANDLE_CLICKED');
 
-            const hueHandle = fixture.nativeElement.querySelector('.p-colorpicker-hue-handle');
+            const hueHandle = fixture.nativeElement.querySelector('.h-colorpicker-hue-handle');
             hueHandle?.click();
             expect((colorPickerInstance as any)._testHueProperty).toBe('HUE_HANDLE_CLICKED');
         });
@@ -1323,7 +1323,7 @@ describe('ColorPicker', () => {
                 standalone: true,
                 imports: [ColorPicker, FormsModule],
                 template: `
-                    <p-colorpicker
+                    <h-colorpicker
                         [pt]="{
                             root: 'INLINE_PT_ROOT',
                             panel: 'INLINE_PT_PANEL',
@@ -1331,7 +1331,7 @@ describe('ColorPicker', () => {
                         }"
                         [inline]="true"
                     >
-                    </p-colorpicker>
+                    </h-colorpicker>
                 `
             })
             class TestInlinePTComponent {}
@@ -1345,13 +1345,13 @@ describe('ColorPicker', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const rootEl = fixture.nativeElement.querySelector('p-colorpicker');
+            const rootEl = fixture.nativeElement.querySelector('h-colorpicker');
             expect(rootEl.className).toContain('INLINE_PT_ROOT');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('INLINE_PT_PANEL');
 
-            const content = fixture.nativeElement.querySelector('.p-colorpicker-content');
+            const content = fixture.nativeElement.querySelector('.h-colorpicker-content');
             expect(content?.className).toContain('INLINE_PT_CONTENT');
         });
 
@@ -1360,17 +1360,17 @@ describe('ColorPicker', () => {
                 standalone: true,
                 imports: [ColorPicker, FormsModule],
                 template: `
-                    <p-colorpicker
+                    <h-colorpicker
                         [pt]="{
                             root: { class: 'INLINE_OBJ_ROOT' },
                             panel: {
                                 class: 'INLINE_OBJ_PANEL',
-                                'data-p-inline': 'true'
+                                'data-h-inline': 'true'
                             }
                         }"
                         [inline]="true"
                     >
-                    </p-colorpicker>
+                    </h-colorpicker>
                 `
             })
             class TestInlineObjectPTComponent {}
@@ -1384,12 +1384,12 @@ describe('ColorPicker', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const rootEl = fixture.nativeElement.querySelector('p-colorpicker');
+            const rootEl = fixture.nativeElement.querySelector('h-colorpicker');
             expect(rootEl.className).toContain('INLINE_OBJ_ROOT');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('INLINE_OBJ_PANEL');
-            expect(panel?.getAttribute('data-p-inline')).toBe('true');
+            expect(panel?.getAttribute('data-h-inline')).toBe('true');
         });
 
         // Case 8: Test from HelixConfig (global PT)
@@ -1436,7 +1436,7 @@ describe('ColorPicker', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('GLOBAL_PANEL_CLASS');
             expect(panel?.getAttribute('data-global-panel')).toBe('true');
         });
@@ -1475,7 +1475,7 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('GLOBAL_CSS_ROOT');
             expect(rootEl.style.border).toBe('2px solid green');
 
-            const colorHandle = fixture.nativeElement.querySelector('.p-colorpicker-color-handle');
+            const colorHandle = fixture.nativeElement.querySelector('.h-colorpicker-color-handle');
             expect(colorHandle?.style.border).toBe('2px solid blue');
         });
 
@@ -1489,7 +1489,7 @@ describe('ColorPicker', () => {
                             colorPicker: {
                                 root: {
                                     class: 'GLOBAL_MERGE_ROOT',
-                                    'data-p-global': 'global-value'
+                                    'data-h-global': 'global-value'
                                 },
                                 panel: {
                                     class: 'GLOBAL_MERGE_PANEL'
@@ -1508,7 +1508,7 @@ describe('ColorPicker', () => {
             fixture.componentRef.setInput('pt', {
                 root: {
                     class: 'LOCAL_MERGE_ROOT',
-                    'data-p-local': 'local-value'
+                    'data-h-local': 'local-value'
                 },
                 panel: {
                     class: 'LOCAL_MERGE_PANEL'
@@ -1522,10 +1522,10 @@ describe('ColorPicker', () => {
             // With mergeProps, both global and local classes should be present
             expect(rootEl.className).toContain('GLOBAL_MERGE_ROOT');
             expect(rootEl.className).toContain('LOCAL_MERGE_ROOT');
-            expect(rootEl.getAttribute('data-p-global')).toBe('global-value');
-            expect(rootEl.getAttribute('data-p-local')).toBe('local-value');
+            expect(rootEl.getAttribute('data-h-global')).toBe('global-value');
+            expect(rootEl.getAttribute('data-h-local')).toBe('local-value');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('GLOBAL_MERGE_PANEL');
             expect(panel?.className).toContain('LOCAL_MERGE_PANEL');
         });
@@ -1535,9 +1535,9 @@ describe('ColorPicker', () => {
                 standalone: true,
                 imports: [ColorPicker, FormsModule],
                 template: `
-                    <p-colorpicker [inline]="true" id="picker1"></p-colorpicker>
-                    <p-colorpicker [inline]="true" id="picker2"></p-colorpicker>
-                    <p-colorpicker [inline]="true" id="picker3"></p-colorpicker>
+                    <h-colorpicker [inline]="true" id="picker1"></h-colorpicker>
+                    <h-colorpicker [inline]="true" id="picker2"></h-colorpicker>
+                    <h-colorpicker [inline]="true" id="picker3"></h-colorpicker>
                 `
             })
             class TestMultiplePTComponent {}
@@ -1563,13 +1563,13 @@ describe('ColorPicker', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const pickers = fixture.nativeElement.querySelectorAll('p-colorpicker');
+            const pickers = fixture.nativeElement.querySelectorAll('h-colorpicker');
             expect(pickers.length).toBe(3);
 
             pickers.forEach((picker: HTMLElement) => {
                 expect(picker.className).toContain('GLOBAL_MULTI_ROOT');
 
-                const panel = picker.querySelector('.p-colorpicker-panel');
+                const panel = picker.querySelector('.h-colorpicker-panel');
                 expect(panel?.getAttribute('data-global-multi')).toBe('true');
             });
         });
@@ -1737,11 +1737,11 @@ describe('ColorPicker', () => {
             expect(rootEl.className).toContain('PT_INLINE');
             expect(rootEl.getAttribute('data-format')).toBe('rgb');
 
-            const panel = fixture.nativeElement.querySelector('.p-colorpicker-panel');
+            const panel = fixture.nativeElement.querySelector('.h-colorpicker-panel');
             expect(panel?.className).toContain('PT_PANEL_INLINE');
             expect(panel?.style.border).toBe('1px solid blue');
 
-            const hue = fixture.nativeElement.querySelector('.p-colorpicker-hue');
+            const hue = fixture.nativeElement.querySelector('.h-colorpicker-hue');
             expect(hue?.style.opacity).toBe('1');
         });
     });

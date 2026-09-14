@@ -11,7 +11,7 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [RadioButton, FormsModule],
     template: `
-        <p-radiobutton
+        <h-radiobutton
             name="test"
             value="option1"
             [(ngModel)]="selectedValue"
@@ -58,9 +58,9 @@ class TestBasicRadioComponent {
     standalone: true,
     imports: [RadioButton, FormsModule],
     template: `
-        <p-radiobutton name="group" value="option1" [(ngModel)]="selectedOption" inputId="option1" />
-        <p-radiobutton name="group" value="option2" [(ngModel)]="selectedOption" inputId="option2" />
-        <p-radiobutton name="group" value="option3" [(ngModel)]="selectedOption" inputId="option3" />
+        <h-radiobutton name="group" value="option1" [(ngModel)]="selectedOption" inputId="option1" />
+        <h-radiobutton name="group" value="option2" [(ngModel)]="selectedOption" inputId="option2" />
+        <h-radiobutton name="group" value="option3" [(ngModel)]="selectedOption" inputId="option3" />
     `
 })
 class TestRadioGroupComponent {
@@ -73,9 +73,9 @@ class TestRadioGroupComponent {
     imports: [RadioButton, ReactiveFormsModule],
     template: `
         <form [formGroup]="radioForm">
-            <p-radiobutton formControlName="selectedValue" name="radioGroup" value="value1" inputId="radio1" [invalid]="isInvalid" />
-            <p-radiobutton formControlName="selectedValue" name="radioGroup" value="value2" inputId="radio2" [invalid]="isInvalid" />
-            <p-radiobutton formControlName="selectedValue" name="radioGroup" value="value3" inputId="radio3" [invalid]="isInvalid" />
+            <h-radiobutton formControlName="selectedValue" name="radioGroup" value="value1" inputId="radio1" [invalid]="isInvalid" />
+            <h-radiobutton formControlName="selectedValue" name="radioGroup" value="value2" inputId="radio2" [invalid]="isInvalid" />
+            <h-radiobutton formControlName="selectedValue" name="radioGroup" value="value3" inputId="radio3" [invalid]="isInvalid" />
         </form>
     `
 })
@@ -91,7 +91,7 @@ class TestReactiveRadioComponent {
 @Component({
     standalone: true,
     imports: [RadioButton, FormsModule],
-    template: ` <p-radiobutton name="advanced" [value]="radioValue" [(ngModel)]="selectedValue" [disabled]="isDisabled" [binary]="binary" [variant]="variant" [size]="size" [autofocus]="autofocus" (onClick)="onAdvancedClick($event)" /> `
+    template: ` <h-radiobutton name="advanced" [value]="radioValue" [(ngModel)]="selectedValue" [disabled]="isDisabled" [binary]="binary" [variant]="variant" [size]="size" [autofocus]="autofocus" (onClick)="onAdvancedClick($event)" /> `
 })
 class TestAdvancedRadioComponent {
     selectedValue: any = null as any;
@@ -113,7 +113,7 @@ class TestAdvancedRadioComponent {
 @Component({
     standalone: true,
     imports: [RadioButton, FormsModule],
-    template: ` <p-radiobutton name="binary" value="binary-value" [(ngModel)]="binaryValue" [binary]="true" /> `
+    template: ` <h-radiobutton name="binary" value="binary-value" [(ngModel)]="binaryValue" [binary]="true" /> `
 })
 class TestBinaryRadioComponent {
     binaryValue: any = false;
@@ -738,7 +738,7 @@ describe('RadioButton', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase1Component {
                 selectedValue: any = 'option1';
@@ -778,7 +778,7 @@ describe('RadioButton', () => {
         describe('Case 2: Object with class, style, data attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase2Component {
                 selectedValue: any = 'option1';
@@ -786,11 +786,11 @@ describe('RadioButton', () => {
                     root: {
                         class: 'OBJECT_ROOT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'test-value'
+                        'data-h-test': 'test-value'
                     },
                     box: {
                         class: 'BOX_OBJECT_CLASS',
-                        'data-p-custom': 'custom-value'
+                        'data-h-custom': 'custom-value'
                     }
                 };
             }
@@ -812,7 +812,7 @@ describe('RadioButton', () => {
                 if (rootEl) {
                     expect(rootEl.nativeElement.classList.contains('OBJECT_ROOT_CLASS')).toBe(true);
                     expect(rootEl.nativeElement.style.backgroundColor).toBe('red');
-                    expect(rootEl.nativeElement.getAttribute('data-p-test')).toBe('test-value');
+                    expect(rootEl.nativeElement.getAttribute('data-h-test')).toBe('test-value');
                 }
             });
         });
@@ -820,7 +820,7 @@ describe('RadioButton', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase3Component {
                 selectedValue: any = 'option1';
@@ -856,7 +856,7 @@ describe('RadioButton', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase4Component {
                 selectedValue: any = 'option1';
@@ -901,7 +901,7 @@ describe('RadioButton', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase5Component {
                 selectedValue: any = null;
@@ -947,7 +947,7 @@ describe('RadioButton', () => {
         describe('Case 6: Inline PT', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="{ root: 'INLINE_ROOT_CLASS', box: 'INLINE_BOX_CLASS' }"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="{ root: 'INLINE_ROOT_CLASS', box: 'INLINE_BOX_CLASS' }"></h-radiobutton>`
             })
             class TestPTCase6InlineComponent {
                 selectedValue: any = 'option1';
@@ -974,7 +974,7 @@ describe('RadioButton', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' }, box: { class: 'BOX_INLINE_CLASS' } }"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' }, box: { class: 'BOX_INLINE_CLASS' } }"></h-radiobutton>`
             })
             class TestPTCase6InlineObjectComponent {
                 selectedValue: any = 'option1';
@@ -1003,7 +1003,7 @@ describe('RadioButton', () => {
         describe('Case 7: Global PT from HelixConfig', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue"></h-radiobutton>`
             })
             class TestPTCase7GlobalComponent {
                 selectedValue: any = 'option1';
@@ -1042,7 +1042,7 @@ describe('RadioButton', () => {
         describe('Case 8: PT Hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCase8HooksComponent {
                 selectedValue: any = 'option1';
@@ -1087,7 +1087,7 @@ describe('RadioButton', () => {
         describe('PT Section Coverage', () => {
             @Component({
                 standalone: false,
-                template: `<p-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></p-radiobutton>`
+                template: `<h-radiobutton name="test" value="option1" [(ngModel)]="selectedValue" [pt]="pt"></h-radiobutton>`
             })
             class TestPTCoverageComponent {
                 selectedValue: any = 'option1';

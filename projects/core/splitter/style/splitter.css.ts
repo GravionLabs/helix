@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-splitter {
+    .h-splitter {
         display: flex;
         flex-wrap: nowrap;
         border: 1px solid dt('splitter.border.color');
@@ -8,11 +8,11 @@ export const style = /*css*/ `
         color: dt('splitter.color');
     }
 
-    .p-splitter-vertical {
+    .h-splitter-vertical {
         flex-direction: column;
     }
 
-    .p-splitter-gutter {
+    .h-splitter-gutter {
         flex-grow: 0;
         flex-shrink: 0;
         display: flex;
@@ -22,7 +22,7 @@ export const style = /*css*/ `
         background: dt('splitter.gutter.background');
     }
 
-    .p-splitter-gutter-handle {
+    .h-splitter-gutter-handle {
         border-radius: dt('splitter.handle.border.radius');
         background: dt('splitter.handle.background');
         transition:
@@ -31,50 +31,50 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-splitter-gutter-handle:focus-visible {
+    .h-splitter-gutter-handle:focus-visible {
         box-shadow: dt('splitter.handle.focus.ring.shadow');
         outline: dt('splitter.handle.focus.ring.width') dt('splitter.handle.focus.ring.style') dt('splitter.handle.focus.ring.color');
         outline-offset: dt('splitter.handle.focus.ring.offset');
     }
 
-    .p-splitter-horizontal.p-splitter-resizing {
+    .h-splitter-horizontal.h-splitter-resizing {
         cursor: col-resize;
         user-select: none;
     }
 
-    .p-splitter-vertical.p-splitter-resizing {
+    .h-splitter-vertical.h-splitter-resizing {
         cursor: row-resize;
         user-select: none;
     }
 
-    .p-splitter-horizontal > .p-splitter-gutter > .p-splitter-gutter-handle {
+    .h-splitter-horizontal > .h-splitter-gutter > .h-splitter-gutter-handle {
         height: dt('splitter.handle.size');
         width: 100%;
     }
 
-    .p-splitter-vertical > .p-splitter-gutter > .p-splitter-gutter-handle {
+    .h-splitter-vertical > .h-splitter-gutter > .h-splitter-gutter-handle {
         width: dt('splitter.handle.size');
         height: 100%;
     }
 
-    .p-splitter-horizontal > .p-splitter-gutter {
+    .h-splitter-horizontal > .h-splitter-gutter {
         cursor: col-resize;
     }
 
-    .p-splitter-vertical > .p-splitter-gutter {
+    .h-splitter-vertical > .h-splitter-gutter {
         cursor: row-resize;
     }
 
-    .p-splitterpanel {
+    .h-splitterpanel {
         flex-grow: 1;
         overflow: hidden;
     }
 
-    .p-splitterpanel-nested {
+    .h-splitterpanel-nested {
         display: flex;
     }
 
-    .p-splitterpanel .p-splitter {
+    .h-splitterpanel .h-splitter {
         flex-grow: 1;
         min-width: 0;
         min-height: 0;

@@ -7,11 +7,11 @@ const style = /*css*/ `
     ${badge_style}
 
     /* For Helix (directive)*/
-    .p-overlay-badge {
+    .h-overlay-badge {
         position: relative;
     }
 
-    .p-overlay-badge > .p-badge {
+    .h-overlay-badge > .h-badge {
         position: absolute;
         top: 0;
         inset-inline-end: 0;
@@ -29,19 +29,19 @@ const classes = {
         const severity = typeof instance.severity === 'function' ? instance.severity() : instance.severity;
 
         return [
-            'p-badge p-component',
+            'h-badge h-component',
             {
-                'p-badge-circle': isNotEmpty(value) && String(value).length === 1,
-                'p-badge-dot': isEmpty(value),
-                'p-badge-sm': size === 'small' || badgeSize === 'small',
-                'p-badge-lg': size === 'large' || badgeSize === 'large',
-                'p-badge-xl': size === 'xlarge' || badgeSize === 'xlarge',
-                'p-badge-info': severity === 'info',
-                'p-badge-success': severity === 'success',
-                'p-badge-warn': severity === 'warn',
-                'p-badge-danger': severity === 'danger',
-                'p-badge-secondary': severity === 'secondary',
-                'p-badge-contrast': severity === 'contrast'
+                'h-badge-circle': isNotEmpty(value) && String(value).length === 1,
+                'h-badge-dot': isEmpty(value),
+                'h-badge-sm': size === 'small' || badgeSize === 'small',
+                'h-badge-lg': size === 'large' || badgeSize === 'large',
+                'h-badge-xl': size === 'xlarge' || badgeSize === 'xlarge',
+                'h-badge-info': severity === 'info',
+                'h-badge-success': severity === 'success',
+                'h-badge-warn': severity === 'warn',
+                'h-badge-danger': severity === 'danger',
+                'h-badge-secondary': severity === 'secondary',
+                'h-badge-contrast': severity === 'contrast'
             }
         ];
     }
@@ -69,7 +69,7 @@ export enum BadgeClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-badge'
+    root = 'h-badge'
 }
 
 export interface BadgeStyle extends BaseStyle {}

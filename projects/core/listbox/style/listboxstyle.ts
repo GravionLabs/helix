@@ -6,33 +6,33 @@ const style = /*css*/ `
     ${listbox_style}
 
     /* For Helix */
-    .p-listbox.ng-invalid.ng-dirty {
+    .h-listbox.ng-invalid.ng-dirty {
         border-color: dt('listbox.invalid.border.color');
     }
 
-    .p-listbox-header {
+    .h-listbox-header {
         display: flex;
         align-items: center;
     }
 
-    .p-listbox-header > .p-iconfield {
+    .h-listbox-header > .h-iconfield {
         flex-grow: 1;
     }
 
-    .p-listbox-list-container {
+    .h-listbox-list-container {
         height: 100%;
     }
 
     /* CDK Drag & Drop styles */
-    .p-listbox-option.cdk-drag-preview {
+    .h-listbox-option.cdk-drag-preview {
         background: dt('listbox.background');
     }
 
-    .p-listbox-dragging .p-listbox-option:not(.cdk-drag-preview) {
+    .h-listbox-dragging .h-listbox-option:not(.cdk-drag-preview) {
         pointer-events: none !important;
     }
 
-    .p-listbox-dragging .p-listbox-option:not(.cdk-drag-preview):hover {
+    .h-listbox-dragging .h-listbox-option:not(.cdk-drag-preview):hover {
         background: inherit !important;
         color: inherit !important;
     }
@@ -44,31 +44,31 @@ const style = /*css*/ `
 
 const classes = {
     root: ({ instance }) => [
-        'p-listbox p-component',
+        'h-listbox h-component',
         {
-            'p-listbox-striped': instance.striped(),
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-listbox-fluid': instance.fluid(),
-            'p-listbox-dragging': instance.isDragging()
+            'h-listbox-striped': instance.striped(),
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-listbox-fluid': instance.fluid(),
+            'h-listbox-dragging': instance.isDragging()
         }
     ],
-    header: 'p-listbox-header',
-    pcFilter: 'p-listbox-filter',
-    listContainer: 'p-listbox-list-container',
-    list: 'p-listbox-list',
-    optionGroup: 'p-listbox-option-group',
+    header: 'h-listbox-header',
+    pcFilter: 'h-listbox-filter',
+    listContainer: 'h-listbox-list-container',
+    list: 'h-listbox-list',
+    optionGroup: 'h-listbox-option-group',
     option: ({ instance, option, i, scrollerOptions }) => [
-        'p-listbox-option',
+        'h-listbox-option',
         {
-            'p-listbox-option-selected': instance.isSelected(option) && instance.highlightOnSelect(),
-            'p-focus': instance.focusedOptionIndex() === instance.getOptionIndex(i, scrollerOptions),
-            'p-disabled': instance.isOptionDisabled(option)
+            'h-listbox-option-selected': instance.isSelected(option) && instance.highlightOnSelect(),
+            'h-focus': instance.focusedOptionIndex() === instance.getOptionIndex(i, scrollerOptions),
+            'h-disabled': instance.isOptionDisabled(option)
         }
     ],
-    optionCheckIcon: 'p-listbox-option-check-icon',
-    optionBlankIcon: 'p-listbox-option-blank-icon',
-    emptyMessage: 'p-listbox-empty-message'
+    optionCheckIcon: 'h-listbox-option-check-icon',
+    optionBlankIcon: 'h-listbox-option-blank-icon',
+    emptyMessage: 'h-listbox-empty-message'
 };
 
 @Injectable()
@@ -93,43 +93,43 @@ export enum ListboxClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-listbox',
+    root = 'h-listbox',
     /**
      * Class name of the header element
      */
-    header = 'p-listbox-header',
+    header = 'h-listbox-header',
     /**
      * Class name of the filter element
      */
-    pcFilter = 'p-listbox-filter',
+    pcFilter = 'h-listbox-filter',
     /**
      * Class name of the list container element
      */
-    listContainer = 'p-listbox-list-container',
+    listContainer = 'h-listbox-list-container',
     /**
      * Class name of the list element
      */
-    list = 'p-listbox-list',
+    list = 'h-listbox-list',
     /**
      * Class name of the option group element
      */
-    optionGroup = 'p-listbox-option-group',
+    optionGroup = 'h-listbox-option-group',
     /**
      * Class name of the option element
      */
-    option = 'p-listbox-option',
+    option = 'h-listbox-option',
     /**
      * Class name of the option check icon element
      */
-    optionCheckIcon = 'p-listbox-option-check-icon',
+    optionCheckIcon = 'h-listbox-option-check-icon',
     /**
      * Class name of the option blank icon element
      */
-    optionBlankIcon = 'p-listbox-option-blank-icon',
+    optionBlankIcon = 'h-listbox-option-blank-icon',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-listbox-empty-message'
+    emptyMessage = 'h-listbox-empty-message'
 }
 
 export interface ListboxStyle extends BaseStyle {}

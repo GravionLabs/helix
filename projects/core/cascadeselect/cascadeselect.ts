@@ -641,7 +641,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
     });
 
     label = computed(() => {
-        const label = this.placeholder() || 'p-emptylabel';
+        const label = this.placeholder() || 'h-emptylabel';
 
         if (this.hasSelectedOption()) {
             const activeOptionPath = this.findOptionPathByValue(this.modelValue(), null);
@@ -653,7 +653,7 @@ export class CascadeSelect extends BaseEditableHolder<CascadeSelectPassThrough> 
     });
 
     get _label() {
-        const label = this.placeholder() || 'p-emptylabel';
+        const label = this.placeholder() || 'h-emptylabel';
 
         if (this.hasSelectedOption()) {
             const activeOptionPath = this.findOptionPathByValue(this.modelValue(), null);

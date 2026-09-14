@@ -13,14 +13,14 @@ const mockImages = {
 @Component({
     standalone: false,
     template: `
-        <p-imagecompare [tabindex]="tabindex" [ariaLabel]="ariaLabel" [ariaLabelledby]="ariaLabelledby">
+        <h-imagecompare [tabindex]="tabindex" [ariaLabel]="ariaLabel" [ariaLabelledby]="ariaLabelledby">
             <ng-template #left>
                 <img [src]="leftImage" [alt]="leftImageAlt" class="left-image" />
             </ng-template>
             <ng-template #right>
                 <img [src]="rightImage" [alt]="rightImageAlt" class="right-image" />
             </ng-template>
-        </p-imagecompare>
+        </h-imagecompare>
     `
 })
 class TestBasicImageCompareComponent {
@@ -36,14 +36,14 @@ class TestBasicImageCompareComponent {
 @Component({
     standalone: false,
     template: `
-        <p-imagecompare>
+        <h-imagecompare>
             <ng-template pTemplate="left">
                 <img [src]="leftImage" [alt]="leftImageAlt" class="ptemplate-left" />
             </ng-template>
             <ng-template pTemplate="right">
                 <img [src]="rightImage" [alt]="rightImageAlt" class="ptemplate-right" />
             </ng-template>
-        </p-imagecompare>
+        </h-imagecompare>
     `
 })
 class TestPTemplateImageCompareComponent {
@@ -57,14 +57,14 @@ class TestPTemplateImageCompareComponent {
     standalone: false,
     template: `
         <div dir="rtl">
-            <p-imagecompare>
+            <h-imagecompare>
                 <ng-template #left>
                     <img [src]="leftImage" [alt]="leftImageAlt" class="rtl-left-image" />
                 </ng-template>
                 <ng-template #right>
                     <img [src]="rightImage" [alt]="rightImageAlt" class="rtl-right-image" />
                 </ng-template>
-            </p-imagecompare>
+            </h-imagecompare>
         </div>
     `
 })
@@ -78,14 +78,14 @@ class TestRTLImageCompareComponent {
 @Component({
     standalone: false,
     template: `
-        <p-imagecompare class="responsive-container">
+        <h-imagecompare class="responsive-container">
             <ng-template #left>
                 <div class="custom-content left-content">Left Custom Content</div>
             </ng-template>
             <ng-template #right>
                 <div class="custom-content right-content">Right Custom Content</div>
             </ng-template>
-        </p-imagecompare>
+        </h-imagecompare>
     `
 })
 class TestCustomContentImageCompareComponent {
@@ -95,14 +95,14 @@ class TestCustomContentImageCompareComponent {
 @Component({
     standalone: false,
     template: `
-        <p-imagecompare [pt]="pt" [tabindex]="tabindex" [ariaLabel]="ariaLabel">
+        <h-imagecompare [pt]="pt" [tabindex]="tabindex" [ariaLabel]="ariaLabel">
             <ng-template #left>
                 <img [src]="leftImage" alt="Left Image" />
             </ng-template>
             <ng-template #right>
                 <img [src]="rightImage" alt="Right Image" />
             </ng-template>
-        </p-imagecompare>
+        </h-imagecompare>
     `
 })
 class TestPTImageCompareComponent {
@@ -540,7 +540,7 @@ describe('ImageCompare', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ROOT_ARIA_LABEL'
                     }
                 };
@@ -549,7 +549,7 @@ describe('ImageCompare', () => {
                 const rootElement = testFixture.debugElement.query(By.directive(ImageCompare));
                 expect(rootElement.nativeElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(rootElement.nativeElement.style.backgroundColor).toBe('red');
-                expect(rootElement.nativeElement.getAttribute('data-p-test')).toBe('true');
+                expect(rootElement.nativeElement.getAttribute('data-h-test')).toBe('true');
                 expect(rootElement.nativeElement.getAttribute('aria-label')).toBe('TEST_ROOT_ARIA_LABEL');
             });
 
@@ -558,7 +558,7 @@ describe('ImageCompare', () => {
                     slider: {
                         class: 'SLIDER_OBJECT_CLASS',
                         style: { border: '1px solid blue' },
-                        'data-p-slider': true,
+                        'data-h-slider': true,
                         'aria-label': 'TEST_SLIDER_ARIA_LABEL'
                     }
                 };
@@ -567,7 +567,7 @@ describe('ImageCompare', () => {
                 const sliderElement = testFixture.debugElement.query(By.css('input[type="range"]'));
                 expect(sliderElement.nativeElement.classList.contains('SLIDER_OBJECT_CLASS')).toBe(true);
                 expect(sliderElement.nativeElement.style.border).toBe('1px solid blue');
-                expect(sliderElement.nativeElement.getAttribute('data-p-slider')).toBe('true');
+                expect(sliderElement.nativeElement.getAttribute('data-h-slider')).toBe('true');
                 expect(sliderElement.nativeElement.getAttribute('aria-label')).toBe('TEST_SLIDER_ARIA_LABEL');
             });
         });

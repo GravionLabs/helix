@@ -5,7 +5,7 @@ import { ProgressSpinner } from './progressspinner';
 
 @Component({
     standalone: false,
-    template: `<p-progressspinner [strokeWidth]="strokeWidth" [fill]="fill" [animationDuration]="animationDuration" [ariaLabel]="ariaLabel" [styleClass]="styleClass"> </p-progressspinner>`
+    template: `<h-progressspinner [strokeWidth]="strokeWidth" [fill]="fill" [animationDuration]="animationDuration" [ariaLabel]="ariaLabel" [styleClass]="styleClass"> </h-progressspinner>`
 })
 class TestBasicProgressSpinnerComponent {
     strokeWidth: string = '2';
@@ -17,7 +17,7 @@ class TestBasicProgressSpinnerComponent {
 
 @Component({
     standalone: false,
-    template: `<p-progressspinner [style]="style" [styleClass]="styleClass"></p-progressspinner>`
+    template: `<h-progressspinner [style]="style" [styleClass]="styleClass"></h-progressspinner>`
 })
 class TestStyleProgressSpinnerComponent {
     style: { [key: string]: any } | undefined = { width: '50px', height: '50px' };
@@ -26,7 +26,7 @@ class TestStyleProgressSpinnerComponent {
 
 @Component({
     standalone: false,
-    template: `<p-progressspinner strokeWidth="4" fill="red" animationDuration="3s" ariaLabel="Loading content"> </p-progressspinner>`
+    template: `<h-progressspinner strokeWidth="4" fill="red" animationDuration="3s" ariaLabel="Loading content"> </h-progressspinner>`
 })
 class TestCustomPropertiesComponent {}
 
@@ -497,7 +497,7 @@ describe('ProgressSpinner', () => {
         @Component({
             standalone: true,
             imports: [ProgressSpinner],
-            template: `<p-progressspinner [strokeWidth]="strokeWidth()" [fill]="fill()" [animationDuration]="animationDuration()" [ariaLabel]="ariaLabel()" [pt]="pt()"></p-progressspinner>`
+            template: `<h-progressspinner [strokeWidth]="strokeWidth()" [fill]="fill()" [animationDuration]="animationDuration()" [ariaLabel]="ariaLabel()" [pt]="pt()"></h-progressspinner>`
         })
         class TestPTProgressSpinnerComponent {
             strokeWidth = input<string>('2');
@@ -563,7 +563,7 @@ describe('ProgressSpinner', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -571,7 +571,7 @@ describe('ProgressSpinner', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.backgroundColor).toBe('red');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -580,7 +580,7 @@ describe('ProgressSpinner', () => {
                     spin: {
                         class: 'SPIN_OBJECT_CLASS',
                         style: { width: '100px' },
-                        'data-p-spin': 'test'
+                        'data-h-spin': 'test'
                     }
                 });
                 fixture.detectChanges();
@@ -588,7 +588,7 @@ describe('ProgressSpinner', () => {
                 const spinElement = fixture.debugElement.query(By.css('svg'));
                 expect(spinElement.nativeElement.classList.contains('SPIN_OBJECT_CLASS')).toBe(true);
                 expect(spinElement.nativeElement.style.width).toBe('100px');
-                expect(spinElement.nativeElement.getAttribute('data-p-spin')).toBe('test');
+                expect(spinElement.nativeElement.getAttribute('data-h-spin')).toBe('test');
             });
 
             it('should apply object with class, style, data and aria attributes to circle', () => {
@@ -596,7 +596,7 @@ describe('ProgressSpinner', () => {
                     circle: {
                         class: 'CIRCLE_OBJECT_CLASS',
                         style: { stroke: 'blue' },
-                        'data-p-circle': 'spinner'
+                        'data-h-circle': 'spinner'
                     }
                 });
                 fixture.detectChanges();
@@ -604,7 +604,7 @@ describe('ProgressSpinner', () => {
                 const circleElement = fixture.debugElement.query(By.css('circle'));
                 expect(circleElement.nativeElement.classList.contains('CIRCLE_OBJECT_CLASS')).toBe(true);
                 expect(circleElement.nativeElement.style.stroke).toBe('blue');
-                expect(circleElement.nativeElement.getAttribute('data-p-circle')).toBe('spinner');
+                expect(circleElement.nativeElement.getAttribute('data-h-circle')).toBe('spinner');
             });
         });
 

@@ -51,21 +51,21 @@ export class RevenueStreamWidget {
         {
           type: 'bar',
           label: 'Subscriptions',
-          backgroundColor: documentStyle.getPropertyValue('--p-primary-400'),
+          backgroundColor: documentStyle.getPropertyValue('--h-primary-400'),
           data: [4000, 10000, 15000, 4000],
           barThickness: 32,
         },
         {
           type: 'bar',
           label: 'Advertising',
-          backgroundColor: documentStyle.getPropertyValue('--p-primary-300'),
+          backgroundColor: documentStyle.getPropertyValue('--h-primary-300'),
           data: [2100, 8400, 2400, 7500],
           barThickness: 32,
         },
         {
           type: 'bar',
           label: 'Affiliate',
-          backgroundColor: documentStyle.getPropertyValue('--p-primary-200'),
+          backgroundColor: documentStyle.getPropertyValue('--h-primary-200'),
           data: [4100, 5200, 3400, 7400],
           borderRadius: {
             topLeft: 8,

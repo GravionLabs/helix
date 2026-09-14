@@ -4,25 +4,25 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-metergroup p-component',
+        'h-metergroup h-component',
         {
-            'p-metergroup-horizontal': instance.orientation() === 'horizontal',
-            'p-metergroup-vertical': instance.orientation() === 'vertical'
+            'h-metergroup-horizontal': instance.orientation() === 'horizontal',
+            'h-metergroup-vertical': instance.orientation() === 'vertical'
         }
     ],
-    meters: 'p-metergroup-meters',
-    meter: 'p-metergroup-meter',
+    meters: 'h-metergroup-meters',
+    meter: 'h-metergroup-meter',
     labelList: ({ instance }) => [
-        'p-metergroup-label-list',
+        'h-metergroup-label-list',
         {
-            'p-metergroup-label-list-vertical': instance.labelOrientation() === 'vertical',
-            'p-metergroup-label-list-horizontal': instance.labelOrientation() === 'horizontal'
+            'h-metergroup-label-list-vertical': instance.labelOrientation() === 'vertical',
+            'h-metergroup-label-list-horizontal': instance.labelOrientation() === 'horizontal'
         }
     ],
-    label: 'p-metergroup-label',
-    labelIcon: 'p-metergroup-label-icon',
-    labelMarker: 'p-metergroup-label-marker',
-    labelText: 'p-metergroup-label-text'
+    label: 'h-metergroup-label',
+    labelIcon: 'h-metergroup-label-icon',
+    labelMarker: 'h-metergroup-label-marker',
+    labelText: 'h-metergroup-label-text'
 };
 
 @Injectable()
@@ -47,35 +47,35 @@ export enum MeterGroupClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-metergroup',
+    root = 'h-metergroup',
     /**
      * Class name of the meters element
      */
-    meters = 'p-metergroup-meters',
+    meters = 'h-metergroup-meters',
     /**
      * Class name of the meter element
      */
-    meter = 'p-metergroup-meter',
+    meter = 'h-metergroup-meter',
     /**
      * Class name of the label list element
      */
-    labelList = 'p-metergroup-label-list',
+    labelList = 'h-metergroup-label-list',
     /**
      * Class name of the label element
      */
-    label = 'p-metergroup-label',
+    label = 'h-metergroup-label',
     /**
      * Class name of the label icon element
      */
-    labelIcon = 'p-metergroup-label-icon',
+    labelIcon = 'h-metergroup-label-icon',
     /**
      * Class name of the label marker element
      */
-    labelMarker = 'p-metergroup-label-marker',
+    labelMarker = 'h-metergroup-label-marker',
     /**
      * Class name of the label text element
      */
-    labelText = 'p-metergroup-label-text'
+    labelText = 'h-metergroup-label-text'
 }
 
 export interface MeterGroupStyle extends BaseStyle {}

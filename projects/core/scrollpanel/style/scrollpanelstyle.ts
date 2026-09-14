@@ -5,17 +5,17 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 const style = /*css*/ `
     ${scrollpanel_style}
 
-    .p-scrollpanel {
+    .h-scrollpanel {
         display: block;
     }
 `;
 
 const classes = {
-    root: 'p-scrollpanel p-component',
-    contentContainer: 'p-scrollpanel-content-container',
-    content: 'p-scrollpanel-content',
-    barX: 'p-scrollpanel-bar p-scrollpanel-bar-x',
-    barY: 'p-scrollpanel-bar p-scrollpanel-bar-y'
+    root: 'h-scrollpanel h-component',
+    contentContainer: 'h-scrollpanel-content-container',
+    content: 'h-scrollpanel-content',
+    barX: 'h-scrollpanel-bar h-scrollpanel-bar-x',
+    barY: 'h-scrollpanel-bar h-scrollpanel-bar-y'
 };
 
 @Injectable()
@@ -40,23 +40,23 @@ export enum ScrollPanelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-scrollpanel',
+    root = 'h-scrollpanel',
     /**
      * Class name of the content container element
      */
-    contentContainer = 'p-scrollpanel-content-container',
+    contentContainer = 'h-scrollpanel-content-container',
     /**
      * Class name of the content element
      */
-    content = 'p-scrollpanel-content',
+    content = 'h-scrollpanel-content',
     /**
      * Class name of the bar x element
      */
-    barX = 'p-scrollpanel-bar-x',
+    barX = 'h-scrollpanel-bar-x',
     /**
      * Class name of the bar y element
      */
-    barY = 'p-scrollpanel-bar-y'
+    barY = 'h-scrollpanel-bar-y'
 }
 
 export interface ScrollPanelStyle extends BaseStyle {}

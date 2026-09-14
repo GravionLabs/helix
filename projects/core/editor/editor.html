@@ -1,6 +1,6 @@
 @if (toolbar() || headerTemplate() || _headerTemplate) {
   <div [class]="cx('toolbar')" [hBind]="ptm('toolbar')">
-    <ng-content select="p-header"></ng-content>
+    <ng-content select="h-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
   </div>
 }

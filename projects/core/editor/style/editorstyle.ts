@@ -4,13 +4,13 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-editor',
+        'h-editor',
         {
-            'p-invalid': instance.invalid()
+            'h-invalid': instance.invalid()
         }
     ],
-    toolbar: 'p-editor-toolbar',
-    content: 'p-editor-content'
+    toolbar: 'h-editor-toolbar',
+    content: 'h-editor-content'
 };
 
 @Injectable()
@@ -35,15 +35,15 @@ export enum EditorClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-editor',
+    root = 'h-editor',
     /**
      * Class name of the toolbar element
      */
-    toolbar = 'p-editor-toolbar',
+    toolbar = 'h-editor-toolbar',
     /**
      * Class name of the content element
      */
-    content = 'p-editor-content'
+    content = 'h-editor-content'
 }
 
 export interface EditorStyle extends BaseStyle {}

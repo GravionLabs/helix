@@ -12,7 +12,7 @@ import { ToggleButton } from './togglebutton';
 @Component({
     standalone: false,
     template: `
-        <p-togglebutton
+        <h-togglebutton
             [(ngModel)]="checked"
             [onLabel]="onLabel"
             [offLabel]="offLabel"
@@ -30,7 +30,7 @@ import { ToggleButton } from './togglebutton';
             [styleClass]="styleClass"
             (onChange)="onToggleChange($event)"
         >
-        </p-togglebutton>
+        </h-togglebutton>
     `
 })
 class TestBasicToggleButtonComponent {
@@ -60,7 +60,7 @@ class TestBasicToggleButtonComponent {
     standalone: false,
     template: `
         <form [formGroup]="toggleForm">
-            <p-togglebutton formControlName="toggle" [onLabel]="onLabel" [offLabel]="offLabel" (onChange)="onFormToggleChange($event)"> </p-togglebutton>
+            <h-togglebutton formControlName="toggle" [onLabel]="onLabel" [offLabel]="offLabel" (onChange)="onFormToggleChange($event)"> </h-togglebutton>
         </form>
     `
 })
@@ -80,11 +80,11 @@ class TestReactiveToggleButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-togglebutton [(ngModel)]="checked">
+        <h-togglebutton [(ngModel)]="checked">
             <ng-template pTemplate="content" let-checked>
                 <span class="custom-content">{{ checked ? 'Custom ON' : 'Custom OFF' }}</span>
             </ng-template>
-        </p-togglebutton>
+        </h-togglebutton>
     `
 })
 class TestTemplateToggleButtonComponent {
@@ -94,11 +94,11 @@ class TestTemplateToggleButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-togglebutton [(ngModel)]="checked">
+        <h-togglebutton [(ngModel)]="checked">
             <ng-template pTemplate="icon" let-checked>
                 <i [class]="checked ? 'pi pi-check custom-on-icon' : 'pi pi-times custom-off-icon'"></i>
             </ng-template>
-        </p-togglebutton>
+        </h-togglebutton>
     `
 })
 class TestIconTemplateToggleButtonComponent {
@@ -107,7 +107,7 @@ class TestIconTemplateToggleButtonComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-togglebutton [(ngModel)]="checked" [onIcon]="onIcon" [offIcon]="offIcon" [iconPos]="iconPos"> </p-togglebutton> `
+    template: ` <h-togglebutton [(ngModel)]="checked" [onIcon]="onIcon" [offIcon]="offIcon" [iconPos]="iconPos"> </h-togglebutton> `
 })
 class TestIconToggleButtonComponent {
     checked = false;
@@ -121,7 +121,7 @@ class TestIconToggleButtonComponent {
     standalone: true,
     imports: [ToggleButton, FormsModule, CommonModule, SharedModule],
     template: `
-        <p-togglebutton [(ngModel)]="checked">
+        <h-togglebutton [(ngModel)]="checked">
             <!-- Icon template with pTemplate -->
             <ng-template pTemplate="icon" let-checked>
                 <i class="custom-template-icon" [ngClass]="checked ? 'pi pi-star-fill' : 'pi pi-star'" [attr.data-testid]="'ptemplate-icon-' + (checked ? 'on' : 'off')" [title]="checked ? 'Checked State Icon' : 'Unchecked State Icon'"></i>
@@ -133,7 +133,7 @@ class TestIconToggleButtonComponent {
                     {{ checked ? 'Template ON' : 'Template OFF' }}
                 </span>
             </ng-template>
-        </p-togglebutton>
+        </h-togglebutton>
     `
 })
 class TestToggleButtonPTemplateComponent {
@@ -145,7 +145,7 @@ class TestToggleButtonPTemplateComponent {
     standalone: true,
     imports: [ToggleButton, FormsModule, CommonModule, SharedModule],
     template: `
-        <p-togglebutton [(ngModel)]="checked">
+        <h-togglebutton [(ngModel)]="checked">
             <!-- Icon template with #template reference -->
             <ng-template #icon let-checked>
                 <i class="custom-ref-icon" [ngClass]="checked ? 'pi pi-heart-fill' : 'pi pi-heart'" [attr.data-testid]="'ref-icon-' + (checked ? 'on' : 'off')" [title]="checked ? 'Reference Checked Icon' : 'Reference Unchecked Icon'"></i>
@@ -157,7 +157,7 @@ class TestToggleButtonPTemplateComponent {
                     {{ checked ? 'Reference ON' : 'Reference OFF' }}
                 </span>
             </ng-template>
-        </p-togglebutton>
+        </h-togglebutton>
     `
 })
 class TestToggleButtonRefTemplateComponent {
@@ -503,7 +503,7 @@ describe('ToggleButton', () => {
 
         it('should position icon on the left by default', () => {
             const iconElement = iconFixture.debugElement.query(By.css('[data-pc-section="icon"]'));
-            expect(iconElement.nativeElement.className).toContain('p-togglebutton-icon-left');
+            expect(iconElement.nativeElement.className).toContain('h-togglebutton-icon-left');
         });
 
         it('should position icon on the right when iconPos is right', async () => {
@@ -513,7 +513,7 @@ describe('ToggleButton', () => {
             iconFixture.detectChanges();
 
             const iconElement = iconFixture.debugElement.query(By.css('[data-pc-section="icon"]'));
-            expect(iconElement.nativeElement.className).toContain('p-togglebutton-icon-right');
+            expect(iconElement.nativeElement.className).toContain('h-togglebutton-icon-right');
         });
     });
 
@@ -981,7 +981,7 @@ describe('ToggleButton', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleButton, FormsModule],
-                template: `<p-togglebutton [(ngModel)]="checked" [pt]="pt"></p-togglebutton>`
+                template: `<h-togglebutton [(ngModel)]="checked" [pt]="pt"></h-togglebutton>`
             })
             class TestPTCase1Component {
                 checked: boolean = false;
@@ -1004,9 +1004,9 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
-                const content = fixture.debugElement.query(By.css('.p-togglebutton-content'));
-                const label = fixture.debugElement.query(By.css('.p-togglebutton-label'));
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
+                const content = fixture.debugElement.query(By.css('.h-togglebutton-content'));
+                const label = fixture.debugElement.query(By.css('.h-togglebutton-label'));
 
                 expect(toggleButtonRoot.classList.contains('ROOT_CLASS')).toBe(true);
                 if (content) expect(content.nativeElement.classList.contains('CONTENT_CLASS')).toBe(true);
@@ -1018,7 +1018,7 @@ describe('ToggleButton', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleButton, FormsModule],
-                template: `<p-togglebutton [(ngModel)]="checked" onIcon="pi pi-check" offIcon="pi pi-times" [pt]="pt"></p-togglebutton>`
+                template: `<h-togglebutton [(ngModel)]="checked" onIcon="pi pi-check" offIcon="pi pi-times" [pt]="pt"></h-togglebutton>`
             })
             class TestPTCase2Component {
                 checked: boolean = true;
@@ -1054,10 +1054,10 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
-                const content = fixture.debugElement.query(By.css('.p-togglebutton-content'));
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
+                const content = fixture.debugElement.query(By.css('.h-togglebutton-content'));
                 const icon = fixture.debugElement.query(By.css('.pi'));
-                const label = fixture.debugElement.query(By.css('.p-togglebutton-label'));
+                const label = fixture.debugElement.query(By.css('.h-togglebutton-label'));
 
                 expect(toggleButtonRoot.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(toggleButtonRoot.style.backgroundColor).toBe('lightblue');
@@ -1084,7 +1084,7 @@ describe('ToggleButton', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleButton, FormsModule],
-                template: `<p-togglebutton [(ngModel)]="checked" onIcon="pi pi-check" [pt]="pt"></p-togglebutton>`
+                template: `<h-togglebutton [(ngModel)]="checked" onIcon="pi pi-check" [pt]="pt"></h-togglebutton>`
             })
             class TestPTCase3Component {
                 checked: boolean = false;
@@ -1111,9 +1111,9 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
-                const content = fixture.debugElement.query(By.css('.p-togglebutton-content'));
-                const label = fixture.debugElement.query(By.css('.p-togglebutton-label'));
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
+                const content = fixture.debugElement.query(By.css('.h-togglebutton-content'));
+                const label = fixture.debugElement.query(By.css('.h-togglebutton-label'));
 
                 expect(toggleButtonRoot.classList.contains('ROOT_STRING_CLASS')).toBe(true);
 
@@ -1131,7 +1131,7 @@ describe('ToggleButton', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleButton, FormsModule],
-                template: `<p-togglebutton [(ngModel)]="checked" [disabled]="disabled" [pt]="pt"></p-togglebutton>`
+                template: `<h-togglebutton [(ngModel)]="checked" [disabled]="disabled" [pt]="pt"></h-togglebutton>`
             })
             class TestPTCase4Component {
                 checked: boolean = false;
@@ -1163,8 +1163,8 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
-                const content = fixture.debugElement.query(By.css('.p-togglebutton-content'));
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
+                const content = fixture.debugElement.query(By.css('.h-togglebutton-content'));
 
                 expect(toggleButtonRoot.classList.contains('UNCHECKED_CLASS') || toggleButtonRoot.classList.contains('CHECKED_CLASS')).toBe(true);
 
@@ -1189,7 +1189,7 @@ describe('ToggleButton', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleButton, FormsModule],
-                template: `<p-togglebutton [(ngModel)]="checked" [pt]="pt"></p-togglebutton>`
+                template: `<h-togglebutton [(ngModel)]="checked" [pt]="pt"></h-togglebutton>`
             })
             class TestPTCase5Component {
                 checked: boolean = false;
@@ -1217,7 +1217,7 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const content = fixture.debugElement.query(By.css('.p-togglebutton-content'));
+                const content = fixture.debugElement.query(By.css('.h-togglebutton-content'));
 
                 if (content) {
                     content.nativeElement.click();
@@ -1232,7 +1232,7 @@ describe('ToggleButton', () => {
                 @Component({
                     standalone: true,
                     imports: [ToggleButton, FormsModule],
-                    template: `<p-togglebutton [(ngModel)]="checked" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-togglebutton>`
+                    template: `<h-togglebutton [(ngModel)]="checked" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-togglebutton>`
                 })
                 class TestInlineComponent {
                     checked: boolean = false;
@@ -1248,7 +1248,7 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
                 expect(toggleButtonRoot.classList.contains('INLINE_ROOT_CLASS')).toBe(true);
             });
 
@@ -1256,7 +1256,7 @@ describe('ToggleButton', () => {
                 @Component({
                     standalone: true,
                     imports: [ToggleButton, FormsModule],
-                    template: `<p-togglebutton [(ngModel)]="checked" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></p-togglebutton>`
+                    template: `<h-togglebutton [(ngModel)]="checked" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></h-togglebutton>`
                 })
                 class TestInlineObjectComponent {
                     checked: boolean = false;
@@ -1272,7 +1272,7 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
                 expect(toggleButtonRoot.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
                 expect(toggleButtonRoot.style.border).toBe('2px solid red');
             });
@@ -1283,7 +1283,7 @@ describe('ToggleButton', () => {
                 @Component({
                     standalone: true,
                     imports: [ToggleButton, FormsModule],
-                    template: `<p-togglebutton [(ngModel)]="checked1"></p-togglebutton><p-togglebutton [(ngModel)]="checked2"></p-togglebutton>`
+                    template: `<h-togglebutton [(ngModel)]="checked1"></h-togglebutton><h-togglebutton [(ngModel)]="checked2"></h-togglebutton>`
                 })
                 class TestGlobalPTComponent {
                     checked1: boolean = false;
@@ -1314,13 +1314,13 @@ describe('ToggleButton', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const toggleButtons = fixture.debugElement.queryAll(By.css('p-togglebutton'));
+                const toggleButtons = fixture.debugElement.queryAll(By.css('h-togglebutton'));
                 expect(toggleButtons.length).toBe(2);
 
                 toggleButtons.forEach((toggleButton) => {
                     const toggleButtonRoot = toggleButton.nativeElement;
-                    const content = toggleButton.query(By.css('.p-togglebutton-content'));
-                    const label = toggleButton.query(By.css('.p-togglebutton-label'));
+                    const content = toggleButton.query(By.css('.h-togglebutton-content'));
+                    const label = toggleButton.query(By.css('.h-togglebutton-label'));
 
                     expect(toggleButtonRoot.getAttribute('data-test')).toBe('global-togglebutton');
 
@@ -1343,7 +1343,7 @@ describe('ToggleButton', () => {
                 @Component({
                     standalone: true,
                     imports: [ToggleButton, FormsModule],
-                    template: `<p-togglebutton [(ngModel)]="checked" [pt]="pt"></p-togglebutton>`
+                    template: `<h-togglebutton [(ngModel)]="checked" [pt]="pt"></h-togglebutton>`
                 })
                 class TestHooksComponent {
                     checked: boolean = false;
@@ -1372,7 +1372,7 @@ describe('ToggleButton', () => {
 
                 expect(hookCalls).toContain('onAfterViewInit');
 
-                const toggleButtonRoot = fixture.debugElement.query(By.css('p-togglebutton')).nativeElement;
+                const toggleButtonRoot = fixture.debugElement.query(By.css('h-togglebutton')).nativeElement;
                 expect(toggleButtonRoot.classList.contains('MY-TOGGLEBUTTON')).toBe(true);
 
                 fixture.destroy();

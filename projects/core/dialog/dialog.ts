@@ -518,9 +518,9 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         const pos = positions.find((item) => item === this.position());
 
         return {
-            'p-dialog-mask': true,
-            'p-overlay-mask': this.modal() || this.dismissableMask(),
-            [`p-dialog-${pos}`]: pos
+            'h-dialog-mask': true,
+            'h-overlay-mask': this.modal() || this.dismissableMask(),
+            [`h-dialog-${pos}`]: pos
         };
     }
 
@@ -648,7 +648,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             }
 
             // for nested dialogs w/modal
-            const scrollBlockers = document.querySelectorAll('[data-p-scrollblocker-active="true"]');
+            const scrollBlockers = document.querySelectorAll('[data-h-scrollblocker-active="true"]');
 
             if (this.modal() && scrollBlockers && scrollBlockers.length == 1) {
                 unblockBodyScroll();
@@ -701,7 +701,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
                 for (let breakpoint in this.breakpoints()) {
                     innerHTML += `
                         @media screen and (max-width: ${breakpoint}) {
-                            .p-dialog[${this.id}]:not(.p-dialog-maximized) {
+                            .h-dialog[${this.id}]:not(.h-dialog-maximized) {
                                 width: ${this.breakpoints()[breakpoint]} !important;
                             }
                         }
@@ -728,7 +728,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             this.lastPageY = event.pageY;
 
             (this.container() as HTMLDivElement).style.margin = '0';
-            this.document.body.setAttribute('data-p-unselectable-text', 'true');
+            this.document.body.setAttribute('data-h-unselectable-text', 'true');
             !this.$unstyled() && addStyle(this.document.body, { 'user-select': 'none' });
         }
     }
@@ -778,7 +778,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     endDrag(event: DragEvent) {
         if (this.dragging) {
             this.dragging = false;
-            this.document.body.removeAttribute('data-p-unselectable-text');
+            this.document.body.removeAttribute('data-h-unselectable-text');
             !this.$unstyled() && (this.document.body.style['user-select'] = '');
             this.cd.detectChanges();
             this.onDragEnd.emit(event);
@@ -803,7 +803,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             this.lastPageX = event.pageX;
             this.lastPageY = event.pageY;
 
-            this.document.body.setAttribute('data-p-unselectable-text', 'true');
+            this.document.body.setAttribute('data-h-unselectable-text', 'true');
             !this.$unstyled() && addStyle(this.document.body, { 'user-select': 'none' });
             this.onResizeInit.emit(event);
         }
@@ -852,7 +852,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
     resizeEnd(event: MouseEvent) {
         if (this.resizing) {
             this.resizing = false;
-            this.document.body.removeAttribute('data-p-unselectable-text');
+            this.document.body.removeAttribute('data-h-unselectable-text');
             !this.$unstyled() && (this.document.body.style['user-select'] = '');
             this.onResizeEnd.emit(event);
         }
@@ -1017,7 +1017,7 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
         this.dragging = false;
 
         if (this.maximized) {
-            removeClass(this.document.body, 'p-overflow-hidden');
+            removeClass(this.document.body, 'h-overflow-hidden');
             this.document.body.style.removeProperty('--scrollbar-width');
             this.maximized = false;
         }
@@ -1026,8 +1026,8 @@ export class Dialog extends BaseComponent<DialogPassThrough> implements OnInit, 
             this.disableModality();
         }
 
-        if (hasClass(this.document.body, 'p-overflow-hidden')) {
-            removeClass(this.document.body, 'p-overflow-hidden');
+        if (hasClass(this.document.body, 'h-overflow-hidden')) {
+            removeClass(this.document.body, 'h-overflow-hidden');
         }
 
         if (this.container() && this.autoZIndex()) {

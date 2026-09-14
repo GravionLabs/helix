@@ -5,7 +5,7 @@ import { minifyCSS, resolve } from '@gravionlabs/helix-core/uix/utils';
 import { UseStyle } from '@gravionlabs/helix-core/usestyle';
 
 const css = /*css*/ `
-.p-hidden-accessible {
+.h-hidden-accessible {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -16,12 +16,12 @@ const css = /*css*/ `
     width: 1px;
 }
 
-.p-hidden-accessible input,
-.p-hidden-accessible select {
+.h-hidden-accessible input,
+.h-hidden-accessible select {
     transform: scale(0);
 }
 
-.p-overflow-hidden {
+.h-overflow-hidden {
     overflow: hidden;
     padding-right: dt('scrollbar.width');
 }

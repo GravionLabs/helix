@@ -1,0 +1,106 @@
+@custom-variant h-invalid (&[data-h~="invalid"]);
+@custom-variant h-small (&[data-h~="small"]);
+@custom-variant h-large (&[data-h~="large"]);
+@custom-variant h-xlarge (&[data-h~="xlarge"]);
+@custom-variant h-fluid (&[data-h~="fluid"]);
+@custom-variant h-filled (&[data-h~="filled"]);
+@custom-variant h-horizontal (&[data-h~="horizontal"]);
+@custom-variant h-vertical (&[data-h~="vertical"]);
+@custom-variant h-stacked (&[data-h~="stacked"]);
+@custom-variant h-checked (&[data-h~="checked"]);
+@custom-variant h-disabled (&[data-h~="disabled"], &[data-h-disabled="true"]);
+@custom-variant h-enabled (&:not([data-h~="disabled"]));
+@custom-variant h-selected (&[data-h~="selected"], &[data-h-selected="true"]);
+@custom-variant h-selectable (
+  &[data-h~="selectable"],
+  &[data-h-selectable="true"],
+  &[data-h-selectable-row="true"]
+);
+@custom-variant h-left (&[data-h~="left"], &[data-h-left="true"]);
+@custom-variant h-right (&[data-h~="right"], &[data-h-right="true"]);
+@custom-variant h-top (&[data-h~="top"], &[data-h-top="true"]);
+@custom-variant h-bottom (&[data-h~="bottom"], &[data-h-bottom="true"]);
+@custom-variant h-alternate (&[data-h~="alternate"]);
+@custom-variant h-center (&[data-h~="center"]);
+@custom-variant h-top-center (&[data-h~="top-center"]);
+@custom-variant h-bottom-center (&[data-h~="bottom-center"]);
+@custom-variant h-active (&[data-h~="active"], &[data-h-active="true"]);
+@custom-variant h-focus (&[data-h~="focus"], &[data-h-focused="true"]);
+@custom-variant h-focus-visible (&[data-h~="focus-visible"]);
+@custom-variant h-readonly (&[data-h~="readonly"]);
+@custom-variant h-removable (&[data-h~="removable"]);
+@custom-variant h-circle (&[data-h~="circle"]);
+@custom-variant h-empty (&[data-h~="empty"]);
+@custom-variant h-determinate (&[data-h~="determinate"]);
+@custom-variant h-indeterminate (&[data-h~="indeterminate"]);
+@custom-variant h-icon-only (&[data-h~="icon-only"]);
+@custom-variant h-rounded (&[data-h~="rounded"]);
+@custom-variant h-raised (&[data-h~="raised"]);
+@custom-variant h-toggleable (&[data-h~="toggleable"]);
+@custom-variant h-solid (&[data-h~="solid"]);
+@custom-variant h-dashed (&[data-h~="dashed"]);
+@custom-variant h-dotted (&[data-h~="dotted"]);
+@custom-variant h-secondary (&[data-h~="secondary"]);
+@custom-variant h-contrast (&[data-h~="contrast"]);
+@custom-variant h-success (&[data-h~="success"]);
+@custom-variant h-info (&[data-h~="info"]);
+@custom-variant h-warn (&[data-h~="warn"]);
+@custom-variant h-danger (&[data-h~="danger"]);
+@custom-variant h-error (&[data-h~="error"]);
+@custom-variant h-custom (&[data-h~="custom"]);
+@custom-variant h-outlined (&[data-h~="outlined"]);
+@custom-variant h-text (&[data-h~="text"]);
+@custom-variant h-simple (&[data-h~="simple"]);
+@custom-variant h-scrollable (&[data-h~="scrollable"]);
+@custom-variant h-maximized (&[data-h~="maximized"]);
+@custom-variant h-modal (&[data-h~="modal"]);
+@custom-variant h-flipped (&[data-h-popover-flipped~="true"]);
+@custom-variant h-nested (&[data-h~="nested"]);
+@custom-variant h-weak (&[data-h~="weak"]);
+@custom-variant h-medium (&[data-h~="medium"]);
+@custom-variant h-strong (&[data-h~="strong"]);
+@custom-variant h-portal-body (&[data-h~="portal-body"]);
+@custom-variant h-portal-self (&[data-h~="portal-self"]);
+@custom-variant h-has-s-icon (&[data-h-has-s-icon~="true"]);
+@custom-variant h-has-e-icon (&[data-h-has-e-icon~="true"]);
+@custom-variant h-full-screen (&[data-h~="full-screen"]);
+@custom-variant h-open (&[data-h~="open"]);
+@custom-variant h-popup (&[data-h~="popup"]);
+@custom-variant h-placeholder (&::placeholder, &[data-h~="placeholder"]);
+@custom-variant h-clearable (&[data-h~="clearable"]);
+@custom-variant h-editable (&[data-h~="editable"]);
+@custom-variant h-has-dropdown (&[data-h-has-dropdown="true"]);
+@custom-variant h-has-chip (&[data-h~="has-chip"]);
+@custom-variant h-inline (&[data-h~="inline"]);
+@custom-variant h-today (&[data-h~="today"]);
+@custom-variant h-other-month (&[data-h~="other-month"]);
+@custom-variant h-time-only (&[data-h~="time-only"]);
+@custom-variant h-completed (&[data-h~="completed"]);
+@custom-variant h-loading (&[data-h~="loading"]);
+@custom-variant h-scrollable (&[data-h~="scrollable"]);
+@custom-variant h-leaf (&[data-h~="leaf"], &[data-h-leaf="true"]);
+@custom-variant h-sortable (
+  &[data-h~="sortable"],
+  &[data-h-sortable-column="true"],
+  &[data-h-sortable="true"]
+);
+@custom-variant h-sorted (&[data-h~="sorted"], &[data-h-sorted="true"]);
+@custom-variant h-resizable (
+  &[data-h~="resizable"],
+  &[data-h-resizable-column="true"],
+  &[data-h-resizable="true"]
+);
+@custom-variant h-hoverable (&[data-h~="hoverable"]);
+@custom-variant h-scrollable (
+  &[data-h~="scrollable"],
+  &[data-h-scrollable="true"]
+);
+@custom-variant h-flex-scrollable (
+  &[data-h~="flex-scrollable"],
+  &[data-h-flex-scrollable="true"]
+);
+@custom-variant h-frozen (
+  &[data-h~="frozen"],
+  &[data-h-frozen="true"],
+  &[data-h-frozen-column="true"]
+);

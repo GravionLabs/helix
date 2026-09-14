@@ -83,9 +83,9 @@ export class RadioControlRegistry {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '[class]': "cx('root')",
-        '[attr.data-p-disabled]': '$disabled()',
-        '[attr.data-p-checked]': 'checked',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h-disabled]': '$disabled()',
+        '[attr.data-h-checked]': 'checked',
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

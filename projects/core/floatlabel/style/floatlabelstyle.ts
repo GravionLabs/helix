@@ -6,18 +6,18 @@ const style = /*css*/ `
     ${floatlabel_style}
 
     /* For Helix */
-    .p-floatlabel:has(.ng-invalid.ng-dirty) label {
+    .h-floatlabel:has(.ng-invalid.ng-dirty) label {
         color: dt('floatlabel.invalid.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-floatlabel',
+        'h-floatlabel',
         {
-            'p-floatlabel-over': instance.variant() === 'over',
-            'p-floatlabel-on': instance.variant() === 'on',
-            'p-floatlabel-in': instance.variant() === 'in'
+            'h-floatlabel-over': instance.variant() === 'over',
+            'h-floatlabel-on': instance.variant() === 'on',
+            'h-floatlabel-in': instance.variant() === 'in'
         }
     ]
 };
@@ -44,7 +44,7 @@ export enum FloatLabelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-floatlabel'
+    root = 'h-floatlabel'
 }
 
 export interface FloatLabelStyle extends BaseStyle {}

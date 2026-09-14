@@ -10,7 +10,7 @@ import { Knob } from './knob';
 @Component({
     standalone: true,
     imports: [Knob, FormsModule],
-    template: `<p-knob [(ngModel)]="value" />`
+    template: `<h-knob [(ngModel)]="value" />`
 })
 class TestBasicKnobComponent {
     value: number = 0;
@@ -20,7 +20,7 @@ class TestBasicKnobComponent {
 @Component({
     standalone: true,
     imports: [Knob, ReactiveFormsModule],
-    template: ` <p-knob [formControl]="knobControl" [min]="min" [max]="max" [step]="step" (onChange)="onKnobChange($event)" /> `
+    template: ` <h-knob [formControl]="knobControl" [min]="min" [max]="max" [step]="step" (onChange)="onKnobChange($event)" /> `
 })
 class TestReactiveFormKnobComponent {
     knobControl = new FormControl(50, [Validators.min(25), Validators.max(75)]);
@@ -39,7 +39,7 @@ class TestReactiveFormKnobComponent {
     standalone: true,
     imports: [Knob, FormsModule],
     template: `
-        <p-knob
+        <h-knob
             [(ngModel)]="value"
             [min]="min"
             [max]="max"
@@ -87,7 +87,7 @@ class TestAdvancedKnobComponent {
 @Component({
     standalone: true,
     imports: [Knob, FormsModule],
-    template: ` <p-knob [(ngModel)]="value" [min]="0" [max]="100" [step]="1" /> `
+    template: ` <h-knob [(ngModel)]="value" [min]="0" [max]="100" [step]="1" /> `
 })
 class TestKeyboardKnobComponent {
     value: number = 50;
@@ -97,7 +97,7 @@ class TestKeyboardKnobComponent {
 @Component({
     standalone: true,
     imports: [Knob, FormsModule],
-    template: ` <p-knob [(ngModel)]="temperature" [min]="0" [max]="40" [valueTemplate]="'{value}°C'" /> `
+    template: ` <h-knob [(ngModel)]="temperature" [min]="0" [max]="40" [valueTemplate]="'{value}°C'" /> `
 })
 class TestTemplateKnobComponent {
     temperature: number = 25;
@@ -794,7 +794,7 @@ describe('Knob', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="pt"></h-knob>`
             })
             class TestPTCase1Component {
                 value: number = 50;
@@ -851,7 +851,7 @@ describe('Knob', () => {
         describe('Case 2: Object with class, style, data attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="pt"></h-knob>`
             })
             class TestPTCase2Component {
                 value: number = 50;
@@ -859,11 +859,11 @@ describe('Knob', () => {
                     host: {
                         class: 'OBJECT_HOST_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'test-value'
+                        'data-h-test': 'test-value'
                     },
                     svg: {
                         class: 'SVG_OBJECT_CLASS',
-                        'data-p-custom': 'custom-value'
+                        'data-h-custom': 'custom-value'
                     },
                     range: {
                         class: 'RANGE_OBJECT_CLASS'
@@ -887,13 +887,13 @@ describe('Knob', () => {
                 if (hostEl) {
                     expect(hostEl.nativeElement.classList.contains('OBJECT_HOST_CLASS')).toBe(true);
                     expect(hostEl.nativeElement.style.backgroundColor).toBe('red');
-                    expect(hostEl.nativeElement.getAttribute('data-p-test')).toBe('test-value');
+                    expect(hostEl.nativeElement.getAttribute('data-h-test')).toBe('test-value');
                 }
 
                 const svgEl = testFixture.debugElement.query(By.css('svg'));
                 if (svgEl) {
                     expect(svgEl.nativeElement.classList.contains('SVG_OBJECT_CLASS')).toBe(true);
-                    expect(svgEl.nativeElement.getAttribute('data-p-custom')).toBe('custom-value');
+                    expect(svgEl.nativeElement.getAttribute('data-h-custom')).toBe('custom-value');
                 }
             });
         });
@@ -901,7 +901,7 @@ describe('Knob', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="pt"></h-knob>`
             })
             class TestPTCase3Component {
                 value: number = 50;
@@ -942,7 +942,7 @@ describe('Knob', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [min]="0" [max]="100" [showValue]="true" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [min]="0" [max]="100" [showValue]="true" [pt]="pt"></h-knob>`
             })
             class TestPTCase4Component {
                 value: number = 75;
@@ -992,7 +992,7 @@ describe('Knob', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="pt"></h-knob>`
             })
             class TestPTCase5Component {
                 value: number = 50;
@@ -1037,7 +1037,7 @@ describe('Knob', () => {
         describe('Case 6: Inline PT', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="{ host: 'INLINE_HOST_CLASS', svg: 'INLINE_SVG_CLASS' }"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="{ host: 'INLINE_HOST_CLASS', svg: 'INLINE_SVG_CLASS' }"></h-knob>`
             })
             class TestPTCase6InlineComponent {
                 value: number = 50;
@@ -1063,7 +1063,7 @@ describe('Knob', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS' }, svg: { class: 'SVG_INLINE_CLASS' } }"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS' }, svg: { class: 'SVG_INLINE_CLASS' } }"></h-knob>`
             })
             class TestPTCase6InlineObjectComponent {
                 value: number = 50;
@@ -1091,7 +1091,7 @@ describe('Knob', () => {
         describe('Case 7: Global PT from HelixConfig', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value"></p-knob>`
+                template: `<h-knob [(ngModel)]="value"></h-knob>`
             })
             class TestPTCase7GlobalComponent {
                 value: number = 50;
@@ -1129,7 +1129,7 @@ describe('Knob', () => {
         describe('Case 8: PT Hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [pt]="pt"></h-knob>`
             })
             class TestPTCase8HooksComponent {
                 value: number = 50;
@@ -1172,7 +1172,7 @@ describe('Knob', () => {
         describe('PT Section Coverage', () => {
             @Component({
                 standalone: false,
-                template: `<p-knob [(ngModel)]="value" [showValue]="true" [pt]="pt"></p-knob>`
+                template: `<h-knob [(ngModel)]="value" [showValue]="true" [pt]="pt"></h-knob>`
             })
             class TestPTCoverageComponent {
                 value: number = 50;

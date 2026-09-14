@@ -6,25 +6,25 @@ const style = /*css*/ `
     ${inputtext_style}
 
     /* For Helix */
-   .p-inputtext.ng-invalid.ng-dirty {
+   .h-inputtext.ng-invalid.ng-dirty {
         border-color: dt('inputtext.invalid.border.color');
     }
 
-    .p-inputtext.ng-invalid.ng-dirty::placeholder {
+    .h-inputtext.ng-invalid.ng-dirty::placeholder {
         color: dt('inputtext.invalid.placeholder.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-inputtext p-component',
+        'h-inputtext h-component',
         {
-            'p-filled': instance.$filled(),
-            'p-inputtext-sm': instance.pSize === 'small',
-            'p-inputtext-lg': instance.pSize === 'large',
-            'p-invalid': instance.invalid(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-inputtext-fluid': instance.hasFluid
+            'h-filled': instance.$filled(),
+            'h-inputtext-sm': instance.pSize === 'small',
+            'h-inputtext-lg': instance.pSize === 'large',
+            'h-invalid': instance.invalid(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-inputtext-fluid': instance.hasFluid
         }
     ]
 };
@@ -51,7 +51,7 @@ export enum InputTextClasses {
     /**
      * The class of root element
      */
-    root = 'p-inputtext'
+    root = 'h-inputtext'
 }
 
 export interface InputTextStyle extends BaseStyle {}

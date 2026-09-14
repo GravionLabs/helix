@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const css = /*css*/ `
-.p-icon {
+.h-icon {
     display: inline-block;
     vertical-align: baseline;
     flex-shrink: 0;
 }
 
-.p-icon-spin {
-    -webkit-animation: p-icon-spin 2s infinite linear;
-    animation: p-icon-spin 2s infinite linear;
+.h-icon-spin {
+    -webkit-animation: h-icon-spin 2s infinite linear;
+    animation: h-icon-spin 2s infinite linear;
 }
 
-@-webkit-keyframes p-icon-spin {
+@-webkit-keyframes h-icon-spin {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
@@ -24,7 +24,7 @@ const css = /*css*/ `
     }
 }
 
-@keyframes p-icon-spin {
+@keyframes h-icon-spin {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
@@ -53,7 +53,7 @@ export class BaseIconStyle extends BaseStyle {
  */
 
 export enum BaseIconClasses {
-    root = 'p-icon'
+    root = 'h-icon'
 }
 
 export interface BaseIconStyle extends BaseStyle {}

@@ -30,8 +30,8 @@ const TAB_INSTANCE = new InjectionToken<Tab>('TAB_INSTANCE');
         '[attr.role]': '"tab"',
         '[attr.aria-selected]': 'active()',
         '[attr.aria-disabled]': 'disabled()',
-        '[attr.data-p-disabled]': 'disabled()',
-        '[attr.data-p-active]': 'active()',
+        '[attr.data-h-disabled]': 'disabled()',
+        '[attr.data-h-active]': 'active()',
         '[attr.tabindex]': 'tabindex()',
         '(focus)': 'onFocus($event)',
         '(click)': 'onClick($event)',
@@ -186,13 +186,13 @@ export class Tab extends BaseComponent<TabPassThrough> {
     findNextTab(tabElement, selfCheck = false) {
         const element = selfCheck ? tabElement : tabElement.nextElementSibling;
 
-        return element ? (getAttribute(element, 'data-p-disabled') || getAttribute(element, 'data-pc-section') === 'activebar' ? this.findNextTab(element) : element) : null;
+        return element ? (getAttribute(element, 'data-h-disabled') || getAttribute(element, 'data-pc-section') === 'activebar' ? this.findNextTab(element) : element) : null;
     }
 
     findPrevTab(tabElement, selfCheck = false) {
         const element = selfCheck ? tabElement : tabElement.previousElementSibling;
 
-        return element ? (getAttribute(element, 'data-p-disabled') || getAttribute(element, 'data-pc-section') === 'activebar' ? this.findPrevTab(element) : element) : null;
+        return element ? (getAttribute(element, 'data-h-disabled') || getAttribute(element, 'data-pc-section') === 'activebar' ? this.findPrevTab(element) : element) : null;
     }
 
     findFirstTab() {

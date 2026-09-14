@@ -11,7 +11,7 @@ import { Select } from './select';
 @Component({
     standalone: false,
     template: `
-        <p-select
+        <h-select
             [options]="options"
             [(ngModel)]="selectedValue"
             optionLabel="name"
@@ -36,7 +36,7 @@ import { Select } from './select';
             (onBlur)="onBlurEvent($event)"
             (onClick)="onClickEvent($event)"
         >
-        </p-select>
+        </h-select>
     `
 })
 class TestBasicSelectComponent {
@@ -104,7 +104,7 @@ class TestBasicSelectComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-select formControlName="selectedOption" [options]="options" optionLabel="name" optionValue="code" placeholder="Choose an option"> </p-select>
+            <h-select formControlName="selectedOption" [options]="options" optionLabel="name" optionValue="code" placeholder="Choose an option"> </h-select>
         </form>
     `
 })
@@ -125,7 +125,7 @@ class TestReactiveFormSelectComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-select [options]="groupedOptions" [(ngModel)]="selectedCity" optionLabel="cname" optionValue="code" [group]="true" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a city"> </p-select> `
+    template: ` <h-select [options]="groupedOptions" [(ngModel)]="selectedCity" optionLabel="cname" optionValue="code" [group]="true" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a city"> </h-select> `
 })
 class TestGroupedSelectComponent {
     selectedCity: any;
@@ -152,7 +152,7 @@ class TestGroupedSelectComponent {
 @Component({
     standalone: false,
     template: `
-        <p-select [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="Select with templates" [filter]="filter" [showClear]="showClear" [loading]="loading">
+        <h-select [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="Select with templates" [filter]="filter" [showClear]="showClear" [loading]="loading">
             <ng-template pTemplate="item" let-option>
                 <div class="custom-item">
                     <i class="pi pi-tag"></i>
@@ -197,7 +197,7 @@ class TestGroupedSelectComponent {
             <ng-template pTemplate="loadingicon">
                 <i class="pi pi-spin pi-spinner custom-loading-icon"></i>
             </ng-template>
-        </p-select>
+        </h-select>
     `
 })
 class TestSelectPTemplateComponent {
@@ -218,7 +218,7 @@ class TestSelectPTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-select [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="Select with template refs" [filter]="filter" [showClear]="showClear" [loading]="loading">
+        <h-select [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="Select with template refs" [filter]="filter" [showClear]="showClear" [loading]="loading">
             <ng-template #item let-option>
                 <div class="ref-item">
                     <i class="pi pi-star"></i>
@@ -263,7 +263,7 @@ class TestSelectPTemplateComponent {
             <ng-template #loadingicon>
                 <i class="pi pi-cog pi-spin ref-loading-icon"></i>
             </ng-template>
-        </p-select>
+        </h-select>
     `
 })
 class TestSelectRefTemplateComponent {
@@ -279,7 +279,7 @@ class TestSelectRefTemplateComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-select [options]="dynamicOptions()" [(ngModel)]="selectedValue" optionLabel="label" optionValue="value" [placeholder]="dynamicPlaceholder()" [disabled]="dynamicDisabled()" [loading]="dynamicLoading()"> </p-select> `
+    template: ` <h-select [options]="dynamicOptions()" [(ngModel)]="selectedValue" optionLabel="label" optionValue="value" [placeholder]="dynamicPlaceholder()" [disabled]="dynamicDisabled()" [loading]="dynamicLoading()"> </h-select> `
 })
 class TestDynamicSelectComponent {
     private _options = signal([
@@ -319,7 +319,7 @@ class TestDynamicSelectComponent {
     template: `
         <div class="dynamic-test-container">
             <!-- Signal-based options -->
-            <p-select
+            <h-select
                 #signalSelect
                 class="signal-select"
                 [options]="signalOptions()"
@@ -330,10 +330,10 @@ class TestDynamicSelectComponent {
                 [disabled]="signalDisabled()"
                 [loading]="signalLoading()"
                 (onChange)="onSignalChange($event)"
-            ></p-select>
+            ></h-select>
 
             <!-- Observable with async pipe -->
-            <p-select
+            <h-select
                 #observableSelect
                 class="observable-select"
                 [options]="observableOptions$ | async"
@@ -342,13 +342,13 @@ class TestDynamicSelectComponent {
                 [placeholder]="observablePlaceholder$ | async"
                 [disabled]="observableDisabled$ | async"
                 (onChange)="onObservableChange($event)"
-            ></p-select>
+            ></h-select>
 
             <!-- Getter-based options -->
-            <p-select #getterSelect class="getter-select" [options]="getterOptions" [(ngModel)]="selectedGetter" [optionLabel]="getterLabel" [optionValue]="getterValue" [placeholder]="getterPlaceholder" (onChange)="onGetterChange($event)"></p-select>
+            <h-select #getterSelect class="getter-select" [options]="getterOptions" [(ngModel)]="selectedGetter" [optionLabel]="getterLabel" [optionValue]="getterValue" [placeholder]="getterPlaceholder" (onChange)="onGetterChange($event)"></h-select>
 
             <!-- Function-based options -->
-            <p-select
+            <h-select
                 #functionSelect
                 class="function-select"
                 [options]="getFunctionOptions()"
@@ -356,10 +356,10 @@ class TestDynamicSelectComponent {
                 [optionLabel]="getFunctionLabel()"
                 [placeholder]="getFunctionPlaceholder()"
                 (onChange)="onFunctionChange($event)"
-            ></p-select>
+            ></h-select>
 
             <!-- Late-loaded options (setTimeout/HTTP simulation) -->
-            <p-select
+            <h-select
                 #lateLoadedSelect
                 class="late-loaded-select"
                 [options]="lateLoadedOptions"
@@ -368,10 +368,10 @@ class TestDynamicSelectComponent {
                 [placeholder]="lateLoadedPlaceholder"
                 [loading]="isLateLoading"
                 (onChange)="onLateLoadedChange($event)"
-            ></p-select>
+            ></h-select>
 
             <!-- Complex computed options -->
-            <p-select #computedSelect class="computed-select" [options]="computedOptions()" [(ngModel)]="selectedComputed" [optionLabel]="computedLabel()" [placeholder]="computedPlaceholder()" (onChange)="onComputedChange($event)"></p-select>
+            <h-select #computedSelect class="computed-select" [options]="computedOptions()" [(ngModel)]="selectedComputed" [optionLabel]="computedLabel()" [placeholder]="computedPlaceholder()" (onChange)="onComputedChange($event)"></h-select>
         </div>
     `
 })
@@ -554,25 +554,25 @@ class TestDynamicDataSourcesComponent {
         <div class="form-test-container">
             <form [formGroup]="testForm">
                 <!-- Basic reactive form select -->
-                <p-select #basicFormSelect formControlName="basicSelect" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="Basic reactive select"></p-select>
+                <h-select #basicFormSelect formControlName="basicSelect" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="Basic reactive select"></h-select>
 
                 <!-- Disabled form control -->
-                <p-select #disabledFormSelect formControlName="disabledSelect" [options]="basicOptions" optionLabel="name" placeholder="Disabled select"></p-select>
+                <h-select #disabledFormSelect formControlName="disabledSelect" [options]="basicOptions" optionLabel="name" placeholder="Disabled select"></h-select>
 
                 <!-- Validators test -->
-                <p-select #validatedFormSelect formControlName="validatedSelect" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="Select with validation"></p-select>
+                <h-select #validatedFormSelect formControlName="validatedSelect" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="Select with validation"></h-select>
 
                 <!-- UpdateOn blur -->
-                <p-select #updateOnBlurSelect formControlName="updateOnBlurSelect" [options]="basicOptions" optionLabel="name" placeholder="Update on blur"></p-select>
+                <h-select #updateOnBlurSelect formControlName="updateOnBlurSelect" [options]="basicOptions" optionLabel="name" placeholder="Update on blur"></h-select>
 
                 <!-- Nested form group -->
                 <div formGroupName="nested">
-                    <p-select #nestedFormSelect formControlName="nestedSelect" [options]="basicOptions" optionLabel="name" placeholder="Nested form select"></p-select>
+                    <h-select #nestedFormSelect formControlName="nestedSelect" [options]="basicOptions" optionLabel="name" placeholder="Nested form select"></h-select>
                 </div>
             </form>
 
             <!-- NgModel test -->
-            <p-select #ngModelSelect [(ngModel)]="ngModelValue" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="NgModel select" #ngModelRef="ngModel" name="ngModelSelect"></p-select>
+            <h-select #ngModelSelect [(ngModel)]="ngModelValue" [options]="basicOptions" optionLabel="name" optionValue="code" placeholder="NgModel select" #ngModelRef="ngModel" name="ngModelSelect"></h-select>
 
             <!-- Form status display -->
             <div class="form-status">
@@ -667,9 +667,9 @@ class TestComprehensiveFormComponent {
     standalone: false,
     template: `
         <div class="viewchild-test-container">
-            <p-select #testSelect [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="ViewChild test select" [filter]="true" [showClear]="true" [virtualScroll]="false"></p-select>
+            <h-select #testSelect [options]="options" [(ngModel)]="selectedValue" optionLabel="name" optionValue="code" placeholder="ViewChild test select" [filter]="true" [showClear]="true" [virtualScroll]="false"></h-select>
 
-            <p-select #virtualSelect [options]="largeOptions" [(ngModel)]="selectedVirtual" optionLabel="name" optionValue="code" placeholder="Virtual scroll select" [virtualScroll]="true" [virtualScrollItemSize]="38" [scrollHeight]="200"></p-select>
+            <h-select #virtualSelect [options]="largeOptions" [(ngModel)]="selectedVirtual" optionLabel="name" optionValue="code" placeholder="Virtual scroll select" [virtualScroll]="true" [virtualScrollItemSize]="38" [scrollHeight]="200"></h-select>
         </div>
     `
 })
@@ -700,19 +700,19 @@ class TestViewChildComponent {
     template: `
         <div class="edge-cases-container">
             <!-- Rapid updates test -->
-            <p-select #rapidUpdatesSelect [options]="rapidOptions" [(ngModel)]="rapidValue" optionLabel="name" placeholder="Rapid updates test" (onChange)="onRapidChange($event)"></p-select>
+            <h-select #rapidUpdatesSelect [options]="rapidOptions" [(ngModel)]="rapidValue" optionLabel="name" placeholder="Rapid updates test" (onChange)="onRapidChange($event)"></h-select>
 
             <!-- Memory intensive test -->
-            <p-select #memorySelect [options]="memoryOptions" [(ngModel)]="memoryValue" optionLabel="label" optionValue="value" placeholder="Memory test" [virtualScroll]="true" [scrollHeight]="200"></p-select>
+            <h-select #memorySelect [options]="memoryOptions" [(ngModel)]="memoryValue" optionLabel="label" optionValue="value" placeholder="Memory test" [virtualScroll]="true" [scrollHeight]="200"></h-select>
 
             <!-- Unicode and special characters -->
-            <p-select #unicodeSelect [options]="unicodeOptions" [(ngModel)]="unicodeValue" optionLabel="text" optionValue="id" placeholder="Unicode test"></p-select>
+            <h-select #unicodeSelect [options]="unicodeOptions" [(ngModel)]="unicodeValue" optionLabel="text" optionValue="id" placeholder="Unicode test"></h-select>
 
             <!-- Circular reference test -->
-            <p-select #circularSelect [options]="circularOptions" [(ngModel)]="circularValue" optionLabel="name" placeholder="Circular test"></p-select>
+            <h-select #circularSelect [options]="circularOptions" [(ngModel)]="circularValue" optionLabel="name" placeholder="Circular test"></h-select>
 
             <!-- Null/undefined edge cases -->
-            <p-select #edgeSelect [options]="edgeOptions" [(ngModel)]="edgeValue" [optionLabel]="edgeLabel" [placeholder]="edgePlaceholder"></p-select>
+            <h-select #edgeSelect [options]="edgeOptions" [(ngModel)]="edgeValue" [optionLabel]="edgeLabel" [placeholder]="edgePlaceholder"></h-select>
         </div>
     `
 })
@@ -826,7 +826,7 @@ describe('Select', () => {
 
         fixture = TestBed.createComponent(TestBasicSelectComponent);
         component = fixture.componentInstance;
-        selectElement = fixture.debugElement.query(By.css('p-select'));
+        selectElement = fixture.debugElement.query(By.css('h-select'));
         selectInstance = selectElement.componentInstance;
         fixture.detectChanges();
     });
@@ -954,8 +954,8 @@ describe('Select', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            // Check the DOM element with p-select-label class
-            const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+            // Check the DOM element with h-select-label class
+            const labelElement = fixture.debugElement.query(By.css('.h-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('Disabled Option');
 
@@ -999,8 +999,8 @@ describe('Select', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await groupFixture.whenStable();
 
-            // Check the DOM element with p-select-label class
-            const labelElement = groupFixture.debugElement.query(By.css('.p-select-label'));
+            // Check the DOM element with h-select-label class
+            const labelElement = groupFixture.debugElement.query(By.css('.h-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('Berlin');
         });
@@ -1189,7 +1189,7 @@ describe('Select', () => {
             fixture.detectChanges();
 
             // Check DOM label element shows selected option
-            const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe(component.options[0].name);
         });
@@ -1469,7 +1469,7 @@ describe('Select - Reactive Forms Integration', () => {
 
         fixture = TestBed.createComponent(TestReactiveFormSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -1551,7 +1551,7 @@ describe('Select - Grouped Options', () => {
 
         fixture = TestBed.createComponent(TestGroupedSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -1582,7 +1582,7 @@ describe('Select - Grouped Options', () => {
         fixture.detectChanges();
 
         // Check DOM label element shows selected grouped option
-        const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+        const labelElement = fixture.debugElement.query(By.css('.h-select-label'));
         expect(labelElement).toBeTruthy();
         expect(labelElement.nativeElement.textContent.trim()).toBe(cityOption.cname);
     });
@@ -1602,7 +1602,7 @@ describe('Select - pTemplate Content Projection', () => {
 
         fixture = TestBed.createComponent(TestSelectPTemplateComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -1657,7 +1657,7 @@ describe('Select - pTemplate Content Projection', () => {
             expect(customSelected.nativeElement.textContent).toContain('Selected: Template Option 1');
         } else {
             // Check DOM label element instead of instance
-            const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('Template Option 1');
         }
@@ -1820,7 +1820,7 @@ describe('Select - #template Reference Content Projection', () => {
 
         fixture = TestBed.createComponent(TestSelectRefTemplateComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -1995,7 +1995,7 @@ describe('Select - Dynamic and Signal-based Properties', () => {
 
         fixture = TestBed.createComponent(TestDynamicSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -2117,7 +2117,7 @@ describe('Select - Performance and Large Datasets', () => {
 
         fixture = TestBed.createComponent(TestBasicSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
     });
 
     it('should handle large datasets efficiently', async () => {
@@ -2486,7 +2486,7 @@ describe('Select Comprehensive Form Integration', () => {
             const updateOnBlurControl = formComponent.testForm.get('updateOnBlurSelect');
             expect(updateOnBlurControl?.value).toBeNull();
 
-            const blurSelect = formFixture.debugElement.query(By.css('p-select[formControlName="updateOnBlurSelect"]')).componentInstance;
+            const blurSelect = formFixture.debugElement.query(By.css('h-select[formControlName="updateOnBlurSelect"]')).componentInstance;
 
             // Simulate selection (should not update immediately)
             blurSelect.onOptionSelect(new Event('click'), formComponent.basicOptions[0]);
@@ -2542,7 +2542,7 @@ describe('Select Comprehensive Form Integration', () => {
 
     describe('NgModel Integration', () => {
         it('should work with NgModel', async () => {
-            const ngModelSelect = formFixture.debugElement.query(By.css('p-select[name="ngModelSelect"]'));
+            const ngModelSelect = formFixture.debugElement.query(By.css('h-select[name="ngModelSelect"]'));
 
             expect(formComponent.ngModelValue).toBeNull();
 
@@ -2562,7 +2562,7 @@ describe('Select Comprehensive Form Integration', () => {
         });
 
         it('should track NgModel status', async () => {
-            const ngModelRef = formFixture.debugElement.query(By.css('p-select[name="ngModelSelect"]'));
+            const ngModelRef = formFixture.debugElement.query(By.css('h-select[name="ngModelSelect"]'));
 
             if (ngModelRef) {
                 // Initially should be valid (no validation), pristine, untouched
@@ -2644,7 +2644,7 @@ describe('Select ViewChild Properties', () => {
     });
 
     it('should render overlay ViewChild properly', async () => {
-        const selectInstance = viewChildFixture.debugElement.query(By.css('p-select[placeholder="ViewChild test select"]')).componentInstance;
+        const selectInstance = viewChildFixture.debugElement.query(By.css('h-select[placeholder="ViewChild test select"]')).componentInstance;
 
         selectInstance.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -2656,7 +2656,7 @@ describe('Select ViewChild Properties', () => {
     });
 
     it('should render filter input ViewChild when filter is enabled', async () => {
-        const selectInstance = viewChildFixture.debugElement.query(By.css('p-select[placeholder="ViewChild test select"]')).componentInstance;
+        const selectInstance = viewChildFixture.debugElement.query(By.css('h-select[placeholder="ViewChild test select"]')).componentInstance;
 
         selectInstance.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -2673,7 +2673,7 @@ describe('Select ViewChild Properties', () => {
     });
 
     it('should render items ViewChild properly', async () => {
-        const selectInstance = viewChildFixture.debugElement.query(By.css('p-select[placeholder="ViewChild test select"]')).componentInstance;
+        const selectInstance = viewChildFixture.debugElement.query(By.css('h-select[placeholder="ViewChild test select"]')).componentInstance;
 
         selectInstance.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -2690,7 +2690,7 @@ describe('Select ViewChild Properties', () => {
     });
 
     it('should render scroller ViewChild for virtual scrolling', async () => {
-        const virtualSelect = viewChildFixture.debugElement.query(By.css('p-select[placeholder="Virtual scroll select"]')).componentInstance;
+        const virtualSelect = viewChildFixture.debugElement.query(By.css('h-select[placeholder="Virtual scroll select"]')).componentInstance;
 
         virtualSelect.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -2698,7 +2698,7 @@ describe('Select ViewChild Properties', () => {
         viewChildFixture.detectChanges();
 
         // Scroller component should be rendered for virtual scrolling
-        const scroller = viewChildFixture.debugElement.query(By.css('p-scroller'));
+        const scroller = viewChildFixture.debugElement.query(By.css('h-scroller'));
 
         if (scroller) {
             expect(scroller).toBeTruthy();
@@ -2707,7 +2707,7 @@ describe('Select ViewChild Properties', () => {
     });
 
     it('should render hidden focusable elements ViewChild', async () => {
-        const selectInstance = viewChildFixture.debugElement.query(By.css('p-select[placeholder="ViewChild test select"]')).componentInstance;
+        const selectInstance = viewChildFixture.debugElement.query(By.css('h-select[placeholder="ViewChild test select"]')).componentInstance;
 
         selectInstance.show();
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -2715,7 +2715,7 @@ describe('Select ViewChild Properties', () => {
         viewChildFixture.detectChanges();
 
         // Hidden focusable elements should be rendered
-        const hiddenElements = viewChildFixture.debugElement.queryAll(By.css('.p-hidden-focusable'));
+        const hiddenElements = viewChildFixture.debugElement.queryAll(By.css('.h-hidden-focusable'));
         expect(hiddenElements.length).toBeGreaterThanOrEqual(2);
 
         // First and last hidden focusable elements should be available
@@ -2747,7 +2747,7 @@ describe('Select Complex Edge Cases', () => {
 
     describe('Rapid Updates', () => {
         it('should handle rapid option updates', async () => {
-            const rapidSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Rapid updates test"]')).componentInstance;
+            const rapidSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Rapid updates test"]')).componentInstance;
 
             edgeComponent.simulateRapidUpdates();
 
@@ -2783,7 +2783,7 @@ describe('Select Complex Edge Cases', () => {
 
     describe('Memory Intensive Operations', () => {
         it('should handle large datasets without memory issues', async () => {
-            const memorySelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Memory test"]')).componentInstance;
+            const memorySelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Memory test"]')).componentInstance;
 
             expect(edgeComponent.memoryOptions.length).toBe(10000);
 
@@ -2807,7 +2807,7 @@ describe('Select Complex Edge Cases', () => {
 
     describe('Unicode and Special Characters', () => {
         it('should handle XSS attempts safely', () => {
-            const unicodeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Unicode test"]')).componentInstance;
+            const unicodeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Unicode test"]')).componentInstance;
 
             expect(unicodeSelect.options[0].text).toContain('<script>');
 
@@ -2818,28 +2818,28 @@ describe('Select Complex Edge Cases', () => {
         });
 
         it('should display unicode characters correctly', () => {
-            const unicodeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Unicode test"]')).componentInstance;
+            const unicodeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Unicode test"]')).componentInstance;
 
             const unicodeOption = unicodeSelect.options.find((opt: any) => opt.id === 'unicode');
             expect(unicodeOption.text).toBe('Unicode: 你好世界 🌍 🚀');
         });
 
         it('should handle special characters', () => {
-            const unicodeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Unicode test"]')).componentInstance;
+            const unicodeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Unicode test"]')).componentInstance;
 
             const specialOption = unicodeSelect.options.find((opt: any) => opt.id === 'special');
             expect(specialOption.text).toBe('Special: !@#$%^&*()');
         });
 
         it('should handle RTL languages', () => {
-            const unicodeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Unicode test"]')).componentInstance;
+            const unicodeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Unicode test"]')).componentInstance;
 
             const rtlOption = unicodeSelect.options.find((opt: any) => opt.id === 'rtl');
             expect(rtlOption.text).toBe('RTL: مرحبا بالعالم');
         });
 
         it('should handle newlines and tabs in text', () => {
-            const unicodeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Unicode test"]')).componentInstance;
+            const unicodeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Unicode test"]')).componentInstance;
 
             const newlinesOption = unicodeSelect.options.find((opt: any) => opt.id === 'newlines');
             expect(newlinesOption.text).toBe('Newlines\nand\ttabs');
@@ -2848,7 +2848,7 @@ describe('Select Complex Edge Cases', () => {
 
     describe('Circular References', () => {
         it('should handle circular references without infinite loops', async () => {
-            const circularSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder="Circular test"]')).componentInstance;
+            const circularSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder="Circular test"]')).componentInstance;
 
             expect(circularSelect.options.length).toBe(2);
 
@@ -2883,7 +2883,7 @@ describe('Select Complex Edge Cases', () => {
             await edgeFixture.whenStable();
             edgeFixture.detectChanges();
 
-            const edgeSelect = edgeFixture.debugElement.query(By.css('p-select[placeholder]:last-child'));
+            const edgeSelect = edgeFixture.debugElement.query(By.css('h-select[placeholder]:last-child'));
 
             if (edgeSelect) {
                 const selectInstance = edgeSelect.componentInstance;
@@ -2982,7 +2982,7 @@ describe('Select Advanced Accessibility', () => {
 
         fixture = TestBed.createComponent(TestBasicSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -3151,7 +3151,7 @@ describe('Select Advanced Accessibility', () => {
             fixture.detectChanges();
 
             // The selected option should be reflected in the DOM display
-            const labelElement = fixture.debugElement.query(By.css('.p-select-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-select-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe(component.options[0].name);
         });
@@ -3199,7 +3199,7 @@ describe('Select Advanced Accessibility', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const hiddenElements = fixture.debugElement.queryAll(By.css('.p-hidden-focusable'));
+            const hiddenElements = fixture.debugElement.queryAll(By.css('.h-hidden-focusable'));
 
             expect(hiddenElements.length).toBeGreaterThan(0);
 
@@ -3217,7 +3217,7 @@ describe('Select PT (PassThrough)', () => {
         standalone: true,
         imports: [FormsModule, Select],
         template: `
-            <p-select
+            <h-select
                 [options]="options"
                 [(ngModel)]="selectedValue"
                 [optionLabel]="optionLabel || 'name'"
@@ -3233,7 +3233,7 @@ describe('Select PT (PassThrough)', () => {
                 [virtualScroll]="virtualScroll"
                 [virtualScrollItemSize]="virtualScrollItemSize"
             >
-            </p-select>
+            </h-select>
         `
     })
     class TestPTSelectComponent {
@@ -3269,7 +3269,7 @@ describe('Select PT (PassThrough)', () => {
 
         fixture = TestBed.createComponent(TestPTSelectComponent);
         component = fixture.componentInstance;
-        selectInstance = fixture.debugElement.query(By.css('p-select')).componentInstance;
+        selectInstance = fixture.debugElement.query(By.css('h-select')).componentInstance;
         fixture.detectChanges();
     });
 
@@ -3278,7 +3278,7 @@ describe('Select PT (PassThrough)', () => {
             component.pt = { root: 'CUSTOM_ROOT_CLASS' };
             fixture.detectChanges();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             expect(root.nativeElement.classList.contains('CUSTOM_ROOT_CLASS')).toBeTruthy();
         });
 
@@ -3294,7 +3294,7 @@ describe('Select PT (PassThrough)', () => {
             component.pt = { dropdown: 'CUSTOM_DROPDOWN_CLASS' };
             fixture.detectChanges();
 
-            const dropdown = fixture.debugElement.query(By.css('.p-select-dropdown'));
+            const dropdown = fixture.debugElement.query(By.css('.h-select-dropdown'));
             expect(dropdown.nativeElement.classList.contains('CUSTOM_DROPDOWN_CLASS')).toBeTruthy();
         });
     });
@@ -3306,7 +3306,7 @@ describe('Select PT (PassThrough)', () => {
             };
             fixture.detectChanges();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             expect(root.nativeElement.classList.contains('PT_ROOT_OBJECT_CLASS')).toBeTruthy();
         });
 
@@ -3316,7 +3316,7 @@ describe('Select PT (PassThrough)', () => {
             };
             fixture.detectChanges();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             expect(root.nativeElement.style.backgroundColor).toBe('red');
             expect(root.nativeElement.style.padding).toBe('10px');
         });
@@ -3330,7 +3330,7 @@ describe('Select PT (PassThrough)', () => {
             };
             fixture.detectChanges();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             expect(root.nativeElement.getAttribute('data-testid')).toBe('select-root');
             expect(root.nativeElement.getAttribute('aria-description')).toBe('Custom select description');
         });
@@ -3361,9 +3361,9 @@ describe('Select PT (PassThrough)', () => {
             };
             fixture.detectChanges();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             const label = fixture.debugElement.query(By.css('[role="combobox"]'));
-            const dropdown = fixture.debugElement.query(By.css('.p-select-dropdown'));
+            const dropdown = fixture.debugElement.query(By.css('.h-select-dropdown'));
 
             expect(root.nativeElement.classList.contains('MIXED_ROOT')).toBeTruthy();
             expect(root.nativeElement.style.margin).toBe('5px');
@@ -3415,7 +3415,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             expect(root.nativeElement.style.opacity).toBe('1');
         });
     });
@@ -3434,7 +3434,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const root = fixture.debugElement.query(By.css('p-select'));
+            const root = fixture.debugElement.query(By.css('h-select'));
             root.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
@@ -3455,7 +3455,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const dropdown = fixture.debugElement.query(By.css('.p-select-dropdown'));
+            const dropdown = fixture.debugElement.query(By.css('.h-select-dropdown'));
             dropdown.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
@@ -3864,7 +3864,7 @@ describe('Select PT (PassThrough)', () => {
             fixture.detectChanges();
 
             // Checkmark icons should be rendered
-            const icons = fixture.debugElement.queryAll(By.css('[data-p-icon]'));
+            const icons = fixture.debugElement.queryAll(By.css('[data-h-icon]'));
             expect(icons.length).toBeGreaterThan(0);
         });
     });
@@ -3908,7 +3908,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const loadingIcon = fixture.debugElement.query(By.css('.p-select-loading-icon'));
+            const loadingIcon = fixture.debugElement.query(By.css('.h-select-loading-icon'));
             expect(loadingIcon).toBeTruthy();
             if (loadingIcon) {
                 expect(loadingIcon.nativeElement.classList.contains('CUSTOM_LOADING_ICON')).toBeTruthy();
@@ -3923,7 +3923,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const dropdownIcon = fixture.debugElement.query(By.css('[data-p-icon="chevron-down"]'));
+            const dropdownIcon = fixture.debugElement.query(By.css('[data-h-icon="chevron-down"]'));
             expect(dropdownIcon).toBeTruthy();
             expect(dropdownIcon.nativeElement.classList.contains('CUSTOM_DROPDOWN_ICON')).toBeTruthy();
         });
@@ -3944,7 +3944,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const filterIcon = fixture.debugElement.query(By.css('[data-p-icon="search"]'));
+            const filterIcon = fixture.debugElement.query(By.css('[data-h-icon="search"]'));
             expect(filterIcon).toBeTruthy();
             if (filterIcon) {
                 expect(filterIcon.nativeElement.classList.contains('CUSTOM_FILTER_ICON')).toBeTruthy();
@@ -3966,7 +3966,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const checkIcon = fixture.debugElement.query(By.css('[data-p-icon="check"]'));
+            const checkIcon = fixture.debugElement.query(By.css('[data-h-icon="check"]'));
             expect(checkIcon?.nativeElement.classList.contains('CUSTOM_CHECK_ICON')).toBeTruthy();
             expect(checkIcon?.nativeElement.getAttribute('data-check')).toBe('true');
         });
@@ -3987,7 +3987,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const blankIcon = fixture.debugElement.query(By.css('[data-p-icon="blank"]'));
+            const blankIcon = fixture.debugElement.query(By.css('[data-h-icon="blank"]'));
             expect(blankIcon).toBeTruthy();
             if (blankIcon) {
                 expect(blankIcon.nativeElement.classList.contains('CUSTOM_BLANK_ICON')).toBeTruthy();
@@ -4003,7 +4003,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const hiddenFirst = fixture.debugElement.query(By.css('[data-p-hidden-focusable="true"]'));
+            const hiddenFirst = fixture.debugElement.query(By.css('[data-h-hidden-focusable="true"]'));
             expect(hiddenFirst).toBeTruthy();
         });
 
@@ -4016,7 +4016,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const hiddenElements = fixture.debugElement.queryAll(By.css('[data-p-hidden-focusable="true"]'));
+            const hiddenElements = fixture.debugElement.queryAll(By.css('[data-h-hidden-focusable="true"]'));
             expect(hiddenElements.length).toBeGreaterThan(0);
         });
 
@@ -4030,7 +4030,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const overlay = fixture.debugElement.query(By.css('p-overlay'));
+            const overlay = fixture.debugElement.query(By.css('h-overlay'));
             expect(overlay).toBeTruthy();
         });
 
@@ -4044,7 +4044,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const overlay = fixture.debugElement.query(By.css('p-overlay'));
+            const overlay = fixture.debugElement.query(By.css('h-overlay'));
             expect(overlay).toBeTruthy();
         });
 
@@ -4058,7 +4058,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const overlay = fixture.debugElement.query(By.css('p-overlay'));
+            const overlay = fixture.debugElement.query(By.css('h-overlay'));
             expect(overlay).toBeTruthy();
         });
 
@@ -4082,7 +4082,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
 
             // VirtualScroller should be rendered when enabled
-            const virtualScroller = fixture.debugElement.query(By.css('.p-virtualscroller'));
+            const virtualScroller = fixture.debugElement.query(By.css('.h-virtualscroller'));
             expect(virtualScroller).toBeTruthy();
             expect(virtualScroller.nativeElement.classList.contains('CUSTOM_VSCROLLER_ROOT')).toBeTruthy();
             expect(virtualScroller.nativeElement.getAttribute('data-vscroller')).toBe('root');
@@ -4090,7 +4090,7 @@ describe('Select PT (PassThrough)', () => {
             // Note: content section is not rendered when Select provides custom content template
             // Only root and spacer sections are testable in this context
 
-            const vScrollerSpacer = fixture.debugElement.query(By.css('.p-virtualscroller-spacer'));
+            const vScrollerSpacer = fixture.debugElement.query(By.css('.h-virtualscroller-spacer'));
             expect(vScrollerSpacer).toBeTruthy();
             expect(vScrollerSpacer.nativeElement.classList.contains('CUSTOM_VSCROLLER_SPACER')).toBeTruthy();
             expect(vScrollerSpacer.nativeElement.getAttribute('data-vscroller')).toBe('spacer');
@@ -4122,7 +4122,7 @@ describe('Select PT (PassThrough)', () => {
                 expect(clearIcon.nativeElement.classList.contains('PT_CLEAR')).toBeTruthy();
             }
 
-            const dropdownIcon = fixture.debugElement.query(By.css('[data-p-icon="chevron-down"]'));
+            const dropdownIcon = fixture.debugElement.query(By.css('[data-h-icon="chevron-down"]'));
             expect(dropdownIcon).toBeTruthy();
             if (dropdownIcon) {
                 expect(dropdownIcon.nativeElement.classList.contains('PT_DROPDOWN')).toBeTruthy();
@@ -4135,7 +4135,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const filterIcon = fixture.debugElement.query(By.css('[data-p-icon="search"]'));
+            const filterIcon = fixture.debugElement.query(By.css('[data-h-icon="search"]'));
             expect(filterIcon).toBeTruthy();
             if (filterIcon) {
                 expect(filterIcon.nativeElement.classList.contains('PT_FILTER')).toBeTruthy();
@@ -4157,7 +4157,7 @@ describe('Select PT (PassThrough)', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const hiddenElements = fixture.debugElement.queryAll(By.css('[data-p-hidden-focusable="true"]'));
+            const hiddenElements = fixture.debugElement.queryAll(By.css('[data-h-hidden-focusable="true"]'));
             expect(hiddenElements.length).toBeGreaterThan(0);
         });
     });
@@ -4171,7 +4171,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const root = fixture.debugElement.query(By.css('.p-select'));
+            const root = fixture.debugElement.query(By.css('.h-select'));
             expect(root).toBeTruthy();
             expect(root.nativeElement.classList.contains('CUSTOM_ROOT')).toBeTruthy();
             expect(root.nativeElement.getAttribute('data-test')).toBe('root-element');
@@ -4194,17 +4194,17 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const overlay = fixture.debugElement.query(By.css('p-overlay'));
+            const overlay = fixture.debugElement.query(By.css('h-overlay'));
             expect(overlay).toBeTruthy();
 
-            const overlayRoot = fixture.debugElement.query(By.css('.p-overlay'));
+            const overlayRoot = fixture.debugElement.query(By.css('.h-overlay'));
             expect(overlayRoot).toBeTruthy();
             if (overlayRoot) {
                 expect(overlayRoot.nativeElement.classList.contains('CUSTOM_OVERLAY_ROOT')).toBeTruthy();
                 expect(overlayRoot.nativeElement.getAttribute('data-overlay')).toBe('root');
             }
 
-            const overlayContent = fixture.debugElement.query(By.css('.p-overlay-content'));
+            const overlayContent = fixture.debugElement.query(By.css('.h-overlay-content'));
             expect(overlayContent).toBeTruthy();
             if (overlayContent) {
                 expect(overlayContent.nativeElement.classList.contains('CUSTOM_OVERLAY_CONTENT')).toBeTruthy();
@@ -4227,7 +4227,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const header = fixture.debugElement.query(By.css('.p-select-header'));
+            const header = fixture.debugElement.query(By.css('.h-select-header'));
             expect(header).toBeTruthy();
             if (header) {
                 expect(header.nativeElement.classList.contains('CUSTOM_HEADER')).toBeTruthy();
@@ -4250,7 +4250,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const filterContainer = fixture.debugElement.query(By.css('p-iconfield'));
+            const filterContainer = fixture.debugElement.query(By.css('h-iconfield'));
             expect(filterContainer).toBeTruthy();
         });
 
@@ -4269,7 +4269,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const filterInput = fixture.debugElement.query(By.css('.p-select-filter'));
+            const filterInput = fixture.debugElement.query(By.css('.h-select-filter'));
             expect(filterInput).toBeTruthy();
             if (filterInput) {
                 expect(filterInput.nativeElement.classList.contains('CUSTOM_FILTER_INPUT')).toBeTruthy();
@@ -4290,7 +4290,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const listContainer = fixture.debugElement.query(By.css('.p-select-list-container'));
+            const listContainer = fixture.debugElement.query(By.css('.h-select-list-container'));
             expect(listContainer).toBeTruthy();
             if (listContainer) {
                 expect(listContainer.nativeElement.classList.contains('CUSTOM_LIST_CONTAINER')).toBeTruthy();
@@ -4312,7 +4312,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const list = fixture.debugElement.query(By.css('.p-select-list'));
+            const list = fixture.debugElement.query(By.css('.h-select-list'));
             expect(list).toBeTruthy();
             if (list) {
                 expect(list.nativeElement.classList.contains('CUSTOM_LIST')).toBeTruthy();
@@ -4348,7 +4348,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const optionGroup = fixture.debugElement.query(By.css('.p-select-option-group'));
+            const optionGroup = fixture.debugElement.query(By.css('.h-select-option-group'));
             expect(optionGroup).toBeTruthy();
             if (optionGroup) {
                 expect(optionGroup.nativeElement.classList.contains('CUSTOM_OPTION_GROUP')).toBeTruthy();
@@ -4384,7 +4384,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const groupLabel = fixture.debugElement.query(By.css('.p-select-option-group-label'));
+            const groupLabel = fixture.debugElement.query(By.css('.h-select-option-group-label'));
             expect(groupLabel).toBeTruthy();
             if (groupLabel) {
                 expect(groupLabel.nativeElement.classList.contains('CUSTOM_GROUP_LABEL')).toBeTruthy();
@@ -4405,7 +4405,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const option = fixture.debugElement.query(By.css('.p-select-option'));
+            const option = fixture.debugElement.query(By.css('.h-select-option'));
             expect(option).toBeTruthy();
             if (option) {
                 expect(option.nativeElement.classList.contains('CUSTOM_OPTION')).toBeTruthy();
@@ -4427,7 +4427,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const optionLabel = fixture.debugElement.query(By.css('.p-select-option'));
+            const optionLabel = fixture.debugElement.query(By.css('.h-select-option'));
             expect(optionLabel).toBeTruthy();
         });
 
@@ -4446,7 +4446,7 @@ describe('Select PT (PassThrough)', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const emptyMessage = fixture.debugElement.query(By.css('.p-select-empty-message'));
+            const emptyMessage = fixture.debugElement.query(By.css('.h-select-empty-message'));
             expect(emptyMessage).toBeTruthy();
             if (emptyMessage) {
                 expect(emptyMessage.nativeElement.classList.contains('CUSTOM_EMPTY_MESSAGE')).toBeTruthy();

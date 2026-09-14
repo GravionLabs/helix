@@ -6,16 +6,16 @@ import { Card, CardModule } from './card';
 
 @Component({
     standalone: false,
-    template: `<p-card></p-card>`
+    template: `<h-card></h-card>`
 })
 class TestBasicCardComponent {}
 
 @Component({
     standalone: false,
     template: `
-        <p-card [header]="header" [subheader]="subheader" [styleClass]="styleClass" [style]="style">
+        <h-card [header]="header" [subheader]="subheader" [styleClass]="styleClass" [style]="style">
             <div class="card-content">Custom Card Content</div>
-        </p-card>
+        </h-card>
     `
 })
 class TestCustomCardComponent {
@@ -28,7 +28,7 @@ class TestCustomCardComponent {
 @Component({
     standalone: false,
     template: `
-        <p-card>
+        <h-card>
             <ng-template pTemplate="header">
                 <div class="custom-header">Custom Header Template</div>
             </ng-template>
@@ -44,7 +44,7 @@ class TestCustomCardComponent {
             <ng-template pTemplate="footer">
                 <div class="custom-footer">Custom Footer Template</div>
             </ng-template>
-        </p-card>
+        </h-card>
     `
 })
 class TestTemplateCardComponent {}
@@ -52,15 +52,15 @@ class TestTemplateCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card>
-            <p-header>
+        <h-card>
+            <h-header>
                 <div class="facet-header">Header Facet Content</div>
-            </p-header>
+            </h-header>
             <div class="main-content">Main Card Content</div>
-            <p-footer>
+            <h-footer>
                 <div class="facet-footer">Footer Facet Content</div>
-            </p-footer>
-        </p-card>
+            </h-footer>
+        </h-card>
     `
 })
 class TestFacetCardComponent {}
@@ -68,7 +68,7 @@ class TestFacetCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card>
+        <h-card>
             <ng-template #header>
                 <div class="contentchild-header">ContentChild Header</div>
             </ng-template>
@@ -84,7 +84,7 @@ class TestFacetCardComponent {}
             <ng-template #footer>
                 <div class="contentchild-footer">ContentChild Footer</div>
             </ng-template>
-        </p-card>
+        </h-card>
     `
 })
 class TestContentChildCardComponent {
@@ -98,9 +98,9 @@ class TestContentChildCardComponent {
 @Component({
     standalone: false,
     template: `
-        <p-card header="Simple Header" subheader="Simple Subheader">
+        <h-card header="Simple Header" subheader="Simple Subheader">
             <div class="simple-content">Simple card content with just text properties</div>
-        </p-card>
+        </h-card>
     `
 })
 class TestSimpleTextCardComponent {}
@@ -108,11 +108,11 @@ class TestSimpleTextCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card [header]="header" [subheader]="subheader">
+        <h-card [header]="header" [subheader]="subheader">
           @if (showContent) {
             <div class="dynamic-content">Dynamic Content</div>
           }
-        </p-card>
+        </h-card>
         `
 })
 class TestDynamicCardComponent {
@@ -124,7 +124,7 @@ class TestDynamicCardComponent {
 @Component({
     standalone: false,
     template: `
-        <p-card>
+        <h-card>
             <ng-template pTemplate="header">
                 <div class="header-with-actions">
                     <h3>Card with Actions</h3>
@@ -145,7 +145,7 @@ class TestDynamicCardComponent {
                     <button class="btn-secondary" type="button">Cancel</button>
                 </div>
             </ng-template>
-        </p-card>
+        </h-card>
     `
 })
 class TestComplexCardComponent {}
@@ -153,9 +153,9 @@ class TestComplexCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card header="Header Only">
+        <h-card header="Header Only">
             <div class="header-only-content">Content with header only</div>
-        </p-card>
+        </h-card>
     `
 })
 class TestHeaderOnlyCardComponent {}
@@ -163,9 +163,9 @@ class TestHeaderOnlyCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card subheader="Subheader Only">
+        <h-card subheader="Subheader Only">
             <div class="subheader-only-content">Content with subheader only</div>
-        </p-card>
+        </h-card>
     `
 })
 class TestSubheaderOnlyCardComponent {}
@@ -173,12 +173,12 @@ class TestSubheaderOnlyCardComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-card>
+        <h-card>
             <ng-template pTemplate="footer">
                 <div class="footer-only">Footer Only Content</div>
             </ng-template>
             <div class="content-with-footer">Content with footer only</div>
-        </p-card>
+        </h-card>
     `
 })
 class TestFooterOnlyCardComponent {}
@@ -234,17 +234,17 @@ describe('Card', () => {
         });
 
         it('should have correct CSS classes', () => {
-            expect(cardEl.nativeElement.className).toContain('p-card');
-            expect(cardEl.nativeElement.className).toContain('p-component');
+            expect(cardEl.nativeElement.className).toContain('h-card');
+            expect(cardEl.nativeElement.className).toContain('h-component');
         });
 
         it('should render card body', () => {
-            const bodyElement = cardEl.query(By.css('.p-card-body'));
+            const bodyElement = cardEl.query(By.css('.h-card-body'));
             expect(bodyElement).toBeTruthy();
         });
 
         it('should render content section', () => {
-            const contentElement = cardEl.query(By.css('.p-card-content'));
+            const contentElement = cardEl.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
         });
     });
@@ -260,7 +260,7 @@ describe('Card', () => {
 
         it('should not render header section when header is not provided', async () => {
             await customFixture.whenStable();
-            const headerElement = customFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = customFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeFalsy();
         });
 
@@ -269,7 +269,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            const titleElement = customFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = customFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeTruthy();
             expect(titleElement.nativeElement.textContent.trim()).toBe('Test Header');
         });
@@ -279,7 +279,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            let titleElement = customFixture.debugElement.query(By.css('.p-card-title'));
+            let titleElement = customFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement.nativeElement.textContent.trim()).toBe('Initial Header');
 
             customComponent.header = 'Updated Header';
@@ -297,7 +297,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            const titleElement = customFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = customFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeFalsy();
         });
     });
@@ -313,7 +313,7 @@ describe('Card', () => {
 
         it('should not render subtitle section when subheader is not provided', async () => {
             await customFixture.whenStable();
-            const subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeFalsy();
         });
 
@@ -322,7 +322,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            const subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeTruthy();
             expect(subtitleElement.nativeElement.textContent.trim()).toBe('Test Subheader');
         });
@@ -332,7 +332,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            let subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            let subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement.nativeElement.textContent.trim()).toBe('Initial Subheader');
 
             customComponent.subheader = 'Updated Subheader';
@@ -350,7 +350,7 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            const subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeFalsy();
         });
     });
@@ -422,8 +422,8 @@ describe('Card', () => {
             expect(contentElement.nativeElement.textContent).toContain('Custom Card Content');
         });
 
-        it('should render content in p-card-content container', () => {
-            const contentContainer = customFixture.debugElement.query(By.css('.p-card-content'));
+        it('should render content in h-card-content container', () => {
+            const contentContainer = customFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentContainer).toBeTruthy();
 
             const projectedContent = contentContainer.query(By.css('.card-content'));
@@ -440,7 +440,7 @@ describe('Card', () => {
         });
 
         it('should render header template', () => {
-            const headerElement = templateFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = templateFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeTruthy();
 
             const customHeader = headerElement.query(By.css('.custom-header'));
@@ -449,7 +449,7 @@ describe('Card', () => {
         });
 
         it('should render title template', () => {
-            const titleElement = templateFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = templateFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeTruthy();
 
             const customTitle = titleElement.query(By.css('.custom-title'));
@@ -458,7 +458,7 @@ describe('Card', () => {
         });
 
         it('should render subtitle template', () => {
-            const subtitleElement = templateFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = templateFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeTruthy();
 
             const customSubtitle = subtitleElement.query(By.css('.custom-subtitle'));
@@ -467,7 +467,7 @@ describe('Card', () => {
         });
 
         it('should render content template', () => {
-            const contentElement = templateFixture.debugElement.query(By.css('.p-card-content'));
+            const contentElement = templateFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
 
             const customContent = contentElement.query(By.css('.custom-content'));
@@ -476,7 +476,7 @@ describe('Card', () => {
         });
 
         it('should render footer template', () => {
-            const footerElement = templateFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = templateFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeTruthy();
 
             const customFooter = footerElement.query(By.css('.custom-footer'));
@@ -494,7 +494,7 @@ describe('Card', () => {
         });
 
         it('should render header facet', () => {
-            const headerElement = facetFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = facetFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeTruthy();
 
             const facetHeader = headerElement.query(By.css('.facet-header'));
@@ -503,7 +503,7 @@ describe('Card', () => {
         });
 
         it('should render footer facet', () => {
-            const footerElement = facetFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = facetFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeTruthy();
 
             const facetFooter = footerElement.query(By.css('.facet-footer'));
@@ -512,7 +512,7 @@ describe('Card', () => {
         });
 
         it('should render main content along with facets', () => {
-            const contentElement = facetFixture.debugElement.query(By.css('.p-card-content'));
+            const contentElement = facetFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
 
             const mainContent = contentElement.query(By.css('.main-content'));
@@ -532,7 +532,7 @@ describe('Card', () => {
         });
 
         it('should render ContentChild header template', () => {
-            const headerElement = contentChildFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = contentChildFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeTruthy();
 
             const contentChildHeader = headerElement.query(By.css('.contentchild-header'));
@@ -541,7 +541,7 @@ describe('Card', () => {
         });
 
         it('should render ContentChild title template', () => {
-            const titleElement = contentChildFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = contentChildFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeTruthy();
 
             const contentChildTitle = titleElement.query(By.css('.contentchild-title'));
@@ -550,7 +550,7 @@ describe('Card', () => {
         });
 
         it('should render ContentChild subtitle template', () => {
-            const subtitleElement = contentChildFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = contentChildFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeTruthy();
 
             const contentChildSubtitle = subtitleElement.query(By.css('.contentchild-subtitle'));
@@ -559,7 +559,7 @@ describe('Card', () => {
         });
 
         it('should render ContentChild content template', () => {
-            const contentElement = contentChildFixture.debugElement.query(By.css('.p-card-content'));
+            const contentElement = contentChildFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
 
             const contentChildContent = contentElement.query(By.css('.contentchild-content'));
@@ -568,7 +568,7 @@ describe('Card', () => {
         });
 
         it('should render ContentChild footer template', () => {
-            const footerElement = contentChildFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = contentChildFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeTruthy();
 
             const contentChildFooter = footerElement.query(By.css('.contentchild-footer'));
@@ -594,19 +594,19 @@ describe('Card', () => {
         });
 
         it('should render simple header text', () => {
-            const titleElement = simpleFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = simpleFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeTruthy();
             expect(titleElement.nativeElement.textContent.trim()).toBe('Simple Header');
         });
 
         it('should render simple subheader text', () => {
-            const subtitleElement = simpleFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = simpleFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeTruthy();
             expect(subtitleElement.nativeElement.textContent.trim()).toBe('Simple Subheader');
         });
 
         it('should render content with text properties', () => {
-            const contentElement = simpleFixture.debugElement.query(By.css('.p-card-content'));
+            const contentElement = simpleFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
 
             const simpleContent = contentElement.query(By.css('.simple-content'));
@@ -626,7 +626,7 @@ describe('Card', () => {
         });
 
         it('should handle dynamic header changes', async () => {
-            let titleElement = dynamicFixture.debugElement.query(By.css('.p-card-title'));
+            let titleElement = dynamicFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement.nativeElement.textContent.trim()).toBe('Initial Header');
 
             dynamicComponent.header = 'Changed Header';
@@ -636,7 +636,7 @@ describe('Card', () => {
         });
 
         it('should handle dynamic subheader changes', async () => {
-            let subtitleElement = dynamicFixture.debugElement.query(By.css('.p-card-subtitle'));
+            let subtitleElement = dynamicFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement.nativeElement.textContent.trim()).toBe('Initial Subheader');
 
             dynamicComponent.subheader = 'Changed Subheader';
@@ -672,7 +672,7 @@ describe('Card', () => {
         });
 
         it('should render complex header with actions', () => {
-            const headerElement = complexFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = complexFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeTruthy();
 
             const headerActions = headerElement.query(By.css('.header-with-actions'));
@@ -684,7 +684,7 @@ describe('Card', () => {
         });
 
         it('should render complex content with multiple elements', () => {
-            const contentElement = complexFixture.debugElement.query(By.css('.p-card-content'));
+            const contentElement = complexFixture.debugElement.query(By.css('.h-card-content'));
             expect(contentElement).toBeTruthy();
 
             const complexContent = contentElement.query(By.css('.complex-content'));
@@ -695,7 +695,7 @@ describe('Card', () => {
         });
 
         it('should render complex footer with buttons', () => {
-            const footerElement = complexFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = complexFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeTruthy();
 
             const footerButtons = footerElement.query(By.css('.footer-buttons'));
@@ -713,14 +713,14 @@ describe('Card', () => {
             const headerOnlyFixture = TestBed.createComponent(TestHeaderOnlyCardComponent);
             await headerOnlyFixture.whenStable();
 
-            const titleElement = headerOnlyFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = headerOnlyFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeTruthy();
             expect(titleElement.nativeElement.textContent.trim()).toBe('Header Only');
 
-            const subtitleElement = headerOnlyFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = headerOnlyFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeFalsy();
 
-            const footerElement = headerOnlyFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = headerOnlyFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeFalsy();
         });
 
@@ -728,14 +728,14 @@ describe('Card', () => {
             const subheaderOnlyFixture = TestBed.createComponent(TestSubheaderOnlyCardComponent);
             await subheaderOnlyFixture.whenStable();
 
-            const titleElement = subheaderOnlyFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = subheaderOnlyFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeFalsy();
 
-            const subtitleElement = subheaderOnlyFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = subheaderOnlyFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeTruthy();
             expect(subtitleElement.nativeElement.textContent.trim()).toBe('Subheader Only');
 
-            const footerElement = subheaderOnlyFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = subheaderOnlyFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeFalsy();
         });
 
@@ -743,16 +743,16 @@ describe('Card', () => {
             const footerOnlyFixture = TestBed.createComponent(TestFooterOnlyCardComponent);
             await footerOnlyFixture.whenStable();
 
-            const titleElement = footerOnlyFixture.debugElement.query(By.css('.p-card-title'));
+            const titleElement = footerOnlyFixture.debugElement.query(By.css('.h-card-title'));
             expect(titleElement).toBeFalsy();
 
-            const subtitleElement = footerOnlyFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const subtitleElement = footerOnlyFixture.debugElement.query(By.css('.h-card-subtitle'));
             expect(subtitleElement).toBeFalsy();
 
-            const headerElement = footerOnlyFixture.debugElement.query(By.css('.p-card-header'));
+            const headerElement = footerOnlyFixture.debugElement.query(By.css('.h-card-header'));
             expect(headerElement).toBeFalsy();
 
-            const footerElement = footerOnlyFixture.debugElement.query(By.css('.p-card-footer'));
+            const footerElement = footerOnlyFixture.debugElement.query(By.css('.h-card-footer'));
             expect(footerElement).toBeTruthy();
 
             const footerContent = footerElement.query(By.css('.footer-only'));
@@ -786,28 +786,28 @@ describe('Card', () => {
 
     describe('CSS Classes and Styling', () => {
         it('should apply base component classes correctly', () => {
-            const cardElement = fixture.debugElement.query(By.css('p-card'));
-            expect(cardElement.nativeElement.className).toContain('p-card');
-            expect(cardElement.nativeElement.className).toContain('p-component');
+            const cardElement = fixture.debugElement.query(By.css('h-card'));
+            expect(cardElement.nativeElement.className).toContain('h-card');
+            expect(cardElement.nativeElement.className).toContain('h-component');
         });
 
         it('should apply section classes correctly', async () => {
             const templateFixture = TestBed.createComponent(TestTemplateCardComponent);
             await templateFixture.whenStable();
 
-            const headerElement = templateFixture.debugElement.query(By.css('.p-card-header'));
-            const bodyElement = templateFixture.debugElement.query(By.css('.p-card-body'));
-            const titleElement = templateFixture.debugElement.query(By.css('.p-card-title'));
-            const subtitleElement = templateFixture.debugElement.query(By.css('.p-card-subtitle'));
-            const contentElement = templateFixture.debugElement.query(By.css('.p-card-content'));
-            const footerElement = templateFixture.debugElement.query(By.css('.p-card-footer'));
+            const headerElement = templateFixture.debugElement.query(By.css('.h-card-header'));
+            const bodyElement = templateFixture.debugElement.query(By.css('.h-card-body'));
+            const titleElement = templateFixture.debugElement.query(By.css('.h-card-title'));
+            const subtitleElement = templateFixture.debugElement.query(By.css('.h-card-subtitle'));
+            const contentElement = templateFixture.debugElement.query(By.css('.h-card-content'));
+            const footerElement = templateFixture.debugElement.query(By.css('.h-card-footer'));
 
-            expect(headerElement.nativeElement.className).toContain('p-card-header');
-            expect(bodyElement.nativeElement.className).toContain('p-card-body');
-            expect(titleElement.nativeElement.className).toContain('p-card-title');
-            expect(subtitleElement.nativeElement.className).toContain('p-card-subtitle');
-            expect(contentElement.nativeElement.className).toContain('p-card-content');
-            expect(footerElement.nativeElement.className).toContain('p-card-footer');
+            expect(headerElement.nativeElement.className).toContain('h-card-header');
+            expect(bodyElement.nativeElement.className).toContain('h-card-body');
+            expect(titleElement.nativeElement.className).toContain('h-card-title');
+            expect(subtitleElement.nativeElement.className).toContain('h-card-subtitle');
+            expect(contentElement.nativeElement.className).toContain('h-card-content');
+            expect(footerElement.nativeElement.className).toContain('h-card-footer');
         });
     });
 
@@ -898,8 +898,8 @@ describe('Card', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            const titleElement = customFixture.debugElement.query(By.css('.p-card-title'));
-            const subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const titleElement = customFixture.debugElement.query(By.css('.h-card-title'));
+            const subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
             const cardElement = customFixture.debugElement.query(By.directive(Card));
 
             expect(titleElement.nativeElement.textContent.trim()).toBe('Header 2');
@@ -917,8 +917,8 @@ describe('Card', () => {
             await customFixture.whenStable();
 
             // Empty strings are falsy values, so title and subtitle elements should not be rendered
-            const titleElement = customFixture.debugElement.query(By.css('.p-card-title'));
-            const subtitleElement = customFixture.debugElement.query(By.css('.p-card-subtitle'));
+            const titleElement = customFixture.debugElement.query(By.css('.h-card-title'));
+            const subtitleElement = customFixture.debugElement.query(By.css('.h-card-subtitle'));
 
             expect(titleElement).toBeFalsy();
             expect(subtitleElement).toBeFalsy();
@@ -969,9 +969,9 @@ describe('Card', () => {
             const cardElement = templateFixture.debugElement.query(By.directive(Card));
             expect(cardElement.nativeElement.children.length).toBeGreaterThan(0);
 
-            const headerElement = templateFixture.debugElement.query(By.css('.p-card-header'));
-            const bodyElement = templateFixture.debugElement.query(By.css('.p-card-body'));
-            const footerElement = templateFixture.debugElement.query(By.css('.p-card-footer'));
+            const headerElement = templateFixture.debugElement.query(By.css('.h-card-header'));
+            const bodyElement = templateFixture.debugElement.query(By.css('.h-card-body'));
+            const footerElement = templateFixture.debugElement.query(By.css('.h-card-footer'));
 
             expect(headerElement).toBeTruthy();
             expect(bodyElement).toBeTruthy();
@@ -985,7 +985,7 @@ describe('Card', () => {
             const cardElement = facetFixture.debugElement.query(By.directive(Card));
             expect(cardElement.nativeElement.getAttribute('data-pc-name')).toBe('card');
 
-            const bodyElement = facetFixture.debugElement.query(By.css('.p-card-body'));
+            const bodyElement = facetFixture.debugElement.query(By.css('.h-card-body'));
             expect(bodyElement).toBeTruthy();
         });
     });
@@ -1016,7 +1016,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', { title: 'HEADER_CLASS' });
                 await fixture.whenStable();
 
-                const headerEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const headerEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(headerEl.nativeElement.className).toContain('HEADER_CLASS');
             });
 
@@ -1025,7 +1025,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', { body: 'BODY_CLASS' });
                 await fixture.whenStable();
 
-                const bodyEl = fixture.debugElement.query(By.css('.p-card-body'));
+                const bodyEl = fixture.debugElement.query(By.css('.h-card-body'));
                 expect(bodyEl.nativeElement.className).toContain('BODY_CLASS');
             });
 
@@ -1035,7 +1035,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', { title: 'TITLE_CLASS' });
                 await fixture.whenStable();
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.className).toContain('TITLE_CLASS');
             });
 
@@ -1045,7 +1045,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', { subtitle: 'SUBTITLE_CLASS' });
                 await fixture.whenStable();
 
-                const subtitleEl = fixture.debugElement.query(By.css('.p-card-subtitle'));
+                const subtitleEl = fixture.debugElement.query(By.css('.h-card-subtitle'));
                 expect(subtitleEl.nativeElement.className).toContain('SUBTITLE_CLASS');
             });
 
@@ -1054,7 +1054,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', { content: 'CONTENT_CLASS' });
                 await fixture.whenStable();
 
-                const contentEl = fixture.debugElement.query(By.css('.p-card-content'));
+                const contentEl = fixture.debugElement.query(By.css('.h-card-content'));
                 expect(contentEl.nativeElement.className).toContain('CONTENT_CLASS');
             });
         });
@@ -1066,7 +1066,7 @@ describe('Card', () => {
                 fixture.componentRef.setInput('pt', {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1074,7 +1074,7 @@ describe('Card', () => {
 
                 const hostElement = fixture.nativeElement;
                 expect(hostElement.className).toContain('ROOT_OBJECT_CLASS');
-                expect(hostElement.getAttribute('data-p-test')).toBe('true');
+                expect(hostElement.getAttribute('data-h-test')).toBe('true');
                 expect(hostElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -1090,7 +1090,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const headerEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const headerEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(headerEl.nativeElement.className).toContain('HEADER_OBJECT_CLASS');
                 expect(headerEl.nativeElement.getAttribute('data-testid')).toBe('card-header');
             });
@@ -1105,7 +1105,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const bodyEl = fixture.debugElement.query(By.css('.p-card-body'));
+                const bodyEl = fixture.debugElement.query(By.css('.h-card-body'));
                 expect(bodyEl.nativeElement.className).toContain('BODY_OBJECT_CLASS');
                 expect(bodyEl.nativeElement.getAttribute('aria-labelledby')).toBe('custom-label');
             });
@@ -1120,7 +1120,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const contentEl = fixture.debugElement.query(By.css('.p-card-content'));
+                const contentEl = fixture.debugElement.query(By.css('.h-card-content'));
                 expect(contentEl.nativeElement.className).toContain('CONTENT_OBJECT_CLASS');
                 expect(contentEl.nativeElement.style.margin).toBe('10px');
             });
@@ -1146,10 +1146,10 @@ describe('Card', () => {
                 const hostElement = fixture.nativeElement;
                 expect(hostElement.className).toContain('ROOT_MIXED_CLASS');
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.className).toContain('TITLE_STRING_CLASS');
 
-                const subtitleEl = fixture.debugElement.query(By.css('.p-card-subtitle'));
+                const subtitleEl = fixture.debugElement.query(By.css('.h-card-subtitle'));
                 expect(subtitleEl.nativeElement.className).toContain('SUBTITLE_MIXED_CLASS');
                 expect(subtitleEl.nativeElement.style.margin).toBe('10px');
             });
@@ -1183,7 +1183,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl?.nativeElement.className).toContain('HAS_HEADER');
             });
 
@@ -1226,7 +1226,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 titleEl.nativeElement.click();
 
                 expect(clicked).toBe(true);
@@ -1245,7 +1245,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const contentEl = fixture.debugElement.query(By.css('.p-card-content'));
+                const contentEl = fixture.debugElement.query(By.css('.h-card-content'));
                 contentEl.nativeElement.click();
 
                 expect(contentClicked).toBe(true);
@@ -1277,11 +1277,11 @@ describe('Card', () => {
                 @Component({
                     standalone: false,
                     template: `
-                        <p-card [pt]="pt">
+                        <h-card [pt]="pt">
                             <ng-template pTemplate="footer">
                                 <div>Footer Content</div>
                             </ng-template>
-                        </p-card>
+                        </h-card>
                     `
                 })
                 class TestPTFooterComponent {
@@ -1298,7 +1298,7 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestPTFooterComponent);
                 await fixture.whenStable();
 
-                const footerEl = fixture.debugElement.query(By.css('.p-card-footer'));
+                const footerEl = fixture.debugElement.query(By.css('.h-card-footer'));
                 expect(footerEl).toBeTruthy();
                 expect(footerEl.nativeElement.className).toContain('FOOTER_CLASS');
             });
@@ -1307,11 +1307,11 @@ describe('Card', () => {
                 @Component({
                     standalone: false,
                     template: `
-                        <p-card [pt]="pt">
+                        <h-card [pt]="pt">
                             <ng-template pTemplate="header">
                                 <div>Header Content</div>
                             </ng-template>
-                        </p-card>
+                        </h-card>
                     `
                 })
                 class TestPTHeaderComponent {
@@ -1328,7 +1328,7 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestPTHeaderComponent);
                 await fixture.whenStable();
 
-                const headerEl = fixture.debugElement.query(By.css('.p-card-header'));
+                const headerEl = fixture.debugElement.query(By.css('.h-card-header'));
                 expect(headerEl).toBeTruthy();
                 expect(headerEl.nativeElement.className).toContain('HEADER_SECTION_CLASS');
             });
@@ -1339,8 +1339,8 @@ describe('Card', () => {
                 @Component({
                     standalone: false,
                     template: `
-                        <p-card header="Card 1"></p-card>
-                        <p-card header="Card 2"></p-card>
+                        <h-card header="Card 1"></h-card>
+                        <h-card header="Card 2"></h-card>
                     `
                 })
                 class TestGlobalPTComponent {}
@@ -1375,7 +1375,7 @@ describe('Card', () => {
             it('should merge local PT with global PT', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="localPt" header="Test"></p-card>`
+                    template: `<h-card [pt]="localPt" header="Test"></h-card>`
                 })
                 class TestMergePTComponent {
                     localPt = { root: 'LOCAL_CLASS', title: 'LOCAL_TITLE_CLASS' };
@@ -1391,10 +1391,10 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestMergePTComponent);
                 await fixture.whenStable();
 
-                const cardEl = fixture.debugElement.query(By.css('p-card'));
+                const cardEl = fixture.debugElement.query(By.css('h-card'));
                 expect(cardEl.nativeElement.className).toContain('LOCAL_CLASS');
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.className).toContain('LOCAL_TITLE_CLASS');
             });
         });
@@ -1406,7 +1406,7 @@ describe('Card', () => {
 
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt"></p-card>`
+                    template: `<h-card [pt]="pt"></h-card>`
                 })
                 class TestPTHooksComponent {
                     pt = {
@@ -1437,7 +1437,7 @@ describe('Card', () => {
 
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt"></p-card>`
+                    template: `<h-card [pt]="pt"></h-card>`
                 })
                 class TestPTBeforeMountComponent {
                     pt = {
@@ -1467,7 +1467,7 @@ describe('Card', () => {
 
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt"></p-card>`
+                    template: `<h-card [pt]="pt"></h-card>`
                 })
                 class TestPTContentInitComponent {
                     pt = {
@@ -1497,7 +1497,7 @@ describe('Card', () => {
 
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt"></p-card>`
+                    template: `<h-card [pt]="pt"></h-card>`
                 })
                 class TestMultiplePTHooksComponent {
                     pt = {
@@ -1534,7 +1534,7 @@ describe('Card', () => {
                 @Component({
                     standalone: false,
                     template: `
-                        <p-card [pt]="pt" [header]="'Test Header'" [subheader]="'Test Subheader'">
+                        <h-card [pt]="pt" [header]="'Test Header'" [subheader]="'Test Subheader'">
                             <ng-template pTemplate="header">
                                 <div>Header Content</div>
                             </ng-template>
@@ -1542,7 +1542,7 @@ describe('Card', () => {
                             <ng-template pTemplate="footer">
                                 <div>Footer Content</div>
                             </ng-template>
-                        </p-card>
+                        </h-card>
                     `
                 })
                 class TestAllSectionsPTComponent {
@@ -1567,32 +1567,32 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestAllSectionsPTComponent);
                 await fixture.whenStable();
 
-                const cardEl = fixture.debugElement.query(By.css('p-card'));
+                const cardEl = fixture.debugElement.query(By.css('h-card'));
                 expect(cardEl.nativeElement.className).toContain('PT_ROOT');
 
-                const headerEl = fixture.debugElement.query(By.css('.p-card-header'));
+                const headerEl = fixture.debugElement.query(By.css('.h-card-header'));
                 expect(headerEl.nativeElement.className).toContain('PT_HEADER');
 
-                const bodyEl = fixture.debugElement.query(By.css('.p-card-body'));
+                const bodyEl = fixture.debugElement.query(By.css('.h-card-body'));
                 expect(bodyEl.nativeElement.className).toContain('PT_BODY');
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.className).toContain('PT_TITLE');
 
-                const subtitleEl = fixture.debugElement.query(By.css('.p-card-subtitle'));
+                const subtitleEl = fixture.debugElement.query(By.css('.h-card-subtitle'));
                 expect(subtitleEl.nativeElement.className).toContain('PT_SUBTITLE');
 
-                const contentEl = fixture.debugElement.query(By.css('.p-card-content'));
+                const contentEl = fixture.debugElement.query(By.css('.h-card-content'));
                 expect(contentEl.nativeElement.className).toContain('PT_CONTENT');
 
-                const footerEl = fixture.debugElement.query(By.css('.p-card-footer'));
+                const footerEl = fixture.debugElement.query(By.css('.h-card-footer'));
                 expect(footerEl.nativeElement.className).toContain('PT_FOOTER');
             });
 
             it('should handle PT with function returning classes based on instance', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt" [header]="header"></p-card>`
+                    template: `<h-card [pt]="pt" [header]="header"></h-card>`
                 })
                 class TestPTFunctionComponent {
                     header = 'Test Header';
@@ -1613,14 +1613,14 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestPTFunctionComponent);
                 await fixture.whenStable();
 
-                const cardEl = fixture.debugElement.query(By.css('p-card'));
+                const cardEl = fixture.debugElement.query(By.css('h-card'));
                 expect(cardEl.nativeElement.className).toContain('HAS-HEADER');
             });
 
             it('should handle dynamic PT updates', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt"></p-card>`
+                    template: `<h-card [pt]="pt"></h-card>`
                 })
                 class TestDynamicPTComponent {
                     pt = { root: 'INITIAL_CLASS' };
@@ -1637,7 +1637,7 @@ describe('Card', () => {
                 const component = fixture.componentInstance;
                 await fixture.whenStable();
 
-                let cardEl = fixture.debugElement.query(By.css('p-card'));
+                let cardEl = fixture.debugElement.query(By.css('h-card'));
                 expect(cardEl.nativeElement.className).toContain('INITIAL_CLASS');
 
                 component.pt = { root: 'UPDATED_CLASS' };
@@ -1682,7 +1682,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 titleEl.nativeElement.click();
                 titleEl.nativeElement.dispatchEvent(new MouseEvent('mouseover'));
 
@@ -1702,7 +1702,7 @@ describe('Card', () => {
                 });
                 await fixture.whenStable();
 
-                const bodyEl = fixture.debugElement.query(By.css('.p-card-body'));
+                const bodyEl = fixture.debugElement.query(By.css('.h-card-body'));
                 expect(bodyEl.nativeElement.style.padding).toBe('20px');
                 expect(bodyEl.nativeElement.style.backgroundColor).toBe('lightblue');
             });
@@ -1710,7 +1710,7 @@ describe('Card', () => {
             it('should handle PT function with instance-based styles', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-card [pt]="pt" [header]="header" [subheader]="subheader"></p-card>`
+                    template: `<h-card [pt]="pt" [header]="header" [subheader]="subheader"></h-card>`
                 })
                 class TestPTInstanceStyleComponent {
                     header = 'Header';
@@ -1734,7 +1734,7 @@ describe('Card', () => {
                 const fixture = TestBed.createComponent(TestPTInstanceStyleComponent);
                 await fixture.whenStable();
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.style.color).toBe('blue');
             });
 
@@ -1761,11 +1761,11 @@ describe('Card', () => {
                 expect(rootEl.className).toContain('ROOT_COMPLEX');
                 expect(rootEl.getAttribute('data-level')).toBe('1');
 
-                const bodyEl = fixture.debugElement.query(By.css('.p-card-body'));
+                const bodyEl = fixture.debugElement.query(By.css('.h-card-body'));
                 expect(bodyEl.nativeElement.className).toContain('BODY_COMPLEX');
                 expect(bodyEl.nativeElement.style.margin).toBe('15px');
 
-                const titleEl = fixture.debugElement.query(By.css('.p-card-title'));
+                const titleEl = fixture.debugElement.query(By.css('.h-card-title'));
                 expect(titleEl.nativeElement.className).toContain('TITLE_COMPLEX');
                 expect(titleEl.nativeElement.getAttribute('aria-level')).toBe('2');
             });

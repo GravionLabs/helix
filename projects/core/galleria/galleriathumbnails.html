@@ -11,10 +11,10 @@
       >
       @if (!galleria.previousThumbnailIconTemplate && !galleria._previousThumbnailIconTemplate()) {
         @if (!isVertical()) {
-          <svg data-p-icon="chevron-left" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
+          <svg data-h-icon="chevron-left" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
         }
         @if (isVertical()) {
-          <svg data-p-icon="chevron-up" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
+          <svg data-h-icon="chevron-up" [hBind]="ptm('thumbnailPrevIcon')" [class]="cx('thumbnailPrevIcon')" />
         }
       }
       <ng-template *ngTemplateOutlet="galleria.previousThumbnailIconTemplate || galleria._previousThumbnailIconTemplate()"></ng-template>
@@ -29,7 +29,7 @@
           [attr.aria-selected]="_activeIndex === index"
           [attr.aria-controls]="containerId() + '_item_' + index"
           (keydown)="onThumbnailKeydown($event, index)"
-          [attr.data-p-active]="_activeIndex === index"
+          [attr.data-h-active]="_activeIndex === index"
           >
           <div
             [hBind]="ptm('thumbnail')"
@@ -59,10 +59,10 @@
       >
       @if (!galleria.nextThumbnailIconTemplate && !galleria._nextThumbnailIconTemplate()) {
         @if (!isVertical()) {
-          <svg data-p-icon="chevron-right" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
+          <svg data-h-icon="chevron-right" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
         }
         @if (isVertical()) {
-          <svg data-p-icon="chevron-down" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
+          <svg data-h-icon="chevron-down" [hBind]="ptm('thumbnailNextIcon')" [class]="cx('thumbnailNextIcon')" />
         }
       }
       <ng-template *ngTemplateOutlet="galleria.nextThumbnailIconTemplate || galleria._nextThumbnailIconTemplate()"></ng-template>

@@ -1,0 +1,38 @@
+@utility border-surface {
+  border-color: var(--h-content-border-color);
+}
+
+@utility bg-emphasis {
+  background: var(--h-content-hover-background);
+  color: var(--h-content-hover-color);
+}
+
+@utility bg-highlight {
+  background: var(--h-highlight-background);
+  color: var(--h-highlight-color);
+}
+
+@utility bg-highlight-emphasis {
+  background: var(--h-highlight-focus-background);
+  color: var(--h-highlight-focus-color);
+}
+
+@utility rounded-border {
+  border-radius: var(--h-content-border-radius);
+}
+
+@utility text-color {
+  color: var(--h-text-color);
+}
+
+@utility text-color-emphasis {
+  color: var(--h-text-hover-color);
+}
+
+@utility text-muted-color {
+  color: var(--h-text-muted-color);
+}
+
+@utility text-muted-color-emphasis {
+  color: var(--h-text-hover-muted-color);
+}

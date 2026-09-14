@@ -537,7 +537,7 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     onEndKey(event) {
-        this.changeFocusedOptionIndex(find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-p-disabled="false"]').length - 1);
+        this.changeFocusedOptionIndex(find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-h-disabled="false"]').length - 1);
         event.preventDefault();
     }
 
@@ -556,21 +556,21 @@ export class Menu extends BaseComponent<MenuPassThrough> {
     }
 
     findNextOptionIndex(index) {
-        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-p-disabled="false"]');
+        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-h-disabled="false"]');
         const matchedOptionIndex = [...links].findIndex((link) => link.id === index);
 
         return matchedOptionIndex > -1 ? matchedOptionIndex + 1 : 0;
     }
 
     findPrevOptionIndex(index) {
-        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-p-disabled="false"]');
+        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-h-disabled="false"]');
         const matchedOptionIndex = [...links].findIndex((link) => link.id === index);
 
         return matchedOptionIndex > -1 ? matchedOptionIndex - 1 : 0;
     }
 
     changeFocusedOptionIndex(index) {
-        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-p-disabled="false"]');
+        const links = find(this.containerViewChild()?.nativeElement, 'li[data-pc-section="item"][data-h-disabled="false"]');
         if (links.length > 0) {
             let order = index >= links.length ? links.length - 1 : index < 0 ? 0 : index;
             order > -1 && this.focusedOptionIndex.set(links[order].getAttribute('id'));

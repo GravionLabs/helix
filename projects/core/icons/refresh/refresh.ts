@@ -3,7 +3,7 @@ import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({
-    selector: '[data-p-icon="refresh"]',
+    selector: '[data-h-icon="refresh"]',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `

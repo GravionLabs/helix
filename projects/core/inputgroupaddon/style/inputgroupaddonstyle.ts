@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-inputgroupaddon'
+    root: 'h-inputgroupaddon'
 };
 
 @Injectable()

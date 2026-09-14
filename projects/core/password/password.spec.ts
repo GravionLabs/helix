@@ -12,7 +12,7 @@ import { MapperPipe, Password, PasswordDirective, PasswordModule } from './passw
 @Component({
     standalone: false,
     template: `
-        <p-password
+        <h-password
             [(ngModel)]="value"
             [feedback]="feedback"
             [toggleMask]="toggleMask"
@@ -41,7 +41,7 @@ import { MapperPipe, Password, PasswordDirective, PasswordModule } from './passw
             (onBlur)="onInputBlur($event)"
             (onClear)="onClearEvent($event)"
         >
-        </p-password>
+        </h-password>
     `
 })
 class TestBasicPasswordComponent {
@@ -81,7 +81,7 @@ class TestBasicPasswordComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-password formControlName="password" [feedback]="feedback" [toggleMask]="toggleMask"> </p-password>
+            <h-password formControlName="password" [feedback]="feedback" [toggleMask]="toggleMask"> </h-password>
         </form>
     `
 })
@@ -98,7 +98,7 @@ class TestFormPasswordComponent {
 @Component({
     standalone: false,
     template: `
-        <p-password [(ngModel)]="value" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear" [placeholder]="placeholder">
+        <h-password [(ngModel)]="value" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear" [placeholder]="placeholder">
             <!-- Header template with pTemplate directive -->
             <ng-template pTemplate="header">
                 <div class="custom-header" data-testid="ptemplate-header">
@@ -142,7 +142,7 @@ class TestFormPasswordComponent {
             <ng-template pTemplate="showicon">
                 <i class="pi pi-eye custom-show-icon" data-testid="ptemplate-showicon"></i>
             </ng-template>
-        </p-password>
+        </h-password>
     `
 })
 class TestPasswordPTemplateComponent {
@@ -157,7 +157,7 @@ class TestPasswordPTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-password [(ngModel)]="value" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear" [placeholder]="placeholder">
+        <h-password [(ngModel)]="value" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear" [placeholder]="placeholder">
             <!-- Header template with #template reference -->
             <ng-template #header>
                 <div class="custom-header" data-testid="ref-header">
@@ -201,7 +201,7 @@ class TestPasswordPTemplateComponent {
             <ng-template #showicon>
                 <i class="pi pi-eye custom-show-icon" data-testid="ref-showicon"></i>
             </ng-template>
-        </p-password>
+        </h-password>
     `
 })
 class TestPasswordRefTemplateComponent {
@@ -237,7 +237,7 @@ class TestPTPasswordDirectiveComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-password [(ngModel)]="value" [pt]="pt" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear"> </p-password> `
+    template: ` <h-password [(ngModel)]="value" [pt]="pt" [feedback]="feedback" [toggleMask]="toggleMask" [showClear]="showClear"> </h-password> `
 })
 class TestPTPasswordComponent {
     value: string | null = null as any;
@@ -485,7 +485,7 @@ describe('Password', () => {
             testFixture.detectChanges();
 
             const inputEl = testFixture.debugElement.query(By.css('input'));
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
 
             if (inputEl?.nativeElement) {
                 inputEl.nativeElement.value = 'weakpwd';
@@ -506,7 +506,7 @@ describe('Password', () => {
             testComponent.feedback = true;
             testFixture.detectChanges();
 
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
             passwordComponent.overlayVisible = true;
 
             const inputEl = testFixture.debugElement.query(By.css('input'));
@@ -547,7 +547,7 @@ describe('Password', () => {
             testFixture.detectChanges();
 
             const showIcon = testFixture.debugElement.query(By.css('[data-pc-section="showIcon"]'));
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
 
             if (showIcon?.nativeElement) {
                 showIcon.nativeElement.dispatchEvent(new Event('click'));
@@ -571,7 +571,7 @@ describe('Password', () => {
         });
 
         it('should show overlay on focus when feedback is enabled', async () => {
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
             const inputEl = testFixture.debugElement.query(By.css('input'));
 
             inputEl.nativeElement.dispatchEvent(new Event('focus'));
@@ -582,7 +582,7 @@ describe('Password', () => {
         });
 
         it('should hide overlay on blur when feedback is enabled', async () => {
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
             const inputEl = testFixture.debugElement.query(By.css('input'));
 
             passwordComponent.overlayVisible = true;
@@ -599,7 +599,7 @@ describe('Password', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
             const inputEl = testFixture.debugElement.query(By.css('input'));
 
             inputEl.nativeElement.dispatchEvent(new Event('focus'));
@@ -742,7 +742,7 @@ describe('Password', () => {
         });
 
         it('should handle rapid value changes', async () => {
-            const passwordComponent = formTestFixture.debugElement.query(By.css('p-password')).componentInstance;
+            const passwordComponent = formTestFixture.debugElement.query(By.css('h-password')).componentInstance;
             let changeCount = 0;
 
             // Subscribe to value changes (if available)
@@ -791,7 +791,7 @@ describe('Password', () => {
         beforeEach(async () => {
             templatesFixture = TestBed.createComponent(TestPasswordPTemplateComponent);
             templatesComponent = templatesFixture.componentInstance;
-            templatesPasswordElement = templatesFixture.debugElement.query(By.css('p-password'));
+            templatesPasswordElement = templatesFixture.debugElement.query(By.css('h-password'));
             templatesFixture.detectChanges();
         });
 
@@ -1451,7 +1451,7 @@ describe('PasswordDirective', () => {
                 ptFixture.detectChanges();
                 await ptFixture.whenStable();
 
-                const rootEl = ptFixture.debugElement.query(By.css('.p-password'));
+                const rootEl = ptFixture.debugElement.query(By.css('.h-password'));
                 if (rootEl) {
                     expect(rootEl.nativeElement.classList.contains('ROOT_DIRECTIVE_CLASS')).toBe(true);
                 }
@@ -1464,7 +1464,7 @@ describe('PasswordDirective', () => {
                     host: {
                         class: 'HOST_DIRECTIVE_OBJECT_CLASS',
                         style: { borderColor: 'green' } as any,
-                        'data-p-directive': 'true',
+                        'data-h-directive': 'true',
                         'aria-label': 'DIRECTIVE_ARIA_LABEL'
                     }
                 };
@@ -1474,7 +1474,7 @@ describe('PasswordDirective', () => {
 
                 expect(inputEl.classList.contains('HOST_DIRECTIVE_OBJECT_CLASS')).toBe(true);
                 expect(inputEl.style.borderColor).toBe('green');
-                expect(inputEl.getAttribute('data-p-directive')).toBe('true');
+                expect(inputEl.getAttribute('data-h-directive')).toBe('true');
                 expect(inputEl.getAttribute('aria-label')).toBe('DIRECTIVE_ARIA_LABEL');
             });
 
@@ -1482,7 +1482,7 @@ describe('PasswordDirective', () => {
                 ptComponent.pt = {
                     root: {
                         class: 'ROOT_DIRECTIVE_OBJECT_CLASS',
-                        'data-p-root': 'root-directive-value'
+                        'data-h-root': 'root-directive-value'
                     }
                 };
                 ptComponent.feedback = true;
@@ -1496,10 +1496,10 @@ describe('PasswordDirective', () => {
                 ptFixture.detectChanges();
                 await ptFixture.whenStable();
 
-                const rootEl = ptFixture.debugElement.query(By.css('.p-password'));
+                const rootEl = ptFixture.debugElement.query(By.css('.h-password'));
                 if (rootEl) {
                     expect(rootEl.nativeElement.classList.contains('ROOT_DIRECTIVE_OBJECT_CLASS')).toBe(true);
-                    expect(rootEl.nativeElement.getAttribute('data-p-root')).toBe('root-directive-value');
+                    expect(rootEl.nativeElement.getAttribute('data-h-root')).toBe('root-directive-value');
                 }
             });
         });
@@ -1820,7 +1820,7 @@ describe('Password Integration Tests', () => {
         testComponent.showClear = true;
         testFixture.detectChanges();
 
-        const passwordComponent = testFixture.debugElement.query(By.css('p-password')).componentInstance;
+        const passwordComponent = testFixture.debugElement.query(By.css('h-password')).componentInstance;
         const inputEl = testFixture.debugElement.query(By.css('input'));
 
         // Test input
@@ -1880,7 +1880,7 @@ describe('Password PassThrough Tests', () => {
         fixture = TestBed.createComponent(TestPTPasswordComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        passwordEl = fixture.debugElement.query(By.css('p-password')).nativeElement;
+        passwordEl = fixture.debugElement.query(By.css('h-password')).nativeElement;
     });
 
     describe('Case 1: Simple string classes', () => {
@@ -1948,26 +1948,26 @@ describe('Password PassThrough Tests', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const overlay = fixture.debugElement.query(By.css('.p-password-overlay'));
+            const overlay = fixture.debugElement.query(By.css('.h-password-overlay'));
             if (overlay) {
                 expect(overlay.nativeElement.classList.contains('OVERLAY_CLASS')).toBe(true);
 
-                const content = overlay.nativeElement.querySelector('.p-password-content');
+                const content = overlay.nativeElement.querySelector('.h-password-content');
                 if (content) {
                     expect(content.classList.contains('CONTENT_CLASS')).toBe(true);
                 }
 
-                const meter = overlay.nativeElement.querySelector('.p-password-meter');
+                const meter = overlay.nativeElement.querySelector('.h-password-meter');
                 if (meter) {
                     expect(meter.classList.contains('METER_CLASS')).toBe(true);
 
-                    const meterLabel = meter.querySelector('.p-password-meter-label');
+                    const meterLabel = meter.querySelector('.h-password-meter-label');
                     if (meterLabel) {
                         expect(meterLabel.classList.contains('METER_LABEL_CLASS')).toBe(true);
                     }
                 }
 
-                const meterText = overlay.nativeElement.querySelector('.p-password-meter-text');
+                const meterText = overlay.nativeElement.querySelector('.h-password-meter-text');
                 if (meterText) {
                     expect(meterText.classList.contains('METER_TEXT_CLASS')).toBe(true);
                 }
@@ -1981,7 +1981,7 @@ describe('Password PassThrough Tests', () => {
                 root: {
                     class: 'ROOT_OBJECT_CLASS',
                     style: { borderColor: 'red' } as any,
-                    'data-p-test': true,
+                    'data-h-test': true,
                     'aria-label': 'TEST_ARIA_LABEL'
                 }
             };
@@ -1990,7 +1990,7 @@ describe('Password PassThrough Tests', () => {
 
             expect(passwordEl.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
             expect(passwordEl.style.borderColor).toBe('red');
-            expect(passwordEl.getAttribute('data-p-test')).toBe('true');
+            expect(passwordEl.getAttribute('data-h-test')).toBe('true');
             expect(passwordEl.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
         });
 
@@ -1998,14 +1998,14 @@ describe('Password PassThrough Tests', () => {
             component.pt = {
                 host: {
                     class: 'HOST_OBJECT_CLASS',
-                    'data-p-host': 'host-value'
+                    'data-h-host': 'host-value'
                 }
             };
             fixture.detectChanges();
             await fixture.whenStable();
 
             expect(passwordEl.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
-            expect(passwordEl.getAttribute('data-p-host')).toBe('host-value');
+            expect(passwordEl.getAttribute('data-h-host')).toBe('host-value');
         });
 
         it('should apply overlay object properties from pt', async () => {
@@ -2015,7 +2015,7 @@ describe('Password PassThrough Tests', () => {
                 overlay: {
                     class: 'OVERLAY_OBJECT_CLASS',
                     style: { backgroundColor: 'blue' } as any,
-                    'data-p-overlay': 'overlay-value'
+                    'data-h-overlay': 'overlay-value'
                 }
             };
             fixture.detectChanges();
@@ -2025,11 +2025,11 @@ describe('Password PassThrough Tests', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const overlay = fixture.debugElement.query(By.css('.p-password-overlay'));
+            const overlay = fixture.debugElement.query(By.css('.h-password-overlay'));
             if (overlay) {
                 expect(overlay.nativeElement.classList.contains('OVERLAY_OBJECT_CLASS')).toBe(true);
                 expect(overlay.nativeElement.style.backgroundColor).toBe('blue');
-                expect(overlay.nativeElement.getAttribute('data-p-overlay')).toBe('overlay-value');
+                expect(overlay.nativeElement.getAttribute('data-h-overlay')).toBe('overlay-value');
             }
         });
     });
@@ -2118,7 +2118,7 @@ describe('Password PassThrough Tests', () => {
             await fixture.whenStable();
 
             // Verify callback was executed by checking if the class was applied
-            const overlay = fixture.debugElement.query(By.css('.p-password-overlay'));
+            const overlay = fixture.debugElement.query(By.css('.h-password-overlay'));
             expect(overlay).toBeTruthy();
             if (overlay) {
                 // The callback should have been executed when overlay was created
@@ -2170,7 +2170,7 @@ describe('Password PassThrough Tests', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const overlay = fixture.debugElement.query(By.css('.p-password-overlay'));
+            const overlay = fixture.debugElement.query(By.css('.h-password-overlay'));
             if (overlay) {
                 overlay.nativeElement.click();
                 await fixture.whenStable();
@@ -2228,7 +2228,7 @@ describe('Password PassThrough Tests', () => {
             globalFixture.detectChanges();
             await globalFixture.whenStable();
 
-            const globalPasswordEl = globalFixture.debugElement.query(By.css('p-password')).nativeElement;
+            const globalPasswordEl = globalFixture.debugElement.query(By.css('h-password')).nativeElement;
             expect(globalPasswordEl.getAttribute('aria-label')).toBe('GLOBAL_ARIA_LABEL');
             expect(globalPasswordEl.classList.contains('GLOBAL_ROOT_CLASS')).toBe(true);
         });
@@ -2245,7 +2245,7 @@ describe('Password PassThrough Tests', () => {
                             password: {
                                 root: { class: 'GLOBAL_CSS_CLASS' },
                                 global: {
-                                    css: `.p-password { border: 2px solid blue !important; }`
+                                    css: `.h-password { border: 2px solid blue !important; }`
                                 }
                             }
                         }
@@ -2257,7 +2257,7 @@ describe('Password PassThrough Tests', () => {
             globalFixture.detectChanges();
             await globalFixture.whenStable();
 
-            const globalPasswordEl = globalFixture.debugElement.query(By.css('p-password')).nativeElement;
+            const globalPasswordEl = globalFixture.debugElement.query(By.css('h-password')).nativeElement;
             expect(globalPasswordEl.classList.contains('GLOBAL_CSS_CLASS')).toBe(true);
         });
 
@@ -2285,8 +2285,8 @@ describe('Password PassThrough Tests', () => {
             fixture2.detectChanges();
             await fixture1.whenStable();
 
-            const el1 = fixture1.debugElement.query(By.css('p-password')).nativeElement;
-            const el2 = fixture2.debugElement.query(By.css('p-password')).nativeElement;
+            const el1 = fixture1.debugElement.query(By.css('h-password')).nativeElement;
+            const el2 = fixture2.debugElement.query(By.css('h-password')).nativeElement;
 
             expect(el1.getAttribute('data-global')).toBe('shared');
             expect(el2.getAttribute('data-global')).toBe('shared');

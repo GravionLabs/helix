@@ -4,31 +4,31 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-image p-component',
+        'h-image h-component',
         {
-            'p-image-preview': instance.preview()
+            'h-image-preview': instance.preview()
         }
     ],
-    previewMask: 'p-image-preview-mask',
-    previewIcon: 'p-image-preview-icon',
-    mask: 'p-image-mask p-overlay-mask',
-    toolbar: 'p-image-toolbar',
-    rotateRightButton: 'p-image-action p-image-rotate-right-button',
-    rotateLeftButton: 'p-image-action p-image-rotate-left-button',
+    previewMask: 'h-image-preview-mask',
+    previewIcon: 'h-image-preview-icon',
+    mask: 'h-image-mask h-overlay-mask',
+    toolbar: 'h-image-toolbar',
+    rotateRightButton: 'h-image-action h-image-rotate-right-button',
+    rotateLeftButton: 'h-image-action h-image-rotate-left-button',
     zoomOutButton: ({ instance }) => [
-        'p-image-action p-image-zoom-out-button',
+        'h-image-action h-image-zoom-out-button',
         {
-            'p-disabled': instance.isZoomOutDisabled
+            'h-disabled': instance.isZoomOutDisabled
         }
     ],
     zoomInButton: ({ instance }) => [
-        'p-image-action p-image-zoom-in-button',
+        'h-image-action h-image-zoom-in-button',
         {
-            'p-disabled': instance.isZoomInDisabled
+            'h-disabled': instance.isZoomInDisabled
         }
     ],
-    closeButton: 'p-image-action p-image-close-button',
-    original: 'p-image-original'
+    closeButton: 'h-image-action h-image-close-button',
+    original: 'h-image-original'
 };
 
 @Injectable()
@@ -53,47 +53,47 @@ export enum ImageClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-image',
+    root = 'h-image',
     /**
      * Class name of the preview mask element
      */
-    previewMask = 'p-image-preview-mask',
+    previewMask = 'h-image-preview-mask',
     /**
      * Class name of the preview icon element
      */
-    previewIcon = 'p-image-preview-icon',
+    previewIcon = 'h-image-preview-icon',
     /**
      * Class name of the mask element
      */
-    mask = 'p-image-mask',
+    mask = 'h-image-mask',
     /**
      * Class name of the toolbar element
      */
-    toolbar = 'p-image-toolbar',
+    toolbar = 'h-image-toolbar',
     /**
      * Class name of the rotate right button element
      */
-    rotateRightButton = 'p-image-rotate-right-button',
+    rotateRightButton = 'h-image-rotate-right-button',
     /**
      * Class name of the rotate left button element
      */
-    rotateLeftButton = 'p-image-rotate-left-button',
+    rotateLeftButton = 'h-image-rotate-left-button',
     /**
      * Class name of the zoom out button element
      */
-    zoomOutButton = 'p-image-zoom-out-button',
+    zoomOutButton = 'h-image-zoom-out-button',
     /**
      * Class name of the zoom in button element
      */
-    zoomInButton = 'p-image-zoom-in-button',
+    zoomInButton = 'h-image-zoom-in-button',
     /**
      * Class name of the close button element
      */
-    closeButton = 'p-image-close-button',
+    closeButton = 'h-image-close-button',
     /**
      * Class name of the original element
      */
-    original = 'p-image-original'
+    original = 'h-image-original'
 }
 
 export interface ImageStyle extends BaseStyle {}

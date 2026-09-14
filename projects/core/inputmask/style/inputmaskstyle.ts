@@ -3,11 +3,11 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
     /* For Helix */
-    p-inputmask {
+    h-inputmask {
         position: relative;
     }
 
-    .p-inputmask-clear-icon {
+    .h-inputmask-clear-icon {
         position: absolute;
         top: 50%;
         margin-top: -0.5rem;
@@ -16,39 +16,39 @@ const style = /*css*/ `
         color: dt('form.field.icon.color');
     }
 
-    p-inputMask:has(.p-inputtext-fluid),
-    p-input-mask:has(.p-inputtext-fluid),
-    p-inputmask:has(.p-inputtext-fluid) {
+    h-inputMask:has(.h-inputtext-fluid),
+    h-input-mask:has(.h-inputtext-fluid),
+    h-inputmask:has(.h-inputtext-fluid) {
         width: 100%;
     }
 
-    p-inputMask.ng-invalid.ng-dirty > .p-inputtext,
-    p-input-mask.ng-invalid.ng-dirty > .p-inputtext,
-    p-inputmask.ng-invalid.ng-dirty > .p-inputtext {
+    h-inputMask.ng-invalid.ng-dirty > .h-inputtext,
+    h-input-mask.ng-invalid.ng-dirty > .h-inputtext,
+    h-inputmask.ng-invalid.ng-dirty > .h-inputtext {
         border-color: dt('inputtext.invalid.border.color');
     }
 
-    p-inputMask.ng-invalid.ng-dirty > .p-inputtext:enabled:focus,
-    p-input-mask.ng-invalid.ng-dirty > .p-inputtext:enabled:focus,
-    p-inputmask.ng-invalid.ng-dirty > .p-inputtext:enabled:focus {
+    h-inputMask.ng-invalid.ng-dirty > .h-inputtext:enabled:focus,
+    h-input-mask.ng-invalid.ng-dirty > .h-inputtext:enabled:focus,
+    h-inputmask.ng-invalid.ng-dirty > .h-inputtext:enabled:focus {
         border-color: dt('inputtext.focus.border.color');
     }
 
-    p-inputMask.ng-invalid.ng-dirty > .p-inputtext::placeholder,
-    p-input-mask.ng-invalid.ng-dirty > .p-inputtext::placeholder,
-    p-inputmask.ng-invalid.ng-dirty > .p-inputtext::placeholder {
+    h-inputMask.ng-invalid.ng-dirty > .h-inputtext::placeholder,
+    h-input-mask.ng-invalid.ng-dirty > .h-inputtext::placeholder,
+    h-inputmask.ng-invalid.ng-dirty > .h-inputtext::placeholder {
         color: dt('inputtext.invalid.placeholder.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-inputmask p-component p-inputwrapper',
+        'h-inputmask h-component h-inputwrapper',
         {
-            'p-variant-filled': instance.$variant() === 'filled'
+            'h-variant-filled': instance.$variant() === 'filled'
         }
     ],
-    clearIcon: 'p-inputmask-clear-icon'
+    clearIcon: 'h-inputmask-clear-icon'
 };
 
 @Injectable()
@@ -74,11 +74,11 @@ export enum InputMaskClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-inputmask',
+    root = 'h-inputmask',
     /**
      * Class name of the clear icon element
      */
-    clearIcon = 'p-inputmask-clear-icon'
+    clearIcon = 'h-inputmask-clear-icon'
 }
 
 export interface InputMaskStyle extends BaseStyle {}

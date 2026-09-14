@@ -5,7 +5,7 @@ import { ProgressBar } from './progressbar';
 
 @Component({
     standalone: false,
-    template: `<p-progressbar [value]="value" [showValue]="showValue" [unit]="unit" [mode]="mode" [color]="color" [valueStyleClass]="valueStyleClass" [styleClass]="styleClass"> </p-progressbar>`
+    template: `<h-progressbar [value]="value" [showValue]="showValue" [unit]="unit" [mode]="mode" [color]="color" [valueStyleClass]="valueStyleClass" [styleClass]="styleClass"> </h-progressbar>`
 })
 class TestBasicProgressBarComponent {
     value: number | undefined = 50;
@@ -20,11 +20,11 @@ class TestBasicProgressBarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-progressbar [value]="value">
+        <h-progressbar [value]="value">
             <ng-template pTemplate="content" let-value>
                 <div class="custom-template-content">Progress: {{ value }}%</div>
             </ng-template>
-        </p-progressbar>
+        </h-progressbar>
     `
 })
 class TestPTemplateProgressBarComponent {
@@ -34,11 +34,11 @@ class TestPTemplateProgressBarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-progressbar [value]="value">
+        <h-progressbar [value]="value">
             <ng-template #content let-value>
                 <div class="custom-content-template">Custom: {{ value }}%</div>
             </ng-template>
-        </p-progressbar>
+        </h-progressbar>
     `
 })
 class TestContentTemplateProgressBarComponent {
@@ -47,7 +47,7 @@ class TestContentTemplateProgressBarComponent {
 
 @Component({
     standalone: false,
-    template: `<p-progressbar [value]="value" mode="indeterminate"></p-progressbar>`
+    template: `<h-progressbar [value]="value" mode="indeterminate"></h-progressbar>`
 })
 class TestIndeterminateProgressBarComponent {
     value = 0;
@@ -55,7 +55,7 @@ class TestIndeterminateProgressBarComponent {
 
 @Component({
     standalone: false,
-    template: `<p-progressbar [value]="value" [style]="style" [styleClass]="styleClass"></p-progressbar>`
+    template: `<h-progressbar [value]="value" [style]="style" [styleClass]="styleClass"></h-progressbar>`
 })
 class TestStyleProgressBarComponent {
     value = 30;
@@ -628,7 +628,7 @@ describe('ProgressBar', () => {
         @Component({
             standalone: true,
             imports: [ProgressBar],
-            template: `<p-progressbar [value]="value()" [mode]="mode()" [showValue]="showValue()" [unit]="unit()" [color]="color()" [pt]="pt()"></p-progressbar>`
+            template: `<h-progressbar [value]="value()" [mode]="mode()" [showValue]="showValue()" [unit]="unit()" [color]="color()" [pt]="pt()"></h-progressbar>`
         })
         class TestPTProgressBarComponent {
             value = input<number | undefined>(50);
@@ -667,7 +667,7 @@ describe('ProgressBar', () => {
                 fixture.componentRef.setInput('pt', { value: 'VALUE_CLASS' });
                 fixture.detectChanges();
 
-                const valueElement = fixture.debugElement.query(By.css('.p-progressbar-value'));
+                const valueElement = fixture.debugElement.query(By.css('.h-progressbar-value'));
                 expect(valueElement.nativeElement.classList.contains('VALUE_CLASS')).toBe(true);
             });
 
@@ -675,7 +675,7 @@ describe('ProgressBar', () => {
                 fixture.componentRef.setInput('pt', { label: 'LABEL_CLASS' });
                 fixture.detectChanges();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-progressbar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-progressbar-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_CLASS')).toBe(true);
             });
         });
@@ -695,7 +695,7 @@ describe('ProgressBar', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -703,7 +703,7 @@ describe('ProgressBar', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.backgroundColor).toBe('red');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -712,16 +712,16 @@ describe('ProgressBar', () => {
                     value: {
                         class: 'VALUE_OBJECT_CLASS',
                         style: { border: '1px solid blue' },
-                        'data-p-value': 'test',
+                        'data-h-value': 'test',
                         'aria-hidden': 'true'
                     }
                 });
                 fixture.detectChanges();
 
-                const valueElement = fixture.debugElement.query(By.css('.p-progressbar-value'));
+                const valueElement = fixture.debugElement.query(By.css('.h-progressbar-value'));
                 expect(valueElement.nativeElement.classList.contains('VALUE_OBJECT_CLASS')).toBe(true);
                 expect(valueElement.nativeElement.style.border).toBe('1px solid blue');
-                expect(valueElement.nativeElement.getAttribute('data-p-value')).toBe('test');
+                expect(valueElement.nativeElement.getAttribute('data-h-value')).toBe('test');
                 expect(valueElement.nativeElement.getAttribute('aria-hidden')).toBe('true');
             });
 
@@ -730,16 +730,16 @@ describe('ProgressBar', () => {
                     label: {
                         class: 'LABEL_OBJECT_CLASS',
                         style: { color: 'green' },
-                        'data-p-label': 'progress',
+                        'data-h-label': 'progress',
                         'aria-live': 'polite'
                     }
                 });
                 fixture.detectChanges();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-progressbar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-progressbar-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_OBJECT_CLASS')).toBe(true);
                 expect(labelElement.nativeElement.style.color).toBe('green');
-                expect(labelElement.nativeElement.getAttribute('data-p-label')).toBe('progress');
+                expect(labelElement.nativeElement.getAttribute('data-h-label')).toBe('progress');
                 expect(labelElement.nativeElement.getAttribute('aria-live')).toBe('polite');
             });
         });
@@ -765,7 +765,7 @@ describe('ProgressBar', () => {
 
                 expect(element.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
 
-                const valueElement = fixture.debugElement.query(By.css('.p-progressbar-value'));
+                const valueElement = fixture.debugElement.query(By.css('.h-progressbar-value'));
                 expect(valueElement.nativeElement.classList.contains('VALUE_MIXED_CLASS')).toBe(true);
             });
         });
@@ -809,7 +809,7 @@ describe('ProgressBar', () => {
                 });
                 fixture.detectChanges();
 
-                const valueElement = fixture.debugElement.query(By.css('.p-progressbar-value'));
+                const valueElement = fixture.debugElement.query(By.css('.h-progressbar-value'));
                 expect(valueElement.nativeElement.getAttribute('data-mode')).toBe('indeterminate');
             });
 
@@ -828,7 +828,7 @@ describe('ProgressBar', () => {
                 });
                 fixture.detectChanges();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-progressbar-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-progressbar-label'));
                 expect(labelElement.nativeElement.style.display).toBe('flex');
             });
         });
@@ -871,7 +871,7 @@ describe('ProgressBar', () => {
                 });
                 fixture.detectChanges();
 
-                const valueElement = fixture.debugElement.query(By.css('.p-progressbar-value'));
+                const valueElement = fixture.debugElement.query(By.css('.h-progressbar-value'));
                 valueElement.nativeElement.click();
 
                 expect(clicked).toBe(true);

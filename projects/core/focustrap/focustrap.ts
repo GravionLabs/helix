@@ -52,7 +52,7 @@ export class FocusTrap extends BaseComponent {
         }
     }
     getComputedSelector(selector) {
-        return `:not(.p-hidden-focusable):not([data-p-hidden-focusable="true"])${selector ?? ''}`;
+        return `:not(.h-hidden-focusable):not([data-h-hidden-focusable="true"])${selector ?? ''}`;
     }
 
     createHiddenFocusableElements() {
@@ -60,12 +60,12 @@ export class FocusTrap extends BaseComponent {
 
         const createFocusableElement = (onFocus) => {
             return createElement('span', {
-                class: 'p-hidden-accessible p-hidden-focusable',
+                class: 'h-hidden-accessible h-hidden-focusable',
                 tabindex,
                 role: 'presentation',
                 'aria-hidden': true,
-                'data-p-hidden-accessible': true,
-                'data-p-hidden-focusable': true,
+                'data-h-hidden-accessible': true,
+                'data-h-hidden-focusable': true,
                 onFocus: onFocus?.bind(this)
             }) as HTMLElement;
         };
@@ -83,7 +83,7 @@ export class FocusTrap extends BaseComponent {
     onFirstHiddenElementFocus(event) {
         const { currentTarget, relatedTarget } = event;
         const focusableElement =
-            relatedTarget === this.lastHiddenFocusableElement || !this.el.nativeElement?.contains(relatedTarget) ? getFirstFocusableElement(currentTarget.parentElement, ':not(.p-hidden-focusable)') : this.lastHiddenFocusableElement;
+            relatedTarget === this.lastHiddenFocusableElement || !this.el.nativeElement?.contains(relatedTarget) ? getFirstFocusableElement(currentTarget.parentElement, ':not(.h-hidden-focusable)') : this.lastHiddenFocusableElement;
 
         focus(focusableElement as any);
     }
@@ -91,7 +91,7 @@ export class FocusTrap extends BaseComponent {
     onLastHiddenElementFocus(event) {
         const { currentTarget, relatedTarget } = event;
         const focusableElement =
-            relatedTarget === this.firstHiddenFocusableElement || !this.el.nativeElement?.contains(relatedTarget) ? getLastFocusableElement(currentTarget.parentElement, ':not(.p-hidden-focusable)') : this.firstHiddenFocusableElement;
+            relatedTarget === this.firstHiddenFocusableElement || !this.el.nativeElement?.contains(relatedTarget) ? getLastFocusableElement(currentTarget.parentElement, ':not(.h-hidden-focusable)') : this.firstHiddenFocusableElement;
 
         focus(focusableElement as any);
     }

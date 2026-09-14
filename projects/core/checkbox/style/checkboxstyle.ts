@@ -6,28 +6,28 @@ const style = /*css*/ `
     ${checkbox_style}
 
     /* For Helix */
-    p-checkBox.ng-invalid.ng-dirty .p-checkbox-box,
-    p-check-box.ng-invalid.ng-dirty .p-checkbox-box,
-    p-checkbox.ng-invalid.ng-dirty .p-checkbox-box {
+    h-checkBox.ng-invalid.ng-dirty .h-checkbox-box,
+    h-check-box.ng-invalid.ng-dirty .h-checkbox-box,
+    h-checkbox.ng-invalid.ng-dirty .h-checkbox-box {
         border-color: dt('checkbox.invalid.border.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-checkbox p-component',
+        'h-checkbox h-component',
         {
-            'p-checkbox-checked p-highlight': instance.checked,
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-checkbox-sm p-inputfield-sm': instance.size() === 'small',
-            'p-checkbox-lg p-inputfield-lg': instance.size() === 'large'
+            'h-checkbox-checked h-highlight': instance.checked,
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-checkbox-sm h-inputfield-sm': instance.size() === 'small',
+            'h-checkbox-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
-    box: 'p-checkbox-box',
-    input: 'p-checkbox-input',
-    icon: 'p-checkbox-icon'
+    box: 'h-checkbox-box',
+    input: 'h-checkbox-input',
+    icon: 'h-checkbox-icon'
 };
 
 @Injectable()
@@ -52,19 +52,19 @@ export enum CheckboxClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-checkbox',
+    root = 'h-checkbox',
     /**
      * Class name of the box element
      */
-    box = 'p-checkbox-box',
+    box = 'h-checkbox-box',
     /**
      * Class name of the input element
      */
-    input = 'p-checkbox-input',
+    input = 'h-checkbox-input',
     /**
      * Class name of the icon element
      */
-    icon = 'p-checkbox-icon'
+    icon = 'h-checkbox-icon'
 }
 
 export interface CheckboxStyle extends BaseStyle {}

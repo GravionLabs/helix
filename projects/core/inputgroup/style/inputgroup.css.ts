@@ -1,25 +1,25 @@
 export const style = /*css*/ `
-    .p-inputgroup,
-    .p-inputgroup .p-iconfield,
-    .p-inputgroup .p-floatlabel,
-    .p-inputgroup .p-iftalabel {
+    .h-inputgroup,
+    .h-inputgroup .h-iconfield,
+    .h-inputgroup .h-floatlabel,
+    .h-inputgroup .h-iftalabel {
         display: flex;
         align-items: stretch;
         width: 100%;
     }
 
-    .p-inputgroup .p-floatlabel .p-inputwrapper,
-    .p-inputgroup .p-iftalabel .p-inputwrapper {
+    .h-inputgroup .h-floatlabel .h-inputwrapper,
+    .h-inputgroup .h-iftalabel .h-inputwrapper {
         display: inline-flex;
     }
 
-    .p-inputgroup .p-inputtext,
-    .p-inputgroup .p-inputwrapper {
+    .h-inputgroup .h-inputtext,
+    .h-inputgroup .h-inputwrapper {
         flex: 1 1 auto;
         width: 1%;
     }
 
-    .p-inputgroupaddon {
+    .h-inputgroupaddon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -31,75 +31,75 @@ export const style = /*css*/ `
         min-width: dt('inputgroup.addon.min.width');
     }
 
-    .p-inputgroupaddon:first-child,
-    .p-inputgroupaddon + .p-inputgroupaddon {
+    .h-inputgroupaddon:first-child,
+    .h-inputgroupaddon + .h-inputgroupaddon {
         border-inline-start: 1px solid dt('inputgroup.addon.border.color');
     }
 
-    .p-inputgroupaddon:last-child {
+    .h-inputgroupaddon:last-child {
         border-inline-end: 1px solid dt('inputgroup.addon.border.color');
     }
 
-    .p-inputgroupaddon:has(.p-button) {
+    .h-inputgroupaddon:has(.h-button) {
         padding: 0;
         overflow: hidden;
     }
 
-    .p-inputgroupaddon .p-button {
+    .h-inputgroupaddon .h-button {
         border-radius: 0;
     }
 
-    .p-inputgroup > .p-component,
-    .p-inputgroup > .p-inputwrapper > .p-component,
-    .p-inputgroup > .p-iconfield > .p-component,
-    .p-inputgroup > .p-floatlabel > .p-component,
-    .p-inputgroup > .p-floatlabel > .p-inputwrapper > .p-component,
-    .p-inputgroup > .p-iftalabel > .p-component,
-    .p-inputgroup > .p-iftalabel > .p-inputwrapper > .p-component {
+    .h-inputgroup > .h-component,
+    .h-inputgroup > .h-inputwrapper > .h-component,
+    .h-inputgroup > .h-iconfield > .h-component,
+    .h-inputgroup > .h-floatlabel > .h-component,
+    .h-inputgroup > .h-floatlabel > .h-inputwrapper > .h-component,
+    .h-inputgroup > .h-iftalabel > .h-component,
+    .h-inputgroup > .h-iftalabel > .h-inputwrapper > .h-component {
         border-radius: 0;
         margin: 0;
     }
 
-    .p-inputgroupaddon:first-child,
-    .p-inputgroup > .p-component:first-child,
-    .p-inputgroup > .p-inputwrapper:first-child > .p-component,
-    .p-inputgroup > .p-iconfield:first-child > .p-component,
-    .p-inputgroup > .p-floatlabel:first-child > .p-component,
-    .p-inputgroup > .p-floatlabel:first-child > .p-inputwrapper > .p-component,
-    .p-inputgroup > .p-iftalabel:first-child > .p-component,
-    .p-inputgroup > .p-iftalabel:first-child > .p-inputwrapper > .p-component {
+    .h-inputgroupaddon:first-child,
+    .h-inputgroup > .h-component:first-child,
+    .h-inputgroup > .h-inputwrapper:first-child > .h-component,
+    .h-inputgroup > .h-iconfield:first-child > .h-component,
+    .h-inputgroup > .h-floatlabel:first-child > .h-component,
+    .h-inputgroup > .h-floatlabel:first-child > .h-inputwrapper > .h-component,
+    .h-inputgroup > .h-iftalabel:first-child > .h-component,
+    .h-inputgroup > .h-iftalabel:first-child > .h-inputwrapper > .h-component {
         border-start-start-radius: dt('inputgroup.addon.border.radius');
         border-end-start-radius: dt('inputgroup.addon.border.radius');
     }
 
-    .p-inputgroupaddon:last-child,
-    .p-inputgroup > .p-component:last-child,
-    .p-inputgroup > .p-inputwrapper:last-child > .p-component,
-    .p-inputgroup > .p-iconfield:last-child > .p-component,
-    .p-inputgroup > .p-floatlabel:last-child > .p-component,
-    .p-inputgroup > .p-floatlabel:last-child > .p-inputwrapper > .p-component,
-    .p-inputgroup > .p-iftalabel:last-child > .p-component,
-    .p-inputgroup > .p-iftalabel:last-child > .p-inputwrapper > .p-component {
+    .h-inputgroupaddon:last-child,
+    .h-inputgroup > .h-component:last-child,
+    .h-inputgroup > .h-inputwrapper:last-child > .h-component,
+    .h-inputgroup > .h-iconfield:last-child > .h-component,
+    .h-inputgroup > .h-floatlabel:last-child > .h-component,
+    .h-inputgroup > .h-floatlabel:last-child > .h-inputwrapper > .h-component,
+    .h-inputgroup > .h-iftalabel:last-child > .h-component,
+    .h-inputgroup > .h-iftalabel:last-child > .h-inputwrapper > .h-component {
         border-start-end-radius: dt('inputgroup.addon.border.radius');
         border-end-end-radius: dt('inputgroup.addon.border.radius');
     }
 
-    .p-inputgroup .p-component:focus,
-    .p-inputgroup .p-component.p-focus,
-    .p-inputgroup .p-inputwrapper-focus,
-    .p-inputgroup .p-component:focus ~ label,
-    .p-inputgroup .p-component.p-focus ~ label,
-    .p-inputgroup .p-inputwrapper-focus ~ label,
-    .p-inputgroup .p-floatlabel .p-inputwrapper ~ label,
-    .p-inputgroup .p-iftalabel .p-inputwrapper ~ label {
+    .h-inputgroup .h-component:focus,
+    .h-inputgroup .h-component.h-focus,
+    .h-inputgroup .h-inputwrapper-focus,
+    .h-inputgroup .h-component:focus ~ label,
+    .h-inputgroup .h-component.h-focus ~ label,
+    .h-inputgroup .h-inputwrapper-focus ~ label,
+    .h-inputgroup .h-floatlabel .h-inputwrapper ~ label,
+    .h-inputgroup .h-iftalabel .h-inputwrapper ~ label {
         z-index: 1;
     }
 
-    .p-inputgroup > .p-button:not(.p-button-icon-only) {
+    .h-inputgroup > .h-button:not(.h-button-icon-only) {
         width: auto;
     }
 
-    .p-inputgroup .p-iconfield + .p-iconfield .p-inputtext {
+    .h-inputgroup .h-iconfield + .h-iconfield .h-inputtext {
         border-inline-start: 0;
     }
 `;

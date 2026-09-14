@@ -19,7 +19,7 @@
       (keydown)="menuButtonKeydown($event)"
       >
       @if (!buttonIconTemplate() && !_buttonIconTemplate) {
-        <svg data-p-icon="bars" [hBind]="ptm('buttonIcon')" />
+        <svg data-h-icon="bars" [hBind]="ptm('buttonIcon')" />
       }
       <ng-template *ngTemplateOutlet="buttonIconTemplate() || _buttonIconTemplate"></ng-template>
     </a>

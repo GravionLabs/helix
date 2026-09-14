@@ -13,7 +13,7 @@ import { Slider, SliderModule } from './slider';
 @Component({
     standalone: false,
     template: `
-        <p-slider
+        <h-slider
             [(ngModel)]="value"
             [min]="min"
             [max]="max"
@@ -29,7 +29,7 @@ import { Slider, SliderModule } from './slider';
             (onChange)="onSliderChange($event)"
             (onSlideEnd)="onSlideEnd($event)"
         >
-        </p-slider>
+        </h-slider>
     `
 })
 class TestBasicSliderComponent {
@@ -54,7 +54,7 @@ class TestBasicSliderComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-slider formControlName="sliderValue"></p-slider>
+            <h-slider formControlName="sliderValue"></h-slider>
         </form>
     `
 })
@@ -68,7 +68,7 @@ class TestFormSliderComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-slider [range]="true" formControlName="rangeValue"> </p-slider>
+            <h-slider [range]="true" formControlName="rangeValue"> </h-slider>
         </form>
     `
 })
@@ -314,7 +314,7 @@ describe('Slider', () => {
         });
 
         it('should handle keyboard navigation', () => {
-            const sliderElement = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderElement = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderElement).toBeTruthy();
 
             const handleElement = testFixture.debugElement.query(By.css('[role="slider"]'));
@@ -340,7 +340,7 @@ describe('Slider', () => {
         });
 
         it('should handle focus events', () => {
-            const sliderElement = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderElement = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderElement).toBeTruthy();
         });
     });
@@ -530,7 +530,7 @@ describe('Slider', () => {
         });
 
         it('should create slider element', () => {
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
         });
 
@@ -540,7 +540,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             if (sliderEl) {
                 const handleEl = testFixture.debugElement.query(By.css('[role="slider"]'));
                 if (handleEl) {
@@ -559,7 +559,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.animate).toBe(true);
         });
@@ -570,7 +570,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.orientation).toBe('vertical');
         });
@@ -581,7 +581,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.range).toBe(true);
         });
@@ -592,7 +592,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.orientation).toBe('horizontal');
         });
@@ -603,7 +603,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.orientation).toBe('vertical');
 
@@ -614,7 +614,7 @@ describe('Slider', () => {
         it('should handle mouse drag events', async () => {
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
 
             // Test that the slider element can handle mouse interactions
@@ -629,7 +629,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.step).toBe(2);
             expect(testComponent.value).toBe(50);
@@ -643,7 +643,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.step).toBe(0.01);
             expect(testComponent.max).toBe(2.5);
@@ -671,7 +671,7 @@ describe('Slider', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const sliderEl = testFixture.debugElement.query(By.css('p-slider'));
+            const sliderEl = testFixture.debugElement.query(By.css('h-slider'));
             expect(sliderEl).toBeTruthy();
             expect(testComponent.range).toBe(true);
         });
@@ -1142,7 +1142,7 @@ describe('Slider', () => {
             @Component({
                 standalone: true,
                 imports: [Slider, FormsModule],
-                template: `<p-slider [(ngModel)]="value" [pt]="pt"></p-slider>`
+                template: `<h-slider [(ngModel)]="value" [pt]="pt"></h-slider>`
             })
             class TestPTCase1Component {
                 value: number = 50;
@@ -1164,9 +1164,9 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
-                const range = fixture.debugElement.query(By.css('.p-slider-range'));
-                const handle = fixture.debugElement.query(By.css('.p-slider-handle'));
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
+                const range = fixture.debugElement.query(By.css('.h-slider-range'));
+                const handle = fixture.debugElement.query(By.css('.h-slider-handle'));
 
                 expect(sliderRoot.classList.contains('ROOT_CLASS')).toBe(true);
                 if (range) expect(range.nativeElement.classList.contains('RANGE_CLASS')).toBe(true);
@@ -1178,7 +1178,7 @@ describe('Slider', () => {
             @Component({
                 standalone: true,
                 imports: [Slider, FormsModule],
-                template: `<p-slider [(ngModel)]="value" [pt]="pt"></p-slider>`
+                template: `<h-slider [(ngModel)]="value" [pt]="pt"></h-slider>`
             })
             class TestPTCase2Component {
                 value: number = 60;
@@ -1210,9 +1210,9 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
-                const range = fixture.debugElement.query(By.css('.p-slider-range'));
-                const handle = fixture.debugElement.query(By.css('.p-slider-handle'));
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
+                const range = fixture.debugElement.query(By.css('.h-slider-range'));
+                const handle = fixture.debugElement.query(By.css('.h-slider-handle'));
 
                 expect(sliderRoot.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(sliderRoot.style.backgroundColor).toBe('lightblue');
@@ -1234,7 +1234,7 @@ describe('Slider', () => {
             @Component({
                 standalone: true,
                 imports: [Slider, FormsModule],
-                template: `<p-slider [(ngModel)]="value" [range]="true" [pt]="pt"></p-slider>`
+                template: `<h-slider [(ngModel)]="value" [range]="true" [pt]="pt"></h-slider>`
             })
             class TestPTCase3Component {
                 value: number[] = [20, 80];
@@ -1261,9 +1261,9 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
-                const range = fixture.debugElement.query(By.css('.p-slider-range'));
-                const handles = fixture.debugElement.queryAll(By.css('.p-slider-handle'));
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
+                const range = fixture.debugElement.query(By.css('.h-slider-range'));
+                const handles = fixture.debugElement.queryAll(By.css('.h-slider-handle'));
 
                 expect(sliderRoot.classList.contains('ROOT_STRING_CLASS')).toBe(true);
 
@@ -1287,7 +1287,7 @@ describe('Slider', () => {
             @Component({
                 standalone: true,
                 imports: [Slider, FormsModule],
-                template: `<p-slider [(ngModel)]="value" [min]="min" [max]="max" [orientation]="orientation" [pt]="pt"></p-slider>`
+                template: `<h-slider [(ngModel)]="value" [min]="min" [max]="max" [orientation]="orientation" [pt]="pt"></h-slider>`
             })
             class TestPTCase4Component {
                 value: number = 50;
@@ -1321,8 +1321,8 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
-                const range = fixture.debugElement.query(By.css('.p-slider-range'));
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
+                const range = fixture.debugElement.query(By.css('.h-slider-range'));
 
                 expect(sliderRoot.classList.contains('HORIZONTAL_CLASS') || sliderRoot.classList.contains('VERTICAL_CLASS')).toBe(true);
 
@@ -1347,7 +1347,7 @@ describe('Slider', () => {
             @Component({
                 standalone: true,
                 imports: [Slider, FormsModule],
-                template: `<p-slider [(ngModel)]="value" [pt]="pt"></p-slider>`
+                template: `<h-slider [(ngModel)]="value" [pt]="pt"></h-slider>`
             })
             class TestPTCase5Component {
                 value: number = 50;
@@ -1375,7 +1375,7 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const handle = fixture.debugElement.query(By.css('.p-slider-handle'));
+                const handle = fixture.debugElement.query(By.css('.h-slider-handle'));
 
                 if (handle) {
                     handle.nativeElement.click();
@@ -1390,7 +1390,7 @@ describe('Slider', () => {
                 @Component({
                     standalone: true,
                     imports: [Slider, FormsModule],
-                    template: `<p-slider [(ngModel)]="value" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-slider>`
+                    template: `<h-slider [(ngModel)]="value" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-slider>`
                 })
                 class TestInlineComponent {
                     value: number = 50;
@@ -1406,7 +1406,7 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
                 expect(sliderRoot.classList.contains('INLINE_ROOT_CLASS')).toBe(true);
             });
 
@@ -1414,7 +1414,7 @@ describe('Slider', () => {
                 @Component({
                     standalone: true,
                     imports: [Slider, FormsModule],
-                    template: `<p-slider [(ngModel)]="value" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></p-slider>`
+                    template: `<h-slider [(ngModel)]="value" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></h-slider>`
                 })
                 class TestInlineObjectComponent {
                     value: number = 50;
@@ -1430,7 +1430,7 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
                 expect(sliderRoot.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
                 expect(sliderRoot.style.border).toBe('2px solid red');
             });
@@ -1441,7 +1441,7 @@ describe('Slider', () => {
                 @Component({
                     standalone: true,
                     imports: [Slider, FormsModule],
-                    template: `<p-slider [(ngModel)]="value1"></p-slider><p-slider [(ngModel)]="value2"></p-slider>`
+                    template: `<h-slider [(ngModel)]="value1"></h-slider><h-slider [(ngModel)]="value2"></h-slider>`
                 })
                 class TestGlobalPTComponent {
                     value1: number = 30;
@@ -1472,13 +1472,13 @@ describe('Slider', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const sliders = fixture.debugElement.queryAll(By.css('p-slider'));
+                const sliders = fixture.debugElement.queryAll(By.css('h-slider'));
                 expect(sliders.length).toBe(2);
 
                 sliders.forEach((slider) => {
                     const sliderRoot = slider.nativeElement;
-                    const range = slider.query(By.css('.p-slider-range'));
-                    const handle = slider.query(By.css('.p-slider-handle'));
+                    const range = slider.query(By.css('.h-slider-range'));
+                    const handle = slider.query(By.css('.h-slider-handle'));
 
                     expect(sliderRoot.getAttribute('data-test')).toBe('global-slider');
 
@@ -1501,7 +1501,7 @@ describe('Slider', () => {
                 @Component({
                     standalone: true,
                     imports: [Slider, FormsModule],
-                    template: `<p-slider [(ngModel)]="value" [pt]="pt"></p-slider>`
+                    template: `<h-slider [(ngModel)]="value" [pt]="pt"></h-slider>`
                 })
                 class TestHooksComponent {
                     value: number = 50;
@@ -1530,7 +1530,7 @@ describe('Slider', () => {
 
                 expect(hookCalls).toContain('onAfterViewInit');
 
-                const sliderRoot = fixture.debugElement.query(By.css('p-slider')).nativeElement;
+                const sliderRoot = fixture.debugElement.query(By.css('h-slider')).nativeElement;
                 expect(sliderRoot.classList.contains('MY-SLIDER')).toBe(true);
 
                 fixture.destroy();

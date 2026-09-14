@@ -1,17 +1,17 @@
 export const style = /*css*/ `
-    .p-image-mask {
+    .h-image-mask {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .p-image-preview {
+    .h-image-preview {
         position: relative;
         display: inline-flex;
         line-height: 0;
     }
 
-    .p-image-preview-mask {
+    .h-image-preview-mask {
         position: absolute;
         inset-inline-start: 0;
         inset-block-start: 0;
@@ -29,21 +29,21 @@ export const style = /*css*/ `
         transition: background dt('image.transition.duration');
     }
 
-    .p-image-preview:hover > .p-image-preview-mask,
-    .p-image-preview-mask:focus-visible {
+    .h-image-preview:hover > .h-image-preview-mask,
+    .h-image-preview-mask:focus-visible {
         opacity: 1;
         cursor: pointer;
         background: dt('image.preview.mask.background');
         outline: 0 none;
     }
 
-    .p-image-preview-icon {
+    .h-image-preview-icon {
         font-size: dt('image.preview.icon.size');
         width: dt('image.preview.icon.size');
         height: dt('image.preview.icon.size');
     }
 
-    .p-image-toolbar {
+    .h-image-toolbar {
         position: absolute;
         inset-block-start: dt('image.toolbar.position.top');
         inset-inline-end: dt('image.toolbar.position.right');
@@ -61,7 +61,7 @@ export const style = /*css*/ `
         gap: dt('image.toolbar.gap');
     }
 
-    .p-image-action {
+    .h-image-action {
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -83,49 +83,49 @@ export const style = /*css*/ `
             box-shadow dt('image.transition.duration');
     }
 
-    .p-image-action:hover {
+    .h-image-action:hover {
         color: dt('image.action.hover.color');
         background: dt('image.action.hover.background');
     }
 
-    .p-image-action:focus-visible {
+    .h-image-action:focus-visible {
         box-shadow: dt('image.action.focus.ring.shadow');
         outline: dt('image.action.focus.ring.width') dt('image.action.focus.ring.style') dt('image.action.focus.ring.color');
         outline-offset: dt('image.action.focus.ring.offset');
     }
 
-    .p-image-action .p-icon {
+    .h-image-action .h-icon {
         font-size: dt('image.action.icon.size');
         width: dt('image.action.icon.size');
         height: dt('image.action.icon.size');
     }
 
-    .p-image-action.p-disabled {
+    .h-image-action.h-disabled {
         pointer-events: auto;
     }
 
-    .p-image-original {
+    .h-image-original {
         max-width: 100vw;
         max-height: 100vh;
         transition: transform 300ms;
     }
 
-    .p-image-original-enter-active {
-        animation: p-animate-image-original-enter 300ms cubic-bezier(.19,1,.22,1);
+    .h-image-original-enter-active {
+        animation: h-animate-image-original-enter 300ms cubic-bezier(.19,1,.22,1);
     }
 
-    .p-image-original-leave-active {
-        animation: p-animate-image-original-leave 300ms cubic-bezier(.19,1,.22,1);
+    .h-image-original-leave-active {
+        animation: h-animate-image-original-leave 300ms cubic-bezier(.19,1,.22,1);
     }
 
-    @keyframes p-animate-image-original-enter {
+    @keyframes h-animate-image-original-enter {
         from {
             opacity: 0;
             transform: scale(0.93);
         }
     }
 
-    @keyframes p-animate-image-original-leave {
+    @keyframes h-animate-image-original-leave {
         to {
             opacity: 0;
             transform: scale(0.93);

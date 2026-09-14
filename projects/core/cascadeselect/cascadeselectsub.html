@@ -26,7 +26,7 @@
       @if (isOptionGroup(processedOption)) {
         <span [class]="cx('groupIcon')" [hBind]="getPTOptions(processedOption, i, 'groupIcon')">
           @if (!groupicon()) {
-            <svg data-p-icon="angle-right" [hBind]="getPTOptions(processedOption, index, 'groupIcon')" />
+            <svg data-h-icon="angle-right" [hBind]="getPTOptions(processedOption, index, 'groupIcon')" />
           }
           <ng-template *ngTemplateOutlet="groupicon()"></ng-template>
         </span>

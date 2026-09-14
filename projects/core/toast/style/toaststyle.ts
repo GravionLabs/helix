@@ -18,28 +18,28 @@ const inlineStyles = {
 };
 
 const classes = {
-    root: ({ instance }) => ['p-toast p-component', `p-toast-${instance._position}`],
+    root: ({ instance }) => ['h-toast h-component', `h-toast-${instance._position}`],
 
     message: ({ instance }) => ({
-        'p-toast-message': true,
-        'p-toast-message-info': instance.message.severity === 'info' || instance.message.severity === undefined,
-        'p-toast-message-warn': instance.message.severity === 'warn',
-        'p-toast-message-error': instance.message.severity === 'error',
-        'p-toast-message-success': instance.message.severity === 'success',
-        'p-toast-message-secondary': instance.message.severity === 'secondary',
-        'p-toast-message-contrast': instance.message.severity === 'contrast'
+        'h-toast-message': true,
+        'h-toast-message-info': instance.message.severity === 'info' || instance.message.severity === undefined,
+        'h-toast-message-warn': instance.message.severity === 'warn',
+        'h-toast-message-error': instance.message.severity === 'error',
+        'h-toast-message-success': instance.message.severity === 'success',
+        'h-toast-message-secondary': instance.message.severity === 'secondary',
+        'h-toast-message-contrast': instance.message.severity === 'contrast'
     }),
-    messageContent: 'p-toast-message-content',
+    messageContent: 'h-toast-message-content',
     messageIcon: ({ instance }) => ({
-        'p-toast-message-icon': true,
+        'h-toast-message-icon': true,
         [`pi ${instance.message.icon}`]: !!instance.message.icon
     }),
-    messageText: 'p-toast-message-text',
-    summary: 'p-toast-summary',
-    detail: 'p-toast-detail',
-    closeButton: 'p-toast-close-button',
+    messageText: 'h-toast-message-text',
+    summary: 'h-toast-summary',
+    detail: 'h-toast-detail',
+    closeButton: 'h-toast-close-button',
     closeIcon: ({ instance }) => ({
-        'p-toast-close-icon': true,
+        'h-toast-close-icon': true,
         [`pi ${instance.message.closeIcon}`]: !!instance.message.closeIcon
     })
 };
@@ -68,39 +68,39 @@ export enum ToastClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-toast',
+    root = 'h-toast',
     /**
      * Class name of the message element
      */
-    message = 'p-toast-message',
+    message = 'h-toast-message',
     /**
      * Class name of the message content element
      */
-    messageContent = 'p-toast-message-content',
+    messageContent = 'h-toast-message-content',
     /**
      * Class name of the message icon element
      */
-    messageIcon = 'p-toast-message-icon',
+    messageIcon = 'h-toast-message-icon',
     /**
      * Class name of the message text element
      */
-    messageText = 'p-toast-message-text',
+    messageText = 'h-toast-message-text',
     /**
      * Class name of the summary element
      */
-    summary = 'p-toast-summary',
+    summary = 'h-toast-summary',
     /**
      * Class name of the detail element
      */
-    detail = 'p-toast-detail',
+    detail = 'h-toast-detail',
     /**
      * Class name of the close button element
      */
-    closeButton = 'p-toast-close-button',
+    closeButton = 'h-toast-close-button',
     /**
      * Class name of the close icon element
      */
-    closeIcon = 'p-toast-close-icon'
+    closeIcon = 'h-toast-close-icon'
 }
 
 export interface ToastStyle extends BaseStyle {}

@@ -1,5 +1,5 @@
-<fieldset [attr.id]="id" [ngStyle]="style()" [class]="cn(cx('root'), styleClass())" [hBind]="ptm('root')" [attr.data-p]="dataP">
-  <legend [class]="cx('legend')" [hBind]="ptm('legend')" [attr.data-p]="dataP">
+<fieldset [attr.id]="id" [ngStyle]="style()" [class]="cn(cx('root'), styleClass())" [hBind]="ptm('root')" [attr.data-h]="dataP">
+  <legend [class]="cx('legend')" [hBind]="ptm('legend')" [attr.data-h]="dataP">
     @if (toggleable()) {
       <button
         [attr.id]="id + '_header'"
@@ -15,7 +15,7 @@
         >
         @if (collapsed()) {
           @if (!expandIconTemplate() && !_expandIconTemplate) {
-            <svg data-p-icon="plus" [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')" />
+            <svg data-h-icon="plus" [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')" />
           }
           @if (expandIconTemplate() || _expandIconTemplate) {
             <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
@@ -25,7 +25,7 @@
         }
         @if (!collapsed()) {
           @if (!collapseIconTemplate() && !_collapseIconTemplate) {
-            <svg data-p-icon="minus" [class]="cx('toggleIcon')" [attr.aria-hidden]="true" [hBind]="ptm('toggleIcon')" />
+            <svg data-h-icon="minus" [class]="cx('toggleIcon')" [attr.aria-hidden]="true" [hBind]="ptm('toggleIcon')" />
           }
           @if (collapseIconTemplate() || _collapseIconTemplate) {
             <span [class]="cx('toggleIcon')" [hBind]="ptm('toggleIcon')">
@@ -37,19 +37,19 @@
       </button>
     } @else {
       <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend() }}</span>
-      <ng-content select="p-header"></ng-content>
+      <ng-content select="h-header"></ng-content>
       <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
     }
     <ng-template #legendContent>
       <span [class]="cx('legendLabel')" [hBind]="ptm('legendLabel')">{{ legend() }}</span>
-      <ng-content select="p-header"></ng-content>
+      <ng-content select="h-header"></ng-content>
       <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
     </ng-template>
   </legend>
   <div
     [hBind]="ptm('contentContainer')"
     [hMotion]="!toggleable() || (toggleable() && !collapsed())"
-    pMotionName="p-collapsible"
+    pMotionName="h-collapsible"
     [pMotionOptions]="computedMotionOptions()"
     [class]="cx('contentContainer')"
     [id]="id + '_content'"

@@ -1,10 +1,10 @@
 export const style = /*css*/ `
-    .p-inputnumber {
+    .h-inputnumber {
         display: inline-flex;
         position: relative;
     }
 
-    .p-inputnumber-button {
+    .h-inputnumber-button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -20,27 +20,27 @@ export const style = /*css*/ `
             outline-color dt('inputnumber.transition.duration');
     }
 
-    .p-inputnumber-button:disabled {
+    .h-inputnumber-button:disabled {
         cursor: auto;
     }
 
-    .p-inputnumber-button:not(:disabled):hover {
+    .h-inputnumber-button:not(:disabled):hover {
         background: dt('inputnumber.button.hover.background');
         color: dt('inputnumber.button.hover.color');
     }
 
-    .p-inputnumber-button:not(:disabled):active {
+    .h-inputnumber-button:not(:disabled):active {
         background: dt('inputnumber.button.active.background');
         color: dt('inputnumber.button.active.color');
     }
 
-    .p-inputnumber-stacked .p-inputnumber-button {
+    .h-inputnumber-stacked .h-inputnumber-button {
         position: relative;
         flex: 1 1 auto;
         border: 0 none;
     }
 
-    .p-inputnumber-stacked .p-inputnumber-button-group {
+    .h-inputnumber-stacked .h-inputnumber-button-group {
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -50,73 +50,73 @@ export const style = /*css*/ `
         z-index: 1;
     }
 
-    .p-inputnumber-stacked .p-inputnumber-increment-button {
+    .h-inputnumber-stacked .h-inputnumber-increment-button {
         padding: 0;
         border-start-end-radius: calc(dt('inputnumber.button.border.radius') - 1px);
     }
 
-    .p-inputnumber-stacked .p-inputnumber-decrement-button {
+    .h-inputnumber-stacked .h-inputnumber-decrement-button {
         padding: 0;
         border-end-end-radius: calc(dt('inputnumber.button.border.radius') - 1px);
     }
 
-    .p-inputnumber-stacked .p-inputnumber-input {
+    .h-inputnumber-stacked .h-inputnumber-input {
         padding-inline-end: calc(dt('inputnumber.button.width') + dt('form.field.padding.x'));
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-button {
+    .h-inputnumber-horizontal .h-inputnumber-button {
         border: 1px solid dt('inputnumber.button.border.color');
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-button:hover {
+    .h-inputnumber-horizontal .h-inputnumber-button:hover {
         border-color: dt('inputnumber.button.hover.border.color');
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-button:active {
+    .h-inputnumber-horizontal .h-inputnumber-button:active {
         border-color: dt('inputnumber.button.active.border.color');
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-increment-button {
+    .h-inputnumber-horizontal .h-inputnumber-increment-button {
         order: 3;
         border-start-end-radius: dt('inputnumber.button.border.radius');
         border-end-end-radius: dt('inputnumber.button.border.radius');
         border-inline-start: 0 none;
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-input {
+    .h-inputnumber-horizontal .h-inputnumber-input {
         order: 2;
         border-radius: 0;
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-decrement-button {
+    .h-inputnumber-horizontal .h-inputnumber-decrement-button {
         order: 1;
         border-start-start-radius: dt('inputnumber.button.border.radius');
         border-end-start-radius: dt('inputnumber.button.border.radius');
         border-inline-end: 0 none;
     }
 
-    .p-floatlabel:has(.p-inputnumber-horizontal) label {
+    .h-floatlabel:has(.h-inputnumber-horizontal) label {
         margin-inline-start: dt('inputnumber.button.width');
     }
 
-    .p-inputnumber-vertical {
+    .h-inputnumber-vertical {
         flex-direction: column;
     }
 
-    .p-inputnumber-vertical .p-inputnumber-button {
+    .h-inputnumber-vertical .h-inputnumber-button {
         border: 1px solid dt('inputnumber.button.border.color');
         padding: dt('inputnumber.button.vertical.padding');
     }
 
-    .p-inputnumber-vertical .p-inputnumber-button:hover {
+    .h-inputnumber-vertical .h-inputnumber-button:hover {
         border-color: dt('inputnumber.button.hover.border.color');
     }
 
-    .p-inputnumber-vertical .p-inputnumber-button:active {
+    .h-inputnumber-vertical .h-inputnumber-button:active {
         border-color: dt('inputnumber.button.active.border.color');
     }
 
-    .p-inputnumber-vertical .p-inputnumber-increment-button {
+    .h-inputnumber-vertical .h-inputnumber-increment-button {
         order: 1;
         border-start-start-radius: dt('inputnumber.button.border.radius');
         border-start-end-radius: dt('inputnumber.button.border.radius');
@@ -124,13 +124,13 @@ export const style = /*css*/ `
         border-block-end: 0 none;
     }
 
-    .p-inputnumber-vertical .p-inputnumber-input {
+    .h-inputnumber-vertical .h-inputnumber-input {
         order: 2;
         border-radius: 0;
         text-align: center;
     }
 
-    .p-inputnumber-vertical .p-inputnumber-decrement-button {
+    .h-inputnumber-vertical .h-inputnumber-decrement-button {
         order: 3;
         border-end-start-radius: dt('inputnumber.button.border.radius');
         border-end-end-radius: dt('inputnumber.button.border.radius');
@@ -138,35 +138,35 @@ export const style = /*css*/ `
         border-block-start: 0 none;
     }
 
-    .p-inputnumber-input {
+    .h-inputnumber-input {
         flex: 1 1 auto;
     }
 
-    .p-inputnumber-fluid {
+    .h-inputnumber-fluid {
         width: 100%;
     }
 
-    .p-inputnumber-fluid .p-inputnumber-input {
+    .h-inputnumber-fluid .h-inputnumber-input {
         width: 1%;
     }
 
-    .p-inputnumber-fluid.p-inputnumber-vertical .p-inputnumber-input {
+    .h-inputnumber-fluid.h-inputnumber-vertical .h-inputnumber-input {
         width: 100%;
     }
 
-    .p-inputnumber:has(.p-inputtext-sm) .p-inputnumber-button .p-icon {
+    .h-inputnumber:has(.h-inputtext-sm) .h-inputnumber-button .h-icon {
         font-size: dt('form.field.sm.font.size');
         width: dt('form.field.sm.font.size');
         height: dt('form.field.sm.font.size');
     }
 
-    .p-inputnumber:has(.p-inputtext-lg) .p-inputnumber-button .p-icon {
+    .h-inputnumber:has(.h-inputtext-lg) .h-inputnumber-button .h-icon {
         font-size: dt('form.field.lg.font.size');
         width: dt('form.field.lg.font.size');
         height: dt('form.field.lg.font.size');
     }
 
-    .p-inputnumber-clear-icon {
+    .h-inputnumber-clear-icon {
         position: absolute;
         top: 50%;
         margin-top: -0.5rem;
@@ -175,19 +175,19 @@ export const style = /*css*/ `
         color: dt('form.field.icon.color');
     }
 
-    .p-inputnumber:has(.p-inputnumber-clear-icon) .p-inputnumber-input {
+    .h-inputnumber:has(.h-inputnumber-clear-icon) .h-inputnumber-input {
         padding-inline-end: calc((dt('form.field.padding.x') * 2) + dt('icon.size'));
     }
 
-    .p-inputnumber-stacked .p-inputnumber-clear-icon {
+    .h-inputnumber-stacked .h-inputnumber-clear-icon {
         inset-inline-end: calc(dt('inputnumber.button.width') + dt('form.field.padding.x'));
     }
 
-    .p-inputnumber-stacked:has(.p-inputnumber-clear-icon) .p-inputnumber-input {
+    .h-inputnumber-stacked:has(.h-inputnumber-clear-icon) .h-inputnumber-input {
         padding-inline-end: calc(dt('inputnumber.button.width') + (dt('form.field.padding.x') * 2) + dt('icon.size'));
     }
 
-    .p-inputnumber-horizontal .p-inputnumber-clear-icon {
+    .h-inputnumber-horizontal .h-inputnumber-clear-icon {
         inset-inline-end: calc(dt('inputnumber.button.width') + dt('form.field.padding.x'));
     }
 `;

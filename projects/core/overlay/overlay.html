@@ -6,7 +6,7 @@
     <div #overlay [class]="cn(cx('root'), styleClass)" [style]="sx('root')" [hBind]="ptm('root')" (click)="onOverlayClick()">
       <h-motion
         [visible]="visible"
-        name="p-anchored-overlay"
+        name="h-anchored-overlay"
         [appear]="true"
         [options]="computedMotionOptions()"
         (onBeforeEnter)="onOverlayBeforeEnter($event)"

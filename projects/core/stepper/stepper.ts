@@ -141,7 +141,7 @@ export class StepperSeparator extends BaseComponent<StepperSeparatorPassThrough>
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': 'cx("root")',
-        '[attr.data-p-active]': 'isActive()'
+        '[attr.data-h-active]': 'isActive()'
     },
     providers: [StepItemStyle, { provide: STEPITEM_INSTANCE, useExisting: StepItem }, { provide: PARENT_INSTANCE, useExisting: StepItem }],
     hostDirectives: [Bind]
@@ -201,8 +201,8 @@ export class StepItem extends BaseComponent<StepItemPassThrough> {
         '[class]': 'cx("root")',
         '[attr.aria-current]': 'active() ? "step" : undefined',
         '[attr.role]': '"presentation"',
-        '[attr.data-p-active]': 'active()',
-        '[attr.data-p-disabled]': 'isStepDisabled()'
+        '[attr.data-h-active]': 'active()',
+        '[attr.data-h-disabled]': 'isStepDisabled()'
     },
     providers: [StepStyle, { provide: STEP_INSTANCE, useExisting: Step }, { provide: PARENT_INSTANCE, useExisting: Step }],
     hostDirectives: [Bind]
@@ -299,7 +299,7 @@ export class Step extends BaseComponent<StepPassThrough> {
         '[attr.role]': '"tabpanel"',
         '[attr.aria-controls]': 'ariaControls()',
         '[attr.id]': 'id()',
-        '[attr.data-p-active]': 'active()',
+        '[attr.data-h-active]': 'active()',
         '[attr.data-pc-name]': '"steppanel"'
     },
     providers: [StepPanelStyle, { provide: STEPPANEL_INSTANCE, useExisting: StepPanel }, { provide: PARENT_INSTANCE, useExisting: StepPanel }],

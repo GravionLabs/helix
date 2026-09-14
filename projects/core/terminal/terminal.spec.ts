@@ -9,7 +9,7 @@ import { TerminalService } from './terminalservice';
 
 @Component({
     standalone: false,
-    template: ` <p-terminal [welcomeMessage]="welcomeMessage" [prompt]="prompt" [styleClass]="styleClass" [style]="style" [response]="response"> </p-terminal> `
+    template: ` <h-terminal [welcomeMessage]="welcomeMessage" [prompt]="prompt" [styleClass]="styleClass" [style]="style" [response]="response"> </h-terminal> `
 })
 class TestBasicTerminalComponent {
     welcomeMessage: string | undefined = 'Welcome to HelixConfig Terminal';
@@ -21,13 +21,13 @@ class TestBasicTerminalComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-terminal welcomeMessage="System Ready" prompt="system> "> </p-terminal> `
+    template: ` <h-terminal welcomeMessage="System Ready" prompt="system> "> </h-terminal> `
 })
 class TestStaticPropsTerminalComponent {}
 
 @Component({
     standalone: false,
-    template: ` <p-terminal [style]="customStyle" styleClass="custom-terminal"> </p-terminal> `
+    template: ` <h-terminal [style]="customStyle" styleClass="custom-terminal"> </h-terminal> `
 })
 class TestStyledTerminalComponent {
     customStyle = {
@@ -39,19 +39,19 @@ class TestStyledTerminalComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-terminal></p-terminal> `
+    template: ` <h-terminal></h-terminal> `
 })
 class TestMinimalTerminalComponent {}
 
 @Component({
     standalone: false,
-    template: ` <p-terminal welcomeMessage="Interactive Terminal" prompt="cmd> "> </p-terminal> `
+    template: ` <h-terminal welcomeMessage="Interactive Terminal" prompt="cmd> "> </h-terminal> `
 })
 class TestInteractiveTerminalComponent {}
 
 @Component({
     standalone: false,
-    template: ` <p-terminal [welcomeMessage]="message" [prompt]="commandPrompt"> </p-terminal> `
+    template: ` <h-terminal [welcomeMessage]="message" [prompt]="commandPrompt"> </h-terminal> `
 })
 class TestDynamicTerminalComponent {
     message = 'Dynamic Welcome';
@@ -889,7 +889,7 @@ describe('Terminal', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase1Component {
                 pt = {
@@ -946,20 +946,20 @@ describe('Terminal', () => {
         describe('Case 2: Objects with class, style, data attributes and aria-label', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase2Component {
                 pt = {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     },
                     welcomeMessage: {
                         class: 'WELCOME_OBJECT_CLASS',
                         style: { color: 'blue' },
-                        'data-p-welcome': true
+                        'data-h-welcome': true
                     },
                     prompt: {
                         class: 'PROMPT_OBJECT_CLASS',
@@ -982,14 +982,14 @@ describe('Terminal', () => {
                 const hostElement = testFixture.debugElement.query(By.directive(Terminal)).nativeElement;
                 expect(hostElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(hostElement.style.backgroundColor).toBe('red');
-                expect(hostElement.getAttribute('data-p-test')).toBe('true');
+                expect(hostElement.getAttribute('data-h-test')).toBe('true');
                 expect(hostElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
 
                 const welcomeMessage = testFixture.debugElement.query(By.css('[data-pc-section="welcomeMessage"]'));
                 if (welcomeMessage) {
                     expect(welcomeMessage.nativeElement.classList.contains('WELCOME_OBJECT_CLASS')).toBe(true);
                     expect(welcomeMessage.nativeElement.style.color).toBe('blue');
-                    expect(welcomeMessage.nativeElement.getAttribute('data-p-welcome')).toBe('true');
+                    expect(welcomeMessage.nativeElement.getAttribute('data-h-welcome')).toBe('true');
                 }
 
                 const prompt = testFixture.debugElement.query(By.css('[data-pc-section="prompt"]'));
@@ -1003,7 +1003,7 @@ describe('Terminal', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase3Component {
                 pt = {
@@ -1052,7 +1052,7 @@ describe('Terminal', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" [welcomeMessage]="welcomeMsg" [prompt]="promptText"></p-terminal>`
+                template: `<h-terminal [pt]="pt" [welcomeMessage]="welcomeMsg" [prompt]="promptText"></h-terminal>`
             })
             class TestPTCase4Component {
                 welcomeMsg = 'Instance Welcome';
@@ -1107,7 +1107,7 @@ describe('Terminal', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase5Component {
                 clickedSection: string = '';
@@ -1154,13 +1154,13 @@ describe('Terminal', () => {
         describe('Case 6: Inline test', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="{ root: 'INLINE_ROOT_CLASS', welcomeMessage: 'INLINE_WELCOME_CLASS' }" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="{ root: 'INLINE_ROOT_CLASS', welcomeMessage: 'INLINE_WELCOME_CLASS' }" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase6InlineComponent {}
 
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, prompt: { class: 'INLINE_PROMPT_CLASS' } }" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, prompt: { class: 'INLINE_PROMPT_CLASS' } }" prompt="$ "></h-terminal>`
             })
             class TestPTCase6InlineObjectComponent {}
 
@@ -1209,8 +1209,8 @@ describe('Terminal', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-terminal welcomeMessage="Terminal 1" prompt="1$ "></p-terminal>
-                    <p-terminal welcomeMessage="Terminal 2" prompt="2$ "></p-terminal>
+                    <h-terminal welcomeMessage="Terminal 1" prompt="1$ "></h-terminal>
+                    <h-terminal welcomeMessage="Terminal 2" prompt="2$ "></h-terminal>
                 `
             })
             class TestPTCase7GlobalComponent {}
@@ -1257,7 +1257,7 @@ describe('Terminal', () => {
         describe('Case 8: Test hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></p-terminal>`
+                template: `<h-terminal [pt]="pt" welcomeMessage="Welcome" prompt="$ "></h-terminal>`
             })
             class TestPTCase8HooksComponent {
                 afterViewInitCalled = false;

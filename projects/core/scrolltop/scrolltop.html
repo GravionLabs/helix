@@ -2,7 +2,7 @@
   <h-button
     [hMotion]="visible()"
     [pMotionAppear]="true"
-    [pMotionName]="'p-scrolltop'"
+    [pMotionName]="'h-scrolltop'"
     [pMotionOptions]="computedMotionOptions()"
     (pMotionOnBeforeEnter)="onBeforeEnter($event)"
     (pMotionOnBeforeLeave)="onBeforeLeave()"
@@ -22,7 +22,7 @@
           <span [class]="cn(cx('icon'), _icon)"></span>
         }
         @if (!_icon) {
-          <svg data-p-icon()="chevron-up" [class]="cx('icon')" />
+          <svg data-h-icon()="chevron-up" [class]="cx('icon')" />
         }
       }
       @if (!icon()) {

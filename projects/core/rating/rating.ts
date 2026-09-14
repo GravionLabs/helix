@@ -35,7 +35,7 @@ export const RATING_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cx('root')",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

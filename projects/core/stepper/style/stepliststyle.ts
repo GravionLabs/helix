@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-steplist'
+    root: 'h-steplist'
 };
 
 @Injectable()
@@ -25,7 +25,7 @@ export enum StepListClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-stepitem'
+    root = 'h-stepitem'
 }
 
 export interface StepListStyle extends BaseStyle {}

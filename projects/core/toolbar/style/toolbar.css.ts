@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-toolbar {
+    .h-toolbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -12,9 +12,9 @@ export const style = /*css*/ `
         gap: dt('toolbar.gap');
     }
 
-    .p-toolbar-start,
-    .p-toolbar-center,
-    .p-toolbar-end {
+    .h-toolbar-start,
+    .h-toolbar-center,
+    .h-toolbar-end {
         display: flex;
         align-items: center;
     }

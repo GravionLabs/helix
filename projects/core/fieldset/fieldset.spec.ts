@@ -10,7 +10,7 @@ import { Fieldset } from './fieldset';
     standalone: true,
     imports: [Fieldset],
     template: `
-        <p-fieldset
+        <h-fieldset
             [legend]="legend"
             [toggleable]="toggleable"
             [collapsed]="collapsed"
@@ -22,7 +22,7 @@ import { Fieldset } from './fieldset';
             (onAfterToggle)="onAfterToggle($event)"
         >
             <div class="test-content">Test Content Here</div>
-        </p-fieldset>
+        </h-fieldset>
     `
 })
 class TestFieldsetComponent {
@@ -54,7 +54,7 @@ class TestFieldsetComponent {
     standalone: true,
     imports: [Fieldset],
     template: `
-        <p-fieldset [toggleable]="true">
+        <h-fieldset [toggleable]="true">
             <ng-template #header>
                 <div class="custom-header">Custom Header Template</div>
             </ng-template>
@@ -68,7 +68,7 @@ class TestFieldsetComponent {
                 <span class="custom-collapse-icon">⬆</span>
             </ng-template>
             <div class="template-content">Template Test Content</div>
-        </p-fieldset>
+        </h-fieldset>
     `
 })
 class TestTemplateFieldsetComponent {}
@@ -77,9 +77,9 @@ class TestTemplateFieldsetComponent {}
     standalone: true,
     imports: [Fieldset],
     template: `
-        <p-fieldset legend="Header Facet Test" [toggleable]="true">
+        <h-fieldset legend="Header Facet Test" [toggleable]="true">
             <div class="facet-content">Facet Test Content</div>
-        </p-fieldset>
+        </h-fieldset>
     `
 })
 class TestFacetFieldsetComponent {}
@@ -159,7 +159,7 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const legendLabel = fixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+            const legendLabel = fixture.debugElement.query(By.css('.h-fieldset-legend-label'));
             expect(legendLabel.nativeElement.textContent.trim()).toBe('My Fieldset');
         });
 
@@ -262,8 +262,8 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const expandIcon = fixture.debugElement.query(By.css('svg[data-p-icon="plus"]'));
-            const collapseIcon = fixture.debugElement.query(By.css('svg[data-p-icon="minus"]'));
+            const expandIcon = fixture.debugElement.query(By.css('svg[data-h-icon="plus"]'));
+            const collapseIcon = fixture.debugElement.query(By.css('svg[data-h-icon="minus"]'));
 
             expect(expandIcon).toBeTruthy();
             expect(collapseIcon).toBeNull();
@@ -274,8 +274,8 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const expandIcon = fixture.debugElement.query(By.css('svg[data-p-icon="plus"]'));
-            const collapseIcon = fixture.debugElement.query(By.css('svg[data-p-icon="minus"]'));
+            const expandIcon = fixture.debugElement.query(By.css('svg[data-h-icon="plus"]'));
+            const collapseIcon = fixture.debugElement.query(By.css('svg[data-h-icon="minus"]'));
 
             expect(expandIcon).toBeNull();
             expect(collapseIcon).toBeTruthy();
@@ -296,7 +296,7 @@ describe('Fieldset', () => {
         });
 
         it('should update aria-hidden on content', async () => {
-            const contentContainer = fixture.debugElement.query(By.css('.p-fieldset-content-container'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-fieldset-content-container'));
 
             component.collapsed = false;
             fixture.changeDetectorRef.markForCheck();
@@ -352,7 +352,7 @@ describe('Fieldset', () => {
             // Verify toggle state changed
             expect(fieldset.collapsed()).toBe(true);
             expect(component.beforeToggleEvent).toBeTruthy();
-            // Note: onAfterToggle is triggered by p-motion directive's pMotionOnAfterEnter event
+            // Note: onAfterToggle is triggered by h-motion directive's pMotionOnAfterEnter event
             // which requires actual animation to complete. Testing the collapsed state and beforeToggle is sufficient.
         });
 
@@ -523,7 +523,7 @@ describe('Fieldset', () => {
             facetFixture.detectChanges();
 
             // Check if fieldset displays the legend text
-            const legendTitle = facetFixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+            const legendTitle = facetFixture.debugElement.query(By.css('.h-fieldset-legend-label'));
             expect(legendTitle).toBeTruthy();
             expect(legendTitle.nativeElement.textContent.trim()).toBe('Header Facet Test');
 
@@ -543,7 +543,7 @@ describe('Fieldset', () => {
 
         it('should have proper ARIA attributes', () => {
             const toggleButton = fixture.debugElement.query(By.css('button[role="button"]'));
-            const contentContainer = fixture.debugElement.query(By.css('.p-fieldset-content-container'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-fieldset-content-container'));
 
             expect(toggleButton.nativeElement.getAttribute('role')).toBe('button');
             expect(toggleButton.nativeElement.getAttribute('tabindex')).toBe('0');
@@ -558,7 +558,7 @@ describe('Fieldset', () => {
 
         it('should have matching aria-controls and id attributes', () => {
             const toggleButton = fixture.debugElement.query(By.css('button[role="button"]'));
-            const contentContainer = fixture.debugElement.query(By.css('.p-fieldset-content-container'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-fieldset-content-container'));
 
             const ariaControls = toggleButton.nativeElement.getAttribute('aria-controls');
             const contentId = contentContainer.nativeElement.getAttribute('id');
@@ -568,7 +568,7 @@ describe('Fieldset', () => {
 
         it('should have matching aria-labelledby and button id', () => {
             const toggleButton = fixture.debugElement.query(By.css('button[role="button"]'));
-            const contentContainer = fixture.debugElement.query(By.css('.p-fieldset-content-container'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-fieldset-content-container'));
 
             const buttonId = toggleButton.nativeElement.getAttribute('id');
             const ariaLabelledby = contentContainer.nativeElement.getAttribute('aria-labelledby');
@@ -592,7 +592,7 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const legendLabel = fixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+            const legendLabel = fixture.debugElement.query(By.css('.h-fieldset-legend-label'));
             expect(legendLabel.nativeElement.textContent.trim()).toBe('' as any);
         });
 
@@ -601,7 +601,7 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const legendLabel = fixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+            const legendLabel = fixture.debugElement.query(By.css('.h-fieldset-legend-label'));
             expect(legendLabel.nativeElement.textContent.trim()).toBe('' as any);
         });
 
@@ -610,7 +610,7 @@ describe('Fieldset', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const legendLabel = fixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+            const legendLabel = fixture.debugElement.query(By.css('.h-fieldset-legend-label'));
             expect(legendLabel.nativeElement.textContent.trim()).toBe('' as any);
         });
 
@@ -720,7 +720,7 @@ describe('Fieldset', () => {
             await fixture.whenStable();
 
             // Should render default icons
-            const defaultIcon = fixture.debugElement.query(By.css('svg[data-p-icon]'));
+            const defaultIcon = fixture.debugElement.query(By.css('svg[data-h-icon]'));
             expect(defaultIcon).toBeTruthy();
 
             // Should not throw errors
@@ -767,7 +767,7 @@ describe('Fieldset', () => {
                 ptFixture.componentRef.setInput('pt', { content: 'CONTENT_CLASS' });
                 ptFixture.detectChanges();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_CLASS');
             });
 
@@ -782,7 +782,7 @@ describe('Fieldset', () => {
 
                 const rootElement = ptFixture.debugElement.query(By.css('fieldset'));
                 const legendElement = ptFixture.debugElement.query(By.css('legend'));
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
 
                 expect(rootElement.nativeElement.className).toContain('ROOT_CLASS');
                 expect(legendElement.nativeElement.className).toContain('LEGEND_CLASS');
@@ -821,13 +821,13 @@ describe('Fieldset', () => {
                 const ptFixture = TestBed.createComponent(Fieldset);
                 ptFixture.componentRef.setInput('pt', {
                     legend: {
-                        'data-p-test': true
+                        'data-h-test': true
                     }
                 });
                 ptFixture.detectChanges();
 
                 const legendElement = ptFixture.debugElement.query(By.css('legend'));
-                expect(legendElement.nativeElement.getAttribute('data-p-test')).toBe('true');
+                expect(legendElement.nativeElement.getAttribute('data-h-test')).toBe('true');
             });
 
             it('should apply object with aria-label to toggleButton', () => {
@@ -856,7 +856,7 @@ describe('Fieldset', () => {
                 });
                 ptFixture.detectChanges();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_OBJECT_CLASS');
                 expect(contentElement?.nativeElement.style.color).toBe('blue');
                 expect(contentElement?.nativeElement.getAttribute('data-test')).toBe('value');
@@ -894,7 +894,7 @@ describe('Fieldset', () => {
                 ptFixture.detectChanges();
 
                 const legendElement = ptFixture.debugElement.query(By.css('legend'));
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
 
                 expect(legendElement.nativeElement.className).toContain('LEGEND_STRING_CLASS');
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_OBJECT_CLASS');
@@ -933,7 +933,7 @@ describe('Fieldset', () => {
                 });
                 ptFixture.detectChanges();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
                 expect(contentElement?.nativeElement.style.borderColor).toBe('yellow');
             });
 
@@ -949,7 +949,7 @@ describe('Fieldset', () => {
                 });
                 ptFixture.detectChanges();
 
-                const legendLabel = ptFixture.debugElement.query(By.css('.p-fieldset-legend-label'));
+                const legendLabel = ptFixture.debugElement.query(By.css('.h-fieldset-legend-label'));
                 expect(legendLabel?.nativeElement.className).toContain('HAS_LEGEND');
             });
 
@@ -1032,7 +1032,7 @@ describe('Fieldset', () => {
                 @Component({
                     standalone: true,
                     imports: [Fieldset],
-                    template: `<p-fieldset [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-fieldset>`
+                    template: `<h-fieldset [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-fieldset>`
                 })
                 class TestInlinePTStringComponent {}
 
@@ -1054,7 +1054,7 @@ describe('Fieldset', () => {
                 @Component({
                     standalone: true,
                     imports: [Fieldset],
-                    template: `<p-fieldset [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></p-fieldset>`
+                    template: `<h-fieldset [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></h-fieldset>`
                 })
                 class TestInlinePTObjectComponent {}
 
@@ -1078,8 +1078,8 @@ describe('Fieldset', () => {
                 standalone: true,
                 imports: [Fieldset],
                 template: `
-                    <p-fieldset></p-fieldset>
-                    <p-fieldset></p-fieldset>
+                    <h-fieldset></h-fieldset>
+                    <h-fieldset></h-fieldset>
                 `
             })
             class TestGlobalPTComponent {}
@@ -1128,7 +1128,7 @@ describe('Fieldset', () => {
                 @Component({
                     standalone: true,
                     imports: [Fieldset],
-                    template: `<p-fieldset [pt]="{ root: { class: 'LOCAL_CLASS' } }"></p-fieldset>`
+                    template: `<h-fieldset [pt]="{ root: { class: 'LOCAL_CLASS' } }"></h-fieldset>`
                 })
                 class TestMergedPTComponent {}
 
@@ -1212,7 +1212,7 @@ describe('Fieldset', () => {
 
                 const rootElement = ptFixture.debugElement.query(By.css('fieldset'));
                 expect(rootElement.nativeElement.className).toContain('CUSTOM_PT_CLASS');
-                expect(rootElement.nativeElement.className).toContain('p-fieldset');
+                expect(rootElement.nativeElement.className).toContain('h-fieldset');
             });
 
             it('should apply PT to all sections simultaneously', () => {
@@ -1226,7 +1226,7 @@ describe('Fieldset', () => {
 
                 const rootElement = ptFixture.debugElement.query(By.css('fieldset'));
                 const legendElement = ptFixture.debugElement.query(By.css('legend'));
-                const contentElement = ptFixture.debugElement.query(By.css('.p-fieldset-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-fieldset-content'));
 
                 expect(rootElement.nativeElement.className).toContain('PT_ROOT');
                 expect(legendElement.nativeElement.className).toContain('PT_LEGEND');

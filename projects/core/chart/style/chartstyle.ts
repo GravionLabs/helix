@@ -6,7 +6,7 @@ const inlineStyles = {
 };
 
 const classes = {
-    root: 'p-chart'
+    root: 'h-chart'
 };
 
 @Injectable()
@@ -31,7 +31,7 @@ export enum ChartClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-chart'
+    root = 'h-chart'
 }
 
 export interface ChartStyle extends BaseStyle {}

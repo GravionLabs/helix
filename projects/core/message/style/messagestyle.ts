@@ -3,13 +3,13 @@ import { style } from './message.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-message p-component p-message-' + instance.severity(), instance.variant() && 'p-message-' + instance.variant(), { 'p-message-sm': instance.size() === 'small', 'p-message-lg': instance.size() === 'large' }],
-    contentWrapper: 'p-message-content-wrapper',
-    content: 'p-message-content',
-    icon: 'p-message-icon',
-    text: 'p-message-text',
-    closeButton: 'p-message-close-button',
-    closeIcon: 'p-message-close-icon'
+    root: ({ instance }) => ['h-message h-component h-message-' + instance.severity(), instance.variant() && 'h-message-' + instance.variant(), { 'h-message-sm': instance.size() === 'small', 'h-message-lg': instance.size() === 'large' }],
+    contentWrapper: 'h-message-content-wrapper',
+    content: 'h-message-content',
+    icon: 'h-message-icon',
+    text: 'h-message-text',
+    closeButton: 'h-message-close-button',
+    closeIcon: 'h-message-close-icon'
 };
 
 @Injectable()
@@ -35,27 +35,27 @@ export enum MessageClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-message',
+    root = 'h-message',
     /**
      * Class name of the content element
      */
-    content = 'p-message-content',
+    content = 'h-message-content',
     /**
      * Class name of the icon element
      */
-    icon = 'p-message-icon',
+    icon = 'h-message-icon',
     /**
      * Class name of the text element
      */
-    text = 'p-message-text',
+    text = 'h-message-text',
     /**
      * Class name of the close button element
      */
-    closeButton = 'p-message-close-button',
+    closeButton = 'h-message-close-button',
     /**
      * Class name of the close icon element
      */
-    closeIcon = 'p-message-close-icon'
+    closeIcon = 'h-message-close-icon'
 }
 
 export interface MessageStyle extends BaseStyle {}

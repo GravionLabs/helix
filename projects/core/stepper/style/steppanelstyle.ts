@@ -3,13 +3,13 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-steppanel',
+        'h-steppanel',
         {
-            'p-steppanel-active': instance.isVertical() && instance.active()
+            'h-steppanel-active': instance.isVertical() && instance.active()
         }
     ],
-    contentWrapper: 'p-steppanel-content-wrapper',
-    content: 'p-steppanel-content'
+    contentWrapper: 'h-steppanel-content-wrapper',
+    content: 'h-steppanel-content'
 };
 
 @Injectable()
@@ -32,17 +32,17 @@ export enum StepPanelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-steppanel',
+    root = 'h-steppanel',
 
     /**
      * Class name of the content wrapper element
      */
-    contentWrapper = 'p-steppanel-content-wrapper',
+    contentWrapper = 'h-steppanel-content-wrapper',
 
     /**
      * Class name of the content element
      */
-    content = 'p-steppanel-content'
+    content = 'h-steppanel-content'
 }
 
 export interface StepPanelStyle extends BaseStyle {}

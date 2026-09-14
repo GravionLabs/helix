@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-message {
+    .h-message {
         display: grid;
         grid-template-rows: 1fr;
         border-radius: dt('message.border.radius');
@@ -7,22 +7,22 @@ export const style = /*css*/ `
         outline-style: solid;
     }
 
-    .p-message-content-wrapper {
+    .h-message-content-wrapper {
         min-height: 0;
     }
 
-    .p-message-content {
+    .h-message-content {
         display: flex;
         align-items: center;
         padding: dt('message.content.padding');
         gap: dt('message.content.gap');
     }
 
-    .p-message-icon {
+    .h-message-icon {
         flex-shrink: 0;
     }
 
-    .p-message-close-button {
+    .h-message-close-button {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -48,250 +48,250 @@ export const style = /*css*/ `
         user-select: none;
     }
 
-    .p-message-close-icon {
+    .h-message-close-icon {
         font-size: dt('message.close.icon.size');
         width: dt('message.close.icon.size');
         height: dt('message.close.icon.size');
     }
 
-    .p-message-close-button:focus-visible {
+    .h-message-close-button:focus-visible {
         outline-width: dt('message.close.button.focus.ring.width');
         outline-style: dt('message.close.button.focus.ring.style');
         outline-offset: dt('message.close.button.focus.ring.offset');
     }
 
-    .p-message-info {
+    .h-message-info {
         background: dt('message.info.background');
         outline-color: dt('message.info.border.color');
         color: dt('message.info.color');
         box-shadow: dt('message.info.shadow');
     }
 
-    .p-message-info .p-message-close-button:focus-visible {
+    .h-message-info .h-message-close-button:focus-visible {
         outline-color: dt('message.info.close.button.focus.ring.color');
         box-shadow: dt('message.info.close.button.focus.ring.shadow');
     }
 
-    .p-message-info .p-message-close-button:hover {
+    .h-message-info .h-message-close-button:hover {
         background: dt('message.info.close.button.hover.background');
     }
 
-    .p-message-info.p-message-outlined {
+    .h-message-info.h-message-outlined {
         color: dt('message.info.outlined.color');
         outline-color: dt('message.info.outlined.border.color');
     }
 
-    .p-message-info.p-message-simple {
+    .h-message-info.h-message-simple {
         color: dt('message.info.simple.color');
     }
 
-    .p-message-success {
+    .h-message-success {
         background: dt('message.success.background');
         outline-color: dt('message.success.border.color');
         color: dt('message.success.color');
         box-shadow: dt('message.success.shadow');
     }
 
-    .p-message-success .p-message-close-button:focus-visible {
+    .h-message-success .h-message-close-button:focus-visible {
         outline-color: dt('message.success.close.button.focus.ring.color');
         box-shadow: dt('message.success.close.button.focus.ring.shadow');
     }
 
-    .p-message-success .p-message-close-button:hover {
+    .h-message-success .h-message-close-button:hover {
         background: dt('message.success.close.button.hover.background');
     }
 
-    .p-message-success.p-message-outlined {
+    .h-message-success.h-message-outlined {
         color: dt('message.success.outlined.color');
         outline-color: dt('message.success.outlined.border.color');
     }
 
-    .p-message-success.p-message-simple {
+    .h-message-success.h-message-simple {
         color: dt('message.success.simple.color');
     }
 
-    .p-message-warn {
+    .h-message-warn {
         background: dt('message.warn.background');
         outline-color: dt('message.warn.border.color');
         color: dt('message.warn.color');
         box-shadow: dt('message.warn.shadow');
     }
 
-    .p-message-warn .p-message-close-button:focus-visible {
+    .h-message-warn .h-message-close-button:focus-visible {
         outline-color: dt('message.warn.close.button.focus.ring.color');
         box-shadow: dt('message.warn.close.button.focus.ring.shadow');
     }
 
-    .p-message-warn .p-message-close-button:hover {
+    .h-message-warn .h-message-close-button:hover {
         background: dt('message.warn.close.button.hover.background');
     }
 
-    .p-message-warn.p-message-outlined {
+    .h-message-warn.h-message-outlined {
         color: dt('message.warn.outlined.color');
         outline-color: dt('message.warn.outlined.border.color');
     }
 
-    .p-message-warn.p-message-simple {
+    .h-message-warn.h-message-simple {
         color: dt('message.warn.simple.color');
     }
 
-    .p-message-error {
+    .h-message-error {
         background: dt('message.error.background');
         outline-color: dt('message.error.border.color');
         color: dt('message.error.color');
         box-shadow: dt('message.error.shadow');
     }
 
-    .p-message-error .p-message-close-button:focus-visible {
+    .h-message-error .h-message-close-button:focus-visible {
         outline-color: dt('message.error.close.button.focus.ring.color');
         box-shadow: dt('message.error.close.button.focus.ring.shadow');
     }
 
-    .p-message-error .p-message-close-button:hover {
+    .h-message-error .h-message-close-button:hover {
         background: dt('message.error.close.button.hover.background');
     }
 
-    .p-message-error.p-message-outlined {
+    .h-message-error.h-message-outlined {
         color: dt('message.error.outlined.color');
         outline-color: dt('message.error.outlined.border.color');
     }
 
-    .p-message-error.p-message-simple {
+    .h-message-error.h-message-simple {
         color: dt('message.error.simple.color');
     }
 
-    .p-message-secondary {
+    .h-message-secondary {
         background: dt('message.secondary.background');
         outline-color: dt('message.secondary.border.color');
         color: dt('message.secondary.color');
         box-shadow: dt('message.secondary.shadow');
     }
 
-    .p-message-secondary .p-message-close-button:focus-visible {
+    .h-message-secondary .h-message-close-button:focus-visible {
         outline-color: dt('message.secondary.close.button.focus.ring.color');
         box-shadow: dt('message.secondary.close.button.focus.ring.shadow');
     }
 
-    .p-message-secondary .p-message-close-button:hover {
+    .h-message-secondary .h-message-close-button:hover {
         background: dt('message.secondary.close.button.hover.background');
     }
 
-    .p-message-secondary.p-message-outlined {
+    .h-message-secondary.h-message-outlined {
         color: dt('message.secondary.outlined.color');
         outline-color: dt('message.secondary.outlined.border.color');
     }
 
-    .p-message-secondary.p-message-simple {
+    .h-message-secondary.h-message-simple {
         color: dt('message.secondary.simple.color');
     }
 
-    .p-message-contrast {
+    .h-message-contrast {
         background: dt('message.contrast.background');
         outline-color: dt('message.contrast.border.color');
         color: dt('message.contrast.color');
         box-shadow: dt('message.contrast.shadow');
     }
 
-    .p-message-contrast .p-message-close-button:focus-visible {
+    .h-message-contrast .h-message-close-button:focus-visible {
         outline-color: dt('message.contrast.close.button.focus.ring.color');
         box-shadow: dt('message.contrast.close.button.focus.ring.shadow');
     }
 
-    .p-message-contrast .p-message-close-button:hover {
+    .h-message-contrast .h-message-close-button:hover {
         background: dt('message.contrast.close.button.hover.background');
     }
 
-    .p-message-contrast.p-message-outlined {
+    .h-message-contrast.h-message-outlined {
         color: dt('message.contrast.outlined.color');
         outline-color: dt('message.contrast.outlined.border.color');
     }
 
-    .p-message-contrast.p-message-simple {
+    .h-message-contrast.h-message-simple {
         color: dt('message.contrast.simple.color');
     }
 
-    .p-message-text {
+    .h-message-text {
         font-size: dt('message.text.font.size');
         font-weight: dt('message.text.font.weight');
     }
 
-    .p-message-icon {
+    .h-message-icon {
         font-size: dt('message.icon.size');
         width: dt('message.icon.size');
         height: dt('message.icon.size');
     }
 
-    .p-message-sm .p-message-content {
+    .h-message-sm .h-message-content {
         padding: dt('message.content.sm.padding');
     }
 
-    .p-message-sm .p-message-text {
+    .h-message-sm .h-message-text {
         font-size: dt('message.text.sm.font.size');
     }
 
-    .p-message-sm .p-message-icon {
+    .h-message-sm .h-message-icon {
         font-size: dt('message.icon.sm.size');
         width: dt('message.icon.sm.size');
         height: dt('message.icon.sm.size');
     }
 
-    .p-message-sm .p-message-close-icon {
+    .h-message-sm .h-message-close-icon {
         font-size: dt('message.close.icon.sm.size');
         width: dt('message.close.icon.sm.size');
         height: dt('message.close.icon.sm.size');
     }
 
-    .p-message-lg .p-message-content {
+    .h-message-lg .h-message-content {
         padding: dt('message.content.lg.padding');
     }
 
-    .p-message-lg .p-message-text {
+    .h-message-lg .h-message-text {
         font-size: dt('message.text.lg.font.size');
     }
 
-    .p-message-lg .p-message-icon {
+    .h-message-lg .h-message-icon {
         font-size: dt('message.icon.lg.size');
         width: dt('message.icon.lg.size');
         height: dt('message.icon.lg.size');
     }
 
-    .p-message-lg .p-message-close-icon {
+    .h-message-lg .h-message-close-icon {
         font-size: dt('message.close.icon.lg.size');
         width: dt('message.close.icon.lg.size');
         height: dt('message.close.icon.lg.size');
     }
 
-    .p-message-outlined {
+    .h-message-outlined {
         background: transparent;
         outline-width: dt('message.outlined.border.width');
     }
 
-    .p-message-simple {
+    .h-message-simple {
         background: transparent;
         outline-color: transparent;
         box-shadow: none;
     }
 
-    .p-message-simple .p-message-content {
+    .h-message-simple .h-message-content {
         padding: dt('message.simple.content.padding');
     }
 
-    .p-message-outlined .p-message-close-button:hover,
-    .p-message-simple .p-message-close-button:hover {
+    .h-message-outlined .h-message-close-button:hover,
+    .h-message-simple .h-message-close-button:hover {
         background: transparent;
     }
 
-    .p-message-enter-active {
-        animation: p-animate-message-enter 0.3s ease-out forwards;
+    .h-message-enter-active {
+        animation: h-animate-message-enter 0.3s ease-out forwards;
         overflow: hidden;
     }
 
-    .p-message-leave-active {
-        animation: p-animate-message-leave 0.15s ease-in forwards;
+    .h-message-leave-active {
+        animation: h-animate-message-leave 0.15s ease-in forwards;
         overflow: hidden;
     }
 
-    @keyframes p-animate-message-enter {
+    @keyframes h-animate-message-enter {
         from {
             opacity: 0;
             grid-template-rows: 0fr;
@@ -302,7 +302,7 @@ export const style = /*css*/ `
         }
     }
 
-    @keyframes p-animate-message-leave {
+    @keyframes h-animate-message-leave {
         from {
             opacity: 1;
             grid-template-rows: 1fr;

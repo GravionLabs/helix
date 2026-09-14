@@ -1,11 +1,11 @@
 @if (loading() && showLoader()) {
-  <div [hBind]="ptm('mask')" [class]="cx('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
+  <div [hBind]="ptm('mask')" [class]="cx('mask')" animate.enter="h-overlay-mask-enter-active" animate.leave="h-overlay-mask-leave-active">
     @if (loadingIcon()) {
       <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())"></i>
     }
     @if (!loadingIcon()) {
       @if (!loadingIconTemplate && !_loadingIconTemplate) {
-        <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" />
+        <svg data-h-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" />
       }
       @if (loadingIconTemplate || _loadingIconTemplate) {
         <span [class]="cx('loadingIcon')">
@@ -165,7 +165,7 @@
 @if (reorderableColumns()) {
   <span [hBind]="ptm('reorderIndicatorUp')" #reorderIndicatorUp [class]="cx('reorderIndicatorUp')" [style.display]="'none'">
     @if (!reorderIndicatorUpIconTemplate && !_reorderIndicatorUpIconTemplate()) {
-      <svg data-p-icon="arrow-down" />
+      <svg data-h-icon="arrow-down" />
     }
     <ng-template *ngTemplateOutlet="reorderIndicatorUpIconTemplate || _reorderIndicatorUpIconTemplate()"></ng-template>
   </span>
@@ -173,7 +173,7 @@
 @if (reorderableColumns()) {
   <span [hBind]="ptm('reorderIndicatorDown')" #reorderIndicatorDown [class]="cx('reorderIndicatorDown')" [style.display]="'none'">
     @if (!reorderIndicatorDownIconTemplate && !_reorderIndicatorDownIconTemplate()) {
-      <svg data-p-icon="arrow-up" />
+      <svg data-h-icon="arrow-up" />
     }
     <ng-template *ngTemplateOutlet="reorderIndicatorDownIconTemplate || _reorderIndicatorDownIconTemplate()"></ng-template>
   </span>

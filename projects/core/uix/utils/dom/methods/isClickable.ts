@@ -12,7 +12,7 @@ export default function isClickable(element: Element): boolean {
             parentNode === 'TEXTAREA' ||
             parentNode === 'BUTTON' ||
             parentNode === 'A' ||
-            !!element.closest('.p-button, .p-checkbox, .p-radiobutton') // @todo Add [data-pc-section="button"]
+            !!element.closest('.h-button, .h-checkbox, .h-radiobutton') // @todo Add [data-pc-section="button"]
         );
     }
 

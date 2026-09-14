@@ -170,7 +170,7 @@ export class TabList extends BaseComponent<TabListPassThrough> {
         const _inkbar = this.inkbar()?.nativeElement;
         const _tabs = this.tabs()?.nativeElement;
 
-        const activeTab = findSingle(_content, '[data-pc-name="tab"][data-p-active="true"]');
+        const activeTab = findSingle(_content, '[data-pc-name="tab"][data-h-active="true"]');
         if (_inkbar) {
             _inkbar.style.width = getOuterWidth(activeTab) + 'px';
             _inkbar.style.left = <any>getOffset(activeTab).left - <any>getOffset(_tabs).left + 'px';

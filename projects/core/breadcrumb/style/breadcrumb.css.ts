@@ -1,11 +1,11 @@
 export const style = /*css*/ `
-    .p-breadcrumb {
+    .h-breadcrumb {
         background: dt('breadcrumb.background');
         padding: dt('breadcrumb.padding');
         overflow-x: auto;
     }
 
-    .p-breadcrumb-list {
+    .h-breadcrumb-list {
         margin: 0;
         padding: 0;
         list-style-type: none;
@@ -15,21 +15,21 @@ export const style = /*css*/ `
         gap: dt('breadcrumb.gap');
     }
 
-    .p-breadcrumb-separator {
+    .h-breadcrumb-separator {
         display: flex;
         align-items: center;
         color: dt('breadcrumb.separator.color');
     }
 
-    .p-breadcrumb-separator-icon:dir(rtl) {
+    .h-breadcrumb-separator-icon:dir(rtl) {
         transform: rotate(180deg);
     }
 
-    .p-breadcrumb::-webkit-scrollbar {
+    .h-breadcrumb::-webkit-scrollbar {
         display: none;
     }
 
-    .p-breadcrumb-item-link {
+    .h-breadcrumb-item-link {
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -44,26 +44,26 @@ export const style = /*css*/ `
         color: dt('breadcrumb.item.color');
     }
 
-    .p-breadcrumb-item-link:focus-visible {
+    .h-breadcrumb-item-link:focus-visible {
         box-shadow: dt('breadcrumb.item.focus.ring.shadow');
         outline: dt('breadcrumb.item.focus.ring.width') dt('breadcrumb.item.focus.ring.style') dt('breadcrumb.item.focus.ring.color');
         outline-offset: dt('breadcrumb.item.focus.ring.offset');
     }
 
-    .p-breadcrumb-item-link:hover .p-breadcrumb-item-label {
+    .h-breadcrumb-item-link:hover .h-breadcrumb-item-label {
         color: dt('breadcrumb.item.hover.color');
     }
 
-    .p-breadcrumb-item-label {
+    .h-breadcrumb-item-label {
         transition: inherit;
     }
 
-    .p-breadcrumb-item-icon {
+    .h-breadcrumb-item-icon {
         color: dt('breadcrumb.item.icon.color');
         transition: inherit;
     }
 
-    .p-breadcrumb-item-link:hover .p-breadcrumb-item-icon {
+    .h-breadcrumb-item-link:hover .h-breadcrumb-item-icon {
         color: dt('breadcrumb.item.icon.hover.color');
     }
 `;

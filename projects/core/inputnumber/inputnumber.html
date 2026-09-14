@@ -42,11 +42,11 @@
   [unstyled]="unstyled()"
   [hAutoFocus]="autofocus()"
   [fluid]="hasFluid"
-  [attr.data-p]="dataP"
+  [attr.data-h]="dataP"
   />
 @if (buttonLayout() != 'vertical' && showClear() && value) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" />
+    <svg data-h-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" />
   }
   @if (clearIconTemplate() || _clearIconTemplate) {
     <span [hBind]="ptm('clearIcon')" (click)="clear()" [class]="cx('clearIcon')">
@@ -55,7 +55,7 @@
   }
 }
 @if (showButtons() && buttonLayout() === 'stacked') {
-  <span [hBind]="ptm('buttonGroup')" [class]="cx('buttonGroup')" [attr.data-p]="dataP">
+  <span [hBind]="ptm('buttonGroup')" [class]="cx('buttonGroup')" [attr.data-h]="dataP">
     <button
       type="button"
       [hBind]="ptm('incrementButton')"
@@ -68,14 +68,14 @@
       (keydown)="onUpButtonKeyDown($event)"
       (keyup)="onUpButtonKeyUp()"
       [attr.aria-hidden]="true"
-      [attr.data-p]="dataP"
+      [attr.data-h]="dataP"
       >
       @if (incrementButtonIcon()) {
         <span [hBind]="ptm('incrementButtonIcon')" [ngClass]="incrementButtonIcon()"></span>
       }
       @if (!incrementButtonIcon()) {
         @if (!incrementButtonIconTemplate() && !_incrementButtonIconTemplate) {
-          <svg data-p-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
+          <svg data-h-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
         }
         <ng-template *ngTemplateOutlet="incrementButtonIconTemplate() || _incrementButtonIconTemplate"></ng-template>
       }
@@ -92,14 +92,14 @@
       (mouseleave)="onDownButtonMouseLeave()"
       (keydown)="onDownButtonKeyDown($event)"
       (keyup)="onDownButtonKeyUp()"
-      [attr.data-p]="dataP"
+      [attr.data-h]="dataP"
       >
       @if (decrementButtonIcon()) {
         <span [hBind]="ptm('decrementButtonIcon')" [ngClass]="decrementButtonIcon()"></span>
       }
       @if (!decrementButtonIcon()) {
         @if (!decrementButtonIconTemplate() && !_decrementButtonIconTemplate) {
-          <svg data-p-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
+          <svg data-h-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
         }
         <ng-template *ngTemplateOutlet="decrementButtonIconTemplate() || _decrementButtonIconTemplate"></ng-template>
       }
@@ -119,14 +119,14 @@
     (mouseleave)="onUpButtonMouseLeave()"
     (keydown)="onUpButtonKeyDown($event)"
     (keyup)="onUpButtonKeyUp()"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
     >
     @if (incrementButtonIcon()) {
       <span [hBind]="ptm('incrementButtonIcon')" [ngClass]="incrementButtonIcon()"></span>
     }
     @if (!incrementButtonIcon()) {
       @if (!incrementButtonIconTemplate() && !_incrementButtonIconTemplate) {
-        <svg data-p-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
+        <svg data-h-icon="angle-up" [hBind]="ptm('incrementButtonIcon')" />
       }
       <ng-template *ngTemplateOutlet="incrementButtonIconTemplate() || _incrementButtonIconTemplate"></ng-template>
     }
@@ -145,14 +145,14 @@
     (mouseleave)="onDownButtonMouseLeave()"
     (keydown)="onDownButtonKeyDown($event)"
     (keyup)="onDownButtonKeyUp()"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
     >
     @if (decrementButtonIcon()) {
       <span [hBind]="ptm('decrementButtonIcon')" [ngClass]="decrementButtonIcon()"></span>
     }
     @if (!decrementButtonIcon()) {
       @if (!decrementButtonIconTemplate() && !_decrementButtonIconTemplate) {
-        <svg data-p-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
+        <svg data-h-icon="angle-down" [hBind]="ptm('decrementButtonIcon')" />
       }
       <ng-template *ngTemplateOutlet="decrementButtonIconTemplate() || _decrementButtonIconTemplate"></ng-template>
     }

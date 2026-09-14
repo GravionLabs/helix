@@ -41,20 +41,20 @@ export type BadgeSeverity = 'info' | 'warn' | 'error' | 'success';
         font-size: 0.625rem;
       }
       .helix-badge--info {
-        background-color: var(--badge-bg, var(--p-info-100, #e0f2fe));
-        color: var(--badge-color, var(--p-info-700, #0369a1));
+        background-color: var(--badge-bg, var(--h-info-100, #e0f2fe));
+        color: var(--badge-color, var(--h-info-700, #0369a1));
       }
       .helix-badge--warn {
-        background-color: var(--badge-bg, var(--p-warn-100, #fef3c7));
-        color: var(--badge-color, var(--p-warn-700, #b45309));
+        background-color: var(--badge-bg, var(--h-warn-100, #fef3c7));
+        color: var(--badge-color, var(--h-warn-700, #b45309));
       }
       .helix-badge--error {
-        background-color: var(--badge-bg, var(--p-error-100, #fce4ec));
-        color: var(--badge-color, var(--p-error-700, #c62828));
+        background-color: var(--badge-bg, var(--h-error-100, #fce4ec));
+        color: var(--badge-color, var(--h-error-700, #c62828));
       }
       .helix-badge--success {
-        background-color: var(--badge-bg, var(--p-success-100, #dcfce7));
-        color: var(--badge-color, var(--p-success-700, #15803d));
+        background-color: var(--badge-bg, var(--h-success-100, #dcfce7));
+        color: var(--badge-color, var(--h-success-700, #15803d));
       }
     `,
   ],

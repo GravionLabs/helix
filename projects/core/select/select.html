@@ -11,7 +11,7 @@
     [attr.aria-disabled]="$disabled()"
     [attr.id]="inputId()"
     role="combobox"
-    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.aria-label]="ariaLabel() || (label() === 'h-emptylabel' ? undefined : label())"
     [attr.aria-labelledby]="ariaLabelledBy()"
     [attr.aria-haspopup]="'listbox'"
     [attr.aria-expanded]="overlayVisible ?? false"
@@ -25,13 +25,13 @@
     [attr.aria-required]="required()"
     [attr.required]="required() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
-    [attr.data-p]="labelDataP"
+    [attr.data-h]="labelDataP"
     >
     @if (!selectedItemTemplate() && !_selectedItemTemplate) {
-      {{ label() === 'p-emptylabel' ? '&nbsp;' : label() }}
+      {{ label() === 'h-emptylabel' ? '&nbsp;' : label() }}
     } @else {
       @if (isSelectedOptionEmpty()) {
-        <span>{{ label() === 'p-emptylabel' ? '&nbsp;' : label() }}</span>
+        <span>{{ label() === 'h-emptylabel' ? '&nbsp;' : label() }}</span>
       }
     }
     @if ((selectedItemTemplate() || _selectedItemTemplate) && !isSelectedOptionEmpty()) {
@@ -48,7 +48,7 @@
     [hBind]="ptm('label')"
     [attr.aria-haspopup]="'listbox'"
     [attr.placeholder]="modelValue() === undefined || modelValue() === null ? placeholder() : undefined"
-    [attr.aria-label]="ariaLabel() || (label() === 'p-emptylabel' ? undefined : label())"
+    [attr.aria-label]="ariaLabel() || (label() === 'h-emptylabel' ? undefined : label())"
     (input)="onEditableInput($event)"
     (keydown)="onKeyDown($event)"
     [hAutoFocus]="autofocus()"
@@ -65,12 +65,12 @@
     [attr.required]="required() ? '' : undefined"
     [attr.readonly]="readonly() ? '' : undefined"
     [attr.disabled]="$disabled() ? '' : undefined"
-    [attr.data-p]="labelDataP"
+    [attr.data-h]="labelDataP"
     />
 }
 @if (isVisibleClearIcon) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')" (click)="clear($event)" [attr.data-pc-section]="'clearicon'" />
+    <svg data-h-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')" (click)="clear($event)" [attr.data-pc-section]="'clearicon'" />
   }
   @if (clearIconTemplate() || _clearIconTemplate) {
     <span [class]="cx('clearIcon')" [hBind]="ptm('clearIcon')" (click)="clear($event)" [attr.data-pc-section]="'clearicon'">
@@ -98,7 +98,7 @@
         <span [class]="cn(cx('dropdownIcon'), dropdownIcon())" [hBind]="ptm('dropdownIcon')"></span>
       }
       @if (!dropdownIcon()) {
-        <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
+        <svg data-h-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
       }
     }
     @if (dropdownIconTemplate() || _dropdownIconTemplate) {
@@ -125,15 +125,15 @@
   (onHide)="hide()"
   >
   <ng-template #content>
-    <div [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()" [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP">
+    <div [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()" [hBind]="ptm('overlay')" [attr.data-h]="overlayDataP">
       <span
         #firstHiddenFocusableEl
         role="presentation"
-        class="p-hidden-accessible p-hidden-focusable"
+        class="h-hidden-accessible h-hidden-focusable"
         [attr.tabindex]="0"
         (focus)="onFirstHiddenFocus($event)"
-        [attr.data-p-hidden-accessible]="true"
-        [attr.data-p-hidden-focusable]="true"
+        [attr.data-h-hidden-accessible]="true"
+        [attr.data-h-hidden-focusable]="true"
         [hBind]="ptm('hiddenFirstFocusableEl')"
         >
       </span>
@@ -166,7 +166,7 @@
                 />
               <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
                 @if (!filterIconTemplate() && !_filterIconTemplate) {
-                  <svg data-p-icon="search" [hBind]="ptm('filterIcon')" />
+                  <svg data-h-icon="search" [hBind]="ptm('filterIcon')" />
                 }
                 @if (filterIconTemplate() || _filterIconTemplate) {
                   <span [hBind]="ptm('filterIcon')">
@@ -262,12 +262,12 @@
       <span
         #lastHiddenFocusableEl
         role="presentation"
-        class="p-hidden-accessible p-hidden-focusable"
+        class="h-hidden-accessible h-hidden-focusable"
         [hBind]="ptm('hiddenLastFocusableEl')"
         [attr.tabindex]="0"
         (focus)="onLastHiddenFocus($event)"
-        [attr.data-p-hidden-accessible]="true"
-        [attr.data-p-hidden-focusable]="true"
+        [attr.data-h-hidden-accessible]="true"
+        [attr.data-h-hidden-focusable]="true"
       ></span>
     </div>
   </ng-template>

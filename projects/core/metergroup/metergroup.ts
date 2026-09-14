@@ -56,7 +56,7 @@ export class MeterGroupLabel extends BaseComponent<MeterGroupPassThrough> {
         '[attr.role]': '"meter"',
         '[attr.aria-valuemax]': 'max()',
         '[attr.aria-valuenow]': 'totalPercent()',
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h]': 'dataP',
         '[class]': "cn(cx('root'), styleClass())"
     },
     hostDirectives: [Bind]

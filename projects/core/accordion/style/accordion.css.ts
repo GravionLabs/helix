@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-accordionpanel {
+    .h-accordionpanel {
         display: flex;
         flex-direction: column;
         border-style: solid;
@@ -7,7 +7,7 @@ export const style = /*css*/ `
         border-color: dt('accordion.panel.border.color');
     }
 
-    .p-accordionheader {
+    .h-accordionheader {
         all: unset;
         cursor: pointer;
         display: flex;
@@ -29,69 +29,69 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-accordionpanel:first-child > .p-accordionheader {
+    .h-accordionpanel:first-child > .h-accordionheader {
         border-width: dt('accordion.header.first.border.width');
         border-start-start-radius: dt('accordion.header.first.top.border.radius');
         border-start-end-radius: dt('accordion.header.first.top.border.radius');
     }
 
-    .p-accordionpanel:last-child > .p-accordionheader {
+    .h-accordionpanel:last-child > .h-accordionheader {
         border-end-start-radius: dt('accordion.header.last.bottom.border.radius');
         border-end-end-radius: dt('accordion.header.last.bottom.border.radius');
     }
 
-    .p-accordionpanel:last-child.p-accordionpanel-active > .p-accordionheader {
+    .h-accordionpanel:last-child.h-accordionpanel-active > .h-accordionheader {
         border-end-start-radius: dt('accordion.header.last.active.bottom.border.radius');
         border-end-end-radius: dt('accordion.header.last.active.bottom.border.radius');
     }
 
-    .p-accordionheader-toggle-icon {
+    .h-accordionheader-toggle-icon {
         color: dt('accordion.header.toggle.icon.color');
     }
 
-    .p-accordionpanel:not(.p-disabled) .p-accordionheader:focus-visible {
+    .h-accordionpanel:not(.h-disabled) .h-accordionheader:focus-visible {
         box-shadow: dt('accordion.header.focus.ring.shadow');
         outline: dt('accordion.header.focus.ring.width') dt('accordion.header.focus.ring.style') dt('accordion.header.focus.ring.color');
         outline-offset: dt('accordion.header.focus.ring.offset');
     }
 
-    .p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) > .p-accordionheader:hover {
+    .h-accordionpanel:not(.h-accordionpanel-active):not(.h-disabled) > .h-accordionheader:hover {
         background: dt('accordion.header.hover.background');
         color: dt('accordion.header.hover.color');
     }
 
-    .p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) .p-accordionheader:hover .p-accordionheader-toggle-icon {
+    .h-accordionpanel:not(.h-accordionpanel-active):not(.h-disabled) .h-accordionheader:hover .h-accordionheader-toggle-icon {
         color: dt('accordion.header.toggle.icon.hover.color');
     }
 
-    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader {
+    .h-accordionpanel:not(.h-disabled).h-accordionpanel-active > .h-accordionheader {
         background: dt('accordion.header.active.background');
         color: dt('accordion.header.active.color');
     }
 
-    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-accordionheader-toggle-icon {
+    .h-accordionpanel:not(.h-disabled).h-accordionpanel-active > .h-accordionheader .h-accordionheader-toggle-icon {
         color: dt('accordion.header.toggle.icon.active.color');
     }
 
-    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover {
+    .h-accordionpanel:not(.h-disabled).h-accordionpanel-active > .h-accordionheader:hover {
         background: dt('accordion.header.active.hover.background');
         color: dt('accordion.header.active.hover.color');
     }
 
-    .p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover .p-accordionheader-toggle-icon {
+    .h-accordionpanel:not(.h-disabled).h-accordionpanel-active > .h-accordionheader:hover .h-accordionheader-toggle-icon {
         color: dt('accordion.header.toggle.icon.active.hover.color');
     }
 
-    .p-accordioncontent {
+    .h-accordioncontent {
         display: grid;
         grid-template-rows: 1fr;
     }
 
-    .p-accordioncontent-wrapper {
+    .h-accordioncontent-wrapper {
         min-height: 0;
     }
 
-    .p-accordioncontent-content {
+    .h-accordioncontent-content {
         border-style: solid;
         border-width: dt('accordion.content.border.width');
         border-color: dt('accordion.content.border.color');

@@ -1,15 +1,15 @@
 export const style = /*css*/ `
-    .p-speeddial {
+    .h-speeddial {
         position: static;
         display: flex;
         gap: dt('speeddial.gap');
     }
 
-    .p-speeddial-button {
+    .h-speeddial-button {
         z-index: 1;
     }
 
-    .p-speeddial-button.p-speeddial-rotate {
+    .h-speeddial-button.h-speeddial-rotate {
         transition:
             transform 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
             background dt('speeddial.transition.duration'),
@@ -20,7 +20,7 @@ export const style = /*css*/ `
         will-change: transform;
     }
 
-    .p-speeddial-list {
+    .h-speeddial-list {
         margin: 0;
         padding: 0;
         list-style: none;
@@ -34,7 +34,7 @@ export const style = /*css*/ `
         gap: dt('speeddial.gap');
     }
 
-    .p-speeddial-item {
+    .h-speeddial-item {
         transform: scale(0);
         opacity: 0;
         transition:
@@ -43,27 +43,27 @@ export const style = /*css*/ `
         will-change: transform;
     }
 
-    .p-speeddial-circle .p-speeddial-item,
-    .p-speeddial-semi-circle .p-speeddial-item,
-    .p-speeddial-quarter-circle .p-speeddial-item {
+    .h-speeddial-circle .h-speeddial-item,
+    .h-speeddial-semi-circle .h-speeddial-item,
+    .h-speeddial-quarter-circle .h-speeddial-item {
         position: absolute;
     }
 
-    .p-speeddial-mask {
+    .h-speeddial-mask {
         position: absolute;
         border-radius: dt('content.border.radius');
     }
 
-    .p-speeddial-open .p-speeddial-list {
+    .h-speeddial-open .h-speeddial-list {
         pointer-events: auto;
     }
 
-    .p-speeddial-open .p-speeddial-item {
+    .h-speeddial-open .h-speeddial-item {
         transform: scale(1);
         opacity: 1;
     }
 
-    .p-speeddial-open .p-speeddial-rotate {
+    .h-speeddial-open .h-speeddial-rotate {
         transform: rotate(45deg);
     }
 `;

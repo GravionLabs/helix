@@ -14,8 +14,8 @@
     role="complementary"
     (keydown)="onKeyDown($event)"
     hFocusTrap
-    [attr.data-p]="dataP"
-    [attr.data-p-open]="visible"
+    [attr.data-h]="dataP"
+    [attr.data-h-open]="visible"
     >
     @if (headlessTemplate() || _headlessTemplate) {
       <ng-container *ngTemplateOutlet="headlessTemplate() || _headlessTemplate"></ng-container>
@@ -38,7 +38,7 @@
             >
             <ng-template #icon>
               @if (!closeIconTemplate() && !_closeIconTemplate) {
-                <svg data-p-icon="times" [attr.data-pc-section]="'closeicon'" />
+                <svg data-h-icon="times" [attr.data-pc-section]="'closeicon'" />
               }
               <ng-template *ngTemplateOutlet="closeIconTemplate() || _closeIconTemplate"></ng-template>
             </ng-template>

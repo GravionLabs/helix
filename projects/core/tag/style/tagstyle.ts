@@ -4,19 +4,19 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-tag p-component',
+        'h-tag h-component',
         {
-            'p-tag-info': instance.severity === 'info',
-            'p-tag-success': instance.severity === 'success',
-            'p-tag-warn': instance.severity === 'warn',
-            'p-tag-danger': instance.severity === 'danger',
-            'p-tag-secondary': instance.severity === 'secondary',
-            'p-tag-contrast': instance.severity === 'contrast',
-            'p-tag-rounded': instance.rounded
+            'h-tag-info': instance.severity === 'info',
+            'h-tag-success': instance.severity === 'success',
+            'h-tag-warn': instance.severity === 'warn',
+            'h-tag-danger': instance.severity === 'danger',
+            'h-tag-secondary': instance.severity === 'secondary',
+            'h-tag-contrast': instance.severity === 'contrast',
+            'h-tag-rounded': instance.rounded
         }
     ],
-    icon: 'p-tag-icon',
-    label: 'p-tag-label'
+    icon: 'h-tag-icon',
+    label: 'h-tag-label'
 };
 
 @Injectable()
@@ -41,15 +41,15 @@ export enum TagClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tag',
+    root = 'h-tag',
     /**
      * Class name of the icon element
      */
-    icon = 'p-tag-icon',
+    icon = 'h-tag-icon',
     /**
      * Class name of the label element
      */
-    label = 'p-tag-label'
+    label = 'h-tag-label'
 }
 
 export interface TagStyle extends BaseStyle {}

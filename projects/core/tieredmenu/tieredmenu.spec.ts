@@ -11,7 +11,7 @@ import { TieredMenu } from './tieredmenu';
 
 @Component({
     standalone: false,
-    template: `<p-tieredmenu [model]="model" [styleClass]="styleClass" [style]="style" [popup]="popup" [disabled]="disabled" [autoDisplay]="autoDisplay"></p-tieredmenu>`
+    template: `<h-tieredmenu [model]="model" [styleClass]="styleClass" [style]="style" [popup]="popup" [disabled]="disabled" [autoDisplay]="autoDisplay"></h-tieredmenu>`
 })
 class TestBasicTieredMenuComponent {
     model: MenuItem[] = [
@@ -38,7 +38,7 @@ class TestBasicTieredMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tieredmenu #menu [model]="model" [popup]="true"></p-tieredmenu>
+        <h-tieredmenu #menu [model]="model" [popup]="true"></h-tieredmenu>
         <button #toggleButton (click)="menu.toggle($event)" class="toggle-button">Show Menu</button>
     `
 })
@@ -71,7 +71,7 @@ class TestPopupTieredMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tieredmenu [model]="model">
+        <h-tieredmenu [model]="model">
           <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
             <div class="custom-item">
               <span class="custom-label">{{ item.label }}</span>
@@ -83,7 +83,7 @@ class TestPopupTieredMenuComponent {
           <ng-template pTemplate="submenuicon">
             <i class="pi pi-angle-right custom-submenu-icon"></i>
           </ng-template>
-        </p-tieredmenu>
+        </h-tieredmenu>
         `
 })
 class TestTemplateTieredMenuComponent {
@@ -99,7 +99,7 @@ class TestTemplateTieredMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tieredmenu [model]="model">
+        <h-tieredmenu [model]="model">
           <ng-template #item let-item let-hasSubmenu="hasSubmenu">
             <div class="content-template-item">
               <span class="item-label">{{ item.label }}</span>
@@ -114,7 +114,7 @@ class TestTemplateTieredMenuComponent {
           <ng-template #submenuicon>
             <i class="content-template-icon pi pi-chevron-right"></i>
           </ng-template>
-        </p-tieredmenu>
+        </h-tieredmenu>
         `
 })
 class TestContentTemplateTieredMenuComponent {
@@ -129,7 +129,7 @@ class TestContentTemplateTieredMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-tieredmenu',
-    template: `<p-tieredmenu [model]="model"></p-tieredmenu>`
+    template: `<h-tieredmenu [model]="model"></h-tieredmenu>`
 })
 class TestDisabledTieredMenuComponent {
     model: MenuItem[] = [
@@ -143,7 +143,7 @@ class TestDisabledTieredMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-router-tieredmenu',
-    template: `<p-tieredmenu [model]="model"></p-tieredmenu>`
+    template: `<h-tieredmenu [model]="model"></h-tieredmenu>`
 })
 class TestRouterTieredMenuComponent {
     model: MenuItem[] = [
@@ -166,7 +166,7 @@ class TestRouterTieredMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-breakpoint-tieredmenu',
-    template: `<p-tieredmenu [model]="model" [breakpoint]="breakpoint"></p-tieredmenu>`
+    template: `<h-tieredmenu [model]="model" [breakpoint]="breakpoint"></h-tieredmenu>`
 })
 class TestBreakpointTieredMenuComponent {
     breakpoint = '768px';
@@ -208,7 +208,7 @@ describe('TieredMenu', () => {
 
         fixture = TestBed.createComponent(TestBasicTieredMenuComponent);
         component = fixture.componentInstance;
-        tieredMenuElement = fixture.debugElement.query(By.css('p-tieredmenu')).nativeElement;
+        tieredMenuElement = fixture.debugElement.query(By.css('h-tieredmenu')).nativeElement;
         tieredMenu = fixture.debugElement.query(By.directive(TieredMenu)).componentInstance;
         fixture.detectChanges();
     });
@@ -308,13 +308,13 @@ describe('TieredMenu', () => {
 
         it('should display submenu items', () => {
             const firstMenuItem = fixture.debugElement.query(By.css('li[role="menuitem"]'));
-            const submenu = firstMenuItem.query(By.css('p-tieredmenusub'));
+            const submenu = firstMenuItem.query(By.css('h-tieredmenusub'));
             expect(submenu).toBeTruthy();
         });
 
         it('should handle menu item click', async () => {
             const clickSpy = spyOn(tieredMenu, 'onItemClick').and.callThrough();
-            const menuItem = fixture.debugElement.query(By.css('li[role="menuitem"] .p-tieredmenu-item-content'));
+            const menuItem = fixture.debugElement.query(By.css('li[role="menuitem"] .h-tieredmenu-item-content'));
 
             menuItem.triggerEventHandler('click', { preventDefault: () => {} });
             await new Promise((resolve) => setTimeout(resolve, 100));
@@ -325,7 +325,7 @@ describe('TieredMenu', () => {
 
         it('should show separators', async () => {
             // Click on the Edit menu item to expand submenu (sets dirty=true and opens submenu)
-            const menuItems = fixture.debugElement.queryAll(By.css('li[role="menuitem"] .p-tieredmenu-item-content'));
+            const menuItems = fixture.debugElement.queryAll(By.css('li[role="menuitem"] .h-tieredmenu-item-content'));
             const editMenuItem = menuItems[1]; // Edit is the second root item
             editMenuItem.triggerEventHandler('click', { preventDefault: () => {} });
             await new Promise((resolve) => setTimeout(resolve, 100));
@@ -338,7 +338,7 @@ describe('TieredMenu', () => {
 
         it('should handle mouse enter on menu item', async () => {
             const mouseEnterSpy = spyOn(tieredMenu, 'onItemMouseEnter').and.callThrough();
-            const menuItem = fixture.debugElement.query(By.css('li[role="menuitem"] .p-tieredmenu-item-content'));
+            const menuItem = fixture.debugElement.query(By.css('li[role="menuitem"] .h-tieredmenu-item-content'));
 
             menuItem.triggerEventHandler('mouseenter', { target: menuItem.nativeElement });
             await new Promise((resolve) => setTimeout(resolve, 100));
@@ -694,7 +694,7 @@ describe('TieredMenu', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const container = fixture.debugElement.query(By.css('.p-tieredmenu'));
+            const container = fixture.debugElement.query(By.css('.h-tieredmenu'));
             expect(container.nativeElement.classList.contains('my-custom-class')).toBe(true);
         });
 
@@ -711,7 +711,7 @@ describe('TieredMenu', () => {
         });
 
         it('should have default CSS classes', () => {
-            const container = fixture.debugElement.query(By.css('.p-tieredmenu'));
+            const container = fixture.debugElement.query(By.css('.h-tieredmenu'));
             expect(container).toBeTruthy();
         });
     });
@@ -726,7 +726,7 @@ describe('TieredMenu', () => {
 
         it('should handle disabled items correctly', async () => {
             // Click on the Actions menu item to expand submenu (sets dirty=true and opens submenu)
-            const rootMenuItems = disabledFixture.debugElement.queryAll(By.css('li[role="menuitem"] .p-tieredmenu-item-content'));
+            const rootMenuItems = disabledFixture.debugElement.queryAll(By.css('li[role="menuitem"] .h-tieredmenu-item-content'));
             const actionsMenuItem = rootMenuItems[0]; // Actions is the first root item
             actionsMenuItem.triggerEventHandler('click', { preventDefault: () => {} });
             await new Promise((resolve) => setTimeout(resolve, 100));
@@ -734,7 +734,7 @@ describe('TieredMenu', () => {
             disabledFixture.detectChanges();
 
             const menuItems = disabledFixture.debugElement.queryAll(By.css('li[role="menuitem"]'));
-            const disabledItem = menuItems.find((item) => item.nativeElement.getAttribute('data-p-disabled') === 'true');
+            const disabledItem = menuItems.find((item) => item.nativeElement.getAttribute('data-h-disabled') === 'true');
 
             expect(disabledItem).toBeTruthy();
             expect(disabledItem!.nativeElement.getAttribute('aria-disabled')).toBe('true');
@@ -908,7 +908,7 @@ describe('TieredMenu', () => {
     describe('Tooltip', () => {
         it('should spawn a tooltip if an option has one provided', async () => {
             // Items are placed at the root level so they are visible without expanding
-            // any sub-menu. The nested p-tieredmenusub for group children only renders
+            // any sub-menu. The nested h-tieredmenusub for group children only renders
             // once the parent item is activated.
             component.model = [
                 { label: 'Save', tooltip: 'Save the file' },
@@ -1043,7 +1043,7 @@ describe('TieredMenu', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt"></h-tieredmenu>`
             })
             class PTStringTestComponent {
                 model: MenuItem[] = [
@@ -1076,7 +1076,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT string class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('ROOT_CLASS')).toBe(true);
             });
 
@@ -1091,26 +1091,26 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT string class to itemContent', () => {
-                const itemContent = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-content'));
+                const itemContent = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-content'));
                 expect(itemContent.nativeElement.classList.contains('ITEM_CONTENT_CLASS')).toBe(true);
             });
 
             it('should apply PT string class to itemLink', () => {
-                const itemLink = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-link'));
+                const itemLink = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-link'));
                 expect(itemLink.nativeElement.classList.contains('ITEM_LINK_CLASS')).toBe(true);
             });
 
             it('should apply PT string class to itemLabel', () => {
-                const itemLabel = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-label'));
+                const itemLabel = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-label'));
                 expect(itemLabel.nativeElement.classList.contains('ITEM_LABEL_CLASS')).toBe(true);
             });
         });
 
-        describe('Case 2: Objects (class, style, data-p, aria)', () => {
+        describe('Case 2: Objects (class, style, data-h, aria)', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt"></h-tieredmenu>`
             })
             class PTObjectTestComponent {
                 model: MenuItem[] = [
@@ -1123,12 +1123,12 @@ describe('TieredMenu', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'true',
+                        'data-h-test': 'true',
                         'aria-label': 'TEST_ROOT_ARIA_LABEL'
                     },
                     item: {
                         class: 'ITEM_OBJECT_CLASS',
-                        'data-p-custom': 'item-data'
+                        'data-h-custom': 'item-data'
                     },
                     itemLabel: {
                         style: { color: 'blue' },
@@ -1147,22 +1147,22 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT object class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
             });
 
             it('should apply PT object style to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.style.backgroundColor).toBe('red');
             });
 
             it('should apply PT object data attribute to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
-                expect(root.nativeElement.getAttribute('data-p-test')).toBe('true');
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
+                expect(root.nativeElement.getAttribute('data-h-test')).toBe('true');
             });
 
             it('should apply PT object aria-label to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.getAttribute('aria-label')).toBe('TEST_ROOT_ARIA_LABEL');
             });
 
@@ -1172,7 +1172,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT object style to itemLabel', () => {
-                const itemLabel = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-label'));
+                const itemLabel = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-label'));
                 expect(itemLabel.nativeElement.style.color).toBe('blue');
             });
         });
@@ -1181,7 +1181,7 @@ describe('TieredMenu', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt"></h-tieredmenu>`
             })
             class PTMixedTestComponent {
                 model: MenuItem[] = [
@@ -1213,7 +1213,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT mixed object class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
             });
 
@@ -1229,7 +1229,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT string class to itemLabel', () => {
-                const itemLabel = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-label'));
+                const itemLabel = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-label'));
                 expect(itemLabel.nativeElement.classList.contains('LABEL_STRING_CLASS')).toBe(true);
             });
         });
@@ -1238,7 +1238,7 @@ describe('TieredMenu', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt" [disabled]="disabled"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt" [disabled]="disabled"></h-tieredmenu>`
             })
             class PTInstanceTestComponent {
                 disabled = true;
@@ -1272,7 +1272,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply PT based on instance disabled state to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('DISABLED')).toBe(true);
             });
 
@@ -1297,7 +1297,7 @@ describe('TieredMenu', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt"></h-tieredmenu>`
             })
             class PTEventTestComponent {
                 clickedValue = '';
@@ -1327,7 +1327,7 @@ describe('TieredMenu', () => {
 
             it('should handle onclick event via PT', async () => {
                 const component = ptFixture.componentInstance;
-                const itemLabel = ptFixture.debugElement.query(By.css('.p-tieredmenu-item-label'));
+                const itemLabel = ptFixture.debugElement.query(By.css('.h-tieredmenu-item-label'));
 
                 itemLabel.nativeElement.click();
                 await new Promise((resolve) => setTimeout(resolve, 100));
@@ -1342,8 +1342,8 @@ describe('TieredMenu', () => {
                 standalone: true,
                 imports: [TieredMenu],
                 template: `
-                    <p-tieredmenu [model]="model1"></p-tieredmenu>
-                    <p-tieredmenu [model]="model2"></p-tieredmenu>
+                    <h-tieredmenu [model]="model1"></h-tieredmenu>
+                    <h-tieredmenu [model]="model2"></h-tieredmenu>
                 `
             })
             class PTGlobalConfigTestComponent {
@@ -1364,7 +1364,7 @@ describe('TieredMenu', () => {
                                     item: { class: 'GLOBAL_ITEM_CLASS' }
                                 },
                                 global: {
-                                    css: `.p-tieredmenu { border: 1px solid red !important; }`
+                                    css: `.h-tieredmenu { border: 1px solid red !important; }`
                                 }
                             }
                         })
@@ -1374,7 +1374,7 @@ describe('TieredMenu', () => {
             });
 
             it('should apply global PT to all instances', () => {
-                const tieredMenus = ptFixture.debugElement.queryAll(By.css('.p-tieredmenu'));
+                const tieredMenus = ptFixture.debugElement.queryAll(By.css('.h-tieredmenu'));
                 expect(tieredMenus.length).toBe(2);
 
                 tieredMenus.forEach((menu) => {
@@ -1395,7 +1395,7 @@ describe('TieredMenu', () => {
             @Component({
                 standalone: true,
                 imports: [TieredMenu],
-                template: `<p-tieredmenu [model]="model" [pt]="pt"></p-tieredmenu>`
+                template: `<h-tieredmenu [model]="model" [pt]="pt"></h-tieredmenu>`
             })
             class PTHooksTestComponent {
                 hookCalled = false;
@@ -1437,7 +1437,7 @@ describe('TieredMenu', () => {
                 @Component({
                     standalone: true,
                     imports: [TieredMenu],
-                    template: `<p-tieredmenu [model]="model" [pt]="{ root: 'INLINE_STRING_CLASS' }"></p-tieredmenu>`
+                    template: `<h-tieredmenu [model]="model" [pt]="{ root: 'INLINE_STRING_CLASS' }"></h-tieredmenu>`
                 })
                 class InlineStringComponent {
                     model: MenuItem[] = [{ label: 'File' }];
@@ -1451,7 +1451,7 @@ describe('TieredMenu', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await inlineFixture.whenStable();
 
-                const root = inlineFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = inlineFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('INLINE_STRING_CLASS')).toBe(true);
             });
 
@@ -1459,7 +1459,7 @@ describe('TieredMenu', () => {
                 @Component({
                     standalone: true,
                     imports: [TieredMenu],
-                    template: `<p-tieredmenu [model]="model" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></p-tieredmenu>`
+                    template: `<h-tieredmenu [model]="model" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></h-tieredmenu>`
                 })
                 class InlineObjectComponent {
                     model: MenuItem[] = [{ label: 'File' }];
@@ -1473,7 +1473,7 @@ describe('TieredMenu', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await inlineFixture.whenStable();
 
-                const root = inlineFixture.debugElement.query(By.css('.p-tieredmenu'));
+                const root = inlineFixture.debugElement.query(By.css('.h-tieredmenu'));
                 expect(root.nativeElement.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
             });
         });

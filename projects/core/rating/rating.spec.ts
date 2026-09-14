@@ -13,7 +13,7 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [Rating, FormsModule],
     template: `
-        <p-rating
+        <h-rating
             [(ngModel)]="value"
             [stars]="stars"
             [readonly]="readonly"
@@ -63,7 +63,7 @@ class TestBasicRatingComponent {
     imports: [Rating, ReactiveFormsModule],
     template: `
         <form [formGroup]="ratingForm">
-            <p-rating formControlName="rating" [stars]="5" [invalid]="isInvalid" />
+            <h-rating formControlName="rating" [stars]="5" [invalid]="isInvalid" />
         </form>
     `
 })
@@ -80,14 +80,14 @@ class TestReactiveRatingComponent {
     standalone: true,
     imports: [Rating, FormsModule],
     template: `
-        <p-rating [(ngModel)]="value">
+        <h-rating [(ngModel)]="value">
             <ng-template pTemplate="onicon">
                 <span class="custom-on-icon">★</span>
             </ng-template>
             <ng-template pTemplate="officon">
                 <span class="custom-off-icon">☆</span>
             </ng-template>
-        </p-rating>
+        </h-rating>
     `
 })
 class TestTemplateRatingComponent {
@@ -98,7 +98,7 @@ class TestTemplateRatingComponent {
 @Component({
     standalone: true,
     imports: [Rating, FormsModule],
-    template: ` <p-rating [(ngModel)]="value" [stars]="numberOfStars" [readonly]="isReadonly" [disabled]="isDisabled" [name]="name" [required]="required" (onRate)="onAdvancedRate($event)" /> `
+    template: ` <h-rating [(ngModel)]="value" [stars]="numberOfStars" [readonly]="isReadonly" [disabled]="isDisabled" [name]="name" [required]="required" (onRate)="onAdvancedRate($event)" /> `
 })
 class TestAdvancedRatingComponent {
     value: number | null = 3;
@@ -120,7 +120,7 @@ class TestAdvancedRatingComponent {
     standalone: true,
     imports: [Rating, FormsModule, SharedModule],
     template: `
-        <p-rating [(ngModel)]="value" [stars]="stars">
+        <h-rating [(ngModel)]="value" [stars]="stars">
             <!-- On icon template with pTemplate directive -->
             <ng-template pTemplate="onicon" let-value let-class="class">
                 <i class="pi pi-star-fill custom-on-icon" [attr.data-testid]="'ptemplate-onicon-' + value" [ngClass]="class" [title]="'Star ' + value + ' filled'"></i>
@@ -130,7 +130,7 @@ class TestAdvancedRatingComponent {
             <ng-template pTemplate="officon" let-value let-class="class">
                 <i class="pi pi-star custom-off-icon" [attr.data-testid]="'ptemplate-officon-' + value" [ngClass]="class" [title]="'Star ' + value + ' empty'"></i>
             </ng-template>
-        </p-rating>
+        </h-rating>
     `
 })
 class TestRatingPTemplateComponent {
@@ -143,7 +143,7 @@ class TestRatingPTemplateComponent {
     standalone: true,
     imports: [Rating, FormsModule, SharedModule],
     template: `
-        <p-rating [(ngModel)]="value" [stars]="stars">
+        <h-rating [(ngModel)]="value" [stars]="stars">
             <!-- On icon template with #template reference -->
             <ng-template #onicon let-value let-class="class">
                 <i class="pi pi-heart-fill custom-on-icon" [attr.data-testid]="'ref-onicon-' + value" [ngClass]="class" [title]="'Heart ' + value + ' filled'"></i>
@@ -153,7 +153,7 @@ class TestRatingPTemplateComponent {
             <ng-template #officon let-value let-class="class">
                 <i class="pi pi-heart custom-off-icon" [attr.data-testid]="'ref-officon-' + value" [ngClass]="class" [title]="'Heart ' + value + ' empty'"></i>
             </ng-template>
-        </p-rating>
+        </h-rating>
     `
 })
 class TestRatingRefTemplateComponent {
@@ -211,7 +211,7 @@ describe('Rating', () => {
             const inputs = fixture.debugElement.queryAll(By.css('input[type="radio"]'));
             expect(inputs.length).toBe(5 as any);
             inputs.forEach((input) => {
-                expect(input.nativeElement.parentElement.classList.contains('p-hidden-accessible')).toBe(true);
+                expect(input.nativeElement.parentElement.classList.contains('h-hidden-accessible')).toBe(true);
             });
         });
 
@@ -678,11 +678,11 @@ describe('Rating', () => {
         });
 
         it('should support screen readers', () => {
-            const hiddenAccessibleElements = fixture.debugElement.queryAll(By.css('.p-hidden-accessible'));
+            const hiddenAccessibleElements = fixture.debugElement.queryAll(By.css('.h-hidden-accessible'));
             expect(hiddenAccessibleElements.length).toBe(5 as any);
 
             hiddenAccessibleElements.forEach((element) => {
-                expect(element.nativeElement.getAttribute('data-p-hidden-accessible')).toBe('true');
+                expect(element.nativeElement.getAttribute('data-h-hidden-accessible')).toBe('true');
             });
         });
 
@@ -871,7 +871,7 @@ describe('Rating', () => {
 
             fixture = TestBed.createComponent(TestRatingPTemplateComponent);
             component = fixture.componentInstance;
-            ratingElement = fixture.debugElement.query(By.css('p-rating'));
+            ratingElement = fixture.debugElement.query(By.css('h-rating'));
             ratingInstance = ratingElement.componentInstance;
             fixture.detectChanges();
         });
@@ -976,7 +976,7 @@ describe('Rating', () => {
 
             fixture = TestBed.createComponent(TestRatingRefTemplateComponent);
             component = fixture.componentInstance;
-            ratingElement = fixture.debugElement.query(By.css('p-rating'));
+            ratingElement = fixture.debugElement.query(By.css('h-rating'));
             ratingInstance = ratingElement.componentInstance;
             fixture.detectChanges();
         });
@@ -1071,7 +1071,7 @@ describe('Rating', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCase1Component {
                 value: number = 3;
@@ -1115,7 +1115,7 @@ describe('Rating', () => {
         describe('Case 2: Object with class, style, data attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCase2Component {
                 value: number = 3;
@@ -1123,11 +1123,11 @@ describe('Rating', () => {
                     host: {
                         class: 'OBJECT_HOST_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'test-value'
+                        'data-h-test': 'test-value'
                     },
                     option: {
                         class: 'OPTION_OBJECT_CLASS',
-                        'data-p-custom': 'custom-value'
+                        'data-h-custom': 'custom-value'
                     }
                 };
             }
@@ -1149,7 +1149,7 @@ describe('Rating', () => {
                 if (hostEl) {
                     expect(hostEl.nativeElement.classList.contains('OBJECT_HOST_CLASS')).toBe(true);
                     expect(hostEl.nativeElement.style.backgroundColor).toBe('red');
-                    expect(hostEl.nativeElement.getAttribute('data-p-test')).toBe('test-value');
+                    expect(hostEl.nativeElement.getAttribute('data-h-test')).toBe('test-value');
                 }
             });
         });
@@ -1157,7 +1157,7 @@ describe('Rating', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCase3Component {
                 value: number = 3;
@@ -1193,7 +1193,7 @@ describe('Rating', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [stars]="5" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [stars]="5" [pt]="pt"></h-rating>`
             })
             class TestPTCase4Component {
                 value: number = 4;
@@ -1238,7 +1238,7 @@ describe('Rating', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCase5Component {
                 value: number = 3;
@@ -1284,7 +1284,7 @@ describe('Rating', () => {
         describe('Case 6: Inline PT', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="{ host: 'INLINE_HOST_CLASS', option: 'INLINE_OPTION_CLASS' }"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="{ host: 'INLINE_HOST_CLASS', option: 'INLINE_OPTION_CLASS' }"></h-rating>`
             })
             class TestPTCase6InlineComponent {
                 value: number = 3;
@@ -1311,7 +1311,7 @@ describe('Rating', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS' }, option: { class: 'OPTION_INLINE_CLASS' } }"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS' }, option: { class: 'OPTION_INLINE_CLASS' } }"></h-rating>`
             })
             class TestPTCase6InlineObjectComponent {
                 value: number = 3;
@@ -1340,7 +1340,7 @@ describe('Rating', () => {
         describe('Case 7: Global PT from HelixConfig', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value"></p-rating>`
+                template: `<h-rating [(ngModel)]="value"></h-rating>`
             })
             class TestPTCase7GlobalComponent {
                 value: number = 3;
@@ -1379,7 +1379,7 @@ describe('Rating', () => {
         describe('Case 8: PT Hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCase8HooksComponent {
                 value: number = 3;
@@ -1424,7 +1424,7 @@ describe('Rating', () => {
         describe('PT Section Coverage', () => {
             @Component({
                 standalone: false,
-                template: `<p-rating [(ngModel)]="value" [pt]="pt"></p-rating>`
+                template: `<h-rating [(ngModel)]="value" [pt]="pt"></h-rating>`
             })
             class TestPTCoverageComponent {
                 value: number = 3;
@@ -1462,7 +1462,7 @@ describe('Rating', () => {
                 expect(optionEls.length).toBeGreaterThan(0);
 
                 // Check for hidden containers and inputs - they should exist within the options
-                const hiddenAccessibleEls = testFixture.debugElement.queryAll(By.css('.p-hidden-accessible'));
+                const hiddenAccessibleEls = testFixture.debugElement.queryAll(By.css('.h-hidden-accessible'));
                 expect(hiddenAccessibleEls.length).toBeGreaterThan(0);
 
                 const inputEls = testFixture.debugElement.queryAll(By.css('input[type="radio"]'));

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-primeui";
+@import "./styles/helix-tailwind/index.css";
 
 @custom-variant dark (&:where([class*="app-dark"], [class*="app-dark"] *));
 
@@ -16,20 +16,20 @@
 
 /* ===== CSS VARIABLES ===== */
 :root {
-  --primary-color: var(--p-primary-color);
-  --primary-contrast-color: var(--p-primary-contrast-color);
-  --text-color: var(--p-text-color);
-  --text-color-secondary: var(--p-text-muted-color);
-  --transition-duration: var(--p-transition-duration);
-  --maskbg: var(--p-mask-background);
-  --content-border-radius: var(--p-content-border-radius);
+  --primary-color: var(--h-primary-color);
+  --primary-contrast-color: var(--h-primary-contrast-color);
+  --text-color: var(--h-text-color);
+  --text-color-secondary: var(--h-text-muted-color);
+  --transition-duration: var(--h-transition-duration);
+  --maskbg: var(--h-mask-background);
+  --content-border-radius: var(--h-content-border-radius);
   --layout-section-transition-duration: 0.2s;
-  --element-transition-duration: var(--p-transition-duration);
-  --focus-ring-width: var(--p-focus-ring-width);
-  --focus-ring-style: var(--p-focus-ring-style);
-  --focus-ring-color: var(--p-focus-ring-color);
-  --focus-ring-offset: var(--p-focus-ring-offset);
-  --focus-ring-shadow: var(--p-focus-ring-shadow);
+  --element-transition-duration: var(--h-transition-duration);
+  --focus-ring-width: var(--h-focus-ring-width);
+  --focus-ring-style: var(--h-focus-ring-style);
+  --focus-ring-color: var(--h-focus-ring-color);
+  --focus-ring-offset: var(--h-focus-ring-offset);
+  --focus-ring-shadow: var(--h-focus-ring-shadow);
 
   /* ===== LAYOUT DIMENSIONS ===== */
   --helix-topbar-height: 4rem;
@@ -41,16 +41,16 @@
 
 /* Light theme surface scale: surface-0 (most elevated) → surface-200 (borders) */
 :root {
-  --helix-surface-ground: var(--p-surface-100); /* page background */
+  --helix-surface-ground: var(--h-surface-100); /* page background */
   --helix-surface-chrome: var(
-    --p-surface-200
+    --h-surface-200
   ); /* chrome (nav rail, topbar, status bar) */
-  --helix-surface-card: var(--p-surface-0); /* cards / content panels */
-  --helix-surface-overlay: var(--p-surface-0); /* popovers / dialogs */
-  --helix-surface-hover: var(--p-surface-100); /* hover states */
-  --helix-border: var(--p-surface-300); /* borders / dividers */
-  --code-background: var(--p-surface-900);
-  --code-color: var(--p-surface-200);
+  --helix-surface-card: var(--h-surface-0); /* cards / content panels */
+  --helix-surface-overlay: var(--h-surface-0); /* popovers / dialogs */
+  --helix-surface-hover: var(--h-surface-100); /* hover states */
+  --helix-border: var(--h-surface-300); /* borders / dividers */
+  --code-background: var(--h-surface-900);
+  --code-color: var(--h-surface-200);
 
   /* Back-compat aliases for code still using old tokens */
   --surface-ground: var(--helix-surface-ground);
@@ -62,14 +62,14 @@
 
 /* Dark theme surface scale */
 :root[class*="app-dark"] {
-  --helix-surface-ground: var(--p-surface-950);
-  --helix-surface-chrome: var(--p-surface-900);
-  --helix-surface-card: var(--p-surface-800);
-  --helix-surface-overlay: var(--p-surface-800);
-  --helix-surface-hover: var(--p-surface-700);
-  --helix-border: var(--p-surface-700);
-  --code-background: var(--p-surface-800);
-  --code-color: var(--p-surface-100);
+  --helix-surface-ground: var(--h-surface-950);
+  --helix-surface-chrome: var(--h-surface-900);
+  --helix-surface-card: var(--h-surface-800);
+  --helix-surface-overlay: var(--h-surface-800);
+  --helix-surface-hover: var(--h-surface-700);
+  --helix-border: var(--h-surface-700);
+  --code-background: var(--h-surface-800);
+  --code-color: var(--h-surface-100);
 }
 
 /* ===== BASE ===== */
@@ -112,9 +112,9 @@ a {
   margin-bottom: 0;
 }
 
-.p-toast.p-toast-top-right,
-.p-toast.p-toast-top-left,
-.p-toast.p-toast-top-center {
+.h-toast.h-toast-top-right,
+.h-toast.h-toast-top-left,
+.h-toast.h-toast-top-center {
   top: 100px;
 }
 

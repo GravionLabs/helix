@@ -35,8 +35,8 @@ export const SLIDER_VALUE_ACCESSOR: any = {
         '[attr.data-pc-name]': "'slider'",
         '[attr.data-pc-section]': "'root'",
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'dataP',
-        '[attr.data-p-sliding]': 'false',
+        '[attr.data-h]': 'dataP',
+        '[attr.data-h-sliding]': 'false',
         '(click)': 'onHostClick($event)'
     },
     hostDirectives: [Bind]
@@ -191,7 +191,7 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
         event.preventDefault();
 
         if (this.animate()) {
-            removeClass(this.el.nativeElement, 'p-slider-animate');
+            removeClass(this.el.nativeElement, 'h-slider-animate');
         }
     }
 
@@ -200,7 +200,7 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
             return;
         }
 
-        this.el.nativeElement.setAttribute('data-p-sliding', true);
+        this.el.nativeElement.setAttribute('data-h-sliding', true);
 
         var touchobj = event.changedTouches[0];
         this.startHandleValue = this.range() ? this.handleValues[index as number] : this.handleValue;
@@ -220,7 +220,7 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
         }
 
         if (this.animate()) {
-            removeClass(this.el.nativeElement, 'p-slider-animate');
+            removeClass(this.el.nativeElement, 'h-slider-animate');
         }
 
         event.preventDefault();
@@ -251,13 +251,13 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
         }
 
         this.dragging = false;
-        this.el.nativeElement.setAttribute('data-p-sliding', false);
+        this.el.nativeElement.setAttribute('data-h-sliding', false);
 
         if (this.range()) this.onSlideEnd.emit({ originalEvent: event, values: this.values as number[] });
         else this.onSlideEnd.emit({ originalEvent: event, value: this.value as number });
 
         if (this.animate()) {
-            addClass(this.el.nativeElement, 'p-slider-animate');
+            addClass(this.el.nativeElement, 'h-slider-animate');
         }
 
         event.preventDefault();
@@ -369,7 +369,7 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
                 if (!this.dragListener) {
                     this.dragListener = this.renderer.listen(documentTarget, 'mousemove', (event) => {
                         if (this.dragging) {
-                            this.el.nativeElement.setAttribute('data-p-sliding', true);
+                            this.el.nativeElement.setAttribute('data-h-sliding', true);
                             this.ngZone.run(() => {
                                 this.handleChange(event);
                             });
@@ -381,13 +381,13 @@ export class Slider extends BaseEditableHolder<SliderPassThrough> {
                     this.mouseupListener = this.renderer.listen(documentTarget, 'mouseup', (event) => {
                         if (this.dragging) {
                             this.dragging = false;
-                            this.el.nativeElement.setAttribute('data-p-sliding', false);
+                            this.el.nativeElement.setAttribute('data-h-sliding', false);
                             this.ngZone.run(() => {
                                 if (this.range()) this.onSlideEnd.emit({ originalEvent: event, values: this.values as number[] });
                                 else this.onSlideEnd.emit({ originalEvent: event, value: this.value as number });
 
                                 if (this.animate()) {
-                                    addClass(this.el.nativeElement, 'p-slider-animate');
+                                    addClass(this.el.nativeElement, 'h-slider-animate');
                                 }
                             });
                         }

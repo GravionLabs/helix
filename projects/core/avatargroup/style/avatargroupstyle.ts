@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-avatar-group p-component'
+    root: 'h-avatar-group h-component'
 };
 
 @Injectable()
@@ -22,7 +22,7 @@ export class AvatarGroupStyle extends BaseStyle {
  *
  */
 export enum AvatarGroupClasses {
-    root = 'p-avatar-group'
+    root = 'h-avatar-group'
 }
 
 export interface AvatarGroupStyle extends BaseStyle {}

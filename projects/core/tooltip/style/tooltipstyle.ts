@@ -3,9 +3,9 @@ import { style } from './tooltip.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-tooltip p-component',
-    arrow: 'p-tooltip-arrow',
-    text: 'p-tooltip-text'
+    root: 'h-tooltip h-component',
+    arrow: 'h-tooltip-arrow',
+    text: 'h-tooltip-text'
 };
 
 @Injectable()
@@ -30,15 +30,15 @@ export enum TooltipClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tooltip',
+    root = 'h-tooltip',
     /**
      * Class name of the arrow element
      */
-    arrow = 'p-tooltip-arrow',
+    arrow = 'h-tooltip-arrow',
     /**
      * Class name of the text element
      */
-    text = 'p-tooltip-text'
+    text = 'h-tooltip-text'
 }
 
 export interface TooltipStyle extends BaseStyle {}

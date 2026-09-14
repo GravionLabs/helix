@@ -340,12 +340,12 @@ export class ConfirmPopup extends BaseComponent<ConfirmPopupPassThrough> {
             arrowLeft = targetOffset.left - containerOffset.left;
         }
         if (this.container) {
-            (this.container as HTMLDivElement).style.setProperty('--p-confirmpopup-arrow-left', `${arrowLeft}px`);
+            (this.container as HTMLDivElement).style.setProperty('--h-confirmpopup-arrow-left', `${arrowLeft}px`);
         }
 
         if (containerOffset && targetOffset && containerOffset.top < targetOffset.top) {
-            (this.container as HTMLElement).setAttribute('data-p-confirmpopup-flipped', 'true');
-            !this.$unstyled() && addClass(this.container as HTMLDivElement, 'p-confirm-popup-flipped');
+            (this.container as HTMLElement).setAttribute('data-h-confirmpopup-flipped', 'true');
+            !this.$unstyled() && addClass(this.container as HTMLDivElement, 'h-confirm-popup-flipped');
         }
     }
 

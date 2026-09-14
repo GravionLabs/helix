@@ -3,8 +3,8 @@ import { style } from './imagecompare.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-imagecompare',
-    slider: 'p-imagecompare-slider'
+    root: 'h-imagecompare',
+    slider: 'h-imagecompare-slider'
 };
 
 @Injectable()
@@ -29,10 +29,10 @@ export enum ImageCompareClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-imagecompare',
+    root = 'h-imagecompare',
     /**
      * Class name of the slider element
      */
-    slider = 'p-imagecompare-slider'
+    slider = 'h-imagecompare-slider'
 }
 export interface ImageCompareStyle extends BaseStyle {}

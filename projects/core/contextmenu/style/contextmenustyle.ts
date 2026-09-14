@@ -7,24 +7,24 @@ const inlineStyles = {
 };
 
 const classes = {
-    root: () => ['p-contextmenu p-component'],
-    rootList: 'p-contextmenu-root-list',
+    root: () => ['h-contextmenu h-component'],
+    rootList: 'h-contextmenu-root-list',
     item: ({ instance, processedItem }) => [
-        'p-contextmenu-item',
+        'h-contextmenu-item',
         {
-            'p-contextmenu-item-active': instance.isItemActive(processedItem),
-            'p-focus': instance.isItemFocused(processedItem),
-            'p-disabled': instance.isItemDisabled(processedItem),
-            'p-contextmenu-mobile': instance.queryMatches()
+            'h-contextmenu-item-active': instance.isItemActive(processedItem),
+            'h-focus': instance.isItemFocused(processedItem),
+            'h-disabled': instance.isItemDisabled(processedItem),
+            'h-contextmenu-mobile': instance.queryMatches()
         }
     ],
-    itemContent: 'p-contextmenu-item-content',
-    itemLink: 'p-contextmenu-item-link',
-    itemIcon: 'p-contextmenu-item-icon',
-    itemLabel: 'p-contextmenu-item-label',
-    submenuIcon: 'p-contextmenu-submenu-icon',
-    submenu: 'p-contextmenu-submenu',
-    separator: 'p-contextmenu-separator'
+    itemContent: 'h-contextmenu-item-content',
+    itemLink: 'h-contextmenu-item-link',
+    itemIcon: 'h-contextmenu-item-icon',
+    itemLabel: 'h-contextmenu-item-label',
+    submenuIcon: 'h-contextmenu-submenu-icon',
+    submenu: 'h-contextmenu-submenu',
+    separator: 'h-contextmenu-separator'
 };
 
 @Injectable()
@@ -52,43 +52,43 @@ export enum ContextMenuClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-contextmenu',
+    root = 'h-contextmenu',
     /**
      * Class name of the root list element
      */
-    rootList = 'p-contextmenu-root-list',
+    rootList = 'h-contextmenu-root-list',
     /**
      * Class name of the item element
      */
-    item = 'p-contextmenu-item',
+    item = 'h-contextmenu-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-contextmenu-item-content',
+    itemContent = 'h-contextmenu-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-contextmenu-item-link',
+    itemLink = 'h-contextmenu-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-contextmenu-item-icon',
+    itemIcon = 'h-contextmenu-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-contextmenu-item-label',
+    itemLabel = 'h-contextmenu-item-label',
     /**
      * Class name of the submenu icon element
      */
-    submenuIcon = 'p-contextmenu-submenu-icon',
+    submenuIcon = 'h-contextmenu-submenu-icon',
     /**
      * Class name of the submenu element
      */
-    submenu = 'p-contextmenu-submenu',
+    submenu = 'h-contextmenu-submenu',
     /**
      * Class name of the separator element
      */
-    separator = 'p-contextmenu-separator'
+    separator = 'h-contextmenu-separator'
 }
 
 export interface ContextMenuStyle extends BaseStyle {}

@@ -12,10 +12,10 @@
   >
   @if (!tt.togglerIconTemplate && !tt._togglerIconTemplate()) {
     @if (rowNode().node.expanded) {
-      <svg data-p-icon="chevron-down" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
+      <svg data-h-icon="chevron-down" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
     }
     @if (!rowNode().node.expanded) {
-      <svg data-p-icon="chevron-right" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
+      <svg data-h-icon="chevron-right" [hBind]="ptm('nodetoggleicon')" [attr.aria-hidden]="true" />
     }
   }
   <ng-template *ngTemplateOutlet="tt.togglerIconTemplate || tt._togglerIconTemplate(); context: { $implicit: rowNode().node.expanded }"></ng-template>

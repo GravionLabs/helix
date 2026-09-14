@@ -10,7 +10,7 @@ import { MegaMenu } from './megamenu';
 @Component({
     standalone: false,
     template: `
-        <p-megamenu
+        <h-megamenu
             [id]="id"
             [model]="model"
             [orientation]="orientation"
@@ -23,7 +23,7 @@ import { MegaMenu } from './megamenu';
             [ariaLabelledBy]="ariaLabelledBy"
             [pt]="pt"
         >
-        </p-megamenu>
+        </h-megamenu>
     `
 })
 class TestBasicMegaMenuComponent {
@@ -80,7 +80,7 @@ class TestBasicMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-vertical-megamenu',
-    template: ` <p-megamenu [model]="verticalModel" orientation="vertical"></p-megamenu> `
+    template: ` <h-megamenu [model]="verticalModel" orientation="vertical"></h-megamenu> `
 })
 class TestVerticalMegaMenuComponent {
     verticalModel: MegaMenuItem[] = [
@@ -112,7 +112,7 @@ class TestVerticalMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-router-megamenu',
-    template: ` <p-megamenu [model]="routerModel"></p-megamenu> `
+    template: ` <h-megamenu [model]="routerModel"></h-megamenu> `
 })
 class TestRouterMegaMenuComponent {
     routerModel: MegaMenuItem[] = [
@@ -150,7 +150,7 @@ class TestRouterMegaMenuComponent {
     standalone: false,
     selector: 'test-template-megamenu',
     template: `
-        <p-megamenu [model]="model">
+        <h-megamenu [model]="model">
           <ng-template #start>
             <div class="custom-start">Start Content</div>
           </ng-template>
@@ -171,7 +171,7 @@ class TestRouterMegaMenuComponent {
           <ng-template #buttonicon>
             <i class="custom-menu-icon pi pi-bars"></i>
           </ng-template>
-        </p-megamenu>
+        </h-megamenu>
         `
 })
 class TestTemplateMegaMenuComponent {
@@ -185,7 +185,7 @@ class TestTemplateMegaMenuComponent {
     standalone: false,
     selector: 'test-ptemplate-megamenu',
     template: `
-        <p-megamenu [model]="model">
+        <h-megamenu [model]="model">
             <ng-template pTemplate="start">
                 <div class="ptemplate-start">PTemplate Start</div>
             </ng-template>
@@ -198,7 +198,7 @@ class TestTemplateMegaMenuComponent {
             <ng-template pTemplate="button">
                 <button class="ptemplate-button">PTemplate Button</button>
             </ng-template>
-        </p-megamenu>
+        </h-megamenu>
     `
 })
 class TestPTemplateMegaMenuComponent {
@@ -208,7 +208,7 @@ class TestPTemplateMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-megamenu',
-    template: ` <p-megamenu [model]="disabledModel"></p-megamenu> `
+    template: ` <h-megamenu [model]="disabledModel"></h-megamenu> `
 })
 class TestDisabledMegaMenuComponent {
     disabledModel: MegaMenuItem[] = [{ label: 'Enabled Item', icon: 'pi pi-check' }, { label: 'Disabled Item', icon: 'pi pi-times', disabled: true }, { label: 'Function Disabled', icon: 'pi pi-question', disabled: () => true } as any];
@@ -217,7 +217,7 @@ class TestDisabledMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-megamenu',
-    template: ` <p-megamenu [model]="model" [styleClass]="customStyleClass"></p-megamenu> `
+    template: ` <h-megamenu [model]="model" [styleClass]="customStyleClass"></h-megamenu> `
 })
 class TestStyledMegaMenuComponent {
     model: MegaMenuItem[] = [{ label: 'Styled Item', icon: 'pi pi-test' }];
@@ -227,14 +227,14 @@ class TestStyledMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-megamenu',
-    template: `<p-megamenu></p-megamenu>`
+    template: `<h-megamenu></h-megamenu>`
 })
 class TestMinimalMegaMenuComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-megamenu',
-    template: ` <p-megamenu [model]="dynamicModel"></p-megamenu> `
+    template: ` <h-megamenu [model]="dynamicModel"></h-megamenu> `
 })
 class TestDynamicMegaMenuComponent {
     dynamicModel: MegaMenuItem[] = [];
@@ -255,7 +255,7 @@ class TestDynamicMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-command-megamenu',
-    template: ` <p-megamenu [model]="commandModel"></p-megamenu> `
+    template: ` <h-megamenu [model]="commandModel"></h-megamenu> `
 })
 class TestCommandMegaMenuComponent {
     commandExecuted: any;
@@ -292,7 +292,7 @@ class TestCommandMegaMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-responsive-megamenu',
-    template: ` <p-megamenu [model]="model" [breakpoint]="breakpoint"></p-megamenu> `
+    template: ` <h-megamenu [model]="model" [breakpoint]="breakpoint"></h-megamenu> `
 })
 class TestResponsiveMegaMenuComponent {
     model: MegaMenuItem[] = [{ label: 'Item 1' }, { label: 'Item 2' }];
@@ -578,14 +578,14 @@ describe('MegaMenu', () => {
 
         it('should render appropriate submenu icons based on orientation', () => {
             // Test horizontal orientation - should have angle down icons
-            const horizontalIcons = fixture.debugElement.queryAll(By.css('svg[data-p-icon="angle-down"]'));
+            const horizontalIcons = fixture.debugElement.queryAll(By.css('svg[data-h-icon="angle-down"]'));
             expect(horizontalIcons.length).toBeGreaterThan(0);
 
             // Test vertical orientation
             const verticalFixture = TestBed.createComponent(TestVerticalMegaMenuComponent);
             verticalFixture.detectChanges();
 
-            const verticalIcons = verticalFixture.debugElement.queryAll(By.css('svg[data-p-icon="angle-right"]'));
+            const verticalIcons = verticalFixture.debugElement.queryAll(By.css('svg[data-h-icon="angle-right"]'));
             expect(verticalIcons.length).toBeGreaterThan(0);
         });
     });
@@ -619,7 +619,7 @@ describe('MegaMenu', () => {
             expect(disabledMegaMenu.isItemDisabled(functionDisabledItem)).toBe(true);
         });
 
-        it('should set data-p-disabled attribute for disabled items', () => {
+        it('should set data-h-disabled attribute for disabled items', () => {
             const disabledFixture = TestBed.createComponent(TestDisabledMegaMenuComponent);
             disabledFixture.detectChanges();
 
@@ -628,17 +628,17 @@ describe('MegaMenu', () => {
             // Check if items exist and have attributes
             if (itemElements.length > 0) {
                 // First item should not be disabled (or may not have the attribute)
-                const firstItemDisabled = itemElements[0].nativeElement.getAttribute('data-p-disabled');
+                const firstItemDisabled = itemElements[0].nativeElement.getAttribute('data-h-disabled');
                 expect(firstItemDisabled === 'false' || firstItemDisabled === null).toBe(true);
 
                 if (itemElements.length > 1) {
                     // Second item should be disabled
-                    expect(itemElements[1].nativeElement.getAttribute('data-p-disabled')).toBe('true');
+                    expect(itemElements[1].nativeElement.getAttribute('data-h-disabled')).toBe('true');
                 }
 
                 if (itemElements.length > 2) {
                     // Third item should be disabled (function returns true)
-                    expect(itemElements[2].nativeElement.getAttribute('data-p-disabled')).toBe('true');
+                    expect(itemElements[2].nativeElement.getAttribute('data-h-disabled')).toBe('true');
                 }
             }
         });
@@ -918,7 +918,7 @@ describe('MegaMenu', () => {
         });
 
         it('should have generated id on host element', () => {
-            // MegaMenu sets id on the host element (p-megamenu), not on the ul element
+            // MegaMenu sets id on the host element (h-megamenu), not on the ul element
             const hostElement = fixture.debugElement.query(By.directive(MegaMenu)).nativeElement;
             expect(hostElement.getAttribute('id')).toBeTruthy();
             expect(hostElement.getAttribute('id')).toBe(megaMenuInstance.id());
@@ -1367,13 +1367,13 @@ describe('MegaMenu', () => {
             });
         });
 
-        describe('Case 2: Objects with class, style, data-p-*, aria-*', () => {
+        describe('Case 2: Objects with class, style, data-h-*, aria-*', () => {
             it('should apply object PT with class, style, and attributes to root', () => {
                 fixture.componentRef.setInput('pt', {
                     root: {
                         class: 'OBJECT_ROOT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1381,7 +1381,7 @@ describe('MegaMenu', () => {
 
                 const hostElement = fixture.debugElement.query(By.directive(MegaMenu)).nativeElement;
                 expect(hostElement.classList.contains('OBJECT_ROOT_CLASS')).toBe(true);
-                expect(hostElement.getAttribute('data-p-test')).toBe('true');
+                expect(hostElement.getAttribute('data-h-test')).toBe('true');
                 expect(hostElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -1391,7 +1391,7 @@ describe('MegaMenu', () => {
                     button: {
                         class: 'BUTTON_OBJECT_CLASS',
                         style: { color: 'blue' },
-                        'data-p-button': true
+                        'data-h-button': true
                     }
                 });
                 megaMenuInstance.queryMatches.set(true);
@@ -1400,7 +1400,7 @@ describe('MegaMenu', () => {
                 const buttonElement = fixture.debugElement.query(By.css('a[role="button"]'));
                 if (buttonElement) {
                     expect(buttonElement.nativeElement.classList.contains('BUTTON_OBJECT_CLASS')).toBe(true);
-                    expect(buttonElement.nativeElement.getAttribute('data-p-button')).toBe('true');
+                    expect(buttonElement.nativeElement.getAttribute('data-h-button')).toBe('true');
                 }
             });
 
@@ -1408,7 +1408,7 @@ describe('MegaMenu', () => {
                 fixture.componentRef.setInput('pt', {
                     item: {
                         class: 'ITEM_OBJECT_CLASS',
-                        'data-p-item': true,
+                        'data-h-item': true,
                         'aria-label': 'ITEM_ARIA'
                     }
                 });
@@ -1417,7 +1417,7 @@ describe('MegaMenu', () => {
                 const items = fixture.debugElement.queryAll(By.css('li[data-pc-section="item"]'));
                 if (items.length > 0) {
                     expect(items[0].nativeElement.classList.contains('ITEM_OBJECT_CLASS')).toBe(true);
-                    expect(items[0].nativeElement.getAttribute('data-p-item')).toBe('true');
+                    expect(items[0].nativeElement.getAttribute('data-h-item')).toBe('true');
                 }
             });
         });
@@ -1581,7 +1581,7 @@ describe('MegaMenu', () => {
                                     root: { class: 'GLOBAL_CSS_CLASS' },
                                     global: {
                                         css: `
-                                            .p-megamenu {
+                                            .h-megamenu {
                                                 border: 1px solid red !important;
                                             }
                                         `

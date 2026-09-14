@@ -23,7 +23,7 @@ const AVATAR_INSTANCE = new InjectionToken<Avatar>('AVATAR_INSTANCE');
         '[class]': "cn(cx('root'), styleClass())",
         '[attr.aria-label]': 'ariaLabel()',
         '[attr.aria-labelledby]': 'ariaLabelledBy()',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     providers: [AvatarStyle, { provide: AVATAR_INSTANCE, useExisting: Avatar }, { provide: PARENT_INSTANCE, useExisting: Avatar }],
     hostDirectives: [Bind]

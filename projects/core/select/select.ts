@@ -152,7 +152,7 @@ export class SelectItem extends BaseComponent {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[attr.id]': 'id()',
-        '[attr.data-p]': 'containerDataP',
+        '[attr.data-h]': 'containerDataP',
         '(click)': 'onContainerClick($event)'
     },
     providers: [SELECT_VALUE_ACCESSOR, SelectStyle, { provide: SELECT_INSTANCE, useExisting: Select }, { provide: PARENT_INSTANCE, useExisting: Select }],
@@ -770,7 +770,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             return this.getOptionLabel(selectedOption);
         }
 
-        return this.placeholder() || 'p-emptylabel';
+        return this.placeholder() || 'h-emptylabel';
     });
 
     selectedOption: any;
@@ -928,7 +928,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
         }
 
         if (this.selectedOptionUpdated && this.itemsWrapper) {
-            let selectedItem = <any>findSingle(this.overlayViewChild()?.overlayViewChild()?.nativeElement, 'li[data-p-selected="true"]');
+            let selectedItem = <any>findSingle(this.overlayViewChild()?.overlayViewChild()?.nativeElement, 'li[data-h-selected="true"]');
             if (selectedItem) {
                 scrollInView(this.itemsWrapper, selectedItem);
             }
@@ -1007,7 +1007,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
 
     updatePlaceHolderForFloatingLabel(): void {
         const parentElement = this.el.nativeElement.parentElement;
-        const isInFloatingLabel = parentElement?.classList.contains('p-float-label');
+        const isInFloatingLabel = parentElement?.classList.contains('h-float-label');
         if (parentElement && isInFloatingLabel && !this.selectedOption) {
             const label = parentElement.querySelector('label');
             if (label) {
@@ -1164,7 +1164,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
                     }, 10);
                 }
             } else {
-                let selectedListItem = findSingle(this.itemsWrapper as HTMLElement, '[data-p-selected="true"]');
+                let selectedListItem = findSingle(this.itemsWrapper as HTMLElement, '[data-h-selected="true"]');
                 if (selectedListItem) {
                     selectedListItem.scrollIntoView({ block: 'nearest', inline: 'nearest' });
                 }
@@ -1596,19 +1596,19 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
     }
 
     onFirstHiddenFocus(event) {
-        const focusableEl = event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.el?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
+        const focusableEl = event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.el?.nativeElement, ':not([data-h-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
         focus(focusableEl);
     }
 
     onLastHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-h-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
 
     hasFocusableElements() {
-        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-h-hidden-focusable="true"])').length > 0;
     }
 
     onBackspaceKey(event: KeyboardEvent, pressedInInputText = false) {
@@ -1730,7 +1730,7 @@ export class Select extends BaseInput<SelectPassThrough> implements AfterViewIni
             clearable: this.showClear(),
             disabled: this.$disabled(),
             [this.size() as string]: this.size(),
-            empty: !this.editable() && !this.selectedItemTemplate() && (!this.label?.() || this.label() === 'p-emptylabel' || this.label()?.length === 0)
+            empty: !this.editable() && !this.selectedItemTemplate() && (!this.label?.() || this.label() === 'h-emptylabel' || this.label()?.length === 0)
         });
     }
 

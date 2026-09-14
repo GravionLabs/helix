@@ -6,7 +6,7 @@ import { Tag } from './tag';
 
 @Component({
     standalone: false,
-    template: ` <p-tag [value]="value" [icon]="icon" [severity]="severity" [rounded]="rounded" [styleClass]="styleClass"> </p-tag> `
+    template: ` <h-tag [value]="value" [icon]="icon" [severity]="severity" [rounded]="rounded" [styleClass]="styleClass"> </h-tag> `
 })
 class TestBasicTagComponent {
     value: string | undefined = 'Test Tag';
@@ -18,18 +18,18 @@ class TestBasicTagComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-tag value="Icon Tag" icon="pi pi-check"></p-tag> `
+    template: ` <h-tag value="Icon Tag" icon="pi pi-check"></h-tag> `
 })
 class TestIconTagComponent {}
 
 @Component({
     standalone: false,
     template: `
-        <p-tag value="Template Tag">
+        <h-tag value="Template Tag">
             <ng-template #icon>
                 <i class="custom-icon">✓</i>
             </ng-template>
-        </p-tag>
+        </h-tag>
     `
 })
 class TestIconTemplateTagComponent {}
@@ -37,11 +37,11 @@ class TestIconTemplateTagComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-tag value="PTemplate Tag">
+        <h-tag value="PTemplate Tag">
             <ng-template pTemplate="icon">
-                <span class="p-template-icon">⭐</span>
+                <span class="h-template-icon">⭐</span>
             </ng-template>
-        </p-tag>
+        </h-tag>
     `
 })
 class TestPTemplateTagComponent {}
@@ -49,22 +49,22 @@ class TestPTemplateTagComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-tag>
+        <h-tag>
             <span class="content-projection">Custom Content</span>
-        </p-tag>
+        </h-tag>
     `
 })
 class TestContentProjectionTagComponent {}
 
 @Component({
     standalone: false,
-    template: ` <p-tag value="Success Tag" severity="success" icon="pi pi-check" [rounded]="true"> </p-tag> `
+    template: ` <h-tag value="Success Tag" severity="success" icon="pi pi-check" [rounded]="true"> </h-tag> `
 })
 class TestSeverityTagComponent {}
 
 @Component({
     standalone: false,
-    template: ` <p-tag [value]="value" [severity]="severity" [style]="style" [styleClass]="styleClass"> </p-tag> `
+    template: ` <h-tag [value]="value" [severity]="severity" [style]="style" [styleClass]="styleClass"> </h-tag> `
 })
 class TestStyleTagComponent {
     value = 'Styled Tag';
@@ -76,14 +76,14 @@ class TestStyleTagComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tag value="Multiple Icons">
+        <h-tag value="Multiple Icons">
             <ng-template #icon>
                 <i class="template-icon">🏷️</i>
             </ng-template>
             <ng-template pTemplate="icon">
-                <span class="p-template-icon">📌</span>
+                <span class="h-template-icon">📌</span>
             </ng-template>
-        </p-tag>
+        </h-tag>
     `
 })
 class TestMultipleIconTemplatesComponent {}
@@ -430,7 +430,7 @@ describe('Tag', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await pTemplateFixture.whenStable();
 
-            const pTemplateIcon = pTemplateFixture.debugElement.query(By.css('.p-template-icon'));
+            const pTemplateIcon = pTemplateFixture.debugElement.query(By.css('.h-template-icon'));
             if (pTemplateIcon) {
                 expect(pTemplateIcon).toBeTruthy();
                 expect(pTemplateIcon.nativeElement.textContent.trim()).toBe('⭐');
@@ -1057,7 +1057,7 @@ describe('Tag', () => {
         @Component({
             standalone: true,
             imports: [Tag],
-            template: `<p-tag [value]="value()" [icon]="icon()" [severity]="severity()" [rounded]="rounded()" [pt]="pt()"></p-tag>`
+            template: `<h-tag [value]="value()" [icon]="icon()" [severity]="severity()" [rounded]="rounded()" [pt]="pt()"></h-tag>`
         })
         class TestPTTagComponent {
             value = input<string | undefined>('PT Tag');
@@ -1073,7 +1073,7 @@ describe('Tag', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestPTTagComponent);
             fixture.detectChanges();
-            tagElement = fixture.debugElement.query(By.css('p-tag'));
+            tagElement = fixture.debugElement.query(By.css('h-tag'));
         });
 
         describe('Case 1: Simple string classes', () => {

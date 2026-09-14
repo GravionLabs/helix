@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-dock {
+    .h-dock {
         position: absolute;
         z-index: 1;
         display: flex;
@@ -8,7 +8,7 @@ export const style = /*css*/ `
         pointer-events: none;
     }
 
-    .p-dock-list-container {
+    .h-dock-list-container {
         display: flex;
         pointer-events: auto;
         background: dt('dock.background');
@@ -17,7 +17,7 @@ export const style = /*css*/ `
         border-radius: dt('dock.border.radius');
     }
 
-    .p-dock-list {
+    .h-dock-list {
         margin: 0;
         padding: 0;
         list-style: none;
@@ -27,20 +27,20 @@ export const style = /*css*/ `
         outline: 0 none;
     }
 
-    .p-dock-item {
+    .h-dock-item {
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         will-change: transform;
         padding: dt('dock.item.padding');
         border-radius: dt('dock.item.border.radius');
     }
 
-    .p-dock-item.p-focus {
+    .h-dock-item.h-focus {
         box-shadow: dt('dock.item.focus.ring.shadow');
         outline: dt('dock.item.focus.ring.width') dt('dock.item.focus.ring.style') dt('dock.item.focus.ring.color');
         outline-offset: dt('dock.item.focus.ring.offset');
     }
 
-    .p-dock-item-link {
+    .h-dock-item-link {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -52,61 +52,61 @@ export const style = /*css*/ `
         height: dt('dock.item.size');
     }
 
-    .p-dock-top {
+    .h-dock-top {
         left: 0;
         top: 0;
         width: 100%;
     }
 
-    .p-dock-bottom {
+    .h-dock-bottom {
         left: 0;
         bottom: 0;
         width: 100%;
     }
 
-    .p-dock-right {
+    .h-dock-right {
         right: 0;
         top: 0;
         height: 100%;
     }
 
-    .p-dock-right .p-dock-list {
+    .h-dock-right .h-dock-list {
         flex-direction: column;
     }
 
-    .p-dock-left {
+    .h-dock-left {
         left: 0;
         top: 0;
         height: 100%;
     }
 
-    .p-dock-left .p-dock-list {
+    .h-dock-left .h-dock-list {
         flex-direction: column;
     }
 
-    .p-dock-mobile.p-dock-top .p-dock-list-container,
-    .p-dock-mobile.p-dock-bottom .p-dock-list-container {
+    .h-dock-mobile.h-dock-top .h-dock-list-container,
+    .h-dock-mobile.h-dock-bottom .h-dock-list-container {
         overflow-x: auto;
         width: 100%;
     }
 
-    .p-dock-mobile.p-dock-top .p-dock-list-container .p-dock-list,
-    .p-dock-mobile.p-dock-bottom .p-dock-list-container .p-dock-list {
+    .h-dock-mobile.h-dock-top .h-dock-list-container .h-dock-list,
+    .h-dock-mobile.h-dock-bottom .h-dock-list-container .h-dock-list {
         margin: 0 auto;
     }
 
-    .p-dock-mobile.p-dock-left .p-dock-list-container,
-    .p-dock-mobile.p-dock-right .p-dock-list-container {
+    .h-dock-mobile.h-dock-left .h-dock-list-container,
+    .h-dock-mobile.h-dock-right .h-dock-list-container {
         overflow-y: auto;
         height: 100%;
     }
 
-    .p-dock-mobile.p-dock-left .p-dock-list-container .p-dock-list,
-    .p-dock-mobile.p-dock-right .p-dock-list-container .p-dock-list {
+    .h-dock-mobile.h-dock-left .h-dock-list-container .h-dock-list,
+    .h-dock-mobile.h-dock-right .h-dock-list-container .h-dock-list {
         margin: auto 0;
     }
 
-    .p-dock-mobile .p-dock-list .p-dock-item {
+    .h-dock-mobile .h-dock-list .h-dock-item {
         transform: none;
         margin: 0;
     }

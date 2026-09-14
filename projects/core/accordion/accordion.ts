@@ -80,8 +80,8 @@ const ACCORDION_INSTANCE = new InjectionToken<Accordion>('ACCORDION_INSTANCE');
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': 'cx("panel")',
-        '[attr.data-p-disabled]': 'disabled()',
-        '[attr.data-p-active]': 'active()'
+        '[attr.data-h-disabled]': 'disabled()',
+        '[attr.data-h-active]': 'active()'
     },
     hostDirectives: [Bind],
     providers: [AccordionStyle, { provide: ACCORDION_PANEL_INSTANCE, useExisting: AccordionPanel }, { provide: PARENT_INSTANCE, useExisting: AccordionPanel }]
@@ -141,10 +141,10 @@ export class AccordionPanel extends BaseComponent<AccordionPanelPassThrough> {
         '[attr.aria-disabled]': 'disabled()',
         '[attr.role]': '"button"',
         '[attr.tabindex]': 'disabled()?"-1":"0"',
-        '[attr.data-p-active]': 'active()',
-        '[attr.data-p-disabled]': 'disabled()',
+        '[attr.data-h-active]': 'active()',
+        '[attr.data-h-disabled]': 'disabled()',
         '[style.user-select]': '"none"',
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h]': 'dataP',
         '(click)': 'onClick($event)',
         '(focus)': 'onFocus()',
         '(keydown)': 'onKeydown($event)'
@@ -252,13 +252,13 @@ export class AccordionHeader extends BaseComponent<AccordionHeaderPassThrough> {
     private findNextPanel(panelElement, selfCheck = false) {
         const element = selfCheck ? panelElement : panelElement.nextElementSibling;
 
-        return element ? (getAttribute(element, 'data-p-disabled') ? this.findNextPanel(element) : this.findHeader(element)) : null;
+        return element ? (getAttribute(element, 'data-h-disabled') ? this.findNextPanel(element) : this.findHeader(element)) : null;
     }
 
     private findPrevPanel(panelElement, selfCheck = false) {
         const element = selfCheck ? panelElement : panelElement.previousElementSibling;
 
-        return element ? (getAttribute(element, 'data-p-disabled') ? this.findPrevPanel(element) : this.findHeader(element)) : null;
+        return element ? (getAttribute(element, 'data-h-disabled') ? this.findPrevPanel(element) : this.findHeader(element)) : null;
     }
 
     private findFirstPanel() {
@@ -319,7 +319,7 @@ export class AccordionHeader extends BaseComponent<AccordionHeaderPassThrough> {
     imports: [BindModule, MotionModule],
     standalone: true,
     template: `
-        <h-motion [visible]="active()" name="p-collapsible" hideStrategy="visibility" [mountOnEnter]="false" [unmountOnLeave]="false" [options]="computedMotionOptions()">
+        <h-motion [visible]="active()" name="h-collapsible" hideStrategy="visibility" [mountOnEnter]="false" [unmountOnLeave]="false" [options]="computedMotionOptions()">
             <div [hBind]="ptm('contentWrapper', ptParams())" [class]="cx('contentWrapper')">
                 <div [hBind]="ptm('content', ptParams())" [class]="cx('content')">
                     <ng-content />
@@ -333,7 +333,7 @@ export class AccordionHeader extends BaseComponent<AccordionHeaderPassThrough> {
         '[class]': 'cx("contentContainer")',
         '[attr.id]': 'id()',
         '[attr.role]': '"region"',
-        '[attr.data-p-active]': 'active()',
+        '[attr.data-h-active]': 'active()',
         '[attr.aria-labelledby]': 'ariaLabelledby()'
     },
     hostDirectives: [Bind],
@@ -525,14 +525,14 @@ export class Accordion extends BaseComponent<AccordionPassThrough> implements Bl
         const nextTabElement = selfCheck ? tabElement : tabElement.nextElementSibling;
         const headerElement = findSingle(nextTabElement, '[data-pc-section="accordionheader"]');
 
-        return headerElement ? (getAttribute(headerElement, 'data-p-disabled') ? this.findNextHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement as HTMLElement, '[data-pc-section="accordionheader"]')) : null;
+        return headerElement ? (getAttribute(headerElement, 'data-h-disabled') ? this.findNextHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement as HTMLElement, '[data-pc-section="accordionheader"]')) : null;
     }
 
     findPrevHeaderAction(tabElement, selfCheck = false) {
         const prevTabElement = selfCheck ? tabElement : tabElement.previousElementSibling;
         const headerElement = findSingle(prevTabElement, '[data-pc-section="accordionheader"]');
 
-        return headerElement ? (getAttribute(headerElement, 'data-p-disabled') ? this.findPrevHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement as HTMLElement, '[data-pc-section="accordionheader"]')) : null;
+        return headerElement ? (getAttribute(headerElement, 'data-h-disabled') ? this.findPrevHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement as HTMLElement, '[data-pc-section="accordionheader"]')) : null;
     }
 
     findFirstHeaderAction() {

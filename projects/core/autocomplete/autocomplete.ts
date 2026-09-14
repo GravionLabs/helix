@@ -77,7 +77,7 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p]': 'containerDataP',
+        '[attr.data-h]': 'containerDataP',
         '(click)': 'onHostClick($event)'
     },
     hostDirectives: [Bind]
@@ -1608,7 +1608,7 @@ export class AutoComplete extends BaseInput<AutoCompletePassThrough> {
                     scrl?.scrollToIndex(selectedIndex);
                 }
             } else {
-                let selectedListItem = findSingle(this.itemsWrapper as HTMLElement, '[data-pc-section="option"][data-p-selected="true"]');
+                let selectedListItem = findSingle(this.itemsWrapper as HTMLElement, '[data-pc-section="option"][data-h-selected="true"]');
 
                 if (selectedListItem) {
                     selectedListItem.scrollIntoView({ block: 'nearest', inline: 'center' });

@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     standalone: false,
     template: `
-        <p-inputmask
+        <h-inputmask
             [(ngModel)]="value"
             [mask]="mask"
             [slotChar]="slotChar"
@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
             (onKeydown)="onKeydownEvent($event)"
             (onClear)="onClearEvent($event)"
         >
-        </p-inputmask>
+        </h-inputmask>
     `
 })
 class TestBasicInputMaskComponent {
@@ -79,7 +79,7 @@ class TestBasicInputMaskComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-inputmask [mask]="mask" formControlName="maskedValue" [unmask]="unmask"> </p-inputmask>
+            <h-inputmask [mask]="mask" formControlName="maskedValue" [unmask]="unmask"> </h-inputmask>
         </form>
     `
 })
@@ -95,12 +95,12 @@ class TestFormInputMaskComponent {
 @Component({
     standalone: false,
     template: `
-        <p-inputmask [mask]="mask" [(ngModel)]="value" [showClear]="showClear" [placeholder]="placeholder" [autoClear]="autoClear" [unmask]="unmask">
+        <h-inputmask [mask]="mask" [(ngModel)]="value" [showClear]="showClear" [placeholder]="placeholder" [autoClear]="autoClear" [unmask]="unmask">
             <!-- Clear icon template with both pTemplate and #template -->
             <ng-template pTemplate="clearicon" #clearicon>
                 <i class="pi pi-times-circle custom-clear-icon" data-testid="clear-icon-template"></i>
             </ng-template>
-        </p-inputmask>
+        </h-inputmask>
     `
 })
 class TestTemplateInputMaskComponent {
@@ -116,9 +116,9 @@ class TestTemplateInputMaskComponent {
     standalone: false,
     template: `
         <div>
-            <p-inputmask [mask]="phoneMask" [(ngModel)]="phoneValue" placeholder="Phone Number"> </p-inputmask>
-            <p-inputmask [mask]="ssnMask" [(ngModel)]="ssnValue" [unmask]="true" placeholder="SSN"> </p-inputmask>
-            <p-inputmask [mask]="dateMask" [(ngModel)]="dateValue" [slotChar]="'mm/dd/yyyy'.charAt(0)" placeholder="Date"> </p-inputmask>
+            <h-inputmask [mask]="phoneMask" [(ngModel)]="phoneValue" placeholder="Phone Number"> </h-inputmask>
+            <h-inputmask [mask]="ssnMask" [(ngModel)]="ssnValue" [unmask]="true" placeholder="SSN"> </h-inputmask>
+            <h-inputmask [mask]="dateMask" [(ngModel)]="dateValue" [slotChar]="'mm/dd/yyyy'.charAt(0)" placeholder="Date"> </h-inputmask>
         </div>
     `
 })
@@ -335,7 +335,7 @@ describe('InputMask', () => {
             spyOn(testComponent, 'onInputFocus');
             testFixture.detectChanges();
 
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             const focusEvent = new Event('focus');
             inputMask.onInputFocus(focusEvent);
             await testFixture.whenStable();
@@ -347,7 +347,7 @@ describe('InputMask', () => {
             spyOn(testComponent, 'onInputBlur');
             testFixture.detectChanges();
 
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             const blurEvent = new Event('blur');
             inputMask.onInputBlur(blurEvent);
             await testFixture.whenStable();
@@ -360,7 +360,7 @@ describe('InputMask', () => {
             testFixture.detectChanges();
 
             // Simulate keydown event through the component's output binding
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             if (inputMask.onKeydown) {
                 const keyEvent = new KeyboardEvent('keydown', { keyCode: 49 });
                 inputMask.onKeydown.emit(keyEvent);
@@ -374,7 +374,7 @@ describe('InputMask', () => {
             spyOn(testComponent, 'onInputChange');
             testFixture.detectChanges();
 
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             const inputEvent = new Event('input');
             inputMask.onInputChange(inputEvent);
 
@@ -387,7 +387,7 @@ describe('InputMask', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             if (inputMask.onComplete) {
                 inputMask.onComplete.emit();
                 expect(testComponent.onMaskComplete).toHaveBeenCalled();
@@ -404,7 +404,7 @@ describe('InputMask', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const inputMask = testFixture.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMask = testFixture.debugElement.query(By.css('h-inputmask')).componentInstance;
             if (inputMask.onClear) {
                 inputMask.onClear.emit();
                 expect(testComponent.onClearEvent).toHaveBeenCalled();
@@ -583,7 +583,7 @@ describe('InputMask', () => {
             const templateComponent = TestBed.createComponent(TestTemplateInputMaskComponent);
             templateComponent.detectChanges();
 
-            const inputMaskInstance = templateComponent.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMaskInstance = templateComponent.debugElement.query(By.css('h-inputmask')).componentInstance;
             expect(inputMaskInstance).toBeTruthy();
             expect(inputMaskInstance._clearIconTemplate !== undefined || inputMaskInstance._clearIconTemplate === undefined).toBe(true);
         });
@@ -596,7 +596,7 @@ describe('InputMask', () => {
             await templateComponent.whenStable();
 
             // Clear icon should be visible when value exists and showClear is true
-            const inputMaskInstance = templateComponent.debugElement.query(By.css('p-inputmask')).componentInstance;
+            const inputMaskInstance = templateComponent.debugElement.query(By.css('h-inputmask')).componentInstance;
             expect(inputMaskInstance.showClear()).toBe(true);
         });
     });
@@ -612,7 +612,7 @@ describe('InputMask', () => {
         });
 
         it('should handle different mask patterns simultaneously', () => {
-            const inputMasks = multiFixture.debugElement.queryAll(By.css('p-inputmask'));
+            const inputMasks = multiFixture.debugElement.queryAll(By.css('h-inputmask'));
 
             expect(inputMasks.length).toBe(3);
             expect(multiComponent.phoneMask).toBe('(999) 999-9999');
@@ -621,7 +621,7 @@ describe('InputMask', () => {
         });
 
         it('should handle unmasked values independently', () => {
-            const inputMasks = multiFixture.debugElement.queryAll(By.css('p-inputmask'));
+            const inputMasks = multiFixture.debugElement.queryAll(By.css('h-inputmask'));
             expect(inputMasks.length).toBe(3);
             // Test that components are properly rendered
             expect(inputMasks[1]).toBeTruthy();
@@ -914,7 +914,7 @@ describe('InputMask', () => {
 
         beforeEach(async () => {
             templatesFixture = TestBed.createComponent(TestTemplateInputMaskComponent);
-            templatesInputMaskElement = templatesFixture.debugElement.query(By.css('p-inputmask'));
+            templatesInputMaskElement = templatesFixture.debugElement.query(By.css('h-inputmask'));
             templatesFixture.detectChanges();
         });
 
@@ -1183,7 +1183,7 @@ describe('InputMask', () => {
                         root: {
                             class: 'PT_OBJECT_CLASS',
                             style: { 'background-color': 'red' },
-                            'data-p-test': 'true',
+                            'data-h-test': 'true',
                             'aria-label': 'PT_ARIA_LABEL'
                         }
                     }
@@ -1196,7 +1196,7 @@ describe('InputMask', () => {
                 const inputElement = fixture.nativeElement.querySelector('input');
                 expect(inputElement?.classList.contains('PT_OBJECT_CLASS')).toBe(true);
                 expect(inputElement?.style.backgroundColor).toBe('red');
-                expect(inputElement?.getAttribute('data-p-test')).toBe('true');
+                expect(inputElement?.getAttribute('data-h-test')).toBe('true');
                 expect(inputElement?.getAttribute('aria-label')).toBe('PT_ARIA_LABEL');
             });
 
@@ -1361,7 +1361,7 @@ describe('InputMask', () => {
             @Component({
                 standalone: true,
                 imports: [InputMask, FormsModule],
-                template: `<p-inputmask [mask]="'999-99-9999'" [pt]="{ pcInputText: { root: 'INLINE_PT_CLASS' } }" />`
+                template: `<h-inputmask [mask]="'999-99-9999'" [pt]="{ pcInputText: { root: 'INLINE_PT_CLASS' } }" />`
             })
             class InlineTestComponent {}
 
@@ -1376,7 +1376,7 @@ describe('InputMask', () => {
             @Component({
                 standalone: true,
                 imports: [InputMask, FormsModule],
-                template: `<p-inputmask [mask]="'999-99-9999'" [pt]="{ pcInputText: { root: { class: 'INLINE_PT_OBJECT_CLASS' } } }" />`
+                template: `<h-inputmask [mask]="'999-99-9999'" [pt]="{ pcInputText: { root: { class: 'INLINE_PT_OBJECT_CLASS' } } }" />`
             })
             class InlineObjectTestComponent {}
 

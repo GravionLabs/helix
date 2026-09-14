@@ -4,9 +4,9 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-tabs p-component',
+        'h-tabs h-component',
         {
-            'p-tabs-scrollable': instance.scrollable()
+            'h-tabs-scrollable': instance.scrollable()
         }
     ]
 };
@@ -34,39 +34,39 @@ export enum TabsClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tabs',
+    root = 'h-tabs',
     /**
      * Class name of the wrapper element
      */
-    list = 'p-tablist',
+    list = 'h-tablist',
     /**
      * Class name of the content element
      */
-    content = 'p-tablist-content',
+    content = 'h-tablist-content',
     /**
      * Class name of the tab list element
      */
-    tablist = 'p-tablist-tab-list',
+    tablist = 'h-tablist-tab-list',
     /**
      * Class name of the tab list element
      */
-    tab = 'p-tab',
+    tab = 'h-tab',
     /**
      * Class name of the inkbar element
      */
-    inkbar = 'p-tablist-active-bar',
+    inkbar = 'h-tablist-active-bar',
     /**
      * Class name of the navigation buttons
      */
-    button = 'p-tablist-nav-button',
+    button = 'h-tablist-nav-button',
     /**
      * Class name of the tab panels wrapper
      */
-    tabpanels = 'p-tabpanels',
+    tabpanels = 'h-tabpanels',
     /**
      * Class name of the tab panel element
      */
-    tabpanel = 'p-tabs-panel'
+    tabpanel = 'h-tabs-panel'
 }
 
 export interface TabsStyle extends BaseStyle {}

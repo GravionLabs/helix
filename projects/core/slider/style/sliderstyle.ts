@@ -9,17 +9,17 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-slider p-component',
+        'h-slider h-component',
         {
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-slider-horizontal': instance.orientation() === 'horizontal',
-            'p-slider-vertical': instance.orientation() === 'vertical',
-            'p-slider-animate': instance.animate()
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-slider-horizontal': instance.orientation() === 'horizontal',
+            'h-slider-vertical': instance.orientation() === 'vertical',
+            'h-slider-animate': instance.animate()
         }
     ],
-    range: 'p-slider-range',
-    handle: 'p-slider-handle'
+    range: 'h-slider-range',
+    handle: 'h-slider-handle'
 };
 
 @Injectable()
@@ -46,15 +46,15 @@ export enum SliderClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-slider',
+    root = 'h-slider',
     /**
      * Class name of the range element
      */
-    range = 'p-slider-range',
+    range = 'h-slider-range',
     /**
      * Class name of the handle element
      */
-    handle = 'p-slider-handle'
+    handle = 'h-slider-handle'
 }
 
 export interface SliderStyle extends BaseStyle {}

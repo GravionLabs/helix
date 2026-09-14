@@ -1,4 +1,4 @@
-<div class="p-hidden-accessible" [hBind]="ptm('hiddenInputContainer')" [attr.data-p-hidden-accessible]="true">
+<div class="h-hidden-accessible" [hBind]="ptm('hiddenInputContainer')" [attr.data-h-hidden-accessible]="true">
   <input
     #focusInput
     type="text"
@@ -14,7 +14,7 @@
     [attr.aria-haspopup]="'tree'"
     [attr.aria-expanded]="overlayVisible ?? false"
     [attr.aria-labelledby]="ariaLabelledBy()"
-    [attr.aria-label]="ariaLabel() || (label === 'p-emptylabel' ? undefined : label)"
+    [attr.aria-label]="ariaLabel() || (label === 'h-emptylabel' ? undefined : label)"
     [hAutoFocus]="autofocus()"
     [hBind]="ptm('hiddenInput')"
     />
@@ -41,7 +41,7 @@
 </div>
 @if (checkValue() && !$disabled() && showClear()) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" />
+    <svg data-h-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" />
   }
   @if (clearIconTemplate() || clearIconTemplate()) {
     <span [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')">
@@ -51,7 +51,7 @@
 }
 <div [class]="cx('dropdown')" role="button" aria-haspopup="tree" [attr.aria-expanded]="overlayVisible ?? false" [attr.aria-label]="'treeselect trigger'" [hBind]="ptm('dropdown')">
   @if (!triggerIconTemplate() && !_triggerIconTemplate && !dropdownIconTemplate() && !_dropdownIconTemplate) {
-    <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
+    <svg data-h-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
   }
   @if (triggerIconTemplate() || _triggerIconTemplate || dropdownIconTemplate() || _dropdownIconTemplate) {
     <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
@@ -79,11 +79,11 @@
       <span
         #firstHiddenFocusableEl
         role="presentation"
-        class="p-hidden-accessible p-hidden-focusable"
+        class="h-hidden-accessible h-hidden-focusable"
         [attr.tabindex]="0"
         (focus)="onFirstHiddenFocus($event)"
-        [attr.data-p-hidden-accessible]="true"
-        [attr.data-p-hidden-focusable]="true"
+        [attr.data-h-hidden-accessible]="true"
+        [attr.data-h-hidden-focusable]="true"
         [hBind]="ptm('hiddenFirstFocusableEl')"
         >
       </span>
@@ -150,11 +150,11 @@
       <span
         #lastHiddenFocusableEl
         role="presentation"
-        class="p-hidden-accessible p-hidden-focusable"
+        class="h-hidden-accessible h-hidden-focusable"
         [attr.tabindex]="0"
         (focus)="onLastHiddenFocus($event)"
-        [attr.data-p-hidden-accessible]="true"
-        [attr.data-p-hidden-focusable]="true"
+        [attr.data-h-hidden-accessible]="true"
+        [attr.data-h-hidden-focusable]="true"
         [hBind]="ptm('hiddenLastFocusableEl')"
       ></span>
     </div>

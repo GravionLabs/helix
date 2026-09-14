@@ -128,16 +128,16 @@ export class Image extends BaseComponent<ImagePassThrough> {
     readonly hideTransitionOptions = input<string>('150ms cubic-bezier(0, 0, 0.2, 1)');
     /**
      * Enter animation class name of modal.
-     * @defaultValue 'p-modal-enter'
+     * @defaultValue 'h-modal-enter'
      * @group Props
      */
-    modalEnterAnimation = input<string | null | undefined>('p-modal-enter');
+    modalEnterAnimation = input<string | null | undefined>('h-modal-enter');
     /**
      * Leave animation class name of modal.
-     * @defaultValue 'p-modal-leave'
+     * @defaultValue 'h-modal-leave'
      * @group Props
      */
-    modalLeaveAnimation = input<string | null | undefined>('p-modal-leave');
+    modalLeaveAnimation = input<string | null | undefined>('h-modal-leave');
     /**
      * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
      * @defaultValue 'self'

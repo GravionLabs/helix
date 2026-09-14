@@ -1318,7 +1318,7 @@ export class PickList extends BaseComponent {
     getListItems(listType: number) {
         let listElemet = this.getListElement(listType);
 
-        return find(listElemet, 'li.p-picklist-item');
+        return find(listElemet, 'li.h-picklist-item');
     }
 
     getLatestSelectedVisibleOptionIndex(visibleList: any[], selectedItems: any[]): number {
@@ -1423,11 +1423,11 @@ export class PickList extends BaseComponent {
 
                 let innerHTML = `
                 @media screen and (max-width: ${this.breakpoint()}) {
-                    .p-picklist[${this.id}] {
+                    .h-picklist[${this.id}] {
                         flex-direction: column;
                     }
 
-                    .p-picklist[${this.id}] .p-picklist-controls {
+                    .h-picklist[${this.id}] .h-picklist-controls {
                         flex-direction: row;
                     }
                 }`;

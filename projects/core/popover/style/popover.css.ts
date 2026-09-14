@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-popover {
+    .h-popover {
         margin-block-start: dt('popover.gutter');
         background: dt('popover.background');
         color: dt('popover.color');
@@ -9,17 +9,17 @@ export const style = /*css*/ `
         will-change: transform;
     }
 
-    .p-popover-content {
+    .h-popover-content {
         padding: dt('popover.content.padding');
     }
 
-    .p-popover-flipped {
+    .h-popover-flipped {
         margin-block-start: calc(dt('popover.gutter') * -1);
         margin-block-end: dt('popover.gutter');
     }
 
-    .p-popover:after,
-    .p-popover:before {
+    .h-popover:after,
+    .h-popover:before {
         bottom: 100%;
         left: calc(dt('popover.arrow.offset') + dt('popover.arrow.left'));
         content: ' ';
@@ -29,7 +29,7 @@ export const style = /*css*/ `
         pointer-events: none;
     }
 
-    .p-popover:after {
+    .h-popover:after {
         border-width: calc(dt('popover.gutter') - 2px);
         margin-left: calc(-1 * (dt('popover.gutter') - 2px));
         border-style: solid;
@@ -37,7 +37,7 @@ export const style = /*css*/ `
         border-bottom-color: dt('popover.background');
     }
 
-    .p-popover:before {
+    .h-popover:before {
         border-width: dt('popover.gutter');
         margin-left: calc(-1 * dt('popover.gutter'));
         border-style: solid;
@@ -45,18 +45,18 @@ export const style = /*css*/ `
         border-bottom-color: dt('popover.border.color');
     }
 
-    .p-popover-flipped:after,
-    .p-popover-flipped:before {
+    .h-popover-flipped:after,
+    .h-popover-flipped:before {
         bottom: auto;
         top: 100%;
     }
 
-    .p-popover.p-popover-flipped:after {
+    .h-popover.h-popover-flipped:after {
         border-bottom-color: transparent;
         border-top-color: dt('popover.background');
     }
 
-    .p-popover.p-popover-flipped:before {
+    .h-popover.h-popover-flipped:before {
         border-bottom-color: transparent;
         border-top-color: dt('popover.border.color');
     }

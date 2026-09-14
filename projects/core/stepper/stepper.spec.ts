@@ -7,24 +7,24 @@ import { Step, StepItem, StepList, StepPanel, StepPanels, Stepper } from './step
 @Component({
     standalone: false,
     template: `
-        <p-stepper [(value)]="value" [linear]="linear" [transitionOptions]="transitionOptions">
-            <p-step-list>
-                <p-step [value]="1">Step 1</p-step>
-                <p-step [value]="2">Step 2</p-step>
-                <p-step [value]="3" [disabled]="step3Disabled">Step 3</p-step>
-            </p-step-list>
-            <p-step-panels>
-                <p-step-panel [value]="1">
+        <h-stepper [(value)]="value" [linear]="linear" [transitionOptions]="transitionOptions">
+            <h-step-list>
+                <h-step [value]="1">Step 1</h-step>
+                <h-step [value]="2">Step 2</h-step>
+                <h-step [value]="3" [disabled]="step3Disabled">Step 3</h-step>
+            </h-step-list>
+            <h-step-panels>
+                <h-step-panel [value]="1">
                     <div class="panel-content-1">Content for Step 1</div>
-                </p-step-panel>
-                <p-step-panel [value]="2">
+                </h-step-panel>
+                <h-step-panel [value]="2">
                     <div class="panel-content-2">Content for Step 2</div>
-                </p-step-panel>
-                <p-step-panel [value]="3">
+                </h-step-panel>
+                <h-step-panel [value]="3">
                     <div class="panel-content-3">Content for Step 3</div>
-                </p-step-panel>
-            </p-step-panels>
-        </p-stepper>
+                </h-step-panel>
+            </h-step-panels>
+        </h-stepper>
     `
 })
 class TestStepperComponent {
@@ -37,20 +37,20 @@ class TestStepperComponent {
 @Component({
     standalone: false,
     template: `
-        <p-stepper [value]="1">
-            <p-step-item [value]="1">
-                <p-step [value]="1">Vertical Step 1</p-step>
-                <p-step-panel [value]="1">
+        <h-stepper [value]="1">
+            <h-step-item [value]="1">
+                <h-step [value]="1">Vertical Step 1</h-step>
+                <h-step-panel [value]="1">
                     <div class="vertical-content-1">Vertical Content 1</div>
-                </p-step-panel>
-            </p-step-item>
-            <p-step-item [value]="2">
-                <p-step [value]="2">Vertical Step 2</p-step>
-                <p-step-panel [value]="2">
+                </h-step-panel>
+            </h-step-item>
+            <h-step-item [value]="2">
+                <h-step [value]="2">Vertical Step 2</h-step>
+                <h-step-panel [value]="2">
                     <div class="vertical-content-2">Vertical Content 2</div>
-                </p-step-panel>
-            </p-step-item>
-        </p-stepper>
+                </h-step-panel>
+            </h-step-item>
+        </h-stepper>
     `
 })
 class TestVerticalStepperComponent {
@@ -60,29 +60,29 @@ class TestVerticalStepperComponent {
 @Component({
     standalone: false,
     template: `
-        <p-stepper [(value)]="value">
-            <p-step-list>
-                <p-step [value]="1">
+        <h-stepper [(value)]="value">
+            <h-step-list>
+                <h-step [value]="1">
                     <ng-template #content let-activateCallback="activateCallback" let-value="value" let-active="active">
                         <div class="custom-step" (click)="activateCallback()">Custom Step {{ value }} - {{ active ? 'Active' : 'Inactive' }}</div>
                     </ng-template>
-                </p-step>
-                <p-step [value]="2">Regular Step 2</p-step>
-            </p-step-list>
-            <p-step-panels>
-                <p-step-panel [value]="1">
+                </h-step>
+                <h-step [value]="2">Regular Step 2</h-step>
+            </h-step-list>
+            <h-step-panels>
+                <h-step-panel [value]="1">
                     <ng-template #content let-activateCallback="activateCallback" let-value="value" let-active="active">
                         <div class="custom-panel">
                             Custom Panel {{ value }}
                             <button (click)="activateCallback(2)">Next</button>
                         </div>
                     </ng-template>
-                </p-step-panel>
-                <p-step-panel [value]="2">
+                </h-step-panel>
+                <h-step-panel [value]="2">
                     <div class="regular-panel">Regular Panel Content</div>
-                </p-step-panel>
-            </p-step-panels>
-        </p-stepper>
+                </h-step-panel>
+            </h-step-panels>
+        </h-stepper>
     `
 })
 class TestTemplateStepperComponent {
@@ -92,20 +92,20 @@ class TestTemplateStepperComponent {
 @Component({
     standalone: false,
     template: `
-        <p-stepper [value]="1" [pt]="pt">
-            <p-step-list>
-                <p-step [value]="1">PT Test Step 1</p-step>
-                <p-step [value]="2">PT Test Step 2</p-step>
-            </p-step-list>
-            <p-step-panels>
-                <p-step-panel [value]="1">
+        <h-stepper [value]="1" [pt]="pt">
+            <h-step-list>
+                <h-step [value]="1">PT Test Step 1</h-step>
+                <h-step [value]="2">PT Test Step 2</h-step>
+            </h-step-list>
+            <h-step-panels>
+                <h-step-panel [value]="1">
                     <div>PT Test Panel 1</div>
-                </p-step-panel>
-                <p-step-panel [value]="2">
+                </h-step-panel>
+                <h-step-panel [value]="2">
                     <div>PT Test Panel 2</div>
-                </p-step-panel>
-            </p-step-panels>
-        </p-stepper>
+                </h-step-panel>
+            </h-step-panels>
+        </h-stepper>
     `
 })
 class TestPTStepperComponent {
@@ -168,29 +168,29 @@ describe('Stepper', () => {
 
     describe('Step List Rendering', () => {
         it('should render step list', () => {
-            const stepList = fixture.debugElement.query(By.css('p-step-list'));
+            const stepList = fixture.debugElement.query(By.css('h-step-list'));
             expect(stepList).toBeTruthy();
         });
 
         it('should render all steps', () => {
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
             expect(steps.length).toBe(3);
         });
 
         it('should render step content', () => {
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
             expect(steps[0].nativeElement.textContent).toContain('Step 1');
             expect(steps[1].nativeElement.textContent).toContain('Step 2');
             expect(steps[2].nativeElement.textContent).toContain('Step 3');
         });
 
         it('should render step numbers', () => {
-            const stepNumbers = fixture.debugElement.queryAll(By.css('.p-step-number'));
+            const stepNumbers = fixture.debugElement.queryAll(By.css('.h-step-number'));
             expect(stepNumbers.length).toBe(3);
         });
 
         it('should render step separators', () => {
-            const separators = fixture.debugElement.queryAll(By.css('p-stepper-separator'));
+            const separators = fixture.debugElement.queryAll(By.css('h-stepper-separator'));
             // Each step can have separators, so count varies based on layout
             expect(separators.length).toBeGreaterThanOrEqual(2);
         });
@@ -198,12 +198,12 @@ describe('Stepper', () => {
 
     describe('Step Panel Rendering', () => {
         it('should render step panels', () => {
-            const stepPanels = fixture.debugElement.query(By.css('p-step-panels'));
+            const stepPanels = fixture.debugElement.query(By.css('h-step-panels'));
             expect(stepPanels).toBeTruthy();
         });
 
         it('should render all step panels', () => {
-            const panels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const panels = fixture.debugElement.queryAll(By.css('h-step-panel'));
             expect(panels.length).toBe(3);
         });
 
@@ -235,7 +235,7 @@ describe('Stepper', () => {
 
     describe('Step Navigation', () => {
         it('should activate step on click', () => {
-            const step2Button = fixture.debugElement.queryAll(By.css('p-step button'))[1];
+            const step2Button = fixture.debugElement.queryAll(By.css('h-step button'))[1];
 
             step2Button.nativeElement.click();
             fixture.detectChanges();
@@ -249,9 +249,9 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
-            expect(steps[1].nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(steps[0].nativeElement.getAttribute('data-p-active')).toBe('false');
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
+            expect(steps[1].nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(steps[0].nativeElement.getAttribute('data-h-active')).toBe('false');
         });
 
         it('should handle programmatic value update', async () => {
@@ -284,7 +284,7 @@ describe('Stepper', () => {
         });
 
         it('should disable non-active steps in linear mode', () => {
-            const stepButtons = fixture.debugElement.queryAll(By.css('p-step button'));
+            const stepButtons = fixture.debugElement.queryAll(By.css('h-step button'));
             const steps = fixture.debugElement.queryAll(By.directive(Step));
 
             // In linear mode, non-active steps should be disabled
@@ -310,7 +310,7 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const step3Button = fixture.debugElement.queryAll(By.css('p-step button'))[2];
+            const step3Button = fixture.debugElement.queryAll(By.css('h-step button'))[2];
             expect(step3Button.nativeElement.disabled).toBe(true);
         });
 
@@ -320,7 +320,7 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const step3Button = fixture.debugElement.queryAll(By.css('p-step button'))[2];
+            const step3Button = fixture.debugElement.queryAll(By.css('h-step button'))[2];
             step3Button.nativeElement.click();
             fixture.detectChanges();
 
@@ -333,8 +333,8 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const step3 = fixture.debugElement.queryAll(By.css('p-step'))[2];
-            expect(step3.nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            const step3 = fixture.debugElement.queryAll(By.css('h-step'))[2];
+            expect(step3.nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
     });
 
@@ -349,7 +349,7 @@ describe('Stepper', () => {
         });
 
         it('should render vertical step items', () => {
-            const stepItems = verticalFixture.debugElement.queryAll(By.css('p-step-item'));
+            const stepItems = verticalFixture.debugElement.queryAll(By.css('h-step-item'));
             expect(stepItems.length).toBe(2);
         });
 
@@ -364,7 +364,7 @@ describe('Stepper', () => {
         });
 
         it('should show separators in vertical layout', () => {
-            const separators = verticalFixture.debugElement.queryAll(By.css('p-stepper-separator'));
+            const separators = verticalFixture.debugElement.queryAll(By.css('h-stepper-separator'));
             expect(separators.length).toBeGreaterThan(0);
         });
     });
@@ -416,9 +416,9 @@ describe('Stepper', () => {
 
     describe('Accessibility', () => {
         it('should have correct ARIA roles', () => {
-            const stepperElement = fixture.debugElement.query(By.css('p-stepper'));
-            const stepButtons = fixture.debugElement.queryAll(By.css('p-step button'));
-            const stepPanels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const stepperElement = fixture.debugElement.query(By.css('h-stepper'));
+            const stepButtons = fixture.debugElement.queryAll(By.css('h-step button'));
+            const stepPanels = fixture.debugElement.queryAll(By.css('h-step-panel'));
 
             expect(stepperElement.nativeElement.getAttribute('role')).toBe('tablist');
             expect(stepButtons[0].nativeElement.getAttribute('role')).toBe('tab');
@@ -426,8 +426,8 @@ describe('Stepper', () => {
         });
 
         it('should have correct ARIA attributes', () => {
-            const stepButtons = fixture.debugElement.queryAll(By.css('p-step button'));
-            const stepPanels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const stepButtons = fixture.debugElement.queryAll(By.css('h-step button'));
+            const stepPanels = fixture.debugElement.queryAll(By.css('h-step-panel'));
 
             expect(stepButtons[0].nativeElement.getAttribute('aria-controls')).toBeTruthy();
             expect(stepPanels[0].nativeElement.getAttribute('id')).toBeTruthy();
@@ -439,7 +439,7 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
             expect(steps[1].nativeElement.getAttribute('aria-current')).toBe('step');
             expect(steps[0].nativeElement.getAttribute('aria-current')).toBeNull();
         });
@@ -451,7 +451,7 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const step3Button = fixture.debugElement.queryAll(By.css('p-step button'))[2];
+            const step3Button = fixture.debugElement.queryAll(By.css('h-step button'))[2];
             expect(step3Button.nativeElement.tabIndex).toBe(-1);
         });
     });
@@ -481,13 +481,13 @@ describe('Stepper', () => {
 
     describe('CSS Classes and Styling', () => {
         it('should apply correct CSS classes', () => {
-            const stepperElement = fixture.debugElement.query(By.css('p-stepper'));
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
-            const panels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const stepperElement = fixture.debugElement.query(By.css('h-stepper'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
+            const panels = fixture.debugElement.queryAll(By.css('h-step-panel'));
 
-            expect(stepperElement.nativeElement.className).toContain('p-stepper');
-            expect(steps[0].nativeElement.className).toContain('p-step');
-            expect(panels[0].nativeElement.className).toContain('p-steppanel');
+            expect(stepperElement.nativeElement.className).toContain('h-stepper');
+            expect(steps[0].nativeElement.className).toContain('h-step');
+            expect(panels[0].nativeElement.className).toContain('h-steppanel');
         });
 
         it('should apply active state classes', async () => {
@@ -496,19 +496,19 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
-            const panels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
+            const panels = fixture.debugElement.queryAll(By.css('h-step-panel'));
 
-            expect(steps[1].nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(panels[1].nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(steps[1].nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(panels[1].nativeElement.getAttribute('data-h-active')).toBe('true');
         });
     });
 
     describe('Data Attributes', () => {
         it('should have correct data-pc-name attributes', () => {
-            const stepperElement = fixture.debugElement.query(By.css('p-stepper'));
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
-            const panels = fixture.debugElement.queryAll(By.css('p-step-panel'));
+            const stepperElement = fixture.debugElement.query(By.css('h-stepper'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
+            const panels = fixture.debugElement.queryAll(By.css('h-step-panel'));
 
             expect(steps[0].nativeElement.getAttribute('data-pc-name')).toBe('step');
             expect(panels[0].nativeElement.getAttribute('data-pc-name')).toBe('steppanel');
@@ -520,11 +520,11 @@ describe('Stepper', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const step2 = fixture.debugElement.queryAll(By.css('p-step'))[1];
-            const panel2 = fixture.debugElement.queryAll(By.css('p-step-panel'))[1];
+            const step2 = fixture.debugElement.queryAll(By.css('h-step'))[1];
+            const panel2 = fixture.debugElement.queryAll(By.css('h-step-panel'))[1];
 
-            expect(step2.nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(panel2.nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(step2.nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(panel2.nativeElement.getAttribute('data-h-active')).toBe('true');
         });
     });
 
@@ -622,14 +622,14 @@ describe('Stepper', () => {
 
     describe('Separator Visibility', () => {
         it('should show separators between steps', () => {
-            const separators = fixture.debugElement.queryAll(By.css('p-stepper-separator'));
+            const separators = fixture.debugElement.queryAll(By.css('h-stepper-separator'));
             expect(separators.length).toBeGreaterThanOrEqual(2); // Should have separators
         });
 
         it('should not show separator after last step', () => {
-            const steps = fixture.debugElement.queryAll(By.css('p-step'));
+            const steps = fixture.debugElement.queryAll(By.css('h-step'));
             const lastStep = steps[steps.length - 1];
-            const separatorAfterLast = lastStep.query(By.css('p-stepper-separator'));
+            const separatorAfterLast = lastStep.query(By.css('h-stepper-separator'));
 
             expect(separatorAfterLast).toBeNull();
         });
@@ -646,7 +646,7 @@ describe('Stepper', () => {
             const panel2Instance = panels[1].componentInstance;
 
             expect(panel2Instance.active()).toBe(true);
-            // In horizontal layout, visibility is controlled by p-motion directive based on active() state
+            // In horizontal layout, visibility is controlled by h-motion directive based on active() state
             expect(panel2Instance.isVertical()).toBe(false);
         });
 
@@ -658,7 +658,7 @@ describe('Stepper', () => {
             const panel1Instance = panels[0].componentInstance;
 
             expect(panel1Instance.isVertical()).toBe(true);
-            // In vertical layout, visibility is controlled by p-motion directive based on active() state
+            // In vertical layout, visibility is controlled by h-motion directive based on active() state
             expect(panel1Instance.active()).toBe(true);
         });
     });
@@ -683,7 +683,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
             const classList = stepperEl.nativeElement.className;
 
             expect(classList).toContain('ROOT_CLASS');
@@ -704,7 +704,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
 
             expect(stepperEl.nativeElement.className).toContain('PT_ROOT_CLASS');
             expect(stepperEl.nativeElement.getAttribute('data-test')).toBe('stepper-test');
@@ -724,7 +724,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
             const classList = stepperEl.nativeElement.className;
 
             expect(classList).toContain('PT_ROOT_CLASS');
@@ -745,7 +745,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
             ptStepper = ptFixture.debugElement.query(By.directive(Stepper)).componentInstance;
 
             expect(stepperEl.nativeElement.className).toContain('NON_LINEAR');
@@ -766,7 +766,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
             stepperEl.nativeElement.click();
 
             expect(clicked).toBe(true);
@@ -779,7 +779,7 @@ describe('Stepper', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const stepperEl = ptFixture.debugElement.query(By.css('p-stepper'));
+            const stepperEl = ptFixture.debugElement.query(By.css('h-stepper'));
 
             expect(stepperEl.nativeElement.className).toContain('SETINPUT_ROOT_CLASS');
         });

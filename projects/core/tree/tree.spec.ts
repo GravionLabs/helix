@@ -10,7 +10,7 @@ import { Tree, UITreeNode } from './tree';
 @Component({
     standalone: false,
     template: `
-        <p-tree
+        <h-tree
             [value]="nodes"
             [selectionMode]="selectionMode"
             [loadingMode]="loadingMode"
@@ -55,7 +55,7 @@ import { Tree, UITreeNode } from './tree';
             (onNodeExpand)="onNodeExpand($event)"
             (onNodeCollapse)="onNodeCollapse($event)"
         >
-        </p-tree>
+        </h-tree>
     `
 })
 class TestBasicTreeComponent {
@@ -125,7 +125,7 @@ class TestBasicTreeComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tree [value]="nodes" [filter]="true" [loading]="loading">
+        <h-tree [value]="nodes" [filter]="true" [loading]="loading">
             <ng-template pTemplate="default" let-node>
                 <span class="custom-node-content">{{ node.label }} - Custom Default</span>
             </ng-template>
@@ -161,7 +161,7 @@ class TestBasicTreeComponent {
             <ng-template pTemplate="loader">
                 <div class="custom-loader">Custom Loader...</div>
             </ng-template>
-        </p-tree>
+        </h-tree>
     `
 })
 class TestPTemplateTreeComponent {
@@ -190,7 +190,7 @@ class TestPTemplateTreeComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tree [value]="nodes" [filter]="true" [loading]="loading">
+        <h-tree [value]="nodes" [filter]="true" [loading]="loading">
             <ng-template #node let-node>
                 <span class="custom-node-template">{{ node.label }} - Template Ref</span>
             </ng-template>
@@ -225,7 +225,7 @@ class TestPTemplateTreeComponent {
             <ng-template #loader>
                 <div class="custom-loader-template">Template Loader...</div>
             </ng-template>
-        </p-tree>
+        </h-tree>
     `
 })
 class TestTemplateRefTreeComponent {
@@ -243,7 +243,7 @@ class TestTemplateRefTreeComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tree [value]="nodes" [selectionMode]="'checkbox'">
+        <h-tree [value]="nodes" [selectionMode]="'checkbox'">
             <ng-template pTemplate="default" let-node let-index="index" let-first="first" let-last="last">
                 <div class="context-node-template">
                     <span class="node-label">{{ node.label }}</span>
@@ -264,7 +264,7 @@ class TestTemplateRefTreeComponent {
                     <span class="toggler-loading">{{ loading ? 'LOADING' : 'READY' }}</span>
                 </div>
             </ng-template>
-        </p-tree>
+        </h-tree>
     `
 })
 class TestContextTreeComponent {
@@ -281,7 +281,7 @@ class TestContextTreeComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tree [value]="nodes" [filter]="true" [loading]="loading" [selectionMode]="'checkbox'">
+        <h-tree [value]="nodes" [filter]="true" [loading]="loading" [selectionMode]="'checkbox'">
             <ng-template pTemplate="default" let-node>
                 <span class="custom-node-content">{{ node.label }} - Custom Default</span>
             </ng-template>
@@ -305,7 +305,7 @@ class TestContextTreeComponent {
             <ng-template pTemplate="empty">
                 <div class="custom-empty-message">No data found with pTemplate</div>
             </ng-template>
-        </p-tree>
+        </h-tree>
     `
 })
 class TestPTemplateComponent {
@@ -333,7 +333,7 @@ class TestPTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tree [value]="nodes" [filter]="true" [loading]="loading">
+        <h-tree [value]="nodes" [filter]="true" [loading]="loading">
             <ng-template #node let-node>
                 <span class="custom-node-template">{{ node.label }} - Template Ref</span>
             </ng-template>
@@ -351,7 +351,7 @@ class TestPTemplateComponent {
                     {{ loading ? 'LOADING' : expanded ? 'OPEN' : 'CLOSED' }}
                 </span>
             </ng-template>
-        </p-tree>
+        </h-tree>
     `
 })
 class TestTemplateRefComponent {
@@ -1145,7 +1145,7 @@ describe('Tree', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const treeElement = fixture.debugElement.query(By.css('p-tree'));
+            const treeElement = fixture.debugElement.query(By.css('h-tree'));
             expect(treeElement.nativeElement.className).toContain('custom-tree-class');
         });
 
@@ -1378,7 +1378,7 @@ describe('Tree', () => {
         });
 
         it('should display checkboxes', () => {
-            const checkboxes = fixture.debugElement.queryAll(By.css('p-checkbox'));
+            const checkboxes = fixture.debugElement.queryAll(By.css('h-checkbox'));
             expect(checkboxes.length).toBeGreaterThan(0);
         });
 
@@ -1567,7 +1567,7 @@ describe('Tree', () => {
             it('should apply checkbox icon template with context', async () => {
                 await fixture.whenStable();
 
-                const checkboxes = pTemplateFixture.debugElement.queryAll(By.css('p-checkbox'));
+                const checkboxes = pTemplateFixture.debugElement.queryAll(By.css('h-checkbox'));
                 expect(checkboxes.length).toBeGreaterThan(0);
 
                 // Checkbox icon template should be available for checkbox selection mode
@@ -2509,7 +2509,7 @@ describe('Tree', () => {
         });
 
         it('should not allow left click selection when contextMenu is provided', async () => {
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             expect(nodeContent).toBeTruthy();
 
             // Left click on node
@@ -2522,7 +2522,7 @@ describe('Tree', () => {
         });
 
         it('should select node on right click when contextMenu is provided', async () => {
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             expect(nodeContent).toBeTruthy();
 
             // Right click on node
@@ -2542,7 +2542,7 @@ describe('Tree', () => {
         });
 
         it('should only allow single selection when contextMenu is provided', async () => {
-            const nodeContents = fixture.debugElement.queryAll(By.css('.p-tree-node-content'));
+            const nodeContents = fixture.debugElement.queryAll(By.css('.h-tree-node-content'));
             expect(nodeContents.length).toBeGreaterThan(1);
 
             // Right click on first node
@@ -2577,7 +2577,7 @@ describe('Tree', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nodeContents = fixture.debugElement.queryAll(By.css('.p-tree-node-content'));
+            const nodeContents = fixture.debugElement.queryAll(By.css('.h-tree-node-content'));
 
             // Right click should update contextMenuSelection, not regular selection
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -2606,7 +2606,7 @@ describe('Tree', () => {
 
         it('should handle unselect (setting to null)', async () => {
             // First select a node
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             const rightClickEvent = new MouseEvent('contextmenu', {
                 bubbles: true,
                 cancelable: true,
@@ -2627,8 +2627,8 @@ describe('Tree', () => {
             expect(component.contextMenuSelectedNode).toBeNull();
         });
 
-        it('should apply p-tree-node-contextmenu-selected class to selected node', async () => {
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+        it('should apply h-tree-node-contextmenu-selected class to selected node', async () => {
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
 
             // Right click on node
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -2641,13 +2641,13 @@ describe('Tree', () => {
             await fixture.whenStable();
 
             // Check if the class is applied
-            const selectedNodeContent = fixture.debugElement.query(By.css('.p-tree-node-contextmenu-selected'));
+            const selectedNodeContent = fixture.debugElement.query(By.css('.h-tree-node-contextmenu-selected'));
             expect(selectedNodeContent).toBeTruthy();
         });
 
-        it('should remove p-tree-node-contextmenu-selected class when unselected', async () => {
+        it('should remove h-tree-node-contextmenu-selected class when unselected', async () => {
             // First select a node
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             const rightClickEvent = new MouseEvent('contextmenu', {
                 bubbles: true,
                 cancelable: true,
@@ -2657,14 +2657,14 @@ describe('Tree', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-tree-node-contextmenu-selected'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-tree-node-contextmenu-selected'))).toBeTruthy();
 
             // Unselect
             tree.contextMenuSelection.set(null);
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-tree-node-contextmenu-selected'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-tree-node-contextmenu-selected'))).toBeFalsy();
         });
 
         it('should work independently from checkbox selection mode', async () => {
@@ -2673,7 +2673,7 @@ describe('Tree', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
 
             // Right click should still work
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -2696,7 +2696,7 @@ describe('Tree', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
 
             // Right click should still work
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -2716,7 +2716,7 @@ describe('Tree', () => {
         it('should emit onNodeContextMenuSelect event on right click', async () => {
             spyOn(tree.onNodeContextMenuSelect, 'emit');
 
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             const rightClickEvent = new MouseEvent('contextmenu', {
                 bubbles: true,
                 cancelable: true,
@@ -2735,7 +2735,7 @@ describe('Tree', () => {
         });
 
         it('should not select when right clicking on toggle button', async () => {
-            const toggleButton = fixture.debugElement.query(By.css('.p-tree-node-toggle-button'));
+            const toggleButton = fixture.debugElement.query(By.css('.h-tree-node-toggle-button'));
             expect(toggleButton).toBeTruthy();
 
             const rightClickEvent = new MouseEvent('contextmenu', {
@@ -2757,7 +2757,7 @@ describe('Tree', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const nodeContents = fixture.debugElement.queryAll(By.css('.p-tree-node-content'));
+            const nodeContents = fixture.debugElement.queryAll(By.css('.h-tree-node-content'));
             // Find a child node (Work or Home)
             const childNodeContent = nodeContents.find((el) => el.nativeElement.textContent.includes('Work'));
             expect(childNodeContent).toBeTruthy();
@@ -2777,7 +2777,7 @@ describe('Tree', () => {
 
         it('should disable context menu selection when contextMenu is removed', async () => {
             // First verify context menu selection works
-            const nodeContent = fixture.debugElement.query(By.css('.p-tree-node-content'));
+            const nodeContent = fixture.debugElement.query(By.css('.h-tree-node-content'));
             const rightClickEvent = new MouseEvent('contextmenu', {
                 bubbles: true,
                 cancelable: true,
@@ -2816,7 +2816,7 @@ describe('Tree', () => {
 @Component({
     standalone: false,
     template: `
-        <p-tree
+        <h-tree
             #tree
             [value]="value"
             [selectionMode]="selectionMode"
@@ -2833,7 +2833,7 @@ describe('Tree', () => {
             [trackBy]="trackBy"
             [indentation]="indentation"
         >
-        </p-tree>
+        </h-tree>
     `
 })
 class TestDynamicTreeComponent {

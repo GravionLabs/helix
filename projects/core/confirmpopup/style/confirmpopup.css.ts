@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-confirmpopup {
+    .h-confirmpopup {
         position: absolute;
         margin-top: dt('confirmpopup.gutter');
         top: 0;
@@ -12,42 +12,42 @@ export const style = /*css*/ `
         will-change: transform;
     }
 
-    .p-confirmpopup-content {
+    .h-confirmpopup-content {
         display: flex;
         align-items: center;
         padding: dt('confirmpopup.content.padding');
         gap: dt('confirmpopup.content.gap');
     }
 
-    .p-confirmpopup-icon {
+    .h-confirmpopup-icon {
         font-size: dt('confirmpopup.icon.size');
         width: dt('confirmpopup.icon.size');
         height: dt('confirmpopup.icon.size');
         color: dt('confirmpopup.icon.color');
     }
 
-    .p-confirmpopup-footer {
+    .h-confirmpopup-footer {
         display: flex;
         justify-content: flex-end;
         gap: dt('confirmpopup.footer.gap');
         padding: dt('confirmpopup.footer.padding');
     }
 
-    .p-confirmpopup-footer button {
+    .h-confirmpopup-footer button {
         width: auto;
     }
 
-    .p-confirmpopup-footer button:last-child {
+    .h-confirmpopup-footer button:last-child {
         margin: 0;
     }
 
-    .p-confirmpopup-flipped {
+    .h-confirmpopup-flipped {
         margin-block-start: calc(dt('confirmpopup.gutter') * -1);
         margin-block-end: dt('confirmpopup.gutter');
     }
 
-    .p-confirmpopup:after,
-    .p-confirmpopup:before {
+    .h-confirmpopup:after,
+    .h-confirmpopup:before {
         bottom: 100%;
         left: calc(dt('confirmpopup.arrow.offset') + dt('confirmpopup.arrow.left'));
         content: ' ';
@@ -57,7 +57,7 @@ export const style = /*css*/ `
         pointer-events: none;
     }
 
-    .p-confirmpopup:after {
+    .h-confirmpopup:after {
         border-width: calc(dt('confirmpopup.gutter') - 2px);
         margin-left: calc(-1 * (dt('confirmpopup.gutter') - 2px));
         border-style: solid;
@@ -65,7 +65,7 @@ export const style = /*css*/ `
         border-bottom-color: dt('confirmpopup.background');
     }
 
-    .p-confirmpopup:before {
+    .h-confirmpopup:before {
         border-width: dt('confirmpopup.gutter');
         margin-left: calc(-1 * dt('confirmpopup.gutter'));
         border-style: solid;
@@ -73,18 +73,18 @@ export const style = /*css*/ `
         border-bottom-color: dt('confirmpopup.border.color');
     }
 
-    .p-confirmpopup-flipped:after,
-    .p-confirmpopup-flipped:before {
+    .h-confirmpopup-flipped:after,
+    .h-confirmpopup-flipped:before {
         bottom: auto;
         top: 100%;
     }
 
-    .p-confirmpopup-flipped:after {
+    .h-confirmpopup-flipped:after {
         border-bottom-color: transparent;
         border-top-color: dt('confirmpopup.background');
     }
 
-    .p-confirmpopup-flipped:before {
+    .h-confirmpopup-flipped:before {
         border-bottom-color: transparent;
         border-top-color: dt('confirmpopup.border.color');
     }

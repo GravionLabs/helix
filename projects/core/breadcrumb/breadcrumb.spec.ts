@@ -10,7 +10,7 @@ import { Breadcrumb } from './breadcrumb';
 
 @Component({
     standalone: false,
-    template: ` <p-breadcrumb [model]="model" [home]="home" [style]="style" [styleClass]="styleClass" [homeAriaLabel]="homeAriaLabel" (onItemClick)="onItemClick($event)"> </p-breadcrumb> `
+    template: ` <h-breadcrumb [model]="model" [home]="home" [style]="style" [styleClass]="styleClass" [homeAriaLabel]="homeAriaLabel" (onItemClick)="onItemClick($event)"> </h-breadcrumb> `
 })
 class TestBasicBreadcrumbComponent {
     model: MenuItem[] | undefined = [
@@ -32,7 +32,7 @@ class TestBasicBreadcrumbComponent {
 @Component({
     standalone: false,
     selector: 'test-static-breadcrumb',
-    template: ` <p-breadcrumb [model]="model" [home]="home"> </p-breadcrumb> `
+    template: ` <h-breadcrumb [model]="model" [home]="home"> </h-breadcrumb> `
 })
 class TestStaticBreadcrumbComponent {
     model: MenuItem[] = [
@@ -45,7 +45,7 @@ class TestStaticBreadcrumbComponent {
 @Component({
     standalone: false,
     template: `
-        <p-breadcrumb [model]="model" [home]="home">
+        <h-breadcrumb [model]="model" [home]="home">
           <ng-template #item let-item>
             <div class="custom-item">
               @if (item.icon) {
@@ -54,7 +54,7 @@ class TestStaticBreadcrumbComponent {
               <span class="custom-label">{{ item.label }}</span>
             </div>
           </ng-template>
-        </p-breadcrumb>
+        </h-breadcrumb>
         `
 })
 class TestItemTemplateBreadcrumbComponent {
@@ -68,11 +68,11 @@ class TestItemTemplateBreadcrumbComponent {
 @Component({
     standalone: false,
     template: `
-        <p-breadcrumb [model]="model" [home]="home">
+        <h-breadcrumb [model]="model" [home]="home">
             <ng-template pTemplate="item" let-item>
-                <span class="p-template-item">{{ item.label }}</span>
+                <span class="h-template-item">{{ item.label }}</span>
             </ng-template>
-        </p-breadcrumb>
+        </h-breadcrumb>
     `
 })
 class TestPTemplateItemBreadcrumbComponent {
@@ -83,11 +83,11 @@ class TestPTemplateItemBreadcrumbComponent {
 @Component({
     standalone: false,
     template: `
-        <p-breadcrumb [model]="model" [home]="home">
+        <h-breadcrumb [model]="model" [home]="home">
             <ng-template #separator>
                 <span class="custom-separator"> > </span>
             </ng-template>
-        </p-breadcrumb>
+        </h-breadcrumb>
     `
 })
 class TestSeparatorTemplateBreadcrumbComponent {
@@ -98,11 +98,11 @@ class TestSeparatorTemplateBreadcrumbComponent {
 @Component({
     standalone: false,
     template: `
-        <p-breadcrumb [model]="model" [home]="home">
+        <h-breadcrumb [model]="model" [home]="home">
             <ng-template pTemplate="separator">
-                <i class="p-template-separator pi pi-angle-right"></i>
+                <i class="h-template-separator pi pi-angle-right"></i>
             </ng-template>
-        </p-breadcrumb>
+        </h-breadcrumb>
     `
 })
 class TestPTemplateSeparatorBreadcrumbComponent {
@@ -113,7 +113,7 @@ class TestPTemplateSeparatorBreadcrumbComponent {
 @Component({
     standalone: false,
     selector: 'test-router-breadcrumb',
-    template: ` <p-breadcrumb [model]="routerModel" [home]="routerHome"> </p-breadcrumb> `
+    template: ` <h-breadcrumb [model]="routerModel" [home]="routerHome"> </h-breadcrumb> `
 })
 class TestRouterBreadcrumbComponent {
     routerModel: MenuItem[] = [
@@ -126,7 +126,7 @@ class TestRouterBreadcrumbComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-breadcrumb',
-    template: ` <p-breadcrumb [style]="customStyle" styleClass="custom-breadcrumb"> </p-breadcrumb> `
+    template: ` <h-breadcrumb [style]="customStyle" styleClass="custom-breadcrumb"> </h-breadcrumb> `
 })
 class TestStyledBreadcrumbComponent {
     customStyle = {
@@ -139,14 +139,14 @@ class TestStyledBreadcrumbComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-breadcrumb',
-    template: ` <p-breadcrumb></p-breadcrumb> `
+    template: ` <h-breadcrumb></h-breadcrumb> `
 })
 class TestMinimalBreadcrumbComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-breadcrumb',
-    template: ` <p-breadcrumb [model]="dynamicModel" [home]="dynamicHome"> </p-breadcrumb> `
+    template: ` <h-breadcrumb [model]="dynamicModel" [home]="dynamicHome"> </h-breadcrumb> `
 })
 class TestDynamicBreadcrumbComponent {
     dynamicModel: MenuItem[] = [];
@@ -379,7 +379,7 @@ describe('Breadcrumb', () => {
 
             fixture.detectChanges();
 
-            const defaultHomeIcon = fixture.debugElement.query(By.css('[data-p-icon="home"]'));
+            const defaultHomeIcon = fixture.debugElement.query(By.css('[data-h-icon="home"]'));
             if (defaultHomeIcon) {
                 expect(defaultHomeIcon).toBeTruthy();
             } else {
@@ -1204,7 +1204,7 @@ describe('Breadcrumb', () => {
                 list: {
                     class: 'LIST_OBJECT_CLASS',
                     style: 'background-color: red',
-                    'data-p-test': true,
+                    'data-h-test': true,
                     'aria-label': 'Test List'
                 }
             });
@@ -1213,7 +1213,7 @@ describe('Breadcrumb', () => {
             const listEl = ptFixture.nativeElement.querySelector('[data-pc-section="list"]');
             expect(listEl).toBeTruthy();
             expect(listEl.classList.contains('LIST_OBJECT_CLASS')).toBe(true);
-            expect(listEl.getAttribute('data-p-test')).toBe('true');
+            expect(listEl.getAttribute('data-h-test')).toBe('true');
             expect(listEl.getAttribute('aria-label')).toBe('Test List');
         });
 

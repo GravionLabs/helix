@@ -3,10 +3,10 @@ import { style } from './splitter.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-splitter p-component', 'p-splitter-' + instance.layout()],
-    panel: ({ instance }) => ['p-splitterpanel', { 'p-splitterpanel-nested': instance.nestedState() }],
-    gutter: 'p-splitter-gutter',
-    gutterHandle: 'p-splitter-gutter-handle'
+    root: ({ instance }) => ['h-splitter h-component', 'h-splitter-' + instance.layout()],
+    panel: ({ instance }) => ['h-splitterpanel', { 'h-splitterpanel-nested': instance.nestedState() }],
+    gutter: 'h-splitter-gutter',
+    gutterHandle: 'h-splitter-gutter-handle'
 };
 
 const inlineStyles = {
@@ -37,15 +37,15 @@ export enum SplitterClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-splitter',
+    root = 'h-splitter',
     /**
      * Class name of the gutter element
      */
-    gutter = 'p-splitter-gutter',
+    gutter = 'h-splitter-gutter',
     /**
      * Class name of the gutter handle element
      */
-    gutterHandle = 'p-splitter-gutter-handle'
+    gutterHandle = 'h-splitter-gutter-handle'
 }
 
 export interface SplitterStyle extends BaseStyle {}

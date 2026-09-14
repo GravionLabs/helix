@@ -7,7 +7,7 @@ import { Fluid, FluidModule } from './fluid';
 @Component({
     standalone: false,
     selector: 'test-basic-fluid',
-    template: `<p-fluid></p-fluid>`
+    template: `<h-fluid></h-fluid>`
 })
 class TestBasicFluidComponent {}
 
@@ -15,9 +15,9 @@ class TestBasicFluidComponent {}
     standalone: false,
     selector: 'test-fluid-with-content',
     template: `
-        <p-fluid>
+        <h-fluid>
             <div class="test-content">Content inside fluid</div>
-        </p-fluid>
+        </h-fluid>
     `
 })
 class TestFluidWithContentComponent {}
@@ -26,7 +26,7 @@ class TestFluidWithContentComponent {}
     standalone: false,
     selector: 'test-fluid-with-form-controls',
     template: `
-        <p-fluid>
+        <h-fluid>
             <div class="form-group">
                 <label for="input1">Input 1</label>
                 <input type="text" id="input1" class="form-control" />
@@ -42,7 +42,7 @@ class TestFluidWithContentComponent {}
                 <label for="textarea1">Textarea 1</label>
                 <textarea id="textarea1" class="form-control"></textarea>
             </div>
-        </p-fluid>
+        </h-fluid>
     `
 })
 class TestFluidWithFormControlsComponent {}
@@ -51,15 +51,15 @@ class TestFluidWithFormControlsComponent {}
     standalone: false,
     selector: 'test-nested-fluid',
     template: `
-        <p-fluid>
+        <h-fluid>
             <div class="outer-container">
-                <p-fluid>
+                <h-fluid>
                     <div class="inner-container">
                         <input type="text" class="nested-input" />
                     </div>
-                </p-fluid>
+                </h-fluid>
             </div>
-        </p-fluid>
+        </h-fluid>
     `
 })
 class TestNestedFluidComponent {}
@@ -68,24 +68,24 @@ class TestNestedFluidComponent {}
     standalone: false,
     selector: 'test-fluid-with-primeng-components',
     template: `
-        <p-fluid>
+        <h-fluid>
             <div class="primeng-controls">
                 <div class="control-group">
                     <label>Button</label>
-                    <button type="button" class="p-button">Test Button</button>
+                    <button type="button" class="h-button">Test Button</button>
                 </div>
                 <div class="control-group">
                     <label>Input Field</label>
-                    <input type="text" class="p-inputtext" />
+                    <input type="text" class="h-inputtext" />
                 </div>
                 <div class="control-group">
                     <label>Dropdown</label>
-                    <select class="p-dropdown">
+                    <select class="h-dropdown">
                         <option>Option 1</option>
                     </select>
                 </div>
             </div>
-        </p-fluid>
+        </h-fluid>
     `
 })
 class TestFluidWithHelixConfigComponentsComponent {}
@@ -95,7 +95,7 @@ class TestFluidWithHelixConfigComponentsComponent {}
     selector: 'test-fluid-responsive',
     template: `
         <div class="responsive-container">
-            <p-fluid>
+            <h-fluid>
                 <div class="grid-system">
                     <div class="col-12">
                         <input type="text" class="responsive-input" />
@@ -107,7 +107,7 @@ class TestFluidWithHelixConfigComponentsComponent {}
                         <button class="responsive-button">Button 2</button>
                     </div>
                 </div>
-            </p-fluid>
+            </h-fluid>
         </div>
     `
 })
@@ -117,7 +117,7 @@ class TestFluidResponsiveComponent {}
     standalone: false,
     selector: 'test-fluid-dynamic-content',
     template: `
-        <p-fluid>
+        <h-fluid>
           @if (showFirstSection) {
             <div class="first-section">
               <input type="text" class="dynamic-input-1" />
@@ -138,7 +138,7 @@ class TestFluidResponsiveComponent {}
               <input type="text" [value]="item.value" class="dynamic-list-input" />
             </div>
           }
-        </p-fluid>
+        </h-fluid>
         `
 })
 class TestFluidDynamicContentComponent {
@@ -155,7 +155,7 @@ class TestFluidDynamicContentComponent {
     selector: 'test-fluid-complex-layout',
     template: `
         <div class="complex-layout">
-            <p-fluid>
+            <h-fluid>
                 <div class="header-section">
                     <h2>Form Header</h2>
                     <input type="text" placeholder="Search" class="header-search" />
@@ -177,7 +177,7 @@ class TestFluidDynamicContentComponent {
                     <div class="status-info">Status: Active</div>
                     <button class="footer-action">Footer Action</button>
                 </div>
-            </p-fluid>
+            </h-fluid>
         </div>
     `
 })
@@ -226,7 +226,7 @@ describe('Fluid', () => {
         });
 
         it('should have correct selector', () => {
-            expect(element.tagName.toLowerCase()).toBe('p-fluid');
+            expect(element.tagName.toLowerCase()).toBe('h-fluid');
         });
 
         it('should inject component style', () => {
@@ -341,8 +341,8 @@ describe('Fluid', () => {
         });
 
         it('should maintain proper hierarchy', () => {
-            const outerFluid = element.querySelector('p-fluid');
-            const innerFluid = outerFluid?.querySelector('p-fluid');
+            const outerFluid = element.querySelector('h-fluid');
+            const innerFluid = outerFluid?.querySelector('h-fluid');
 
             expect(outerFluid).toBeTruthy();
             expect(innerFluid).toBeTruthy();
@@ -354,7 +354,7 @@ describe('Fluid', () => {
         });
 
         it('should apply fluid styling to all levels', () => {
-            const fluidElements = element.querySelectorAll('p-fluid');
+            const fluidElements = element.querySelectorAll('h-fluid');
             expect(fluidElements.length).toBe(2);
 
             fluidElements.forEach((fluidEl) => {
@@ -374,9 +374,9 @@ describe('Fluid', () => {
         });
 
         it('should work with HelixConfig styled components', () => {
-            const button = element.querySelector('.p-button');
-            const input = element.querySelector('.p-inputtext');
-            const dropdown = element.querySelector('.p-dropdown');
+            const button = element.querySelector('.h-button');
+            const input = element.querySelector('.h-inputtext');
+            const dropdown = element.querySelector('.h-dropdown');
 
             expect(button).toBeTruthy();
             expect(input).toBeTruthy();
@@ -394,7 +394,7 @@ describe('Fluid', () => {
         });
 
         it('should preserve component interactions', () => {
-            const button = element.querySelector('.p-button') as HTMLButtonElement;
+            const button = element.querySelector('.h-button') as HTMLButtonElement;
 
             // Should be able to interact with button
             button.click();
@@ -597,7 +597,7 @@ describe('Fluid', () => {
 
         it('should support styling inheritance', () => {
             // Fluid component should allow styling to cascade to children
-            expect(element.tagName.toLowerCase()).toBe('p-fluid');
+            expect(element.tagName.toLowerCase()).toBe('h-fluid');
         });
     });
 
@@ -714,7 +714,7 @@ describe('Fluid', () => {
         @Component({
             standalone: true,
             imports: [Fluid],
-            template: `<p-fluid [pt]="pt()"><div class="test-content">Test Content</div></p-fluid>`
+            template: `<h-fluid [pt]="pt()"><div class="test-content">Test Content</div></h-fluid>`
         })
         class TestPTFluidComponent {
             pt = input<any>();
@@ -760,7 +760,7 @@ describe('Fluid', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { padding: '10px' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -768,7 +768,7 @@ describe('Fluid', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.padding).toBe('10px');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -777,7 +777,7 @@ describe('Fluid', () => {
                     host: {
                         class: 'HOST_OBJECT_CLASS',
                         style: { margin: '5px' },
-                        'data-p-host': 'fluid',
+                        'data-h-host': 'fluid',
                         'aria-expanded': 'true'
                     }
                 });
@@ -785,7 +785,7 @@ describe('Fluid', () => {
 
                 expect(element.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
                 expect(element.style.margin).toBe('5px');
-                expect(element.getAttribute('data-p-host')).toBe('fluid');
+                expect(element.getAttribute('data-h-host')).toBe('fluid');
                 expect(element.getAttribute('aria-expanded')).toBe('true');
             });
         });

@@ -6,32 +6,32 @@ const style = /*css*/ `
 ${autocomplete_style}
 
 /* For Helix */
-p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input,
-p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input-multiple,
-p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input,
-p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input-multiple p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input,
-p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input-multiple {
+h-autoComplete.ng-invalid.ng-dirty .h-autocomplete-input,
+h-autoComplete.ng-invalid.ng-dirty .h-autocomplete-input-multiple,
+h-auto-complete.ng-invalid.ng-dirty .h-autocomplete-input,
+h-auto-complete.ng-invalid.ng-dirty .h-autocomplete-input-multiple h-autocomplete.ng-invalid.ng-dirty .h-autocomplete-input,
+h-autocomplete.ng-invalid.ng-dirty .h-autocomplete-input-multiple {
     border-color: dt('autocomplete.invalid.border.color');
 }
 
-p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
-p-autoComplete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
-p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
-p-auto-complete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
-p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
-p-autocomplete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple {
+h-autoComplete.ng-invalid.ng-dirty .h-autocomplete-input:enabled:focus,
+h-autoComplete.ng-invalid.ng-dirty:not(.h-disabled).h-focus .h-autocomplete-input-multiple,
+h-auto-complete.ng-invalid.ng-dirty .h-autocomplete-input:enabled:focus,
+h-auto-complete.ng-invalid.ng-dirty:not(.h-disabled).h-focus .h-autocomplete-input-multiple,
+h-autocomplete.ng-invalid.ng-dirty .h-autocomplete-input:enabled:focus,
+h-autocomplete.ng-invalid.ng-dirty:not(.h-disabled).h-focus .h-autocomplete-input-multiple {
     border-color: dt('autocomplete.focus.border.color');
 }
 
-p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder,
-p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder,
-p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder {
+h-autoComplete.ng-invalid.ng-dirty .h-autocomplete-input-chip input::placeholder,
+h-auto-complete.ng-invalid.ng-dirty .h-autocomplete-input-chip input::placeholder,
+h-autocomplete.ng-invalid.ng-dirty .h-autocomplete-input-chip input::placeholder {
     color: dt('autocomplete.invalid.placeholder.color');
 }
 
-p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder,
-p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder,
-p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder {
+h-autoComplete.ng-invalid.ng-dirty .h-autocomplete-input::placeholder,
+h-auto-complete.ng-invalid.ng-dirty .h-autocomplete-input::placeholder,
+h-autocomplete.ng-invalid.ng-dirty .h-autocomplete-input::placeholder {
     color: dt('autocomplete.invalid.placeholder.color');
 }
 `;
@@ -42,48 +42,48 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-autocomplete p-component p-inputwrapper',
+        'h-autocomplete h-component h-inputwrapper',
         {
-            'p-invalid': instance.invalid(),
-            'p-focus': instance.focused,
-            'p-inputwrapper-filled': instance.$filled(),
-            'p-inputwrapper-focus': (instance.focused && !instance.$disabled()) || instance.autofocus || instance.overlayVisible,
-            'p-autocomplete-open': instance.overlayVisible,
-            'p-autocomplete-clearable': instance.showClear && !instance.$disabled(),
-            'p-autocomplete-fluid': instance.hasFluid
+            'h-invalid': instance.invalid(),
+            'h-focus': instance.focused,
+            'h-inputwrapper-filled': instance.$filled(),
+            'h-inputwrapper-focus': (instance.focused && !instance.$disabled()) || instance.autofocus || instance.overlayVisible,
+            'h-autocomplete-open': instance.overlayVisible,
+            'h-autocomplete-clearable': instance.showClear && !instance.$disabled(),
+            'h-autocomplete-fluid': instance.hasFluid
         }
     ],
-    pcInputText: 'p-autocomplete-input',
+    pcInputText: 'h-autocomplete-input',
     inputMultiple: ({ instance }) => [
-        'p-autocomplete-input-multiple',
+        'h-autocomplete-input-multiple',
         {
-            'p-disabled': instance.$disabled(),
-            'p-variant-filled': instance.$variant() === 'filled'
+            'h-disabled': instance.$disabled(),
+            'h-variant-filled': instance.$variant() === 'filled'
         }
     ],
     chipItem: ({ instance, i }) => [
-        'p-autocomplete-chip-item',
+        'h-autocomplete-chip-item',
         {
-            'p-focus': instance.focusedMultipleOptionIndex() === i
+            'h-focus': instance.focusedMultipleOptionIndex() === i
         }
     ],
-    pcChip: 'p-autocomplete-chip',
-    chipIcon: 'p-autocomplete-chip-icon',
-    inputChip: 'p-autocomplete-input-chip',
-    loader: 'p-autocomplete-loader',
-    dropdown: 'p-autocomplete-dropdown',
-    overlay: ({ instance }) => ['p-autocomplete-overlay p-component-overlay p-component', { 'p-input-filled': instance.$variant() === 'filled', 'p-ripple-disabled': instance.config.ripple() === false }],
-    listContainer: 'p-autocomplete-list-container',
-    list: 'p-autocomplete-list',
-    optionGroup: 'p-autocomplete-option-group',
+    pcChip: 'h-autocomplete-chip',
+    chipIcon: 'h-autocomplete-chip-icon',
+    inputChip: 'h-autocomplete-input-chip',
+    loader: 'h-autocomplete-loader',
+    dropdown: 'h-autocomplete-dropdown',
+    overlay: ({ instance }) => ['h-autocomplete-overlay h-component-overlay h-component', { 'h-input-filled': instance.$variant() === 'filled', 'h-ripple-disabled': instance.config.ripple() === false }],
+    listContainer: 'h-autocomplete-list-container',
+    list: 'h-autocomplete-list',
+    optionGroup: 'h-autocomplete-option-group',
     option: ({ instance, option, i, scrollerOptions }) => ({
-        'p-autocomplete-option': true,
-        'p-autocomplete-option-selected': instance.isSelected(option),
-        'p-focus': instance.focusedOptionIndex() === instance.getOptionIndex(i, scrollerOptions),
-        'p-disabled': instance.isOptionDisabled(option)
+        'h-autocomplete-option': true,
+        'h-autocomplete-option-selected': instance.isSelected(option),
+        'h-focus': instance.focusedOptionIndex() === instance.getOptionIndex(i, scrollerOptions),
+        'h-disabled': instance.isOptionDisabled(option)
     }),
-    emptyMessage: 'p-autocomplete-empty-message',
-    clearIcon: 'p-autocomplete-clear-icon'
+    emptyMessage: 'h-autocomplete-empty-message',
+    clearIcon: 'h-autocomplete-clear-icon'
 };
 
 @Injectable()
@@ -110,63 +110,63 @@ export enum AutoCompleteClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-autocomplete',
+    root = 'h-autocomplete',
     /**
      * Class name of the input element
      */
-    pcInputText = 'p-autocomplete-input',
+    pcInputText = 'h-autocomplete-input',
     /**
      * Class name of the input multiple element
      */
-    inputMultiple = 'p-autocomplete-input-multiple',
+    inputMultiple = 'h-autocomplete-input-multiple',
     /**
      * Class name of the chip item element
      */
-    chipItem = 'p-autocomplete-chip-item',
+    chipItem = 'h-autocomplete-chip-item',
     /**
      * Class name of the chip element
      */
-    pcChip = 'p-autocomplete-chip',
+    pcChip = 'h-autocomplete-chip',
     /**
      * Class name of the chip icon element
      */
-    chipIcon = 'p-autocomplete-chip-icon',
+    chipIcon = 'h-autocomplete-chip-icon',
     /**
      * Class name of the input chip element
      */
-    inputChip = 'p-autocomplete-input-chip',
+    inputChip = 'h-autocomplete-input-chip',
     /**
      * Class name of the loader element
      */
-    loader = 'p-autocomplete-loader',
+    loader = 'h-autocomplete-loader',
     /**
      * Class name of the dropdown element
      */
-    dropdown = 'p-autocomplete-dropdown',
+    dropdown = 'h-autocomplete-dropdown',
     /**
      * Class name of the panel element
      */
-    panel = 'p-autocomplete-overlay',
+    panel = 'h-autocomplete-overlay',
     /**
      * Class name of the list element
      */
-    list = 'p-autocomplete-list',
+    list = 'h-autocomplete-list',
     /**
      * Class name of the option group element
      */
-    optionGroup = 'p-autocomplete-option-group',
+    optionGroup = 'h-autocomplete-option-group',
     /**
      * Class name of the option element
      */
-    option = 'p-autocomplete-option',
+    option = 'h-autocomplete-option',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-autocomplete-empty-message',
+    emptyMessage = 'h-autocomplete-empty-message',
     /**
      * Class name of the clear icon
      */
-    clearIcon = 'p-autocomplete-clear-icon'
+    clearIcon = 'h-autocomplete-clear-icon'
 }
 
 export interface AutoCompleteStyle extends BaseStyle {}

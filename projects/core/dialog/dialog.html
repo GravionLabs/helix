@@ -6,12 +6,12 @@
     [hBind]="ptm('mask')"
     [hMotion]="maskVisible"
     [pMotionAppear]="true"
-    [pMotionEnterActiveClass]="modal() ? 'p-overlay-mask-enter-active' : ''"
-    [pMotionLeaveActiveClass]="modal() ? 'p-overlay-mask-leave-active' : ''"
+    [pMotionEnterActiveClass]="modal() ? 'h-overlay-mask-enter-active' : ''"
+    [pMotionLeaveActiveClass]="modal() ? 'h-overlay-mask-leave-active' : ''"
     [pMotionOptions]="computedMaskMotionOptions()"
     (pMotionOnAfterLeave)="onMaskAfterLeave()"
-    [attr.data-p-scrollblocker-active]="modal() || blockScroll()"
-    [attr.data-p]="dataP"
+    [attr.data-h-scrollblocker-active]="modal() || blockScroll()"
+    [attr.data-h]="dataP"
     >
     @if (renderDialog()) {
       <div
@@ -24,7 +24,7 @@
         [pFocusTrapDisabled]="focusTrap() === false"
         [hMotion]="visible"
         [pMotionAppear]="true"
-        [pMotionName]="'p-dialog'"
+        [pMotionName]="'h-dialog'"
         [pMotionOptions]="computedMotionOptions()"
         (pMotionOnBeforeEnter)="onBeforeEnter($event)"
         (pMotionOnAfterEnter)="onAfterEnter($event)"
@@ -33,7 +33,7 @@
         [attr.role]="role()"
         [attr.aria-labelledby]="ariaLabelledBy"
         [attr.aria-modal]="true"
-        [attr.data-p]="dataP"
+        [attr.data-h]="dataP"
         >
         @if (_headlessTemplate() || headlessTemplate() || headlessT) {
           <ng-container *ngTemplateOutlet="_headlessTemplate() || headlessTemplate() || headlessT"></ng-container>
@@ -66,10 +66,10 @@
                       }
                       @if (!maximizeIcon() && !maximizeButtonProps()?.icon) {
                         @if (!maximized && !_maximizeiconTemplate() && !maximizeIconTemplate() && !maximizeIconT) {
-                          <svg data-p-icon="window-maximize" />
+                          <svg data-h-icon="window-maximize" />
                         }
                         @if (maximized && !_minimizeiconTemplate() && !minimizeIconTemplate() && !minimizeIconT) {
-                          <svg data-p-icon="window-minimize" />
+                          <svg data-h-icon="window-minimize" />
                         }
                       }
                       @if (!maximized) {
@@ -99,7 +99,7 @@
                           <span [class]="closeIcon()"></span>
                         }
                         @if (!closeIcon()) {
-                          <svg data-p-icon="times" />
+                          <svg data-h-icon="times" />
                         }
                       }
                       @if (_closeiconTemplate() || closeIconTemplate() || closeIconT) {
@@ -119,7 +119,7 @@
           </div>
           @if (_footerTemplate() || footerTemplate() || footerT) {
             <div #footer [class]="cx('footer')" [hBind]="ptm('footer')">
-              <ng-content select="p-footer"></ng-content>
+              <ng-content select="h-footer"></ng-content>
               <ng-container *ngTemplateOutlet="_footerTemplate() || footerTemplate() || footerT"></ng-container>
             </div>
           }

@@ -432,7 +432,7 @@ describe('FileUpload', () => {
         });
 
         it('should show choose button', () => {
-            const chooseButton = fixture.debugElement.query(By.css('.p-fileupload-choose-button'));
+            const chooseButton = fixture.debugElement.query(By.css('.h-fileupload-choose-button'));
             expect(chooseButton).toBeTruthy();
         });
 
@@ -441,7 +441,7 @@ describe('FileUpload', () => {
             fixture.componentRef.setInput('showUploadButton', true);
             fixture.detectChanges();
 
-            const uploadButton = fixture.debugElement.query(By.css('.p-fileupload-upload'));
+            const uploadButton = fixture.debugElement.query(By.css('.h-fileupload-upload'));
             // Button might not be visible without files, but component should handle this case
             expect(component.showUploadButton).toBe(true);
         });
@@ -463,7 +463,7 @@ describe('FileUpload', () => {
 
             // The actual button disabling is handled by the template bindings,
             // which we can verify by checking the component property
-            const chooseButton = fixture.debugElement.query(By.css('.p-fileupload-choose-button button'));
+            const chooseButton = fixture.debugElement.query(By.css('.h-fileupload-choose-button button'));
             if (chooseButton && chooseButton.nativeElement.disabled !== undefined) {
                 expect(chooseButton.nativeElement.disabled).toBe(true);
             } else {
@@ -740,7 +740,7 @@ describe('FileUpload', () => {
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
                 <div class="custom-header">
                     <button type="button" (click)="chooseCallback()" class="choose-btn">Choose</button>
@@ -748,7 +748,7 @@ describe('FileUpload', () => {
                     <button type="button" (click)="clearCallback()" class="clear-btn">Clear</button>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateHeaderComponent {}
@@ -756,7 +756,7 @@ class TestPTemplateHeaderComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template #header let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
                 <div class="custom-header">
                     <button type="button" (click)="chooseCallback()" class="choose-btn">Choose</button>
@@ -764,7 +764,7 @@ class TestPTemplateHeaderComponent {}
                     <button type="button" (click)="clearCallback()" class="clear-btn">Clear</button>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestHashHeaderComponent {}
@@ -772,7 +772,7 @@ class TestHashHeaderComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
           <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
             <div class="custom-content">
               @for (file of files; track file; let i = $index) {
@@ -783,7 +783,7 @@ class TestHashHeaderComponent {}
               }
             </div>
           </ng-template>
-        </p-fileupload>
+        </h-fileupload>
         `
 })
 class TestPTemplateContentComponent {}
@@ -791,7 +791,7 @@ class TestPTemplateContentComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
           <ng-template #content let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback">
             <div class="custom-content">
               @for (file of files; track file; let i = $index) {
@@ -802,7 +802,7 @@ class TestPTemplateContentComponent {}
               }
             </div>
           </ng-template>
-        </p-fileupload>
+        </h-fileupload>
         `
 })
 class TestHashContentComponent {}
@@ -810,13 +810,13 @@ class TestHashContentComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="file" let-file let-index="index">
                 <div class="custom-file">
                     <span>Custom: {{ file.name }} ({{ index }})</span>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateFileComponent {}
@@ -824,11 +824,11 @@ class TestPTemplateFileComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="empty">
                 <div class="custom-empty">No files selected</div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateEmptyComponent {}
@@ -836,13 +836,13 @@ class TestPTemplateEmptyComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="basic" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="basic" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="filelabel" let-files>
                 <div class="custom-file-label">
                     {{ files?.length ? files.length + ' files selected' : 'No files' }}
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateFileLabelComponent {}
@@ -850,7 +850,7 @@ class TestPTemplateFileLabelComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="chooseicon">
                 <i class="custom-choose-icon pi pi-plus"></i>
             </ng-template>
@@ -860,7 +860,7 @@ class TestPTemplateFileLabelComponent {}
             <ng-template pTemplate="cancelicon">
                 <i class="custom-cancel-icon pi pi-times"></i>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateIconsComponent {}
@@ -868,14 +868,14 @@ class TestPTemplateIconsComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="toolbar">
                 <div class="custom-toolbar">
                     <span class="toolbar-info">Custom Toolbar Content</span>
                     <button class="toolbar-action">Action</button>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestPTemplateToolbarComponent {}
@@ -883,14 +883,14 @@ class TestPTemplateToolbarComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload" [files]="files">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload" [files]="files">
             <ng-template pTemplate="file" let-file let-index="index">
                 <div class="file-item">
                     <span>{{ file.name }}</span>
-                    <ng-container [ngTemplateOutlet]="removeIconTemplate" [ngTemplateOutletContext]="{ class: 'p-button-icon-only p-button-danger', file: file, index: index }"></ng-container>
+                    <ng-container [ngTemplateOutlet]="removeIconTemplate" [ngTemplateOutletContext]="{ class: 'h-button-icon-only h-button-danger', file: file, index: index }"></ng-container>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
         <ng-template #removeIconTemplate let-class="class" let-file="file" let-index="index">
             <i [class]="class" class="custom-remove-icon pi pi-trash" [attr.data-file-name]="file.name" [attr.data-file-index]="index"></i>
         </ng-template>
@@ -907,7 +907,7 @@ class TestFileRemoveIconComponent {
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
                 <div class="context-test-header">
                     <span [attr.data-files-count]="files?.length || 0">Files: {{ files?.length || 0 }}</span>
@@ -916,7 +916,7 @@ class TestFileRemoveIconComponent {
                     <button type="button" (click)="testUpload(uploadCallback)" class="ctx-upload">Upload</button>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestContextObjectsComponent {
@@ -936,7 +936,7 @@ class TestContextObjectsComponent {
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
             <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles" let-removeFileCallback="removeFileCallback" let-removeUploadedFileCallback="removeUploadedFileCallback" let-progress="progress" let-messages="messages">
                 <div class="context-content-test">
                     <div class="files-info">
@@ -951,7 +951,7 @@ class TestContextObjectsComponent {
                     </div>
                 </div>
             </ng-template>
-        </p-fileupload>
+        </h-fileupload>
     `
 })
 class TestContentContextComponent {
@@ -967,7 +967,7 @@ class TestContentContextComponent {
 @Component({
     standalone: false,
     template: `
-        <p-fileupload mode="basic" name="testFile[]" url="https://test.com/upload">
+        <h-fileupload mode="basic" name="testFile[]" url="https://test.com/upload">
           <ng-template pTemplate="filelabel" let-files>
             <div class="context-file-label">
               <span [attr.data-files-array-length]="files?.length || 0">Files Array Length: {{ files?.length || 0 }}</span>
@@ -981,7 +981,7 @@ class TestContentContextComponent {
               }
             </div>
           </ng-template>
-        </p-fileupload>
+        </h-fileupload>
         `
 })
 class TestFileLabelContextComponent {}
@@ -1640,7 +1640,7 @@ describe('FileUpload Advanced Template Combinations', () => {
         @Component({
             standalone: false,
             template: `
-                <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+                <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
                   <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
                     <div class="mixed-header">
                       <span class="file-count">{{ files?.length || 0 }} files</span>
@@ -1712,7 +1712,7 @@ describe('FileUpload Advanced Template Combinations', () => {
                   <ng-template pTemplate="uploadicon">
                     <i class="pi pi-send mixed-upload-icon"></i>
                   </ng-template>
-                </p-fileupload>
+                </h-fileupload>
                 `
         })
         class TestMixedTemplatesComponent {}
@@ -1814,7 +1814,7 @@ describe('FileUpload Advanced Template Combinations', () => {
         @Component({
             standalone: false,
             template: `
-                <p-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
+                <h-fileupload mode="advanced" name="testFile[]" url="https://test.com/upload">
                     <ng-template
                         pTemplate="content"
                         let-files
@@ -1847,7 +1847,7 @@ describe('FileUpload Advanced Template Combinations', () => {
                             </div>
                         </div>
                     </ng-template>
-                </p-fileupload>
+                </h-fileupload>
             `
         })
         class TestAdvancedContextValidationComponent {
@@ -2718,7 +2718,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase1Component {
                 pt = {
@@ -2763,7 +2763,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 2: Objects with class, style, and attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase2Component {
                 pt = {
@@ -2818,7 +2818,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase3Component {
                 pt = {
@@ -2863,7 +2863,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" [name]="fileName" url="./upload" [disabled]="isDisabled"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" [name]="fileName" url="./upload" [disabled]="isDisabled"></h-fileupload>`
             })
             class TestPTCase4Component {
                 fileName = 'test-upload';
@@ -2910,7 +2910,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase5Component {
                 clickedSection: string = '';
@@ -2957,13 +2957,13 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 6: Inline test', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="{ root: 'INLINE_ROOT_CLASS', header: 'INLINE_HEADER_CLASS' }" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="{ root: 'INLINE_ROOT_CLASS', header: 'INLINE_HEADER_CLASS' }" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase6InlineComponent {}
 
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase6InlineObjectComponent {}
 
@@ -3016,8 +3016,8 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-fileupload name="file1" url="./upload"></p-fileupload>
-                    <p-fileupload name="file2" url="./upload"></p-fileupload>
+                    <h-fileupload name="file1" url="./upload"></h-fileupload>
+                    <h-fileupload name="file2" url="./upload"></h-fileupload>
                 `
             })
             class TestPTCase7GlobalComponent {}
@@ -3062,7 +3062,7 @@ describe('FileUpload Input Properties - Observable/Async Values', () => {
         describe('Case 8: Test hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-fileupload [pt]="pt" name="test" url="./upload"></p-fileupload>`
+                template: `<h-fileupload [pt]="pt" name="test" url="./upload"></h-fileupload>`
             })
             class TestPTCase8HooksComponent {
                 afterViewInitCalled = false;

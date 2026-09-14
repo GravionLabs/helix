@@ -261,7 +261,7 @@ describe('DynamicDialog', () => {
 
         it('should call close on dialogRef on close icon click', async () => {
             component.visible = true;
-            const closeButton = fixture.debugElement.query(By.css('.p-dialog-close-button'));
+            const closeButton = fixture.debugElement.query(By.css('.h-dialog-close-button'));
             closeButton.nativeElement.click();
             expect(mockDialogRef.close).toHaveBeenCalled();
             expect(component.visible).toBe(false);
@@ -331,7 +331,7 @@ describe('DynamicDialog', () => {
 
         it('should not initialize drag when clicking on header icons', () => {
             const iconElement = document.createElement('i');
-            iconElement.className = 'p-dialog-header-icon';
+            iconElement.className = 'h-dialog-header-icon';
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageX', { value: 100 });
             Object.defineProperty(mouseEvent, 'pageY', { value: 100 });
@@ -557,7 +557,7 @@ describe('DynamicDialog', () => {
         });
 
         it('should handle maximize button click', async () => {
-            const maximizeButton = fixture.debugElement.query(By.css('.p-dialog-maximize-button'));
+            const maximizeButton = fixture.debugElement.query(By.css('.h-dialog-maximize-button'));
             expect(maximizeButton).toBeTruthy();
 
             maximizeButton.nativeElement.click();
@@ -568,11 +568,11 @@ describe('DynamicDialog', () => {
 
         it('should apply maximized class when maximized', async () => {
             // Get the dialog element from Dialog component
-            const dialogElement = fixture.debugElement.query(By.css('p-dialog'));
+            const dialogElement = fixture.debugElement.query(By.css('h-dialog'));
             expect(dialogElement).toBeTruthy();
 
             // Click the maximize button which is in the Dialog component
-            const maximizeButton = fixture.debugElement.query(By.css('.p-dialog-maximize-button'));
+            const maximizeButton = fixture.debugElement.query(By.css('.h-dialog-maximize-button'));
             expect(maximizeButton).toBeTruthy();
 
             maximizeButton.nativeElement.click();
@@ -755,7 +755,7 @@ describe('DynamicDialog', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const headerElement = fixture.debugElement.query(By.css('.p-dialog-title'));
+            const headerElement = fixture.debugElement.query(By.css('.h-dialog-title'));
             expect(headerElement).toBeTruthy();
             expect(headerElement.nativeElement.textContent.trim()).toBe('Template Dialog');
         });
@@ -764,7 +764,7 @@ describe('DynamicDialog', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            // Footer is rendered as a plain div, not with .p-dialog-footer class in dynamic dialog
+            // Footer is rendered as a plain div, not with .h-dialog-footer class in dynamic dialog
             const dialogContent = fixture.nativeElement;
             expect(dialogContent.textContent).toContain('Footer Content');
         });
@@ -774,7 +774,7 @@ describe('DynamicDialog', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const headerElement = fixture.debugElement.query(By.css('.p-dialog-header'));
+            const headerElement = fixture.debugElement.query(By.css('.h-dialog-header'));
             expect(headerElement).toBeFalsy();
         });
     });

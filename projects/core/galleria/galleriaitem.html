@@ -11,7 +11,7 @@
       data-pc-group-section="itemnavigator"
       >
       @if (!galleria.itemPreviousIconTemplate && !galleria._itemPreviousIconTemplate()) {
-        <svg data-p-icon="chevron-left" [hBind]="ptm('prevIcon')" [class]="cx('prevIcon')" />
+        <svg data-h-icon="chevron-left" [hBind]="ptm('prevIcon')" [class]="cx('prevIcon')" />
       }
       <ng-template *ngTemplateOutlet="galleria.itemPreviousIconTemplate || galleria._itemPreviousIconTemplate()"></ng-template>
     </button>
@@ -41,7 +41,7 @@
       data-pc-group-section="itemnavigator"
       >
       @if (!galleria.itemNextIconTemplate && !galleria._itemNextIconTemplate()) {
-        <svg data-p-icon="chevron-right" [hBind]="ptm('nextIcon')" [class]="cx('nextIcon')" />
+        <svg data-h-icon="chevron-right" [hBind]="ptm('nextIcon')" [class]="cx('nextIcon')" />
       }
       <ng-template *ngTemplateOutlet="galleria.itemNextIconTemplate || galleria._itemNextIconTemplate()"></ng-template>
     </button>
@@ -64,7 +64,7 @@
         [attr.aria-selected]="activeIndex() === index"
         [attr.aria-controls]="id() + '_item_' + index"
         [hBind]="ptm('indicator', getIndicatorPTOptions(index))"
-        [attr.data-p-active]="isIndicatorItemActive(index)"
+        [attr.data-h-active]="isIndicatorItemActive(index)"
         >
         @if (!indicatorFacet() && !galleria.indicatorTemplate()) {
           <button type="button" tabIndex="-1" [hBind]="ptm('indicatorButton', getIndicatorPTOptions(index))" [class]="cx('indicatorButton')"></button>

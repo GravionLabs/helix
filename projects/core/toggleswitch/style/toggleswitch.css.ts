@@ -1,11 +1,11 @@
 export const style = /*css*/ `
-    .p-toggleswitch {
+    .h-toggleswitch {
         display: inline-block;
         width: dt('toggleswitch.width');
         height: dt('toggleswitch.height');
     }
 
-    .p-toggleswitch-input {
+    .h-toggleswitch-input {
         cursor: pointer;
         appearance: none;
         position: absolute;
@@ -21,7 +21,7 @@ export const style = /*css*/ `
         border-radius: dt('toggleswitch.border.radius');
     }
 
-    .p-toggleswitch-slider {
+    .h-toggleswitch-slider {
         cursor: pointer;
         width: 100%;
         height: 100%;
@@ -40,7 +40,7 @@ export const style = /*css*/ `
         box-shadow: dt('toggleswitch.shadow');
     }
 
-    .p-toggleswitch-handle {
+    .h-toggleswitch-handle {
         position: absolute;
         top: 50%;
         display: flex;
@@ -60,56 +60,56 @@ export const style = /*css*/ `
             box-shadow dt('toggleswitch.slide.duration');
     }
 
-    .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+    .h-toggleswitch.h-toggleswitch-checked .h-toggleswitch-slider {
         background: dt('toggleswitch.checked.background');
         border-color: dt('toggleswitch.checked.border.color');
     }
 
-    .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
+    .h-toggleswitch.h-toggleswitch-checked .h-toggleswitch-handle {
         background: dt('toggleswitch.handle.checked.background');
         color: dt('toggleswitch.handle.checked.color');
         inset-inline-start: calc(dt('toggleswitch.width') - calc(dt('toggleswitch.handle.size') + dt('toggleswitch.gap')));
     }
 
-    .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-slider {
+    .h-toggleswitch:not(.h-disabled):has(.h-toggleswitch-input:hover) .h-toggleswitch-slider {
         background: dt('toggleswitch.hover.background');
         border-color: dt('toggleswitch.hover.border.color');
     }
 
-    .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-handle {
+    .h-toggleswitch:not(.h-disabled):has(.h-toggleswitch-input:hover) .h-toggleswitch-handle {
         background: dt('toggleswitch.handle.hover.background');
         color: dt('toggleswitch.handle.hover.color');
     }
 
-    .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-slider {
+    .h-toggleswitch:not(.h-disabled):has(.h-toggleswitch-input:hover).h-toggleswitch-checked .h-toggleswitch-slider {
         background: dt('toggleswitch.checked.hover.background');
         border-color: dt('toggleswitch.checked.hover.border.color');
     }
 
-    .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-handle {
+    .h-toggleswitch:not(.h-disabled):has(.h-toggleswitch-input:hover).h-toggleswitch-checked .h-toggleswitch-handle {
         background: dt('toggleswitch.handle.checked.hover.background');
         color: dt('toggleswitch.handle.checked.hover.color');
     }
 
-    .p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:focus-visible) .p-toggleswitch-slider {
+    .h-toggleswitch:not(.h-disabled):has(.h-toggleswitch-input:focus-visible) .h-toggleswitch-slider {
         box-shadow: dt('toggleswitch.focus.ring.shadow');
         outline: dt('toggleswitch.focus.ring.width') dt('toggleswitch.focus.ring.style') dt('toggleswitch.focus.ring.color');
         outline-offset: dt('toggleswitch.focus.ring.offset');
     }
 
-    .p-toggleswitch.p-invalid > .p-toggleswitch-slider {
+    .h-toggleswitch.h-invalid > .h-toggleswitch-slider {
         border-color: dt('toggleswitch.invalid.border.color');
     }
 
-    .p-toggleswitch.p-disabled {
+    .h-toggleswitch.h-disabled {
         opacity: 1;
     }
 
-    .p-toggleswitch.p-disabled .p-toggleswitch-slider {
+    .h-toggleswitch.h-disabled .h-toggleswitch-slider {
         background: dt('toggleswitch.disabled.background');
     }
 
-    .p-toggleswitch.p-disabled .p-toggleswitch-handle {
+    .h-toggleswitch.h-disabled .h-toggleswitch-handle {
         background: dt('toggleswitch.handle.disabled.background');
     }
 `;

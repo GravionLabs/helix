@@ -34,7 +34,7 @@ export const INPUTNUMBER_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

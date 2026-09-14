@@ -8,7 +8,7 @@ import { BlockUI, BlockUIModule } from './blockui';
 @Component({
     standalone: false,
     selector: 'test-basic-blockui',
-    template: `<p-blockui [blocked]="blocked"></p-blockui>`
+    template: `<h-blockui [blocked]="blocked"></h-blockui>`
 })
 class TestBasicBlockUIComponent {
     blocked = false;
@@ -17,7 +17,7 @@ class TestBasicBlockUIComponent {
 @Component({
     standalone: false,
     selector: 'test-blocked-blockui',
-    template: `<p-blockui [blocked]="blocked"></p-blockui>`
+    template: `<h-blockui [blocked]="blocked"></h-blockui>`
 })
 class TestBlockedBlockUIComponent {
     blocked = false;
@@ -26,7 +26,7 @@ class TestBlockedBlockUIComponent {
 @Component({
     standalone: false,
     selector: 'test-auto-zindex-blockui',
-    template: `<p-blockui [blocked]="blocked" [autoZIndex]="autoZIndex" [baseZIndex]="baseZIndex"></p-blockui>`
+    template: `<h-blockui [blocked]="blocked" [autoZIndex]="autoZIndex" [baseZIndex]="baseZIndex"></h-blockui>`
 })
 class TestAutoZIndexBlockUIComponent {
     blocked = false;
@@ -37,7 +37,7 @@ class TestAutoZIndexBlockUIComponent {
 @Component({
     standalone: false,
     selector: 'test-style-class-blockui',
-    template: `<p-blockui [blocked]="blocked" [styleClass]="styleClass"></p-blockui>`
+    template: `<h-blockui [blocked]="blocked" [styleClass]="styleClass"></h-blockui>`
 })
 class TestStyleClassBlockUIComponent {
     blocked = false;
@@ -48,9 +48,9 @@ class TestStyleClassBlockUIComponent {
     standalone: false,
     selector: 'test-content-blockui',
     template: `
-        <p-blockui [blocked]="blocked">
+        <h-blockui [blocked]="blocked">
             <div class="custom-content">Loading...</div>
-        </p-blockui>
+        </h-blockui>
     `
 })
 class TestContentBlockUIComponent {
@@ -61,11 +61,11 @@ class TestContentBlockUIComponent {
     standalone: false,
     selector: 'test-template-blockui',
     template: `
-        <p-blockui [blocked]="blocked">
+        <h-blockui [blocked]="blocked">
             <ng-template #content>
                 <div class="template-content">Please wait...</div>
             </ng-template>
-        </p-blockui>
+        </h-blockui>
     `
 })
 class TestTemplateBlockUIComponent {
@@ -79,7 +79,7 @@ class TestTemplateBlockUIComponent {
         <div #targetElement class="target-container">
             <p>Target content</p>
         </div>
-        <p-blockui [blocked]="blocked" [target]="targetElement"></p-blockui>
+        <h-blockui [blocked]="blocked" [target]="targetElement"></h-blockui>
     `
 })
 class TestTargetBlockUIComponent {
@@ -108,7 +108,7 @@ class MockBlockableComponent {
         <mock-blockable #blockableTarget>
             <p>Blockable content</p>
         </mock-blockable>
-        <p-blockui [blocked]="blocked" [target]="blockableTarget"></p-blockui>
+        <h-blockui [blocked]="blocked" [target]="blockableTarget"></h-blockui>
     `
 })
 class TestBlockableTargetBlockUIComponent {
@@ -121,7 +121,7 @@ class TestBlockableTargetBlockUIComponent {
     selector: 'test-invalid-target-blockui',
     template: `
         <div #invalidTarget class="invalid-target">Invalid Target</div>
-        <p-blockui [blocked]="blocked" [target]="invalidTarget"></p-blockui>
+        <h-blockui [blocked]="blocked" [target]="invalidTarget"></h-blockui>
     `
 })
 class TestInvalidTargetBlockUIComponent {
@@ -133,9 +133,9 @@ class TestInvalidTargetBlockUIComponent {
     standalone: false,
     selector: 'test-dynamic-blockui',
     template: `
-        <p-blockui [blocked]="blocked" [autoZIndex]="autoZIndex" [baseZIndex]="baseZIndex" [styleClass]="styleClass">
+        <h-blockui [blocked]="blocked" [autoZIndex]="autoZIndex" [baseZIndex]="baseZIndex" [styleClass]="styleClass">
             <div class="dynamic-content">{{ content }}</div>
-        </p-blockui>
+        </h-blockui>
     `
 })
 class TestDynamicBlockUIComponent {
@@ -201,10 +201,10 @@ describe('BlockUI', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-blockui')).toBe(true);
-            expect(element.classList.contains('p-blockui-mask')).toBe(true);
-            expect(element.classList.contains('p-overlay-mask')).toBe(true);
-            expect(element.classList.contains('p-blockui-mask-document')).toBe(true);
+            expect(element.classList.contains('h-blockui')).toBe(true);
+            expect(element.classList.contains('h-blockui-mask')).toBe(true);
+            expect(element.classList.contains('h-overlay-mask')).toBe(true);
+            expect(element.classList.contains('h-blockui-mask-document')).toBe(true);
         });
 
         it('should have correct data attributes', () => {
@@ -376,7 +376,7 @@ describe('BlockUI', () => {
         });
 
         it('should maintain base classes with custom style class', () => {
-            expect(element.classList.contains('p-blockui')).toBe(true);
+            expect(element.classList.contains('h-blockui')).toBe(true);
             expect(element.classList.contains('custom-blockui')).toBe(true);
         });
     });
@@ -714,10 +714,10 @@ describe('BlockUI', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-blockui')).toBe(true);
-            expect(element.classList.contains('p-blockui-mask')).toBe(true);
-            expect(element.classList.contains('p-overlay-mask')).toBe(true);
-            expect(element.classList.contains('p-blockui-mask-document')).toBe(true);
+            expect(element.classList.contains('h-blockui')).toBe(true);
+            expect(element.classList.contains('h-blockui-mask')).toBe(true);
+            expect(element.classList.contains('h-overlay-mask')).toBe(true);
+            expect(element.classList.contains('h-blockui-mask-document')).toBe(true);
 
             expect(element.classList.contains('custom-overlay')).toBe(true);
         });
@@ -750,7 +750,7 @@ describe('BlockUI', () => {
         @Component({
             standalone: true,
             imports: [BlockUI],
-            template: `<p-blockui [blocked]="blocked()" [autoZIndex]="autoZIndex()" [baseZIndex]="baseZIndex()" [pt]="pt()"></p-blockui>`
+            template: `<h-blockui [blocked]="blocked()" [autoZIndex]="autoZIndex()" [baseZIndex]="baseZIndex()" [pt]="pt()"></h-blockui>`
         })
         class TestPTBlockUIComponent {
             blocked = input<boolean>(false);
@@ -801,7 +801,7 @@ describe('BlockUI', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'rgba(0,0,0,0.5)' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -810,7 +810,7 @@ describe('BlockUI', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.backgroundColor).toBe('rgba(0, 0, 0, 0.5)');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -819,7 +819,7 @@ describe('BlockUI', () => {
                     host: {
                         class: 'HOST_OBJECT_CLASS',
                         style: { 'z-index': '1000' },
-                        'data-p-host': 'blockui',
+                        'data-h-host': 'blockui',
                         'aria-modal': 'true'
                     }
                 });
@@ -828,7 +828,7 @@ describe('BlockUI', () => {
 
                 expect(element.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
                 expect(element.style.zIndex).toBe('1000');
-                expect(element.getAttribute('data-p-host')).toBe('blockui');
+                expect(element.getAttribute('data-h-host')).toBe('blockui');
                 expect(element.getAttribute('aria-modal')).toBe('true');
             });
         });

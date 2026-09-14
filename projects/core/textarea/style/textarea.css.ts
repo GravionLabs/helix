@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-textarea {
+    .h-textarea {
         font-family: inherit;
         font-feature-settings: inherit;
         font-size: 1rem;
@@ -20,63 +20,63 @@ export const style = /*css*/ `
         box-shadow: dt('textarea.shadow');
     }
 
-    .p-textarea:enabled:hover {
+    .h-textarea:enabled:hover {
         border-color: dt('textarea.hover.border.color');
     }
 
-    .p-textarea:enabled:focus {
+    .h-textarea:enabled:focus {
         border-color: dt('textarea.focus.border.color');
         box-shadow: dt('textarea.focus.ring.shadow');
         outline: dt('textarea.focus.ring.width') dt('textarea.focus.ring.style') dt('textarea.focus.ring.color');
         outline-offset: dt('textarea.focus.ring.offset');
     }
 
-    .p-textarea.p-invalid {
+    .h-textarea.h-invalid {
         border-color: dt('textarea.invalid.border.color');
     }
 
-    .p-textarea.p-variant-filled {
+    .h-textarea.h-variant-filled {
         background: dt('textarea.filled.background');
     }
 
-    .p-textarea.p-variant-filled:enabled:hover {
+    .h-textarea.h-variant-filled:enabled:hover {
         background: dt('textarea.filled.hover.background');
     }
 
-    .p-textarea.p-variant-filled:enabled:focus {
+    .h-textarea.h-variant-filled:enabled:focus {
         background: dt('textarea.filled.focus.background');
     }
 
-    .p-textarea:disabled {
+    .h-textarea:disabled {
         opacity: 1;
         background: dt('textarea.disabled.background');
         color: dt('textarea.disabled.color');
     }
 
-    .p-textarea::placeholder {
+    .h-textarea::placeholder {
         color: dt('textarea.placeholder.color');
     }
 
-    .p-textarea.p-invalid::placeholder {
+    .h-textarea.h-invalid::placeholder {
         color: dt('textarea.invalid.placeholder.color');
     }
 
-    .p-textarea-fluid {
+    .h-textarea-fluid {
         width: 100%;
     }
 
-    .p-textarea-resizable {
+    .h-textarea-resizable {
         overflow: hidden;
         resize: none;
     }
 
-    .p-textarea-sm {
+    .h-textarea-sm {
         font-size: dt('textarea.sm.font.size');
         padding-block: dt('textarea.sm.padding.y');
         padding-inline: dt('textarea.sm.padding.x');
     }
 
-    .p-textarea-lg {
+    .h-textarea-lg {
         font-size: dt('textarea.lg.font.size');
         padding-block: dt('textarea.lg.padding.y');
         padding-inline: dt('textarea.lg.padding.x');

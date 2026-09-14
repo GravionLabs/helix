@@ -254,7 +254,7 @@ describe('SelectButton', () => {
     describe('Template and Content Projection', () => {
         it('should process templates in ngAfterContentInit', () => {
             const templateComponent = TestBed.createComponent(TestHelixTemplateSelectButtonComponent);
-            const selectButtonInstance = templateComponent.debugElement.query(By.css('p-selectbutton')).componentInstance;
+            const selectButtonInstance = templateComponent.debugElement.query(By.css('h-selectbutton')).componentInstance;
 
             templateComponent.detectChanges();
 
@@ -425,7 +425,7 @@ describe('SelectButton', () => {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-selectbutton [options]="options" formControlName="selectedValue"> </p-selectbutton>
+            <h-selectbutton [options]="options" formControlName="selectedValue"> </h-selectbutton>
         </form>
     `
 })
@@ -444,11 +444,11 @@ class TestFormSelectButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-selectbutton [options]="options">
+        <h-selectbutton [options]="options">
             <ng-template pTemplate="item" let-option let-index="index">
                 <div class="prime-template-content">Prime: {{ option.label }}</div>
             </ng-template>
-        </p-selectbutton>
+        </h-selectbutton>
     `
 })
 class TestHelixTemplateSelectButtonComponent {
@@ -463,7 +463,7 @@ class TestHelixTemplateSelectButtonComponent {
     standalone: true,
     imports: [SelectButton, FormsModule, SharedModule],
     template: `
-        <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
+        <h-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with pTemplate -->
             <ng-template pTemplate="item" let-option let-index="index">
                 <span class="custom-template-item" [attr.data-testid]="'ptemplate-item-' + index" [title]="'Template item: ' + option.label + ' at index ' + index">
@@ -471,7 +471,7 @@ class TestHelixTemplateSelectButtonComponent {
                     {{ option.label }} ({{ option.value }})
                 </span>
             </ng-template>
-        </p-selectbutton>
+        </h-selectbutton>
     `
 })
 class TestSelectButtonPTemplateComponent {
@@ -488,7 +488,7 @@ class TestSelectButtonPTemplateComponent {
     standalone: true,
     imports: [SelectButton, FormsModule, SharedModule],
     template: `
-        <p-selectbutton [(ngModel)]="selectedValue" [options]="options">
+        <h-selectbutton [(ngModel)]="selectedValue" [options]="options">
             <!-- Item template with #template reference -->
             <ng-template #item let-option let-index="index">
                 <span class="custom-ref-item" [attr.data-testid]="'ref-item-' + index" [title]="'Reference item: ' + option.label + ' at index ' + index">
@@ -496,7 +496,7 @@ class TestSelectButtonPTemplateComponent {
                     {{ option.label }} [{{ option.value }}]
                 </span>
             </ng-template>
-        </p-selectbutton>
+        </h-selectbutton>
     `
 })
 class TestSelectButtonRefTemplateComponent {
@@ -738,12 +738,12 @@ describe('SelectButton PassThrough Tests', () => {
         it('should apply object with data attributes to root', () => {
             fixture.componentRef.setInput('pt', {
                 root: {
-                    'data-p-test': 'true'
+                    'data-h-test': 'true'
                 }
             });
             fixture.detectChanges();
 
-            expect(hostElement.getAttribute('data-p-test')).toBe('true');
+            expect(hostElement.getAttribute('data-h-test')).toBe('true');
         });
 
         it('should apply object with aria attributes to root', () => {
@@ -877,7 +877,7 @@ describe('SelectButton PassThrough Tests', () => {
             const inlineFixture = TestBed.createComponent(TestInlineStringPTComponent);
             inlineFixture.detectChanges();
 
-            const inlineHostElement = inlineFixture.nativeElement.querySelector('p-selectbutton');
+            const inlineHostElement = inlineFixture.nativeElement.querySelector('h-selectbutton');
             expect(inlineHostElement.classList.contains('INLINE_STRING')).toBe(true);
         });
 
@@ -885,7 +885,7 @@ describe('SelectButton PassThrough Tests', () => {
             const inlineFixture = TestBed.createComponent(TestInlineObjectPTComponent);
             inlineFixture.detectChanges();
 
-            const inlineHostElement = inlineFixture.nativeElement.querySelector('p-selectbutton');
+            const inlineHostElement = inlineFixture.nativeElement.querySelector('h-selectbutton');
             expect(inlineHostElement.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
             expect(inlineHostElement.getAttribute('data-inline')).toBe('true');
         });
@@ -943,7 +943,7 @@ describe('SelectButton PassThrough Tests', () => {
             const multiFixture = TestBed.createComponent(TestMultipleInstancesComponent);
             multiFixture.detectChanges();
 
-            const selectButtons = multiFixture.nativeElement.querySelectorAll('p-selectbutton');
+            const selectButtons = multiFixture.nativeElement.querySelectorAll('h-selectbutton');
             expect(selectButtons.length).toBe(2);
 
             selectButtons.forEach((btn: HTMLElement) => {
@@ -1140,7 +1140,7 @@ describe('SelectButton PassThrough Tests', () => {
             });
             fixture.detectChanges();
 
-            const toggleButtons = hostElement.querySelectorAll('p-togglebutton');
+            const toggleButtons = hostElement.querySelectorAll('h-togglebutton');
             expect(toggleButtons.length).toBeGreaterThan(0);
         });
 
@@ -1155,7 +1155,7 @@ describe('SelectButton PassThrough Tests', () => {
             });
             fixture.detectChanges();
 
-            const toggleButtons = hostElement.querySelectorAll('p-togglebutton');
+            const toggleButtons = hostElement.querySelectorAll('h-togglebutton');
             expect(toggleButtons.length).toBeGreaterThan(0);
         });
     });
@@ -1165,7 +1165,7 @@ describe('SelectButton PassThrough Tests', () => {
 @Component({
     standalone: true,
     imports: [SelectButton, FormsModule],
-    template: `<p-selectbutton [options]="options" [pt]="{ root: 'INLINE_STRING' }" />`
+    template: `<h-selectbutton [options]="options" [pt]="{ root: 'INLINE_STRING' }" />`
 })
 class TestInlineStringPTComponent {
     options = ['One', 'Two'];
@@ -1174,7 +1174,7 @@ class TestInlineStringPTComponent {
 @Component({
     standalone: true,
     imports: [SelectButton, FormsModule],
-    template: `<p-selectbutton [options]="options" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }" />`
+    template: `<h-selectbutton [options]="options" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }" />`
 })
 class TestInlineObjectPTComponent {
     options = ['One', 'Two'];
@@ -1184,8 +1184,8 @@ class TestInlineObjectPTComponent {
     standalone: true,
     imports: [SelectButton, FormsModule],
     template: `
-        <p-selectbutton [options]="options1" />
-        <p-selectbutton [options]="options2" />
+        <h-selectbutton [options]="options1" />
+        <h-selectbutton [options]="options2" />
     `
 })
 class TestMultipleInstancesComponent {

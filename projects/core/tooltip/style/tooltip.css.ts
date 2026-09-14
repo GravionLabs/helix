@@ -1,21 +1,21 @@
 export const style = /*css*/ `
-    .p-tooltip {
+    .h-tooltip {
         position: absolute;
         display: none;
         max-width: dt('tooltip.max.width');
     }
 
-    .p-tooltip-right,
-    .p-tooltip-left {
+    .h-tooltip-right,
+    .h-tooltip-left {
         padding: 0 dt('tooltip.gutter');
     }
 
-    .p-tooltip-top,
-    .p-tooltip-bottom {
+    .h-tooltip-top,
+    .h-tooltip-bottom {
         padding: dt('tooltip.gutter') 0;
     }
 
-    .p-tooltip-text {
+    .h-tooltip-text {
         white-space: pre-line;
         word-break: break-word;
         background: dt('tooltip.background');
@@ -25,7 +25,7 @@ export const style = /*css*/ `
         border-radius: dt('tooltip.border.radius');
     }
 
-    .p-tooltip-arrow {
+    .h-tooltip-arrow {
         position: absolute;
         width: 0;
         height: 0;
@@ -33,26 +33,26 @@ export const style = /*css*/ `
         border-style: solid;
     }
 
-    .p-tooltip-right .p-tooltip-arrow {
+    .h-tooltip-right .h-tooltip-arrow {
         margin-top: calc(-1 * dt('tooltip.gutter'));
         border-width: dt('tooltip.gutter') dt('tooltip.gutter') dt('tooltip.gutter') 0;
         border-right-color: dt('tooltip.background');
     }
 
-    .p-tooltip-left .p-tooltip-arrow {
+    .h-tooltip-left .h-tooltip-arrow {
         margin-top: calc(-1 * dt('tooltip.gutter'));
         border-width: dt('tooltip.gutter') 0 dt('tooltip.gutter') dt('tooltip.gutter');
         border-left-color: dt('tooltip.background');
     }
 
-    .p-tooltip-top .p-tooltip-arrow {
+    .h-tooltip-top .h-tooltip-arrow {
         margin-left: calc(-1 * dt('tooltip.gutter'));
         border-width: dt('tooltip.gutter') dt('tooltip.gutter') 0 dt('tooltip.gutter');
         border-top-color: dt('tooltip.background');
         border-bottom-color: dt('tooltip.background');
     }
 
-    .p-tooltip-bottom .p-tooltip-arrow {
+    .h-tooltip-bottom .h-tooltip-arrow {
         margin-left: calc(-1 * dt('tooltip.gutter'));
         border-width: 0 dt('tooltip.gutter') dt('tooltip.gutter') dt('tooltip.gutter');
         border-top-color: dt('tooltip.background');

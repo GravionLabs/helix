@@ -27,9 +27,9 @@
         }
       } @else {
         @if (loaderIconTemplate() || _loaderIconTemplate) {
-          <ng-container *ngTemplateOutlet="loaderIconTemplate() || _loaderIconTemplate; context: { options: { styleClass: 'p-virtualscroller-loading-icon' } }"></ng-container>
+          <ng-container *ngTemplateOutlet="loaderIconTemplate() || _loaderIconTemplate; context: { options: { styleClass: 'h-virtualscroller-loading-icon' } }"></ng-container>
         } @else {
-          <svg data-p-icon="spinner" [class]="cx('loadingIcon')" [spin]="true" [hBind]="ptm('loadingIcon')" />
+          <svg data-h-icon="spinner" [class]="cx('loadingIcon')" [spin]="true" [hBind]="ptm('loadingIcon')" />
         }
       }
     </div>

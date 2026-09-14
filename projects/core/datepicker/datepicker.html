@@ -2,7 +2,7 @@
   <input
     #inputfield
     hInputText
-    data-p-maskable
+    data-h-maskable
     [pSize]="size()"
     [attr.size]="inputSize()"
     type="text"
@@ -40,7 +40,7 @@
     />
   @if (showClear() && !$disabled() && inputfieldViewChild()?.nativeElement?.value) {
     @if (!clearIconTemplate() && !_clearIconTemplate) {
-      <svg data-p-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()" />
+      <svg data-h-icon="times" [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()" />
     }
     @if (clearIconTemplate() || _clearIconTemplate) {
       <span [class]="cx('clearIcon')" [hBind]="ptm('inputIcon')" (click)="clear()">
@@ -66,22 +66,22 @@
       }
       @if (!icon()) {
         @if (!triggerIconTemplate() && !_triggerIconTemplate) {
-          <svg data-p-icon="calendar" [hBind]="ptm('dropdownIcon')" />
+          <svg data-h-icon="calendar" [hBind]="ptm('dropdownIcon')" />
         }
         <ng-template *ngTemplateOutlet="triggerIconTemplate() || _triggerIconTemplate"></ng-template>
       }
     </button>
   }
   @if (iconDisplay() === 'input' && showIcon()) {
-    <span [class]="cx('inputIconContainer')" [hBind]="ptm('inputIconContainer')" [attr.data-p]="inputIconDataP">
+    <span [class]="cx('inputIconContainer')" [hBind]="ptm('inputIconContainer')" [attr.data-h]="inputIconDataP">
       @if (!inputIconTemplate() && !_inputIconTemplate) {
-        <svg data-p-icon="calendar" (click)="onButtonClick($event)" [class]="cx('inputIcon')" [hBind]="ptm('inputIcon')" />
+        <svg data-h-icon="calendar" (click)="onButtonClick($event)" [class]="cx('inputIcon')" [hBind]="ptm('inputIcon')" />
       }
       <ng-container *ngTemplateOutlet="inputIconTemplate() || _inputIconTemplate; context: { clickCallBack: onButtonClick.bind(this) }"></ng-container>
     </span>
   }
 }
-<h-motion [visible]="inline() || overlayVisible" name="p-anchored-overlay" [appear]="!inline()" [options]="computedMotionOptions()" (onBeforeEnter)="onOverlayBeforeEnter($event)" (onAfterLeave)="onOverlayAfterLeave($event)">
+<h-motion [visible]="inline() || overlayVisible" name="h-anchored-overlay" [appear]="!inline()" [options]="computedMotionOptions()" (onBeforeEnter)="onOverlayBeforeEnter($event)" (onAfterLeave)="onOverlayAfterLeave($event)">
   <div
     #contentWrapper
     [attr.id]="panelId"
@@ -93,7 +93,7 @@
     (click)="onOverlayClick($event)"
     [hBind]="ptm('panel')"
     >
-    <ng-content select="p-header"></ng-content>
+    <ng-content select="h-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
     @if (!timeOnly()) {
       <div [class]="cx('calendarContainer')" [hBind]="ptm('calendarContainer')">
@@ -115,7 +115,7 @@
                 >
                 <ng-template #icon>
                   @if (!previousIconTemplate() && !_previousIconTemplate) {
-                    <svg data-p-icon="chevron-left" />
+                    <svg data-h-icon="chevron-left" />
                   }
                   @if (previousIconTemplate() || _previousIconTemplate) {
                     <span>
@@ -178,7 +178,7 @@
                 >
                 <ng-template #icon>
                   @if (!nextIconTemplate() && !_nextIconTemplate) {
-                    <svg data-p-icon="chevron-right" />
+                    <svg data-h-icon="chevron-right" />
                   }
                   @if (nextIconTemplate() || _nextIconTemplate) {
                     <ng-template *ngTemplateOutlet="nextIconTemplate() || _nextIconTemplate"></ng-template>
@@ -235,7 +235,7 @@
                               }
                             </span>
                             @if (isSelected(date)) {
-                              <div class="p-hidden-accessible" aria-live="polite">
+                              <div class="h-hidden-accessible" aria-live="polite">
                                 {{ date.day }}
                               </div>
                             }
@@ -256,7 +256,7 @@
             <span (click)="onMonthSelect($event, i)" (keydown)="onMonthCellKeydown($event, i)" [class]="cx('month', { month: m, index: i })" hRipple [hBind]="ptm('month')">
               {{ m }}
               @if (isMonthSelected(i)) {
-                <div class="p-hidden-accessible" aria-live="polite">
+                <div class="h-hidden-accessible" aria-live="polite">
                   {{ m }}
                 </div>
               }
@@ -270,7 +270,7 @@
             <span (click)="onYearSelect($event, y)" (keydown)="onYearCellKeydown($event, y)" [class]="cx('year', { year: y })" hRipple [hBind]="ptm('year')">
               {{ y }}
               @if (isYearSelected(y)) {
-                <div class="p-hidden-accessible" aria-live="polite">
+                <div class="h-hidden-accessible" aria-live="polite">
                   {{ y }}
                 </div>
               }
@@ -301,7 +301,7 @@
             >
             <ng-template #icon>
               @if (!incrementIconTemplate() && !_incrementIconTemplate) {
-                <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
+                <svg data-h-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
               }
               <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
             </ng-template>
@@ -328,13 +328,13 @@
             >
             <ng-template #icon>
               @if (!decrementIconTemplate() && !_decrementIconTemplate) {
-                <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
+                <svg data-h-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
               }
               <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
             </ng-template>
           </h-button>
         </div>
-        <div class="p-datepicker-separator" [hBind]="ptm('separatorContainer')">
+        <div class="h-datepicker-separator" [hBind]="ptm('separatorContainer')">
           <span [hBind]="ptm('separator')">{{ timeSeparator() }}</span>
         </div>
         <div [class]="cx('minutePicker')" [hBind]="ptm('minutePicker')">
@@ -357,7 +357,7 @@
             >
             <ng-template #icon>
               @if (!incrementIconTemplate() && !_incrementIconTemplate) {
-                <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
+                <svg data-h-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
               }
               <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
             </ng-template>
@@ -384,7 +384,7 @@
             >
             <ng-template #icon>
               @if (!decrementIconTemplate() && !_decrementIconTemplate) {
-                <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
+                <svg data-h-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
               }
               <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
             </ng-template>
@@ -416,7 +416,7 @@
               >
               <ng-template #icon>
                 @if (!incrementIconTemplate() && !_incrementIconTemplate) {
-                  <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
+                  <svg data-h-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
                 }
                 <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
               </ng-template>
@@ -443,7 +443,7 @@
               >
               <ng-template #icon>
                 @if (!decrementIconTemplate() && !_decrementIconTemplate) {
-                  <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
+                  <svg data-h-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
                 }
                 <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
               </ng-template>
@@ -471,7 +471,7 @@
               >
               <ng-template #icon>
                 @if (!incrementIconTemplate() && !_incrementIconTemplate) {
-                  <svg data-p-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
+                  <svg data-h-icon="chevron-up" [hBind]="ptm('pcIncrementButton')['icon']" />
                 }
                 <ng-template *ngTemplateOutlet="incrementIconTemplate() || _incrementIconTemplate"></ng-template>
               </ng-template>
@@ -491,7 +491,7 @@
               >
               <ng-template #icon>
                 @if (!decrementIconTemplate() && !_decrementIconTemplate) {
-                  <svg data-p-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
+                  <svg data-h-icon="chevron-down" [hBind]="ptm('pcDecrementButton')['icon']" />
                 }
                 <ng-template *ngTemplateOutlet="decrementIconTemplate() || _decrementIconTemplate"></ng-template>
               </ng-template>
@@ -534,7 +534,7 @@
         }
       </div>
     }
-    <ng-content select="p-footer"></ng-content>
+    <ng-content select="h-footer"></ng-content>
     <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   </div>
 </h-motion>

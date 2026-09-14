@@ -69,7 +69,7 @@ export const LISTBOX_VALUE_ACCESSOR: any = {
         '[attr.id]': '$id()',
         '(focusout)': 'onHostFocusOut($event)',
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'containerDataP'
+        '[attr.data-h]': 'containerDataP'
     },
     hostDirectives: [Bind]
 })
@@ -873,7 +873,7 @@ export class Listbox extends BaseEditableHolder<ListBoxPassThrough> {
 
     onFirstHiddenFocus(event: FocusEvent) {
         focus(this.listViewChild()?.nativeElement);
-        const firstFocusableEl = getFirstFocusableElement(this.el?.nativeElement, ':not([data-p-hidden-focusable="true"])');
+        const firstFocusableEl = getFirstFocusableElement(this.el?.nativeElement, ':not([data-h-hidden-focusable="true"])');
         this.lastHiddenFocusableElement()?.nativeElement && (this.lastHiddenFocusableElement()!.nativeElement.tabIndex = isEmpty(firstFocusableEl) ? -1 : undefined);
         this.firstHiddenFocusableElement()?.nativeElement && (this.firstHiddenFocusableElement()!.nativeElement.tabIndex = -1);
     }
@@ -882,7 +882,7 @@ export class Listbox extends BaseEditableHolder<ListBoxPassThrough> {
         const relatedTarget = event.relatedTarget;
 
         if (relatedTarget === this.listViewChild()?.nativeElement) {
-            const firstFocusableEl = <any>getFirstFocusableElement(this.el?.nativeElement, ':not([data-p-hidden-focusable="true"])');
+            const firstFocusableEl = <any>getFirstFocusableElement(this.el?.nativeElement, ':not([data-h-hidden-focusable="true"])');
 
             focus(firstFocusableEl);
             this.firstHiddenFocusableElement()?.nativeElement && (this.firstHiddenFocusableElement()!.nativeElement.tabIndex = undefined);
@@ -1423,12 +1423,12 @@ export class Listbox extends BaseEditableHolder<ListBoxPassThrough> {
 
     onDragEntered() {
         this.isDragging.set(true);
-        this.el.nativeElement.setAttribute('p-listbox-dragging', 'true');
+        this.el.nativeElement.setAttribute('h-listbox-dragging', 'true');
     }
 
     onDragExited() {
         this.isDragging.set(false);
-        this.el.nativeElement.setAttribute('p-listbox-dragging', 'false');
+        this.el.nativeElement.setAttribute('h-listbox-dragging', 'false');
     }
 
     drop(event: CdkDragDrop<string[]>) {

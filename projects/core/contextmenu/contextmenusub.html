@@ -15,7 +15,7 @@
     (blur)="menuBlur.emit($event)"
     [hMotion]="root() ? true : visible"
     [pMotionAppear]="true"
-    [pMotionName]="'p-anchored-overlay'"
+    [pMotionName]="'h-anchored-overlay'"
     [pMotionOptions]="motionOptions()"
     (pMotionOnBeforeEnter)="onBeforeEnter($event)"
     (pMotionOnAfterLeave)="onAfterLeave()"
@@ -35,9 +35,9 @@
           #listItem
           role="menuitem"
           [attr.id]="getItemId(processedItem)"
-          [attr.data-p-highlight]="isItemActive(processedItem)"
-          [attr.data-p-focused]="isItemFocused(processedItem)"
-          [attr.data-p-disabled]="isItemDisabled(processedItem)"
+          [attr.data-h-highlight]="isItemActive(processedItem)"
+          [attr.data-h-focused]="isItemFocused(processedItem)"
+          [attr.data-h-disabled]="isItemDisabled(processedItem)"
           [attr.aria-label]="getItemLabel(processedItem)"
           [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
           [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
@@ -98,13 +98,13 @@
                   @if (isItemGroup(processedItem)) {
                     @if (!contextMenu.submenuIconTemplate() && !contextMenu._submenuIconTemplate) {
                       <svg
-                        data-p-icon="angle-right"
+                        data-h-icon="angle-right"
                         [class]="cx('submenuIcon')"
                         [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'h-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }
@@ -168,13 +168,13 @@
                   @if (isItemGroup(processedItem)) {
                     @if (!contextMenu.submenuIconTemplate() && !contextMenu._submenuIconTemplate) {
                       <svg
-                        data-p-icon="angle-right"
+                        data-h-icon="angle-right"
                         [class]="cx('submenuIcon')"
                         [hBind]="getPTOptions(processedItem, index, 'submenuIcon')"
                         [attr.aria-hidden]="true"
                         />
                     }
-                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
+                    <ng-template *ngTemplateOutlet="contextMenu.submenuIconTemplate() || contextMenu._submenuIconTemplate; context: { class: 'h-contextmenu-submenu-icon' }" [attr.aria-hidden]="true"></ng-template>
                   }
                 </a>
               }

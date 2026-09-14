@@ -10,7 +10,7 @@ import { Dialog } from './dialog';
 @Component({
     standalone: false,
     template: `
-        <p-dialog
+        <h-dialog
             [(visible)]="visible"
             [header]="header"
             [modal]="modal"
@@ -54,7 +54,7 @@ import { Dialog } from './dialog';
             (visibleChange)="onVisibleChangeEvent($event)"
         >
             <div class="dialog-content">Basic dialog content</div>
-        </p-dialog>
+        </h-dialog>
         <button #triggerBtn (click)="showDialog()" class="trigger-btn">Show Dialog</button>
     `
 })
@@ -140,7 +140,7 @@ class TestBasicDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible" [modal]="true">
+        <h-dialog [(visible)]="visible" [modal]="true">
             <ng-template pTemplate="header">
                 <div class="custom-header">Custom Header with pTemplate</div>
             </ng-template>
@@ -159,7 +159,7 @@ class TestBasicDialogComponent {
             <ng-template pTemplate="minimizeicon">
                 <i class="pi pi-custom-minimize custom-minimize-icon"></i>
             </ng-template>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestPTemplateDialogComponent {
@@ -170,7 +170,7 @@ class TestPTemplateDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible" [modal]="true" [maximizable]="true">
+        <h-dialog [(visible)]="visible" [modal]="true" [maximizable]="true">
             <ng-template #header>
                 <div class="custom-header">Custom Header with #template</div>
             </ng-template>
@@ -189,7 +189,7 @@ class TestPTemplateDialogComponent {
             <ng-template #minimizeicon>
                 <i class="pi pi-custom-minimize custom-minimize-icon"></i>
             </ng-template>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestHashTemplateDialogComponent {
@@ -200,7 +200,7 @@ class TestHashTemplateDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible">
+        <h-dialog [(visible)]="visible">
             <ng-template #headless>
                 <div class="custom-headless">
                     <h3>Headless Dialog</h3>
@@ -208,7 +208,7 @@ class TestHashTemplateDialogComponent {
                     <button (click)="visible = false">Close</button>
                 </div>
             </ng-template>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestHeadlessDialogComponent {
@@ -219,9 +219,9 @@ class TestHeadlessDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible" [position]="position" header="Position Test">
+        <h-dialog [(visible)]="visible" [position]="position" header="Position Test">
             <div>Testing different positions</div>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestPositionDialogComponent {
@@ -233,9 +233,9 @@ class TestPositionDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible" [maximizable]="maximizable" header="Maximizable Test" (onMaximize)="onMaximize($event)">
+        <h-dialog [(visible)]="visible" [maximizable]="maximizable" header="Maximizable Test" (onMaximize)="onMaximize($event)">
             <div>Testing maximize functionality</div>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestMaximizableDialogComponent {
@@ -252,10 +252,10 @@ class TestMaximizableDialogComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dialog [(visible)]="visible" [modal]="true" header="Accessibility Test" [closeAriaLabel]="closeAriaLabel" [role]="role" [focusTrap]="focusTrap">
+        <h-dialog [(visible)]="visible" [modal]="true" header="Accessibility Test" [closeAriaLabel]="closeAriaLabel" [role]="role" [focusTrap]="focusTrap">
             <div>Testing accessibility features</div>
             <button class="focusable-element">Focusable Button</button>
-        </p-dialog>
+        </h-dialog>
     `
 })
 class TestAccessibilityDialogComponent {
@@ -540,7 +540,7 @@ describe('Dialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const closeButton = fixture.debugElement.query(By.css('p-button[aria-label="Close Dialog"], .p-dialog-close-button, [class*="pcCloseButton"]'));
+            const closeButton = fixture.debugElement.query(By.css('h-button[aria-label="Close Dialog"], .h-dialog-close-button, [class*="pcCloseButton"]'));
 
             if (closeButton) {
                 closeButton.nativeElement.click();
@@ -823,7 +823,7 @@ describe('Dialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const closeButton = fixture.debugElement.query(By.css('p-button[class*="pcCloseButton"]'));
+            const closeButton = fixture.debugElement.query(By.css('h-button[class*="pcCloseButton"]'));
             if (closeButton) {
                 const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
                 closeButton.nativeElement.dispatchEvent(enterEvent);
@@ -846,7 +846,7 @@ describe('Dialog', () => {
             await fixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 0));
 
-            const maximizeButton = fixture.debugElement.query(By.css('p-button[class*="pcMaximizeButton"]'));
+            const maximizeButton = fixture.debugElement.query(By.css('h-button[class*="pcMaximizeButton"]'));
             if (maximizeButton) {
                 const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
                 maximizeButton.nativeElement.dispatchEvent(enterEvent);
@@ -1094,18 +1094,18 @@ describe('Dialog', () => {
             await new Promise((resolve) => setTimeout(resolve, 0));
 
             // Try different selectors for maximize button
-            let maximizeButton = maximizableFixture.debugElement.query(By.css('p-button[class*="pcMaximizeButton"]'));
+            let maximizeButton = maximizableFixture.debugElement.query(By.css('h-button[class*="pcMaximizeButton"]'));
             if (!maximizeButton) {
-                maximizeButton = maximizableFixture.debugElement.query(By.css('.p-dialog-maximize-button'));
+                maximizeButton = maximizableFixture.debugElement.query(By.css('.h-dialog-maximize-button'));
             }
             if (!maximizeButton) {
-                maximizeButton = maximizableFixture.debugElement.query(By.css('p-button[aria-label*="maximize"], p-button[aria-label*="Maximize"]'));
+                maximizeButton = maximizableFixture.debugElement.query(By.css('h-button[aria-label*="maximize"], h-button[aria-label*="Maximize"]'));
             }
             if (!maximizeButton) {
                 // Check if maximize button exists in header actions
-                const headerActions = maximizableFixture.debugElement.query(By.css('.p-dialog-header-actions'));
+                const headerActions = maximizableFixture.debugElement.query(By.css('.h-dialog-header-actions'));
                 if (headerActions) {
-                    maximizeButton = headerActions.query(By.css('p-button'));
+                    maximizeButton = headerActions.query(By.css('h-button'));
                 }
             }
 
@@ -1316,7 +1316,7 @@ describe('Dialog', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase1Component {
                 visible = true;
@@ -1364,7 +1364,7 @@ describe('Dialog', () => {
         describe('Case 2: Objects with class, style, and attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase2Component {
                 visible = true;
@@ -1420,7 +1420,7 @@ describe('Dialog', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase3Component {
                 visible = true;
@@ -1467,7 +1467,7 @@ describe('Dialog', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" [maximizable]="isMaximizable" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" [maximizable]="isMaximizable" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase4Component {
                 visible = true;
@@ -1515,7 +1515,7 @@ describe('Dialog', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase5Component {
                 visible = true;
@@ -1564,7 +1564,7 @@ describe('Dialog', () => {
         describe('Case 6: Inline test', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="{ mask: 'INLINE_MASK_CLASS', header: 'INLINE_HEADER_CLASS' }" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="{ mask: 'INLINE_MASK_CLASS', header: 'INLINE_HEADER_CLASS' }" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase6InlineComponent {
                 visible = true;
@@ -1572,7 +1572,7 @@ describe('Dialog', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="{ mask: { class: 'INLINE_MASK_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="{ mask: { class: 'INLINE_MASK_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase6InlineObjectComponent {
                 visible = true;
@@ -1629,8 +1629,8 @@ describe('Dialog', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-dialog [visible]="visible1" header="Dialog 1">Content 1</p-dialog>
-                    <p-dialog [visible]="visible2" header="Dialog 2">Content 2</p-dialog>
+                    <h-dialog [visible]="visible1" header="Dialog 1">Content 1</h-dialog>
+                    <h-dialog [visible]="visible2" header="Dialog 2">Content 2</h-dialog>
                 `
             })
             class TestPTCase7GlobalComponent {
@@ -1671,7 +1671,7 @@ describe('Dialog', () => {
         describe('Case 8: Test hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</p-dialog>`
+                template: `<h-dialog [pt]="pt" [visible]="visible" header="Test Dialog">Content</h-dialog>`
             })
             class TestPTCase8HooksComponent {
                 visible = true;

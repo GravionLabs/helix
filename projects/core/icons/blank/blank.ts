@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({
-    selector: '[data-p-icon="blank"]',
+    selector: '[data-h-icon="blank"]',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: ` <svg:rect width="1" height="1" fill="currentColor" fill-opacity="0" /> `

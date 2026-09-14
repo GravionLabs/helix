@@ -194,25 +194,25 @@ describe('FocusTrap', () => {
             expect(firstHidden.getAttribute('tabindex')).toBe('0');
             expect(firstHidden.getAttribute('role')).toBe('presentation');
             expect(firstHidden.getAttribute('aria-hidden')).toBe('true');
-            expect(firstHidden.getAttribute('data-p-hidden-accessible')).toBe('true');
-            expect(firstHidden.getAttribute('data-p-hidden-focusable')).toBe('true');
+            expect(firstHidden.getAttribute('data-h-hidden-accessible')).toBe('true');
+            expect(firstHidden.getAttribute('data-h-hidden-focusable')).toBe('true');
 
             expect(lastHidden.getAttribute('tabindex')).toBe('0');
             expect(lastHidden.getAttribute('role')).toBe('presentation');
             expect(lastHidden.getAttribute('aria-hidden')).toBe('true');
-            expect(lastHidden.getAttribute('data-p-hidden-accessible')).toBe('true');
-            expect(lastHidden.getAttribute('data-p-hidden-focusable')).toBe('true');
+            expect(lastHidden.getAttribute('data-h-hidden-accessible')).toBe('true');
+            expect(lastHidden.getAttribute('data-h-hidden-focusable')).toBe('true');
         });
 
         it('should apply correct CSS classes to hidden elements', () => {
             const firstHidden = element.querySelector('[data-pc-section="firstfocusableelement"]') as HTMLElement;
             const lastHidden = element.querySelector('[data-pc-section="lastfocusableelement"]') as HTMLElement;
 
-            expect(firstHidden.classList.contains('p-hidden-accessible')).toBe(true);
-            expect(firstHidden.classList.contains('p-hidden-focusable')).toBe(true);
+            expect(firstHidden.classList.contains('h-hidden-accessible')).toBe(true);
+            expect(firstHidden.classList.contains('h-hidden-focusable')).toBe(true);
 
-            expect(lastHidden.classList.contains('p-hidden-accessible')).toBe(true);
-            expect(lastHidden.classList.contains('p-hidden-focusable')).toBe(true);
+            expect(lastHidden.classList.contains('h-hidden-accessible')).toBe(true);
+            expect(lastHidden.classList.contains('h-hidden-focusable')).toBe(true);
         });
     });
 
@@ -752,13 +752,13 @@ describe('FocusTrap', () => {
 
         it('should handle getComputedSelector method', () => {
             const selector = directive.getComputedSelector('input');
-            expect(selector).toBe(':not(.p-hidden-focusable):not([data-p-hidden-focusable="true"])input');
+            expect(selector).toBe(':not(.h-hidden-focusable):not([data-h-hidden-focusable="true"])input');
 
             const selectorWithoutParam = directive.getComputedSelector('');
-            expect(selectorWithoutParam).toBe(':not(.p-hidden-focusable):not([data-p-hidden-focusable="true"])');
+            expect(selectorWithoutParam).toBe(':not(.h-hidden-focusable):not([data-h-hidden-focusable="true"])');
 
             const selectorWithNull = directive.getComputedSelector(null);
-            expect(selectorWithNull).toBe(':not(.p-hidden-focusable):not([data-p-hidden-focusable="true"])');
+            expect(selectorWithNull).toBe(':not(.h-hidden-focusable):not([data-h-hidden-focusable="true"])');
         });
 
         it('should handle elements that cannot receive focus', () => {

@@ -6,29 +6,29 @@ const style = /*css*/ `
     ${rating_style}
 
     /* For Helix */
-    p-rating.ng-invalid.ng-dirty > .p-rating > .p-rating-icon {
+    h-rating.ng-invalid.ng-dirty > .h-rating > .h-rating-icon {
         stroke: dt('rating.invalid.icon.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-rating',
+        'h-rating',
         {
-            'p-readonly': instance.readonly(),
-            'p-disabled': instance.$disabled()
+            'h-readonly': instance.readonly(),
+            'h-disabled': instance.$disabled()
         }
     ],
     option: ({ instance, star, value }) => [
-        'p-rating-option',
+        'h-rating-option',
 
         {
-            'p-rating-option-active': star + 1 <= value,
-            'p-focus-visible': star + 1 === instance.focusedOptionIndex() && instance.isFocusVisibleItem
+            'h-rating-option-active': star + 1 <= value,
+            'h-focus-visible': star + 1 === instance.focusedOptionIndex() && instance.isFocusVisibleItem
         }
     ],
-    onIcon: ({ instance }) => ['p-rating-icon p-rating-on-icon', { 'p-invalid': instance.invalid() }],
-    offIcon: ({ instance }) => ['p-rating-icon p-rating-off-icon', { 'p-invalid': instance.invalid() }]
+    onIcon: ({ instance }) => ['h-rating-icon h-rating-on-icon', { 'h-invalid': instance.invalid() }],
+    offIcon: ({ instance }) => ['h-rating-icon h-rating-off-icon', { 'h-invalid': instance.invalid() }]
 };
 
 @Injectable()
@@ -53,19 +53,19 @@ export enum RatingClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-rating',
+    root = 'h-rating',
     /**
      * Class name of the option element
      */
-    option = 'p-rating-option',
+    option = 'h-rating-option',
     /**
      * Class name of the on icon element
      */
-    onIcon = 'p-rating-on-icon',
+    onIcon = 'h-rating-on-icon',
     /**
      * Class name of the off icon element
      */
-    offIcon = 'p-rating-off-icon'
+    offIcon = 'h-rating-off-icon'
 }
 
 export interface RatingStyle extends BaseStyle {}

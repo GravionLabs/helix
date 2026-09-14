@@ -6,12 +6,12 @@ const style = /*css*/ `
     ${ripple_style}
 
     /* For Helix */
-    .p-ripple {
+    .h-ripple {
         overflow: hidden;
         position: relative;
     }
 
-    .p-ripple-disabled .p-ink {
+    .h-ripple-disabled .h-ink {
         display: none !important;
     }
 
@@ -24,7 +24,7 @@ const style = /*css*/ `
 `;
 
 const classes = {
-    root: 'p-ink'
+    root: 'h-ink'
 };
 
 @Injectable()
@@ -50,7 +50,7 @@ export enum RippleClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-ink'
+    root = 'h-ink'
 }
 
 export interface RippleStyle extends BaseStyle {}

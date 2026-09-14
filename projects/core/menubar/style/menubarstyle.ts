@@ -8,31 +8,31 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-menubar p-component',
+        'h-menubar h-component',
         {
-            'p-menubar-mobile': instance.queryMatches(),
-            'p-menubar-mobile-active': instance.mobileActive
+            'h-menubar-mobile': instance.queryMatches(),
+            'h-menubar-mobile-active': instance.mobileActive
         }
     ],
-    start: 'p-menubar-start',
-    button: 'p-menubar-button',
-    rootList: 'p-menubar-root-list',
+    start: 'h-menubar-start',
+    button: 'h-menubar-button',
+    rootList: 'h-menubar-root-list',
     item: ({ instance, processedItem }) => [
-        'p-menubar-item',
+        'h-menubar-item',
         {
-            'p-menubar-item-active': instance.isItemActive(processedItem),
-            'p-focus': instance.isItemFocused(processedItem),
-            'p-disabled': instance.isItemDisabled(processedItem)
+            'h-menubar-item-active': instance.isItemActive(processedItem),
+            'h-focus': instance.isItemFocused(processedItem),
+            'h-disabled': instance.isItemDisabled(processedItem)
         }
     ],
-    itemContent: 'p-menubar-item-content',
-    itemLink: 'p-menubar-item-link',
-    itemIcon: 'p-menubar-item-icon',
-    itemLabel: 'p-menubar-item-label',
-    submenuIcon: 'p-menubar-submenu-icon',
-    submenu: 'p-menubar-submenu',
-    separator: 'p-menubar-separator',
-    end: 'p-menubar-end'
+    itemContent: 'h-menubar-item-content',
+    itemLink: 'h-menubar-item-link',
+    itemIcon: 'h-menubar-item-icon',
+    itemLabel: 'h-menubar-item-label',
+    submenuIcon: 'h-menubar-submenu-icon',
+    submenu: 'h-menubar-submenu',
+    separator: 'h-menubar-separator',
+    end: 'h-menubar-end'
 };
 
 @Injectable()
@@ -59,55 +59,55 @@ export enum MenubarClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-menubar',
+    root = 'h-menubar',
     /**
      * Class name of the start element
      */
-    start = 'p-menubar-start',
+    start = 'h-menubar-start',
     /**
      * Class name of the button element
      */
-    button = 'p-menubar-button',
+    button = 'h-menubar-button',
     /**
      * Class name of the root list element
      */
-    rootList = 'p-menubar-root-list',
+    rootList = 'h-menubar-root-list',
     /**
      * Class name of the item element
      */
-    item = 'p-menubar-item',
+    item = 'h-menubar-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-menubar-item-content',
+    itemContent = 'h-menubar-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-menubar-item-link',
+    itemLink = 'h-menubar-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-menubar-item-icon',
+    itemIcon = 'h-menubar-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-menubar-item-label',
+    itemLabel = 'h-menubar-item-label',
     /**
      * Class name of the submenu icon element
      */
-    submenuIcon = 'p-menubar-submenu-icon',
+    submenuIcon = 'h-menubar-submenu-icon',
     /**
      * Class name of the submenu element
      */
-    submenu = 'p-menubar-submenu',
+    submenu = 'h-menubar-submenu',
     /**
      * Class name of the separator element
      */
-    separator = 'p-menubar-separator',
+    separator = 'h-menubar-separator',
     /**
      * Class name of the end element
      */
-    end = 'p-menubar-end'
+    end = 'h-menubar-end'
 }
 
 export interface MenubarStyle extends BaseStyle {}

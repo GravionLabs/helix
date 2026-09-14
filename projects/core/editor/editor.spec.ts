@@ -12,7 +12,7 @@ import { Editor } from './editor';
 @Component({
     standalone: false,
     template: `
-        <p-editor
+        <h-editor
             [(ngModel)]="text"
             [style]="style"
             [styleClass]="styleClass"
@@ -30,7 +30,7 @@ import { Editor } from './editor';
             (onFocus)="onFocus($event)"
             (onBlur)="onBlur($event)"
         >
-        </p-editor>
+        </h-editor>
     `
 })
 class TestBasicEditorComponent {
@@ -81,14 +81,14 @@ class TestBasicEditorComponent {
 @Component({
     standalone: false,
     template: `
-        <p-editor [(ngModel)]="text">
+        <h-editor [(ngModel)]="text">
             <ng-template #header>
                 <span class="ql-formats custom-toolbar">
                     <button type="button" class="ql-bold custom-bold" aria-label="Bold"></button>
                     <button type="button" class="ql-italic custom-italic" aria-label="Italic"></button>
                 </span>
             </ng-template>
-        </p-editor>
+        </h-editor>
     `
 })
 class TestCustomToolbarComponent {
@@ -98,7 +98,7 @@ class TestCustomToolbarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-editor [(ngModel)]="text">
+        <h-editor [(ngModel)]="text">
             <ng-template pTemplate="header">
                 <div class="ptemplate-toolbar">
                     <span class="ql-formats">
@@ -106,7 +106,7 @@ class TestCustomToolbarComponent {
                     </span>
                 </div>
             </ng-template>
-        </p-editor>
+        </h-editor>
     `
 })
 class TestPTemplateComponent {
@@ -115,7 +115,7 @@ class TestPTemplateComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-editor [(ngModel)]="text" [readonly]="readonly"> </p-editor> `
+    template: ` <h-editor [(ngModel)]="text" [readonly]="readonly"> </h-editor> `
 })
 class TestReadonlyComponent {
     text: string = '<div>Readonly editor content</div>';
@@ -124,7 +124,7 @@ class TestReadonlyComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-editor [(ngModel)]="text" [modules]="customModules" [formats]="customFormats"> </p-editor> `
+    template: ` <h-editor [(ngModel)]="text" [modules]="customModules" [formats]="customFormats"> </h-editor> `
 })
 class TestCustomConfigurationComponent {
     text: string = '<div>Custom config</div>';
@@ -200,7 +200,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -249,7 +249,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -306,7 +306,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -426,7 +426,7 @@ describe('Editor', () => {
         });
 
         it('should process pTemplate header correctly', async () => {
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             editorInstance.ngAfterContentInit();
@@ -466,7 +466,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             expect(editorInstance.styleClass()).toBe('custom-editor-class');
@@ -477,13 +477,13 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             expect(editorInstance.style()).toEqual({ border: '2px solid red', padding: '10px' });
 
             // Simulate ngStyle behavior in test environment
-            const contentElement = fixture.debugElement.query(By.css('.p-editor-content'));
+            const contentElement = fixture.debugElement.query(By.css('.h-editor-content'));
             const editorStyle = editorInstance.style();
             if (contentElement && editorStyle) {
                 const element = contentElement.nativeElement;
@@ -509,14 +509,14 @@ describe('Editor', () => {
         });
 
         it('should initialize in readonly mode', () => {
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             expect(editorInstance.readonly()).toBe(true);
         });
 
         it('should disable editor when readonly is true', async () => {
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             if (editorInstance.quill) {
@@ -548,7 +548,7 @@ describe('Editor', () => {
         });
 
         it('should accept custom modules configuration', () => {
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             expect(editorInstance.modules()).toEqual({
@@ -557,7 +557,7 @@ describe('Editor', () => {
         });
 
         it('should accept custom formats configuration', () => {
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             const editorInstance = editorEl.componentInstance as Editor;
 
             expect(editorInstance.formats()).toEqual(['bold', 'italic', 'underline']);
@@ -575,7 +575,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -615,19 +615,19 @@ describe('Editor', () => {
         });
 
         it('should have proper ARIA attributes', () => {
-            const editorContent = fixture.debugElement.query(By.css('.p-editor-content'));
+            const editorContent = fixture.debugElement.query(By.css('.h-editor-content'));
 
             if (editorContent && editorContent.nativeElement.getAttribute('role')) {
                 expect(editorContent.nativeElement.getAttribute('role')).toBeTruthy();
             } else {
                 // Editor content might not be rendered yet in test environment
-                const editorRoot = fixture.debugElement.query(By.css('p-editor'));
+                const editorRoot = fixture.debugElement.query(By.css('h-editor'));
                 expect(editorRoot).toBeTruthy();
             }
         });
 
         it('should support keyboard navigation', () => {
-            const editorContent = fixture.debugElement.query(By.css('.p-editor-content'));
+            const editorContent = fixture.debugElement.query(By.css('.h-editor-content'));
 
             if (editorContent) {
                 // Editor should be keyboard accessible
@@ -658,7 +658,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -703,7 +703,7 @@ describe('Editor', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const editorEl = fixture.debugElement.query(By.css('p-editor'));
+            const editorEl = fixture.debugElement.query(By.css('h-editor'));
             editorInstance = editorEl.componentInstance as Editor;
         });
 
@@ -762,7 +762,7 @@ describe('Editor', () => {
             @Component({
                 standalone: true,
                 imports: [Editor, FormsModule],
-                template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
             })
             class TestPTCase1Component {
                 text: string = '<div>Test</div>';
@@ -788,11 +788,11 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
-                const toolbar = fixture.debugElement.query(By.css('.p-editor-toolbar'));
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
+                const toolbar = fixture.debugElement.query(By.css('.h-editor-toolbar'));
                 const formats = fixture.debugElement.query(By.css('.ql-formats'));
                 const boldButton = fixture.debugElement.query(By.css('.ql-bold'));
-                const content = fixture.debugElement.query(By.css('.p-editor-content'));
+                const content = fixture.debugElement.query(By.css('.h-editor-content'));
 
                 expect(editorRoot.classList.contains('ROOT_CLASS')).toBe(true);
                 if (toolbar) expect(toolbar.nativeElement.classList.contains('TOOLBAR_CLASS')).toBe(true);
@@ -806,7 +806,7 @@ describe('Editor', () => {
             @Component({
                 standalone: true,
                 imports: [Editor, FormsModule],
-                template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
             })
             class TestPTCase2Component {
                 text: string = '<div>Test</div>';
@@ -814,7 +814,7 @@ describe('Editor', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     },
                     toolbar: {
@@ -845,14 +845,14 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
-                const toolbar = fixture.debugElement.query(By.css('.p-editor-toolbar'));
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
+                const toolbar = fixture.debugElement.query(By.css('.h-editor-toolbar'));
                 const boldButton = fixture.debugElement.query(By.css('.ql-bold'));
-                const content = fixture.debugElement.query(By.css('.p-editor-content'));
+                const content = fixture.debugElement.query(By.css('.h-editor-content'));
 
                 expect(editorRoot.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(editorRoot.style.backgroundColor).toBe('red');
-                expect(editorRoot.getAttribute('data-p-test')).toBe('true');
+                expect(editorRoot.getAttribute('data-h-test')).toBe('true');
                 expect(editorRoot.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
 
                 if (toolbar) {
@@ -876,7 +876,7 @@ describe('Editor', () => {
             @Component({
                 standalone: true,
                 imports: [Editor, FormsModule],
-                template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
             })
             class TestPTCase3Component {
                 text: string = '<div>Test</div>';
@@ -907,11 +907,11 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
-                const toolbar = fixture.debugElement.query(By.css('.p-editor-toolbar'));
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
+                const toolbar = fixture.debugElement.query(By.css('.h-editor-toolbar'));
                 const boldButton = fixture.debugElement.query(By.css('.ql-bold'));
                 const italicButton = fixture.debugElement.query(By.css('.ql-italic'));
-                const content = fixture.debugElement.query(By.css('.p-editor-content'));
+                const content = fixture.debugElement.query(By.css('.h-editor-content'));
 
                 expect(editorRoot.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
 
@@ -931,7 +931,7 @@ describe('Editor', () => {
             @Component({
                 standalone: true,
                 imports: [Editor, FormsModule],
-                template: `<p-editor [(ngModel)]="text" [readonly]="isReadonly" [placeholder]="placeholder" [pt]="pt"></p-editor>`
+                template: `<h-editor [(ngModel)]="text" [readonly]="isReadonly" [placeholder]="placeholder" [pt]="pt"></h-editor>`
             })
             class TestPTCase4Component {
                 text: string = '<div>Test</div>';
@@ -971,9 +971,9 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
-                const toolbar = fixture.debugElement.query(By.css('.p-editor-toolbar'));
-                const content = fixture.debugElement.query(By.css('.p-editor-content'));
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
+                const toolbar = fixture.debugElement.query(By.css('.h-editor-toolbar'));
+                const content = fixture.debugElement.query(By.css('.h-editor-content'));
 
                 // Check if class is applied based on readonly state
                 expect(editorRoot.classList.contains('READONLY_CLASS') || editorRoot.classList.contains('NOT_READONLY_CLASS')).toBe(true);
@@ -995,7 +995,7 @@ describe('Editor', () => {
                 await fixture.whenStable();
 
                 // Verify class changed
-                const editorRootAfter = fixture.debugElement.query(By.css('p-editor')).nativeElement;
+                const editorRootAfter = fixture.debugElement.query(By.css('h-editor')).nativeElement;
                 expect(editorRootAfter.classList.contains('READONLY_CLASS') || editorRootAfter.classList.contains('NOT_READONLY_CLASS')).toBe(true);
             });
         });
@@ -1004,7 +1004,7 @@ describe('Editor', () => {
             @Component({
                 standalone: true,
                 imports: [Editor, FormsModule],
-                template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
             })
             class TestPTCase5Component {
                 text: string = '<div>Test</div>';
@@ -1065,7 +1065,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-editor>`
                 })
                 class TestInlineComponent {
                     text: string = '<div>Test</div>';
@@ -1083,7 +1083,7 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
                 expect(editorRoot.classList.contains('INLINE_ROOT_CLASS')).toBe(true);
             });
 
@@ -1091,7 +1091,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></h-editor>`
                 })
                 class TestInlineObjectComponent {
                     text: string = '<div>Test</div>';
@@ -1109,7 +1109,7 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
                 expect(editorRoot.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
                 expect(editorRoot.style.border).toBe('2px solid red');
             });
@@ -1120,7 +1120,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text1"></p-editor><p-editor [(ngModel)]="text2"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text1"></h-editor><h-editor [(ngModel)]="text2"></h-editor>`
                 })
                 class TestGlobalPTComponent {
                     text1: string = '<div>Test 1</div>';
@@ -1153,13 +1153,13 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editors = fixture.debugElement.queryAll(By.css('p-editor'));
+                const editors = fixture.debugElement.queryAll(By.css('h-editor'));
                 expect(editors.length).toBe(2);
 
                 editors.forEach((editor) => {
                     const editorRoot = editor.nativeElement;
-                    const toolbar = editor.query(By.css('.p-editor-toolbar'));
-                    const content = editor.query(By.css('.p-editor-content'));
+                    const toolbar = editor.query(By.css('.h-editor-toolbar'));
+                    const content = editor.query(By.css('.h-editor-content'));
 
                     expect(editorRoot.getAttribute('aria-label')).toBe('TEST_GLOBAL_ARIA_LABEL');
 
@@ -1178,7 +1178,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text"></h-editor>`
                 })
                 class TestGlobalCSSComponent {
                     text: string = '<div>Test</div>';
@@ -1195,7 +1195,7 @@ describe('Editor', () => {
                                 },
                                 global: {
                                     css: `
-                                        .p-editor-toolbar {
+                                        .h-editor-toolbar {
                                             border: 1px solid red !important;
                                         }
                                     `
@@ -1212,13 +1212,13 @@ describe('Editor', () => {
                 fixture.changeDetectorRef.markForCheck();
                 await fixture.whenStable();
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
                 expect(editorRoot.classList.contains('GLOBAL_CSS_CLASS')).toBe(true);
 
                 // Check if global CSS style tag was injected
                 const styleTag = document.head.querySelector('style[data-primeng-global-css]');
                 if (styleTag) {
-                    expect(styleTag.textContent).toContain('.p-editor-toolbar');
+                    expect(styleTag.textContent).toContain('.h-editor-toolbar');
                     expect(styleTag.textContent).toContain('border: 1px solid red !important');
                 }
             });
@@ -1231,7 +1231,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
                 })
                 class TestHooksComponent {
                     text: string = '<div>Test</div>';
@@ -1263,7 +1263,7 @@ describe('Editor', () => {
                 // AfterViewInit should be called
                 expect(hookCalls).toContain('onAfterViewInit');
 
-                const editorRoot = fixture.debugElement.query(By.css('p-editor')).nativeElement;
+                const editorRoot = fixture.debugElement.query(By.css('h-editor')).nativeElement;
                 expect(editorRoot.classList.contains('MY-EDITOR')).toBe(true);
 
                 // Destroy the component
@@ -1280,7 +1280,7 @@ describe('Editor', () => {
                 @Component({
                     standalone: true,
                     imports: [Editor, FormsModule],
-                    template: `<p-editor [(ngModel)]="text" [pt]="pt"></p-editor>`
+                    template: `<h-editor [(ngModel)]="text" [pt]="pt"></h-editor>`
                 })
                 class TestMultipleHooksComponent {
                     text: string = '<div>Test</div>';

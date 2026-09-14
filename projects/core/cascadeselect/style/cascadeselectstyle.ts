@@ -6,11 +6,11 @@ const style = /*css*/ `
     ${cascadeselect_style}
 
     /* For Helix */
-    .p-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) {
+    .h-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) {
         border-color: dt('cascadeselect.invalid.border.color');
     }
 
-    .p-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) .p-cascadeselect-label.p-placeholder {
+    .h-cascadeselect.ng-invalid.ng-dirty:not(.ng-untouched):not(.ng-pristine) .h-cascadeselect-label.h-placeholder {
         color: dt('cascadeselect.invalid.placeholder.color');
     }
 `;
@@ -20,56 +20,56 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-cascadeselect p-component p-inputwrapper',
+        'h-cascadeselect h-component h-inputwrapper',
         {
-            'p-cascadeselect p-component p-inputwrapper': true,
-            'p-cascadeselect-clearable': instance.showClear() && !instance.$disabled(),
-            'p-cascadeselect-mobile': instance.queryMatches(),
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-focus': instance.focused,
-            'p-inputwrapper-filled': instance.modelValue(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-inputwrapper-focus': instance.focused || instance.overlayVisible,
-            'p-cascadeselect-open': instance.overlayVisible,
-            'p-cascadeselect-fluid': instance.hasFluid,
-            'p-cascadeselect-sm p-inputfield-sm': instance.size() === 'small',
-            'p-cascadeselect-lg p-inputfield-lg': instance.size() === 'large'
+            'h-cascadeselect h-component h-inputwrapper': true,
+            'h-cascadeselect-clearable': instance.showClear() && !instance.$disabled(),
+            'h-cascadeselect-mobile': instance.queryMatches(),
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-focus': instance.focused,
+            'h-inputwrapper-filled': instance.modelValue(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-inputwrapper-focus': instance.focused || instance.overlayVisible,
+            'h-cascadeselect-open': instance.overlayVisible,
+            'h-cascadeselect-fluid': instance.hasFluid,
+            'h-cascadeselect-sm h-inputfield-sm': instance.size() === 'small',
+            'h-cascadeselect-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
     label: ({ instance }) => [
-        'p-cascadeselect-label',
+        'h-cascadeselect-label',
         {
-            'p-placeholder': instance.label() === instance.placeholder(),
-            'p-cascadeselect-label-empty': !instance.value && (instance.label() === 'p-emptylabel' || instance.label().length === 0)
+            'h-placeholder': instance.label() === instance.placeholder(),
+            'h-cascadeselect-label-empty': !instance.value && (instance.label() === 'h-emptylabel' || instance.label().length === 0)
         }
     ],
-    clearIcon: 'p-cascadeselect-clear-icon',
-    dropdown: 'p-cascadeselect-dropdown',
-    loadingIcon: 'p-cascadeselect-loading-icon',
-    dropdownIcon: 'p-cascadeselect-dropdown-icon',
+    clearIcon: 'h-cascadeselect-clear-icon',
+    dropdown: 'h-cascadeselect-dropdown',
+    loadingIcon: 'h-cascadeselect-loading-icon',
+    dropdownIcon: 'h-cascadeselect-dropdown-icon',
     overlay: ({ instance }) => [
-        'p-cascadeselect-overlay p-component-overlay p-component',
+        'h-cascadeselect-overlay h-component-overlay h-component',
         {
-            'p-cascadeselect-mobile-active': instance.queryMatches()
+            'h-cascadeselect-mobile-active': instance.queryMatches()
         }
     ],
-    listContainer: 'p-cascadeselect-list-container',
-    list: 'p-cascadeselect-list',
+    listContainer: 'h-cascadeselect-list-container',
+    list: 'h-cascadeselect-list',
     option: ({ instance, processedOption }) => [
-        'p-cascadeselect-option',
+        'h-cascadeselect-option',
         {
-            'p-cascadeselect-option-group': instance.isOptionGroup(processedOption),
-            'p-cascadeselect-option-active': instance.isOptionActive(processedOption),
-            'p-cascadeselect-option-selected': instance.isOptionSelected(processedOption),
-            'p-focus': instance.isOptionFocused(processedOption),
-            'p-disabled': instance.isOptionDisabled(processedOption)
+            'h-cascadeselect-option-group': instance.isOptionGroup(processedOption),
+            'h-cascadeselect-option-active': instance.isOptionActive(processedOption),
+            'h-cascadeselect-option-selected': instance.isOptionSelected(processedOption),
+            'h-focus': instance.isOptionFocused(processedOption),
+            'h-disabled': instance.isOptionDisabled(processedOption)
         }
     ],
-    optionContent: 'p-cascadeselect-option-content',
-    optionText: 'p-cascadeselect-option-text',
-    groupIcon: 'p-cascadeselect-group-icon',
-    optionList: 'p-cascadeselect-list p-cascadeselect-overlay p-cascadeselect-option-list'
+    optionContent: 'h-cascadeselect-option-content',
+    optionText: 'h-cascadeselect-option-text',
+    groupIcon: 'h-cascadeselect-group-icon',
+    optionList: 'h-cascadeselect-list h-cascadeselect-overlay h-cascadeselect-option-list'
 };
 
 @Injectable()
@@ -96,59 +96,59 @@ export enum CascadeSelectClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-cascadeselect',
+    root = 'h-cascadeselect',
     /**
      * Class name of the label element
      */
-    label = 'p-cascadeselect-label',
+    label = 'h-cascadeselect-label',
     /**
      * Class name of the dropdown element
      */
-    dropdown = 'p-cascadeselect-dropdown',
+    dropdown = 'h-cascadeselect-dropdown',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-cascadeselect-loading-icon',
+    loadingIcon = 'h-cascadeselect-loading-icon',
     /**
      * Class name of the dropdown icon element
      */
-    clearIcon = 'p-cascadeselect-clear-icon',
+    clearIcon = 'h-cascadeselect-clear-icon',
     /**
      * Class name of the dropdown icon element
      */
-    dropdownIcon = 'p-cascadeselect-dropdown-icon',
+    dropdownIcon = 'h-cascadeselect-dropdown-icon',
     /**
      * Class name of the overlay element
      */
-    overlay = 'p-cascadeselect-overlay',
+    overlay = 'h-cascadeselect-overlay',
     /**
      * Class name of the list container element
      */
-    listContainer = 'p-cascadeselect-list-container',
+    listContainer = 'h-cascadeselect-list-container',
     /**
      * Class name of the list element
      */
-    list = 'p-cascadeselect-list',
+    list = 'h-cascadeselect-list',
     /**
      * Class name of the item element
      */
-    item = 'p-cascadeselect-item',
+    item = 'h-cascadeselect-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-cascadeselect-item-content',
+    itemContent = 'h-cascadeselect-item-content',
     /**
      * Class name of the item text element
      */
-    itemText = 'p-cascadeselect-item-text',
+    itemText = 'h-cascadeselect-item-text',
     /**
      * Class name of the group icon element
      */
-    groupIcon = 'p-cascadeselect-group-icon',
+    groupIcon = 'h-cascadeselect-group-icon',
     /**
      * Class name of the item list element
      */
-    itemList = 'p-cascadeselect-item-list'
+    itemList = 'h-cascadeselect-item-list'
 }
 
 export interface CascadeSelectStyle extends BaseStyle {}

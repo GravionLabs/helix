@@ -22,7 +22,7 @@ const mockProducts = [
 @Component({
     standalone: false,
     template: `
-        <p-carousel
+        <h-carousel
             [value]="products"
             [page]="page"
             [numVisible]="numVisible"
@@ -51,7 +51,7 @@ const mockProducts = [
                     <span class="status">{{ product.inventoryStatus }}</span>
                 </div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestBasicCarouselComponent {
@@ -86,11 +86,11 @@ class TestBasicCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [circular]="true">
+        <h-carousel [value]="products" [numVisible]="3" [numScroll]="1" [circular]="true">
             <ng-template let-product #item>
                 <div class="circular-item">{{ product.name }}</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestCircularCarouselComponent {
@@ -100,11 +100,11 @@ class TestCircularCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products" [orientation]="'vertical'" [verticalViewPortHeight]="'400px'">
+        <h-carousel [value]="products" [orientation]="'vertical'" [verticalViewPortHeight]="'400px'">
             <ng-template let-product #item>
                 <div class="vertical-item">{{ product.name }}</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestVerticalCarouselComponent {
@@ -114,11 +114,11 @@ class TestVerticalCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products" [responsiveOptions]="responsiveOptions">
+        <h-carousel [value]="products" [responsiveOptions]="responsiveOptions">
             <ng-template let-product #item>
                 <div class="responsive-item">{{ product.name }}</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestResponsiveCarouselComponent {
@@ -133,11 +133,11 @@ class TestResponsiveCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products" [autoplayInterval]="1000">
+        <h-carousel [value]="products" [autoplayInterval]="1000">
             <ng-template let-product #item>
                 <div class="autoplay-item">{{ product.name }}</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestAutoplayCarouselComponent {
@@ -147,7 +147,7 @@ class TestAutoplayCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products" [numVisible]="3">
+        <h-carousel [value]="products" [numVisible]="3">
             <ng-template #header>
                 <div class="custom-header">Header Content</div>
             </ng-template>
@@ -157,7 +157,7 @@ class TestAutoplayCarouselComponent {
             <ng-template #footer>
                 <div class="custom-footer">Footer Content</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestTemplateCarouselComponent {
@@ -167,7 +167,7 @@ class TestTemplateCarouselComponent {
 @Component({
     standalone: false,
     template: `
-        <p-carousel [value]="products">
+        <h-carousel [value]="products">
             <ng-template pTemplate="header">
                 <div class="ptemplate-header">PTemplate Header</div>
             </ng-template>
@@ -177,7 +177,7 @@ class TestTemplateCarouselComponent {
             <ng-template pTemplate="footer">
                 <div class="ptemplate-footer">PTemplate Footer</div>
             </ng-template>
-        </p-carousel>
+        </h-carousel>
     `
 })
 class TestPTemplateCarouselComponent {
@@ -210,7 +210,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -270,7 +270,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -337,7 +337,7 @@ describe('Carousel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -392,7 +392,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -425,7 +425,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -440,8 +440,8 @@ describe('Carousel', () => {
 
         it('should render appropriate icons for vertical mode', () => {
             // Vertical mode should show chevron-up and chevron-down icons
-            const prevButton = fixture.debugElement.query(By.css('svg[data-p-icon="chevron-up"]'));
-            const nextButton = fixture.debugElement.query(By.css('svg[data-p-icon="chevron-down"]'));
+            const prevButton = fixture.debugElement.query(By.css('svg[data-h-icon="chevron-up"]'));
+            const nextButton = fixture.debugElement.query(By.css('svg[data-h-icon="chevron-down"]'));
 
             expect(prevButton || nextButton).toBeTruthy(); // At least one should be present
         });
@@ -457,7 +457,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -495,7 +495,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -574,7 +574,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -609,7 +609,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -661,7 +661,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -700,7 +700,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -727,12 +727,12 @@ describe('Carousel', () => {
         });
 
         it('should have proper CSS structure', () => {
-            const carouselRoot = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselRoot = fixture.debugElement.query(By.css('h-carousel'));
             expect(carouselRoot).toBeTruthy();
 
             // Check for main structural elements
-            const viewport = fixture.debugElement.query(By.css('.p-carousel-viewport') || By.css('[class*="viewport"]'));
-            const itemList = fixture.debugElement.query(By.css('.p-carousel-item-list') || By.css('[class*="itemList"]'));
+            const viewport = fixture.debugElement.query(By.css('.h-carousel-viewport') || By.css('[class*="viewport"]'));
+            const itemList = fixture.debugElement.query(By.css('.h-carousel-item-list') || By.css('[class*="itemList"]'));
 
             // Elements might not be rendered with exact CSS classes in test environment
             if (viewport || itemList) {
@@ -753,7 +753,7 @@ describe('Carousel', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -785,7 +785,7 @@ describe('Carousel', () => {
         });
 
         it('should have proper ARIA attributes on root element', () => {
-            const carouselRoot = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselRoot = fixture.debugElement.query(By.css('h-carousel'));
             const nativeElement = carouselRoot.nativeElement;
 
             expect(nativeElement.getAttribute('role')).toBe('region');
@@ -793,7 +793,7 @@ describe('Carousel', () => {
         });
 
         it('should have ARIA labels on navigation buttons', () => {
-            const prevButton = fixture.debugElement.query(By.css('p-button[aria-label]'));
+            const prevButton = fixture.debugElement.query(By.css('h-button[aria-label]'));
             if (prevButton) {
                 expect(prevButton.nativeElement.getAttribute('aria-label')).toBeTruthy();
             }
@@ -816,7 +816,7 @@ describe('Carousel', () => {
         });
 
         it('should provide ARIA labels through translation service', () => {
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             const carouselInstance = carouselEl.componentInstance as Carousel;
 
             expect(carouselInstance.ariaPrevButtonLabel).toBeDefined();
@@ -835,7 +835,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -877,7 +877,7 @@ describe('Carousel', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const carouselEl = fixture.debugElement.query(By.css('p-carousel'));
+            const carouselEl = fixture.debugElement.query(By.css('h-carousel'));
             carouselInstance = carouselEl.componentInstance as Carousel;
         });
 
@@ -1052,7 +1052,7 @@ describe('Carousel', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1061,7 +1061,7 @@ describe('Carousel', () => {
                 const rootElement = fixture.nativeElement;
                 expect(rootElement.className).toContain('ROOT_OBJECT_CLASS');
                 expect(rootElement.style.backgroundColor).toBe('red');
-                expect(rootElement.getAttribute('data-p-test')).toBe('true');
+                expect(rootElement.getAttribute('data-h-test')).toBe('true');
                 expect(rootElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 

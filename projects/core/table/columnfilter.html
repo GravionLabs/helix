@@ -1,7 +1,7 @@
 <div [class]="cx('filter')">
   @if (display() === 'row') {
     <h-columnFilterFormElement
-      class="p-fluid"
+      class="h-fluid"
       [type]="type()"
       [field]="field()"
       [ariaLabel]="ariaLabel()"
@@ -40,10 +40,10 @@
       <ng-template #icon>
         <ng-container>
           @if (!filterIconTemplate && !_filterIconTemplate && !hasFilter) {
-            <svg data-p-icon="filter" [hBind]="ptm('pcColumnFilterButton')['icon']" />
+            <svg data-h-icon="filter" [hBind]="ptm('pcColumnFilterButton')['icon']" />
           }
           @if (!filterIconTemplate && !_filterIconTemplate && hasFilter) {
-            <svg data-p-icon="filter-fill" [hBind]="ptm('pcColumnFilterButton')['icon']" />
+            <svg data-h-icon="filter-fill" [hBind]="ptm('pcColumnFilterButton')['icon']" />
           }
           @if (filterIconTemplate || _filterIconTemplate) {
             <span [hBind]="ptm('pcColumnFilterButton')['icon']" [attr.data-pc-section]="'columnfilterbuttonicon'">
@@ -58,7 +58,7 @@
     <div
       [hMotion]="showMenu() && overlayVisible"
       [pMotionAppear]="true"
-      pMotionName="p-anchored-overlay"
+      pMotionName="h-anchored-overlay"
       (pMotionOnBeforeEnter)="onOverlayBeforeEnter($event)"
       (pMotionOnAfterLeave)="onOverlayAnimationAfterLeave($event)"
       [pMotionOptions]="computedMotionOptions()"
@@ -80,7 +80,7 @@
               (keydown.enter)="onRowMatchModeChange(matchMode.value)"
               [class]="cx('filterConstraint')"
               [hBind]="ptm('filterConstraint', ptmFilterConstraintOptions(matchMode))"
-              [class.p-datatable-filter-constraint-selected]="isRowMatchModeSelected(matchMode.value)"
+              [class.h-datatable-filter-constraint-selected]="isRowMatchModeSelected(matchMode.value)"
               [attr.tabindex]="i === 0 ? '0' : null"
               >
               {{ matchMode.label }}
@@ -145,7 +145,7 @@
                     >
                     <ng-template #icon>
                       @if (!removeRuleIconTemplate() && !_removeRuleIconTemplate) {
-                        <svg data-p-icon="trash" [hBind]="ptm('pcFilterRemoveRuleButton')['icon']" />
+                        <svg data-h-icon="trash" [hBind]="ptm('pcFilterRemoveRuleButton')['icon']" />
                       }
                       <ng-template *ngTemplateOutlet="removeRuleIconTemplate() || _removeRuleIconTemplate"></ng-template>
                     </ng-template>
@@ -170,7 +170,7 @@
             >
             <ng-template #icon>
               @if (!addRuleIconTemplate() && !_addRuleIconTemplate) {
-                <svg data-p-icon="plus" [hBind]="ptm('pcAddRuleButtonLabel')['icon']" />
+                <svg data-h-icon="plus" [hBind]="ptm('pcAddRuleButtonLabel')['icon']" />
               }
               <ng-template *ngTemplateOutlet="addRuleIconTemplate() || _addRuleIconTemplate"></ng-template>
             </ng-template>

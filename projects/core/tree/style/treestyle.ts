@@ -4,35 +4,35 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-tree p-component',
+        'h-tree h-component',
         {
-            'p-tree-selectable': instance.selectionMode != null,
-            'p-tree-loading': instance.loading,
-            'p-tree-flex-scrollable': instance.scrollHeight === 'flex',
-            'p-tree-node-dragover': instance.dragHover
+            'h-tree-selectable': instance.selectionMode != null,
+            'h-tree-loading': instance.loading,
+            'h-tree-flex-scrollable': instance.scrollHeight === 'flex',
+            'h-tree-node-dragover': instance.dragHover
         }
     ],
-    mask: 'p-tree-mask p-overlay-mask',
-    loadingIcon: 'p-tree-loading-icon',
-    pcFilterInput: 'p-tree-filter-input',
-    wrapper: 'p-tree-root',
-    rootChildren: 'p-tree-root-children',
-    node: ({ instance }) => ({ 'p-tree-node': true, 'p-tree-node-leaf': instance.isLeaf() }),
+    mask: 'h-tree-mask h-overlay-mask',
+    loadingIcon: 'h-tree-loading-icon',
+    pcFilterInput: 'h-tree-filter-input',
+    wrapper: 'h-tree-root',
+    rootChildren: 'h-tree-root-children',
+    node: ({ instance }) => ({ 'h-tree-node': true, 'h-tree-node-leaf': instance.isLeaf() }),
     nodeContent: ({ instance }) => ({
-        'p-tree-node-content': true,
-        'p-tree-node-selectable': instance.selectable,
-        'p-tree-node-dragover': instance.isNodeDropActive(),
-        'p-tree-node-selected': instance.selectionMode === 'checkbox' && instance.tree.highlightOnSelect ? instance.checked : instance.selected,
-        'p-tree-node-contextmenu-selected': instance.isContextMenuSelected()
+        'h-tree-node-content': true,
+        'h-tree-node-selectable': instance.selectable,
+        'h-tree-node-dragover': instance.isNodeDropActive(),
+        'h-tree-node-selected': instance.selectionMode === 'checkbox' && instance.tree.highlightOnSelect ? instance.checked : instance.selected,
+        'h-tree-node-contextmenu-selected': instance.isContextMenuSelected()
     }),
-    nodeToggleButton: 'p-tree-node-toggle-button',
-    nodeToggleIcon: 'p-tree-node-toggle-icon',
-    nodeCheckbox: 'p-tree-node-checkbox',
-    nodeIcon: 'p-tree-node-icon',
-    nodeLabel: 'p-tree-node-label',
-    nodeChildren: 'p-tree-node-children',
-    emptyMessage: 'p-tree-empty-message',
-    dropPoint: 'p-tree-node-drop-point'
+    nodeToggleButton: 'h-tree-node-toggle-button',
+    nodeToggleIcon: 'h-tree-node-toggle-icon',
+    nodeCheckbox: 'h-tree-node-checkbox',
+    nodeIcon: 'h-tree-node-icon',
+    nodeLabel: 'h-tree-node-label',
+    nodeChildren: 'h-tree-node-children',
+    emptyMessage: 'h-tree-empty-message',
+    dropPoint: 'h-tree-node-drop-point'
 };
 
 @Injectable()
@@ -57,67 +57,67 @@ export enum TreeClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tree',
+    root = 'h-tree',
     /**
      * Class name of the mask element
      */
-    mask = 'p-tree-mask',
+    mask = 'h-tree-mask',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-tree-loading-icon',
+    loadingIcon = 'h-tree-loading-icon',
     /**
      * Class name of the filter input element
      */
-    pcFilterInput = 'p-tree-filter-input',
+    pcFilterInput = 'h-tree-filter-input',
     /**
      * Class name of the wrapper element
      */
-    wrapper = 'p-tree-root',
+    wrapper = 'h-tree-root',
     /**
      * Class name of the root children element
      */
-    rootChildren = 'p-tree-root-children',
+    rootChildren = 'h-tree-root-children',
     /**
      * Class name of the node element
      */
-    node = 'p-tree-node',
+    node = 'h-tree-node',
     /**
      * Class name of the node content element
      */
-    nodeContent = 'p-tree-node-content',
+    nodeContent = 'h-tree-node-content',
     /**
      * Class name of the node toggle button element
      */
-    nodeToggleButton = 'p-tree-node-toggle-button',
+    nodeToggleButton = 'h-tree-node-toggle-button',
     /**
      * Class name of the node toggle icon element
      */
-    nodeToggleIcon = 'p-tree-node-toggle-icon',
+    nodeToggleIcon = 'h-tree-node-toggle-icon',
     /**
      * Class name of the node checkbox element
      */
-    nodeCheckbox = 'p-tree-node-checkbox',
+    nodeCheckbox = 'h-tree-node-checkbox',
     /**
      * Class name of the node icon element
      */
-    nodeIcon = 'p-tree-node-icon',
+    nodeIcon = 'h-tree-node-icon',
     /**
      * Class name of the node label element
      */
-    nodeLabel = 'p-tree-node-label',
+    nodeLabel = 'h-tree-node-label',
     /**
      * Class name of the node children element
      */
-    nodeChildren = 'p-tree-node-children',
+    nodeChildren = 'h-tree-node-children',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-tree-empty-message',
+    emptyMessage = 'h-tree-empty-message',
     /**
      * Class name of the drop point element
      */
-    dropPoint = 'p-tree-node-droppoint'
+    dropPoint = 'h-tree-node-droppoint'
 }
 
 export interface TreeStyle extends BaseStyle {}

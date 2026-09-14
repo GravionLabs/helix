@@ -48,9 +48,9 @@ export const TOGGLESWITCH_VALUE_ACCESSOR: any = {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p-checked]': 'checked()',
-        '[attr.data-p-disabled]': '$disabled()',
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h-checked]': 'checked()',
+        '[attr.data-h-disabled]': '$disabled()',
+        '[attr.data-h]': 'dataP',
         '(click)': 'onHostClick($event)'
     },
     hostDirectives: [Bind]
