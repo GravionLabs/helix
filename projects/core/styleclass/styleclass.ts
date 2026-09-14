@@ -1,5 +1,5 @@
 import { booleanAttribute, Directive, ElementRef, NgModule, NgZone, OnDestroy, Renderer2, input } from '@angular/core';
-import { addClass, getTargetElement, hasClass, isElement, removeClass } from '@primeuix/utils';
+import { addClass, getTargetElement, hasClass, isElement, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { VoidListener } from '@gravionlabs/helix-core/ts-helpers';
 
 /**

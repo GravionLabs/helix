@@ -1,5 +1,5 @@
 import { computed, Directive, signal } from '@angular/core';
-import { isNotEmpty } from '@primeuix/utils';
+import { isNotEmpty } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent } from '@gravionlabs/helix-core/basecomponent';
 
 @Directive({ standalone: true })

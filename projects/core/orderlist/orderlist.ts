@@ -2,7 +2,7 @@ import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, NgModule, numberAttribute,  TemplateRef, ViewEncapsulation, input, model, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { findIndexInList, setAttribute, uuid } from '@primeuix/utils';
+import { findIndexInList, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { FilterService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, SimpleChanges, TemplateRef, ViewEncapsulation, input, output, contentChild, model } from '@angular/core';
-import { resolveFieldData } from '@primeuix/utils';
+import { resolveFieldData } from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, FilterService, Footer, Header, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

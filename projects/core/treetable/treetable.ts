@@ -45,7 +45,7 @@ import {
     removeClass,
     reorderArray,
     resolveFieldData
-} from '@primeuix/utils';
+} from '@gravionlabs/helix-core/uix/utils';
 import { BlockableUI, FilterMetadata, FilterService, HelixTemplate, ScrollerOptions, SharedModule, SortMeta, TreeNode, TreeTableNode } from '@gravionlabs/helix-core/api';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

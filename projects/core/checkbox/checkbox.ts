@@ -22,7 +22,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
-import { contains, equals } from '@primeuix/utils';
+import { contains, equals } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';

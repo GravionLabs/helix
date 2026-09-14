@@ -20,7 +20,7 @@ import {
   contentChildren
 } from '@angular/core';
 import { MotionEvent, MotionOptions } from '@primeuix/motion';
-import { isEmpty, setAttribute, uuid } from '@primeuix/utils';
+import { isEmpty, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MessageService, HelixTemplate, SharedModule, ToastMessageOptions } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

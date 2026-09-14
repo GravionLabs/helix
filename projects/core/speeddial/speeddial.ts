@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input, NgModule, numberAttribute, signal, TemplateRef, ViewEncapsulation, input, output, viewChild, contentChild, contentChildren, computed, model, effect, untracked } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { find, findSingle, focus, hasClass, uuid } from '@primeuix/utils';
+import { find, findSingle, focus, hasClass, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, HelixTemplate, SharedModule, TooltipOptions } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, inject, InjectionToken, Input, NgModule,  TemplateRef, ViewEncapsulation, input, output, contentChildren, contentChild, model, effect, untracked } from '@angular/core';
-import { hasClass, isAttributeEquals } from '@primeuix/utils';
+import { hasClass, isAttributeEquals } from '@gravionlabs/helix-core/uix/utils';
 import { HelixTemplate, SharedModule, TreeNode } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';

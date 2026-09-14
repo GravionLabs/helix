@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, InjectionToken, input, model, numberAttribute, signal, ViewEncapsulation } from '@angular/core';
-import { uuid } from '@primeuix/utils';
+import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind, BindModule } from '@gravionlabs/helix-core/bind';
 import { TabsPassThrough } from '@gravionlabs/helix-core/types/tabs';

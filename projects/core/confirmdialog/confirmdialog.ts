@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, booleanAttribute, ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, InjectionToken, input, model, NgModule, NgZone, numberAttribute, OnDestroy, OnInit, TemplateRef, ViewEncapsulation, output, contentChild, contentChildren, EventEmitter } from '@angular/core';
-import { findSingle, setAttribute, uuid } from '@primeuix/utils';
+import { findSingle, setAttribute, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { Confirmation, ConfirmationService, ConfirmEventType, Footer, HelixTemplate, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { BaseComponent, PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { Bind } from '@gravionlabs/helix-core/bind';

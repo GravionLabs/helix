@@ -2,7 +2,7 @@ import { CDK_DRAG_CONFIG, CdkDragDrop, DragDropModule, moveItemInArray } from '@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, InjectionToken, Input, NgModule, TemplateRef, ViewEncapsulation, booleanAttribute, computed, forwardRef, inject, input, numberAttribute, signal, output, viewChild, contentChild, contentChildren, effect } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, isEmpty, isFunction, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@primeuix/utils';
+import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, isEmpty, isFunction, isNotEmpty, isPrintableCharacter, resolveFieldData, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { FilterService, Footer, Header, HelixTemplate, ScrollerOptions, SharedModule } from '@gravionlabs/helix-core/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';

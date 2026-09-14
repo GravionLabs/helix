@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, inject, InjectionToken, NgModule, NgZone, numberAttribute, ViewEncapsulation, input, output, viewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { addClass, getWindowScrollLeft, getWindowScrollTop, isRTL, removeClass } from '@primeuix/utils';
+import { addClass, getWindowScrollLeft, getWindowScrollTop, isRTL, removeClass } from '@gravionlabs/helix-core/uix/utils';
 import { SharedModule } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
