@@ -6,5 +6,5 @@
     "entryFile": "public_api.ts"
   },
   "assets": ["LICENSE.md", "VENDOR.md"],
-  "allowedNonPeerDependencies": ["@primeuix/styled", "@primeuix/styles"]
+  "allowedNonPeerDependencies": ["@primeuix/styles"]
 }

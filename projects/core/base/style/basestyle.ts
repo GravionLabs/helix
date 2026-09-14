@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { css as Css, dt, Theme } from '@primeuix/styled';
+import { css as Css, dt, Theme } from '@gravionlabs/helix-core/uix/styled';
 import { style as base_style } from '@primeuix/styles/base';
 import { minifyCSS, resolve } from '@gravionlabs/helix-core/uix/utils';
 import { UseStyle } from '@gravionlabs/helix-core/usestyle';

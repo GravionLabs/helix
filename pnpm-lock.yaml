@@ -133,18 +133,12 @@ importers:
       '@ngrx/signals':
         specifier: ^21.0.1
         version: 21.1.1(@angular/core@22.1.2(@angular/compiler@22.1.2)(rxjs@7.8.2))(rxjs@7.8.2)
-      '@primeuix/styled':
-        specifier: 0.7.4
-        version: 0.7.4
       '@primeuix/styles':
         specifier: 2.0.3
         version: 2.0.3
       '@primeuix/themes':
         specifier: 2.0.3
         version: 2.0.3
-      '@primeuix/utils':
-        specifier: 0.7.2
-        version: 0.7.2
       '@tailwindcss/postcss':
         specifier: ^4.3.3
         version: 4.3.3
@@ -1725,10 +1719,6 @@ packages:
 
   '@primeuix/utils@0.6.4':
     resolution: {integrity: sha512-pZ5f+vj7wSzRhC7KoEQRU5fvYAe+RP9+m39CTscZ3UywCD1Y2o6Fe1rRgklMPSkzUcty2jzkA0zMYkiJBD1hgg==}
-    engines: {node: '>=12.11.0'}
-
-  '@primeuix/utils@0.7.2':
-    resolution: {integrity: sha512-pmEbSfP0Phf9W9RweiM66zXnkn73ZeKyYINElbX3uZ2+stzzaba2svLAl3B1pHVcRw5t43O0VciaGe4ye2EXKw==}
     engines: {node: '>=12.11.0'}
 
   '@rolldown/binding-android-arm64@1.1.5':
@@ -5509,8 +5499,6 @@ snapshots:
       '@primeuix/styled': 0.7.4
 
   '@primeuix/utils@0.6.4': {}
-
-  '@primeuix/utils@0.7.2': {}
 
   '@rolldown/binding-android-arm64@1.1.5':
     optional: true

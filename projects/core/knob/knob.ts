@@ -1,7 +1,7 @@
 
 import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, inject, InjectionToken, NgModule, numberAttribute, signal, ViewEncapsulation, input, output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { $dt } from '@primeuix/styled';
+import { $dt } from '@gravionlabs/helix-core/uix/styled';
 import { SharedModule } from '@gravionlabs/helix-core/api';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';
 import { BaseEditableHolder } from '@gravionlabs/helix-core/baseeditableholder';
