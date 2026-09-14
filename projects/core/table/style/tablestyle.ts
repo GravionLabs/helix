@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as datatable_style } from '@primeuix/styles/datatable';
+import { style as datatable_style } from './datatable.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

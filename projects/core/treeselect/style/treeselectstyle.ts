@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as treeselect_style } from '@primeuix/styles/treeselect';
+import { style as treeselect_style } from './treeselect.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

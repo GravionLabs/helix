@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/editor';
+import { style } from './editor.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {

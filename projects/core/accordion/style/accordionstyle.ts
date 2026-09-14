@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as accordion_style } from '@primeuix/styles/accordion';
+import { style as accordion_style } from './accordion.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

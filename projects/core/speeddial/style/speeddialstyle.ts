@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/speeddial';
+import { style } from './speeddial.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 /* Direction */

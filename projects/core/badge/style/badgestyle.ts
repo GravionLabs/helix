@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as badge_style } from '@primeuix/styles/badge';
+import { style as badge_style } from './badge.css';
 import { isEmpty, isNotEmpty } from '@gravionlabs/helix-core/uix/utils';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 

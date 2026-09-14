@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/tooltip';
+import { style } from './tooltip.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {

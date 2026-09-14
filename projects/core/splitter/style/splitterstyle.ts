@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style } from '@primeuix/styles/splitter';
+import { style } from './splitter.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {

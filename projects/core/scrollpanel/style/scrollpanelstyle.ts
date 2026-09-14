@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as scrollpanel_style } from '@primeuix/styles/scrollpanel';
+import { style as scrollpanel_style } from './scrollpanel.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `

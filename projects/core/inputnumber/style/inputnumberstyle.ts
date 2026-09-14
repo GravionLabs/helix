@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { style as inputnumber_style } from '@primeuix/styles/inputnumber';
+import { style as inputnumber_style } from './inputnumber.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
