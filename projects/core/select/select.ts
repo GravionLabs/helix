@@ -25,7 +25,7 @@ import {
     viewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MotionOptions } from '@primeuix/motion';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { equals, findLastIndex, findSingle, focus, getFirstFocusableElement, getFocusableElements, getLastFocusableElement, isEmpty, isNotEmpty, isPrintableCharacter, resolveFieldData, scrollInView, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { FilterService, OverlayOptions, HelixTemplate, ScrollerOptions, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { AutoFocus } from '@gravionlabs/helix-core/autofocus';

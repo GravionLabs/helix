@@ -1,7 +1,7 @@
 
 import { AfterViewChecked, booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, InjectionToken, input, NgModule, TemplateRef, ViewEncapsulation, output, viewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MotionOptions } from '@primeuix/motion';
+import { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { OverlayOptions, OverlayService, SharedModule, TranslationKeys } from '@gravionlabs/helix-core/api';
 import { AutoFocusModule } from '@gravionlabs/helix-core/autofocus';
 import { PARENT_INSTANCE } from '@gravionlabs/helix-core/basecomponent';

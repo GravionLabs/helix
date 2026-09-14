@@ -1,4 +1,4 @@
-import type { MotionOptions } from '@primeuix/motion';
+import type { MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import type { PassThrough, PassThroughOption } from '@gravionlabs/helix-core/api';
 
 /**

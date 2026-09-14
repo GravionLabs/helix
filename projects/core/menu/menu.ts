@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, Inject, inject, InjectionToken, input, Input, NgModule, numberAttribute, Pipe, PipeTransform, PLATFORM_ID, signal, TemplateRef, viewChild, ViewEncapsulation, ViewRef, output, contentChild, contentChildren } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { MotionEvent, MotionOptions } from '@primeuix/motion';
+import { MotionEvent, MotionOptions } from '@gravionlabs/helix-core/uix/motion';
 import { absolutePosition, addStyle, appendChild, find, findSingle, focus, isTouchDevice, uuid } from '@gravionlabs/helix-core/uix/utils';
 import { MenuItem, OverlayService, HelixTemplate, SharedModule } from '@gravionlabs/helix-core/api';
 import { BadgeModule } from '@gravionlabs/helix-core/badge';
