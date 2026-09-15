@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-inplace-display {
+    .h-inplace-display {
         display: inline-block;
         cursor: pointer;
         border: 1px solid transparent;
@@ -13,18 +13,18 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-inplace-display:not(.p-disabled):hover {
+    .h-inplace-display:not(.h-disabled):hover {
         background: dt('inplace.display.hover.background');
         color: dt('inplace.display.hover.color');
     }
 
-    .p-inplace-display:focus-visible {
+    .h-inplace-display:focus-visible {
         box-shadow: dt('inplace.focus.ring.shadow');
         outline: dt('inplace.focus.ring.width') dt('inplace.focus.ring.style') dt('inplace.focus.ring.color');
         outline-offset: dt('inplace.focus.ring.offset');
     }
 
-    .p-inplace-content {
+    .h-inplace-content {
         display: block;
     }
 `;

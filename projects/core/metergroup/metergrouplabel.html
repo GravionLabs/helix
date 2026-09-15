@@ -1,4 +1,4 @@
-<ol [class]="cx('labelList')" [hBind]="ptm('labelList')" [attr.data-p]="dataP">
+<ol [class]="cx('labelList')" [hBind]="ptm('labelList')" [attr.data-h]="dataP">
   @for (labelItem of value(); track parentInstance.trackByFn(index); let index = $index) {
     <li [class]="cx('label')" [hBind]="ptm('label')">
       @if (!iconTemplate()) {

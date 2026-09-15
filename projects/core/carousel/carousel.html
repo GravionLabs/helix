@@ -1,6 +1,6 @@
 @if (headerFacet() || headerTemplate()) {
   <div [class]="cx('header')" [hBind]="ptm('header')">
-    <ng-content select="p-header"></ng-content>
+    <ng-content select="h-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
   </div>
 }
@@ -20,10 +20,10 @@
         <ng-template #icon>
           @if (!previousIconTemplate() && !_previousIconTemplate && !prevButtonProps()?.icon) {
             @if (!isVertical()) {
-              <svg data-p-icon="chevron-left" />
+              <svg data-h-icon="chevron-left" />
             }
             @if (isVertical()) {
-              <svg data-p-icon="chevron-up" />
+              <svg data-h-icon="chevron-up" />
             }
           }
           @if ((previousIconTemplate() || _previousIconTemplate) && !prevButtonProps()?.icon) {
@@ -40,9 +40,9 @@
             [attr.aria-hidden]="!(totalShiftedItems * -1 === value().length)"
             [attr.aria-label]="ariaSlideNumber(index)"
             [attr.aria-roledescription]="ariaSlideLabel()"
-            [attr.data-p-carousel-item-active]="totalShiftedItems * -1 === value().length + _numVisible"
-            [attr.data-p-carousel-item-start]="index === 0"
-            [attr.data-p-carousel-item-end]="clonedItemsForStarting && clonedItemsForStarting.length - 1 === index"
+            [attr.data-h-carousel-item-active]="totalShiftedItems * -1 === value().length + _numVisible"
+            [attr.data-h-carousel-item-start]="index === 0"
+            [attr.data-h-carousel-item-end]="clonedItemsForStarting && clonedItemsForStarting.length - 1 === index"
             [hBind]="ptm('itemClone')"
             >
             <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item }"></ng-container>
@@ -55,9 +55,9 @@
             [attr.aria-hidden]="!(firstIndex() <= index && lastIndex() >= index)"
             [attr.aria-label]="ariaSlideNumber(index)"
             [attr.aria-roledescription]="ariaSlideLabel()"
-            [attr.data-p-carousel-item-active]="firstIndex() <= index && lastIndex() >= index"
-            [attr.data-p-carousel-item-start]="firstIndex() === index"
-            [attr.data-p-carousel-item-end]="lastIndex() === index"
+            [attr.data-h-carousel-item-active]="firstIndex() <= index && lastIndex() >= index"
+            [attr.data-h-carousel-item-start]="firstIndex() === index"
+            [attr.data-h-carousel-item-end]="lastIndex() === index"
             [hBind]="getItemPTOptions('item', index)"
             >
             <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item }"></ng-container>
@@ -66,9 +66,9 @@
         @for (item of clonedItemsForFinishing; track item; let index = $index) {
           <div
             [class]="cx('itemClone', { index })"
-            [attr.data-p-carousel-item-active]="false"
-            [attr.data-p-carousel-item-start]="false"
-            [attr.data-p-carousel-item-end]="false"
+            [attr.data-h-carousel-item-active]="false"
+            [attr.data-h-carousel-item-start]="false"
+            [attr.data-h-carousel-item-end]="false"
             [hBind]="ptm('itemClone')"
             >
             <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item }"></ng-container>
@@ -91,10 +91,10 @@
         <ng-template #icon>
           @if (!nextIconTemplate() && !_nextIconTemplate && !nextButtonProps()?.icon) {
             @if (!isVertical()) {
-              <svg data-p-icon="chevron-right" />
+              <svg data-h-icon="chevron-right" />
             }
             @if (isVertical()) {
-              <svg data-p-icon="chevron-down" />
+              <svg data-h-icon="chevron-down" />
             }
           }
           @if (nextIconTemplate() || (_nextIconTemplate && !nextButtonProps()?.icon)) {
@@ -109,7 +109,7 @@
   @if (showIndicators()) {
     <ul #indicatorContent [class]="cx('indicatorList')" [ngStyle]="indicatorsContentStyle()" (keydown)="onIndicatorKeydown($event)" [hBind]="ptm('indicatorList')">
       @for (totalDot of totalDotsArray(); track totalDot; let i = $index) {
-        <li [class]="cx('indicator', { index: i })" [attr.data-p-active]="_page === i" [hBind]="getIndicatorPTOptions('indicator', i)">
+        <li [class]="cx('indicator', { index: i })" [attr.data-h-active]="_page === i" [hBind]="getIndicatorPTOptions('indicator', i)">
           <button
             type="button"
             [class]="cx('indicatorButton')"
@@ -127,7 +127,7 @@
 </div>
 @if (footerFacet() || footerTemplate() || _footerTemplate) {
   <div [class]="cx('footer')" [hBind]="ptm('footer')">
-    <ng-content select="p-footer"></ng-content>
+    <ng-content select="h-footer"></ng-content>
     <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   </div>
 }

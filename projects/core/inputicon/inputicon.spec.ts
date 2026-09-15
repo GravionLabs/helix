@@ -11,10 +11,10 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [IconField, InputIcon, InputText, FormsModule],
     template: `
-        <p-iconfield>
-            <p-inputicon class="pi pi-search" />
+        <h-iconfield>
+            <h-inputicon class="pi pi-search" />
             <input type="text" pInputText [(ngModel)]="value" placeholder="Search" />
-        </p-iconfield>
+        </h-iconfield>
     `
 })
 class TestBasicInputIconComponent {
@@ -25,10 +25,10 @@ class TestBasicInputIconComponent {
     standalone: true,
     imports: [IconField, InputIcon, InputText, FormsModule],
     template: `
-        <p-iconfield>
-            <p-inputicon [styleClass]="customClass" class="pi pi-user" />
+        <h-iconfield>
+            <h-inputicon [styleClass]="customClass" class="pi pi-user" />
             <input type="text" pInputText [(ngModel)]="username" />
-        </p-iconfield>
+        </h-iconfield>
     `
 })
 class TestStyledInputIconComponent {
@@ -64,7 +64,7 @@ describe('InputIcon', () => {
 
         it('should have correct CSS class', () => {
             const iconElement = fixture.debugElement.query(By.directive(InputIcon));
-            expect(iconElement.nativeElement.classList.contains('p-inputicon')).toBe(true);
+            expect(iconElement.nativeElement.classList.contains('h-inputicon')).toBe(true);
         });
     });
 

@@ -14,7 +14,7 @@
   <ng-container *ngTemplateOutlet="labelTemplate() || labelTemplate(); context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
 }
 <ng-container *ngTemplateOutlet="startTemplate() || _startTemplate; context: { $implicit: value(), totalPercent: totalPercent(), percentages: percentages() }"></ng-container>
-<div [class]="cx('meters')" [hBind]="ptm('meters')" [attr.data-p]="dataP">
+<div [class]="cx('meters')" [hBind]="ptm('meters')" [attr.data-h]="dataP">
   @for (meterItem of value(); track trackByFn(index); let index = $index) {
     <ng-container
             *ngTemplateOutlet="
@@ -32,7 +32,7 @@
     >
   </ng-container>
   @if (!meterTemplate() && !_meterTemplate && meterItem.value > 0) {
-    <span [class]="cx('meter')" [attr.data-p]="dataP" [hBind]="ptm('meter')" [ngStyle]="meterStyle(meterItem)"></span>
+    <span [class]="cx('meter')" [attr.data-h]="dataP" [hBind]="ptm('meter')" [ngStyle]="meterStyle(meterItem)"></span>
   }
 }
 </div>

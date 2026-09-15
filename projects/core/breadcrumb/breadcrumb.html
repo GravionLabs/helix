@@ -23,7 +23,7 @@
                   <span [class]="cn(cx('itemIcon'), home.icon, home.iconClass)" [ngStyle]="home.iconStyle" [hBind]="ptm('itemIcon')"></span>
                 }
                 @if (!home.icon) {
-                  <svg data-p-icon="home" [class]="cx('itemIcon')" [hBind]="ptm('itemIcon')" />
+                  <svg data-h-icon="home" [class]="cx('itemIcon')" [hBind]="ptm('itemIcon')" />
                 }
                 @if (home.label) {
                   @if (home.escape !== false) {
@@ -40,7 +40,7 @@
             @if (home.routerLink) {
               <a
                 [routerLink]="home.routerLink"
-                routerLinkActive="p-menuitem-link-active"
+                routerLinkActive="h-menuitem-link-active"
                 [attr.aria-label]="homeAriaLabel()"
                 [queryParams]="home.queryParams"
                 [routerLinkActiveOptions]="home.routerLinkActiveOptions || { exact: false }"
@@ -63,7 +63,7 @@
                   <span [class]="cn(cx('itemIcon'), home.icon, home.iconClass)" [ngStyle]="home.iconStyle" [hBind]="ptm('itemIcon')"></span>
                 }
                 @if (!home.icon) {
-                  <svg data-p-icon="home" [class]="cx('itemIcon')" [hBind]="ptm('itemIcon')" />
+                  <svg data-h-icon="home" [class]="cx('itemIcon')" [hBind]="ptm('itemIcon')" />
                 }
                 @if (home.label) {
                   @if (home.escape !== false) {
@@ -84,7 +84,7 @@
     @if (model() && home()) {
       <li [class]="cx('separator')" [hBind]="ptm('separator')">
         @if (!separatorTemplate() && !_separatorTemplate) {
-          <svg data-p-icon="chevron-right" [hBind]="ptm('separatorIcon')" />
+          <svg data-h-icon="chevron-right" [hBind]="ptm('separatorIcon')" />
         }
         <ng-template *ngTemplateOutlet="separatorTemplate() || _separatorTemplate"></ng-template>
       </li>
@@ -138,7 +138,7 @@
               @if (menuitem?.routerLink) {
                 <a
                   [routerLink]="$safeNavigationMigration(menuitem?.routerLink)"
-                  routerLinkActive="p-menuitem-link-active"
+                  routerLinkActive="h-menuitem-link-active"
                   [queryParams]="$safeNavigationMigration(menuitem?.queryParams)"
                   [routerLinkActiveOptions]="menuitem?.routerLinkActiveOptions || { exact: false }"
                   [class]="cn(cx('itemLink'), $safeNavigationMigration(menuitem?.linkClass))"
@@ -180,7 +180,7 @@
           @if (!end && menuitem.visible !== false) {
             <li [class]="cx('separator')" [hBind]="ptm('separator')">
               @if (!separatorTemplate() && !_separatorTemplate) {
-                <svg data-p-icon="chevron-right" [hBind]="ptm('separatorIcon')" />
+                <svg data-h-icon="chevron-right" [hBind]="ptm('separatorIcon')" />
               }
               <ng-template *ngTemplateOutlet="separatorTemplate() || _separatorTemplate"></ng-template>
             </li>

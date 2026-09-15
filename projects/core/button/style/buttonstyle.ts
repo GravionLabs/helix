@@ -16,37 +16,37 @@ const classes = {
         const badge = unwrap(instance.badge);
         const buttonProps = unwrap(instance.buttonProps);
         return [
-            'p-button p-component',
+            'h-button h-component',
             {
-                'p-button-icon-only': instance.hasIcon && !label && !buttonProps?.label && !badge,
-                'p-button-vertical': (iconPos === 'top' || iconPos === 'bottom') && label,
-                'p-button-loading': loading || buttonProps?.loading,
-                'p-button-link': unwrap(instance.link) || buttonProps?.link,
-                [`p-button-${severity || buttonProps?.severity}`]: severity || buttonProps?.severity,
-                'p-button-raised': unwrap(instance.raised) || buttonProps?.raised,
-                'p-button-rounded': unwrap(instance.rounded) || buttonProps?.rounded,
-                'p-button-text': unwrap(instance.text) || variant === 'text' || buttonProps?.text || buttonProps?.variant === 'text',
-                'p-button-outlined': unwrap(instance.outlined) || variant === 'outlined' || buttonProps?.outlined || buttonProps?.variant === 'outlined',
-                'p-button-sm': size === 'small' || buttonProps?.size === 'small',
-                'p-button-lg': size === 'large' || buttonProps?.size === 'large',
-                'p-button-plain': unwrap(instance.plain) || buttonProps?.plain,
-                'p-button-fluid': instance.hasFluid
+                'h-button-icon-only': instance.hasIcon && !label && !buttonProps?.label && !badge,
+                'h-button-vertical': (iconPos === 'top' || iconPos === 'bottom') && label,
+                'h-button-loading': loading || buttonProps?.loading,
+                'h-button-link': unwrap(instance.link) || buttonProps?.link,
+                [`h-button-${severity || buttonProps?.severity}`]: severity || buttonProps?.severity,
+                'h-button-raised': unwrap(instance.raised) || buttonProps?.raised,
+                'h-button-rounded': unwrap(instance.rounded) || buttonProps?.rounded,
+                'h-button-text': unwrap(instance.text) || variant === 'text' || buttonProps?.text || buttonProps?.variant === 'text',
+                'h-button-outlined': unwrap(instance.outlined) || variant === 'outlined' || buttonProps?.outlined || buttonProps?.variant === 'outlined',
+                'h-button-sm': size === 'small' || buttonProps?.size === 'small',
+                'h-button-lg': size === 'large' || buttonProps?.size === 'large',
+                'h-button-plain': unwrap(instance.plain) || buttonProps?.plain,
+                'h-button-fluid': instance.hasFluid
             }
         ];
     },
-    loadingIcon: 'p-button-loading-icon',
+    loadingIcon: 'h-button-loading-icon',
     icon: ({ instance }) => {
         const label = unwrap(instance.label);
         const iconPos = unwrap(instance.iconPos);
         const buttonProps = unwrap(instance.buttonProps);
         return [
-            'p-button-icon',
+            'h-button-icon',
             {
-                [`p-button-icon-${iconPos || buttonProps?.iconPos}`]: label || buttonProps?.label,
-                'p-button-icon-left': ((iconPos === 'left' || buttonProps?.iconPos === 'left') && label) || buttonProps?.label,
-                'p-button-icon-right': ((iconPos === 'right' || buttonProps?.iconPos === 'right') && label) || buttonProps?.label,
-                'p-button-icon-top': ((iconPos === 'top' || buttonProps?.iconPos === 'top') && label) || buttonProps?.label,
-                'p-button-icon-bottom': ((iconPos === 'bottom' || buttonProps?.iconPos === 'bottom') && label) || buttonProps?.label
+                [`h-button-icon-${iconPos || buttonProps?.iconPos}`]: label || buttonProps?.label,
+                'h-button-icon-left': ((iconPos === 'left' || buttonProps?.iconPos === 'left') && label) || buttonProps?.label,
+                'h-button-icon-right': ((iconPos === 'right' || buttonProps?.iconPos === 'right') && label) || buttonProps?.label,
+                'h-button-icon-top': ((iconPos === 'top' || buttonProps?.iconPos === 'top') && label) || buttonProps?.label,
+                'h-button-icon-bottom': ((iconPos === 'bottom' || buttonProps?.iconPos === 'bottom') && label) || buttonProps?.label
             },
             unwrap(instance.icon),
             buttonProps?.icon
@@ -55,9 +55,9 @@ const classes = {
     spinnerIcon: ({ instance }) => {
         return Object.entries(instance.cx('icon'))
             .filter(([, value]) => !!value)
-            .reduce((acc, [key]) => acc + ` ${key}`, 'p-button-loading-icon');
+            .reduce((acc, [key]) => acc + ` ${key}`, 'h-button-loading-icon');
     },
-    label: 'p-button-label'
+    label: 'h-button-label'
 };
 
 @Injectable()
@@ -82,19 +82,19 @@ export enum ButtonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-button',
+    root = 'h-button',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-button-loading-icon',
+    loadingIcon = 'h-button-loading-icon',
     /**
      * Class name of the icon element
      */
-    icon = 'p-button-icon',
+    icon = 'h-button-icon',
     /**
      * Class name of the label element
      */
-    label = 'p-button-label'
+    label = 'h-button-label'
 }
 
 export interface ButtonStyle extends BaseStyle {}

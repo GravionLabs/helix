@@ -3,9 +3,9 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-stepitem',
+        'h-stepitem',
         {
-            'p-stepitem-active': instance.isActive()
+            'h-stepitem-active': instance.isActive()
         }
     ]
 };
@@ -30,7 +30,7 @@ export enum StepItemClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-stepitem'
+    root = 'h-stepitem'
 }
 
 export interface StepItemStyle extends BaseStyle {}

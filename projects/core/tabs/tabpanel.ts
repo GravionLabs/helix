@@ -26,7 +26,7 @@ const TABPANEL_INSTANCE = new InjectionToken<TabPanel>('TABPANEL_INSTANCE');
         '[attr.id]': 'id()',
         '[attr.role]': '"tabpanel"',
         '[attr.aria-labelledby]': 'ariaLabelledby()',
-        '[attr.data-p-active]': 'active()',
+        '[attr.data-h-active]': 'active()',
         '[hidden]': '!active()'
     },
     hostDirectives: [Bind]

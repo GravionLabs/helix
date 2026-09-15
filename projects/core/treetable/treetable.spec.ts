@@ -215,7 +215,7 @@ describe('TreeTable', () => {
         });
 
         it('should display paginator when enabled', async () => {
-            const paginator = fixture.debugElement.query(By.css('p-paginator'));
+            const paginator = fixture.debugElement.query(By.css('h-paginator'));
             expect(paginator).toBeTruthy();
         });
 
@@ -2951,7 +2951,7 @@ describe('TreeTable', () => {
 @Component({
     standalone: false,
     template: `
-        <p-treetable
+        <h-treetable
             [columns]="columns"
             [value]="value"
             [autoLayout]="autoLayout"
@@ -3034,7 +3034,7 @@ describe('TreeTable', () => {
             (onEditCancel)="onEditCancel($event)"
             (selectionKeysChange)="onSelectionKeysChange($event)"
         >
-        </p-treetable>
+        </h-treetable>
     `
 })
 class TestBasicTreeTableComponent {
@@ -3135,7 +3135,7 @@ class TestBasicTreeTableComponent {
 @Component({
     standalone: false,
     template: `
-        <p-treetable [value]="value" [columns]="columns">
+        <h-treetable [value]="value" [columns]="columns">
           <ng-template #caption>Custom TreeTable Caption</ng-template>
           <ng-template #header let-columns>
             <tr>
@@ -3149,7 +3149,7 @@ class TestBasicTreeTableComponent {
               @for (col of columns; track col; let i = $index) {
                 <td [ttEditableColumn]="rowData" [ttEditableColumnField]="col.field">
                   @if (i == 0) {
-                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    <h-treeTableToggler [rowNode]="rowNode"></h-treeTableToggler>
                   }
                   {{ rowData[col.field] }}
                 </td>
@@ -3165,7 +3165,7 @@ class TestBasicTreeTableComponent {
           </ng-template>
           <ng-template #summary>Custom TreeTable Summary</ng-template>
           <ng-template #emptymessage>No records found</ng-template>
-        </p-treetable>
+        </h-treetable>
         `
 })
 class TestTemplatesTreeTableComponent {
@@ -3179,7 +3179,7 @@ class TestTemplatesTreeTableComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-treetable #treetable [value]="value" [columns]="columns"> </p-treetable> `
+    template: ` <h-treetable #treetable [value]="value" [columns]="columns"> </h-treetable> `
 })
 class TestDynamicTreeTableComponent {
     // NOTE: `treetable` used to be populated via `@ViewChild('treetable') treetable!: TreeTable;`
@@ -3313,7 +3313,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+            const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
             expect(wrapper?.classList.contains('WRAPPER_CLASS')).toBe(true);
         });
 
@@ -3380,7 +3380,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const header = fixture.nativeElement.querySelector('.p-treetable-header');
+            const header = fixture.nativeElement.querySelector('.h-treetable-header');
             expect(header?.classList.contains('HEADER_CLASS')).toBe(true);
         });
 
@@ -3407,7 +3407,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const footer = fixture.nativeElement.querySelector('.p-treetable-footer');
+            const footer = fixture.nativeElement.querySelector('.h-treetable-footer');
             expect(footer?.classList.contains('FOOTER_CLASS')).toBe(true);
         });
     });
@@ -3419,7 +3419,7 @@ describe('TreeTable PT', () => {
                 host: {
                     class: 'HOST_OBJECT_CLASS',
                     style: { 'background-color': 'red' },
-                    'data-p-test': 'true',
+                    'data-h-test': 'true',
                     'aria-label': 'TEST_ARIA_LABEL'
                 }
             });
@@ -3430,7 +3430,7 @@ describe('TreeTable PT', () => {
             const host = fixture.nativeElement;
             expect(host.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
             expect(host.style.backgroundColor).toBe('red');
-            expect(host.getAttribute('data-p-test')).toBe('true');
+            expect(host.getAttribute('data-h-test')).toBe('true');
             expect(host.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
         });
 
@@ -3448,7 +3448,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+            const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
             expect(wrapper?.classList.contains('WRAPPER_OBJECT_CLASS')).toBe(true);
             expect(wrapper?.style.border).toBe('1px solid blue');
             expect(wrapper?.getAttribute('data-testid')).toBe('wrapper-test');
@@ -3490,7 +3490,7 @@ describe('TreeTable PT', () => {
             fixture.detectChanges();
 
             const host = fixture.nativeElement;
-            const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+            const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
             const table = fixture.nativeElement.querySelector('table');
 
             expect(host.classList.contains('HOST_MIXED_CLASS')).toBe(true);
@@ -3534,7 +3534,7 @@ describe('TreeTable PT', () => {
     //         });
     //         fixture.detectChanges();
 
-    //         const loading = fixture.nativeElement.querySelector('.p-treetable-loading');
+    //         const loading = fixture.nativeElement.querySelector('.h-treetable-loading');
     //         expect(loading?.classList.contains('IS_LOADING')).toBe(true);
     //     });
 
@@ -3573,7 +3573,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+            const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
             wrapper?.click();
 
             expect(clicked).toBe(true);
@@ -3611,7 +3611,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const mask = fixture.nativeElement.querySelector('.p-treetable-mask');
+            const mask = fixture.nativeElement.querySelector('.h-treetable-mask');
 
             expect(mask?.classList.contains('MASK_CLASS')).toBe(true);
         });
@@ -3631,13 +3631,13 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const scrollableWrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+            const scrollableWrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
             expect(scrollableWrapper?.classList.contains('SCROLLABLE_WRAPPER_CLASS')).toBe(true);
 
-            const scrollableHeader = fixture.nativeElement.querySelector('.p-treetable-scrollable-header');
+            const scrollableHeader = fixture.nativeElement.querySelector('.h-treetable-scrollable-header');
             expect(scrollableHeader?.classList.contains('SCROLLABLE_HEADER_CLASS')).toBe(true);
 
-            const scrollableBody = fixture.nativeElement.querySelector('.p-treetable-scrollable-body');
+            const scrollableBody = fixture.nativeElement.querySelector('.h-treetable-scrollable-body');
             expect(scrollableBody?.classList.contains('SCROLLABLE_BODY_CLASS')).toBe(true);
         });
 
@@ -3651,10 +3651,10 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const headerTable = fixture.nativeElement.querySelector('.p-treetable-scrollable-header-table');
+            const headerTable = fixture.nativeElement.querySelector('.h-treetable-scrollable-header-table');
             expect(headerTable?.classList.contains('SCROLLABLE_HEADER_TABLE_CLASS')).toBe(true);
 
-            const headerBox = fixture.nativeElement.querySelector('.p-treetable-scrollable-header-box');
+            const headerBox = fixture.nativeElement.querySelector('.h-treetable-scrollable-header-box');
             expect(headerBox?.classList.contains('SCROLLABLE_HEADER_BOX_CLASS')).toBe(true);
         });
 
@@ -3686,13 +3686,13 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const footer = fixture.nativeElement.querySelector('.p-treetable-scrollable-footer');
+            const footer = fixture.nativeElement.querySelector('.h-treetable-scrollable-footer');
             expect(footer?.classList.contains('SCROLLABLE_FOOTER_CLASS')).toBe(true);
 
-            const footerBox = fixture.nativeElement.querySelector('.p-treetable-scrollable-footer-box');
+            const footerBox = fixture.nativeElement.querySelector('.h-treetable-scrollable-footer-box');
             expect(footerBox?.classList.contains('SCROLLABLE_FOOTER_BOX_CLASS')).toBe(true);
 
-            const footerTable = fixture.nativeElement.querySelector('.p-treetable-scrollable-footer-table');
+            const footerTable = fixture.nativeElement.querySelector('.h-treetable-scrollable-footer-table');
             expect(footerTable?.classList.contains('SCROLLABLE_FOOTER_TABLE_CLASS')).toBe(true);
         });
     });
@@ -3708,7 +3708,7 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const resizerHelper = fixture.nativeElement.querySelector('.p-column-resizer-helper');
+            const resizerHelper = fixture.nativeElement.querySelector('.h-column-resizer-helper');
             expect(resizerHelper?.classList.contains('RESIZER_HELPER_CLASS')).toBe(true);
         });
     });
@@ -3725,8 +3725,8 @@ describe('TreeTable PT', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const indicatorUp = fixture.nativeElement.querySelector('.p-treetable-reorder-indicator-up');
-            const indicatorDown = fixture.nativeElement.querySelector('.p-treetable-reorder-indicator-down');
+            const indicatorUp = fixture.nativeElement.querySelector('.h-treetable-reorder-indicator-up');
+            const indicatorDown = fixture.nativeElement.querySelector('.h-treetable-reorder-indicator-down');
 
             expect(indicatorUp?.classList.contains('REORDER_UP_CLASS')).toBe(true);
             expect(indicatorDown?.classList.contains('REORDER_DOWN_CLASS')).toBe(true);
@@ -3789,7 +3789,7 @@ describe('TreeTable Global PT', () => {
 
     it('should apply global PT from config', async () => {
         const host = fixture.nativeElement;
-        const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+        const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
 
         expect(host.getAttribute('aria-label')).toBe('GLOBAL_ARIA_LABEL');
         expect(wrapper?.classList.contains('GLOBAL_WRAPPER_CLASS')).toBe(true);
@@ -3805,7 +3805,7 @@ describe('TreeTable Global PT', () => {
         fixture.detectChanges();
 
         const host = fixture.nativeElement;
-        const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+        const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
 
         expect(host.getAttribute('aria-label')).toBe('GLOBAL_ARIA_LABEL');
         expect(host.classList.contains('LOCAL_HOST_CLASS')).toBe(true);
@@ -3817,7 +3817,7 @@ describe('TreeTable Global PT', () => {
 // Case 12: Inline PT test with template
 @Component({
     template: `
-        <p-treetable [value]="nodes" [scrollable]="true" scrollHeight="200px" [pt]="{ host: 'INLINE_HOST_CLASS', scrollableWrapper: 'INLINE_WRAPPER_CLASS' }">
+        <h-treetable [value]="nodes" [scrollable]="true" scrollHeight="200px" [pt]="{ host: 'INLINE_HOST_CLASS', scrollableWrapper: 'INLINE_WRAPPER_CLASS' }">
             <ng-template #header>
                 <tr>
                     <th>Name</th>
@@ -3828,7 +3828,7 @@ describe('TreeTable Global PT', () => {
                     <td>{{ rowData.name }}</td>
                 </tr>
             </ng-template>
-        </p-treetable>
+        </h-treetable>
     `,
     standalone: true,
     imports: [TreeTableModule]
@@ -3853,8 +3853,8 @@ describe('TreeTable Inline PT', () => {
     });
 
     it('should apply inline PT classes', async () => {
-        const host = fixture.nativeElement.querySelector('p-treetable');
-        const wrapper = fixture.nativeElement.querySelector('.p-treetable-scrollable-wrapper');
+        const host = fixture.nativeElement.querySelector('h-treetable');
+        const wrapper = fixture.nativeElement.querySelector('.h-treetable-scrollable-wrapper');
 
         expect(host?.classList.contains('INLINE_HOST_CLASS')).toBe(true);
         expect(wrapper?.classList.contains('INLINE_WRAPPER_CLASS')).toBe(true);
@@ -3866,7 +3866,7 @@ describe('TreeTable Inline PT', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        const host = fixture.nativeElement.querySelector('p-treetable');
+        const host = fixture.nativeElement.querySelector('h-treetable');
         expect(host?.classList.contains('INLINE_HOST_CLASS')).toBe(true);
     });
 });

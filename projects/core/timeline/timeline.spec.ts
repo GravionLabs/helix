@@ -18,7 +18,7 @@ interface EventItem {
 // Basic test component
 @Component({
     standalone: false,
-    template: ` <p-timeline [value]="events" [align]="align" [layout]="layout" [styleClass]="styleClass"> </p-timeline> `
+    template: ` <h-timeline [value]="events" [align]="align" [layout]="layout" [styleClass]="styleClass"> </h-timeline> `
 })
 class TestBasicTimelineComponent {
     events: EventItem[] = [
@@ -37,7 +37,7 @@ class TestBasicTimelineComponent {
 @Component({
     standalone: false,
     template: `
-        <p-timeline [value]="events" [align]="align">
+        <h-timeline [value]="events" [align]="align">
             <ng-template #content let-event>
                 <div class="custom-content">{{ event.status }} - {{ event.date }}</div>
             </ng-template>
@@ -51,7 +51,7 @@ class TestBasicTimelineComponent {
                     <i [class]="event.icon"></i>
                 </div>
             </ng-template>
-        </p-timeline>
+        </h-timeline>
     `
 })
 class TestTemplatesTimelineComponent {
@@ -66,7 +66,7 @@ class TestTemplatesTimelineComponent {
 @Component({
     standalone: false,
     template: `
-        <p-timeline [value]="events">
+        <h-timeline [value]="events">
             <ng-template pTemplate="content" let-event>
                 <div class="prime-content">{{ event.status }}</div>
             </ng-template>
@@ -80,7 +80,7 @@ class TestTemplatesTimelineComponent {
                     <i [class]="event.icon"></i>
                 </div>
             </ng-template>
-        </p-timeline>
+        </h-timeline>
     `
 })
 class TestHelixTemplateTimelineComponent {
@@ -91,11 +91,11 @@ class TestHelixTemplateTimelineComponent {
 @Component({
     standalone: false,
     template: `
-        <p-timeline [value]="events">
+        <h-timeline [value]="events">
             <ng-template #content let-event>
                 <div>{{ event.status }}</div>
             </ng-template>
-        </p-timeline>
+        </h-timeline>
     `
 })
 class TestEmptyTimelineComponent {
@@ -106,14 +106,14 @@ class TestEmptyTimelineComponent {
 @Component({
     standalone: false,
     template: `
-        <p-timeline [value]="events" [layout]="layout" [align]="align">
+        <h-timeline [value]="events" [layout]="layout" [align]="align">
             <ng-template #content let-event>
                 <div class="event-content">
                     <h4>{{ event.status }}</h4>
                     <p>{{ event.description }}</p>
                 </div>
             </ng-template>
-        </p-timeline>
+        </h-timeline>
     `
 })
 class TestComplexTimelineComponent {
@@ -275,7 +275,7 @@ describe('Timeline', () => {
         it('should not render connector for last event', () => {
             const events = fixture.debugElement.queryAll(By.css('[data-pc-section="event"]'));
             const lastEvent = events[events.length - 1];
-            const connectorInLastEvent = lastEvent.query(By.css('.p-timeline-event-connector'));
+            const connectorInLastEvent = lastEvent.query(By.css('.h-timeline-event-connector'));
 
             expect(connectorInLastEvent).toBeFalsy();
         });

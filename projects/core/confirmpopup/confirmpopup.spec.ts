@@ -11,7 +11,7 @@ import { ConfirmPopup } from './confirmpopup';
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup
+        <h-confirmpopup
             [key]="key"
             [defaultFocus]="defaultFocus"
             [showTransitionOptions]="showTransitionOptions"
@@ -22,7 +22,7 @@ import { ConfirmPopup } from './confirmpopup';
             [styleClass]="styleClass"
             [visible]="visible"
         >
-        </p-confirmpopup>
+        </h-confirmpopup>
         <button #triggerBtn (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -61,7 +61,7 @@ class TestBasicConfirmPopupComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup>
+        <h-confirmpopup>
             <ng-template pTemplate="content" let-message>
                 <div class="custom-content">
                     <i class="pi pi-info-circle custom-content-icon"></i>
@@ -84,7 +84,7 @@ class TestBasicConfirmPopupComponent {
                     </div>
                 </div>
             </ng-template>
-        </p-confirmpopup>
+        </h-confirmpopup>
         <button #triggerBtn (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -104,7 +104,7 @@ class TestTemplatePConfirmPopupComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup>
+        <h-confirmpopup>
             <ng-template #content let-message>
                 <div class="content-template">
                     <i class="pi pi-bell content-icon"></i>
@@ -127,7 +127,7 @@ class TestTemplatePConfirmPopupComponent {
                     </div>
                 </div>
             </ng-template>
-        </p-confirmpopup>
+        </h-confirmpopup>
         <button #triggerBtn (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -147,8 +147,8 @@ class TestContentTemplateConfirmPopupComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup key="popup1"></p-confirmpopup>
-        <p-confirmpopup key="popup2"></p-confirmpopup>
+        <h-confirmpopup key="popup1"></h-confirmpopup>
+        <h-confirmpopup key="popup2"></h-confirmpopup>
         <button (click)="confirm1($event)" class="trigger-btn-1">Trigger 1</button>
         <button (click)="confirm2($event)" class="trigger-btn-2">Trigger 2</button>
     `
@@ -186,7 +186,7 @@ class TestMultipleKeysComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup [defaultFocus]="defaultFocus"></p-confirmpopup>
+        <h-confirmpopup [defaultFocus]="defaultFocus"></h-confirmpopup>
         <button (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -208,7 +208,7 @@ class TestFocusConfirmPopupComponent {
     standalone: false,
     selector: 'test-button-properties-confirmpopup',
     template: `
-        <p-confirmpopup></p-confirmpopup>
+        <h-confirmpopup></h-confirmpopup>
         <button (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -233,7 +233,7 @@ class TestButtonPropertiesComponent {
 @Component({
     standalone: false,
     template: `
-        <p-confirmpopup></p-confirmpopup>
+        <h-confirmpopup></h-confirmpopup>
         <div style="height: 400px; display: flex; align-items: center; justify-content: center;">
             <button (click)="confirm($event)" class="trigger-btn">Trigger</button>
         </div>
@@ -255,7 +255,7 @@ class TestPositionConfirmPopupComponent {
     standalone: false,
     selector: 'test-accessibility-confirmpopup',
     template: `
-        <p-confirmpopup></p-confirmpopup>
+        <h-confirmpopup></h-confirmpopup>
         <button (click)="confirm($event)" class="trigger-btn">Trigger</button>
     `
 })
@@ -324,7 +324,7 @@ describe('ConfirmPopup', () => {
         });
 
         it('should have proper component structure', () => {
-            const popupElement = fixture.debugElement.query(By.css('p-confirmpopup'));
+            const popupElement = fixture.debugElement.query(By.css('h-confirmpopup'));
             expect(popupElement).toBeTruthy();
         });
     });
@@ -843,8 +843,8 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await accessibilityFixture.whenStable();
 
-            const acceptButton = accessibilityFixture.debugElement.query(By.css('.p-confirm-popup-accept'));
-            const rejectButton = accessibilityFixture.debugElement.query(By.css('.p-confirm-popup-reject'));
+            const acceptButton = accessibilityFixture.debugElement.query(By.css('.h-confirm-popup-accept'));
+            const rejectButton = accessibilityFixture.debugElement.query(By.css('.h-confirm-popup-reject'));
 
             if (acceptButton) {
                 expect(acceptButton.nativeElement.hasAttribute('aria-label')).toBe(true);
@@ -885,7 +885,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const acceptButton = fixture.debugElement.query(By.css('p-button[label="Yes"]'));
+            const acceptButton = fixture.debugElement.query(By.css('h-button[label="Yes"]'));
             if (acceptButton) {
                 spyOn(confirmPopupInstance, 'onAccept');
 
@@ -908,7 +908,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const rejectButton = fixture.debugElement.query(By.css('p-button[label="No"]'));
+            const rejectButton = fixture.debugElement.query(By.css('h-button[label="No"]'));
             if (rejectButton) {
                 const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
                 rejectButton.nativeElement.dispatchEvent(spaceEvent);
@@ -945,7 +945,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const buttons = fixture.debugElement.queryAll(By.css('p-button'));
+            const buttons = fixture.debugElement.queryAll(By.css('h-button'));
 
             buttons.forEach((button) => {
                 const hasLabel = button.nativeElement.hasAttribute('aria-label') || button.nativeElement.textContent?.trim();
@@ -961,7 +961,7 @@ describe('ConfirmPopup', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const messageElement = fixture.debugElement.query(By.css('.p-confirm-popup-message'));
+            const messageElement = fixture.debugElement.query(By.css('.h-confirm-popup-message'));
             if (messageElement) {
                 expect(messageElement.nativeElement.textContent).toBeTruthy();
                 // Message should be readable by screen readers
@@ -1372,7 +1372,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1432,7 +1432,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1501,7 +1501,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1561,7 +1561,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test" [visible]="isVisible"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test" [visible]="isVisible"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1623,7 +1623,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1684,7 +1684,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="{ root: 'INLINE_ROOT_CLASS', content: 'INLINE_CONTENT_CLASS' }" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="{ root: 'INLINE_ROOT_CLASS', content: 'INLINE_CONTENT_CLASS' }" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1704,7 +1704,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, message: { class: 'INLINE_MESSAGE_CLASS' } }" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, message: { class: 'INLINE_MESSAGE_CLASS' } }" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })
@@ -1772,9 +1772,9 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup key="test1"></p-confirmpopup>
+                    <h-confirmpopup key="test1"></h-confirmpopup>
                     <button #btn1 (click)="confirm($event, 'test1')">Confirm 1</button>
-                    <p-confirmpopup key="test2"></p-confirmpopup>
+                    <h-confirmpopup key="test2"></h-confirmpopup>
                     <button #btn2 (click)="confirm($event, 'test2')">Confirm 2</button>
                 `
             })
@@ -1826,7 +1826,7 @@ describe('ConfirmPopup', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-confirmpopup [pt]="pt" key="test"></p-confirmpopup>
+                    <h-confirmpopup [pt]="pt" key="test"></h-confirmpopup>
                     <button #btn (click)="confirm($event)">Confirm</button>
                 `
             })

@@ -6,7 +6,7 @@ const inlineStyles = {
 };
 
 const style = /*css*/ `
-.p-overlay-modal {
+.h-overlay-modal {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,101 +17,101 @@ const style = /*css*/ `
     height: 100%;
 }
 
-.p-overlay-content {
+.h-overlay-content {
     transform-origin: inherit;
     will-change: transform;
 }
 
 /* Github Issue #18560 */
-.p-component-overlay.p-component {
+.h-component-overlay.h-component {
     position: relative;
 }
 
-.p-overlay-modal > .p-overlay-content {
+.h-overlay-modal > .h-overlay-content {
     z-index: 1;
     width: 90%;
 }
 
 /* Position */
 /* top */
-.p-overlay-top {
+.h-overlay-top {
     align-items: flex-start;
 }
-.p-overlay-top-start {
+.h-overlay-top-start {
     align-items: flex-start;
     justify-content: flex-start;
 }
-.p-overlay-top-end {
+.h-overlay-top-end {
     align-items: flex-start;
     justify-content: flex-end;
 }
 
 /* bottom */
-.p-overlay-bottom {
+.h-overlay-bottom {
     align-items: flex-end;
 }
-.p-overlay-bottom-start {
+.h-overlay-bottom-start {
     align-items: flex-end;
     justify-content: flex-start;
 }
-.p-overlay-bottom-end {
+.h-overlay-bottom-end {
     align-items: flex-end;
     justify-content: flex-end;
 }
 
 /* left */
-.p-overlay-left {
+.h-overlay-left {
     justify-content: flex-start;
 }
-.p-overlay-left-start {
+.h-overlay-left-start {
     justify-content: flex-start;
     align-items: flex-start;
 }
-.p-overlay-left-end {
+.h-overlay-left-end {
     justify-content: flex-start;
     align-items: flex-end;
 }
 
 /* right */
-.p-overlay-right {
+.h-overlay-right {
     justify-content: flex-end;
 }
-.p-overlay-right-start {
+.h-overlay-right-start {
     justify-content: flex-end;
     align-items: flex-start;
 }
-.p-overlay-right-end {
+.h-overlay-right-end {
     justify-content: flex-end;
     align-items: flex-end;
 }
 
-.p-overlay-content ~ .p-overlay-content {
+.h-overlay-content ~ .h-overlay-content {
     display: none;
 }
 `;
 
 const classes = {
-    host: 'p-overlay-host',
+    host: 'h-overlay-host',
     root: ({ instance }: { instance: any }) => [
-        'p-overlay p-component',
+        'h-overlay h-component',
         {
-            'p-overlay-modal p-overlay-mask p-overlay-mask-enter-active': instance.modal,
-            'p-overlay-center': instance.modal && instance.overlayResponsiveDirection === 'center',
-            'p-overlay-top': instance.modal && instance.overlayResponsiveDirection === 'top',
-            'p-overlay-top-start': instance.modal && instance.overlayResponsiveDirection === 'top-start',
-            'p-overlay-top-end': instance.modal && instance.overlayResponsiveDirection === 'top-end',
-            'p-overlay-bottom': instance.modal && instance.overlayResponsiveDirection === 'bottom',
-            'p-overlay-bottom-start': instance.modal && instance.overlayResponsiveDirection === 'bottom-start',
-            'p-overlay-bottom-end': instance.modal && instance.overlayResponsiveDirection === 'bottom-end',
-            'p-overlay-left': instance.modal && instance.overlayResponsiveDirection === 'left',
-            'p-overlay-left-start': instance.modal && instance.overlayResponsiveDirection === 'left-start',
-            'p-overlay-left-end': instance.modal && instance.overlayResponsiveDirection === 'left-end',
-            'p-overlay-right': instance.modal && instance.overlayResponsiveDirection === 'right',
-            'p-overlay-right-start': instance.modal && instance.overlayResponsiveDirection === 'right-start',
-            'p-overlay-right-end': instance.modal && instance.overlayResponsiveDirection === 'right-end'
+            'h-overlay-modal h-overlay-mask h-overlay-mask-enter-active': instance.modal,
+            'h-overlay-center': instance.modal && instance.overlayResponsiveDirection === 'center',
+            'h-overlay-top': instance.modal && instance.overlayResponsiveDirection === 'top',
+            'h-overlay-top-start': instance.modal && instance.overlayResponsiveDirection === 'top-start',
+            'h-overlay-top-end': instance.modal && instance.overlayResponsiveDirection === 'top-end',
+            'h-overlay-bottom': instance.modal && instance.overlayResponsiveDirection === 'bottom',
+            'h-overlay-bottom-start': instance.modal && instance.overlayResponsiveDirection === 'bottom-start',
+            'h-overlay-bottom-end': instance.modal && instance.overlayResponsiveDirection === 'bottom-end',
+            'h-overlay-left': instance.modal && instance.overlayResponsiveDirection === 'left',
+            'h-overlay-left-start': instance.modal && instance.overlayResponsiveDirection === 'left-start',
+            'h-overlay-left-end': instance.modal && instance.overlayResponsiveDirection === 'left-end',
+            'h-overlay-right': instance.modal && instance.overlayResponsiveDirection === 'right',
+            'h-overlay-right-start': instance.modal && instance.overlayResponsiveDirection === 'right-start',
+            'h-overlay-right-end': instance.modal && instance.overlayResponsiveDirection === 'right-end'
         }
     ],
-    content: 'p-overlay-content'
+    content: 'h-overlay-content'
 };
 
 @Injectable()

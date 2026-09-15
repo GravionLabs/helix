@@ -373,7 +373,7 @@ describe('Textarea', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { borderColor: 'red' } as any,
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 };
@@ -385,7 +385,7 @@ describe('Textarea', () => {
 
                 expect(textareaEl.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(textareaEl.style.borderColor).toBe('red');
-                expect(textareaEl.getAttribute('data-p-test')).toBe('true');
+                expect(textareaEl.getAttribute('data-h-test')).toBe('true');
                 expect(textareaEl.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 

@@ -72,7 +72,7 @@ const TREENODE_INSTANCE = new InjectionToken<UITreeNode>('TREENODE_INSTANCE');
 export class UITreeNode extends BaseComponent<TreePassThrough> {
     $pcTreeNode: UITreeNode | undefined = inject(TREENODE_INSTANCE, { optional: true, skipSelf: true }) ?? undefined;
 
-    static ICON_CLASS: string = 'p-tree-node-icon ';
+    static ICON_CLASS: string = 'h-tree-node-icon ';
 
     readonly rowNode = input<any>();
 
@@ -175,7 +175,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
     onInit() {
         (<TreeNode>this.node()).parent = this.parentNode();
         const nativeElement = this.tree.el.nativeElement;
-        const pDialogWrapper = nativeElement.closest('p-dialog');
+        const pDialogWrapper = nativeElement.closest('h-dialog');
         const parentNode = this.parentNode();
         if (parentNode && !pDialogWrapper) {
             this.setAllNodesTabIndexes();
@@ -189,7 +189,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
         if ((<TreeNode>this.node()).icon) icon = (<TreeNode>this.node()).icon as string;
         else icon = (<TreeNode>this.node()).expanded && (<TreeNode>this.node()).children && (<TreeNode>this.node()).children?.length ? (<TreeNode>this.node()).expandedIcon : (<TreeNode>this.node()).collapsedIcon;
 
-        return UITreeNode.ICON_CLASS + ' ' + icon + ' p-tree-node-icon';
+        return UITreeNode.ICON_CLASS + ' ' + icon + ' h-tree-node-icon';
     }
 
     isLeaf() {
@@ -352,7 +352,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
             const toggler = <HTMLElement>dragEl.querySelector('[data-pc-section="nodetogglebutton"]');
             const checkbox = <HTMLElement>dragEl.querySelector('[data-pc-name="pcnodecheckbox"]');
 
-            target.setAttribute('data-p-dragging', 'true');
+            target.setAttribute('data-h-dragging', 'true');
             dragEl.style.width = getOuterWidth(target) + 'px';
             dragEl.style.height = getOuterHeight(target) + 'px';
             dragEl.setAttribute('data-pc-section', 'drag-image');
@@ -412,7 +412,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
     }
 
     onNodeDragEnd(event: any) {
-        event.currentTarget?.removeAttribute('data-p-dragging');
+        event.currentTarget?.removeAttribute('data-h-dragging');
 
         this.tree.dragDropService.stopDrag({
             node: this.node(),
@@ -635,7 +635,7 @@ export class UITreeNode extends BaseComponent<TreePassThrough> {
     providers: [TreeStyle, { provide: TREE_INSTANCE, useExisting: Tree }, { provide: PARENT_INSTANCE, useExisting: Tree }],
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'containerDataP',
+        '[attr.data-h]': 'containerDataP',
         '(drop)': 'handleDropEvent($event)',
         '(dragover)': 'handleDragOverEvent($event)',
         '(dragenter)': 'handleDragEnterEvent()',
@@ -1167,11 +1167,11 @@ export class Tree extends BaseComponent<TreePassThrough> implements BlockableUI 
 
         if (this.selectionMode()) {
             if (node.selectable === false) {
-                node.style = '--p-focus-ring-color: none;';
+                node.style = '--h-focus-ring-color: none;';
                 return;
             } else {
-                if (!node.style?.includes('--p-focus-ring-color')) {
-                    node.style = node.style ? `${node.style}--p-focus-ring-color: var(--primary-color)` : '--p-focus-ring-color: var(--primary-color)';
+                if (!node.style?.includes('--h-focus-ring-color')) {
+                    node.style = node.style ? `${node.style}--h-focus-ring-color: var(--primary-color)` : '--h-focus-ring-color: var(--primary-color)';
                 }
             }
 

@@ -14,10 +14,10 @@
 .helix-ag-grid {
   /* ── Colours ──────────────────────────────────────────────────────────── */
   --ag-background-color: var(--helix-surface-card);
-  --ag-foreground-color: var(--p-text-color);
+  --ag-foreground-color: var(--h-text-color);
   --ag-text-color: var(--ag-foreground-color);
-  --ag-accent-color: var(--p-primary-color);
-  --ag-invalid-color: var(--p-form-field-invalid-border-color);
+  --ag-accent-color: var(--h-primary-color);
+  --ag-invalid-color: var(--h-form-field-invalid-border-color);
   --ag-border-color: var(--helix-border);
   --ag-wrapper-border: none;
   --ag-row-border: solid 1px var(--helix-border);
@@ -37,10 +37,10 @@
   --ag-header-font-family: "Lato", sans-serif;
   --ag-header-font-weight: 500;
   --ag-header-font-size: 0.75rem;
-  --ag-header-text-color: var(--p-primary-color);
+  --ag-header-text-color: var(--h-primary-color);
 
   /* ── Cells ────────────────────────────────────────────────────────────── */
-  --ag-cell-text-color: var(--p-text-color);
+  --ag-cell-text-color: var(--h-text-color);
   --ag-cell-horizontal-padding: 1ch;
 
   /* ── Input ────────────────────────────────────────────────────────────── */
@@ -72,7 +72,7 @@
     font-family: "Lato", sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--p-primary-color);
+    color: var(--h-primary-color);
   }
 
   .ag-paging-panel {

@@ -10,10 +10,10 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [IconField, InputIcon, FormsModule],
     template: `
-        <p-iconfield>
-            <p-inputicon class="pi pi-search" />
+        <h-iconfield>
+            <h-inputicon class="pi pi-search" />
             <input type="text" [(ngModel)]="value" placeholder="Search" />
-        </p-iconfield>
+        </h-iconfield>
     `
 })
 class TestBasicIconFieldComponent {
@@ -24,10 +24,10 @@ class TestBasicIconFieldComponent {
     standalone: true,
     imports: [IconField, InputIcon, FormsModule],
     template: `
-        <p-iconfield [iconPosition]="position">
-            <p-inputicon class="pi pi-user" />
+        <h-iconfield [iconPosition]="position">
+            <h-inputicon class="pi pi-user" />
             <input type="text" [(ngModel)]="username" />
-        </p-iconfield>
+        </h-iconfield>
     `
 })
 class TestPositionIconFieldComponent {
@@ -39,10 +39,10 @@ class TestPositionIconFieldComponent {
     standalone: true,
     imports: [IconField, InputIcon, FormsModule],
     template: `
-        <p-iconfield [styleClass]="customClass">
+        <h-iconfield [styleClass]="customClass">
             <input type="email" [(ngModel)]="email" />
-            <p-inputicon class="pi pi-envelope" />
-        </p-iconfield>
+            <h-inputicon class="pi pi-envelope" />
+        </h-iconfield>
     `
 })
 class TestStyledIconFieldComponent {
@@ -82,7 +82,7 @@ describe('IconField', () => {
 
         it('should have correct CSS class', () => {
             const iconFieldElement = fixture.debugElement.query(By.directive(IconField));
-            expect(iconFieldElement.nativeElement.classList.contains('p-iconfield')).toBe(true);
+            expect(iconFieldElement.nativeElement.classList.contains('h-iconfield')).toBe(true);
         });
     });
 
@@ -122,13 +122,13 @@ describe('IconField', () => {
             component.position = 'left';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(iconFieldElement.nativeElement.classList.contains('p-iconfield-left')).toBe(true);
+            expect(iconFieldElement.nativeElement.classList.contains('h-iconfield-left')).toBe(true);
 
             // Test 'right' position
             component.position = 'right';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(iconFieldElement.nativeElement.classList.contains('p-iconfield-right')).toBe(true);
+            expect(iconFieldElement.nativeElement.classList.contains('h-iconfield-right')).toBe(true);
         });
     });
 
@@ -364,7 +364,7 @@ describe('IconField PassThrough Tests', () => {
 @Component({
     standalone: true,
     imports: [IconField, FormsModule],
-    template: `<p-iconfield [pt]="{ root: 'INLINE_STRING' }"><input /></p-iconfield>`
+    template: `<h-iconfield [pt]="{ root: 'INLINE_STRING' }"><input /></h-iconfield>`
 })
 class TestInlineStringPTComponent {}
 
@@ -372,8 +372,8 @@ class TestInlineStringPTComponent {}
     standalone: true,
     imports: [IconField, FormsModule],
     template: `
-        <p-iconfield><input /></p-iconfield>
-        <p-iconfield><input /></p-iconfield>
+        <h-iconfield><input /></h-iconfield>
+        <h-iconfield><input /></h-iconfield>
     `
 })
 class TestMultipleInstancesComponent {}

@@ -27,8 +27,8 @@
           (click)="onItemClick($event, item)"
           (mouseenter)="onItemMouseEnter(i)"
           [hBind]="getPTOptions(item, i, 'item')"
-          [attr.data-p-focused]="isItemActive(getItemId(item, i))"
-          [attr.data-p-disabled]="disabled(item) || false"
+          [attr.data-h-focused]="isItemActive(getItemId(item, i))"
+          [attr.data-h-disabled]="disabled(item) || false"
           >
           <div [class]="cx('itemContent')" [hBind]="getPTOptions(item, i, 'itemContent')">
             @if (isClickableRouterLink(item)) {

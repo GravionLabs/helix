@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-timeline {
+    .h-timeline {
         display: flex;
         flex-grow: 1;
         flex-direction: column;
@@ -9,81 +9,81 @@ export const style = /*css*/ `
         padding: 0;
     }
 
-    .p-timeline-left .p-timeline-event-opposite {
+    .h-timeline-left .h-timeline-event-opposite {
         text-align: right;
     }
 
-    .p-timeline-left .p-timeline-event-content {
+    .h-timeline-left .h-timeline-event-content {
         text-align: left;
     }
 
-    .p-timeline-right .p-timeline-event {
+    .h-timeline-right .h-timeline-event {
         flex-direction: row-reverse;
     }
 
-    .p-timeline-right .p-timeline-event-opposite {
+    .h-timeline-right .h-timeline-event-opposite {
         text-align: left;
     }
 
-    .p-timeline-right .p-timeline-event-content {
+    .h-timeline-right .h-timeline-event-content {
         text-align: right;
     }
 
-    .p-timeline-vertical.p-timeline-alternate .p-timeline-event:nth-child(even) {
+    .h-timeline-vertical.h-timeline-alternate .h-timeline-event:nth-child(even) {
         flex-direction: row-reverse;
     }
 
-    .p-timeline-vertical.p-timeline-alternate .p-timeline-event:nth-child(odd) .p-timeline-event-opposite {
+    .h-timeline-vertical.h-timeline-alternate .h-timeline-event:nth-child(odd) .h-timeline-event-opposite {
         text-align: right;
     }
 
-    .p-timeline-vertical.p-timeline-alternate .p-timeline-event:nth-child(odd) .p-timeline-event-content {
+    .h-timeline-vertical.h-timeline-alternate .h-timeline-event:nth-child(odd) .h-timeline-event-content {
         text-align: left;
     }
 
-    .p-timeline-vertical.p-timeline-alternate .p-timeline-event:nth-child(even) .p-timeline-event-opposite {
+    .h-timeline-vertical.h-timeline-alternate .h-timeline-event:nth-child(even) .h-timeline-event-opposite {
         text-align: left;
     }
 
-    .p-timeline-vertical.p-timeline-alternate .p-timeline-event:nth-child(even) .p-timeline-event-content {
+    .h-timeline-vertical.h-timeline-alternate .h-timeline-event:nth-child(even) .h-timeline-event-content {
         text-align: right;
     }
 
-    .p-timeline-vertical .p-timeline-event-opposite,
-    .p-timeline-vertical .p-timeline-event-content {
+    .h-timeline-vertical .h-timeline-event-opposite,
+    .h-timeline-vertical .h-timeline-event-content {
         padding: dt('timeline.vertical.event.content.padding');
     }
 
-    .p-timeline-vertical .p-timeline-event-connector {
+    .h-timeline-vertical .h-timeline-event-connector {
         width: dt('timeline.event.connector.size');
     }
 
-    .p-timeline-event {
+    .h-timeline-event {
         display: flex;
         position: relative;
         min-height: dt('timeline.event.min.height');
     }
 
-    .p-timeline-event:last-child {
+    .h-timeline-event:last-child {
         min-height: 0;
     }
 
-    .p-timeline-event-opposite {
+    .h-timeline-event-opposite {
         flex: 1;
     }
 
-    .p-timeline-event-content {
+    .h-timeline-event-content {
         flex: 1;
     }
 
-    .p-timeline-event-separator {
+    .h-timeline-event-separator {
         flex: 0;
         display: flex;
         align-items: center;
         flex-direction: column;
     }
 
-    .p-timeline-event-marker {
+    .h-timeline-event-marker {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -98,7 +98,7 @@ export const style = /*css*/ `
         background: dt('timeline.event.marker.background');
     }
 
-    .p-timeline-event-marker::before {
+    .h-timeline-event-marker::before {
         content: ' ';
         border-radius: dt('timeline.event.marker.content.border.radius');
         width: dt('timeline.event.marker.content.size');
@@ -106,7 +106,7 @@ export const style = /*css*/ `
         background: dt('timeline.event.marker.content.background');
     }
 
-    .p-timeline-event-marker::after {
+    .h-timeline-event-marker::after {
         content: ' ';
         position: absolute;
         width: 100%;
@@ -115,43 +115,43 @@ export const style = /*css*/ `
         box-shadow: dt('timeline.event.marker.content.inset.shadow');
     }
 
-    .p-timeline-event-connector {
+    .h-timeline-event-connector {
         flex-grow: 1;
         background: dt('timeline.event.connector.color');
     }
 
-    .p-timeline-horizontal {
+    .h-timeline-horizontal {
         flex-direction: row;
     }
 
-    .p-timeline-horizontal .p-timeline-event {
+    .h-timeline-horizontal .h-timeline-event {
         flex-direction: column;
         flex: 1;
     }
 
-    .p-timeline-horizontal .p-timeline-event:last-child {
+    .h-timeline-horizontal .h-timeline-event:last-child {
         flex: 0;
     }
 
-    .p-timeline-horizontal .p-timeline-event-separator {
+    .h-timeline-horizontal .h-timeline-event-separator {
         flex-direction: row;
     }
 
-    .p-timeline-horizontal .p-timeline-event-connector {
+    .h-timeline-horizontal .h-timeline-event-connector {
         width: 100%;
         height: dt('timeline.event.connector.size');
     }
 
-    .p-timeline-horizontal .p-timeline-event-opposite,
-    .p-timeline-horizontal .p-timeline-event-content {
+    .h-timeline-horizontal .h-timeline-event-opposite,
+    .h-timeline-horizontal .h-timeline-event-content {
         padding: dt('timeline.horizontal.event.content.padding');
     }
 
-    .p-timeline-horizontal.p-timeline-alternate .p-timeline-event:nth-child(even) {
+    .h-timeline-horizontal.h-timeline-alternate .h-timeline-event:nth-child(even) {
         flex-direction: column-reverse;
     }
 
-    .p-timeline-bottom .p-timeline-event {
+    .h-timeline-bottom .h-timeline-event {
         flex-direction: column-reverse;
     }
 `;

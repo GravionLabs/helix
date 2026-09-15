@@ -484,7 +484,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
     }
 
     setContentEl(el?: HTMLElement) {
-        this.contentEl = el || this.contentViewChild()?.nativeElement || findSingle(this.elementViewChild()?.nativeElement, '.p-virtualscroller-content');
+        this.contentEl = el || this.contentViewChild()?.nativeElement || findSingle(this.elementViewChild()?.nativeElement, '.h-virtualscroller-content');
     }
     setInitialState() {
         this.first = this.both ? { rows: 0, cols: 0 } : 0;
@@ -973,7 +973,7 @@ export class Scroller extends BaseComponent<VirtualScrollerPassThrough> {
 
     getContentOptions() {
         return {
-            contentStyleClass: `p-virtualscroller-content ${this.d_loading ? 'p-virtualscroller-loading' : ''}`,
+            contentStyleClass: `h-virtualscroller-content ${this.d_loading ? 'h-virtualscroller-loading' : ''}`,
             items: this.loadedItems,
             getItemOptions: (index: number) => this.getOptions(index),
             loading: this.d_loading,

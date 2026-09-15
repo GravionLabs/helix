@@ -11,12 +11,14 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Selectors use the `h-` prefix (`h-button`, `hTooltip`, `hRipple`). Styling and
-theming (the former `@primeuix/{utils,motion,styled,styles,themes}` MIT layer)
-are vendored into this library — see [VENDOR.md](VENDOR.md). CSS classes
-(`.p-*`) and design tokens (`--p-*`) still keep their upstream names for now
-(decision rationale, now superseded — see the update note:
-[docs/migrations/css-class-prefix-decision.md](../../docs/migrations/css-class-prefix-decision.md)).
+Selectors, CSS classes, and design tokens all use the `h-` prefix
+(`h-button`, `hTooltip`, `hRipple`, `.h-button`, `--h-primary-color`,
+`data-h-disabled`). Styling and theming (the former
+`@primeuix/{utils,motion,styled,styles,themes}` MIT layer) are vendored into
+this library — see [VENDOR.md](VENDOR.md); the class/token prefix rename is
+epic #421 feature #431 (see
+[docs/migrations/css-class-prefix-decision.md](../../docs/migrations/css-class-prefix-decision.md)
+for the history of why it was previously infeasible).
 
 ## Documentation
 

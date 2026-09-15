@@ -22,7 +22,7 @@ import { Popover } from './popover';
     standalone: false,
     template: `
         <button #targetButton (click)="popover.toggle($event)">Toggle</button>
-        <p-popover
+        <h-popover
             #popover
             [dismissable]="dismissable"
             [style]="style"
@@ -40,7 +40,7 @@ import { Popover } from './popover';
             (onHide)="onHide($event)"
         >
             <div class="test-content">Basic content</div>
-        </p-popover>
+        </h-popover>
     `
 })
 class TestBasicPopoverComponent {
@@ -76,14 +76,14 @@ class TestBasicPopoverComponent {
     standalone: false,
     template: `
         <button #targetButton (click)="popover.toggle($event)">Toggle</button>
-        <p-popover #popover>
+        <h-popover #popover>
             <ng-template #content let-closeCallback="closeCallback">
                 <div class="template-content">
                     Template content
                     <button class="close-button" (click)="closeCallback()">Close</button>
                 </div>
             </ng-template>
-        </p-popover>
+        </h-popover>
     `
 })
 class TestTemplatePopoverComponent {
@@ -95,14 +95,14 @@ class TestTemplatePopoverComponent {
     standalone: false,
     template: `
         <button #targetButton (click)="popover.toggle($event)">Toggle</button>
-        <p-popover #popover>
+        <h-popover #popover>
             <ng-template pTemplate="content" let-closeCallback="closeCallback">
                 <div class="ptemplate-content">
                     PTemplate content
                     <button class="close-button" (click)="closeCallback()">Close</button>
                 </div>
             </ng-template>
-        </p-popover>
+        </h-popover>
     `
 })
 class TestPTemplatePopoverComponent {
@@ -114,11 +114,11 @@ class TestPTemplatePopoverComponent {
     standalone: false,
     template: `
         <button #targetButton (click)="popover.toggle($event)">Toggle</button>
-        <p-popover #popover [focusOnShow]="true" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy">
+        <h-popover #popover [focusOnShow]="true" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy">
             <input autofocus type="text" class="focus-input" />
             <button tabindex="0">Button</button>
             <div tabindex="0">Focusable div</div>
-        </p-popover>
+        </h-popover>
     `
 })
 class TestKeyboardNavigationComponent {

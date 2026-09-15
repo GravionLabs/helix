@@ -4,16 +4,16 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-avatar p-component',
+        'h-avatar h-component',
         {
-            'p-avatar-image': instance.image() != null,
-            'p-avatar-circle': instance.shape() === 'circle',
-            'p-avatar-lg': instance.size() === 'large',
-            'p-avatar-xl': instance.size() === 'xlarge'
+            'h-avatar-image': instance.image() != null,
+            'h-avatar-circle': instance.shape() === 'circle',
+            'h-avatar-lg': instance.size() === 'large',
+            'h-avatar-xl': instance.size() === 'xlarge'
         }
     ],
-    label: 'p-avatar-label',
-    icon: 'p-avatar-icon'
+    label: 'h-avatar-label',
+    icon: 'h-avatar-icon'
 };
 
 @Injectable()
@@ -38,31 +38,31 @@ export enum AvatarClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-avatar',
+    root = 'h-avatar',
     /**
      * Class name of the label element
      */
-    label = 'p-avatar-label',
+    label = 'h-avatar-label',
     /**
      * Class name of the icon element
      */
-    icon = 'p-avatar-icon',
+    icon = 'h-avatar-icon',
     /**
      * Container element in image mode
      */
-    image = 'p-avatar-image',
+    image = 'h-avatar-image',
     /**
      * Container element with a circle shape
      */
-    circle = 'p-avatar-circle',
+    circle = 'h-avatar-circle',
     /**
      *  Container element with a large size
      */
-    large = 'p-avatar-lg',
+    large = 'h-avatar-lg',
     /**
      *  Container element with an xlarge size
      */
-    xlarge = 'p-avatar-xl'
+    xlarge = 'h-avatar-xl'
 }
 
 export interface AvatarStyle extends BaseStyle {}

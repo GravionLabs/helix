@@ -7,19 +7,19 @@ const style = /*css*/ `
 
     /* For Helix */
 
-    .p-treeselect.ng-invalid.ng-dirty {
+    .h-treeselect.ng-invalid.ng-dirty {
         border-color: dt('treeselect.invalid.border.color');
     }
 
-    p-treeselect.ng-invalid.ng-dirty.p-focus {
+    h-treeselect.ng-invalid.ng-dirty.h-focus {
         border-color: dt('treeselect.focus.border.color');
     }
 
-    p-treeselect.ng-invalid.ng-dirty .p-treeselect-label.p-placeholder {
+    h-treeselect.ng-invalid.ng-dirty .h-treeselect-label.h-placeholder {
         color: dt('treeselect.invalid.placeholder.color');
     }
 
-    .p-treeselect-clear-icon.p-icon {
+    .h-treeselect-clear-icon.h-icon {
         flex-shrink: 0;
     }
 `;
@@ -30,38 +30,38 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-treeselect p-component p-inputwrapper',
+        'h-treeselect h-component h-inputwrapper',
         {
-            'p-treeselect-display-chip': instance.display() === 'chip',
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-focus': instance.focused,
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-inputwrapper-filled': !instance.emptyValue,
-            'p-inputwrapper-focus': instance.focused || instance.overlayVisible,
-            'p-treeselect-open': instance.overlayVisible,
-            'p-treeselect-clearable': instance.showClear(),
-            'p-treeselect-fluid': instance.hasFluid,
-            'p-treeselect-sm p-inputfield-sm': instance.size() === 'small',
-            'p-treeselect-lg p-inputfield-lg': instance.size() === 'large'
+            'h-treeselect-display-chip': instance.display() === 'chip',
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-focus': instance.focused,
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-inputwrapper-filled': !instance.emptyValue,
+            'h-inputwrapper-focus': instance.focused || instance.overlayVisible,
+            'h-treeselect-open': instance.overlayVisible,
+            'h-treeselect-clearable': instance.showClear(),
+            'h-treeselect-fluid': instance.hasFluid,
+            'h-treeselect-sm h-inputfield-sm': instance.size() === 'small',
+            'h-treeselect-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
-    labelContainer: 'p-treeselect-label-container',
+    labelContainer: 'h-treeselect-label-container',
     label: ({ instance }) => [
-        'p-treeselect-label',
+        'h-treeselect-label',
         {
-            'p-placeholder': instance.label === instance.placeholder(),
-            'p-treeselect-label-empty': !instance.placeholder() && instance.emptyValue
+            'h-placeholder': instance.label === instance.placeholder(),
+            'h-treeselect-label-empty': !instance.placeholder() && instance.emptyValue
         }
     ],
-    clearIcon: 'p-treeselect-clear-icon',
-    chip: 'p-treeselect-chip-item',
-    pcChip: 'p-treeselect-chip',
-    dropdown: 'p-treeselect-dropdown',
-    dropdownIcon: 'p-treeselect-dropdown-icon',
-    panel: 'p-treeselect-overlay p-component-overlay p-component',
-    treeContainer: 'p-treeselect-tree-container',
-    emptyMessage: 'p-treeselect-empty-message'
+    clearIcon: 'h-treeselect-clear-icon',
+    chip: 'h-treeselect-chip-item',
+    pcChip: 'h-treeselect-chip',
+    dropdown: 'h-treeselect-dropdown',
+    dropdownIcon: 'h-treeselect-dropdown-icon',
+    panel: 'h-treeselect-overlay h-component-overlay h-component',
+    treeContainer: 'h-treeselect-tree-container',
+    emptyMessage: 'h-treeselect-empty-message'
 };
 
 @Injectable()
@@ -88,47 +88,47 @@ export enum TreeSelectClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-treeselect',
+    root = 'h-treeselect',
     /**
      * Class name of the label container element
      */
-    labelContainer = 'p-treeselect-label-container',
+    labelContainer = 'h-treeselect-label-container',
     /**
      * Class name of the label element
      */
-    label = 'p-treeselect-label',
+    label = 'h-treeselect-label',
     /**
      * Class name of the chip item element
      */
-    chipItem = 'p-treeselect-chip-item',
+    chipItem = 'h-treeselect-chip-item',
     /**
      * Class name of the clear icon element
      */
-    clearIcon = 'p-treeselect-clear-icon',
+    clearIcon = 'h-treeselect-clear-icon',
     /**
      * Class name of the chip element
      */
-    pcChip = 'p-treeselect-chip',
+    pcChip = 'h-treeselect-chip',
     /**
      * Class name of the dropdown element
      */
-    dropdown = 'p-treeselect-dropdown',
+    dropdown = 'h-treeselect-dropdown',
     /**
      * Class name of the dropdown icon element
      */
-    dropdownIcon = 'p-treeselect-dropdown-icon',
+    dropdownIcon = 'h-treeselect-dropdown-icon',
     /**
      * Class name of the panel element
      */
-    panel = 'p-treeselect-overlay',
+    panel = 'h-treeselect-overlay',
     /**
      * Class name of the tree container element
      */
-    treeContainer = 'p-treeselect-tree-container',
+    treeContainer = 'h-treeselect-tree-container',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-treeselect-empty-message'
+    emptyMessage = 'h-treeselect-empty-message'
 }
 
 export interface TreeSelectStyle extends BaseStyle {}

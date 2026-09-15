@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-togglebutton {
+    .h-togglebutton {
         display: inline-flex;
         cursor: pointer;
         user-select: none;
@@ -23,7 +23,7 @@ export const style = /*css*/ `
         font-weight: dt('togglebutton.font.weight');
     }
 
-    .p-togglebutton-content {
+    .h-togglebutton-content {
         display: inline-flex;
         flex: 1 1 auto;
         align-items: center;
@@ -40,33 +40,33 @@ export const style = /*css*/ `
             box-shadow dt('togglebutton.transition.duration');
     }
 
-    .p-togglebutton:not(:disabled):not(.p-togglebutton-checked):hover {
+    .h-togglebutton:not(:disabled):not(.h-togglebutton-checked):hover {
         background: dt('togglebutton.hover.background');
         color: dt('togglebutton.hover.color');
     }
 
-    .p-togglebutton.p-togglebutton-checked {
+    .h-togglebutton.h-togglebutton-checked {
         background: dt('togglebutton.checked.background');
         border-color: dt('togglebutton.checked.border.color');
         color: dt('togglebutton.checked.color');
     }
 
-    .p-togglebutton-checked .p-togglebutton-content {
+    .h-togglebutton-checked .h-togglebutton-content {
         background: dt('togglebutton.content.checked.background');
         box-shadow: dt('togglebutton.content.checked.shadow');
     }
 
-    .p-togglebutton:focus-visible {
+    .h-togglebutton:focus-visible {
         box-shadow: dt('togglebutton.focus.ring.shadow');
         outline: dt('togglebutton.focus.ring.width') dt('togglebutton.focus.ring.style') dt('togglebutton.focus.ring.color');
         outline-offset: dt('togglebutton.focus.ring.offset');
     }
 
-    .p-togglebutton.p-invalid {
+    .h-togglebutton.h-invalid {
         border-color: dt('togglebutton.invalid.border.color');
     }
 
-    .p-togglebutton:disabled {
+    .h-togglebutton:disabled {
         opacity: 1;
         cursor: default;
         background: dt('togglebutton.disabled.background');
@@ -74,47 +74,47 @@ export const style = /*css*/ `
         color: dt('togglebutton.disabled.color');
     }
 
-    .p-togglebutton-label,
-    .p-togglebutton-icon {
+    .h-togglebutton-label,
+    .h-togglebutton-icon {
         position: relative;
         transition: none;
     }
 
-    .p-togglebutton-icon {
+    .h-togglebutton-icon {
         color: dt('togglebutton.icon.color');
     }
 
-    .p-togglebutton:not(:disabled):not(.p-togglebutton-checked):hover .p-togglebutton-icon {
+    .h-togglebutton:not(:disabled):not(.h-togglebutton-checked):hover .h-togglebutton-icon {
         color: dt('togglebutton.icon.hover.color');
     }
 
-    .p-togglebutton.p-togglebutton-checked .p-togglebutton-icon {
+    .h-togglebutton.h-togglebutton-checked .h-togglebutton-icon {
         color: dt('togglebutton.icon.checked.color');
     }
 
-    .p-togglebutton:disabled .p-togglebutton-icon {
+    .h-togglebutton:disabled .h-togglebutton-icon {
         color: dt('togglebutton.icon.disabled.color');
     }
 
-    .p-togglebutton-sm {
+    .h-togglebutton-sm {
         padding: dt('togglebutton.sm.padding');
         font-size: dt('togglebutton.sm.font.size');
     }
 
-    .p-togglebutton-sm .p-togglebutton-content {
+    .h-togglebutton-sm .h-togglebutton-content {
         padding: dt('togglebutton.content.sm.padding');
     }
 
-    .p-togglebutton-lg {
+    .h-togglebutton-lg {
         padding: dt('togglebutton.lg.padding');
         font-size: dt('togglebutton.lg.font.size');
     }
 
-    .p-togglebutton-lg .p-togglebutton-content {
+    .h-togglebutton-lg .h-togglebutton-content {
         padding: dt('togglebutton.content.lg.padding');
     }
 
-    .p-togglebutton-fluid {
+    .h-togglebutton-fluid {
         width: 100%;
     }
 `;

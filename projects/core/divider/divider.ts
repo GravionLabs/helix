@@ -24,7 +24,7 @@ const DIVIDER_INSTANCE = new InjectionToken<Divider>('DIVIDER_INSTANCE');
         role: 'separator',
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     providers: [DividerStyle, { provide: DIVIDER_INSTANCE, useExisting: Divider }, { provide: PARENT_INSTANCE, useExisting: Divider }],
     hostDirectives: [Bind]

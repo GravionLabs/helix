@@ -18,9 +18,9 @@
       #listItem
       role="menuitem"
       [attr.id]="getItemId(processedItem)"
-      [attr.data-p-active]="isItemActive(processedItem)"
-      [attr.data-p-focused]="isItemFocused(processedItem)"
-      [attr.data-p-disabled]="isItemDisabled(processedItem)"
+      [attr.data-h-active]="isItemActive(processedItem)"
+      [attr.data-h-focused]="isItemFocused(processedItem)"
+      [attr.data-h-disabled]="isItemDisabled(processedItem)"
       [attr.aria-label]="getItemLabel(processedItem)"
       [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
       [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
@@ -80,10 +80,10 @@
               @if (isItemGroup(processedItem)) {
                 @if (!megaMenu.submenuIconTemplate() && !megaMenu._submenuIconTemplate) {
                   @if (orientation() === 'horizontal' || mobileActive()) {
-                    <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                    <svg data-h-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
                   } @else {
                     @if (orientation() === 'vertical') {
-                      <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                      <svg data-h-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
                     }
                   }
                 }
@@ -98,7 +98,7 @@
               [attr.title]="getItemProp(processedItem, 'title')"
               [attr.tabindex]="-1"
               [queryParams]="getItemProp(processedItem, 'queryParams')"
-              [routerLinkActive]="'p-megamenu-item-link-active'"
+              [routerLinkActive]="'h-megamenu-item-link-active'"
               [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
               [target]="getItemProp(processedItem, 'target')"
               [class]="cn(cx('itemLink'), getItemProp(processedItem, 'linkClass'))"
@@ -142,10 +142,10 @@
                   @if (isItemGroup(processedItem)) {
                     @if (!megaMenu.submenuIconTemplate() && !megaMenu._submenuIconTemplate) {
                       @if (orientation() === 'horizontal') {
-                        <svg data-p-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                        <svg data-h-icon="angle-down" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
                       }
                       @if (orientation() === 'vertical') {
-                        <svg data-p-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
+                        <svg data-h-icon="angle-right" [class]="cx('submenuIcon')" [hBind]="getPTOptions(processedItem, index, 'submenuIcon')" [attr.aria-hidden]="true" />
                       }
                     }
                     <ng-template *ngTemplateOutlet="megaMenu.submenuIconTemplate() || megaMenu._submenuIconTemplate" [attr.aria-hidden]="true"></ng-template>

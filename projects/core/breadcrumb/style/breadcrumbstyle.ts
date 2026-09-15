@@ -3,14 +3,14 @@ import { style } from './breadcrumb.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-breadcrumb p-component'],
-    list: 'p-breadcrumb-list',
-    homeItem: 'p-breadcrumb-home-item',
-    separator: 'p-breadcrumb-separator',
-    item: ({ menuitem }) => ['p-breadcrumb-item', { 'p-disabled': menuitem.disabled }],
-    itemLink: 'p-breadcrumb-item-link',
-    itemIcon: 'p-breadcrumb-item-icon',
-    itemLabel: 'p-breadcrumb-item-label'
+    root: () => ['h-breadcrumb h-component'],
+    list: 'h-breadcrumb-list',
+    homeItem: 'h-breadcrumb-home-item',
+    separator: 'h-breadcrumb-separator',
+    item: ({ menuitem }) => ['h-breadcrumb-item', { 'h-disabled': menuitem.disabled }],
+    itemLink: 'h-breadcrumb-item-link',
+    itemIcon: 'h-breadcrumb-item-icon',
+    itemLabel: 'h-breadcrumb-item-label'
 };
 
 @Injectable()
@@ -35,35 +35,35 @@ export enum BreadcrumbClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-breadcrumb',
+    root = 'h-breadcrumb',
     /**
      * Class name of the list element
      */
-    list = 'p-breadcrumb-list',
+    list = 'h-breadcrumb-list',
     /**
      * Class name of the home item element
      */
-    homeItem = 'p-breadcrumb-home-item',
+    homeItem = 'h-breadcrumb-home-item',
     /**
      * Class name of the separator element
      */
-    separator = 'p-breadcrumb-separator',
+    separator = 'h-breadcrumb-separator',
     /**
      * Class name of the item element
      */
-    item = 'p-breadcrumb-item',
+    item = 'h-breadcrumb-item',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-breadcrumb-item-link',
+    itemLink = 'h-breadcrumb-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-breadcrumb-item-icon',
+    itemIcon = 'h-breadcrumb-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-breadcrumb-item-label'
+    itemLabel = 'h-breadcrumb-item-label'
 }
 
 export interface BreadcrumbStyle extends BaseStyle {}

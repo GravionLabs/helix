@@ -10,12 +10,12 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [InputGroup, InputGroupAddon, FormsModule],
     template: `
-        <p-inputgroup>
-            <p-inputgroup-addon>
+        <h-inputgroup>
+            <h-inputgroup-addon>
                 <i class="pi pi-user"></i>
-            </p-inputgroup-addon>
+            </h-inputgroup-addon>
             <input type="text" [(ngModel)]="username" placeholder="Username" />
-        </p-inputgroup>
+        </h-inputgroup>
     `
 })
 class TestBasicInputGroupComponent {
@@ -26,11 +26,11 @@ class TestBasicInputGroupComponent {
     standalone: true,
     imports: [InputGroup, InputGroupAddon, FormsModule],
     template: `
-        <p-inputgroup [styleClass]="customClass">
-            <p-inputgroup-addon>$</p-inputgroup-addon>
+        <h-inputgroup [styleClass]="customClass">
+            <h-inputgroup-addon>$</h-inputgroup-addon>
             <input type="number" [(ngModel)]="price" placeholder="Price" />
-            <p-inputgroup-addon>.00</p-inputgroup-addon>
-        </p-inputgroup>
+            <h-inputgroup-addon>.00</h-inputgroup-addon>
+        </h-inputgroup>
     `
 })
 class TestStyledInputGroupComponent {
@@ -42,10 +42,10 @@ class TestStyledInputGroupComponent {
     standalone: true,
     imports: [InputGroup, InputGroupAddon, FormsModule],
     template: `
-        <p-inputgroup>
-            <p-inputgroup-addon [style]="addonStyle" [styleClass]="addonClass"> www </p-inputgroup-addon>
+        <h-inputgroup>
+            <h-inputgroup-addon [style]="addonStyle" [styleClass]="addonClass"> www </h-inputgroup-addon>
             <input type="text" [(ngModel)]="website" placeholder="Website" />
-        </p-inputgroup>
+        </h-inputgroup>
     `
 })
 class TestAddonStyledComponent {
@@ -89,8 +89,8 @@ describe('InputGroup', () => {
             const inputGroupElement = fixture.debugElement.query(By.directive(InputGroup));
             const addonElement = fixture.debugElement.query(By.directive(InputGroupAddon));
 
-            expect(inputGroupElement.nativeElement.classList.contains('p-inputgroup')).toBe(true);
-            expect(addonElement.nativeElement.classList.contains('p-inputgroupaddon')).toBe(true);
+            expect(inputGroupElement.nativeElement.classList.contains('h-inputgroup')).toBe(true);
+            expect(addonElement.nativeElement.classList.contains('h-inputgroupaddon')).toBe(true);
         });
 
         it('should have correct data attributes', () => {
@@ -246,10 +246,10 @@ describe('InputGroup', () => {
                 standalone: true,
                 imports: [InputGroup, InputGroupAddon, FormsModule],
                 template: `
-                    <p-inputgroup>
-                        <p-inputgroup-addon></p-inputgroup-addon>
+                    <h-inputgroup>
+                        <h-inputgroup-addon></h-inputgroup-addon>
                         <input type="text" [(ngModel)]="value" />
-                    </p-inputgroup>
+                    </h-inputgroup>
                 `
             })
             class TestEmptyAddonComponent {

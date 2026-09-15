@@ -131,7 +131,7 @@ export class TableService {
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })
@@ -431,7 +431,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
      */
     readonly showLoader = input<boolean, unknown>(true, { transform: booleanAttribute });
     /**
-     * Adds hover effect to rows without the need for selectionMode. Note that tr elements that can be hovered need to have "p-selectable-row" class for rowHover to work.
+     * Adds hover effect to rows without the need for selectionMode. Note that tr elements that can be hovered need to have "h-selectable-row" class for rowHover to work.
      * @group Props
      */
     readonly rowHover = input<boolean, unknown>(undefined, { transform: booleanAttribute });
@@ -2109,8 +2109,8 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         if (!this.documentEditListener) {
             this.documentEditListener = this.renderer.listen(this.document, 'click', (event) => {
                 if (this.editingCell && !this.selfClick && this.isEditingCellValid()) {
-                    !this.$unstyled() && DomHandler.removeClass(this.editingCell, 'p-cell-editing');
-                    setAttribute(this.editingCell as HTMLElement, 'data-p-cell-editing', 'false');
+                    !this.$unstyled() && DomHandler.removeClass(this.editingCell, 'h-cell-editing');
+                    setAttribute(this.editingCell as HTMLElement, 'data-h-cell-editing', 'false');
                     this.editingCell = null;
                     this.onEditComplete.emit({
                         field: this.editingCellField,
@@ -2226,7 +2226,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
     onColumnResize(event: any) {
         let containerLeft = DomHandler.getOffset(this.el?.nativeElement).left;
-        !this.$unstyled() && DomHandler.addClass(this.el?.nativeElement, 'p-unselectable-text');
+        !this.$unstyled() && DomHandler.addClass(this.el?.nativeElement, 'h-unselectable-text');
         (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.height = this.el?.nativeElement.offsetHeight + 'px';
         (<ElementRef>this.resizeHelperViewChild()).nativeElement.style.top = 0 + 'px';
         if (event.type == 'touchmove') {
@@ -2275,7 +2275,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
         }
 
         (<ElementRef>resizeHelperViewChild).nativeElement.style.display = 'none';
-        DomHandler.removeClass(this.el?.nativeElement, 'p-unselectable-text');
+        DomHandler.removeClass(this.el?.nativeElement, 'h-unselectable-text');
     }
 
     private _totalTableWidth(): number[] {
@@ -2398,9 +2398,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             let colWidth = index === colIndex ? newColumnWidth : nextColumnWidth && index === colIndex + 1 ? nextColumnWidth : width;
             let style = `width: ${colWidth}px !important; max-width: ${colWidth}px !important;`;
             innerHTML += `
-                #${this.id}-table > .p-datatable-thead > tr > th:nth-child(${index + 1}),
-                #${this.id}-table > .p-datatable-tbody > tr > td:nth-child(${index + 1}),
-                #${this.id}-table > .p-datatable-tfoot > tr > td:nth-child(${index + 1}) {
+                #${this.id}-table > .h-datatable-thead > tr > th:nth-child(${index + 1}),
+                #${this.id}-table > .h-datatable-tbody > tr > td:nth-child(${index + 1}),
+                #${this.id}-table > .h-datatable-tfoot > tr > td:nth-child(${index + 1}) {
                     ${style}
                 }
             `;
@@ -2422,17 +2422,17 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
             let prevRowElement = rowElement.previousElementSibling;
 
             if (pageY < rowMidY) {
-                DomHandler.removeClass(rowElement, 'p-datatable-dragpoint-bottom');
+                DomHandler.removeClass(rowElement, 'h-datatable-dragpoint-bottom');
 
                 this.droppedRowIndex = index;
-                if (prevRowElement && !this.$unstyled()) DomHandler.addClass(prevRowElement, 'p-datatable-dragpoint-bottom');
-                else !this.$unstyled() && DomHandler.addClass(rowElement, 'p-datatable-dragpoint-top');
+                if (prevRowElement && !this.$unstyled()) DomHandler.addClass(prevRowElement, 'h-datatable-dragpoint-bottom');
+                else !this.$unstyled() && DomHandler.addClass(rowElement, 'h-datatable-dragpoint-top');
             } else {
-                if (prevRowElement && !this.$unstyled()) DomHandler.removeClass(prevRowElement, 'p-datatable-dragpoint-bottom');
-                else !this.$unstyled() && DomHandler.addClass(rowElement, 'p-datatable-dragpoint-top');
+                if (prevRowElement && !this.$unstyled()) DomHandler.removeClass(prevRowElement, 'h-datatable-dragpoint-bottom');
+                else !this.$unstyled() && DomHandler.addClass(rowElement, 'h-datatable-dragpoint-top');
 
                 this.droppedRowIndex = index + 1;
-                !this.$unstyled() && DomHandler.addClass(rowElement, 'p-datatable-dragpoint-bottom');
+                !this.$unstyled() && DomHandler.addClass(rowElement, 'h-datatable-dragpoint-bottom');
             }
         }
     }
@@ -2440,11 +2440,11 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     onRowDragLeave(event: Event, rowElement: any) {
         let prevRowElement = rowElement.previousElementSibling;
         if (prevRowElement) {
-            !this.$unstyled() && DomHandler.removeClass(prevRowElement, 'p-datatable-dragpoint-bottom');
+            !this.$unstyled() && DomHandler.removeClass(prevRowElement, 'h-datatable-dragpoint-bottom');
         }
 
-        !this.$unstyled() && DomHandler.removeClass(rowElement, 'p-datatable-dragpoint-bottom');
-        !this.$unstyled() && DomHandler.removeClass(rowElement, 'p-datatable-dragpoint-top');
+        !this.$unstyled() && DomHandler.removeClass(rowElement, 'h-datatable-dragpoint-bottom');
+        !this.$unstyled() && DomHandler.removeClass(rowElement, 'h-datatable-dragpoint-top');
     }
 
     onRowDragEnd(event: Event) {
@@ -2658,9 +2658,9 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
                     let style = `width: ${width}px !important; max-width: ${width}px !important`;
 
                     innerHTML += `
-                        #${this.id}-table > .p-datatable-thead > tr > th:nth-child(${index + 1}),
-                        #${this.id}-table > .p-datatable-tbody > tr > td:nth-child(${index + 1}),
-                        #${this.id}-table > .p-datatable-tfoot > tr > td:nth-child(${index + 1}) {
+                        #${this.id}-table > .h-datatable-thead > tr > th:nth-child(${index + 1}),
+                        #${this.id}-table > .h-datatable-tbody > tr > td:nth-child(${index + 1}),
+                        #${this.id}-table > .h-datatable-tfoot > tr > td:nth-child(${index + 1}) {
                             ${style}
                         }
                     `;
@@ -2737,29 +2737,29 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
 
                 let innerHTML = `
     @media screen and (max-width: ${this.breakpoint()}) {
-        #${this.id}-table > .p-datatable-thead > tr > th,
-        #${this.id}-table > .p-datatable-tfoot > tr > td {
+        #${this.id}-table > .h-datatable-thead > tr > th,
+        #${this.id}-table > .h-datatable-tfoot > tr > td {
             display: none !important;
         }
 
-        #${this.id}-table > .p-datatable-tbody > tr > td {
+        #${this.id}-table > .h-datatable-tbody > tr > td {
             display: flex;
             width: 100% !important;
             align-items: center;
             justify-content: space-between;
         }
 
-        #${this.id}-table > .p-datatable-tbody > tr > td:not(:last-child) {
+        #${this.id}-table > .h-datatable-tbody > tr > td:not(:last-child) {
             border: 0 none;
         }
 
-        #${this.id}.p-datatable-gridlines > .p-datatable-table-container > .p-datatable-table > .p-datatable-tbody > tr > td:last-child {
+        #${this.id}.h-datatable-gridlines > .h-datatable-table-container > .h-datatable-table > .h-datatable-tbody > tr > td:last-child {
             border-top: 0;
             border-right: 0;
             border-left: 0;
         }
 
-        #${this.id}-table > .p-datatable-tbody > tr > td > .p-datatable-column-title {
+        #${this.id}-table > .h-datatable-tbody > tr > td > .h-datatable-column-title {
             display: block;
         }
     }
@@ -2815,7 +2815,7 @@ export class Table<RowData = any> extends BaseComponent<TablePassThrough> implem
     changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
     host: {
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     }
 })
 export class TableBody extends BaseComponent {
@@ -3258,7 +3258,7 @@ export class SortIcon extends BaseComponent {
     host: {
         '[class]': "cx('selectableRow')",
         '[tabindex]': 'setRowTabIndex()',
-        '[attr.data-p-selectable-row]': 'true',
+        '[attr.data-h-selectable-row]': 'true',
         '(click)': 'onClick($event)',
         '(touchend)': 'onTouchEnd($event)',
         '(keydown)': 'onKeyDown($event)'
@@ -3469,13 +3469,13 @@ export class SelectableRow extends BaseComponent {
     }
 
     findLastSelectableRow() {
-        const rows = DomHandler.find(this.dataTable.el.nativeElement, '[data-p-selectable-row="true"]');
+        const rows = DomHandler.find(this.dataTable.el.nativeElement, '[data-h-selectable-row="true"]');
 
         return rows ? rows[rows.length - 1] : null;
     }
 
     findFirstSelectableRow() {
-        const firstRow = DomHandler.findSingle(this.dataTable.el.nativeElement, '[data-p-selectable-row="true"]');
+        const firstRow = DomHandler.findSingle(this.dataTable.el.nativeElement, '[data-h-selectable-row="true"]');
 
         return firstRow;
     }
@@ -3484,7 +3484,7 @@ export class SelectableRow extends BaseComponent {
         let nextRow = <HTMLTableRowElement>row.nextElementSibling;
 
         if (nextRow) {
-            if (find(nextRow, '[data-p-selectable-row="true"]')) return nextRow;
+            if (find(nextRow, '[data-h-selectable-row="true"]')) return nextRow;
             else return this.findNextSelectableRow(nextRow);
         } else {
             return null;
@@ -3494,7 +3494,7 @@ export class SelectableRow extends BaseComponent {
     findPrevSelectableRow(row: HTMLTableRowElement): HTMLTableRowElement | null {
         let prevRow = <HTMLTableRowElement>row.previousElementSibling;
         if (prevRow) {
-            if (find(prevRow, '[data-p-selectable-row="true"]')) return prevRow;
+            if (find(prevRow, '[data-h-selectable-row="true"]')) return prevRow;
             else return this.findPrevSelectableRow(prevRow);
         } else {
             return null;
@@ -3699,7 +3699,7 @@ export class ResizableColumn extends BaseComponent {
             if (this.isEnabled()) {
                 this.resizer = this.renderer.createElement('span');
                 setAttribute(this.resizer as HTMLElement, 'data-pc-column-resizer', 'true');
-                !this.$unstyled() && this.renderer.addClass(this.resizer, 'p-datatable-column-resizer');
+                !this.$unstyled() && this.renderer.addClass(this.resizer, 'h-datatable-column-resizer');
                 this.renderer.appendChild(this.el.nativeElement, this.resizer);
 
                 this.zone.runOutsideAngular(() => {
@@ -3902,7 +3902,7 @@ export class ReorderableColumn extends BaseComponent {
     selector: '[hEditableColumn]',
     standalone: false,
     host: {
-        '[attr.data-p-editable-column]': 'true',
+        '[attr.data-h-editable-column]': 'true',
         '(click)': 'onClick($event)',
         '(keydown.enter)': 'onEnterKeyDown($event)',
         '(keydown.tab)': 'onShiftKeyDown($event)',
@@ -3943,7 +3943,7 @@ export class EditableColumn extends BaseComponent {
 
     onAfterViewInit() {
         if (this.isEnabled()) {
-            !this.$unstyled() && DomHandler.addClass(this.el.nativeElement, 'p-editable-column');
+            !this.$unstyled() && DomHandler.addClass(this.el.nativeElement, 'h-editable-column');
         }
     }
 
@@ -3971,8 +3971,8 @@ export class EditableColumn extends BaseComponent {
         const field = this.field();
         const rowIndex = this.rowIndex();
         this.dataTable.updateEditingCell(this.el.nativeElement, data, field, <number>rowIndex);
-        !this.$unstyled() && DomHandler.addClass(this.el.nativeElement, 'p-cell-editing');
-        setAttribute(this.el.nativeElement, 'data-p-cell-editing', 'true');
+        !this.$unstyled() && DomHandler.addClass(this.el.nativeElement, 'h-cell-editing');
+        setAttribute(this.el.nativeElement, 'data-h-cell-editing', 'true');
 
         this.dataTable.onEditInit.emit({
             field: field,
@@ -4019,8 +4019,8 @@ export class EditableColumn extends BaseComponent {
             });
         }
 
-        !this.$unstyled() && DomHandler.removeClass(this.dataTable.editingCell, 'p-cell-editing');
-        setAttribute(this.el.nativeElement, 'data-p-cell-editing', 'false');
+        !this.$unstyled() && DomHandler.removeClass(this.dataTable.editingCell, 'h-cell-editing');
+        setAttribute(this.el.nativeElement, 'data-h-cell-editing', 'false');
         this.dataTable.editingCell = null;
         this.dataTable.editingCellData = null;
         this.dataTable.editingCellField = null;
@@ -4126,7 +4126,7 @@ export class EditableColumn extends BaseComponent {
     findCell(element: any) {
         if (element) {
             let cell = element;
-            while (cell && !findSingle(cell as HTMLElement, '[data-p-cell-editing="true"]')) {
+            while (cell && !findSingle(cell as HTMLElement, '[data-h-cell-editing="true"]')) {
                 cell = cell.parentElement;
             }
 
@@ -4185,7 +4185,7 @@ export class EditableColumn extends BaseComponent {
         }
 
         if (prevCell) {
-            if (findSingle(prevCell, '[data-p-editable-column="true"]')) return prevCell;
+            if (findSingle(prevCell, '[data-h-editable-column="true"]')) return prevCell;
             else return this.findPreviousEditableColumn(prevCell);
         } else {
             return null;
@@ -4203,7 +4203,7 @@ export class EditableColumn extends BaseComponent {
         }
 
         if (nextCell) {
-            if (findSingle(nextCell, '[data-p-editable-column="true"]')) return nextCell;
+            if (findSingle(nextCell, '[data-h-editable-column="true"]')) return nextCell;
             else return this.findNextEditableColumn(nextCell);
         } else {
             return null;
@@ -4216,7 +4216,7 @@ export class EditableColumn extends BaseComponent {
         if (nextRow) {
             let nextCell = nextRow.children[index];
 
-            if (nextCell && findSingle(nextCell, '[data-p-editable-column="true"]')) {
+            if (nextCell && findSingle(nextCell, '[data-h-editable-column="true"]')) {
                 return nextCell;
             }
 
@@ -4232,7 +4232,7 @@ export class EditableColumn extends BaseComponent {
         if (prevRow) {
             let prevCell = prevRow.children[index];
 
-            if (prevCell && findSingle(prevCell, '[data-p-editable-column="true"]')) {
+            if (prevCell && findSingle(prevCell, '[data-h-editable-column="true"]')) {
                 return prevCell;
             }
 
@@ -4271,7 +4271,7 @@ export class EditableRow extends BaseComponent {
     selector: '[hInitEditableRow]',
     standalone: false,
     host: {
-        class: 'p-datatable-row-editor-init',
+        class: 'h-datatable-row-editor-init',
         '(click)': 'onClick($event)'
     }
 })
@@ -4293,7 +4293,7 @@ export class InitEditableRow extends BaseComponent {
     selector: '[hSaveEditableRow]',
     standalone: false,
     host: {
-        class: 'p-datatable-row-editor-save',
+        class: 'h-datatable-row-editor-save',
         '(click)': 'onClick($event)'
     }
 })
@@ -4638,7 +4638,7 @@ export class ReorderableRowHandle extends BaseComponent {
     }
 
     onAfterViewInit() {
-        // DomHandler.addClass(this.el.nativeElement, 'p-datatable-reorderable-row-handle');
+        // DomHandler.addClass(this.el.nativeElement, 'h-datatable-reorderable-row-handle');
     }
 }
 
@@ -4737,7 +4737,7 @@ export class ReorderableRow extends BaseComponent {
     }
 
     isHandleElement(element: HTMLElement): boolean {
-        if (element?.classList.contains('p-datatable-reorderable-row-handle')) {
+        if (element?.classList.contains('h-datatable-reorderable-row-handle')) {
             return true;
         }
 

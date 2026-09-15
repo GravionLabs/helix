@@ -20,7 +20,7 @@ const mockImages = [
 @Component({
     standalone: false,
     template: `
-        <p-galleria
+        <h-galleria
             [value]="images"
             [activeIndex]="activeIndex"
             [fullScreen]="fullScreen"
@@ -57,7 +57,7 @@ const mockImages = [
             <ng-template #thumbnail let-item>
                 <img [src]="item.thumbnailImageSrc" [alt]="item.alt" class="test-thumbnail-image" />
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestBasicGalleriaComponent {
@@ -105,14 +105,14 @@ class TestBasicGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images" [fullScreen]="true" [visible]="true">
+        <h-galleria [value]="images" [fullScreen]="true" [visible]="true">
             <ng-template #item let-item>
                 <img [src]="item.itemImageSrc" [alt]="item.alt" class="fullscreen-item" />
             </ng-template>
             <ng-template #thumbnail let-item>
                 <img [src]="item.thumbnailImageSrc" [alt]="item.alt" class="fullscreen-thumbnail" />
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestFullScreenGalleriaComponent {
@@ -122,11 +122,11 @@ class TestFullScreenGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images" [autoPlay]="true" [circular]="true" [transitionInterval]="1000">
+        <h-galleria [value]="images" [autoPlay]="true" [circular]="true" [transitionInterval]="1000">
             <ng-template #item let-item>
                 <img [src]="item.itemImageSrc" [alt]="item.alt" class="autoplay-item" />
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestAutoPlayGalleriaComponent {
@@ -136,11 +136,11 @@ class TestAutoPlayGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images" [responsiveOptions]="responsiveOptions">
+        <h-galleria [value]="images" [responsiveOptions]="responsiveOptions">
             <ng-template #item let-item>
                 <img [src]="item.itemImageSrc" [alt]="item.alt" class="responsive-item" />
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestResponsiveGalleriaComponent {
@@ -155,11 +155,11 @@ class TestResponsiveGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images" [showIndicators]="true" [showThumbnails]="false">
+        <h-galleria [value]="images" [showIndicators]="true" [showThumbnails]="false">
             <ng-template #item let-item>
                 <img [src]="item.itemImageSrc" [alt]="item.alt" class="indicator-item" />
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestIndicatorsGalleriaComponent {
@@ -169,7 +169,7 @@ class TestIndicatorsGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images" [numVisible]="3">
+        <h-galleria [value]="images" [numVisible]="3">
             <ng-template #header>
                 <div class="custom-header">Gallery Header</div>
             </ng-template>
@@ -185,7 +185,7 @@ class TestIndicatorsGalleriaComponent {
             <ng-template #caption let-item>
                 <div class="custom-caption">{{ item?.title || 'Test Caption' }}</div>
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestTemplateGalleriaComponent {
@@ -195,7 +195,7 @@ class TestTemplateGalleriaComponent {
 @Component({
     standalone: false,
     template: `
-        <p-galleria [value]="images">
+        <h-galleria [value]="images">
             <ng-template pTemplate="header">
                 <div class="ptemplate-header">PTemplate Header</div>
             </ng-template>
@@ -208,7 +208,7 @@ class TestTemplateGalleriaComponent {
             <ng-template pTemplate="footer">
                 <div class="ptemplate-footer">PTemplate Footer</div>
             </ng-template>
-        </p-galleria>
+        </h-galleria>
     `
 })
 class TestPTemplateGalleriaComponent {
@@ -234,7 +234,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -314,7 +314,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -347,7 +347,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -407,7 +407,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -439,7 +439,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -464,7 +464,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -494,7 +494,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -570,7 +570,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -596,7 +596,7 @@ describe('Galleria', () => {
         });
 
         it('should process all template types', () => {
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             const instance = galleriaEl.componentInstance as Galleria;
 
             instance.ngAfterContentInit();
@@ -616,7 +616,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -649,7 +649,7 @@ describe('Galleria', () => {
         });
 
         it('should have proper galleria root structure', () => {
-            const galleriaRoot = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaRoot = fixture.debugElement.query(By.css('h-galleria'));
             expect(galleriaRoot).toBeTruthy();
         });
     });
@@ -664,7 +664,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -731,12 +731,12 @@ describe('Galleria', () => {
             windowedFixture.detectChanges();
 
             // In windowed mode, should use 'region' role if any ARIA attributes are present
-            const galleriaRoot = windowedFixture.debugElement.query(By.css('p-galleria'));
+            const galleriaRoot = windowedFixture.debugElement.query(By.css('h-galleria'));
             expect(galleriaRoot).toBeTruthy();
         });
 
         it('should handle focus management in animations', () => {
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             const galleriaInstance = galleriaEl.componentInstance as Galleria;
 
             // Add a mock close button element to the real container
@@ -773,7 +773,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 
@@ -857,7 +857,7 @@ describe('Galleria', () => {
             component = fixture.componentInstance;
             fixture.detectChanges();
 
-            const galleriaEl = fixture.debugElement.query(By.css('p-galleria'));
+            const galleriaEl = fixture.debugElement.query(By.css('h-galleria'));
             galleriaInstance = galleriaEl.componentInstance as Galleria;
         });
 

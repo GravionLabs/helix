@@ -12,7 +12,7 @@ import { InputNumber, InputNumberModule } from './inputnumber';
 @Component({
     standalone: false,
     template: `
-        <p-inputNumber
+        <h-inputNumber
             [(ngModel)]="value"
             [showButtons]="showButtons"
             [showClear]="showClear"
@@ -53,7 +53,7 @@ import { InputNumber, InputNumberModule } from './inputnumber';
             (onBlur)="onBlurChange($event)"
             (onKeyDown)="onKeyDownChange($event)"
             (onClear)="onClearChange()"
-        ></p-inputNumber>
+        ></h-inputNumber>
     `
 })
 class TestBasicInputNumberComponent {
@@ -104,7 +104,7 @@ class TestBasicInputNumberComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-inputNumber formControlName="numberField" [showButtons]="showButtons" [min]="min" [max]="max" [step]="step"></p-inputNumber>
+            <h-inputNumber formControlName="numberField" [showButtons]="showButtons" [min]="min" [max]="max" [step]="step"></h-inputNumber>
         </form>
     `
 })
@@ -122,7 +122,7 @@ class TestFormInputNumberComponent {
 @Component({
     standalone: false,
     template: `
-        <p-inputNumber [(ngModel)]="value" [showButtons]="true" [showClear]="true" [mode]="'currency'" [currency]="'USD'" [locale]="'en-US'" [min]="min" [max]="max" [step]="step">
+        <h-inputNumber [(ngModel)]="value" [showButtons]="true" [showClear]="true" [mode]="'currency'" [currency]="'USD'" [locale]="'en-US'" [min]="min" [max]="max" [step]="step">
             <!-- Clear icon template with pTemplate directive -->
             <ng-template pTemplate="clearicon">
                 <i class="pi pi-times custom-clear-icon" data-testid="ptemplate-clearicon"></i>
@@ -137,7 +137,7 @@ class TestFormInputNumberComponent {
             <ng-template pTemplate="decrementbuttonicon">
                 <i class="pi pi-minus custom-decrement-icon" data-testid="ptemplate-decrementicon"></i>
             </ng-template>
-        </p-inputNumber>
+        </h-inputNumber>
     `
 })
 class TestInputNumberPTemplateComponent {
@@ -151,7 +151,7 @@ class TestInputNumberPTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-inputNumber [(ngModel)]="value" [showButtons]="true" [showClear]="true" [mode]="'currency'" [currency]="'USD'" [locale]="'en-US'" [min]="min" [max]="max" [step]="step">
+        <h-inputNumber [(ngModel)]="value" [showButtons]="true" [showClear]="true" [mode]="'currency'" [currency]="'USD'" [locale]="'en-US'" [min]="min" [max]="max" [step]="step">
             <!-- Clear icon template with #template reference -->
             <ng-template #clearicon>
                 <i class="pi pi-times custom-clear-icon" data-testid="ref-clearicon"></i>
@@ -166,7 +166,7 @@ class TestInputNumberPTemplateComponent {
             <ng-template #decrementbuttonicon>
                 <i class="pi pi-minus custom-decrement-icon" data-testid="ref-decrementicon"></i>
             </ng-template>
-        </p-inputNumber>
+        </h-inputNumber>
     `
 })
 class TestInputNumberRefTemplateComponent {
@@ -263,7 +263,7 @@ describe('InputNumber', () => {
             testComponent.max = 100;
             testFixture.detectChanges();
 
-            const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
+            const inputNumberInstance = testFixture.debugElement.query(By.css('h-inputNumber')).componentInstance;
 
             // Test validation behavior
             expect(inputNumberInstance.validateValue(5)).toBe(10); // Should clamp to min
@@ -648,7 +648,7 @@ describe('InputNumber', () => {
         beforeEach(() => {
             templateFixture = TestBed.createComponent(TestInputNumberPTemplateComponent);
             templateComponent = templateFixture.componentInstance;
-            inputNumberElement = templateFixture.debugElement.query(By.css('p-inputNumber'));
+            inputNumberElement = templateFixture.debugElement.query(By.css('h-inputNumber'));
             templateFixture.detectChanges();
         });
 
@@ -733,7 +733,7 @@ describe('InputNumber', () => {
         beforeEach(() => {
             templateFixture = TestBed.createComponent(TestInputNumberRefTemplateComponent);
             templateComponent = templateFixture.componentInstance;
-            inputNumberElement = templateFixture.debugElement.query(By.css('p-inputNumber'));
+            inputNumberElement = templateFixture.debugElement.query(By.css('h-inputNumber'));
             templateFixture.detectChanges();
         });
 
@@ -967,7 +967,7 @@ describe('InputNumber', () => {
             await testFixture.whenStable();
 
             // Test that currency mode is set correctly
-            const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
+            const inputNumberInstance = testFixture.debugElement.query(By.css('h-inputNumber')).componentInstance;
             expect(inputNumberInstance.mode()).toBe('currency');
             expect(inputNumberInstance.currency()).toBe('USD');
         });
@@ -981,7 +981,7 @@ describe('InputNumber', () => {
             await testFixture.whenStable();
 
             // Test that EUR currency mode is set correctly
-            const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
+            const inputNumberInstance = testFixture.debugElement.query(By.css('h-inputNumber')).componentInstance;
             expect(inputNumberInstance.mode()).toBe('currency');
             expect(inputNumberInstance.currency()).toBe('EUR');
         });
@@ -995,7 +995,7 @@ describe('InputNumber', () => {
             await testFixture.whenStable();
 
             // Test that currency display mode is set correctly
-            const inputNumberInstance = testFixture.debugElement.query(By.css('p-inputNumber')).componentInstance;
+            const inputNumberInstance = testFixture.debugElement.query(By.css('h-inputNumber')).componentInstance;
             expect(inputNumberInstance.currencyDisplay()).toBe('code');
             expect(inputNumberInstance.currency()).toBe('USD');
         });
@@ -1072,7 +1072,7 @@ describe('InputNumber', () => {
 
             expect(inputEl).toBeTruthy();
             // Only check for buttons since clear icon might not be visible initially
-            const buttonsContainer = testFixture.debugElement.query(By.css('.p-inputnumber-button-group'));
+            const buttonsContainer = testFixture.debugElement.query(By.css('.h-inputnumber-button-group'));
             expect(buttonsContainer || incrementBtn).toBeTruthy();
             expect(testComponent.value).toBe(1234.56);
         });
@@ -1082,7 +1082,7 @@ describe('InputNumber', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase1Component {
                 value: number = 100;
@@ -1127,7 +1127,7 @@ describe('InputNumber', () => {
         describe('Case 2: Object with class, style, data attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase2Component {
                 value: number = 100;
@@ -1135,7 +1135,7 @@ describe('InputNumber', () => {
                     root: {
                         class: 'OBJECT_ROOT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'test-value',
+                        'data-h-test': 'test-value',
                         'aria-label': 'TEST_ARIA_LABEL'
                     },
                     pcInputText: {
@@ -1146,7 +1146,7 @@ describe('InputNumber', () => {
                     },
                     incrementButton: {
                         class: 'INCREMENT_OBJECT_CLASS',
-                        'data-p-custom': 'custom-value'
+                        'data-h-custom': 'custom-value'
                     }
                 };
             }
@@ -1166,7 +1166,7 @@ describe('InputNumber', () => {
                 const rootEl = testFixture.debugElement.query(By.css('[data-pc-section="root"]'));
                 expect(rootEl?.nativeElement.classList.contains('OBJECT_ROOT_CLASS')).toBe(true);
                 expect(rootEl?.nativeElement.style.backgroundColor).toBe('red');
-                expect(rootEl?.nativeElement.getAttribute('data-p-test')).toBe('test-value');
+                expect(rootEl?.nativeElement.getAttribute('data-h-test')).toBe('test-value');
                 expect(rootEl?.nativeElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
 
                 const inputEl = testFixture.debugElement.query(By.css('input'));
@@ -1175,14 +1175,14 @@ describe('InputNumber', () => {
 
                 const incrementBtn = testFixture.debugElement.query(By.css('[data-pc-section="incrementbutton"]'));
                 expect(incrementBtn?.nativeElement.classList.contains('INCREMENT_OBJECT_CLASS')).toBe(true);
-                expect(incrementBtn?.nativeElement.getAttribute('data-p-custom')).toBe('custom-value');
+                expect(incrementBtn?.nativeElement.getAttribute('data-h-custom')).toBe('custom-value');
             });
         });
 
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase3Component {
                 value: number = 100;
@@ -1220,7 +1220,7 @@ describe('InputNumber', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase4Component {
                 value: number = 20;
@@ -1264,7 +1264,7 @@ describe('InputNumber', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase5Component {
                 value: number = 100;
@@ -1311,7 +1311,7 @@ describe('InputNumber', () => {
         describe('Case 6: Inline PT', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [pt]="{ root: 'INLINE_ROOT_CLASS', pcInputText: { root: 'INLINE_INPUT_CLASS' } }" [showButtons]="true"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [pt]="{ root: 'INLINE_ROOT_CLASS', pcInputText: { root: 'INLINE_INPUT_CLASS' } }" [showButtons]="true"></h-inputNumber>`
             })
             class TestPTCase6InlineComponent {
                 value: number = 100;
@@ -1319,7 +1319,7 @@ describe('InputNumber', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, pcInputText: { root: { class: 'INLINE_INPUT_OBJECT_CLASS' } } }" [showButtons]="true"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, pcInputText: { root: { class: 'INLINE_INPUT_OBJECT_CLASS' } } }" [showButtons]="true"></h-inputNumber>`
             })
             class TestPTCase6InlineObjectComponent {
                 value: number = 100;
@@ -1368,8 +1368,8 @@ describe('InputNumber', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-inputNumber [(ngModel)]="value1" [showButtons]="true"></p-inputNumber>
-                    <p-inputNumber [(ngModel)]="value2" [showButtons]="true"></p-inputNumber>
+                    <h-inputNumber [(ngModel)]="value1" [showButtons]="true"></h-inputNumber>
+                    <h-inputNumber [(ngModel)]="value2" [showButtons]="true"></h-inputNumber>
                 `
             })
             class TestPTCase7GlobalComponent {
@@ -1411,7 +1411,7 @@ describe('InputNumber', () => {
         describe('Case 8: PT Hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCase8HooksComponent {
                 value: number = 100;
@@ -1460,7 +1460,7 @@ describe('InputNumber', () => {
         describe('PT Section Coverage', () => {
             @Component({
                 standalone: false,
-                template: `<p-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></p-inputNumber>`
+                template: `<h-inputNumber [(ngModel)]="value" [showButtons]="true" [pt]="pt"></h-inputNumber>`
             })
             class TestPTCoveragComponent {
                 value: number = 100;

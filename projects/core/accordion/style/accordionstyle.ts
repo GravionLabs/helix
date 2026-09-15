@@ -6,40 +6,40 @@ const style = /*css*/ `
 ${accordion_style}
 
 /* For Helix */
-.p-accordionheader-toggle-icon.icon-start {
+.h-accordionheader-toggle-icon.icon-start {
     order: -1;
 }
 
-.p-accordionheader:has(.p-accordionheader-toggle-icon.icon-start) {
+.h-accordionheader:has(.h-accordionheader-toggle-icon.icon-start) {
     justify-content: flex-start;
     gap: dt('accordion.header.padding');
 }
 
-.p-accordionheader.p-ripple {
+.h-accordionheader.h-ripple {
     overflow: hidden;
     position: relative;
 }
 
-.p-accordioncontent .p-motion {
+.h-accordioncontent .h-motion {
     display: grid;
     grid-template-rows: 1fr;
 }
 `;
 
 const classes = {
-    root: 'p-accordion p-component',
+    root: 'h-accordion h-component',
     panel: ({ instance }) => [
-        'p-accordionpanel',
+        'h-accordionpanel',
         {
-            'p-accordionpanel-active': instance.active(),
-            'p-disabled': instance.disabled()
+            'h-accordionpanel-active': instance.active(),
+            'h-disabled': instance.disabled()
         }
     ],
-    header: 'p-accordionheader',
-    toggleicon: 'p-accordionheader-toggle-icon',
-    contentContainer: 'p-accordioncontent',
-    contentWrapper: 'p-accordioncontent-wrapper',
-    content: 'p-accordioncontent-content'
+    header: 'h-accordionheader',
+    toggleicon: 'h-accordionheader-toggle-icon',
+    contentContainer: 'h-accordioncontent',
+    contentWrapper: 'h-accordioncontent-wrapper',
+    content: 'h-accordioncontent-content'
 };
 
 @Injectable()
@@ -64,27 +64,27 @@ export enum AccordionClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-accordion',
+    root = 'h-accordion',
     /**
      * Class name of the content wrapper
      */
-    contentwrapper = 'p-accordioncontent',
+    contentwrapper = 'h-accordioncontent',
     /**
      * Class name of the content
      */
-    content = 'p-accordioncontent-content',
+    content = 'h-accordioncontent-content',
     /**
      * Class name of the header
      */
-    header = 'p-accordionheader',
+    header = 'h-accordionheader',
     /**
      * Class name of the toggle icon
      */
-    toggleicon = 'p-accordionheader-toggle-icon',
+    toggleicon = 'h-accordionheader-toggle-icon',
     /**
      * Class name of the panel
      */
-    panel = 'p-accordionpanel'
+    panel = 'h-accordionpanel'
 }
 
 export interface AccordionStyle extends BaseStyle {}

@@ -6,43 +6,43 @@ const style = /*css*/ `
 ${password_style}
 
 /* For Helix */
-.p-password-overlay {
+.h-password-overlay {
     min-width: 100%;
 }
 
-p-password.ng-invalid.ng-dirty .p-inputtext {
+h-password.ng-invalid.ng-dirty .h-inputtext {
     border-color: dt('inputtext.invalid.border.color');
 }
 
-p-password.ng-invalid.ng-dirty .p-inputtext:enabled:focus {
+h-password.ng-invalid.ng-dirty .h-inputtext:enabled:focus {
     border-color: dt('inputtext.focus.border.color');
 }
 
-p-password.ng-invalid.ng-dirty .p-inputtext::placeholder {
+h-password.ng-invalid.ng-dirty .h-inputtext::placeholder {
     color: dt('inputtext.invalid.placeholder.color');
 }
 
-.p-password-fluid-directive {
+.h-password-fluid-directive {
     width: 100%;
 }
 
 /* Animations */
-.p-password-enter {
-    animation: p-animate-password-enter 300ms cubic-bezier(.19,1,.22,1);
+.h-password-enter {
+    animation: h-animate-password-enter 300ms cubic-bezier(.19,1,.22,1);
 }
 
-.p-password-leave {
-    animation: p-animate-password-leave 300ms cubic-bezier(.19,1,.22,1);
+.h-password-leave {
+    animation: h-animate-password-leave 300ms cubic-bezier(.19,1,.22,1);
 }
 
-@keyframes p-animate-password-enter {
+@keyframes h-animate-password-enter {
     from {
         opacity: 0;
         transform: scale(0.93);
     }
 }
 
-@keyframes p-animate-password-leave {
+@keyframes h-animate-password-leave {
     to {
         opacity: 0;
         transform: scale(0.93);
@@ -57,31 +57,31 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-password p-component p-inputwrapper',
+        'h-password h-component h-inputwrapper',
         {
-            'p-inputwrapper-filled': instance.$filled(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-inputwrapper-focus': instance.focused,
-            'p-password-fluid': instance.hasFluid
+            'h-inputwrapper-filled': instance.$filled(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-inputwrapper-focus': instance.focused,
+            'h-password-fluid': instance.hasFluid
         }
     ],
     rootDirective: ({ instance }) => [
-        'p-password p-inputtext p-component p-inputwrapper',
+        'h-password h-inputtext h-component h-inputwrapper',
         {
-            'p-inputwrapper-filled': instance.$filled(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-password-fluid-directive': instance.hasFluid
+            'h-inputwrapper-filled': instance.$filled(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-password-fluid-directive': instance.hasFluid
         }
     ],
-    pcInputText: 'p-password-input',
-    maskIcon: 'p-password-toggle-mask-icon p-password-mask-icon',
-    unmaskIcon: 'p-password-toggle-mask-icon p-password-unmask-icon',
-    overlay: 'p-password-overlay p-component',
-    content: 'p-password-content',
-    meter: 'p-password-meter',
-    meterLabel: ({ instance }) => `p-password-meter-label ${instance.meter ? 'p-password-meter-' + instance.meter.strength : ''}`,
-    meterText: 'p-password-meter-text',
-    clearIcon: 'p-password-clear-icon'
+    pcInputText: 'h-password-input',
+    maskIcon: 'h-password-toggle-mask-icon h-password-mask-icon',
+    unmaskIcon: 'h-password-toggle-mask-icon h-password-unmask-icon',
+    overlay: 'h-password-overlay h-component',
+    content: 'h-password-content',
+    meter: 'h-password-meter',
+    meterLabel: ({ instance }) => `h-password-meter-label ${instance.meter ? 'h-password-meter-' + instance.meter.strength : ''}`,
+    meterText: 'h-password-meter-text',
+    clearIcon: 'h-password-clear-icon'
 };
 
 @Injectable()
@@ -109,39 +109,39 @@ export enum PasswordClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-password',
+    root = 'h-password',
     /**
      * Class name of the pt input element
      */
-    pcInputText = 'p-password-input',
+    pcInputText = 'h-password-input',
     /**
      * Class name of the mask icon element
      */
-    maskIcon = 'p-password-mask-icon',
+    maskIcon = 'h-password-mask-icon',
     /**
      * Class name of the unmask icon element
      */
-    unmaskIcon = 'p-password-unmask-icon',
+    unmaskIcon = 'h-password-unmask-icon',
     /**
      * Class name of the overlay element
      */
-    overlay = 'p-password-overlay',
+    overlay = 'h-password-overlay',
     /**
      * Class name of the meter element
      */
-    meter = 'p-password-meter',
+    meter = 'h-password-meter',
     /**
      * Class name of the meter label element
      */
-    meterLabel = 'p-password-meter-label',
+    meterLabel = 'h-password-meter-label',
     /**
      * Class name of the meter text element
      */
-    meterText = 'p-password-meter-text',
+    meterText = 'h-password-meter-text',
     /**
      * Class name of the clear icon
      */
-    clearIcon = 'p-password-clear-icon'
+    clearIcon = 'h-password-clear-icon'
 }
 
 export interface PasswordStyle extends BaseStyle {}

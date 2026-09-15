@@ -4,17 +4,17 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-splitbutton p-component',
+        'h-splitbutton h-component',
         {
-            'p-splitbutton-raised': instance.raised(),
-            'p-splitbutton-rounded': instance.rounded(),
-            'p-splitbutton-outlined': instance.outlined(),
-            'p-splitbutton-text': instance.text(),
-            [`p-splitbutton-${instance.size() === 'small' ? 'sm' : 'lg'}`]: instance.size()
+            'h-splitbutton-raised': instance.raised(),
+            'h-splitbutton-rounded': instance.rounded(),
+            'h-splitbutton-outlined': instance.outlined(),
+            'h-splitbutton-text': instance.text(),
+            [`h-splitbutton-${instance.size() === 'small' ? 'sm' : 'lg'}`]: instance.size()
         }
     ],
-    pcButton: 'p-splitbutton-button',
-    pcDropdown: 'p-splitbutton-dropdown p-button-icon-only'
+    pcButton: 'h-splitbutton-button',
+    pcDropdown: 'h-splitbutton-dropdown h-button-icon-only'
 };
 
 @Injectable()
@@ -39,15 +39,15 @@ export enum SplitButtonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-splitbutton',
+    root = 'h-splitbutton',
     /**
      * Class name of the button element
      */
-    pcButton = 'p-splitbutton-button',
+    pcButton = 'h-splitbutton-button',
     /**
      * Class name of the dropdown element
      */
-    pcDropdown = 'p-splitbutton-dropdown'
+    pcDropdown = 'h-splitbutton-dropdown'
 }
 
 export interface SplitButtonStyle extends BaseStyle {}

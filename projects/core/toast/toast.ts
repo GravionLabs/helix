@@ -184,7 +184,7 @@ export class ToastItem extends BaseComponent<ToastPassThrough> {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })
@@ -461,7 +461,7 @@ export class Toast extends BaseComponent<ToastPassThrough> {
                 }
                 innerHTML += `
                     @media screen and (max-width: ${breakpoint}) {
-                        .p-toast[${this.id}] {
+                        .h-toast[${this.id}] {
                            ${breakpointStyle}
                         }
                     }

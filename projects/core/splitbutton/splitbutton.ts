@@ -31,7 +31,7 @@ type SplitButtonIconPosition = 'left' | 'right';
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p-severity]': 'severity()'
+        '[attr.data-h-severity]': 'severity()'
     },
     hostDirectives: [Bind]
 })

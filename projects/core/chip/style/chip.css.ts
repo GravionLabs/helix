@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-chip {
+    .h-chip {
         display: inline-flex;
         align-items: center;
         background: dt('chip.background');
@@ -10,30 +10,30 @@ export const style = /*css*/ `
         gap: dt('chip.gap');
     }
 
-    .p-chip-icon {
+    .h-chip-icon {
         color: dt('chip.icon.color');
         font-size: dt('chip.icon.size');
         width: dt('chip.icon.size');
         height: dt('chip.icon.size');
     }
 
-    .p-chip-image {
+    .h-chip-image {
         border-radius: 50%;
         width: dt('chip.image.width');
         height: dt('chip.image.height');
         margin-inline-start: calc(-1 * dt('chip.padding.y'));
     }
 
-    .p-chip:has(.p-chip-remove-icon) {
+    .h-chip:has(.h-chip-remove-icon) {
         padding-inline-end: dt('chip.padding.y');
     }
 
-    .p-chip:has(.p-chip-image) {
+    .h-chip:has(.h-chip-image) {
         padding-block-start: calc(dt('chip.padding.y') / 2);
         padding-block-end: calc(dt('chip.padding.y') / 2);
     }
 
-    .p-chip-remove-icon {
+    .h-chip-remove-icon {
         cursor: pointer;
         font-size: dt('chip.remove.icon.size');
         width: dt('chip.remove.icon.size');
@@ -46,7 +46,7 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-chip-remove-icon:focus-visible {
+    .h-chip-remove-icon:focus-visible {
         box-shadow: dt('chip.remove.icon.focus.ring.shadow');
         outline: dt('chip.remove.icon.focus.ring.width') dt('chip.remove.icon.focus.ring.style') dt('chip.remove.icon.focus.ring.color');
         outline-offset: dt('chip.remove.icon.focus.ring.offset');

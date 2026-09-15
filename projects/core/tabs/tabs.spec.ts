@@ -8,24 +8,24 @@ import { TabsModule } from './tabs.module';
 @Component({
     standalone: false,
     template: `
-        <p-tabs [(value)]="value" [scrollable]="scrollable" [lazy]="lazy" [selectOnFocus]="selectOnFocus" [showNavigators]="showNavigators" [tabindex]="tabindex">
-            <p-tablist>
-                <p-tab [value]="1">Tab 1</p-tab>
-                <p-tab [value]="2">Tab 2</p-tab>
-                <p-tab [value]="3" [disabled]="tab3Disabled">Tab 3</p-tab>
-            </p-tablist>
-            <p-tabpanels>
-                <p-tabpanel [value]="1">
+        <h-tabs [(value)]="value" [scrollable]="scrollable" [lazy]="lazy" [selectOnFocus]="selectOnFocus" [showNavigators]="showNavigators" [tabindex]="tabindex">
+            <h-tablist>
+                <h-tab [value]="1">Tab 1</h-tab>
+                <h-tab [value]="2">Tab 2</h-tab>
+                <h-tab [value]="3" [disabled]="tab3Disabled">Tab 3</h-tab>
+            </h-tablist>
+            <h-tabpanels>
+                <h-tabpanel [value]="1">
                     <div class="panel-content-1">Content for Tab 1</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="2">
+                </h-tabpanel>
+                <h-tabpanel [value]="2">
                     <div class="panel-content-2">Content for Tab 2</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="3">
+                </h-tabpanel>
+                <h-tabpanel [value]="3">
                     <div class="panel-content-3">Content for Tab 3</div>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+                </h-tabpanel>
+            </h-tabpanels>
+        </h-tabs>
     `
 })
 class TestTabsComponent {
@@ -41,42 +41,42 @@ class TestTabsComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tabs [(value)]="value" [scrollable]="true">
-            <p-tablist>
+        <h-tabs [(value)]="value" [scrollable]="true">
+            <h-tablist>
                 <ng-template pTemplate="previcon">
                     <i class="custom-prev-icon">‹</i>
                 </ng-template>
                 <ng-template pTemplate="nexticon">
                     <i class="custom-next-icon">›</i>
                 </ng-template>
-                <p-tab [value]="1">Very Long Tab Name 1</p-tab>
-                <p-tab [value]="2">Very Long Tab Name 2</p-tab>
-                <p-tab [value]="3">Very Long Tab Name 3</p-tab>
-                <p-tab [value]="4">Very Long Tab Name 4</p-tab>
-                <p-tab [value]="5">Very Long Tab Name 5</p-tab>
-                <p-tab [value]="6">Very Long Tab Name 6</p-tab>
-            </p-tablist>
-            <p-tabpanels>
-                <p-tabpanel [value]="1">
+                <h-tab [value]="1">Very Long Tab Name 1</h-tab>
+                <h-tab [value]="2">Very Long Tab Name 2</h-tab>
+                <h-tab [value]="3">Very Long Tab Name 3</h-tab>
+                <h-tab [value]="4">Very Long Tab Name 4</h-tab>
+                <h-tab [value]="5">Very Long Tab Name 5</h-tab>
+                <h-tab [value]="6">Very Long Tab Name 6</h-tab>
+            </h-tablist>
+            <h-tabpanels>
+                <h-tabpanel [value]="1">
                     <div class="scrollable-content-1">Scrollable Content 1</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="2">
+                </h-tabpanel>
+                <h-tabpanel [value]="2">
                     <div class="scrollable-content-2">Scrollable Content 2</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="3">
+                </h-tabpanel>
+                <h-tabpanel [value]="3">
                     <div class="scrollable-content-3">Scrollable Content 3</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="4">
+                </h-tabpanel>
+                <h-tabpanel [value]="4">
                     <div class="scrollable-content-4">Scrollable Content 4</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="5">
+                </h-tabpanel>
+                <h-tabpanel [value]="5">
                     <div class="scrollable-content-5">Scrollable Content 5</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="6">
+                </h-tabpanel>
+                <h-tabpanel [value]="6">
                     <div class="scrollable-content-6">Scrollable Content 6</div>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+                </h-tabpanel>
+            </h-tabpanels>
+        </h-tabs>
     `
 })
 class TestScrollableTabsComponent {
@@ -86,24 +86,24 @@ class TestScrollableTabsComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tabs [(value)]="value" [lazy]="true">
-            <p-tablist>
-                <p-tab [value]="1">Lazy Tab 1</p-tab>
-                <p-tab [value]="2">Lazy Tab 2</p-tab>
-                <p-tab [value]="3">Lazy Tab 3</p-tab>
-            </p-tablist>
-            <p-tabpanels>
-                <p-tabpanel [value]="1">
+        <h-tabs [(value)]="value" [lazy]="true">
+            <h-tablist>
+                <h-tab [value]="1">Lazy Tab 1</h-tab>
+                <h-tab [value]="2">Lazy Tab 2</h-tab>
+                <h-tab [value]="3">Lazy Tab 3</h-tab>
+            </h-tablist>
+            <h-tabpanels>
+                <h-tabpanel [value]="1">
                     <div class="lazy-content-1">Lazy Content 1</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="2">
+                </h-tabpanel>
+                <h-tabpanel [value]="2">
                     <div class="lazy-content-2">Lazy Content 2</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="3">
+                </h-tabpanel>
+                <h-tabpanel [value]="3">
                     <div class="lazy-content-3">Lazy Content 3</div>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+                </h-tabpanel>
+            </h-tabpanels>
+        </h-tabs>
     `
 })
 class TestLazyTabsComponent {
@@ -113,42 +113,42 @@ class TestLazyTabsComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tabs [(value)]="value" [scrollable]="true">
-            <p-tablist>
+        <h-tabs [(value)]="value" [scrollable]="true">
+            <h-tablist>
                 <ng-template #previcon>
                     <span class="contentchild-prev-icon">⬅</span>
                 </ng-template>
                 <ng-template #nexticon>
                     <span class="contentchild-next-icon">➡</span>
                 </ng-template>
-                <p-tab [value]="1">Tab with ContentChild Icons 1</p-tab>
-                <p-tab [value]="2">Tab with ContentChild Icons 2</p-tab>
-                <p-tab [value]="3">Tab with ContentChild Icons 3</p-tab>
-                <p-tab [value]="4">Tab with ContentChild Icons 4</p-tab>
-                <p-tab [value]="5">Tab with ContentChild Icons 5</p-tab>
-                <p-tab [value]="6">Tab with ContentChild Icons 6</p-tab>
-            </p-tablist>
-            <p-tabpanels>
-                <p-tabpanel [value]="1">
+                <h-tab [value]="1">Tab with ContentChild Icons 1</h-tab>
+                <h-tab [value]="2">Tab with ContentChild Icons 2</h-tab>
+                <h-tab [value]="3">Tab with ContentChild Icons 3</h-tab>
+                <h-tab [value]="4">Tab with ContentChild Icons 4</h-tab>
+                <h-tab [value]="5">Tab with ContentChild Icons 5</h-tab>
+                <h-tab [value]="6">Tab with ContentChild Icons 6</h-tab>
+            </h-tablist>
+            <h-tabpanels>
+                <h-tabpanel [value]="1">
                     <div class="contentchild-content-1">Content 1</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="2">
+                </h-tabpanel>
+                <h-tabpanel [value]="2">
                     <div class="contentchild-content-2">Content 2</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="3">
+                </h-tabpanel>
+                <h-tabpanel [value]="3">
                     <div class="contentchild-content-3">Content 3</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="4">
+                </h-tabpanel>
+                <h-tabpanel [value]="4">
                     <div class="contentchild-content-4">Content 4</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="5">
+                </h-tabpanel>
+                <h-tabpanel [value]="5">
                     <div class="contentchild-content-5">Content 5</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="6">
+                </h-tabpanel>
+                <h-tabpanel [value]="6">
                     <div class="contentchild-content-6">Content 6</div>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+                </h-tabpanel>
+            </h-tabpanels>
+        </h-tabs>
     `
 })
 class TestContentChildIconsTabsComponent {
@@ -158,20 +158,20 @@ class TestContentChildIconsTabsComponent {
 @Component({
     standalone: false,
     template: `
-        <p-tabs [value]="1" [pt]="pt">
-            <p-tablist>
-                <p-tab [value]="1">PT Test Tab 1</p-tab>
-                <p-tab [value]="2">PT Test Tab 2</p-tab>
-            </p-tablist>
-            <p-tabpanels>
-                <p-tabpanel [value]="1">
+        <h-tabs [value]="1" [pt]="pt">
+            <h-tablist>
+                <h-tab [value]="1">PT Test Tab 1</h-tab>
+                <h-tab [value]="2">PT Test Tab 2</h-tab>
+            </h-tablist>
+            <h-tabpanels>
+                <h-tabpanel [value]="1">
                     <div>PT Test Content 1</div>
-                </p-tabpanel>
-                <p-tabpanel [value]="2">
+                </h-tabpanel>
+                <h-tabpanel [value]="2">
                     <div>PT Test Content 2</div>
-                </p-tabpanel>
-            </p-tabpanels>
-        </p-tabs>
+                </h-tabpanel>
+            </h-tabpanels>
+        </h-tabs>
     `
 })
 class TestPTTabsComponent {
@@ -243,31 +243,31 @@ describe('Tabs', () => {
 
     describe('Tab List Rendering', () => {
         it('should render tab list', () => {
-            const tabList = fixture.debugElement.query(By.css('p-tablist'));
+            const tabList = fixture.debugElement.query(By.css('h-tablist'));
             expect(tabList).toBeTruthy();
         });
 
         it('should render all tabs', () => {
-            const tabElements = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabElements = fixture.debugElement.queryAll(By.css('h-tab'));
             expect(tabElements.length).toBe(3);
         });
 
         it('should render tab content', () => {
-            const tabElements = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabElements = fixture.debugElement.queryAll(By.css('h-tab'));
             expect(tabElements[0].nativeElement.textContent).toContain('Tab 1');
             expect(tabElements[1].nativeElement.textContent).toContain('Tab 2');
             expect(tabElements[2].nativeElement.textContent).toContain('Tab 3');
         });
 
         it('should have correct ARIA roles', () => {
-            // The role="tablist" is on the inner div with class containing 'tabList', not on p-tablist itself
+            // The role="tablist" is on the inner div with class containing 'tabList', not on h-tablist itself
             const tabListInnerElement = fixture.debugElement.query(By.css('div[role="tablist"]'));
 
             expect(tabListInnerElement.nativeElement.getAttribute('role')).toBe('tablist');
 
             // Tab role may be on button inside tab or on tab itself
-            const tabButtons = fixture.debugElement.queryAll(By.css('p-tab button'));
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabButtons = fixture.debugElement.queryAll(By.css('h-tab button'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
 
             if (tabButtons.length > 0) {
                 expect(tabButtons[0].nativeElement.getAttribute('role')).toBe('tab');
@@ -279,12 +279,12 @@ describe('Tabs', () => {
 
     describe('Tab Panel Rendering', () => {
         it('should render tab panels container', () => {
-            const tabPanels = fixture.debugElement.query(By.css('p-tabpanels'));
+            const tabPanels = fixture.debugElement.query(By.css('h-tabpanels'));
             expect(tabPanels).toBeTruthy();
         });
 
         it('should render all tab panels', () => {
-            const panels = fixture.debugElement.queryAll(By.css('p-tabpanel'));
+            const panels = fixture.debugElement.queryAll(By.css('h-tabpanel'));
             expect(panels.length).toBe(3);
         });
 
@@ -311,7 +311,7 @@ describe('Tabs', () => {
         });
 
         it('should have correct ARIA attributes on panels', () => {
-            const tabPanels = fixture.debugElement.queryAll(By.css('p-tabpanel'));
+            const tabPanels = fixture.debugElement.queryAll(By.css('h-tabpanel'));
             const firstPanel = tabPanels[0];
 
             expect(firstPanel.nativeElement.getAttribute('role')).toBe('tabpanel');
@@ -321,7 +321,7 @@ describe('Tabs', () => {
 
     describe('Tab Navigation', () => {
         it('should activate tab on click', async () => {
-            const tab2 = fixture.debugElement.queryAll(By.css('p-tab'))[1];
+            const tab2 = fixture.debugElement.queryAll(By.css('h-tab'))[1];
 
             tab2.nativeElement.click();
             await fixture.whenStable();
@@ -336,9 +336,9 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
-            expect(tabs[1].nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(tabs[0].nativeElement.getAttribute('data-p-active')).toBe('false');
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
+            expect(tabs[1].nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(tabs[0].nativeElement.getAttribute('data-h-active')).toBe('false');
         });
 
         it('should handle programmatic value update', async () => {
@@ -363,9 +363,9 @@ describe('Tabs', () => {
                 expect(tabList.isTabActive(1)).toBe(false);
             } else {
                 // Alternative: check active state through data attributes
-                const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
-                expect(tabs[1].nativeElement.getAttribute('data-p-active')).toBe('true');
-                expect(tabs[0].nativeElement.getAttribute('data-p-active')).toBe('false');
+                const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
+                expect(tabs[1].nativeElement.getAttribute('data-h-active')).toBe('true');
+                expect(tabs[0].nativeElement.getAttribute('data-h-active')).toBe('false');
             }
         });
     });
@@ -377,8 +377,8 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tab3 = fixture.debugElement.queryAll(By.css('p-tab'))[2];
-            expect(tab3.nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            const tab3 = fixture.debugElement.queryAll(By.css('h-tab'))[2];
+            expect(tab3.nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
 
         it('should not activate disabled tabs', async () => {
@@ -388,7 +388,7 @@ describe('Tabs', () => {
             fixture.detectChanges();
 
             const initialValue = component.value;
-            const tab3 = fixture.debugElement.queryAll(By.css('p-tab'))[2];
+            const tab3 = fixture.debugElement.queryAll(By.css('h-tab'))[2];
             tab3.nativeElement.click();
             await fixture.whenStable();
             fixture.detectChanges();
@@ -403,8 +403,8 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tab3 = fixture.debugElement.queryAll(By.css('p-tab'))[2];
-            expect(tab3.nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            const tab3 = fixture.debugElement.queryAll(By.css('h-tab'))[2];
+            expect(tab3.nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
 
         it('should set correct ARIA attributes for disabled tabs', async () => {
@@ -413,8 +413,8 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tab3 = fixture.debugElement.queryAll(By.css('p-tab'))[2];
-            const tab3Button = fixture.debugElement.queryAll(By.css('p-tab'))[2].query(By.css('button'));
+            const tab3 = fixture.debugElement.queryAll(By.css('h-tab'))[2];
+            const tab3Button = fixture.debugElement.queryAll(By.css('h-tab'))[2].query(By.css('button'));
 
             // aria-disabled may be on the tab element or the button inside it
             if (tab3Button) {
@@ -429,7 +429,7 @@ describe('Tabs', () => {
         let tabs: DebugElement[];
 
         beforeEach(() => {
-            tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            tabs = fixture.debugElement.queryAll(By.css('h-tab'));
             // Focus first tab
             tabs[0].nativeElement.focus();
         });
@@ -508,7 +508,7 @@ describe('Tabs', () => {
 
             // Navigate from tab 2 with right arrow - should not go to disabled tab 3
             const rightArrowEvent = new KeyboardEvent('keydown', { code: 'ArrowRight' });
-            tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            tabs = fixture.debugElement.queryAll(By.css('h-tab'));
 
             tabs[1].nativeElement.focus();
             tabs[1].nativeElement.dispatchEvent(rightArrowEvent);
@@ -529,7 +529,7 @@ describe('Tabs', () => {
         });
 
         it('should activate tab on focus when selectOnFocus is enabled', async () => {
-            const tab2 = fixture.debugElement.queryAll(By.css('p-tab'))[1];
+            const tab2 = fixture.debugElement.queryAll(By.css('h-tab'))[1];
 
             // Simulate focus event
             tab2.nativeElement.focus();
@@ -547,7 +547,7 @@ describe('Tabs', () => {
             fixture.detectChanges();
 
             const initialValue = component.value;
-            const tab2 = fixture.debugElement.queryAll(By.css('p-tab'))[1];
+            const tab2 = fixture.debugElement.queryAll(By.css('h-tab'))[1];
 
             tab2.nativeElement.focus();
             tab2.nativeElement.dispatchEvent(new FocusEvent('focus'));
@@ -578,8 +578,8 @@ describe('Tabs', () => {
             expect(tabList.componentInstance.scrollable()).toBe(true);
 
             // Navigation buttons may or may not be rendered in test environment
-            const prevButton = scrollableFixture.debugElement.query(By.css('.p-tablist-prev-button'));
-            const nextButton = scrollableFixture.debugElement.query(By.css('.p-tablist-next-button'));
+            const prevButton = scrollableFixture.debugElement.query(By.css('.h-tablist-prev-button'));
+            const nextButton = scrollableFixture.debugElement.query(By.css('.h-tablist-next-button'));
 
             // If navigation buttons exist, they should be valid elements
             if (prevButton) {
@@ -594,7 +594,7 @@ describe('Tabs', () => {
             const tabListComponent = scrollableFixture.debugElement.query(By.directive(TabList)).componentInstance;
             spyOn(tabListComponent, 'onPrevButtonClick');
 
-            const prevButton = scrollableFixture.debugElement.query(By.css('.p-tablist-prev-button'));
+            const prevButton = scrollableFixture.debugElement.query(By.css('.h-tablist-prev-button'));
             if (prevButton) {
                 prevButton.nativeElement.click();
                 expect(tabListComponent.onPrevButtonClick).toHaveBeenCalled();
@@ -608,7 +608,7 @@ describe('Tabs', () => {
             const tabListComponent = scrollableFixture.debugElement.query(By.directive(TabList)).componentInstance;
             spyOn(tabListComponent, 'onNextButtonClick');
 
-            const nextButton = scrollableFixture.debugElement.query(By.css('.p-tablist-next-button'));
+            const nextButton = scrollableFixture.debugElement.query(By.css('.h-tablist-next-button'));
             if (nextButton) {
                 nextButton.nativeElement.click();
                 expect(tabListComponent.onNextButtonClick).toHaveBeenCalled();
@@ -758,7 +758,7 @@ describe('Tabs', () => {
 
             it('should maintain scrollable functionality with custom icons', () => {
                 const tabList = contentChildFixture.debugElement.query(By.directive(TabList));
-                const tabs = contentChildFixture.debugElement.queryAll(By.css('p-tab'));
+                const tabs = contentChildFixture.debugElement.queryAll(By.css('h-tab'));
 
                 // Should have multiple tabs for scrolling
                 expect(tabs.length).toBe(6);
@@ -768,8 +768,8 @@ describe('Tabs', () => {
             });
 
             it('should integrate custom icons with navigation buttons', () => {
-                const prevButton = contentChildFixture.debugElement.query(By.css('.p-tablist-prev-button'));
-                const nextButton = contentChildFixture.debugElement.query(By.css('.p-tablist-next-button'));
+                const prevButton = contentChildFixture.debugElement.query(By.css('.h-tablist-prev-button'));
+                const nextButton = contentChildFixture.debugElement.query(By.css('.h-tablist-next-button'));
 
                 // Buttons may or may not be rendered depending on viewport
                 if (prevButton) {
@@ -852,8 +852,8 @@ describe('Tabs', () => {
 
     describe('Accessibility', () => {
         it('should have correct ARIA attributes on tabs', () => {
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
-            const tabPanels = fixture.debugElement.queryAll(By.css('p-tabpanel'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
+            const tabPanels = fixture.debugElement.queryAll(By.css('h-tabpanel'));
 
             expect(tabs[0].nativeElement.getAttribute('role')).toBe('tab');
             expect(tabs[0].nativeElement.getAttribute('aria-controls')).toBeTruthy();
@@ -867,13 +867,13 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
             expect(tabs[1].nativeElement.getAttribute('aria-selected')).toBe('true');
             expect(tabs[0].nativeElement.getAttribute('aria-selected')).toBe('false');
         });
 
         it('should set correct tabindex for tabs', () => {
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
 
             // Active tab should have tabindex 0, others should have -1
             expect(tabs[0].nativeElement.tabIndex).toBe(0);
@@ -887,7 +887,7 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
             expect(tabs[1].nativeElement.tabIndex).toBe(0);
             expect(tabs[0].nativeElement.tabIndex).toBe(-1);
         });
@@ -895,13 +895,13 @@ describe('Tabs', () => {
 
     describe('CSS Classes and Styling', () => {
         it('should apply correct CSS classes', () => {
-            const tabsElement = fixture.debugElement.query(By.css('p-tabs'));
-            const tabListElement = fixture.debugElement.query(By.css('p-tablist'));
-            const tabElements = fixture.debugElement.queryAll(By.css('p-tab'));
+            const tabsElement = fixture.debugElement.query(By.css('h-tabs'));
+            const tabListElement = fixture.debugElement.query(By.css('h-tablist'));
+            const tabElements = fixture.debugElement.queryAll(By.css('h-tab'));
 
-            expect(tabsElement.nativeElement.className).toContain('p-tabs');
-            expect(tabListElement.nativeElement.className).toContain('p-tablist');
-            expect(tabElements[0].nativeElement.className).toContain('p-tab');
+            expect(tabsElement.nativeElement.className).toContain('h-tabs');
+            expect(tabListElement.nativeElement.className).toContain('h-tablist');
+            expect(tabElements[0].nativeElement.className).toContain('h-tab');
         });
 
         it('should apply active state classes', async () => {
@@ -910,11 +910,11 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
-            const panels = fixture.debugElement.queryAll(By.css('p-tabpanel'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
+            const panels = fixture.debugElement.queryAll(By.css('h-tabpanel'));
 
-            expect(tabs[1].nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(panels[1].nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(tabs[1].nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(panels[1].nativeElement.getAttribute('data-h-active')).toBe('true');
         });
 
         it('should apply disabled state classes', async () => {
@@ -923,17 +923,17 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tab3 = fixture.debugElement.queryAll(By.css('p-tab'))[2];
-            expect(tab3.nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            const tab3 = fixture.debugElement.queryAll(By.css('h-tab'))[2];
+            expect(tab3.nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
     });
 
     describe('Data Attributes', () => {
         it('should have correct data-pc-name attributes', () => {
-            const tabsElement = fixture.debugElement.query(By.css('p-tabs'));
-            const tabListElement = fixture.debugElement.query(By.css('p-tablist'));
-            const tabs = fixture.debugElement.queryAll(By.css('p-tab'));
-            const panels = fixture.debugElement.queryAll(By.css('p-tabpanel'));
+            const tabsElement = fixture.debugElement.query(By.css('h-tabs'));
+            const tabListElement = fixture.debugElement.query(By.css('h-tablist'));
+            const tabs = fixture.debugElement.queryAll(By.css('h-tab'));
+            const panels = fixture.debugElement.queryAll(By.css('h-tabpanel'));
 
             expect(tabsElement.nativeElement.getAttribute('data-pc-name')).toBe('tabs');
             expect(tabListElement.nativeElement.getAttribute('data-pc-name')).toBe('tablist');
@@ -947,11 +947,11 @@ describe('Tabs', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const tab2 = fixture.debugElement.queryAll(By.css('p-tab'))[1];
-            const panel2 = fixture.debugElement.queryAll(By.css('p-tabpanel'))[1];
+            const tab2 = fixture.debugElement.queryAll(By.css('h-tab'))[1];
+            const panel2 = fixture.debugElement.queryAll(By.css('h-tabpanel'))[1];
 
-            expect(tab2.nativeElement.getAttribute('data-p-active')).toBe('true');
-            expect(panel2.nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(tab2.nativeElement.getAttribute('data-h-active')).toBe('true');
+            expect(panel2.nativeElement.getAttribute('data-h-active')).toBe('true');
         });
     });
 
@@ -1069,7 +1069,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
             const classList = tabsEl.nativeElement.className;
 
             expect(classList).toContain('ROOT_CLASS');
@@ -1090,7 +1090,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
 
             expect(tabsEl.nativeElement.className).toContain('PT_ROOT_CLASS');
             expect(tabsEl.nativeElement.getAttribute('data-test')).toBe('tabs-test');
@@ -1110,7 +1110,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
             const classList = tabsEl.nativeElement.className;
 
             expect(classList).toContain('PT_ROOT_CLASS');
@@ -1131,7 +1131,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
             ptTabs = ptFixture.debugElement.query(By.directive(Tabs)).componentInstance;
 
             expect(tabsEl.nativeElement.className).toContain('NON_SCROLLABLE');
@@ -1152,7 +1152,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
             tabsEl.nativeElement.click();
 
             expect(clicked).toBe(true);
@@ -1165,7 +1165,7 @@ describe('Tabs', () => {
             await ptFixture.whenStable();
             ptFixture.detectChanges();
 
-            const tabsEl = ptFixture.debugElement.query(By.css('p-tabs'));
+            const tabsEl = ptFixture.debugElement.query(By.css('h-tabs'));
 
             expect(tabsEl.nativeElement.className).toContain('SETINPUT_ROOT_CLASS');
         });

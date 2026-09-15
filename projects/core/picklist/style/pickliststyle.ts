@@ -3,12 +3,12 @@ import { style } from './picklist.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-picklist p-component'],
-    sourceControls: 'p-picklist-controls p-picklist-source-controls',
-    sourceListContainer: 'p-picklist-list-container p-picklist-source-list-container',
-    transferControls: 'p-picklist-controls p-picklist-transfer-controls',
-    targetListContainer: 'p-picklist-list-container p-picklist-target-list-container',
-    targetControls: 'p-picklist-controls p-picklist-target-controls'
+    root: () => ['h-picklist h-component'],
+    sourceControls: 'h-picklist-controls h-picklist-source-controls',
+    sourceListContainer: 'h-picklist-list-container h-picklist-source-list-container',
+    transferControls: 'h-picklist-controls h-picklist-transfer-controls',
+    targetListContainer: 'h-picklist-list-container h-picklist-target-list-container',
+    targetControls: 'h-picklist-controls h-picklist-target-controls'
 };
 
 @Injectable()
@@ -34,27 +34,27 @@ export enum PickListClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-picklist',
+    root = 'h-picklist',
     /**
      * Class name of the source controls element
      */
-    sourceControls = 'p-picklist-source-controls',
+    sourceControls = 'h-picklist-source-controls',
     /**
      * Class name of the source list container element
      */
-    sourceListContainer = 'p-picklist-source-list-container',
+    sourceListContainer = 'h-picklist-source-list-container',
     /**
      * Class name of the transfer controls element
      */
-    transferControls = 'p-picklist-transfer-controls',
+    transferControls = 'h-picklist-transfer-controls',
     /**
      * Class name of the target list container element
      */
-    targetListContainer = 'p-picklist-target-list-container',
+    targetListContainer = 'h-picklist-target-list-container',
     /**
      * Class name of the target controls element
      */
-    targetControls = 'p-picklist-target-controls'
+    targetControls = 'h-picklist-target-controls'
 }
 
 export interface PickListStyle extends BaseStyle {}

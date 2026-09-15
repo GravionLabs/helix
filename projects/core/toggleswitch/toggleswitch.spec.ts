@@ -258,7 +258,7 @@ describe('ToggleSwitch', () => {
                 expect(customHandle).toBeTruthy();
                 expect(customHandle.nativeElement.textContent.trim()).toBe('Prime Handle');
             } else {
-                const toggleSwitch = primeTemplateFixture.debugElement.query(By.css('p-toggleswitch')).componentInstance;
+                const toggleSwitch = primeTemplateFixture.debugElement.query(By.css('h-toggleswitch')).componentInstance;
                 expect(toggleSwitch).toBeTruthy();
             }
         });
@@ -276,7 +276,7 @@ describe('ToggleSwitch', () => {
 
         it('should handle template processing in ngAfterContentInit', () => {
             const primeTemplateFixture = TestBed.createComponent(TestHelixTemplateToggleSwitchComponent);
-            const toggleSwitchInstance = primeTemplateFixture.debugElement.query(By.css('p-toggleswitch')).componentInstance;
+            const toggleSwitchInstance = primeTemplateFixture.debugElement.query(By.css('h-toggleswitch')).componentInstance;
 
             primeTemplateFixture.detectChanges();
 
@@ -339,7 +339,7 @@ describe('ToggleSwitch', () => {
         });
 
         it('should focus input element after click', () => {
-            const toggleSwitch = testFixture.debugElement.query(By.css('p-toggleswitch')).componentInstance;
+            const toggleSwitch = testFixture.debugElement.query(By.css('h-toggleswitch')).componentInstance;
 
             if (toggleSwitch && toggleSwitch.input) {
                 spyOn(toggleSwitch.input.nativeElement, 'focus');
@@ -376,7 +376,7 @@ describe('ToggleSwitch', () => {
         });
 
         it('should update aria-checked when state changes', () => {
-            const toggleSwitchComponent = testFixture.debugElement.query(By.css('p-toggleswitch')).componentInstance;
+            const toggleSwitchComponent = testFixture.debugElement.query(By.css('h-toggleswitch')).componentInstance;
 
             // Set checked state through the component's model
             toggleSwitchComponent.writeModelValue(true);
@@ -621,7 +621,7 @@ describe('ToggleSwitch', () => {
 @Component({
     standalone: false,
     template: `
-        <p-toggleswitch [(ngModel)]="checked" [readonly]="readonly" [disabled]="disabled" [autofocus]="autofocus" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" [tabindex]="tabindex" (onChange)="onToggleChange($event)"> </p-toggleswitch>
+        <h-toggleswitch [(ngModel)]="checked" [readonly]="readonly" [disabled]="disabled" [autofocus]="autofocus" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" [tabindex]="tabindex" (onChange)="onToggleChange($event)"> </h-toggleswitch>
     `
 })
 class TestBasicToggleSwitchComponent {
@@ -640,7 +640,7 @@ class TestBasicToggleSwitchComponent {
     standalone: false,
     template: `
         <form [formGroup]="form">
-            <p-toggleswitch formControlName="toggleValue"></p-toggleswitch>
+            <h-toggleswitch formControlName="toggleValue"></h-toggleswitch>
         </form>
     `
 })
@@ -653,11 +653,11 @@ class TestFormToggleSwitchComponent {
 @Component({
     standalone: false,
     template: `
-        <p-toggleswitch [(ngModel)]="checked">
+        <h-toggleswitch [(ngModel)]="checked">
             <ng-template #handle let-checked="checked">
                 <div class="custom-handle-content">Custom Handle</div>
             </ng-template>
-        </p-toggleswitch>
+        </h-toggleswitch>
     `
 })
 class TestTemplateToggleSwitchComponent {
@@ -667,11 +667,11 @@ class TestTemplateToggleSwitchComponent {
 @Component({
     standalone: false,
     template: `
-        <p-toggleswitch [(ngModel)]="checked">
+        <h-toggleswitch [(ngModel)]="checked">
             <ng-template pTemplate="handle" let-checked="checked">
                 <div class="prime-template-handle">Prime Handle</div>
             </ng-template>
-        </p-toggleswitch>
+        </h-toggleswitch>
     `
 })
 class TestHelixTemplateToggleSwitchComponent {
@@ -680,7 +680,7 @@ class TestHelixTemplateToggleSwitchComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-toggleswitch [required]="required"></p-toggleswitch> `
+    template: ` <h-toggleswitch [required]="required"></h-toggleswitch> `
 })
 class TestRequiredToggleSwitchComponent {
     required: boolean = false;
@@ -688,7 +688,7 @@ class TestRequiredToggleSwitchComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-toggleswitch [name]="name"></p-toggleswitch> `
+    template: ` <h-toggleswitch [name]="name"></h-toggleswitch> `
 })
 class TestNamedToggleSwitchComponent {
     name: string = '';
@@ -699,7 +699,7 @@ class TestNamedToggleSwitchComponent {
     standalone: true,
     imports: [ToggleSwitch, FormsModule, CommonModule, SharedModule],
     template: `
-        <p-toggleswitch [(ngModel)]="checked">
+        <h-toggleswitch [(ngModel)]="checked">
             <!-- Handle template with pTemplate -->
             <ng-template pTemplate="handle" let-checked="checked">
                 <span class="custom-template-handle" [attr.data-testid]="'ptemplate-handle-' + (checked ? 'on' : 'off')" [title]="checked ? 'Template Handle On' : 'Template Handle Off'">
@@ -707,7 +707,7 @@ class TestNamedToggleSwitchComponent {
                     {{ checked ? 'ON' : 'OFF' }}
                 </span>
             </ng-template>
-        </p-toggleswitch>
+        </h-toggleswitch>
     `
 })
 class TestToggleSwitchPTemplateComponent {
@@ -719,7 +719,7 @@ class TestToggleSwitchPTemplateComponent {
     standalone: true,
     imports: [ToggleSwitch, FormsModule, CommonModule, SharedModule],
     template: `
-        <p-toggleswitch [(ngModel)]="checked">
+        <h-toggleswitch [(ngModel)]="checked">
             <!-- Handle template with #template reference -->
             <ng-template #handle let-checked="checked">
                 <span class="custom-ref-handle" [attr.data-testid]="'ref-handle-' + (checked ? 'on' : 'off')" [title]="checked ? 'Reference Handle On' : 'Reference Handle Off'">
@@ -727,7 +727,7 @@ class TestToggleSwitchPTemplateComponent {
                     {{ checked ? 'ACTIVE' : 'INACTIVE' }}
                 </span>
             </ng-template>
-        </p-toggleswitch>
+        </h-toggleswitch>
     `
 })
 class TestToggleSwitchRefTemplateComponent {
@@ -931,7 +931,7 @@ describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
             imports: [ToggleSwitch, FormsModule],
-            template: `<p-toggleswitch [(ngModel)]="checked" [pt]="pt"></p-toggleswitch>`
+            template: `<h-toggleswitch [(ngModel)]="checked" [pt]="pt"></h-toggleswitch>`
         })
         class TestPTCase1Component {
             checked: boolean = false;
@@ -954,10 +954,10 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             const input = fixture.debugElement.query(By.css('input'));
-            const slider = fixture.debugElement.query(By.css('.p-toggleswitch-slider'));
-            const handle = fixture.debugElement.query(By.css('.p-toggleswitch-handle'));
+            const slider = fixture.debugElement.query(By.css('.h-toggleswitch-slider'));
+            const handle = fixture.debugElement.query(By.css('.h-toggleswitch-handle'));
 
             expect(toggleSwitchRoot.classList.contains('ROOT_CLASS')).toBe(true);
             if (input) expect(input.nativeElement.classList.contains('INPUT_CLASS')).toBe(true);
@@ -970,7 +970,7 @@ describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
             imports: [ToggleSwitch, FormsModule],
-            template: `<p-toggleswitch [(ngModel)]="checked" [pt]="pt"></p-toggleswitch>`
+            template: `<h-toggleswitch [(ngModel)]="checked" [pt]="pt"></h-toggleswitch>`
         })
         class TestPTCase2Component {
             checked: boolean = true;
@@ -1006,10 +1006,10 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             const input = fixture.debugElement.query(By.css('input'));
-            const slider = fixture.debugElement.query(By.css('.p-toggleswitch-slider'));
-            const handle = fixture.debugElement.query(By.css('.p-toggleswitch-handle'));
+            const slider = fixture.debugElement.query(By.css('.h-toggleswitch-slider'));
+            const handle = fixture.debugElement.query(By.css('.h-toggleswitch-handle'));
 
             expect(toggleSwitchRoot.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
             expect(toggleSwitchRoot.style.backgroundColor).toBe('lightblue');
@@ -1036,7 +1036,7 @@ describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
             imports: [ToggleSwitch, FormsModule],
-            template: `<p-toggleswitch [(ngModel)]="checked" [pt]="pt"></p-toggleswitch>`
+            template: `<h-toggleswitch [(ngModel)]="checked" [pt]="pt"></h-toggleswitch>`
         })
         class TestPTCase3Component {
             checked: boolean = false;
@@ -1063,10 +1063,10 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             const input = fixture.debugElement.query(By.css('input'));
-            const slider = fixture.debugElement.query(By.css('.p-toggleswitch-slider'));
-            const handle = fixture.debugElement.query(By.css('.p-toggleswitch-handle'));
+            const slider = fixture.debugElement.query(By.css('.h-toggleswitch-slider'));
+            const handle = fixture.debugElement.query(By.css('.h-toggleswitch-handle'));
 
             expect(toggleSwitchRoot.classList.contains('ROOT_STRING_CLASS')).toBe(true);
 
@@ -1088,7 +1088,7 @@ describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
             imports: [ToggleSwitch, FormsModule],
-            template: `<p-toggleswitch [(ngModel)]="checked" [disabled]="disabled" [pt]="pt"></p-toggleswitch>`
+            template: `<h-toggleswitch [(ngModel)]="checked" [disabled]="disabled" [pt]="pt"></h-toggleswitch>`
         })
         class TestPTCase4Component {
             checked: boolean = false;
@@ -1120,8 +1120,8 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
-            const slider = fixture.debugElement.query(By.css('.p-toggleswitch-slider'));
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
+            const slider = fixture.debugElement.query(By.css('.h-toggleswitch-slider'));
 
             expect(toggleSwitchRoot.classList.contains('UNCHECKED_CLASS') || toggleSwitchRoot.classList.contains('CHECKED_CLASS')).toBe(true);
 
@@ -1146,7 +1146,7 @@ describe('PassThrough (PT) Tests', () => {
         @Component({
             standalone: true,
             imports: [ToggleSwitch, FormsModule],
-            template: `<p-toggleswitch [(ngModel)]="checked" [pt]="pt"></p-toggleswitch>`
+            template: `<h-toggleswitch [(ngModel)]="checked" [pt]="pt"></h-toggleswitch>`
         })
         class TestPTCase5Component {
             checked: boolean = false;
@@ -1174,7 +1174,7 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const slider = fixture.debugElement.query(By.css('.p-toggleswitch-slider'));
+            const slider = fixture.debugElement.query(By.css('.h-toggleswitch-slider'));
 
             if (slider) {
                 slider.nativeElement.click();
@@ -1189,7 +1189,7 @@ describe('PassThrough (PT) Tests', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleSwitch, FormsModule],
-                template: `<p-toggleswitch [(ngModel)]="checked" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-toggleswitch>`
+                template: `<h-toggleswitch [(ngModel)]="checked" [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-toggleswitch>`
             })
             class TestInlineComponent {
                 checked: boolean = false;
@@ -1205,7 +1205,7 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             expect(toggleSwitchRoot.classList.contains('INLINE_ROOT_CLASS')).toBe(true);
         });
 
@@ -1213,7 +1213,7 @@ describe('PassThrough (PT) Tests', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleSwitch, FormsModule],
-                template: `<p-toggleswitch [(ngModel)]="checked" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></p-toggleswitch>`
+                template: `<h-toggleswitch [(ngModel)]="checked" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid red' } } }"></h-toggleswitch>`
             })
             class TestInlineObjectComponent {
                 checked: boolean = false;
@@ -1229,7 +1229,7 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             expect(toggleSwitchRoot.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
             expect(toggleSwitchRoot.style.border).toBe('2px solid red');
         });
@@ -1240,7 +1240,7 @@ describe('PassThrough (PT) Tests', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleSwitch, FormsModule],
-                template: `<p-toggleswitch [(ngModel)]="checked1"></p-toggleswitch><p-toggleswitch [(ngModel)]="checked2"></p-toggleswitch>`
+                template: `<h-toggleswitch [(ngModel)]="checked1"></h-toggleswitch><h-toggleswitch [(ngModel)]="checked2"></h-toggleswitch>`
             })
             class TestGlobalPTComponent {
                 checked1: boolean = false;
@@ -1271,13 +1271,13 @@ describe('PassThrough (PT) Tests', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const toggleSwitches = fixture.debugElement.queryAll(By.css('p-toggleswitch'));
+            const toggleSwitches = fixture.debugElement.queryAll(By.css('h-toggleswitch'));
             expect(toggleSwitches.length).toBe(2);
 
             toggleSwitches.forEach((toggleSwitch) => {
                 const toggleSwitchRoot = toggleSwitch.nativeElement;
                 const input = toggleSwitch.query(By.css('input'));
-                const slider = toggleSwitch.query(By.css('.p-toggleswitch-slider'));
+                const slider = toggleSwitch.query(By.css('.h-toggleswitch-slider'));
 
                 expect(toggleSwitchRoot.getAttribute('data-test')).toBe('global-toggleswitch');
 
@@ -1300,7 +1300,7 @@ describe('PassThrough (PT) Tests', () => {
             @Component({
                 standalone: true,
                 imports: [ToggleSwitch, FormsModule],
-                template: `<p-toggleswitch [(ngModel)]="checked" [pt]="pt"></p-toggleswitch>`
+                template: `<h-toggleswitch [(ngModel)]="checked" [pt]="pt"></h-toggleswitch>`
             })
             class TestHooksComponent {
                 checked: boolean = false;
@@ -1329,7 +1329,7 @@ describe('PassThrough (PT) Tests', () => {
 
             expect(hookCalls).toContain('onAfterViewInit');
 
-            const toggleSwitchRoot = fixture.debugElement.query(By.css('p-toggleswitch')).nativeElement;
+            const toggleSwitchRoot = fixture.debugElement.query(By.css('h-toggleswitch')).nativeElement;
             expect(toggleSwitchRoot.classList.contains('MY-TOGGLESWITCH')).toBe(true);
 
             fixture.destroy();

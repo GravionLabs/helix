@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const css = /*css*/ `
-.p-virtualscroller {
+.h-virtualscroller {
     position: relative;
     overflow: auto;
     contain: strict;
@@ -11,7 +11,7 @@ const css = /*css*/ `
     outline: 0 none;
 }
 
-.p-virtualscroller-content {
+.h-virtualscroller-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -20,7 +20,7 @@ const css = /*css*/ `
     will-change: transform;
 }
 
-.p-virtualscroller-spacer {
+.h-virtualscroller-spacer {
     position: absolute;
     top: 0;
     left: 0;
@@ -30,7 +30,7 @@ const css = /*css*/ `
     pointer-events: none;
 }
 
-.p-virtualscroller-loader {
+.h-virtualscroller-loader {
     position: sticky;
     top: 0;
     left: 0;
@@ -40,45 +40,45 @@ const css = /*css*/ `
     color: dt('virtualscroller.loader.mask.color');
 }
 
-.p-virtualscroller-loader-mask {
+.h-virtualscroller-loader-mask {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.p-virtualscroller-loading-icon {
+.h-virtualscroller-loading-icon {
     font-size: dt('virtualscroller.loader.icon.size');
     width: dt('virtualscroller.loader.icon.size');
     height: dt('virtualscroller.loader.icon.size');
 }
 
-.p-virtualscroller-horizontal > .p-virtualscroller-content {
+.h-virtualscroller-horizontal > .h-virtualscroller-content {
     display: flex;
 }
 
-.p-virtualscroller-inline .p-virtualscroller-content {
+.h-virtualscroller-inline .h-virtualscroller-content {
     position: static;
 }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-virtualscroller',
+        'h-virtualscroller',
         {
-            'p-virtualscroller-inline': instance.inline,
-            'p-virtualscroller-both p-both-scroll': instance.both,
-            'p-virtualscroller-horizontal p-horizontal-scroll': instance.horizontal
+            'h-virtualscroller-inline': instance.inline,
+            'h-virtualscroller-both h-both-scroll': instance.both,
+            'h-virtualscroller-horizontal h-horizontal-scroll': instance.horizontal
         }
     ],
-    content: 'p-virtualscroller-content',
-    spacer: 'p-virtualscroller-spacer',
+    content: 'h-virtualscroller-content',
+    spacer: 'h-virtualscroller-spacer',
     loader: ({ instance }) => [
-        'p-virtualscroller-loader',
+        'h-virtualscroller-loader',
         {
-            'p-virtualscroller-loader-mask': !instance.loaderTemplate
+            'h-virtualscroller-loader-mask': !instance.loaderTemplate
         }
     ],
-    loadingIcon: 'p-virtualscroller-loading-icon'
+    loadingIcon: 'h-virtualscroller-loading-icon'
 };
 
 @Injectable()
@@ -103,23 +103,23 @@ export enum ScrollerClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-virtualscroller',
+    root = 'h-virtualscroller',
     /**
      * Class name of the content element
      */
-    content = 'p-virtualscroller-content',
+    content = 'h-virtualscroller-content',
     /**
      * Class name of the spacer element
      */
-    spacer = 'p-virtualscroller-spacer',
+    spacer = 'h-virtualscroller-spacer',
     /**
      * Class name of the loader element
      */
-    loader = 'p-virtualscroller-loader',
+    loader = 'h-virtualscroller-loader',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-virtualscroller-loading-icon'
+    loadingIcon = 'h-virtualscroller-loading-icon'
 }
 
 export interface ScrollerStyle extends BaseStyle {}

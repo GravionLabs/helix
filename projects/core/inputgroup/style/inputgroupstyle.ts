@@ -7,42 +7,42 @@ const style = /*css*/ `
 
     /*For Helix*/
 
-    .p-inputgroup > .p-component,
-    .p-inputgroup > .p-inputwrapper > .p-component,
-    .p-inputgroup:first-child > p-button > .p-button,
-    .p-inputgroup > .p-floatlabel > .p-component,
-    .p-inputgroup > .p-floatlabel > .p-inputwrapper > .p-component,
-    .p-inputgroup > .p-iftalabel > .p-component,
-    .p-inputgroup > .p-iftalabel > .p-inputwrapper > .p-component {
+    .h-inputgroup > .h-component,
+    .h-inputgroup > .h-inputwrapper > .h-component,
+    .h-inputgroup:first-child > h-button > .h-button,
+    .h-inputgroup > .h-floatlabel > .h-component,
+    .h-inputgroup > .h-floatlabel > .h-inputwrapper > .h-component,
+    .h-inputgroup > .h-iftalabel > .h-component,
+    .h-inputgroup > .h-iftalabel > .h-inputwrapper > .h-component {
         border-radius: 0;
         margin: 0;
     }
 
-    .p-inputgroup p-button:first-child,
-    .p-inputgroup p-button:last-child {
+    .h-inputgroup h-button:first-child,
+    .h-inputgroup h-button:last-child {
         display: inline-flex;
     }
 
-    .p-inputgroup:has(> p-button:first-child) .p-button {
+    .h-inputgroup:has(> h-button:first-child) .h-button {
         border-start-start-radius: dt('inputgroup.addon.border.radius');
         border-end-start-radius: dt('inputgroup.addon.border.radius');
     }
 
-    .p-inputgroup:has(> p-button:last-child) .p-button {
+    .h-inputgroup:has(> h-button:last-child) .h-button {
         border-start-end-radius: dt('inputgroup.addon.border.radius');
         border-end-end-radius: dt('inputgroup.addon.border.radius');
     }
 
-    .p-inputgroup > p-inputmask > .p-inputtext {
+    .h-inputgroup > h-inputmask > .h-inputtext {
         width: 100%;
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-inputgroup',
+        'h-inputgroup',
         {
-            'p-inputgroup-fluid': instance.fluid
+            'h-inputgroup-fluid': instance.fluid
         }
     ]
 };
@@ -70,7 +70,7 @@ export enum InputGroupClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-inputgroup'
+    root = 'h-inputgroup'
 }
 
 export interface InputGroupStyle extends BaseStyle {}

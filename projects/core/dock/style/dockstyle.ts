@@ -4,24 +4,24 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-dock p-component',
-        `p-dock-${instance.position()}`,
+        'h-dock h-component',
+        `h-dock-${instance.position()}`,
         {
-            'p-dock-mobile': instance.queryMatches()
+            'h-dock-mobile': instance.queryMatches()
         }
     ],
-    listContainer: 'p-dock-list-container',
-    list: 'p-dock-list',
+    listContainer: 'h-dock-list-container',
+    list: 'h-dock-list',
     item: ({ instance, item, id }) => [
-        'p-dock-item',
+        'h-dock-item',
         {
-            'p-focus': instance.isItemActive(id),
-            'p-disabled': instance.disabled(item)
+            'h-focus': instance.isItemActive(id),
+            'h-disabled': instance.disabled(item)
         }
     ],
-    itemContent: 'p-dock-item-content',
-    itemLink: 'p-dock-item-link',
-    itemIcon: 'p-dock-item-icon'
+    itemContent: 'h-dock-item-content',
+    itemLink: 'h-dock-item-link',
+    itemIcon: 'h-dock-item-icon'
 };
 
 @Injectable()
@@ -46,31 +46,31 @@ export enum DockClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-dock',
+    root = 'h-dock',
     /**
      * Class name of the list container element
      */
-    listContainer = 'p-dock-list-container',
+    listContainer = 'h-dock-list-container',
     /**
      * Class name of the list element
      */
-    list = 'p-dock-list',
+    list = 'h-dock-list',
     /**
      * Class name of the item element
      */
-    item = 'p-dock-item',
+    item = 'h-dock-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-dock-item-content',
+    itemContent = 'h-dock-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-dock-item-link',
+    itemLink = 'h-dock-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-dock-item-icon'
+    itemIcon = 'h-dock-item-icon'
 }
 
 export interface DockStyle extends BaseStyle {}

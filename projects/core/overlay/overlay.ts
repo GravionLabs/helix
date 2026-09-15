@@ -376,7 +376,7 @@ export class Overlay extends BaseComponent {
         this.handleEvents('onShow', { overlay: overlay || this.overlayEl, target: this.targetEl, mode: this.overlayMode });
 
         isFocus && focus(this.targetEl);
-        this.modal && addClass(this.document?.body, 'p-overflow-hidden');
+        this.modal && addClass(this.document?.body, 'h-overflow-hidden');
     }
 
     hide(overlay?: HTMLElement, isFocus: boolean = false) {
@@ -386,7 +386,7 @@ export class Overlay extends BaseComponent {
             this.onVisibleChange(false);
             this.handleEvents('onHide', { overlay: overlay || this.overlayEl, target: this.targetEl, mode: this.overlayMode });
             isFocus && focus(this.targetEl as any);
-            this.modal && removeClass(this.document?.body, 'p-overflow-hidden');
+            this.modal && removeClass(this.document?.body, 'h-overflow-hidden');
         }
     }
 

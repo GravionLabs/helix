@@ -420,7 +420,7 @@ describe('Tooltip', () => {
 
         it('should find correct target element', () => {
             const mockElement = document.createElement('div');
-            mockElement.classList.add('p-inputwrapper');
+            mockElement.classList.add('h-inputwrapper');
             const input = document.createElement('input');
             mockElement.appendChild(input);
 
@@ -428,7 +428,7 @@ describe('Tooltip', () => {
             expect(target!.tagName.toLowerCase()).toBe('input');
         });
 
-        it('should return element itself if not p-inputwrapper', () => {
+        it('should return element itself if not h-inputwrapper', () => {
             const mockElement = document.createElement('button');
 
             const target = tooltipDirective.getTarget(mockElement);
@@ -689,7 +689,7 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip');
+            const tooltipContainer = document.querySelector('.h-tooltip');
             expect(tooltipContainer?.classList.contains('ROOT_CLASS')).toBeTruthy();
 
             tooltipDirective.deactivate();
@@ -709,9 +709,9 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip');
-            const tooltipArrow = document.querySelector('.p-tooltip-arrow');
-            const tooltipText = document.querySelector('.p-tooltip-text');
+            const tooltipContainer = document.querySelector('.h-tooltip');
+            const tooltipArrow = document.querySelector('.h-tooltip-arrow');
+            const tooltipText = document.querySelector('.h-tooltip-text');
 
             expect(tooltipContainer?.classList.contains('ROOT_CLASS')).toBeTruthy();
             expect(tooltipArrow?.classList.contains('ARROW_CLASS')).toBeTruthy();
@@ -738,7 +738,7 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip') as HTMLElement;
+            const tooltipContainer = document.querySelector('.h-tooltip') as HTMLElement;
 
             expect(tooltipContainer?.classList.contains('PT_ROOT_CLASS')).toBeTruthy();
             expect(tooltipContainer?.style.backgroundColor).toBe('yellow');
@@ -768,8 +768,8 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip') as HTMLElement;
-            const tooltipText = document.querySelector('.p-tooltip-text') as HTMLElement;
+            const tooltipContainer = document.querySelector('.h-tooltip') as HTMLElement;
+            const tooltipText = document.querySelector('.h-tooltip-text') as HTMLElement;
 
             expect(tooltipContainer?.classList.contains('ROOT_PT_CLASS')).toBeTruthy();
             expect(tooltipContainer?.style.border).toBe('2px solid blue');
@@ -796,8 +796,8 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip');
-            const tooltipArrow = document.querySelector('.p-tooltip-arrow');
+            const tooltipContainer = document.querySelector('.h-tooltip');
+            const tooltipArrow = document.querySelector('.h-tooltip-arrow');
 
             expect(tooltipContainer?.classList.contains('SIMPLE_ROOT_CLASS')).toBeTruthy();
             expect(tooltipArrow?.classList.contains('OBJECT_ARROW_CLASS')).toBeTruthy();
@@ -823,7 +823,7 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const tooltipContainer = document.querySelector('.p-tooltip') as HTMLElement;
+            const tooltipContainer = document.querySelector('.h-tooltip') as HTMLElement;
             tooltipContainer.click();
             expect(clicked).toBeTruthy();
 
@@ -847,9 +847,9 @@ describe('Tooltip', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await fixture.whenStable();
 
-            const container = document.querySelector('.p-tooltip');
-            const arrow = document.querySelector('.p-tooltip-arrow');
-            const text = document.querySelector('.p-tooltip-text');
+            const container = document.querySelector('.h-tooltip');
+            const arrow = document.querySelector('.h-tooltip-arrow');
+            const text = document.querySelector('.h-tooltip-text');
 
             expect(container?.classList.contains('ROOT_PT')).toBeTruthy();
             expect(arrow?.classList.contains('ARROW_PT')).toBeTruthy();
@@ -860,7 +860,7 @@ describe('Tooltip', () => {
 
         // Test PT attribute removal
         it('should remove attributes when PT value is null', async () => {
-            const container = document.querySelector('.p-tooltip');
+            const container = document.querySelector('.h-tooltip');
             component.pt = {
                 root: {
                     'data-test': null

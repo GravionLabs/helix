@@ -10,7 +10,7 @@ import { Scroller } from './scroller';
 @Component({
     standalone: false,
     template: `
-        <p-scroller
+        <h-scroller
             [id]="id"
             [style]="style"
             [styleClass]="styleClass"
@@ -40,7 +40,7 @@ import { Scroller } from './scroller';
             (onScroll)="onScroll($event)"
             (onScrollIndexChange)="onScrollIndexChange($event)"
         >
-        </p-scroller>
+        </h-scroller>
     `
 })
 class TestBasicScrollerComponent {
@@ -91,7 +91,7 @@ class TestBasicScrollerComponent {
 @Component({
     standalone: false,
     template: `
-        <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+        <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
           <ng-template #content let-items="items" let-options="options">
             <div class="custom-content">
               @for (item of items; track item; let i = $index) {
@@ -101,7 +101,7 @@ class TestBasicScrollerComponent {
               }
             </div>
           </ng-template>
-        </p-scroller>
+        </h-scroller>
         `
 })
 class TestContentTemplateComponent {
@@ -119,7 +119,7 @@ class TestContentTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+        <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
           <ng-template #item let-item="item" let-options="options">
             <div class="item-template" [attr.data-index]="options.index">
               <span class="item-label">{{ item.label }}</span>
@@ -139,7 +139,7 @@ class TestContentTemplateComponent {
               }
             </div>
           </ng-template>
-        </p-scroller>
+        </h-scroller>
         `
 })
 class TestItemTemplateComponent {
@@ -157,7 +157,7 @@ class TestItemTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [lazy]="true" [showLoader]="true">
+        <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [lazy]="true" [showLoader]="true">
             <ng-template #loader let-options="options">
                 <div class="custom-loader" [attr.data-index]="options.index">
                     <span class="loader-text">Loading item {{ options.index }}...</span>
@@ -168,7 +168,7 @@ class TestItemTemplateComponent {
                     <i class="custom-spinner"></i>
                 </div>
             </ng-template>
-        </p-scroller>
+        </h-scroller>
     `
 })
 class TestLoaderTemplateComponent {
@@ -179,7 +179,7 @@ class TestLoaderTemplateComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [orientation]="'both'" [columns]="columns"> </p-scroller> `
+    template: ` <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [orientation]="'both'" [columns]="columns"> </h-scroller> `
 })
 class TestBothOrientationComponent {
     items = [
@@ -195,7 +195,7 @@ class TestBothOrientationComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [lazy]="true" [step]="step" (onLazyLoad)="onLazyLoad($event)"> </p-scroller> `
+    template: ` <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [lazy]="true" [step]="step" (onLazyLoad)="onLazyLoad($event)"> </h-scroller> `
 })
 class TestLazyLoadingComponent {
     items: any[] = [];
@@ -216,7 +216,7 @@ class TestLazyLoadingComponent {
 
 @Component({
     standalone: false,
-    template: ` <p-scroller [items]="dynamicItems$ | async" [itemSize]="dynamicItemSize" [scrollHeight]="dynamicScrollHeight" [orientation]="dynamicOrientation" [loading]="dynamicLoading" [disabled]="dynamicDisabled"> </p-scroller> `
+    template: ` <h-scroller [items]="dynamicItems$ | async" [itemSize]="dynamicItemSize" [scrollHeight]="dynamicScrollHeight" [orientation]="dynamicOrientation" [loading]="dynamicLoading" [disabled]="dynamicDisabled"> </h-scroller> `
 })
 class TestDynamicPropertiesComponent {
     dynamicItems$: Observable<any[]> = of([]);
@@ -1223,9 +1223,9 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [disabled]="true">
+                    <h-scroller [disabled]="true">
                         <div class="disabled-content">Disabled Scroller Content</div>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestDisabledComponent {}
@@ -1817,7 +1817,7 @@ describe('Scroller', () => {
             fixture.detectChanges();
 
             const contentOptions = scroller.getContentOptions();
-            expect(contentOptions.contentStyleClass).toContain('p-virtualscroller-loading');
+            expect(contentOptions.contentStyleClass).toContain('h-virtualscroller-loading');
         });
 
         it('should apply orientation-based behavior', async () => {
@@ -2629,7 +2629,7 @@ describe('Scroller', () => {
         @Component({
             standalone: false,
             template: `
-                <p-scroller
+                <h-scroller
                     [id]="dynamicId$ | async"
                     [style]="dynamicStyle$ | async"
                     [styleClass]="dynamicStyleClass$ | async"
@@ -2656,7 +2656,7 @@ describe('Scroller', () => {
                     [trackBy]="dynamicTrackBy$ | async"
                     [options]="dynamicOptions$ | async"
                 >
-                </p-scroller>
+                </h-scroller>
             `
         })
         class TestDynamicInputsComponent {
@@ -3298,10 +3298,10 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
                       <ng-template pTemplate="content" let-items let-options="options">
                         <div
-                          class="p-template-content"
+                          class="h-template-content"
                           [attr.data-items-count]="items?.length"
                           [attr.data-has-scroll-to]="!options.scrollTo"
                           [attr.data-has-scroll-to-index]="!options.scrollToIndex"
@@ -3309,7 +3309,7 @@ describe('Scroller', () => {
                           >
                           <div class="content-scrollable-element" [attr.data-scrollable]="options.scrollableElement">
                             @for (item of items; track item; let i = $index) {
-                              <div class="p-template-content-item" [attr.data-index]="i" [attr.data-item-id]="item.id">
+                              <div class="h-template-content-item" [attr.data-index]="i" [attr.data-item-id]="item.id">
                                 {{ item.name }}
                               </div>
                             }
@@ -3317,7 +3317,7 @@ describe('Scroller', () => {
                           <div class="content-options" [attr.data-orientation]="options.orientation" [attr.data-both]="options.both" [attr.data-horizontal]="options.horizontal" [attr.data-vertical]="options.vertical"></div>
                         </div>
                       </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                     `
             })
             class TestPTemplateContentComponent {
@@ -3335,10 +3335,10 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
                       <ng-template pTemplate="item" let-item let-options="options">
                         <div
-                          class="p-template-item"
+                          class="h-template-item"
                           [attr.data-index]="options.index"
                           [attr.data-count]="options.count"
                           [attr.data-first]="options.first"
@@ -3363,7 +3363,7 @@ describe('Scroller', () => {
                           <span class="item-meta">{{ options.index + 1 }}/{{ options.count }}</span>
                         </div>
                       </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                     `
             })
             class TestPTemplateItemComponent {
@@ -3381,10 +3381,10 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
                         <ng-template pTemplate="loader" let-options="options">
                             <div
-                                class="p-template-loader"
+                                class="h-template-loader"
                                 [attr.data-index]="options.index"
                                 [attr.data-count]="options.count"
                                 [attr.data-loading]="options.loading"
@@ -3397,7 +3397,7 @@ describe('Scroller', () => {
                                 <div class="loader-meta">{{ options.index + 1 }}/{{ options.count }}</div>
                             </div>
                         </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestPTemplateLoaderComponent {
@@ -3410,14 +3410,14 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
                         <ng-template pTemplate="loadericon" let-options="options">
-                            <div class="p-template-loader-icon" [class]="options.styleClass" [attr.data-style-class]="options.styleClass">
+                            <div class="h-template-loader-icon" [class]="options.styleClass" [attr.data-style-class]="options.styleClass">
                                 <i class="custom-loading-icon pi pi-spin pi-spinner"></i>
                                 <span class="loading-text">Loading...</span>
                             </div>
                         </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestPTemplateLoaderIconComponent {
@@ -3549,7 +3549,7 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
                       <ng-template #content let-items let-options="options">
                         <div class="hash-template-content" [attr.data-items-count]="items?.length" [attr.data-has-scroll-to]="!options.scrollTo" [attr.data-orientation]="options.orientation">
                           <div class="hash-content-list">
@@ -3560,7 +3560,7 @@ describe('Scroller', () => {
                           <div class="hash-content-meta" [attr.data-scrollable-element]="options.scrollableElement">Content rendered via #content template</div>
                         </div>
                       </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                     `
             })
             class TestHashTemplateContentComponent {
@@ -3576,7 +3576,7 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
                       <ng-template #item let-item let-options="options">
                         <div class="hash-template-item" [attr.data-index]="options.index" [attr.data-first]="options.first" [attr.data-last]="options.last">
                           <span class="hash-item-name">{{ item.name }}</span>
@@ -3589,7 +3589,7 @@ describe('Scroller', () => {
                           <span class="hash-item-position">{{ options.index }}/{{ options.count - 1 }}</span>
                         </div>
                       </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                     `
             })
             class TestHashTemplateItemComponent {
@@ -3606,7 +3606,7 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
                         <ng-template #loader let-options="options">
                             <div class="hash-template-loader" [attr.data-index]="options.index" [attr.data-loading]="options.loading">
                                 <div class="hash-loader-content">
@@ -3615,7 +3615,7 @@ describe('Scroller', () => {
                                 </div>
                             </div>
                         </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestHashTemplateLoaderComponent {
@@ -3628,14 +3628,14 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [showLoader]="true" [loading]="loading">
                         <ng-template #loadericon let-options="options">
                             <div class="hash-template-loader-icon" [class]="options.styleClass">
                                 <i class="hash-loading-icon fas fa-spinner fa-spin"></i>
                                 <span class="hash-loading-label">#Loading Icon</span>
                             </div>
                         </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestHashTemplateLoaderIconComponent {
@@ -3737,14 +3737,14 @@ describe('Scroller', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight">
                       <!-- Both pTemplate and #template should work together -->
                       <ng-template pTemplate="content" let-items let-options="options">
-                        <div class="mixed-p-template-content">
+                        <div class="mixed-h-template-content">
                           <h3>pTemplate Content ({{ items?.length }} items)</h3>
-                          <div class="p-content-items">
+                          <div class="h-content-items">
                             @for (item of items; track item) {
-                              <div class="p-content-item">{{ item.name }}</div>
+                              <div class="h-content-item">{{ item.name }}</div>
                             }
                           </div>
                         </div>
@@ -3755,7 +3755,7 @@ describe('Scroller', () => {
                           <span>#Hash Item: {{ item.name }} ({{ options.index }})</span>
                         </div>
                       </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                     `
             })
             class TestMixedTemplateComponent {
@@ -3800,7 +3800,7 @@ describe('Scroller', () => {
                 standalone: true,
                 imports: [Scroller],
                 template: `
-                    <p-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [orientation]="orientation">
+                    <h-scroller [items]="items" [itemSize]="itemSize" [scrollHeight]="scrollHeight" [orientation]="orientation">
                         <ng-template pTemplate="content" let-items let-options="options">
                             <div class="context-test-content" [attr.data-orientation]="options.orientation" [attr.data-both]="options.both" [attr.data-horizontal]="options.horizontal" [attr.data-vertical]="options.vertical">
                                 Items: {{ items?.length }}
@@ -3819,7 +3819,7 @@ describe('Scroller', () => {
                                 {{ item.name }}
                             </div>
                         </ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestContextValidationComponent {
@@ -3947,11 +3947,11 @@ describe('Scroller', () => {
             standalone: true,
             imports: [Scroller],
             template: `
-                <p-scroller [items]="items()" [itemSize]="itemSize()" [pt]="pt()" [showLoader]="showLoader()" [loading]="loading()">
+                <h-scroller [items]="items()" [itemSize]="itemSize()" [pt]="pt()" [showLoader]="showLoader()" [loading]="loading()">
                     <ng-template #item let-item>
                         <div class="item">{{ item }}</div>
                     </ng-template>
-                </p-scroller>
+                </h-scroller>
             `
         })
         class TestPTScrollerComponent {
@@ -3975,7 +3975,7 @@ describe('Scroller', () => {
 
             fixture = TestBed.createComponent(TestPTScrollerComponent);
             component = fixture.componentInstance;
-            scrollerElement = fixture.debugElement.query(By.css('p-scroller'));
+            scrollerElement = fixture.debugElement.query(By.css('h-scroller'));
             scrollerInstance = scrollerElement.componentInstance;
             fixture.detectChanges();
         });
@@ -3985,7 +3985,7 @@ describe('Scroller', () => {
                 fixture.componentRef.setInput('pt', { root: 'CUSTOM_ROOT_CLASS' });
                 fixture.detectChanges();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
                 expect(root.nativeElement.classList.contains('CUSTOM_ROOT_CLASS')).toBeTruthy();
             });
 
@@ -3993,7 +3993,7 @@ describe('Scroller', () => {
                 fixture.componentRef.setInput('pt', { content: 'CUSTOM_CONTENT_CLASS' });
                 fixture.detectChanges();
 
-                const content = fixture.debugElement.query(By.css('.p-virtualscroller-content'));
+                const content = fixture.debugElement.query(By.css('.h-virtualscroller-content'));
                 expect(content.nativeElement.classList.contains('CUSTOM_CONTENT_CLASS')).toBeTruthy();
             });
 
@@ -4001,7 +4001,7 @@ describe('Scroller', () => {
                 fixture.componentRef.setInput('pt', { spacer: 'CUSTOM_SPACER_CLASS' });
                 fixture.detectChanges();
 
-                const spacer = fixture.debugElement.query(By.css('.p-virtualscroller-spacer'));
+                const spacer = fixture.debugElement.query(By.css('.h-virtualscroller-spacer'));
                 expect(spacer?.nativeElement.classList.contains('CUSTOM_SPACER_CLASS')).toBeTruthy();
             });
 
@@ -4016,7 +4016,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const loader = fixture.debugElement.query(By.css('.p-virtualscroller-loader'));
+                const loader = fixture.debugElement.query(By.css('.h-virtualscroller-loader'));
                 expect(loader?.nativeElement.classList.contains('CUSTOM_LOADER_CLASS')).toBeTruthy();
             });
 
@@ -4031,7 +4031,7 @@ describe('Scroller', () => {
                 await fixture.whenStable();
                 fixture.detectChanges();
 
-                const loadingIcon = fixture.debugElement.query(By.css('[data-p-icon="spinner"]'));
+                const loadingIcon = fixture.debugElement.query(By.css('[data-h-icon="spinner"]'));
                 expect(loadingIcon?.nativeElement.classList.contains('CUSTOM_LOADING_ICON_CLASS')).toBeTruthy();
             });
         });
@@ -4042,16 +4042,16 @@ describe('Scroller', () => {
                     root: {
                         class: 'ROOT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
                 fixture.detectChanges();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
                 expect(root.nativeElement.classList.contains('ROOT_CLASS')).toBeTruthy();
                 expect(root.nativeElement.style.backgroundColor).toBe('red');
-                expect(root.nativeElement.getAttribute('data-p-test')).toBe('true');
+                expect(root.nativeElement.getAttribute('data-h-test')).toBe('true');
                 expect(root.nativeElement.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -4065,7 +4065,7 @@ describe('Scroller', () => {
                 });
                 fixture.detectChanges();
 
-                const content = fixture.debugElement.query(By.css('.p-virtualscroller-content'));
+                const content = fixture.debugElement.query(By.css('.h-virtualscroller-content'));
                 expect(content.nativeElement.classList.contains('CONTENT_CLASS')).toBeTruthy();
                 expect(content.nativeElement.style.padding).toBe('10px');
                 expect(content.nativeElement.getAttribute('data-content')).toBe('test');
@@ -4080,7 +4080,7 @@ describe('Scroller', () => {
                 });
                 fixture.detectChanges();
 
-                const spacer = fixture.debugElement.query(By.css('.p-virtualscroller-spacer'));
+                const spacer = fixture.debugElement.query(By.css('.h-virtualscroller-spacer'));
                 expect(spacer?.nativeElement.classList.contains('SPACER_CLASS')).toBeTruthy();
                 expect(spacer?.nativeElement.getAttribute('data-spacer')).toBe('test');
             });
@@ -4094,8 +4094,8 @@ describe('Scroller', () => {
                 });
                 fixture.detectChanges();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
-                const content = fixture.debugElement.query(By.css('.p-virtualscroller-content'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
+                const content = fixture.debugElement.query(By.css('.h-virtualscroller-content'));
 
                 expect(root.nativeElement.classList.contains('ROOT_OBJECT_CLASS')).toBeTruthy();
                 expect(content.nativeElement.classList.contains('CONTENT_STRING_CLASS')).toBeTruthy();
@@ -4124,8 +4124,8 @@ describe('Scroller', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
-                const loader = fixture.debugElement.query(By.css('.p-virtualscroller-loader'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
+                const loader = fixture.debugElement.query(By.css('.h-virtualscroller-loader'));
 
                 expect(root.nativeElement.classList.contains('IS_LOADING')).toBeTruthy();
                 expect(loader?.nativeElement.style.backgroundColor).toBe('yellow');
@@ -4144,7 +4144,7 @@ describe('Scroller', () => {
                 });
                 fixture.detectChanges();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
                 root.nativeElement.click();
 
                 expect(clicked).toBe(true);
@@ -4155,9 +4155,9 @@ describe('Scroller', () => {
             @Component({
                 standalone: true,
                 imports: [Scroller],
-                template: `<p-scroller [items]="items" [itemSize]="50" [pt]="{ root: 'INLINE_TEST_CLASS' }">
+                template: `<h-scroller [items]="items" [itemSize]="50" [pt]="{ root: 'INLINE_TEST_CLASS' }">
                     <ng-template #item let-item>{{ item }}</ng-template>
-                </p-scroller>`
+                </h-scroller>`
             })
             class TestInlinePTComponent {
                 items = ['Item 1', 'Item 2', 'Item 3'];
@@ -4167,7 +4167,7 @@ describe('Scroller', () => {
                 const inlineFixture = TestBed.createComponent(TestInlinePTComponent);
                 inlineFixture.detectChanges();
 
-                const root = inlineFixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = inlineFixture.debugElement.query(By.css('.h-virtualscroller'));
                 expect(root.nativeElement.classList.contains('INLINE_TEST_CLASS')).toBeTruthy();
             });
 
@@ -4175,9 +4175,9 @@ describe('Scroller', () => {
                 @Component({
                     standalone: true,
                     imports: [Scroller],
-                    template: `<p-scroller [items]="items" [itemSize]="50" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }">
+                    template: `<h-scroller [items]="items" [itemSize]="50" [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }">
                         <ng-template #item let-item>{{ item }}</ng-template>
-                    </p-scroller>`
+                    </h-scroller>`
                 })
                 class TestInlineObjectPTComponent {
                     items = ['Item 1', 'Item 2', 'Item 3'];
@@ -4186,7 +4186,7 @@ describe('Scroller', () => {
                 const objFixture = TestBed.createComponent(TestInlineObjectPTComponent);
                 objFixture.detectChanges();
 
-                const root = objFixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = objFixture.debugElement.query(By.css('.h-virtualscroller'));
                 expect(root.nativeElement.classList.contains('INLINE_OBJECT_CLASS')).toBeTruthy();
             });
         });
@@ -4196,12 +4196,12 @@ describe('Scroller', () => {
                 standalone: true,
                 imports: [Scroller],
                 template: `
-                    <p-scroller [items]="items1" [itemSize]="50">
+                    <h-scroller [items]="items1" [itemSize]="50">
                         <ng-template #item let-item>{{ item }}</ng-template>
-                    </p-scroller>
-                    <p-scroller [items]="items2" [itemSize]="50">
+                    </h-scroller>
+                    <h-scroller [items]="items2" [itemSize]="50">
                         <ng-template #item let-item>{{ item }}</ng-template>
-                    </p-scroller>
+                    </h-scroller>
                 `
             })
             class TestGlobalPTComponent {
@@ -4228,7 +4228,7 @@ describe('Scroller', () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.detectChanges();
 
-                const scrollers = globalFixture.debugElement.queryAll(By.css('.p-virtualscroller'));
+                const scrollers = globalFixture.debugElement.queryAll(By.css('.h-virtualscroller'));
                 expect(scrollers.length).toBe(2);
 
                 scrollers.forEach((scroller) => {
@@ -4257,12 +4257,12 @@ describe('Scroller', () => {
                 const globalFixture = TestBed.createComponent(TestGlobalPTComponent);
                 globalFixture.detectChanges();
 
-                const scrollers = globalFixture.debugElement.queryAll(By.css('.p-virtualscroller'));
+                const scrollers = globalFixture.debugElement.queryAll(By.css('.h-virtualscroller'));
                 scrollers.forEach((scroller) => {
                     expect(scroller.nativeElement.classList.contains('GLOBAL_ROOT')).toBeTruthy();
                 });
 
-                const contents = globalFixture.debugElement.queryAll(By.css('.p-virtualscroller-content'));
+                const contents = globalFixture.debugElement.queryAll(By.css('.h-virtualscroller-content'));
                 contents.forEach((content) => {
                     expect(content.nativeElement.classList.contains('GLOBAL_CONTENT')).toBeTruthy();
                 });
@@ -4320,27 +4320,27 @@ describe('Scroller', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await fixture.whenStable();
 
-                const root = fixture.debugElement.query(By.css('.p-virtualscroller'));
+                const root = fixture.debugElement.query(By.css('.h-virtualscroller'));
                 expect(root.nativeElement.classList.contains('PT_ROOT')).toBeTruthy();
                 expect(root.nativeElement.getAttribute('data-root')).toBe('test');
 
-                const content = fixture.debugElement.query(By.css('.p-virtualscroller-content'));
+                const content = fixture.debugElement.query(By.css('.h-virtualscroller-content'));
                 expect(content.nativeElement.classList.contains('PT_CONTENT')).toBeTruthy();
                 expect(content.nativeElement.getAttribute('data-content')).toBe('test');
 
-                const spacer = fixture.debugElement.query(By.css('.p-virtualscroller-spacer'));
+                const spacer = fixture.debugElement.query(By.css('.h-virtualscroller-spacer'));
                 if (spacer) {
                     expect(spacer.nativeElement.classList.contains('PT_SPACER')).toBeTruthy();
                     expect(spacer.nativeElement.getAttribute('data-spacer')).toBe('test');
                 }
 
-                const loader = fixture.debugElement.query(By.css('.p-virtualscroller-loader'));
+                const loader = fixture.debugElement.query(By.css('.h-virtualscroller-loader'));
                 if (loader) {
                     expect(loader.nativeElement.classList.contains('PT_LOADER')).toBeTruthy();
                     expect(loader.nativeElement.getAttribute('data-loader')).toBe('test');
                 }
 
-                const loadingIcon = fixture.debugElement.query(By.css('[data-p-icon="spinner"]'));
+                const loadingIcon = fixture.debugElement.query(By.css('[data-h-icon="spinner"]'));
                 if (loadingIcon) {
                     expect(loadingIcon.nativeElement.classList.contains('PT_LOADING_ICON')).toBeTruthy();
                 }

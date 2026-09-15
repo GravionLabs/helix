@@ -789,21 +789,21 @@ export class OrderList extends BaseComponent<OrderListPassThrough> {
 
                 let innerHTML = `
                     @media screen and (max-width: ${this.breakpoint()}) {
-                        .p-orderlist[${this.$attrSelector}] {
+                        .h-orderlist[${this.$attrSelector}] {
                             flex-direction: column;
                         }
 
-                        .p-orderlist[${this.$attrSelector}] .p-orderlist-controls {
+                        .h-orderlist[${this.$attrSelector}] .h-orderlist-controls {
                             padding: var(--content-padding);
                             flex-direction: row;
                         }
 
-                        .p-orderlist[${this.$attrSelector}] .p-orderlist-controls .p-button {
+                        .h-orderlist[${this.$attrSelector}] .h-orderlist-controls .h-button {
                             margin-right: var(--inline-spacing);
                             margin-bottom: 0;
                         }
 
-                        .p-orderlist[${this.$attrSelector}] .p-orderlist-controls .p-button:last-child {
+                        .h-orderlist[${this.$attrSelector}] .h-orderlist-controls .h-button:last-child {
                             margin-right: 0;
                         }
                     }

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
-.p-overlaybadge {
+.h-overlaybadge {
     position: relative;
 }
 
-.p-overlaybadge .p-badge {
+.h-overlaybadge .h-badge {
     position: absolute;
     top: 0;
     right: 0;
@@ -20,7 +20,7 @@ const style = /*css*/ `
 `;
 
 const classes = {
-    root: 'p-overlaybadge'
+    root: 'h-overlaybadge'
 };
 
 @Injectable()

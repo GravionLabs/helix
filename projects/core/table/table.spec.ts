@@ -15,7 +15,7 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [dataKey]="'id'">
+            <h-table [value]="products" [dataKey]="'id'">
                 <ng-template #header>
                     <tr>
                         <th>ID</th>
@@ -44,7 +44,7 @@ describe('Table', () => {
                         <td>{{ product.rating }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestBasicTableComponent {
@@ -60,10 +60,10 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [selection]="selectedProducts" [selectionMode]="'multiple'" [dataKey]="'id'">
+            <h-table [value]="products" [selection]="selectedProducts" [selectionMode]="'multiple'" [dataKey]="'id'">
                 <ng-template #header>
                     <tr>
-                        <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                        <th><h-tableHeaderCheckbox></h-tableHeaderCheckbox></th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>Status</th>
@@ -71,13 +71,13 @@ describe('Table', () => {
                 </ng-template>
                 <ng-template #body let-product>
                     <tr>
-                        <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
+                        <td><h-tableCheckbox [value]="product"></h-tableCheckbox></td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.price | currency }}</td>
                         <td>{{ product.inventoryStatus }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestSelectionTableComponent {
@@ -91,12 +91,12 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [sortMode]="'multiple'">
+            <h-table [value]="products" [sortMode]="'multiple'">
                 <ng-template #header>
                     <tr>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-                        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+                        <th pSortableColumn="name">Name <h-sortIcon field="name"></h-sortIcon></th>
+                        <th pSortableColumn="price">Price <h-sortIcon field="price"></h-sortIcon></th>
+                        <th pSortableColumn="category">Category <h-sortIcon field="category"></h-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template #body let-product>
@@ -106,7 +106,7 @@ describe('Table', () => {
                         <td>{{ product.category }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestSortingTableComponent {
@@ -120,24 +120,24 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [globalFilterFields]="['name', 'category']">
+            <h-table [value]="products" [globalFilterFields]="['name', 'category']">
                 <ng-template #header>
                     <tr>
                         <th>
                             Name
-                            <p-columnFilter field="name" matchMode="contains" display="menu">
+                            <h-columnFilter field="name" matchMode="contains" display="menu">
                                 <ng-template #filter let-value let-filter="filterCallback">
                                     <input type="text" [(ngModel)]="value" (ngModelChange)="filter($event)" placeholder="Search by name" />
                                 </ng-template>
-                            </p-columnFilter>
+                            </h-columnFilter>
                         </th>
                         <th>
                             Category
-                            <p-columnFilter field="category" matchMode="equals" display="menu">
+                            <h-columnFilter field="category" matchMode="equals" display="menu">
                                 <ng-template #filter let-value let-filter="filterCallback">
-                                    <p-select [(ngModel)]="value" [options]="categories" (ngModelChange)="filter($event)" placeholder="Select Category"> </p-select>
+                                    <h-select [(ngModel)]="value" [options]="categories" (ngModelChange)="filter($event)" placeholder="Select Category"> </h-select>
                                 </ng-template>
-                            </p-columnFilter>
+                            </h-columnFilter>
                         </th>
                     </tr>
                 </ng-template>
@@ -147,7 +147,7 @@ describe('Table', () => {
                         <td>{{ product.category }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestFilteringTableComponent {
@@ -165,7 +165,7 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [virtualScroll]="true" [virtualScrollItemSize]="46" [scrollHeight]="'400px'">
+            <h-table [value]="products" [virtualScroll]="true" [virtualScrollItemSize]="46" [scrollHeight]="'400px'">
                 <ng-template #header>
                     <tr>
                         <th>ID</th>
@@ -180,7 +180,7 @@ describe('Table', () => {
                         <td>{{ product.price | currency }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestVirtualScrollTableComponent {
@@ -194,7 +194,7 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products" [lazy]="true" [totalRecords]="totalRecords" [paginator]="true" [rows]="10" (onLazyLoad)="loadProducts($event)">
+            <h-table [value]="products" [lazy]="true" [totalRecords]="totalRecords" [paginator]="true" [rows]="10" (onLazyLoad)="loadProducts($event)">
                 <ng-template #header>
                     <tr>
                         <th>Name</th>
@@ -207,7 +207,7 @@ describe('Table', () => {
                         <td>{{ product.price | currency }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestLazyLoadTableComponent {
@@ -229,11 +229,11 @@ describe('Table', () => {
     @Component({
         standalone: false,
         template: `
-            <p-table [value]="products">
+            <h-table [value]="products">
                 <ng-template #caption>
-                    <div class="p-d-flex p-ai-center p-jc-between">
+                    <div class="h-d-flex h-ai-center h-jc-between">
                         <h5>Product Catalog</h5>
-                        <span class="p-input-icon-left">
+                        <span class="h-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input type="text" pInputText placeholder="Global Search" />
                         </span>
@@ -252,7 +252,7 @@ describe('Table', () => {
                     </tr>
                 </ng-template>
                 <ng-template #summary> Total Products: {{ products.length }} </ng-template>
-            </p-table>
+            </h-table>
         `
     })
     class TestTemplatesTableComponent {
@@ -290,7 +290,7 @@ describe('Table', () => {
         });
 
         it('should render table with product data', () => {
-            const tableElement = testFixture.debugElement.query(By.css('p-table'));
+            const tableElement = testFixture.debugElement.query(By.css('h-table'));
             expect(tableElement).toBeTruthy();
         });
 
@@ -306,7 +306,7 @@ describe('Table', () => {
         });
 
         it('should have correct dataKey', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.dataKey).toBe('id');
         });
     });
@@ -323,17 +323,17 @@ describe('Table', () => {
         });
 
         it('should enable multiple selection', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.selectionMode).toBe('multiple');
         });
 
         it('should render checkboxes for selection', () => {
-            const checkboxes = testFixture.debugElement.queryAll(By.css('p-tableCheckbox'));
+            const checkboxes = testFixture.debugElement.queryAll(By.css('h-tableCheckbox'));
             expect(checkboxes.length).toBe(testComponent.products.length);
         });
 
         it('should render header checkbox for select all', () => {
-            const headerCheckbox = testFixture.debugElement.query(By.css('p-tableHeaderCheckbox'));
+            const headerCheckbox = testFixture.debugElement.query(By.css('h-tableHeaderCheckbox'));
             expect(headerCheckbox).toBeTruthy();
         });
     });
@@ -350,12 +350,12 @@ describe('Table', () => {
         });
 
         it('should enable multiple sort mode', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.sortMode).toBe('multiple');
         });
 
         it('should render sort icons', () => {
-            const sortIcons = testFixture.debugElement.queryAll(By.css('p-sortIcon'));
+            const sortIcons = testFixture.debugElement.queryAll(By.css('h-sortIcon'));
             expect(sortIcons.length).toBe(3);
         });
 
@@ -377,12 +377,12 @@ describe('Table', () => {
         });
 
         it('should have global filter fields configured', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.globalFilterFields).toEqual(['name', 'category']);
         });
 
         it('should render column filters', () => {
-            const columnFilters = testFixture.debugElement.queryAll(By.css('p-columnFilter'));
+            const columnFilters = testFixture.debugElement.queryAll(By.css('h-columnFilter'));
             expect(columnFilters.length).toBe(2);
         });
     });
@@ -399,12 +399,12 @@ describe('Table', () => {
         });
 
         it('should enable virtual scrolling', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.virtualScroll).toBe(true);
         });
 
         it('should have correct virtual scroll item size', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.virtualScrollItemSize).toBe(46);
         });
 
@@ -425,18 +425,18 @@ describe('Table', () => {
         });
 
         it('should enable lazy loading', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.lazy).toBe(true);
         });
 
         it('should have correct total records', () => {
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
             expect(tableInstance.totalRecords).toBe(1000);
         });
 
         it('should emit lazy load event', () => {
             spyOn(testComponent, 'loadProducts');
-            const tableInstance = testFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = testFixture.debugElement.query(By.css('h-table')).componentInstance;
 
             tableInstance.onLazyLoad.emit({ first: 0, rows: 10 });
             expect(testComponent.loadProducts).toHaveBeenCalled();
@@ -455,7 +455,7 @@ describe('Table', () => {
         });
 
         it('should render caption template', () => {
-            const captionElement = testFixture.debugElement.query(By.css('.p-d-flex'));
+            const captionElement = testFixture.debugElement.query(By.css('.h-d-flex'));
             expect(captionElement).toBeTruthy();
         });
 
@@ -485,7 +485,7 @@ describe('Table', () => {
         });
 
         it('should handle inventory status filtering for stock management', async () => {
-            const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
 
             tableInstance.filter('INSTOCK', 'inventoryStatus', 'equals');
             await new Promise((resolve) => setTimeout(resolve, 350));
@@ -497,7 +497,7 @@ describe('Table', () => {
         });
 
         it('should sort by price for promotional planning', async () => {
-            const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
 
             tableInstance.sort({ field: 'price', order: 1 });
             await ecommerceFixture.whenStable();
@@ -507,7 +507,7 @@ describe('Table', () => {
         });
 
         it('should support price range filtering for budget constraints', async () => {
-            const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
 
             tableInstance.filter(100, 'price', 'lt');
             await new Promise((resolve) => setTimeout(resolve, 350));
@@ -528,7 +528,7 @@ describe('Table', () => {
         });
 
         it('should support CSV export for external analysis', () => {
-            const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+            const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
             spyOn(tableInstance, 'exportCSV');
 
             tableInstance.exportCSV({ selectionOnly: false });
@@ -537,23 +537,23 @@ describe('Table', () => {
 
         describe('Real-Life Scenarios - Additional Tests', () => {
             it('should handle bulk operations efficiently', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
             });
 
             it('should support complex filtering operations', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
             });
 
             it('should handle large datasets with virtual scrolling', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
                 expect(ecommerceComponent.products.length).toBeGreaterThan(0);
             });
 
             it('should maintain state across user interactions', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
                 expect(tableInstance.value).toBeDefined();
             });
@@ -563,13 +563,13 @@ describe('Table', () => {
             });
 
             it('should handle column reordering and resizing', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
                 expect(tableInstance.value).toBeDefined();
             });
 
             it('should provide advanced sorting capabilities', () => {
-                const tableInstance = ecommerceFixture.debugElement.query(By.css('p-table')).componentInstance;
+                const tableInstance = ecommerceFixture.debugElement.query(By.css('h-table')).componentInstance;
                 expect(tableInstance).toBeTruthy();
                 expect(typeof tableInstance.sort).toBe('function');
             });
@@ -649,7 +649,7 @@ describe('Table', () => {
         @Component({
             standalone: false,
             template: `
-                <p-table
+                <h-table
                     [value]="products"
                     [dataKey]="'id'"
                     [selection]="selectedProducts"
@@ -670,14 +670,14 @@ describe('Table', () => {
                     </ng-template>
                     <ng-template #header>
                         <tr>
-                            <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                            <th><h-tableHeaderCheckbox></h-tableHeaderCheckbox></th>
                             <th pReorderableColumn pResizableColumn>
                                 Name
-                                <p-columnFilter field="name" matchMode="contains" display="menu">
+                                <h-columnFilter field="name" matchMode="contains" display="menu">
                                     <ng-template #filter let-value let-filter="filterCallback">
                                         <input type="text" [(ngModel)]="value" (ngModelChange)="filter($event)" placeholder="Search" />
                                     </ng-template>
-                                </p-columnFilter>
+                                </h-columnFilter>
                             </th>
                             <th pReorderableColumn pResizableColumn>Price</th>
                             <th pReorderableColumn pResizableColumn>Category</th>
@@ -685,7 +685,7 @@ describe('Table', () => {
                     </ng-template>
                     <ng-template #body let-product let-rowIndex="rowIndex">
                         <tr [pReorderableRow]="rowIndex">
-                            <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
+                            <td><h-tableCheckbox [value]="product"></h-tableCheckbox></td>
                             <td>
                                 <span pReorderableRowHandle class="pi pi-bars"></span>
                                 {{ product.name }}
@@ -702,7 +702,7 @@ describe('Table', () => {
                     <ng-template #summary>
                         <div>Footer Summary</div>
                     </ng-template>
-                </p-table>
+                </h-table>
             `
         })
         class TestComprehensivePTComponent {
@@ -732,8 +732,8 @@ describe('Table', () => {
             const fixture = TestBed.createComponent(TestComprehensivePTComponent);
             fixture.detectChanges();
 
-            // Check that p-table element exists (host element)
-            const tableElement = fixture.nativeElement.querySelector('p-table');
+            // Check that h-table element exists (host element)
+            const tableElement = fixture.nativeElement.querySelector('h-table');
             expect(tableElement).toBeTruthy();
         });
 
@@ -1037,7 +1037,7 @@ describe('Table', () => {
             fixture.detectChanges();
 
             // Check that header checkbox exists
-            const headerCheckbox = fixture.nativeElement.querySelector('p-tableheadercheckbox');
+            const headerCheckbox = fixture.nativeElement.querySelector('h-tableheadercheckbox');
             expect(headerCheckbox).toBeTruthy();
         });
 
@@ -1052,7 +1052,7 @@ describe('Table', () => {
             fixture.detectChanges();
 
             // Check that row checkboxes exist
-            const checkboxes = fixture.nativeElement.querySelectorAll('p-tablecheckbox');
+            const checkboxes = fixture.nativeElement.querySelectorAll('h-tablecheckbox');
             expect(checkboxes.length).toBeGreaterThan(0);
         });
 
@@ -1067,7 +1067,7 @@ describe('Table', () => {
             fixture.detectChanges();
 
             // Check that column filter element exists
-            const filterEl = fixture.nativeElement.querySelector('p-columnfilter');
+            const filterEl = fixture.nativeElement.querySelector('h-columnfilter');
             expect(filterEl).toBeTruthy();
         });
 
@@ -1095,7 +1095,7 @@ describe('Table', () => {
         @Component({
             standalone: false,
             template: `
-                <p-table [value]="products" [dataKey]="'id'" editMode="cell">
+                <h-table [value]="products" [dataKey]="'id'" editMode="cell">
                     <ng-template #header>
                         <tr>
                             <th>ID</th>
@@ -1107,28 +1107,28 @@ describe('Table', () => {
                         <tr>
                             <td>{{ product.id }}</td>
                             <td [pEditableColumn]="product" [pEditableColumnField]="'name'" [pEditableColumnRowIndex]="rowIndex">
-                                <p-cellEditor>
+                                <h-cellEditor>
                                     <ng-template #input>
                                         <input pInputText type="text" [(ngModel)]="product.name" class="name-input" />
                                     </ng-template>
                                     <ng-template #output>
                                         {{ product.name }}
                                     </ng-template>
-                                </p-cellEditor>
+                                </h-cellEditor>
                             </td>
                             <td [pEditableColumn]="product" [pEditableColumnField]="'price'" [pEditableColumnRowIndex]="rowIndex">
-                                <p-cellEditor>
+                                <h-cellEditor>
                                     <ng-template #input>
                                         <input pInputText type="text" [(ngModel)]="product.price" class="price-input" />
                                     </ng-template>
                                     <ng-template #output>
                                         {{ product.price | currency }}
                                     </ng-template>
-                                </p-cellEditor>
+                                </h-cellEditor>
                             </td>
                         </tr>
                     </ng-template>
-                </p-table>
+                </h-table>
             `
         })
         class TestCellNavigationComponent {
@@ -1150,7 +1150,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             expect(editableCells.length).toBe(6); // 2 editable columns x 3 rows
         });
 
@@ -1165,7 +1165,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const nameCell = editableCells[0]; // First name cell
 
             nameCell.click();
@@ -1173,7 +1173,7 @@ describe('Table', () => {
             fixture.detectChanges();
 
             // Verify the name cell is now editing
-            const editingCell = fixture.nativeElement.querySelector('[data-p-cell-editing="true"]');
+            const editingCell = fixture.nativeElement.querySelector('[data-h-cell-editing="true"]');
             expect(editingCell).toBeTruthy();
 
             // Verify the name input is shown
@@ -1196,7 +1196,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const nameCell = editableCells[0]; // First name cell (row 1)
 
             // Open the name cell for editing
@@ -1238,7 +1238,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const priceCell = editableCells[1]; // First price cell (row 1)
 
             // Open the price cell for editing
@@ -1280,7 +1280,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const priceCellRow1 = editableCells[1]; // Price cell in row 1
             const nameCellRow2 = editableCells[2]; // Name cell in row 2
 
@@ -1310,7 +1310,7 @@ describe('Table', () => {
             expect(nameInput).toBeTruthy();
 
             // The editing cell should be in row 2
-            const editingCell = fixture.nativeElement.querySelector('[data-p-cell-editing="true"]');
+            const editingCell = fixture.nativeElement.querySelector('[data-h-cell-editing="true"]');
             expect(editingCell.parentElement).toBe(nameCellRow2.parentElement);
         });
 
@@ -1325,7 +1325,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const priceCellRow1 = editableCells[1]; // Price cell in row 1
             const nameCellRow2 = editableCells[2]; // Name cell in row 2
 
@@ -1352,7 +1352,7 @@ describe('Table', () => {
             expect(priceInput).toBeTruthy();
 
             // The editing cell should be in row 1
-            const editingCell = fixture.nativeElement.querySelector('[data-p-cell-editing="true"]');
+            const editingCell = fixture.nativeElement.querySelector('[data-h-cell-editing="true"]');
             expect(editingCell.parentElement).toBe(priceCellRow1.parentElement);
         });
 
@@ -1360,7 +1360,7 @@ describe('Table', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-table [value]="products" [dataKey]="'id'" editMode="cell">
+                    <h-table [value]="products" [dataKey]="'id'" editMode="cell">
                         <ng-template #header>
                             <tr>
                                 <th>Name</th>
@@ -1370,28 +1370,28 @@ describe('Table', () => {
                         <ng-template #body let-product let-rowIndex="rowIndex">
                             <tr>
                                 <td [pEditableColumn]="product" [pEditableColumnField]="'name'" [pEditableColumnRowIndex]="rowIndex" [pEditableColumnDisabled]="true">
-                                    <p-cellEditor>
+                                    <h-cellEditor>
                                         <ng-template #input>
                                             <input pInputText type="text" [(ngModel)]="product.name" class="name-input" />
                                         </ng-template>
                                         <ng-template #output>
                                             {{ product.name }}
                                         </ng-template>
-                                    </p-cellEditor>
+                                    </h-cellEditor>
                                 </td>
                                 <td [pEditableColumn]="product" [pEditableColumnField]="'price'" [pEditableColumnRowIndex]="rowIndex">
-                                    <p-cellEditor>
+                                    <h-cellEditor>
                                         <ng-template #input>
                                             <input pInputText type="text" [(ngModel)]="product.price" class="price-input" />
                                         </ng-template>
                                         <ng-template #output>
                                             {{ product.price | currency }}
                                         </ng-template>
-                                    </p-cellEditor>
+                                    </h-cellEditor>
                                 </td>
                             </tr>
                         </ng-template>
-                    </p-table>
+                    </h-table>
                 `
             })
             class TestDisabledCellComponent {
@@ -1408,7 +1408,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const disabledNameCell = editableCells[0];
 
             // Click on disabled cell
@@ -1421,7 +1421,7 @@ describe('Table', () => {
             expect(nameInput).toBeFalsy();
 
             // No cell should be in editing state
-            const editingCell = fixture.nativeElement.querySelector('[data-p-cell-editing="true"]');
+            const editingCell = fixture.nativeElement.querySelector('[data-h-cell-editing="true"]');
             expect(editingCell).toBeFalsy();
         });
 
@@ -1436,7 +1436,7 @@ describe('Table', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const editableCells = fixture.nativeElement.querySelectorAll('[data-p-editable-column="true"]');
+            const editableCells = fixture.nativeElement.querySelectorAll('[data-h-editable-column="true"]');
             const nameCell = editableCells[0];
 
             // Open the cell for editing
@@ -1449,12 +1449,12 @@ describe('Table', () => {
             expect(input).toBeTruthy();
 
             // The input should be a descendant of the editing cell
-            const editingCell = fixture.nativeElement.querySelector('[data-p-cell-editing="true"]');
+            const editingCell = fixture.nativeElement.querySelector('[data-h-cell-editing="true"]');
             expect(editingCell).toBeTruthy();
             expect(editingCell.contains(input)).toBe(true);
 
             // Verify the editing cell has the correct data attribute
-            expect(editingCell.querySelector('[data-p-cell-editing="true"]') || editingCell.getAttribute('data-p-cell-editing')).toBeTruthy();
+            expect(editingCell.querySelector('[data-h-cell-editing="true"]') || editingCell.getAttribute('data-h-cell-editing')).toBeTruthy();
         });
     });
 });

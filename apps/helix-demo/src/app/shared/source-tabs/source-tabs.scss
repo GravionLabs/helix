@@ -1,4 +1,4 @@
-:host ::ng-deep .p-tabpanels {
+:host ::ng-deep .h-tabpanels {
   padding: 0;
   padding-top: var(--layout-gap, 1.5rem);
   background: transparent;
@@ -6,7 +6,7 @@
 
 .source-tabs__code {
   margin: 0;
-  border-radius: var(--p-border-radius-md);
+  border-radius: var(--h-border-radius-md);
   overflow: hidden;
 
   code {

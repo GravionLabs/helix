@@ -23,10 +23,10 @@
                 >
                 @if (!chart.togglerIconTemplate() && !chart._togglerIconTemplate) {
                   @if (node().expanded) {
-                    <svg data-p-icon="chevron-down" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
+                    <svg data-h-icon="chevron-down" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
                   }
                   @if (!node().expanded) {
-                    <svg data-p-icon="chevron-up" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
+                    <svg data-h-icon="chevron-up" [class]="cx('nodeToggleButtonIcon')" [hBind]="getPTOptions('nodeToggleButtonIcon')" />
                   }
                 }
                 @if (chart.togglerIconTemplate() || chart._togglerIconTemplate) {

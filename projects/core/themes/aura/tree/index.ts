@@ -59,7 +59,7 @@ export const filter: TreeTokenSections.Filter = {
 };
 
 export const css: TreeTokenSections.CSS = /*css*/ `
-    .p-tree-mask.p-overlay-mask {
+    .h-tree-mask.h-overlay-mask {
         --px-mask-background: light-dark(rgba(255,255,255,0.5),rgba(0,0,0,0.3));
     }
 `;

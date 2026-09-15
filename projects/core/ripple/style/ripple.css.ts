@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-ink {
+    .h-ink {
         display: block;
         position: absolute;
         background: dt('ripple.background');
@@ -8,7 +8,7 @@ export const style = /*css*/ `
         pointer-events: none;
     }
 
-    .p-ink-active {
+    .h-ink-active {
         animation: ripple 0.4s linear;
     }
 

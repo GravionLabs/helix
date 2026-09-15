@@ -33,7 +33,7 @@ export const SELECTBUTTON_VALUE_ACCESSOR: any = {
         '[class]': "cx('root')",
         '[attr.role]': '"group"',
         '[attr.aria-labelledby]': 'ariaLabelledBy()',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

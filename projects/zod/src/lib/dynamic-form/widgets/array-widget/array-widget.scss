@@ -11,7 +11,7 @@
   &__label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--p-text-color);
+    color: var(--h-text-color);
   }
 
   &__item {
@@ -29,15 +29,15 @@
     padding: 0.375rem 0.75rem;
     font-family: inherit;
     font-size: 0.875rem;
-    color: var(--p-text-color);
-    background-color: var(--p-content-background);
-    border: 1px solid var(--p-content-border-color);
-    border-radius: var(--p-border-radius-md);
+    color: var(--h-text-color);
+    background-color: var(--h-content-background);
+    border: 1px solid var(--h-content-border-color);
+    border-radius: var(--h-border-radius-md);
     cursor: pointer;
     transition: border-color 0.2s;
 
     &:hover {
-      border-color: var(--p-primary-color);
+      border-color: var(--h-primary-color);
     }
   }
 
@@ -49,11 +49,11 @@
     font-size: 0.75rem;
 
     &--hint {
-      color: var(--p-text-muted-color);
+      color: var(--h-text-muted-color);
     }
 
     &--error {
-      color: var(--p-red-500);
+      color: var(--h-red-500);
     }
   }
 }

@@ -9,7 +9,7 @@ import { ContextMenu } from './contextmenu';
 @Component({
     standalone: false,
     template: `
-        <p-contextmenu
+        <h-contextmenu
             [model]="model"
             [target]="target"
             [global]="global"
@@ -25,7 +25,7 @@ import { ContextMenu } from './contextmenu';
             (onShow)="onShow($event)"
             (onHide)="onHide($event)"
         >
-        </p-contextmenu>
+        </h-contextmenu>
     `
 })
 class TestBasicContextMenuComponent {
@@ -59,7 +59,7 @@ class TestBasicContextMenuComponent {
     selector: 'test-target-contextmenu',
     template: `
         <div #targetDiv id="target-div">Target Element</div>
-        <p-contextmenu [model]="model" target="targetDiv"></p-contextmenu>
+        <h-contextmenu [model]="model" target="targetDiv"></h-contextmenu>
     `
 })
 class TestTargetContextMenuComponent {
@@ -74,7 +74,7 @@ class TestTargetContextMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-global-contextmenu',
-    template: ` <p-contextmenu [model]="model" [global]="true"></p-contextmenu> `
+    template: ` <h-contextmenu [model]="model" [global]="true"></h-contextmenu> `
 })
 class TestGlobalContextMenuComponent {
     model: MenuItem[] = [{ label: 'Global Item 1' }, { label: 'Global Item 2' }];
@@ -83,7 +83,7 @@ class TestGlobalContextMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-contextmenu [model]="nestedModel">
+        <h-contextmenu [model]="nestedModel">
           <ng-template #item let-item>
             <div class="custom-item">
               @if (item.icon) {
@@ -92,7 +92,7 @@ class TestGlobalContextMenuComponent {
               <span class="custom-label">{{ item.label }}</span>
             </div>
           </ng-template>
-        </p-contextmenu>
+        </h-contextmenu>
         `
 })
 class TestItemTemplateContextMenuComponent {
@@ -112,11 +112,11 @@ class TestItemTemplateContextMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-contextmenu [model]="model">
+        <h-contextmenu [model]="model">
             <ng-template pTemplate="item" let-item>
-                <span class="p-template-item">{{ item.label }}</span>
+                <span class="h-template-item">{{ item.label }}</span>
             </ng-template>
-        </p-contextmenu>
+        </h-contextmenu>
     `
 })
 class TestPTemplateContextMenuComponent {
@@ -126,11 +126,11 @@ class TestPTemplateContextMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-contextmenu [model]="model">
+        <h-contextmenu [model]="model">
             <ng-template #submenuicon>
                 <i class="custom-submenu-icon pi pi-angle-right"></i>
             </ng-template>
-        </p-contextmenu>
+        </h-contextmenu>
     `
 })
 class TestSubmenuIconTemplateComponent {
@@ -145,7 +145,7 @@ class TestSubmenuIconTemplateComponent {
 @Component({
     standalone: false,
     selector: 'test-router-contextmenu',
-    template: ` <p-contextmenu [model]="routerModel"></p-contextmenu> `
+    template: ` <h-contextmenu [model]="routerModel"></h-contextmenu> `
 })
 class TestRouterContextMenuComponent {
     routerModel: MenuItem[] = [
@@ -162,7 +162,7 @@ class TestRouterContextMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-contextmenu',
-    template: ` <p-contextmenu [style]="customStyle" styleClass="custom-contextmenu"></p-contextmenu> `
+    template: ` <h-contextmenu [style]="customStyle" styleClass="custom-contextmenu"></h-contextmenu> `
 })
 class TestStyledContextMenuComponent {
     customStyle = {
@@ -175,14 +175,14 @@ class TestStyledContextMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-contextmenu',
-    template: `<p-contextmenu></p-contextmenu>`
+    template: `<h-contextmenu></h-contextmenu>`
 })
 class TestMinimalContextMenuComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-contextmenu',
-    template: ` <p-contextmenu [model]="dynamicModel"></p-contextmenu> `
+    template: ` <h-contextmenu [model]="dynamicModel"></h-contextmenu> `
 })
 class TestDynamicContextMenuComponent {
     dynamicModel: MenuItem[] = [];
@@ -203,7 +203,7 @@ class TestDynamicContextMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-items-contextmenu',
-    template: ` <p-contextmenu [model]="disabledModel"></p-contextmenu> `
+    template: ` <h-contextmenu [model]="disabledModel"></h-contextmenu> `
 })
 class TestDisabledItemsComponent {
     disabledModel: MenuItem[] = [{ label: 'Enabled Item' }, { label: 'Disabled Item', disabled: true }, { separator: true }, { label: 'Another Enabled Item' }];
@@ -1235,7 +1235,7 @@ describe('ContextMenu', () => {
             @Component({
                 standalone: true,
                 imports: [ContextMenu],
-                template: `<p-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></p-contextmenu>`
+                template: `<h-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></h-contextmenu>`
             })
             class PTStringTestComponent {
                 @ViewChild('cm') contextMenu!: ContextMenu;
@@ -1278,7 +1278,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT string class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
                 expect(root).toBeTruthy();
                 expect(root.nativeElement.classList.contains('ROOT_CLASS')).toBe(true);
             });
@@ -1288,7 +1288,7 @@ describe('ContextMenu', () => {
             @Component({
                 standalone: true,
                 imports: [ContextMenu],
-                template: `<p-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></p-contextmenu>`
+                template: `<h-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></h-contextmenu>`
             })
             class PTObjectTestComponent {
                 @ViewChild('cm') contextMenu!: ContextMenu;
@@ -1303,12 +1303,12 @@ describe('ContextMenu', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red' },
-                        'data-p-test': 'true',
+                        'data-h-test': 'true',
                         'aria-label': 'TEST_ROOT_ARIA_LABEL'
                     },
                     item: {
                         class: 'ITEM_OBJECT_CLASS',
-                        'data-p-custom': 'item-data'
+                        'data-h-custom': 'item-data'
                     },
                     itemLabel: {
                         style: { color: 'blue' },
@@ -1337,22 +1337,22 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
                 expect(root.nativeElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
             });
 
             it('should apply PT object style to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
                 expect(root.nativeElement.style.backgroundColor).toBe('red');
             });
 
             it('should apply PT object data attribute to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
-                expect(root.nativeElement.getAttribute('data-p-test')).toBe('true');
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
+                expect(root.nativeElement.getAttribute('data-h-test')).toBe('true');
             });
 
             it('should apply PT object aria-label to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
                 expect(root).toBeTruthy();
                 expect(root.nativeElement.getAttribute('aria-label')).toBe('TEST_ROOT_ARIA_LABEL');
             });
@@ -1362,7 +1362,7 @@ describe('ContextMenu', () => {
             @Component({
                 standalone: true,
                 imports: [ContextMenu],
-                template: `<p-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></p-contextmenu>`
+                template: `<h-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></h-contextmenu>`
             })
             class PTMixedTestComponent {
                 @ViewChild('cm') contextMenu!: ContextMenu;
@@ -1402,7 +1402,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT mixed object class to root', () => {
-                const root = ptFixture.debugElement.query(By.css('.p-contextmenu'));
+                const root = ptFixture.debugElement.query(By.css('.h-contextmenu'));
                 expect(root).toBeTruthy();
                 expect(root.nativeElement.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
             });
@@ -1412,7 +1412,7 @@ describe('ContextMenu', () => {
             @Component({
                 standalone: true,
                 imports: [ContextMenu],
-                template: `<p-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></p-contextmenu>`
+                template: `<h-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></h-contextmenu>`
             })
             class PTBasicStringTestComponent {
                 @ViewChild('cm') contextMenu!: ContextMenu;
@@ -1452,25 +1452,25 @@ describe('ContextMenu', () => {
             });
 
             it('should apply string PT class to itemContent elements', () => {
-                const contents = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-content'));
+                const contents = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-content'));
                 expect(contents.length).toBeGreaterThan(0);
                 expect(contents[0].nativeElement.classList.contains('custom-content-class')).toBe(true);
             });
 
             it('should apply string PT class to itemLink elements', () => {
-                const links = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-link'));
+                const links = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-link'));
                 expect(links.length).toBeGreaterThan(0);
                 expect(links[0].nativeElement.classList.contains('custom-link-class')).toBe(true);
             });
 
             it('should apply string PT class to itemIcon elements', () => {
-                const icons = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-icon'));
+                const icons = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-icon'));
                 expect(icons.length).toBeGreaterThan(0);
                 expect(icons[0].nativeElement.classList.contains('custom-icon-class')).toBe(true);
             });
 
             it('should apply string PT class to itemLabel elements', () => {
-                const labels = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-label'));
+                const labels = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-label'));
                 expect(labels.length).toBeGreaterThan(0);
                 expect(labels[0].nativeElement.classList.contains('custom-label-class')).toBe(true);
             });
@@ -1480,7 +1480,7 @@ describe('ContextMenu', () => {
             @Component({
                 standalone: true,
                 imports: [ContextMenu],
-                template: `<p-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></p-contextmenu>`
+                template: `<h-contextmenu #cm [model]="model" [pt]="pt" [global]="true"></h-contextmenu>`
             })
             class PTObjectContextTestComponent {
                 @ViewChild('cm') contextMenu!: ContextMenu;
@@ -1549,7 +1549,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object to all itemContent elements', () => {
-                const contents = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-content'));
+                const contents = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-content'));
                 expect(contents.length).toBeGreaterThan(0);
 
                 contents.forEach((content) => {
@@ -1559,7 +1559,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object to all itemLink elements', () => {
-                const links = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-link'));
+                const links = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-link'));
                 expect(links.length).toBeGreaterThan(0);
 
                 links.forEach((link) => {
@@ -1569,7 +1569,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object to all itemIcon elements', () => {
-                const icons = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-icon'));
+                const icons = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-icon'));
                 expect(icons.length).toBeGreaterThan(0);
 
                 icons.forEach((icon) => {
@@ -1579,7 +1579,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object to all itemLabel elements', () => {
-                const labels = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-item-label'));
+                const labels = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-item-label'));
                 expect(labels.length).toBeGreaterThan(0);
 
                 labels.forEach((label) => {
@@ -1589,7 +1589,7 @@ describe('ContextMenu', () => {
             });
 
             it('should apply PT object to submenuIcon elements for items with children', () => {
-                const submenuIcons = ptFixture.debugElement.queryAll(By.css('.p-contextmenu-submenu-icon'));
+                const submenuIcons = ptFixture.debugElement.queryAll(By.css('.h-contextmenu-submenu-icon'));
 
                 if (submenuIcons.length > 0) {
                     submenuIcons.forEach((icon) => {

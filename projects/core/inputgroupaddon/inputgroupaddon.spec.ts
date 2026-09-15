@@ -9,9 +9,9 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [InputGroupAddon, FormsModule],
     template: `
-        <p-inputgroup-addon>
+        <h-inputgroup-addon>
             <i class="pi pi-user"></i>
-        </p-inputgroup-addon>
+        </h-inputgroup-addon>
     `
 })
 class TestBasicInputGroupAddonComponent {}
@@ -19,7 +19,7 @@ class TestBasicInputGroupAddonComponent {}
 @Component({
     standalone: true,
     imports: [InputGroupAddon, FormsModule],
-    template: ` <p-inputgroup-addon [style]="addonStyle" [styleClass]="addonClass"> $ </p-inputgroup-addon> `
+    template: ` <h-inputgroup-addon [style]="addonStyle" [styleClass]="addonClass"> $ </h-inputgroup-addon> `
 })
 class TestStyledInputGroupAddonComponent {
     addonStyle: { [key: string]: any } = { 'background-color': '#f0f0f0' };
@@ -57,7 +57,7 @@ describe('InputGroupAddon', () => {
         it('should have correct CSS class', () => {
             const addonElement = fixture.debugElement.query(By.directive(InputGroupAddon));
 
-            expect(addonElement.nativeElement.classList.contains('p-inputgroupaddon')).toBe(true);
+            expect(addonElement.nativeElement.classList.contains('h-inputgroupaddon')).toBe(true);
         });
     });
 

@@ -1,4 +1,4 @@
-<span [class]="cx('content')" [hBind]="ptm('content')" [attr.data-p]="dataP">
+<span [class]="cx('content')" [hBind]="ptm('content')" [attr.data-h]="dataP">
         <ng-container *ngTemplateOutlet="contentTemplate() || _contentTemplate; context: { $implicit: checked }"></ng-container>
         @if (!contentTemplate()) {
             @if (!iconTemplate()) {

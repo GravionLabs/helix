@@ -12,8 +12,8 @@ const mockPreviewImageSrc = 'https://primefaces.org/cdn/primeng/images/galleria/
 @Component({
     standalone: false,
     template: `
-        <p-image [src]="src" [alt]="alt" [width]="width" [height]="height" [srcSet]="srcSet" [sizes]="sizes" [loading]="loading" [imageClass]="imageClass" [imageStyle]="imageStyle" [styleClass]="styleClass" (onImageError)="onImageError($event)">
-        </p-image>
+        <h-image [src]="src" [alt]="alt" [width]="width" [height]="height" [srcSet]="srcSet" [sizes]="sizes" [loading]="loading" [imageClass]="imageClass" [imageStyle]="imageStyle" [styleClass]="styleClass" (onImageError)="onImageError($event)">
+        </h-image>
     `
 })
 class TestBasicImageComponent {
@@ -37,7 +37,7 @@ class TestBasicImageComponent {
 @Component({
     standalone: false,
     template: `
-        <p-image
+        <h-image
             [src]="src"
             [alt]="alt"
             [width]="width"
@@ -50,7 +50,7 @@ class TestBasicImageComponent {
             (onShow)="onShow($event)"
             (onHide)="onHide($event)"
         >
-        </p-image>
+        </h-image>
     `
 })
 class TestPreviewImageComponent {
@@ -77,7 +77,7 @@ class TestPreviewImageComponent {
 @Component({
     standalone: false,
     template: `
-        <p-image [src]="src" [alt]="alt" [width]="width" [preview]="true">
+        <h-image [src]="src" [alt]="alt" [width]="width" [preview]="true">
             <ng-template #indicator>
                 <i class="pi pi-search custom-indicator"></i>
             </ng-template>
@@ -102,7 +102,7 @@ class TestPreviewImageComponent {
             <ng-template #closeicon>
                 <i class="pi pi-times custom-close"></i>
             </ng-template>
-        </p-image>
+        </h-image>
     `
 })
 class TestTemplateImageComponent {
@@ -115,7 +115,7 @@ class TestTemplateImageComponent {
 @Component({
     standalone: false,
     template: `
-        <p-image [src]="src" [alt]="alt" [width]="width" [preview]="true">
+        <h-image [src]="src" [alt]="alt" [width]="width" [preview]="true">
             <ng-template pTemplate="indicator">
                 <i class="pi pi-eye ptemplate-indicator"></i>
             </ng-template>
@@ -140,7 +140,7 @@ class TestTemplateImageComponent {
             <ng-template pTemplate="closeicon">
                 <i class="pi pi-times ptemplate-close"></i>
             </ng-template>
-        </p-image>
+        </h-image>
     `
 })
 class TestPTemplateImageComponent {
@@ -242,7 +242,7 @@ describe('Image', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const maskElement = testFixture.debugElement.query(By.css('.p-image-mask, [class*="mask"]'));
+            const maskElement = testFixture.debugElement.query(By.css('.h-image-mask, [class*="mask"]'));
             expect(maskElement).toBeTruthy();
         });
 
@@ -685,7 +685,7 @@ describe('Image', () => {
                     root: {
                         class: 'COLLAPSED',
                         style: { 'background-color': 'red' },
-                        'data-p-TEST': true,
+                        'data-h-TEST': true,
                         'aria-label': 'TEST ARIA LABEL'
                     }
                 };
@@ -696,7 +696,7 @@ describe('Image', () => {
 
                 expect(testFixture.nativeElement.classList.contains('COLLAPSED')).toBe(true);
                 expect(testFixture.nativeElement.style.backgroundColor).toBe('red');
-                expect(testFixture.nativeElement.getAttribute('data-p-TEST')).toBe('true');
+                expect(testFixture.nativeElement.getAttribute('data-h-TEST')).toBe('true');
                 expect(testFixture.nativeElement.getAttribute('aria-label')).toBe('TEST ARIA LABEL');
             });
 
@@ -917,7 +917,7 @@ describe('Image', () => {
             it('should accept inline PT with string class', () => {
                 @Component({
                     standalone: false,
-                    template: `<p-image [src]="src" [pt]="{ root: 'TEST_INLINE_CLASS' }" />`
+                    template: `<h-image [src]="src" [pt]="{ root: 'TEST_INLINE_CLASS' }" />`
                 })
                 class TestInlineComponent {
                     src = mockImageSrc;
@@ -939,7 +939,7 @@ describe('Image', () => {
             it('should accept inline PT with object class', () => {
                 @Component({
                     standalone: false,
-                    template: `<p-image [src]="src" [pt]="{ root: { class: 'TEST_INLINE_OBJECT_CLASS' } }" />`
+                    template: `<h-image [src]="src" [pt]="{ root: { class: 'TEST_INLINE_OBJECT_CLASS' } }" />`
                 })
                 class TestInlineObjectComponent {
                     src = mockImageSrc;
@@ -970,8 +970,8 @@ describe('Image', () => {
                 @Component({
                     standalone: false,
                     template: `
-                        <p-image [src]="src1" />
-                        <p-image [src]="src2" />
+                        <h-image [src]="src1" />
+                        <h-image [src]="src2" />
                     `
                 })
                 class TestGlobalPTComponent {

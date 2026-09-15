@@ -142,7 +142,7 @@ export const colorScheme: TreeTableTokenSections.ColorScheme = {
 };
 
 export const css: TreeTableTokenSections.CSS = /*css*/ `
-    .p-treetable-mask.p-overlay-mask {
+    .h-treetable-mask.h-overlay-mask {
         --px-mask-background: light-dark(rgba(255,255,255,0.5),rgba(0,0,0,0.3));
     }
 `;

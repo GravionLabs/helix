@@ -12,7 +12,7 @@ import { TabsModule } from '@gravionlabs/helix-core/tabs';
 import { Highlight } from 'ngx-highlightjs';
 
 interface SourceTab {
-  /** Tab header + p-tab value. */
+  /** Tab header + h-tab value. */
   label: string;
   /** File name fetched from `/source/{directory}/{file}`. */
   file: string;

@@ -11,6 +11,8 @@ import { ZIndexUtils, UniqueComponentId, ObjectUtils, transformToNumber, transfo
 ## Functions
 
 - `helixFormErrorMap`
+- `transformToBoolean`
+- `transformToNumber`
 - `UniqueComponentId`
 
 ## Source

@@ -22,7 +22,7 @@
                [attr.tabindex]="-1"
                [attr.title]="item().title"
                [queryParams]="item().queryParams"
-               routerLinkActive="p-menu-item()-link-active"
+               routerLinkActive="h-menu-item()-link-active"
                [routerLinkActiveOptions]="item().routerLinkActiveOptions || { exact: false }"
                [class]="cn(cx('itemLink'), $safeNavigationMigration(item()?.linkClass))"
                [ngStyle]="$safeNavigationMigration(item()?.linkStyle)"

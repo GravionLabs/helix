@@ -8,7 +8,7 @@ import { Skeleton, SkeletonModule } from './skeleton';
 @Component({
     standalone: false,
     selector: 'test-basic-skeleton',
-    template: `<p-skeleton [shape]="shape" [animation]="animation" [width]="width" [height]="height"></p-skeleton>`
+    template: `<h-skeleton [shape]="shape" [animation]="animation" [width]="width" [height]="height"></h-skeleton>`
 })
 class TestBasicSkeletonComponent {
     shape = 'rectangle';
@@ -20,7 +20,7 @@ class TestBasicSkeletonComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-shapes',
-    template: ` <p-skeleton [shape]="shape" [size]="size" [borderRadius]="borderRadius" [animation]="animation"> </p-skeleton> `
+    template: ` <h-skeleton [shape]="shape" [size]="size" [borderRadius]="borderRadius" [animation]="animation"> </h-skeleton> `
 })
 class TestSkeletonShapesComponent {
     shape: string = 'rectangle';
@@ -32,7 +32,7 @@ class TestSkeletonShapesComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-dimensions',
-    template: ` <p-skeleton [width]="width" [height]="height" [size]="size" [shape]="shape" [borderRadius]="borderRadius"> </p-skeleton> `
+    template: ` <h-skeleton [width]="width" [height]="height" [size]="size" [shape]="shape" [borderRadius]="borderRadius"> </h-skeleton> `
 })
 class TestSkeletonDimensionsComponent {
     width = '200px';
@@ -45,7 +45,7 @@ class TestSkeletonDimensionsComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-animations',
-    template: ` <p-skeleton [animation]="animation" [shape]="shape"> </p-skeleton> `
+    template: ` <h-skeleton [animation]="animation" [shape]="shape"> </h-skeleton> `
 })
 class TestSkeletonAnimationsComponent {
     animation = 'wave';
@@ -55,7 +55,7 @@ class TestSkeletonAnimationsComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-styling',
-    template: ` <p-skeleton [styleClass]="styleClass" [shape]="shape" [borderRadius]="borderRadius"> </p-skeleton> `
+    template: ` <h-skeleton [styleClass]="styleClass" [shape]="shape" [borderRadius]="borderRadius"> </h-skeleton> `
 })
 class TestSkeletonStylingComponent {
     styleClass = 'custom-skeleton';
@@ -68,11 +68,11 @@ class TestSkeletonStylingComponent {
     selector: 'test-skeleton-card-layout',
     template: `
         <div class="card-skeleton">
-            <p-skeleton shape="circle" size="4rem"></p-skeleton>
+            <h-skeleton shape="circle" size="4rem"></h-skeleton>
             <div class="content">
-                <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton width="8rem" styleClass="mb-2"></p-skeleton>
-                <p-skeleton height="0.5rem" styleClass="mb-2"></p-skeleton>
+                <h-skeleton width="10rem" styleClass="mb-2"></h-skeleton>
+                <h-skeleton width="8rem" styleClass="mb-2"></h-skeleton>
+                <h-skeleton height="0.5rem" styleClass="mb-2"></h-skeleton>
             </div>
         </div>
     `
@@ -85,15 +85,15 @@ class TestSkeletonCardLayoutComponent {}
     template: `
         <div class="table-skeleton">
           <div class="table-header">
-            <p-skeleton width="100%" height="2rem" styleClass="mb-2"></p-skeleton>
+            <h-skeleton width="100%" height="2rem" styleClass="mb-2"></h-skeleton>
           </div>
           <div class="table-rows">
             @for (row of rows; track trackByFn($index, row)) {
               <div class="table-row">
-                <p-skeleton width="25%" height="1.5rem" styleClass="mr-2"></p-skeleton>
-                <p-skeleton width="25%" height="1.5rem" styleClass="mr-2"></p-skeleton>
-                <p-skeleton width="25%" height="1.5rem" styleClass="mr-2"></p-skeleton>
-                <p-skeleton width="25%" height="1.5rem"></p-skeleton>
+                <h-skeleton width="25%" height="1.5rem" styleClass="mr-2"></h-skeleton>
+                <h-skeleton width="25%" height="1.5rem" styleClass="mr-2"></h-skeleton>
+                <h-skeleton width="25%" height="1.5rem" styleClass="mr-2"></h-skeleton>
+                <h-skeleton width="25%" height="1.5rem"></h-skeleton>
               </div>
             }
           </div>
@@ -111,7 +111,7 @@ class TestSkeletonDataTableComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-empty',
-    template: `<p-skeleton [width]="width" [height]="height" [shape]="shape" [borderRadius]="borderRadius" [size]="size"></p-skeleton>`
+    template: `<h-skeleton [width]="width" [height]="height" [shape]="shape" [borderRadius]="borderRadius" [size]="size"></h-skeleton>`
 })
 class TestSkeletonEmptyComponent {
     // Mirror the component's own defaults so binding these (instead of leaving
@@ -126,7 +126,7 @@ class TestSkeletonEmptyComponent {
 @Component({
     standalone: false,
     selector: 'test-skeleton-dynamic',
-    template: ` <p-skeleton [shape]="dynamicShape" [animation]="dynamicAnimation" [width]="dynamicWidth" [height]="dynamicHeight" [size]="dynamicSize" [borderRadius]="dynamicBorderRadius" [styleClass]="dynamicStyleClass"> </p-skeleton> `
+    template: ` <h-skeleton [shape]="dynamicShape" [animation]="dynamicAnimation" [width]="dynamicWidth" [height]="dynamicHeight" [size]="dynamicSize" [borderRadius]="dynamicBorderRadius" [styleClass]="dynamicStyleClass"> </h-skeleton> `
 })
 class TestSkeletonDynamicComponent {
     dynamicShape = 'rectangle';
@@ -746,7 +746,7 @@ describe('Skeleton', () => {
                 template: `
                     @for (item of items; track trackByFn($index, item)) {
                       <div>
-                        <p-skeleton [width]="item.width" [height]="item.height"></p-skeleton>
+                        <h-skeleton [width]="item.width" [height]="item.height"></h-skeleton>
                       </div>
                     }
                     `
@@ -809,18 +809,18 @@ describe('Skeleton', () => {
                 template: `
                     <div class="container">
                         <div class="header">
-                            <p-skeleton shape="circle" size="3rem"></p-skeleton>
+                            <h-skeleton shape="circle" size="3rem"></h-skeleton>
                             <div class="header-content">
-                                <p-skeleton width="8rem" height="1.5rem"></p-skeleton>
-                                <p-skeleton width="6rem" height="1rem"></p-skeleton>
+                                <h-skeleton width="8rem" height="1.5rem"></h-skeleton>
+                                <h-skeleton width="6rem" height="1rem"></h-skeleton>
                             </div>
                         </div>
                         <div class="body">
-                            <p-skeleton width="100%" height="10rem"></p-skeleton>
+                            <h-skeleton width="100%" height="10rem"></h-skeleton>
                         </div>
                         <div class="footer">
-                            <p-skeleton width="4rem" height="2rem" styleClass="mr-2"></p-skeleton>
-                            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+                            <h-skeleton width="4rem" height="2rem" styleClass="mr-2"></h-skeleton>
+                            <h-skeleton width="4rem" height="2rem"></h-skeleton>
                         </div>
                     </div>
                 `
@@ -854,7 +854,7 @@ describe('Skeleton', () => {
                     @if (showSkeletons) {
                       <div>
                         @for (item of skeletonItems; track item) {
-                          <p-skeleton [width]="item.width" [height]="item.height" [shape]="item.shape"> </p-skeleton>
+                          <h-skeleton [width]="item.width" [height]="item.height" [shape]="item.shape"> </h-skeleton>
                         }
                       </div>
                     }
@@ -964,7 +964,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 1: Simple string classes', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtComponent {
             pt: any = {};
@@ -1007,7 +1007,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 2: Objects', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtObjectComponent {
             pt: any = {};
@@ -1033,7 +1033,7 @@ describe('Skeleton', () => {
                 host: {
                     class: 'HOST_OBJECT_CLASS',
                     style: { border: '1px solid red' },
-                    'data-p-test': true
+                    'data-h-test': true
                 }
             };
             fixture.detectChanges();
@@ -1042,7 +1042,7 @@ describe('Skeleton', () => {
             const skeletonElement = fixture.debugElement.query(By.directive(Skeleton));
             expect(skeletonElement.nativeElement.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
             expect(skeletonElement.nativeElement.style.border).toBe('1px solid red');
-            expect(skeletonElement.nativeElement.getAttribute('data-p-test')).toBe('true');
+            expect(skeletonElement.nativeElement.getAttribute('data-h-test')).toBe('true');
         });
 
         it('should apply pt root with object properties', () => {
@@ -1066,7 +1066,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 3: Mixed object and string values', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtMixedComponent {
             pt: any = {};
@@ -1108,7 +1108,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 4: Use variables from instance', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [shape]="shape" [animation]="animation" [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [shape]="shape" [animation]="animation" [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtInstanceComponent {
             pt: any = {};
@@ -1179,7 +1179,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 5: Event binding', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtEventComponent {
             pt: any = {};
@@ -1246,13 +1246,13 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 6: Inline test', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="{ host: 'INLINE_HOST_CLASS' }"></p-skeleton> `
+            template: ` <h-skeleton [pt]="{ host: 'INLINE_HOST_CLASS' }"></h-skeleton> `
         })
         class TestSkeletonInlineStringPtComponent {}
 
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="{ host: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid green' } } }"></p-skeleton> `
+            template: ` <h-skeleton [pt]="{ host: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid green' } } }"></h-skeleton> `
         })
         class TestSkeletonInlineObjectPtComponent {}
 
@@ -1297,8 +1297,8 @@ describe('Skeleton', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-skeleton></p-skeleton>
-                    <p-skeleton></p-skeleton>
+                    <h-skeleton></h-skeleton>
+                    <h-skeleton></h-skeleton>
                 `
             })
             class TestSkeletonGlobalPtComponent {}
@@ -1338,7 +1338,7 @@ describe('Skeleton', () => {
 
             @Component({
                 standalone: false,
-                template: ` <p-skeleton [pt]="{ host: 'LOCAL_HOST_CLASS', root: 'LOCAL_ROOT_CLASS' }"></p-skeleton> `
+                template: ` <h-skeleton [pt]="{ host: 'LOCAL_HOST_CLASS', root: 'LOCAL_ROOT_CLASS' }"></h-skeleton> `
             })
             class TestSkeletonMergedPtComponent {}
 
@@ -1372,7 +1372,7 @@ describe('Skeleton', () => {
     describe('PassThrough - Case 8: Test hooks', () => {
         @Component({
             standalone: false,
-            template: ` <p-skeleton [pt]="pt"></p-skeleton> `
+            template: ` <h-skeleton [pt]="pt"></h-skeleton> `
         })
         class TestSkeletonPtHooksComponent {
             pt: any = {};

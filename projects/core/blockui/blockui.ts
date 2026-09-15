@@ -133,8 +133,8 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
                 ZIndexUtils.set('modal', (this.el as ElementRef).nativeElement, this.baseZIndex() + this.config.zIndex.modal);
             }
 
-            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask');
-            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask-enter-active');
+            this.renderer.addClass(this.el.nativeElement, 'h-overlay-mask');
+            this.renderer.addClass(this.el.nativeElement, 'h-overlay-mask-enter-active');
         }
     }
 
@@ -144,8 +144,8 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
             if (!this.animationEndListener) {
                 this.animationEndListener = this.renderer.listen(this.el.nativeElement, 'animationend', this.destroyModal.bind(this));
             }
-            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask-enter-active');
-            this.renderer.addClass(this.el.nativeElement, 'p-overlay-mask-leave-active');
+            this.renderer.removeClass(this.el.nativeElement, 'h-overlay-mask-enter-active');
+            this.renderer.addClass(this.el.nativeElement, 'h-overlay-mask-leave-active');
         }
     }
 
@@ -153,8 +153,8 @@ export class BlockUI extends BaseComponent<BlockUIPassThrough> {
         this._blocked = false;
         if (this.el && isPlatformBrowser(this.platformId)) {
             this.el.nativeElement.style.display = 'none';
-            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask');
-            this.renderer.removeClass(this.el.nativeElement, 'p-overlay-mask-leave-active');
+            this.renderer.removeClass(this.el.nativeElement, 'h-overlay-mask');
+            this.renderer.removeClass(this.el.nativeElement, 'h-overlay-mask-leave-active');
             ZIndexUtils.clear(this.el.nativeElement);
 
             if (!this.target()) {

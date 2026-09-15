@@ -1,10 +1,10 @@
 export const style = /*css*/ `
-    .p-iconfield {
+    .h-iconfield {
         position: relative;
         display: block;
     }
 
-    .p-inputicon {
+    .h-inputicon {
         position: absolute;
         top: 50%;
         margin-top: calc(-1 * (dt('icon.size') / 2));
@@ -13,31 +13,31 @@ export const style = /*css*/ `
         z-index: 1;
     }
 
-    .p-iconfield .p-inputicon:first-child {
+    .h-iconfield .h-inputicon:first-child {
         inset-inline-start: dt('form.field.padding.x');
     }
 
-    .p-iconfield .p-inputicon:last-child {
+    .h-iconfield .h-inputicon:last-child {
         inset-inline-end: dt('form.field.padding.x');
     }
 
-    .p-iconfield .p-inputtext:not(:first-child),
-    .p-iconfield .p-inputwrapper:not(:first-child) .p-inputtext {
+    .h-iconfield .h-inputtext:not(:first-child),
+    .h-iconfield .h-inputwrapper:not(:first-child) .h-inputtext {
         padding-inline-start: calc((dt('form.field.padding.x') * 2) + dt('icon.size'));
     }
 
-    .p-iconfield .p-inputtext:not(:last-child) {
+    .h-iconfield .h-inputtext:not(:last-child) {
         padding-inline-end: calc((dt('form.field.padding.x') * 2) + dt('icon.size'));
     }
 
-    .p-iconfield:has(.p-inputfield-sm) .p-inputicon {
+    .h-iconfield:has(.h-inputfield-sm) .h-inputicon {
         font-size: dt('form.field.sm.font.size');
         width: dt('form.field.sm.font.size');
         height: dt('form.field.sm.font.size');
         margin-top: calc(-1 * (dt('form.field.sm.font.size') / 2));
     }
 
-    .p-iconfield:has(.p-inputfield-lg) .p-inputicon {
+    .h-iconfield:has(.h-inputfield-lg) .h-inputicon {
         font-size: dt('form.field.lg.font.size');
         width: dt('form.field.lg.font.size');
         height: dt('form.field.lg.font.size');

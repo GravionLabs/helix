@@ -54,10 +54,10 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p-highlight]': 'checked',
-        '[attr.data-p-checked]': 'checked',
-        '[attr.data-p-disabled]': '$disabled()',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h-highlight]': 'checked',
+        '[attr.data-h-checked]': 'checked',
+        '[attr.data-h-disabled]': '$disabled()',
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

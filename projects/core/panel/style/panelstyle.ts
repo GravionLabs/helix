@@ -4,28 +4,28 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-panel p-component',
+        'h-panel h-component',
         {
-            'p-panel-toggleable': instance.toggleable(),
-            'p-panel-expanded': !instance.collapsed() && instance.toggleable(),
-            'p-panel-collapsed': instance.collapsed() && instance.toggleable()
+            'h-panel-toggleable': instance.toggleable(),
+            'h-panel-expanded': !instance.collapsed() && instance.toggleable(),
+            'h-panel-collapsed': instance.collapsed() && instance.toggleable()
         }
     ],
-    header: 'p-panel-header',
-    title: 'p-panel-title',
+    header: 'h-panel-header',
+    title: 'h-panel-title',
     headerActions: ({ instance }) => [
-        'p-panel-header-actions',
+        'h-panel-header-actions',
         {
-            'p-panel-icons-start': instance.iconPos() === 'start',
-            'p-panel-icons-end': instance.iconPos() === 'end',
-            'p-panel-icons-center': instance.iconPos() === 'center'
+            'h-panel-icons-start': instance.iconPos() === 'start',
+            'h-panel-icons-end': instance.iconPos() === 'end',
+            'h-panel-icons-center': instance.iconPos() === 'center'
         }
     ],
-    pcToggleButton: 'p-panel-toggle-button',
-    contentContainer: 'p-panel-content-container',
-    contentWrapper: 'p-panel-content-wrapper',
-    content: 'p-panel-content',
-    footer: 'p-panel-footer'
+    pcToggleButton: 'h-panel-toggle-button',
+    contentContainer: 'h-panel-content-container',
+    contentWrapper: 'h-panel-content-wrapper',
+    content: 'h-panel-content',
+    footer: 'h-panel-footer'
 };
 @Injectable()
 export class PanelStyle extends BaseStyle {
@@ -49,37 +49,37 @@ export enum PanelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-panel',
+    root = 'h-panel',
     /**
      * Class name of the header element
      */
-    header = 'p-panel-header',
+    header = 'h-panel-header',
     /**
      * Class name of the title element
      */
-    title = 'p-panel-title',
+    title = 'h-panel-title',
     /**
      * Class name of the header actions element
      */
-    headerActions = 'p-panel-header-actions',
+    headerActions = 'h-panel-header-actions',
     /**
      * Class name of the toggle button element
      */
-    pcToggleButton = 'p-panel-toggle-button',
+    pcToggleButton = 'h-panel-toggle-button',
     /**
      * Class name of the content container element
      */
-    contentContainer = 'p-panel-content-container',
+    contentContainer = 'h-panel-content-container',
     /**
      * Class name of the content wrapper element
      */
-    contentWrapper = 'p-panel-content-wrapper',
+    contentWrapper = 'h-panel-content-wrapper',
     /**
      * Class name of the content element
      */
-    content = 'p-panel-content',
+    content = 'h-panel-content',
     /**
      * Class name of the footer element
      */
-    footer = 'p-panel-footer'
+    footer = 'h-panel-footer'
 }

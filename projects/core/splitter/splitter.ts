@@ -24,8 +24,8 @@ const SPLITTER_INSTANCE = new InjectionToken<Splitter>('SPLITTER_INSTANCE');
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p-gutter-resizing]': 'false',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h-gutter-resizing]': 'false',
+        '[attr.data-h]': 'dataP'
     },
     providers: [SplitterStyle, { provide: SPLITTER_INSTANCE, useExisting: Splitter }, { provide: PARENT_INSTANCE, useExisting: Splitter }],
     hostDirectives: [Bind]
@@ -233,10 +233,10 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         }
 
         this.prevPanelIndex = index;
-        addClass(this.gutterElement, 'p-splitter-gutter-resizing');
-        this.gutterElement.setAttribute('data-p-gutter-resizing', 'true');
-        addClass((this.el as ElementRef).nativeElement, 'p-splitter-resizing');
-        this.el.nativeElement.setAttribute('data-p-resizing', 'true');
+        addClass(this.gutterElement, 'h-splitter-gutter-resizing');
+        this.gutterElement.setAttribute('data-h-gutter-resizing', 'true');
+        addClass((this.el as ElementRef).nativeElement, 'h-splitter-resizing');
+        this.el.nativeElement.setAttribute('data-h-resizing', 'true');
         this.onResizeStart.emit({ originalEvent: event, sizes: this.panelSizes() });
     }
 
@@ -284,8 +284,8 @@ export class Splitter extends BaseComponent<SplitterPassThrough> {
         }
 
         this.onResizeEnd.emit({ originalEvent: event, sizes: this.panelSizes() });
-        removeClass(this.gutterElement as any, 'p-splitter-gutter-resizing');
-        removeClass((this.el as ElementRef).nativeElement, 'p-splitter-resizing');
+        removeClass(this.gutterElement as any, 'h-splitter-gutter-resizing');
+        removeClass((this.el as ElementRef).nativeElement, 'h-splitter-resizing');
         this.clear();
     }
 

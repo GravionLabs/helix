@@ -1,11 +1,11 @@
 @if (loading() && loadingMode() === 'mask') {
-  <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
+  <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="h-overlay-mask-enter-active" animate.leave="h-overlay-mask-leave-active">
     @if (loadingIcon()) {
       <i [class]="cn(cx('loadingIcon'), 'pi-spin' + loadingIcon())" [hBind]="ptm('loadingIcon')"></i>
     }
     @if (!loadingIcon()) {
       @if (!loadingIconTemplate() && !_loadingIconTemplate) {
-        <svg data-p-icon="spinner" spin [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
+        <svg data-h-icon="spinner" spin [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
       }
       @if (loadingIconTemplate() || _loadingIconTemplate) {
         <span [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
@@ -36,7 +36,7 @@
         />
       <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
         @if (!filterIconTemplate() && !_filterIconTemplate) {
-          <svg data-p-icon="search" [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')" />
+          <svg data-h-icon="search" [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')" />
         }
         @if (filterIconTemplate() || _filterIconTemplate) {
           <span [class]="cx('filterIcon')" [hBind]="ptm('filterIcon')">
@@ -65,7 +65,7 @@
       [options]="virtualScrollOptions()"
       [pt]="ptm('virtualScroller')"
       hostName="tree"
-      [attr.data-p]="wrapperDataP"
+      [attr.data-h]="wrapperDataP"
       >
       <ng-template #content let-items let-scrollerOptions="options">
         @if (items) {
@@ -107,7 +107,7 @@
     </h-scroller>
   }
   @if (!virtualScroll()) {
-    <div #wrapper [class]="cx('wrapper')" [style.max-height]="scrollHeight()" [hBind]="ptm('wrapper')" [attr.data-p]="wrapperDataP">
+    <div #wrapper [class]="cx('wrapper')" [style.max-height]="scrollHeight()" [hBind]="ptm('wrapper')" [attr.data-h]="wrapperDataP">
       @if (getRootNode()) {
         <ul #content [class]="cx('rootChildren')" role="tree" [attr.aria-label]="ariaLabel()" [attr.aria-labelledby]="ariaLabelledBy()" [hBind]="ptm('rootChildren')">
           @for (node of getRootNode(); track trackBy().bind(this)(index, node); let firstChild = $first; let lastChild = $last; let index = $index) {

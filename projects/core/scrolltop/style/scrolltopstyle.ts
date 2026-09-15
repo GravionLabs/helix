@@ -3,8 +3,8 @@ import { style } from './scrolltop.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-scrolltop', { 'p-scrolltop-sticky': instance.target !== 'window' }],
-    icon: 'p-scrolltop-icon'
+    root: ({ instance }) => ['h-scrolltop', { 'h-scrolltop-sticky': instance.target !== 'window' }],
+    icon: 'h-scrolltop-icon'
 };
 
 @Injectable()
@@ -29,11 +29,11 @@ export enum ScrollTopClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-scrolltop',
+    root = 'h-scrolltop',
     /**
      * Class name of the icon element
      */
-    icon = 'p-scrolltop-icon'
+    icon = 'h-scrolltop-icon'
 }
 
 export interface ScrollTopStyle extends BaseStyle {}

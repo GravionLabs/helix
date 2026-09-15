@@ -32,7 +32,7 @@
             }
             @if (!chooseIcon()) {
               @if (!chooseIconTemplate() && !_chooseIconTemplate) {
-                <svg data-p-icon="plus" [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
+                <svg data-h-icon="plus" [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
               }
               @if (chooseIconTemplate() || _chooseIconTemplate) {
                 <span [attr.aria-label]="true" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)">
@@ -58,7 +58,7 @@
               }
               @if (!uploadIcon()) {
                 @if (!uploadIconTemplate() && !_uploadIconTemplate) {
-                  <svg data-p-icon="upload" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)" />
+                  <svg data-h-icon="upload" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)" />
                 }
                 @if (uploadIconTemplate() || _uploadIconTemplate) {
                   <span [attr.aria-hidden]="true" [hBind]="$safeNavigationMigration(ptm('pcUploadButton')?.icon)">
@@ -85,7 +85,7 @@
               }
               @if (!cancelIcon()) {
                 @if (!cancelIconTemplate() && !_cancelIconTemplate) {
-                  <svg data-p-icon="times" [attr.aria-hidden]="true" />
+                  <svg data-h-icon="times" [attr.aria-hidden]="true" />
                 }
                 @if (cancelIconTemplate() || _cancelIconTemplate) {
                   <span [attr.aria-hidden]="true">
@@ -199,25 +199,25 @@
         <ng-template #icon>
           @if (hasFiles() && !auto()) {
             @if (uploadIcon()) {
-              <span class="p-button-icon p-button-icon-left" [ngClass]="uploadIcon()" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
+              <span class="h-button-icon h-button-icon-left" [ngClass]="uploadIcon()" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
             }
             @if (!uploadIcon()) {
               @if (!uploadIconTemplate() && !_uploadIconTemplate) {
-                <svg data-p-icon="upload" [class]="'p-button-icon p-button-icon-left'" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
+                <svg data-h-icon="upload" [class]="'h-button-icon h-button-icon-left'" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
               }
               @if (_uploadIconTemplate || uploadIconTemplate()) {
-                <span class="p-button-icon p-button-icon-left" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)">
+                <span class="h-button-icon h-button-icon-left" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)">
                   <ng-template *ngTemplateOutlet="_uploadIconTemplate || uploadIconTemplate()"></ng-template>
                 </span>
               }
             }
           } @else {
             @if (chooseIcon()) {
-              <span class="p-button-icon p-button-icon-left pi" [ngClass]="chooseIcon()" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
+              <span class="h-button-icon h-button-icon-left pi" [ngClass]="chooseIcon()" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)"></span>
             }
             @if (!chooseIcon()) {
               @if (!chooseIconTemplate() && !_chooseIconTemplate) {
-                <svg data-p-icon="plus" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
+                <svg data-h-icon="plus" [hBind]="$safeNavigationMigration(ptm('pcChooseButton')?.icon)" />
               }
               <ng-template *ngTemplateOutlet="chooseIconTemplate() || _chooseIconTemplate"></ng-template>
             }

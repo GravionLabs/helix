@@ -3,7 +3,7 @@ import { uuid } from '@gravionlabs/helix-core/uix/utils';
 import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({
-    selector: '[data-p-icon="sort-alt"]',
+    selector: '[data-h-icon="sort-alt"]',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `

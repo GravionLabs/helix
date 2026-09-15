@@ -5,17 +5,17 @@ export const style = /*css*/ `
         box-sizing: border-box;
     }
 
-    .p-collapsible-enter-active {
-        animation: p-animate-collapsible-expand 0.2s ease-out;
+    .h-collapsible-enter-active {
+        animation: h-animate-collapsible-expand 0.2s ease-out;
         overflow: hidden;
     }
 
-    .p-collapsible-leave-active {
-        animation: p-animate-collapsible-collapse 0.2s ease-out;
+    .h-collapsible-leave-active {
+        animation: h-animate-collapsible-collapse 0.2s ease-out;
         overflow: hidden;
     }
 
-    @keyframes p-animate-collapsible-expand {
+    @keyframes h-animate-collapsible-expand {
         from {
             grid-template-rows: 0fr;
         }
@@ -24,7 +24,7 @@ export const style = /*css*/ `
         }
     }
 
-    @keyframes p-animate-collapsible-collapse {
+    @keyframes h-animate-collapsible-collapse {
         from {
             grid-template-rows: 1fr;
         }
@@ -33,15 +33,15 @@ export const style = /*css*/ `
         }
     }
 
-    .p-disabled,
-    .p-disabled * {
+    .h-disabled,
+    .h-disabled * {
         cursor: default;
         pointer-events: none;
         user-select: none;
     }
 
-    .p-disabled,
-    .p-component:disabled {
+    .h-disabled,
+    .h-component:disabled {
         opacity: dt('disabled.opacity');
     }
 
@@ -49,12 +49,12 @@ export const style = /*css*/ `
         font-size: dt('icon.size');
     }
 
-    .p-icon {
+    .h-icon {
         width: dt('icon.size');
         height: dt('icon.size');
     }
 
-    .p-overlay-mask {
+    .h-overlay-mask {
         background: var(--px-mask-background, dt('mask.background'));
         color: dt('mask.color');
         position: fixed;
@@ -64,15 +64,15 @@ export const style = /*css*/ `
         height: 100%;
     }
 
-    .p-overlay-mask-enter-active {
-        animation: p-animate-overlay-mask-enter dt('mask.transition.duration') forwards;
+    .h-overlay-mask-enter-active {
+        animation: h-animate-overlay-mask-enter dt('mask.transition.duration') forwards;
     }
 
-    .p-overlay-mask-leave-active {
-        animation: p-animate-overlay-mask-leave dt('mask.transition.duration') forwards;
+    .h-overlay-mask-leave-active {
+        animation: h-animate-overlay-mask-leave dt('mask.transition.duration') forwards;
     }
 
-    @keyframes p-animate-overlay-mask-enter {
+    @keyframes h-animate-overlay-mask-enter {
         from {
             background: transparent;
         }
@@ -80,7 +80,7 @@ export const style = /*css*/ `
             background: var(--px-mask-background, dt('mask.background'));
         }
     }
-    @keyframes p-animate-overlay-mask-leave {
+    @keyframes h-animate-overlay-mask-leave {
         from {
             background: var(--px-mask-background, dt('mask.background'));
         }
@@ -89,22 +89,22 @@ export const style = /*css*/ `
         }
     }
 
-    .p-anchored-overlay-enter-active {
-        animation: p-animate-anchored-overlay-enter 300ms cubic-bezier(.19,1,.22,1);
+    .h-anchored-overlay-enter-active {
+        animation: h-animate-anchored-overlay-enter 300ms cubic-bezier(.19,1,.22,1);
     }
 
-    .p-anchored-overlay-leave-active {
-        animation: p-animate-anchored-overlay-leave 300ms cubic-bezier(.19,1,.22,1);
+    .h-anchored-overlay-leave-active {
+        animation: h-animate-anchored-overlay-leave 300ms cubic-bezier(.19,1,.22,1);
     }
 
-    @keyframes p-animate-anchored-overlay-enter {
+    @keyframes h-animate-anchored-overlay-enter {
         from {
             opacity: 0;
             transform: scale(0.93);
         }
     }
 
-    @keyframes p-animate-anchored-overlay-leave {
+    @keyframes h-animate-anchored-overlay-leave {
         to {
             opacity: 0;
             transform: scale(0.93);

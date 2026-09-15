@@ -1,4 +1,4 @@
-<div class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true" [hBind]="ptm('hiddenInputContainer')">
+<div class="h-hidden-accessible" [attr.data-h-hidden-accessible]="true" [hBind]="ptm('hiddenInputContainer')">
   <input
     #focusInput
     [hTooltip]="tooltip()"
@@ -38,7 +38,7 @@
   [positionStyle]="tooltipPositionStyle()"
   [tooltipStyleClass]="tooltipStyleClass()"
   >
-  <div [hBind]="ptm('label')" [class]="cx('label')" [attr.data-p]="labelDataP">
+  <div [hBind]="ptm('label')" [class]="cx('label')" [attr.data-h]="labelDataP">
     @if (!selectedItemsTemplate() && !_selectedItemsTemplate) {
       @if (display() === 'comma') {
         {{ label() || 'empty' }}
@@ -60,7 +60,7 @@
                           [attr.aria-hidden]="true"
                           [hBind]="ptm('chipIcon')"
                           >
-                          <ng-container *ngTemplateOutlet="chipIconTemplate() || _chipIconTemplate || removeTokenIconTemplate() || _removeTokenIconTemplate; context: { class: 'p-multiselect-chip-icon' }"></ng-container>
+                          <ng-container *ngTemplateOutlet="chipIconTemplate() || _chipIconTemplate || removeTokenIconTemplate() || _removeTokenIconTemplate; context: { class: 'h-multiselect-chip-icon' }"></ng-container>
                         </span>
                       }
                     }
@@ -85,7 +85,7 @@
 </div>
 @if (isVisibleClearIcon) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true" />
+    <svg data-h-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true" />
   }
   @if (clearIconTemplate() || _clearIconTemplate) {
     <span [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear($event)" [attr.aria-hidden]="true">
@@ -109,10 +109,10 @@
   } @else {
     @if (!dropdownIconTemplate() && !_dropdownIconTemplate) {
       @if (dropdownIcon()) {
-        <span [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [ngClass]="dropdownIcon()" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP"></span>
+        <span [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [ngClass]="dropdownIcon()" [attr.aria-hidden]="true" [attr.data-h]="dropdownIconDataP"></span>
       }
       @if (!dropdownIcon()) {
-        <svg data-p-icon="chevron-down" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true" [attr.data-p]="dropdownIconDataP" />
+        <svg data-h-icon="chevron-down" [hBind]="ptm('dropdownIcon')" [class]="cx('dropdownIcon')" [attr.aria-hidden]="true" [attr.data-h]="dropdownIconDataP" />
       }
     }
     @if (dropdownIconTemplate() || _dropdownIconTemplate) {
@@ -137,22 +137,22 @@
   (onHide)="onOverlayHide($event)"
   >
   <ng-template #content>
-    <div [hBind]="ptm('overlay')" [attr.data-p]="overlayDataP" [attr.id]="$id() + '_list'" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
+    <div [hBind]="ptm('overlay')" [attr.data-h]="overlayDataP" [attr.id]="$id() + '_list'" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
       <span
         #firstHiddenFocusableEl
         role="presentation"
-        class="p-hidden-accessible p-hidden-focusable"
+        class="h-hidden-accessible h-hidden-focusable"
         [attr.tabindex]="0"
         (focus)="onFirstHiddenFocus($event)"
-        [attr.data-p-hidden-accessible]="true"
-        [attr.data-p-hidden-focusable]="true"
+        [attr.data-h-hidden-accessible]="true"
+        [attr.data-h-hidden-focusable]="true"
         [hBind]="ptm('firstHiddenFocusableEl')"
         >
       </span>
       <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate"></ng-container>
       @if (showHeader()) {
         <div [hBind]="ptm('header')" [class]="cx('header')">
-          <ng-content select="p-header"></ng-content>
+          <ng-content select="h-header"></ng-content>
           @if (filterTemplate() || _filterTemplate) {
             <ng-container *ngTemplateOutlet="filterTemplate() || _filterTemplate; context: { options: filterOptions }"></ng-container>
           } @else {
@@ -170,7 +170,7 @@
                 >
                 <ng-template #icon let-klass="class">
                   @if (!headerCheckboxIconTemplate() && !_headerCheckboxIconTemplate && allSelected()) {
-                    <svg data-p-icon="check" [class]="klass" [hBind]="getHeaderCheckboxPTOptions('pcHeaderCheckbox.icon')" />
+                    <svg data-h-icon="check" [class]="klass" [hBind]="getHeaderCheckboxPTOptions('pcHeaderCheckbox.icon')" />
                   }
                   <ng-template
                                 *ngTemplateOutlet="
@@ -210,10 +210,10 @@
                 />
               <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
                 @if (!filterIconTemplate() && !_filterIconTemplate) {
-                  <svg data-p-icon="search" [hBind]="ptm('filterIcon')" />
+                  <svg data-h-icon="search" [hBind]="ptm('filterIcon')" />
                 }
                 @if (filterIconTemplate() || _filterIconTemplate) {
-                  <span [hBind]="ptm('filterIcon')" class="p-multiselect-filter-icon">
+                  <span [hBind]="ptm('filterIcon')" class="h-multiselect-filter-icon">
                     <ng-template *ngTemplateOutlet="filterIconTemplate() || _filterIconTemplate"></ng-template>
                   </span>
                 }
@@ -312,7 +312,7 @@
     </div>
     @if (footerFacet() || footerTemplate() || _footerTemplate) {
       <div>
-        <ng-content select="p-footer"></ng-content>
+        <ng-content select="h-footer"></ng-content>
         <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
       </div>
     }
@@ -320,11 +320,11 @@
     <span
       #lastHiddenFocusableEl
       role="presentation"
-      class="p-hidden-accessible p-hidden-focusable"
+      class="h-hidden-accessible h-hidden-focusable"
       [attr.tabindex]="0"
       (focus)="onLastHiddenFocus($event)"
-      [attr.data-p-hidden-accessible]="true"
-      [attr.data-p-hidden-focusable]="true"
+      [attr.data-h-hidden-accessible]="true"
+      [attr.data-h-hidden-focusable]="true"
       [hBind]="ptm('lastHiddenFocusableEl')"
     ></span>
   </div>

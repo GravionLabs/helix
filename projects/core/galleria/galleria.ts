@@ -449,7 +449,7 @@ export class Galleria extends BaseComponent<GalleriaPassThrough> {
 
     onDestroy() {
         if (this.fullScreen()) {
-            removeClass(this.document.body, 'p-overflow-hidden');
+            removeClass(this.document.body, 'h-overflow-hidden');
         }
 
         if (this.mask) {
@@ -1062,8 +1062,8 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
             }
 
             if (this._oldactiveIndex !== this._activeIndex) {
-                this.document.body.setAttribute('data-p-items-hidden', 'false');
-                !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+                this.document.body.setAttribute('data-h-items-hidden', 'false');
+                !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'h-items-hidden');
                 itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
             }
 
@@ -1086,7 +1086,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
         }
 
         let innerHTML = `
-            #${this.containerId()} .p-galleria-thumbnail-item {
+            #${this.containerId()} .h-galleria-thumbnail-item {
                 flex: 1 0 ${100 / this.d_numVisible}%
             }
         `;
@@ -1113,7 +1113,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
                 innerHTML += `
                     @media screen and (max-width: ${res.breakpoint}) {
-                        #${this.containerId()} .p-galleria-thumbnail-item {
+                        #${this.containerId()} .h-galleria-thumbnail-item {
                             flex: 1 0 ${100 / res.numVisible}%
                         }
                     }
@@ -1280,7 +1280,7 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
     onTabKey() {
         const indicators = <any>[...find(this.itemsContainer()?.nativeElement, '[data-pc-section="thumbnailitem"]')];
-        const highlightedIndex = indicators.findIndex((ind: any) => getAttribute(ind, 'data-p-active') === true);
+        const highlightedIndex = indicators.findIndex((ind: any) => getAttribute(ind, 'data-h-active') === true);
 
         const activeIndicator = <any>findSingle(this.itemsContainer()?.nativeElement, '[tabindex="0"]');
 
@@ -1325,8 +1325,8 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
 
         const itemsContainer = this.itemsContainer();
         if (itemsContainer) {
-            this.document.body.setAttribute('data-p-items-hidden', 'false');
-            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+            this.document.body.setAttribute('data-h-items-hidden', 'false');
+            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'h-items-hidden');
             itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.d_numVisible)}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.d_numVisible)}%, 0, 0)`;
             itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
         }
@@ -1363,8 +1363,8 @@ export class GalleriaThumbnails extends BaseComponent<GalleriaPassThrough> {
     onTransitionEnd() {
         const itemsContainer = this.itemsContainer();
         if (itemsContainer && itemsContainer.nativeElement) {
-            this.document.body.setAttribute('data-p-items-hidden', 'true');
-            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'p-items-hidden');
+            this.document.body.setAttribute('data-h-items-hidden', 'true');
+            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'h-items-hidden');
             itemsContainer.nativeElement.style.transition = '';
         }
     }

@@ -14,7 +14,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveUpIconTemplate() && !_moveUpIconTemplate) {
-          <svg data-p-icon="angle-up" [pt]="ptm('pcSourceMoveUpButton')['icon']" hButtonIcon />
+          <svg data-h-icon="angle-up" [pt]="ptm('pcSourceMoveUpButton')['icon']" hButtonIcon />
         }
         <ng-template *ngTemplateOutlet="moveUpIconTemplate() || _moveUpIconTemplate"></ng-template>
       </button>
@@ -31,7 +31,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveTopIconTemplate() && !_moveTopIconTemplate) {
-          <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcSourceMoveTopButton')['icon']" />
+          <svg data-h-icon="angle-double-up" hButtonIcon [pt]="ptm('pcSourceMoveTopButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveTopIconTemplate() || _moveTopIconTemplate"></ng-template>
       </button>
@@ -49,7 +49,7 @@
         hostName="picklist"
         >
         @if (!moveDownIconTemplate() && !_moveDownIconTemplate) {
-          <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcSourceMoveDownButton')['icon']" />
+          <svg data-h-icon="angle-down" hButtonIcon [pt]="ptm('pcSourceMoveDownButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveDownIconTemplate() || _moveDownIconTemplate"></ng-template>
       </button>
@@ -67,7 +67,7 @@
         hostName="picklist"
         >
         @if (!moveBottomIconTemplate() || _moveBottomIconTemplate) {
-          <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcSourceMoveBottomButton')['icon']" />
+          <svg data-h-icon="angle-double-down" hButtonIcon [pt]="ptm('pcSourceMoveBottomButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveBottomIconTemplate() || _moveBottomIconTemplate"></ng-template>
       </button>
@@ -157,10 +157,10 @@
       >
       @if (!moveToTargetIconTemplate() && !_moveToTargetIconTemplate) {
         @if (!viewChanged) {
-          <svg data-p-icon="angle-right" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
+          <svg data-h-icon="angle-right" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
         }
         @if (viewChanged) {
-          <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
+          <svg data-h-icon="angle-down" hButtonIcon [pt]="ptm('pcMoveToTargetButton')['icon']" />
         }
       }
       <ng-template *ngTemplateOutlet="moveToTargetIconTemplate() || _moveToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
@@ -179,10 +179,10 @@
       >
       @if (!moveAllToTargetIconTemplate() && !_moveAllToTargetIconTemplate) {
         @if (!viewChanged) {
-          <svg data-p-icon="angle-double-right" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
+          <svg data-h-icon="angle-double-right" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
         }
         @if (viewChanged) {
-          <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
+          <svg data-h-icon="angle-double-down" hButtonIcon [pt]="ptm('pcMoveAllToTargetButton')['icon']" />
         }
       }
       <ng-template *ngTemplateOutlet="moveAllToTargetIconTemplate() || _moveAllToTargetIconTemplate; context: { $implicit: viewChanged }"></ng-template>
@@ -202,10 +202,10 @@
       >
       @if (!moveToSourceIconTemplate() && !_moveToSourceIconTemplate) {
         @if (!viewChanged) {
-          <svg data-p-icon="angle-left" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
+          <svg data-h-icon="angle-left" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
         }
         @if (viewChanged) {
-          <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
+          <svg data-h-icon="angle-up" hButtonIcon [pt]="ptm('pcMoveToSourceButton')['icon']" />
         }
       }
       <ng-template *ngTemplateOutlet="moveToSourceIconTemplate() || _moveToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
@@ -225,10 +225,10 @@
       >
       @if (!moveAllToSourceIconTemplate() && !_moveAllToSourceIconTemplate) {
         @if (!viewChanged) {
-          <svg data-p-icon="angle-double-left" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
+          <svg data-h-icon="angle-double-left" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
         }
         @if (viewChanged) {
-          <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
+          <svg data-h-icon="angle-double-up" hButtonIcon [pt]="ptm('pcMoveAllToSourceButton')['icon']" />
         }
       }
       <ng-template *ngTemplateOutlet="moveAllToSourceIconTemplate() || _moveAllToSourceIconTemplate; context: { $implicit: viewChanged }"></ng-template>
@@ -318,7 +318,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveUpIconTemplate() && !_moveUpIconTemplate) {
-          <svg data-p-icon="angle-up" hButtonIcon [pt]="ptm('pcTargetMoveUpButton')['icon']" />
+          <svg data-h-icon="angle-up" hButtonIcon [pt]="ptm('pcTargetMoveUpButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveUpIconTemplate() || _moveUpIconTemplate"></ng-template>
       </button>
@@ -336,7 +336,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveTopIconTemplate() && !_moveTopIconTemplate) {
-          <svg data-p-icon="angle-double-up" hButtonIcon [pt]="ptm('pcTargetMoveTopButton')['icon']" />
+          <svg data-h-icon="angle-double-up" hButtonIcon [pt]="ptm('pcTargetMoveTopButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveTopIconTemplate() || moveTopIconTemplate"></ng-template>
       </button>
@@ -354,7 +354,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveDownIconTemplate() && !_moveDownIconTemplate) {
-          <svg data-p-icon="angle-down" hButtonIcon [pt]="ptm('pcTargetMoveDownButton')['icon']" />
+          <svg data-h-icon="angle-down" hButtonIcon [pt]="ptm('pcTargetMoveDownButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveDownIconTemplate() || _moveDownIconTemplate"></ng-template>
       </button>
@@ -372,7 +372,7 @@
         [unstyled]="unstyled()"
         >
         @if (!moveBottomIconTemplate() && !_moveBottomIconTemplate) {
-          <svg data-p-icon="angle-double-down" hButtonIcon [pt]="ptm('pcTargetMoveBottomButton')['icon']" />
+          <svg data-h-icon="angle-double-down" hButtonIcon [pt]="ptm('pcTargetMoveBottomButton')['icon']" />
         }
         <ng-template *ngTemplateOutlet="moveBottomIconTemplate() || _moveBottomIconTemplate"></ng-template>
       </button>

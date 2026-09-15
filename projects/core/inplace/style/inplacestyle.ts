@@ -3,9 +3,9 @@ import { style } from './inplace.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-inplace p-component'],
-    display: ({ instance }) => ['p-inplace-display', { 'p-disabled': instance.disabled() }],
-    content: 'p-inplace-content'
+    root: () => ['h-inplace h-component'],
+    display: ({ instance }) => ['h-inplace-display', { 'h-disabled': instance.disabled() }],
+    content: 'h-inplace-content'
 };
 
 @Injectable()
@@ -30,15 +30,15 @@ export enum InplaceClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-inplace',
+    root = 'h-inplace',
     /**
      * Class name of the display element
      */
-    display = 'p-inplace-display',
+    display = 'h-inplace-display',
     /**
      * Class name of the content element
      */
-    content = 'p-inplace-content'
+    content = 'h-inplace-content'
 }
 
 export interface InplaceStyle extends BaseStyle {}

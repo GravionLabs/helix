@@ -88,10 +88,10 @@ export const MULTISELECT_VALUE_ACCESSOR: any = {
         '[attr.aria-setsize]': 'ariaSetSize()',
         '[attr.aria-posinset]': 'ariaPosInset()',
         '[attr.aria-selected]': 'selected()',
-        '[attr.data-p-selected]': 'selected()',
-        '[attr.data-p-focused]': 'focused()',
-        '[attr.data-p-highlight]': 'selected()',
-        '[attr.data-p-disabled]': 'disabled()',
+        '[attr.data-h-selected]': 'selected()',
+        '[attr.data-h-focused]': 'focused()',
+        '[attr.data-h-highlight]': 'selected()',
+        '[attr.data-h-disabled]': 'disabled()',
         '[attr.aria-checked]': 'selected()',
         '(click)': 'onOptionClick($event)',
         '(mouseenter)': 'onOptionMouseEnter($event)',
@@ -179,7 +179,7 @@ export class MultiSelectItem extends BaseComponent {
     encapsulation: ViewEncapsulation.None,
     host: {
         '[attr.id]': '$id()',
-        '[attr.data-p]': 'containerDataP',
+        '[attr.data-h]': 'containerDataP',
         '(click)': 'onContainerClick($event)',
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')"
@@ -1548,7 +1548,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
     onFirstHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getFirstFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-h-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
@@ -1585,7 +1585,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
 
     onLastHiddenFocus(event) {
         const focusableEl =
-            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
+            event.relatedTarget === this.focusInputViewChild()?.nativeElement ? getLastFocusableElement(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-h-hidden-focusable="true"])') : this.focusInputViewChild()?.nativeElement;
 
         focus(focusableEl);
     }
@@ -1736,7 +1736,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
                     this.scroller()?.scrollToIndex(selectedIndex);
                 }
             } else {
-                let selectedListItem = findSingle(this.itemsWrapper, '[data-pc-section="option"][data-p-selected="true"]');
+                let selectedListItem = findSingle(this.itemsWrapper, '[data-pc-section="option"][data-h-selected="true"]');
 
                 if (selectedListItem) {
                     selectedListItem.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -1891,7 +1891,7 @@ export class MultiSelect extends BaseEditableHolder<MultiSelectPassThrough> {
     }
 
     hasFocusableElements() {
-        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-p-hidden-focusable="true"])').length > 0;
+        return getFocusableElements(this.overlayViewChild()?.overlayViewChild()?.nativeElement, ':not([data-h-hidden-focusable="true"])').length > 0;
     }
 
     hasFilter() {

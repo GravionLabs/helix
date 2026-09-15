@@ -25,7 +25,7 @@ const CHIP_INSTANCE = new InjectionToken<Chip>('CHIP_INSTANCE');
         '[class]': "cn(cx('root'), styleClass)",
         '[style]': "sx('root')",
         '[attr.aria-label]': 'label',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

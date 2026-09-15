@@ -8,6 +8,10 @@
 import '@gravionlabs/helix-core/passthrough';
 ```
 
+## Functions
+
+- `usePassThrough`
+
 ## Source
 
 [`projects/core/passthrough`](../../projects/core/passthrough)

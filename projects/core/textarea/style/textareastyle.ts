@@ -6,25 +6,25 @@ const style = /*css*/ `
     ${textarea_style}
 
     /* For Helix */
-    .p-textarea.ng-invalid.ng-dirty {
+    .h-textarea.ng-invalid.ng-dirty {
         border-color: dt('textarea.invalid.border.color');
     }
-    .p-textarea.ng-invalid.ng-dirty::placeholder {
+    .h-textarea.ng-invalid.ng-dirty::placeholder {
         color: dt('textarea.invalid.placeholder.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-textarea p-component',
+        'h-textarea h-component',
         {
-            'p-filled': instance.$filled(),
-            'p-textarea-resizable ': instance.autoResize,
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-textarea-fluid': instance.hasFluid,
-            'p-inputfield-sm p-textarea-sm': instance.pSize === 'small',
-            'p-textarea-lg p-inputfield-lg': instance.pSize === 'large',
-            'p-invalid': instance.invalid()
+            'h-filled': instance.$filled(),
+            'h-textarea-resizable ': instance.autoResize,
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-textarea-fluid': instance.hasFluid,
+            'h-inputfield-sm h-textarea-sm': instance.pSize === 'small',
+            'h-textarea-lg h-inputfield-lg': instance.pSize === 'large',
+            'h-invalid': instance.invalid()
         }
     ]
 };
@@ -51,7 +51,7 @@ export enum TextareaClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-textarea'
+    root = 'h-textarea'
 }
 
 export interface TextareaStyle extends BaseStyle {}

@@ -8,7 +8,7 @@ import { MeterGroup, MeterGroupLabel, MeterGroupModule } from './metergroup';
 @Component({
     standalone: false,
     selector: 'test-basic-metergroup',
-    template: `<p-metergroup [value]="value" [min]="min" [max]="max" [orientation]="orientation"></p-metergroup>`
+    template: `<h-metergroup [value]="value" [min]="min" [max]="max" [orientation]="orientation"></h-metergroup>`
 })
 class TestBasicMeterGroupComponent {
     value: MeterItem[] = [
@@ -25,7 +25,7 @@ class TestBasicMeterGroupComponent {
 @Component({
     standalone: false,
     selector: 'test-metergroup-orientations',
-    template: ` <p-metergroup [value]="value" [orientation]="orientation" [labelPosition]="labelPosition" [labelOrientation]="labelOrientation"> </p-metergroup> `
+    template: ` <h-metergroup [value]="value" [orientation]="orientation" [labelPosition]="labelPosition" [labelOrientation]="labelOrientation"> </h-metergroup> `
 })
 class TestMeterGroupOrientationsComponent {
     value: MeterItem[] = [
@@ -41,7 +41,7 @@ class TestMeterGroupOrientationsComponent {
     standalone: false,
     selector: 'test-metergroup-templates',
     template: `
-        <p-metergroup [value]="value">
+        <h-metergroup [value]="value">
             <ng-template #label let-value let-totalPercent="totalPercent">
                 <div class="custom-label">
                     <span>Total: {{ totalPercent }}%</span>
@@ -61,7 +61,7 @@ class TestMeterGroupOrientationsComponent {
             <ng-template #icon let-item>
                 <i class="custom-icon">{{ item.label[0] }}</i>
             </ng-template>
-        </p-metergroup>
+        </h-metergroup>
     `
 })
 class TestMeterGroupTemplatesComponent {
@@ -74,7 +74,7 @@ class TestMeterGroupTemplatesComponent {
 @Component({
     standalone: false,
     selector: 'test-metergroup-with-icons',
-    template: ` <p-metergroup [value]="value" [min]="min" [max]="max"> </p-metergroup> `
+    template: ` <h-metergroup [value]="value" [min]="min" [max]="max"> </h-metergroup> `
 })
 class TestMeterGroupWithIconsComponent {
     value: MeterItem[] = [
@@ -89,7 +89,7 @@ class TestMeterGroupWithIconsComponent {
 @Component({
     standalone: false,
     selector: 'test-metergroup-empty',
-    template: `<p-metergroup [value]="value" [min]="min" [max]="max"></p-metergroup>`
+    template: `<h-metergroup [value]="value" [min]="min" [max]="max"></h-metergroup>`
 })
 class TestMeterGroupEmptyComponent {
     value: MeterItem[] | undefined | null = [];
@@ -100,7 +100,7 @@ class TestMeterGroupEmptyComponent {
 @Component({
     standalone: false,
     selector: 'test-metergroup-dynamic',
-    template: ` <p-metergroup [value]="value" [min]="min" [max]="max" [styleClass]="styleClass"> </p-metergroup> `
+    template: ` <h-metergroup [value]="value" [min]="min" [max]="max" [styleClass]="styleClass"> </h-metergroup> `
 })
 class TestMeterGroupDynamicComponent {
     value: MeterItem[] = [{ label: 'Dynamic 1', value: 10, color: '#ff6b6b' }];
@@ -182,7 +182,7 @@ describe('MeterGroup', () => {
         });
 
         it('should render all meter items', () => {
-            const meters = element.querySelectorAll('.p-metergroup-meter');
+            const meters = element.querySelectorAll('.h-metergroup-meter');
             expect(meters.length).toBeGreaterThan(0);
         });
 
@@ -453,7 +453,7 @@ describe('MeterGroup', () => {
         });
 
         it('should display label text with percentage', () => {
-            const labelTexts = element.querySelectorAll('.p-metergroup-label-text');
+            const labelTexts = element.querySelectorAll('.h-metergroup-label-text');
             expect(labelTexts[0]?.textContent).toContain('Apps');
             expect(labelTexts[0]?.textContent).toContain('16%');
         });
@@ -501,7 +501,7 @@ describe('MeterGroup', () => {
         });
 
         it('should apply icon color from meter item', () => {
-            const icons = element.querySelectorAll('.p-metergroup-label-icon');
+            const icons = element.querySelectorAll('.h-metergroup-label-icon');
             icons.forEach((icon) => {
                 const style = (icon as HTMLElement).style;
                 // In test environment, inline styles might not be applied, so we test the component logic
@@ -517,7 +517,7 @@ describe('MeterGroup', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const markers = element.querySelectorAll('.p-metergroup-label-marker');
+            const markers = element.querySelectorAll('.h-metergroup-label-marker');
             expect(markers.length).toBeGreaterThan(0);
         });
     });
@@ -594,7 +594,7 @@ describe('MeterGroup', () => {
         });
 
         it('should generate proper meter container class', () => {
-            const metersContainer = element.querySelector('.p-metergroup-meters');
+            const metersContainer = element.querySelector('.h-metergroup-meters');
             expect(metersContainer).toBeTruthy();
         });
     });
@@ -662,7 +662,7 @@ describe('MeterGroup', () => {
             expect(meterGroup.value()!.length).toBe(2);
 
             // Check DOM elements
-            const labelTexts = element.querySelectorAll('.p-metergroup-label-text');
+            const labelTexts = element.querySelectorAll('.h-metergroup-label-text');
             expect(labelTexts.length).toBe(2);
         });
 
@@ -675,7 +675,7 @@ describe('MeterGroup', () => {
             await fixture.whenStable();
 
             expect(meterGroup.value()!.length).toBe(0);
-            const meters = element.querySelectorAll('.p-metergroup-meter');
+            const meters = element.querySelectorAll('.h-metergroup-meter');
             expect(meters.length).toBe(0);
         });
     });

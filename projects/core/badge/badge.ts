@@ -154,21 +154,21 @@ export class BadgeDirective extends BaseComponent {
         }
 
         if (this.value() != null) {
-            if (hasClass(badge, 'p-badge-dot')) {
-                removeClass(badge, 'p-badge-dot');
+            if (hasClass(badge, 'h-badge-dot')) {
+                removeClass(badge, 'h-badge-dot');
             }
 
             if (this.value() && String(this.value()).length === 1) {
-                addClass(badge, 'p-badge-circle');
+                addClass(badge, 'h-badge-circle');
             } else {
-                removeClass(badge, 'p-badge-circle');
+                removeClass(badge, 'h-badge-circle');
             }
         } else {
-            if (!hasClass(badge, 'p-badge-dot')) {
-                addClass(badge, 'p-badge-dot');
+            if (!hasClass(badge, 'h-badge-dot')) {
+                addClass(badge, 'h-badge-dot');
             }
 
-            removeClass(badge, 'p-badge-circle');
+            removeClass(badge, 'h-badge-circle');
         }
 
         badge.textContent = '';
@@ -186,27 +186,27 @@ export class BadgeDirective extends BaseComponent {
         const badgeSize = this.badgeSize();
         if (badgeSize) {
             if (badgeSize === 'large') {
-                addClass(badge, 'p-badge-lg');
-                removeClass(badge, 'p-badge-xl');
+                addClass(badge, 'h-badge-lg');
+                removeClass(badge, 'h-badge-xl');
             }
 
             if (badgeSize === 'xlarge') {
-                addClass(badge, 'p-badge-xl');
-                removeClass(badge, 'p-badge-lg');
+                addClass(badge, 'h-badge-xl');
+                removeClass(badge, 'h-badge-lg');
             }
         } else if (this.size() && !badgeSize) {
             if (this.size() === 'large') {
-                addClass(badge, 'p-badge-lg');
-                removeClass(badge, 'p-badge-xl');
+                addClass(badge, 'h-badge-lg');
+                removeClass(badge, 'h-badge-xl');
             }
 
             if (this.size() === 'xlarge') {
-                addClass(badge, 'p-badge-xl');
-                removeClass(badge, 'p-badge-lg');
+                addClass(badge, 'h-badge-xl');
+                removeClass(badge, 'h-badge-lg');
             }
         } else {
-            removeClass(badge, 'p-badge-lg');
-            removeClass(badge, 'p-badge-xl');
+            removeClass(badge, 'h-badge-lg');
+            removeClass(badge, 'h-badge-xl');
         }
     }
 
@@ -216,11 +216,11 @@ export class BadgeDirective extends BaseComponent {
         }
 
         const el = this.activeElement;
-        const badge = <HTMLElement>createElement('span', { class: this.cx('root'), id: this.id, 'p-bind': this.ptm('root') });
+        const badge = <HTMLElement>createElement('span', { class: this.cx('root'), id: this.id, 'h-bind': this.ptm('root') });
         this.setSeverity(null, badge);
         this.setSizeClasses(badge);
         this.setValue(badge);
-        addClass(el, 'p-overlay-badge');
+        addClass(el, 'h-overlay-badge');
         this.renderer.appendChild(el, badge);
         this.badgeEl = badge;
         this.applyStyles();
@@ -248,11 +248,11 @@ export class BadgeDirective extends BaseComponent {
 
         const severity = this.severity();
         if (severity) {
-            addClass(badge, `p-badge-${severity}`);
+            addClass(badge, `h-badge-${severity}`);
         }
 
         if (oldSeverity) {
-            removeClass(badge, `p-badge-${oldSeverity}`);
+            removeClass(badge, `h-badge-${oldSeverity}`);
         }
     }
 
@@ -287,7 +287,7 @@ export class BadgeDirective extends BaseComponent {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style.display]': 'badgeDisabled() ? "none" : null',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

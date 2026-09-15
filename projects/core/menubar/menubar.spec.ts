@@ -9,7 +9,7 @@ import { Menubar, MenubarSub } from './menubar';
 @Component({
     standalone: false,
     template: `
-        <p-menubar
+        <h-menubar
             [model]="model"
             [styleClass]="styleClass"
             [autoZIndex]="autoZIndex"
@@ -24,7 +24,7 @@ import { Menubar, MenubarSub } from './menubar';
             (onFocus)="onFocus($event)"
             (onBlur)="onBlur($event)"
         >
-        </p-menubar>
+        </h-menubar>
     `
 })
 class TestBasicMenubarComponent {
@@ -55,7 +55,7 @@ class TestBasicMenubarComponent {
 @Component({
     standalone: false,
     selector: 'test-nested-menubar',
-    template: ` <p-menubar [model]="nestedModel"> </p-menubar> `
+    template: ` <h-menubar [model]="nestedModel"> </h-menubar> `
 })
 class TestNestedMenubarComponent {
     nestedModel: MenuItem[] = [
@@ -78,7 +78,7 @@ class TestNestedMenubarComponent {
 @Component({
     standalone: false,
     selector: 'test-router-menubar',
-    template: ` <p-menubar [model]="routerModel"> </p-menubar> `
+    template: ` <h-menubar [model]="routerModel"> </h-menubar> `
 })
 class TestRouterMenubarComponent {
     routerModel: MenuItem[] = [
@@ -96,14 +96,14 @@ class TestRouterMenubarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menubar [model]="model">
+        <h-menubar [model]="model">
             <ng-template #start>
                 <div class="custom-start">Start Content</div>
             </ng-template>
             <ng-template #end>
                 <div class="custom-end">End Content</div>
             </ng-template>
-        </p-menubar>
+        </h-menubar>
     `
 })
 class TestTemplateMenubarComponent {
@@ -113,7 +113,7 @@ class TestTemplateMenubarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menubar [model]="model">
+        <h-menubar [model]="model">
           <ng-template #item let-item>
             <div class="custom-item">
               @if (item.icon) {
@@ -122,7 +122,7 @@ class TestTemplateMenubarComponent {
               <span class="custom-label">{{ item.label }}</span>
             </div>
           </ng-template>
-        </p-menubar>
+        </h-menubar>
         `
 })
 class TestItemTemplateMenubarComponent {
@@ -135,11 +135,11 @@ class TestItemTemplateMenubarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menubar [model]="model">
+        <h-menubar [model]="model">
             <ng-template pTemplate="item" let-item>
-                <span class="p-template-item">{{ item.label }}</span>
+                <span class="h-template-item">{{ item.label }}</span>
             </ng-template>
-        </p-menubar>
+        </h-menubar>
     `
 })
 class TestPTemplateMenubarComponent {
@@ -149,11 +149,11 @@ class TestPTemplateMenubarComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menubar [model]="model">
+        <h-menubar [model]="model">
             <ng-template #submenuicon>
                 <i class="custom-submenu-icon pi pi-angle-down"></i>
             </ng-template>
-        </p-menubar>
+        </h-menubar>
     `
 })
 class TestSubmenuIconTemplateComponent {
@@ -168,11 +168,11 @@ class TestSubmenuIconTemplateComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menubar [model]="model">
+        <h-menubar [model]="model">
             <ng-template #menuicon>
                 <i class="custom-menu-icon pi pi-bars"></i>
             </ng-template>
-        </p-menubar>
+        </h-menubar>
     `
 })
 class TestMenuIconTemplateComponent {
@@ -182,7 +182,7 @@ class TestMenuIconTemplateComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-items',
-    template: ` <p-menubar [model]="disabledModel"> </p-menubar> `
+    template: ` <h-menubar [model]="disabledModel"> </h-menubar> `
 })
 class TestDisabledItemsComponent {
     disabledModel: MenuItem[] = [{ label: 'Enabled Item' }, { label: 'Disabled Item', disabled: true }, { separator: true }, { label: 'Another Enabled Item' }];
@@ -191,7 +191,7 @@ class TestDisabledItemsComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-menubar',
-    template: ` <p-menubar [styleClass]="customStyleClass"> </p-menubar> `
+    template: ` <h-menubar [styleClass]="customStyleClass"> </h-menubar> `
 })
 class TestStyledMenubarComponent {
     customStyleClass = 'custom-menubar-class';
@@ -200,14 +200,14 @@ class TestStyledMenubarComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-menubar',
-    template: `<p-menubar></p-menubar>`
+    template: `<h-menubar></h-menubar>`
 })
 class TestMinimalMenubarComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-menubar',
-    template: ` <p-menubar [model]="dynamicModel"> </p-menubar> `
+    template: ` <h-menubar [model]="dynamicModel"> </h-menubar> `
 })
 class TestDynamicMenubarComponent {
     dynamicModel: MenuItem[] = [];
@@ -228,7 +228,7 @@ class TestDynamicMenubarComponent {
 @Component({
     standalone: false,
     selector: 'test-command-menubar',
-    template: ` <p-menubar [model]="commandModel"> </p-menubar> `
+    template: ` <h-menubar [model]="commandModel"> </h-menubar> `
 })
 class TestCommandMenubarComponent {
     commandExecuted: any;
@@ -247,7 +247,7 @@ class TestCommandMenubarComponent {
 @Component({
     standalone: false,
     selector: 'test-autohide-menubar',
-    template: ` <p-menubar [model]="model" [autoHide]="autoHide" [autoHideDelay]="autoHideDelay"> </p-menubar> `
+    template: ` <h-menubar [model]="model" [autoHide]="autoHide" [autoHideDelay]="autoHideDelay"> </h-menubar> `
 })
 class TestAutoHideMenubarComponent {
     model: MenuItem[] = [{ label: 'Item 1' }, { label: 'Item 2' }];
@@ -1280,7 +1280,7 @@ describe('Menubar', () => {
             });
             fixture.detectChanges();
 
-            const buttonEl = fixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = fixture.nativeElement.querySelector('[class*="h-menubar-button"]');
 
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
@@ -1299,7 +1299,7 @@ describe('Menubar', () => {
             });
             fixture.detectChanges();
 
-            const buttonEl = fixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = fixture.nativeElement.querySelector('[class*="h-menubar-button"]');
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
                 expect(buttonEl.classList.contains('CUSTOM_BUTTON')).toBe(true);
@@ -1316,7 +1316,7 @@ describe('Menubar', () => {
             });
             fixture.detectChanges();
 
-            const buttonEl = fixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = fixture.nativeElement.querySelector('[class*="h-menubar-button"]');
 
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
@@ -1336,7 +1336,7 @@ describe('Menubar', () => {
             menubar.mobileActive = true;
             fixture.detectChanges();
 
-            const buttonEl = fixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = fixture.nativeElement.querySelector('[class*="h-menubar-button"]');
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
                 expect(buttonEl.classList.contains('MOBILE_ACTIVE')).toBe(true);
@@ -1354,7 +1354,7 @@ describe('Menubar', () => {
             });
             fixture.detectChanges();
 
-            const buttonEl = fixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = fixture.nativeElement.querySelector('[class*="h-menubar-button"]');
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
                 buttonEl.click();
@@ -1368,7 +1368,7 @@ describe('Menubar', () => {
             testFixture.componentRef.setInput('pt', { button: 'INLINE_CLASS' });
             testFixture.detectChanges();
 
-            const buttonEl = testFixture.nativeElement.querySelector('[class*="p-menubar-button"]');
+            const buttonEl = testFixture.nativeElement.querySelector('[class*="h-menubar-button"]');
             expect(buttonEl).toBeTruthy();
             if (buttonEl) {
                 expect(buttonEl.classList.contains('INLINE_CLASS')).toBe(true);

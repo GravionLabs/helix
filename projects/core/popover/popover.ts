@@ -310,8 +310,8 @@ export class Popover extends BaseComponent<PopoverPassThrough> {
             this.container.style.setProperty($dt('popover.arrow.left').name, `${arrowLeft}px`);
 
             if (containerOffset.top < targetOffset.top) {
-                this.container.setAttribute('data-p-popover-flipped', 'true');
-                !this.$unstyled() && addClass(this.container, 'p-popover-flipped');
+                this.container.setAttribute('data-h-popover-flipped', 'true');
+                !this.$unstyled() && addClass(this.container, 'h-popover-flipped');
             }
         }
     }

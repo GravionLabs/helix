@@ -4,12 +4,12 @@ import { ThemeUtils } from '../utils/index';
 export default {
     defaults: {
         variable: {
-            prefix: 'p',
+            prefix: 'h',
             selector: ':root,:host',
             excludedKeyRegex: /^(primitive|semantic|components|directives|variables|colorscheme|light|dark|common|root|states|extend|css)$/gi
         },
         options: {
-            prefix: 'p',
+            prefix: 'h',
             darkModeSelector: 'system',
             cssLayer: false
         }

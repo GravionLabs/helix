@@ -1,17 +1,17 @@
 export const style = /*css*/ `
-    .p-organizationchart-table {
+    .h-organizationchart-table {
         border-spacing: 0;
         border-collapse: separate;
         margin: 0 auto;
     }
 
-    .p-organizationchart-table > tbody > tr > td {
+    .h-organizationchart-table > tbody > tr > td {
         text-align: center;
         vertical-align: top;
         padding: 0 dt('organizationchart.gutter');
     }
 
-    .p-organizationchart-node {
+    .h-organizationchart-node {
         display: inline-block;
         position: relative;
         border: 1px solid dt('organizationchart.node.border.color');
@@ -26,21 +26,21 @@ export const style = /*css*/ `
             box-shadow dt('organizationchart.transition.duration');
     }
 
-    .p-organizationchart-node:has(.p-organizationchart-node-toggle-button) {
+    .h-organizationchart-node:has(.h-organizationchart-node-toggle-button) {
         padding: dt('organizationchart.node.toggleable.padding');
     }
 
-    .p-organizationchart-node.p-organizationchart-node-selectable:not(.p-organizationchart-node-selected):hover {
+    .h-organizationchart-node.h-organizationchart-node-selectable:not(.h-organizationchart-node-selected):hover {
         background: dt('organizationchart.node.hover.background');
         color: dt('organizationchart.node.hover.color');
     }
 
-    .p-organizationchart-node-selected {
+    .h-organizationchart-node-selected {
         background: dt('organizationchart.node.selected.background');
         color: dt('organizationchart.node.selected.color');
     }
 
-    .p-organizationchart-node-toggle-button {
+    .h-organizationchart-node-toggle-button {
         position: absolute;
         inset-block-end: calc(-1 * calc(dt('organizationchart.node.toggle.button.size') / 2));
         margin-inline-start: calc(-1 * calc(dt('organizationchart.node.toggle.button.size') / 2));
@@ -67,55 +67,55 @@ export const style = /*css*/ `
             box-shadow dt('organizationchart.transition.duration');
     }
 
-    .p-organizationchart-node-toggle-button:hover {
+    .h-organizationchart-node-toggle-button:hover {
         background: dt('organizationchart.node.toggle.button.hover.background');
         color: dt('organizationchart.node.toggle.button.hover.color');
     }
 
-    .p-organizationchart-node-toggle-button:focus-visible {
+    .h-organizationchart-node-toggle-button:focus-visible {
         box-shadow: dt('organizationchart.node.toggle.button.focus.ring.shadow');
         outline: dt('organizationchart.node.toggle.button.focus.ring.width') dt('organizationchart.node.toggle.button.focus.ring.style') dt('organizationchart.node.toggle.button.focus.ring.color');
         outline-offset: dt('organizationchart.node.toggle.button.focus.ring.offset');
     }
 
-    .p-organizationchart-node-toggle-button-icon {
+    .h-organizationchart-node-toggle-button-icon {
         position: relative;
         inset-block-start: 1px;
     }
 
-    .p-organizationchart-connector-down {
+    .h-organizationchart-connector-down {
         margin: 0 auto;
         height: dt('organizationchart.connector.height');
         width: 1px;
         background: dt('organizationchart.connector.color');
     }
 
-    .p-organizationchart-connector-right {
+    .h-organizationchart-connector-right {
         border-radius: 0;
     }
 
-    .p-organizationchart-connector-left {
+    .h-organizationchart-connector-left {
         border-radius: 0;
         border-inline-end: 1px solid dt('organizationchart.connector.color');
     }
 
-    .p-organizationchart-connector-top {
+    .h-organizationchart-connector-top {
         border-block-start: 1px solid dt('organizationchart.connector.color');
     }
 
-    .p-organizationchart-node-selectable {
+    .h-organizationchart-node-selectable {
         cursor: pointer;
     }
 
-    .p-organizationchart-connectors :nth-child(1 of .p-organizationchart-connector-left) {
+    .h-organizationchart-connectors :nth-child(1 of .h-organizationchart-connector-left) {
         border-inline-end: 0 none;
     }
 
-    .p-organizationchart-connectors :nth-last-child(1 of .p-organizationchart-connector-left) {
+    .h-organizationchart-connectors :nth-last-child(1 of .h-organizationchart-connector-left) {
         border-start-end-radius: dt('organizationchart.connector.border.radius');
     }
 
-    .p-organizationchart-connectors :nth-child(1 of .p-organizationchart-connector-right) {
+    .h-organizationchart-connectors :nth-child(1 of .h-organizationchart-connector-right) {
         border-inline-start: 1px solid dt('organizationchart.connector.color');
         border-start-start-radius: dt('organizationchart.connector.border.radius');
     }

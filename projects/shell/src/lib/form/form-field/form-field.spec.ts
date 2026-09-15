@@ -154,7 +154,7 @@ describe('HelixFormField', () => {
       fixture.detectChanges();
       const smallEls = fixture.nativeElement.querySelectorAll('small');
       expect(smallEls.length).toBe(1);
-      expect(smallEls[0].classList.contains('p-error')).toBe(true);
+      expect(smallEls[0].classList.contains('h-error')).toBe(true);
     });
 
     it('should not show hint or error when showHint is false', () => {

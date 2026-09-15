@@ -4,10 +4,10 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-iconfield',
+        'h-iconfield',
         {
-            'p-iconfield-left': instance.iconPosition() == 'left',
-            'p-iconfield-right': instance.iconPosition() == 'right'
+            'h-iconfield-left': instance.iconPosition() == 'left',
+            'h-iconfield-right': instance.iconPosition() == 'right'
         }
     ]
 };
@@ -34,7 +34,7 @@ export enum IconFieldClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-iconfield'
+    root = 'h-iconfield'
 }
 
 export interface IconFieldStyle extends BaseStyle {}

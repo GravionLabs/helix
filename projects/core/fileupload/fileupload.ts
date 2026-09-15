@@ -877,8 +877,8 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
     onDragOver(e: DragEvent) {
         if (!this.disabled()) {
-            !this.$unstyled() && addClass(this.content()?.nativeElement, 'p-fileupload-highlight');
-            this.content()?.nativeElement.setAttribute('data-p-highlight', true);
+            !this.$unstyled() && addClass(this.content()?.nativeElement, 'h-fileupload-highlight');
+            this.content()?.nativeElement.setAttribute('data-h-highlight', true);
             this.dragHighlight = true;
             e.stopPropagation();
             e.preventDefault();
@@ -887,15 +887,15 @@ export class FileUpload extends BaseComponent<FileUploadPassThrough> implements 
 
     onDragLeave(event: DragEvent) {
         if (!this.disabled()) {
-            !this.$unstyled() && removeClass(this.content()?.nativeElement, 'p-fileupload-highlight');
-            this.content()?.nativeElement.setAttribute('data-p-highlight', false);
+            !this.$unstyled() && removeClass(this.content()?.nativeElement, 'h-fileupload-highlight');
+            this.content()?.nativeElement.setAttribute('data-h-highlight', false);
         }
     }
 
     onDrop(event: any) {
         if (!this.disabled()) {
-            !this.$unstyled() && removeClass(this.content()?.nativeElement, 'p-fileupload-highlight');
-            this.content()?.nativeElement.setAttribute('data-p-highlight', false);
+            !this.$unstyled() && removeClass(this.content()?.nativeElement, 'h-fileupload-highlight');
+            this.content()?.nativeElement.setAttribute('data-h-highlight', false);
             event.stopPropagation();
             event.preventDefault();
 

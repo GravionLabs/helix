@@ -1,17 +1,17 @@
 export const style = /*css*/ `
-    .p-tabs {
+    .h-tabs {
         display: flex;
         flex-direction: column;
     }
 
-    .p-tablist {
+    .h-tablist {
         display: flex;
         position: relative;
         overflow: hidden;
         background: dt('tabs.tablist.background');
     }
 
-    .p-tablist-viewport {
+    .h-tablist-viewport {
         overflow-x: auto;
         overflow-y: hidden;
         scroll-behavior: smooth;
@@ -19,11 +19,11 @@ export const style = /*css*/ `
         overscroll-behavior: contain auto;
     }
 
-    .p-tablist-viewport::-webkit-scrollbar {
+    .h-tablist-viewport::-webkit-scrollbar {
         display: none;
     }
 
-    .p-tablist-tab-list {
+    .h-tablist-tab-list {
         position: relative;
         display: flex;
         border-style: solid;
@@ -31,11 +31,11 @@ export const style = /*css*/ `
         border-width: dt('tabs.tablist.border.width');
     }
 
-    .p-tablist-content {
+    .h-tablist-content {
         flex-grow: 1;
     }
 
-    .p-tablist-nav-button {
+    .h-tablist-nav-button {
         all: unset;
         position: absolute !important;
         flex-shrink: 0;
@@ -57,31 +57,31 @@ export const style = /*css*/ `
         cursor: pointer;
     }
 
-    .p-tablist-nav-button:focus-visible {
+    .h-tablist-nav-button:focus-visible {
         z-index: 1;
         box-shadow: dt('tabs.nav.button.focus.ring.shadow');
         outline: dt('tabs.nav.button.focus.ring.width') dt('tabs.nav.button.focus.ring.style') dt('tabs.nav.button.focus.ring.color');
         outline-offset: dt('tabs.nav.button.focus.ring.offset');
     }
 
-    .p-tablist-nav-button:hover {
+    .h-tablist-nav-button:hover {
         color: dt('tabs.nav.button.hover.color');
     }
 
-    .p-tablist-prev-button {
+    .h-tablist-prev-button {
         inset-inline-start: 0;
     }
 
-    .p-tablist-next-button {
+    .h-tablist-next-button {
         inset-inline-end: 0;
     }
 
-    .p-tablist-prev-button:dir(rtl),
-    .p-tablist-next-button:dir(rtl) {
+    .h-tablist-prev-button:dir(rtl),
+    .h-tablist-next-button:dir(rtl) {
         transform: rotate(180deg);
     }
 
-    .p-tab {
+    .h-tab {
         flex-shrink: 0;
         cursor: pointer;
         user-select: none;
@@ -105,39 +105,39 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-tab:not(.p-disabled):focus-visible {
+    .h-tab:not(.h-disabled):focus-visible {
         z-index: 1;
         box-shadow: dt('tabs.tab.focus.ring.shadow');
         outline: dt('tabs.tab.focus.ring.width') dt('tabs.tab.focus.ring.style') dt('tabs.tab.focus.ring.color');
         outline-offset: dt('tabs.tab.focus.ring.offset');
     }
 
-    .p-tab:not(.p-tab-active):not(.p-disabled):hover {
+    .h-tab:not(.h-tab-active):not(.h-disabled):hover {
         background: dt('tabs.tab.hover.background');
         border-color: dt('tabs.tab.hover.border.color');
         color: dt('tabs.tab.hover.color');
     }
 
-    .p-tab-active {
+    .h-tab-active {
         background: dt('tabs.tab.active.background');
         border-color: dt('tabs.tab.active.border.color');
         color: dt('tabs.tab.active.color');
     }
 
-    .p-tabpanels {
+    .h-tabpanels {
         background: dt('tabs.tabpanel.background');
         color: dt('tabs.tabpanel.color');
         padding: dt('tabs.tabpanel.padding');
         outline: 0 none;
     }
 
-    .p-tabpanel:focus-visible {
+    .h-tabpanel:focus-visible {
         box-shadow: dt('tabs.tabpanel.focus.ring.shadow');
         outline: dt('tabs.tabpanel.focus.ring.width') dt('tabs.tabpanel.focus.ring.style') dt('tabs.tabpanel.focus.ring.color');
         outline-offset: dt('tabs.tabpanel.focus.ring.offset');
     }
 
-    .p-tablist-active-bar {
+    .h-tablist-active-bar {
         z-index: 1;
         display: block;
         position: absolute;

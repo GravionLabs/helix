@@ -10,7 +10,7 @@ import { Menu } from './menu';
 @Component({
     standalone: false,
     template: `
-        <p-menu
+        <h-menu
             [id]="id"
             [model]="model"
             [popup]="popup"
@@ -29,7 +29,7 @@ import { Menu } from './menu';
             (onBlur)="onBlur($event)"
             (onFocus)="onFocus($event)"
         >
-        </p-menu>
+        </h-menu>
     `
 })
 class TestBasicMenuComponent {
@@ -72,7 +72,7 @@ class TestBasicMenuComponent {
 @Component({
     standalone: false,
     template: `
-        <p-menu #menu [model]="popupItems" [popup]="true"></p-menu>
+        <h-menu #menu [model]="popupItems" [popup]="true"></h-menu>
         <button #toggleButton (click)="menu.toggle($event)" class="toggle-button">Show Menu</button>
     `
 })
@@ -108,7 +108,7 @@ class TestPopupMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-router-menu',
-    template: ` <p-menu [model]="routerModel"></p-menu> `
+    template: ` <h-menu [model]="routerModel"></h-menu> `
 })
 class TestRouterMenuComponent {
     routerModel: MenuItem[] = [
@@ -126,7 +126,7 @@ class TestRouterMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-submenu-menu',
-    template: ` <p-menu [model]="submenuModel"></p-menu> `
+    template: ` <h-menu [model]="submenuModel"></h-menu> `
 })
 class TestSubmenuMenuComponent {
     submenuModel: MenuItem[] = [
@@ -151,7 +151,7 @@ class TestSubmenuMenuComponent {
     standalone: false,
     selector: 'test-item-template-menu',
     template: `
-        <p-menu [model]="model">
+        <h-menu [model]="model">
           <ng-template #item let-item>
             <div class="custom-menu-item">
               @if (item.icon) {
@@ -160,7 +160,7 @@ class TestSubmenuMenuComponent {
               <span class="custom-label">{{ item.label }}</span>
             </div>
           </ng-template>
-        </p-menu>
+        </h-menu>
         `
 })
 class TestItemTemplateMenuComponent {
@@ -174,9 +174,9 @@ class TestItemTemplateMenuComponent {
     standalone: false,
     selector: 'test-ptemplate-menu',
     template: `
-        <p-menu [model]="model">
+        <h-menu [model]="model">
             <ng-template pTemplate="item" let-item>
-                <span class="p-template-item">{{ item.label }}</span>
+                <span class="h-template-item">{{ item.label }}</span>
             </ng-template>
             <ng-template pTemplate="start">
                 <div class="menu-start">Header Content</div>
@@ -184,7 +184,7 @@ class TestItemTemplateMenuComponent {
             <ng-template pTemplate="end">
                 <div class="menu-end">Footer Content</div>
             </ng-template>
-        </p-menu>
+        </h-menu>
     `
 })
 class TestPTemplateMenuComponent {
@@ -194,7 +194,7 @@ class TestPTemplateMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-items-menu',
-    template: ` <p-menu [model]="disabledModel"></p-menu> `
+    template: ` <h-menu [model]="disabledModel"></h-menu> `
 })
 class TestDisabledItemsMenuComponent {
     disabledModel: MenuItem[] = [{ label: 'Enabled Item', icon: 'pi pi-check' }, { label: 'Disabled Item', icon: 'pi pi-times', disabled: true }, { label: 'Function Disabled', icon: 'pi pi-question', disabled: () => true } as any];
@@ -203,7 +203,7 @@ class TestDisabledItemsMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-menu',
-    template: ` <p-menu [model]="model" [styleClass]="customStyleClass" [style]="customStyle"></p-menu> `
+    template: ` <h-menu [model]="model" [styleClass]="customStyleClass" [style]="customStyle"></h-menu> `
 })
 class TestStyledMenuComponent {
     model: MenuItem[] = [{ label: 'Test', icon: 'pi pi-test' }];
@@ -214,14 +214,14 @@ class TestStyledMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-menu',
-    template: `<p-menu></p-menu>`
+    template: `<h-menu></h-menu>`
 })
 class TestMinimalMenuComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-menu',
-    template: ` <p-menu [model]="dynamicModel"></p-menu> `
+    template: ` <h-menu [model]="dynamicModel"></h-menu> `
 })
 class TestDynamicMenuComponent {
     dynamicModel: MenuItem[] = [];
@@ -242,7 +242,7 @@ class TestDynamicMenuComponent {
 @Component({
     standalone: false,
     selector: 'test-command-menu',
-    template: ` <p-menu [model]="commandModel"></p-menu> `
+    template: ` <h-menu [model]="commandModel"></h-menu> `
 })
 class TestCommandMenuComponent {
     commandExecuted: any;
@@ -581,7 +581,7 @@ describe('Menu', () => {
             expect(disabledMenu.disabled(functionDisabledItem.disabled)).toBe(true);
         });
 
-        it('should set data-p-disabled attribute for disabled items', async () => {
+        it('should set data-h-disabled attribute for disabled items', async () => {
             const disabledFixture = TestBed.createComponent(TestDisabledItemsMenuComponent);
             disabledFixture.detectChanges();
             await disabledFixture.whenStable();
@@ -957,7 +957,7 @@ describe('Menu', () => {
 
             anchors.forEach((anchor) => {
                 expect(anchor.nativeElement.hasAttribute('routerlinkactive')).toBe(true);
-                expect(anchor.nativeElement.getAttribute('routerlinkactive')).toBe('p-menu-item-link-active');
+                expect(anchor.nativeElement.getAttribute('routerlinkactive')).toBe('h-menu-item-link-active');
             });
         });
     });
@@ -1457,13 +1457,13 @@ describe('Menu', () => {
                 const ptFixture = TestBed.createComponent(Menu);
                 ptFixture.componentRef.setInput('pt', {
                     root: {
-                        'data-p-test': true
+                        'data-h-test': true
                     }
                 });
                 ptFixture.detectChanges();
 
                 const rootElement = ptFixture.debugElement.query(By.css('[data-pc-name="menu"]'));
-                expect(rootElement.nativeElement.getAttribute('data-p-test')).toBe('true');
+                expect(rootElement.nativeElement.getAttribute('data-h-test')).toBe('true');
             });
 
             it('should apply object with aria-label to root', () => {
@@ -1673,7 +1673,7 @@ describe('Menu', () => {
                 @Component({
                     standalone: true,
                     imports: [Menu],
-                    template: `<p-menu [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-menu>`
+                    template: `<h-menu [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-menu>`
                 })
                 class TestInlinePTStringComponent {}
 
@@ -1694,7 +1694,7 @@ describe('Menu', () => {
                 @Component({
                     standalone: true,
                     imports: [Menu],
-                    template: `<p-menu [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></p-menu>`
+                    template: `<h-menu [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></h-menu>`
                 })
                 class TestInlinePTObjectComponent {}
 
@@ -1717,8 +1717,8 @@ describe('Menu', () => {
                 standalone: true,
                 imports: [Menu],
                 template: `
-                    <p-menu></p-menu>
-                    <p-menu></p-menu>
+                    <h-menu></h-menu>
+                    <h-menu></h-menu>
                 `
             })
             class TestGlobalPTComponent {}
@@ -1768,7 +1768,7 @@ describe('Menu', () => {
                 @Component({
                     standalone: true,
                     imports: [Menu],
-                    template: `<p-menu [pt]="{ root: { class: 'LOCAL_CLASS' } }"></p-menu>`
+                    template: `<h-menu [pt]="{ root: { class: 'LOCAL_CLASS' } }"></h-menu>`
                 })
                 class TestMergedPTComponent {}
 
@@ -1851,7 +1851,7 @@ describe('Menu', () => {
                 ptFixture.detectChanges();
 
                 const rootElement = ptFixture.debugElement.query(By.css('[data-pc-name="menu"]'));
-                expect(rootElement.nativeElement.className).toContain('p-menu');
+                expect(rootElement.nativeElement.className).toContain('h-menu');
                 expect(rootElement.nativeElement.className).toContain('CUSTOM_PT_CLASS');
             });
 

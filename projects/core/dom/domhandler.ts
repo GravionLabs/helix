@@ -205,7 +205,7 @@ export class DomHandler {
 
         element.style.top = top + 'px';
         element.style.left = left + 'px';
-        gutter && (element.style.marginTop = origin === 'bottom' ? 'calc(var(--p-anchor-gutter) * -1)' : 'calc(var(--p-anchor-gutter))');
+        gutter && (element.style.marginTop = origin === 'bottom' ? 'calc(var(--h-anchor-gutter) * -1)' : 'calc(var(--h-anchor-gutter))');
     }
 
     static getParents(element: any, parents: any = []): any {
@@ -528,7 +528,7 @@ export class DomHandler {
             if (this.calculatedScrollbarWidth !== null) return this.calculatedScrollbarWidth;
 
             let scrollDiv = document.createElement('div');
-            scrollDiv.className = 'p-scrollbar-measure';
+            scrollDiv.className = 'h-scrollbar-measure';
             document.body.appendChild(scrollDiv);
 
             let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
@@ -544,7 +544,7 @@ export class DomHandler {
         if (this.calculatedScrollbarHeight !== null) return this.calculatedScrollbarHeight;
 
         let scrollDiv = document.createElement('div');
-        scrollDiv.className = 'p-scrollbar-measure';
+        scrollDiv.className = 'h-scrollbar-measure';
         document.body.appendChild(scrollDiv);
 
         let scrollbarHeight = scrollDiv.offsetHeight - scrollDiv.clientHeight;
@@ -638,8 +638,8 @@ export class DomHandler {
         textarea:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
         [tabIndex]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
         [contenteditable]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
-        .p-inputtext:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
-        .p-button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector}`;
+        .h-inputtext:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+        .h-button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector}`;
     }
 
     public static getFocusableElements(element, selector = ''): any[] {
@@ -769,12 +769,12 @@ export class DomHandler {
         return window.innerWidth - document.documentElement.offsetWidth;
     }
 
-    public static blockBodyScroll(className = 'p-overflow-hidden') {
+    public static blockBodyScroll(className = 'h-overflow-hidden') {
         document.body.style.setProperty('--scrollbar-width', this.calculateBodyScrollbarWidth() + 'px');
         this.addClass(document.body, className);
     }
 
-    public static unblockBodyScroll(className = 'p-overflow-hidden') {
+    public static unblockBodyScroll(className = 'h-overflow-hidden') {
         document.body.style.removeProperty('--scrollbar-width');
         this.removeClass(document.body, className);
     }

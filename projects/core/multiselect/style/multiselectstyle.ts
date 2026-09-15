@@ -6,12 +6,12 @@ const style = /*css*/ `
     ${multiselect_style}
 
     /* For Helix */
-   .p-multiselect.ng-invalid.ng-dirty {
+   .h-multiselect.ng-invalid.ng-dirty {
         border-color: dt('multiselect.invalid.border.color');
     }
-    p-multiSelect.ng-invalid.ng-dirty .p-multiselect-label.p-placeholder,
-    p-multi-select.ng-invalid.ng-dirty .p-multiselect-label.p-placeholder,
-    p-multiselect.ng-invalid.ng-dirty .p-multiselect-label.p-placeholder {
+    h-multiSelect.ng-invalid.ng-dirty .h-multiselect-label.h-placeholder,
+    h-multi-select.ng-invalid.ng-dirty .h-multiselect-label.h-placeholder,
+    h-multiselect.ng-invalid.ng-dirty .h-multiselect-label.h-placeholder {
         color: dt('multiselect.invalid.placeholder.color');
     }
 `;
@@ -22,49 +22,49 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-multiselect p-component p-inputwrapper',
+        'h-multiselect h-component h-inputwrapper',
         {
-            'p-multiselect p-component p-inputwrapper': true,
-            'p-multiselect-display-chip': instance.display === 'chip',
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-focus': instance.focused,
-            'p-inputwrapper-filled': instance.$filled(),
-            'p-inputwrapper-focus': instance.focused || instance.overlayVisible,
-            'p-multiselect-open': instance.overlayVisible,
-            'p-multiselect-fluid': instance.hasFluid,
-            'p-multiselect-sm p-inputfield-sm': instance.size() === 'small',
-            'p-multiselect-lg p-inputfield-lg': instance.size() === 'large'
+            'h-multiselect h-component h-inputwrapper': true,
+            'h-multiselect-display-chip': instance.display === 'chip',
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-focus': instance.focused,
+            'h-inputwrapper-filled': instance.$filled(),
+            'h-inputwrapper-focus': instance.focused || instance.overlayVisible,
+            'h-multiselect-open': instance.overlayVisible,
+            'h-multiselect-fluid': instance.hasFluid,
+            'h-multiselect-sm h-inputfield-sm': instance.size() === 'small',
+            'h-multiselect-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
-    labelContainer: 'p-multiselect-label-container',
+    labelContainer: 'h-multiselect-label-container',
     label: ({ instance }) => ({
-        'p-multiselect-label': true,
-        'p-placeholder': instance.label() === instance.placeholder(),
-        'p-multiselect-label-empty': !instance.placeholder() && !instance.defaultLabel && (!instance.modelValue() || instance.modelValue().length === 0)
+        'h-multiselect-label': true,
+        'h-placeholder': instance.label() === instance.placeholder(),
+        'h-multiselect-label-empty': !instance.placeholder() && !instance.defaultLabel && (!instance.modelValue() || instance.modelValue().length === 0)
     }),
-    chipItem: 'p-multiselect-chip-item',
-    pcChip: 'p-multiselect-chip',
-    chipIcon: 'p-multiselect-chip-icon',
-    dropdown: 'p-multiselect-dropdown',
-    loadingIcon: 'p-multiselect-loading-icon',
-    dropdownIcon: 'p-multiselect-dropdown-icon',
-    overlay: 'p-multiselect-overlay p-component-overlay p-component',
-    header: 'p-multiselect-header',
-    pcFilterContainer: 'p-multiselect-filter-container',
-    pcFilter: 'p-multiselect-filter',
-    listContainer: 'p-multiselect-list-container',
-    list: 'p-multiselect-list',
-    optionGroup: 'p-multiselect-option-group',
+    chipItem: 'h-multiselect-chip-item',
+    pcChip: 'h-multiselect-chip',
+    chipIcon: 'h-multiselect-chip-icon',
+    dropdown: 'h-multiselect-dropdown',
+    loadingIcon: 'h-multiselect-loading-icon',
+    dropdownIcon: 'h-multiselect-dropdown-icon',
+    overlay: 'h-multiselect-overlay h-component-overlay h-component',
+    header: 'h-multiselect-header',
+    pcFilterContainer: 'h-multiselect-filter-container',
+    pcFilter: 'h-multiselect-filter',
+    listContainer: 'h-multiselect-list-container',
+    list: 'h-multiselect-list',
+    optionGroup: 'h-multiselect-option-group',
     option: ({ instance }) => ({
-        'p-multiselect-option': true,
-        'p-multiselect-option-selected': instance.selected && instance.highlightOnSelect,
-        'p-disabled': instance.disabled,
-        'p-focus': instance.focused
+        'h-multiselect-option': true,
+        'h-multiselect-option-selected': instance.selected && instance.highlightOnSelect,
+        'h-disabled': instance.disabled,
+        'h-focus': instance.focused
     }),
-    emptyMessage: 'p-multiselect-empty-message',
-    clearIcon: 'p-multiselect-clear-icon'
+    emptyMessage: 'h-multiselect-empty-message',
+    clearIcon: 'h-multiselect-clear-icon'
 };
 
 @Injectable()
@@ -91,79 +91,79 @@ export enum MultiSelectClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-multiselect',
+    root = 'h-multiselect',
     /**
      * Class name of the label container element
      */
-    labelContainer = 'p-multiselect-label-container',
+    labelContainer = 'h-multiselect-label-container',
     /**
      * Class name of the label element
      */
-    label = 'p-multiselect-label',
+    label = 'h-multiselect-label',
     /**
      * Class name of the chip item element
      */
-    chipItem = 'p-multiselect-chip-item',
+    chipItem = 'h-multiselect-chip-item',
     /**
      * Class name of the chip element
      */
-    pcChip = 'p-multiselect-chip',
+    pcChip = 'h-multiselect-chip',
     /**
      * Class name of the chip icon element
      */
-    chipIcon = 'p-multiselect-chip-icon',
+    chipIcon = 'h-multiselect-chip-icon',
     /**
      * Class name of the dropdown element
      */
-    dropdown = 'p-multiselect-dropdown',
+    dropdown = 'h-multiselect-dropdown',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-multiselect-loading-icon',
+    loadingIcon = 'h-multiselect-loading-icon',
     /**
      * Class name of the dropdown icon element
      */
-    dropdownIcon = 'p-multiselect-dropdown-icon',
+    dropdownIcon = 'h-multiselect-dropdown-icon',
     /**
      * Class name of the overlay element
      */
-    overlay = 'p-multiselect-overlay',
+    overlay = 'h-multiselect-overlay',
     /**
      * Class name of the header element
      */
-    header = 'p-multiselect-header',
+    header = 'h-multiselect-header',
     /**
      * Class name of the filter container element
      */
-    pcFilterContainer = 'p-multiselect-filter-container',
+    pcFilterContainer = 'h-multiselect-filter-container',
     /**
      * Class name of the filter element
      */
-    pcFilter = 'p-multiselect-filter',
+    pcFilter = 'h-multiselect-filter',
     /**
      * Class name of the list container element
      */
-    listContainer = 'p-multiselect-list-container',
+    listContainer = 'h-multiselect-list-container',
     /**
      * Class name of the list element
      */
-    list = 'p-multiselect-list',
+    list = 'h-multiselect-list',
     /**
      * Class name of the option group element
      */
-    optionGroup = 'p-multiselect-option-group',
+    optionGroup = 'h-multiselect-option-group',
     /**
      * Class name of the option element
      */
-    option = 'p-multiselect-option',
+    option = 'h-multiselect-option',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-multiselect-empty-message',
+    emptyMessage = 'h-multiselect-empty-message',
     /**
      * Class name of the clear icon
      */
-    clearIcon = 'p-autocomplete-clear-icon'
+    clearIcon = 'h-autocomplete-clear-icon'
 }
 
 export interface MultiSelectStyle extends BaseStyle {}

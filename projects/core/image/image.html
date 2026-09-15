@@ -21,7 +21,7 @@
     @if (indicatorTemplate() || _indicatorTemplate) {
       <ng-container *ngTemplateOutlet="indicatorTemplate() || _indicatorTemplate"></ng-container>
     } @else {
-      <svg data-p-icon="eye" [class]="cx('previewIcon')" [hBind]="ptm('previewIcon')" />
+      <svg data-h-icon="eye" [class]="cx('previewIcon')" [hBind]="ptm('previewIcon')" />
     }
   </button>
 }
@@ -37,45 +37,45 @@
     [hBind]="ptm('mask')"
     [hMotion]="maskVisible"
     [pMotionAppear]="true"
-    [pMotionEnterActiveClass]="'p-overlay-mask-enter-active'"
-    [pMotionLeaveActiveClass]="'p-overlay-mask-leave-active'"
+    [pMotionEnterActiveClass]="'h-overlay-mask-enter-active'"
+    [pMotionLeaveActiveClass]="'h-overlay-mask-leave-active'"
     [pMotionOptions]="computedMaskMotionOptions()"
     (pMotionOnAfterLeave)="onMaskAfterLeave()"
     >
     <div [class]="cx('toolbar')" (click)="handleToolbarClick($event)" [hBind]="ptm('toolbar')">
       <button [class]="cx('rotateRightButton')" (click)="rotateRight()" type="button" [attr.aria-label]="rightAriaLabel()" [hBind]="ptm('rotateRightButton')">
         @if (!rotateRightIconTemplate() && !_rotateRightIconTemplate) {
-          <svg data-p-icon="refresh" />
+          <svg data-h-icon="refresh" />
         }
         <ng-template *ngTemplateOutlet="rotateRightIconTemplate() || _rotateRightIconTemplate"></ng-template>
       </button>
       <button [class]="cx('rotateLeftButton')" (click)="rotateLeft()" type="button" [attr.aria-label]="leftAriaLabel()" [hBind]="ptm('rotateLeftButton')">
         @if (!rotateLeftIconTemplate() && !_rotateLeftIconTemplate) {
-          <svg data-p-icon="undo" />
+          <svg data-h-icon="undo" />
         }
         <ng-template *ngTemplateOutlet="rotateLeftIconTemplate() || _rotateLeftIconTemplate"></ng-template>
       </button>
       <button [class]="cx('zoomOutButton')" (click)="zoomOut()" type="button" [disabled]="isZoomOutDisabled" [attr.aria-label]="zoomOutAriaLabel()" [hBind]="ptm('zoomOutButton')">
         @if (!zoomOutIconTemplate() && !_zoomOutIconTemplate) {
-          <svg data-p-icon="search-minus" />
+          <svg data-h-icon="search-minus" />
         }
         <ng-template *ngTemplateOutlet="zoomOutIconTemplate() || _zoomOutIconTemplate"></ng-template>
       </button>
       <button [class]="cx('zoomInButton')" (click)="zoomIn()" type="button" [disabled]="isZoomInDisabled" [attr.aria-label]="zoomInAriaLabel()" [hBind]="ptm('zoomInButton')">
         @if (!zoomInIconTemplate() && !_zoomInIconTemplate) {
-          <svg data-p-icon="search-plus" />
+          <svg data-h-icon="search-plus" />
         }
         <ng-template *ngTemplateOutlet="zoomInIconTemplate() || _zoomInIconTemplate"></ng-template>
       </button>
       <button [class]="cx('closeButton')" type="button" (click)="closePreview()" [attr.aria-label]="closeAriaLabel()" #closeButton [hBind]="ptm('closeButton')">
         @if (!closeIconTemplate() && !_closeIconTemplate) {
-          <svg data-p-icon="times" />
+          <svg data-h-icon="times" />
         }
         <ng-template *ngTemplateOutlet="closeIconTemplate() || _closeIconTemplate"></ng-template>
       </button>
     </div>
     @if (renderPreview()) {
-      <h-motion [visible]="previewVisible" name="p-image-original" [appear]="true" [options]="computedMotionOptions()" (onBeforeEnter)="onAnimationStart($event)" (onBeforeLeave)="onBeforeLeave()" (onAfterLeave)="onAnimationEnd($event)">
+      <h-motion [visible]="previewVisible" name="h-image-original" [appear]="true" [options]="computedMotionOptions()" (onBeforeEnter)="onAnimationStart($event)" (onBeforeLeave)="onBeforeLeave()" (onAfterLeave)="onAnimationEnd($event)">
         @if (!previewTemplate() && !_previewTemplate) {
           <img
             [attr.src]="previewImageSrc() ? previewImageSrc() : src()"

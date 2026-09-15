@@ -9,7 +9,7 @@ import { Dock } from './dock';
 
 @Component({
     standalone: false,
-    template: ` <p-dock [id]="id" [model]="model" [position]="position" [styleClass]="styleClass" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" [breakpoint]="breakpoint" (onFocus)="onFocus($event)" (onBlur)="onBlur($event)"> </p-dock> `
+    template: ` <h-dock [id]="id" [model]="model" [position]="position" [styleClass]="styleClass" [ariaLabel]="ariaLabel" [ariaLabelledBy]="ariaLabelledBy" [breakpoint]="breakpoint" (onFocus)="onFocus($event)" (onBlur)="onBlur($event)"> </h-dock> `
 })
 class TestBasicDockComponent {
     id: string | undefined;
@@ -35,7 +35,7 @@ class TestBasicDockComponent {
 @Component({
     standalone: false,
     selector: 'test-position-dock',
-    template: ` <p-dock [model]="model" [position]="position"></p-dock> `
+    template: ` <h-dock [model]="model" [position]="position"></h-dock> `
 })
 class TestPositionDockComponent {
     position: 'bottom' | 'top' | 'left' | 'right' = 'bottom';
@@ -48,7 +48,7 @@ class TestPositionDockComponent {
 @Component({
     standalone: false,
     selector: 'test-router-dock',
-    template: ` <p-dock [model]="routerModel"></p-dock> `
+    template: ` <h-dock [model]="routerModel"></h-dock> `
 })
 class TestRouterDockComponent {
     routerModel: MenuItem[] = [
@@ -67,7 +67,7 @@ class TestRouterDockComponent {
     standalone: false,
     selector: 'test-item-template-dock',
     template: `
-        <p-dock [model]="model">
+        <h-dock [model]="model">
           <ng-template #item let-item>
             <div class="custom-dock-item">
               @if (item.icon) {
@@ -76,7 +76,7 @@ class TestRouterDockComponent {
               <span class="custom-label">{{ item.label }}</span>
             </div>
           </ng-template>
-        </p-dock>
+        </h-dock>
         `
 })
 class TestItemTemplateDockComponent {
@@ -90,11 +90,11 @@ class TestItemTemplateDockComponent {
     standalone: false,
     selector: 'test-ptemplate-dock',
     template: `
-        <p-dock [model]="model">
+        <h-dock [model]="model">
             <ng-template pTemplate="item" let-item>
-                <span class="p-template-item">{{ item.label }}</span>
+                <span class="h-template-item">{{ item.label }}</span>
             </ng-template>
-        </p-dock>
+        </h-dock>
     `
 })
 class TestPTemplateDockComponent {
@@ -104,7 +104,7 @@ class TestPTemplateDockComponent {
 @Component({
     standalone: false,
     selector: 'test-disabled-items-dock',
-    template: ` <p-dock [model]="disabledModel"></p-dock> `
+    template: ` <h-dock [model]="disabledModel"></h-dock> `
 })
 class TestDisabledItemsDockComponent {
     disabledModel: MenuItem[] = [{ label: 'Enabled Item', icon: 'pi pi-check' }, { label: 'Disabled Item', icon: 'pi pi-times', disabled: true }, { label: 'Function Disabled', icon: 'pi pi-question', disabled: () => true } as any];
@@ -113,7 +113,7 @@ class TestDisabledItemsDockComponent {
 @Component({
     standalone: false,
     selector: 'test-styled-dock',
-    template: ` <p-dock [model]="model" [styleClass]="customStyleClass"></p-dock> `
+    template: ` <h-dock [model]="model" [styleClass]="customStyleClass"></h-dock> `
 })
 class TestStyledDockComponent {
     model: MenuItem[] = [{ label: 'Test', icon: 'pi pi-test' }];
@@ -123,14 +123,14 @@ class TestStyledDockComponent {
 @Component({
     standalone: false,
     selector: 'test-minimal-dock',
-    template: `<p-dock></p-dock>`
+    template: `<h-dock></h-dock>`
 })
 class TestMinimalDockComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-dynamic-dock',
-    template: ` <p-dock [model]="dynamicModel"></p-dock> `
+    template: ` <h-dock [model]="dynamicModel"></h-dock> `
 })
 class TestDynamicDockComponent {
     dynamicModel: MenuItem[] = [];
@@ -151,7 +151,7 @@ class TestDynamicDockComponent {
 @Component({
     standalone: false,
     selector: 'test-command-dock',
-    template: ` <p-dock [model]="commandModel"></p-dock> `
+    template: ` <h-dock [model]="commandModel"></h-dock> `
 })
 class TestCommandDockComponent {
     commandExecuted: any;
@@ -863,7 +863,7 @@ describe('Dock', () => {
             expect(disabledDock.disabled(functionDisabledItem)).toBe(true);
         });
 
-        it('should set data-p-disabled attribute for disabled items', async () => {
+        it('should set data-h-disabled attribute for disabled items', async () => {
             const disabledFixture = TestBed.createComponent(TestDisabledItemsDockComponent);
             disabledFixture.changeDetectorRef.markForCheck();
             await disabledFixture.whenStable();
@@ -871,10 +871,10 @@ describe('Dock', () => {
             const itemElements = disabledFixture.debugElement.queryAll(By.css('li[role="menuitem"]'));
 
             // First item should not be disabled
-            expect(itemElements[0].nativeElement.getAttribute('data-p-disabled')).toBe('false');
+            expect(itemElements[0].nativeElement.getAttribute('data-h-disabled')).toBe('false');
 
             // Second item should be disabled
-            expect(itemElements[1].nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            expect(itemElements[1].nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
     });
 
@@ -1056,7 +1056,7 @@ describe('Dock', () => {
                 list: {
                     class: 'LIST_OBJECT_CLASS',
                     style: 'background-color: red',
-                    'data-p-test': true,
+                    'data-h-test': true,
                     'aria-label': 'Test Dock List'
                 },
                 listContainer: {
@@ -1072,7 +1072,7 @@ describe('Dock', () => {
 
             expect(listEl).toBeTruthy();
             expect(listEl.classList.contains('LIST_OBJECT_CLASS')).toBe(true);
-            expect(listEl.getAttribute('data-p-test')).toBe('true');
+            expect(listEl.getAttribute('data-h-test')).toBe('true');
             expect(listEl.getAttribute('aria-label')).toBe('Test Dock List');
 
             expect(containerEl).toBeTruthy();
@@ -1288,8 +1288,8 @@ describe('Dock', () => {
                 standalone: true,
                 imports: [Dock],
                 template: `
-                    <p-dock [model]="model"></p-dock>
-                    <p-dock [model]="model"></p-dock>
+                    <h-dock [model]="model"></h-dock>
+                    <h-dock [model]="model"></h-dock>
                 `
             })
             class TestGlobalPTComponent {
@@ -1310,7 +1310,7 @@ describe('Dock', () => {
                                     listContainer: { 'data-global': 'true' }
                                 },
                                 global: {
-                                    css: `.p-dock { border: 1px solid red !important; }`
+                                    css: `.h-dock { border: 1px solid red !important; }`
                                 }
                             }
                         })
@@ -1346,7 +1346,7 @@ describe('Dock', () => {
                 @Component({
                     standalone: true,
                     imports: [Dock],
-                    template: `<p-dock [model]="model" [pt]="{ root: { class: 'LOCAL_CLASS' } }"></p-dock>`
+                    template: `<h-dock [model]="model" [pt]="{ root: { class: 'LOCAL_CLASS' } }"></h-dock>`
                 })
                 class TestMergedPTComponent {
                     model = [{ label: 'Test', icon: 'pi pi-test' }];
@@ -1384,7 +1384,7 @@ describe('Dock', () => {
                 const styleElements = document.querySelectorAll('style');
                 let hasGlobalCSS = false;
                 styleElements.forEach((style) => {
-                    if (style.textContent?.includes('.p-dock') && style.textContent?.includes('border: 1px solid red')) {
+                    if (style.textContent?.includes('.h-dock') && style.textContent?.includes('border: 1px solid red')) {
                         hasGlobalCSS = true;
                     }
                 });

@@ -11,7 +11,7 @@ import { SpeedDial } from './speeddial';
 @Component({
     standalone: false,
     template: `
-        <p-speeddial
+        <h-speeddial
             [id]="id"
             [model]="model"
             [visible]="visible"
@@ -41,7 +41,7 @@ import { SpeedDial } from './speeddial';
             (onShow)="onShow($event)"
             (onHide)="onHide($event)"
         >
-        </p-speeddial>
+        </h-speeddial>
     `
 })
 class TestBasicSpeedDialComponent {
@@ -112,7 +112,7 @@ class TestBasicSpeedDialComponent {
 @Component({
     standalone: false,
     template: `
-        <p-speeddial [model]="model">
+        <h-speeddial [model]="model">
             <ng-template pTemplate="button" let-toggleCallback="toggleCallback">
                 <button (click)="toggleCallback()" class="custom-button">
                     <i class="pi pi-bars custom-button-icon"></i>
@@ -127,7 +127,7 @@ class TestBasicSpeedDialComponent {
             <ng-template pTemplate="icon">
                 <i class="pi pi-cog custom-icon"></i>
             </ng-template>
-        </p-speeddial>
+        </h-speeddial>
     `
 })
 class TestTemplateSpeedDialComponent {
@@ -141,7 +141,7 @@ class TestTemplateSpeedDialComponent {
 @Component({
     standalone: false,
     template: `
-        <p-speeddial [model]="model">
+        <h-speeddial [model]="model">
             <ng-template #button let-toggleCallback="toggleCallback">
                 <button (click)="toggleCallback()" class="content-template-button">
                     <i class="pi pi-menu content-template-button-icon"></i>
@@ -156,7 +156,7 @@ class TestTemplateSpeedDialComponent {
             <ng-template #icon>
                 <i class="pi pi-star content-template-icon"></i>
             </ng-template>
-        </p-speeddial>
+        </h-speeddial>
     `
 })
 class TestContentTemplateSpeedDialComponent {
@@ -171,10 +171,10 @@ class TestContentTemplateSpeedDialComponent {
     standalone: false,
     template: `
         <div class="speed-dial-types">
-            <p-speeddial [model]="model" type="linear"></p-speeddial>
-            <p-speeddial [model]="model" type="circle" [radius]="80"></p-speeddial>
-            <p-speeddial [model]="model" type="semi-circle" direction="up" [radius]="100"></p-speeddial>
-            <p-speeddial [model]="model" type="quarter-circle" direction="up-right" [radius]="120"></p-speeddial>
+            <h-speeddial [model]="model" type="linear"></h-speeddial>
+            <h-speeddial [model]="model" type="circle" [radius]="80"></h-speeddial>
+            <h-speeddial [model]="model" type="semi-circle" direction="up" [radius]="100"></h-speeddial>
+            <h-speeddial [model]="model" type="quarter-circle" direction="up-right" [radius]="120"></h-speeddial>
         </div>
     `
 })
@@ -191,14 +191,14 @@ class TestSpeedDialTypesComponent {
     standalone: false,
     template: `
         <div class="speed-dial-directions">
-            <p-speeddial [model]="model" direction="up"></p-speeddial>
-            <p-speeddial [model]="model" direction="down"></p-speeddial>
-            <p-speeddial [model]="model" direction="left"></p-speeddial>
-            <p-speeddial [model]="model" direction="right"></p-speeddial>
-            <p-speeddial [model]="model" direction="up-left"></p-speeddial>
-            <p-speeddial [model]="model" direction="up-right"></p-speeddial>
-            <p-speeddial [model]="model" direction="down-left"></p-speeddial>
-            <p-speeddial [model]="model" direction="down-right"></p-speeddial>
+            <h-speeddial [model]="model" direction="up"></h-speeddial>
+            <h-speeddial [model]="model" direction="down"></h-speeddial>
+            <h-speeddial [model]="model" direction="left"></h-speeddial>
+            <h-speeddial [model]="model" direction="right"></h-speeddial>
+            <h-speeddial [model]="model" direction="up-left"></h-speeddial>
+            <h-speeddial [model]="model" direction="up-right"></h-speeddial>
+            <h-speeddial [model]="model" direction="down-left"></h-speeddial>
+            <h-speeddial [model]="model" direction="down-right"></h-speeddial>
         </div>
     `
 })
@@ -212,7 +212,7 @@ class TestSpeedDialDirectionsComponent {
 // SpeedDial with Mask
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model" [mask]="true" [maskStyle]="maskStyle" [maskClassName]="maskClassName" [visible]="visible"> </p-speeddial> `
+    template: ` <h-speeddial [model]="model" [mask]="true" [maskStyle]="maskStyle" [maskClassName]="maskClassName" [visible]="visible"> </h-speeddial> `
 })
 class TestMaskSpeedDialComponent {
     model: MenuItem[] = [{ label: 'Action', icon: 'pi pi-plus' }];
@@ -226,8 +226,8 @@ class TestMaskSpeedDialComponent {
     standalone: false,
     template: `
         <div class="disabled-speed-dials">
-            <p-speeddial [model]="model" [disabled]="true"></p-speeddial>
-            <p-speeddial [model]="disabledItemsModel"></p-speeddial>
+            <h-speeddial [model]="model" [disabled]="true"></h-speeddial>
+            <h-speeddial [model]="disabledItemsModel"></h-speeddial>
         </div>
     `
 })
@@ -246,7 +246,7 @@ class TestDisabledSpeedDialComponent {
 // SpeedDial with Router Links
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model"></p-speeddial> `
+    template: ` <h-speeddial [model]="model"></h-speeddial> `
 })
 class TestRouterSpeedDialComponent {
     model: MenuItem[] = [
@@ -265,7 +265,7 @@ class TestRouterSpeedDialComponent {
 // SpeedDial with Custom Icons
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model" [showIcon]="showIcon" [hideIcon]="hideIcon" [rotateAnimation]="rotateAnimation"> </p-speeddial> `
+    template: ` <h-speeddial [model]="model" [showIcon]="showIcon" [hideIcon]="hideIcon" [rotateAnimation]="rotateAnimation"> </h-speeddial> `
 })
 class TestIconSpeedDialComponent {
     model: MenuItem[] = [{ label: 'Action', icon: 'pi pi-plus' }];
@@ -277,7 +277,7 @@ class TestIconSpeedDialComponent {
 // SpeedDial with Tooltip
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model" [tooltipOptions]="tooltipOptions"> </p-speeddial> `
+    template: ` <h-speeddial [model]="model" [tooltipOptions]="tooltipOptions"> </h-speeddial> `
 })
 class TestTooltipSpeedDialComponent {
     model: MenuItem[] = [
@@ -293,7 +293,7 @@ class TestTooltipSpeedDialComponent {
 // SpeedDial Command Test
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model" [visible]="true"></p-speeddial> `
+    template: ` <h-speeddial [model]="model" [visible]="true"></h-speeddial> `
 })
 class TestCommandSpeedDialComponent {
     addClicked = false;
@@ -322,7 +322,7 @@ class TestCommandSpeedDialComponent {
 // SpeedDial PT Test Components
 @Component({
     standalone: false,
-    template: ` <p-speeddial [model]="model" [pt]="pt" [visible]="visible"></p-speeddial> `
+    template: ` <h-speeddial [model]="model" [pt]="pt" [visible]="visible"></h-speeddial> `
 })
 class TestPTSpeedDialComponent {
     @Input() model: MenuItem[] = [
@@ -373,7 +373,7 @@ describe('SpeedDial', () => {
         fixture = TestBed.createComponent(TestBasicSpeedDialComponent);
         component = fixture.componentInstance;
         speedDialInstance = fixture.debugElement.query(By.directive(SpeedDial)).componentInstance;
-        speedDialElement = fixture.debugElement.query(By.css('p-speeddial')).nativeElement;
+        speedDialElement = fixture.debugElement.query(By.css('h-speeddial')).nativeElement;
         fixture.detectChanges();
     });
 
@@ -907,7 +907,7 @@ describe('SpeedDial', () => {
             await maskFixture.whenStable();
             maskFixture.detectChanges();
 
-            const maskElement = maskFixture.debugElement.query(By.css('[data-pc-section="mask"], .p-speeddial-mask'));
+            const maskElement = maskFixture.debugElement.query(By.css('[data-pc-section="mask"], .h-speeddial-mask'));
             expect(maskElement).toBeTruthy();
         });
 
@@ -1547,7 +1547,7 @@ describe('SpeedDial', () => {
                 ptFixture.componentRef.setInput('pt', { host: 'HOST_CLASS' });
                 ptFixture.detectChanges();
 
-                const hostElement = ptFixture.nativeElement.querySelector('p-speeddial');
+                const hostElement = ptFixture.nativeElement.querySelector('h-speeddial');
                 expect(hostElement?.className).toContain('HOST_CLASS');
             });
 
@@ -1609,7 +1609,7 @@ describe('SpeedDial', () => {
                     root: {
                         class: 'collapsed',
                         style: { 'background-color': 'red' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1618,7 +1618,7 @@ describe('SpeedDial', () => {
                 const rootElement = ptFixture.nativeElement.querySelector('[data-pc-name="speeddial"]');
                 expect(rootElement?.className).toContain('collapsed');
                 expect(rootElement?.style.backgroundColor).toBe('red');
-                expect(rootElement?.getAttribute('data-p-test')).toBe('true');
+                expect(rootElement?.getAttribute('data-h-test')).toBe('true');
                 expect(rootElement?.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -1628,7 +1628,7 @@ describe('SpeedDial', () => {
                         root: {
                             class: 'button-custom',
                             style: { border: '2px solid blue' },
-                            'data-p-custom': true
+                            'data-h-custom': true
                         }
                     }
                 });
@@ -1637,7 +1637,7 @@ describe('SpeedDial', () => {
                 const buttonElement = ptFixture.nativeElement.querySelector('[data-pc-name="pcbutton"]');
                 expect(buttonElement?.className).toContain('button-custom');
                 expect(buttonElement?.style.border).toBe('2px solid blue');
-                expect(buttonElement?.getAttribute('data-p-custom')).toBe('true');
+                expect(buttonElement?.getAttribute('data-h-custom')).toBe('true');
             });
 
             it('should apply object with class and style to list', () => {
@@ -1645,7 +1645,7 @@ describe('SpeedDial', () => {
                     list: {
                         class: 'list-custom',
                         style: { padding: '10px' },
-                        'data-p-list': true
+                        'data-h-list': true
                     }
                 });
                 ptFixture.detectChanges();
@@ -1653,7 +1653,7 @@ describe('SpeedDial', () => {
                 const listElement = ptFixture.nativeElement.querySelector('ul[role="menu"]');
                 expect(listElement?.className).toContain('list-custom');
                 expect(listElement?.style.padding).toBe('10px');
-                expect(listElement?.getAttribute('data-p-list')).toBe('true');
+                expect(listElement?.getAttribute('data-h-list')).toBe('true');
             });
 
             it('should apply object to item elements', async () => {
@@ -1662,7 +1662,7 @@ describe('SpeedDial', () => {
                     item: {
                         class: 'item-custom',
                         style: { margin: '5px' },
-                        'data-p-item': true
+                        'data-h-item': true
                     }
                 });
                 ptFixture.detectChanges();
@@ -1673,7 +1673,7 @@ describe('SpeedDial', () => {
                 itemElements.forEach((item: HTMLElement) => {
                     expect(item?.className).toContain('item-custom');
                     expect(item?.style.margin).toBe('5px');
-                    expect(item?.getAttribute('data-p-item')).toBe('true');
+                    expect(item?.getAttribute('data-h-item')).toBe('true');
                 });
             });
 
@@ -1683,7 +1683,7 @@ describe('SpeedDial', () => {
                     mask: {
                         class: 'mask-custom',
                         style: { opacity: '0.5' },
-                        'data-p-mask': true
+                        'data-h-mask': true
                     }
                 });
                 ptFixture.componentRef.setInput('mask', true);
@@ -1695,7 +1695,7 @@ describe('SpeedDial', () => {
                 if (maskElement) {
                     expect(maskElement.className).toContain('mask-custom');
                     expect(maskElement.style.opacity).toBe('0.5');
-                    expect(maskElement.getAttribute('data-p-mask')).toBe('true');
+                    expect(maskElement.getAttribute('data-h-mask')).toBe('true');
                 }
             });
         });
@@ -2100,7 +2100,7 @@ describe('SpeedDial', () => {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await ptFixture.whenStable();
 
-                const hostElement = ptFixture.nativeElement.querySelector('p-speeddial');
+                const hostElement = ptFixture.nativeElement.querySelector('h-speeddial');
                 const rootElement = ptFixture.nativeElement.querySelector('[data-pc-name="speeddial"]');
                 const buttonElement = ptFixture.nativeElement.querySelector('[data-pc-name="pcbutton"]');
                 const listElement = ptFixture.nativeElement.querySelector('ul[role="menu"]');

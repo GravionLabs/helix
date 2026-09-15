@@ -1,11 +1,11 @@
 @if (loading() && showLoader()) {
-  <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active">
+  <div [class]="cx('mask')" [hBind]="ptm('mask')" animate.enter="h-overlay-mask-enter-active" animate.leave="h-overlay-mask-leave-active">
     @if (loadingIcon()) {
       <i [class]="cn(cx('loadingIcon'), loadingIcon())" [hBind]="ptm('loadingIcon')"></i>
     }
     @if (!loadingIcon()) {
       @if (!loadingIconTemplate && !_loadingIconTemplate) {
-        <svg data-p-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
+        <svg data-h-icon="spinner" [spin]="true" [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')" />
       }
       @if (loadingIconTemplate || _loadingIconTemplate) {
         <span [class]="cx('loadingIcon')" [hBind]="ptm('loadingIcon')">
@@ -73,7 +73,7 @@
   </h-paginator>
 }
 
-<div #wrapper [class]="cx('tableContainer')" [ngStyle]="sx('tableContainer')" [hBind]="ptm('tableContainer')" [attr.data-p]="dataP">
+<div #wrapper [class]="cx('tableContainer')" [ngStyle]="sx('tableContainer')" [hBind]="ptm('tableContainer')" [attr.data-h]="dataP">
   @if (virtualScroll()) {
     <h-scroller
       #scroller
@@ -145,7 +145,7 @@
       [pTableBodyTemplate]="frozenBodyTemplate || _frozenBodyTemplate"
       [unstyled]="unstyled()"
       [frozen]="true"
-      [attr.data-p-virtualscroll]="virtualScroll()"
+      [attr.data-h-virtualscroll]="virtualScroll()"
     ></tbody>
   }
   <tbody
@@ -158,7 +158,7 @@
     [pTableBodyTemplate]="bodyTemplate || _bodyTemplate()"
     [scrollerOptions]="scrollerOptions"
     [unstyled]="unstyled()"
-    [attr.data-p-virtualscroll]="virtualScroll()"
+    [attr.data-h-virtualscroll]="virtualScroll()"
   ></tbody>
   @if (scrollerOptions.spacerStyle) {
     <tbody
@@ -249,7 +249,7 @@
 @if (reorderableColumns()) {
   <span #reorderIndicatorUp [ngClass]="cx('rowReorderIndicatorUp')" [hBind]="ptm('rowReorderIndicatorUp')" [style.display]="'none'">
     @if (!reorderIndicatorUpIconTemplate && !_reorderIndicatorUpIconTemplate()) {
-      <svg data-p-icon="arrow-down" [hBind]="ptm('rowReorderIndicatorUp')['icon']" />
+      <svg data-h-icon="arrow-down" [hBind]="ptm('rowReorderIndicatorUp')['icon']" />
     }
     <ng-template *ngTemplateOutlet="reorderIndicatorUpIconTemplate || _reorderIndicatorUpIconTemplate()"></ng-template>
   </span>
@@ -257,7 +257,7 @@
 @if (reorderableColumns()) {
   <span #reorderIndicatorDown [ngClass]="cx('rowReorderIndicatorDown')" [hBind]="ptm('rowReorderIndicatorDown')" [style.display]="'none'">
     @if (!reorderIndicatorDownIconTemplate && !_reorderIndicatorDownIconTemplate()) {
-      <svg data-p-icon="arrow-up" [hBind]="ptm('rowReorderIndicatorDown')['icon']" />
+      <svg data-h-icon="arrow-up" [hBind]="ptm('rowReorderIndicatorDown')['icon']" />
     }
     <ng-template *ngTemplateOutlet="reorderIndicatorDownIconTemplate || _reorderIndicatorDownIconTemplate()"></ng-template>
   </span>

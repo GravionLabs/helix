@@ -34,7 +34,7 @@
         <div class="font-semibold text-xl mb-2">Opposite Content</div>
         <h-timeline [value]="events1">
           <ng-template #content let-event>
-            <small class="p-text-secondary">{{ event.date }}</small>
+            <small class="h-text-secondary">{{ event.date }}</small>
           </ng-template>
           <ng-template #opposite let-event>
             {{ event.status }}

@@ -29,7 +29,7 @@ const PANEL_INSTANCE = new InjectionToken<Panel>('PANEL_INSTANCE');
     host: {
         '[id]': 'id()',
         '[class]': "cn(cx('root'), styleClass())",
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

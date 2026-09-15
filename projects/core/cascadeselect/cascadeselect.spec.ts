@@ -55,7 +55,7 @@ const mockCountries = [
 @Component({
     standalone: false,
     template: `
-        <p-cascadeselect
+        <h-cascadeselect
           [(ngModel)]="selectedValue"
           [options]="options"
           [optionLabel]="optionLabel"
@@ -148,12 +148,12 @@ const mockCountries = [
           <ng-template #clearicon>
             <i class="pi pi-times custom-clear" data-testid="template-clearicon"></i>
           </ng-template>
-        </p-cascadeselect>
+        </h-cascadeselect>
         
         <!-- Reactive Forms test -->
         @if (showReactiveForm) {
           <form [formGroup]="reactiveForm">
-            <p-cascadeselect formControlName="selectedItems" [options]="formOptions" [optionLabel]="'cname'" [optionGroupLabel]="'name'" [optionGroupChildren]="['states', 'cities']" (onChange)="onFormChange($event)"> </p-cascadeselect>
+            <h-cascadeselect formControlName="selectedItems" [options]="formOptions" [optionLabel]="'cname'" [optionGroupLabel]="'name'" [optionGroupChildren]="['states', 'cities']" (onChange)="onFormChange($event)"> </h-cascadeselect>
           </form>
         }
         `
@@ -288,7 +288,7 @@ class TestCascadeSelectComponent {
 @Component({
     standalone: false,
     template: `
-        <p-cascadeselect
+        <h-cascadeselect
           [(ngModel)]="selectedValue"
           [options]="options"
           [optionLabel]="'cname'"
@@ -369,7 +369,7 @@ class TestCascadeSelectComponent {
               <span class="clear-text">Clear</span>
             </div>
           </ng-template>
-        </p-cascadeselect>
+        </h-cascadeselect>
         `
 })
 class TestPTemplateCascadeSelectComponent {
@@ -426,7 +426,7 @@ describe('CascadeSelect', () => {
 
         it('should render input element', async () => {
             await fixture.whenStable();
-            const hiddenInput = fixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = fixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput).toBeTruthy();
         });
     });
@@ -533,7 +533,7 @@ describe('CascadeSelect', () => {
             const formControl = testComponent.reactiveForm.get('selectedItems');
             expect(formControl).toBeTruthy();
 
-            const cascadeSelectElement = testFixture.debugElement.query(By.css('form p-cascadeselect'));
+            const cascadeSelectElement = testFixture.debugElement.query(By.css('form h-cascadeselect'));
             expect(cascadeSelectElement).toBeTruthy();
         });
 
@@ -729,7 +729,7 @@ describe('CascadeSelect', () => {
         });
 
         it('should emit onFocus event', async () => {
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
             hiddenInput.nativeElement.dispatchEvent(new Event('focus'));
             await testFixture.whenStable();
 
@@ -737,7 +737,7 @@ describe('CascadeSelect', () => {
         });
 
         it('should emit onBlur event', async () => {
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
             hiddenInput.nativeElement.dispatchEvent(new Event('blur'));
             await testFixture.whenStable();
 
@@ -778,7 +778,7 @@ describe('CascadeSelect', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const trigger = testFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+            const trigger = testFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
             trigger.nativeElement.click();
             await testFixture.whenStable();
 
@@ -825,7 +825,7 @@ describe('CascadeSelect', () => {
         });
 
         it('should have proper ARIA attributes', async () => {
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
 
             expect(hiddenInput.nativeElement.getAttribute('role')).toBe('combobox');
             expect(hiddenInput.nativeElement.getAttribute('aria-haspopup')).toBe('tree');
@@ -839,18 +839,18 @@ describe('CascadeSelect', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const trigger = testFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+            const trigger = testFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
             trigger.nativeElement.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
             testFixture.changeDetectorRef.markForCheck();
             testFixture.detectChanges();
             await testFixture.whenStable();
 
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput.nativeElement.getAttribute('aria-expanded')).toBe('true');
         });
 
         it('should support keyboard navigation', async () => {
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
 
             const arrowDownEvent = new KeyboardEvent('keydown', { code: 'ArrowDown' });
             hiddenInput.nativeElement.dispatchEvent(arrowDownEvent);
@@ -868,7 +868,7 @@ describe('CascadeSelect', () => {
         });
 
         it('should handle screen reader compatibility', async () => {
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
 
             const ariaRequired = hiddenInput.nativeElement.getAttribute('aria-required');
             expect(ariaRequired === null || ariaRequired === 'false').toBe(true);
@@ -907,7 +907,7 @@ describe('CascadeSelect', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const trigger = testFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+            const trigger = testFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
             trigger.nativeElement.click();
             await testFixture.whenStable();
 
@@ -928,8 +928,8 @@ describe('CascadeSelect', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const cascadeSelectElement = testFixture.debugElement.query(By.css('p-cascadeselect'));
-            expect(cascadeSelectElement.nativeElement.classList.contains('p-disabled')).toBe(true);
+            const cascadeSelectElement = testFixture.debugElement.query(By.css('h-cascadeselect'));
+            expect(cascadeSelectElement.nativeElement.classList.contains('h-disabled')).toBe(true);
         });
 
         it('should handle loading state with custom icon', async () => {
@@ -1069,7 +1069,7 @@ describe('CascadeSelect', () => {
             testFixture.changeDetectorRef.markForCheck();
             await testFixture.whenStable();
 
-            const hiddenInput = testFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+            const hiddenInput = testFixture.debugElement.query(By.css('.h-hidden-accessible input'));
             expect(hiddenInput.nativeElement.getAttribute('tabindex')).toBe('5');
         });
     });
@@ -1126,7 +1126,7 @@ describe('CascadeSelect', () => {
 
         describe('Option Template (optionTemplate)', () => {
             it('should render pTemplate="option" with option and level context', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1182,7 +1182,7 @@ describe('CascadeSelect', () => {
 
         describe('Header Template (headerTemplate)', () => {
             it('should render pTemplate="header" with options context', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1205,7 +1205,7 @@ describe('CascadeSelect', () => {
 
         describe('Footer Template (footerTemplate)', () => {
             it('should render pTemplate="footer" with custom content', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1270,7 +1270,7 @@ describe('CascadeSelect', () => {
 
         describe('Option Group Icon Template (groupIconTemplate)', () => {
             it('should render pTemplate="optiongroupicon" for hierarchical options', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1357,7 +1357,7 @@ describe('CascadeSelect', () => {
                 pTemplateFixture.changeDetectorRef.markForCheck();
                 await pTemplateFixture.whenStable();
 
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1447,7 +1447,7 @@ describe('CascadeSelect', () => {
                 pTemplateFixture.changeDetectorRef.markForCheck();
                 await pTemplateFixture.whenStable();
 
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 trigger.nativeElement.click();
                 await pTemplateFixture.whenStable();
 
@@ -1504,7 +1504,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const hiddenWrapper = ptFixture.debugElement.query(By.css('.p-hidden-accessible'));
+                const hiddenWrapper = ptFixture.debugElement.query(By.css('.h-hidden-accessible'));
                 expect(hiddenWrapper.nativeElement.classList.contains('HIDDEN_WRAPPER_CLASS')).toBe(true);
             });
 
@@ -1514,7 +1514,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const hiddenInput = ptFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+                const hiddenInput = ptFixture.debugElement.query(By.css('.h-hidden-accessible input'));
                 expect(hiddenInput.nativeElement.classList.contains('HIDDEN_INPUT_CLASS')).toBe(true);
             });
 
@@ -1524,7 +1524,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.classList.contains('LABEL_PT_CLASS')).toBe(true);
             });
 
@@ -1534,7 +1534,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 expect(dropdown.nativeElement.classList.contains('DROPDOWN_PT_CLASS')).toBe(true);
             });
 
@@ -1544,7 +1544,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const dropdownIcon = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown svg'));
+                const dropdownIcon = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown svg'));
                 if (dropdownIcon) {
                     expect(dropdownIcon.nativeElement.classList.contains('DROPDOWN_ICON_CLASS')).toBe(true);
                 }
@@ -1558,7 +1558,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const clearIcon = ptFixture.debugElement.query(By.css('[data-p-icon="times"]'));
+                const clearIcon = ptFixture.debugElement.query(By.css('[data-h-icon="times"]'));
                 if (clearIcon) {
                     expect(clearIcon.nativeElement.classList.contains('CLEAR_ICON_CLASS')).toBe(true);
                 } else {
@@ -1577,7 +1577,7 @@ describe('CascadeSelect', () => {
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const overlay = ptFixture.debugElement.query(By.css('.p-cascadeselect-overlay'));
+                const overlay = ptFixture.debugElement.query(By.css('.h-cascadeselect-overlay'));
                 if (overlay) {
                     expect(overlay.nativeElement.classList.contains('OVERLAY_PT_CLASS')).toBe(true);
                 }
@@ -1593,7 +1593,7 @@ describe('CascadeSelect', () => {
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const listContainer = ptFixture.debugElement.query(By.css('.p-cascadeselect-list-container'));
+                const listContainer = ptFixture.debugElement.query(By.css('.h-cascadeselect-list-container'));
                 if (listContainer) {
                     expect(listContainer.nativeElement.classList.contains('LIST_CONTAINER_CLASS')).toBe(true);
                 }
@@ -1609,7 +1609,7 @@ describe('CascadeSelect', () => {
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const list = ptFixture.debugElement.query(By.css('.p-cascadeselect-list'));
+                const list = ptFixture.debugElement.query(By.css('.h-cascadeselect-list'));
                 if (list) {
                     expect(list.nativeElement.classList.contains('LIST_PT_CLASS')).toBe(true);
                 }
@@ -1622,7 +1622,7 @@ describe('CascadeSelect', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'red', padding: '10px' },
-                        'data-p-test': 'true',
+                        'data-h-test': 'true',
                         'aria-label': 'ROOT_ARIA_LABEL'
                     }
                 });
@@ -1632,7 +1632,7 @@ describe('CascadeSelect', () => {
                 expect(hostElement.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(hostElement.style.backgroundColor).toBe('red');
                 expect(hostElement.style.padding).toBe('10px');
-                expect(hostElement.getAttribute('data-p-test')).toBe('true');
+                expect(hostElement.getAttribute('data-h-test')).toBe('true');
                 expect(hostElement.getAttribute('aria-label')).toBe('ROOT_ARIA_LABEL');
             });
 
@@ -1646,7 +1646,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const hiddenInput = ptFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+                const hiddenInput = ptFixture.debugElement.query(By.css('.h-hidden-accessible input'));
                 expect(hiddenInput.nativeElement.classList.contains('HIDDEN_INPUT_OBJECT_CLASS')).toBe(true);
                 expect(hiddenInput.nativeElement.style.border).toBe('1px solid blue');
                 expect(hiddenInput.nativeElement.getAttribute('data-testid')).toBe('hidden-input-test');
@@ -1662,7 +1662,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.classList.contains('LABEL_OBJECT_CLASS')).toBe(true);
                 expect(label.nativeElement.getAttribute('data-label')).toBe('test-label');
                 expect(label.nativeElement.getAttribute('aria-label')).toBe('LABEL_ARIA');
@@ -1678,7 +1678,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 expect(dropdown.nativeElement.classList.contains('DROPDOWN_OBJECT_CLASS')).toBe(true);
                 expect(dropdown.nativeElement.style.borderRadius).toBe('5px');
                 expect(dropdown.nativeElement.getAttribute('data-dropdown')).toBe('true');
@@ -1698,7 +1698,7 @@ describe('CascadeSelect', () => {
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const overlay = ptFixture.debugElement.query(By.css('.p-cascadeselect-overlay'));
+                const overlay = ptFixture.debugElement.query(By.css('.h-cascadeselect-overlay'));
                 if (overlay) {
                     expect(overlay.nativeElement.classList.contains('OVERLAY_OBJECT_CLASS')).toBe(true);
                     expect(overlay.nativeElement.getAttribute('data-overlay')).toBe('test');
@@ -1723,10 +1723,10 @@ describe('CascadeSelect', () => {
                 const hostElement = ptFixture.nativeElement;
                 expect(hostElement.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.classList.contains('LABEL_STRING_CLASS')).toBe(true);
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 expect(dropdown.nativeElement.classList.contains('DROPDOWN_MIXED_CLASS')).toBe(true);
                 expect(dropdown.nativeElement.getAttribute('data-mixed')).toBe('true');
             });
@@ -1745,20 +1745,20 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const hiddenInput = ptFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+                const hiddenInput = ptFixture.debugElement.query(By.css('.h-hidden-accessible input'));
                 expect(hiddenInput.nativeElement.classList.contains('INPUT_STRING')).toBe(true);
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.classList.contains('LABEL_OBJECT')).toBe(true);
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 expect(dropdown.nativeElement.classList.contains('DROPDOWN_STRING')).toBe(true);
 
                 ptComponent.show();
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const overlay = ptFixture.debugElement.query(By.css('.p-cascadeselect-overlay'));
+                const overlay = ptFixture.debugElement.query(By.css('.h-cascadeselect-overlay'));
                 if (overlay) {
                     expect(overlay.nativeElement.classList.contains('OVERLAY_OBJECT')).toBe(true);
                     expect(overlay.nativeElement.style.maxHeight).toBe('300px');
@@ -1797,7 +1797,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.getAttribute('data-has-placeholder')).toBe('true');
             });
 
@@ -1845,7 +1845,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 dropdown.nativeElement.click();
                 await ptFixture.whenStable();
 
@@ -1868,7 +1868,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 label.nativeElement.click();
                 await ptFixture.whenStable();
 
@@ -1891,7 +1891,7 @@ describe('CascadeSelect', () => {
                 });
                 await ptFixture.whenStable();
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 dropdown.nativeElement.dispatchEvent(new MouseEvent('mouseenter'));
                 dropdown.nativeElement.click();
                 await ptFixture.whenStable();
@@ -2061,18 +2061,18 @@ describe('CascadeSelect', () => {
                 const hostElement = ptFixture.nativeElement;
                 expect(hostElement.classList.contains('ROOT_INTEGRATION')).toBe(true);
 
-                const hiddenInput = ptFixture.debugElement.query(By.css('.p-hidden-accessible input'));
+                const hiddenInput = ptFixture.debugElement.query(By.css('.h-hidden-accessible input'));
                 expect(hiddenInput.nativeElement.classList.contains('INPUT_INTEGRATION')).toBe(true);
                 expect(hiddenInput.nativeElement.getAttribute('data-test')).toBe('input');
 
-                const dropdown = ptFixture.debugElement.query(By.css('.p-cascadeselect-dropdown'));
+                const dropdown = ptFixture.debugElement.query(By.css('.h-cascadeselect-dropdown'));
                 expect(dropdown.nativeElement.classList.contains('DROPDOWN_INTEGRATION')).toBe(true);
 
                 ptComponent.show();
                 await ptFixture.whenStable();
                 await new Promise((resolve) => setTimeout(resolve, 0));
 
-                const overlay = ptFixture.debugElement.query(By.css('.p-cascadeselect-overlay'));
+                const overlay = ptFixture.debugElement.query(By.css('.h-cascadeselect-overlay'));
                 if (overlay) {
                     expect(overlay.nativeElement.classList.contains('OVERLAY_INTEGRATION')).toBe(true);
                     expect(overlay.nativeElement.style.minWidth).toBe('200px');
@@ -2099,7 +2099,7 @@ describe('CascadeSelect', () => {
                 expect(hostElement.classList.contains('PERSISTENT_PT')).toBe(true);
 
                 // Verify PT based on instance properties is applied correctly
-                const label = ptFixture.debugElement.query(By.css('.p-cascadeselect-label'));
+                const label = ptFixture.debugElement.query(By.css('.h-cascadeselect-label'));
                 expect(label.nativeElement.classList.contains('HAS_PLACEHOLDER')).toBe(true);
 
                 // Verify root PT persists

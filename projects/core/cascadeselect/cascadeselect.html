@@ -1,4 +1,4 @@
-<div class="p-hidden-accessible" [hBind]="ptm('hiddenInputWrapper')">
+<div class="h-hidden-accessible" [hBind]="ptm('hiddenInputWrapper')">
   <input
     #focusInput
     readonly
@@ -33,7 +33,7 @@
 
 @if ($filled() && !$disabled() && showClear()) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true" />
+    <svg data-h-icon="times" [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true" />
   }
   @if (clearIconTemplate() || _clearIconTemplate) {
     <span [class]="cx('clearIcon')" (click)="clear($event)" [hBind]="ptm('clearIcon')" [attr.aria-hidden]="true">
@@ -57,7 +57,7 @@
     }
   } @else {
     @if (!triggerIconTemplate() && !_triggerIconTemplate) {
-      <svg data-p-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
+      <svg data-h-icon="chevron-down" [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')" />
     }
     @if (triggerIconTemplate() || _triggerIconTemplate) {
       <span [class]="cx('dropdownIcon')" [hBind]="ptm('dropdownIcon')">
@@ -66,7 +66,7 @@
     }
   }
 </div>
-<span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenSearchResult')">
+<span role="status" aria-live="polite" class="h-hidden-accessible" [hBind]="ptm('hiddenSearchResult')">
   {{ searchResultMessageText }}
 </span>
 <h-overlay
@@ -117,7 +117,7 @@
           [unstyled]="unstyled()"
         ></ul>
       </div>
-      <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('selectedMessageText')">
+      <span role="status" aria-live="polite" class="h-hidden-accessible" [hBind]="ptm('selectedMessageText')">
         {{ selectedMessageText }}
       </span>
       <ng-template *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-template>

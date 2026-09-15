@@ -23,12 +23,12 @@ const BUTTON_ICON_INSTANCE = new InjectionToken<ButtonIcon>('BUTTON_ICON_INSTANC
 export type ButtonIconPosition = 'left' | 'right' | 'top' | 'bottom';
 
 const INTERNAL_BUTTON_CLASSES = {
-    button: 'p-button',
-    component: 'p-component',
-    iconOnly: 'p-button-icon-only',
-    disabled: 'p-disabled',
-    loading: 'p-button-loading',
-    labelOnly: 'p-button-loading-label-only'
+    button: 'h-button',
+    component: 'h-component',
+    iconOnly: 'h-button-icon-only',
+    disabled: 'h-disabled',
+    loading: 'h-button-loading',
+    labelOnly: 'h-button-loading-label-only'
 } as const;
 
 @Directive({
@@ -36,7 +36,7 @@ const INTERNAL_BUTTON_CLASSES = {
     providers: [ButtonStyle, { provide: BUTTON_LABEL_INSTANCE, useExisting: ButtonLabel }, { provide: PARENT_INSTANCE, useExisting: ButtonLabel }],
     standalone: true,
     host: {
-        '[class.p-button-label]': '!$unstyled() && true'
+        '[class.h-button-label]': '!$unstyled() && true'
     },
     hostDirectives: [Bind]
 })
@@ -89,7 +89,7 @@ export class ButtonLabel extends BaseComponent {
     providers: [ButtonStyle, { provide: BUTTON_ICON_INSTANCE, useExisting: ButtonIcon }, { provide: PARENT_INSTANCE, useExisting: ButtonIcon }],
     standalone: true,
     host: {
-        '[class.p-button-icon]': '!$unstyled() && true'
+        '[class.h-button-icon]': '!$unstyled() && true'
     },
     hostDirectives: [Bind]
 })
@@ -145,8 +145,8 @@ export class ButtonIcon extends BaseComponent {
     standalone: true,
     providers: [ButtonStyle, { provide: BUTTON_DIRECTIVE_INSTANCE, useExisting: ButtonDirective }, { provide: PARENT_INSTANCE, useExisting: ButtonDirective }],
     host: {
-        '[class.p-button-icon-only]': '!$unstyled() && isIconOnly()',
-        '[class.p-button-text]': ' !$unstyled() && isTextButton()'
+        '[class.h-button-icon-only]': '!$unstyled() && isIconOnly()',
+        '[class.h-button-text]': ' !$unstyled() && isTextButton()'
     },
     hostDirectives: [Bind]
 })
@@ -332,7 +332,7 @@ export class ButtonDirective extends BaseComponent {
      */
     readonly severity = input<ButtonSeverity | undefined>(undefined);
 
-    spinnerIcon = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="p-icon-spin">
+    spinnerIcon = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-icon-spin">
         <g clip-path="url(#clip0_417_21408)">
             <path
                 d="M6.99701 14C5.85441 13.999 4.72939 13.7186 3.72012 13.1832C2.71084 12.6478 1.84795 11.8737 1.20673 10.9284C0.565504 9.98305 0.165424 8.89526 0.041387 7.75989C-0.0826496 6.62453 0.073125 5.47607 0.495122 4.4147C0.917119 3.35333 1.59252 2.4113 2.46241 1.67077C3.33229 0.930247 4.37024 0.413729 5.4857 0.166275C6.60117 -0.0811796 7.76026 -0.0520535 8.86188 0.251112C9.9635 0.554278 10.9742 1.12227 11.8057 1.90555C11.915 2.01493 11.9764 2.16319 11.9764 2.31778C11.9764 2.47236 11.915 2.62062 11.8057 2.73C11.7521 2.78503 11.688 2.82877 11.6171 2.85864C11.5463 2.8885 11.4702 2.90389 11.3933 2.90389C11.3165 2.90389 11.2404 2.8885 11.1695 2.85864C11.0987 2.82877 11.0346 2.78503 10.9809 2.73C9.9998 1.81273 8.73246 1.26138 7.39226 1.16876C6.05206 1.07615 4.72086 1.44794 3.62279 2.22152C2.52471 2.99511 1.72683 4.12325 1.36345 5.41602C1.00008 6.70879 1.09342 8.08723 1.62775 9.31926C2.16209 10.5513 3.10478 11.5617 4.29713 12.1803C5.48947 12.7989 6.85865 12.988 8.17414 12.7157C9.48963 12.4435 10.6711 11.7264 11.5196 10.6854C12.3681 9.64432 12.8319 8.34282 12.8328 7C12.8328 6.84529 12.8943 6.69692 13.0038 6.58752C13.1132 6.47812 13.2616 6.41667 13.4164 6.41667C13.5712 6.41667 13.7196 6.47812 13.8291 6.58752C13.9385 6.69692 14 6.84529 14 7C14 8.85651 13.2622 10.637 11.9489 11.9497C10.6356 13.2625 8.85432 14 6.99701 14Z"
@@ -376,44 +376,44 @@ export class ButtonDirective extends BaseComponent {
         }
 
         if (this.text()) {
-            styleClass.push('p-button-text');
+            styleClass.push('h-button-text');
         }
 
         if (this.severity()) {
-            styleClass.push(`p-button-${this.severity()}`);
+            styleClass.push(`h-button-${this.severity()}`);
         }
 
         if (this.plain()) {
-            styleClass.push('p-button-plain');
+            styleClass.push('h-button-plain');
         }
 
         if (this.raised()) {
-            styleClass.push('p-button-raised');
+            styleClass.push('h-button-raised');
         }
 
         const size = this.size();
         if (size) {
-            styleClass.push(`p-button-${size}`);
+            styleClass.push(`h-button-${size}`);
         }
 
         if (this.outlined()) {
-            styleClass.push('p-button-outlined');
+            styleClass.push('h-button-outlined');
         }
 
         if (this.rounded()) {
-            styleClass.push('p-button-rounded');
+            styleClass.push('h-button-rounded');
         }
 
         if (size === 'small') {
-            styleClass.push('p-button-sm');
+            styleClass.push('h-button-sm');
         }
 
         if (size === 'large') {
-            styleClass.push('p-button-lg');
+            styleClass.push('h-button-lg');
         }
 
         if (this.hasFluid) {
-            styleClass.push('p-button-fluid');
+            styleClass.push('h-button-fluid');
         }
 
         return this.$unstyled() ? [] : styleClass;
@@ -433,7 +433,7 @@ export class ButtonDirective extends BaseComponent {
 
     removeExistingSeverityClass() {
         const severityArray = ['success', 'info', 'warn', 'danger', 'help', 'primary', 'secondary', 'contrast'];
-        const existingSeverityClass = this.htmlElement.classList.value.split(' ').find((cls) => severityArray.some((severity) => cls === `p-button-${severity}`));
+        const existingSeverityClass = this.htmlElement.classList.value.split(' ').find((cls) => severityArray.some((severity) => cls === `h-button-${severity}`));
 
         if (existingSeverityClass) {
             this.htmlElement.classList.remove(existingSeverityClass);
@@ -444,7 +444,7 @@ export class ButtonDirective extends BaseComponent {
         const created = findSingle(this.htmlElement, '[data-pc-section="buttonlabel"]');
         const labelVal = this.label();
         if (!created && labelVal) {
-            let labelElement = <HTMLElement>createElement('span', { class: this.cx('label'), 'p-bind': this.ptm('buttonlabel'), 'aria-hidden': this.icon() && !labelVal ? 'true' : null });
+            let labelElement = <HTMLElement>createElement('span', { class: this.cx('label'), 'h-bind': this.ptm('buttonlabel'), 'aria-hidden': this.icon() && !labelVal ? 'true' : null });
             labelElement.appendChild(this.document.createTextNode(labelVal));
             this.htmlElement.appendChild(labelElement);
         }
@@ -453,9 +453,9 @@ export class ButtonDirective extends BaseComponent {
     createIcon() {
         const created = findSingle(this.htmlElement, '[data-pc-section="buttonicon"]');
         if (!created && (this.icon() || this.loading())) {
-            let iconPosClass = this.label() && !this.$unstyled() ? 'p-button-icon-' + this.iconPos() : null;
+            let iconPosClass = this.label() && !this.$unstyled() ? 'h-button-icon-' + this.iconPos() : null;
             let iconClass = !this.$unstyled() && this.getIconClass();
-            let iconElement: HTMLElement = <HTMLElement>createElement('span', { class: this.cn(this.cx('icon'), iconPosClass, iconClass), 'aria-hidden': 'true', 'p-bind': this.ptm('buttonicon') });
+            let iconElement: HTMLElement = <HTMLElement>createElement('span', { class: this.cn(this.cx('icon'), iconPosClass, iconClass), 'aria-hidden': 'true', 'h-bind': this.ptm('buttonicon') });
 
             if (!this.loadingIcon() && this.loading()) {
                 iconElement.innerHTML = this.spinnerIcon;
@@ -490,9 +490,9 @@ export class ButtonDirective extends BaseComponent {
         if (iconElement && !this.$unstyled()) {
             const iconPos = this.iconPos();
             if (iconPos) {
-                iconElement.className = 'p-button-icon ' + (labelElement ? 'p-button-icon-' + iconPos : '') + ' ' + this.getIconClass();
+                iconElement.className = 'h-button-icon ' + (labelElement ? 'h-button-icon-' + iconPos : '') + ' ' + this.getIconClass();
             } else {
-                iconElement.className = 'p-button-icon ' + this.getIconClass();
+                iconElement.className = 'h-button-icon ' + this.getIconClass();
             }
         } else {
             this.createIcon();
@@ -501,7 +501,7 @@ export class ButtonDirective extends BaseComponent {
 
     getIconClass() {
         const loadingIcon = this.loadingIcon();
-        return this.loading() ? 'p-button-loading-icon ' + (loadingIcon ? loadingIcon : 'p-icon') : this.icon() || 'p-hidden';
+        return this.loading() ? 'h-button-loading-icon ' + (loadingIcon ? loadingIcon : 'h-icon') : this.icon() || 'h-hidden';
     }
 
     onDestroy() {

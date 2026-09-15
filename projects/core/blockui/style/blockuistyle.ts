@@ -4,9 +4,9 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-blockui p-blockui-mask',
+        'h-blockui h-blockui-mask',
         {
-            'p-blockui-mask-document': !instance.target
+            'h-blockui-mask-document': !instance.target
         }
     ]
 };
@@ -33,7 +33,7 @@ export enum BlockUIClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-blockui'
+    root = 'h-blockui'
 }
 
 export interface BlockUIStyle extends BaseStyle {}

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { BaseIcon } from '@gravionlabs/helix-core/icons/baseicon';
 
 @Component({
-    selector: '[data-p-icon="angle-double-right"]',
+    selector: '[data-h-icon="angle-double-right"]',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     template: `

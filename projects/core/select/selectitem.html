@@ -9,19 +9,19 @@
   [attr.aria-setsize]="ariaSetSize()"
   [attr.aria-posinset]="ariaPosInset()"
   [attr.aria-selected]="selected()"
-  [attr.data-p-focused]="focused()"
-  [attr.data-p-highlight]="selected()"
-  [attr.data-p-selected]="selected()"
-  [attr.data-p-disabled]="disabled()"
+  [attr.data-h-focused]="focused()"
+  [attr.data-h-highlight]="selected()"
+  [attr.data-h-selected]="selected()"
+  [attr.data-h-disabled]="disabled()"
   [ngStyle]="{ height: $safeNavigationMigration(scrollerOptions()?.itemSize) + 'px' }"
   [class]="cx('option')"
   >
   @if (checkmark()) {
     @if (selected()) {
-      <svg data-p-icon="check" [class]="cx('optionCheckIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionCheckIcon'))" />
+      <svg data-h-icon="check" [class]="cx('optionCheckIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionCheckIcon'))" />
     }
     @if (!selected()) {
-      <svg data-p-icon="blank" [class]="cx('optionBlankIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionBlankIcon'))" />
+      <svg data-h-icon="blank" [class]="cx('optionBlankIcon')" [hBind]="$safeNavigationMigration($pcSelect?.ptm('optionBlankIcon'))" />
     }
   }
   @if (!template()) {

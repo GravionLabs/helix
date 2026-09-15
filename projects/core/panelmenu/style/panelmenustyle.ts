@@ -7,46 +7,46 @@ const style = /*css*/ `
     /*For Helix*/
 
 
-    .p-panelmenu-root-list,
-    .p-panelmenu-submenu,
-    .p-panelmenu-item-link {
+    .h-panelmenu-root-list,
+    .h-panelmenu-submenu,
+    .h-panelmenu-item-link {
         outline: 0 none;
     }
 `;
 
 const classes = {
-    root: () => ['p-panelmenu p-component'],
-    panel: 'p-panelmenu-panel',
+    root: () => ['h-panelmenu h-component'],
+    panel: 'h-panelmenu-panel',
     header: ({ instance, item }) => [
-        'p-panelmenu-header',
+        'h-panelmenu-header',
         {
-            'p-panelmenu-header-active': instance.isItemActive(item) && !!item.items,
-            'p-disabled': instance.isItemDisabled(item)
+            'h-panelmenu-header-active': instance.isItemActive(item) && !!item.items,
+            'h-disabled': instance.isItemDisabled(item)
         }
     ],
-    headerContent: 'p-panelmenu-header-content',
-    headerLink: 'p-panelmenu-header-link',
-    headerIcon: 'p-panelmenu-header-icon',
-    headerLabel: 'p-panelmenu-header-label',
-    contentContainer: ({ instance, processedItem }) => ['p-panelmenu-content-container', { 'p-panelmenu-expanded': instance.isItemActive(processedItem) }],
-    contentWrapper: 'p-panelmenu-content-wrapper',
-    content: 'p-panelmenu-content',
-    rootList: 'p-panelmenu-root-list',
+    headerContent: 'h-panelmenu-header-content',
+    headerLink: 'h-panelmenu-header-link',
+    headerIcon: 'h-panelmenu-header-icon',
+    headerLabel: 'h-panelmenu-header-label',
+    contentContainer: ({ instance, processedItem }) => ['h-panelmenu-content-container', { 'h-panelmenu-expanded': instance.isItemActive(processedItem) }],
+    contentWrapper: 'h-panelmenu-content-wrapper',
+    content: 'h-panelmenu-content',
+    rootList: 'h-panelmenu-root-list',
     item: ({ instance, processedItem }) => [
-        'p-panelmenu-item',
+        'h-panelmenu-item',
         {
-            'p-focus': instance.isItemFocused(processedItem) && !instance.isItemDisabled(processedItem),
-            'p-disabled': instance.isItemDisabled(processedItem)
+            'h-focus': instance.isItemFocused(processedItem) && !instance.isItemDisabled(processedItem),
+            'h-disabled': instance.isItemDisabled(processedItem)
         }
     ],
-    itemContent: 'p-panelmenu-item-content',
-    itemLink: 'p-panelmenu-item-link',
-    itemIcon: 'p-panelmenu-item-icon',
-    itemLabel: 'p-panelmenu-item-label',
-    submenuIcon: 'p-panelmenu-submenu-icon',
-    submenu: 'p-panelmenu-submenu',
-    separator: 'p-menuitem-separator',
-    badge: 'p-menuitem-badge'
+    itemContent: 'h-panelmenu-item-content',
+    itemLink: 'h-panelmenu-item-link',
+    itemIcon: 'h-panelmenu-item-icon',
+    itemLabel: 'h-panelmenu-item-label',
+    submenuIcon: 'h-panelmenu-submenu-icon',
+    submenu: 'h-panelmenu-submenu',
+    separator: 'h-menuitem-separator',
+    badge: 'h-menuitem-badge'
 };
 
 @Injectable()
@@ -71,72 +71,72 @@ export enum PanelMenuClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-panelmenu',
+    root = 'h-panelmenu',
     /**
      * Class name of the panel element
      */
-    panel = 'p-panelmenu-panel',
+    panel = 'h-panelmenu-panel',
     /**
      * Class name of the header element
      */
-    header = 'p-panelmenu-header',
+    header = 'h-panelmenu-header',
     /**
      * Class name of the header content element
      */
-    headerContent = 'p-panelmenu-header-content',
+    headerContent = 'h-panelmenu-header-content',
     /**
      * Class name of the header link element
      */
-    headerLink = 'p-panelmenu-header-link',
+    headerLink = 'h-panelmenu-header-link',
     /**
      * Class name of the header icon element
      */
-    headerIcon = 'p-panelmenu-header-icon',
+    headerIcon = 'h-panelmenu-header-icon',
     /**
      * Class name of the header label element
      */
-    headerLabel = 'p-panelmenu-header-label',
+    headerLabel = 'h-panelmenu-header-label',
     /**
      * Class name of the content container element
      */
-    contentContainer = 'p-panelmenu-content-container',
+    contentContainer = 'h-panelmenu-content-container',
     /**
      * Class name of the content element
      */
-    content = 'p-panelmenu-content',
+    content = 'h-panelmenu-content',
     /**
      * Class name of the root list element
      */
-    rootList = 'p-panelmenu-root-list',
+    rootList = 'h-panelmenu-root-list',
     /**
      * Class name of the item element
      */
-    item = 'p-panelmenu-item',
+    item = 'h-panelmenu-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-panelmenu-item-content',
+    itemContent = 'h-panelmenu-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-panelmenu-item-link',
+    itemLink = 'h-panelmenu-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-panelmenu-item-icon',
+    itemIcon = 'h-panelmenu-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-panelmenu-item-label',
+    itemLabel = 'h-panelmenu-item-label',
     /**
      * Class name of the submenu icon element
      */
-    submenuIcon = 'p-panelmenu-submenu-icon',
+    submenuIcon = 'h-panelmenu-submenu-icon',
     /**
      * Class name of the submenu element
      */
-    submenu = 'p-panelmenu-submenu',
-    separator = 'p-menuitem-separator'
+    submenu = 'h-panelmenu-submenu',
+    separator = 'h-menuitem-separator'
 }
 
 export interface PanelMenuStyle extends BaseStyle {}

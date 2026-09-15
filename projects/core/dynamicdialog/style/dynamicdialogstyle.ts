@@ -19,39 +19,39 @@ export enum DynamicDialogClasses {
     /**
      * Class name of the mask element
      */
-    mask = 'p-dialog-mask',
+    mask = 'h-dialog-mask',
     /**
      * Class name of the root element
      */
-    root = 'p-dialog',
+    root = 'h-dialog',
     /**
      * Class name of the header element
      */
-    header = 'p-dialog-header',
+    header = 'h-dialog-header',
     /**
      * Class name of the title element
      */
-    title = 'p-dialog-title',
+    title = 'h-dialog-title',
     /**
      * Class name of the header actions element
      */
-    headerActions = 'p-dialog-header-actions',
+    headerActions = 'h-dialog-header-actions',
     /**
      * Class name of the maximize button element
      */
-    pcMaximizeButton = 'p-dialog-maximize-button',
+    pcMaximizeButton = 'h-dialog-maximize-button',
     /**
      * Class name of the close button element
      */
-    pcCloseButton = 'p-dialog-close-button',
+    pcCloseButton = 'h-dialog-close-button',
     /**
      * Class name of the content element
      */
-    content = 'p-dialog-content',
+    content = 'h-dialog-content',
     /**
      * Class name of the footer element
      */
-    footer = 'p-dialog-footer'
+    footer = 'h-dialog-footer'
 }
 
 export interface DynamicDialogStyle {}

@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionHeader, AccordionPanel, Accordion
     standalone: true,
     imports: [Accordion, AccordionPanel, AccordionHeader, AccordionContent],
     template: `
-        <p-accordion
+        <h-accordion
             [(value)]="value"
             [multiple]="multiple"
             [selectOnFocus]="selectOnFocus"
@@ -18,33 +18,33 @@ import { Accordion, AccordionContent, AccordionHeader, AccordionPanel, Accordion
             (onOpen)="onOpen($event)"
             (onClose)="onClose($event)"
         >
-            <p-accordion-panel [value]="'tab1'" [disabled]="tab1Disabled">
-                <p-accordion-header>
+            <h-accordion-panel [value]="'tab1'" [disabled]="tab1Disabled">
+                <h-accordion-header>
                     <span class="header-text">Tab 1 Header</span>
-                </p-accordion-header>
-                <p-accordion-content>
+                </h-accordion-header>
+                <h-accordion-content>
                     <div class="content-1">Tab 1 Content</div>
-                </p-accordion-content>
-            </p-accordion-panel>
+                </h-accordion-content>
+            </h-accordion-panel>
 
-            <p-accordion-panel [value]="'tab2'" [disabled]="tab2Disabled">
-                <p-accordion-header>
+            <h-accordion-panel [value]="'tab2'" [disabled]="tab2Disabled">
+                <h-accordion-header>
                     <span class="header-text">Tab 2 Header</span>
-                </p-accordion-header>
-                <p-accordion-content>
+                </h-accordion-header>
+                <h-accordion-content>
                     <div class="content-2">Tab 2 Content</div>
-                </p-accordion-content>
-            </p-accordion-panel>
+                </h-accordion-content>
+            </h-accordion-panel>
 
-            <p-accordion-panel [value]="'tab3'" [disabled]="tab3Disabled">
-                <p-accordion-header>
+            <h-accordion-panel [value]="'tab3'" [disabled]="tab3Disabled">
+                <h-accordion-header>
                     <span class="header-text">Tab 3 Header</span>
-                </p-accordion-header>
-                <p-accordion-content>
+                </h-accordion-header>
+                <h-accordion-content>
                     <div class="content-3">Tab 3 Content</div>
-                </p-accordion-content>
-            </p-accordion-panel>
-        </p-accordion>
+                </h-accordion-content>
+            </h-accordion-panel>
+        </h-accordion>
     `
 })
 class TestAccordionComponent {
@@ -75,14 +75,14 @@ class TestAccordionComponent {
     standalone: true,
     imports: [Accordion, AccordionPanel, AccordionHeader, AccordionContent],
     template: `
-        <p-accordion [(value)]="value" [multiple]="true">
+        <h-accordion [(value)]="value" [multiple]="true">
             @for (tab of tabs; track tab.id) {
-                <p-accordion-panel [value]="tab.id">
-                    <p-accordion-header>{{ tab.header }}</p-accordion-header>
-                    <p-accordion-content>{{ tab.content }}</p-accordion-content>
-                </p-accordion-panel>
+                <h-accordion-panel [value]="tab.id">
+                    <h-accordion-header>{{ tab.header }}</h-accordion-header>
+                    <h-accordion-content>{{ tab.content }}</h-accordion-content>
+                </h-accordion-panel>
             }
-        </p-accordion>
+        </h-accordion>
     `
 })
 class TestDynamicAccordionComponent {
@@ -98,17 +98,17 @@ class TestDynamicAccordionComponent {
     standalone: true,
     imports: [Accordion, AccordionPanel, AccordionHeader, AccordionContent],
     template: `
-        <p-accordion [(value)]="value">
-            <p-accordion-panel value="custom">
-                <p-accordion-header>
+        <h-accordion [(value)]="value">
+            <h-accordion-panel value="custom">
+                <h-accordion-header>
                     <ng-template #toggleicon let-active="active">
                         <span class="custom-icon">{{ active ? '▼' : '▶' }}</span>
                     </ng-template>
                     Custom Header with Icon
-                </p-accordion-header>
-                <p-accordion-content>Custom Content</p-accordion-content>
-            </p-accordion-panel>
-        </p-accordion>
+                </h-accordion-header>
+                <h-accordion-content>Custom Content</h-accordion-content>
+            </h-accordion-panel>
+        </h-accordion>
     `
 })
 class TestCustomIconAccordionComponent {
@@ -119,16 +119,16 @@ class TestCustomIconAccordionComponent {
     standalone: true,
     imports: [Accordion, AccordionPanel, AccordionHeader, AccordionContent],
     template: `
-        <p-accordion [value]="'tab1'" [pt]="pt">
-            <p-accordion-panel [value]="'tab1'">
-                <p-accordion-header>PT Test Header 1</p-accordion-header>
-                <p-accordion-content>PT Test Content 1</p-accordion-content>
-            </p-accordion-panel>
-            <p-accordion-panel [value]="'tab2'">
-                <p-accordion-header>PT Test Header 2</p-accordion-header>
-                <p-accordion-content>PT Test Content 2</p-accordion-content>
-            </p-accordion-panel>
-        </p-accordion>
+        <h-accordion [value]="'tab1'" [pt]="pt">
+            <h-accordion-panel [value]="'tab1'">
+                <h-accordion-header>PT Test Header 1</h-accordion-header>
+                <h-accordion-content>PT Test Content 1</h-accordion-content>
+            </h-accordion-panel>
+            <h-accordion-panel [value]="'tab2'">
+                <h-accordion-header>PT Test Header 2</h-accordion-header>
+                <h-accordion-content>PT Test Content 2</h-accordion-content>
+            </h-accordion-panel>
+        </h-accordion>
     `
 })
 class TestPTAccordionComponent {
@@ -627,13 +627,13 @@ describe('Accordion', () => {
         it('should handle content visibility states', async () => {
             const panels = fixture.debugElement.queryAll(By.directive(AccordionPanel));
 
-            expect(panels[0].nativeElement.getAttribute('data-p-active')).toBe('false');
+            expect(panels[0].nativeElement.getAttribute('data-h-active')).toBe('false');
 
             component.value = 'tab1';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panels[0].nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(panels[0].nativeElement.getAttribute('data-h-active')).toBe('true');
         });
     });
 
@@ -674,10 +674,10 @@ describe('Accordion', () => {
 
         it('should use default icons when custom icons not provided', () => {
             const headers = fixture.debugElement.queryAll(By.directive(AccordionHeader));
-            const svgIcon = headers[0].nativeElement.querySelector('svg[data-p-icon]');
+            const svgIcon = headers[0].nativeElement.querySelector('svg[data-h-icon]');
 
             expect(svgIcon).toBeTruthy();
-            expect(svgIcon.getAttribute('data-p-icon')).toBe('chevron-down');
+            expect(svgIcon.getAttribute('data-h-icon')).toBe('chevron-down');
         });
     });
 
@@ -884,28 +884,28 @@ describe('Accordion', () => {
             });
         });
 
-        it('should update data-p-active attribute', async () => {
+        it('should update data-h-active attribute', async () => {
             const panels = fixture.debugElement.queryAll(By.directive(AccordionPanel));
 
-            expect(panels[0].nativeElement.getAttribute('data-p-active')).toBe('false');
+            expect(panels[0].nativeElement.getAttribute('data-h-active')).toBe('false');
 
             component.value = 'tab1';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panels[0].nativeElement.getAttribute('data-p-active')).toBe('true');
+            expect(panels[0].nativeElement.getAttribute('data-h-active')).toBe('true');
         });
 
-        it('should update data-p-disabled attribute', async () => {
+        it('should update data-h-disabled attribute', async () => {
             const panels = fixture.debugElement.queryAll(By.directive(AccordionPanel));
 
-            expect(panels[0].nativeElement.getAttribute('data-p-disabled')).toBe('false');
+            expect(panels[0].nativeElement.getAttribute('data-h-disabled')).toBe('false');
 
             component.tab1Disabled = true;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(panels[0].nativeElement.getAttribute('data-p-disabled')).toBe('true');
+            expect(panels[0].nativeElement.getAttribute('data-h-disabled')).toBe('true');
         });
     });
 
@@ -926,7 +926,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
             const classList = accordionEl.nativeElement.className;
 
             expect(classList).toContain('ROOT_CLASS');
@@ -944,7 +944,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
 
             expect(accordionEl.nativeElement.className).toContain('PT_ROOT_CLASS');
             expect(accordionEl.nativeElement.getAttribute('data-test')).toBe('accordion-test');
@@ -962,7 +962,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
 
             expect(accordionEl.nativeElement.className).toContain('PT_ROOT_CLASS');
             expect(accordionEl.nativeElement.getAttribute('data-custom')).toBe('custom-value');
@@ -980,7 +980,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
 
             expect(accordionEl.nativeElement.className).toContain('SINGLE');
             expect(accordionEl.nativeElement.getAttribute('data-select-on-focus')).toBe('false');
@@ -998,7 +998,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
             accordionEl.nativeElement.click();
 
             expect(clicked).toBe(true);
@@ -1009,7 +1009,7 @@ describe('Accordion', () => {
             ptFixture.changeDetectorRef.markForCheck();
             await ptFixture.whenStable();
 
-            const accordionEl = ptFixture.debugElement.query(By.css('p-accordion'));
+            const accordionEl = ptFixture.debugElement.query(By.css('h-accordion'));
 
             expect(accordionEl.nativeElement.className).toContain('SETINPUT_ROOT_CLASS');
         });

@@ -1,14 +1,14 @@
 export const style = /*css*/ `
-    .p-colorpicker {
+    .h-colorpicker {
         display: inline-block;
         position: relative;
     }
 
-    .p-colorpicker-dragging {
+    .h-colorpicker-dragging {
         cursor: pointer;
     }
 
-    .p-colorpicker-preview {
+    .h-colorpicker-preview {
         width: dt('colorpicker.preview.width');
         height: dt('colorpicker.preview.height');
         padding: 0;
@@ -24,14 +24,14 @@ export const style = /*css*/ `
         cursor: pointer;
     }
 
-    .p-colorpicker-preview:enabled:focus-visible {
+    .h-colorpicker-preview:enabled:focus-visible {
         border-color: dt('colorpicker.preview.focus.border.color');
         box-shadow: dt('colorpicker.preview.focus.ring.shadow');
         outline: dt('colorpicker.preview.focus.ring.width') dt('colorpicker.preview.focus.ring.style') dt('colorpicker.preview.focus.ring.color');
         outline-offset: dt('colorpicker.preview.focus.ring.offset');
     }
 
-    .p-colorpicker-panel {
+    .h-colorpicker-panel {
         background: dt('colorpicker.panel.background');
         border: 1px solid dt('colorpicker.panel.border.color');
         border-radius: dt('colorpicker.panel.border.radius');
@@ -43,16 +43,16 @@ export const style = /*css*/ `
         left: 0;
     }
 
-    .p-colorpicker-panel-inline {
+    .h-colorpicker-panel-inline {
         box-shadow: none;
         position: static;
     }
 
-    .p-colorpicker-content {
+    .h-colorpicker-content {
         position: relative;
     }
 
-    .p-colorpicker-color-selector {
+    .h-colorpicker-color-selector {
         width: 150px;
         height: 150px;
         inset-block-start: 8px;
@@ -60,13 +60,13 @@ export const style = /*css*/ `
         position: absolute;
     }
 
-    .p-colorpicker-color-background {
+    .h-colorpicker-color-background {
         width: 100%;
         height: 100%;
         background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, #fff 0%, rgba(255, 255, 255, 0) 100%);
     }
 
-    .p-colorpicker-color-handle {
+    .h-colorpicker-color-handle {
         position: absolute;
         inset-block-start: 0px;
         inset-inline-start: 150px;
@@ -81,7 +81,7 @@ export const style = /*css*/ `
         border-color: dt('colorpicker.handle.color');
     }
 
-    .p-colorpicker-hue {
+    .h-colorpicker-hue {
         width: 17px;
         height: 150px;
         inset-block-start: 8px;
@@ -91,7 +91,7 @@ export const style = /*css*/ `
         background: linear-gradient(0deg, red 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, red);
     }
 
-    .p-colorpicker-hue-handle {
+    .h-colorpicker-hue-handle {
         position: absolute;
         inset-block-start: 150px;
         inset-inline-start: 0px;

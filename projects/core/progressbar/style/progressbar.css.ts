@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-progressbar {
+    .h-progressbar {
         display: block;
         position: relative;
         overflow: hidden;
@@ -8,18 +8,18 @@ export const style = /*css*/ `
         border-radius: dt('progressbar.border.radius');
     }
 
-    .p-progressbar-value {
+    .h-progressbar-value {
         margin: 0;
         background: dt('progressbar.value.background');
     }
 
-    .p-progressbar-label {
+    .h-progressbar-label {
         color: dt('progressbar.label.color');
         font-size: dt('progressbar.label.font.size');
         font-weight: dt('progressbar.label.font.weight');
     }
 
-    .p-progressbar-determinate .p-progressbar-value {
+    .h-progressbar-determinate .h-progressbar-value {
         height: 100%;
         width: 0%;
         position: absolute;
@@ -31,11 +31,11 @@ export const style = /*css*/ `
         transition: width 1s ease-in-out;
     }
 
-    .p-progressbar-determinate .p-progressbar-label {
+    .h-progressbar-determinate .h-progressbar-label {
         display: inline-flex;
     }
 
-    .p-progressbar-indeterminate .p-progressbar-value::before {
+    .h-progressbar-indeterminate .h-progressbar-value::before {
         content: '';
         position: absolute;
         background: inherit;
@@ -43,10 +43,10 @@ export const style = /*css*/ `
         inset-inline-start: 0;
         inset-block-end: 0;
         will-change: inset-inline-start, inset-inline-end;
-        animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        animation: h-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
     }
 
-    .p-progressbar-indeterminate .p-progressbar-value::after {
+    .h-progressbar-indeterminate .h-progressbar-value::after {
         content: '';
         position: absolute;
         background: inherit;
@@ -54,11 +54,11 @@ export const style = /*css*/ `
         inset-inline-start: 0;
         inset-block-end: 0;
         will-change: inset-inline-start, inset-inline-end;
-        animation: p-progressbar-indeterminate-anim-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+        animation: h-progressbar-indeterminate-anim-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
         animation-delay: 1.15s;
     }
 
-    @keyframes p-progressbar-indeterminate-anim {
+    @keyframes h-progressbar-indeterminate-anim {
         0% {
             inset-inline-start: -35%;
             inset-inline-end: 100%;
@@ -72,7 +72,7 @@ export const style = /*css*/ `
             inset-inline-end: -90%;
         }
     }
-    @-webkit-keyframes p-progressbar-indeterminate-anim {
+    @-webkit-keyframes h-progressbar-indeterminate-anim {
         0% {
             inset-inline-start: -35%;
             inset-inline-end: 100%;
@@ -87,7 +87,7 @@ export const style = /*css*/ `
         }
     }
 
-    @keyframes p-progressbar-indeterminate-anim-short {
+    @keyframes h-progressbar-indeterminate-anim-short {
         0% {
             inset-inline-start: -200%;
             inset-inline-end: 100%;
@@ -101,7 +101,7 @@ export const style = /*css*/ `
             inset-inline-end: -8%;
         }
     }
-    @-webkit-keyframes p-progressbar-indeterminate-anim-short {
+    @-webkit-keyframes h-progressbar-indeterminate-anim-short {
         0% {
             inset-inline-start: -200%;
             inset-inline-end: 100%;

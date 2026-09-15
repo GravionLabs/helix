@@ -8,31 +8,31 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-tieredmenu p-component',
+        'h-tieredmenu h-component',
         {
-            'p-tieredmenu-overlay': instance.popup,
-            'p-tieredmenu-mobile': instance.queryMatches()
+            'h-tieredmenu-overlay': instance.popup,
+            'h-tieredmenu-mobile': instance.queryMatches()
         }
     ],
-    start: 'p-tieredmenu-start',
-    rootList: 'p-tieredmenu-root-list',
+    start: 'h-tieredmenu-start',
+    rootList: 'h-tieredmenu-root-list',
     item: ({ instance, processedItem }) => [
-        'p-tieredmenu-item',
+        'h-tieredmenu-item',
         {
-            'p-tieredmenu-item-active': instance.isItemActive(processedItem),
-            'p-focus': instance.isItemFocused(processedItem),
-            'p-disabled': instance.isItemDisabled(processedItem)
+            'h-tieredmenu-item-active': instance.isItemActive(processedItem),
+            'h-focus': instance.isItemFocused(processedItem),
+            'h-disabled': instance.isItemDisabled(processedItem)
         }
     ],
-    itemContent: 'p-tieredmenu-item-content',
-    itemLink: 'p-tieredmenu-item-link',
-    itemIcon: 'p-tieredmenu-item-icon',
-    itemLabel: 'p-tieredmenu-item-label',
-    itemBadge: 'p-menuitem-badge',
-    submenuIcon: 'p-tieredmenu-submenu-icon',
-    submenu: 'p-tieredmenu-submenu',
-    separator: 'p-tieredmenu-separator',
-    end: 'p-tieredmenu-end'
+    itemContent: 'h-tieredmenu-item-content',
+    itemLink: 'h-tieredmenu-item-link',
+    itemIcon: 'h-tieredmenu-item-icon',
+    itemLabel: 'h-tieredmenu-item-label',
+    itemBadge: 'h-menuitem-badge',
+    submenuIcon: 'h-tieredmenu-submenu-icon',
+    submenu: 'h-tieredmenu-submenu',
+    separator: 'h-tieredmenu-separator',
+    end: 'h-tieredmenu-end'
 };
 
 @Injectable()
@@ -59,51 +59,51 @@ export enum TieredMenuClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tieredmenu',
+    root = 'h-tieredmenu',
     /**
      * Class name of the start element
      */
-    start = 'p-tieredmenu-start',
+    start = 'h-tieredmenu-start',
     /**
      * Class name of the root list element
      */
-    rootList = 'p-tieredmenu-root-list',
+    rootList = 'h-tieredmenu-root-list',
     /**
      * Class name of the item element
      */
-    item = 'p-tieredmenu-item',
+    item = 'h-tieredmenu-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-tieredmenu-item-content',
+    itemContent = 'h-tieredmenu-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-tieredmenu-item-link',
+    itemLink = 'h-tieredmenu-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-tieredmenu-item-icon',
+    itemIcon = 'h-tieredmenu-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-tieredmenu-item-label',
+    itemLabel = 'h-tieredmenu-item-label',
     /**
      * Class name of the submenu icon element
      */
-    submenuIcon = 'p-tieredmenu-submenu-icon',
+    submenuIcon = 'h-tieredmenu-submenu-icon',
     /**
      * Class name of the submenu element
      */
-    submenu = 'p-tieredmenu-submenu',
+    submenu = 'h-tieredmenu-submenu',
     /**
      * Class name of the separator element
      */
-    separator = 'p-tieredmenu-separator',
+    separator = 'h-tieredmenu-separator',
     /**
      * Class name of the end element
      */
-    end = 'p-tieredmenu-end'
+    end = 'h-tieredmenu-end'
 }
 
 export interface TieredMenuStyle extends BaseStyle {}

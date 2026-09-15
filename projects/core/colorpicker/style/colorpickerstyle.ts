@@ -3,21 +3,21 @@ import { style } from './colorpicker.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-colorpicker p-component', { 'p-colorpicker-overlay': !instance.inline(), 'p-colorpicker-dragging': instance.colorDragging || instance.hueDragging }],
-    preview: ({ instance }) => ['p-colorpicker-preview', { 'p-disabled': instance.$disabled() }],
+    root: ({ instance }) => ['h-colorpicker h-component', { 'h-colorpicker-overlay': !instance.inline(), 'h-colorpicker-dragging': instance.colorDragging || instance.hueDragging }],
+    preview: ({ instance }) => ['h-colorpicker-preview', { 'h-disabled': instance.$disabled() }],
     panel: ({ instance }) => [
-        'p-colorpicker-panel',
+        'h-colorpicker-panel',
         {
-            'p-colorpicker-panel-inline': instance.inline(),
-            'p-disabled': instance.$disabled()
+            'h-colorpicker-panel-inline': instance.inline(),
+            'h-disabled': instance.$disabled()
         }
     ],
-    content: 'p-colorpicker-content',
-    colorSelector: 'p-colorpicker-color-selector',
-    colorBackground: 'p-colorpicker-color-background',
-    colorHandle: 'p-colorpicker-color-handle',
-    hue: 'p-colorpicker-hue',
-    hueHandle: 'p-colorpicker-hue-handle'
+    content: 'h-colorpicker-content',
+    colorSelector: 'h-colorpicker-color-selector',
+    colorBackground: 'h-colorpicker-color-background',
+    colorHandle: 'h-colorpicker-color-handle',
+    hue: 'h-colorpicker-hue',
+    hueHandle: 'h-colorpicker-hue-handle'
 };
 
 @Injectable()
@@ -42,35 +42,35 @@ export enum ColorPickerClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-colorpicker',
+    root = 'h-colorpicker',
     /**
      * Class name of the preview element
      */
-    preview = 'p-colorpicker-preview',
+    preview = 'h-colorpicker-preview',
     /**
      * Class name of the panel element
      */
-    panel = 'p-colorpicker-panel',
+    panel = 'h-colorpicker-panel',
     /**
      * Class name of the color selector element
      */
-    colorSelector = 'p-colorpicker-color-selector',
+    colorSelector = 'h-colorpicker-color-selector',
     /**
      * Class name of the color background element
      */
-    colorBackground = 'p-colorpicker-color-background',
+    colorBackground = 'h-colorpicker-color-background',
     /**
      * Class name of the color handle element
      */
-    colorHandle = 'p-colorpicker-color-handle',
+    colorHandle = 'h-colorpicker-color-handle',
     /**
      * Class name of the hue element
      */
-    hue = 'p-colorpicker-hue',
+    hue = 'h-colorpicker-hue',
     /**
      * Class name of the hue handle element
      */
-    hueHandle = 'p-colorpicker-hue-handle'
+    hueHandle = 'h-colorpicker-hue-handle'
 }
 
 export interface ColorPickerStyle extends BaseStyle {}

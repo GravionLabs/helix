@@ -24,7 +24,7 @@ const SKELETON_INSTANCE = new InjectionToken<Skeleton>('SKELETON_INSTANCE');
         '[attr.aria-hidden]': 'true',
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': 'containerStyle',
-        '[attr.data-p]': 'dataP'
+        '[attr.data-h]': 'dataP'
     },
     hostDirectives: [Bind]
 })

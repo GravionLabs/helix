@@ -4,14 +4,14 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-progressbar p-component',
+        'h-progressbar h-component',
         {
-            'p-progressbar-determinate': instance.mode() == 'determinate',
-            'p-progressbar-indeterminate': instance.mode() == 'indeterminate'
+            'h-progressbar-determinate': instance.mode() == 'determinate',
+            'h-progressbar-indeterminate': instance.mode() == 'indeterminate'
         }
     ],
-    value: 'p-progressbar-value',
-    label: 'p-progressbar-label'
+    value: 'h-progressbar-value',
+    label: 'h-progressbar-label'
 };
 
 @Injectable()
@@ -36,15 +36,15 @@ export enum ProgressBarClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-progressbar',
+    root = 'h-progressbar',
     /**
      * Class name of the value element
      */
-    value = 'p-progressbar-value',
+    value = 'h-progressbar-value',
     /**
      * Class name of the label element
      */
-    label = 'p-progressbar-label'
+    label = 'h-progressbar-label'
 }
 
 export interface ProgressBarStyle extends BaseStyle {}

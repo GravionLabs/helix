@@ -4,20 +4,20 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-dataview p-component',
+        'h-dataview h-component',
         {
-            'p-dataview-list': instance.layout() === 'list',
-            'p-dataview-grid': instance.layout() === 'grid'
+            'h-dataview-list': instance.layout() === 'list',
+            'h-dataview-grid': instance.layout() === 'grid'
         }
     ],
-    header: 'p-dataview-header',
-    loading: 'p-dataview-loading',
-    loadingOverlay: 'p-dataview-loading-overlay p-overlay-mask',
-    loadingIcon: 'p-dataview-loading-icon',
-    pcPaginator: ({ position }) => 'p-dataview-paginator-' + position,
-    content: 'p-dataview-content',
-    emptyMessage: 'p-dataview-empty-message',
-    footer: 'p-dataview-footer'
+    header: 'h-dataview-header',
+    loading: 'h-dataview-loading',
+    loadingOverlay: 'h-dataview-loading-overlay h-overlay-mask',
+    loadingIcon: 'h-dataview-loading-icon',
+    pcPaginator: ({ position }) => 'h-dataview-paginator-' + position,
+    content: 'h-dataview-content',
+    emptyMessage: 'h-dataview-empty-message',
+    footer: 'h-dataview-footer'
 };
 
 @Injectable()
@@ -42,39 +42,39 @@ export enum DataViewClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-dataview',
+    root = 'h-dataview',
     /**
      * Class name of the header element
      */
-    header = 'p-dataview-header',
+    header = 'h-dataview-header',
     /**
      * Class name of the loading element
      */
-    loading = 'p-dataview-loading',
+    loading = 'h-dataview-loading',
     /**
      * Class name of the loading overlay element
      */
-    loadingOverlay = 'p-dataview-loading-overlay',
+    loadingOverlay = 'h-dataview-loading-overlay',
     /**
      * Class name of the loading icon element
      */
-    loadingIcon = 'p-dataview-loading-icon',
+    loadingIcon = 'h-dataview-loading-icon',
     /**
      * Class name of the paginator element
      */
-    pcPaginator = 'p-dataview-paginator-[position]',
+    pcPaginator = 'h-dataview-paginator-[position]',
     /**
      * Class name of the content element
      */
-    content = 'p-dataview-content',
+    content = 'h-dataview-content',
     /**
      * Class name of the empty message element
      */
-    emptyMessage = 'p-dataview-empty-message',
+    emptyMessage = 'h-dataview-empty-message',
     /**
      * Class name of the footer element
      */
-    footer = 'p-dataview-footer'
+    footer = 'h-dataview-footer'
 }
 
 export interface DataViewStyle extends BaseStyle {}

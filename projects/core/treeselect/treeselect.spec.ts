@@ -49,7 +49,7 @@ const mockTreeNodes: TreeNode[] = [
 @Component({
     standalone: false,
     template: `
-        <p-treeselect
+        <h-treeselect
           [(ngModel)]="selectedValue"
           [options]="options"
           [placeholder]="placeholder"
@@ -158,12 +158,12 @@ const mockTreeNodes: TreeNode[] = [
           <ng-template #itemloadingicon>
             <i class="pi pi-spinner custom-loading" data-testid="template-itemloadingicon"></i>
           </ng-template>
-        </p-treeselect>
+        </h-treeselect>
         
         <!-- Reactive Forms test -->
         @if (showReactiveForm) {
           <form [formGroup]="reactiveForm">
-            <p-treeselect formControlName="selectedNodes" [options]="formOptions" [placeholder]="'Select nodes'" (onNodeSelect)="onFormNodeSelect($event)"> </p-treeselect>
+            <h-treeselect formControlName="selectedNodes" [options]="formOptions" [placeholder]="'Select nodes'" (onNodeSelect)="onFormNodeSelect($event)"> </h-treeselect>
           </form>
         }
         `
@@ -340,7 +340,7 @@ class TestTreeSelectComponent {
 @Component({
     standalone: false,
     template: `
-        <p-treeselect [(ngModel)]="selectedValue" [options]="options" [placeholder]="placeholder" [disabled]="disabled" [showClear]="showClear" [filter]="filter">
+        <h-treeselect [(ngModel)]="selectedValue" [options]="options" [placeholder]="placeholder" [disabled]="disabled" [showClear]="showClear" [filter]="filter">
           <!-- Value template with pTemplate -->
           <ng-template pTemplate="value" let-value let-placeholder="placeholder">
             <div class="ptemplate-value" [attr.data-testid]="'ptemplate-value'">
@@ -418,7 +418,7 @@ class TestTreeSelectComponent {
               <span class="loading-text">Loading...</span>
             </div>
           </ng-template>
-        </p-treeselect>
+        </h-treeselect>
         `
 })
 class TestPTemplateTreeSelectComponent {
@@ -660,7 +660,7 @@ describe('TreeSelect', () => {
             control?.disable();
             testFixture.detectChanges();
 
-            const treeSelectElement = testFixture.debugElement.query(By.css('p-treeselect[formControlName="selectedNodes"]'));
+            const treeSelectElement = testFixture.debugElement.query(By.css('h-treeselect[formControlName="selectedNodes"]'));
             expect(treeSelectElement).toBeTruthy();
 
             control?.enable();
@@ -794,7 +794,7 @@ describe('TreeSelect', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const dropdown = testFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+            const dropdown = testFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
 
             dropdown.nativeElement.click();
             testFixture.detectChanges();
@@ -899,7 +899,7 @@ describe('TreeSelect', () => {
         });
 
         it('should handle HelixTemplate with context parameters', async () => {
-            const dropdown = testFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+            const dropdown = testFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
             dropdown.nativeElement.click();
             testFixture.detectChanges();
             await testFixture.whenStable();
@@ -973,7 +973,7 @@ describe('TreeSelect', () => {
 
         describe('Header Template (_headerTemplate)', () => {
             it('should render pTemplate="header" with options context', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
                 trigger.nativeElement.click();
                 pTemplateFixture.detectChanges();
                 await pTemplateFixture.whenStable();
@@ -1007,7 +1007,7 @@ describe('TreeSelect', () => {
 
         describe('Footer Template (_footerTemplate)', () => {
             it('should render pTemplate="footer" with custom content', async () => {
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
                 trigger.nativeElement.click();
                 pTemplateFixture.detectChanges();
                 await pTemplateFixture.whenStable();
@@ -1046,7 +1046,7 @@ describe('TreeSelect', () => {
                 await pTemplateFixture.whenStable();
                 pTemplateFixture.detectChanges();
 
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
                 trigger.nativeElement.click();
                 pTemplateFixture.changeDetectorRef.markForCheck();
                 await pTemplateFixture.whenStable();
@@ -1147,7 +1147,7 @@ describe('TreeSelect', () => {
                 await pTemplateFixture.whenStable();
                 pTemplateFixture.detectChanges();
 
-                const trigger = pTemplateFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+                const trigger = pTemplateFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
                 trigger.nativeElement.click();
                 pTemplateFixture.detectChanges();
                 await pTemplateFixture.whenStable();
@@ -1296,7 +1296,7 @@ describe('TreeSelect', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const dropdown = testFixture.debugElement.query(By.css('.p-treeselect-dropdown'));
+            const dropdown = testFixture.debugElement.query(By.css('.h-treeselect-dropdown'));
             dropdown.nativeElement.click();
             testFixture.detectChanges();
             await testFixture.whenStable();

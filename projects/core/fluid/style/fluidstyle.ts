@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-fluid'
+    root: 'h-fluid'
 };
 
 @Injectable()
@@ -25,7 +25,7 @@ export enum FluidClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-fluid'
+    root = 'h-fluid'
 }
 
 export interface FluidStyle extends BaseStyle {}

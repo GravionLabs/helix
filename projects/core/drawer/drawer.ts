@@ -149,9 +149,9 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
      */
     fullScreen = input<boolean>(false);
 
-    $enterAnimation = computed(() => (this.fullScreen() ? 'p-drawer-enter-full' : `p-drawer-enter-${this.position()}`));
+    $enterAnimation = computed(() => (this.fullScreen() ? 'h-drawer-enter-full' : `h-drawer-enter-${this.position()}`));
 
-    $leaveAnimation = computed(() => (this.fullScreen() ? 'p-drawer-leave-full' : `p-drawer-leave-${this.position()}`));
+    $leaveAnimation = computed(() => (this.fullScreen() ? 'h-drawer-leave-full' : `h-drawer-leave-${this.position()}`));
 
     /**
      * Title content of the dialog.
@@ -318,7 +318,7 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
     }
 
     enableModality() {
-        const activeDrawers = this.document.querySelectorAll('[data-p-open="true"]');
+        const activeDrawers = this.document.querySelectorAll('[data-h-open="true"]');
         const activeDrawersLength = activeDrawers.length;
         const zIndex = activeDrawersLength == 1 ? String(parseInt((this.container as HTMLDivElement).style.zIndex) - 1) : String(parseInt((activeDrawers[activeDrawersLength - 1] as HTMLElement).style.zIndex) - 1);
 
@@ -328,7 +328,7 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
             if (this.mask) {
                 const style = `z-index: ${zIndex};${this.getMaskStyle()}`;
                 setAttribute(this.mask, 'style', style);
-                setAttribute(this.mask, 'data-p', this.dataP);
+                setAttribute(this.mask, 'data-h', this.dataP);
                 addClass(this.mask, this.cx('mask'));
             }
 
@@ -358,8 +358,8 @@ export class Drawer extends BaseComponent<DrawerPassThrough> {
 
     disableModality() {
         if (this.mask) {
-            !this.$unstyled() && removeClass(this.mask, 'p-overlay-mask-enter-active');
-            !this.$unstyled() && addClass(this.mask, 'p-overlay-mask-leave-active');
+            !this.$unstyled() && removeClass(this.mask, 'h-overlay-mask-enter-active');
+            !this.$unstyled() && addClass(this.mask, 'h-overlay-mask-leave-active');
             this.animationEndListener = this.renderer.listen(this.mask, 'animationend', this.destroyModal.bind(this));
         }
     }

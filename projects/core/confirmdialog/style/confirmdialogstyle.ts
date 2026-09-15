@@ -3,11 +3,11 @@ import { style } from './confirmdialog.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-confirmdialog',
-    icon: 'p-confirmdialog-icon',
-    message: 'p-confirmdialog-message',
-    pcRejectButton: 'p-confirmdialog-reject-button',
-    pcAcceptButton: 'p-confirmdialog-accept-button'
+    root: 'h-confirmdialog',
+    icon: 'h-confirmdialog-icon',
+    message: 'h-confirmdialog-message',
+    pcRejectButton: 'h-confirmdialog-reject-button',
+    pcAcceptButton: 'h-confirmdialog-accept-button'
 };
 
 @Injectable()
@@ -32,23 +32,23 @@ export enum ConfirmDialogClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-confirmdialog',
+    root = 'h-confirmdialog',
     /**
      * Class name of the icon element
      */
-    icon = 'p-confirmdialog-icon',
+    icon = 'h-confirmdialog-icon',
     /**
      * Class name of the message element
      */
-    message = 'p-confirmdialog-message',
+    message = 'h-confirmdialog-message',
     /**
      * Class name of the reject button element
      */
-    pcRejectButton = 'p-confirmdialog-reject-button',
+    pcRejectButton = 'h-confirmdialog-reject-button',
     /**
      * Class name of the accept button element
      */
-    pcAcceptButton = 'p-confirmdialog-accept-button'
+    pcAcceptButton = 'h-confirmdialog-accept-button'
 }
 
 export interface ConfirmDialogStyle extends BaseStyle {}

@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-paginator {
+    .h-paginator {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -11,7 +11,7 @@ export const style = /*css*/ `
         gap: dt('paginator.gap');
     }
 
-    .p-paginator-content {
+    .h-paginator-content {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -19,19 +19,19 @@ export const style = /*css*/ `
         gap: dt('paginator.gap');
     }
 
-    .p-paginator-content-start {
+    .h-paginator-content-start {
         margin-inline-end: auto;
     }
 
-    .p-paginator-content-end {
+    .h-paginator-content-end {
         margin-inline-start: auto;
     }
 
-    .p-paginator-page,
-    .p-paginator-next,
-    .p-paginator-last,
-    .p-paginator-first,
-    .p-paginator-prev {
+    .h-paginator-page,
+    .h-paginator-next,
+    .h-paginator-last,
+    .h-paginator-first,
+    .h-paginator-prev {
         cursor: pointer;
         display: inline-flex;
         align-items: center;
@@ -55,48 +55,48 @@ export const style = /*css*/ `
         margin: 0;
     }
 
-    .p-paginator-page:focus-visible,
-    .p-paginator-next:focus-visible,
-    .p-paginator-last:focus-visible,
-    .p-paginator-first:focus-visible,
-    .p-paginator-prev:focus-visible {
+    .h-paginator-page:focus-visible,
+    .h-paginator-next:focus-visible,
+    .h-paginator-last:focus-visible,
+    .h-paginator-first:focus-visible,
+    .h-paginator-prev:focus-visible {
         box-shadow: dt('paginator.nav.button.focus.ring.shadow');
         outline: dt('paginator.nav.button.focus.ring.width') dt('paginator.nav.button.focus.ring.style') dt('paginator.nav.button.focus.ring.color');
         outline-offset: dt('paginator.nav.button.focus.ring.offset');
     }
 
-    .p-paginator-page:not(.p-disabled):not(.p-paginator-page-selected):hover,
-    .p-paginator-first:not(.p-disabled):hover,
-    .p-paginator-prev:not(.p-disabled):hover,
-    .p-paginator-next:not(.p-disabled):hover,
-    .p-paginator-last:not(.p-disabled):hover {
+    .h-paginator-page:not(.h-disabled):not(.h-paginator-page-selected):hover,
+    .h-paginator-first:not(.h-disabled):hover,
+    .h-paginator-prev:not(.h-disabled):hover,
+    .h-paginator-next:not(.h-disabled):hover,
+    .h-paginator-last:not(.h-disabled):hover {
         background: dt('paginator.nav.button.hover.background');
         color: dt('paginator.nav.button.hover.color');
     }
 
-    .p-paginator-page.p-paginator-page-selected {
+    .h-paginator-page.h-paginator-page-selected {
         background: dt('paginator.nav.button.selected.background');
         color: dt('paginator.nav.button.selected.color');
     }
 
-    .p-paginator-current {
+    .h-paginator-current {
         color: dt('paginator.current.page.report.color');
     }
 
-    .p-paginator-pages {
+    .h-paginator-pages {
         display: flex;
         align-items: center;
         gap: dt('paginator.gap');
     }
 
-    .p-paginator-jtp-input .p-inputtext {
+    .h-paginator-jtp-input .h-inputtext {
         max-width: dt('paginator.jump.to.page.input.max.width');
     }
 
-    .p-paginator-first:dir(rtl),
-    .p-paginator-prev:dir(rtl),
-    .p-paginator-next:dir(rtl),
-    .p-paginator-last:dir(rtl) {
+    .h-paginator-first:dir(rtl),
+    .h-paginator-prev:dir(rtl),
+    .h-paginator-next:dir(rtl),
+    .h-paginator-last:dir(rtl) {
         transform: rotate(180deg);
     }
 `;

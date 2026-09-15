@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-checkbox {
+    .h-checkbox {
         position: relative;
         display: inline-flex;
         user-select: none;
@@ -8,7 +8,7 @@ export const style = /*css*/ `
         height: dt('checkbox.height');
     }
 
-    .p-checkbox-input {
+    .h-checkbox-input {
         cursor: pointer;
         appearance: none;
         position: absolute;
@@ -25,7 +25,7 @@ export const style = /*css*/ `
         border-radius: dt('checkbox.border.radius');
     }
 
-    .p-checkbox-box {
+    .h-checkbox-box {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,7 +44,7 @@ export const style = /*css*/ `
         box-shadow: dt('checkbox.shadow');
     }
 
-    .p-checkbox-icon {
+    .h-checkbox-icon {
         transition-duration: dt('checkbox.transition.duration');
         color: dt('checkbox.icon.color');
         font-size: dt('checkbox.icon.size');
@@ -52,87 +52,87 @@ export const style = /*css*/ `
         height: dt('checkbox.icon.size');
     }
 
-    .p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+    .h-checkbox:not(.h-disabled):has(.h-checkbox-input:hover) .h-checkbox-box {
         border-color: dt('checkbox.hover.border.color');
     }
 
-    .p-checkbox-checked .p-checkbox-box {
+    .h-checkbox-checked .h-checkbox-box {
         border-color: dt('checkbox.checked.border.color');
         background: dt('checkbox.checked.background');
     }
 
-    .p-checkbox-checked .p-checkbox-icon {
+    .h-checkbox-checked .h-checkbox-icon {
         color: dt('checkbox.icon.checked.color');
     }
 
-    .p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+    .h-checkbox-checked:not(.h-disabled):has(.h-checkbox-input:hover) .h-checkbox-box {
         background: dt('checkbox.checked.hover.background');
         border-color: dt('checkbox.checked.hover.border.color');
     }
 
-    .p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-icon {
+    .h-checkbox-checked:not(.h-disabled):has(.h-checkbox-input:hover) .h-checkbox-icon {
         color: dt('checkbox.icon.checked.hover.color');
     }
 
-    .p-checkbox:not(.p-disabled):has(.p-checkbox-input:focus-visible) .p-checkbox-box {
+    .h-checkbox:not(.h-disabled):has(.h-checkbox-input:focus-visible) .h-checkbox-box {
         border-color: dt('checkbox.focus.border.color');
         box-shadow: dt('checkbox.focus.ring.shadow');
         outline: dt('checkbox.focus.ring.width') dt('checkbox.focus.ring.style') dt('checkbox.focus.ring.color');
         outline-offset: dt('checkbox.focus.ring.offset');
     }
 
-    .p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:focus-visible) .p-checkbox-box {
+    .h-checkbox-checked:not(.h-disabled):has(.h-checkbox-input:focus-visible) .h-checkbox-box {
         border-color: dt('checkbox.checked.focus.border.color');
     }
 
-    .p-checkbox.p-invalid > .p-checkbox-box {
+    .h-checkbox.h-invalid > .h-checkbox-box {
         border-color: dt('checkbox.invalid.border.color');
     }
 
-    .p-checkbox.p-variant-filled .p-checkbox-box {
+    .h-checkbox.h-variant-filled .h-checkbox-box {
         background: dt('checkbox.filled.background');
     }
 
-    .p-checkbox-checked.p-variant-filled .p-checkbox-box {
+    .h-checkbox-checked.h-variant-filled .h-checkbox-box {
         background: dt('checkbox.checked.background');
     }
 
-    .p-checkbox-checked.p-variant-filled:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+    .h-checkbox-checked.h-variant-filled:not(.h-disabled):has(.h-checkbox-input:hover) .h-checkbox-box {
         background: dt('checkbox.checked.hover.background');
     }
 
-    .p-checkbox.p-disabled {
+    .h-checkbox.h-disabled {
         opacity: 1;
     }
 
-    .p-checkbox.p-disabled .p-checkbox-box {
+    .h-checkbox.h-disabled .h-checkbox-box {
         background: dt('checkbox.disabled.background');
         border-color: dt('checkbox.checked.disabled.border.color');
     }
 
-    .p-checkbox.p-disabled .p-checkbox-box .p-checkbox-icon {
+    .h-checkbox.h-disabled .h-checkbox-box .h-checkbox-icon {
         color: dt('checkbox.icon.disabled.color');
     }
 
-    .p-checkbox-sm,
-    .p-checkbox-sm .p-checkbox-box {
+    .h-checkbox-sm,
+    .h-checkbox-sm .h-checkbox-box {
         width: dt('checkbox.sm.width');
         height: dt('checkbox.sm.height');
     }
 
-    .p-checkbox-sm .p-checkbox-icon {
+    .h-checkbox-sm .h-checkbox-icon {
         font-size: dt('checkbox.icon.sm.size');
         width: dt('checkbox.icon.sm.size');
         height: dt('checkbox.icon.sm.size');
     }
 
-    .p-checkbox-lg,
-    .p-checkbox-lg .p-checkbox-box {
+    .h-checkbox-lg,
+    .h-checkbox-lg .h-checkbox-box {
         width: dt('checkbox.lg.width');
         height: dt('checkbox.lg.height');
     }
 
-    .p-checkbox-lg .p-checkbox-icon {
+    .h-checkbox-lg .h-checkbox-icon {
         font-size: dt('checkbox.icon.lg.size');
         width: dt('checkbox.icon.lg.size');
         height: dt('checkbox.icon.lg.size');

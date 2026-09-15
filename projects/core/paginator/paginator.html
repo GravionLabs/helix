@@ -9,7 +9,7 @@
 @if (showFirstLastIcon()) {
   <button [hBind]="ptm('first')" type="button" (click)="changePageToFirst($event)" hRipple [class]="cx('first')" [attr.aria-label]="getAriaLabel('firstPageLabel')">
     @if (!firstPageLinkIconTemplate() && !_firstPageLinkIconTemplate) {
-      <svg [hBind]="ptm('firstIcon')" data-p-icon="angle-double-left" [class]="cx('firstIcon')" />
+      <svg [hBind]="ptm('firstIcon')" data-h-icon="angle-double-left" [class]="cx('firstIcon')" />
     }
     @if (firstPageLinkIconTemplate() || _firstPageLinkIconTemplate) {
       <span [class]="cx('firstIcon')">
@@ -20,7 +20,7 @@
 }
 <button [hBind]="ptm('prev')" type="button" [disabled]="isFirstPage() || empty()" (click)="changePageToPrev($event)" hRipple [class]="cx('prev')" [attr.aria-label]="getAriaLabel('prevPageLabel')">
   @if (!previousPageLinkIconTemplate() && !_previousPageLinkIconTemplate) {
-    <svg [hBind]="ptm('prevIcon')" data-p-icon="angle-left" [class]="cx('prevIcon')" />
+    <svg [hBind]="ptm('prevIcon')" data-h-icon="angle-left" [class]="cx('prevIcon')" />
   }
   @if (previousPageLinkIconTemplate() || _previousPageLinkIconTemplate) {
     <span [class]="cx('prevIcon')">
@@ -73,7 +73,7 @@
 }
 <button [hBind]="ptm('next')" type="button" [disabled]="isLastPage() || empty()" (click)="changePageToNext($event)" hRipple [class]="cx('next')" [attr.aria-label]="getAriaLabel('nextPageLabel')">
   @if (!nextPageLinkIconTemplate() && !_nextPageLinkIconTemplate) {
-    <svg [hBind]="ptm('nextIcon')" data-p-icon="angle-right" [class]="cx('nextIcon')" />
+    <svg [hBind]="ptm('nextIcon')" data-h-icon="angle-right" [class]="cx('nextIcon')" />
   }
   @if (nextPageLinkIconTemplate() || _nextPageLinkIconTemplate) {
     <span [class]="cx('nextIcon')">
@@ -84,7 +84,7 @@
 @if (showFirstLastIcon()) {
   <button [hBind]="ptm('last')" type="button" [disabled]="isLastPage() || empty()" (click)="changePageToLast($event)" hRipple [class]="cx('last')" [attr.aria-label]="getAriaLabel('lastPageLabel')">
     @if (!lastPageLinkIconTemplate() && !_lastPageLinkIconTemplate) {
-      <svg [hBind]="ptm('lastIcon')" data-p-icon="angle-double-right" [class]="cx('lastIcon')" />
+      <svg [hBind]="ptm('lastIcon')" data-h-icon="angle-double-right" [class]="cx('lastIcon')" />
     }
     @if (lastPageLinkIconTemplate() || _lastPageLinkIconTemplate) {
       <span [class]="cx('lastIcon')">

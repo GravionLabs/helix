@@ -2,7 +2,7 @@
   @if (galleria.fullScreen()) {
     <button type="button" [hBind]="getPTOptions('closeButton')" [class]="cx('closeButton')" (click)="maskHide.emit()" [attr.aria-label]="closeAriaLabel()">
       @if (!galleria.closeIconTemplate && !galleria._closeIconTemplate()) {
-        <svg data-p-icon="times" [hBind]="getPTOptions('closeIcon')" [class]="cx('closeIcon')" />
+        <svg data-h-icon="times" [hBind]="getPTOptions('closeIcon')" [class]="cx('closeIcon')" />
       }
       <ng-template *ngTemplateOutlet="galleria.closeIconTemplate || galleria._closeIconTemplate()"></ng-template>
     </button>

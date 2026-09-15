@@ -1,17 +1,17 @@
 export const style = /*css*/ `
-    .p-blockui {
+    .h-blockui {
         position: relative;
     }
 
-    .p-blockui-mask {
+    .h-blockui-mask {
         border-radius: dt('blockui.border.radius');
     }
 
-    .p-blockui-mask.p-overlay-mask {
+    .h-blockui-mask.h-overlay-mask {
         position: absolute;
     }
 
-    .p-blockui-mask-document.p-overlay-mask {
+    .h-blockui-mask-document.h-overlay-mask {
         position: fixed;
     }
 `;

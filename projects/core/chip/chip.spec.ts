@@ -9,14 +9,14 @@ import { Chip, ChipModule } from './chip';
 @Component({
     standalone: false,
     selector: 'test-basic-chip',
-    template: `<p-chip></p-chip>`
+    template: `<h-chip></h-chip>`
 })
 class TestBasicChipComponent {}
 
 @Component({
     standalone: false,
     selector: 'test-label-chip',
-    template: `<p-chip [label]="label"></p-chip>`
+    template: `<h-chip [label]="label"></h-chip>`
 })
 class TestLabelChipComponent {
     label = 'Sample Chip';
@@ -25,7 +25,7 @@ class TestLabelChipComponent {
 @Component({
     standalone: false,
     selector: 'test-icon-chip',
-    template: `<p-chip [icon]="icon" [label]="label"></p-chip>`
+    template: `<h-chip [icon]="icon" [label]="label"></h-chip>`
 })
 class TestIconChipComponent {
     icon = 'pi pi-user';
@@ -35,7 +35,7 @@ class TestIconChipComponent {
 @Component({
     standalone: false,
     selector: 'test-image-chip',
-    template: `<p-chip [image]="image" [alt]="alt" [label]="label" (onImageError)="onImageError($event)"></p-chip>`
+    template: `<h-chip [image]="image" [alt]="alt" [label]="label" (onImageError)="onImageError($event)"></h-chip>`
 })
 class TestImageChipComponent {
     image = '/path/to/image.jpg';
@@ -51,7 +51,7 @@ class TestImageChipComponent {
 @Component({
     standalone: false,
     selector: 'test-removable-chip',
-    template: `<p-chip [label]="label" [removable]="removable" (onRemove)="onRemove($event)"></p-chip>`
+    template: `<h-chip [label]="label" [removable]="removable" (onRemove)="onRemove($event)"></h-chip>`
 })
 class TestRemovableChipComponent {
     label = 'Removable Chip';
@@ -68,7 +68,7 @@ class TestRemovableChipComponent {
 @Component({
     standalone: false,
     selector: 'test-custom-remove-icon-chip',
-    template: `<p-chip [label]="label" [removable]="removable" [removeIcon]="removeIcon" (onRemove)="onRemove($event)"></p-chip>`
+    template: `<h-chip [label]="label" [removable]="removable" [removeIcon]="removeIcon" (onRemove)="onRemove($event)"></h-chip>`
 })
 class TestCustomRemoveIconChipComponent {
     label = 'Custom Remove';
@@ -85,11 +85,11 @@ class TestCustomRemoveIconChipComponent {
     standalone: false,
     selector: 'test-template-chip',
     template: `
-        <p-chip [label]="label" [removable]="removable" (onRemove)="onRemove($event)">
+        <h-chip [label]="label" [removable]="removable" (onRemove)="onRemove($event)">
             <ng-template #removeicon>
                 <i class="custom-remove-icon pi pi-trash"></i>
             </ng-template>
-        </p-chip>
+        </h-chip>
     `
 })
 class TestTemplateChipComponent {
@@ -106,9 +106,9 @@ class TestTemplateChipComponent {
     standalone: false,
     selector: 'test-content-chip',
     template: `
-        <p-chip>
+        <h-chip>
             <div class="custom-content">Custom Chip Content</div>
-        </p-chip>
+        </h-chip>
     `
 })
 class TestContentChipComponent {}
@@ -116,7 +116,7 @@ class TestContentChipComponent {}
 @Component({
     standalone: false,
     selector: 'test-style-class-chip',
-    template: `<p-chip [label]="label" [styleClass]="styleClass"></p-chip>`
+    template: `<h-chip [label]="label" [styleClass]="styleClass"></h-chip>`
 })
 class TestStyleClassChipComponent {
     label = 'Styled Chip';
@@ -126,7 +126,7 @@ class TestStyleClassChipComponent {
 @Component({
     standalone: false,
     selector: 'test-chip-props',
-    template: `<p-chip [chipProps]="chipProps"></p-chip>`
+    template: `<h-chip [chipProps]="chipProps"></h-chip>`
 })
 class TestChipPropsComponent {
     chipProps: ChipProps = {
@@ -141,11 +141,11 @@ class TestChipPropsComponent {
     standalone: false,
     selector: 'test-dynamic-chip',
     template: `
-        <p-chip [label]="label" [icon]="icon" [image]="image" [alt]="alt" [removable]="removable" [removeIcon]="removeIcon" [styleClass]="styleClass" [chipProps]="chipProps" (onRemove)="onRemove($event)" (onImageError)="onImageError($event)">
+        <h-chip [label]="label" [icon]="icon" [image]="image" [alt]="alt" [removable]="removable" [removeIcon]="removeIcon" [styleClass]="styleClass" [chipProps]="chipProps" (onRemove)="onRemove($event)" (onImageError)="onImageError($event)">
           @if (showContent) {
             <div class="dynamic-content">{{ content }}</div>
           }
-        </p-chip>
+        </h-chip>
         `
 })
 class TestDynamicChipComponent {
@@ -174,7 +174,7 @@ class TestDynamicChipComponent {
 @Component({
     standalone: false,
     selector: 'test-visibility-chip',
-    template: `<p-chip [label]="label"></p-chip>`
+    template: `<h-chip [label]="label"></h-chip>`
 })
 class TestVisibilityChipComponent {
     label = 'Visibility Test';
@@ -232,8 +232,8 @@ describe('Chip', () => {
         });
 
         it('should apply base CSS classes', async () => {
-            expect(element.classList.contains('p-chip')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
+            expect(element.classList.contains('h-chip')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
         });
 
         it('should have correct data attributes', async () => {
@@ -246,7 +246,7 @@ describe('Chip', () => {
         });
 
         it('should not show remove icon when not removable', async () => {
-            const removeIcon = fixture.debugElement.query(By.css('.p-chip-remove-icon'));
+            const removeIcon = fixture.debugElement.query(By.css('.h-chip-remove-icon'));
             expect(removeIcon).toBeFalsy();
         });
     });
@@ -262,7 +262,7 @@ describe('Chip', () => {
         });
 
         it('should display label text', async () => {
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('Sample Chip');
         });
@@ -272,7 +272,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             expect(labelElement.nativeElement.textContent.trim()).toBe('Updated Label');
         });
 
@@ -281,7 +281,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             expect(labelElement).toBeFalsy();
         });
 
@@ -290,7 +290,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             expect(labelElement).toBeFalsy();
         });
 
@@ -311,7 +311,7 @@ describe('Chip', () => {
         });
 
         it('should display icon', async () => {
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
             expect(iconElement).toBeTruthy();
             expect(iconElement.nativeElement.classList.contains('pi')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('pi-user')).toBe(true);
@@ -322,7 +322,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
             expect(iconElement.nativeElement.classList.contains('pi-star')).toBe(true);
             expect(iconElement.nativeElement.classList.contains('pi-user')).toBe(false);
         });
@@ -332,13 +332,13 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
             expect(iconElement).toBeFalsy();
         });
 
         it('should display both icon and label', async () => {
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
 
             expect(iconElement).toBeTruthy();
             expect(labelElement).toBeTruthy();
@@ -346,7 +346,7 @@ describe('Chip', () => {
         });
 
         it('should have correct data attributes on icon', async () => {
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
             expect(iconElement.nativeElement.getAttribute('data-pc-section')).toBe('icon');
         });
     });
@@ -362,13 +362,13 @@ describe('Chip', () => {
         });
 
         it('should display image', async () => {
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             expect(imageElement).toBeTruthy();
             expect(imageElement.nativeElement.src).toContain('/path/to/image.jpg');
         });
 
         it('should set alt attribute', async () => {
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             expect(imageElement.nativeElement.alt).toBe('User Avatar');
         });
 
@@ -377,12 +377,12 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             expect(imageElement.nativeElement.src).toContain('/new/path/image.png');
         });
 
         it('should handle image error event', async () => {
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             const errorEvent = new Event('error');
 
             imageElement.nativeElement.dispatchEvent(errorEvent);
@@ -393,7 +393,7 @@ describe('Chip', () => {
 
         it('should emit onImageError event', async () => {
             spyOn(component, 'onImageError');
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             const errorEvent = new Event('error');
 
             imageElement.nativeElement.dispatchEvent(errorEvent);
@@ -406,7 +406,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             expect(imageElement).toBeFalsy();
         });
 
@@ -415,7 +415,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
             expect(imageElement.nativeElement.alt).toBe('New Alt Text');
         });
 
@@ -424,8 +424,8 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const imageElement = fixture.debugElement.query(By.css('.p-chip-image'));
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const imageElement = fixture.debugElement.query(By.css('.h-chip-image'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
 
             expect(imageElement).toBeTruthy();
             expect(iconElement).toBeFalsy();
@@ -540,7 +540,7 @@ describe('Chip', () => {
         it('should display custom remove icon', async () => {
             const removeIconElement = fixture.debugElement.query(By.css('.pi-times'));
             expect(removeIconElement).toBeTruthy();
-            expect(removeIconElement.nativeElement.classList.contains('p-chip-remove-icon')).toBe(true);
+            expect(removeIconElement.nativeElement.classList.contains('h-chip-remove-icon')).toBe(true);
         });
 
         it('should handle custom remove icon click', async () => {
@@ -634,7 +634,7 @@ describe('Chip', () => {
         });
 
         it('should maintain base classes with custom style class', async () => {
-            expect(element.classList.contains('p-chip')).toBe(true);
+            expect(element.classList.contains('h-chip')).toBe(true);
             expect(element.classList.contains('custom-chip')).toBe(true);
         });
     });
@@ -686,8 +686,8 @@ describe('Chip', () => {
         });
 
         it('should display elements from chipProps', async () => {
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
             const removeIcon = fixture.debugElement.query(By.css('[data-pc-section="removeicon"]'));
 
             expect(labelElement.nativeElement.textContent.trim()).toBe('Props Chip');
@@ -730,16 +730,16 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-chip-icon'))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('.p-chip-image'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-icon'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-chip-image'))).toBeFalsy();
 
             // Switch to image
             component.image = '/path/to/image.jpg';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-chip-image'))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css('.p-chip-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-image'))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css('.h-chip-icon'))).toBeFalsy();
         });
 
         it('should handle removable state changes', async () => {
@@ -902,9 +902,9 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-chip-label'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-chip-icon'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-chip-image'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-label'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-image'))).toBeFalsy();
         });
 
         it('should handle empty string values', async () => {
@@ -915,9 +915,9 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(fixture.debugElement.query(By.css('.p-chip-label'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-chip-icon'))).toBeFalsy();
-            expect(fixture.debugElement.query(By.css('.p-chip-image'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-label'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-icon'))).toBeFalsy();
+            expect(fixture.debugElement.query(By.css('.h-chip-image'))).toBeFalsy();
         });
 
         it('should handle whitespace-only label', async () => {
@@ -925,7 +925,7 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             expect(labelElement).toBeTruthy();
             expect(labelElement.nativeElement.textContent.trim()).toBe('' as any);
         });
@@ -984,8 +984,8 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.classList.contains('p-chip')).toBe(true);
-            expect(element.classList.contains('p-component')).toBe(true);
+            expect(element.classList.contains('h-chip')).toBe(true);
+            expect(element.classList.contains('h-component')).toBe(true);
             expect(element.classList.contains('custom-chip-class')).toBe(true);
         });
 
@@ -995,8 +995,8 @@ describe('Chip', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
-            const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+            const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
+            const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
             const removeIcon = fixture.debugElement.query(By.css('[data-pc-section="removeicon"]'));
 
             expect(iconElement.nativeElement.getAttribute('data-pc-section')).toBe('icon');
@@ -1032,7 +1032,7 @@ describe('Chip', () => {
         @Component({
             standalone: true,
             imports: [Chip],
-            template: `<p-chip [label]="label()" [icon]="icon()" [image]="image()" [removable]="removable()" [removeIcon]="removeIcon()" [pt]="pt()"></p-chip>`
+            template: `<h-chip [label]="label()" [icon]="icon()" [image]="image()" [removable]="removable()" [removeIcon]="removeIcon()" [pt]="pt()"></h-chip>`
         })
         class TestPTChipComponent {
             label = input<string | undefined>('Test');
@@ -1071,7 +1071,7 @@ describe('Chip', () => {
                 fixture.componentRef.setInput('pt', { label: 'LABEL_CLASS' });
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_CLASS')).toBe(true);
             });
 
@@ -1082,7 +1082,7 @@ describe('Chip', () => {
                 fixture.componentRef.setInput('pt', { icon: 'ICON_CLASS' });
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
                 expect(iconElement.nativeElement.classList.contains('ICON_CLASS')).toBe(true);
             });
 
@@ -1105,7 +1105,7 @@ describe('Chip', () => {
                 fixture.componentRef.setInput('pt', { removeIcon: 'REMOVE_ICON_CLASS' });
                 await fixture.whenStable();
 
-                const removeIconElement = fixture.debugElement.query(By.css('.p-chip-remove-icon'));
+                const removeIconElement = fixture.debugElement.query(By.css('.h-chip-remove-icon'));
                 expect(removeIconElement.nativeElement.classList.contains('REMOVE_ICON_CLASS')).toBe(true);
             });
         });
@@ -1125,7 +1125,7 @@ describe('Chip', () => {
                     root: {
                         class: 'ROOT_OBJECT_CLASS',
                         style: { 'background-color': 'lightblue' },
-                        'data-p-test': true,
+                        'data-h-test': true,
                         'aria-label': 'TEST_ARIA_LABEL'
                     }
                 });
@@ -1133,7 +1133,7 @@ describe('Chip', () => {
 
                 expect(element.classList.contains('ROOT_OBJECT_CLASS')).toBe(true);
                 expect(element.style.backgroundColor).toBe('lightblue');
-                expect(element.getAttribute('data-p-test')).toBe('true');
+                expect(element.getAttribute('data-h-test')).toBe('true');
                 expect(element.getAttribute('aria-label')).toBe('TEST_ARIA_LABEL');
             });
 
@@ -1142,16 +1142,16 @@ describe('Chip', () => {
                     label: {
                         class: 'LABEL_OBJECT_CLASS',
                         style: { color: 'red' },
-                        'data-p-label': 'chip',
+                        'data-h-label': 'chip',
                         'aria-hidden': 'true'
                     }
                 });
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_OBJECT_CLASS')).toBe(true);
                 expect(labelElement.nativeElement.style.color).toBe('red');
-                expect(labelElement.nativeElement.getAttribute('data-p-label')).toBe('chip');
+                expect(labelElement.nativeElement.getAttribute('data-h-label')).toBe('chip');
                 expect(labelElement.nativeElement.getAttribute('aria-hidden')).toBe('true');
             });
 
@@ -1163,15 +1163,15 @@ describe('Chip', () => {
                     icon: {
                         class: 'ICON_OBJECT_CLASS',
                         style: { 'font-size': '1.5rem' },
-                        'data-p-icon': 'user'
+                        'data-h-icon': 'user'
                     }
                 });
                 await fixture.whenStable();
 
-                const iconElement = fixture.debugElement.query(By.css('.p-chip-icon'));
+                const iconElement = fixture.debugElement.query(By.css('.h-chip-icon'));
                 expect(iconElement.nativeElement.classList.contains('ICON_OBJECT_CLASS')).toBe(true);
                 expect(iconElement.nativeElement.style.fontSize).toBe('1.5rem');
-                expect(iconElement.nativeElement.getAttribute('data-p-icon')).toBe('user');
+                expect(iconElement.nativeElement.getAttribute('data-h-icon')).toBe('user');
             });
         });
 
@@ -1196,7 +1196,7 @@ describe('Chip', () => {
 
                 expect(element.classList.contains('ROOT_MIXED_CLASS')).toBe(true);
 
-                const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
                 expect(labelElement.nativeElement.classList.contains('LABEL_MIXED_CLASS')).toBe(true);
             });
         });
@@ -1240,7 +1240,7 @@ describe('Chip', () => {
                 });
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
                 expect(labelElement.nativeElement.getAttribute('data-removable')).toBe('true');
             });
         });
@@ -1283,7 +1283,7 @@ describe('Chip', () => {
                 });
                 await fixture.whenStable();
 
-                const labelElement = fixture.debugElement.query(By.css('.p-chip-label'));
+                const labelElement = fixture.debugElement.query(By.css('.h-chip-label'));
                 labelElement.nativeElement.click();
 
                 expect(clicked).toBe(true);

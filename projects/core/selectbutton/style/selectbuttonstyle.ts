@@ -6,7 +6,7 @@ const style = /*css*/ `
     ${selectbutton_style}
 
     /* For Helix */
-    .p-selectbutton.ng-invalid.ng-dirty {
+    .h-selectbutton.ng-invalid.ng-dirty {
         outline: 1px solid dt('selectbutton.invalid.border.color');
         outline-offset: 0;
     }
@@ -14,10 +14,10 @@ const style = /*css*/ `
 
 const classes = {
     root: ({ instance }) => [
-        'p-selectbutton p-component',
+        'h-selectbutton h-component',
         {
-            'p-invalid': instance.invalid(),
-            'p-selectbutton-fluid': instance.fluid()
+            'h-invalid': instance.invalid(),
+            'h-selectbutton-fluid': instance.fluid()
         }
     ]
 };
@@ -44,7 +44,7 @@ export enum SelectButtonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-selectbutton'
+    root = 'h-selectbutton'
 }
 
 export interface SelectButtonStyle extends BaseStyle {}

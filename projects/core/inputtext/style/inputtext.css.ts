@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-inputtext {
+    .h-inputtext {
         font-family: inherit;
         font-feature-settings: inherit;
         font-size: 1rem;
@@ -20,60 +20,60 @@ export const style = /*css*/ `
         box-shadow: dt('inputtext.shadow');
     }
 
-    .p-inputtext:enabled:hover {
+    .h-inputtext:enabled:hover {
         border-color: dt('inputtext.hover.border.color');
     }
 
-    .p-inputtext:enabled:focus {
+    .h-inputtext:enabled:focus {
         border-color: dt('inputtext.focus.border.color');
         box-shadow: dt('inputtext.focus.ring.shadow');
         outline: dt('inputtext.focus.ring.width') dt('inputtext.focus.ring.style') dt('inputtext.focus.ring.color');
         outline-offset: dt('inputtext.focus.ring.offset');
     }
 
-    .p-inputtext.p-invalid {
+    .h-inputtext.h-invalid {
         border-color: dt('inputtext.invalid.border.color');
     }
 
-    .p-inputtext.p-variant-filled {
+    .h-inputtext.h-variant-filled {
         background: dt('inputtext.filled.background');
     }
 
-    .p-inputtext.p-variant-filled:enabled:hover {
+    .h-inputtext.h-variant-filled:enabled:hover {
         background: dt('inputtext.filled.hover.background');
     }
 
-    .p-inputtext.p-variant-filled:enabled:focus {
+    .h-inputtext.h-variant-filled:enabled:focus {
         background: dt('inputtext.filled.focus.background');
     }
 
-    .p-inputtext:disabled {
+    .h-inputtext:disabled {
         opacity: 1;
         background: dt('inputtext.disabled.background');
         color: dt('inputtext.disabled.color');
     }
 
-    .p-inputtext::placeholder {
+    .h-inputtext::placeholder {
         color: dt('inputtext.placeholder.color');
     }
 
-    .p-inputtext.p-invalid::placeholder {
+    .h-inputtext.h-invalid::placeholder {
         color: dt('inputtext.invalid.placeholder.color');
     }
 
-    .p-inputtext-sm {
+    .h-inputtext-sm {
         font-size: dt('inputtext.sm.font.size');
         padding-block: dt('inputtext.sm.padding.y');
         padding-inline: dt('inputtext.sm.padding.x');
     }
 
-    .p-inputtext-lg {
+    .h-inputtext-lg {
         font-size: dt('inputtext.lg.font.size');
         padding-block: dt('inputtext.lg.padding.y');
         padding-inline: dt('inputtext.lg.padding.x');
     }
 
-    .p-inputtext-fluid {
+    .h-inputtext-fluid {
         width: 100%;
     }
 `;

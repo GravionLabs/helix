@@ -8,7 +8,7 @@ import { PaginatorModule } from '@gravionlabs/helix-core/paginator';
 @Component({
     standalone: false,
     template: `
-        <p-dataview
+        <h-dataview
           [value]="products"
           [paginator]="paginator"
           [rows]="rows"
@@ -58,7 +58,7 @@ import { PaginatorModule } from '@gravionlabs/helix-core/paginator';
               }
             </div>
           </ng-template>
-        </p-dataview>
+        </h-dataview>
         `
 })
 class TestBasicDataViewComponent {
@@ -124,10 +124,10 @@ class TestBasicDataViewComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dataview [value]="products">
-          <p-header>
+        <h-dataview [value]="products">
+          <h-header>
             <div class="custom-header">Custom Header Content</div>
-          </p-header>
+          </h-header>
           <ng-template #list let-items>
             <div class="list-container">
               @for (item of items; track item) {
@@ -137,10 +137,10 @@ class TestBasicDataViewComponent {
               }
             </div>
           </ng-template>
-          <p-footer>
+          <h-footer>
             <div class="custom-footer">Custom Footer Content</div>
-          </p-footer>
-        </p-dataview>
+          </h-footer>
+        </h-dataview>
         `
 })
 class TestHeaderFooterDataViewComponent {
@@ -153,7 +153,7 @@ class TestHeaderFooterDataViewComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dataview [value]="products" [paginator]="true" [rows]="2">
+        <h-dataview [value]="products" [paginator]="true" [rows]="2">
           <ng-template #list let-items>
             <div class="list-container">
               @for (item of items; track item) {
@@ -178,7 +178,7 @@ class TestHeaderFooterDataViewComponent {
           <ng-template #paginatorright>
             <span class="paginator-right">Right Content</span>
           </ng-template>
-        </p-dataview>
+        </h-dataview>
         `
 })
 class TestTemplatesDataViewComponent {
@@ -188,7 +188,7 @@ class TestTemplatesDataViewComponent {
 @Component({
     standalone: false,
     template: `
-        <p-dataview [value]="products()" [layout]="layout">
+        <h-dataview [value]="products()" [layout]="layout">
           <ng-template #list let-items>
             <div class="list-container">
               @for (item of items; track item) {
@@ -203,7 +203,7 @@ class TestTemplatesDataViewComponent {
               }
             </div>
           </ng-template>
-        </p-dataview>
+        </h-dataview>
         `
 })
 class TestLayoutDataViewComponent {
@@ -664,14 +664,14 @@ describe('DataView', () => {
         });
 
         it('should render paginator when enabled', () => {
-            const paginator = fixture.debugElement.query(By.css('p-paginator'));
+            const paginator = fixture.debugElement.query(By.css('h-paginator'));
             expect(paginator).toBeTruthy();
         });
 
         it('should render paginator at bottom by default', () => {
             const content = fixture.debugElement.query(By.css('[class*="content"]'));
             const paginator = content.nativeElement.nextElementSibling;
-            expect(paginator.tagName.toLowerCase()).toBe('p-paginator');
+            expect(paginator.tagName.toLowerCase()).toBe('h-paginator');
         });
 
         it('should render paginator at top when position is top', async () => {
@@ -681,7 +681,7 @@ describe('DataView', () => {
 
             const content = fixture.debugElement.query(By.css('[class*="content"]'));
             const paginator = content.nativeElement.previousElementSibling;
-            expect(paginator.tagName.toLowerCase()).toBe('p-paginator');
+            expect(paginator.tagName.toLowerCase()).toBe('h-paginator');
         });
 
         it('should render paginator at both positions when position is both', async () => {
@@ -689,7 +689,7 @@ describe('DataView', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const paginators = fixture.debugElement.queryAll(By.css('p-paginator'));
+            const paginators = fixture.debugElement.queryAll(By.css('h-paginator'));
             expect(paginators.length).toBe(2);
         });
 
@@ -719,7 +719,7 @@ describe('DataView', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const paginator = fixture.debugElement.query(By.css('p-paginator')).componentInstance;
+            const paginator = fixture.debugElement.query(By.css('h-paginator')).componentInstance;
             expect(paginator.rows).toBe(2);
             expect(paginator.totalRecords).toBe(5);
             expect(paginator.rowsPerPageOptions).toEqual([2, 5, 10]);
@@ -859,7 +859,7 @@ describe('DataView', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const svg = fixture.debugElement.query(By.css('svg')) || fixture.debugElement.query(By.css('[data-p-icon="spinner"]'));
+            const svg = fixture.debugElement.query(By.css('svg')) || fixture.debugElement.query(By.css('[data-h-icon="spinner"]'));
             expect(svg).toBeTruthy();
         });
     });
@@ -974,7 +974,7 @@ describe('DataView', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const dataviewElement = fixture.debugElement.query(By.css('p-dataview'));
+            const dataviewElement = fixture.debugElement.query(By.css('h-dataview'));
             expect(dataviewElement.nativeElement.className).toContain('custom-dataview-class');
         });
 
@@ -1649,7 +1649,7 @@ describe('DataView', () => {
 @Component({
     standalone: false,
     template: `
-        <p-dataview
+        <h-dataview
           #dataView
           [value]="value"
           [paginator]="paginator"
@@ -1678,7 +1678,7 @@ describe('DataView', () => {
               }
             </div>
           </ng-template>
-        </p-dataview>
+        </h-dataview>
         `
 })
 class TestDynamicDataViewComponent {

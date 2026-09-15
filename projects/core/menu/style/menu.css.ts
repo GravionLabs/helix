@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-menu {
+    .h-menu {
         background: dt('menu.background');
         color: dt('menu.color');
         border: 1px solid dt('menu.border.color');
@@ -7,7 +7,7 @@ export const style = /*css*/ `
         min-width: 12.5rem;
     }
 
-    .p-menu-list {
+    .h-menu-list {
         margin: 0;
         padding: dt('menu.list.padding');
         outline: 0 none;
@@ -17,7 +17,7 @@ export const style = /*css*/ `
         gap: dt('menu.list.gap');
     }
 
-    .p-menu-item-content {
+    .h-menu-item-content {
         transition:
             background dt('menu.transition.duration'),
             color dt('menu.transition.duration');
@@ -26,7 +26,7 @@ export const style = /*css*/ `
         overflow: hidden;
     }
 
-    .p-menu-item-link {
+    .h-menu-item-link {
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -40,44 +40,44 @@ export const style = /*css*/ `
         outline: 0 none;
     }
 
-    .p-menu-item-label {
+    .h-menu-item-label {
         line-height: 1;
     }
 
-    .p-menu-item-icon {
+    .h-menu-item-icon {
         color: dt('menu.item.icon.color');
     }
 
-    .p-menu-item.p-focus .p-menu-item-content {
+    .h-menu-item.h-focus .h-menu-item-content {
         color: dt('menu.item.focus.color');
         background: dt('menu.item.focus.background');
     }
 
-    .p-menu-item.p-focus .p-menu-item-icon {
+    .h-menu-item.h-focus .h-menu-item-icon {
         color: dt('menu.item.icon.focus.color');
     }
 
-    .p-menu-item:not(.p-disabled) .p-menu-item-content:hover {
+    .h-menu-item:not(.h-disabled) .h-menu-item-content:hover {
         color: dt('menu.item.focus.color');
         background: dt('menu.item.focus.background');
     }
 
-    .p-menu-item:not(.p-disabled) .p-menu-item-content:hover .p-menu-item-icon {
+    .h-menu-item:not(.h-disabled) .h-menu-item-content:hover .h-menu-item-icon {
         color: dt('menu.item.icon.focus.color');
     }
 
-    .p-menu-overlay {
+    .h-menu-overlay {
         box-shadow: dt('menu.shadow');
     }
 
-    .p-menu-submenu-label {
+    .h-menu-submenu-label {
         background: dt('menu.submenu.label.background');
         padding: dt('menu.submenu.label.padding');
         color: dt('menu.submenu.label.color');
         font-weight: dt('menu.submenu.label.font.weight');
     }
 
-    .p-menu-separator {
+    .h-menu-separator {
         border-block-start: 1px solid dt('menu.separator.border.color');
     }
 `;

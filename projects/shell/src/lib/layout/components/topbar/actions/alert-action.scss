@@ -43,7 +43,7 @@
   height: 1rem;
   padding: 0 0.25rem;
   border-radius: 9999px;
-  background-color: var(--p-red-500, #ef4444);
+  background-color: var(--h-red-500, #ef4444);
   color: white;
   font-size: 0.625rem;
   font-weight: 700;
@@ -83,20 +83,20 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: var(--p-info-500, #3b82f6);
+  background-color: var(--h-info-500, #3b82f6);
   flex-shrink: 0;
 }
 
 .alert-badge-item--warn .alert-badge-dot {
-  background-color: var(--p-warn-500, #f59e0b);
+  background-color: var(--h-warn-500, #f59e0b);
 }
 
 .alert-badge-item--error .alert-badge-dot {
-  background-color: var(--p-red-500, #ef4444);
+  background-color: var(--h-red-500, #ef4444);
 }
 
 .alert-badge-item--success .alert-badge-dot {
-  background-color: var(--p-green-500, #22c55e);
+  background-color: var(--h-green-500, #22c55e);
 }
 
 .alert-badge-label {

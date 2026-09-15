@@ -11,14 +11,14 @@ import { Inplace, InplaceContent, InplaceDisplay, InplaceModule } from './inplac
     standalone: false,
     selector: 'test-basic-inplace',
     template: `
-        <p-inplace>
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace>
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="display-content">Click to edit</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <input type="text" class="edit-input" value="Edit mode" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestBasicInplaceComponent {}
@@ -27,14 +27,14 @@ class TestBasicInplaceComponent {}
     standalone: false,
     selector: 'test-inplace-with-events',
     template: `
-        <p-inplace (onActivate)="onActivate($event)" (onDeactivate)="onDeactivate($event)">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace (onActivate)="onActivate($event)" (onDeactivate)="onDeactivate($event)">
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="display-text">Display Mode</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <textarea class="edit-textarea">Edit Mode Content</textarea>
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceWithEventsComponent {
@@ -54,14 +54,14 @@ class TestInplaceWithEventsComponent {
     standalone: false,
     selector: 'test-inplace-disabled',
     template: `
-        <p-inplace [disabled]="disabled">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace [disabled]="disabled">
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="disabled-display">Disabled inplace</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <input type="text" class="disabled-input" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceDisabledComponent {
@@ -72,14 +72,14 @@ class TestInplaceDisabledComponent {
     standalone: false,
     selector: 'test-inplace-closable',
     template: `
-        <p-inplace [closable]="closable" [closeIcon]="closeIcon" [closeAriaLabel]="closeAriaLabel">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace [closable]="closable" [closeIcon]="closeIcon" [closeAriaLabel]="closeAriaLabel">
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="closable-display">Closable inplace</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <input type="text" class="closable-input" value="Closable content" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceClosableComponent {
@@ -92,14 +92,14 @@ class TestInplaceClosableComponent {
     standalone: false,
     selector: 'test-inplace-prevent-click',
     template: `
-        <p-inplace [preventClick]="preventClick">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace [preventClick]="preventClick">
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="prevent-click-display">Prevent click test</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <input type="text" class="prevent-click-input" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplacePreventClickComponent {
@@ -110,14 +110,14 @@ class TestInplacePreventClickComponent {
     standalone: false,
     selector: 'test-inplace-active-state',
     template: `
-        <p-inplace [active]="active">
-            <p-inplacedisplay>
+        <h-inplace [active]="active">
+            <h-inplacedisplay>
                 <span class="active-display">Active state test</span>
-            </p-inplacedisplay>
-            <p-inplacecontent>
+            </h-inplacedisplay>
+            <h-inplacecontent>
                 <input type="text" class="active-input" value="Active content" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceActiveStateComponent {
@@ -128,14 +128,14 @@ class TestInplaceActiveStateComponent {
     standalone: false,
     selector: 'test-inplace-style-class',
     template: `
-        <p-inplace [styleClass]="styleClass">
-            <p-inplacedisplay>
+        <h-inplace [styleClass]="styleClass">
+            <h-inplacedisplay>
                 <span class="style-display">Style class test</span>
-            </p-inplacedisplay>
-            <p-inplacecontent>
+            </h-inplacedisplay>
+            <h-inplacecontent>
                 <input type="text" class="style-input" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceStyleClassComponent {
@@ -146,7 +146,7 @@ class TestInplaceStyleClassComponent {
     standalone: false,
     selector: 'test-inplace-templates',
     template: `
-        <p-inplace [closable]="true">
+        <h-inplace [closable]="true">
             <ng-template #display>
                 <div class="template-display">Custom Display Template</div>
             </ng-template>
@@ -159,7 +159,7 @@ class TestInplaceStyleClassComponent {
             <ng-template #closeicon>
                 <i class="custom-close-icon pi pi-trash"></i>
             </ng-template>
-        </p-inplace>
+        </h-inplace>
     `
 })
 class TestInplaceTemplatesComponent {}
@@ -168,20 +168,20 @@ class TestInplaceTemplatesComponent {}
     standalone: false,
     selector: 'test-inplace-primeng-templates',
     template: `
-        <p-inplace>
+        <h-inplace>
             <ng-template pTemplate="display">
-                <span class="p-template-display">HelixConfig Template Display</span>
+                <span class="h-template-display">HelixConfig Template Display</span>
             </ng-template>
             <ng-template pTemplate="content" let-closeCallback="closeCallback">
-                <div class="p-template-content">
-                    <input type="text" class="p-template-input" />
+                <div class="h-template-content">
+                    <input type="text" class="h-template-input" />
                     <button type="button" (click)="closeCallback()">Done</button>
                 </div>
             </ng-template>
             <ng-template pTemplate="closeicon">
-                <i class="p-template-close-icon pi pi-check"></i>
+                <i class="h-template-close-icon pi pi-check"></i>
             </ng-template>
-        </p-inplace>
+        </h-inplace>
     `
 })
 class TestInplaceHelixConfigTemplatesComponent {}
@@ -190,14 +190,14 @@ class TestInplaceHelixConfigTemplatesComponent {}
     standalone: false,
     selector: 'test-inplace-keyboard',
     template: `
-        <p-inplace [disabled]="disabled">
-            <p-inplacedisplay>
+        <h-inplace [disabled]="disabled">
+            <h-inplacedisplay>
                 <span class="keyboard-display">Press Enter to edit</span>
-            </p-inplacedisplay>
-            <p-inplacecontent>
+            </h-inplacedisplay>
+            <h-inplacecontent>
                 <input type="text" class="keyboard-input" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceKeyboardComponent {
@@ -208,15 +208,15 @@ class TestInplaceKeyboardComponent {
     standalone: false,
     selector: 'test-inplace-complex-content',
     template: `
-        <p-inplace [closable]="true">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace [closable]="true">
+            <h-inplacedisplay pInplaceDisplay>
                 <div class="complex-display">
                     <h4>Product Information</h4>
                     <p>Name: {{ productInfo.name }}</p>
                     <p>Price: {{ productInfo.price | currency }}</p>
                 </div>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <div class="complex-content">
                     <div class="form-group">
                         <label for="product-name">Name:</label>
@@ -231,8 +231,8 @@ class TestInplaceKeyboardComponent {
                         <button type="button" class="cancel-btn">Cancel</button>
                     </div>
                 </div>
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceComplexContentComponent {
@@ -246,14 +246,14 @@ class TestInplaceComplexContentComponent {
     standalone: false,
     selector: 'test-inplace-dynamic',
     template: `
-        <p-inplace [active]="dynamicActive" [disabled]="dynamicDisabled" [closable]="dynamicClosable" [preventClick]="dynamicPreventClick">
-            <p-inplacedisplay pInplaceDisplay>
+        <h-inplace [active]="dynamicActive" [disabled]="dynamicDisabled" [closable]="dynamicClosable" [preventClick]="dynamicPreventClick">
+            <h-inplacedisplay pInplaceDisplay>
                 <span class="dynamic-display">Dynamic: {{ displayText }}</span>
-            </p-inplacedisplay>
-            <p-inplacecontent pInplaceContent>
+            </h-inplacedisplay>
+            <h-inplacecontent pInplaceContent>
                 <input type="text" class="dynamic-input" [value]="contentText" />
-            </p-inplacecontent>
-        </p-inplace>
+            </h-inplacecontent>
+        </h-inplace>
     `
 })
 class TestInplaceDynamicComponent {
@@ -322,7 +322,7 @@ describe('Inplace', () => {
         });
 
         it('should have correct selector', () => {
-            expect(element.tagName.toLowerCase()).toBe('p-inplace');
+            expect(element.tagName.toLowerCase()).toBe('h-inplace');
         });
 
         it('should have aria-live attribute', () => {
@@ -501,7 +501,7 @@ describe('Inplace', () => {
             await fixture.whenStable();
 
             const displayDiv = element.querySelector('div[role="button"]');
-            expect(displayDiv?.classList.contains('p-disabled')).toBe(true);
+            expect(displayDiv?.classList.contains('h-disabled')).toBe(true);
         });
 
         it('should remove disabled class when enabled', async () => {
@@ -510,13 +510,13 @@ describe('Inplace', () => {
             await fixture.whenStable();
 
             const displayDiv = element.querySelector('div[role="button"]');
-            expect(displayDiv?.classList.contains('p-disabled')).toBe(true);
+            expect(displayDiv?.classList.contains('h-disabled')).toBe(true);
 
             component.disabled = false;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(displayDiv?.classList.contains('p-disabled')).toBe(false);
+            expect(displayDiv?.classList.contains('h-disabled')).toBe(false);
         });
 
         it('should not activate programmatically when disabled', async () => {
@@ -575,7 +575,7 @@ describe('Inplace', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const closeButton = element.querySelector('p-button');
+            const closeButton = element.querySelector('h-button');
             expect(closeButton).toBeTruthy();
         });
 
@@ -590,7 +590,7 @@ describe('Inplace', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const closeButton = element.querySelector('p-button');
+            const closeButton = element.querySelector('h-button');
             expect(closeButton).toBeFalsy();
         });
 
@@ -604,7 +604,7 @@ describe('Inplace', () => {
             expect(inplaceComponent.active()).toBe(true);
 
             // Click close button
-            const closeButton = element.querySelector('p-button') as HTMLElement;
+            const closeButton = element.querySelector('h-button') as HTMLElement;
             closeButton.click();
             fixture.detectChanges();
             await fixture.whenStable();
@@ -638,7 +638,7 @@ describe('Inplace', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const closeButton = element.querySelector('p-button') as HTMLElement;
+            const closeButton = element.querySelector('h-button') as HTMLElement;
             expect(closeButton.getAttribute('aria-label')).toBe('Close Editor');
         });
     });
@@ -869,7 +869,7 @@ describe('Inplace', () => {
         });
 
         it('should render pTemplate display', () => {
-            const pTemplateDisplay = element.querySelector('.p-template-display');
+            const pTemplateDisplay = element.querySelector('.h-template-display');
             expect(pTemplateDisplay).toBeTruthy();
             expect(pTemplateDisplay?.textContent?.trim()).toBe('HelixConfig Template Display');
         });
@@ -880,8 +880,8 @@ describe('Inplace', () => {
             fixture.detectChanges();
             await fixture.whenStable();
 
-            const pTemplateContent = element.querySelector('.p-template-content');
-            const pTemplateInput = element.querySelector('.p-template-input');
+            const pTemplateContent = element.querySelector('.h-template-content');
+            const pTemplateInput = element.querySelector('.h-template-input');
 
             expect(pTemplateContent).toBeTruthy();
             expect(pTemplateInput).toBeTruthy();
@@ -1105,14 +1105,14 @@ describe('Inplace', () => {
             await fixture.whenStable();
 
             // Initially not closable
-            expect(element.querySelector('p-button')).toBeFalsy();
+            expect(element.querySelector('h-button')).toBeFalsy();
 
             // Enable closable
             component.dynamicClosable = true;
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            expect(element.querySelector('p-button')).toBeTruthy();
+            expect(element.querySelector('h-button')).toBeTruthy();
         });
 
         it('should handle dynamic content changes', async () => {
@@ -1262,14 +1262,14 @@ describe('Inplace', () => {
         @Component({
             standalone: true,
             imports: [Inplace, InplaceDisplay, InplaceContent],
-            template: `<p-inplace [active]="active()" [closable]="closable()" [disabled]="disabled()" [closeIcon]="closeIcon()" [pt]="pt()">
-                <p-inplacedisplay>
+            template: `<h-inplace [active]="active()" [closable]="closable()" [disabled]="disabled()" [closeIcon]="closeIcon()" [pt]="pt()">
+                <h-inplacedisplay>
                     <span class="test-display">Display Content</span>
-                </p-inplacedisplay>
-                <p-inplacecontent>
+                </h-inplacedisplay>
+                <h-inplacecontent>
                     <input type="text" class="test-input" value="Content" />
-                </p-inplacecontent>
-            </p-inplace>`
+                </h-inplacecontent>
+            </h-inplace>`
         })
         class TestPTInplaceComponent {
             active = input<boolean>(false);
@@ -1285,7 +1285,7 @@ describe('Inplace', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TestPTInplaceComponent);
             fixture.detectChanges();
-            inplaceElement = fixture.debugElement.query(By.css('p-inplace'));
+            inplaceElement = fixture.debugElement.query(By.css('h-inplace'));
         });
 
         describe('Case 1: Simple string classes', () => {

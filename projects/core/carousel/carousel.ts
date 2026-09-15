@@ -478,7 +478,7 @@ export class Carousel extends BaseComponent {
         }
 
         let innerHTML = `
-            #${this.id} .p-carousel-item {
+            #${this.id} .h-carousel-item {
 				flex: 1 0 ${100 / this.numVisible()}%
 			}
         `;
@@ -504,7 +504,7 @@ export class Carousel extends BaseComponent {
 
                 innerHTML += `
                     @media screen and (max-width: ${res.breakpoint}) {
-                        #${this.id} .p-carousel-item {
+                        #${this.id} .h-carousel-item {
                             flex: 1 0 ${100 / res.numVisible}%
                         }
                     }
@@ -695,7 +695,7 @@ export class Carousel extends BaseComponent {
     onTabKey() {
         const indicatorContent = this.indicatorContent();
         const indicators = <any>[...find(indicatorContent?.nativeElement, '[data-pc-section="indicator"]')];
-        const highlightedIndex = indicators.findIndex((ind) => getAttribute(ind, 'data-p-highlight') === true);
+        const highlightedIndex = indicators.findIndex((ind) => getAttribute(ind, 'data-h-highlight') === true);
 
         const activeIndicator = <any>findSingle(indicatorContent?.nativeElement, '[data-pc-section="indicator"] > button[tabindex="0"]');
         const activeIndex = indicators.findIndex((ind) => ind === activeIndicator.parentElement);
@@ -756,7 +756,7 @@ export class Carousel extends BaseComponent {
 
         const itemsContainer = this.itemsContainer();
         if (itemsContainer) {
-            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'p-items-hidden');
+            !this.$unstyled() && removeClass(itemsContainer.nativeElement, 'h-items-hidden');
             itemsContainer.nativeElement.style.transform = this.isVertical() ? `translate3d(0, ${totalShiftedItems * (100 / this.numVisible())}%, 0)` : `translate3d(${totalShiftedItems * (100 / this.numVisible())}%, 0, 0)`;
             itemsContainer.nativeElement.style.transition = 'transform 500ms ease 0s';
         }
@@ -801,7 +801,7 @@ export class Carousel extends BaseComponent {
     onTransitionEnd() {
         const itemsContainer = this.itemsContainer();
         if (itemsContainer) {
-            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'p-items-hidden');
+            !this.$unstyled() && addClass(itemsContainer.nativeElement, 'h-items-hidden');
             itemsContainer.nativeElement.style.transition = '';
 
             if ((this.page() === 0 || this.page() === this.totalDots() - 1) && this.isCircular()) {

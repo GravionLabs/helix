@@ -3,9 +3,9 @@ import { style } from './progressspinner.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-progressspinner'],
-    spin: 'p-progressspinner-spin',
-    circle: 'p-progressspinner-circle'
+    root: () => ['h-progressspinner'],
+    spin: 'h-progressspinner-spin',
+    circle: 'h-progressspinner-circle'
 };
 
 @Injectable()
@@ -30,15 +30,15 @@ export enum ProgressSpinnerClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-progressspinner',
+    root = 'h-progressspinner',
     /**
      * Class name of the spin element
      */
-    spin = 'p-progressspinner-spin',
+    spin = 'h-progressspinner-spin',
     /**
      * Class name of the circle element
      */
-    circle = 'p-progressspinner-circle'
+    circle = 'h-progressspinner-circle'
 }
 
 export interface ProgressSpinnerStyle extends BaseStyle {}

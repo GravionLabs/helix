@@ -3,15 +3,15 @@ import { style } from './terminal.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-terminal p-component'],
-    welcomeMessage: 'p-terminal-welcome-message',
-    commandList: 'p-terminal-command-list',
-    command: 'p-terminal-command',
-    commandValue: 'p-terminal-command-value',
-    commandResponse: 'p-terminal-command-response',
-    prompt: 'p-terminal-prompt',
-    promptLabel: 'p-terminal-prompt-label',
-    promptValue: 'p-terminal-prompt-value'
+    root: () => ['h-terminal h-component'],
+    welcomeMessage: 'h-terminal-welcome-message',
+    commandList: 'h-terminal-command-list',
+    command: 'h-terminal-command',
+    commandValue: 'h-terminal-command-value',
+    commandResponse: 'h-terminal-command-response',
+    prompt: 'h-terminal-prompt',
+    promptLabel: 'h-terminal-prompt-label',
+    promptValue: 'h-terminal-prompt-value'
 };
 
 @Injectable()
@@ -36,39 +36,39 @@ export enum TerminalClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-terminal',
+    root = 'h-terminal',
     /**
      * Class name of the welcome message element
      */
-    welcomeMessage = 'p-terminal-welcome-message',
+    welcomeMessage = 'h-terminal-welcome-message',
     /**
      * Class name of the command list element
      */
-    commandList = 'p-terminal-command-list',
+    commandList = 'h-terminal-command-list',
     /**
      * Class name of the command element
      */
-    command = 'p-terminal-command',
+    command = 'h-terminal-command',
     /**
      * Class name of the command value element
      */
-    commandValue = 'p-terminal-command-value',
+    commandValue = 'h-terminal-command-value',
     /**
      * Class name of the command response element
      */
-    commandResponse = 'p-terminal-command-response',
+    commandResponse = 'h-terminal-command-response',
     /**
      * Class name of the prompt element
      */
-    prompt = 'p-terminal-prompt',
+    prompt = 'h-terminal-prompt',
     /**
      * Class name of the prompt label element
      */
-    promptLabel = 'p-terminal-prompt-label',
+    promptLabel = 'h-terminal-prompt-label',
     /**
      * Class name of the prompt value element
      */
-    promptValue = 'p-terminal-prompt-value'
+    promptValue = 'h-terminal-prompt-value'
 }
 
 export interface TerminalStyle extends BaseStyle {}

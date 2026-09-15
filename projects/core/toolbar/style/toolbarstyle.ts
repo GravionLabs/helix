@@ -3,10 +3,10 @@ import { style } from './toolbar.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: () => ['p-toolbar p-component'],
-    start: 'p-toolbar-start',
-    center: 'p-toolbar-center',
-    end: 'p-toolbar-end'
+    root: () => ['h-toolbar h-component'],
+    start: 'h-toolbar-start',
+    center: 'h-toolbar-center',
+    end: 'h-toolbar-end'
 };
 
 @Injectable()
@@ -31,19 +31,19 @@ export enum ToolbarClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-toolbar',
+    root = 'h-toolbar',
     /**
      * Class name of the start element
      */
-    start = 'p-toolbar-start',
+    start = 'h-toolbar-start',
     /**
      * Class name of the center element
      */
-    center = 'p-toolbar-center',
+    center = 'h-toolbar-center',
     /**
      * Class name of the end element
      */
-    end = 'p-toolbar-end'
+    end = 'h-toolbar-end'
 }
 
 export interface ToolbarStyle extends BaseStyle {}

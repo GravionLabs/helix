@@ -9,10 +9,10 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [FloatLabel, FormsModule],
     template: `
-        <p-floatlabel>
+        <h-floatlabel>
             <input id="username" [(ngModel)]="value" />
             <label for="username">Username</label>
-        </p-floatlabel>
+        </h-floatlabel>
     `
 })
 class TestBasicFloatLabelComponent {
@@ -23,10 +23,10 @@ class TestBasicFloatLabelComponent {
     standalone: true,
     imports: [FloatLabel, FormsModule],
     template: `
-        <p-floatlabel [variant]="variant">
+        <h-floatlabel [variant]="variant">
             <input id="test-input" [(ngModel)]="value" />
             <label for="test-input">Test Label</label>
-        </p-floatlabel>
+        </h-floatlabel>
     `
 })
 class TestVariantFloatLabelComponent {
@@ -67,7 +67,7 @@ describe('FloatLabel', () => {
 
         it('should have correct CSS class', () => {
             const floatLabelElement = fixture.debugElement.query(By.directive(FloatLabel));
-            expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel')).toBe(true);
+            expect(floatLabelElement.nativeElement.classList.contains('h-floatlabel')).toBe(true);
         });
     });
 
@@ -116,19 +116,19 @@ describe('FloatLabel', () => {
             fixture.componentRef.setInput('variant', 'in');
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-in')).toBe(true);
+            expect(floatLabelElement.nativeElement.classList.contains('h-floatlabel-in')).toBe(true);
 
             // Test 'on' variant
             component.variant = 'on';
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-on')).toBe(true);
+            expect(floatLabelElement.nativeElement.classList.contains('h-floatlabel-on')).toBe(true);
 
             // Test 'over' variant (default)
             fixture.componentRef.setInput('variant', 'over');
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            expect(floatLabelElement.nativeElement.classList.contains('p-floatlabel-over')).toBe(true);
+            expect(floatLabelElement.nativeElement.classList.contains('h-floatlabel-over')).toBe(true);
         });
     });
 
@@ -233,12 +233,12 @@ describe('FloatLabel PassThrough Tests', () => {
         it('should apply object with data attributes to root', () => {
             fixture.componentRef.setInput('pt', {
                 root: {
-                    'data-p-test': 'true'
+                    'data-h-test': 'true'
                 }
             });
             fixture.detectChanges();
 
-            expect(hostElement.getAttribute('data-p-test')).toBe('true');
+            expect(hostElement.getAttribute('data-h-test')).toBe('true');
         });
 
         it('should apply object with aria attributes to root', () => {
@@ -352,7 +352,7 @@ describe('FloatLabel PassThrough Tests', () => {
             const inlineFixture = TestBed.createComponent(TestInlineStringPTComponent);
             inlineFixture.detectChanges();
 
-            const inlineHostElement = inlineFixture.nativeElement.querySelector('p-floatlabel');
+            const inlineHostElement = inlineFixture.nativeElement.querySelector('h-floatlabel');
             expect(inlineHostElement.classList.contains('INLINE_STRING')).toBe(true);
         });
 
@@ -360,7 +360,7 @@ describe('FloatLabel PassThrough Tests', () => {
             const inlineFixture = TestBed.createComponent(TestInlineObjectPTComponent);
             inlineFixture.detectChanges();
 
-            const inlineHostElement = inlineFixture.nativeElement.querySelector('p-floatlabel');
+            const inlineHostElement = inlineFixture.nativeElement.querySelector('h-floatlabel');
             expect(inlineHostElement.classList.contains('INLINE_OBJECT_CLASS')).toBe(true);
             expect(inlineHostElement.getAttribute('data-inline')).toBe('true');
         });
@@ -414,7 +414,7 @@ describe('FloatLabel PassThrough Tests', () => {
             const multiFixture = TestBed.createComponent(TestMultipleInstancesComponent);
             multiFixture.detectChanges();
 
-            const floatLabels = multiFixture.nativeElement.querySelectorAll('p-floatlabel');
+            const floatLabels = multiFixture.nativeElement.querySelectorAll('h-floatlabel');
             expect(floatLabels.length).toBe(2);
 
             floatLabels.forEach((fl: HTMLElement) => {
@@ -587,14 +587,14 @@ describe('FloatLabel PassThrough Tests', () => {
 @Component({
     standalone: true,
     imports: [FloatLabel, FormsModule],
-    template: `<p-floatlabel [pt]="{ root: 'INLINE_STRING' }"><input /></p-floatlabel>`
+    template: `<h-floatlabel [pt]="{ root: 'INLINE_STRING' }"><input /></h-floatlabel>`
 })
 class TestInlineStringPTComponent {}
 
 @Component({
     standalone: true,
     imports: [FloatLabel, FormsModule],
-    template: `<p-floatlabel [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }"><input /></p-floatlabel>`
+    template: `<h-floatlabel [pt]="{ root: { class: 'INLINE_OBJECT_CLASS', 'data-inline': 'true' } }"><input /></h-floatlabel>`
 })
 class TestInlineObjectPTComponent {}
 
@@ -602,8 +602,8 @@ class TestInlineObjectPTComponent {}
     standalone: true,
     imports: [FloatLabel, FormsModule],
     template: `
-        <p-floatlabel><input /></p-floatlabel>
-        <p-floatlabel><input /></p-floatlabel>
+        <h-floatlabel><input /></h-floatlabel>
+        <h-floatlabel><input /></h-floatlabel>
     `
 })
 class TestMultipleInstancesComponent {}

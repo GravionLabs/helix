@@ -37,22 +37,22 @@ const classes = {
         const positions = ['left', 'right', 'top', 'topleft', 'topright', 'bottom', 'bottomleft', 'bottomright'];
         const pos = positions.find((item) => item === instance.position());
 
-        return ['p-dialog-mask', { 'p-overlay-mask': instance.modal() }, pos ? `p-dialog-${pos}` : ''];
+        return ['h-dialog-mask', { 'h-overlay-mask': instance.modal() }, pos ? `h-dialog-${pos}` : ''];
     },
     root: ({ instance }) => [
-        'p-dialog p-component',
+        'h-dialog h-component',
         {
-            'p-dialog-maximized': instance.maximizable() && instance.maximized
+            'h-dialog-maximized': instance.maximizable() && instance.maximized
         }
     ],
-    header: 'p-dialog-header',
-    title: 'p-dialog-title',
-    resizeHandle: 'p-resizable-handle',
-    headerActions: 'p-dialog-header-actions',
-    pcMaximizeButton: 'p-dialog-maximize-button',
-    pcCloseButton: 'p-dialog-close-button',
-    content: () => ['p-dialog-content'],
-    footer: 'p-dialog-footer'
+    header: 'h-dialog-header',
+    title: 'h-dialog-title',
+    resizeHandle: 'h-resizable-handle',
+    headerActions: 'h-dialog-header-actions',
+    pcMaximizeButton: 'h-dialog-maximize-button',
+    pcCloseButton: 'h-dialog-close-button',
+    content: () => ['h-dialog-content'],
+    footer: 'h-dialog-footer'
 };
 
 @Injectable()
@@ -79,39 +79,39 @@ export enum DialogClasses {
     /**
      * Class name of the mask element
      */
-    mask = 'p-dialog-mask',
+    mask = 'h-dialog-mask',
     /**
      * Class name of the root element
      */
-    root = 'p-dialog',
+    root = 'h-dialog',
     /**
      * Class name of the header element
      */
-    header = 'p-dialog-header',
+    header = 'h-dialog-header',
     /**
      * Class name of the title element
      */
-    title = 'p-dialog-title',
+    title = 'h-dialog-title',
     /**
      * Class name of the header actions element
      */
-    headerActions = 'p-dialog-header-actions',
+    headerActions = 'h-dialog-header-actions',
     /**
      * Class name of the maximize button element
      */
-    pcMaximizeButton = 'p-dialog-maximize-button',
+    pcMaximizeButton = 'h-dialog-maximize-button',
     /**
      * Class name of the close button element
      */
-    pcCloseButton = 'p-dialog-close-button',
+    pcCloseButton = 'h-dialog-close-button',
     /**
      * Class name of the content element
      */
-    content = 'p-dialog-content',
+    content = 'h-dialog-content',
     /**
      * Class name of the footer element
      */
-    footer = 'p-dialog-footer'
+    footer = 'h-dialog-footer'
 }
 
 export interface DialogStyle extends BaseStyle {}

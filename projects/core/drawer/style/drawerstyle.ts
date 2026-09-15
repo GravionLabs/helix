@@ -6,11 +6,11 @@ const style = /*css*/ `
 ${drawer_style}
 
 /** For Helix **/
-.p-drawer {
+.h-drawer {
     position: fixed;
 }
 
-.p-drawer-left {
+.h-drawer-left {
     top: 0;
     left: 0;
     width: 20rem;
@@ -18,7 +18,7 @@ ${drawer_style}
     border-inline-end-width: 1px;
 }
 
-.p-drawer-right {
+.h-drawer-right {
     top: 0;
     right: 0;
     width: 20rem;
@@ -26,7 +26,7 @@ ${drawer_style}
     border-inline-start-width: 1px;
 }
 
-.p-drawer-top {
+.h-drawer-top {
     top: 0;
     left: 0;
     width: 100%;
@@ -34,7 +34,7 @@ ${drawer_style}
     border-block-end-width: 1px;
 }
 
-.p-drawer-bottom {
+.h-drawer-bottom {
     bottom: 0;
     left: 0;
     width: 100%;
@@ -42,7 +42,7 @@ ${drawer_style}
     border-block-start-width: 1px;
 }
 
-.p-drawer-full {
+.h-drawer-full {
     width: 100%;
     height: 100%;
     top: 0;
@@ -52,62 +52,62 @@ ${drawer_style}
 }
 
 /* Animations */
-.p-drawer-enter-left {
-    animation: p-animate-drawer-enter-left 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-enter-left {
+    animation: h-animate-drawer-enter-left 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-leave-left {
-    animation: p-animate-drawer-leave-left 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-leave-left {
+    animation: h-animate-drawer-leave-left 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-enter-right {
-    animation: p-animate-drawer-enter-right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-enter-right {
+    animation: h-animate-drawer-enter-right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-leave-right {
-    animation: p-animate-drawer-leave-right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-leave-right {
+    animation: h-animate-drawer-leave-right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-enter-top {
-    animation: p-animate-drawer-enter-top 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-enter-top {
+    animation: h-animate-drawer-enter-top 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-leave-top {
-    animation: p-animate-drawer-leave-top 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-leave-top {
+    animation: h-animate-drawer-leave-top 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-enter-bottom {
-    animation: p-animate-drawer-enter-bottom 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-enter-bottom {
+    animation: h-animate-drawer-enter-bottom 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-leave-bottom {
-    animation: p-animate-drawer-leave-bottom 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-leave-bottom {
+    animation: h-animate-drawer-leave-bottom 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-enter-full {
-    animation: p-animate-drawer-enter-full 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-enter-full {
+    animation: h-animate-drawer-enter-full 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.p-drawer-leave-full {
-    animation: p-animate-drawer-leave-full 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+.h-drawer-leave-full {
+    animation: h-animate-drawer-leave-full 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 `;
 
 const classes = {
-    mask: ({ instance }) => ['p-drawer-mask', { [`p-overlay-mask p-overlay-mask-enter-active`]: instance.modal() }, { 'p-drawer-full': instance.fullScreen() }],
+    mask: ({ instance }) => ['h-drawer-mask', { [`h-overlay-mask h-overlay-mask-enter-active`]: instance.modal() }, { 'h-drawer-full': instance.fullScreen() }],
     root: ({ instance }) => [
-        'p-drawer p-component',
+        'h-drawer h-component',
         {
-            'p-drawer-full': instance.fullScreen(),
-            'p-drawer-open': instance.visible
+            'h-drawer-full': instance.fullScreen(),
+            'h-drawer-open': instance.visible
         },
-        `p-drawer-${instance.position()}`
+        `h-drawer-${instance.position()}`
     ],
-    header: 'p-drawer-header',
-    title: 'p-drawer-title',
-    pcCloseButton: 'p-drawer-close-button',
-    content: 'p-drawer-content',
-    footer: 'p-drawer-footer'
+    header: 'h-drawer-header',
+    title: 'h-drawer-title',
+    pcCloseButton: 'h-drawer-close-button',
+    content: 'h-drawer-content',
+    footer: 'h-drawer-footer'
 };
 
 @Injectable()
@@ -132,27 +132,27 @@ export enum DrawerClasses {
     /**
      * Class name of the mask element
      */
-    mask = 'p-drawer-mask',
+    mask = 'h-drawer-mask',
     /**
      * Class name of the root element
      */
-    root = 'p-drawer',
+    root = 'h-drawer',
     /**
      * Class name of the header element
      */
-    header = 'p-drawer-header',
+    header = 'h-drawer-header',
     /**
      * Class name of the title element
      */
-    title = 'p-drawer-title',
+    title = 'h-drawer-title',
     /**
      * Class name of the close button element
      */
-    pcCloseButton = 'p-drawer-close-button',
+    pcCloseButton = 'h-drawer-close-button',
     /**
      * Class name of the content element
      */
-    content = 'p-drawer-content'
+    content = 'h-drawer-content'
 }
 
 export interface DrawerStyle extends BaseStyle {}

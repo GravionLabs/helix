@@ -1,12 +1,12 @@
 export const style = /*css*/ `
-    .p-rating {
+    .h-rating {
         position: relative;
         display: inline-flex;
         align-items: center;
         gap: dt('rating.gap');
     }
 
-    .p-rating-option {
+    .h-rating-option {
         display: inline-flex;
         align-items: center;
         cursor: pointer;
@@ -20,13 +20,13 @@ export const style = /*css*/ `
             box-shadow dt('rating.transition.duration');
     }
 
-    .p-rating-option.p-focus-visible {
+    .h-rating-option.h-focus-visible {
         box-shadow: dt('rating.focus.ring.shadow');
         outline: dt('rating.focus.ring.width') dt('rating.focus.ring.style') dt('rating.focus.ring.color');
         outline-offset: dt('rating.focus.ring.offset');
     }
 
-    .p-rating-icon {
+    .h-rating-icon {
         color: dt('rating.icon.color');
         transition:
             background dt('rating.transition.duration'),
@@ -39,20 +39,20 @@ export const style = /*css*/ `
         height: dt('rating.icon.size');
     }
 
-    .p-rating:not(.p-disabled):not(.p-readonly) .p-rating-option:hover .p-rating-icon {
+    .h-rating:not(.h-disabled):not(.h-readonly) .h-rating-option:hover .h-rating-icon {
         color: dt('rating.icon.hover.color');
     }
 
-    .p-rating-option-active .p-rating-icon {
+    .h-rating-option-active .h-rating-icon {
         color: dt('rating.icon.active.color');
     }
 
-    .p-rating-icon.p-invalid {
+    .h-rating-icon.h-invalid {
         /* @todo */
         stroke: dt('rating.invalid.icon.color');
     }
 
-    .p-rating.p-readonly .p-rating-option {
+    .h-rating.h-readonly .h-rating-option {
         cursor: not-allowed;
     }
 `;

@@ -58,7 +58,7 @@
 }
 <ng-template #footer>
   @if (footerTemplate() || _footerTemplate) {
-    <ng-content select="p-footer"></ng-content>
+    <ng-content select="h-footer"></ng-content>
     <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   }
   @if (!footerTemplate() && !_footerTemplate) {

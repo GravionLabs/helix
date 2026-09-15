@@ -6,13 +6,13 @@ const style = /*css*/ `
     ${iftalabel_style}
 
     /* For Helix */
-    .p-iftalabel:has(.ng-invalid.ng-dirty) label {
+    .h-iftalabel:has(.ng-invalid.ng-dirty) label {
         color: dt('iftalabel.invalid.color');
     }
 `;
 
 const classes = {
-    root: 'p-iftalabel'
+    root: 'h-iftalabel'
 };
 
 @Injectable()
@@ -37,7 +37,7 @@ export enum IftaLabelClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-iftalabel'
+    root = 'h-iftalabel'
 }
 
 export interface IftaLabelStyle extends BaseStyle {}

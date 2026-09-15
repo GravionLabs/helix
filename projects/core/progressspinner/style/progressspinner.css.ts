@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-progressspinner {
+    .h-progressspinner {
         position: relative;
         margin: 0 auto;
         width: 100px;
@@ -7,13 +7,13 @@ export const style = /*css*/ `
         display: inline-block;
     }
 
-    .p-progressspinner::before {
+    .h-progressspinner::before {
         content: '';
         display: block;
         padding-top: 100%;
     }
 
-    .p-progressspinner-spin {
+    .h-progressspinner-spin {
         height: 100%;
         transform-origin: center center;
         width: 100%;
@@ -23,25 +23,25 @@ export const style = /*css*/ `
         left: 0;
         right: 0;
         margin: auto;
-        animation: p-progressspinner-rotate 2s linear infinite;
+        animation: h-progressspinner-rotate 2s linear infinite;
     }
 
-    .p-progressspinner-circle {
+    .h-progressspinner-circle {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: 0;
         stroke: dt('progressspinner.colorOne');
         animation:
-            p-progressspinner-dash 1.5s ease-in-out infinite,
-            p-progressspinner-color 6s ease-in-out infinite;
+            h-progressspinner-dash 1.5s ease-in-out infinite,
+            h-progressspinner-color 6s ease-in-out infinite;
         stroke-linecap: round;
     }
 
-    @keyframes p-progressspinner-rotate {
+    @keyframes h-progressspinner-rotate {
         100% {
             transform: rotate(360deg);
         }
     }
-    @keyframes p-progressspinner-dash {
+    @keyframes h-progressspinner-dash {
         0% {
             stroke-dasharray: 1, 200;
             stroke-dashoffset: 0;
@@ -55,7 +55,7 @@ export const style = /*css*/ `
             stroke-dashoffset: -124px;
         }
     }
-    @keyframes p-progressspinner-color {
+    @keyframes h-progressspinner-color {
         100%,
         0% {
             stroke: dt('progressspinner.color.one');

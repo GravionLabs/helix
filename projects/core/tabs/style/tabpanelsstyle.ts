@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: 'p-tabpanels'
+    root: 'h-tabpanels'
 };
 
 @Injectable()
@@ -26,7 +26,7 @@ export enum TabPanelsClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-tabpanels'
+    root = 'h-tabpanels'
 }
 
 export interface TabPanelsStyle extends BaseStyle {}

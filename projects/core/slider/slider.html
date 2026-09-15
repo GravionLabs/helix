@@ -7,7 +7,7 @@
     }"
     [style]="sx('range')"
     [attr.data-pc-section]="'range'"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
     [hBind]="ptm('range')"
   ></span>
 }
@@ -20,7 +20,7 @@
     }"
     [style]="sx('range')"
     [attr.data-pc-section]="'range'"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
     [hBind]="ptm('range')"
   ></span>
 }
@@ -56,14 +56,14 @@
     [attr.data-pc-section]="'handle'"
     [hAutoFocus]="autofocus()"
     [hBind]="ptm('handle')"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
   ></span>
 }
 @if (range()) {
   <span
     #sliderHandleStart
     [style.transition]="dragging ? 'none' : null"
-    [class]="cn(cx('handle'), handleIndex == 0 && 'p-slider-handle-active')"
+    [class]="cn(cx('handle'), handleIndex == 0 && 'h-slider-handle-active')"
     [style]="sx('handle')"
     [ngStyle]="{ 'inset-inline-start': rangeStartLeft, bottom: rangeStartBottom }"
     (keydown)="onKeyDown($event, 0)"
@@ -82,14 +82,14 @@
     [attr.data-pc-section]="'startHandler'"
     [hAutoFocus]="autofocus()"
     [hBind]="ptm('startHandler')"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
   ></span>
 }
 @if (range()) {
   <span
     #sliderHandleEnd
     [style.transition]="dragging ? 'none' : null"
-    [class]="cn(cx('handle'), handleIndex == 1 && 'p-slider-handle-active')"
+    [class]="cn(cx('handle'), handleIndex == 1 && 'h-slider-handle-active')"
     [ngStyle]="{ 'inset-inline-start': rangeEndLeft, bottom: rangeEndBottom }"
     [style]="sx('handle')"
     (keydown)="onKeyDown($event, 1)"
@@ -107,6 +107,6 @@
     [attr.aria-orientation]="orientation()"
     [attr.data-pc-section]="'endHandler'"
     [hBind]="ptm('endHandler')"
-    [attr.data-p]="dataP"
+    [attr.data-h]="dataP"
   ></span>
 }

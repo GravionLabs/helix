@@ -253,7 +253,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
                     this.focusListener = this.onFocus.bind(this);
                     this.blurListener = this.onBlur.bind(this);
 
-                    let target = this.el.nativeElement.querySelector('.p-component');
+                    let target = this.el.nativeElement.querySelector('.h-component');
 
                     if (!target) {
                         target = this.getTarget(this.el.nativeElement);
@@ -375,7 +375,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
 
     onMouseLeave(e: MouseEvent) {
         if (!this.isAutoHide()) {
-            const valid = hasClass(e.relatedTarget as any, 'p-tooltip') || hasClass(e.relatedTarget as any, 'p-tooltip-text') || hasClass(e.relatedTarget as any, 'p-tooltip-arrow');
+            const valid = hasClass(e.relatedTarget as any, 'h-tooltip') || hasClass(e.relatedTarget as any, 'h-tooltip-text') || hasClass(e.relatedTarget as any, 'h-tooltip-arrow');
             !valid && this.deactivate();
         } else {
             this.deactivate();
@@ -489,11 +489,11 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
             this.remove();
         }
 
-        this.container = createElement('div', { class: this.cx('root'), 'p-bind': this.ptm('root'), 'data-pc-section': 'root' });
+        this.container = createElement('div', { class: this.cx('root'), 'h-bind': this.ptm('root'), 'data-pc-section': 'root' });
         this.container.setAttribute('role', 'tooltip');
-        let tooltipArrow = createElement('div', { class: this.cx('arrow'), 'p-bind': this.ptm('arrow'), 'data-pc-section': 'arrow' });
+        let tooltipArrow = createElement('div', { class: this.cx('arrow'), 'h-bind': this.ptm('arrow'), 'data-pc-section': 'arrow' });
         this.container.appendChild(tooltipArrow);
-        this.tooltipText = createElement('div', { class: this.cx('text'), 'p-bind': this.ptm('text'), 'data-pc-section': 'text' });
+        this.tooltipText = createElement('div', { class: this.cx('text'), 'h-bind': this.ptm('text'), 'data-pc-section': 'text' });
 
         this.updateText();
 
@@ -546,7 +546,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
         this.create();
 
         const nativeElement = this.el.nativeElement;
-        const pDialogWrapper = nativeElement.closest('p-dialog');
+        const pDialogWrapper = nativeElement.closest('h-dialog');
 
         if (pDialogWrapper) {
             setTimeout(() => {
@@ -619,7 +619,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
     }
 
     private get activeElement(): HTMLElement {
-        return this.el.nativeElement.nodeName.startsWith('P-') ? (findSingle(this.el.nativeElement, '.p-component') as HTMLElement) : this.el.nativeElement;
+        return this.el.nativeElement.nodeName.startsWith('P-') ? (findSingle(this.el.nativeElement, '.h-component') as HTMLElement) : this.el.nativeElement;
     }
 
     alignRight() {
@@ -704,13 +704,13 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
     }
 
     getTarget(el: Element) {
-        return hasClass(el, 'p-inputwrapper') ? findSingle(el, 'input') : el;
+        return hasClass(el, 'h-inputwrapper') ? findSingle(el, 'input') : el;
     }
 
     preAlign(position: string) {
         this.container.style.left = -999 + 'px';
         this.container.style.top = -999 + 'px';
-        this.container.className = this.cn(this.cx('root'), this.ptm('root')?.class, 'p-tooltip-' + position, this.getOption('tooltipStyleClass'));
+        this.container.className = this.cn(this.cx('root'), this.ptm('root')?.class, 'h-tooltip-' + position, this.getOption('tooltipStyleClass'));
     }
 
     isOutOfBounds(): boolean {
@@ -774,7 +774,7 @@ export class Tooltip extends BaseComponent<TooltipPassThroughOptions> {
             this.unbindDocumentTouchListener();
         }
         if (tooltipEvent === 'focus' || tooltipEvent === 'both') {
-            let target = this.el.nativeElement.querySelector('.p-component');
+            let target = this.el.nativeElement.querySelector('.h-component');
 
             if (!target) {
                 target = this.getTarget(this.el.nativeElement);

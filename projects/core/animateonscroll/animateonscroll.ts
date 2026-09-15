@@ -17,7 +17,7 @@ interface AnimateOnScrollOptions {
     selector: '[hAnimateOnScroll]',
     standalone: true,
     host: {
-        '[class.p-animateonscroll]': 'true'
+        '[class.h-animateonscroll]': 'true'
     }
 })
 export class AnimateOnScroll extends BaseComponent {

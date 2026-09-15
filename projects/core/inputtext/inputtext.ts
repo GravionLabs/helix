@@ -18,7 +18,7 @@ const INPUTTEXT_INSTANCE = new InjectionToken<InputText>('INPUTTEXT_INSTANCE');
     standalone: true,
     host: {
         '[class]': "cx('root')",
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h]': 'dataP',
         '(input)': 'onInput()'
     },
     providers: [InputTextStyle, { provide: INPUTTEXT_INSTANCE, useExisting: InputText }, { provide: PARENT_INSTANCE, useExisting: InputText }],

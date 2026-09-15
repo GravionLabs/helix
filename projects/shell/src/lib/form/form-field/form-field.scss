@@ -6,12 +6,12 @@
   &__label {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--p-text-color);
+    color: var(--h-text-color);
   }
 
   &__control {
-    :host-context(.p-inputtext),
-    :host-context(.p-component) {
+    :host-context(.h-inputtext),
+    :host-context(.h-component) {
       width: 100%;
     }
   }
@@ -20,11 +20,11 @@
     font-size: 0.75rem;
 
     &--hint {
-      color: var(--p-text-muted-color);
+      color: var(--h-text-muted-color);
     }
 
     &--error {
-      color: var(--p-red-500);
+      color: var(--h-red-500);
     }
   }
 }

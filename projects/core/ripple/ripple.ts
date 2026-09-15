@@ -12,7 +12,7 @@ import { RippleStyle } from './style/ripplestyle';
 @Directive({
     selector: '[hRipple]',
     host: {
-        class: 'p-ripple'
+        class: 'h-ripple'
     },
     standalone: true,
     providers: [RippleStyle]
@@ -54,8 +54,8 @@ export class Ripple extends BaseComponent {
             return;
         }
 
-        !this.$unstyled() && removeClass(ink, 'p-ink-active');
-        ink.setAttribute('data-p-ink-active', 'false');
+        !this.$unstyled() && removeClass(ink, 'h-ink-active');
+        ink.setAttribute('data-h-ink-active', 'false');
 
         if (!getHeight(ink) && !getWidth(ink)) {
             let d = Math.max(getOuterWidth(this.el.nativeElement), getOuterHeight(this.el.nativeElement));
@@ -70,14 +70,14 @@ export class Ripple extends BaseComponent {
         this.renderer.setStyle(ink, 'top', y + 'px');
         this.renderer.setStyle(ink, 'left', x + 'px');
 
-        !this.$unstyled() && addClass(ink, 'p-ink-active');
-        ink.setAttribute('data-p-ink-active', 'true');
+        !this.$unstyled() && addClass(ink, 'h-ink-active');
+        ink.setAttribute('data-h-ink-active', 'true');
 
         this.timeout = setTimeout(() => {
             let ink = this.getInk();
             if (ink) {
-                !this.$unstyled() && removeClass(ink, 'p-ink-active');
-                ink.setAttribute('data-p-ink-active', 'false');
+                !this.$unstyled() && removeClass(ink, 'h-ink-active');
+                ink.setAttribute('data-h-ink-active', 'false');
             }
         }, 401);
     }
@@ -85,7 +85,7 @@ export class Ripple extends BaseComponent {
     getInk() {
         const children = this.el.nativeElement.children;
         for (let i = 0; i < children.length; i++) {
-            if (typeof children[i].className === 'string' && children[i].className.indexOf('p-ink') !== -1) {
+            if (typeof children[i].className === 'string' && children[i].className.indexOf('h-ink') !== -1) {
                 return children[i];
             }
         }
@@ -95,8 +95,8 @@ export class Ripple extends BaseComponent {
     resetInk() {
         let ink = this.getInk();
         if (ink) {
-            !this.$unstyled() && removeClass(ink, 'p-ink-active');
-            ink.setAttribute('data-p-ink-active', 'false');
+            !this.$unstyled() && removeClass(ink, 'h-ink-active');
+            ink.setAttribute('data-h-ink-active', 'false');
         }
     }
 
@@ -105,16 +105,16 @@ export class Ripple extends BaseComponent {
             clearTimeout(this.timeout);
         }
 
-        !this.$unstyled() && removeClass(event.currentTarget as any, 'p-ink-active');
-        (event.currentTarget as any).setAttribute('data-p-ink-active', 'false');
+        !this.$unstyled() && removeClass(event.currentTarget as any, 'h-ink-active');
+        (event.currentTarget as any).setAttribute('data-h-ink-active', 'false');
     }
 
     create() {
         let ink = this.renderer.createElement('span');
-        this.renderer.addClass(ink, 'p-ink');
+        this.renderer.addClass(ink, 'h-ink');
         this.renderer.appendChild(this.el.nativeElement, ink);
-        this.renderer.setAttribute(ink, 'data-p-ink', 'true');
-        this.renderer.setAttribute(ink, 'data-p-ink-active', 'false');
+        this.renderer.setAttribute(ink, 'data-h-ink', 'true');
+        this.renderer.setAttribute(ink, 'data-h-ink-active', 'false');
         this.renderer.setAttribute(ink, 'aria-hidden', 'true');
         this.renderer.setAttribute(ink, 'role', 'presentation');
 

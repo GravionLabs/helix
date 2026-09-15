@@ -46,7 +46,7 @@
 }
 @if ($filled() && !$disabled() && showClear() && !loading) {
   @if (!clearIconTemplate() && !_clearIconTemplate) {
-    <svg data-p-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true" />
+    <svg data-h-icon="times" [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true" />
   }
   @if (clearIconTemplate() || _clearIconTemplate) {
     <span [hBind]="ptm('clearIcon')" [class]="cx('clearIcon')" (click)="clear()" [attr.aria-hidden]="true">
@@ -60,7 +60,7 @@
     #multiContainer
     [hBind]="ptm('inputMultiple')"
     [class]="cx('inputMultiple')"
-    [attr.data-p]="inputMultipleDataP"
+    [attr.data-h]="inputMultipleDataP"
     [tabindex]="-1"
     role="listbox"
     [attr.aria-orientation]="'horizontal'"
@@ -94,7 +94,7 @@
           <ng-template #removeicon>
             @if (!removeIconTemplate() && !_removeIconTemplate) {
               <span [hBind]="ptm('chipIcon')" [class]="cx('chipIcon')" (click)="!readonly() && !$disabled() ? removeOption($event, i) : ''">
-                <svg data-p-icon="times-circle" [class]="cx('chipIcon')" [attr.aria-hidden]="true" />
+                <svg data-h-icon="times-circle" [class]="cx('chipIcon')" [attr.aria-hidden]="true" />
               </span>
             }
             @if (removeIconTemplate() || _removeIconTemplate) {
@@ -150,7 +150,7 @@
 }
 @if (loading) {
   @if (!loadingIconTemplate() && !_loadingIconTemplate) {
-    <svg data-p-icon="spinner" [hBind]="ptm('loader')" [class]="cx('loader')" [spin]="true" [attr.aria-hidden]="true" />
+    <svg data-h-icon="spinner" [hBind]="ptm('loader')" [class]="cx('loader')" [spin]="true" [attr.aria-hidden]="true" />
   }
   @if (loadingIconTemplate() || _loadingIconTemplate) {
     <span [hBind]="ptm('loader')" [class]="cx('loader')" [attr.aria-hidden]="true">
@@ -165,7 +165,7 @@
     }
     @if (!dropdownIcon()) {
       @if (!dropdownIconTemplate() && !_dropdownIconTemplate) {
-        <svg data-p-icon="chevron-down" [hBind]="ptm('dropdown')" />
+        <svg data-h-icon="chevron-down" [hBind]="ptm('dropdown')" />
       }
       <ng-template *ngTemplateOutlet="dropdownIconTemplate() || _dropdownIconTemplate"></ng-template>
     }
@@ -183,7 +183,7 @@
   [motionOptions]="motionOptions()"
   (onBeforeEnter)="onOverlayBeforeEnter()"
   (onHide)="hide()"
-  [attr.data-p]="overlayDataP"
+  [attr.data-h]="overlayDataP"
   >
   <ng-template #content>
     <div [hBind]="ptm('overlay')" [class]="cn(cx('overlay'), panelStyleClass())" [ngStyle]="panelStyle()">
@@ -238,9 +238,9 @@
                 role="option"
                 [attr.aria-label]="getOptionLabel(option)"
                 [attr.aria-selected]="isSelected(option)"
-                [attr.data-p-selected]="isSelected(option)"
+                [attr.data-h-selected]="isSelected(option)"
                 [attr.aria-disabled]="isOptionDisabled(option)"
-                [attr.data-p-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
+                [attr.data-h-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
                 [attr.aria-setsize]="ariaSetSize"
                 [attr.aria-posinset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
                 (click)="onOptionSelect($event, option)"
@@ -275,7 +275,7 @@
     </ng-template>
     <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate"></ng-container>
   </div>
-  <span role="status" aria-live="polite" class="p-hidden-accessible">
+  <span role="status" aria-live="polite" class="h-hidden-accessible">
     {{ selectedMessageText }}
   </span>
 </ng-template>

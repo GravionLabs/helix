@@ -7,16 +7,16 @@ import { Divider, DividerModule } from './divider';
 
 @Component({
     standalone: false,
-    template: ` <p-divider></p-divider> `
+    template: ` <h-divider></h-divider> `
 })
 class TestBasicDividerComponent {}
 
 @Component({
     standalone: false,
     template: `
-        <p-divider [layout]="layout" [type]="type" [align]="align" [styleClass]="styleClass">
+        <h-divider [layout]="layout" [type]="type" [align]="align" [styleClass]="styleClass">
             <div class="custom-content">Custom Divider Content</div>
-        </p-divider>
+        </h-divider>
     `
 })
 class TestCustomDividerComponent {
@@ -29,15 +29,15 @@ class TestCustomDividerComponent {
 @Component({
     standalone: false,
     template: `
-        <p-divider layout="horizontal" type="solid" align="left">
+        <h-divider layout="horizontal" type="solid" align="left">
             <b>Left Aligned</b>
-        </p-divider>
-        <p-divider layout="horizontal" type="dashed" align="center">
+        </h-divider>
+        <h-divider layout="horizontal" type="dashed" align="center">
             <b>Center Aligned</b>
-        </p-divider>
-        <p-divider layout="horizontal" type="dotted" align="right">
+        </h-divider>
+        <h-divider layout="horizontal" type="dotted" align="right">
             <b>Right Aligned</b>
-        </p-divider>
+        </h-divider>
     `
 })
 class TestHorizontalDividerComponent {}
@@ -47,17 +47,17 @@ class TestHorizontalDividerComponent {}
     template: `
         <div style="height: 200px; display: flex;">
             <div>Left Content</div>
-            <p-divider layout="vertical" type="solid" align="top">
+            <h-divider layout="vertical" type="solid" align="top">
                 <b>Top</b>
-            </p-divider>
+            </h-divider>
             <div>Middle Content</div>
-            <p-divider layout="vertical" type="dashed" align="center">
+            <h-divider layout="vertical" type="dashed" align="center">
                 <b>Center</b>
-            </p-divider>
+            </h-divider>
             <div>Right Content</div>
-            <p-divider layout="vertical" type="dotted" align="bottom">
+            <h-divider layout="vertical" type="dotted" align="bottom">
                 <b>Bottom</b>
-            </p-divider>
+            </h-divider>
             <div>End Content</div>
         </div>
     `
@@ -67,13 +67,13 @@ class TestVerticalDividerComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-divider>
+        <h-divider>
             <div class="content-with-icon">
                 <i class="pi pi-star"></i>
                 <span>Complex Content</span>
                 <button type="button" class="test-button">Action</button>
             </div>
-        </p-divider>
+        </h-divider>
     `
 })
 class TestComplexContentDividerComponent {}
@@ -81,9 +81,9 @@ class TestComplexContentDividerComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-divider [layout]="layout" [type]="type" [align]="align">
+        <h-divider [layout]="layout" [type]="type" [align]="align">
             <span>Dynamic Content</span>
-        </p-divider>
+        </h-divider>
     `
 })
 class TestDynamicDividerComponent {
@@ -133,14 +133,14 @@ describe('Divider', () => {
         });
 
         it('should have correct CSS classes', () => {
-            expect(dividerEl.nativeElement.className).toContain('p-divider');
-            expect(dividerEl.nativeElement.className).toContain('p-component');
-            expect(dividerEl.nativeElement.className).toContain('p-divider-horizontal');
-            expect(dividerEl.nativeElement.className).toContain('p-divider-solid');
+            expect(dividerEl.nativeElement.className).toContain('h-divider');
+            expect(dividerEl.nativeElement.className).toContain('h-component');
+            expect(dividerEl.nativeElement.className).toContain('h-divider-horizontal');
+            expect(dividerEl.nativeElement.className).toContain('h-divider-solid');
         });
 
         it('should render content container', () => {
-            const contentElement = dividerEl.query(By.css('.p-divider-content'));
+            const contentElement = dividerEl.query(By.css('.h-divider-content'));
             expect(contentElement).toBeTruthy();
         });
     });
@@ -159,7 +159,7 @@ describe('Divider', () => {
             await customFixture.whenStable();
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-horizontal');
             expect(dividerElement.nativeElement.getAttribute('aria-orientation')).toBe('horizontal');
         });
 
@@ -169,7 +169,7 @@ describe('Divider', () => {
             await customFixture.whenStable();
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-vertical');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-vertical');
             expect(dividerElement.nativeElement.getAttribute('aria-orientation')).toBe('vertical');
         });
 
@@ -179,15 +179,15 @@ describe('Divider', () => {
             let dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
             // Initially horizontal
-            expect(dividerElement.nativeElement.className).toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-horizontal');
 
             // Change to vertical
             customComponent.layout = 'vertical';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-vertical');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-vertical');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-horizontal');
         });
     });
 
@@ -205,7 +205,7 @@ describe('Divider', () => {
             await customFixture.whenStable();
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-solid');
         });
 
         it('should apply dashed type when specified', async () => {
@@ -214,8 +214,8 @@ describe('Divider', () => {
             await customFixture.whenStable();
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dashed');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dashed');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-solid');
         });
 
         it('should apply dotted type when specified', async () => {
@@ -224,7 +224,7 @@ describe('Divider', () => {
             await customFixture.whenStable();
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dotted');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dotted');
         });
 
         it('should switch between types dynamically', async () => {
@@ -233,19 +233,19 @@ describe('Divider', () => {
             let dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
             // Initially solid
-            expect(dividerElement.nativeElement.className).toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-solid');
 
             // Change to dashed
             customComponent.type = 'dashed';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dashed');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dashed');
 
             // Change to dotted
             customComponent.type = 'dotted';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dotted');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dotted');
         });
     });
 
@@ -265,7 +265,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-left');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-left');
             });
 
             it('should apply left alignment for horizontal layout', async () => {
@@ -275,7 +275,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-left');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-left');
             });
 
             it('should apply center alignment for horizontal layout', async () => {
@@ -285,7 +285,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-center');
             });
 
             it('should apply right alignment for horizontal layout', async () => {
@@ -295,7 +295,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-right');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-right');
             });
         });
 
@@ -306,7 +306,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-center');
             });
 
             it('should apply top alignment for vertical layout', async () => {
@@ -316,7 +316,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-top');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-top');
             });
 
             it('should apply center alignment for vertical layout', async () => {
@@ -326,7 +326,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-center');
             });
 
             it('should apply bottom alignment for vertical layout', async () => {
@@ -336,7 +336,7 @@ describe('Divider', () => {
                 await customFixture.whenStable();
                 const dividerElement = customFixture.debugElement.query(By.directive(Divider));
 
-                expect(dividerElement.nativeElement.className).toContain('p-divider-bottom');
+                expect(dividerElement.nativeElement.className).toContain('h-divider-bottom');
             });
         });
 
@@ -368,7 +368,7 @@ describe('Divider', () => {
         it('should handle no content gracefully', async () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
-            const contentContainer = dividerEl.query(By.css('.p-divider-content'));
+            const contentContainer = dividerEl.query(By.css('.h-divider-content'));
 
             expect(contentContainer).toBeTruthy();
             expect(contentContainer.nativeElement.textContent.trim()).toBe('' as any);
@@ -490,14 +490,14 @@ describe('Divider', () => {
             expect(dividers.length).toBe(3);
 
             // Check different alignments
-            expect(dividers[0].nativeElement.className).toContain('p-divider-left');
-            expect(dividers[1].nativeElement.className).toContain('p-divider-center');
-            expect(dividers[2].nativeElement.className).toContain('p-divider-right');
+            expect(dividers[0].nativeElement.className).toContain('h-divider-left');
+            expect(dividers[1].nativeElement.className).toContain('h-divider-center');
+            expect(dividers[2].nativeElement.className).toContain('h-divider-right');
 
             // Check different types
-            expect(dividers[0].nativeElement.className).toContain('p-divider-solid');
-            expect(dividers[1].nativeElement.className).toContain('p-divider-dashed');
-            expect(dividers[2].nativeElement.className).toContain('p-divider-dotted');
+            expect(dividers[0].nativeElement.className).toContain('h-divider-solid');
+            expect(dividers[1].nativeElement.className).toContain('h-divider-dashed');
+            expect(dividers[2].nativeElement.className).toContain('h-divider-dotted');
         });
 
         it('should render multiple vertical dividers correctly', async () => {
@@ -510,14 +510,14 @@ describe('Divider', () => {
 
             // All should be vertical
             dividers.forEach((divider) => {
-                expect(divider.nativeElement.className).toContain('p-divider-vertical');
+                expect(divider.nativeElement.className).toContain('h-divider-vertical');
                 expect(divider.nativeElement.getAttribute('aria-orientation')).toBe('vertical');
             });
 
             // Check different alignments
-            expect(dividers[0].nativeElement.className).toContain('p-divider-top');
-            expect(dividers[1].nativeElement.className).toContain('p-divider-center');
-            expect(dividers[2].nativeElement.className).toContain('p-divider-bottom');
+            expect(dividers[0].nativeElement.className).toContain('h-divider-top');
+            expect(dividers[1].nativeElement.className).toContain('h-divider-center');
+            expect(dividers[2].nativeElement.className).toContain('h-divider-bottom');
         });
     });
 
@@ -536,7 +536,7 @@ describe('Divider', () => {
             let dividerElement = dynamicFixture.debugElement.query(By.directive(Divider));
 
             // Initially horizontal
-            expect(dividerElement.nativeElement.className).toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-horizontal');
             expect(dividerElement.nativeElement.getAttribute('aria-orientation')).toBe('horizontal');
 
             // Change to vertical
@@ -544,8 +544,8 @@ describe('Divider', () => {
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-vertical');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-vertical');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-horizontal');
             expect(dividerElement.nativeElement.getAttribute('aria-orientation')).toBe('vertical');
         });
 
@@ -553,50 +553,50 @@ describe('Divider', () => {
             let dividerElement = dynamicFixture.debugElement.query(By.directive(Divider));
 
             // Initially solid
-            expect(dividerElement.nativeElement.className).toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-solid');
 
             // Change to dashed
             dynamicComponent.type = 'dashed';
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dashed');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dashed');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-solid');
 
             // Change to dotted
             dynamicComponent.type = 'dotted';
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dotted');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-dashed');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dotted');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-dashed');
         });
 
         it('should handle dynamic align changes', async () => {
             let dividerElement = dynamicFixture.debugElement.query(By.directive(Divider));
 
             // Initially center
-            expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-center');
 
             // Change to left
             dynamicComponent.align = 'left';
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-left');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-center');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-left');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-center');
 
             // Change to right
             dynamicComponent.align = 'right';
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-right');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-left');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-right');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-left');
         });
 
         it('should handle alignment changes with layout changes', async () => {
             let dividerElement = dynamicFixture.debugElement.query(By.directive(Divider));
 
             // Start with horizontal center
-            expect(dividerElement.nativeElement.className).toContain('p-divider-horizontal');
-            expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-center');
 
             // Change to vertical layout with top alignment
             dynamicComponent.layout = 'vertical';
@@ -604,9 +604,9 @@ describe('Divider', () => {
             dynamicFixture.changeDetectorRef.markForCheck();
             await dynamicFixture.whenStable();
 
-            expect(dividerElement.nativeElement.className).toContain('p-divider-vertical');
-            expect(dividerElement.nativeElement.className).toContain('p-divider-top');
-            expect(dividerElement.nativeElement.className).not.toContain('p-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-vertical');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-top');
+            expect(dividerElement.nativeElement.className).not.toContain('h-divider-horizontal');
         });
     });
 
@@ -614,13 +614,13 @@ describe('Divider', () => {
         it('should have base CSS classes', () => {
             const dividerElement = dividerEl.nativeElement;
 
-            expect(dividerElement.className).toContain('p-divider');
-            expect(dividerElement.className).toContain('p-component');
+            expect(dividerElement.className).toContain('h-divider');
+            expect(dividerElement.className).toContain('h-component');
         });
 
         it('should have layout-specific classes', async () => {
             // Test horizontal
-            expect(dividerEl.nativeElement.className).toContain('p-divider-horizontal');
+            expect(dividerEl.nativeElement.className).toContain('h-divider-horizontal');
 
             // Test vertical
             const customFixture = TestBed.createComponent(TestCustomDividerComponent);
@@ -630,7 +630,7 @@ describe('Divider', () => {
             await customFixture.whenStable();
 
             const verticalDivider = customFixture.debugElement.query(By.directive(Divider));
-            expect(verticalDivider.nativeElement.className).toContain('p-divider-vertical');
+            expect(verticalDivider.nativeElement.className).toContain('h-divider-vertical');
         });
 
         it('should have type-specific classes', async () => {
@@ -642,19 +642,19 @@ describe('Divider', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
             let dividerElement = customFixture.debugElement.query(By.directive(Divider));
-            expect(dividerElement.nativeElement.className).toContain('p-divider-solid');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-solid');
 
             // Test dashed
             customComponent.type = 'dashed';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dashed');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dashed');
 
             // Test dotted
             customComponent.type = 'dotted';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dotted');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dotted');
         });
 
         it('should have alignment-specific classes', async () => {
@@ -667,34 +667,34 @@ describe('Divider', () => {
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
             let dividerElement = customFixture.debugElement.query(By.directive(Divider));
-            expect(dividerElement.nativeElement.className).toContain('p-divider-left');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-left');
 
             customComponent.align = 'center';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-center');
 
             customComponent.align = 'right';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-right');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-right');
 
             // Test vertical alignments
             customComponent.layout = 'vertical';
             customComponent.align = 'top';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-top');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-top');
 
             customComponent.align = 'center';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-center');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-center');
 
             customComponent.align = 'bottom';
             customFixture.changeDetectorRef.markForCheck();
             await customFixture.whenStable();
-            expect(dividerElement.nativeElement.className).toContain('p-divider-bottom');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-bottom');
         });
     });
 
@@ -762,9 +762,9 @@ describe('Divider', () => {
             await customFixture.whenStable();
 
             const dividerElement = customFixture.debugElement.query(By.directive(Divider));
-            expect(dividerElement.nativeElement.className).toContain('p-divider-horizontal');
-            expect(dividerElement.nativeElement.className).toContain('p-divider-dotted');
-            expect(dividerElement.nativeElement.className).toContain('p-divider-right');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-horizontal');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-dotted');
+            expect(dividerElement.nativeElement.className).toContain('h-divider-right');
         });
     });
 
@@ -815,7 +815,7 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_CLASS');
             });
 
@@ -829,7 +829,7 @@ describe('Divider', () => {
                 await ptFixture.whenStable();
 
                 expect(ptFixture.nativeElement.className).toContain('ROOT_CLASS');
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_CLASS');
             });
         });
@@ -865,13 +865,13 @@ describe('Divider', () => {
                 const ptFixture = TestBed.createComponent(Divider);
                 ptFixture.componentRef.setInput('pt', {
                     root: {
-                        'data-p-test': true
+                        'data-h-test': true
                     }
                 });
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                expect(ptFixture.nativeElement.getAttribute('data-p-test')).toBe('true');
+                expect(ptFixture.nativeElement.getAttribute('data-h-test')).toBe('true');
             });
 
             it('should apply object with aria-label to root', async () => {
@@ -900,7 +900,7 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_OBJECT_CLASS');
                 expect(contentElement?.nativeElement.style.color).toBe('blue');
                 expect(contentElement?.nativeElement.getAttribute('data-test')).toBe('value');
@@ -921,7 +921,7 @@ describe('Divider', () => {
                 await ptFixture.whenStable();
 
                 expect(ptFixture.nativeElement.className).toContain('ROOT_OBJECT_CLASS');
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_STRING_CLASS');
             });
 
@@ -938,7 +938,7 @@ describe('Divider', () => {
                 await ptFixture.whenStable();
 
                 expect(ptFixture.nativeElement.className).toContain('ROOT_STRING_CLASS');
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_OBJECT_CLASS');
                 expect(contentElement?.nativeElement.style.fontWeight).toBe('bold');
             });
@@ -976,7 +976,7 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.style.borderColor).toBe('yellow');
             });
 
@@ -1045,7 +1045,7 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 contentElement?.nativeElement.click();
                 expect(contentClicked).toBe(true);
             });
@@ -1075,7 +1075,7 @@ describe('Divider', () => {
             it('should apply inline PT with string class', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-divider [pt]="{ root: 'INLINE_ROOT_CLASS' }"></p-divider>`
+                    template: `<h-divider [pt]="{ root: 'INLINE_ROOT_CLASS' }"></h-divider>`
                 })
                 class TestInlinePTStringComponent {}
 
@@ -1097,7 +1097,7 @@ describe('Divider', () => {
             it('should apply inline PT with object class', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-divider [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></p-divider>`
+                    template: `<h-divider [pt]="{ root: { class: 'INLINE_OBJECT_CLASS' } }"></h-divider>`
                 })
                 class TestInlinePTObjectComponent {}
 
@@ -1121,8 +1121,8 @@ describe('Divider', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-divider></p-divider>
-                    <p-divider></p-divider>
+                    <h-divider></h-divider>
+                    <h-divider></h-divider>
                 `
             })
             class TestGlobalPTComponent {}
@@ -1173,7 +1173,7 @@ describe('Divider', () => {
             it('should merge local PT with global PT', async () => {
                 @Component({
                     standalone: false,
-                    template: `<p-divider [pt]="{ root: { class: 'LOCAL_CLASS' } }"></p-divider>`
+                    template: `<h-divider [pt]="{ root: { class: 'LOCAL_CLASS' } }"></h-divider>`
                 })
                 class TestMergedPTComponent {}
 
@@ -1212,7 +1212,7 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('CONTENT_CLASS');
             });
 
@@ -1257,8 +1257,8 @@ describe('Divider', () => {
                 ptFixture.changeDetectorRef.markForCheck();
                 await ptFixture.whenStable();
 
-                expect(ptFixture.nativeElement.className).toContain('p-divider-vertical');
-                expect(ptFixture.nativeElement.className).toContain('p-divider-dashed');
+                expect(ptFixture.nativeElement.className).toContain('h-divider-vertical');
+                expect(ptFixture.nativeElement.className).toContain('h-divider-dashed');
                 expect(ptFixture.nativeElement.className).toContain('CUSTOM_PT_CLASS');
             });
 
@@ -1272,7 +1272,7 @@ describe('Divider', () => {
                 await ptFixture.whenStable();
 
                 expect(ptFixture.nativeElement.className).toContain('PT_ROOT');
-                const contentElement = ptFixture.debugElement.query(By.css('.p-divider-content'));
+                const contentElement = ptFixture.debugElement.query(By.css('.h-divider-content'));
                 expect(contentElement?.nativeElement.className).toContain('PT_CONTENT');
             });
         });

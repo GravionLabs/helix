@@ -1,16 +1,16 @@
 <span
   #firstHiddenFocusableElement
   role="presentation"
-  class="p-hidden-accessible p-hidden-focusable"
+  class="h-hidden-accessible h-hidden-focusable"
   [tabindex]="!$disabled() ? tabindex() : -1"
   (focus)="onFirstHiddenFocus($event)"
-  [attr.data-p-hidden-focusable]="true"
+  [attr.data-h-hidden-focusable]="true"
   [hBind]="ptm('hiddenFirstFocusableElement')"
   >
 </span>
 @if (headerFacet() || headerTemplate() || _headerTemplate) {
   <div [class]="cx('header')" [hBind]="ptm('header')">
-    <ng-content select="p-header"></ng-content>
+    <ng-content select="h-header"></ng-content>
     <ng-container *ngTemplateOutlet="headerTemplate() || _headerTemplate; context: { $implicit: modelValue(), options: visibleOptions() }"></ng-container>
   </div>
 }
@@ -64,7 +64,7 @@
             />
           <h-inputicon [pt]="ptm('pcFilterIconContainer')" [unstyled]="unstyled()">
             @if (!filterIconTemplate() && !_filterIconTemplate) {
-              <svg data-p-icon="search" [attr.aria-hidden]="true" [hBind]="ptm('filterIcon')" />
+              <svg data-h-icon="search" [attr.aria-hidden]="true" [hBind]="ptm('filterIcon')" />
             }
             @if (filterIconTemplate() || _filterIconTemplate) {
               <span [attr.aria-hidden]="true">
@@ -74,7 +74,7 @@
           </h-inputicon>
         </h-iconfield>
       }
-      <span role="status" [hBind]="ptm('hiddenFilterResult')" [attr.aria-live]="'polite'" class="p-hidden-accessible" [attr.data-p-hidden-accessible]="true">
+      <span role="status" [hBind]="ptm('hiddenFilterResult')" [attr.aria-live]="'polite'" class="h-hidden-accessible" [attr.data-h-hidden-accessible]="true">
         {{ filterResultMessageText }}
       </span>
     }
@@ -187,9 +187,9 @@
               [attr.aria-disabled]="isOptionDisabled(option)"
               [attr.aria-setsize]="ariaSetSize"
               [attr.ariaPosInset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
-              [attr.data-p-selected]="isSelected(option)"
-              [attr.data-p-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
-              [attr.data-p-disabled]="isOptionDisabled(option)"
+              [attr.data-h-selected]="isSelected(option)"
+              [attr.data-h-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
+              [attr.data-h-disabled]="isOptionDisabled(option)"
               [hBind]="getPTOptions(option, scrollerOptions, i, 'option')"
               (click)="onOptionSelect($event, option, getOptionIndex(i, scrollerOptions))"
               (dblclick)="onOptionDoubleClick($event, option)"
@@ -225,10 +225,10 @@
               @if (checkmark()) {
                 @if (!checkmarkTemplate() && !_checkmarkTemplate) {
                   @if (!isSelected(option)) {
-                    <svg data-p-icon="blank" [class]="cx('optionBlankIcon')" [hBind]="ptm('optionBlankIcon')" />
+                    <svg data-h-icon="blank" [class]="cx('optionBlankIcon')" [hBind]="ptm('optionBlankIcon')" />
                   }
                   @if (isSelected(option)) {
-                    <svg data-p-icon="check" [class]="cx('optionCheckIcon')" [hBind]="ptm('optionCheckIcon')" />
+                    <svg data-h-icon="check" [class]="cx('optionCheckIcon')" [hBind]="ptm('optionCheckIcon')" />
                   }
                 }
                 <ng-container *ngTemplateOutlet="checkmarkTemplate() || _checkmarkTemplate; context: { implicit: isSelected(option) }"></ng-container>
@@ -256,25 +256,25 @@
 </div>
 @if (footerFacet() || footerTemplate() || _footerTemplate) {
   <div>
-    <ng-content select="p-footer"></ng-content>
+    <ng-content select="h-footer"></ng-content>
     <ng-container *ngTemplateOutlet="footerTemplate() || _footerTemplate; context: { $implicit: modelValue(), options: visibleOptions() }"></ng-container>
   </div>
 }
 @if (isEmpty()) {
-  <span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenEmptyMessage')">
+  <span role="status" aria-live="polite" class="h-hidden-accessible" [hBind]="ptm('hiddenEmptyMessage')">
     {{ emptyMessage() }}
   </span>
 }
-<span role="status" aria-live="polite" class="p-hidden-accessible" [hBind]="ptm('hiddenSelectedMessage')">
+<span role="status" aria-live="polite" class="h-hidden-accessible" [hBind]="ptm('hiddenSelectedMessage')">
   {{ selectedMessageText }}
 </span>
 <span
   #lastHiddenFocusableElement
   role="presentation"
-  class="p-hidden-accessible p-hidden-focusable"
+  class="h-hidden-accessible h-hidden-focusable"
   [tabindex]="!$disabled() ? tabindex() : -1"
   (focus)="onLastHiddenFocus($event)"
-  [attr.data-p-hidden-focusable]="true"
+  [attr.data-h-hidden-focusable]="true"
   [hBind]="ptm('hiddenLastFocusableEl')"
   >
 </span>

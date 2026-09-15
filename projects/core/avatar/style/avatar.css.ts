@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-avatar {
+    .h-avatar {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -11,71 +11,71 @@ export const style = /*css*/ `
         border-radius: dt('avatar.border.radius');
     }
 
-    .p-avatar-image {
+    .h-avatar-image {
         background: transparent;
     }
 
-    .p-avatar-circle {
+    .h-avatar-circle {
         border-radius: 50%;
     }
 
-    .p-avatar-circle img {
+    .h-avatar-circle img {
         border-radius: 50%;
     }
 
-    .p-avatar-icon {
+    .h-avatar-icon {
         font-size: dt('avatar.icon.size');
         width: dt('avatar.icon.size');
         height: dt('avatar.icon.size');
     }
 
-    .p-avatar img {
+    .h-avatar img {
         width: 100%;
         height: 100%;
     }
 
-    .p-avatar-lg {
+    .h-avatar-lg {
         width: dt('avatar.lg.width');
         height: dt('avatar.lg.width');
         font-size: dt('avatar.lg.font.size');
     }
 
-    .p-avatar-lg .p-avatar-icon {
+    .h-avatar-lg .h-avatar-icon {
         font-size: dt('avatar.lg.icon.size');
         width: dt('avatar.lg.icon.size');
         height: dt('avatar.lg.icon.size');
     }
 
-    .p-avatar-xl {
+    .h-avatar-xl {
         width: dt('avatar.xl.width');
         height: dt('avatar.xl.width');
         font-size: dt('avatar.xl.font.size');
     }
 
-    .p-avatar-xl .p-avatar-icon {
+    .h-avatar-xl .h-avatar-icon {
         font-size: dt('avatar.xl.icon.size');
         width: dt('avatar.xl.icon.size');
         height: dt('avatar.xl.icon.size');
     }
 
-    .p-avatar-group {
+    .h-avatar-group {
         display: flex;
         align-items: center;
     }
 
-    .p-avatar-group .p-avatar + .p-avatar {
+    .h-avatar-group .h-avatar + .h-avatar {
         margin-inline-start: dt('avatar.group.offset');
     }
 
-    .p-avatar-group .p-avatar {
+    .h-avatar-group .h-avatar {
         border: 2px solid dt('avatar.group.border.color');
     }
 
-    .p-avatar-group .p-avatar-lg + .p-avatar-lg {
+    .h-avatar-group .h-avatar-lg + .h-avatar-lg {
         margin-inline-start: dt('avatar.lg.group.offset');
     }
 
-    .p-avatar-group .p-avatar-xl + .p-avatar-xl {
+    .h-avatar-group .h-avatar-xl + .h-avatar-xl {
         margin-inline-start: dt('avatar.xl.group.offset');
     }
 `;

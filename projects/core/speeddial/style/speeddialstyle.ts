@@ -16,24 +16,24 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        `p-speeddial p-component p-speeddial-${instance.type()}`,
+        `h-speeddial h-component h-speeddial-${instance.type()}`,
         {
-            [`p-speeddial-direction-${instance.direction()}`]: instance.type() !== 'circle',
-            'p-speeddial-open': instance.visible(),
-            'p-disabled': instance.disabled()
+            [`h-speeddial-direction-${instance.direction()}`]: instance.type() !== 'circle',
+            'h-speeddial-open': instance.visible(),
+            'h-disabled': instance.disabled()
         }
     ],
     pcButton: ({ instance }) => [
-        'p-button-icon-only p-speeddial-button p-button-rounded',
+        'h-button-icon-only h-speeddial-button h-button-rounded',
         {
-            'p-speeddial-rotate': instance.rotateAnimation() && !instance.hideIcon()
+            'h-speeddial-rotate': instance.rotateAnimation() && !instance.hideIcon()
         }
     ],
-    list: 'p-speeddial-list',
-    item: ({ instance, item, i }) => ['p-speeddial-item', { 'p-hidden': item.visible === false, 'p-focus': instance.focusedOptionId == instance.$id() + '_' + i }],
-    pcAction: 'p-speeddial-action',
-    actionIcon: 'p-speeddial-action-icon',
-    mask: 'p-speeddial-mask p-overlay-mask'
+    list: 'h-speeddial-list',
+    item: ({ instance, item, i }) => ['h-speeddial-item', { 'h-hidden': item.visible === false, 'h-focus': instance.focusedOptionId == instance.$id() + '_' + i }],
+    pcAction: 'h-speeddial-action',
+    actionIcon: 'h-speeddial-action-icon',
+    mask: 'h-speeddial-mask h-overlay-mask'
 };
 
 @Injectable()
@@ -60,31 +60,31 @@ export enum SpeedDialClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-speeddial',
+    root = 'h-speeddial',
     /**
      * Class name of the button element
      */
-    pcButton = 'p-speeddial-button',
+    pcButton = 'h-speeddial-button',
     /**
      * Class name of the list element
      */
-    list = 'p-speeddial-list',
+    list = 'h-speeddial-list',
     /**
      * Class name of the item element
      */
-    item = 'p-speeddial-item',
+    item = 'h-speeddial-item',
     /**
      * Class name of the action element
      */
-    pcAction = 'p-speeddial-action',
+    pcAction = 'h-speeddial-action',
     /**
      * Class name of the action icon element
      */
-    actionIcon = 'p-speeddial-action-icon',
+    actionIcon = 'h-speeddial-action-icon',
     /**
      * Class name of the mask element
      */
-    mask = 'p-speeddial-mask'
+    mask = 'h-speeddial-mask'
 }
 
 export interface SpeedDialStyle extends BaseStyle {}

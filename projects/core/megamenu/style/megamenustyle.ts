@@ -8,74 +8,74 @@ const inlineStyles = {
 
 const classes = {
     root: ({ instance }) => [
-        'p-megamenu p-component',
+        'h-megamenu h-component',
         {
-            'p-megamenu-mobile': instance.queryMatches(),
-            'p-megamenu-mobile-active': instance.mobileActive,
-            'p-megamenu-horizontal': instance.orientation() === 'horizontal',
-            'p-megamenu-vertical': instance.orientation() === 'vertical'
+            'h-megamenu-mobile': instance.queryMatches(),
+            'h-megamenu-mobile-active': instance.mobileActive,
+            'h-megamenu-horizontal': instance.orientation() === 'horizontal',
+            'h-megamenu-vertical': instance.orientation() === 'vertical'
         }
     ],
-    start: 'p-megamenu-start',
-    button: 'p-megamenu-button',
-    rootList: 'p-megamenu-root-list',
+    start: 'h-megamenu-start',
+    button: 'h-megamenu-button',
+    rootList: 'h-megamenu-root-list',
     submenuLabel: ({ instance, processedItem }) => [
-        'p-megamenu-submenu-label',
+        'h-megamenu-submenu-label',
         {
-            'p-disabled': instance.isItemDisabled(processedItem)
+            'h-disabled': instance.isItemDisabled(processedItem)
         }
     ],
     item: ({ instance, processedItem }) => [
-        'p-megamenu-item',
+        'h-megamenu-item',
         instance.getItemProp(processedItem, 'styleClass'),
         instance.getItemProp(processedItem, 'class'),
         {
-            'p-megamenu-item-active': instance.isItemActive(processedItem),
-            'p-focus': instance.isItemFocused(processedItem),
-            'p-disabled': instance.isItemDisabled(processedItem)
+            'h-megamenu-item-active': instance.isItemActive(processedItem),
+            'h-focus': instance.isItemFocused(processedItem),
+            'h-disabled': instance.isItemDisabled(processedItem)
         }
     ],
-    itemContent: 'p-megamenu-item-content',
-    itemLink: 'p-megamenu-item-link',
-    itemIcon: 'p-megamenu-item-icon',
-    itemLabel: 'p-megamenu-item-label',
-    submenuIcon: 'p-megamenu-submenu-icon',
-    overlay: 'p-megamenu-overlay',
-    grid: 'p-megamenu-grid',
+    itemContent: 'h-megamenu-item-content',
+    itemLink: 'h-megamenu-item-link',
+    itemIcon: 'h-megamenu-item-icon',
+    itemLabel: 'h-megamenu-item-label',
+    submenuIcon: 'h-megamenu-submenu-icon',
+    overlay: 'h-megamenu-overlay',
+    grid: 'h-megamenu-grid',
     column: ({ instance, processedItem }) => {
         let length = instance.isItemGroup(processedItem) ? processedItem.items.length : 0;
         let columnClass;
 
-        if (instance.megaMenu.queryMatches()) columnClass = 'p-megamenu-col-12';
+        if (instance.megaMenu.queryMatches()) columnClass = 'h-megamenu-col-12';
         else {
             switch (length) {
                 case 2:
-                    columnClass = 'p-megamenu-col-6';
+                    columnClass = 'h-megamenu-col-6';
                     break;
 
                 case 3:
-                    columnClass = 'p-megamenu-col-4';
+                    columnClass = 'h-megamenu-col-4';
                     break;
 
                 case 4:
-                    columnClass = 'p-megamenu-col-3';
+                    columnClass = 'h-megamenu-col-3';
                     break;
 
                 case 6:
-                    columnClass = 'p-megamenu-col-2';
+                    columnClass = 'h-megamenu-col-2';
                     break;
 
                 default:
-                    columnClass = 'p-megamenu-col-12';
+                    columnClass = 'h-megamenu-col-12';
                     break;
             }
         }
 
         return columnClass;
     },
-    submenu: 'p-megamenu-submenu',
-    separator: 'p-megamenu-separator',
-    end: 'p-megamenu-end'
+    submenu: 'h-megamenu-submenu',
+    separator: 'h-megamenu-separator',
+    end: 'h-megamenu-end'
 };
 
 @Injectable()
@@ -103,71 +103,71 @@ export enum MegaMenuClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-megamenu',
+    root = 'h-megamenu',
     /**
      * Class name of the start element
      */
-    start = 'p-megamenu-start',
+    start = 'h-megamenu-start',
     /**
      * Class name of the button element
      */
-    button = 'p-megamenu-button',
+    button = 'h-megamenu-button',
     /**
      * Class name of the root list element
      */
-    rootList = 'p-megamenu-root-list',
+    rootList = 'h-megamenu-root-list',
     /**
      * Class name of the submenu item element
      */
-    submenuItem = 'p-megamenu-submenu-item',
+    submenuItem = 'h-megamenu-submenu-item',
     /**
      * Class name of the item element
      */
-    item = 'p-megamenu-item',
+    item = 'h-megamenu-item',
     /**
      * Class name of the item content element
      */
-    itemContent = 'p-megamenu-item-content',
+    itemContent = 'h-megamenu-item-content',
     /**
      * Class name of the item link element
      */
-    itemLink = 'p-megamenu-item-link',
+    itemLink = 'h-megamenu-item-link',
     /**
      * Class name of the item icon element
      */
-    itemIcon = 'p-megamenu-item-icon',
+    itemIcon = 'h-megamenu-item-icon',
     /**
      * Class name of the item label element
      */
-    itemLabel = 'p-megamenu-item-label',
+    itemLabel = 'h-megamenu-item-label',
     /**
      * Class name of the submenu icon element
      */
-    submenuIcon = 'p-megamenu-submenu-icon',
+    submenuIcon = 'h-megamenu-submenu-icon',
     /**
      * Class name of the panel element
      */
-    panel = 'p-megamenu-panel',
+    panel = 'h-megamenu-panel',
     /**
      * Class name of the grid element
      */
-    grid = 'p-megamenu-grid',
+    grid = 'h-megamenu-grid',
     /**
      * Class name of the submenu element
      */
-    submenu = 'p-megamenu-submenu',
+    submenu = 'h-megamenu-submenu',
     /**
      * Class name of the submenu item label element
      */
-    submenuItemLabel = 'p-megamenu-submenu-item-label',
+    submenuItemLabel = 'h-megamenu-submenu-item-label',
     /**
      * Class name of the separator element
      */
-    separator = 'p-megamenu-separator',
+    separator = 'h-megamenu-separator',
     /**
      * Class name of the end element
      */
-    end = 'p-megamenu-end'
+    end = 'h-megamenu-end'
 }
 
 export interface MegaMenuStyle extends BaseStyle {}

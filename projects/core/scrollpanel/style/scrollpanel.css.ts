@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-scrollpanel-content-container {
+    .h-scrollpanel-content-container {
         overflow: hidden;
         width: 100%;
         height: 100%;
@@ -8,7 +8,7 @@ export const style = /*css*/ `
         float: left;
     }
 
-    .p-scrollpanel-content {
+    .h-scrollpanel-content {
         height: calc(100% + calc(2 * dt('scrollpanel.bar.size')));
         width: calc(100% + calc(2 * dt('scrollpanel.bar.size')));
         padding-inline: 0 calc(2 * dt('scrollpanel.bar.size'));
@@ -19,11 +19,11 @@ export const style = /*css*/ `
         scrollbar-width: none;
     }
 
-    .p-scrollpanel-content::-webkit-scrollbar {
+    .h-scrollpanel-content::-webkit-scrollbar {
         display: none;
     }
 
-    .p-scrollpanel-bar {
+    .h-scrollpanel-bar {
         position: relative;
         border-radius: dt('scrollpanel.bar.border.radius');
         z-index: 2;
@@ -37,32 +37,32 @@ export const style = /*css*/ `
             opacity dt('scrollpanel.transition.duration');
     }
 
-    .p-scrollpanel-bar:focus-visible {
+    .h-scrollpanel-bar:focus-visible {
         box-shadow: dt('scrollpanel.bar.focus.ring.shadow');
         outline: dt('scrollpanel.barfocus.ring.width') dt('scrollpanel.bar.focus.ring.style') dt('scrollpanel.bar.focus.ring.color');
         outline-offset: dt('scrollpanel.barfocus.ring.offset');
     }
 
-    .p-scrollpanel-bar-y {
+    .h-scrollpanel-bar-y {
         width: dt('scrollpanel.bar.size');
         inset-block-start: 0;
     }
 
-    .p-scrollpanel-bar-x {
+    .h-scrollpanel-bar-x {
         height: dt('scrollpanel.bar.size');
         inset-block-end: 0;
     }
 
-    .p-scrollpanel-hidden {
+    .h-scrollpanel-hidden {
         visibility: hidden;
     }
 
-    .p-scrollpanel:hover .p-scrollpanel-bar,
-    .p-scrollpanel:active .p-scrollpanel-bar {
+    .h-scrollpanel:hover .h-scrollpanel-bar,
+    .h-scrollpanel:active .h-scrollpanel-bar {
         opacity: 1;
     }
 
-    .p-scrollpanel-grabbed {
+    .h-scrollpanel-grabbed {
         user-select: none;
     }
 `;

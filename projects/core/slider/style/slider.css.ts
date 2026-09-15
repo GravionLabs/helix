@@ -1,12 +1,12 @@
 export const style = /*css*/ `
-    .p-slider {
+    .h-slider {
         display: block;
         position: relative;
         background: dt('slider.track.background');
         border-radius: dt('slider.track.border.radius');
     }
 
-    .p-slider-handle {
+    .h-slider-handle {
         cursor: grab;
         touch-action: none;
         user-select: none;
@@ -26,7 +26,7 @@ export const style = /*css*/ `
         outline-color: transparent;
     }
 
-    .p-slider-handle::before {
+    .h-slider-handle::before {
         content: '';
         width: dt('slider.handle.content.width');
         height: dt('slider.handle.content.height');
@@ -37,54 +37,54 @@ export const style = /*css*/ `
         transition: background dt('slider.transition.duration');
     }
 
-    .p-slider:not(.p-disabled) .p-slider-handle:hover {
+    .h-slider:not(.h-disabled) .h-slider-handle:hover {
         background: dt('slider.handle.hover.background');
     }
 
-    .p-slider:not(.p-disabled) .p-slider-handle:hover::before {
+    .h-slider:not(.h-disabled) .h-slider-handle:hover::before {
         background: dt('slider.handle.content.hover.background');
     }
 
-    .p-slider-handle:focus-visible {
+    .h-slider-handle:focus-visible {
         box-shadow: dt('slider.handle.focus.ring.shadow');
         outline: dt('slider.handle.focus.ring.width') dt('slider.handle.focus.ring.style') dt('slider.handle.focus.ring.color');
         outline-offset: dt('slider.handle.focus.ring.offset');
     }
 
-    .p-slider-range {
+    .h-slider-range {
         display: block;
         background: dt('slider.range.background');
         border-radius: dt('slider.track.border.radius');
     }
 
-    .p-slider.p-slider-horizontal {
+    .h-slider.h-slider-horizontal {
         height: dt('slider.track.size');
     }
 
-    .p-slider-horizontal .p-slider-range {
+    .h-slider-horizontal .h-slider-range {
         inset-block-start: 0;
         inset-inline-start: 0;
         height: 100%;
     }
 
-    .p-slider-horizontal .p-slider-handle {
+    .h-slider-horizontal .h-slider-handle {
         inset-block-start: 50%;
         margin-block-start: calc(-1 * calc(dt('slider.handle.height') / 2));
         margin-inline-start: calc(-1 * calc(dt('slider.handle.width') / 2));
     }
 
-    .p-slider-vertical {
+    .h-slider-vertical {
         min-height: 100px;
         width: dt('slider.track.size');
     }
 
-    .p-slider-vertical .p-slider-handle {
+    .h-slider-vertical .h-slider-handle {
         inset-inline-start: 50%;
         margin-inline-start: calc(-1 * calc(dt('slider.handle.width') / 2));
         margin-block-end: calc(-1 * calc(dt('slider.handle.height') / 2));
     }
 
-    .p-slider-vertical .p-slider-range {
+    .h-slider-vertical .h-slider-range {
         inset-block-end: 0;
         inset-inline-start: 0;
         width: 100%;

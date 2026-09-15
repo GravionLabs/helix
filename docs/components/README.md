@@ -117,7 +117,7 @@ Output convention: signal outputs are documented as `output<T>()`, matching the 
 | [Textarea](textarea.md) | Textarea adds styling and autoResize functionality to standard textarea element. |
 | [Tooltip](tooltip.md) | Tooltip directive provides advisory information for a component. |
 
-## Infrastructure (21)
+## Infrastructure (22)
 
 | Module | Description |
 | --- | --- |
@@ -137,6 +137,7 @@ Output convention: signal outputs are documented as `output<T>()`, matching the 
 | [Motion](motion.md) | Motion component is a container to apply motion effects to its content. |
 | [Overlay](overlay.md) | This API allows overlay components to be controlled from the Helix configuration. In this way, all overlay components in the application can have the same behavior. |
 | [Passthrough](passthrough.md) | Pass-through (`pt`) infrastructure: merge and provide attribute maps for component internals. |
+| [Themes](themes.md) | Theme preset engine ($t, definePreset, updatePreset) plus the Aura/Lara/Nora presets (themes/aura, themes/lara, themes/nora) and their design-token types (themes/types), vendored from @primeuix/themes. |
 | [TS Helpers](ts-helpers.md) | Tiny TypeScript runtime helpers shared by the library. |
 | [Types](types.md) | Shared pass-through type definitions for every Helix component module. |
 | [UseStyle](usestyle.md) | Runtime CSS injection service used by the theming layer. |

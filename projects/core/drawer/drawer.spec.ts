@@ -9,7 +9,7 @@ import { Drawer } from './drawer';
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer
+        <h-drawer
             [(visible)]="visible"
             [position]="position"
             [modal]="modal"
@@ -34,7 +34,7 @@ import { Drawer } from './drawer';
             (visibleChange)="onVisibleChange($event)"
         >
             <p>Basic drawer content</p>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerBasicComponent {
@@ -83,7 +83,7 @@ class TestDrawerBasicComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible" [header]="header">
+        <h-drawer [(visible)]="visible" [header]="header">
             <ng-template pTemplate="header">
                 <div class="custom-header">Custom Header Template</div>
             </ng-template>
@@ -96,7 +96,7 @@ class TestDrawerBasicComponent {
             <ng-template pTemplate="closeicon">
                 <i class="pi pi-times custom-close-icon"></i>
             </ng-template>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerTemplatesComponent {
@@ -108,7 +108,7 @@ class TestDrawerTemplatesComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible">
+        <h-drawer [(visible)]="visible">
             <ng-template #header>
                 <div class="ref-header">Template Ref Header</div>
             </ng-template>
@@ -121,7 +121,7 @@ class TestDrawerTemplatesComponent {
             <ng-template #closeicon>
                 <i class="pi pi-close ref-close-icon"></i>
             </ng-template>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerTemplateRefsComponent {
@@ -132,7 +132,7 @@ class TestDrawerTemplateRefsComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible">
+        <h-drawer [(visible)]="visible">
             <ng-template pTemplate="headless">
                 <div class="headless-template">
                     <div class="headless-header">Headless Header</div>
@@ -140,7 +140,7 @@ class TestDrawerTemplateRefsComponent {
                     <div class="headless-footer">Headless Footer</div>
                 </div>
             </ng-template>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerHeadlessComponent {
@@ -151,9 +151,9 @@ class TestDrawerHeadlessComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible" [position]="position">
+        <h-drawer [(visible)]="visible" [position]="position">
             <p>Position test content</p>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerPositionComponent {
@@ -165,9 +165,9 @@ class TestDrawerPositionComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible" [fullScreen]="fullScreen">
+        <h-drawer [(visible)]="visible" [fullScreen]="fullScreen">
             <p>Full screen test content</p>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerFullScreenComponent {
@@ -179,9 +179,9 @@ class TestDrawerFullScreenComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible" [modal]="modal" [dismissible]="dismissible">
+        <h-drawer [(visible)]="visible" [modal]="modal" [dismissible]="dismissible">
             <p>Modal test content</p>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerModalComponent {
@@ -194,9 +194,9 @@ class TestDrawerModalComponent {
     standalone: false,
     imports: [Drawer],
     template: `
-        <p-drawer [(visible)]="visible" [closable]="closable" [closeOnEscape]="closeOnEscape" [ariaCloseLabel]="ariaCloseLabel">
+        <h-drawer [(visible)]="visible" [closable]="closable" [closeOnEscape]="closeOnEscape" [ariaCloseLabel]="ariaCloseLabel">
             <p>Accessibility test content</p>
-        </p-drawer>
+        </h-drawer>
     `
 })
 class TestDrawerAccessibilityComponent {
@@ -264,7 +264,7 @@ describe('Drawer', () => {
         });
 
         it('should initialize component correctly', () => {
-            const drawerElement = testFixture.debugElement.query(By.css('p-drawer'));
+            const drawerElement = testFixture.debugElement.query(By.css('h-drawer'));
             expect(drawerElement).toBeTruthy();
         });
 
@@ -490,7 +490,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const closeButton = testFixture.debugElement.query(By.css('p-button'));
+            const closeButton = testFixture.debugElement.query(By.css('h-button'));
             if (closeButton) {
                 closeButton.triggerEventHandler('onClick', new Event('click'));
                 testFixture.changeDetectorRef.markForCheck();
@@ -561,7 +561,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const closeButton = testFixture.debugElement.query(By.css('p-button'));
+            const closeButton = testFixture.debugElement.query(By.css('h-button'));
             if (closeButton) {
                 const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
                 closeButton.triggerEventHandler('keydown.enter', enterEvent);
@@ -800,7 +800,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const mask = document.querySelector('.p-drawer-mask');
+            const mask = document.querySelector('.h-drawer-mask');
             if (mask) {
                 (mask as HTMLElement).click();
                 testFixture.changeDetectorRef.markForCheck();
@@ -856,7 +856,7 @@ describe('Drawer', () => {
             const drawerComponent = testFixture.debugElement.query(By.directive(Drawer)).componentInstance;
             expect(drawerComponent.ariaCloseLabel()).toBe('Close drawer');
 
-            const closeButton = testFixture.debugElement.query(By.css('p-button'));
+            const closeButton = testFixture.debugElement.query(By.css('h-button'));
             if (closeButton) {
                 const ariaLabel = closeButton.componentInstance.ariaLabel || closeButton.nativeElement.getAttribute('aria-label') || closeButton.nativeElement.getAttribute('ng-reflect-aria-label');
                 // Check that some form of aria label is set
@@ -871,7 +871,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const closeButton = testFixture.debugElement.query(By.css('p-button'));
+            const closeButton = testFixture.debugElement.query(By.css('h-button'));
             expect(closeButton).toBeTruthy();
         });
 
@@ -882,7 +882,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const closeButton = testFixture.debugElement.query(By.css('p-button'));
+            const closeButton = testFixture.debugElement.query(By.css('h-button'));
             expect(closeButton).toBeFalsy();
         });
 
@@ -919,7 +919,7 @@ describe('Drawer', () => {
             const headerElement = testFixture.debugElement.query(By.css('[data-pc-section="header"]'));
             expect(headerElement).toBeTruthy();
 
-            const titleElement = headerElement.query(By.css('.p-drawer-title'));
+            const titleElement = headerElement.query(By.css('.h-drawer-title'));
             if (titleElement) {
                 expect(titleElement.nativeElement.textContent).toContain('Test Header');
             }
@@ -932,7 +932,7 @@ describe('Drawer', () => {
             await testFixture.whenStable();
             await new Promise((resolve) => setTimeout(resolve, 100));
 
-            const titleElement = testFixture.debugElement.query(By.css('.p-drawer-title'));
+            const titleElement = testFixture.debugElement.query(By.css('.h-drawer-title'));
             expect(titleElement).toBeFalsy();
         });
     });
@@ -1063,7 +1063,7 @@ describe('Drawer', () => {
         describe('Case 1: Simple string classes', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase1Component {
                 visible = true;
@@ -1110,7 +1110,7 @@ describe('Drawer', () => {
         describe('Case 2: Objects with class, style, and attributes', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase2Component {
                 visible = true;
@@ -1168,7 +1168,7 @@ describe('Drawer', () => {
         describe('Case 3: Mixed object and string values', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase3Component {
                 visible = true;
@@ -1216,7 +1216,7 @@ describe('Drawer', () => {
         describe('Case 4: Use variables from instance', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" [position]="position" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" [position]="position" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase4Component {
                 visible = true;
@@ -1265,7 +1265,7 @@ describe('Drawer', () => {
         describe('Case 5: Event binding', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase5Component {
                 visible = true;
@@ -1315,7 +1315,7 @@ describe('Drawer', () => {
         describe('Case 6: Inline test', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="{ root: 'INLINE_ROOT_CLASS', header: 'INLINE_HEADER_CLASS' }" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="{ root: 'INLINE_ROOT_CLASS', header: 'INLINE_HEADER_CLASS' }" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase6InlineComponent {
                 visible = true;
@@ -1323,7 +1323,7 @@ describe('Drawer', () => {
 
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="{ root: { class: 'INLINE_ROOT_OBJECT_CLASS' }, content: { class: 'INLINE_CONTENT_CLASS' } }" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase6InlineObjectComponent {
                 visible = true;
@@ -1382,8 +1382,8 @@ describe('Drawer', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-drawer [(visible)]="visible1" header="Drawer 1">Content 1</p-drawer>
-                    <p-drawer [(visible)]="visible2" header="Drawer 2">Content 2</p-drawer>
+                    <h-drawer [(visible)]="visible1" header="Drawer 1">Content 1</h-drawer>
+                    <h-drawer [(visible)]="visible2" header="Drawer 2">Content 2</h-drawer>
                 `
             })
             class TestPTCase7GlobalComponent {
@@ -1425,7 +1425,7 @@ describe('Drawer', () => {
         describe('Case 8: Test hooks', () => {
             @Component({
                 standalone: false,
-                template: `<p-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</p-drawer>`
+                template: `<h-drawer [pt]="pt" [(visible)]="visible" header="Test Drawer">Content</h-drawer>`
             })
             class TestPTCase8HooksComponent {
                 visible = true;

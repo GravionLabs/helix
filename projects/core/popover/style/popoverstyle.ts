@@ -7,8 +7,8 @@ const inlineStyles = {
 };
 
 const classes = {
-    root: 'p-popover p-component',
-    content: 'p-popover-content'
+    root: 'h-popover h-component',
+    content: 'h-popover-content'
 };
 
 @Injectable()

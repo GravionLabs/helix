@@ -6,14 +6,14 @@ const theme = /*css*/ `
     ${style}
 
     /* For Helix */
-    .p-orderlist-controls-right .p-orderlist-controls {
+    .h-orderlist-controls-right .h-orderlist-controls {
         order: 2;
     }
 `;
 
 const classes = {
-    root: ({ instance }) => ['p-orderlist p-component', { 'p-orderlist-controls-left': instance.controlsPosition() === 'left', 'p-orderlist-controls-right': instance.controlsPosition() === 'right' }],
-    controls: 'p-orderlist-controls'
+    root: ({ instance }) => ['h-orderlist h-component', { 'h-orderlist-controls-left': instance.controlsPosition() === 'left', 'h-orderlist-controls-right': instance.controlsPosition() === 'right' }],
+    controls: 'h-orderlist-controls'
 };
 
 @Injectable()
@@ -39,11 +39,11 @@ export enum OrderListClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-orderlist',
+    root = 'h-orderlist',
     /**
      * Class name of the controls element
      */
-    controls = 'p-orderlist-controls'
+    controls = 'h-orderlist-controls'
 }
 
 export interface OrderListStyle extends BaseStyle {}

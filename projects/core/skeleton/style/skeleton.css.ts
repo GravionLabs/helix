@@ -1,14 +1,14 @@
 export const style = /*css*/ `
-    .p-skeleton {
+    .h-skeleton {
         display: block;
         overflow: hidden;
         background: dt('skeleton.background');
         border-radius: dt('skeleton.border.radius');
     }
 
-    .p-skeleton::after {
+    .h-skeleton::after {
         content: '';
-        animation: p-skeleton-animation 1.2s infinite;
+        animation: h-skeleton-animation 1.2s infinite;
         height: 100%;
         left: 0;
         position: absolute;
@@ -19,19 +19,19 @@ export const style = /*css*/ `
         background: linear-gradient(90deg, rgba(255, 255, 255, 0), dt('skeleton.animation.background'), rgba(255, 255, 255, 0));
     }
 
-    [dir='rtl'] .p-skeleton::after {
-        animation-name: p-skeleton-animation-rtl;
+    [dir='rtl'] .h-skeleton::after {
+        animation-name: h-skeleton-animation-rtl;
     }
 
-    .p-skeleton-circle {
+    .h-skeleton-circle {
         border-radius: 50%;
     }
 
-    .p-skeleton-animation-none::after {
+    .h-skeleton-animation-none::after {
         animation: none;
     }
 
-    @keyframes p-skeleton-animation {
+    @keyframes h-skeleton-animation {
         from {
             transform: translateX(-100%);
         }
@@ -40,7 +40,7 @@ export const style = /*css*/ `
         }
     }
 
-    @keyframes p-skeleton-animation-rtl {
+    @keyframes h-skeleton-animation-rtl {
         from {
             transform: translateX(100%);
         }

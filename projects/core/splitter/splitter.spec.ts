@@ -7,7 +7,7 @@ import { Splitter } from './splitter';
 @Component({
     standalone: false,
     template: `
-        <p-splitter
+        <h-splitter
             [panelSizes]="panelSizes"
             [layout]="layout"
             [gutterSize]="gutterSize"
@@ -27,7 +27,7 @@ import { Splitter } from './splitter';
             <ng-template #panel>
                 <div class="panel2">Panel 2</div>
             </ng-template>
-        </p-splitter>
+        </h-splitter>
     `
 })
 class TestSplitterComponent {
@@ -57,7 +57,7 @@ class TestSplitterComponent {
 @Component({
     standalone: false,
     template: `
-        <p-splitter>
+        <h-splitter>
             <ng-template #panel>
                 <div>Panel 1</div>
             </ng-template>
@@ -67,7 +67,7 @@ class TestSplitterComponent {
             <ng-template #panel>
                 <div>Panel 3</div>
             </ng-template>
-        </p-splitter>
+        </h-splitter>
     `
 })
 class TestThreePanelComponent {}
@@ -75,21 +75,21 @@ class TestThreePanelComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-splitter [panelSizes]="[20, 80]">
+        <h-splitter [panelSizes]="[20, 80]">
             <ng-template #panel>
                 <div>Panel 1</div>
             </ng-template>
             <ng-template #panel>
-                <p-splitter layout="vertical" [panelSizes]="[30, 70]">
+                <h-splitter layout="vertical" [panelSizes]="[30, 70]">
                     <ng-template #panel>
                         <div>Nested Panel 1</div>
                     </ng-template>
                     <ng-template #panel>
                         <div>Nested Panel 2</div>
                     </ng-template>
-                </p-splitter>
+                </h-splitter>
             </ng-template>
-        </p-splitter>
+        </h-splitter>
     `
 })
 class TestNestedSplitterComponent {}
@@ -97,14 +97,14 @@ class TestNestedSplitterComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-splitter [pt]="pt" [layout]="layout">
+        <h-splitter [pt]="pt" [layout]="layout">
             <ng-template #panel>
                 <div>PT Test Panel 1</div>
             </ng-template>
             <ng-template #panel>
                 <div>PT Test Panel 2</div>
             </ng-template>
-        </p-splitter>
+        </h-splitter>
     `
 })
 class TestPTSplitterComponent {
@@ -181,7 +181,7 @@ describe('Splitter', () => {
 
     describe('Panel Rendering', () => {
         xit('should render two panels by default', () => {
-            const panels = testFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
+            const panels = testFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
             expect(panels.length).toBe(2);
         });
 
@@ -200,7 +200,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const panels = testFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
+            const panels = testFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
             expect(panels[0].nativeElement.className).toContain('custom-panel-class');
         });
 
@@ -208,8 +208,8 @@ describe('Splitter', () => {
             const fixture = TestBed.createComponent(TestThreePanelComponent);
             fixture.detectChanges();
 
-            const panels = fixture.debugElement.queryAll(By.css('.p-splitterpanel'));
-            const gutters = fixture.debugElement.queryAll(By.css('.p-splitter-gutter'));
+            const panels = fixture.debugElement.queryAll(By.css('.h-splitterpanel'));
+            const gutters = fixture.debugElement.queryAll(By.css('.h-splitter-gutter'));
 
             expect(panels.length).toBe(3);
             expect(gutters.length).toBe(2); // 3 panels = 2 gutters
@@ -218,12 +218,12 @@ describe('Splitter', () => {
 
     describe('Gutter Functionality', () => {
         xit('should render gutter between panels', () => {
-            const gutters = testFixture.debugElement.queryAll(By.css('.p-splitter-gutter'));
+            const gutters = testFixture.debugElement.queryAll(By.css('.h-splitter-gutter'));
             expect(gutters.length).toBe(1);
         });
 
         xit('should render gutter handle', () => {
-            const handle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const handle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
             expect(handle).toBeTruthy();
         });
 
@@ -249,7 +249,7 @@ describe('Splitter', () => {
         });
 
         xit('should have proper ARIA attributes', () => {
-            const handle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const handle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
             expect(handle.nativeElement.getAttribute('aria-orientation')).toBe('horizontal');
             expect(handle.nativeElement.getAttribute('tabindex')).toBe('0');
         });
@@ -290,7 +290,7 @@ describe('Splitter', () => {
 
     describe('Mouse Resize Operations', () => {
         xit('should start resize on mouse down', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageX', { value: 100, writable: true });
             Object.defineProperty(mouseEvent, 'pageY', { value: 100, writable: true });
@@ -302,7 +302,7 @@ describe('Splitter', () => {
         });
 
         xit('should emit onResizeStart event', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageX', { value: 100, writable: true });
             Object.defineProperty(mouseEvent, 'pageY', { value: 100, writable: true });
@@ -317,7 +317,7 @@ describe('Splitter', () => {
 
         xit('should emit onResizeEnd event', () => {
             const mouseEvent = new MouseEvent('mouseup');
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             splitterInstance.gutterElement = gutter.nativeElement;
 
             splitterInstance.resizeEnd(mouseEvent);
@@ -340,7 +340,7 @@ describe('Splitter', () => {
 
     describe('Touch Resize Operations', () => {
         xit('should handle touch start', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
 
             spyOn(splitterInstance, 'onGutterTouchStart');
 
@@ -351,7 +351,7 @@ describe('Splitter', () => {
         });
 
         xit('should handle touch move', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
 
             spyOn(splitterInstance, 'onGutterTouchMove');
 
@@ -362,7 +362,7 @@ describe('Splitter', () => {
         });
 
         xit('should handle touch end', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
 
             spyOn(splitterInstance, 'onGutterTouchEnd');
 
@@ -377,7 +377,7 @@ describe('Splitter', () => {
         let gutterHandle: DebugElement;
 
         beforeEach(() => {
-            gutterHandle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            gutterHandle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
         });
 
         describe('Horizontal Layout', () => {
@@ -610,7 +610,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const splitterElement = testFixture.debugElement.query(By.css('p-splitter'));
+            const splitterElement = testFixture.debugElement.query(By.css('h-splitter'));
             expect(splitterElement.nativeElement.className).toContain('custom-splitter-class');
         });
 
@@ -620,7 +620,7 @@ describe('Splitter', () => {
             await testFixture.whenStable();
             testFixture.detectChanges();
 
-            const panelElements = testFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
+            const panelElements = testFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
 
             // Check that splitter component received the style input
             expect(splitterInstance.panelStyle()).toEqual({ border: '2px solid red', padding: '10px' });
@@ -648,28 +648,28 @@ describe('Splitter', () => {
         });
 
         xit('should apply resizing classes during resize', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageX', { value: 100, writable: true });
             Object.defineProperty(mouseEvent, 'pageY', { value: 100, writable: true });
             Object.defineProperty(mouseEvent, 'currentTarget', { value: gutter.nativeElement, writable: true });
 
             splitterInstance.resizeStart(mouseEvent, 0);
-            expect(splitterInstance.el.nativeElement.className).toContain('p-splitter-resizing');
+            expect(splitterInstance.el.nativeElement.className).toContain('h-splitter-resizing');
 
             splitterInstance.resizeEnd(mouseEvent);
-            expect(splitterInstance.el.nativeElement.className).not.toContain('p-splitter-resizing');
+            expect(splitterInstance.el.nativeElement.className).not.toContain('h-splitter-resizing');
         });
     });
 
     describe('Accessibility', () => {
         xit('should have separator role on gutter', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             expect(gutter.nativeElement.getAttribute('role')).toBe('separator');
         });
 
         xit('should set aria-orientation on handle', async () => {
-            const handle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const handle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
 
             testComponent.layout = 'horizontal';
             testFixture.changeDetectorRef.markForCheck();
@@ -685,12 +685,12 @@ describe('Splitter', () => {
         });
 
         xit('should be keyboard navigable', () => {
-            const handle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const handle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
             expect(handle.nativeElement.getAttribute('tabindex')).toBe('0');
         });
 
         xit('should update aria-valuenow during resize', async () => {
-            const handle = testFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const handle = testFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
 
             testComponent.panelSizes = [30, 70];
             testFixture.changeDetectorRef.markForCheck();
@@ -722,7 +722,7 @@ describe('Splitter', () => {
         });
 
         xit('should handle rapid mouse events', () => {
-            const gutter = testFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const gutter = testFixture.debugElement.query(By.css('.h-splitter-gutter'));
             const mouseEvent1 = new MouseEvent('mousedown');
 
             Object.defineProperty(mouseEvent1, 'pageX', { value: 100, writable: true });
@@ -878,10 +878,10 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-splitter'));
-            const panels = ptFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
-            const gutter = ptFixture.debugElement.query(By.css('.p-splitter-gutter'));
-            const gutterHandle = ptFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-splitter'));
+            const panels = ptFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
+            const gutter = ptFixture.debugElement.query(By.css('.h-splitter-gutter'));
+            const gutterHandle = ptFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
 
             expect(hostEl.nativeElement.className).toContain('HOST_CLASS');
             expect(hostEl.nativeElement.className).toContain('ROOT_CLASS');
@@ -917,10 +917,10 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-splitter'));
-            const panels = ptFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
-            const gutter = ptFixture.debugElement.query(By.css('.p-splitter-gutter'));
-            const gutterHandle = ptFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-splitter'));
+            const panels = ptFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
+            const gutter = ptFixture.debugElement.query(By.css('.h-splitter-gutter'));
+            const gutterHandle = ptFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
 
             expect(hostEl.nativeElement.className).toContain('ROOT_OBJECT_CLASS');
             expect(hostEl.nativeElement.getAttribute('data-test')).toBe('root-test');
@@ -950,10 +950,10 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-splitter'));
-            const panels = ptFixture.debugElement.queryAll(By.css('.p-splitterpanel'));
-            const gutter = ptFixture.debugElement.query(By.css('.p-splitter-gutter'));
-            const gutterHandle = ptFixture.debugElement.query(By.css('.p-splitter-gutter-handle'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-splitter'));
+            const panels = ptFixture.debugElement.queryAll(By.css('.h-splitterpanel'));
+            const gutter = ptFixture.debugElement.query(By.css('.h-splitter-gutter'));
+            const gutterHandle = ptFixture.debugElement.query(By.css('.h-splitter-gutter-handle'));
 
             expect(hostEl.nativeElement.className).toContain('MIXED_ROOT_CLASS');
             expect(panels[0].nativeElement.className).toContain('MIXED_PANEL_CLASS');
@@ -982,8 +982,8 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-splitter'));
-            const gutter = ptFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-splitter'));
+            const gutter = ptFixture.debugElement.query(By.css('.h-splitter-gutter'));
 
             expect(hostEl.nativeElement.className).toContain('DRAGGING');
             expect(gutter.nativeElement.className).toContain('GUTTER_INSTANCE');
@@ -1005,7 +1005,7 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const panel = ptFixture.debugElement.query(By.css('.p-splitterpanel'));
+            const panel = ptFixture.debugElement.query(By.css('.h-splitterpanel'));
             panel.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 50));
             await ptFixture.whenStable();
@@ -1022,8 +1022,8 @@ describe('Splitter', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-splitter'));
-            const gutter = ptFixture.debugElement.query(By.css('.p-splitter-gutter'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-splitter'));
+            const gutter = ptFixture.debugElement.query(By.css('.h-splitter-gutter'));
 
             expect(hostEl.nativeElement.className).toContain('SET_INPUT_CLASS');
             expect(gutter.nativeElement.className).toContain('GUTTER_SET_INPUT');

@@ -26,7 +26,7 @@ interface Product {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist
+        <h-orderlist
             [value]="products"
             [selection]="selection"
             [header]="header"
@@ -69,7 +69,7 @@ interface Product {
                     <div class="product-price">{{ product.price | currency }}</div>
                 </div>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestBasicOrderListComponent {
@@ -146,7 +146,7 @@ class TestBasicOrderListComponent {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="products">
+        <h-orderlist [value]="products">
             <ng-template #header>
                 <div class="custom-header">Custom Header Content</div>
             </ng-template>
@@ -182,7 +182,7 @@ class TestBasicOrderListComponent {
             <ng-template pTemplate="filtericon">
                 <i class="pi pi-search custom-filter"></i>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestTemplatesOrderListComponent {
@@ -195,14 +195,14 @@ class TestTemplatesOrderListComponent {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="[]" [filterBy]="'name'">
+        <h-orderlist [value]="[]" [filterBy]="'name'">
             <ng-template pTemplate="empty">
                 <div class="empty-template">No products available</div>
             </ng-template>
             <ng-template pTemplate="emptyfilter">
                 <div class="empty-filter-template">No filtered products</div>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestEmptyTemplatesOrderListComponent {}
@@ -210,11 +210,11 @@ class TestEmptyTemplatesOrderListComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="products" [dragdrop]="true" [selection]="selection" [(ngModel)]="selection">
+        <h-orderlist [value]="products" [dragdrop]="true" [selection]="selection" [(ngModel)]="selection">
             <ng-template pTemplate="item" let-product>
                 <div class="drag-item">{{ product.name }}</div>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestDragDropOrderListComponent {
@@ -229,11 +229,11 @@ class TestDragDropOrderListComponent {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="products" [filterBy]="'name,category'" filterPlaceholder="Filter products">
+        <h-orderlist [value]="products" [filterBy]="'name,category'" filterPlaceholder="Filter products">
             <ng-template pTemplate="item" let-product>
                 <div class="filter-item">{{ product.name }} - {{ product.category }}</div>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestFilterOrderListComponent {
@@ -248,7 +248,7 @@ class TestFilterOrderListComponent {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="products" [selection]="selection" [filterBy]="filterBy">
+        <h-orderlist [value]="products" [selection]="selection" [filterBy]="filterBy">
             <!-- Item template with full context -->
             <ng-template pTemplate="item" let-product let-selected="selected" let-index="index">
                 <div class="custom-item-template">Item: {{ product.name }} | Index: {{ index }} | Selected: {{ selected }}</div>
@@ -297,7 +297,7 @@ class TestFilterOrderListComponent {
             <ng-template pTemplate="filtericon">
                 <span class="custom-filter-icon">SEARCH</span>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestComprehensiveTemplatesOrderListComponent {
@@ -315,7 +315,7 @@ class TestComprehensiveTemplatesOrderListComponent {
 @Component({
     standalone: false,
     template: `
-        <p-orderlist [value]="products" [selection]="selection" [filterBy]="filterBy">
+        <h-orderlist [value]="products" [selection]="selection" [filterBy]="filterBy">
             <!-- ContentChild templates using #template references -->
             <ng-template #item let-product let-selected="selected" let-index="index">
                 <div class="contentchild-item-template">ContentChild Item: {{ product.name }} | Index: {{ index }} | Selected: {{ selected }}</div>
@@ -358,7 +358,7 @@ class TestComprehensiveTemplatesOrderListComponent {
             <ng-template #filtericon>
                 <span class="contentchild-filter-icon">CC-SEARCH</span>
             </ng-template>
-        </p-orderlist>
+        </h-orderlist>
     `
 })
 class TestContentChildTemplatesOrderListComponent {
@@ -1193,7 +1193,7 @@ describe('OrderList', () => {
 
     describe('Selection Handling', () => {
         it('should handle single selection', () => {
-            const listbox = fixture.debugElement.query(By.css('p-listbox'));
+            const listbox = fixture.debugElement.query(By.css('h-listbox'));
             expect(listbox).toBeTruthy();
 
             // Test selection through component
@@ -1384,7 +1384,7 @@ describe('OrderList', () => {
             fixture.changeDetectorRef.markForCheck();
             await fixture.whenStable();
 
-            const orderListElement = fixture.debugElement.query(By.css('p-orderlist'));
+            const orderListElement = fixture.debugElement.query(By.css('h-orderlist'));
             expect(orderListElement.nativeElement.className).toContain('custom-orderlist-class');
         });
 

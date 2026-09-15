@@ -20,7 +20,7 @@
       [unstyled]="unstyled()"
       >
       @if (!buttonIconClass && !iconTemplate() && !_iconTemplate) {
-        <svg data-p-icon="plus" hButtonIcon [pt]="ptm('pcButton')['icon']" />
+        <svg data-h-icon="plus" hButtonIcon [pt]="ptm('pcButton')['icon']" />
       }
       <ng-container *ngTemplateOutlet="iconTemplate() || _iconTemplate"></ng-container>
     </button>
@@ -52,7 +52,7 @@
         [id]="$id() + '_' + i"
         [attr.aria-controls]="$id() + '_item'"
         role="menuitem"
-        [attr.data-p-active]="isItemActive($id() + '_' + i)"
+        [attr.data-h-active]="isItemActive($id() + '_' + i)"
         >
         @if (itemTemplate() || _itemTemplate) {
           <ng-container *ngTemplateOutlet="itemTemplate() || _itemTemplate; context: { $implicit: item, index: i, toggleCallback: onItemClick.bind(this) }"></ng-container>
@@ -85,5 +85,5 @@
   </ul>
 </div>
 @if (mask() && visible()) {
-  <div [hBind]="ptm('mask')" [class]="cn(cx('mask'), maskClassName())" [ngStyle]="maskStyle()" animate.enter="p-overlay-mask-enter-active" animate.leave="p-overlay-mask-leave-active"></div>
+  <div [hBind]="ptm('mask')" [class]="cn(cx('mask'), maskClassName())" [ngStyle]="maskStyle()" animate.enter="h-overlay-mask-enter-active" animate.leave="h-overlay-mask-leave-active"></div>
 }

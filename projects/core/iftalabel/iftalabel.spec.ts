@@ -9,10 +9,10 @@ import { provideHelix } from '@gravionlabs/helix-core/config';
     standalone: true,
     imports: [IftaLabel, FormsModule],
     template: `
-        <p-iftalabel>
+        <h-iftalabel>
             <input id="username" [(ngModel)]="value" />
             <label for="username">Username</label>
-        </p-iftalabel>
+        </h-iftalabel>
     `
 })
 class TestBasicIftaLabelComponent {
@@ -23,10 +23,10 @@ class TestBasicIftaLabelComponent {
     standalone: true,
     imports: [IftaLabel, FormsModule],
     template: `
-        <p-iftalabel>
+        <h-iftalabel>
             <input id="email" type="email" [(ngModel)]="email" />
             <label for="email">Email Address</label>
-        </p-iftalabel>
+        </h-iftalabel>
     `
 })
 class TestEmailIftaLabelComponent {
@@ -65,7 +65,7 @@ describe('IftaLabel', () => {
 
         it('should have correct CSS class', () => {
             const iftaLabelElement = fixture.debugElement.query(By.directive(IftaLabel));
-            expect(iftaLabelElement.nativeElement.classList.contains('p-iftalabel')).toBe(true);
+            expect(iftaLabelElement.nativeElement.classList.contains('h-iftalabel')).toBe(true);
         });
     });
 

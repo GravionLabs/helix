@@ -1,5 +1,5 @@
 export const style = /*css*/ `
-    .p-terminal {
+    .h-terminal {
         display: block;
         height: dt('terminal.height');
         overflow: auto;
@@ -10,12 +10,12 @@ export const style = /*css*/ `
         border-radius: dt('terminal.border.radius');
     }
 
-    .p-terminal-prompt {
+    .h-terminal-prompt {
         display: flex;
         align-items: center;
     }
 
-    .p-terminal-prompt-value {
+    .h-terminal-prompt-value {
         flex: 1 1 auto;
         border: 0 none;
         background: transparent;
@@ -27,15 +27,15 @@ export const style = /*css*/ `
         font-size: 1rem;
     }
 
-    .p-terminal-prompt-label {
+    .h-terminal-prompt-label {
         margin-inline-end: dt('terminal.prompt.gap');
     }
 
-    .p-terminal-input::-ms-clear {
+    .h-terminal-input::-ms-clear {
         display: none;
     }
 
-    .p-terminal-command-response {
+    .h-terminal-command-response {
         margin: dt('terminal.command.response.margin');
     }
 `;

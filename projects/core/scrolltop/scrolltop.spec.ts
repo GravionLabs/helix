@@ -10,7 +10,7 @@ import { ScrollTop, ScrollTopModule } from './scrolltop';
 @Component({
     standalone: false,
     selector: 'test-basic-scrolltop',
-    template: `<p-scrolltop [threshold]="threshold" [target]="target" [behavior]="behavior"></p-scrolltop>`
+    template: `<h-scrolltop [threshold]="threshold" [target]="target" [behavior]="behavior"></h-scrolltop>`
 })
 class TestBasicScrollTopComponent {
     threshold = 400;
@@ -25,7 +25,7 @@ class TestBasicScrollTopComponent {
         <div class="scroll-container" style="height: 200px; overflow-y: auto;">
             <div style="height: 1000px;">
                 <p>Long content here...</p>
-                <p-scrolltop target="parent" [threshold]="100"></p-scrolltop>
+                <h-scrolltop target="parent" [threshold]="100"></h-scrolltop>
             </div>
         </div>
     `
@@ -35,7 +35,7 @@ class TestScrollTopWithParentComponent {}
 @Component({
     standalone: false,
     selector: 'test-scrolltop-with-icon',
-    template: ` <p-scrolltop [icon]="icon" [threshold]="threshold" [buttonAriaLabel]="buttonAriaLabel"> </p-scrolltop> `
+    template: ` <h-scrolltop [icon]="icon" [threshold]="threshold" [buttonAriaLabel]="buttonAriaLabel"> </h-scrolltop> `
 })
 class TestScrollTopWithIconComponent {
     icon = 'pi pi-arrow-up';
@@ -47,11 +47,11 @@ class TestScrollTopWithIconComponent {
     standalone: false,
     selector: 'test-scrolltop-with-template',
     template: `
-        <p-scrolltop [threshold]="50">
+        <h-scrolltop [threshold]="50">
             <ng-template #icon let-styleClass="styleClass">
                 <span class="custom-icon" [ngClass]="styleClass">↑</span>
             </ng-template>
-        </p-scrolltop>
+        </h-scrolltop>
     `
 })
 class TestScrollTopWithTemplateComponent {}
@@ -60,8 +60,8 @@ class TestScrollTopWithTemplateComponent {}
     standalone: false,
     selector: 'test-scrolltop-with-styles',
     template: `
-        <p-scrolltop [threshold]="threshold" [style]="customStyle" [styleClass]="customClass" [behavior]="behavior" [showTransitionOptions]="showTransitionOptions" [hideTransitionOptions]="hideTransitionOptions" [buttonProps]="buttonProps">
-        </p-scrolltop>
+        <h-scrolltop [threshold]="threshold" [style]="customStyle" [styleClass]="customClass" [behavior]="behavior" [showTransitionOptions]="showTransitionOptions" [hideTransitionOptions]="hideTransitionOptions" [buttonProps]="buttonProps">
+        </h-scrolltop>
     `
 })
 class TestScrollTopWithStylesComponent {
@@ -83,7 +83,7 @@ class TestScrollTopWithStylesComponent {
             @for (item of items; track item) {
               <p>{{ item }}</p>
             }
-            <p-scrolltop target="parent" [threshold]="dynamicThreshold"> </p-scrolltop>
+            <h-scrolltop target="parent" [threshold]="dynamicThreshold"> </h-scrolltop>
           </div>
         </div>
         `
@@ -380,7 +380,7 @@ describe('ScrollTop', () => {
             scrollTop.visible.set(true);
             fixture.detectChanges();
 
-            const svgIcon = fixture.debugElement.query(By.css('svg[data-p-icon="chevron-up"]'));
+            const svgIcon = fixture.debugElement.query(By.css('svg[data-h-icon="chevron-up"]'));
             expect(svgIcon).toBeTruthy();
         });
 
@@ -850,8 +850,8 @@ describe('ScrollTop', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scrolltop [threshold]="100"></p-scrolltop>
-                    <p-scrolltop [threshold]="200"></p-scrolltop>
+                    <h-scrolltop [threshold]="100"></h-scrolltop>
+                    <h-scrolltop [threshold]="200"></h-scrolltop>
                 `
             })
             class MultipleScrollTopsComponent {}
@@ -878,7 +878,7 @@ describe('ScrollTop', () => {
                         <div style="height: 1000px;">
                             <div class="inner" style="height: 200px; overflow: auto;">
                                 <div style="height: 500px;">
-                                    <p-scrolltop target="parent" [threshold]="50"></p-scrolltop>
+                                    <h-scrolltop target="parent" [threshold]="50"></h-scrolltop>
                                 </div>
                             </div>
                         </div>
@@ -905,7 +905,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 1: Simple string classes', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtComponent {
             pt: any = {};
@@ -955,7 +955,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 2: Objects', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtObjectComponent {
             pt: any = {};
@@ -981,7 +981,7 @@ describe('ScrollTop', () => {
                 host: {
                     class: 'HOST_OBJECT_CLASS',
                     style: { border: '1px solid red' },
-                    'data-p-test': true
+                    'data-h-test': true
                 }
             };
             fixture.detectChanges();
@@ -990,7 +990,7 @@ describe('ScrollTop', () => {
             const scrollTopElement = fixture.debugElement.query(By.directive(ScrollTop));
             expect(scrollTopElement.nativeElement.classList.contains('HOST_OBJECT_CLASS')).toBe(true);
             expect(scrollTopElement.nativeElement.style.border).toBe('1px solid red');
-            expect(scrollTopElement.nativeElement.getAttribute('data-p-test')).toBe('true');
+            expect(scrollTopElement.nativeElement.getAttribute('data-h-test')).toBe('true');
         });
 
         it('should apply pt root with object properties', () => {
@@ -1014,7 +1014,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 3: Mixed object and string values', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtMixedComponent {
             pt: any = {};
@@ -1056,7 +1056,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 4: Use variables from instance', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="threshold" [target]="target" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="threshold" [target]="target" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtInstanceComponent {
             pt: any = {};
@@ -1123,7 +1123,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 5: Event binding', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtEventComponent {
             pt: any = {};
@@ -1190,13 +1190,13 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 6: Inline test', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="{ host: 'INLINE_HOST_CLASS' }"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="{ host: 'INLINE_HOST_CLASS' }"></h-scrolltop> `
         })
         class TestScrollTopInlineStringPtComponent {}
 
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid green' } } }"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="{ host: { class: 'INLINE_OBJECT_CLASS', style: { border: '2px solid green' } } }"></h-scrolltop> `
         })
         class TestScrollTopInlineObjectPtComponent {}
 
@@ -1241,8 +1241,8 @@ describe('ScrollTop', () => {
             @Component({
                 standalone: false,
                 template: `
-                    <p-scrolltop [threshold]="100"></p-scrolltop>
-                    <p-scrolltop [threshold]="200"></p-scrolltop>
+                    <h-scrolltop [threshold]="100"></h-scrolltop>
+                    <h-scrolltop [threshold]="200"></h-scrolltop>
                 `
             })
             class TestScrollTopGlobalPtComponent {}
@@ -1283,7 +1283,7 @@ describe('ScrollTop', () => {
 
             @Component({
                 standalone: false,
-                template: ` <p-scrolltop [threshold]="100" [pt]="{ host: 'LOCAL_HOST_CLASS', root: 'LOCAL_ROOT_CLASS' }"></p-scrolltop> `
+                template: ` <h-scrolltop [threshold]="100" [pt]="{ host: 'LOCAL_HOST_CLASS', root: 'LOCAL_ROOT_CLASS' }"></h-scrolltop> `
             })
             class TestScrollTopMergedPtComponent {}
 
@@ -1318,7 +1318,7 @@ describe('ScrollTop', () => {
     describe('PassThrough - Case 8: Test hooks', () => {
         @Component({
             standalone: false,
-            template: ` <p-scrolltop [threshold]="100" [pt]="pt"></p-scrolltop> `
+            template: ` <h-scrolltop [threshold]="100" [pt]="pt"></h-scrolltop> `
         })
         class TestScrollTopPtHooksComponent {
             pt: any = {};

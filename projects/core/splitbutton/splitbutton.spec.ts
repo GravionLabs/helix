@@ -11,7 +11,7 @@ import { SplitButton } from './splitbutton';
 @Component({
     standalone: false,
     template: `
-        <p-splitbutton
+        <h-splitbutton
             [model]="model"
             [label]="label"
             [icon]="icon"
@@ -46,7 +46,7 @@ import { SplitButton } from './splitbutton';
             (onMenuHide)="onMenuHide($event)"
             (onDropdownClick)="onDropdownClick($event)"
         >
-        </p-splitbutton>
+        </h-splitbutton>
     `
 })
 class TestBasicSplitButtonComponent {
@@ -128,7 +128,7 @@ class TestBasicSplitButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-splitbutton [model]="model" [label]="label">
+        <h-splitbutton [model]="model" [label]="label">
             <ng-template pTemplate="content">
                 <div class="custom-content">
                     <i class="pi pi-star custom-icon"></i>
@@ -138,7 +138,7 @@ class TestBasicSplitButtonComponent {
             <ng-template pTemplate="dropdownicon">
                 <i class="pi pi-angle-down custom-dropdown-icon"></i>
             </ng-template>
-        </p-splitbutton>
+        </h-splitbutton>
     `
 })
 class TestTemplateSplitButtonComponent {
@@ -150,7 +150,7 @@ class TestTemplateSplitButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-splitbutton [model]="model">
+        <h-splitbutton [model]="model">
             <ng-template #content>
                 <div class="content-template-content">
                     <i class="pi pi-heart content-template-icon"></i>
@@ -160,7 +160,7 @@ class TestTemplateSplitButtonComponent {
             <ng-template #dropdownicon>
                 <i class="pi pi-chevron-down content-dropdown-icon"></i>
             </ng-template>
-        </p-splitbutton>
+        </h-splitbutton>
     `
 })
 class TestContentTemplateSplitButtonComponent {
@@ -172,14 +172,14 @@ class TestContentTemplateSplitButtonComponent {
     standalone: false,
     template: `
         <div class="severity-buttons">
-            <p-splitbutton label="Primary" severity="primary" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Secondary" severity="secondary" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Success" severity="success" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Info" severity="info" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Warn" severity="warn" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Danger" severity="danger" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Help" severity="help" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Contrast" severity="contrast" [model]="model"></p-splitbutton>
+            <h-splitbutton label="Primary" severity="primary" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Secondary" severity="secondary" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Success" severity="success" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Info" severity="info" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Warn" severity="warn" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Danger" severity="danger" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Help" severity="help" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Contrast" severity="contrast" [model]="model"></h-splitbutton>
         </div>
     `
 })
@@ -192,13 +192,13 @@ class TestSeveritySplitButtonComponent {
     standalone: false,
     template: `
         <div class="variant-buttons">
-            <p-splitbutton label="Raised" [raised]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Rounded" [rounded]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Text" [text]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Outlined" [outlined]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Plain" [plain]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Small" size="small" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Large" size="large" [model]="model"></p-splitbutton>
+            <h-splitbutton label="Raised" [raised]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Rounded" [rounded]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Text" [text]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Outlined" [outlined]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Plain" [plain]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Small" size="small" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Large" size="large" [model]="model"></h-splitbutton>
         </div>
     `
 })
@@ -211,9 +211,9 @@ class TestSplitButtonVariantsComponent {
     standalone: false,
     template: `
         <div class="disabled-buttons">
-            <p-splitbutton label="Disabled" [disabled]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Button Disabled" [buttonDisabled]="true" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Menu Disabled" [menuButtonDisabled]="true" [model]="model"></p-splitbutton>
+            <h-splitbutton label="Disabled" [disabled]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Button Disabled" [buttonDisabled]="true" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Menu Disabled" [menuButtonDisabled]="true" [model]="model"></h-splitbutton>
         </div>
     `
 })
@@ -226,9 +226,9 @@ class TestDisabledSplitButtonComponent {
     standalone: false,
     template: `
         <div class="icon-buttons">
-            <p-splitbutton icon="pi pi-check" [iconPos]="iconPos" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Save" icon="pi pi-save" iconPos="left" [model]="model"></p-splitbutton>
-            <p-splitbutton label="Save" icon="pi pi-save" iconPos="right" [model]="model"></p-splitbutton>
+            <h-splitbutton icon="pi pi-check" [iconPos]="iconPos" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Save" icon="pi pi-save" iconPos="left" [model]="model"></h-splitbutton>
+            <h-splitbutton label="Save" icon="pi pi-save" iconPos="right" [model]="model"></h-splitbutton>
         </div>
     `
 })
@@ -240,7 +240,7 @@ class TestIconSplitButtonComponent {
 // Dropdown Icon SplitButton Test
 @Component({
     standalone: false,
-    template: ` <p-splitbutton label="Custom Dropdown" [dropdownIcon]="dropdownIcon" [model]="model"> </p-splitbutton> `
+    template: ` <h-splitbutton label="Custom Dropdown" [dropdownIcon]="dropdownIcon" [model]="model"> </h-splitbutton> `
 })
 class TestDropdownIconSplitButtonComponent {
     dropdownIcon = 'pi pi-angle-down';
@@ -250,7 +250,7 @@ class TestDropdownIconSplitButtonComponent {
 // Command SplitButton Test
 @Component({
     standalone: false,
-    template: ` <p-splitbutton label="Actions" [model]="model" (onClick)="onMainClick()"></p-splitbutton> `
+    template: ` <h-splitbutton label="Actions" [model]="model" (onClick)="onMainClick()"></h-splitbutton> `
 })
 class TestCommandSplitButtonComponent {
     mainClicked = false;
@@ -276,7 +276,7 @@ class TestCommandSplitButtonComponent {
 // Tooltip SplitButton Test
 @Component({
     standalone: false,
-    template: ` <p-splitbutton label="Tooltip Button" [tooltip]="tooltip" [tooltipOptions]="tooltipOptions" [model]="model"> </p-splitbutton> `
+    template: ` <h-splitbutton label="Tooltip Button" [tooltip]="tooltip" [tooltipOptions]="tooltipOptions" [model]="model"> </h-splitbutton> `
 })
 class TestTooltipSplitButtonComponent {
     tooltip = 'This is a tooltip';
@@ -287,7 +287,7 @@ class TestTooltipSplitButtonComponent {
 // Autofocus SplitButton Test
 @Component({
     standalone: false,
-    template: ` <p-splitbutton label="Autofocus" [autofocus]="autofocus" [model]="model"></p-splitbutton> `
+    template: ` <h-splitbutton label="Autofocus" [autofocus]="autofocus" [model]="model"></h-splitbutton> `
 })
 class TestAutofocusSplitButtonComponent {
     autofocus = true;
@@ -324,7 +324,7 @@ describe('SplitButton', () => {
         fixture = TestBed.createComponent(TestBasicSplitButtonComponent);
         component = fixture.componentInstance;
         splitButtonInstance = fixture.debugElement.query(By.directive(SplitButton)).componentInstance;
-        splitButtonElement = fixture.debugElement.query(By.css('p-splitbutton')).nativeElement;
+        splitButtonElement = fixture.debugElement.query(By.css('h-splitbutton')).nativeElement;
         fixture.detectChanges();
 
         const buttons = fixture.debugElement.queryAll(By.css('button'));

@@ -24,8 +24,8 @@ export class BaseIcon extends BaseComponent {
     _componentStyle = inject(BaseIconStyle);
 
     getClassNames() {
-        return cn('p-icon', {
-            'p-icon-spin': this.spin()
+        return cn('h-icon', {
+            'h-icon-spin': this.spin()
         });
     }
 }

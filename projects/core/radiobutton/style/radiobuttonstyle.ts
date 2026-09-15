@@ -6,28 +6,28 @@ const style = /*css*/ `
     ${radiobutton_style}
 
     /* For Helix */
-    p-radioButton.ng-invalid.ng-dirty .p-radiobutton-box,
-    p-radio-button.ng-invalid.ng-dirty .p-radiobutton-box,
-    p-radiobutton.ng-invalid.ng-dirty .p-radiobutton-box {
+    h-radioButton.ng-invalid.ng-dirty .h-radiobutton-box,
+    h-radio-button.ng-invalid.ng-dirty .h-radiobutton-box,
+    h-radiobutton.ng-invalid.ng-dirty .h-radiobutton-box {
         border-color: dt('radiobutton.invalid.border.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-radiobutton p-component',
+        'h-radiobutton h-component',
         {
-            'p-radiobutton-checked': instance.checked,
-            'p-disabled': instance.$disabled(),
-            'p-invalid': instance.invalid(),
-            'p-variant-filled': instance.$variant() === 'filled',
-            'p-radiobutton-sm p-inputfield-sm': instance.size() === 'small',
-            'p-radiobutton-lg p-inputfield-lg': instance.size() === 'large'
+            'h-radiobutton-checked': instance.checked,
+            'h-disabled': instance.$disabled(),
+            'h-invalid': instance.invalid(),
+            'h-variant-filled': instance.$variant() === 'filled',
+            'h-radiobutton-sm h-inputfield-sm': instance.size() === 'small',
+            'h-radiobutton-lg h-inputfield-lg': instance.size() === 'large'
         }
     ],
-    box: 'p-radiobutton-box',
-    input: 'p-radiobutton-input',
-    icon: 'p-radiobutton-icon'
+    box: 'h-radiobutton-box',
+    input: 'h-radiobutton-input',
+    icon: 'h-radiobutton-icon'
 };
 
 @Injectable()
@@ -52,19 +52,19 @@ export enum RadioButtonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-radiobutton',
+    root = 'h-radiobutton',
     /**
      * Class name of the box element
      */
-    box = 'p-radiobutton-box',
+    box = 'h-radiobutton-box',
     /**
      * Class name of the input element
      */
-    input = 'p-radiobutton-input',
+    input = 'h-radiobutton-input',
     /**
      * Class name of the icon element
      */
-    icon = 'p-radiobutton-icon'
+    icon = 'h-radiobutton-icon'
 }
 
 export interface RadioButtonStyle extends BaseStyle {}

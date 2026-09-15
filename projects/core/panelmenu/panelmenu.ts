@@ -102,9 +102,9 @@ export class PanelMenuSub extends BaseComponent {
 
     getItemClass(processedItem) {
         return {
-            'p-panelmenu-item': true,
-            'p-disabled': this.isItemDisabled(processedItem),
-            'p-focus': this.isItemFocused(processedItem)
+            'h-panelmenu-item': true,
+            'h-disabled': this.isItemDisabled(processedItem),
+            'h-focus': this.isItemFocused(processedItem)
         };
     }
 
@@ -808,14 +808,14 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
         const nextPanelElement = selfCheck ? panelElement : panelElement.nextElementSibling;
         const headerElement = findSingle(nextPanelElement, '[data-pc-section="header"]');
 
-        return headerElement ? (getAttribute(headerElement, 'data-p-disabled') ? this.findNextHeader(headerElement.parentElement) : headerElement) : null;
+        return headerElement ? (getAttribute(headerElement, 'data-h-disabled') ? this.findNextHeader(headerElement.parentElement) : headerElement) : null;
     }
 
     findPrevHeader(panelElement, selfCheck = false) {
         const prevPanelElement = selfCheck ? panelElement : panelElement.previousElementSibling;
         const headerElement = findSingle(prevPanelElement, '[data-pc-section="header"]');
 
-        return headerElement ? (getAttribute(headerElement, 'data-p-disabled') ? this.findPrevHeader(headerElement.parentElement) : headerElement) : null;
+        return headerElement ? (getAttribute(headerElement, 'data-h-disabled') ? this.findPrevHeader(headerElement.parentElement) : headerElement) : null;
     }
 
     findFirstHeader() {
@@ -881,7 +881,7 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
     }
 
     onHeaderArrowDownKey(event) {
-        const rootList = getAttribute(event.currentTarget, 'data-p-highlight') === true ? <any>findSingle(event.currentTarget.nextElementSibling, '[data-pc-section="rootlist"]') : null;
+        const rootList = getAttribute(event.currentTarget, 'data-h-highlight') === true ? <any>findSingle(event.currentTarget.nextElementSibling, '[data-pc-section="rootlist"]') : null;
 
         rootList ? focus(rootList) : this.updateFocusedHeader({ originalEvent: event, focusOnNext: true });
         event.preventDefault();
@@ -889,7 +889,7 @@ export class PanelMenu extends BaseComponent<PanelMenuPassThrough> {
 
     onHeaderArrowUpKey(event) {
         const prevHeader = this.findPrevHeader(event.currentTarget.parentElement) || this.findLastHeader();
-        const rootList = getAttribute(prevHeader, 'data-p-highlight') === true ? <any>findSingle(prevHeader.nextElementSibling, '[data-pc-section="rootlist"]') : null;
+        const rootList = getAttribute(prevHeader, 'data-h-highlight') === true ? <any>findSingle(prevHeader.nextElementSibling, '[data-pc-section="rootlist"]') : null;
 
         rootList ? focus(rootList) : this.updateFocusedHeader({ originalEvent: event, focusOnNext: false });
         event.preventDefault();

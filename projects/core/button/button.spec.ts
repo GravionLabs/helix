@@ -8,7 +8,7 @@ import { Button, ButtonDirective, ButtonIcon, ButtonLabel } from './button';
 @Component({
     standalone: false,
     template: `
-        <p-button
+        <h-button
             [label]="label"
             [icon]="icon"
             [iconPos]="iconPos"
@@ -35,7 +35,7 @@ import { Button, ButtonDirective, ButtonIcon, ButtonLabel } from './button';
             (onFocus)="onButtonFocus($event)"
             (onBlur)="onButtonBlur($event)"
         >
-        </p-button>
+        </h-button>
     `
 })
 class TestBasicButtonComponent {
@@ -83,7 +83,7 @@ class TestBasicButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-button [loading]="loading">
+        <h-button [loading]="loading">
             <ng-template pTemplate="content">
                 <div class="custom-content">
                     <span class="custom-icon">🎯</span>
@@ -96,7 +96,7 @@ class TestBasicButtonComponent {
             <ng-template pTemplate="loadingicon">
                 <i class="pi pi-spin pi-cog custom-loading-icon"></i>
             </ng-template>
-        </p-button>
+        </h-button>
     `
 })
 class TestTemplatePButtonComponent {
@@ -106,7 +106,7 @@ class TestTemplatePButtonComponent {
 @Component({
     standalone: false,
     template: `
-        <p-button>
+        <h-button>
             <ng-template #content>
                 <div class="content-template-content">
                     <span class="content-icon">⭐</span>
@@ -119,7 +119,7 @@ class TestTemplatePButtonComponent {
             <ng-template #loadingicon>
                 <i class="content-loading-icon pi pi-spin pi-spinner"></i>
             </ng-template>
-        </p-button>
+        </h-button>
     `
 })
 class TestContentTemplateButtonComponent {}
@@ -183,7 +183,7 @@ class TestButtonWithIconLabelDirectiveComponent {}
 // Loading Button Test
 @Component({
     standalone: false,
-    template: ` <p-button [label]="label" [loading]="loading" [loadingIcon]="loadingIcon" (onClick)="toggleLoading()"> </p-button> `
+    template: ` <h-button [label]="label" [loading]="loading" [loadingIcon]="loadingIcon" (onClick)="toggleLoading()"> </h-button> `
 })
 class TestLoadingButtonComponent {
     label = 'Load Data';
@@ -200,14 +200,14 @@ class TestLoadingButtonComponent {
     standalone: false,
     template: `
         <div class="button-group">
-            <p-button label="Primary" severity="primary"></p-button>
-            <p-button label="Secondary" severity="secondary"></p-button>
-            <p-button label="Success" severity="success"></p-button>
-            <p-button label="Info" severity="info"></p-button>
-            <p-button label="Warn" severity="warn"></p-button>
-            <p-button label="Danger" severity="danger"></p-button>
-            <p-button label="Help" severity="help"></p-button>
-            <p-button label="Contrast" severity="contrast"></p-button>
+            <h-button label="Primary" severity="primary"></h-button>
+            <h-button label="Secondary" severity="secondary"></h-button>
+            <h-button label="Success" severity="success"></h-button>
+            <h-button label="Info" severity="info"></h-button>
+            <h-button label="Warn" severity="warn"></h-button>
+            <h-button label="Danger" severity="danger"></h-button>
+            <h-button label="Help" severity="help"></h-button>
+            <h-button label="Contrast" severity="contrast"></h-button>
         </div>
     `
 })
@@ -218,14 +218,14 @@ class TestSeverityButtonComponent {}
     standalone: false,
     template: `
         <div class="variant-buttons">
-            <p-button label="Raised" [raised]="true"></p-button>
-            <p-button label="Rounded" [rounded]="true"></p-button>
-            <p-button label="Text" [text]="true"></p-button>
-            <p-button label="Outlined" [outlined]="true"></p-button>
-            <p-button label="Plain" [plain]="true"></p-button>
-            <p-button label="Small" size="small"></p-button>
-            <p-button label="Large" size="large"></p-button>
-            <p-button label="Fluid" [fluid]="true"></p-button>
+            <h-button label="Raised" [raised]="true"></h-button>
+            <h-button label="Rounded" [rounded]="true"></h-button>
+            <h-button label="Text" [text]="true"></h-button>
+            <h-button label="Outlined" [outlined]="true"></h-button>
+            <h-button label="Plain" [plain]="true"></h-button>
+            <h-button label="Small" size="small"></h-button>
+            <h-button label="Large" size="large"></h-button>
+            <h-button label="Fluid" [fluid]="true"></h-button>
         </div>
     `
 })
@@ -234,7 +234,7 @@ class TestButtonVariantsComponent {}
 // Badge Button Test
 @Component({
     standalone: false,
-    template: ` <p-button label="Messages" icon="pi pi-envelope" [badge]="badge" [badgeSeverity]="badgeSeverity"> </p-button> `
+    template: ` <h-button label="Messages" icon="pi pi-envelope" [badge]="badge" [badgeSeverity]="badgeSeverity"> </h-button> `
 })
 class TestBadgeButtonComponent {
     badge = '5';
@@ -246,11 +246,11 @@ class TestBadgeButtonComponent {
     standalone: false,
     template: `
         <div class="icon-buttons">
-            <p-button icon="pi pi-search" [iconPos]="iconPos"></p-button>
-            <p-button label="Search" icon="pi pi-search" iconPos="left"></p-button>
-            <p-button label="Search" icon="pi pi-search" iconPos="right"></p-button>
-            <p-button label="Search" icon="pi pi-search" iconPos="top"></p-button>
-            <p-button label="Search" icon="pi pi-search" iconPos="bottom"></p-button>
+            <h-button icon="pi pi-search" [iconPos]="iconPos"></h-button>
+            <h-button label="Search" icon="pi pi-search" iconPos="left"></h-button>
+            <h-button label="Search" icon="pi pi-search" iconPos="right"></h-button>
+            <h-button label="Search" icon="pi pi-search" iconPos="top"></h-button>
+            <h-button label="Search" icon="pi pi-search" iconPos="bottom"></h-button>
         </div>
     `
 })
@@ -316,7 +316,7 @@ describe('Button', () => {
         });
 
         it('should display label correctly', () => {
-            const labelElement = buttonElement.querySelector('.p-button-label');
+            const labelElement = buttonElement.querySelector('.h-button-label');
             expect(labelElement?.textContent?.trim()).toBe('Click Me');
         });
     });
@@ -329,7 +329,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.label()).toBe('Updated Label');
-            const labelElement = buttonElement.querySelector('.p-button-label');
+            const labelElement = buttonElement.querySelector('.h-button-label');
             expect(labelElement?.textContent?.trim()).toBe('Updated Label');
         });
 
@@ -340,7 +340,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.icon()).toBe('pi pi-search');
-            const iconElement = buttonElement.querySelector('.p-button-icon');
+            const iconElement = buttonElement.querySelector('.h-button-icon');
             expect(iconElement).toBeTruthy();
         });
 
@@ -481,7 +481,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.raised()).toBe(true);
-            expect(buttonElement.classList.contains('p-button-raised')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-raised')).toBe(true);
         });
 
         it('should apply rounded styling', async () => {
@@ -491,7 +491,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.rounded()).toBe(true);
-            expect(buttonElement.classList.contains('p-button-rounded')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-rounded')).toBe(true);
         });
 
         it('should apply text styling', async () => {
@@ -501,7 +501,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.text()).toBe(true);
-            expect(buttonElement.classList.contains('p-button-text')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-text')).toBe(true);
         });
 
         it('should apply outlined styling', async () => {
@@ -511,7 +511,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.outlined()).toBe(true);
-            expect(buttonElement.classList.contains('p-button-outlined')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-outlined')).toBe(true);
         });
 
         it('should apply plain styling', async () => {
@@ -521,7 +521,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.plain()).toBe(true);
-            // Plain buttons may not always add p-button-text class in test environment
+            // Plain buttons may not always add h-button-text class in test environment
             expect(buttonInstance.plain()).toBe(true);
         });
 
@@ -550,7 +550,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.fluid()).toBe(true);
-            expect(buttonElement.classList.contains('p-button-fluid')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-fluid')).toBe(true);
         });
     });
 
@@ -562,7 +562,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.severity()).toBe('primary');
-            expect(buttonElement.classList.contains('p-button-primary')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-primary')).toBe(true);
         });
 
         it('should apply secondary severity', async () => {
@@ -572,7 +572,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.severity()).toBe('secondary');
-            expect(buttonElement.classList.contains('p-button-secondary')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-secondary')).toBe(true);
         });
 
         it('should apply success severity', async () => {
@@ -582,7 +582,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.severity()).toBe('success');
-            expect(buttonElement.classList.contains('p-button-success')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-success')).toBe(true);
         });
 
         it('should apply danger severity', async () => {
@@ -592,7 +592,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             expect(buttonInstance.severity()).toBe('danger');
-            expect(buttonElement.classList.contains('p-button-danger')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-danger')).toBe(true);
         });
     });
 
@@ -603,7 +603,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const iconElement = buttonElement.querySelector('.p-button-icon');
+            const iconElement = buttonElement.querySelector('.h-button-icon');
             expect(iconElement).toBeTruthy();
         });
 
@@ -616,7 +616,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            let iconElement = buttonElement.querySelector('.p-button-icon-left');
+            let iconElement = buttonElement.querySelector('.h-button-icon-left');
             expect(iconElement).toBeTruthy();
 
             // Right position
@@ -625,7 +625,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            iconElement = buttonElement.querySelector('.p-button-icon-right');
+            iconElement = buttonElement.querySelector('.h-button-icon-right');
             expect(iconElement).toBeTruthy();
         });
 
@@ -640,7 +640,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            expect(buttonElement.classList.contains('p-button-icon-only')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-icon-only')).toBe(true);
         });
     });
 
@@ -690,7 +690,7 @@ describe('Button', () => {
             badgeFixture.detectChanges();
             await fixture.whenStable();
 
-            const badgeElement = badgeFixture.debugElement.query(By.css('p-badge'));
+            const badgeElement = badgeFixture.debugElement.query(By.css('h-badge'));
             expect(badgeElement).toBeTruthy();
         });
     });
@@ -891,7 +891,7 @@ describe('Button', () => {
                 const buttonElement = fixture.debugElement.query(By.css('button'));
                 expect(buttonElement).toBeTruthy();
 
-                const defaultLabel = buttonElement.query(By.css('.p-button-label'));
+                const defaultLabel = buttonElement.query(By.css('.h-button-label'));
                 expect(defaultLabel).toBeTruthy();
             });
 
@@ -970,8 +970,8 @@ describe('Button', () => {
 
     describe('CSS Classes and Styling', () => {
         it('should apply correct default classes', () => {
-            expect(buttonElement.classList.contains('p-button')).toBe(true);
-            expect(buttonElement.classList.contains('p-component')).toBe(true);
+            expect(buttonElement.classList.contains('h-button')).toBe(true);
+            expect(buttonElement.classList.contains('h-component')).toBe(true);
         });
 
         it('should apply correct classes based on state', async () => {
@@ -1019,7 +1019,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const iconElement = buttonElement.querySelector('.p-button-icon');
+            const iconElement = buttonElement.querySelector('.h-button-icon');
             expect(iconElement).toBeTruthy();
             expect(iconElement?.classList.contains('pi')).toBe(true);
             expect(iconElement?.classList.contains('pi-search')).toBe(true);
@@ -1044,11 +1044,11 @@ describe('Button', () => {
             expect(loadingIcon).toBeTruthy();
 
             // Should use default SVG spinner (check for direct SVG or nested SVG)
-            const svgSpinner = buttonElement.querySelector('svg[data-p-icon="spinner"]') || loadingIcon?.querySelector('svg[data-p-icon="spinner"]');
+            const svgSpinner = buttonElement.querySelector('svg[data-h-icon="spinner"]') || loadingIcon?.querySelector('svg[data-h-icon="spinner"]');
             expect(svgSpinner).toBeTruthy();
 
             // Should not show regular icon
-            const regularIcon = buttonElement.querySelector('.p-button-icon:not([data-pc-section="loadingicon"])');
+            const regularIcon = buttonElement.querySelector('.h-button-icon:not([data-pc-section="loadingicon"])');
             expect(regularIcon).toBeFalsy();
         });
 
@@ -1070,7 +1070,7 @@ describe('Button', () => {
             expect(loadingIcon?.classList.contains('pi-spin')).toBe(true);
 
             // Should not use default SVG spinner
-            const svgSpinner = buttonElement.querySelector('svg[data-p-icon="spinner"]');
+            const svgSpinner = buttonElement.querySelector('svg[data-h-icon="spinner"]');
             expect(svgSpinner).toBeFalsy();
         });
 
@@ -1109,7 +1109,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Initially should show regular icon
-            let iconElement = buttonElement.querySelector('.p-button-icon:not([data-pc-section="loadingicon"])');
+            let iconElement = buttonElement.querySelector('.h-button-icon:not([data-pc-section="loadingicon"])');
             let loadingIcon = buttonElement.querySelector('[data-pc-section="loadingicon"]');
             expect(iconElement).toBeTruthy();
             expect(loadingIcon).toBeFalsy();
@@ -1121,7 +1121,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Should now show loading icon and not regular icon
-            iconElement = buttonElement.querySelector('.p-button-icon:not([data-pc-section="loadingicon"])');
+            iconElement = buttonElement.querySelector('.h-button-icon:not([data-pc-section="loadingicon"])');
             loadingIcon = buttonElement.querySelector('[data-pc-section="loadingicon"]');
             expect(iconElement).toBeFalsy();
             expect(loadingIcon).toBeTruthy();
@@ -1160,7 +1160,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Should fallback to default SVG spinner when loadingIcon is empty
-            const svgSpinner = buttonElement.querySelector('svg[data-p-icon="spinner"]');
+            const svgSpinner = buttonElement.querySelector('svg[data-h-icon="spinner"]');
             expect(svgSpinner).toBeTruthy();
 
             // Check that span with empty loadingIcon is not shown
@@ -1190,9 +1190,9 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Initially icon-only button
-            expect(buttonElement.classList.contains('p-button-icon-only')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-icon-only')).toBe(true);
 
-            const iconElement = buttonElement.querySelector('.p-button-icon:not([data-pc-section="loadingicon"])');
+            const iconElement = buttonElement.querySelector('.h-button-icon:not([data-pc-section="loadingicon"])');
             expect(iconElement).toBeTruthy();
 
             // Switch to loading
@@ -1230,11 +1230,11 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Should show default spinner even without custom icons
-            const svgSpinner = buttonElement.querySelector('svg[data-p-icon="spinner"]') || buttonElement.querySelector('[data-pc-section="loadingicon"] svg[data-p-icon="spinner"]');
+            const svgSpinner = buttonElement.querySelector('svg[data-h-icon="spinner"]') || buttonElement.querySelector('[data-pc-section="loadingicon"] svg[data-h-icon="spinner"]');
             expect(svgSpinner).toBeTruthy();
 
             // Should still show label
-            const labelElement = buttonElement.querySelector('.p-button-label');
+            const labelElement = buttonElement.querySelector('.h-button-label');
             expect(labelElement?.textContent?.trim()).toBe('Submit');
 
             // Button should be disabled
@@ -1268,7 +1268,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Initially check icon position
-            const iconElement = buttonElement.querySelector('.p-button-icon-right');
+            const iconElement = buttonElement.querySelector('.h-button-icon-right');
             expect(iconElement).toBeTruthy();
 
             // Switch to loading
@@ -1288,7 +1288,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Icon position should be preserved
-            const restoredIconElement = buttonElement.querySelector('.p-button-icon-right');
+            const restoredIconElement = buttonElement.querySelector('.h-button-icon-right');
             expect(restoredIconElement).toBeTruthy();
         });
 
@@ -1317,7 +1317,7 @@ describe('Button', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            let regularIcon = buttonElement.querySelector('.p-button-icon:not([data-pc-section="loadingicon"])');
+            let regularIcon = buttonElement.querySelector('.h-button-icon:not([data-pc-section="loadingicon"])');
             expect(regularIcon).toBeTruthy();
 
             // Change loadingIcon and switch again
@@ -1359,7 +1359,7 @@ describe('Button', () => {
             fixture.detectChanges();
 
             // Check initial accessibility
-            const iconElement = buttonElement.querySelector('.p-button-icon');
+            const iconElement = buttonElement.querySelector('.h-button-icon');
             expect(iconElement?.getAttribute('aria-hidden')).toBeNull(); // Icon elements don't always have aria-hidden in this implementation
 
             // Switch to loading
@@ -1401,7 +1401,7 @@ describe('Button', () => {
 
             const icon = buttonElement.querySelector('[data-pc-section="icon"]');
             expect(icon).toBeTruthy();
-            expect(icon?.classList.contains('p-button-icon')).toBeTruthy();
+            expect(icon?.classList.contains('h-button-icon')).toBeTruthy();
             expect(icon?.classList.contains('pi')).toBeTruthy();
             expect(icon?.classList.contains('pi-home')).toBeTruthy();
 
@@ -1413,7 +1413,7 @@ describe('Button', () => {
 
             const loadingIcon = buttonElement.querySelector('[data-pc-section="loadingicon"]');
             expect(loadingIcon).toBeTruthy();
-            expect(loadingIcon?.classList.contains('p-button-loading-icon')).toBeTruthy();
+            expect(loadingIcon?.classList.contains('h-button-loading-icon')).toBeTruthy();
             expect(loadingIcon?.classList.contains('pi-spin')).toBeTruthy();
             expect(loadingIcon?.classList.contains('pi')).toBeTruthy();
             expect(loadingIcon?.classList.contains('pi-spinner')).toBeTruthy();
@@ -1498,8 +1498,8 @@ describe('ButtonDirective', () => {
         });
 
         it('should apply directive classes', () => {
-            expect(buttonElement.classList.contains('p-button')).toBe(true);
-            expect(buttonElement.classList.contains('p-component')).toBe(true);
+            expect(buttonElement.classList.contains('h-button')).toBe(true);
+            expect(buttonElement.classList.contains('h-component')).toBe(true);
         });
     });
 
@@ -1511,7 +1511,7 @@ describe('ButtonDirective', () => {
             fixture.detectChanges();
 
             expect(buttonDirective.severity).toBe('success');
-            expect(buttonElement.classList.contains('p-button-success')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-success')).toBe(true);
         });
 
         it('should handle loading state', async () => {
@@ -1521,7 +1521,7 @@ describe('ButtonDirective', () => {
             fixture.detectChanges();
 
             expect(buttonDirective.loading).toBe(true);
-            expect(buttonElement.classList.contains('p-button-loading')).toBe(true);
+            expect(buttonElement.classList.contains('h-button-loading')).toBe(true);
         });
 
         it('should apply variant styles', async () => {
@@ -1551,8 +1551,8 @@ describe('ButtonDirective', () => {
             const iconNativeElement = iconElement.nativeElement;
             const labelNativeElement = labelElement.nativeElement;
 
-            expect(iconNativeElement.classList.contains('p-button-icon')).toBe(true);
-            expect(labelNativeElement.classList.contains('p-button-label')).toBe(true);
+            expect(iconNativeElement.classList.contains('h-button-icon')).toBe(true);
+            expect(labelNativeElement.classList.contains('h-button-label')).toBe(true);
         });
     });
 

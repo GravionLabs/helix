@@ -166,23 +166,23 @@ export class PasswordDirective extends BaseEditableHolder {
     createPanel() {
         if (isPlatformBrowser(this.platformId)) {
             this.panel = this.renderer.createElement('div');
-            this.renderer.addClass(this.panel, 'p-password-overlay');
-            this.renderer.addClass(this.panel, 'p-component');
+            this.renderer.addClass(this.panel, 'h-password-overlay');
+            this.renderer.addClass(this.panel, 'h-component');
 
             this.content = this.renderer.createElement('div');
-            this.renderer.addClass(this.content, 'p-password-content');
+            this.renderer.addClass(this.content, 'h-password-content');
             this.renderer.appendChild(this.panel, this.content);
 
             this.meter = this.renderer.createElement('div');
-            this.renderer.addClass(this.meter, 'p-password-meter');
+            this.renderer.addClass(this.meter, 'h-password-meter');
             this.renderer.appendChild(this.content, this.meter);
 
             this.label = this.renderer.createElement('div');
-            this.renderer.addClass(this.label, 'p-password-meter-label');
+            this.renderer.addClass(this.label, 'h-password-meter-label');
             this.renderer.appendChild(this.meter, this.label);
 
             this.info = this.renderer.createElement('div');
-            this.renderer.addClass(this.info, 'p-password-meter-text');
+            this.renderer.addClass(this.info, 'h-password-meter-text');
             this.renderer.setProperty(this.info, 'textContent', this.promptLabel());
             this.renderer.appendChild(this.content, this.info);
 
@@ -202,7 +202,7 @@ export class PasswordDirective extends BaseEditableHolder {
             this.renderer.setStyle(this.panel, 'display', 'block');
             this.zone.runOutsideAngular(() => {
                 setTimeout(() => {
-                    addClass(this.panel!, 'p-connected-overlay-visible');
+                    addClass(this.panel!, 'h-connected-overlay-visible');
                     this.bindScrollListener();
                     this.bindDocumentResizeListener();
                 }, 1);
@@ -213,8 +213,8 @@ export class PasswordDirective extends BaseEditableHolder {
 
     hideOverlay() {
         if (this.feedback() && this.panel) {
-            addClass(this.panel, 'p-connected-overlay-hidden');
-            removeClass(this.panel, 'p-connected-overlay-visible');
+            addClass(this.panel, 'h-connected-overlay-hidden');
+            removeClass(this.panel, 'h-connected-overlay-visible');
             this.unbindScrollListener();
             this.unbindDocumentResizeListener();
 
@@ -263,7 +263,7 @@ export class PasswordDirective extends BaseEditableHolder {
                 this.updateMeter();
             }
 
-            if (!this.panel || !hasClass(this.panel, 'p-connected-overlay-visible')) {
+            if (!this.panel || !hasClass(this.panel, 'h-connected-overlay-visible')) {
                 this.showOverlay();
             }
 
@@ -294,7 +294,7 @@ export class PasswordDirective extends BaseEditableHolder {
     }
 
     strengthClass(label) {
-        return `p-password-meter${label ? `-${label}` : ''}`;
+        return `h-password-meter${label ? `-${label}` : ''}`;
     }
 
     testStrength(str: string) {
@@ -328,7 +328,7 @@ export class PasswordDirective extends BaseEditableHolder {
     bindScrollListener() {
         if (!this.scrollHandler) {
             this.scrollHandler = new ConnectedOverlayScrollHandler(this.el.nativeElement, () => {
-                if (hasClass(this.panel!, 'p-connected-overlay-visible')) {
+                if (hasClass(this.panel!, 'h-connected-overlay-visible')) {
                     this.hideOverlay();
                 }
             });
@@ -415,7 +415,7 @@ export const Password_VALUE_ACCESSOR: any = {
     host: {
         '[class]': "cn(cx('root'), styleClass())",
         '[style]': "sx('root')",
-        '[attr.data-p]': 'containerDataP'
+        '[attr.data-h]': 'containerDataP'
     },
     hostDirectives: [Bind]
 })

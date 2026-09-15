@@ -414,20 +414,20 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
 
         switch (this.option('defaultFocus')) {
             case 'accept':
-                return findSingle(this.dialog.el.nativeElement, '.p-confirm-dialog-accept');
+                return findSingle(this.dialog.el.nativeElement, '.h-confirm-dialog-accept');
 
             case 'reject':
-                return findSingle(this.dialog.el.nativeElement, '.p-confirm-dialog-reject');
+                return findSingle(this.dialog.el.nativeElement, '.h-confirm-dialog-reject');
 
             case 'close':
-                return findSingle(this.dialog.el.nativeElement, '.p-dialog-header-close');
+                return findSingle(this.dialog.el.nativeElement, '.h-dialog-header-close');
 
             case 'none':
                 return null;
 
             //backward compatibility
             default:
-                return findSingle(this.dialog.el.nativeElement, '.p-confirm-dialog-accept');
+                return findSingle(this.dialog.el.nativeElement, '.h-confirm-dialog-accept');
         }
     }
 
@@ -441,7 +441,7 @@ export class ConfirmDialog extends BaseComponent<ConfirmDialogPassThrough> imple
             for (let breakpoint in this.breakpoints()) {
                 innerHTML += `
                     @media screen and (max-width: ${breakpoint}) {
-                        .p-dialog[${this.id}] {
+                        .h-dialog[${this.id}] {
                             width: ${this.breakpoints()[breakpoint]} !important;
                         }
                     }

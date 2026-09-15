@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const style = /*css*/ `
-    .p-motion {
+    .h-motion {
         display: block;
     }
 `;
 
 const classes = {
-    root: 'p-motion'
+    root: 'h-motion'
 };
 
 @Injectable()
@@ -33,7 +33,7 @@ export enum MotionClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-motion'
+    root = 'h-motion'
 }
 
 export interface MotionStyle extends BaseStyle {}

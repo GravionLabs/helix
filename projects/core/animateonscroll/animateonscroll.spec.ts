@@ -167,7 +167,7 @@ describe('AnimateOnScroll', () => {
         });
 
         it('should apply host class', () => {
-            expect(directiveEl.nativeElement.className).toContain('p-animateonscroll');
+            expect(directiveEl.nativeElement.className).toContain('h-animateonscroll');
         });
 
         it('should initialize IntersectionObserver', async () => {

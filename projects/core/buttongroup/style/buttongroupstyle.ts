@@ -6,33 +6,33 @@ const style = /*css*/ `
     ${buttongroup_style}
 
     /* For Helix */
-    .p-buttongroup p-button:focus .p-button {
+    .h-buttongroup h-button:focus .h-button {
         position: relative;
         z-index: 1;
     }
 
-    .p-buttongroup p-button:not(:last-child) .p-button,
-    .p-buttongroup p-button:not(:last-child) .p-button:hover {
+    .h-buttongroup h-button:not(:last-child) .h-button,
+    .h-buttongroup h-button:not(:last-child) .h-button:hover {
         border-right: 0 none;
     }
 
-    .p-buttongroup p-button:not(:first-of-type):not(:last-of-type) .p-button {
+    .h-buttongroup h-button:not(:first-of-type):not(:last-of-type) .h-button {
         border-radius: 0;
     }
 
-    .p-buttongroup p-button:first-of-type:not(:only-of-type) .p-button {
+    .h-buttongroup h-button:first-of-type:not(:only-of-type) .h-button {
         border-start-end-radius: 0;
         border-end-end-radius: 0;
     }
 
-    .p-buttongroup p-button:last-of-type:not(:only-of-type) .p-button {
+    .h-buttongroup h-button:last-of-type:not(:only-of-type) .h-button {
         border-start-start-radius: 0;
         border-end-start-radius: 0;
     }
 `;
 
 const classes = {
-    root: 'p-buttongroup p-component'
+    root: 'h-buttongroup h-component'
 };
 
 @Injectable()
@@ -57,7 +57,7 @@ export enum ButtonGroupClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-buttongroup'
+    root = 'h-buttongroup'
 }
 
 export interface ButtonGroupStyle extends BaseStyle {}

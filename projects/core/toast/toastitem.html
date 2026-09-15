@@ -2,7 +2,7 @@
   #container
   [hMotion]="visible()"
   [pMotionAppear]="true"
-  [pMotionName]="'p-toast-message'"
+  [pMotionName]="'h-toast-message'"
   [pMotionOptions]="motionOptions()"
   (pMotionOnBeforeEnter)="onBeforeEnter($event)"
   (pMotionOnAfterLeave)="onAfterLeave($event)"
@@ -14,7 +14,7 @@
   role="alert"
   aria-live="assertive"
   aria-atomic="true"
-  [attr.data-p]="dataP"
+  [attr.data-h]="dataP"
   >
   @if (headlessTemplate()) {
     <ng-container *ngTemplateOutlet="headlessTemplate(); context: { $implicit: message(), closeFn: onCloseIconClick }"></ng-container>
@@ -26,27 +26,27 @@
         } @else {
           @switch (message()?.severity) {
             @case ('success') {
-              <svg [hBind]="ptm('messageIcon')" data-p-icon="check" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('messageIcon')" data-h-icon="check" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
             }
             @case ('info') {
-              <svg [hBind]="ptm('messageIcon')" data-p-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('messageIcon')" data-h-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
             }
             @case ('error') {
-              <svg [hBind]="ptm('messageIcon')" data-p-icon="times-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('messageIcon')" data-h-icon="times-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
             }
             @case ('warn') {
-              <svg [hBind]="ptm('messageIcon')" data-p-icon="exclamation-triangle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('messageIcon')" data-h-icon="exclamation-triangle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
             }
             @default {
-              <svg [hBind]="ptm('messageIcon')" data-p-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('messageIcon')" data-h-icon="info-circle" [class]="cx('messageIcon')" [attr.aria-hidden]="true" />
             }
           }
         }
-        <div [hBind]="ptm('messageText')" [ngClass]="cx('messageText')" [attr.data-p]="dataP">
-          <div [hBind]="ptm('summary')" [ngClass]="cx('summary')" [attr.data-p]="dataP">
+        <div [hBind]="ptm('messageText')" [ngClass]="cx('messageText')" [attr.data-h]="dataP">
+          <div [hBind]="ptm('summary')" [ngClass]="cx('summary')" [attr.data-h]="dataP">
             {{ message()?.summary }}
           </div>
-          <div [hBind]="ptm('detail')" [ngClass]="cx('detail')" [attr.data-p]="dataP">{{ message()?.detail }}</div>
+          <div [hBind]="ptm('detail')" [ngClass]="cx('detail')" [attr.data-h]="dataP">{{ message()?.detail }}</div>
         </div>
       }
       <ng-container *ngTemplateOutlet="template(); context: { $implicit: message() }"></ng-container>
@@ -60,14 +60,14 @@
             (keydown.enter)="onCloseIconClick($event)"
             [attr.aria-label]="closeAriaLabel"
             autofocus
-            [attr.data-p]="dataP"
+            [attr.data-h]="dataP"
             >
             @if (message()?.closeIcon) {
               @if (message()?.closeIcon) {
                 <span [hBind]="ptm('closeIcon')" [class]="cn(cx('closeIcon'), $safeNavigationMigration(message()?.closeIcon))"></span>
               }
             } @else {
-              <svg [hBind]="ptm('closeIcon')" data-p-icon="times" [class]="cx('closeIcon')" [attr.aria-hidden]="true" />
+              <svg [hBind]="ptm('closeIcon')" data-h-icon="times" [class]="cx('closeIcon')" [attr.aria-hidden]="true" />
             }
           </button>
         </div>

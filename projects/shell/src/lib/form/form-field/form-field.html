@@ -9,7 +9,7 @@
 
   @if (showHint()) {
     @if (activeError(); as err) {
-      <small class="helix-form-field__message helix-form-field__message--error p-error">{{ err }}</small>
+      <small class="helix-form-field__message helix-form-field__message--error h-error">{{ err }}</small>
     } @else if (hint()) {
       <small class="helix-form-field__message helix-form-field__message--hint">{{ hint() }}</small>
     }

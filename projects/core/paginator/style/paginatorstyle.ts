@@ -3,49 +3,49 @@ import { style } from './paginator.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    paginator: ({ instance }) => ['p-paginator p-component'],
-    content: 'p-paginator-content',
-    contentStart: 'p-paginator-content-start',
-    contentEnd: 'p-paginator-content-end',
+    paginator: ({ instance }) => ['h-paginator h-component'],
+    content: 'h-paginator-content',
+    contentStart: 'h-paginator-content-start',
+    contentEnd: 'h-paginator-content-end',
     first: ({ instance }) => [
-        'p-paginator-first',
+        'h-paginator-first',
         {
-            'p-disabled': instance.isFirstPage() || instance.empty()
+            'h-disabled': instance.isFirstPage() || instance.empty()
         }
     ],
-    firstIcon: 'p-paginator-first-icon',
+    firstIcon: 'h-paginator-first-icon',
     prev: ({ instance }) => [
-        'p-paginator-prev',
+        'h-paginator-prev',
         {
-            'p-disabled': instance.isFirstPage() || instance.empty()
+            'h-disabled': instance.isFirstPage() || instance.empty()
         }
     ],
-    prevIcon: 'p-paginator-prev-icon',
+    prevIcon: 'h-paginator-prev-icon',
     next: ({ instance }) => [
-        'p-paginator-next',
+        'h-paginator-next',
         {
-            'p-disabled': instance.isLastPage() || instance.empty()
+            'h-disabled': instance.isLastPage() || instance.empty()
         }
     ],
-    nextIcon: 'p-paginator-next-icon',
+    nextIcon: 'h-paginator-next-icon',
     last: ({ instance }) => [
-        'p-paginator-last',
+        'h-paginator-last',
         {
-            'p-disabled': instance.isLastPage() || instance.empty()
+            'h-disabled': instance.isLastPage() || instance.empty()
         }
     ],
-    lastIcon: 'p-paginator-last-icon',
-    pages: 'p-paginator-pages',
+    lastIcon: 'h-paginator-last-icon',
+    pages: 'h-paginator-pages',
     page: ({ instance, pageLink }) => [
-        'p-paginator-page',
+        'h-paginator-page',
         {
-            'p-paginator-page-selected': pageLink - 1 == instance.getPage()
+            'h-paginator-page-selected': pageLink - 1 == instance.getPage()
         }
     ],
-    current: 'p-paginator-current',
-    pcRowPerPageDropdown: 'p-paginator-rpp-dropdown',
-    pcJumpToPageDropdown: 'p-paginator-jtp-dropdown',
-    pcJumpToPageInput: 'p-paginator-jtp-input'
+    current: 'h-paginator-current',
+    pcRowPerPageDropdown: 'h-paginator-rpp-dropdown',
+    pcJumpToPageDropdown: 'h-paginator-jtp-dropdown',
+    pcJumpToPageInput: 'h-paginator-jtp-input'
 };
 
 @Injectable()
@@ -71,71 +71,71 @@ export enum PaginatorClasses {
     /**
      * Class name of the paginator element
      */
-    paginator = 'p-paginator',
+    paginator = 'h-paginator',
     /**
      * Class name of the content start element
      */
-    contentStart = 'p-paginator-content-start',
+    contentStart = 'h-paginator-content-start',
     /**
      * Class name of the content end element
      */
-    contentEnd = 'p-paginator-content-end',
+    contentEnd = 'h-paginator-content-end',
     /**
      * Class name of the first element
      */
-    first = 'p-paginator-first',
+    first = 'h-paginator-first',
     /**
      * Class name of the first icon element
      */
-    firstIcon = 'p-paginator-first-icon',
+    firstIcon = 'h-paginator-first-icon',
     /**
      * Class name of the prev element
      */
-    prev = 'p-paginator-prev',
+    prev = 'h-paginator-prev',
     /**
      * Class name of the prev icon element
      */
-    prevIcon = 'p-paginator-prev-icon',
+    prevIcon = 'h-paginator-prev-icon',
     /**
      * Class name of the next element
      */
-    next = 'p-paginator-next',
+    next = 'h-paginator-next',
     /**
      * Class name of the next icon element
      */
-    nextIcon = 'p-paginator-next-icon',
+    nextIcon = 'h-paginator-next-icon',
     /**
      * Class name of the last element
      */
-    last = 'p-paginator-last',
+    last = 'h-paginator-last',
     /**
      * Class name of the last icon element
      */
-    lastIcon = 'p-paginator-last-icon',
+    lastIcon = 'h-paginator-last-icon',
     /**
      * Class name of the pages element
      */
-    pages = 'p-paginator-pages',
+    pages = 'h-paginator-pages',
     /**
      * Class name of the page element
      */
-    page = 'p-paginator-page',
+    page = 'h-paginator-page',
     /**
      * Class name of the current element
      */
-    current = 'p-paginator-current',
+    current = 'h-paginator-current',
     /**
      * Class name of the row per page dropdown element
      */
-    pcRowPerPageDropdown = 'p-paginator-rpp-dropdown',
+    pcRowPerPageDropdown = 'h-paginator-rpp-dropdown',
     /**
      * Class name of the jump to page dropdown element
      */
-    pcJumpToPageDropdown = 'p-paginator-jtp-dropdown',
+    pcJumpToPageDropdown = 'h-paginator-jtp-dropdown',
     /**
      * Class name of the jump to page input element
      */
-    pcJumpToPageInput = 'p-paginator-jtp-input'
+    pcJumpToPageInput = 'h-paginator-jtp-input'
 }
 
 export interface PaginatorStyle extends BaseStyle {}

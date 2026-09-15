@@ -12,7 +12,7 @@
                         @if (fileRemoveIconTemplate()) {
                             <ng-template *ngTemplateOutlet="fileRemoveIconTemplate(); context: { class: iconClass, file: file, index: index }"></ng-template>
                         } @else {
-                            <svg data-p-icon="times" [class]="iconClass" [attr.aria-hidden]="true" />
+                            <svg data-h-icon="times" [class]="iconClass" [attr.aria-hidden]="true" />
                         }
                     </ng-template>
                 </h-button>

@@ -5,7 +5,7 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 const style = /*css*/ `
 ${stepper_style}
 
-.p-steppanel .p-motion {
+.h-steppanel .h-motion {
     display: grid;
     grid-template-rows: 1fr;
 }
@@ -13,12 +13,12 @@ ${stepper_style}
 
 const classes = {
     root: ({ instance }) => [
-        'p-stepper p-component',
+        'h-stepper h-component',
         {
-            'p-readonly': instance.linear()
+            'h-readonly': instance.linear()
         }
     ],
-    separator: 'p-stepper-separator'
+    separator: 'h-stepper-separator'
 };
 
 @Injectable()
@@ -43,11 +43,11 @@ export enum StepperClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-stepper',
+    root = 'h-stepper',
     /**
      * Class name of the separator element
      */
-    separator = 'p-stepper-separator'
+    separator = 'h-stepper-separator'
 }
 
 export interface StepperStyle extends BaseStyle {}

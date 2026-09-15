@@ -3,15 +3,15 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-step',
+        'h-step',
         {
-            'p-step-active': instance.active(),
-            'p-disabled': instance.isStepDisabled()
+            'h-step-active': instance.active(),
+            'h-disabled': instance.isStepDisabled()
         }
     ],
-    header: 'p-step-header',
-    number: 'p-step-number',
-    title: 'p-step-title'
+    header: 'h-step-header',
+    number: 'h-step-number',
+    title: 'h-step-title'
 };
 
 @Injectable()
@@ -34,19 +34,19 @@ export enum StepClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-step',
+    root = 'h-step',
     /**
      * Class name of the header element
      */
-    header = 'p-step-header',
+    header = 'h-step-header',
     /**
      * Class name of the number element
      */
-    number = 'p-step-number',
+    number = 'h-step-number',
     /**
      * Class name of the title element
      */
-    title = 'p-step-title'
+    title = 'h-step-title'
 }
 
 export interface StepStyle extends BaseStyle {}

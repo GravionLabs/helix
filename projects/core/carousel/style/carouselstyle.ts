@@ -4,54 +4,54 @@ import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
     root: ({ instance }) => [
-        'p-carousel p-component',
+        'h-carousel h-component',
         {
-            'p-carousel-vertical': instance.isVertical(),
-            'p-carousel-horizontal': !instance.isVertical()
+            'h-carousel-vertical': instance.isVertical(),
+            'h-carousel-horizontal': !instance.isVertical()
         }
     ],
-    header: 'p-carousel-header',
-    contentContainer: 'p-carousel-content-container',
-    content: 'p-carousel-content',
+    header: 'h-carousel-header',
+    contentContainer: 'h-carousel-content-container',
+    content: 'h-carousel-content',
     pcPrevButton: ({ instance }) => [
-        'p-carousel-prev-button',
+        'h-carousel-prev-button',
         {
-            'p-disabled': instance.isBackwardNavDisabled()
+            'h-disabled': instance.isBackwardNavDisabled()
         }
     ],
-    viewport: 'p-carousel-viewport',
-    itemList: 'p-carousel-item-list',
+    viewport: 'h-carousel-viewport',
+    itemList: 'h-carousel-item-list',
     itemClone: ({ instance, index }) => [
-        'p-carousel-item p-carousel-item-clone',
+        'h-carousel-item h-carousel-item-clone',
         {
-            'p-carousel-item-active': instance.totalShiftedItems * -1 === instance.value().length,
-            'p-carousel-item-start': 0 === index,
-            'p-carousel-item-end': instance.clonedItemsForStarting.length - 1 === index
+            'h-carousel-item-active': instance.totalShiftedItems * -1 === instance.value().length,
+            'h-carousel-item-start': 0 === index,
+            'h-carousel-item-end': instance.clonedItemsForStarting.length - 1 === index
         }
     ],
     item: ({ instance, index }) => [
-        'p-carousel-item',
+        'h-carousel-item',
         {
-            'p-carousel-item-active': instance.firstIndex() <= index && instance.lastIndex() >= index,
-            'p-carousel-item-start': instance.firstIndex() === index,
-            'p-carousel-item-end': instance.lastIndex() === index
+            'h-carousel-item-active': instance.firstIndex() <= index && instance.lastIndex() >= index,
+            'h-carousel-item-start': instance.firstIndex() === index,
+            'h-carousel-item-end': instance.lastIndex() === index
         }
     ],
     pcNextButton: ({ instance }) => [
-        'p-carousel-next-button',
+        'h-carousel-next-button',
         {
-            'p-disabled': instance.isForwardNavDisabled()
+            'h-disabled': instance.isForwardNavDisabled()
         }
     ],
-    indicatorList: ({ instance }) => ['p-carousel-indicator-list', instance.indicatorsContentClass()],
+    indicatorList: ({ instance }) => ['h-carousel-indicator-list', instance.indicatorsContentClass()],
     indicator: ({ instance, index }) => [
-        'p-carousel-indicator',
+        'h-carousel-indicator',
         {
-            'p-carousel-indicator-active': instance._page === index
+            'h-carousel-indicator-active': instance._page === index
         }
     ],
-    indicatorButton: ({ instance }) => ['p-carousel-indicator-button', instance.indicatorStyleClass()],
-    footer: 'p-carousel-footer'
+    indicatorButton: ({ instance }) => ['h-carousel-indicator-button', instance.indicatorStyleClass()],
+    footer: 'h-carousel-footer'
 };
 
 @Injectable()
@@ -76,59 +76,59 @@ export enum CarouselClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-carousel',
+    root = 'h-carousel',
     /**
      * Class name of the header element
      */
-    header = 'p-carousel-header',
+    header = 'h-carousel-header',
     /**
      * Class name of the content container element
      */
-    contentContainer = 'p-carousel-content-container',
+    contentContainer = 'h-carousel-content-container',
     /**
      * Class name of the content element
      */
-    content = 'p-carousel-content',
+    content = 'h-carousel-content',
     /**
      * Class name of the previous button element
      */
-    pcPrevButton = 'p-carousel-prev-button',
+    pcPrevButton = 'h-carousel-prev-button',
     /**
      * Class name of the viewport element
      */
-    viewport = 'p-carousel-viewport',
+    viewport = 'h-carousel-viewport',
     /**
      * Class name of the item list element
      */
-    itemList = 'p-carousel-item-list',
+    itemList = 'h-carousel-item-list',
     /**
      * Class name of the item clone element
      */
-    itemClone = 'p-carousel-item-clone',
+    itemClone = 'h-carousel-item-clone',
     /**
      * Class name of the item element
      */
-    item = 'p-carousel-item',
+    item = 'h-carousel-item',
     /**
      * Class name of the next button element
      */
-    pcNextButton = 'p-carousel-next-button',
+    pcNextButton = 'h-carousel-next-button',
     /**
      * Class name of the indicator list element
      */
-    indicatorList = 'p-carousel-indicator-list',
+    indicatorList = 'h-carousel-indicator-list',
     /**
      * Class name of the indicator element
      */
-    indicator = 'p-carousel-indicator',
+    indicator = 'h-carousel-indicator',
     /**
      * Class name of the indicator button element
      */
-    indicatorButton = 'p-carousel-indicator-button',
+    indicatorButton = 'h-carousel-indicator-button',
     /**
      * Class name of the footer element
      */
-    footer = 'p-carousel-footer'
+    footer = 'h-carousel-footer'
 }
 
 export interface CarouselStyle extends BaseStyle {}

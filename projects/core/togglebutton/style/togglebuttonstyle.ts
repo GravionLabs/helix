@@ -6,32 +6,32 @@ const style = /*css*/ `
     ${togglebutton_style}
 
     /* For Helix (iconPos) */
-    .p-togglebutton-icon-right {
+    .h-togglebutton-icon-right {
         order: 1;
     }
 
-    .p-togglebutton.ng-invalid.ng-dirty {
+    .h-togglebutton.ng-invalid.ng-dirty {
         border-color: dt('togglebutton.invalid.border.color');
     }
 `;
 
 const classes = {
     root: ({ instance }) => [
-        'p-togglebutton p-component',
+        'h-togglebutton h-component',
         {
-            'p-togglebutton-checked': instance.checked,
-            'p-invalid': instance.invalid(),
-            'p-disabled': instance.$disabled(),
-            'p-togglebutton-sm p-inputfield-sm': instance.size === 'small',
-            'p-togglebutton-lg p-inputfield-lg': instance.size === 'large',
-            'p-togglebutton-fluid': instance.fluid()
+            'h-togglebutton-checked': instance.checked,
+            'h-invalid': instance.invalid(),
+            'h-disabled': instance.$disabled(),
+            'h-togglebutton-sm h-inputfield-sm': instance.size === 'small',
+            'h-togglebutton-lg h-inputfield-lg': instance.size === 'large',
+            'h-togglebutton-fluid': instance.fluid()
         }
     ],
-    content: 'p-togglebutton-content',
-    icon: 'p-togglebutton-icon',
-    iconLeft: 'p-togglebutton-icon-left',
-    iconRight: 'p-togglebutton-icon-right',
-    label: 'p-togglebutton-label'
+    content: 'h-togglebutton-content',
+    icon: 'h-togglebutton-icon',
+    iconLeft: 'h-togglebutton-icon-left',
+    iconRight: 'h-togglebutton-icon-right',
+    label: 'h-togglebutton-label'
 };
 
 @Injectable()
@@ -56,23 +56,23 @@ export enum ToggleButtonClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-togglebutton',
+    root = 'h-togglebutton',
     /**
      * Class name of the icon element
      */
-    icon = 'p-togglebutton-icon',
+    icon = 'h-togglebutton-icon',
     /**
      * Class name of the left icon
      */
-    iconLeft = 'p-togglebutton-icon-left',
+    iconLeft = 'h-togglebutton-icon-left',
     /**
      * Class name of the right icon
      */
-    iconRight = 'p-togglebutton-icon-right',
+    iconRight = 'h-togglebutton-icon-right',
     /**
      * Class name of the label element
      */
-    label = 'p-togglebutton-label'
+    label = 'h-togglebutton-label'
 }
 
 export interface ToggleButtonStyle extends BaseStyle {}

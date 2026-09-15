@@ -77,7 +77,7 @@ Table displays data in tabular format.
 | `loading` | `boolean \| undefined` | — | Displays a loader to indicate data load is in progress. |
 | `loadingIcon` | `string \| undefined` | — | The icon to show while indicating data load is in progress. |
 | `showLoader` | `boolean` | `true` | Whether to show the loading mask when loading property is true. |
-| `rowHover` | `boolean \| undefined` | — | Adds hover effect to rows without the need for selectionMode. Note that tr elements that can be hovered need to have "p-selectable-row" class for rowHover to work. |
+| `rowHover` | `boolean \| undefined` | — | Adds hover effect to rows without the need for selectionMode. Note that tr elements that can be hovered need to have "h-selectable-row" class for rowHover to work. |
 | `customSort` | `boolean \| undefined` | — | Whether to use the default sorting or a custom one using sortFunction. |
 | `showInitialSortBadge` | `boolean` | `true` | Whether to use the initial sort badge or not. |
 | `exportFunction` | `Function \| undefined` | — | Export function. |

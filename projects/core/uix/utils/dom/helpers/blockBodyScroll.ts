@@ -8,9 +8,9 @@ export interface BlockBodyScrollOptions {
 
 export default function blockBodyScroll(option: string | BlockBodyScrollOptions | undefined): void {
     if (typeof option === 'string') {
-        addClass(document.body, option || 'p-overflow-hidden');
+        addClass(document.body, option || 'h-overflow-hidden');
     } else {
         option?.variableName && document.body.style.setProperty(option.variableName, calculateBodyScrollbarWidth() + 'px');
-        addClass(document.body, option?.className || 'p-overflow-hidden');
+        addClass(document.body, option?.className || 'h-overflow-hidden');
     }
 }

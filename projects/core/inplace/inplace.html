@@ -1,5 +1,5 @@
 @if (!active()) {
-  <div [class]="cx('display')" [hBind]="ptm('display')" (click)="onActivateClick($event)" tabindex="0" role="button" (keydown)="onKeydown($event)" [attr.data-p-disabled]="disabled()">
+  <div [class]="cx('display')" [hBind]="ptm('display')" (click)="onActivateClick($event)" tabindex="0" role="button" (keydown)="onKeydown($event)" [attr.data-h-disabled]="disabled()">
     <ng-content select="[pInplaceDisplay]"></ng-content>
     <ng-container *ngTemplateOutlet="displayTemplate() || _displayTemplate"></ng-container>
   </div>
@@ -16,7 +16,7 @@
         <h-button [pt]="ptm('pcButton')" type="button" hRipple (click)="onDeactivateClick($event)" [attr.aria-label]="closeAriaLabel()">
           <ng-template #icon>
             @if (!closeIconTemplate() && !_closeIconTemplate) {
-              <svg data-p-icon="times" />
+              <svg data-h-icon="times" />
             }
           </ng-template>
           <ng-template *ngTemplateOutlet="closeIconTemplate() || _closeIconTemplate"></ng-template>

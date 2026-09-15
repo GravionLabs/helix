@@ -26,13 +26,13 @@ const MESSAGE_INSTANCE = new InjectionToken<Message>('MESSAGE_INSTANCE');
     providers: [MessageStyle, { provide: MESSAGE_INSTANCE, useExisting: Message }, { provide: PARENT_INSTANCE, useExisting: Message }],
     hostDirectives: [Bind],
     host: {
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h]': 'dataP',
         role: 'alert',
         'aria-live': 'polite',
         '[class]': 'cn(cx("root"), styleClass())',
-        '[animate.enter]': '"p-message-enter-active"',
-        '[animate.leave]': '"p-message-leave-active"',
-        '[class.p-message-leave-active]': '!visible()'
+        '[animate.enter]': '"h-message-enter-active"',
+        '[animate.leave]': '"h-message-leave-active"',
+        '[class.h-message-leave-active]': '!visible()'
     }
 })
 export class Message extends BaseComponent<MessagePassThrough> {

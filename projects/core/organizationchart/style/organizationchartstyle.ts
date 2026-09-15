@@ -3,19 +3,19 @@ import { style } from './organizationchart.css';
 import { BaseStyle } from '@gravionlabs/helix-core/base';
 
 const classes = {
-    root: ({ instance }) => ['p-organizationchart p-component', { 'p-organizationchart-preservespace': instance.preserveSpace() }],
-    table: 'p-organizationchart-table',
+    root: ({ instance }) => ['h-organizationchart h-component', { 'h-organizationchart-preservespace': instance.preserveSpace() }],
+    table: 'h-organizationchart-table',
     node: ({ instance }) => [
-        'p-organizationchart-node',
-        { 'p-organizationchart-node': true, 'p-organizationchart-node-selectable': instance.chart.selectionMode && instance.node.selectable !== false, 'p-organizationchart-node-selected': instance.isSelected() }
+        'h-organizationchart-node',
+        { 'h-organizationchart-node': true, 'h-organizationchart-node-selectable': instance.chart.selectionMode && instance.node.selectable !== false, 'h-organizationchart-node-selected': instance.isSelected() }
     ],
-    nodeToggleButton: 'p-organizationchart-node-toggle-button',
-    nodeToggleButtonIcon: 'p-organizationchart-node-toggle-button-icon',
-    connectors: 'p-organizationchart-connectors',
-    connectorDown: 'p-organizationchart-connector-down',
-    connectorLeft: ({ first }) => ['p-organizationchart-connector-left', { 'p-organizationchart-connector-top': !first }],
-    connectorRight: ({ last }) => ['p-organizationchart-connector-right', { 'p-organizationchart-connector-top': !last }],
-    nodeChildren: 'p-organizationchart-node-children'
+    nodeToggleButton: 'h-organizationchart-node-toggle-button',
+    nodeToggleButtonIcon: 'h-organizationchart-node-toggle-button-icon',
+    connectors: 'h-organizationchart-connectors',
+    connectorDown: 'h-organizationchart-connector-down',
+    connectorLeft: ({ first }) => ['h-organizationchart-connector-left', { 'h-organizationchart-connector-top': !first }],
+    connectorRight: ({ last }) => ['h-organizationchart-connector-right', { 'h-organizationchart-connector-top': !last }],
+    nodeChildren: 'h-organizationchart-node-children'
 };
 
 @Injectable()
@@ -40,43 +40,43 @@ export enum OrganizationChartClasses {
     /**
      * Class name of the root element
      */
-    root = 'p-organizationchart',
+    root = 'h-organizationchart',
     /**
      * Class name of the table element
      */
-    table = 'p-organizationchart-table',
+    table = 'h-organizationchart-table',
     /**
      * Class name of the node element
      */
-    node = 'p-organizationchart-node',
+    node = 'h-organizationchart-node',
     /**
      * Class name of the node toggle button element
      */
-    nodeToggleButton = 'p-organizationchart-node-toggle-button',
+    nodeToggleButton = 'h-organizationchart-node-toggle-button',
     /**
      * Class name of the node toggle button icon element
      */
-    nodeToggleButtonIcon = 'p-organizationchart-node-toggle-button-icon',
+    nodeToggleButtonIcon = 'h-organizationchart-node-toggle-button-icon',
     /**
      * Class name of the connectors element
      */
-    connectors = 'p-organizationchart-connectors',
+    connectors = 'h-organizationchart-connectors',
     /**
      * Class name of the connector down element
      */
-    connectorDown = 'p-organizationchart-connector-down',
+    connectorDown = 'h-organizationchart-connector-down',
     /**
      * Class name of the connector left element
      */
-    connectorLeft = 'p-organizationchart-connector-left',
+    connectorLeft = 'h-organizationchart-connector-left',
     /**
      * Class name of the connector right element
      */
-    connectorRight = 'p-organizationchart-connector-right',
+    connectorRight = 'h-organizationchart-connector-right',
     /**
      * Class name of the node children element
      */
-    nodeChildren = 'p-organizationchart-node-children'
+    nodeChildren = 'h-organizationchart-node-children'
 }
 
 export interface OrganizationChartStyle extends BaseStyle {}

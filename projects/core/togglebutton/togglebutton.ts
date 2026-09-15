@@ -49,9 +49,9 @@ export const TOGGLEBUTTON_VALUE_ACCESSOR: any = {
         '[attr.role]': '"button"',
         '[attr.tabindex]': 'tabindex() !== undefined ? tabindex() : (!$disabled() ? 0 : -1)',
         '[attr.data-pc-name]': "'togglebutton'",
-        '[attr.data-p-checked]': 'active',
-        '[attr.data-p-disabled]': '$disabled()',
-        '[attr.data-p]': 'dataP',
+        '[attr.data-h-checked]': 'active',
+        '[attr.data-h-disabled]': '$disabled()',
+        '[attr.data-h]': 'dataP',
         '(keydown)': 'onKeyDown($event)',
         '(click)': 'toggle($event)'
     },

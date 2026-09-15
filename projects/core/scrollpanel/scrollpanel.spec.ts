@@ -7,7 +7,7 @@ import { ScrollPanel } from './scrollpanel';
 @Component({
     standalone: false,
     template: `
-        <p-scrollpanel [styleClass]="styleClass" [step]="step" style="width: 400px; height: 200px;">
+        <h-scrollpanel [styleClass]="styleClass" [step]="step" style="width: 400px; height: 200px;">
           <div class="content-div" style="width: 800px; height: 600px; padding: 20px;">
             <h2>Scrollable Content</h2>
             <p>This is content that will cause scrollbars to appear.</p>
@@ -15,7 +15,7 @@ import { ScrollPanel } from './scrollpanel';
               <div>Item {{ item }}</div>
             }
           </div>
-        </p-scrollpanel>
+        </h-scrollpanel>
         `
 })
 class TestScrollPanelComponent {
@@ -27,14 +27,14 @@ class TestScrollPanelComponent {
 @Component({
     standalone: false,
     template: `
-        <p-scrollpanel style="width: 300px; height: 150px;">
+        <h-scrollpanel style="width: 300px; height: 150px;">
             <ng-template pTemplate="content">
                 <div class="template-content" style="width: 600px; height: 400px;">
                     <h3>Template Content</h3>
                     <p>This content is rendered via template.</p>
                 </div>
             </ng-template>
-        </p-scrollpanel>
+        </h-scrollpanel>
     `
 })
 class TestTemplateScrollPanelComponent {}
@@ -42,14 +42,14 @@ class TestTemplateScrollPanelComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-scrollpanel style="width: 280px; height: 120px;">
+        <h-scrollpanel style="width: 280px; height: 120px;">
             <ng-template #content>
                 <div class="content-template-content" style="width: 500px; height: 300px;">
                     <h3>Content Template</h3>
                     <p>This content is rendered via #content template.</p>
                 </div>
             </ng-template>
-        </p-scrollpanel>
+        </h-scrollpanel>
     `
 })
 class TestContentTemplateScrollPanelComponent {}
@@ -57,9 +57,9 @@ class TestContentTemplateScrollPanelComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-scrollpanel style="width: 250px; height: 100px;">
+        <h-scrollpanel style="width: 250px; height: 100px;">
             <div style="width: 100px; height: 50px;">Small content - no scrollbars needed</div>
-        </p-scrollpanel>
+        </h-scrollpanel>
     `
 })
 class TestNoScrollScrollPanelComponent {}
@@ -67,11 +67,11 @@ class TestNoScrollScrollPanelComponent {}
 @Component({
     standalone: false,
     template: `
-        <p-scrollpanel [pt]="pt" style="width: 400px; height: 200px;">
+        <h-scrollpanel [pt]="pt" style="width: 400px; height: 200px;">
             <div style="width: 800px; height: 600px; padding: 20px;">
                 <h2>PT Test Content</h2>
             </div>
-        </p-scrollpanel>
+        </h-scrollpanel>
     `
 })
 class TestPTScrollPanelComponent {
@@ -130,31 +130,31 @@ describe('ScrollPanel', () => {
         });
 
         it('should set data attributes', () => {
-            const scrollPanelElement = fixture.debugElement.query(By.css('p-scrollpanel'));
+            const scrollPanelElement = fixture.debugElement.query(By.css('h-scrollpanel'));
             expect(scrollPanelElement.nativeElement.getAttribute('data-pc-name')).toBe('scrollpanel');
         });
     });
 
     describe('DOM Structure', () => {
         it('should render content container', () => {
-            const contentContainer = fixture.debugElement.query(By.css('.p-scrollpanel-content-container'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-scrollpanel-content-container'));
             expect(contentContainer).toBeTruthy();
         });
 
         it('should render content area', () => {
-            const content = fixture.debugElement.query(By.css('.p-scrollpanel-content'));
+            const content = fixture.debugElement.query(By.css('.h-scrollpanel-content'));
             expect(content).toBeTruthy();
         });
 
         it('should render horizontal scrollbar', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
             expect(xBar).toBeTruthy();
             expect(xBar.nativeElement.getAttribute('role')).toBe('scrollbar');
             expect(xBar.nativeElement.getAttribute('aria-orientation')).toBe('horizontal');
         });
 
         it('should render vertical scrollbar', () => {
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
             expect(yBar).toBeTruthy();
             expect(yBar.nativeElement.getAttribute('role')).toBe('scrollbar');
             expect(yBar.nativeElement.getAttribute('aria-orientation')).toBe('vertical');
@@ -174,13 +174,13 @@ describe('ScrollPanel', () => {
             await fixture.whenStable();
             fixture.detectChanges();
 
-            const scrollPanelElement = fixture.debugElement.query(By.css('p-scrollpanel'));
+            const scrollPanelElement = fixture.debugElement.query(By.css('h-scrollpanel'));
             expect(scrollPanelElement.nativeElement.className).toContain('my-custom-panel');
         });
 
         it('should apply custom styles via template', () => {
             // ScrollPanel doesn't have style input, it uses template style binding
-            const scrollPanelElement = fixture.debugElement.query(By.css('p-scrollpanel'));
+            const scrollPanelElement = fixture.debugElement.query(By.css('h-scrollpanel'));
 
             // Test that inline styles in template are applied
             expect(scrollPanelElement.nativeElement.style.width).toBe('400px');
@@ -188,11 +188,11 @@ describe('ScrollPanel', () => {
         });
 
         it('should apply correct CSS classes to scrollbars', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
-            expect(xBar.nativeElement.className).toContain('p-scrollpanel-bar-x');
-            expect(yBar.nativeElement.className).toContain('p-scrollpanel-bar-y');
+            expect(xBar.nativeElement.className).toContain('h-scrollpanel-bar-x');
+            expect(yBar.nativeElement.className).toContain('h-scrollpanel-bar-y');
         });
     });
 
@@ -328,7 +328,7 @@ describe('ScrollPanel', () => {
         it('should handle arrow key navigation in vertical orientation', async () => {
             scrollPanel.orientation = 'vertical';
 
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
             const arrowDownEvent = new KeyboardEvent('keydown', { code: 'ArrowDown' });
             const arrowUpEvent = new KeyboardEvent('keydown', { code: 'ArrowUp' });
 
@@ -377,8 +377,8 @@ describe('ScrollPanel', () => {
         });
 
         it('should update orientation on focus', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             scrollPanel.onFocus({ target: xBar.nativeElement });
             expect(scrollPanel.orientation).toBe('horizontal');
@@ -401,7 +401,7 @@ describe('ScrollPanel', () => {
         });
 
         it('should handle vertical bar mouse down', async () => {
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageY', { value: 100, writable: false });
 
@@ -414,11 +414,11 @@ describe('ScrollPanel', () => {
             expect(scrollPanel.lastPageY).toBe(100);
             expect(yBar.nativeElement.focus).toHaveBeenCalled();
             expect(mouseEvent.preventDefault).toHaveBeenCalled();
-            expect(yBar.nativeElement.getAttribute('data-p-scrollpanel-grabbed')).toBe('true');
+            expect(yBar.nativeElement.getAttribute('data-h-scrollpanel-grabbed')).toBe('true');
         });
 
         it('should handle horizontal bar mouse down', async () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageX', { value: 150, writable: false });
 
@@ -465,15 +465,15 @@ describe('ScrollPanel', () => {
             scrollPanel.isXBarClicked = true;
             scrollPanel.isYBarClicked = true;
 
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             scrollPanel.onDocumentMouseUp(new MouseEvent('mouseup'));
 
             expect(scrollPanel.isXBarClicked).toBe(false);
             expect(scrollPanel.isYBarClicked).toBe(false);
-            expect(xBar.nativeElement.getAttribute('data-p-scrollpanel-grabbed')).toBe('false');
-            expect(yBar.nativeElement.getAttribute('data-p-scrollpanel-grabbed')).toBe('false');
+            expect(xBar.nativeElement.getAttribute('data-h-scrollpanel-grabbed')).toBe('false');
+            expect(yBar.nativeElement.getAttribute('data-h-scrollpanel-grabbed')).toBe('false');
         });
     });
 
@@ -493,7 +493,7 @@ describe('ScrollPanel', () => {
             expect(templateScrollPanel.templates).toBeDefined();
 
             // Verify pTemplate content container is rendered
-            const content = templateFixture.debugElement.query(By.css('.p-scrollpanel-content'));
+            const content = templateFixture.debugElement.query(By.css('.h-scrollpanel-content'));
             expect(content).toBeTruthy();
         });
 
@@ -512,7 +512,7 @@ describe('ScrollPanel', () => {
             expect(contentScrollPanel.contentTemplate).toBeDefined();
 
             // Verify content container is rendered
-            const content = contentTemplateFixture.debugElement.query(By.css('.p-scrollpanel-content'));
+            const content = contentTemplateFixture.debugElement.query(By.css('.h-scrollpanel-content'));
             expect(content).toBeTruthy();
         });
 
@@ -591,8 +591,8 @@ describe('ScrollPanel', () => {
 
     describe('Accessibility', () => {
         it('should have correct ARIA attributes on scrollbars', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(xBar.nativeElement.getAttribute('role')).toBe('scrollbar');
             expect(xBar.nativeElement.getAttribute('aria-orientation')).toBe('horizontal');
@@ -606,8 +606,8 @@ describe('ScrollPanel', () => {
         });
 
         it('should update aria-valuenow on scroll', async () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             scrollPanel.lastScrollLeft = 50;
             scrollPanel.lastScrollTop = 75;
@@ -620,8 +620,8 @@ describe('ScrollPanel', () => {
         });
 
         it('should be keyboard navigable', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(xBar.nativeElement.tabIndex).toBe(0);
             expect(yBar.nativeElement.tabIndex).toBe(0);
@@ -771,10 +771,10 @@ describe('ScrollPanel', () => {
 
     describe('Data Attributes', () => {
         it('should have correct data-pc-section attributes', () => {
-            const contentContainer = fixture.debugElement.query(By.css('.p-scrollpanel-content-container'));
-            const content = fixture.debugElement.query(By.css('.p-scrollpanel-content'));
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const contentContainer = fixture.debugElement.query(By.css('.h-scrollpanel-content-container'));
+            const content = fixture.debugElement.query(By.css('.h-scrollpanel-content'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(contentContainer?.nativeElement.getAttribute('data-pc-section')).toBe('contentcontainer');
             expect(content?.nativeElement.getAttribute('data-pc-section')).toBe('content');
@@ -783,31 +783,31 @@ describe('ScrollPanel', () => {
         });
 
         it('should update grabbed state data attributes', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             const mouseEvent = new MouseEvent('mousedown');
             Object.defineProperty(mouseEvent, 'pageY', { value: 100, writable: false });
             scrollPanel.onYBarMouseDown(mouseEvent);
 
-            expect(yBar.nativeElement.getAttribute('data-p-scrollpanel-grabbed')).toBe('true');
-            expect(document.body.getAttribute('data-p-scrollpanel-grabbed')).toBe('true');
+            expect(yBar.nativeElement.getAttribute('data-h-scrollpanel-grabbed')).toBe('true');
+            expect(document.body.getAttribute('data-h-scrollpanel-grabbed')).toBe('true');
 
             scrollPanel.onDocumentMouseUp(new MouseEvent('mouseup'));
 
-            expect(yBar.nativeElement.getAttribute('data-p-scrollpanel-grabbed')).toBe('false');
-            expect(document.body.getAttribute('data-p-scrollpanel-grabbed')).toBe('false');
+            expect(yBar.nativeElement.getAttribute('data-h-scrollpanel-grabbed')).toBe('false');
+            expect(document.body.getAttribute('data-h-scrollpanel-grabbed')).toBe('false');
         });
 
         it('should update scrollbar hidden state attributes', () => {
-            const xBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const yBar = fixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const xBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const yBar = fixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
-            xBar.nativeElement.setAttribute('data-p-scrollpanel-hidden', 'false');
-            yBar.nativeElement.setAttribute('data-p-scrollpanel-hidden', 'false');
+            xBar.nativeElement.setAttribute('data-h-scrollpanel-hidden', 'false');
+            yBar.nativeElement.setAttribute('data-h-scrollpanel-hidden', 'false');
 
-            expect(xBar.nativeElement.hasAttribute('data-p-scrollpanel-hidden')).toBe(true);
-            expect(yBar.nativeElement.hasAttribute('data-p-scrollpanel-hidden')).toBe(true);
+            expect(xBar.nativeElement.hasAttribute('data-h-scrollpanel-hidden')).toBe(true);
+            expect(yBar.nativeElement.hasAttribute('data-h-scrollpanel-hidden')).toBe(true);
         });
     });
 
@@ -871,11 +871,11 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-scrollpanel'));
-            const contentContainer = ptFixture.debugElement.query(By.css('.p-scrollpanel-content-container'));
-            const content = ptFixture.debugElement.query(By.css('.p-scrollpanel-content'));
-            const barX = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
-            const barY = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-scrollpanel'));
+            const contentContainer = ptFixture.debugElement.query(By.css('.h-scrollpanel-content-container'));
+            const content = ptFixture.debugElement.query(By.css('.h-scrollpanel-content'));
+            const barX = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
+            const barY = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(hostEl.nativeElement.className).toContain('HOST_CLASS');
             expect(hostEl.nativeElement.className).toContain('ROOT_CLASS');
@@ -907,9 +907,9 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-scrollpanel'));
-            const contentContainer = ptFixture.debugElement.query(By.css('.p-scrollpanel-content-container'));
-            const barX = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-scrollpanel'));
+            const contentContainer = ptFixture.debugElement.query(By.css('.h-scrollpanel-content-container'));
+            const barX = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
 
             expect(hostEl.nativeElement.className).toContain('ROOT_OBJECT_CLASS');
             expect(hostEl.nativeElement.getAttribute('data-test')).toBe('root-test');
@@ -936,9 +936,9 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-scrollpanel'));
-            const content = ptFixture.debugElement.query(By.css('.p-scrollpanel-content'));
-            const barY = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-scrollpanel'));
+            const content = ptFixture.debugElement.query(By.css('.h-scrollpanel-content'));
+            const barY = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(hostEl.nativeElement.className).toContain('MIXED_ROOT_CLASS');
             expect(content.nativeElement.className).toContain('MIXED_CONTENT_CLASS');
@@ -968,8 +968,8 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-scrollpanel'));
-            const barX = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-x'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-scrollpanel'));
+            const barX = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-x'));
 
             expect(hostEl.nativeElement.className).toContain('INITIALIZED');
             expect(barX.nativeElement.className).toContain('INSTANCE_BAR');
@@ -991,7 +991,7 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const content = ptFixture.debugElement.query(By.css('.p-scrollpanel-content'));
+            const content = ptFixture.debugElement.query(By.css('.h-scrollpanel-content'));
             content.nativeElement.click();
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
@@ -1010,8 +1010,8 @@ describe('ScrollPanel', () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             await ptFixture.whenStable();
 
-            const hostEl = ptFixture.debugElement.query(By.css('p-scrollpanel'));
-            const barY = ptFixture.debugElement.query(By.css('.p-scrollpanel-bar-y'));
+            const hostEl = ptFixture.debugElement.query(By.css('h-scrollpanel'));
+            const barY = ptFixture.debugElement.query(By.css('.h-scrollpanel-bar-y'));
 
             expect(hostEl.nativeElement.className).toContain('SET_INPUT_CLASS');
             expect(barY.nativeElement.className).toContain('BARY_SET_INPUT');
