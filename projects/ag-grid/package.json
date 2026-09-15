@@ -2,6 +2,7 @@
   "name": "@gravionlabs/helix-ag-grid",
   "version": "0.1.0",
   "description": "Helix AG Grid helpers for Angular — value formatters, number parsers, and cell styles.",
+  "license": "MIT",
   "keywords": [
     "helix",
     "angular",
