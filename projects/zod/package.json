@@ -2,6 +2,7 @@
   "name": "@gravionlabs/helix-zod",
   "version": "0.2.0",
   "description": "Helix Zod v4 adapter for Angular — reactive-forms validator bridge and dynamic forms from annotated Zod schemas.",
+  "license": "MIT",
   "keywords": [
     "helix",
     "angular",

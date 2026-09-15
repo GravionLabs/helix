@@ -2,6 +2,7 @@
   "name": "@gravionlabs/helix-shell",
   "version": "0.2.0",
   "description": "Helix application shell for Angular — layout (topbar, nav rail, footer), auth pages, landing widgets, and a signal-store-backed layout state.",
+  "license": "MIT",
   "keywords": [
     "helix",
     "angular",

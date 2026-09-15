@@ -4,11 +4,7 @@ permissions:
   contents: write
   checks: write
   pull-requests: write
-  packages: write
   id-token: write
-
-env:
-  PNPM_VERSION: '12.3.4'
 
 on:
   workflow_dispatch:
@@ -69,13 +65,10 @@ jobs:
   publish:
     name: Publish
     needs: [determine-version, build-test]
-    # Temporarily disabled for #381 (release cleanup + scope rename) — publishing
-    # only via manual workflow_dispatch with force-publish until the rename lands.
-    if: inputs.force-publish == true
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || inputs.force-publish == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -86,54 +79,41 @@ jobs:
           name: node-build
           path: .
 
-      # NOTE: publishing targets the public npm registry (registry.npmjs.org)
-      # rather than GitHub Packages, so installs don't require an authenticated
-      # .npmrc. This requires an NPM_TOKEN secret (npmjs automation token) — it
-      # does not exist yet as of this change and must be added before
-      # force-publish is used again. (The @gravionlabs scope would also work on
-      # GitHub Packages, since it matches the repo owner there — but that
-      # registry has no anonymous read, so npmjs remains the target.)
-      - name: Publish @gravionlabs/helix-core
-        uses: GravionLabs/ci/node/publish@main
+      # Publishes to the public npm registry (registry.npmjs.org) via npm's
+      # OIDC "trusted publisher" flow (npm CLI >= 11.5, this job's
+      # id-token: write permission) — no NPM_TOKEN secret needed, and no auth
+      # token is configured below on purpose. This requires a one-time setup
+      # on npmjs.com per package — for each of @gravionlabs/helix-core,
+      # helix-shell, helix-zod, helix-ag-grid: Settings → Trusted Publisher →
+      # GitHub Actions → owner GravionLabs, repo helix, workflow ci.yml. Until
+      # that's configured for a given package, its publish step below 404s /
+      # 401s with no trusted publisher found — configuring it is a manual,
+      # per-account step only an npm org owner can do.
+      - uses: actions/setup-node@v4
         with:
-          package-manager: pnpm
-          package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: core
-          version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org/'
 
-      - name: Publish @gravionlabs/helix-shell
-        uses: GravionLabs/ci/node/publish@main
-        with:
-          package-manager: pnpm
-          package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: shell
-          version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
+      - name: Set package versions
+        run: |
+          set -euo pipefail
+          for dir in core shell zod ag-grid; do
+            npm --prefix "./$dir" version "${{ needs.determine-version.outputs.npm-version }}" --no-git-tag-version --allow-same-version
+          done
 
-      - name: Publish @gravionlabs/helix-zod
-        uses: GravionLabs/ci/node/publish@main
-        with:
-          package-manager: pnpm
-          package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: zod
-          version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @gravionlabs/helix-ag-grid
-        uses: GravionLabs/ci/node/publish@main
-        with:
-          package-manager: pnpm
-          package-manager-version: ${{ env.PNPM_VERSION }}
-          publish-directory: ag-grid
-          version: ${{ needs.determine-version.outputs.npm-version }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
+      - name: Publish packages
+        run: |
+          set -euo pipefail
+          for dir in core shell zod ag-grid; do
+            # The leading ./ matters: a bare "core" is ambiguous with npm's
+            # "user/repo" git-shorthand package spec and gets misparsed as one.
+            npm publish "./$dir" --access public --provenance
+          done
 
   release:
     name: Release
     needs: [determine-version, publish]
-    # Temporarily disabled for #381 (release cleanup + scope rename) — see publish job.
-    if: inputs.force-publish == true
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || inputs.force-publish == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -146,3 +126,4 @@ jobs:
           version: ${{ needs.determine-version.outputs.semver }}
           tag-prefix: v
           changelog-file: CHANGELOG.md
+          cliff-config: cliff.toml
