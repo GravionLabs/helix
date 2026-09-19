@@ -1,0 +1,46 @@
+[changelog]
+header = """
+# Changelog\n
+All notable changes to this project are documented here. Generated with\n[git-cliff](https://github.com/orhun/git-cliff) from [Conventional Commits](https://www.conventionalcommits.org/).\n
+"""
+body = """
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}]\
+        {%- if release_link -%}({{ release_link }}){% endif %} - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## [Unreleased]
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | striptags | trim | upper_first }}
+    {% for commit in commits %}
+        - {% if commit.breaking %}**[breaking]** {% endif %}{{ commit.message | upper_first | trim }}\
+            {% if commit.remote.pr_number %} ([#{{ commit.remote.pr_number }}]({{ self::remote_url() }}/pull/{{ commit.remote.pr_number }})){% endif %}
+    {%- endfor %}
+{% endfor %}\n
+{%- macro remote_url() -%}
+  https://github.com/{{ remote.github.owner }}/{{ remote.github.repo }}
+{%- endmacro -%}
+"""
+trim = true
+footer = ""
+
+[git]
+conventional_commits = true
+filter_unconventional = true
+split_commits = false
+commit_preprocessors = []
+commit_parsers = [
+    { message = "^feat", group = "Added" },
+    { message = "^fix", group = "Fixed" },
+    { message = "^perf", group = "Performance" },
+    { message = "^refactor", group = "Changed" },
+    { message = "^docs", group = "Documentation" },
+    { message = "^chore\\(deps.*\\)", group = "Dependencies" },
+    { message = "^chore|^ci|^style|^test|^build", skip = true },
+    { message = ".*", group = "Other" },
+]
+protect_breaking_commits = false
+filter_commits = true
+tag_pattern = "v[0-9]*"
+topo_order = false
+sort_commits = "oldest"
