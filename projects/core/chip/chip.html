@@ -19,19 +19,19 @@
         (click)="close($event)"
         (keydown)="onKeydown($event)"
         [attr.tabindex]="disabled() ? -1 : 0"
-        [attr.aria-label()]="removeAriaLabel"
+        [attr.aria-label]="removeAriaLabel"
         role="button"
       ></span>
     }
     @if (!removeIcon()) {
       <svg
         [hBind]="ptm('removeIcon')"
-        data-h-icon()="times-circle"
+        data-h-icon="times-circle"
         [class]="cx('removeIcon')"
         (click)="close($event)"
         (keydown)="onKeydown($event)"
         [attr.tabindex]="disabled() ? -1 : 0"
-        [attr.aria-label()]="removeAriaLabel"
+        [attr.aria-label]="removeAriaLabel"
         role="button"
         />
     }
@@ -43,7 +43,7 @@
       [class]="cx('removeIcon')"
       (click)="close($event)"
       (keydown)="onKeydown($event)"
-      [attr.aria-label()]="removeAriaLabel"
+      [attr.aria-label]="removeAriaLabel"
       role="button"
       >
       <ng-template *ngTemplateOutlet="removeIconTemplate() || _removeIconTemplate"></ng-template>
