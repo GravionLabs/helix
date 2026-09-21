@@ -733,7 +733,10 @@ export class DatePicker extends BaseInput<DatePickerPassThrough> {
         effect(() => {
             this.showTime();
             if (this.currentHour === undefined) {
-                this.initTime(this.value || new Date());
+                // `value` is a Date[] in range/multiple selection mode — initTime() needs a
+                // single Date, so pick the first one, matching the existing pattern at isSelected().
+                const value = Array.isArray(this.value) ? this.value[0] : this.value;
+                this.initTime(value || new Date());
             }
             this.updateInputfield();
         });
