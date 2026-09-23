@@ -15,7 +15,8 @@ application shell, form utilities, and AG Grid helpers built on top of it.
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
 
 The workspace also contains [`apps/helix-demo`](apps/helix-demo), the showcase
-application used for development.
+application used for development — live at
+[gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/).
 
 ## Quick Start
 
