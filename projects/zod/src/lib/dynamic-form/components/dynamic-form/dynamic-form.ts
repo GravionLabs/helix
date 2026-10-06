@@ -14,7 +14,7 @@ import { form, submit } from '@angular/forms/signals';
 import type { z } from 'zod';
 import type { HelixFieldDescriptor } from '../../model/helix-field-descriptor';
 import { buildHelixSchema } from '../../schema/signal-schema-builder';
-import { buildDefaultValue } from '../../schema/zod-defaults';
+import { buildDefaultValue, nullsToAbsent } from '../../schema/zod-defaults';
 import { zodToFieldDescriptors } from '../../schema/zod-field-walker';
 import { HelixDynamicField } from '../dynamic-field/dynamic-field';
 
@@ -72,7 +72,7 @@ export class HelixDynamicForm<T extends Record<string, unknown> = Record<string,
   protected async handleSubmit(event: Event): Promise<void> {
     event.preventDefault();
     await submit(this.formTree(), async (tree) => {
-      this.submitted.emit(this.schema().parse(tree().value()) as T);
+      this.submitted.emit(this.schema().parse(nullsToAbsent(this.schema(), tree().value())) as T);
       return undefined;
     });
   }

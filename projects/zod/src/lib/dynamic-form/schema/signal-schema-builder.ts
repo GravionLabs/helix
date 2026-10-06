@@ -12,6 +12,7 @@ import {
 } from '@angular/forms/signals';
 import type { z } from 'zod';
 import type { HelixFieldDescriptor } from '../model/helix-field-descriptor';
+import { nullsToAbsent } from './zod-defaults';
 
 /**
  * Builds the signal-forms schema for a Zod-driven dynamic form:
@@ -31,7 +32,16 @@ export function buildHelixSchema<T extends Record<string, unknown>>(
   root: HelixFieldDescriptor,
 ): SchemaFn<T> {
   return (rootPath) => {
-    validateStandardSchema(rootPath as any, zodSchema as any);
+    const standard = (zodSchema as any)['~standard'];
+    validateStandardSchema(
+      rootPath as any,
+      {
+        '~standard': {
+          ...standard,
+          validate: (value: unknown) => standard.validate(nullsToAbsent(zodSchema, value)),
+        },
+      } as any,
+    );
     applyDescriptorRules(rootPath as any, root, rootPath as any);
   };
 }

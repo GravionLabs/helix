@@ -25,8 +25,9 @@ describe('buildDefaultValue', () => {
     expect(value).toEqual({ name: '', nested: { on: false } });
   });
 
-  it('uses undefined for optional leaves and null for nullable leaves', () => {
-    expect(buildDefaultValue(z.string().optional())).toBeUndefined();
+  it('never uses undefined for optional leaves (signal forms create no child for it)', () => {
+    expect(buildDefaultValue(z.string().optional())).toBe('');
+    expect(buildDefaultValue(z.date().nullish())).toBeNull();
     expect(buildDefaultValue(z.string().nullable())).toBeNull();
   });
 
