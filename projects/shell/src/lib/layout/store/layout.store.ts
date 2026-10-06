@@ -1,4 +1,4 @@
-import { computed, effect } from '@angular/core';
+import { computed, DestroyRef, effect, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -10,6 +10,29 @@ import {
 import type { LayoutConfig, LayoutState, MenuMode } from './layout.models';
 
 type LayoutStoreState = LayoutConfig & LayoutState;
+
+/** Mobile breakpoint: above this width the rail is static and collapsible, below it is a drawer. */
+const DESKTOP_MIN_WIDTH = 992;
+const COLLAPSED_STORAGE_KEY = 'helix.nav-rail.collapsed';
+
+const isDesktopViewport = () =>
+  typeof window === 'undefined' || window.innerWidth >= DESKTOP_MIN_WIDTH;
+
+function readCollapsed(): boolean {
+  try {
+    return localStorage.getItem(COLLAPSED_STORAGE_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function writeCollapsed(collapsed: boolean): void {
+  try {
+    localStorage.setItem(COLLAPSED_STORAGE_KEY, String(collapsed));
+  } catch {
+    // Storage unavailable (private mode, blocked): the state just isn't remembered.
+  }
+}
 
 const initialState: LayoutStoreState = {
   // Config
@@ -26,7 +49,8 @@ const initialState: LayoutStoreState = {
   menuHoverActive: false,
   activePath: null,
   sidebarCollapsed: false,
-  expandedRoot: null,
+  desktop: true,
+  expandedKeys: [],
 };
 
 export const LayoutStore = signalStore(
@@ -37,7 +61,8 @@ export const LayoutStore = signalStore(
     isOverlay: computed(() => store.menuMode() === 'overlay'),
     isStatic: computed(() => store.menuMode() === 'static'),
     isSidebarActive: computed(() => store.overlayMenuActive() || store.mobileMenuActive()),
-    isCollapsed: computed(() => store.sidebarCollapsed()),
+    /** Icon-only rail. Only applies on desktop — the mobile drawer always shows labels. */
+    isCollapsed: computed(() => store.sidebarCollapsed() && store.desktop()),
   })),
   withMethods((store) => ({
     toggleDarkMode(): void {
@@ -57,7 +82,12 @@ export const LayoutStore = signalStore(
         patchState(store, { overlayMenuActive: !store.overlayMenuActive() });
       }
       if (window.innerWidth > 991) {
-        patchState(store, { staticMenuDesktopInactive: !store.staticMenuDesktopInactive() });
+        // Desktop: the rail is never hidden completely, the toggle collapses it to icons.
+        if (store.menuMode() === 'static') {
+          const sidebarCollapsed = !store.sidebarCollapsed();
+          patchState(store, { sidebarCollapsed });
+          writeCollapsed(sidebarCollapsed);
+        }
       } else {
         patchState(store, { mobileMenuActive: !store.mobileMenuActive() });
       }
@@ -72,11 +102,17 @@ export const LayoutStore = signalStore(
     setActivePath(activePath: string | null): void {
       patchState(store, { activePath });
     },
-    setExpandedRoot(key: string | null): void {
-      patchState(store, { expandedRoot: key });
+    setExpanded(key: string, expanded: boolean): void {
+      const keys = store.expandedKeys();
+      if (keys.includes(key) === expanded) return;
+      patchState(store, {
+        expandedKeys: expanded ? [...keys, key] : keys.filter((k) => k !== key),
+      });
     },
     toggleSidebar(): void {
-      patchState(store, { sidebarCollapsed: !store.sidebarCollapsed() });
+      const sidebarCollapsed = !store.sidebarCollapsed();
+      patchState(store, { sidebarCollapsed });
+      writeCollapsed(sidebarCollapsed);
     },
     setMenuHoverActive(menuHoverActive: boolean): void {
       patchState(store, { menuHoverActive });
@@ -96,12 +132,22 @@ export const LayoutStore = signalStore(
     isDesktop(): boolean {
       return window.innerWidth > 991;
     },
+    setDesktop(desktop: boolean): void {
+      patchState(store, { desktop });
+    },
     reset(): void {
-      patchState(store, initialState);
+      patchState(store, { ...initialState, desktop: isDesktopViewport() });
     },
   })),
   withHooks({
     onInit(store) {
+      patchState(store, { sidebarCollapsed: readCollapsed(), desktop: isDesktopViewport() });
+      if (typeof window !== 'undefined') {
+        const onResize = () => store.setDesktop(isDesktopViewport());
+        window.addEventListener('resize', onResize);
+        inject(DestroyRef).onDestroy(() => window.removeEventListener('resize', onResize));
+      }
+
       effect(() => {
         const isDark = store.darkTheme();
         const supportsViewTransition = 'startViewTransition' in document;

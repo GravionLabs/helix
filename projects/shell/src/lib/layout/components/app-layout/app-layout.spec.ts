@@ -23,6 +23,7 @@ describe('HelixAppLayout', () => {
   let store: InstanceType<typeof LayoutStore>;
 
   beforeEach(async () => {
+    localStorage.clear();
     // Override template, imports and styles BEFORE compileComponents() to prevent jsdom from
     // choking on HelixConfig CSS that uses `border: solid var(--surface-border)`. The computed
     // signals under test live on the class and need no rendered child components.
@@ -137,14 +138,10 @@ describe('HelixAppLayout', () => {
     expect(classes['layout-overlay-active']).toBe(true);
   });
 
-  it('containerClass() should have layout-static-inactive when staticMenuDesktopInactive is true and mode is static', () => {
+  it('containerClass() still honours the legacy staticMenuDesktopInactive flag in static mode', () => {
     store.setMenuMode('static');
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 1024,
-    });
-    store.onMenuToggle();
+    // No longer reachable from the UI; kept in the store for compatibility.
+    store.updateConfig({ staticMenuDesktopInactive: true } as never);
     const classes = component.containerClass();
     expect(classes['layout-static-inactive']).toBe(true);
   });
@@ -171,5 +168,35 @@ describe('HelixAppLayout', () => {
     expect((component as unknown as { effectiveMenu: () => MenuItem[] }).effectiveMenu()).toEqual(
       menu,
     );
+  });
+
+  describe('nav groups', () => {
+    const menu = [
+      { label: 'Dashboard', path: '/dashboard' },
+      { label: 'Components', items: [{ label: 'Button', path: '/uikit/button' }] },
+    ];
+    const groups = () =>
+      (component as unknown as { effectiveNavGroups: () => unknown[] }).effectiveNavGroups();
+
+    it('navStyle defaults to "sections"', () => {
+      fixture.componentRef.setInput('menu', menu);
+      expect(groups()).toEqual([
+        { items: [menu[0]] },
+        { section: 'Components', items: menu[1].items },
+      ]);
+    });
+
+    it('navStyle "tree" keeps a single unlabeled group', () => {
+      fixture.componentRef.setInput('menu', menu);
+      fixture.componentRef.setInput('navStyle', 'tree');
+      expect(groups()).toEqual([{ items: menu }]);
+    });
+
+    it('explicit navGroups win over the mapped menu', () => {
+      const explicit = [{ section: 'Mine', items: [{ label: 'X', path: '/x' }] }];
+      fixture.componentRef.setInput('menu', menu);
+      fixture.componentRef.setInput('navGroups', explicit);
+      expect(groups()).toEqual(explicit);
+    });
   });
 });

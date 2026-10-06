@@ -87,6 +87,13 @@
     margin-left: -0.5rem;
   }
 
+  // Static rail: on desktop the rail's own toggle is the only collapse control.
+  @media (min-width: 992px) {
+    .layout-menu-button-mobile-only {
+      display: none;
+    }
+  }
+
   .layout-topbar-menu-button {
     display: none;
   }

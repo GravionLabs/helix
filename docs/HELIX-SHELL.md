@@ -101,6 +101,8 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 | `topbarItems` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
 | `topbarActions` | `HelixTopbarAction[]` | `calendar`, `inbox`, `profile` | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks |
 | `brandIcon` | `string` | — | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon |
+| `navStyle` | `'sections' \| 'tree'` | `'sections'` | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
+| `navGroups` | `HelixNavGroup[]` | — | Explicit nav groups; win over the mapped `menu` |
 
 #### Example
 
@@ -265,10 +267,27 @@ place of the old
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
 
-Items with children (e.g. "UI Components", "Pages") render as a normal clickable
-item with a chevron rather than a static heading — clicking expands its children.
-Only one item is expanded at a time app-wide (`LayoutStore.expandedRoot()`, the
-same single-key accordion the old `HelixMenuItem` used).
+Expandable items (any item with children that is not lifted into a section — every top-level
+folder in `navStyle="tree"`, deeper levels in `'sections'`) render as a clickable row with a
+chevron (right when closed, down when open) and a subtle indent guide for the children.
+Several items can be open at once (`LayoutStore.expandedKeys()`); the group holding the
+active route opens automatically on navigation and can still be collapsed by the user.
+
+Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible links;
+`Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
+close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
+
+**Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
+icons and back — it is the only collapse control; the topbar hamburger is hidden there in
+`static` menu mode. At ≤ 991px the rail is a drawer: the hamburger opens it with a mask, and
+a click outside or a navigation closes it (the drawer always shows labels). The collapsed
+state is remembered in `localStorage` (reads/writes are guarded, so it works without storage).
+
+**Collapsed rail.** Links show a tooltip with their label. A section that has an `icon`
+(`helixNavGroupsFromMenu` copies it from the top-level item) becomes a single icon, and any
+expandable item opens its children in a flyout on hover and on keyboard focus (also `Enter`,
+`Space` or `ArrowRight`); `Escape`, leaving the item, or navigating closes it, and it is
+kept inside the viewport. Sections without an icon list their items directly.
 
 The rail's brand icon is customizable via the `brandIcon` input — pass an inline SVG
 (`<svg>…</svg>`) or a URL to an SVG file. Falls back to the default helix icon when
@@ -291,13 +310,21 @@ interface HelixNavGroup {
 }
 ```
 
-Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[]` to adapt
-an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
-input) into the shape `HelixNavRail` expects: it wraps the whole list as a single
-unlabeled group, preserving each top-level item's own identity — an item with
-`items` of its own still renders as an expandable parent, not a label. Construct
-`HelixNavGroup[]` by hand instead (with `section` set) if you want real uppercase
-section headers grouping multiple expandable items.
+Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[], style: 'sections' | 'tree' = 'sections'): HelixNavGroup[]`
+to adapt an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
+input) into the shape `HelixNavRail` expects:
+
+- **`'sections'`** (default) — every top-level item with children becomes an uppercase
+  section heading (its icon is not shown) with its children listed directly beneath it,
+  always visible. Consecutive top-level items without children form one unlabeled group.
+  Deeper levels (a child that itself has children) still expand inline.
+- **`'tree'`** — the whole list is one unlabeled group, so each top-level item with
+  children renders as an expandable folder.
+
+> **Changed default:** menus with nested items used to render as collapsed folders. Pass
+> `navStyle="tree"` to keep that look.
+
+Construct `HelixNavGroup[]` by hand (and pass it as `navGroups`) for full control.
 
 #### Example
 
@@ -314,11 +341,12 @@ const menu: HelixRouteMenuItem[] = [
   },
 ];
 
-const navGroups = helixNavGroupsFromMenu(menu);
+const navGroups = helixNavGroupsFromMenu(menu); // 'sections': OVERVIEW → Dashboard, Analytics
+const treeGroups = helixNavGroupsFromMenu(menu, 'tree'); // Overview folder
 ```
 
 ```html
-<helix-app-layout [menu]="menu" brandIcon="/assets/logo.svg" />
+<helix-app-layout [menu]="menu" navStyle="sections" brandIcon="/assets/logo.svg" />
 ```
 
 ---
@@ -443,7 +471,8 @@ Where `breadcrumb` can be a static string or a function:
 | Property | Type | Description |
 |----------|------|-------------|
 | `menuVisible` | `boolean` | Whether the menu is shown |
-| `staticMenuDesktopInactive` | `boolean` | Static menu collapsed on desktop |
+| `staticMenuDesktopInactive` | `boolean` | Legacy "hide the rail completely" flag. Still honoured by `HelixAppLayout`, but no longer reachable from the default UI |
+| `sidebarCollapsed` | `boolean` | Desktop rail collapsed to icons; persisted in `localStorage` (`helix.nav-rail.collapsed`) |
 | `overlayMenuActive` | `boolean` | Overlay menu open state |
 | `profileSidebarVisible` | `boolean` | Profile sidebar open state |
 | `configSidebarVisible` | `boolean` | Config sidebar open state |

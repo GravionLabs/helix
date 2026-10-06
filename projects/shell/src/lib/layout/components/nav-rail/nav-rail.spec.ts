@@ -8,6 +8,7 @@ describe('HelixNavRail', () => {
   let fixture: ComponentFixture<HelixNavRail>;
 
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [HelixNavRail],
       providers: [provideRouter([])],
@@ -110,5 +111,45 @@ describe('HelixNavRail', () => {
     );
     fixture.detectChanges();
     expect((component as unknown as { isInlineSvg: () => boolean }).isInlineSvg()).toBe(true);
+  });
+
+  describe('collapsed sections', () => {
+    it('shows a section with an icon as one entry with a flyout of its items', () => {
+      fixture.componentRef.setInput('model', [
+        {
+          section: 'Components',
+          icon: 'pi pi-th-large',
+          items: [
+            { label: 'Button', path: '/uikit/button' },
+            { label: 'Table', path: '/uikit/table' },
+          ],
+        },
+      ]);
+      TestBed.inject(LayoutStore).toggleSidebar();
+      fixture.detectChanges();
+
+      const entries = fixture.nativeElement.querySelectorAll(':scope .helix-nav-rail-list > li');
+      expect(entries.length).toBe(1);
+
+      const link: HTMLElement = entries[0].querySelector('a');
+      link.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+      fixture.detectChanges();
+
+      const flyout = fixture.nativeElement.querySelector('.helix-nav-rail-flyout');
+      expect(flyout.textContent).toContain('Components');
+      expect(flyout.textContent).toContain('Button');
+      expect(flyout.textContent).toContain('Table');
+    });
+
+    it('lists the items directly when the section has no icon', () => {
+      fixture.componentRef.setInput('model', [
+        { section: 'Pages', items: [{ label: 'Landing', path: '/landing', icon: 'pi pi-home' }] },
+      ]);
+      TestBed.inject(LayoutStore).toggleSidebar();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelectorAll('[helix-nav-rail-item]').length).toBe(1);
+      expect(fixture.nativeElement.querySelector('.helix-nav-rail-flyout')).toBeNull();
+    });
   });
 });

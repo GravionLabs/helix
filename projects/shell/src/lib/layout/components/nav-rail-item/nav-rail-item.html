@@ -1,9 +1,12 @@
 @if (hasChildren()) {
   <a
     class="helix-nav-rail-link"
-    [title]="$safeNavigationMigration(item()?.label)"
-    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
+    [attr.title]="isCollapsed() ? null : $safeNavigationMigration(item()?.label)"
+    [attr.aria-expanded]="isCollapsed() ? flyoutOpen() : isExpanded()"
+    [attr.aria-haspopup]="isCollapsed() ? 'true' : null"
+    role="button"
     (click)="itemClick($event)"
+    (keydown)="onKeydown($event)"
     tabindex="0"
     hRipple
   >
@@ -13,11 +16,27 @@
     @if (!isCollapsed()) {
       <span class="helix-nav-rail-label">{{ item()?.label }}</span>
       <i
-        class="pi pi-chevron-down helix-nav-rail-chevron"
+        class="pi pi-chevron-right helix-nav-rail-chevron"
         [class.helix-nav-rail-chevron-open]="isExpanded()"
       ></i>
     }
   </a>
+  @if (isCollapsed() && flyoutOpen()) {
+    <div class="helix-nav-rail-flyout" [style.top.px]="flyoutTop()" [style.left.px]="flyoutLeft()">
+      <div class="helix-nav-rail-flyout-title">{{ item()?.label }}</div>
+      <ul class="helix-nav-rail-flyout-list">
+        @for (child of item()?.items; track child.label) {
+          <li
+            helix-nav-rail-item
+            [item]="child"
+            [parentPath]="fullPath()"
+            [depth]="0"
+            [flyout]="true"
+          ></li>
+        }
+      </ul>
+    </div>
+  }
   @if (isExpanded() && !isCollapsed()) {
     <ul
       class="helix-nav-rail-sublist"
@@ -34,10 +53,14 @@
     class="helix-nav-rail-link"
     [class.active]="isActive()"
     [attr.aria-current]="isActive() ? 'page' : null"
-    [title]="$safeNavigationMigration(item()?.label)"
+    [attr.title]="isCollapsed() ? null : $safeNavigationMigration(item()?.label)"
+    [hTooltip]="$safeNavigationMigration(item()?.label)"
+    [tooltipDisabled]="!isCollapsed()"
+    tooltipPosition="right"
+    tooltipEvent="both"
     [routerLink]="$safeNavigationMigration(item()?.routerLink)"
-    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
+    (keydown)="onKeydown($event)"
     tabindex="0"
     hRipple
   >

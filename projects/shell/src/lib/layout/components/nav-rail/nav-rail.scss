@@ -20,9 +20,9 @@
   flex-direction: column;
   position: fixed;
   top: 0;
+  bottom: 0; // not 100vh: stays above a page scrollbar, level with the status bar
   left: 0;
   width: var(--helix-nav-width, 17rem);
-  height: 100vh;
   z-index: 999;
   overflow: hidden;
   user-select: none;
@@ -156,5 +156,12 @@
   &:focus {
     outline-offset: -1px;
     box-shadow: inset var(--focus-ring-shadow);
+  }
+}
+
+// The mobile drawer has no collapse mode; the hamburger is its only control.
+@media (max-width: 991px) {
+  .helix-nav-rail-footer {
+    display: none;
   }
 }

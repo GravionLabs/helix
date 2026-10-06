@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BreadcrumbModule } from '@gravionlabs/helix-core/breadcrumb';
 import { ButtonModule } from '@gravionlabs/helix-core/button';
 import { ContextMenuModule } from '@gravionlabs/helix-core/contextmenu';
@@ -13,6 +13,7 @@ import { PanelMenuModule } from '@gravionlabs/helix-core/panelmenu';
 import { StepperModule } from '@gravionlabs/helix-core/stepper';
 import { TabsModule } from '@gravionlabs/helix-core/tabs';
 import { TieredMenuModule } from '@gravionlabs/helix-core/tieredmenu';
+import { DemoSettings } from '../../../shell/demo-settings';
 
 @Component({
   selector: 'app-menu-demo',
@@ -42,6 +43,51 @@ import { TieredMenuModule } from '@gravionlabs/helix-core/tieredmenu';
   styleUrl: './menu-demo.scss',
 })
 export class MenuDemo {
+  protected readonly settings = inject(DemoSettings);
+
+  /** A three-level hierarchy — the menu-component showcase that used to live in the nav rail. */
+  hierarchyItems = [
+    {
+      label: 'Submenu 1',
+      icon: 'pi pi-fw pi-bookmark',
+      items: [
+        {
+          label: 'Submenu 1.1',
+          icon: 'pi pi-fw pi-bookmark',
+          items: [
+            { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+            { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+            { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+          ],
+        },
+        {
+          label: 'Submenu 1.2',
+          icon: 'pi pi-fw pi-bookmark',
+          items: [{ label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' }],
+        },
+      ],
+    },
+    {
+      label: 'Submenu 2',
+      icon: 'pi pi-fw pi-bookmark',
+      items: [
+        {
+          label: 'Submenu 2.1',
+          icon: 'pi pi-fw pi-bookmark',
+          items: [
+            { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
+            { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
+          ],
+        },
+        {
+          label: 'Submenu 2.2',
+          icon: 'pi pi-fw pi-bookmark',
+          items: [{ label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' }],
+        },
+      ],
+    },
+  ];
+
   nestedMenuItems = [
     {
       label: 'Customers',

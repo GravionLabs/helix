@@ -50,8 +50,17 @@
           <div class="helix-nav-rail-divider"></div>
         }
         <ul class="helix-nav-rail-list">
-          @for (item of group.items; track item.label) {
-            <li helix-nav-rail-item [item]="item" [parentPath]="null" [depth]="0"></li>
+          @if (store.isCollapsed() && group.section && group.icon) {
+            <li
+              helix-nav-rail-item
+              [item]="{ label: group.section, icon: group.icon, items: group.items }"
+              [parentPath]="null"
+              [depth]="0"
+            ></li>
+          } @else {
+            @for (item of group.items; track item.label) {
+              <li helix-nav-rail-item [item]="item" [parentPath]="null" [depth]="0"></li>
+            }
           }
         </ul>
       </div>
@@ -64,6 +73,8 @@
       class="helix-nav-rail-collapse-button"
       (click)="store.toggleSidebar()"
       [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [attr.aria-label]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [attr.aria-expanded]="!store.isCollapsed()"
     >
       <i
         class="pi"
