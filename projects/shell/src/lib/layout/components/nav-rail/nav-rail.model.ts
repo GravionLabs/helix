@@ -11,13 +11,41 @@ export interface HelixNavGroup {
   items: HelixRouteMenuItem[];
 }
 
+/** How a flat menu is mapped onto the nav rail. */
+export type HelixNavStyle = 'sections' | 'tree';
+
 /**
  * Adapts a flat HelixRouteMenuItem tree (as used by HelixAppLayout's `menu`
- * input) into HelixNavGroup[] by wrapping it as a single unlabeled group.
- * Each top-level item keeps its own identity (icon, children, etc.), so an
- * item with children renders as a normal expandable HelixNavRailItem rather
- * than being flattened into a static section heading.
+ * input) into HelixNavGroup[].
+ *
+ * - `'sections'` (default): every top-level item with children becomes an
+ *   uppercase section whose children are listed directly; consecutive
+ *   top-level items without children form one unlabeled group. Deeper levels
+ *   still expand inline.
+ * - `'tree'`: the whole menu is one unlabeled group, so each top-level item
+ *   with children renders as an expandable HelixNavRailItem.
  */
-export function helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[] {
-  return [{ items }];
+export function helixNavGroupsFromMenu(
+  items: HelixRouteMenuItem[],
+  style: HelixNavStyle = 'sections',
+): HelixNavGroup[] {
+  if (style === 'tree') return [{ items }];
+
+  const groups: HelixNavGroup[] = [];
+  let plain: HelixRouteMenuItem[] = [];
+  const flushPlain = () => {
+    if (plain.length) groups.push({ items: plain });
+    plain = [];
+  };
+
+  for (const item of items) {
+    if (item.items?.length) {
+      flushPlain();
+      groups.push({ section: item.label, items: item.items });
+    } else {
+      plain.push(item);
+    }
+  }
+  flushPlain();
+  return groups;
 }

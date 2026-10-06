@@ -14,7 +14,8 @@ import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRail } from '../nav-rail/nav-rail';
-import { helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
+import type { HelixNavGroup } from '../nav-rail/nav-rail.model';
+import { type HelixNavStyle, helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import { HelixStatusBar } from '../status-bar/status-bar';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from '../status-bar/status-bar.model';
 import { HelixTopbar } from '../topbar/topbar';
@@ -58,6 +59,15 @@ export class HelixAppLayout {
    */
   menu = input<HelixRouteMenuItem[]>([]);
 
+  /**
+   * Nav rail style. `'sections'` (default) renders top-level items with children as
+   * always-open section headings; `'tree'` keeps them as expandable folders.
+   */
+  navStyle = input<HelixNavStyle>('sections');
+
+  /** Explicit nav groups. When provided, they win over the mapping of `menu`. */
+  navGroups = input<HelixNavGroup[] | undefined>();
+
   private static readonly DEFAULT_TOP_ACTIONS: HelixTopbarAction[] = [
     { icon: 'pi pi-calendar', label: 'Calendar' },
     { icon: 'pi pi-inbox', label: 'Messages' },
@@ -74,8 +84,10 @@ export class HelixAppLayout {
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];
   });
 
-  protected effectiveNavGroups = computed(() =>
-    helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[]),
+  protected effectiveNavGroups = computed(
+    () =>
+      this.navGroups() ??
+      helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[], this.navStyle()),
   );
 
   protected effectiveEnvironment = computed<Environment | undefined>(() => {

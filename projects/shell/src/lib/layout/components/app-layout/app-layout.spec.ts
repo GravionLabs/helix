@@ -172,4 +172,34 @@ describe('HelixAppLayout', () => {
       menu,
     );
   });
+
+  describe('nav groups', () => {
+    const menu = [
+      { label: 'Dashboard', path: '/dashboard' },
+      { label: 'Components', items: [{ label: 'Button', path: '/uikit/button' }] },
+    ];
+    const groups = () =>
+      (component as unknown as { effectiveNavGroups: () => unknown[] }).effectiveNavGroups();
+
+    it('navStyle defaults to "sections"', () => {
+      fixture.componentRef.setInput('menu', menu);
+      expect(groups()).toEqual([
+        { items: [menu[0]] },
+        { section: 'Components', items: menu[1].items },
+      ]);
+    });
+
+    it('navStyle "tree" keeps a single unlabeled group', () => {
+      fixture.componentRef.setInput('menu', menu);
+      fixture.componentRef.setInput('navStyle', 'tree');
+      expect(groups()).toEqual([{ items: menu }]);
+    });
+
+    it('explicit navGroups win over the mapped menu', () => {
+      const explicit = [{ section: 'Mine', items: [{ label: 'X', path: '/x' }] }];
+      fixture.componentRef.setInput('menu', menu);
+      fixture.componentRef.setInput('navGroups', explicit);
+      expect(groups()).toEqual(explicit);
+    });
+  });
 });

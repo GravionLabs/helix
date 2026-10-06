@@ -101,6 +101,8 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 | `topbarItems` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
 | `topbarActions` | `HelixTopbarAction[]` | `calendar`, `inbox`, `profile` | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks |
 | `brandIcon` | `string` | — | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon |
+| `navStyle` | `'sections' \| 'tree'` | `'sections'` | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
+| `navGroups` | `HelixNavGroup[]` | — | Explicit nav groups; win over the mapped `menu` |
 
 #### Example
 
@@ -291,13 +293,21 @@ interface HelixNavGroup {
 }
 ```
 
-Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[]): HelixNavGroup[]` to adapt
-an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
-input) into the shape `HelixNavRail` expects: it wraps the whole list as a single
-unlabeled group, preserving each top-level item's own identity — an item with
-`items` of its own still renders as an expandable parent, not a label. Construct
-`HelixNavGroup[]` by hand instead (with `section` set) if you want real uppercase
-section headers grouping multiple expandable items.
+Use `helixNavGroupsFromMenu(items: HelixRouteMenuItem[], style: 'sections' | 'tree' = 'sections'): HelixNavGroup[]`
+to adapt an existing flat `HelixRouteMenuItem[]` tree (as used by `HelixAppLayout`'s `menu`
+input) into the shape `HelixNavRail` expects:
+
+- **`'sections'`** (default) — every top-level item with children becomes an uppercase
+  section heading (its icon is not shown) with its children listed directly beneath it,
+  always visible. Consecutive top-level items without children form one unlabeled group.
+  Deeper levels (a child that itself has children) still expand inline.
+- **`'tree'`** — the whole list is one unlabeled group, so each top-level item with
+  children renders as an expandable folder.
+
+> **Changed default:** menus with nested items used to render as collapsed folders. Pass
+> `navStyle="tree"` to keep that look.
+
+Construct `HelixNavGroup[]` by hand (and pass it as `navGroups`) for full control.
 
 #### Example
 
@@ -314,11 +324,12 @@ const menu: HelixRouteMenuItem[] = [
   },
 ];
 
-const navGroups = helixNavGroupsFromMenu(menu);
+const navGroups = helixNavGroupsFromMenu(menu); // 'sections': OVERVIEW → Dashboard, Analytics
+const treeGroups = helixNavGroupsFromMenu(menu, 'tree'); // Overview folder
 ```
 
 ```html
-<helix-app-layout [menu]="menu" brandIcon="/assets/logo.svg" />
+<helix-app-layout [menu]="menu" navStyle="sections" brandIcon="/assets/logo.svg" />
 ```
 
 ---
