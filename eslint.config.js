@@ -7,6 +7,8 @@ module.exports = [
     {
         ignores: [
             'dist/**',
+            'apps/site/.vitepress/dist/**',
+            'apps/site/.vitepress/cache/**',
             'node_modules/**',
             '.angular/**',
             'coverage/**',
