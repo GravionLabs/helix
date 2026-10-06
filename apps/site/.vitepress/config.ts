@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitepress';
+import { demoLinksPlugin } from './demo-links';
 import { REPO_URL, repoFilesOnDisk, repoLinksPlugin } from './repo-links';
 import { sidebarOf } from './sidebar';
 
@@ -30,7 +31,10 @@ export default defineConfig({
   head: [['link', { rel: 'icon', href: `${base}favicon.ico` }]],
   markdown: {
     // Links to repository files the site does not contain go to GitHub; the Markdown stays valid there.
-    config: (md) => repoLinksPlugin(md as never, files),
+    config: (md) => {
+      demoLinksPlugin(md as never, base);
+      repoLinksPlugin(md as never, files);
+    },
   },
   themeConfig: {
     siteTitle: 'Helix',
