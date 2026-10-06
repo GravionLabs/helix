@@ -2,8 +2,10 @@
   <a
     class="helix-nav-rail-link"
     [title]="$safeNavigationMigration(item()?.label)"
-    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
+    [attr.aria-expanded]="isExpanded()"
+    role="button"
     (click)="itemClick($event)"
+    (keydown)="onKeydown($event)"
     tabindex="0"
     hRipple
   >
@@ -13,7 +15,7 @@
     @if (!isCollapsed()) {
       <span class="helix-nav-rail-label">{{ item()?.label }}</span>
       <i
-        class="pi pi-chevron-down helix-nav-rail-chevron"
+        class="pi pi-chevron-right helix-nav-rail-chevron"
         [class.helix-nav-rail-chevron-open]="isExpanded()"
       ></i>
     }
@@ -36,8 +38,8 @@
     [attr.aria-current]="isActive() ? 'page' : null"
     [title]="$safeNavigationMigration(item()?.label)"
     [routerLink]="$safeNavigationMigration(item()?.routerLink)"
-    [style.padding-left.rem]="isCollapsed() ? null : 0.75 + depth() * 0.85"
     (click)="itemClick($event)"
+    (keydown)="onKeydown($event)"
     tabindex="0"
     hRipple
   >

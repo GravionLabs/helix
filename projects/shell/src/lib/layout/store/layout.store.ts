@@ -26,7 +26,7 @@ const initialState: LayoutStoreState = {
   menuHoverActive: false,
   activePath: null,
   sidebarCollapsed: false,
-  expandedRoot: null,
+  expandedKeys: [],
 };
 
 export const LayoutStore = signalStore(
@@ -72,8 +72,12 @@ export const LayoutStore = signalStore(
     setActivePath(activePath: string | null): void {
       patchState(store, { activePath });
     },
-    setExpandedRoot(key: string | null): void {
-      patchState(store, { expandedRoot: key });
+    setExpanded(key: string, expanded: boolean): void {
+      const keys = store.expandedKeys();
+      if (keys.includes(key) === expanded) return;
+      patchState(store, {
+        expandedKeys: expanded ? [...keys, key] : keys.filter((k) => k !== key),
+      });
     },
     toggleSidebar(): void {
       patchState(store, { sidebarCollapsed: !store.sidebarCollapsed() });

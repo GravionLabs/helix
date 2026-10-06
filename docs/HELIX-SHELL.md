@@ -267,10 +267,15 @@ place of the old
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
 
-Items with children (e.g. "UI Components", "Pages") render as a normal clickable
-item with a chevron rather than a static heading — clicking expands its children.
-Only one item is expanded at a time app-wide (`LayoutStore.expandedRoot()`, the
-same single-key accordion the old `HelixMenuItem` used).
+Expandable items (any item with children that is not lifted into a section — every top-level
+folder in `navStyle="tree"`, deeper levels in `'sections'`) render as a clickable row with a
+chevron (right when closed, down when open) and a subtle indent guide for the children.
+Several items can be open at once (`LayoutStore.expandedKeys()`); the group holding the
+active route opens automatically on navigation and can still be collapsed by the user.
+
+Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible links;
+`Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
+close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
 
 The rail's brand icon is customizable via the `brandIcon` input — pass an inline SVG
 (`<svg>…</svg>`) or a URL to an SVG file. Falls back to the default helix icon when

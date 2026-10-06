@@ -92,7 +92,7 @@
   transition: transform var(--element-transition-duration);
 
   &.helix-nav-rail-chevron-open {
-    transform: rotate(180deg);
+    transform: rotate(90deg);
   }
 }
 
@@ -101,6 +101,15 @@
   padding: 0;
   list-style-type: none;
   overflow: hidden;
+  // Indent guide: a subtle line under the parent's icon column.
+  margin-left: 1.5rem;
+  border-left: 1px solid var(--helix-nav-border);
+
+  .helix-nav-rail-link {
+    margin-left: 0.4rem;
+    padding-block: 0.45rem;
+    font-size: 0.9rem;
+  }
 }
 
 :host(.helix-nav-rail-item-collapsed) .helix-nav-rail-link {

@@ -16,5 +16,6 @@ export interface LayoutState {
   menuHoverActive: boolean;
   activePath: string | null;
   sidebarCollapsed: boolean;
-  expandedRoot: string | null;
+  /** Keys of the expanded nav-rail items (several can be open at once). */
+  expandedKeys: string[];
 }

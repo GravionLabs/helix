@@ -4,9 +4,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   signal,
+  untracked,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RippleModule } from '@gravionlabs/helix-core/ripple';
@@ -49,7 +51,7 @@ export class HelixNavRailItem implements AfterViewInit {
   hasChildren = computed(() => !!this.item()?.items?.length);
   isCollapsed = computed(() => this.store.isCollapsed());
 
-  /** Stable key used against LayoutStore.expandedRoot() — only one item app-wide is expanded at a time. */
+  /** Stable key used against LayoutStore.expandedKeys() — several items can be expanded at once. */
   itemKey = computed(() => {
     const ownPath = this.item()?.path;
     if (ownPath) {
@@ -106,9 +108,17 @@ export class HelixNavRailItem implements AfterViewInit {
     return match(items, parentFullPath);
   });
 
-  isExpanded = computed(
-    () => this.hasActiveDescendant() || this.store.expandedRoot() === this.itemKey(),
-  );
+  isExpanded = computed(() => this.store.expandedKeys().includes(this.itemKey()));
+
+  constructor() {
+    // The group holding the active route opens itself on navigation; the user can still collapse it.
+    effect(() => {
+      if (this.hasActiveDescendant()) {
+        const key = this.itemKey();
+        untracked(() => this.store.setExpanded(key, true));
+      }
+    });
+  }
 
   ngAfterViewInit() {
     setTimeout(() => this.initialized.set(true));
@@ -125,9 +135,51 @@ export class HelixNavRailItem implements AfterViewInit {
     }
     if (this.hasChildren()) {
       event.preventDefault();
-      this.store.setExpandedRoot(this.isExpanded() ? null : this.itemKey());
+      this.store.setExpanded(this.itemKey(), !this.isExpanded());
     } else {
       this.store.closeMobileMenu();
+    }
+  }
+
+  /** Enter/Space activate expandable items; arrow keys move between visible links. */
+  onKeydown(event: KeyboardEvent) {
+    const link = event.currentTarget as HTMLElement;
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        if (this.hasChildren()) {
+          event.preventDefault();
+          this.itemClick(event);
+        }
+        break;
+      case 'ArrowDown':
+      case 'ArrowUp': {
+        const links = Array.from(
+          (
+            link.closest('nav') ??
+            link.parentElement?.parentElement ??
+            document
+          ).querySelectorAll<HTMLElement>('.helix-nav-rail-link'),
+        );
+        const next = links[links.indexOf(link) + (event.key === 'ArrowDown' ? 1 : -1)];
+        if (next) {
+          event.preventDefault();
+          next.focus();
+        }
+        break;
+      }
+      case 'ArrowRight':
+        if (this.hasChildren() && !this.isExpanded()) {
+          event.preventDefault();
+          this.store.setExpanded(this.itemKey(), true);
+        }
+        break;
+      case 'ArrowLeft':
+        if (this.hasChildren() && this.isExpanded()) {
+          event.preventDefault();
+          this.store.setExpanded(this.itemKey(), false);
+        }
+        break;
     }
   }
 }
