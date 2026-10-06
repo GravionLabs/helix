@@ -8,16 +8,27 @@ This document defines how issues are structured, titled, labeled, and linked in 
 Epic
 └── Feature
     └── PBI (Product Backlog Item)
-        └── Task (optional)
+        └── Task
 
 Bug
 └── Task (optional)
 ```
 
+**Every planned piece of work uses the full chain Epic → Feature → PBI → Task.** A new Feature goes under an
+existing open Epic when one fits, otherwise a new Epic is created for it; every PBI gets at least one Task. Only Bugs
+live outside the chain.
+
+**Every issue is added to the [Helix project](https://github.com/users/GravionLabs/projects/6)** (Status
+`Backlog` when new):
+
+```bash
+gh project item-add 6 --owner GravionLabs --url https://github.com/GravionLabs/helix/issues/<number>
+```
+
 - An **Epic** groups related Features toward one larger outcome.
 - A **Feature** groups the PBIs that deliver one user-facing capability.
 - A **PBI** is a shippable increment: one PR-sized (or few-PR-sized) unit of value.
-- A **Task** is a concrete technical step; use tasks only when a PBI or Bug needs to be split.
+- A **Task** is a concrete technical step with the files it touches; every PBI has at least one. A Bug gets Tasks only when its fix is split up.
 - A **Bug** lives outside the epic hierarchy but may reference an Epic/Feature in its Background.
 
 ## Titles & labels
@@ -77,7 +88,7 @@ same fields as `### <Label>` headings, in this order, so it reads the same as on
 
 | Field       | Required | Content                                  |
 | ----------- | -------- | ---------------------------------------- |
-| Parent Epic | yes      | `#<number>` (or "None" for a standalone) |
+| Parent Epic | yes      | `#<number>` (always set) |
 | Description | yes      | What the feature delivers and why        |
 | Sub-issues  | no       | One PBI per line                         |
 
