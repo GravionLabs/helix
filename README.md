@@ -14,9 +14,11 @@ application shell, form utilities, and AG Grid helpers built on top of it.
 | [`@gravionlabs/helix-zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
 
-The workspace also contains [`apps/helix-demo`](apps/helix-demo), the showcase
-application used for development — live at
-[gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/).
+The documentation is published at
+[gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/) (built from [`docs/`](docs) by
+[`apps/site`](apps/site)). The workspace also contains [`apps/helix-demo`](apps/helix-demo), the
+showcase application used for development — live at
+[gravionlabs.github.io/helix/demo/](https://gravionlabs.github.io/helix/demo/).
 
 ## Quick Start
 
@@ -45,6 +47,8 @@ export const appConfig: ApplicationConfig = {
 ```
 
 ## Documentation
+
+Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/), or read the Markdown here:
 
 - [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix-core` entry point
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
