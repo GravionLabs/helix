@@ -6,23 +6,17 @@ import { UIKIT_MENU_ITEMS } from '../pages/uikit/uikit-menu-items';
 
 export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
   {
-    label: 'Overview',
+    label: 'Dashboard',
     icon: 'pi pi-fw pi-home',
-    items: [
-      {
-        label: 'Dashboard',
-        icon: 'pi pi-fw pi-home',
-        path: '',
-        component: Dashboard,
-        breadcrumb: 'Dashboard',
-        routerLink: ['/'],
-      },
-    ],
+    path: '',
+    component: Dashboard,
+    breadcrumb: 'Dashboard',
+    routerLink: ['/'],
   },
   {
-    label: 'UI Components',
+    label: 'Components',
     icon: 'pi pi-fw pi-th-large',
-    breadcrumb: 'UI Components',
+    breadcrumb: 'Components',
     path: 'uikit',
     loadChildren: () => import('../pages/uikit/uikit.routes'),
     items: helixMenuLinksFrom(UIKIT_MENU_ITEMS, '/uikit'),
@@ -53,57 +47,8 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
     ],
   },
   {
-    label: 'Hierarchy',
-    icon: 'pi pi-fw pi-sitemap',
-    items: [
-      {
-        label: 'Submenu 1',
-        icon: 'pi pi-fw pi-bookmark',
-        breadcrumb: 'Submenu 1',
-        path: 'hierarchy/submenu_1',
-        items: [
-          {
-            label: 'Submenu 1.1',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-          {
-            label: 'Submenu 1.2',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [{ label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' }],
-          },
-        ],
-      },
-      {
-        label: 'Submenu 2',
-        icon: 'pi pi-fw pi-bookmark',
-        breadcrumb: 'Submenu 2',
-        path: 'hierarchy/submenu_2',
-        items: [
-          {
-            label: 'Submenu 2.1',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [
-              { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
-              { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
-            ],
-          },
-          {
-            label: 'Submenu 2.2',
-            icon: 'pi pi-fw pi-bookmark',
-            items: [{ label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Get Started',
-    icon: 'pi pi-fw pi-star',
+    label: 'Resources',
+    icon: 'pi pi-fw pi-compass',
     items: [
       {
         label: 'Documentation',
@@ -114,9 +59,9 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
         routerLink: ['/documentation'],
       },
       {
-        label: 'View Source',
+        label: 'GitHub',
         icon: 'pi pi-fw pi-github',
-        url: 'https://github.com/primefaces/sakai-ng',
+        url: 'https://github.com/GravionLabs/helix',
         target: '_blank',
       },
     ],

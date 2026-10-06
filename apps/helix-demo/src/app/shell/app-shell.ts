@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/cor
 import type { HelixStatusBarVersion } from '@gravionlabs/helix-shell';
 import { HelixAppLayout, LayoutStore } from '@gravionlabs/helix-shell';
 import { HighlightLoader } from 'ngx-highlightjs';
+import { DemoSettings } from './demo-settings';
 import { DEMO_MENU_MODEL } from './menu.model';
 
 @Component({
@@ -17,6 +18,7 @@ export class AppShell {
   private readonly highlightLoader = inject(HighlightLoader);
 
   protected menu = DEMO_MENU_MODEL;
+  protected readonly settings = inject(DemoSettings);
 
   protected versions: HelixStatusBarVersion[] = [{ label: 'Helix', value: '0.0.0' }];
 

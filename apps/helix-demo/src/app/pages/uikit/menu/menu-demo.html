@@ -97,4 +97,41 @@
         </div>
       </div>
     </div>
+
+    <div class="flex flex-col md:flex-row gap-layout">
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card h-full">
+          <div class="font-semibold text-xl mb-2">Nested hierarchy</div>
+          <p class="text-muted-color mb-3">Three levels of nesting with the PanelMenu.</p>
+          <h-panelmenu [model]="hierarchyItems" />
+        </div>
+      </div>
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card h-full">
+          <div class="font-semibold text-xl mb-2">Navigation rail style</div>
+          <p class="text-muted-color mb-3">
+            Switch how the demo's side navigation renders: sections are always open, a tree
+            uses expandable folders.
+          </p>
+          <div class="flex gap-2">
+            <button
+              hButton
+              type="button"
+              label="Sections"
+              [outlined]="settings.navStyle() !== 'sections'"
+              [attr.aria-pressed]="settings.navStyle() === 'sections'"
+              (click)="settings.navStyle.set('sections')"
+            ></button>
+            <button
+              hButton
+              type="button"
+              label="Tree"
+              [outlined]="settings.navStyle() !== 'tree'"
+              [attr.aria-pressed]="settings.navStyle() === 'tree'"
+              (click)="settings.navStyle.set('tree')"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>

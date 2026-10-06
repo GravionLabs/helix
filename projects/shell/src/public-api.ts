@@ -21,7 +21,7 @@ export type {
   HelixFooterLink,
 } from './lib/layout/components/footer/footer.model';
 export { HelixNavRail } from './lib/layout/components/nav-rail/nav-rail';
-export type { HelixNavGroup } from './lib/layout/components/nav-rail/nav-rail.model';
+export type { HelixNavGroup, HelixNavStyle } from './lib/layout/components/nav-rail/nav-rail.model';
 export { helixNavGroupsFromMenu } from './lib/layout/components/nav-rail/nav-rail.model';
 export { HelixNavRailItem } from './lib/layout/components/nav-rail-item/nav-rail-item';
 export { HelixStatusBar } from './lib/layout/components/status-bar/status-bar';
