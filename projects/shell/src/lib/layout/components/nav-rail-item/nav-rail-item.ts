@@ -177,7 +177,9 @@ export class HelixNavRailItem implements AfterViewInit {
     if (this.flyoutOpen()) return;
     const rect = this.#host.nativeElement.getBoundingClientRect();
     this.flyoutTop.set(rect.top);
-    this.flyoutLeft.set(rect.right);
+    // Anchor to the rail's edge (not the padded item) so the flyout sits beside the rail.
+    const rail = this.#host.nativeElement.closest('.helix-nav-rail');
+    this.flyoutLeft.set((rail?.getBoundingClientRect().right ?? rect.right) + 4);
     this.flyoutOpen.set(true);
     // Keep the flyout inside the viewport once it has rendered.
     setTimeout(() => {
