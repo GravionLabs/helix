@@ -15,6 +15,8 @@
     "build:lib:css:ag-grid": "tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css && node scripts/add-css-export.mjs dist/ag-grid",
     "build:demo": "pnpm demo:generate-sources && ng build helix-demo",
     "build:site": "SITE_BASE=${SITE_BASE:-/helix/} pnpm --filter @helix/site build",
+    "build:demo:pages": "pnpm demo:generate-sources && ng build helix-demo --configuration production --base-href ${PAGES_BASE:-/helix/}demo/",
+    "pages:assemble": "node apps/site/scripts/assemble.mjs dist/pages",
     "docs:dev": "pnpm --filter @helix/site dev",
     "watch": "ng build helix-demo --watch --configuration development",
     "test": "ng test",
