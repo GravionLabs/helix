@@ -175,3 +175,46 @@ describe('HelixDynamicForm (integration)', () => {
     expect(external.componentInstance.model()).toEqual({ name: 'changed' });
   });
 });
+
+describe('HelixDynamicForm with optional fields (#450)', () => {
+  const OptionalSchema = z.object({
+    name: helixMeta(z.string().min(1), { label: 'Name', order: 1 }),
+    note: helixMeta(z.string().optional(), { label: 'Note', order: 2 }),
+    from: helixMeta(z.date().nullish(), { label: 'From', order: 3 }),
+    count: helixMeta(z.number().optional(), { label: 'Count', order: 4 }),
+  });
+
+  @Component({
+    standalone: true,
+    imports: [HelixDynamicForm],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    template: `<helix-dynamic-form [schema]="schema" (submitted)="submittedValue.set($event)" />`,
+  })
+  class OptionalHost {
+    readonly schema = OptionalSchema;
+    readonly submittedValue = signal<unknown>(null);
+  }
+
+  it('renders every field and submits untouched optionals', async () => {
+    TestBed.configureTestingModule({
+      imports: [OptionalHost],
+      providers: [provideHelixDynamicForms()],
+    });
+    const fixture = TestBed.createComponent(OptionalHost);
+    expect(() => fixture.detectChanges()).not.toThrow();
+
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelectorAll('helix-dynamic-field').length).toBe(4);
+
+    const name = el.querySelector('input') as HTMLInputElement;
+    name.value = 'x';
+    name.dispatchEvent(new Event('input', { bubbles: true }));
+    name.dispatchEvent(new Event('blur', { bubbles: true }));
+    fixture.detectChanges();
+
+    (el.querySelector('button[type="submit"]') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.submittedValue()).toMatchObject({ name: 'x' });
+  });
+});
