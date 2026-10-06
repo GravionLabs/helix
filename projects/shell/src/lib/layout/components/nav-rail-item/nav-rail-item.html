@@ -1,8 +1,9 @@
 @if (hasChildren()) {
   <a
     class="helix-nav-rail-link"
-    [title]="$safeNavigationMigration(item()?.label)"
-    [attr.aria-expanded]="isExpanded()"
+    [attr.title]="isCollapsed() ? null : $safeNavigationMigration(item()?.label)"
+    [attr.aria-expanded]="isCollapsed() ? flyoutOpen() : isExpanded()"
+    [attr.aria-haspopup]="isCollapsed() ? 'true' : null"
     role="button"
     (click)="itemClick($event)"
     (keydown)="onKeydown($event)"
@@ -20,6 +21,22 @@
       ></i>
     }
   </a>
+  @if (isCollapsed() && flyoutOpen()) {
+    <div class="helix-nav-rail-flyout" [style.top.px]="flyoutTop()" [style.left.px]="flyoutLeft()">
+      <div class="helix-nav-rail-flyout-title">{{ item()?.label }}</div>
+      <ul class="helix-nav-rail-flyout-list">
+        @for (child of item()?.items; track child.label) {
+          <li
+            helix-nav-rail-item
+            [item]="child"
+            [parentPath]="fullPath()"
+            [depth]="0"
+            [flyout]="true"
+          ></li>
+        }
+      </ul>
+    </div>
+  }
   @if (isExpanded() && !isCollapsed()) {
     <ul
       class="helix-nav-rail-sublist"
@@ -36,7 +53,11 @@
     class="helix-nav-rail-link"
     [class.active]="isActive()"
     [attr.aria-current]="isActive() ? 'page' : null"
-    [title]="$safeNavigationMigration(item()?.label)"
+    [attr.title]="isCollapsed() ? null : $safeNavigationMigration(item()?.label)"
+    [hTooltip]="$safeNavigationMigration(item()?.label)"
+    [tooltipDisabled]="!isCollapsed()"
+    tooltipPosition="right"
+    tooltipEvent="both"
     [routerLink]="$safeNavigationMigration(item()?.routerLink)"
     (click)="itemClick($event)"
     (keydown)="onKeydown($event)"

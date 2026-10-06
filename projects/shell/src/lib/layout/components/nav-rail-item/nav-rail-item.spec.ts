@@ -1,5 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+import { Tooltip } from '@gravionlabs/helix-core/tooltip';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from './nav-rail-item';
 
@@ -266,6 +268,115 @@ describe('HelixNavRailItem', () => {
       own.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
       expect(document.activeElement).toBe(b);
       host.remove();
+    });
+  });
+
+  describe('collapsed rail', () => {
+    const workspace = {
+      label: 'Workspace',
+      icon: 'pi pi-folder',
+      items: [
+        { label: 'Projects', path: '/projects', routerLink: ['/projects'] },
+        { label: 'Archive', path: '/archive', routerLink: ['/archive'] },
+      ],
+    };
+    const flyout = (): HTMLElement | null =>
+      fixture.nativeElement.querySelector('.helix-nav-rail-flyout');
+    const host = (): HTMLElement => fixture.nativeElement;
+    const collapse = () => {
+      TestBed.inject(LayoutStore).toggleSidebar();
+      fixture.detectChanges();
+    };
+
+    it('shows a tooltip with the label on a leaf link, only when collapsed', () => {
+      fixture.componentRef.setInput('item', {
+        label: 'Dashboard',
+        icon: 'pi pi-home',
+        path: '/dashboard',
+        routerLink: ['/dashboard'],
+      });
+      fixture.detectChanges();
+      const tooltip = () => fixture.debugElement.query(By.directive(Tooltip)).injector.get(Tooltip);
+      expect(tooltip().content()).toBe('Dashboard');
+      expect(tooltip().disabled()).toBe(true);
+      expect(host().querySelector('a')?.getAttribute('title')).toBe('Dashboard');
+
+      collapse();
+      expect(tooltip().disabled()).toBe(false);
+      expect(tooltip().tooltipPosition()).toBe('right');
+      expect(host().querySelector('a')?.hasAttribute('title')).toBe(false);
+    });
+
+    it('does not render a flyout while the rail is expanded', () => {
+      fixture.componentRef.setInput('item', workspace);
+      fixture.detectChanges();
+      host().dispatchEvent(new Event('mouseenter'));
+      fixture.detectChanges();
+      expect(flyout()).toBeNull();
+    });
+
+    it('opens a flyout with the children on hover and closes it on mouse leave', () => {
+      vi.useFakeTimers();
+      fixture.componentRef.setInput('item', workspace);
+      collapse();
+
+      host().dispatchEvent(new Event('mouseenter'));
+      fixture.detectChanges();
+      expect(flyout()?.textContent).toContain('Workspace');
+      expect(flyout()?.textContent).toContain('Projects');
+      expect(flyout()?.textContent).toContain('Archive');
+
+      host().dispatchEvent(new Event('mouseleave'));
+      vi.advanceTimersByTime(200);
+      fixture.detectChanges();
+      expect(flyout()).toBeNull();
+      vi.useRealTimers();
+    });
+
+    it('opens on keyboard focus and closes on Escape', async () => {
+      fixture.componentRef.setInput('item', workspace);
+      collapse();
+      const link: HTMLElement = host().querySelector('a') as HTMLElement;
+
+      document.body.appendChild(host());
+      link.focus();
+      await new Promise((resolve) => setTimeout(resolve));
+      fixture.detectChanges();
+      expect(flyout()).not.toBeNull();
+      expect(link.getAttribute('aria-expanded')).toBe('true');
+
+      link.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve));
+      fixture.detectChanges();
+      expect(flyout()).toBeNull();
+    });
+
+    it('opens with Enter and closes when navigation happens', () => {
+      fixture.componentRef.setInput('item', workspace);
+      collapse();
+      const link: HTMLElement = host().querySelector('a') as HTMLElement;
+
+      link.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      fixture.detectChanges();
+      expect(flyout()).not.toBeNull();
+
+      TestBed.inject(LayoutStore).setActivePath('/projects');
+      fixture.detectChanges();
+      expect(flyout()).toBeNull();
+    });
+
+    it('closes when focus leaves the item', () => {
+      fixture.componentRef.setInput('item', workspace);
+      collapse();
+      const link: HTMLElement = host().querySelector('a') as HTMLElement;
+      link.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+      fixture.detectChanges();
+
+      link.dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
+      );
+      fixture.detectChanges();
+      expect(flyout()).toBeNull();
     });
   });
 });

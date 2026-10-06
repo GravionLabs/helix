@@ -8,6 +8,8 @@ import type { HelixRouteMenuItem } from '../../route-menu.model';
 export interface HelixNavGroup {
   /** Uppercase section label shown above the items. Omit for an unlabeled group. */
   section?: string;
+  /** Icon of the section. In the collapsed rail the section becomes one icon with a flyout of its items. */
+  icon?: string;
   items: HelixRouteMenuItem[];
 }
 
@@ -41,7 +43,7 @@ export function helixNavGroupsFromMenu(
   for (const item of items) {
     if (item.items?.length) {
       flushPlain();
-      groups.push({ section: item.label, items: item.items });
+      groups.push({ section: item.label, icon: item.icon, items: item.items });
     } else {
       plain.push(item);
     }

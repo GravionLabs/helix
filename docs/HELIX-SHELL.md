@@ -283,6 +283,12 @@ icons and back — it is the only collapse control; the topbar hamburger is hidd
 a click outside or a navigation closes it (the drawer always shows labels). The collapsed
 state is remembered in `localStorage` (reads/writes are guarded, so it works without storage).
 
+**Collapsed rail.** Links show a tooltip with their label. A section that has an `icon`
+(`helixNavGroupsFromMenu` copies it from the top-level item) becomes a single icon, and any
+expandable item opens its children in a flyout on hover and on keyboard focus (also `Enter`,
+`Space` or `ArrowRight`); `Escape`, leaving the item, or navigating closes it, and it is
+kept inside the viewport. Sections without an icon list their items directly.
+
 The rail's brand icon is customizable via the `brandIcon` input — pass an inline SVG
 (`<svg>…</svg>`) or a URL to an SVG file. Falls back to the default helix icon when
 not provided. The app title (`appTitle`) renders alongside regardless.
