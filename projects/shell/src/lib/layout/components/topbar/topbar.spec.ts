@@ -27,6 +27,7 @@ describe('HelixTopbar', () => {
   let fixture: ComponentFixture<HelixTopbar>;
 
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [HelixTopbar],
       providers: [provideRouter([])],
@@ -105,6 +106,45 @@ describe('HelixTopbar', () => {
       fixture.detectChanges();
       const privateComp = component as unknown as HelixTopbarPrivate;
       expect(privateComp.showBreadcrumbs()).toBe(true);
+    });
+  });
+
+  describe('menu button', () => {
+    const button = (): HTMLButtonElement =>
+      fixture.nativeElement.querySelector('.layout-menu-button');
+
+    it('is marked mobile-only (hidden above 991px) in static menu mode', () => {
+      fixture.detectChanges();
+      expect(button().classList.contains('layout-menu-button-mobile-only')).toBe(true);
+    });
+
+    it('stays visible on desktop in overlay menu mode', () => {
+      TestBed.inject(LayoutStore).setMenuMode('overlay');
+      fixture.detectChanges();
+      expect(button().classList.contains('layout-menu-button-mobile-only')).toBe(false);
+    });
+
+    it('opens and closes the drawer on mobile', () => {
+      const store = TestBed.inject(LayoutStore);
+      const original = window.innerWidth;
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 500,
+      });
+      fixture.detectChanges();
+
+      button().click();
+      expect(store.mobileMenuActive()).toBe(true);
+      button().click();
+      expect(store.mobileMenuActive()).toBe(false);
+      expect(store.staticMenuDesktopInactive()).toBe(false);
+
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: original,
+      });
     });
   });
 });

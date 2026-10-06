@@ -1,6 +1,12 @@
 <div class="layout-topbar">
   <div class="layout-topbar-start">
-    <button class="layout-menu-button layout-topbar-action" (click)="store.onMenuToggle()">
+    <button
+      type="button"
+      class="layout-menu-button layout-topbar-action"
+      [class.layout-menu-button-mobile-only]="store.isStatic()"
+      aria-label="Toggle navigation"
+      (click)="store.onMenuToggle()"
+    >
       <i class="pi pi-bars"></i>
     </button>
     @if (showBreadcrumbs()) {

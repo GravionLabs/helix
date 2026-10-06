@@ -158,3 +158,10 @@
     box-shadow: inset var(--focus-ring-shadow);
   }
 }
+
+// The mobile drawer has no collapse mode; the hamburger is its only control.
+@media (max-width: 991px) {
+  .helix-nav-rail-footer {
+    display: none;
+  }
+}

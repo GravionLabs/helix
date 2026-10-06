@@ -8,6 +8,7 @@ describe('HelixNavRail', () => {
   let fixture: ComponentFixture<HelixNavRail>;
 
   beforeEach(async () => {
+    localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [HelixNavRail],
       providers: [provideRouter([])],

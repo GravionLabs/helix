@@ -23,6 +23,7 @@ describe('HelixAppLayout', () => {
   let store: InstanceType<typeof LayoutStore>;
 
   beforeEach(async () => {
+    localStorage.clear();
     // Override template, imports and styles BEFORE compileComponents() to prevent jsdom from
     // choking on HelixConfig CSS that uses `border: solid var(--surface-border)`. The computed
     // signals under test live on the class and need no rendered child components.
@@ -137,14 +138,10 @@ describe('HelixAppLayout', () => {
     expect(classes['layout-overlay-active']).toBe(true);
   });
 
-  it('containerClass() should have layout-static-inactive when staticMenuDesktopInactive is true and mode is static', () => {
+  it('containerClass() still honours the legacy staticMenuDesktopInactive flag in static mode', () => {
     store.setMenuMode('static');
-    Object.defineProperty(window, 'innerWidth', {
-      writable: true,
-      configurable: true,
-      value: 1024,
-    });
-    store.onMenuToggle();
+    // No longer reachable from the UI; kept in the store for compatibility.
+    store.updateConfig({ staticMenuDesktopInactive: true } as never);
     const classes = component.containerClass();
     expect(classes['layout-static-inactive']).toBe(true);
   });

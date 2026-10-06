@@ -16,6 +16,8 @@ export interface LayoutState {
   menuHoverActive: boolean;
   activePath: string | null;
   sidebarCollapsed: boolean;
+  /** Viewport is above the mobile breakpoint (> 991px). Kept in sync on window resize. */
+  desktop: boolean;
   /** Keys of the expanded nav-rail items (several can be open at once). */
   expandedKeys: string[];
 }

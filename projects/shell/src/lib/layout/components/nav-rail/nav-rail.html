@@ -64,6 +64,8 @@
       class="helix-nav-rail-collapse-button"
       (click)="store.toggleSidebar()"
       [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [attr.aria-label]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [attr.aria-expanded]="!store.isCollapsed()"
     >
       <i
         class="pi"

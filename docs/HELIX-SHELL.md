@@ -277,6 +277,12 @@ Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible lin
 `Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
 close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
 
+**Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
+icons and back — it is the only collapse control; the topbar hamburger is hidden there in
+`static` menu mode. At ≤ 991px the rail is a drawer: the hamburger opens it with a mask, and
+a click outside or a navigation closes it (the drawer always shows labels). The collapsed
+state is remembered in `localStorage` (reads/writes are guarded, so it works without storage).
+
 The rail's brand icon is customizable via the `brandIcon` input — pass an inline SVG
 (`<svg>…</svg>`) or a URL to an SVG file. Falls back to the default helix icon when
 not provided. The app title (`appTitle`) renders alongside regardless.
@@ -459,7 +465,8 @@ Where `breadcrumb` can be a static string or a function:
 | Property | Type | Description |
 |----------|------|-------------|
 | `menuVisible` | `boolean` | Whether the menu is shown |
-| `staticMenuDesktopInactive` | `boolean` | Static menu collapsed on desktop |
+| `staticMenuDesktopInactive` | `boolean` | Legacy "hide the rail completely" flag. Still honoured by `HelixAppLayout`, but no longer reachable from the default UI |
+| `sidebarCollapsed` | `boolean` | Desktop rail collapsed to icons; persisted in `localStorage` (`helix.nav-rail.collapsed`) |
 | `overlayMenuActive` | `boolean` | Overlay menu open state |
 | `profileSidebarVisible` | `boolean` | Profile sidebar open state |
 | `configSidebarVisible` | `boolean` | Config sidebar open state |

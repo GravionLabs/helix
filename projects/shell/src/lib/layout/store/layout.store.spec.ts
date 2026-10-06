@@ -5,6 +5,7 @@ describe('LayoutStore', () => {
   let store: InstanceType<typeof LayoutStore>;
 
   beforeEach(() => {
+    localStorage.clear();
     TestBed.configureTestingModule({});
     store = TestBed.inject(LayoutStore);
     store.reset();
@@ -272,7 +273,7 @@ describe('LayoutStore', () => {
       expect(store.overlayMenuActive()).toBe(false);
     });
 
-    it('should toggle staticMenuDesktopInactive in static mode on desktop', () => {
+    it('should collapse the rail instead of hiding it in static mode on desktop', () => {
       store.setMenuMode('static');
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
@@ -280,9 +281,10 @@ describe('LayoutStore', () => {
         value: 1024,
       });
       store.onMenuToggle();
-      expect(store.staticMenuDesktopInactive()).toBe(true);
-      store.onMenuToggle();
+      expect(store.sidebarCollapsed()).toBe(true);
       expect(store.staticMenuDesktopInactive()).toBe(false);
+      store.onMenuToggle();
+      expect(store.sidebarCollapsed()).toBe(false);
     });
 
     it('should toggle mobileMenuActive in static mode on mobile', () => {
@@ -344,6 +346,48 @@ describe('LayoutStore', () => {
         configurable: true,
         value: 1024,
       });
+    });
+  });
+
+  describe('collapsed state persistence', () => {
+    const KEY = 'helix.nav-rail.collapsed';
+
+    it('writes the collapsed state to localStorage', () => {
+      store.toggleSidebar();
+      expect(localStorage.getItem(KEY)).toBe('true');
+      store.toggleSidebar();
+      expect(localStorage.getItem(KEY)).toBe('false');
+    });
+
+    it('restores the collapsed state for a new store instance', () => {
+      localStorage.setItem(KEY, 'true');
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({});
+      expect(TestBed.inject(LayoutStore).sidebarCollapsed()).toBe(true);
+    });
+
+    it('works without storage', () => {
+      const getItem = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('blocked');
+      });
+      const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new Error('blocked');
+      });
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({});
+      const fresh = TestBed.inject(LayoutStore);
+      expect(fresh.sidebarCollapsed()).toBe(false);
+      expect(() => fresh.toggleSidebar()).not.toThrow();
+      expect(fresh.sidebarCollapsed()).toBe(true);
+      getItem.mockRestore();
+      setItem.mockRestore();
+    });
+
+    it('never reports a collapsed rail on mobile viewports', () => {
+      store.toggleSidebar();
+      expect(store.isCollapsed()).toBe(true);
+      store.setDesktop(false);
+      expect(store.isCollapsed()).toBe(false);
     });
   });
 });
