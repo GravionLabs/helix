@@ -1,0 +1,50 @@
+name: PBI
+description: Product backlog item — a scoped, demoable slice of a Feature.
+title: '[PBI] '
+labels: ['pbi']
+body:
+  - type: input
+    id: feature
+    attributes:
+      label: Parent Feature
+      description: '#<issue number>'
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+    validations:
+      required: true
+  - type: textarea
+    id: depends
+    attributes:
+      label: Depends on
+      description: >-
+        PBIs that must be closed first, one per line ("- #12 title"), or "Nothing". Also add them
+        as native "blocked by" dependencies.
+      value: '- Nothing; this PBI can start any time.'
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification
+      description: The commands that prove the PBI works, as run from the repo root.
+      render: sh
+      value: pnpm format:check && pnpm lint && pnpm test:ci && pnpm build
+    validations:
+      required: true
+  - type: textarea
+    id: subissues
+    attributes:
+      label: Sub-issues
+      description: >-
+        List Task children as they are created, one per line (e.g. "- #12 Task title"). Keep this
+        in sync by hand — it's for readability; the native panel below is the source of truth for
+        progress.
+  - type: markdown
+    attributes:
+      value: |
+        Add Task children via GitHub's native **sub-issues** panel on this issue (not a manual checklist) — it keeps progress and completion % in sync automatically. Also list them in the Sub-issues field above so they're readable inline.
+        Set this issue's **Parent** to the Feature above using the same panel, so the hierarchy is linked both ways.
