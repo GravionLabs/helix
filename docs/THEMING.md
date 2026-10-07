@@ -94,6 +94,11 @@ documentation site is themed this way: `pnpm tokens:site` writes
 [`apps/site/.vitepress/theme/helix.css`](../apps/site/.vitepress/theme/helix.css) binds VitePress's
 `--vp-c-*` variables to the `--h-*` ones, so site and components share one palette.
 
+## The Design System
+
+The tokens, the brand book and static previews of the components are generated as a Design System
+(`pnpm design-system:build`); see [CONTRIBUTING-design-system](CONTRIBUTING-design-system.md).
+
 ## Where things are
 
 | | |

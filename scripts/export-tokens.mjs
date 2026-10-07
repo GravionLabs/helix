@@ -33,9 +33,9 @@ export function resolvePreset(Theme, preset, darkSelector = DARK_SELECTOR, { com
   const common = Theme.getCommon('common');
   const parts = [common.primitive.css, common.semantic.css, common.global.css];
   if (components) {
-    for (const name of Object.keys(preset.components ?? {}).sort()) {
-      parts.push(Theme.getComponent(name).css);
-    }
+    // `true`: every component of the preset; an array: just those.
+    const names = Array.isArray(components) ? components : Object.keys(preset.components ?? {}).sort();
+    for (const name of names) parts.push(Theme.getComponent(name).css);
   }
   return parts.filter(Boolean).join('\n');
 }
@@ -55,7 +55,7 @@ export function tokensOf(css, darkSelector = DARK_SELECTOR) {
   return tokens;
 }
 
-async function loadPreset(name) {
+export async function loadPreset(name) {
   const engine = await import(path.join(FESM, 'gravionlabs-helix-core-themes.mjs'));
   const module = await import(path.join(FESM, `gravionlabs-helix-core-themes-${name}.mjs`));
   const preset = module[`${name}Preset`];
