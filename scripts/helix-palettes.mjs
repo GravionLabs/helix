@@ -2,7 +2,7 @@
 // Writes projects/core/themes/helix/palettes.ts: Aura's (Tailwind's) colour scales with
 // their chroma reduced in OKLCH, lightness untouched. Helix's primary and severity
 // colours are these muted scales (#521 review: the saturated Tailwind hues were too
-// loud). Run: node scripts/helix-palettes.mjs [chroma factor, default 0.65]
+// loud). Run: node scripts/helix-palettes.mjs [chroma factor, default 0.55]
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,7 +13,7 @@ const OUT = path.join(ROOT, 'projects/core/themes/helix/palettes.ts');
 
 /** The scales the component tokens reference (primary + severities + their tints). */
 export const SCALES = ['indigo', 'red', 'green', 'emerald', 'yellow', 'amber', 'orange', 'sky', 'blue', 'purple'];
-export const CHROMA = Number(process.argv[2] ?? 0.65);
+export const CHROMA = Number(process.argv[2] ?? 0.55);
 
 // sRGB <-> OKLCH (Björn Ottosson's OKLab), enough for a build script.
 const lin = (c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
