@@ -8,27 +8,41 @@ This document defines how issues are structured, titled, labeled, and linked in 
 Epic
 └── Feature
     └── PBI (Product Backlog Item)
-        └── Task (optional)
+        └── Task
 
 Bug
 └── Task (optional)
 ```
 
+**Every planned piece of work uses the full chain Epic → Feature → PBI → Task.** A new Feature goes under an
+existing open Epic when one fits, otherwise a new Epic is created for it; every PBI gets at least one Task. Only Bugs
+live outside the chain.
+
+**Every issue is added to the [Helix project](https://github.com/users/GravionLabs/projects/6)** (Status
+`Backlog` when new):
+
+```bash
+gh project item-add 6 --owner GravionLabs --url https://github.com/GravionLabs/helix/issues/<number>
+```
+
 - An **Epic** groups related Features toward one larger outcome.
 - A **Feature** groups the PBIs that deliver one user-facing capability.
 - A **PBI** is a shippable increment: one PR-sized (or few-PR-sized) unit of value.
-- A **Task** is a concrete technical step; use tasks only when a PBI or Bug needs to be split.
+- A **Task** is a concrete technical step with the files it touches; every PBI has at least one. A Bug gets Tasks only when its fix is split up.
 - A **Bug** lives outside the epic hierarchy but may reference an Epic/Feature in its Background.
 
 ## Titles & labels
 
-| Type    | Label     | Title convention                                                  |
-| ------- | --------- | ----------------------------------------------------------------- |
-| Epic    | `epic`    | `Epic: <name>`                                                    |
-| Feature | `feature` | `Feature: <name>`                                                 |
-| PBI     | `pbi`     | Conventional commit: `feat: …`, `refactor: …`, `docs: …`, `test: …` |
-| Task    | `task`    | Conventional commit: `chore: …`, `feat: …`, `test: …`, …          |
-| Bug     | `bug`     | `fix: <symptom>`                                                  |
+| Type    | Label     | Title convention    |
+| ------- | --------- | ------------------- |
+| Epic    | `epic`    | `[Epic] <name>`     |
+| Feature | `feature` | `[Feature] <name>`  |
+| PBI     | `pbi`     | `[PBI] <name>`      |
+| Task    | `task`    | `[Task] <name>`     |
+| Bug     | `bug`     | `[Bug] <symptom>`   |
+
+The issue forms in `.github/ISSUE_TEMPLATE/` pre-fill the prefix and the label. Commits and PR titles stay
+conventional (`feat: …`, `fix: …`, `chore: …`).
 
 Additional area labels (`library`, `demo`, `form`, `navigation`, `design-system`, …) may be added on top of the type label.
 
@@ -45,84 +59,76 @@ Every issue that has sub-issues must link them **both** ways:
      -X POST -F sub_issue_id="$child_id"
    ```
 
-2. **`Sub-Issues` checklist** in the parent body, one line per child:
+2. **`Sub-issues` field** in the parent body, one line per child (kept in sync by hand; the native panel is
+   the source of truth for progress):
 
    ```markdown
-   ## Sub-Issues
+   ### Sub-issues
 
-   - [ ] #346 — fix: forward BullMQ lifecycle events to SSE
-   - [ ] #347 — feat: queue depth on /healthz
+   - #346 [PBI] Section headings from top-level menu items
+   - #347 [PBI] Single collapse control
    ```
 
-Each child references its parent with a `Part of #NNN` line in its **Parent** section. Closing PRs reference the PBI/Task/Bug they resolve with `Closes #NNN`.
+Each child names its parent in its **Parent** field (`#NNN`). Closing PRs reference the PBI/Task/Bug they resolve with `Closes #NNN`.
 
 ## Fields per issue type
 
-### Epic
+The issue forms in `.github/ISSUE_TEMPLATE/` define these fields. An issue created with `gh` (no form) uses the
+same fields as `### <Label>` headings, in this order, so it reads the same as one created in the browser.
 
-| Section            | Content                                          |
-| ------------------ | ------------------------------------------------ |
-| Overview           | What this epic groups and why (2–4 sentences)    |
-| Background         | Current state / pain points motivating the epic  |
-| Goals              | Bullet list of outcomes                          |
-| Out of Scope       | Explicit non-goals                               |
-| Sub-Issues         | Checklist of Features                            |
-| Definition of Done | Measurable completion criteria for the whole epic |
+### Epic (`epic.yml`)
 
-### Feature
+| Field            | Required | Content                                                   |
+| ---------------- | -------- | --------------------------------------------------------- |
+| Goal             | yes      | What outcome the epic delivers                            |
+| Related spec/ADR | no       | Link to a doc under `docs/` (e.g. `docs/ROADMAP.md`)      |
+| Sub-issues       | no       | One Feature per line (`- #12 Feature title`)              |
 
-| Section            | Content                                    |
-| ------------------ | ------------------------------------------ |
-| Overview           | What the feature delivers                  |
-| Background         | Why it's needed, links to design/discussion |
-| Parent             | `Part of #NNN` (epic)                      |
-| Scope              | In scope / out of scope bullets            |
-| Sub-Issues         | Checklist of PBIs                          |
-| Definition of Done | Feature-level acceptance criteria          |
+### Feature (`feature.yml`)
 
-### PBI
+| Field       | Required | Content                                  |
+| ----------- | -------- | ---------------------------------------- |
+| Parent Epic | yes      | `#<number>` (always set) |
+| Description | yes      | What the feature delivers and why        |
+| Sub-issues  | no       | One PBI per line                         |
 
-| Section             | Content                                                   |
-| ------------------- | --------------------------------------------------------- |
-| Overview            | User story or concise description of the increment        |
-| Background          | Context, constraints, prior art                           |
-| Parent              | `Part of #NNN` (feature)                                  |
-| Acceptance Criteria | Testable Given/When/Then or bullet criteria               |
-| Technical Notes     | Implementation hints, affected files/packages (optional)  |
-| Sub-Issues          | Checklist of Tasks (optional)                             |
-| Definition of Done  | Code + tests + docs criteria                              |
+### PBI (`pbi.yml`)
 
-### Task
+| Field               | Required | Content                                                                         |
+| ------------------- | -------- | ------------------------------------------------------------------------------- |
+| Parent Feature      | yes      | `#<number>`                                                                     |
+| Acceptance criteria | yes      | Testable bullets or Given/When/Then                                             |
+| Depends on          | yes      | PBIs that must close first (also as native "blocked by"), or "Nothing"          |
+| Verification        | yes      | Commands that prove it works (default `pnpm format:check && pnpm lint && pnpm test:ci && pnpm build`) |
+| Sub-issues          | no       | One Task per line                                                               |
 
-| Section              | Content                            |
-| -------------------- | ---------------------------------- |
-| Overview             | The concrete technical step        |
-| Parent               | `Part of #NNN` (PBI or bug)        |
-| Implementation Notes | How/where (optional)               |
-| Definition of Done   | What "done" means for this task    |
+### Task (`task.yml`)
 
-### Bug
+| Field                | Required | Content                                                              |
+| -------------------- | -------- | -------------------------------------------------------------------- |
+| Parent PBI or Bug    | yes      | `#<number>`                                                          |
+| Implementation notes | no       | How/where                                                            |
+| Files                | yes      | Files the task creates or changes, one per line                      |
+| Done when            | yes      | Checkboxes, ending with the parent PBI's verification commands       |
 
-| Section            | Content                                          |
-| ------------------ | ------------------------------------------------ |
-| Description        | What is broken                                   |
-| Reproduction       | Numbered steps                                   |
-| Expected Behavior  | What should happen                               |
-| Actual Behavior    | What happens instead                             |
-| Environment        | Versions, browser, OS                            |
-| Screenshots        | Optional                                         |
-| Sub-Issues         | Checklist of Tasks (only if the fix is split up) |
-| Definition of Done | Fix + regression test criteria                   |
+### Bug (`bug.yml`)
+
+| Field              | Required | Content                                             |
+| ------------------ | -------- | --------------------------------------------------- |
+| Steps to reproduce | yes      | Numbered steps                                      |
+| Expected vs actual | yes      | What should happen, what happens instead            |
+| Area               | no       | `core` / `shell` / `zod` / `ag-grid` / `demo` / `docs` / `ci` |
+| Sub-issues         | no       | One Task per line, only if the fix is split up      |
 
 ## Creating issues with `gh`
 
 ```bash
 # Epic
-gh issue create --label epic --title "Epic: <name>" --body-file epic.md
+gh issue create --label epic --title "[Epic] <name>" --body-file epic.md
 
 # Feature under epic #10
-gh issue create --label feature --title "Feature: <name>" --body-file feature.md
+gh issue create --label feature --title "[Feature] <name>" --body-file feature.md
 child_id=$(gh api repos/{owner}/{repo}/issues/<feature-number> --jq .id)
 gh api repos/{owner}/{repo}/issues/10/sub_issues -X POST -F sub_issue_id="$child_id"
-# …then add "- [ ] #<feature-number> — <title>" to epic #10's Sub-Issues section.
+# …then add "- #<feature-number> <title>" to epic #10's Sub-issues field.
 ```

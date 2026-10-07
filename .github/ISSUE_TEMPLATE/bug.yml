@@ -1,0 +1,34 @@
+name: Bug
+description: Something is broken.
+title: '[Bug] '
+labels: ['bug']
+body:
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Area
+      description: core / shell / zod / ag-grid / demo / docs / ci
+  - type: textarea
+    id: subissues
+    attributes:
+      label: Sub-issues
+      description: >-
+        If this bug is broken into multiple Tasks, list them here as they are created, one per
+        line (e.g. "- #12 Task title"). Keep this in sync by hand — it's for readability; the
+        native panel below is the source of truth for progress.
+  - type: markdown
+    attributes:
+      value: |
+        If this bug needs to be broken into multiple Tasks, add them as children via GitHub's native **sub-issues** panel on this issue. Also list them in the Sub-issues field above so they're readable inline.

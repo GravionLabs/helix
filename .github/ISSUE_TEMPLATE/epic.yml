@@ -1,0 +1,29 @@
+name: Epic
+description: A large body of work spanning multiple features, tied to a spec/ADR.
+title: '[Epic] '
+labels: ['epic']
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome does this epic deliver?
+    validations:
+      required: true
+  - type: input
+    id: spec
+    attributes:
+      label: Related spec/ADR
+      description: Link to the doc under docs/ (e.g. docs/ROADMAP.md, a spec or an ADR), if any
+  - type: textarea
+    id: subissues
+    attributes:
+      label: Sub-issues
+      description: >-
+        List Feature children as they are created, one per line (e.g. "- #12 Feature title").
+        Keep this in sync by hand — it's for readability; the native panel below is the source of
+        truth for progress.
+  - type: markdown
+    attributes:
+      value: |
+        Add Feature children via GitHub's native **sub-issues** panel on this issue (not a manual checklist) — it keeps progress and completion % in sync automatically. Also list them in the Sub-issues field above so they're readable inline.
