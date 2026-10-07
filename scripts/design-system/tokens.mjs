@@ -68,7 +68,7 @@ export function createResolver(tokens) {
 
 // ---------------------------------------------------------------------------------------- the colour set
 
-const PALETTES = ['indigo', 'zinc', 'red', 'green', 'sky', 'orange', 'purple'];
+const PALETTES = ['indigo', 'red', 'green', 'sky', 'orange', 'purple'];
 const SEVERITIES = [
   ['success', 'Success: confirmation, completed, valid.'],
   ['info', 'Info: neutral notices and help.'],
@@ -77,16 +77,31 @@ const SEVERITIES = [
   ['danger', 'Danger: errors, destructive actions.'],
 ];
 
+const SURFACE_USAGE = {
+  0: 'Page and cards on light, fields; the lightest neutral.',
+  50: 'Chrome on light (topbar, nav, status bar) and soft blocks.',
+  100: 'Hover and quiet fills on light (secondary button, row hover).',
+  200: 'Dividers and card borders on light.',
+  300: 'Control borders on light.',
+  400: 'Muted text on dark; placeholders.',
+  500: 'Muted text on light.',
+  600: 'Text on light; control borders on dark.',
+  700: 'Dividers and hover on dark.',
+  800: 'Cards and overlays on dark.',
+  900: 'Page on dark.',
+  950: 'Chrome and fields on dark.',
+};
+
 /** [token name, custom property, usage] — the curated colour tokens, in display order. */
 export function colorSpec() {
   const spec = [];
   for (const p of PALETTES) {
     for (const s of STEPS) {
-      spec.push([`${p}-${s}`, `--h-${p}-${s}`, `${p[0].toUpperCase()}${p.slice(1)} ${s} of Helix's ${p === 'zinc' ? 'neutral' : 'muted'} scale (primitive; use the semantic tokens in UI).`]);
+      spec.push([`${p}-${s}`, `--h-${p}-${s}`, `${p[0].toUpperCase()}${p.slice(1)} ${s} of Helix's muted scale (primitive; use the semantic tokens in UI).`]);
     }
   }
   for (const s of STEPS) spec.push([`primary-${s}`, `--h-primary-${s}`, `Primary scale step ${s}: the brand colour's tints and shades (indigo).`]);
-  for (const s of [0, ...STEPS]) spec.push([`surface-${s}`, `--h-surface-${s}`, s === 0 ? 'Surface 0: cards, fields, overlays on light; the lightest neutral.' : `Surface ${s} of the zinc neutral scale (both themes).`]);
+  for (const s of [0, ...STEPS]) spec.push([`surface-${s}`, `--h-surface-${s}`, SURFACE_USAGE[s]]);
   spec.push(
     ['primary', '--h-primary-color', 'Brand colour: filled buttons, links, focus ring, selected state. 600 on light, 400 on dark.'],
     ['primary-hover', '--h-primary-hover-color', 'Primary on hover.'],

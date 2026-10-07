@@ -1,6 +1,6 @@
 # Helix
 
-Angular UI components (a maintained fork of PrimeNG 21.1.9), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: zinc surfaces, one muted indigo for action, colour reserved for meaning.
+Angular UI components (a maintained fork of PrimeNG 21.1.9), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: the grey surfaces of the other Gravion Labs sites, one muted indigo for action, colour reserved for meaning.
 
 Source: https://github.com/GravionLabs/helix · docs: https://gravionlabs.github.io/helix/ · live demo: https://gravionlabs.github.io/helix/demo/
 
@@ -18,10 +18,10 @@ What the demo and the docs show, in the order you meet it:
 
 ## Visual foundations
 
-**Colour.** Neutrals are the **zinc** scale in both themes (`surface-0` … `surface-950`). The one brand hue is **indigo**, muted: Helix uses Tailwind's scales with their OKLCH chroma reduced to 55 % at unchanged lightness, so contrast ratios are those of the original and the colours are quieter. `primary` is `primary-600` on light, `primary-400` on dark; `primary-contrast` is the text on a primary fill.
+**Colour.** Neutrals are one grey scale shared by both themes (`surface-0` … `surface-950`), the surfaces and greys of the stock VitePress theme that the Ariadne docs use, so the sites look alike. The one brand hue is **indigo**, muted: Helix uses Tailwind's scales with their OKLCH chroma reduced to 55 % at unchanged lightness, so contrast ratios are those of the original and the colours are quieter. `primary` is `primary-600` on light, `primary-400` on dark; `primary-contrast` is the text on a primary fill.
 Colour means something: `success`, `info`, `warn`, `help` and `danger` (muted green, sky, orange, purple, red) are for status, never for decoration. Hover and pressed states step along the scale (`primary-hover`, `primary-active`).
 
-**Surfaces.** Page ground is a light neutral (`surface-100`; `surface-950` in dark); cards and fields sit on `content-bg` (`surface-0`; `surface-900`) with a hairline `content-border`. Overlays use the `shadow-*` tokens; nothing else casts a shadow at rest.
+**Surfaces.** The page is white (`surface-0`; `surface-900`, a soft charcoal, in dark); the chrome (topbar, nav rail, status bar) is `surface-50` (`surface-950`); cards and fields sit on `content-bg` with a hairline `content-border` (`surface-200`; `surface-700`). Hover is one step down (`surface-100`; `surface-700`). Overlays use the `shadow-*` tokens; nothing else casts a shadow at rest.
 
 **Type.** **Inter** for text and headings (headings 700, tracking −0.02em), self-hosted (Open Font License), and the system monospace (`ui-monospace`, SF Mono, Menlo, Consolas) for code: the same look as the other Gravion Labs sites. One family keeps the page calm; `--helix-font-display` exists so an application can still give headings another face. The application root is **14px**; headings step 14 → 35px (`h1`) in the Display styles. Body text is `text` on `content-bg`, secondary text `text-muted` (≥ 4.5:1 on cards in both themes).
 
@@ -29,7 +29,7 @@ Colour means something: `success`, `info`, `warn`, `help` and `danger` (muted gr
 
 **Focus and state.** Focus is a 1px solid `primary` ring with a 2px offset (inputs swap their border for `field-border-focus`); disabled controls fade to 60 % opacity; transitions are 0.2s.
 
-**Dark mode.** The same tokens under the `app-dark` class: `surface-950` ground, `surface-900` cards, `primary-400` for action with `surface-950` text on it, severity fills one step lighter. Nothing is inverted by hand; a block that would vanish on the ground takes another token.
+**Dark mode.** The same tokens under the `app-dark` class: `surface-900` ground, `surface-950` chrome, `surface-800` cards, `primary-400` for action with `surface-950` text on it, severity fills one step lighter. Nothing is inverted by hand; a block that would vanish on the ground takes another token.
 
 ## Iconography
 

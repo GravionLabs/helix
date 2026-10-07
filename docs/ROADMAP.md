@@ -106,7 +106,7 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
 - [x] #520 – ADR 0001; `helixPreset` (`themes/helix`, extends Aura, values pending the mockups);
       `pnpm tokens:export` → `dist/tokens/<preset>.{css,json}` (static `--h-*` variables, light + dark)
 - [ ] #521 – Design mockups in Claude Design; Helix look for docs site, demo and components.
-      Done: mockup rounds 1–2 (hybrid chosen: zinc neutrals, indigo primary), type settled on
+      Done: mockup rounds 1–2 (hybrid chosen: muted indigo primary; surfaces then settled on the sibling sites' VitePress neutrals, #532), type settled on
       Inter (as on the sibling Gravion Labs sites) after a comparison of six pairings, `helixPreset` values, shell font stacks, demo and shell default to
       `helixPreset`. VitePress theme on the same tokens (`apps/site/.vitepress/theme`), theming guide (`docs/THEMING.md`)
 - [x] #522 – Design System sync: `pnpm design-system:build` (tokens.json, brand book, 12 component previews, cover, Inter

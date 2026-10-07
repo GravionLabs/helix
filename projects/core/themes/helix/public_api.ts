@@ -10,8 +10,8 @@
  *   choices that give every component the same identity
  * - `components`: per-component overrides, only where the semantic layer isn't enough
  *
- * The look ("Hybrid", round 2 of the mockups): zinc neutrals, a muted indigo
- * primary and muted severity colours (`palettes.ts`, Tailwind's scales at 55 %
+ * The look ("Hybrid", round 2 of the mockups, surfaces of proposal D): the neutrals
+ * of the sibling sites' VitePress theme, a muted indigo primary and muted severity colours (`palettes.ts`, Tailwind's scales at 55 %
  * chroma), 6 px radius (Aura's `md`), Inter for text and headings and the system
  * monospace for code. Type is not a token of the engine: the font stacks live in
  * `@gravionlabs/helix-shell`'s stylesheet, the font files are the application's
@@ -28,19 +28,25 @@ import { palettes } from './palettes';
 
 export { palettes as helixPalettes };
 
-const zinc = {
+/**
+ * The neutral scale of both colour schemes: the surfaces and greys of the stock VitePress theme (the look of
+ * the other Gravion Labs sites), as one monotone scale. Light uses 0 (page, cards), 50 (chrome), 100 (hover),
+ * 200 (dividers), 300 (control borders), 500 (muted text), 600 (text); dark uses 900 (page), 950 (chrome),
+ * 800 (cards), 700 (hover, dividers), 600 (control borders), 400 (muted text).
+ */
+const surface = {
     0: '#ffffff',
-    50: '{zinc.50}',
-    100: '{zinc.100}',
-    200: '{zinc.200}',
-    300: '{zinc.300}',
-    400: '{zinc.400}',
-    500: '{zinc.500}',
-    600: '{zinc.600}',
-    700: '{zinc.700}',
-    800: '{zinc.800}',
-    900: '{zinc.900}',
-    950: '{zinc.950}'
+    50: '#f6f6f7',
+    100: '#ebebef',
+    200: '#e2e2e3',
+    300: '#c2c2c4',
+    400: '#98989f',
+    500: '#67676c',
+    600: '#3c3c43',
+    700: '#2e2e32',
+    800: '#202127',
+    900: '#1b1b1f',
+    950: '#161618'
 };
 
 /** Helix's deviations from Aura. Keep this the only place where Helix's identity is encoded. */
@@ -65,9 +71,9 @@ export const helixOverrides: Preset = {
         },
         colorScheme: {
             light: {
-                // Zinc in both schemes (Aura: slate by day, zinc by night), so the
-                // neutrals don't shift temperature with the theme.
-                surface: zinc,
+                // One neutral scale in both schemes (Aura: slate by day, zinc by night), so the
+                // greys don't shift temperature with the theme.
+                surface,
                 // indigo-600 on white (7.2:1) instead of Aura's 500.
                 primary: {
                     color: '{primary.600}',
@@ -75,32 +81,36 @@ export const helixOverrides: Preset = {
                     hoverColor: '{primary.700}',
                     activeColor: '{primary.800}'
                 },
-                // Near-black text and a darker muted step: zinc-600 on white is 7.6:1,
-                // Aura's 500 would be 4.8:1 on the surface-50 cards.
+                // Soft near-black text (10.9:1 on white) and a muted step that holds 4.5:1 on the
+                // chrome and hover surfaces too (surface-500: 5.4:1 on white, 4.6:1 on surface-100).
                 text: {
-                    color: '{surface.950}',
-                    hoverColor: '{surface.900}',
-                    mutedColor: '{surface.600}',
-                    hoverMutedColor: '{surface.700}'
+                    color: '{surface.600}',
+                    hoverColor: '{surface.700}',
+                    mutedColor: '{surface.500}',
+                    hoverMutedColor: '{surface.600}'
                 },
                 formField: {
-                    color: '{surface.950}',
+                    color: '{surface.600}',
                     floatLabelFocusColor: '{primary.color}'
                 }
             },
             dark: {
-                surface: zinc,
+                surface,
                 primary: {
                     color: '{primary.400}',
                     contrastColor: '{surface.950}',
                     hoverColor: '{primary.300}',
                     activeColor: '{primary.200}'
                 },
+                // The warm off-white of the sibling sites' dark theme, not part of the scale.
                 text: {
-                    color: '{surface.50}',
-                    hoverColor: '{surface.0}',
+                    color: '#dfdfd6',
+                    hoverColor: '{surface.50}',
                     mutedColor: '{surface.400}',
                     hoverMutedColor: '{surface.300}'
+                },
+                formField: {
+                    color: '{text.color}'
                 }
             }
         }
