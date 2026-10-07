@@ -38,11 +38,12 @@ jobs:
         with:
           package-manager: pnpm
       - run: pnpm install --frozen-lockfile
-      # Dead links in the documents fail this step.
-      - name: Build the documentation site
-        run: SITE_BASE="$PAGES_BASE" pnpm --filter @helix/site build
+      # The site is themed from the design tokens of helixPreset, which `build:lib` builds and exports.
       - name: Build the libraries
         run: pnpm build:lib
+      # Dead links in the documents fail this step.
+      - name: Build the documentation site
+        run: SITE_BASE="$PAGES_BASE" pnpm build:site
       - name: Build the demo
         run: pnpm build:demo:pages
       - name: Put the pieces together

@@ -32,6 +32,7 @@ export function isSitePage(repoPath: string): boolean {
   return !(
     page.startsWith('CONTRIBUTING-') ||
     page.startsWith('migrations/') ||
+    page.startsWith('adr/') ||
     page === 'components/_TEMPLATE.md'
   );
 }

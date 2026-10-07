@@ -2,7 +2,7 @@ export type MenuMode = 'static' | 'overlay';
 
 export interface LayoutConfig {
   preset: string;
-  primary: string;
+  primary: string | null;
   surface: string | undefined | null;
   darkTheme: boolean;
   menuMode: MenuMode;

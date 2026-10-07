@@ -13,6 +13,9 @@ hero:
       text: Shell API
       link: /HELIX-SHELL
     - theme: alt
+      text: Theming
+      link: /THEMING
+    - theme: alt
       text: Live demo
       link: /demo/
     - theme: alt

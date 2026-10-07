@@ -14,11 +14,17 @@ import { HelixConfig } from '@gravionlabs/helix-core/config';
 import { SelectButtonModule } from '@gravionlabs/helix-core/selectbutton';
 import { $t, updatePreset, updateSurfacePalette } from '@gravionlabs/helix-core/themes';
 import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
 import { laraPreset } from '@gravionlabs/helix-core/themes/lara';
 import { noraPreset } from '@gravionlabs/helix-core/themes/nora';
 import { LayoutStore } from '../../store/layout.store';
 
-const presets = { Aura: auraPreset, Lara: laraPreset, Nora: noraPreset } as const;
+const presets = {
+  Helix: helixPreset,
+  Aura: auraPreset,
+  Lara: laraPreset,
+  Nora: noraPreset,
+} as const;
 
 declare type KeyOfType<T> = keyof T extends infer U ? U : never;
 
@@ -248,6 +254,8 @@ export class HelixConfigurator implements OnInit {
   }
 
   getPresetExt() {
+    // No primary chosen: the preset's own (Helix: indigo), nothing to extend.
+    if (this.selectedPrimaryColor() === null) return {};
     const color: SurfacesType =
       this.primaryColors().find((c) => c.name === this.selectedPrimaryColor()) || {};
     const preset = this.store.preset();
@@ -295,6 +303,42 @@ export class HelixConfigurator implements OnInit {
                 focusBackground: '{primary.300}',
                 color: '{primary.950}',
                 focusColor: '{primary.950}',
+              },
+            },
+          },
+        },
+      };
+    } else if (preset === 'Helix') {
+      return {
+        semantic: {
+          primary: color.palette,
+          colorScheme: {
+            light: {
+              primary: {
+                color: '{primary.600}',
+                contrastColor: '#ffffff',
+                hoverColor: '{primary.700}',
+                activeColor: '{primary.800}',
+              },
+              highlight: {
+                background: '{primary.50}',
+                focusBackground: '{primary.100}',
+                color: '{primary.700}',
+                focusColor: '{primary.800}',
+              },
+            },
+            dark: {
+              primary: {
+                color: '{primary.400}',
+                contrastColor: '{surface.950}',
+                hoverColor: '{primary.300}',
+                activeColor: '{primary.200}',
+              },
+              highlight: {
+                background: 'color-mix(in srgb, {primary.400}, transparent 84%)',
+                focusBackground: 'color-mix(in srgb, {primary.400}, transparent 76%)',
+                color: 'rgba(255,255,255,.87)',
+                focusColor: 'rgba(255,255,255,.87)',
               },
             },
           },

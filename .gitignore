@@ -56,3 +56,4 @@ apm_modules/
 # Documentation site (VitePress)
 /apps/site/.vitepress/dist
 /apps/site/.vitepress/cache
+/apps/site/.vitepress/theme/generated

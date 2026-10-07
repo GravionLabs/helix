@@ -20,7 +20,7 @@ export default defineConfig({
   base,
   // The site is the documentation of the repository: its pages are the files of `docs`.
   srcDir: '../../docs',
-  srcExclude: ['CONTRIBUTING-*.md', 'migrations/**', 'components/_TEMPLATE.md'],
+  srcExclude: ['CONTRIBUTING-*.md', 'migrations/**', 'components/_TEMPLATE.md', 'adr/**'],
   // `docs/components/README.md` is what GitHub shows for the folder, and the home of the component pages here.
   rewrites: { 'components/README.md': 'components/index.md' },
   cleanUrls: true,
@@ -41,6 +41,7 @@ export default defineConfig({
     nav: [
       { text: 'Components', link: '/components/' },
       { text: 'Shell API', link: '/HELIX-SHELL' },
+      { text: 'Theming', link: '/THEMING' },
       { text: 'Roadmap', link: '/ROADMAP' },
       { text: 'GitHub', link: REPO_URL },
     ],

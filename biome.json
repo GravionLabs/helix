@@ -51,6 +51,7 @@
       "!**/*.cjs",
       "!**/*.html",
       "!**/*.svg",
+      "!apps/site/.vitepress/theme/generated",
       "!**/public",
       "!projects/core"
     ]

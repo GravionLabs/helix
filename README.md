@@ -34,15 +34,18 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Theming ships the Aura, Lara and Nora presets vendored into `helix-core`:
+Theming ships `helixPreset` (`themes/helix`) — Helix's own look as tokens on top of Aura: zinc
+neutrals, indigo primary, Inter (see
+[ADR 0001](docs/adr/0001-styling-foundation.md), epic #519) — plus the Aura, Lara and Nora presets
+vendored into `helix-core`:
 
 ```ts
 // app.config.ts
-import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHelix({ theme: { preset: auraPreset } })],
+  providers: [provideHelix({ theme: { preset: helixPreset } })],
 };
 ```
 
@@ -52,7 +55,10 @@ Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.gith
 
 - [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix-core` entry point
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
+- [Theming](docs/THEMING.md) — the Helix preset, dark mode, overriding tokens, static token export
+- [Design System](docs/CONTRIBUTING-design-system.md) — the generated brand book, tokens and component previews
 - [Roadmap](docs/ROADMAP.md)
+- [Architecture decision records](docs/adr/README.md)
 - [File structure conventions](docs/CONTRIBUTING-file-structure.md)
 
 ## Development
@@ -62,7 +68,7 @@ Requires Node ≥ 24 and [pnpm](https://pnpm.io).
 ```bash
 pnpm install
 pnpm start          # Build libs + serve the demo app
-pnpm build:lib      # Build all four libraries
+pnpm build:lib      # Build all four libraries (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
 pnpm lint           # biome + eslint + no-primeng import guard
 ```
