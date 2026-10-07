@@ -1,5 +1,6 @@
+<h1 class="sr-only">Table</h1>
 <div class="card">
-      <div class="font-semibold text-xl mb-2">Filtering</div>
+      <h2 class="demo-title mb-2!">Filtering</h2>
       <h-table
         #dt1
         [value]="customers1"
@@ -250,7 +251,7 @@
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-2">Frozen Columns</div>
+      <h2 class="demo-title mb-2!">Frozen Columns</h2>
       <h-togglebutton
         [(ngModel)]="balanceFrozen"
         [onIcon]="'pi pi-lock'"
@@ -305,7 +306,7 @@
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-2">Row Expansion</div>
+      <h2 class="demo-title mb-2!">Row Expansion</h2>
       <h-table
         [value]="products"
         dataKey="id"
@@ -422,7 +423,7 @@
     </div>
 
     <div class="card">
-      <div class="font-semibold text-xl mb-2">Grouping</div>
+      <h2 class="demo-title mb-2!">Grouping</h2>
       <h-table
         [value]="customers3"
         sortField="representative.name"

@@ -1,1 +1,20 @@
 /* Global app styles — layout provided by @gravionlabs/helix */
+
+/*
+ * Section titles of the demo pages are headings (h2) that look like the `div.font-semibold.text-xl`
+ * they replaced (#525). The global h1–h6 rules of helix-shell are unlayered and so win over Tailwind's
+ * utilities: size, weight, line-height and margin are set here instead, and spacing utilities on a
+ * title are written important (`mb-2!`).
+ */
+.demo-title {
+  margin: 0;
+  font-size: 1.25rem; // text-xl
+  line-height: calc(1.75 / 1.25);
+  font-weight: 600; // font-semibold
+}
+
+/* The one visible page title (documentation): text-2xl. */
+.demo-title-page {
+  font-size: 1.5rem;
+  line-height: calc(2 / 1.5);
+}

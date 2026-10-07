@@ -1,9 +1,10 @@
+<h1 class="sr-only">Dynamic Form Advanced</h1>
 <app-source-tabs directory="dynamicform-advanced" componentName="dynamic-form-advanced-demo"
   [extraSources]="['rating-widget.ts', 'advanced-error-resolver.ts', 'domain-schema.ts']">
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card flex flex-col gap-3 h-full">
-        <div class="font-semibold text-xl">Dynamic Form — Advanced Features</div>
+        <h2 class="demo-title">Dynamic Form — Advanced Features</h2>
         <ul class="text-sm text-muted-color list-disc pl-5 flex flex-col gap-1">
           <li>
             <b>Custom widget</b> — the score renders a Helix rating registered as
@@ -38,12 +39,12 @@
 
     <div class="md:w-1/2 flex flex-col gap-layout">
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">Live model (schema-derived defaults)</div>
+        <h2 class="demo-title">Live model (schema-derived defaults)</h2>
         <pre class="dynamic-form-advanced-demo__json">{{ df.formTree()().value() | json }}</pre>
       </div>
 
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">Submitted (parsed) value</div>
+        <h2 class="demo-title">Submitted (parsed) value</h2>
         @if (submittedValue(); as value) {
           <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
         } @else {
@@ -56,7 +57,7 @@
   <div class="flex flex-col md:flex-row gap-layout mt-6">
     <div class="md:w-1/2 flex flex-col">
       <div class="card flex flex-col gap-3 h-full">
-        <div class="font-semibold text-xl">Decorated domain schema</div>
+        <h2 class="demo-title">Decorated domain schema</h2>
         <p class="text-sm text-muted-color">
           This form uses a <b>plain Zod domain schema</b> (as it would ship in a shared package)
           that is decorated with UI metadata after the fact:
@@ -76,12 +77,12 @@
 
     <div class="md:w-1/2 flex flex-col gap-layout">
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">Live model</div>
+        <h2 class="demo-title">Live model</h2>
         <pre class="dynamic-form-advanced-demo__json">{{ taskDf.formTree()().value() | json }}</pre>
       </div>
 
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">Submitted (parsed) value</div>
+        <h2 class="demo-title">Submitted (parsed) value</h2>
         @if (taskSubmittedValue(); as value) {
           <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
         } @else {

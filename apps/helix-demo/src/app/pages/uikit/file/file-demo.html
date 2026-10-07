@@ -1,8 +1,9 @@
+<h1 class="sr-only">File</h1>
 <h-toast />
     <div class="grid grid-cols-12 gap-layout">
       <div class="col-span-full lg:col-span-6">
         <div class="card h-full">
-          <div class="font-semibold text-xl mb-2">Advanced</div>
+          <h2 class="demo-title mb-2!">Advanced</h2>
           <h-fileupload
             name="demo[]"
             (onUpload)="onUpload($event)"
@@ -20,7 +21,7 @@
       </div>
       <div class="col-span-full lg:col-span-6">
         <div class="card h-full">
-          <div class="font-semibold text-xl mb-2">Basic</div>
+          <h2 class="demo-title mb-2!">Basic</h2>
           <div class="flex flex-col gap-3 items-center justify-center">
             <h-fileupload
               #fu

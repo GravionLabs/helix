@@ -1,7 +1,8 @@
+<h1 class="sr-only">Timeline</h1>
 <div class="grid grid-cols-12 gap-layout">
     <div class="col-span-12 sm:col-span-6">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Left Align</div>
+        <h2 class="demo-title mb-2!">Left Align</h2>
         <h-timeline [value]="events1">
           <ng-template #content let-event>
             {{ event.status }}
@@ -11,7 +12,7 @@
     </div>
     <div class="col-span-12 sm:col-span-6">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Right Align</div>
+        <h2 class="demo-title mb-2!">Right Align</h2>
         <h-timeline [value]="events1" align="right">
           <ng-template #content let-event>
             {{ event.status }}
@@ -21,7 +22,7 @@
     </div>
     <div class="col-span-12 sm:col-span-6">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Alternate Align</div>
+        <h2 class="demo-title mb-2!">Alternate Align</h2>
         <h-timeline [value]="events1" align="alternate">
           <ng-template #content let-event>
             {{ event.status }}
@@ -31,7 +32,7 @@
     </div>
     <div class="col-span-12 sm:col-span-6">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Opposite Content</div>
+        <h2 class="demo-title mb-2!">Opposite Content</h2>
         <h-timeline [value]="events1">
           <ng-template #content let-event>
             <small class="h-text-secondary">{{ event.date }}</small>
@@ -44,7 +45,7 @@
     </div>
     <div class="col-span-full">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Templating</div>
+        <h2 class="demo-title mb-2!">Templating</h2>
         <h-timeline [value]="events1" align="alternate" styleClass="customized-timeline">
           <ng-template #marker let-event>
             <span
@@ -77,7 +78,7 @@
     </div>
     <div class="col-span-full">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Horizontal</div>
+        <h2 class="demo-title mb-2!">Horizontal</h2>
         <div class="font-semibold mb-1">Top Align</div>
         <h-timeline [value]="events2" layout="horizontal" align="top">
           <ng-template #content let-event>

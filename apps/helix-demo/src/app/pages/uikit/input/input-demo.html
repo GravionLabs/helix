@@ -1,16 +1,17 @@
+<h1 class="sr-only">Input</h1>
 <h-fluid>
     <div class="flex flex-col gap-layout">
       <div class="flex flex-col md:flex-row gap-layout">
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
-            <div class="font-semibold text-xl">InputText</div>
+            <h2 class="demo-title">InputText</h2>
             <div class="flex flex-col md:flex-row gap-3">
               <input hInputText type="text" placeholder="Default" />
               <input hInputText type="text" placeholder="Disabled" [disabled]="true" />
               <input hInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
             </div>
 
-            <div class="font-semibold text-xl">Icons</div>
+            <h2 class="demo-title">Icons</h2>
             <h-iconfield>
               <h-inputicon class="pi pi-user" />
               <input hInputText type="text" placeholder="Username" />
@@ -20,13 +21,13 @@
               <h-inputicon class="pi pi-search" />
             </h-iconfield>
 
-            <div class="font-semibold text-xl">Float Label</div>
+            <h2 class="demo-title">Float Label</h2>
             <h-floatlabel>
               <input hInputText id="username" type="text" [(ngModel)]="floatValue" />
               <label for="username">Username</label>
             </h-floatlabel>
 
-            <div class="font-semibold text-xl">Textarea</div>
+            <h2 class="demo-title">Textarea</h2>
             <textarea
               hTextarea
               placeholder="Your Message"
@@ -35,7 +36,7 @@
               cols="30"
             ></textarea>
 
-            <div class="font-semibold text-xl">AutoComplete</div>
+            <h2 class="demo-title">AutoComplete</h2>
             <h-autocomplete
               [(ngModel)]="selectedAutoValue"
               [suggestions]="autoFilteredValue"
@@ -47,20 +48,20 @@
               (completeMethod)="filterCountry($event)"
             />
 
-            <div class="font-semibold text-xl">DatePicker</div>
+            <h2 class="demo-title">DatePicker</h2>
             <h-datepicker
               [showIcon]="true"
               [showButtonBar]="true"
               [(ngModel)]="calendarValue"
             ></h-datepicker>
 
-            <div class="font-semibold text-xl">InputNumber</div>
+            <h2 class="demo-title">InputNumber</h2>
             <h-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></h-inputnumber>
           </div>
         </div>
         <div class="md:w-1/2 flex flex-col gap-1">
           <div class="card flex flex-col gap-3">
-            <div class="font-semibold text-xl">RadioButton</div>
+            <h2 class="demo-title">RadioButton</h2>
             <div class="flex flex-col md:flex-row gap-3">
               <div class="flex items-center">
                 <h-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
@@ -81,7 +82,7 @@
               </div>
             </div>
 
-            <div class="font-semibold text-xl">Checkbox</div>
+            <h2 class="demo-title">Checkbox</h2>
             <div class="flex flex-col md:flex-row gap-3">
               <div class="flex items-center">
                 <h-checkbox
@@ -112,12 +113,12 @@
               </div>
             </div>
 
-            <div class="font-semibold text-xl">ToggleSwitch</div>
+            <h2 class="demo-title">ToggleSwitch</h2>
             <h-toggleswitch [(ngModel)]="switchValue" />
           </div>
 
           <div class="card flex flex-col gap-3">
-            <div class="font-semibold text-xl">Listbox</div>
+            <h2 class="demo-title">Listbox</h2>
             <h-listbox
               [(ngModel)]="listboxValue"
               [options]="listboxValues"
@@ -125,7 +126,7 @@
               [filter]="true"
             />
 
-            <div class="font-semibold text-xl">Select</div>
+            <h2 class="demo-title">Select</h2>
             <h-select
               [(ngModel)]="dropdownValue"
               [options]="dropdownValues"
@@ -133,7 +134,7 @@
               placeholder="Select"
             />
 
-            <div class="font-semibold text-xl">MultiSelect</div>
+            <h2 class="demo-title">MultiSelect</h2>
             <h-multiselect
               [options]="multiselectCountries"
               [(ngModel)]="multiselectSelectedCountries"
@@ -166,7 +167,7 @@
               </ng-template>
             </h-multiselect>
 
-            <div class="font-semibold text-xl">TreeSelect</div>
+            <h2 class="demo-title">TreeSelect</h2>
             <h-treeselect
               [(ngModel)]="selectedNode"
               [options]="treeSelectNodes"
@@ -179,22 +180,22 @@
       <div class="flex flex-col md:flex-row gap-layout">
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
-            <div class="font-semibold text-xl">Slider</div>
+            <h2 class="demo-title">Slider</h2>
             <input hInputText [(ngModel)]="sliderValue" type="number" />
             <h-slider [(ngModel)]="sliderValue" />
 
             <div class="flex flex-row mt-2">
               <div class="flex flex-col gap-3 w-1/2">
-                <div class="font-semibold text-xl">Rating</div>
+                <h2 class="demo-title">Rating</h2>
                 <h-rating [(ngModel)]="ratingValue" />
               </div>
               <div class="flex flex-col gap-3 w-1/2">
-                <div class="font-semibold text-xl">ColorPicker</div>
+                <h2 class="demo-title">ColorPicker</h2>
                 <h-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
               </div>
             </div>
 
-            <div class="font-semibold text-xl">Knob</div>
+            <h2 class="demo-title">Knob</h2>
             <h-knob
               [(ngModel)]="knobValue"
               [step]="10"
@@ -206,7 +207,7 @@
         </div>
         <div class="md:w-1/2 flex flex-col">
           <div class="card flex flex-col gap-3 h-full">
-            <div class="font-semibold text-xl">ToggleButton</div>
+            <h2 class="demo-title">ToggleButton</h2>
             <h-togglebutton
               [(ngModel)]="toggleValue"
               onLabel="Yes"
@@ -214,7 +215,7 @@
               [style]="{ width: '10em' }"
             />
 
-            <div class="font-semibold text-xl">SelectButton</div>
+            <h2 class="demo-title">SelectButton</h2>
             <h-selectbutton
               [(ngModel)]="selectButtonValue"
               [options]="selectButtonValues"
@@ -225,7 +226,7 @@
       </div>
 
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">InputGroup</div>
+        <h2 class="demo-title">InputGroup</h2>
         <div class="flex flex-col md:flex-row gap-3">
           <h-inputgroup>
             <h-inputgroup-addon>
