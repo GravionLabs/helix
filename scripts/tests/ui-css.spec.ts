@@ -1,0 +1,53 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { buildStyles, buildTokens, componentStyles, undefinedVariables } from '../build-ui-css.mjs';
+
+const ROOT = resolve(__dirname, '../..');
+const built = existsSync(resolve(ROOT, 'dist/core/fesm2022'));
+
+describe('helix-ui styles', () => {
+  const styles = componentStyles();
+  const css = buildStyles(styles);
+
+  it('has a stylesheet per component, in the components layer', () => {
+    expect(styles.map((s) => s.name)).toContain('button');
+    expect(css).toMatch(/@layer components \{/);
+    expect(css.match(/@layer \w+ \{/g)).toHaveLength(1);
+    expect(css).toContain('@layer theme, base, components, utilities;');
+  });
+
+  it('reads only --h-* tokens or its own --hx-* locals, never an engine class or helix-core name', () => {
+    for (const { name, css: source } of styles) {
+      const vars = new Set([...source.matchAll(/var\((--[\w-]+)/g)].map((m) => m[1]));
+      for (const v of vars)
+        expect({ name, v, ok: /^--(h|hx)-/.test(v) }).toEqual({ name, v, ok: true });
+      expect(source).not.toMatch(/\.h-[a-z]/); // core's class prefix
+      expect(source).not.toMatch(/p-component|primeng|primeuix/i);
+    }
+  });
+
+  it('styles every class the button directive can set', () => {
+    const directive = readFileSync(resolve(ROOT, 'projects/ui/src/lib/button/button.ts'), 'utf8');
+    const classes = new Set([...directive.matchAll(/'\[class\.(hx-[\w-]+)\]'/g)].map((m) => m[1]));
+    expect(classes.size).toBeGreaterThan(10);
+    const button = styles.find((s) => s.name === 'button')?.css ?? '';
+    for (const c of classes) {
+      expect({ c, styled: new RegExp(`\\.${c}(?![\\w-])`).test(button) }).toEqual({
+        c,
+        styled: true,
+      });
+    }
+  });
+});
+
+describe.skipIf(!built)('helix-ui tokens (built core)', () => {
+  it('defines every token the styles read, light and dark', async () => {
+    const styles = componentStyles();
+    const tokens = await buildTokens(styles);
+    expect(undefinedVariables(buildStyles(styles), tokens)).toEqual([]);
+    expect(tokens).toContain(':root,:host{--h-');
+    expect(tokens).toContain('.app-dark');
+    expect(tokens).toMatch(/--h-button-primary-background:/);
+  });
+});

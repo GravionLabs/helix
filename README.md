@@ -13,6 +13,7 @@ application shell, form utilities, and AG Grid helpers built on top of it.
 | [`@gravionlabs/helix-shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
 | [`@gravionlabs/helix-zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
+| [`@gravionlabs/helix-ui`](projects/ui) | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): the successor of `helix-core`, `Button` first. Not published yet. |
 
 The documentation is published at
 [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/) (built from [`docs/`](docs) by
@@ -55,6 +56,7 @@ Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.gith
 
 - [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix-core` entry point
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
+- [Helix UI](docs/HELIX-UI.md) — the vanilla component library that replaces the fork (`@gravionlabs/helix-ui`)
 - [Theming](docs/THEMING.md) — the Helix preset, dark mode, overriding tokens, static token export
 - [Design System](docs/CONTRIBUTING-design-system.md) — the generated brand book, tokens and component previews
 - [Roadmap](docs/ROADMAP.md)
