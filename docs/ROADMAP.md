@@ -109,7 +109,8 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
       Done: mockup rounds 1–2 (hybrid chosen: zinc neutrals, indigo primary), type settled on
       Inter (as on the sibling Gravion Labs sites) after a comparison of six pairings, `helixPreset` values, shell font stacks, demo and shell default to
       `helixPreset`. VitePress theme on the same tokens (`apps/site/.vitepress/theme`), theming guide (`docs/THEMING.md`)
-- [ ] #522 – Design System sync: tokens and component previews in a Claude Design System project
+- [x] #522 – Design System sync: `pnpm design-system:build` (tokens.json, brand book, 12 component previews, cover, Geist
+      fonts, Helix mark), published as the "Helix Design System" artifact; `docs/CONTRIBUTING-design-system.md`
 - [ ] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens, B-lite set first, `helix-shell`
       and `helix-zod` migrated, `helix-core` retired when nothing imports it
 

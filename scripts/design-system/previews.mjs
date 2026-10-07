@@ -23,7 +23,7 @@ export const PREVIEWS = [
   {
     name: 'Button',
     group: 'Actions',
-    height: 330,
+    height: 230,
     css: ['button', 'badge'],
     selector: 'h-button / hButton',
     entry: '@gravionlabs/helix-core/button',
@@ -78,7 +78,7 @@ export const PREVIEWS = [
   {
     name: 'Textarea',
     group: 'Form',
-    height: 190,
+    height: 150,
     css: ['textarea'],
     selector: 'textarea[hTextarea]',
     entry: '@gravionlabs/helix-core/textarea',
@@ -90,7 +90,7 @@ export const PREVIEWS = [
   {
     name: 'Checkbox',
     group: 'Form',
-    height: 120,
+    height: 70,
     css: ['checkbox'],
     selector: 'h-checkbox',
     entry: '@gravionlabs/helix-core/checkbox',
@@ -107,7 +107,7 @@ export const PREVIEWS = [
   {
     name: 'RadioButton',
     group: 'Form',
-    height: 120,
+    height: 70,
     css: ['radiobutton'],
     selector: 'h-radiobutton',
     entry: '@gravionlabs/helix-core/radiobutton',
@@ -123,7 +123,7 @@ export const PREVIEWS = [
   {
     name: 'ToggleSwitch',
     group: 'Form',
-    height: 120,
+    height: 70,
     css: ['toggleswitch'],
     selector: 'h-toggleswitch',
     entry: '@gravionlabs/helix-core/toggleswitch',
@@ -139,7 +139,7 @@ export const PREVIEWS = [
   {
     name: 'Tag',
     group: 'Data display',
-    height: 130,
+    height: 100,
     css: ['tag'],
     selector: 'h-tag',
     entry: '@gravionlabs/helix-core/tag',
@@ -152,7 +152,7 @@ export const PREVIEWS = [
   {
     name: 'Badge',
     group: 'Data display',
-    height: 130,
+    height: 80,
     css: ['badge'],
     selector: 'h-badge',
     entry: '@gravionlabs/helix-core/badge',
@@ -182,7 +182,7 @@ export const PREVIEWS = [
   {
     name: 'Card',
     group: 'Container',
-    height: 300,
+    height: 200,
     css: ['card', 'button'],
     selector: 'h-card',
     entry: '@gravionlabs/helix-core/card',
@@ -194,7 +194,7 @@ export const PREVIEWS = [
   {
     name: 'Divider',
     group: 'Container',
-    height: 190,
+    height: 170,
     css: ['divider'],
     selector: 'h-divider',
     entry: '@gravionlabs/helix-core/divider',
@@ -212,7 +212,7 @@ export const PREVIEWS = [
   {
     name: 'ProgressBar',
     group: 'Feedback',
-    height: 160,
+    height: 130,
     css: ['progressbar'],
     selector: 'h-progressbar',
     entry: '@gravionlabs/helix-core/progressbar',
