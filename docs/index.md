@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: Live demo
       link: /demo/
+      # The demo is a separate app next to the site: without a target VitePress's router would look
+      # for a page of its own and show its 404 until a reload.
+      target: _self
     - theme: alt
       text: GitHub
       link: https://github.com/GravionLabs/helix
