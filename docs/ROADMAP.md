@@ -98,6 +98,21 @@ epic were deleted, so every API break here was free — no external consumers ex
 
 ---
 
+## 🚧 Phase 6 – Visual identity & styling foundation (epics #519, #523)
+
+Decided 2026-10-07 in [ADR 0001](adr/0001-styling-foundation.md): Helix's own look as design tokens on
+the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *long-term target*.
+
+- [x] #520 – ADR 0001; `helixPreset` (`themes/helix`, extends Aura, values pending the mockups);
+      `pnpm tokens:export` → `dist/tokens/<preset>.{css,json}` (static `--h-*` variables, light + dark)
+- [ ] #521 – Design mockups in Claude Design; Helix look for docs site, demo and components
+      (`helixPreset` values, shell token layer, VitePress theme on the same tokens)
+- [ ] #522 – Design System sync: tokens and component previews in a Claude Design System project
+- [ ] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens, B-lite set first, `helix-shell`
+      and `helix-zod` migrated, `helix-core` retired when nothing imports it
+
+---
+
 ## Architecture
 
 ```
@@ -110,6 +125,7 @@ helix/
 ├── apps/
 │   └── helix-demo/            # Showcase app (dashboard, uikit, crud, docs)
 └── docs/
+    ├── adr/                   # Architecture decision records
     ├── ROADMAP.md
     ├── COMPONENTS.md
     ├── HELIX-SHELL.md

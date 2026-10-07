@@ -12,6 +12,7 @@ const repo = files({
   'docs/components/button.md': 'file',
   'docs/CONTRIBUTING-file-structure.md': 'file',
   'docs/migrations/signals-audit.md': 'file',
+  'docs/adr/0001-styling-foundation.md': 'file',
 });
 
 const main = `${REPO_URL}/blob/main`;
@@ -47,6 +48,9 @@ describe('repoLink', () => {
   it('sends documents the site leaves out to GitHub', () => {
     expect(repoLink('CONTRIBUTING-file-structure.md', 'COMPONENTS.md', repo)).toBe(
       `${main}/docs/CONTRIBUTING-file-structure.md`,
+    );
+    expect(repoLink('adr/0001-styling-foundation.md', 'ROADMAP.md', repo)).toBe(
+      `${main}/docs/adr/0001-styling-foundation.md`,
     );
     expect(repoLink('migrations/signals-audit.md', 'ROADMAP.md', repo)).toBe(
       `${main}/docs/migrations/signals-audit.md`,

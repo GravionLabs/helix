@@ -32,7 +32,7 @@ const INFRA_DESCRIPTIONS = {
   motion: 'Enter/leave animation directive built on the vendored `@gravionlabs/helix-core/uix/motion`.',
   overlay: 'Generic overlay container with configurable positioning, transitions, and pass-through.',
   passthrough: "Pass-through (`pt`) infrastructure: merge and provide attribute maps for component internals.",
-  themes: 'Theme preset engine ($t, definePreset, updatePreset) plus the Aura/Lara/Nora presets (themes/aura, themes/lara, themes/nora) and their design-token types (themes/types), vendored from @primeuix/themes.',
+  themes: 'Theme preset engine ($t, definePreset, updatePreset), the Helix preset (themes/helix — Helix\'s own tokens on top of Aura, ADR 0001), the Aura/Lara/Nora presets (themes/aura, themes/lara, themes/nora) and their design-token types (themes/types), vendored from @primeuix/themes.',
   'ts-helpers': 'Tiny TypeScript runtime helpers shared by the library.',
   types: 'Shared pass-through type definitions for every Helix component module.',
   uix: 'Vendored @primeuix/{utils,motion,styled} — DOM/object helpers, enter/leave animation, and the theming/CSS-variable engine (epic #421).',
