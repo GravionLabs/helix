@@ -7,7 +7,7 @@
           type="button"
           [title]="primaryColor.name"
           (click)="updateColors($event, 'primary', primaryColor)"
-          [ngClass]="{ 'outline outline-primary': primaryColor.name === selectedPrimaryColor() }"
+          [ngClass]="{ 'outline outline-primary': primaryColor.name === activePrimaryColor() }"
           class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center outline-offset-1 shadow"
           [style]="{
             'background-color':

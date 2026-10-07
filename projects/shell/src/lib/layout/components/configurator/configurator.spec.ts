@@ -39,6 +39,18 @@ describe('HelixConfigurator', () => {
     expect(component).toBeTruthy();
   });
 
+  it("activePrimaryColor is the preset's own colour until one is chosen", () => {
+    expect(store.primary()).toBeNull();
+    expect(component.activePrimaryColor()).toBe('indigo'); // Helix
+    component.onPresetChange('Aura');
+    expect(component.activePrimaryColor()).toBe('emerald');
+  });
+
+  it('activePrimaryColor follows the chosen colour', () => {
+    store.setPrimary('teal');
+    expect(component.activePrimaryColor()).toBe('teal');
+  });
+
   it('onMenuModeChange("overlay") should call store.setMenuMode("overlay")', () => {
     component.onMenuModeChange('overlay');
     expect(store.menuMode()).toBe('overlay');
