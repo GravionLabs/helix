@@ -1,9 +1,10 @@
+<h1 class="sr-only">Dynamic Form JSON</h1>
 <app-source-tabs directory="dynamicform-json" componentName="dynamic-form-json-demo"
   [extraSources]="['json-form-definition.ts']">
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card flex flex-col gap-3 h-full">
-        <div class="font-semibold text-xl">Form definition (JSON)</div>
+        <h2 class="demo-title">Form definition (JSON)</h2>
         <p class="text-sm text-muted-color">
           A compact JSON form definition — as it could be stored in a database — is validated with
           Zod and translated into an annotated Zod schema at runtime
@@ -24,21 +25,21 @@
       <div class="card flex flex-col gap-3">
         @if (parsed(); as result) {
           @if ('schema' in result) {
-            <div class="font-semibold text-xl">{{ result.definition.title ?? 'Generated form' }}</div>
+            <h2 class="demo-title">{{ result.definition.title ?? 'Generated form' }}</h2>
             <helix-dynamic-form
               [schema]="result.schema"
               [submitLabel]="result.definition.submitLabel ?? 'Submit'"
               (submitted)="onSubmitted($event)"
             />
           } @else {
-            <div class="font-semibold text-xl">Invalid definition</div>
+            <h2 class="demo-title">Invalid definition</h2>
             <pre class="dynamic-form-json-demo__error">{{ result.error }}</pre>
           }
         }
       </div>
 
       <div class="card flex flex-col gap-3">
-        <div class="font-semibold text-xl">Submitted (parsed) value</div>
+        <h2 class="demo-title">Submitted (parsed) value</h2>
         @if (submittedValue(); as value) {
           <pre class="dynamic-form-json-demo__json">{{ value | json }}</pre>
         } @else {

@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   imports: [CommonModule],
   template: `
     <div class="card">
-      <div class="font-semibold text-2xl mb-2">Documentation</div>
-      <div class="font-semibold text-xl mb-2">Get Started</div>
+      <h1 class="demo-title demo-title-page mb-2!">Documentation</h1>
+      <h2 class="demo-title mb-2!">Get Started</h2>
       <p class="text-lg mb-2">
         Helix is an Angular UI component ecosystem by Gravion Labs — a maintained fork of PrimeNG
         21.1.9 rebranded with <i>h-</i> selectors, plus an application shell, form utilities, and
@@ -22,7 +22,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <pre class="app-code"><code>pnpm install
 pnpm start</code></pre>
 
-      <div class="font-semibold text-xl mb-2">Packages</div>
+      <h2 class="demo-title mb-2!">Packages</h2>
       <ul class="leading-normal list-disc pl-8 text-lg mb-2">
         <li>
           <span class="text-primary font-medium">&#64;gravionlabs/helix-core</span>: Base component
@@ -44,7 +44,7 @@ pnpm start</code></pre>
         </li>
       </ul>
 
-      <div class="font-semibold text-xl mb-2">Structure</div>
+      <h2 class="demo-title mb-2!">Structure</h2>
       <p class="text-lg mb-2">
         This app's source under <i>src/app</i> is organized as follows:
       </p>
@@ -64,7 +64,7 @@ pnpm start</code></pre>
         </li>
       </ul>
 
-      <div class="font-semibold text-xl mb-2">Menu</div>
+      <h2 class="demo-title mb-2!">Menu</h2>
       <p class="text-lg mb-2">
         The main navigation menu is defined in
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base"
@@ -72,20 +72,20 @@ pnpm start</code></pre>
         >. Update <i>DEMO_MENU_MODEL</i> to add or rearrange menu items.
       </p>
 
-      <div class="font-semibold text-xl mb-2">Layout Store</div>
+      <h2 class="demo-title mb-2!">Layout Store</h2>
       <p class="text-lg mb-2">
         The layout state (dark mode, theme preset, menu mode) is managed by
         <span class="bg-highlight px-2 py-1 rounded-border not-italic text-base">LayoutStore</span
         >, an NgRx Signal Store exported from <i>&#64;gravionlabs/helix-shell</i>.
       </p>
 
-      <div class="font-semibold text-xl mb-2">Tailwind CSS</div>
+      <h2 class="demo-title mb-2!">Tailwind CSS</h2>
       <p class="text-lg mb-2">
         The demo pages are developed with Tailwind CSS, while the application shell itself ships
         its own pre-built stylesheet.
       </p>
 
-      <div class="font-semibold text-xl mb-2">More docs</div>
+      <h2 class="demo-title mb-2!">More docs</h2>
       <p class="text-lg mb-2">
         Full API references live in the repository under <i>docs/</i> — one page per
         <i>&#64;gravionlabs/helix-core</i> module, plus the <i>&#64;gravionlabs/helix-shell</i> API reference and

@@ -1,7 +1,8 @@
+<h1 class="sr-only">Message</h1>
 <div class="flex flex-col md:flex-row gap-layout">
       <div class="md:w-1/2 flex flex-col">
         <div class="card h-full">
-          <div class="font-semibold text-xl mb-2">Toast</div>
+          <h2 class="demo-title mb-2!">Toast</h2>
           <div class="flex flex-wrap gap-1">
             <h-button (click)="showSuccessViaToast()" label="Success" severity="success" />
             <h-button (click)="showInfoViaToast()" label="Info" severity="info" />
@@ -10,7 +11,7 @@
             <h-toast />
           </div>
 
-          <div class="font-semibold text-xl mt-1 mb-2">Inline</div>
+          <h2 class="demo-title mt-1! mb-2!">Inline</h2>
           <div class="flex mb-2 gap-1">
             <input
               hInputText
@@ -44,7 +45,7 @@
       </div>
       <div class="md:w-1/2 flex flex-col">
         <div class="card h-full">
-          <div class="font-semibold text-xl mb-2">Message</div>
+          <h2 class="demo-title mb-2!">Message</h2>
           <div class="flex flex-col gap-3 mb-2">
             <h-message severity="success">Success Message</h-message>
             <h-message severity="info">Info Message</h-message>

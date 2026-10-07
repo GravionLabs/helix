@@ -1,6 +1,7 @@
+<h1 class="sr-only">Panel</h1>
 <div class="flex flex-col">
       <div class="card">
-        <div class="font-semibold text-xl mb-2">Toolbar</div>
+        <h2 class="demo-title mb-2!">Toolbar</h2>
         <h-toolbar>
           <ng-template #start>
             <h-button icon="pi pi-plus" class="mr-2" severity="secondary" text />
@@ -26,7 +27,7 @@
       <div class="flex flex-col md:flex-row gap-layout">
         <div class="md:w-1/2 flex flex-col">
           <div class="card">
-            <div class="font-semibold text-xl mb-2">Accordion</div>
+            <h2 class="demo-title mb-2!">Accordion</h2>
             <h-accordion value="0">
               <h-accordion-panel value="0">
                 <h-accordion-header>Header I</h-accordion-header>
@@ -72,7 +73,7 @@
             </h-accordion>
           </div>
           <div class="card">
-            <div class="font-semibold text-xl mb-2">Tabs</div>
+            <h2 class="demo-title mb-2!">Tabs</h2>
             <h-tabs value="0">
               <h-tablist>
                 <h-tab value="0">Header I</h-tab>
@@ -116,7 +117,7 @@
         </div>
         <div class="md:w-1/2 mt-2 md:mt-0 flex flex-col">
           <div class="card">
-            <div class="font-semibold text-xl mb-2">Panel</div>
+            <h2 class="demo-title mb-2!">Panel</h2>
             <h-panel header="Header" [toggleable]="true">
               <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -144,7 +145,7 @@
             </h-panel>
           </div>
           <div class="card">
-            <div class="font-semibold text-xl mb-2">Fieldset</div>
+            <h2 class="demo-title mb-2!">Fieldset</h2>
             <h-fieldset legend="Legend" [toggleable]="true">
               <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -175,7 +176,7 @@
       </div>
 
       <div class="card mt-6">
-        <div class="font-semibold text-xl mb-2">Divider</div>
+        <h2 class="demo-title mb-2!">Divider</h2>
         <div class="flex flex-col md:flex-row">
           <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-2 py-5">
             <div class="flex flex-col gap-1">
@@ -213,7 +214,7 @@
       </div>
 
       <div class="card mt-2">
-        <div class="font-semibold text-xl mb-2">Splitter</div>
+        <h2 class="demo-title mb-2!">Splitter</h2>
         <h-splitter
           [style]="{ height: '300px' }"
           [panelSizes]="[20, 80]"
