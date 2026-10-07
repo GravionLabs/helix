@@ -81,3 +81,22 @@ describe('helix-palettes', () => {
     expect(oklchToHex(hexToOklch('#4f46e5'))).toBe('#4f46e5');
   });
 });
+
+describe('helix-palettes covers the configurator', () => {
+  it('mutes every primary colour the demo configurator offers', async () => {
+    const { readFileSync } = await import('node:fs');
+    const { SCALES } = await import('../helix-palettes.mjs');
+    const source = readFileSync(
+      resolve(
+        __dirname,
+        '../../projects/shell/src/lib/layout/components/configurator/configurator.ts',
+      ),
+      'utf8',
+    );
+    const offered = [
+      ...(/const colors = \[([\s\S]*?)\];/.exec(source)?.[1] ?? '').matchAll(/'([a-z]+)'/g),
+    ].map((m) => m[1]);
+    expect(offered.length).toBe(16);
+    expect(offered.filter((c) => !SCALES.includes(c))).toEqual([]);
+  });
+});

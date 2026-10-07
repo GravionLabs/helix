@@ -34,8 +34,13 @@ export class ChartDemo {
 
   radarOptions = signal<any>(null);
 
+  // The colours are read from the CSS variables: draw again when dark mode, primary colour, preset or
+  // surface palette change (the configurator applies them right after the store).
   chartEffect = effect(() => {
     this.store.darkTheme();
+    this.store.primary();
+    this.store.preset();
+    this.store.surface();
     setTimeout(() => this.initCharts(), 150);
   });
 

@@ -211,6 +211,10 @@ export class HelixConfigurator implements OnInit {
   ];
 
   selectedPrimaryColor = computed(() => this.store.primary());
+  /** The colour in use: the chosen one, else the preset's own (Helix: indigo, the others: emerald). */
+  activePrimaryColor = computed(
+    () => this.store.primary() ?? (this.store.preset() === 'Helix' ? 'indigo' : 'emerald'),
+  );
   selectedSurfaceColor = computed(() => this.store.surface());
   selectedPreset = computed(() => this.store.preset());
   menuMode = computed(() => this.store.menuMode());

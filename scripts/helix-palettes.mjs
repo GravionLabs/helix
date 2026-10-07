@@ -11,8 +11,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const AURA = path.join(ROOT, 'projects/core/themes/aura/base/index.ts');
 const OUT = path.join(ROOT, 'projects/core/themes/helix/palettes.ts');
 
-/** The scales the component tokens reference (primary + severities + their tints). */
-export const SCALES = ['indigo', 'red', 'green', 'emerald', 'yellow', 'amber', 'orange', 'sky', 'blue', 'purple'];
+/** The scales that are muted: the primary, the severities and every colour the configurator offers. */
+export const SCALES = [
+  // the primary and the severities
+  'indigo', 'red', 'green', 'sky', 'orange', 'purple',
+  // the rest of what the demo's configurator offers as primary colour, so every choice is as quiet
+  'emerald', 'lime', 'yellow', 'amber', 'teal', 'cyan', 'blue', 'violet', 'fuchsia', 'pink', 'rose',
+];
 export const CHROMA = Number(process.argv[2] ?? 0.55);
 
 // sRGB <-> OKLCH (Björn Ottosson's OKLab), enough for a build script.
