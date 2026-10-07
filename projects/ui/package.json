@@ -1,7 +1,7 @@
 {
   "name": "@gravionlabs/helix-ui",
   "version": "0.1.0",
-  "description": "Helix UI: vanilla Angular components on the Helix design tokens — plain CSS, no runtime styling engine.",
+  "description": "Helix UI: vanilla Angular components on the Helix design tokens \u2014 plain CSS, no runtime styling engine.",
   "license": "MIT",
   "keywords": [
     "helix",
@@ -19,6 +19,7 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@angular/cdk": ">=22",
     "@angular/common": ">=22",
     "@angular/core": ">=22"
   },

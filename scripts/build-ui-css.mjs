@@ -29,16 +29,22 @@ export const TOKEN_COMPONENTS = {
   checkbox: ['checkbox'],
   input: ['inputtext', 'textarea'],
   radio: ['radiobutton'],
+  select: ['select'],
+  'cdk-overlay': [],
   switch: ['toggleswitch'],
 };
 
 /** The component stylesheets, `{ name: 'button', css }`, in name order. */
 export function componentStyles(dir = STYLES) {
-  return fs
+  const own = fs
     .readdirSync(dir)
     .filter((f) => f.endsWith('.css'))
     .sort()
     .map((f) => ({ name: f.slice(0, -4), css: fs.readFileSync(path.join(dir, f), 'utf8').trim() }));
+  // The CDK overlay container's structural CSS (positioning, z-index, backdrop) comes first: overlay based
+  // components (Select, …) do not work without it.
+  const cdk = path.join(ROOT, 'node_modules/@angular/cdk/overlay-prebuilt.css');
+  return [{ name: 'cdk-overlay', css: fs.readFileSync(cdk, 'utf8').trim() }, ...own];
 }
 
 export function buildStyles(styles = componentStyles()) {

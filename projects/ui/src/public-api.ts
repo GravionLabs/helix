@@ -14,4 +14,10 @@ export {
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
+export {
+  HxSelect,
+  type HxSelectItem,
+  type HxSelectSize,
+  type HxSelectVariant,
+} from './lib/select/select';
 export { HxSwitch } from './lib/switch/switch';

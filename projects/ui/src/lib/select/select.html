@@ -1,0 +1,73 @@
+<button
+  #trigger
+  type="button"
+  class="hx-select-trigger"
+  role="combobox"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+  aria-haspopup="listbox"
+  [id]="inputId() ?? null"
+  [disabled]="isDisabled()"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? panelId : null"
+  [attr.aria-label]="ariaLabel() ?? null"
+  [attr.aria-labelledby]="ariaLabelledby() ?? null"
+  [attr.aria-invalid]="invalid() ? 'true' : null"
+  (click)="toggle()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span class="hx-select-label" [class.hx-select-placeholder]="!selected()">{{
+    selected()?.label ?? placeholder()
+  }}</span>
+  <svg class="hx-select-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="m3 5.5 4 4 4-4" />
+  </svg>
+</button>
+@if (canClear()) {
+  <button type="button" class="hx-select-clear" aria-label="Clear selection" (click)="clear($event)">
+    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <path d="m3.5 3.5 7 7M10.5 3.5l-7 7" />
+    </svg>
+  </button>
+}
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayPanelClass="hx-select-overlay"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayMinWidth]="panelWidth()"
+  (overlayOutsideClick)="onOutsideClick($event)"
+  (overlayKeydown)="onOverlayKeydown($event)"
+  (attach)="onAttach()"
+  (detach)="close()"
+>
+  <div class="hx-select-panel">
+    <div
+      cdkListbox
+      class="hx-select-list"
+      [id]="panelId"
+      [cdkListboxValue]="selectedValues()"
+      [cdkListboxUseActiveDescendant]="true"
+      [cdkListboxCompareWith]="compareWith()"
+      [attr.aria-label]="ariaLabel() ?? placeholder() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      (cdkListboxValueChange)="onSelect($event)"
+    >
+      @for (item of items(); track $index) {
+        <div
+          class="hx-select-option"
+          [cdkOption]="item.value"
+          [cdkOptionDisabled]="item.disabled"
+          [cdkOptionTypeaheadLabel]="item.label"
+        >
+          <span class="hx-select-check" aria-hidden="true"></span>
+          <span>{{ item.label }}</span>
+        </div>
+      } @empty {
+        <div class="hx-select-empty">{{ emptyMessage() }}</div>
+      }
+    </div>
+  </div>
+</ng-template>
