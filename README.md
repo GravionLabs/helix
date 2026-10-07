@@ -34,8 +34,8 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Theming ships `helixPreset` (`themes/helix`) — Helix's own look as tokens on top of Aura: zinc
-neutrals, indigo primary, Inter (see
+Theming ships `helixPreset` (`themes/helix`) — Helix's own look as tokens on top of Aura: the
+neutral greys of the sibling sites, indigo primary, Inter (see
 [ADR 0001](docs/adr/0001-styling-foundation.md), epic #519) — plus the Aura, Lara and Nora presets
 vendored into `helix-core`:
 

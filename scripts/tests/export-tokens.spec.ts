@@ -43,7 +43,7 @@ describe.skipIf(!existsSync(FESM))('resolvePreset (built core)', () => {
     expect(Object.keys(tokens.light).length).toBeGreaterThan(1000);
   });
 
-  it('helixPreset is Aura with the Helix identity: indigo primary, zinc surfaces in both schemes', async () => {
+  it('helixPreset is Aura with the Helix identity: indigo primary, the sibling-site surfaces in both schemes', async () => {
     const helix = tokensOf(
       resolvePreset(...(Object.values(await load('helix')) as [unknown, unknown])),
     );
@@ -52,12 +52,13 @@ describe.skipIf(!existsSync(FESM))('resolvePreset (built core)', () => {
     );
     expect(helix.light['--h-primary-color']).toBe('var(--h-primary-600)');
     expect(helix.light['--h-primary-500']).toBe('var(--h-indigo-500)');
-    expect(helix.light['--h-surface-500']).toBe('var(--h-zinc-500)');
+    expect(helix.light['--h-surface-500']).toBe('#67676c');
     expect(helix.light['--h-indigo-500']).not.toBe(aura.light['--h-indigo-500']); // muted palettes
     expect(helix.light['--h-red-500']).not.toBe(aura.light['--h-red-500']);
-    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // neutrals untouched
-    expect(helix.dark['--h-surface-500']).toBe('var(--h-zinc-500)');
-    expect(helix.light['--h-text-color']).toBe('var(--h-surface-950)');
+    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // Aura's palettes stay available
+    expect(helix.dark['--h-surface-500']).toBe('#67676c');
+    expect(helix.light['--h-text-color']).toBe('var(--h-surface-600)');
+    expect(helix.dark['--h-text-color']).toBe('#dfdfd6');
     expect(helix.light['--h-button-primary-background']).toBe(
       aura.light['--h-button-primary-background'],
     ); // component layer untouched

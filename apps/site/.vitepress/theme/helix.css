@@ -1,6 +1,6 @@
 /*
  * VitePress on the Helix tokens. Every colour here is a `--h-*` variable from
- * `generated/helix.base.css` (helixPreset: zinc neutrals, indigo primary); nothing is
+ * `generated/helix.base.css` (helixPreset: the neutrals of the stock VitePress theme, muted indigo primary); nothing is
  * a second palette. Dark values follow VitePress's `.dark` class, which the export
  * uses as the dark-scheme selector.
  */
@@ -20,7 +20,7 @@
 
   --vp-c-text-1: var(--h-text-color);
   --vp-c-text-2: var(--h-text-muted-color);
-  --vp-c-text-3: var(--h-surface-500);
+  --vp-c-text-3: var(--h-surface-400);
 
   --vp-c-brand-1: var(--h-primary-color);
   --vp-c-brand-2: var(--h-primary-hover-color);
@@ -46,14 +46,14 @@
 }
 
 .dark {
-  --vp-c-bg: var(--h-surface-950);
-  --vp-c-bg-alt: var(--h-surface-900);
+  --vp-c-bg: var(--h-surface-900);
+  --vp-c-bg-alt: var(--h-surface-950);
   --vp-c-bg-elv: var(--h-surface-800);
   --vp-c-bg-soft: var(--h-surface-800);
 
-  --vp-c-border: var(--h-surface-700);
-  --vp-c-divider: var(--h-surface-800);
-  --vp-c-gutter: var(--h-surface-950);
+  --vp-c-border: var(--h-surface-600);
+  --vp-c-divider: var(--h-surface-700);
+  --vp-c-gutter: #000000;
 
   --vp-c-text-3: var(--h-surface-500);
   --vp-c-brand-soft: color-mix(in srgb, var(--h-primary-400) 18%, transparent);

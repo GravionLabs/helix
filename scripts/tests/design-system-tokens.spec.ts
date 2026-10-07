@@ -107,6 +107,20 @@ describe.skipIf(!existsSync(EXPORT))('buildTokens (helixPreset)', () => {
       ['text', 'content-bg'],
       ...(theme === 'light' ? ([['text', 'surface-0']] as [string, string][]) : []), // surface-0 is white in both themes
       ['text-muted', 'content-bg'],
+      // the shell's page, chrome, hover and card surfaces (styles-src.css)
+      ...(theme === 'light'
+        ? ([
+            ['text', 'surface-50'],
+            ['text-muted', 'surface-50'],
+            ['text-muted', 'surface-100'],
+          ] as [string, string][])
+        : ([
+            ['text', 'surface-900'],
+            ['text', 'surface-950'],
+            ['text-muted', 'surface-900'],
+            ['text-muted', 'surface-800'],
+            ['text-muted', 'surface-950'],
+          ] as [string, string][])),
       ['primary-contrast', 'primary'],
       ['primary', 'content-bg'], // links, focus text
     ];
