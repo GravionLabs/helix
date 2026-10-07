@@ -27,13 +27,23 @@ describe('helix-ui styles', () => {
     }
   });
 
-  it('styles every class the button directive can set', () => {
-    const directive = readFileSync(resolve(ROOT, 'projects/ui/src/lib/button/button.ts'), 'utf8');
-    const classes = new Set([...directive.matchAll(/'\[class\.(hx-[\w-]+)\]'/g)].map((m) => m[1]));
-    expect(classes.size).toBeGreaterThan(10);
-    const button = styles.find((s) => s.name === 'button')?.css ?? '';
+  // every class a directive can put on its host must be styled by the stylesheet of its component
+  it.each([
+    ['button', 'button/button.ts'],
+    ['input', 'input/input.ts'],
+    ['checkbox', 'checkbox/checkbox.ts'],
+    ['radio', 'radio/radio.ts'],
+    ['switch', 'switch/switch.ts'],
+  ])('styles every class the %s directive sets', (name, file) => {
+    const directive = readFileSync(resolve(ROOT, 'projects/ui/src/lib', file), 'utf8');
+    const classes = new Set([
+      ...[...directive.matchAll(/'\[class\.(hx-[\w-]+)\]'/g)].map((m) => m[1]),
+      ...[...directive.matchAll(/\bclass: '(hx-[\w-]+)'/g)].map((m) => m[1]),
+    ]);
+    expect(classes.size).toBeGreaterThan(0);
+    const sheet = styles.find((s) => s.name === name)?.css ?? '';
     for (const c of classes) {
-      expect({ c, styled: new RegExp(`\\.${c}(?![\\w-])`).test(button) }).toEqual({
+      expect({ c, styled: new RegExp(`\\.${c}(?![\\w-])`).test(sheet) }).toEqual({
         c,
         styled: true,
       });

@@ -1,0 +1,130 @@
+/*
+ * Checkbox: `input[hxCheckbox]` on a native `<input type="checkbox">`, drawn with CSS. Same look as the
+ * helix-core Checkbox, from the `--h-checkbox-*` tokens. Checked, indeterminate and invalid (`aria-invalid`
+ * or `ng-invalid ng-touched`) are styled; the tick is a mask in the icon colour.
+ */
+.hx-checkbox {
+  display: inline-grid;
+  flex: none;
+  width: var(--h-checkbox-width);
+  height: var(--h-checkbox-height);
+  box-sizing: border-box;
+  margin: 0;
+  place-content: center;
+  border: 1px solid var(--h-checkbox-border-color);
+  border-radius: var(--h-checkbox-border-radius);
+  appearance: none;
+  background: var(--h-checkbox-background);
+  box-shadow: var(--h-checkbox-shadow);
+  cursor: pointer;
+  outline: 0 none;
+  transition:
+    background var(--h-checkbox-transition-duration),
+    color var(--h-checkbox-transition-duration),
+    border-color var(--h-checkbox-transition-duration),
+    box-shadow var(--h-checkbox-transition-duration);
+}
+
+/* the tick (checked) and the bar (indeterminate) */
+.hx-checkbox::before {
+  content: "";
+  width: var(--h-checkbox-icon-size);
+  height: var(--h-checkbox-icon-size);
+  background: var(--h-checkbox-icon-checked-color);
+  mask: var(--hx-check) center / contain no-repeat;
+  -webkit-mask: var(--hx-check) center / contain no-repeat;
+  transform: scale(0);
+  transition: transform var(--h-checkbox-transition-duration);
+  --hx-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 7.5 2.8 2.8L11 4.5'/%3E%3C/svg%3E");
+}
+
+.hx-checkbox:indeterminate::before {
+  --hx-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 7h8'/%3E%3C/svg%3E");
+}
+
+.hx-checkbox:checked,
+.hx-checkbox:indeterminate {
+  border-color: var(--h-checkbox-checked-border-color);
+  background: var(--h-checkbox-checked-background);
+}
+
+.hx-checkbox:checked::before,
+.hx-checkbox:indeterminate::before {
+  transform: scale(1);
+}
+
+.hx-checkbox:enabled:hover {
+  border-color: var(--h-checkbox-hover-border-color);
+}
+
+.hx-checkbox:enabled:checked:hover,
+.hx-checkbox:enabled:indeterminate:hover {
+  border-color: var(--h-checkbox-checked-hover-border-color);
+  background: var(--h-checkbox-checked-hover-background);
+}
+
+.hx-checkbox:enabled:checked:hover::before,
+.hx-checkbox:enabled:indeterminate:hover::before {
+  background: var(--h-checkbox-icon-checked-hover-color);
+}
+
+.hx-checkbox:focus-visible {
+  border-color: var(--h-checkbox-focus-border-color);
+  outline: var(--h-checkbox-focus-ring-width) var(--h-checkbox-focus-ring-style)
+    var(--h-checkbox-focus-ring-color);
+  outline-offset: var(--h-checkbox-focus-ring-offset);
+  box-shadow: var(--h-checkbox-focus-ring-shadow);
+}
+
+.hx-checkbox:focus-visible:checked,
+.hx-checkbox:focus-visible:indeterminate {
+  border-color: var(--h-checkbox-checked-focus-border-color);
+}
+
+.hx-checkbox:disabled {
+  border-color: var(--h-checkbox-border-color);
+  background: var(--h-checkbox-disabled-background);
+  cursor: default;
+}
+
+.hx-checkbox:disabled::before {
+  background: var(--h-checkbox-icon-disabled-color);
+}
+
+.hx-checkbox:disabled:checked,
+.hx-checkbox:disabled:indeterminate {
+  border-color: var(--h-checkbox-checked-disabled-border-color);
+}
+
+.hx-checkbox[aria-invalid="true"],
+.hx-checkbox.ng-invalid.ng-touched {
+  border-color: var(--h-checkbox-invalid-border-color);
+}
+
+/* sizes */
+.hx-checkbox-sm {
+  width: var(--h-checkbox-sm-width);
+  height: var(--h-checkbox-sm-height);
+}
+
+.hx-checkbox-sm::before {
+  width: var(--h-checkbox-icon-sm-size);
+  height: var(--h-checkbox-icon-sm-size);
+}
+
+.hx-checkbox-lg {
+  width: var(--h-checkbox-lg-width);
+  height: var(--h-checkbox-lg-height);
+}
+
+.hx-checkbox-lg::before {
+  width: var(--h-checkbox-icon-lg-size);
+  height: var(--h-checkbox-icon-lg-size);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-checkbox,
+  .hx-checkbox::before {
+    transition: none;
+  }
+}

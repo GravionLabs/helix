@@ -11,6 +11,7 @@ import { DynamicFormJsonDemo } from './dynamicform-json/dynamic-form-json-demo';
 import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
 import { HxButtonDemo } from './hx-button/hx-button-demo';
+import { HxFormDemo } from './hx-form/hx-form-demo';
 import { InputDemo } from './input/input-demo';
 import { ListDemo } from './list/list-demo';
 import { MediaDemo } from './media/media-demo';
@@ -34,6 +35,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   file: FileDemo,
   formlayout: FormLayoutDemo,
   'hx-button': HxButtonDemo,
+  'hx-form': HxFormDemo,
   input: InputDemo,
   list: ListDemo,
   media: MediaDemo,

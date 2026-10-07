@@ -1,0 +1,91 @@
+/*
+ * Text field: `input[hxInput]` and `textarea[hxInput]`. Same look as the helix-core InputText and Textarea,
+ * from the `--h-inputtext-*` tokens (the Textarea tokens hold the same values).
+ * Invalid: `aria-invalid="true"` or Angular's `ng-invalid ng-touched`.
+ */
+.hx-input {
+  box-sizing: border-box;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  appearance: none;
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  box-shadow: var(--h-inputtext-shadow);
+  font: inherit;
+  font-size: 1rem;
+  outline: 0 none;
+  transition:
+    background var(--h-inputtext-transition-duration),
+    color var(--h-inputtext-transition-duration),
+    border-color var(--h-inputtext-transition-duration),
+    outline-color var(--h-inputtext-transition-duration),
+    box-shadow var(--h-inputtext-transition-duration);
+}
+
+.hx-input::placeholder {
+  color: var(--h-inputtext-placeholder-color);
+}
+
+.hx-input:enabled:hover {
+  border-color: var(--h-inputtext-hover-border-color);
+}
+
+.hx-input:enabled:focus {
+  border-color: var(--h-inputtext-focus-border-color);
+  outline: var(--h-inputtext-focus-ring-width)
+    var(--h-inputtext-focus-ring-style) var(--h-inputtext-focus-ring-color);
+  outline-offset: var(--h-inputtext-focus-ring-offset);
+  box-shadow: var(--h-inputtext-focus-ring-shadow);
+}
+
+.hx-input:disabled {
+  background: var(--h-inputtext-disabled-background);
+  color: var(--h-inputtext-disabled-color);
+  opacity: 1;
+  cursor: default;
+}
+
+/* invalid */
+.hx-input[aria-invalid="true"],
+.hx-input.ng-invalid.ng-touched {
+  border-color: var(--h-inputtext-invalid-border-color);
+}
+
+.hx-input[aria-invalid="true"]::placeholder,
+.hx-input.ng-invalid.ng-touched::placeholder {
+  color: var(--h-inputtext-invalid-placeholder-color);
+}
+
+/* filled */
+.hx-input-filled {
+  background: var(--h-inputtext-filled-background);
+}
+
+.hx-input-filled:enabled:hover {
+  background: var(--h-inputtext-filled-hover-background);
+}
+
+.hx-input-filled:enabled:focus {
+  background: var(--h-inputtext-filled-focus-background);
+}
+
+/* sizes */
+.hx-input-sm {
+  padding: var(--h-inputtext-sm-padding-y) var(--h-inputtext-sm-padding-x);
+  font-size: var(--h-inputtext-sm-font-size);
+}
+
+.hx-input-lg {
+  padding: var(--h-inputtext-lg-padding-y) var(--h-inputtext-lg-padding-x);
+  font-size: var(--h-inputtext-lg-font-size);
+}
+
+.hx-input-fluid {
+  width: 100%;
+}
+
+textarea.hx-input {
+  min-height: 4rem;
+  resize: vertical;
+}
