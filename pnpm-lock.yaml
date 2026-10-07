@@ -130,13 +130,10 @@ importers:
       '@angular/router':
         specifier: ^22.2.1
         version: 22.2.1(@angular/common@22.2.1(@angular/core@22.2.1(@angular/compiler@22.2.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.1(@angular/compiler@22.2.1)(rxjs@7.8.2))(@angular/platform-browser@22.2.1(@angular/common@22.2.1(@angular/core@22.2.1(@angular/compiler@22.2.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@22.2.1(@angular/compiler@22.2.1)(rxjs@7.8.2)))(rxjs@7.8.2)
-      '@fontsource-variable/figtree':
+      '@fontsource-variable/geist':
         specifier: ^5.3.0
         version: 5.3.0
-      '@fontsource-variable/fira-code':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource-variable/space-grotesk':
+      '@fontsource-variable/geist-mono':
         specifier: ^5.3.0
         version: 5.3.0
       '@ngrx/signals':
@@ -245,13 +242,10 @@ importers:
 
   apps/site:
     devDependencies:
-      '@fontsource-variable/figtree':
+      '@fontsource-variable/geist':
         specifier: ^5.3.0
         version: 5.3.0
-      '@fontsource-variable/fira-code':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource-variable/space-grotesk':
+      '@fontsource-variable/geist-mono':
         specifier: ^5.3.0
         version: 5.3.0
       '@types/node':
@@ -1127,14 +1121,11 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@fontsource-variable/figtree@5.3.0':
-    resolution: {integrity: sha512-VRVodD7OiG7apQwE8/2fMjaqpY/a0qRJqL5HtYj8CKIVps+9amaFcdfKmDIf7iqYQx6iPLlArVXAfKeIZmVcNQ==}
+  '@fontsource-variable/geist-mono@5.3.0':
+    resolution: {integrity: sha512-vBbuwDEo9AkrqADMXOrlAR3DFcJi4/JxeuU43FoiQERnNwsfXNnvxvReZG02cQKmyk4DZkZdBZX3oTDvy2zBAw==}
 
-  '@fontsource-variable/fira-code@5.3.0':
-    resolution: {integrity: sha512-ZhvHeknlicraKVSJBa1NrJnXDVByUkC407zwgELYfmnx3p9g8vwIPfQCxx8YD3K7dAeCdLuHJOHlpMfRsIcApQ==}
-
-  '@fontsource-variable/space-grotesk@5.3.0':
-    resolution: {integrity: sha512-2IxmvfB08i9vnGB3Ym/AXvhRE+8XOjWMXIyDum03c+tPwH0FUoMNQfGpU8NXPxjbws0Vvss3AH0Zqt4oJBBAdw==}
+  '@fontsource-variable/geist@5.3.0':
+    resolution: {integrity: sha512-j0m+vLQuG5XAYoHtGCVu0spvlGreR3EzpECUVzkFmI1mTVnAO38l/NEPDCFgZ177JxzYJCLSmTQibIiYPilGrA==}
 
   '@harperfast/extended-iterable@1.0.3':
     resolution: {integrity: sha512-sSAYhQca3rDWtQUHSAPeO7axFIUJOI6hn1gjRC5APVE1a90tuyT8f5WIgRsFhhWA7htNkju2veB9eWL6YHi/Lw==}
@@ -5711,11 +5702,9 @@ snapshots:
 
   '@exodus/bytes@1.16.0': {}
 
-  '@fontsource-variable/figtree@5.3.0': {}
+  '@fontsource-variable/geist-mono@5.3.0': {}
 
-  '@fontsource-variable/fira-code@5.3.0': {}
-
-  '@fontsource-variable/space-grotesk@5.3.0': {}
+  '@fontsource-variable/geist@5.3.0': {}
 
   '@harperfast/extended-iterable@1.0.3':
     optional: true

@@ -26,10 +26,11 @@ Aura plus the deviations in [`projects/core/themes/helix/public_api.ts`](../proj
 - **Text:** near-black (`surface.950`) with a darker muted step (`surface.600`) for 4.5:1 contrast on
   cards; the inverse in dark mode.
 - **Radius:** Aura's 6 px (`border.radius.md`).
-- **Type:** Figtree for text, Space Grotesk for headings, Fira Code for code — declared as
-  `--helix-font-sans`, `--helix-font-display` and `--helix-font-mono` by `helix-shell`'s stylesheet.
-  The font files are the application's: the demo loads them from `@fontsource-variable/figtree`,
-  `@fontsource-variable/space-grotesk` and `@fontsource-variable/fira-code` (self-hosted, no font CDN).
+- **Type:** Geist for text and headings (one family; headings are weight 700 with −0.02em tracking), Geist
+  Mono for code — declared as `--helix-font-sans`, `--helix-font-display` (an alias of sans, so an application
+  can give headings another face) and `--helix-font-mono` by `helix-shell`'s stylesheet. The font files are
+  the application's: the demo loads them from `@fontsource-variable/geist` and
+  `@fontsource-variable/geist-mono` (self-hosted, no font CDN).
 
 ```ts
 // app.config.ts
@@ -44,9 +45,8 @@ export const appConfig: ApplicationConfig = {
 ```json
 // angular.json → projects.<app>.architect.build.options.styles
 [
-  "node_modules/@fontsource-variable/figtree/index.css",
-  "node_modules/@fontsource-variable/space-grotesk/index.css",
-  "node_modules/@fontsource-variable/fira-code/index.css",
+  "node_modules/@fontsource-variable/geist/index.css",
+  "node_modules/@fontsource-variable/geist-mono/index.css",
   "node_modules/@gravionlabs/helix-shell/styles.css"
 ]
 ```

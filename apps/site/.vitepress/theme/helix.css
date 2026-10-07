@@ -6,11 +6,10 @@
  */
 
 :root {
-  --vp-font-family-base: "Figtree Variable", "Figtree", system-ui, sans-serif;
+  --vp-font-family-base: "Geist Variable", "Geist", system-ui, sans-serif;
   --vp-font-family-mono:
-    "Fira Code Variable", "Fira Code", ui-monospace, monospace;
-  --helix-font-display:
-    "Space Grotesk Variable", "Space Grotesk", var(--vp-font-family-base);
+    "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+  --helix-font-display: var(--vp-font-family-base);
 
   --vp-c-bg: var(--h-surface-0);
   --vp-c-bg-alt: var(--h-surface-50);

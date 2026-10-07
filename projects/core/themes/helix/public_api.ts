@@ -12,8 +12,8 @@
  *
  * The look ("Hybrid", round 2 of the mockups): zinc neutrals, a muted indigo
  * primary and muted severity colours (`palettes.ts`, Tailwind's scales at 55 %
- * chroma), 6 px radius (Aura's `md`), Space Grotesk for display, Figtree for
- * text and Fira Code for code. Type is not a token of the engine: the font stacks live in
+ * chroma), 6 px radius (Aura's `md`), Geist for text and headings and Geist Mono
+ * for code. Type is not a token of the engine: the font stacks live in
  * `@gravionlabs/helix-shell`'s stylesheet, the font files are the application's
  * (`@fontsource-variable/*`, see the demo's `angular.json`).
  *

@@ -3,9 +3,8 @@
 // tokens the components render with — and `helix.css` binds VitePress's variables to them.
 import type { Theme } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
-import '@fontsource-variable/figtree';
-import '@fontsource-variable/space-grotesk';
-import '@fontsource-variable/fira-code';
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
 import './generated/helix.base.css';
 import './helix.css';
 
