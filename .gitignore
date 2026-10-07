@@ -7,7 +7,7 @@
 /bazel-out
 
 # Node
-/node_modules
+node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -52,3 +52,7 @@ apps/helix-demo/public/source/
 # APM dependencies
 apm_modules/
 .claude/
+
+# Documentation site (VitePress)
+/apps/site/.vitepress/dist
+/apps/site/.vitepress/cache

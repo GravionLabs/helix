@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found · Helix</title>
+    <script>
+      // GitHub Pages only serves the 404.html of the site root, also for the single-page demo under
+      // /demo/. A deep link into the demo (/helix/demo/uikit/table) lands here: remember the address and
+      // load the demo, whose index.html puts the address back for the router.
+      (function () {
+        var path = location.pathname;
+        var at = path.indexOf('/demo/');
+        if (at < 0) return;
+        try {
+          sessionStorage.setItem('helix-demo-redirect', path + location.search + location.hash);
+        } catch (e) {}
+        location.replace(path.slice(0, at + '/demo/'.length));
+      })();
+    </script>
+    <style>
+      :root { color-scheme: light dark; }
+      body { max-width: 36rem; margin: 4rem auto; padding: 0 1rem; font: 16px/1.5 system-ui, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <h1>Page not found</h1>
+    <p>There is no such page. <a href="./">Back to the Helix documentation</a>.</p>
+    <script>
+      // The relative link above only works one level deep; point it at the site root instead.
+      (function () {
+        var root = location.pathname.split('/').slice(0, 2).join('/') + '/';
+        document.querySelector('a').setAttribute('href', root);
+      })();
+    </script>
+  </body>
+</html>
