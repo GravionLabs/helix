@@ -13,7 +13,7 @@ npm install @gravionlabs/helix-ui
 ```css
 /* the components */
 @import "@gravionlabs/helix-ui/styles.css";
-/* the tokens: only when the app does not run the helix-core theme engine (provideHelix) */
+/* the tokens the components read; load them in every app, also with the helix-core theme engine */
 @import "@gravionlabs/helix-ui/tokens.css";
 ```
 
@@ -24,6 +24,10 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | Component | Selector | |
 | --- | --- | --- |
 | `HxButton` | `button[hxButton]`, `a[hxButton]` | variants, severities, sizes, loading, icon-only |
+| `HxInput` | `input[hxInput]`, `textarea[hxInput]` | outlined / filled, sizes, invalid |
+| `HxCheckbox` | `input[hxCheckbox]` | native checkbox, indeterminate |
+| `HxRadio` | `input[hxRadio]` | native radio |
+| `HxSwitch` | `input[hxSwitch]` | native checkbox with `role="switch"` |
 
 Selectors, inputs and classes use the prefix `hx` (`hx-button`), so they never clash with `helix-core`'s `h-`
 in an app that uses both while migrating. Both libraries read the same `--h-*` tokens, so a page mixes them

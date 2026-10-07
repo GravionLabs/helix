@@ -1,0 +1,114 @@
+/*
+ * RadioButton: `input[hxRadio]` on a native `<input type="radio">`, drawn with CSS. Same look as the
+ * helix-core RadioButton, from the `--h-radiobutton-*` tokens.
+ */
+.hx-radio {
+  display: inline-grid;
+  flex: none;
+  width: var(--h-radiobutton-width);
+  height: var(--h-radiobutton-height);
+  box-sizing: border-box;
+  margin: 0;
+  place-content: center;
+  border: 1px solid var(--h-radiobutton-border-color);
+  border-radius: 50%;
+  appearance: none;
+  background: var(--h-radiobutton-background);
+  box-shadow: var(--h-radiobutton-shadow);
+  cursor: pointer;
+  outline: 0 none;
+  transition:
+    background var(--h-radiobutton-transition-duration),
+    color var(--h-radiobutton-transition-duration),
+    border-color var(--h-radiobutton-transition-duration),
+    box-shadow var(--h-radiobutton-transition-duration);
+}
+
+.hx-radio::before {
+  content: "";
+  width: var(--h-radiobutton-icon-size);
+  height: var(--h-radiobutton-icon-size);
+  border-radius: 50%;
+  background: var(--h-radiobutton-icon-checked-color);
+  transform: scale(0);
+  transition: transform var(--h-radiobutton-transition-duration);
+}
+
+.hx-radio:checked {
+  border-color: var(--h-radiobutton-checked-border-color);
+  background: var(--h-radiobutton-checked-background);
+}
+
+.hx-radio:checked::before {
+  transform: scale(1);
+}
+
+.hx-radio:enabled:hover {
+  border-color: var(--h-radiobutton-hover-border-color);
+}
+
+.hx-radio:enabled:checked:hover {
+  border-color: var(--h-radiobutton-checked-hover-border-color);
+  background: var(--h-radiobutton-checked-hover-background);
+}
+
+.hx-radio:enabled:checked:hover::before {
+  background: var(--h-radiobutton-icon-checked-hover-color);
+}
+
+.hx-radio:focus-visible {
+  border-color: var(--h-radiobutton-focus-border-color);
+  outline: var(--h-radiobutton-focus-ring-width)
+    var(--h-radiobutton-focus-ring-style) var(--h-radiobutton-focus-ring-color);
+  outline-offset: var(--h-radiobutton-focus-ring-offset);
+  box-shadow: var(--h-radiobutton-focus-ring-shadow);
+}
+
+.hx-radio:focus-visible:checked {
+  border-color: var(--h-radiobutton-checked-focus-border-color);
+}
+
+.hx-radio:disabled {
+  background: var(--h-radiobutton-disabled-background);
+  cursor: default;
+}
+
+.hx-radio:disabled::before {
+  background: var(--h-radiobutton-icon-disabled-color);
+}
+
+.hx-radio:disabled:checked {
+  border-color: var(--h-radiobutton-checked-disabled-border-color);
+}
+
+.hx-radio[aria-invalid="true"],
+.hx-radio.ng-invalid.ng-touched {
+  border-color: var(--h-radiobutton-invalid-border-color);
+}
+
+.hx-radio-sm {
+  width: var(--h-radiobutton-sm-width);
+  height: var(--h-radiobutton-sm-height);
+}
+
+.hx-radio-sm::before {
+  width: var(--h-radiobutton-icon-sm-size);
+  height: var(--h-radiobutton-icon-sm-size);
+}
+
+.hx-radio-lg {
+  width: var(--h-radiobutton-lg-width);
+  height: var(--h-radiobutton-lg-height);
+}
+
+.hx-radio-lg::before {
+  width: var(--h-radiobutton-icon-lg-size);
+  height: var(--h-radiobutton-icon-lg-size);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-radio,
+  .hx-radio::before {
+    transition: none;
+  }
+}

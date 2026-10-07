@@ -1,0 +1,158 @@
+<h1 class="sr-only">Helix UI Form</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI form controls</h2>
+    <p class="m-0">
+      <code>hxInput</code>, <code>hxCheckbox</code>, <code>hxRadio</code> and <code>hxSwitch</code> from
+      <code>&#64;gravionlabs/helix-ui</code> are native controls drawn with CSS on the same tokens as the
+      helix-core ones on the left.
+    </p>
+    <div class="row">
+      <span></span><strong>helix-core</strong><strong>helix-ui</strong>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Text fields</h2>
+    <div class="row">
+      <span class="label">default</span>
+      <span class="cell"><input hInputText type="text" placeholder="Default" [(ngModel)]="text" /></span>
+      <span class="cell"><input hxInput type="text" placeholder="Default" [(ngModel)]="text" /></span>
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <span class="cell"><input hInputText type="text" placeholder="Disabled" disabled /></span>
+      <span class="cell"><input hxInput type="text" placeholder="Disabled" disabled /></span>
+    </div>
+    <div class="row">
+      <span class="label">invalid</span>
+      <span class="cell"><input hInputText type="text" value="x" class="ng-dirty ng-invalid" /></span>
+      <span class="cell"><input hxInput type="text" value="x" aria-invalid="true" /></span>
+    </div>
+    <div class="row">
+      <span class="label">filled</span>
+      <span class="cell"><input hInputText type="text" placeholder="Filled" variant="filled" /></span>
+      <span class="cell"><input hxInput type="text" placeholder="Filled" variant="filled" /></span>
+    </div>
+    <div class="row">
+      <span class="label">small / large</span>
+      <span class="cell">
+        <input hInputText type="text" placeholder="Small" pSize="small" />
+        <input hInputText type="text" placeholder="Large" pSize="large" />
+      </span>
+      <span class="cell">
+        <input hxInput type="text" placeholder="Small" size="small" />
+        <input hxInput type="text" placeholder="Large" size="large" />
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">textarea</span>
+      <span class="cell"><textarea hTextarea rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
+      <span class="cell"><textarea hxInput rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Checkbox, radio, switch</h2>
+    <div class="row">
+      <span class="label">checkbox</span>
+      <span class="cell">
+        <label><h-checkbox [binary]="true" [(ngModel)]="agree" /> Agree</label>
+        <label><h-checkbox [binary]="true" [disabled]="true" /> Disabled</label>
+      </span>
+      <span class="cell">
+        <label><input type="checkbox" hxCheckbox [(ngModel)]="agree" /> Agree</label>
+        <label><input type="checkbox" hxCheckbox disabled /> Disabled</label>
+        <label><input type="checkbox" hxCheckbox disabled checked /> Checked</label>
+        <label><input type="checkbox" hxCheckbox aria-invalid="true" /> Invalid</label>
+        <label><input type="checkbox" hxCheckbox [indeterminate]="true" /> Some</label>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">radio</span>
+      <span class="cell">
+        <label><h-radiobutton name="core-plan" value="free" [(ngModel)]="plan" /> Free</label>
+        <label><h-radiobutton name="core-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+      </span>
+      <span class="cell">
+        <label><input type="radio" hxRadio name="ui-plan" value="free" [(ngModel)]="plan" /> Free</label>
+        <label><input type="radio" hxRadio name="ui-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+        <label><input type="radio" hxRadio name="ui-plan-off" disabled /> Disabled</label>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">switch</span>
+      <span class="cell">
+        <label><h-toggleswitch [(ngModel)]="dark" /> Dark mode</label>
+      </span>
+      <span class="cell">
+        <label><input type="checkbox" hxSwitch [(ngModel)]="dark" /> Dark mode</label>
+        <label><input type="checkbox" hxSwitch disabled /> Disabled</label>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">sizes</span>
+      <span class="cell"><h-checkbox [binary]="true" size="small" /><h-checkbox [binary]="true" size="large" /></span>
+      <span class="cell">
+        <input type="checkbox" hxCheckbox size="small" aria-label="Small" />
+        <input type="checkbox" hxCheckbox size="large" aria-label="Large" />
+        <input type="radio" hxRadio name="sz" size="small" aria-label="Small" />
+        <input type="radio" hxRadio name="sz" size="large" aria-label="Large" />
+      </span>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">A signal form</h2>
+    <p class="m-0">
+      Angular signal forms (<code>form()</code>, <code>[formField]</code>) on the native controls: validation
+      messages are bound with <code>aria-invalid</code> and <code>aria-describedby</code>.
+    </p>
+    <form class="flex flex-col gap-4" (submit)="send($event)" novalidate>
+      <div class="field">
+        <label for="su-name">Name</label>
+        <input
+          hxInput
+          id="su-name"
+          [formField]="signup.name"
+          [attr.aria-invalid]="signup.name().touched() && signup.name().invalid() ? 'true' : null"
+          aria-describedby="su-name-error"
+        />
+        <span class="error" id="su-name-error" aria-live="polite">
+          @if (signup.name().touched() && signup.name().errors()[0]; as e) {
+            {{ e.message }}
+          }
+        </span>
+      </div>
+      <div class="field">
+        <label for="su-email">Email</label>
+        <input
+          hxInput
+          id="su-email"
+          type="email"
+          [formField]="signup.email"
+          [attr.aria-invalid]="signup.email().touched() && signup.email().invalid() ? 'true' : null"
+          aria-describedby="su-email-error"
+        />
+        <span class="error" id="su-email-error" aria-live="polite">
+          @if (signup.email().touched() && signup.email().errors()[0]; as e) {
+            {{ e.message }}
+          }
+        </span>
+      </div>
+      <fieldset>
+        <legend>Plan</legend>
+        <label class="cell"><input type="radio" hxRadio value="free" [formField]="signup.plan" /> Free</label>
+        <label class="cell"><input type="radio" hxRadio value="pro" [formField]="signup.plan" /> Pro</label>
+      </fieldset>
+      <label class="cell"><input type="checkbox" hxCheckbox [formField]="signup.newsletter" /> Send me the newsletter</label>
+      <label class="cell"><input type="checkbox" hxSwitch [formField]="signup.darkMode" /> Dark mode</label>
+      <div class="flex gap-2 items-center">
+        <button hxButton type="submit" [loading]="sending()">Sign up</button>
+        @if (sent(); as s) {
+          <span>Signed up {{ s.name }} ({{ s.email }}) on the {{ s.plan }} plan.</span>
+        }
+      </div>
+    </form>
+  </div>
+</div>

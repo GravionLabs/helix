@@ -1,0 +1,105 @@
+/*
+ * ToggleSwitch: `input[hxSwitch]` on a native `<input type="checkbox" role="switch">`, drawn with CSS.
+ * Same look as the helix-core ToggleSwitch, from the `--h-toggleswitch-*` tokens: the track is the input, the
+ * handle its `::before`.
+ */
+.hx-switch {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--h-toggleswitch-width);
+  height: var(--h-toggleswitch-height);
+  box-sizing: border-box;
+  margin: 0;
+  border: var(--h-toggleswitch-border-width) solid
+    var(--h-toggleswitch-border-color);
+  border-radius: var(--h-toggleswitch-border-radius);
+  appearance: none;
+  background: var(--h-toggleswitch-background);
+  box-shadow: var(--h-toggleswitch-shadow);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-toggleswitch-transition-duration),
+    border-color var(--h-toggleswitch-transition-duration),
+    outline-color var(--h-toggleswitch-transition-duration),
+    box-shadow var(--h-toggleswitch-transition-duration);
+}
+
+.hx-switch::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-start: var(--h-toggleswitch-gap);
+  width: var(--h-toggleswitch-handle-size);
+  height: var(--h-toggleswitch-handle-size);
+  margin-block-start: calc(-1 * var(--h-toggleswitch-handle-size) / 2);
+  border-radius: var(--h-toggleswitch-handle-border-radius);
+  background: var(--h-toggleswitch-handle-background);
+  transition:
+    background var(--h-toggleswitch-transition-duration),
+    inset-inline-start var(--h-toggleswitch-slide-duration);
+}
+
+.hx-switch:checked {
+  border-color: var(--h-toggleswitch-checked-border-color);
+  background: var(--h-toggleswitch-checked-background);
+}
+
+.hx-switch:checked::before {
+  inset-inline-start: calc(
+    var(--h-toggleswitch-width) -
+    var(--h-toggleswitch-handle-size) -
+    var(--h-toggleswitch-gap) -
+    2 *
+    var(--h-toggleswitch-border-width)
+  );
+  background: var(--h-toggleswitch-handle-checked-background);
+}
+
+.hx-switch:enabled:hover {
+  border-color: var(--h-toggleswitch-hover-border-color);
+  background: var(--h-toggleswitch-hover-background);
+}
+
+.hx-switch:enabled:hover::before {
+  background: var(--h-toggleswitch-handle-hover-background);
+}
+
+.hx-switch:enabled:checked:hover {
+  border-color: var(--h-toggleswitch-checked-hover-border-color);
+  background: var(--h-toggleswitch-checked-hover-background);
+}
+
+.hx-switch:enabled:checked:hover::before {
+  background: var(--h-toggleswitch-handle-checked-hover-background);
+}
+
+.hx-switch:focus-visible {
+  outline: var(--h-toggleswitch-focus-ring-width)
+    var(--h-toggleswitch-focus-ring-style)
+    var(--h-toggleswitch-focus-ring-color);
+  outline-offset: var(--h-toggleswitch-focus-ring-offset);
+  box-shadow: var(--h-toggleswitch-focus-ring-shadow);
+}
+
+.hx-switch:disabled {
+  background: var(--h-toggleswitch-disabled-background);
+  cursor: default;
+}
+
+.hx-switch:disabled::before {
+  background: var(--h-toggleswitch-handle-disabled-background);
+}
+
+.hx-switch[aria-invalid="true"],
+.hx-switch.ng-invalid.ng-touched {
+  border-color: var(--h-toggleswitch-invalid-border-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-switch,
+  .hx-switch::before {
+    transition: none;
+  }
+}
