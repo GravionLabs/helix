@@ -206,11 +206,10 @@ export function buildShadow(tokens) {
   };
 }
 
-/** Fonts: Figtree (text), Space Grotesk (display), Fira Code (code), self-hosted latin variable files. */
+/** Fonts: Geist (text and headings) and Geist Mono (code), self-hosted latin variable files. */
 export const FONTS = [
-  { family: 'Figtree', pkg: 'figtree', weight: '300 900', file: 'figtree-latin-wght-normal.woff2' },
-  { family: 'Space Grotesk', pkg: 'space-grotesk', weight: '300 700', file: 'space-grotesk-latin-wght-normal.woff2' },
-  { family: 'Fira Code', pkg: 'fira-code', weight: '300 700', file: 'fira-code-latin-wght-normal.woff2' },
+  { family: 'Geist', pkg: 'geist', weight: '100 900', file: 'geist-latin-wght-normal.woff2' },
+  { family: 'Geist Mono', pkg: 'geist-mono', weight: '100 900', file: 'geist-mono-latin-wght-normal.woff2' },
 ];
 
 export function buildType(tokens) {
@@ -221,21 +220,20 @@ export function buildType(tokens) {
   return {
     fonts: FONTS.map((f) => ({ family: f.family, file: `fonts/${f.file}`, weight: f.weight, style: 'normal' })),
     families: {
-      sans: '"Figtree", system-ui, sans-serif',
-      display: '"Space Grotesk", "Figtree", system-ui, sans-serif',
-      mono: '"Fira Code", ui-monospace, monospace',
+      sans: '"Geist", system-ui, sans-serif',
+      mono: '"Geist Mono", ui-monospace, monospace',
     },
     groups: [
       {
         name: 'Display',
-        family: 'display',
+        family: 'sans',
         styles: [
-          style('h1', px('2.5rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Page title.' }),
-          style('h2', px('2rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Section heading.' }),
-          style('h3', px('1.75rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Subsection heading.' }),
-          style('h4', px('1.5rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Card title (large).' }),
-          style('h5', px('1.25rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Card title.' }),
-          style('h6', px('1rem'), 1.3, 700, { letterSpacing: '-0.01em', usage: 'Small heading.' }),
+          style('h1', px('2.5rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Page title.' }),
+          style('h2', px('2rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Section heading.' }),
+          style('h3', px('1.75rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Subsection heading.' }),
+          style('h4', px('1.5rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Card title (large).' }),
+          style('h5', px('1.25rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Card title.' }),
+          style('h6', px('1rem'), 1.3, 700, { letterSpacing: '-0.02em', usage: 'Small heading.' }),
         ],
       },
       {

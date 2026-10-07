@@ -75,7 +75,7 @@ ${mdList(p.guidelines)}
 import { ${p.name === 'InputText' ? 'InputText' : p.name} } from '${p.entry}';
 \`\`\`
 
-Selector: \`${p.selector}\`. The application provides \`provideHelix({ theme: { preset: helixPreset } })\`, the fonts (Figtree, Space Grotesk, Fira Code) and, for dark mode, the \`app-dark\` class on \`<html>\`; the rendition here is static (Helix components are Angular, there is no runtime bundle).
+Selector: \`${p.selector}\`. The application provides \`provideHelix({ theme: { preset: helixPreset } })\`, the fonts (Geist, Geist Mono) and, for dark mode, the \`app-dark\` class on \`<html>\`; the rendition here is static (Helix components are Angular, there is no runtime bundle).
 
 ${p.tokens}
 `;
