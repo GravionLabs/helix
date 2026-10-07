@@ -206,10 +206,9 @@ export function buildShadow(tokens) {
   };
 }
 
-/** Fonts: Geist (text and headings) and Geist Mono (code), self-hosted latin variable files. */
+/** Fonts: Inter (text and headings), self-hosted latin variable file; code uses the system monospace. */
 export const FONTS = [
-  { family: 'Geist', pkg: 'geist', weight: '100 900', file: 'geist-latin-wght-normal.woff2' },
-  { family: 'Geist Mono', pkg: 'geist-mono', weight: '100 900', file: 'geist-mono-latin-wght-normal.woff2' },
+  { family: 'Inter', pkg: 'inter', weight: '100 900', file: 'inter-latin-wght-normal.woff2' },
 ];
 
 export function buildType(tokens) {
@@ -220,8 +219,8 @@ export function buildType(tokens) {
   return {
     fonts: FONTS.map((f) => ({ family: f.family, file: `fonts/${f.file}`, weight: f.weight, style: 'normal' })),
     families: {
-      sans: '"Geist", system-ui, sans-serif',
-      mono: '"Geist Mono", ui-monospace, monospace',
+      sans: '"Inter", ui-sans-serif, system-ui, sans-serif',
+      mono: 'ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace',
     },
     groups: [
       {

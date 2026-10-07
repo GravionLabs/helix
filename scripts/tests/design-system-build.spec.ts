@@ -52,8 +52,7 @@ describe.skipIf(!built)('buildSystem (built library)', () => {
       'tokens.json',
       'components/bundle.css',
       'components/Cover/preview.html',
-      'fonts/geist-latin-wght-normal.woff2',
-      'fonts/geist-mono-latin-wght-normal.woff2',
+      'fonts/inter-latin-wght-normal.woff2',
       'assets/Logos/helix-mark-light.svg',
     ]) {
       expect(a).toHaveProperty([required]);

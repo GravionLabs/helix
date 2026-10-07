@@ -23,7 +23,7 @@ Colour means something: `success`, `info`, `warn`, `help` and `danger` (muted gr
 
 **Surfaces.** Page ground is a light neutral (`surface-100`; `surface-950` in dark); cards and fields sit on `content-bg` (`surface-0`; `surface-900`) with a hairline `content-border`. Overlays use the `shadow-*` tokens; nothing else casts a shadow at rest.
 
-**Type.** **Geist** for text and headings (headings 700, tracking −0.02em) and **Geist Mono** for code, self-hosted (Open Font License). One family keeps the page calm; `--helix-font-display` exists so an application can still give headings another face. The application root is **14px**; headings step 14 → 35px (`h1`) in the Display styles. Body text is `text` on `content-bg`, secondary text `text-muted` (≥ 4.5:1 on cards in both themes).
+**Type.** **Inter** for text and headings (headings 700, tracking −0.02em), self-hosted (Open Font License), and the system monospace (`ui-monospace`, SF Mono, Menlo, Consolas) for code: the same look as the other Gravion Labs sites. One family keeps the page calm; `--helix-font-display` exists so an application can still give headings another face. The application root is **14px**; headings step 14 → 35px (`h1`) in the Display styles. Body text is `text` on `content-bg`, secondary text `text-muted` (≥ 4.5:1 on cards in both themes).
 
 **Shape and space.** One radius does most of the work: **6px** (`radius-md`) on buttons, fields, cards; 12px (`radius-xl`) on modal dialogs; pills only for `rounded` buttons and badges. Fields and buttons are padded `field-padding-x` × `field-padding-y` (10.5 × 7px); lists gap 2px; the shell's cards are `layout-gap` (21px) apart.
 
@@ -37,7 +37,7 @@ Icons come from the **PrimeIcons** font (MIT; `pi pi-home`, …), 1rem by defaul
 
 ## Using it
 
-- In an Angular app: `provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })`, the `@fontsource-variable/geist` and `geist-mono` stylesheets and `@gravionlabs/helix-shell/styles.css` (docs: Theming).
+- In an Angular app: `provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })`, the `@fontsource-variable/inter` stylesheet and `@gravionlabs/helix-shell/styles.css` (docs: Theming).
 - Outside Angular: `pnpm tokens:export` writes the same tokens as CSS and JSON (`dist/tokens`).
 - The component previews here are static renditions of the real markup and CSS; the components themselves are Angular, so there is no runtime bundle.
 

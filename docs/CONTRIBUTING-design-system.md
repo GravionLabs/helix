@@ -24,7 +24,7 @@ checks the files against the type's grammar and caps, and fails when a preview u
 | `components/bundle.css`             | resolved `--h-*` tokens + the components' real structural CSS (`bundle.mjs`)                       |
 | `components/<Name>/…`               | `scripts/design-system/previews.mjs`: markup captured from the demo, guidelines, selector          |
 | `components/Cover/preview.html`     | `build.mjs`: palette blocks, a helix of dots and the name, all in tokens                          |
-| `fonts/*.woff2`                     | `@fontsource-variable/geist` and `geist-mono` (latin, variable)                                   |
+| `fonts/*.woff2`                     | `@fontsource-variable/inter` (latin, variable); code uses the system monospace                    |
 | `assets/Logos/…`                    | the double helix of the shell's nav rail in `primary` (light and dark)                            |
 
 To add a component: capture its markup from the demo (class names only, no Angular attributes), add an entry

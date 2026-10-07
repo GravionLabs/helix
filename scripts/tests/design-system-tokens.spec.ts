@@ -123,11 +123,8 @@ describe.skipIf(!existsSync(EXPORT))('buildTokens (helixPreset)', () => {
     expect(onSuccess?.usage).toMatch(/below 4\.5:1/);
   });
 
-  it('carries the two fonts with files, and a radius and shadow set', () => {
-    expect(tokens.type.fonts.map((f: { family: string }) => f.family)).toEqual([
-      'Geist',
-      'Geist Mono',
-    ]);
+  it('carries the font with files, and a radius and shadow set', () => {
+    expect(tokens.type.fonts.map((f: { family: string }) => f.family)).toEqual(['Inter']);
     expect(tokens.radius.tokens.find((t: { name: string }) => t.name === 'radius-md').value).toBe(
       '6px',
     );

@@ -5,7 +5,7 @@
 //   components/bundle.css            tokens + structural CSS of the previewed components (bundle.mjs)
 //   components/<Name>/…              README.md + preview.html per component (previews.mjs)
 //   components/Cover/preview.html    the cover, built from the tokens
-//   fonts/*.woff2                    Geist and Geist Mono (latin, variable) from @fontsource-variable
+//   fonts/*.woff2                    Inter (latin, variable) from @fontsource-variable
 //   assets/Logos/…                   the Helix mark, one file per theme, and its usage note
 //
 // Everything is derived from the repository, nothing from the clock: a second run writes the same bytes.
