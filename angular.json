@@ -161,8 +161,7 @@
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
-              "node_modules/@fontsource-variable/geist/index.css",
-              "node_modules/@fontsource-variable/geist-mono/index.css",
+              "node_modules/@fontsource-variable/inter/index.css",
               "apps/helix-demo/src/styles.scss",
               "dist/shell/styles.css",
               "dist/ag-grid/styles.css"

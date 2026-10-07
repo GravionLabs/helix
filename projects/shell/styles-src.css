@@ -79,15 +79,17 @@ html {
   line-height: 1.2;
 }
 
-/* Type (ADR 0001, #521): Geist for text and headings (one family; `display` is its own
-   token so an application can give headings another face), Geist Mono for code. The
-   stacks are declared here; the font files are the application's
-   (`@fontsource-variable/geist` and `geist-mono` in its styles). */
+/* Type (ADR 0001, #521): Inter for text and headings (one family; `display` is its own
+   token so an application can give headings another face) and the system monospace for
+   code, as on the documentation sites of the other Gravion Labs projects. The stacks are
+   declared here; the font file is the application's (`@fontsource-variable/inter` in
+   its styles). */
 :root {
-  --helix-font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+  --helix-font-sans:
+    "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
   --helix-font-display: var(--helix-font-sans);
   --helix-font-mono:
-    "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 }
 
 body {

@@ -6,9 +6,7 @@
  */
 
 :root {
-  --vp-font-family-base: "Geist Variable", "Geist", system-ui, sans-serif;
-  --vp-font-family-mono:
-    "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+  /* Type: VitePress's own Inter and system monospace (the Gravion Labs sites' look). */
   --helix-font-display: var(--vp-font-family-base);
 
   --vp-c-bg: var(--h-surface-0);
