@@ -55,6 +55,7 @@ Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.gith
 
 - [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix-core` entry point
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
+- [Theming](docs/THEMING.md) — the Helix preset, dark mode, overriding tokens, static token export
 - [Roadmap](docs/ROADMAP.md)
 - [Architecture decision records](docs/adr/README.md)
 - [File structure conventions](docs/CONTRIBUTING-file-structure.md)

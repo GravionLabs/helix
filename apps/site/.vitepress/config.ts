@@ -41,6 +41,7 @@ export default defineConfig({
     nav: [
       { text: 'Components', link: '/components/' },
       { text: 'Shell API', link: '/HELIX-SHELL' },
+      { text: 'Theming', link: '/THEMING' },
       { text: 'Roadmap', link: '/ROADMAP' },
       { text: 'GitHub', link: REPO_URL },
     ],

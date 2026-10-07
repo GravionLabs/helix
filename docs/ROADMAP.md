@@ -108,7 +108,7 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
 - [ ] #521 – Design mockups in Claude Design; Helix look for docs site, demo and components.
       Done: mockup rounds 1–2 (hybrid chosen: zinc neutrals, indigo primary, Space Grotesk /
       Figtree / Fira Code), `helixPreset` values, shell font stacks, demo and shell default to
-      `helixPreset`. Open: VitePress theme on the same tokens, theming guide
+      `helixPreset`. VitePress theme on the same tokens (`apps/site/.vitepress/theme`), theming guide (`docs/THEMING.md`)
 - [ ] #522 – Design System sync: tokens and component previews in a Claude Design System project
 - [ ] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens, B-lite set first, `helix-shell`
       and `helix-zod` migrated, `helix-core` retired when nothing imports it

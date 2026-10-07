@@ -1,0 +1,119 @@
+/*
+ * VitePress on the Helix tokens. Every colour here is a `--h-*` variable from
+ * `generated/helix.base.css` (helixPreset: zinc neutrals, indigo primary); nothing is
+ * a second palette. Dark values follow VitePress's `.dark` class, which the export
+ * uses as the dark-scheme selector.
+ */
+
+:root {
+  --vp-font-family-base: "Figtree Variable", "Figtree", system-ui, sans-serif;
+  --vp-font-family-mono:
+    "Fira Code Variable", "Fira Code", ui-monospace, monospace;
+  --helix-font-display:
+    "Space Grotesk Variable", "Space Grotesk", var(--vp-font-family-base);
+
+  --vp-c-bg: var(--h-surface-0);
+  --vp-c-bg-alt: var(--h-surface-50);
+  --vp-c-bg-elv: var(--h-surface-0);
+  --vp-c-bg-soft: var(--h-surface-100);
+
+  --vp-c-border: var(--h-surface-300);
+  --vp-c-divider: var(--h-surface-200);
+  --vp-c-gutter: var(--h-surface-200);
+
+  --vp-c-text-1: var(--h-text-color);
+  --vp-c-text-2: var(--h-text-muted-color);
+  --vp-c-text-3: var(--h-surface-500);
+
+  --vp-c-brand-1: var(--h-primary-color);
+  --vp-c-brand-2: var(--h-primary-hover-color);
+  --vp-c-brand-3: var(--h-primary-active-color);
+  --vp-c-brand-soft: color-mix(in srgb, var(--h-primary-500) 14%, transparent);
+
+  --vp-button-brand-bg: var(--h-primary-color);
+  --vp-button-brand-border: var(--h-primary-color);
+  --vp-button-brand-hover-bg: var(--h-primary-hover-color);
+  --vp-button-brand-hover-border: var(--h-primary-hover-color);
+  --vp-button-brand-active-bg: var(--h-primary-active-color);
+  --vp-button-brand-active-border: var(--h-primary-active-color);
+  --vp-button-brand-text: var(--h-primary-contrast-color);
+  --vp-button-brand-hover-text: var(--h-primary-contrast-color);
+  --vp-button-brand-active-text: var(--h-primary-contrast-color);
+
+  --vp-code-color: var(--h-primary-color);
+  --vp-code-bg: var(--h-surface-100);
+
+  /* A solid brand colour for the hero name, not the default gradient wash. */
+  --vp-home-hero-name-color: var(--h-primary-color);
+  --vp-home-hero-name-background: none;
+}
+
+.dark {
+  --vp-c-bg: var(--h-surface-950);
+  --vp-c-bg-alt: var(--h-surface-900);
+  --vp-c-bg-elv: var(--h-surface-800);
+  --vp-c-bg-soft: var(--h-surface-800);
+
+  --vp-c-border: var(--h-surface-700);
+  --vp-c-divider: var(--h-surface-800);
+  --vp-c-gutter: var(--h-surface-950);
+
+  --vp-c-text-3: var(--h-surface-500);
+  --vp-c-brand-soft: color-mix(in srgb, var(--h-primary-400) 18%, transparent);
+
+  /* indigo-400 is the dark text/link primary; white on it fails 4.5:1, so filled
+     buttons step down to 500/600/700 and keep white text. */
+  --vp-button-brand-bg: var(--h-primary-500);
+  --vp-button-brand-border: var(--h-primary-500);
+  --vp-button-brand-hover-bg: var(--h-primary-600);
+  --vp-button-brand-hover-border: var(--h-primary-600);
+  --vp-button-brand-active-bg: var(--h-primary-700);
+  --vp-button-brand-active-border: var(--h-primary-700);
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-active-text: #ffffff;
+
+  --vp-code-bg: var(--h-surface-800);
+}
+
+/* Display type: the hero, page titles, section headings, the brand in the nav bar. */
+.VPNavBarTitle .title,
+.VPHero .name,
+.VPHero .text,
+.VPFeature .title,
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3 {
+  font-family: var(--helix-font-display);
+  letter-spacing: -0.01em;
+}
+
+.VPHero .name,
+.VPHero .text {
+  letter-spacing: -0.02em;
+}
+
+.VPSidebarItem.level-0 > .item > .text {
+  font-family: var(--helix-font-display);
+}
+
+/* Component pages: the "Open in the demo" link reads as a Helix primary button. */
+.vp-doc .demo-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: var(--h-content-border-radius, 6px);
+  background: var(--vp-button-brand-bg);
+  color: var(--vp-button-brand-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.vp-doc .demo-link a:hover {
+  background: var(--vp-button-brand-hover-bg);
+  color: var(--vp-button-brand-hover-text);
+  text-decoration: none;
+}

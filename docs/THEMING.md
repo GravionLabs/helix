@@ -1,0 +1,103 @@
+# Theming
+
+Helix components are styled by **design tokens**: a preset declares them in three layers and the
+theming engine resolves them to `--h-*` CSS custom properties at runtime.
+
+| Layer       | What                                                                                                   | Example                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------- |
+| `primitive` | Palettes and radii                                                                                     | `{indigo.600}`, `{border.radius.md}`      |
+| `semantic`  | The choices shared by every component: `primary`, `surface`, `text`, `formField`, `focusRing`, per colour scheme | `primary.color: '{primary.600}'`          |
+| `components`| Per-component tokens, referencing the layers above                                                      | `button.root.paddingX: '{form.field.padding.x}'` |
+
+A token value is a CSS value or a `{reference}` to another token.
+
+## The Helix preset
+
+`helixPreset` is Helix's own look — the one the demo and the documentation site use — defined as
+Aura plus the deviations in [`projects/core/themes/helix/public_api.ts`](../projects/core/themes/helix/public_api.ts)
+(decided in [ADR 0001](adr/0001-styling-foundation.md)):
+
+- **Neutrals:** zinc in both colour schemes (`surface.0…950`), so the greys don't change temperature
+  between light and dark.
+- **Primary:** indigo — `primary.600` on light backgrounds, `primary.400` on dark ones.
+- **Text:** near-black (`surface.950`) with a darker muted step (`surface.600`) for 4.5:1 contrast on
+  cards; the inverse in dark mode.
+- **Radius:** Aura's 6 px (`border.radius.md`).
+- **Type:** Figtree for text, Space Grotesk for headings, Fira Code for code — declared as
+  `--helix-font-sans`, `--helix-font-display` and `--helix-font-mono` by `helix-shell`'s stylesheet.
+  The font files are the application's: the demo loads them from `@fontsource-variable/figtree`,
+  `@fontsource-variable/space-grotesk` and `@fontsource-variable/fira-code` (self-hosted, no font CDN).
+
+```ts
+// app.config.ts
+import { provideHelix } from '@gravionlabs/helix-core/config';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })],
+};
+```
+
+```json
+// angular.json → projects.<app>.architect.build.options.styles
+[
+  "node_modules/@fontsource-variable/figtree/index.css",
+  "node_modules/@fontsource-variable/space-grotesk/index.css",
+  "node_modules/@fontsource-variable/fira-code/index.css",
+  "node_modules/@gravionlabs/helix-shell/styles.css"
+]
+```
+
+Aura, Lara and Nora (`themes/aura`, `themes/lara`, `themes/nora`) remain available and selectable in
+`HelixConfigurator`.
+
+## Dark mode
+
+Tokens of `colorScheme.dark` are emitted under the `darkModeSelector` (`.app-dark` in the shell and
+the demo; `HelixLayoutStore.toggleDarkMode()` adds the class to `<html>` with a view transition).
+`'system'` follows `prefers-color-scheme`; `false` disables dark tokens.
+
+## Overriding tokens
+
+Extend the preset instead of writing CSS against `.h-*` classes; the override applies to every
+component that references the token.
+
+```ts
+import { definePreset } from '@gravionlabs/helix-core/themes';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
+
+const myPreset = definePreset(helixPreset, {
+  semantic: {
+    primary: { 50: '{teal.50}', /* … */ 950: '{teal.950}' },
+    colorScheme: { light: { formField: { borderColor: '{surface.400}' } } },
+  },
+  components: {
+    button: { root: { borderRadius: '999px' } },
+  },
+});
+```
+
+At runtime, `updatePreset()`, `updatePrimaryPalette()` and `updateSurfacePalette()` from
+`@gravionlabs/helix-core/themes` change the active theme (this is what the configurator does); the
+`$dt('primary.color')` helper reads a token's resolved value.
+
+## Static tokens, outside Angular
+
+`pnpm tokens:export [preset …]` resolves a preset with the same engine and writes
+`dist/tokens/<preset>.css` (all `--h-*` variables, light and dark) and `<preset>.json`. With `--base`
+only the primitive, semantic and global layers are written (~16 kB) — enough for a page that is not
+built from Helix components — and `--dark=<selector>` picks the dark-scheme selector. The
+documentation site is themed this way: `pnpm tokens:site` writes
+`apps/site/.vitepress/theme/generated/helix.base.css` with `.dark` as selector, and
+[`apps/site/.vitepress/theme/helix.css`](../apps/site/.vitepress/theme/helix.css) binds VitePress's
+`--vp-c-*` variables to the `--h-*` ones, so site and components share one palette.
+
+## Where things are
+
+| | |
+| --- | --- |
+| Engine (`definePreset`, `$t`, `updatePreset`, …) | [`themes`](components/themes.md), vendored `@primeuix/styled` in `projects/core/uix/styled` |
+| Presets | `projects/core/themes/{helix,aura,lara,nora}` |
+| Token types | `@gravionlabs/helix-core/themes/types` |
+| Shell layer (`--helix-surface-*`, layout sizes, fonts, Tailwind colour map) | `projects/shell/styles-src.css`, `projects/shell/styles/helix-tailwind` |
+| Configurator (preset / primary / surface switch) | `HelixConfigurator` in `@gravionlabs/helix-shell` |

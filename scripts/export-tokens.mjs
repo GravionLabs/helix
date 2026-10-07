@@ -3,6 +3,12 @@
 // as the docs site, the design-system sync (#522) and helix-ui (epic #523) read
 // them, without the runtime engine (ADR 0001). Run: pnpm tokens:export [preset …]
 //
+// Options: `--base` writes only the primitive, semantic and global layers (no
+// component tokens: what a page outside Angular needs, ~1/10 of the size);
+// `--dark=<selector>` sets the dark-scheme selector (default `.app-dark`, the
+// docs site passes VitePress's `.dark`); `--out=<dir>` the output folder
+// (default `dist/tokens`).
+//
 // Needs `dist/core` (`pnpm build:core`): the presets and the styling engine are
 // imported from the built bundles, which have no Angular dependency.
 import fs from 'node:fs';
@@ -22,12 +28,14 @@ export const PRESETS = ['helix', 'aura', 'lara', 'nora'];
  * under `darkSelector`), then every component's variables, in the order the engine
  * emits them at runtime.
  */
-export function resolvePreset(Theme, preset, darkSelector = DARK_SELECTOR) {
+export function resolvePreset(Theme, preset, darkSelector = DARK_SELECTOR, { components = true } = {}) {
   Theme.setTheme({ preset, options: { prefix: 'h', darkModeSelector: darkSelector } });
   const common = Theme.getCommon('common');
   const parts = [common.primitive.css, common.semantic.css, common.global.css];
-  for (const name of Object.keys(preset.components ?? {}).sort()) {
-    parts.push(Theme.getComponent(name).css);
+  if (components) {
+    for (const name of Object.keys(preset.components ?? {}).sort()) {
+      parts.push(Theme.getComponent(name).css);
+    }
   }
   return parts.filter(Boolean).join('\n');
 }
@@ -55,14 +63,15 @@ async function loadPreset(name) {
   return { Theme: engine.Theme, preset };
 }
 
-export async function exportPreset(name, outDir = OUT) {
+export async function exportPreset(name, { outDir = OUT, darkSelector = DARK_SELECTOR, base = false } = {}) {
   const { Theme, preset } = await loadPreset(name);
-  const css = resolvePreset(Theme, preset);
-  const tokens = tokensOf(css);
+  const css = resolvePreset(Theme, preset, darkSelector, { components: !base });
+  const tokens = tokensOf(css, darkSelector);
+  const stem = base ? `${name}.base` : name;
   fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, `${name}.css`), `${css}\n`);
-  fs.writeFileSync(path.join(outDir, `${name}.json`), `${JSON.stringify(tokens, null, 2)}\n`);
-  return { css, tokens };
+  fs.writeFileSync(path.join(outDir, `${stem}.css`), `${css}\n`);
+  fs.writeFileSync(path.join(outDir, `${stem}.json`), `${JSON.stringify(tokens, null, 2)}\n`);
+  return { css, tokens, stem };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -70,16 +79,23 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     console.error('dist/core not found — run `pnpm build:core` first');
     process.exit(1);
   }
-  const names = process.argv.slice(2).length ? process.argv.slice(2) : ['helix'];
-  for (const name of names) {
+  const args = process.argv.slice(2);
+  const flag = (key) => args.find((a) => a.startsWith(`--${key}=`))?.slice(key.length + 3);
+  const options = {
+    base: args.includes('--base'),
+    darkSelector: flag('dark') ?? DARK_SELECTOR,
+    outDir: flag('out') ? path.resolve(ROOT, flag('out')) : OUT,
+  };
+  const names = args.filter((a) => !a.startsWith('--'));
+  for (const name of names.length ? names : ['helix']) {
     if (!PRESETS.includes(name)) {
       console.error(`unknown preset "${name}" (one of ${PRESETS.join(', ')})`);
       process.exit(1);
     }
-    const { tokens } = await exportPreset(name);
+    const { tokens, stem } = await exportPreset(name, options);
     const count = (scheme) => Object.keys(tokens[scheme]).length;
     console.log(
-      `dist/tokens/${name}.{css,json}: ${count('light')} light / ${count('dark')} dark tokens`,
+      `${path.relative(ROOT, options.outDir)}/${stem}.{css,json}: ${count('light')} light / ${count('dark')} dark tokens`,
     );
   }
 }
