@@ -53,11 +53,30 @@ describe.skipIf(!existsSync(FESM))('resolvePreset (built core)', () => {
     expect(helix.light['--h-primary-color']).toBe('var(--h-primary-600)');
     expect(helix.light['--h-primary-500']).toBe('var(--h-indigo-500)');
     expect(helix.light['--h-surface-500']).toBe('var(--h-zinc-500)');
+    expect(helix.light['--h-indigo-500']).not.toBe(aura.light['--h-indigo-500']); // muted palettes
+    expect(helix.light['--h-red-500']).not.toBe(aura.light['--h-red-500']);
+    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // neutrals untouched
     expect(helix.dark['--h-surface-500']).toBe('var(--h-zinc-500)');
     expect(helix.light['--h-text-color']).toBe('var(--h-surface-950)');
     expect(helix.light['--h-button-primary-background']).toBe(
       aura.light['--h-button-primary-background'],
     ); // component layer untouched
     expect(Object.keys(helix.light)).toEqual(Object.keys(aura.light)); // same token set, different values
+  });
+});
+
+describe('helix-palettes', () => {
+  it('reduces chroma and keeps lightness', async () => {
+    const { hexToOklch, mute } = await import('../helix-palettes.mjs');
+    const muted = mute({ 500: '#6366f1' }, 0.65)[500];
+    const before = hexToOklch('#6366f1');
+    const after = hexToOklch(muted);
+    expect(after.C).toBeCloseTo(before.C * 0.65, 2);
+    expect(after.L).toBeCloseTo(before.L, 2);
+  });
+
+  it('round-trips a hex colour', async () => {
+    const { hexToOklch, oklchToHex } = await import('../helix-palettes.mjs');
+    expect(oklchToHex(hexToOklch('#4f46e5'))).toBe('#4f46e5');
   });
 });

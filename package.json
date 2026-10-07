@@ -15,6 +15,7 @@
     "build:lib:css:ag-grid": "tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css && node scripts/add-css-export.mjs dist/ag-grid",
     "tokens:export": "node scripts/export-tokens.mjs",
     "tokens:site": "node scripts/export-tokens.mjs helix --base --dark=.dark --out=apps/site/.vitepress/theme/generated",
+    "palettes:generate": "node scripts/helix-palettes.mjs",
     "build:demo": "pnpm demo:generate-sources && ng build helix-demo",
     "build:site": "pnpm build:core:ensure && pnpm tokens:site && SITE_BASE=${SITE_BASE:-/helix/} pnpm --filter @helix/site build",
     "build:demo:pages": "pnpm demo:generate-sources && ng build helix-demo --configuration production --base-href ${PAGES_BASE:-/helix/}demo/",
