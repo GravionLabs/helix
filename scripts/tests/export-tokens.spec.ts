@@ -43,9 +43,21 @@ describe.skipIf(!existsSync(FESM))('resolvePreset (built core)', () => {
     expect(Object.keys(tokens.light).length).toBeGreaterThan(1000);
   });
 
-  it('helixPreset equals Aura until the mockups (#521) fill helixOverrides', async () => {
-    const helix = await load('helix');
-    const aura = await load('aura');
-    expect(resolvePreset(helix.Theme, helix.preset)).toBe(resolvePreset(aura.Theme, aura.preset));
+  it('helixPreset is Aura with the Helix identity: indigo primary, zinc surfaces in both schemes', async () => {
+    const helix = tokensOf(
+      resolvePreset(...(Object.values(await load('helix')) as [unknown, unknown])),
+    );
+    const aura = tokensOf(
+      resolvePreset(...(Object.values(await load('aura')) as [unknown, unknown])),
+    );
+    expect(helix.light['--h-primary-color']).toBe('var(--h-primary-600)');
+    expect(helix.light['--h-primary-500']).toBe('var(--h-indigo-500)');
+    expect(helix.light['--h-surface-500']).toBe('var(--h-zinc-500)');
+    expect(helix.dark['--h-surface-500']).toBe('var(--h-zinc-500)');
+    expect(helix.light['--h-text-color']).toBe('var(--h-surface-950)');
+    expect(helix.light['--h-button-primary-background']).toBe(
+      aura.light['--h-button-primary-background'],
+    ); // component layer untouched
+    expect(Object.keys(helix.light)).toEqual(Object.keys(aura.light)); // same token set, different values
   });
 });

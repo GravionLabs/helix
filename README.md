@@ -34,17 +34,18 @@ import { Button } from '@gravionlabs/helix-core/button';
 <h-button label="Save" />
 ```
 
-Theming ships the Aura, Lara and Nora presets vendored into `helix-core`, and `helixPreset`
-(`themes/helix`) — Helix's own look as tokens on top of Aura (see
-[ADR 0001](docs/adr/0001-styling-foundation.md); it equals Aura until the design work of epic #519 lands):
+Theming ships `helixPreset` (`themes/helix`) — Helix's own look as tokens on top of Aura: zinc
+neutrals, indigo primary, Space Grotesk / Figtree / Fira Code (see
+[ADR 0001](docs/adr/0001-styling-foundation.md), epic #519) — plus the Aura, Lara and Nora presets
+vendored into `helix-core`:
 
 ```ts
 // app.config.ts
-import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHelix({ theme: { preset: auraPreset } })],
+  providers: [provideHelix({ theme: { preset: helixPreset } })],
 };
 ```
 

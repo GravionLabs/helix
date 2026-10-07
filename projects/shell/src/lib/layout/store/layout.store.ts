@@ -36,8 +36,8 @@ function writeCollapsed(collapsed: boolean): void {
 
 const initialState: LayoutStoreState = {
   // Config
-  preset: 'Aura',
-  primary: 'emerald',
+  preset: 'Helix',
+  primary: null,
   surface: null,
   darkTheme: false,
   menuMode: 'static',
@@ -123,7 +123,7 @@ export const LayoutStore = signalStore(
     setPreset(preset: string): void {
       patchState(store, { preset });
     },
-    setPrimary(primary: string): void {
+    setPrimary(primary: string | null): void {
       patchState(store, { primary });
     },
     setSurface(surface: string | null): void {

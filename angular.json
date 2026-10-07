@@ -161,6 +161,9 @@
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
+              "node_modules/@fontsource-variable/figtree/index.css",
+              "node_modules/@fontsource-variable/space-grotesk/index.css",
+              "node_modules/@fontsource-variable/fira-code/index.css",
               "apps/helix-demo/src/styles.scss",
               "dist/shell/styles.css",
               "dist/ag-grid/styles.css"

@@ -12,7 +12,7 @@ Angular application shell for [Helix](../../README.md), extending
 - 🔐 **Auth & error pages** — login, error, access-denied, not-found, with lazy route config
 - 🚀 **Landing widgets** — hero, features, highlights, pricing, footer sections
 - 📝 **Form infrastructure** — `HelixFormField`, `HelixValidators`, `helixFormErrorMap`
-- 🎨 **Helix + PrimeUIX theming** — Aura / Lara / Nora presets, dark mode via View Transitions
+- 🎨 **Helix theming** — the Helix preset (plus Aura / Lara / Nora), dark mode via View Transitions
 - 📦 **Standalone components** — no NgModule required
 
 ## Installation
@@ -30,14 +30,14 @@ npm install @gravionlabs/helix-shell
 
 ```typescript
 // app.config.ts
-import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
+import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideHttpClient(),
-    provideHelix({ theme: { preset: auraPreset, options: { darkModeSelector: '.app-dark' } } })
+    provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })
   ]
 };
 ```

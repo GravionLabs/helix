@@ -12,12 +12,12 @@ describe('LayoutStore', () => {
   });
 
   describe('initial state', () => {
-    it('should have default preset "Aura"', () => {
-      expect(store.preset()).toBe('Aura');
+    it('should have default preset "Helix"', () => {
+      expect(store.preset()).toBe('Helix');
     });
 
-    it('should have default primary "emerald"', () => {
-      expect(store.primary()).toBe('emerald');
+    it("should have no primary by default (the preset's own)", () => {
+      expect(store.primary()).toBeNull();
     });
 
     it('should have default surface null', () => {
@@ -235,8 +235,8 @@ describe('LayoutStore', () => {
 
       store.reset();
 
-      expect(store.preset()).toBe('Aura');
-      expect(store.primary()).toBe('emerald');
+      expect(store.preset()).toBe('Helix');
+      expect(store.primary()).toBeNull();
       expect(store.surface()).toBeNull();
       expect(store.darkTheme()).toBe(false);
       expect(store.menuMode()).toBe('static');

@@ -72,7 +72,8 @@ describe('HelixConfigurator', () => {
     expect(store.surface()).toBe('slate');
   });
 
-  it('should expose presetOptions with Aura, Lara, Nora', () => {
+  it('should expose presetOptions with Helix, Aura, Lara, Nora', () => {
+    expect(component.presetOptions).toContain('Helix');
     expect(component.presetOptions).toContain('Aura');
     expect(component.presetOptions).toContain('Lara');
     expect(component.presetOptions).toContain('Nora');
