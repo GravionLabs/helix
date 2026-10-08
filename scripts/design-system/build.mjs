@@ -123,9 +123,9 @@ export function writeSystem(files, out = OUT) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  for (const needed of ['dist/tokens/helix.json', 'dist/core/fesm2022']) {
+  for (const needed of ['dist/tokens/helix.json']) {
     if (!fs.existsSync(path.join(ROOT, needed))) {
-      console.error(`${needed} not found — run \`pnpm build:lib\` first`);
+      console.error(`${needed} not found — run \`pnpm tokens:export\` first`);
       process.exit(1);
     }
   }

@@ -1,10 +1,9 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { buildStyles, buildTokens, componentStyles, undefinedVariables } from '../build-ui-css.mjs';
 
 const ROOT = resolve(__dirname, '../..');
-const built = existsSync(resolve(ROOT, 'dist/core/fesm2022'));
 
 describe('helix-ui styles', () => {
   const styles = componentStyles();
@@ -57,10 +56,10 @@ describe('helix-ui styles', () => {
   });
 });
 
-describe.skipIf(!built)('helix-ui tokens (built core)', () => {
+describe('helix-ui tokens', () => {
   it('defines every token the styles read, light and dark', async () => {
     const styles = componentStyles();
-    const tokens = await buildTokens(styles);
+    const tokens = buildTokens(styles);
     expect(undefinedVariables(buildStyles(styles), tokens)).toEqual([]);
     expect(tokens).toContain(':root,:host{--h-');
     expect(tokens).toContain('.app-dark');

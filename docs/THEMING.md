@@ -87,8 +87,10 @@ At runtime, `updatePreset()`, `updatePrimaryPalette()` and `updateSurfacePalette
 
 ## Static tokens, outside Angular
 
-`pnpm tokens:export [preset …]` resolves a preset with the same engine and writes
-`dist/tokens/<preset>.css` (all `--h-*` variables, light and dark) and `<preset>.json`. With `--base`
+`pnpm tokens:export` resolves the token data of [`projects/tokens`](../projects/tokens/README.md) with the
+resolver of `scripts/tokens/resolve.mjs` (no engine, nothing has to be built first) and writes
+`dist/tokens/helix.css` (all `--h-*` variables, light and dark) and `helix.json`. Helix is the only preset with
+token data; Aura, Lara and Nora existed only inside the engine of helix-core. With `--base`
 only the primitive, semantic and global layers are written (~16 kB) — enough for a page that is not
 built from Helix components — and `--dark=<selector>` picks the dark-scheme selector. The
 documentation site is themed this way: `pnpm tokens:site` writes

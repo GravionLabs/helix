@@ -38,7 +38,8 @@ jobs:
         with:
           package-manager: pnpm
       - run: pnpm install --frozen-lockfile
-      # The site is themed from the design tokens of helixPreset, which `build:lib` builds and exports.
+      # The demo needs the built libraries. The site's design tokens (`build:site` → `tokens:site`) are resolved
+      # from projects/tokens and need nothing built.
       - name: Build the libraries
         run: pnpm build:lib
       # Dead links in the documents fail this step.

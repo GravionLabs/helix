@@ -3,8 +3,8 @@ import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { helixTokens, palettes } from '../../projects/tokens/src/index.ts';
 import { TOKEN_COMPONENTS } from '../build-ui-css.mjs';
-import { loadPreset } from '../export-tokens.mjs';
 import { auraPrimitive, mute, SCALES } from '../helix-palettes.mjs';
+import { loadPreset } from '../tokens/core-engine.mjs';
 
 const ROOT = resolve(__dirname, '../..');
 const SRC = join(ROOT, 'projects/tokens/src');

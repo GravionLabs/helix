@@ -16,7 +16,7 @@
 //            (the engine walks with a stack); a layer is light first (`:root,:host`), dark after it.
 //  - Layers: primitive; semantic (light = everything but `colorScheme`, plus `colorScheme.light`; dark =
 //            `colorScheme.dark`); global (`color-scheme: light|dark`); then one block per component.
-//  - Dark:   under the dark selector, a class (`.app-dark`) in this version.
+//  - Dark:   under the dark selector: a class (`.app-dark`), or an attribute (`[data-theme="dark"]`, on the root).
 //
 // Pure functions, no I/O.
 
@@ -74,11 +74,14 @@ export function declare(tree, prefixPath = []) {
 
 const text = (declarations) => declarations.map(({ name, value }) => `${name}:${value};`).join('');
 
+/**
+ * The rule of the dark scheme: a class selector (`.app-dark`) is used as it is; an attribute selector
+ * (`[data-theme="dark"]`) applies to the root element, `:root[…],:host[…]`.
+ */
 function darkRule(css, darkSelector) {
-  if (!/^\.[a-zA-Z][\w-]*$/.test(darkSelector)) {
-    throw new Error(`dark selector "${darkSelector}": only a class selector like ".app-dark" is supported`);
-  }
-  return `${darkSelector}{${css}}`;
+  if (/^\.[a-zA-Z][\w-]*$/.test(darkSelector)) return `${darkSelector}{${css}}`;
+  if (/^\[.+\]$/.test(darkSelector)) return `:root${darkSelector},:host${darkSelector}{${css}}`;
+  throw new Error(`dark selector "${darkSelector}": only a class (".app-dark") or an attribute ("[data-theme=dark]") selector is supported`);
 }
 
 const rule = (selector, css) => (css ? `${selector}{${css}}` : '');
