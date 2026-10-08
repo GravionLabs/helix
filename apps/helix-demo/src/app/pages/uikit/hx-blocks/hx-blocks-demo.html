@@ -1,6 +1,28 @@
 <h1 class="sr-only">Helix UI building blocks</h1>
 <div class="flex flex-col gap-layout">
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Theme service</h2>
+    <p class="m-0">
+      <code>HxTheme</code> switches the primary colour and the surface scale with CSS variables only, in light and dark
+      mode. Here it is provided for this page; an app uses <code>provideHxTheme()</code>.
+    </p>
+    <div class="flex flex-wrap items-end gap-4">
+      <div class="field">
+        <label for="theme-primary">Primary colour</label>
+        <hx-select inputId="theme-primary" placeholder="Helix (indigo)" showClear [options]="primaryColors" [ngModel]="theme.primary()" (ngModelChange)="theme.setPrimary($event)" />
+      </div>
+      <div class="field">
+        <label for="theme-surface">Surface</label>
+        <hx-select inputId="theme-surface" placeholder="Helix" showClear [options]="surfaces" [ngModel]="theme.surface()" (ngModelChange)="theme.setSurface($event)" />
+      </div>
+      <button hx-button>Primary button</button>
+      <button hx-button variant="outlined">Outlined</button>
+      <input type="checkbox" hx-checkbox checked aria-label="A checked box" />
+      <input type="checkbox" hx-switch checked aria-label="A switch" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Divider</h2>
     <p class="m-0">A line between content; the content is a label on the line.</p>
     <hx-divider />
