@@ -37,6 +37,7 @@ export { HxSwitch } from './lib/switch/switch';
 export {
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,
+  HX_SURFACES,
   HX_THEME_OPTIONS,
   type HxPrimaryColor,
   type HxSurface,

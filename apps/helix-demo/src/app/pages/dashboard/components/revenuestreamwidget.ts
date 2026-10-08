@@ -32,11 +32,10 @@ export class RevenueStreamWidget {
     });
 
     // The colours are read from the CSS variables, so draw again when the theme changes: dark mode,
-    // primary colour, preset or surface palette (the configurator applies them right after the store).
+    // primary colour or surface (the theme service applies them as soon as the store passes them on).
     effect(() => {
       this.store.darkTheme();
       this.store.primary();
-      this.store.preset();
       this.store.surface();
       setTimeout(() => {
         this.initChart();

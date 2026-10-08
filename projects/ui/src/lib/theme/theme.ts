@@ -55,7 +55,15 @@ export interface HxThemeOptions {
   primary?: HxPrimaryColor | null;
   /** The surface scale when nothing is remembered; `null` is the one of the preset. */
   surface?: HxSurface | null;
+  /**
+   * Cross-fades the page when dark mode is switched, with the View Transitions API where the browser has it
+   * (the first value at start-up is applied at once). Default `false`.
+   */
+  viewTransition?: boolean;
 }
+
+/** The scales of the surfaces, by name: for swatches in a colour chooser (`HX_SURFACES.zinc[500]`). */
+export { HX_SURFACES };
 
 export const HX_THEME_OPTIONS = new InjectionToken<HxThemeOptions>('HX_THEME_OPTIONS', {
   providedIn: 'root',
@@ -164,13 +172,24 @@ export class HxTheme {
     return `${surface ? surfaceCss(surface, dark) : ''}${primary ? primaryCss(primary, dark) : ''}`;
   });
 
+  #darkApplied = false;
   #write: ((css: string) => void) | null = null;
   #remove: (() => void) | null = null;
 
   constructor() {
     effect(() => {
+      const dark = this.#dark();
+      if (!this.#browser) return;
       const root = this.#doc.documentElement;
-      if (this.#browser) this.#darkSelector.apply(root, this.#dark());
+      const doc = this.#doc as Document & { startViewTransition?: (update: () => void) => unknown };
+      const apply = () => this.#darkSelector.apply(root, dark);
+      // the first value is the start-up state: nothing to cross-fade from
+      if (this.#darkApplied && this.#options.viewTransition && doc.startViewTransition) {
+        doc.startViewTransition(apply);
+      } else {
+        apply();
+      }
+      this.#darkApplied = true;
     });
     effect(() => {
       const css = this.css();

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { HxTheme } from '@gravionlabs/helix-ui';
 import { LayoutStore } from './layout.store';
 
 describe('LayoutStore', () => {
@@ -12,10 +13,6 @@ describe('LayoutStore', () => {
   });
 
   describe('initial state', () => {
-    it('should have default preset "Helix"', () => {
-      expect(store.preset()).toBe('Helix');
-    });
-
     it("should have no primary by default (the preset's own)", () => {
       expect(store.primary()).toBeNull();
     });
@@ -192,19 +189,13 @@ describe('LayoutStore', () => {
 
   describe('updateConfig()', () => {
     it('should apply partial config update', () => {
-      store.updateConfig({ preset: 'Lara', primary: 'blue' });
-      expect(store.preset()).toBe('Lara');
-      expect(store.primary()).toBe('blue');
+      store.updateConfig({ menuMode: 'overlay' });
+      expect(store.menuMode()).toBe('overlay');
       expect(store.darkTheme()).toBe(false);
     });
   });
 
-  describe('setPreset() / setPrimary() / setSurface()', () => {
-    it('should set preset', () => {
-      store.setPreset('Nora');
-      expect(store.preset()).toBe('Nora');
-    });
-
+  describe('setPrimary() / setSurface()', () => {
     it('should set primary', () => {
       store.setPrimary('blue');
       expect(store.primary()).toBe('blue');
@@ -224,10 +215,6 @@ describe('LayoutStore', () => {
 
   describe('reset()', () => {
     it('should restore initial state after mutations', () => {
-      store.setPreset('Nora');
-      store.setPrimary('blue');
-      store.setSurface('slate');
-      store.toggleDarkMode();
       store.setMenuMode('overlay');
       store.showConfigSidebar();
       store.setActivePath('/test');
@@ -235,10 +222,6 @@ describe('LayoutStore', () => {
 
       store.reset();
 
-      expect(store.preset()).toBe('Helix');
-      expect(store.primary()).toBeNull();
-      expect(store.surface()).toBeNull();
-      expect(store.darkTheme()).toBe(false);
       expect(store.menuMode()).toBe('static');
       expect(store.configSidebarVisible()).toBe(false);
       expect(store.activePath()).toBeNull();
@@ -303,6 +286,38 @@ describe('LayoutStore', () => {
         configurable: true,
         value: 1024,
       });
+    });
+  });
+
+  describe('the theme service of helix-ui is the one source of dark mode, primary colour and surface', () => {
+    it('reads what the service holds', () => {
+      const theme = TestBed.inject(HxTheme);
+      theme.setDark(true);
+      theme.setPrimary('teal');
+      theme.setSurface('zinc');
+      expect(store.darkTheme()).toBe(true);
+      expect(store.isDarkTheme()).toBe(true);
+      expect(store.primary()).toBe('teal');
+      expect(store.surface()).toBe('zinc');
+    });
+
+    it('writes to the service', () => {
+      const theme = TestBed.inject(HxTheme);
+      store.toggleDarkMode();
+      store.setPrimary('rose');
+      store.setSurface('stone');
+      expect(theme.dark()).toBe(true);
+      expect(theme.primary()).toBe('rose');
+      expect(theme.surface()).toBe('stone');
+    });
+
+    it('is left alone by reset(): the colours are not layout state', () => {
+      const theme = TestBed.inject(HxTheme);
+      store.setPrimary('lime');
+      store.toggleDarkMode();
+      store.reset();
+      expect(theme.primary()).toBe('lime');
+      expect(theme.dark()).toBe(true);
     });
   });
 

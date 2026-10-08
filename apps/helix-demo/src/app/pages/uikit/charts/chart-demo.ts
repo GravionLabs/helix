@@ -39,7 +39,6 @@ export class ChartDemo {
   chartEffect = effect(() => {
     this.store.darkTheme();
     this.store.primary();
-    this.store.preset();
     this.store.surface();
     setTimeout(() => this.initCharts(), 150);
   });

@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 import { provideHelix } from '@gravionlabs/helix-core/config';
 import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
+import { provideHxTheme } from '@gravionlabs/helix-ui';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { appRoutes } from './app.routes';
 
@@ -20,6 +21,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideZonelessChangeDetection(),
     provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } }),
+    // Dark mode, primary colour and surface (the shell's configurator and top bar change them). The demo
+    // starts light, as it always did, and fades between the schemes.
+    provideHxTheme({ dark: false, viewTransition: true }),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),
       languages: {

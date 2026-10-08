@@ -82,20 +82,21 @@ describe('helix-palettes', () => {
   });
 });
 
-describe('helix-palettes covers the configurator', () => {
-  it('mutes every primary colour the demo configurator offers', async () => {
+describe('helix-palettes covers the theme service', () => {
+  it('mutes every primary colour the theme service offers', async () => {
     const { readFileSync } = await import('node:fs');
     const { SCALES } = await import('../helix-palettes.mjs');
     const source = readFileSync(
-      resolve(
-        __dirname,
-        '../../projects/shell/src/lib/layout/components/configurator/configurator.ts',
-      ),
+      resolve(__dirname, '../../projects/ui/src/lib/theme/theme.ts'),
       'utf8',
     );
     const offered = [
-      ...(/const colors = \[([\s\S]*?)\];/.exec(source)?.[1] ?? '').matchAll(/'([a-z]+)'/g),
-    ].map((m) => m[1]);
+      ...(/HX_PRIMARY_COLORS = \[([\s\S]*?)\] as const/.exec(source)?.[1] ?? '').matchAll(
+        /'([a-z]+)'/g,
+      ),
+    ]
+      .map((m) => m[1])
+      .filter((color) => color !== 'noir'); // noir is the surface scale, not a colour scale
     expect(offered.length).toBe(16);
     expect(offered.filter((c) => !SCALES.includes(c))).toEqual([]);
   });
