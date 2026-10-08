@@ -10,6 +10,7 @@ import { RatingWidget } from './dynamicform-advanced/rating-widget';
 import { DynamicFormJsonDemo } from './dynamicform-json/dynamic-form-json-demo';
 import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
+import { HxBlocksDemo } from './hx-blocks/hx-blocks-demo';
 import { HxButtonDemo } from './hx-button/hx-button-demo';
 import { HxFormDemo } from './hx-form/hx-form-demo';
 import { HxSelectDemo } from './hx-select/hx-select-demo';
@@ -35,6 +36,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'dynamicform-json': DynamicFormJsonDemo,
   file: FileDemo,
   formlayout: FormLayoutDemo,
+  'hx-blocks': HxBlocksDemo,
   'hx-button': HxButtonDemo,
   'hx-form': HxFormDemo,
   'hx-select': HxSelectDemo,

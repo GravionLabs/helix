@@ -33,7 +33,12 @@ describe('helix-ui styles', () => {
     ['input', 'input/input.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['radio', 'radio/radio.ts'],
+    ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
+    ['divider', 'divider/divider.ts'],
+    ['password', 'password/password.ts'],
     ['select', 'select/select.ts'],
+    ['select-button', 'select-button/select-button.ts'],
+    ['tooltip', 'tooltip/tooltip.ts'],
     ['switch', 'switch/switch.ts'],
   ])('styles every class the %s directive sets', (name, file) => {
     const directive = readFileSync(resolve(ROOT, 'projects/ui/src/lib', file), 'utf8');

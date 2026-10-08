@@ -1,0 +1,83 @@
+/*
+ * Breadcrumb: `<hx-breadcrumb>`. Same look as the helix-core breadcrumb, from the `--h-breadcrumb-*` tokens.
+ * The separator is a chevron drawn with a mask, so it follows the token colour.
+ */
+.hx-breadcrumb {
+  display: block;
+  padding: var(--h-breadcrumb-padding);
+  background: var(--h-breadcrumb-background);
+  overflow-x: auto;
+}
+
+.hx-breadcrumb-list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--h-breadcrumb-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hx-breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-breadcrumb-item-gap);
+  border-radius: var(--h-breadcrumb-item-border-radius);
+  color: var(--h-breadcrumb-item-color);
+  text-decoration: none;
+  white-space: nowrap;
+  outline-color: transparent;
+  transition:
+    color var(--h-breadcrumb-transition-duration),
+    outline-color var(--h-breadcrumb-transition-duration),
+    box-shadow var(--h-breadcrumb-transition-duration);
+}
+
+a.hx-breadcrumb-link {
+  cursor: pointer;
+}
+
+a.hx-breadcrumb-link:hover {
+  color: var(--h-breadcrumb-item-hover-color);
+}
+
+a.hx-breadcrumb-link:hover .hx-breadcrumb-icon {
+  color: var(--h-breadcrumb-item-icon-hover-color);
+}
+
+a.hx-breadcrumb-link:focus-visible {
+  outline: var(--h-breadcrumb-item-focus-ring-width) var(--h-breadcrumb-item-focus-ring-style)
+    var(--h-breadcrumb-item-focus-ring-color);
+  outline-offset: var(--h-breadcrumb-item-focus-ring-offset);
+  box-shadow: var(--h-breadcrumb-item-focus-ring-shadow);
+}
+
+.hx-breadcrumb-icon {
+  color: var(--h-breadcrumb-item-icon-color);
+}
+
+.hx-breadcrumb-link[aria-disabled="true"] {
+  opacity: 0.6;
+}
+
+.hx-breadcrumb-separator {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  background: var(--h-breadcrumb-separator-color);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-breadcrumb-link {
+    transition: none;
+  }
+}

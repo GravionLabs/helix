@@ -1,0 +1,21 @@
+:host {
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.hint {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.vertical-row {
+  display: flex;
+  align-items: center;
+  min-height: 4rem;
+}
