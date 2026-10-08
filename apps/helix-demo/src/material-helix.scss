@@ -1,0 +1,92 @@
+// SPIKE (Angular Material hybrid): Angular Material 22 themed with the Helix design tokens.
+//
+// Material's M3 components read `--mat-sys-*` system tokens and per-component `--mat-*` tokens. Here the
+// system tokens point at the semantic Helix tokens (`--h-*`), which already switch under `.app-dark`, so dark
+// mode and a runtime primary colour reach Material without a second theme. Component overrides set what makes
+// Helix look like Helix (radii, heights, outline widths) where the system mapping is not enough.
+@use '@angular/material' as mat;
+
+html {
+  // A base theme is still needed for the token structure and the values nobody overrides
+  // (state-layer opacities, elevation). Its colours are replaced below.
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+      ),
+      typography: (
+        plain-family: var(--helix-font-sans),
+        brand-family: var(--helix-font-sans),
+      ),
+      density: 0,
+    )
+  );
+
+  @include mat.theme-overrides(
+    (
+      primary: var(--h-primary-color),
+      on-primary: var(--h-primary-contrast-color),
+      primary-container: var(--h-highlight-background),
+      on-primary-container: var(--h-highlight-color),
+      secondary-container: var(--h-highlight-background),
+      on-secondary-container: var(--h-highlight-color),
+      background: var(--h-content-background),
+      on-background: var(--h-text-color),
+      surface: var(--h-content-background),
+      on-surface: var(--h-text-color),
+      on-surface-variant: var(--h-text-muted-color),
+      surface-container-lowest: var(--h-content-background),
+      surface-container-low: var(--h-overlay-popover-background),
+      surface-container: var(--h-overlay-select-background),
+      surface-container-high: var(--h-overlay-modal-background),
+      surface-container-highest: var(--h-form-field-filled-background),
+      outline: var(--h-form-field-border-color),
+      outline-variant: var(--h-content-border-color),
+      error: var(--h-form-field-invalid-border-color),
+      on-error: var(--h-primary-contrast-color),
+      inverse-surface: var(--h-tooltip-background),
+      inverse-on-surface: var(--h-tooltip-color),
+      corner-extra-small: var(--h-border-radius-xs),
+      corner-small: var(--h-border-radius-sm),
+      corner-medium: var(--h-border-radius-md),
+      corner-large: var(--h-border-radius-lg),
+      corner-extra-large: var(--h-border-radius-xl),
+    )
+  );
+
+  // Helix buttons: the radius and weight of the button tokens, not M3's pill
+  @include mat.button-overrides(
+    (
+      filled-container-shape: var(--h-button-border-radius),
+      outlined-container-shape: var(--h-button-border-radius),
+      text-container-shape: var(--h-button-border-radius),
+      filled-label-text-weight: var(--h-button-label-font-weight),
+      outlined-label-text-weight: var(--h-button-label-font-weight),
+      text-label-text-weight: var(--h-button-label-font-weight),
+      filled-label-text-size: 1rem,
+      outlined-label-text-size: 1rem,
+      text-label-text-size: 1rem,
+      filled-horizontal-padding: var(--h-button-padding-x),
+      outlined-horizontal-padding: var(--h-button-padding-x),
+      outlined-outline-color: var(--h-button-outlined-primary-border-color),
+    )
+  );
+
+  // Helix fields: a single 1px outline, the field radius, a compact height
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: var(--h-form-field-border-radius),
+      outlined-outline-color: var(--h-form-field-border-color),
+      outlined-hover-outline-color: var(--h-form-field-hover-border-color),
+      outlined-focus-outline-color: var(--h-form-field-focus-border-color),
+      outlined-focus-outline-width: 1px,
+      outlined-input-text-placeholder-color: var(--h-form-field-placeholder-color),
+      outlined-label-text-color: var(--h-form-field-float-label-color),
+      outlined-focus-label-text-color: var(--h-form-field-float-label-focus-color),
+      container-height: 2.625rem,
+      container-vertical-padding: 0.5rem,
+      container-text-size: 1rem,
+    )
+  );
+}

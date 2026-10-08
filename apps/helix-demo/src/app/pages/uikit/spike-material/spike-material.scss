@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.label {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.inline {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.spike-table {
+  width: 100%;
+}

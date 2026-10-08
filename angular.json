@@ -200,7 +200,8 @@
               "dist/shell/styles.css",
               "dist/ag-grid/styles.css",
               "dist/ui/tokens.css",
-              "dist/ui/styles.css"
+              "dist/ui/styles.css",
+              "apps/helix-demo/src/material-helix.scss"
             ]
           },
           "configurations": {

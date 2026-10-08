@@ -29,4 +29,5 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Helix UI Button', icon: 'pi pi-fw pi-box', path: 'hx-button' },
   { label: 'Helix UI Form', icon: 'pi pi-fw pi-box', path: 'hx-form' },
   { label: 'Helix UI Select', icon: 'pi pi-fw pi-box', path: 'hx-select' },
+  { label: 'Spike: Material', icon: 'pi pi-fw pi-box', path: 'spike-material' },
 ];

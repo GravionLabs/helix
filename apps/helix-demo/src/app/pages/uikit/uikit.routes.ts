@@ -22,6 +22,7 @@ import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
 import { OverlayDemo } from './overlay/overlay-demo';
 import { PanelsDemo } from './panel/panels-demo';
+import { SpikeMaterial } from './spike-material/spike-material';
 import { TableDemo } from './table/table-demo';
 import { TimelineDemo } from './timeline/timeline-demo';
 import { TopbarDemo } from './topbar/topbar-demo';
@@ -40,6 +41,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'hx-button': HxButtonDemo,
   'hx-form': HxFormDemo,
   'hx-select': HxSelectDemo,
+  'spike-material': SpikeMaterial,
   input: InputDemo,
   list: ListDemo,
   media: MediaDemo,
