@@ -1,7 +1,7 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { Tooltip } from '@gravionlabs/helix-core/tooltip';
+import { HxTooltip } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from './nav-rail-item';
 
@@ -296,14 +296,15 @@ describe('HelixNavRailItem', () => {
         routerLink: ['/dashboard'],
       });
       fixture.detectChanges();
-      const tooltip = () => fixture.debugElement.query(By.directive(Tooltip)).injector.get(Tooltip);
-      expect(tooltip().content()).toBe('Dashboard');
+      const tooltip = () =>
+        fixture.debugElement.query(By.directive(HxTooltip)).injector.get(HxTooltip);
+      expect(tooltip().text()).toBe('Dashboard');
       expect(tooltip().disabled()).toBe(true);
       expect(host().querySelector('a')?.getAttribute('title')).toBe('Dashboard');
 
       collapse();
       expect(tooltip().disabled()).toBe(false);
-      expect(tooltip().tooltipPosition()).toBe('right');
+      expect(tooltip().position()).toBe('right');
       expect(host().querySelector('a')?.hasAttribute('title')).toBe(false);
     });
 

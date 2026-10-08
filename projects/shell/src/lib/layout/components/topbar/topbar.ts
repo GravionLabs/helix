@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import type { MenuItem } from '@gravionlabs/helix-core/api';
-import { Breadcrumb } from '@gravionlabs/helix-core/breadcrumb';
 import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
+import { HxBreadcrumb } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
@@ -45,7 +45,7 @@ const DEFAULT_ITEMS: HelixTopbarItem[] = [
     HelixAlertAction,
     HelixConfiguratorAction,
     HelixDarkModeAction,
-    Breadcrumb,
+    HxBreadcrumb,
   ],
   templateUrl: './topbar.html',
   changeDetection: ChangeDetectionStrategy.Eager,

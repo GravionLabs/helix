@@ -11,12 +11,12 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HelixConfig } from '@gravionlabs/helix-core/config';
-import { SelectButtonModule } from '@gravionlabs/helix-core/selectbutton';
 import { $t, updatePreset, updateSurfacePalette } from '@gravionlabs/helix-core/themes';
 import { auraPreset } from '@gravionlabs/helix-core/themes/aura';
 import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
 import { laraPreset } from '@gravionlabs/helix-core/themes/lara';
 import { noraPreset } from '@gravionlabs/helix-core/themes/nora';
+import { HxSelectButton } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 
 const presets = {
@@ -49,7 +49,7 @@ declare type SurfacesType = {
 @Component({
   selector: 'helix-configurator',
   standalone: true,
-  imports: [CommonModule, FormsModule, SelectButtonModule],
+  imports: [CommonModule, FormsModule, HxSelectButton],
   templateUrl: './configurator.html',
   styleUrl: './configurator.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
