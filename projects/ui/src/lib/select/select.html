@@ -19,15 +19,11 @@
   <span class="hx-select-label" [class.hx-select-placeholder]="!selected()">{{
     selected()?.label ?? placeholder()
   }}</span>
-  <svg class="hx-select-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="m3 5.5 4 4 4-4" />
-  </svg>
+  <span class="hx-select-chevron" aria-hidden="true"></span>
 </button>
 @if (canClear()) {
   <button type="button" class="hx-select-clear" aria-label="Clear selection" (click)="clear($event)">
-    <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
-      <path d="m3.5 3.5 7 7M10.5 3.5l-7 7" />
-    </svg>
+    <span class="hx-select-clear-icon" aria-hidden="true"></span>
   </button>
 }
 

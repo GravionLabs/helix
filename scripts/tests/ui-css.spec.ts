@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import * as sass from 'sass';
 import { describe, expect, it } from 'vitest';
 import { buildStyles, buildTokens, componentStyles, undefinedVariables } from '../build-ui-css.mjs';
 
@@ -69,5 +70,71 @@ describe('helix-ui tokens', () => {
     expect(tokens).toContain(':root,:host{--h-');
     expect(tokens).toContain('.app-dark');
     expect(tokens).toMatch(/--h-button-primary-background:/);
+  });
+});
+
+describe('helix-ui icons (styles/_icons.scss)', () => {
+  const STYLES = resolve(ROOT, 'projects/ui/styles');
+  const compile = (source: string) =>
+    sass.compileString(`@use 'icons' as *;\n${source}`, { loadPaths: [STYLES] }).css;
+  const iconSource = readFileSync(resolve(STYLES, '_icons.scss'), 'utf8');
+  const iconMap = iconSource.slice(iconSource.indexOf('$hx-icons: ('), iconSource.indexOf('\n);'));
+  const names = [...iconMap.matchAll(/^ {2}([a-z-]+): /gm)].map((m) => m[1]);
+
+  it('is a partial: it is no component stylesheet and emits no CSS of its own', () => {
+    expect(componentStyles().map((s) => s.name)).not.toContain('icons');
+    expect(compile('')).toBe('');
+  });
+
+  it('knows the icons the components need', () => {
+    for (const icon of [
+      'chevron-down',
+      'chevron-up',
+      'chevron-left',
+      'chevron-right',
+      'check',
+      'close',
+      'plus',
+      'minus',
+      'search',
+      'calendar',
+      'eye',
+      'eye-off',
+      'upload',
+      'spinner',
+      'info',
+      'success',
+      'warn',
+      'error',
+      'star',
+      'star-filled',
+      'bars',
+    ]) {
+      expect(names).toContain(icon);
+    }
+  });
+
+  it.each(names)('draws %s as a mask in the given colour', (name) => {
+    const out = compile(`.i { @include hx-icon(${name}, 2rem, red, 2.5); }`);
+    expect(out).toContain('width: 2rem');
+    expect(out).toContain('background: red');
+    expect(out).toMatch(
+      /mask: url\("data:image\/svg\+xml,%3Csvg[^"]+"\) center\/contain no-repeat/,
+    );
+    expect(out).toMatch(/-webkit-mask: url\(/);
+    expect(out).not.toMatch(/[<>#]/); // a data URI must be escaped
+  });
+
+  it('fills solid icons and strokes the others with the requested width', () => {
+    expect(compile('.i { @include hx-icon(star-filled); }')).toContain("fill='black'");
+    expect(compile('.i { @include hx-icon(check, 1em, red, 3.4); }')).toContain(
+      "stroke-width='3.4'",
+    );
+  });
+
+  it('fails on an unknown icon, naming the known ones', () => {
+    expect(() => compile('.i { @include hx-icon(nope); }')).toThrow(
+      /Unknown helix-ui icon `nope`.*chevron-down/,
+    );
   });
 });

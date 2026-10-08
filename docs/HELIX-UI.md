@@ -243,6 +243,31 @@ email.errors; // { Required: 'Email is required' } while the field is empty
   `MinLength`, `MaxLength`, `Pattern`, `Date`, `OneOf`, `AllOf`), so templates and error resolvers can switch on it.
 - It is the same code as `@gravionlabs/helix-core/validators`; `helix-zod` and the shell move to this entry point.
 
+## Icons
+
+Components draw the few icons they need themselves, as CSS masks in the colour of the element, so an app needs no
+icon font for helix-ui to look right. The icons live in `projects/ui/styles/_icons.scss` (a partial: it emits no
+CSS of its own) on a 24 × 24 grid with round caps and joins:
+
+`chevron-down`, `chevron-up`, `chevron-left`, `chevron-right`, `check`, `close`, `plus`, `minus`, `search`,
+`calendar`, `eye`, `eye-off`, `upload`, `spinner`, `info`, `success`, `warn`, `error`, `star`, `star-filled`, `bars`.
+
+```scss
+@use 'icons' as *;
+
+.hx-select-chevron {
+  @include hx-icon(chevron-down, 1rem, var(--h-select-dropdown-color), 2.4);
+}
+```
+
+`hx-icon($name, $size: 1em, $color: currentcolor, $stroke: 2)` sets the box, the colour and the mask; an unknown name
+stops the build with the list of known icons. To add one, add its path to the `$hx-icons` map (a test compiles every
+entry). `hx-icon-spin()` and `hx-icon-spin-keyframes()` turn an icon, with a slower turn for users who prefer
+reduced motion.
+
+Apps are free to keep PrimeIcons (`pi pi-*`) for the content of their own pages and for the `icon` field of menu
+items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the classes of any icon font.
+
 ## Divider
 
 `hx-divider`: a line between content. Projected content is a label sitting on the line.
