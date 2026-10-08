@@ -127,4 +127,112 @@ like `projects/ui/src/lib/tooltip/tooltip.ts`.
 
 ## Issue map
 
-Filled in when the issues exist; see the epics in the GitHub project "Helix".
+Every PBI has one Task with the implementation notes, files and checks.
+
+### #523 Epic: helix-ui — vanilla Angular component library replacing the vendored PrimeNG fork
+
+- **#586 helix-ui foundations for the remaining components**
+  - #602 helix-ui: shared option and id internals
+  - #603 helix-ui: HxMenuItem model
+  - #604 helix-ui: validators entry point
+  - #605 helix-ui: internal icon set
+- **#587 helix-ui form inputs**
+  - #606 helix-ui InputNumber
+  - #607 helix-ui IconField and InputIcon
+  - #608 helix-ui InputGroup
+  - #609 helix-ui FloatLabel
+  - #610 helix-ui Textarea auto-resize
+  - #611 helix-ui ToggleButton
+  - #612 helix-ui Slider
+  - #613 helix-ui Rating
+- **#588 helix-ui selection components (B-mid)**
+  - #614 helix-ui Listbox
+  - #615 helix-ui MultiSelect
+  - #616 helix-ui AutoComplete
+  - #617 helix-ui DatePicker: calendar
+  - #618 helix-ui DatePicker: input and popup
+  - #619 helix-ui FileUpload
+- **#589 helix-ui containers**
+  - #620 helix-ui Card
+  - #621 helix-ui Panel
+  - #622 helix-ui Fieldset
+  - #623 helix-ui Accordion
+  - #624 helix-ui Toolbar
+- **#590 helix-ui overlays and messages**
+  - #754 helix-ui Dialog
+  - #755 helix-ui Drawer
+  - #756 helix-ui Popover
+  - #757 helix-ui ConfirmDialog and ConfirmPopup
+  - #625 helix-ui Toast
+  - #626 helix-ui Message
+- **#591 helix-ui navigation**
+  - #627 helix-ui Tabs
+  - #628 helix-ui Menu (popup, inline, nested)
+  - #629 helix-ui Menubar
+  - #630 helix-ui Paginator (deferred)
+  - #631 helix-ui Stepper
+  - #632 helix-ui SplitButton
+- **#592 helix-ui display components**
+  - #633 helix-ui Badge and OverlayBadge
+  - #634 helix-ui Tag
+  - #635 helix-ui Chip
+  - #636 helix-ui Avatar and AvatarGroup
+  - #637 helix-ui Skeleton
+  - #638 helix-ui ProgressBar and ProgressSpinner
+  - #639 helix-ui ButtonGroup
+  - #640 helix-ui Timeline
+- **#593 helix-ui data components (B-mid)**
+  - #641 helix-ui Table: rendering and column model (deferred)
+  - #642 helix-ui Table: sorting and pagination (deferred)
+  - #643 helix-ui Table: selection, filtering, row expansion (deferred)
+  - #644 helix-ui Tree
+  - #645 helix-ui Chart
+  - #759 helix-ui simple table styles
+  - #760 Data grids with helix-ag-grid
+
+### #583 Epic: Helix tokens and theming without helix-core
+
+- **#594 Helix token source and resolver outside helix-core**
+  - #646 Golden snapshot of the resolved Helix tokens
+  - #647 Token data in projects/tokens
+  - #648 Token resolver of our own
+  - #649 Token pipeline on the new resolver
+- **#595 Runtime theming without the styling engine**
+  - #650 helix-ui theme service
+  - #651 Shell configurator on HxTheme
+  - #652 Theming docs for the token pipeline
+
+### #584 Epic: Move every consumer off helix-core
+
+- **#596 helix-zod without helix-core**
+  - #653 helix-zod: validators from helix-ui
+  - #654 helix-zod: widgets with helix-ui controls
+- **#597 helix-shell without helix-core**
+  - #655 helix-shell: HxMenuItem and validators from helix-ui
+  - #656 helix-shell: no helix-core peer dependency
+- **#598 Demo app on helix-ui**
+  - #657 Demo: dashboard on helix-ui
+  - #658 Demo: CRUD page on helix-ui
+  - #659 Demo: input and form layout pages on helix-ui
+  - #660 Demo: button page on helix-ui
+  - #661 Demo: table page on helix-ui
+  - #662 Demo: list and media pages
+  - #663 Demo: menu page on helix-ui
+  - #664 Demo: message, file and overlay pages on helix-ui
+  - #665 Demo: misc, timeline and panel pages on helix-ui
+  - #666 Demo: tree and charts pages on helix-ui
+  - #667 Demo: dynamic forms, source tabs and the Helix UI pages
+  - #668 Demo: app without the styling engine
+- **#599 Docs and design system on helix-ui**
+  - #669 Component docs for helix-ui
+  - #670 Design System generator on helix-ui
+
+### #585 Epic: Retire helix-core
+
+- **#600 Remove helix-core from the workspace**
+  - #671 Remove projects/core and its build wiring
+  - #672 CI and publishing without helix-core
+- **#601 Communicate the retirement**
+  - #673 Migration guide helix-core → helix-ui
+  - #674 Wording, attribution and ADR 0002
+  - #675 Deprecate helix-core on npm
