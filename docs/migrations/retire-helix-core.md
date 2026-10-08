@@ -44,6 +44,12 @@ files, 19 MB of source.
    `primeicons` peer stays.
 6. **Component scope** is the B-lite and B-mid bar of ADR 0001 plus what the demo's dashboard and CRUD pages
    need. Everything else is dropped; its demo sections are removed (table below).
+7. **Data tables use AG Grid; no Angular Material** (decided 2026-10-08). Interactive tables (sorting,
+   filtering, paging, selection, row actions) use AG Grid Community through `helix-ag-grid`, themed with the
+   `--h-*` tokens; small static tables get plain styles (`table[hx-table]`). The own Table component (three
+   PBIs) and the Paginator stay in the backlog with the label `deferred`. A hybrid on Angular Material was
+   checked and rejected: it themes well, but keeps Material's anatomy, its CSS sits outside the cascade
+   layers, and it would add a second component vocabulary ([spike report](spike-angular-material.md)).
 
 ### Component scope
 
@@ -57,9 +63,9 @@ Password, SelectButton.
 | Selection (B-mid) | Listbox, MultiSelect, AutoComplete, DatePicker, FileUpload |
 | Containers | Card, Panel, Fieldset, Accordion, Toolbar |
 | Overlays and messages | Dialog, Drawer, Popover, ConfirmDialog + ConfirmPopup, Toast, Message |
-| Navigation | Tabs, Menu (popup, inline, nested), Menubar, Paginator, Stepper, SplitButton |
+| Navigation | Tabs, Menu (popup, inline, nested), Menubar, Stepper, SplitButton (Paginator deferred) |
 | Display | Badge + OverlayBadge, Tag, Chip, Avatar + AvatarGroup, Skeleton, ProgressBar + ProgressSpinner, ButtonGroup, Timeline |
-| Data (B-mid) | Table (three steps), Tree, Chart |
+| Data (B-mid) | data grids via `helix-ag-grid` (theme and recipe), simple table styles, Tree, Chart; own Table (three steps) and Paginator deferred |
 
 **Dropped** (no helix-ui counterpart; the demo loses these sections): Knob, ColorPicker, InputMask, InputOtp,
 KeyFilter, CascadeSelect, TreeSelect, TreeTable, PickList, OrderList, DataView, Carousel, Galleria, Image,
