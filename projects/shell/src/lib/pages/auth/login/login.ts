@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { HxButton, HxCheckbox, HxInput, HxPassword } from '@gravionlabs/helix-ui';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
@@ -21,7 +20,6 @@ export interface HelixLoginCredentials {
     HxPassword,
     FormsModule,
     RouterModule,
-    RippleModule,
     HelixFloatingConfigurator,
   ],
   templateUrl: './login.html',

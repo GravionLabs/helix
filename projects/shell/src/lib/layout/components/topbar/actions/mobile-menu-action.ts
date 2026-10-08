@@ -1,23 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { HelixDisclosure } from '../../../disclosure';
 
 @Component({
   selector: 'helix-mobile-menu-action',
   standalone: true,
-  imports: [StyleClassModule],
+  imports: [HelixDisclosure],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button
+      type="button"
       class="layout-topbar-menu-button layout-topbar-action"
-      hStyleClass="@next"
-      enterFromClass="hidden"
-      enterActiveClass="animate-scalein"
-      leaveToClass="hidden"
-      leaveActiveClass="animate-fadeout"
-      [hideOnOutsideClick]="true"
+      [attr.aria-label]="label()"
+      helixDisclosure
+      helixDisclosureAnimate
     >
       <i class="pi pi-ellipsis-v"></i>
     </button>
   `,
 })
-export class HelixMobileMenuAction {}
+export class HelixMobileMenuAction {
+  label = input('More actions');
+}

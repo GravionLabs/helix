@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { HxButton } from '@gravionlabs/helix-ui';
 
 @Component({
   selector: 'helix-hero-widget',
   standalone: true,
-  imports: [HxButton, RippleModule],
+  imports: [HxButton],
   templateUrl: './hero-widget.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hero-widget.scss',

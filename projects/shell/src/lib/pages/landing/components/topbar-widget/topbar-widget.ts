@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 // biome-ignore lint/style/useImportType: DI token, must be value import
 import { Router, RouterModule } from '@angular/router';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { HxButton } from '@gravionlabs/helix-ui';
 import { HelixFloatingConfigurator } from '../../../../layout/components/floating-configurator/floating-configurator';
+import { HelixDisclosure } from '../../../../layout/disclosure';
 import type { HelixNavLink } from '../../landing.model';
 
 const DEFAULT_NAV_LINKS: HelixNavLink[] = [
@@ -17,7 +16,7 @@ const DEFAULT_NAV_LINKS: HelixNavLink[] = [
 @Component({
   selector: 'helix-topbar-widget',
   standalone: true,
-  imports: [RouterModule, StyleClassModule, HxButton, RippleModule, HelixFloatingConfigurator],
+  imports: [RouterModule, HxButton, HelixDisclosure, HelixFloatingConfigurator],
   templateUrl: './topbar-widget.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './topbar-widget.scss',

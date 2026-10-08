@@ -32,22 +32,19 @@
   >
 </a>
 
-<a
+<button
+  type="button"
   hx-button
   variant="text"
   severity="secondary"
   rounded
   iconOnly
   [attr.aria-label]="menuLabel()"
-  hRipple
   class="lg:hidden!"
-  hStyleClass="@next"
-  enterFromClass="hidden"
-  leaveToClass="hidden"
-  [hideOnOutsideClick]="true"
+  helixDisclosure
 >
-  <i class="pi pi-bars text-2xl!"></i>
-</a>
+  <i class="pi pi-bars text-2xl!" aria-hidden="true"></i>
+</button>
 
 <div
   class="items-center bg-surface-0 dark:bg-surface-900 grow justify-between hidden lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border"
@@ -59,7 +56,6 @@
       <li>
         <a
           (click)="router.navigate([link.route], { fragment: link.fragment })"
-          hRipple
           class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl"
         >
           <span>{{ link.label }}</span>
@@ -68,8 +64,8 @@
     }
   </ul>
   <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
-    <a hx-button hRipple [routerLink]="loginRoute()" rounded variant="text">{{ loginLabel() }}</a>
-    <a hx-button hRipple [routerLink]="registerRoute()" rounded>{{ registerLabel() }}</a>
+    <a hx-button [routerLink]="loginRoute()" rounded variant="text">{{ loginLabel() }}</a>
+    <a hx-button [routerLink]="registerRoute()" rounded>{{ registerLabel() }}</a>
     <helix-floating-configurator [float]="false" />
   </div>
 </div>

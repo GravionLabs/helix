@@ -1,24 +1,22 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { HelixDisclosure } from '../../../disclosure';
 import { HelixConfigurator } from '../../configurator/configurator';
 
 @Component({
   selector: 'helix-configurator-action',
   standalone: true,
-  imports: [StyleClassModule, HelixConfigurator],
+  imports: [HelixDisclosure, HelixConfigurator],
   template: `
     <div
       class="relative"
       style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem;"
     >
       <button
+        type="button"
         class="layout-topbar-action layout-topbar-action-highlight"
-        hStyleClass="@next"
-        enterFromClass="hidden"
-        enterActiveClass="animate-scalein"
-        leaveToClass="hidden"
-        leaveActiveClass="animate-fadeout"
-        [hideOnOutsideClick]="true"
+        [attr.aria-label]="label()"
+        helixDisclosure
+        helixDisclosureAnimate
       >
         <i class="pi pi-palette" style="font-size: 1.4rem;"></i>
       </button>
@@ -53,4 +51,6 @@ import { HelixConfigurator } from '../../configurator/configurator';
     `,
   ],
 })
-export class HelixConfiguratorAction {}
+export class HelixConfiguratorAction {
+  label = input('Configure theme');
+}
