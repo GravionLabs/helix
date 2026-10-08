@@ -236,8 +236,23 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Migration status
+
+`helix-ui` replaces the components of the vendored PrimeNG fork group by group ([ADR 0001](adr/0001-styling-foundation.md)).
+
+| Library        | State                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `helix-shell`  | Migrated: every component, ripple and styleclass is gone. It still imports the `MenuItem` type, the theme engine and the presets of the configurator, and the message validators from `helix-core`. `helix-ui` is a peer dependency. |
+| `helix-zod`    | Uses only the validators of `helix-core`; no UI.                                                                                        |
+| `helix-ag-grid`| No import from `helix-core`.                                                                                                            |
+| `helix-core`   | Stays as the theme engine, presets and validators; its components are the fork that is retired last.                                   |
+
+`pnpm lint:core-imports` fails when one of these libraries imports another entry point of `helix-core`, so a
+migrated library cannot slide back.
+
 ## Rules of the package
 
+- No component of `helix-shell`, `helix-zod` or `helix-ag-grid` imports a component of `helix-core` (`pnpm lint:core-imports`).
 - Nothing in `projects/ui` imports `@gravionlabs/helix-core`, `@primeuix/*` or `primeng` (`pnpm lint:no-core`).
 - A test fails when a stylesheet reads a `--h-*` token that `tokens.css` does not define, or when a
   directive sets a class its stylesheet does not style.

@@ -54,7 +54,16 @@
 npm install @gravionlabs/helix-shell
 ```
 
-Peer dependencies: `@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`, `primeicons >=7`.
+Peer dependencies: `@angular/core >=22`, `@angular/router >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`,
+`@gravionlabs/helix-ui >=0.1.0` (and its own peers, `@angular/cdk` and `@angular/forms`), `primeicons >=7`.
+
+The shell draws its buttons, fields, breadcrumb and tooltips with [`@gravionlabs/helix-ui`](HELIX-UI.md), so the
+app loads its styles and tokens next to the shell styles:
+
+```css
+@import "@gravionlabs/helix-ui/styles.css";
+@import "@gravionlabs/helix-ui/tokens.css";
+```
 
 ---
 
