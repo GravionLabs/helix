@@ -74,15 +74,14 @@
             class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
             >Password</label
           >
-          <h-password
-            id="password1"
+          <hx-password
+            inputId="password1"
             [(ngModel)]="password"
             placeholder="Password"
-            [toggleMask]="true"
-            styleClass="mb-4"
-            [fluid]="true"
-            [feedback]="false"
-          ></h-password>
+            toggleMask
+            fluid
+            class="mb-4"
+          />
 
           <div class="flex items-center justify-between mt-2 mb-8 gap-8">
             <div class="flex items-center">

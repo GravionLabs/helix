@@ -39,8 +39,9 @@
     </div>
   </div>
   <div class="flex flex-col gap-2">
-    <span class="text-sm text-muted-color font-semibold">Presets</span>
-    <h-selectbutton
+    <span id="helix-config-presets" class="text-sm text-muted-color font-semibold">Presets</span>
+    <hx-select-button
+      ariaLabelledby="helix-config-presets"
       [options]="presetOptions"
       [ngModel]="selectedPreset()"
       (ngModelChange)="onPresetChange($event)"
@@ -50,8 +51,9 @@
   </div>
   @if (showMenuModeButton()) {
     <div class="flex flex-col gap-2">
-      <span class="text-sm text-muted-color font-semibold">Menu Mode</span>
-      <h-selectbutton
+      <span id="helix-config-menu-mode" class="text-sm text-muted-color font-semibold">Menu Mode</span>
+      <hx-select-button
+        ariaLabelledby="helix-config-menu-mode"
         [ngModel]="menuMode()"
         (ngModelChange)="onMenuModeChange($event)"
         [options]="menuModeOptions"
