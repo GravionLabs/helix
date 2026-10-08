@@ -1,0 +1,134 @@
+/*
+ * SelectButton: `<hx-select-button>`. A joined group of toggle buttons from the `--h-togglebutton-*` and
+ * `--h-selectbutton-*` tokens: the group is a tinted track, the checked option is a raised segment.
+ */
+.hx-select-button {
+  display: inline-flex;
+  border-radius: var(--h-selectbutton-border-radius);
+  outline-color: transparent;
+  user-select: none;
+  vertical-align: bottom;
+}
+
+.hx-select-button-fluid {
+  display: flex;
+  width: 100%;
+}
+
+.hx-select-button-option {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  overflow: hidden;
+  padding: var(--h-togglebutton-padding);
+  border: 1px solid var(--h-togglebutton-border-color);
+  border-width: 1px 1px 1px 0;
+  border-radius: 0;
+  background: var(--h-togglebutton-background);
+  color: var(--h-togglebutton-color);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: var(--h-togglebutton-font-weight);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-togglebutton-transition-duration),
+    color var(--h-togglebutton-transition-duration),
+    border-color var(--h-togglebutton-transition-duration),
+    box-shadow var(--h-togglebutton-transition-duration);
+}
+
+.hx-select-button-fluid .hx-select-button-option {
+  flex: 1 1 0;
+}
+
+.hx-select-button-option:first-child {
+  border-inline-start-width: 1px;
+  border-start-start-radius: var(--h-selectbutton-border-radius);
+  border-end-start-radius: var(--h-selectbutton-border-radius);
+}
+
+.hx-select-button-option:last-child {
+  border-start-end-radius: var(--h-selectbutton-border-radius);
+  border-end-end-radius: var(--h-selectbutton-border-radius);
+}
+
+.hx-select-button-content {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-togglebutton-gap);
+  padding: var(--h-togglebutton-content-padding);
+  border-radius: var(--h-togglebutton-content-border-radius);
+  background: transparent;
+  transition:
+    background var(--h-togglebutton-transition-duration),
+    box-shadow var(--h-togglebutton-transition-duration);
+}
+
+.hx-select-button-option:not(:disabled, .hx-select-button-option-checked):hover {
+  background: var(--h-togglebutton-hover-background);
+  color: var(--h-togglebutton-hover-color);
+}
+
+.hx-select-button-option-checked {
+  border-color: var(--h-togglebutton-checked-border-color);
+  background: var(--h-togglebutton-checked-background);
+  color: var(--h-togglebutton-checked-color);
+}
+
+.hx-select-button-option-checked .hx-select-button-content {
+  background: var(--h-togglebutton-content-checked-background);
+  box-shadow: var(--h-togglebutton-content-checked-shadow);
+}
+
+.hx-select-button-option:focus-visible {
+  z-index: 1;
+  outline: var(--h-togglebutton-focus-ring-width) var(--h-togglebutton-focus-ring-style)
+    var(--h-togglebutton-focus-ring-color);
+  outline-offset: var(--h-togglebutton-focus-ring-offset);
+  box-shadow: var(--h-togglebutton-focus-ring-shadow);
+}
+
+.hx-select-button-option:disabled {
+  background: var(--h-togglebutton-disabled-background);
+  border-color: var(--h-togglebutton-disabled-border-color);
+  color: var(--h-togglebutton-disabled-color);
+  cursor: default;
+}
+
+.hx-select-button-sm .hx-select-button-option {
+  padding: var(--h-togglebutton-sm-padding);
+  font-size: var(--h-togglebutton-sm-font-size);
+}
+
+.hx-select-button-sm .hx-select-button-content {
+  padding: var(--h-togglebutton-content-sm-padding);
+}
+
+.hx-select-button-lg .hx-select-button-option {
+  padding: var(--h-togglebutton-lg-padding);
+  font-size: var(--h-togglebutton-lg-font-size);
+}
+
+.hx-select-button-lg .hx-select-button-content {
+  padding: var(--h-togglebutton-content-lg-padding);
+}
+
+.hx-select-button-invalid,
+.hx-select-button.ng-invalid.ng-touched {
+  outline: 1px solid var(--h-selectbutton-invalid-border-color);
+  outline-offset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-select-button-option,
+  .hx-select-button-content {
+    transition: none;
+  }
+}
+
+.hx-select-button-disabled .hx-select-button-option {
+  cursor: default;
+}

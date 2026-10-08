@@ -159,6 +159,89 @@ dependency) and the overlay styles that come with `styles.css`.
 - **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
   `listbox` of `option`s. Give it a visible label or `ariaLabel`.
 
+## Divider
+
+`hx-divider`: a line between content. Projected content is a label sitting on the line.
+
+```html
+<hx-divider />
+<hx-divider align="center">OR</hx-divider>
+<hx-divider layout="vertical" />
+```
+
+| Input    | Type                               | Default        | Description                                  |
+| -------- | ---------------------------------- | -------------- | -------------------------------------------- |
+| `layout` | `'horizontal' \| 'vertical'`       | `'horizontal'` | Direction of the line.                       |
+| `type`   | `'solid' \| 'dashed' \| 'dotted'`  | `'solid'`      | Line style.                                  |
+| `align`  | `'start' \| 'center' \| 'end'`     |                | Where the label sits; no effect without one. |
+
+It has `role="separator"` and `aria-orientation`. Margins and colours come from the `--h-divider-*` tokens.
+
+## Tooltip
+
+`[hx-tooltip]` shows a short text next to an element on hover and keyboard focus. It is a CDK overlay with
+`role="tooltip"`, the host gets `aria-describedby` while it is open, and Escape or a click closes it. Use it for
+hints, for example the name of an icon-only button, never for essential information.
+
+```html
+<button hx-button iconOnly aria-label="Add" hx-tooltip="Add item" hxTooltipPosition="right">+</button>
+```
+
+| Input                  | Type                                       | Default  | Description                                 |
+| ---------------------- | ------------------------------------------ | -------- | ------------------------------------------- |
+| `hx-tooltip`           | `string \| null`                           |          | The text; empty shows nothing.              |
+| `hxTooltipPosition`    | `'top' \| 'right' \| 'bottom' \| 'left'`    | `'top'`  | Preferred side; it flips when it does not fit. |
+| `hxTooltipEvent`       | `'hover' \| 'focus' \| 'both'`             | `'both'` | What opens it.                              |
+| `hxTooltipDisabled`    | `boolean`                                  | `false`  | Never shows.                                |
+| `hxTooltipShowDelay`   | `number`                                   | `0`      | Milliseconds before it appears.             |
+
+## Breadcrumb
+
+`hx-breadcrumb` renders the path to the current page as a `nav` landmark with an ordered list. The last item is
+the current page (`aria-current="page"`); items with `routerLink` or `url` are links. It needs `@angular/router`.
+
+```html
+<hx-breadcrumb [model]="items" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
+```
+
+An item is `{ label?, icon?, routerLink?, url?, target?, disabled?, visible? }`; `icon` is the CSS classes of an
+icon font. An item without a label (the home icon) gets `aria-label="Home"`. `ariaLabel` renames the landmark.
+
+## Password
+
+`hx-password` is a password field with an optional button that shows or hides the text. It works with `ngModel`,
+reactive forms and signal forms, like the Select.
+
+```html
+<label for="pw">Password</label>
+<hx-password inputId="pw" [(ngModel)]="password" toggleMask fluid />
+```
+
+| Input                    | Type      | Default              | Description                                   |
+| ------------------------ | --------- | -------------------- | --------------------------------------------- |
+| `toggleMask`             | `boolean` | `false`              | The show/hide button (`aria-pressed`).        |
+| `inputId`                | `string`  |                      | Id of the field, for `<label for>`.           |
+| `placeholder`            | `string`  |                      | A hint, not a label.                          |
+| `autocomplete`           | `string`  | `'current-password'` | Use `new-password` when choosing one.         |
+| `variant`, `size`, `fluid` |         | as `hx-input`        | Same look as the text field.                  |
+| `showLabel`, `hideLabel` | `string`  | English              | Accessible names of the toggle, to translate. |
+
+There is no strength meter yet.
+
+## Select button
+
+`hx-select-button` is a choice among a few options as a joined group of toggle buttons: native buttons with
+`aria-pressed` in a `role="group"`. Single choice by default, `multiple` for an array.
+
+```html
+<hx-select-button [options]="['Left', 'Center', 'Right']" [(ngModel)]="align" [allowEmpty]="false" ariaLabel="Alignment" />
+<hx-select-button [options]="toppings" multiple [(value)]="chosen" />
+```
+
+Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select. `allowEmpty` (default `true`)
+decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
+reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
+
 ## Rules of the package
 
 - Nothing in `projects/ui` imports `@gravionlabs/helix-core`, `@primeuix/*` or `primeng` (`pnpm lint:no-core`).
@@ -167,4 +250,4 @@ dependency) and the overlay styles that come with `styles.css`.
 - The component styles are SCSS (`projects/ui/styles/*.scss`) compiled at build time (`pnpm build:lib:css:ui`) to
   plain CSS: loops and mixins keep repetitive parts, such as the button severities, in one place, and the
   package ships and needs no SCSS. Components still read only `--h-*` tokens.
-- Every component has unit tests and a page here and in the demo (Helix UI Button, Form, Select).
+- Every component has unit tests and a page here and in the demo (Helix UI Button, Form, Select, Blocks).

@@ -1,0 +1,90 @@
+/*
+ * Divider: `<hx-divider>`. A line from the `--h-divider-*` tokens; projected content is a label on the line.
+ * Horizontal by default, `vertical` for a line between inline items.
+ */
+.hx-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--h-divider-content-color);
+}
+
+.hx-divider::before {
+  content: "";
+  position: absolute;
+  display: block;
+  border: 0 solid var(--h-divider-border-color);
+}
+
+.hx-divider-dashed::before {
+  border-style: dashed;
+}
+
+.hx-divider-dotted::before {
+  border-style: dotted;
+}
+
+.hx-divider-horizontal {
+  width: 100%;
+  margin: var(--h-divider-horizontal-margin);
+  padding: var(--h-divider-horizontal-padding);
+}
+
+.hx-divider-horizontal::before {
+  inset-inline: 0;
+  top: 50%;
+  border-top-width: 1px;
+}
+
+.hx-divider-vertical {
+  flex-direction: column;
+  align-self: stretch;
+  min-height: 100%;
+  margin: var(--h-divider-vertical-margin);
+  padding: var(--h-divider-vertical-padding);
+}
+
+.hx-divider-vertical::before {
+  inset-block: 0;
+  left: 50%;
+  border-inline-start-width: 1px;
+}
+
+/* the label sits on the line */
+.hx-divider > * {
+  position: relative;
+  z-index: 1;
+  background: var(--h-divider-content-background);
+}
+
+.hx-divider-horizontal > * {
+  padding: var(--h-divider-horizontal-content-padding);
+}
+
+.hx-divider-vertical > * {
+  padding: var(--h-divider-vertical-content-padding);
+}
+
+.hx-divider-horizontal.hx-divider-start {
+  justify-content: flex-start;
+}
+
+.hx-divider-horizontal.hx-divider-center {
+  justify-content: center;
+}
+
+.hx-divider-horizontal.hx-divider-end {
+  justify-content: flex-end;
+}
+
+.hx-divider-vertical.hx-divider-start {
+  justify-content: flex-start;
+}
+
+.hx-divider-vertical.hx-divider-center {
+  justify-content: center;
+}
+
+.hx-divider-vertical.hx-divider-end {
+  justify-content: flex-end;
+}

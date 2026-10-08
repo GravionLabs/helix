@@ -1,0 +1,21 @@
+/*
+ * Tooltip: `[hx-tooltip]`. The bubble is a CDK overlay (`.hx-tooltip-overlay` is the pane), coloured by the
+ * `--h-tooltip-*` tokens. It never takes pointer events, so it cannot flicker under the cursor.
+ */
+.hx-tooltip-overlay {
+  pointer-events: none;
+}
+
+.hx-tooltip {
+  display: block;
+  box-sizing: border-box;
+  max-width: var(--h-tooltip-max-width);
+  padding: var(--h-tooltip-padding);
+  border-radius: var(--h-tooltip-border-radius);
+  background: var(--h-tooltip-background);
+  color: var(--h-tooltip-color);
+  box-shadow: var(--h-tooltip-shadow);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}

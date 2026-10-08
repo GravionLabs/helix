@@ -27,6 +27,12 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInput` | `input[hx-input]`, `textarea[hx-input]` | outlined / filled, sizes, invalid |
 | `HxCheckbox` | `input[hx-checkbox]` | native checkbox, indeterminate |
 | `HxRadio` | `input[hx-radio]` | native radio |
+| `HxSelect` | `hx-select` | CDK listbox in an overlay, all three forms APIs |
+| `HxDivider` | `hx-divider` | horizontal/vertical, labelled |
+| `HxTooltip` | `[hx-tooltip]` | CDK overlay, hover and focus |
+| `HxBreadcrumb` | `hx-breadcrumb` | router links, home item |
+| `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
+| `HxSelectButton` | `hx-select-button` | single or multiple, all three forms APIs |
 | `HxSwitch` | `input[hx-switch]` | native checkbox with `role="switch"` |
 
 Selectors, inputs and classes use the prefix `hx` (`hx-button`), so they never clash with `helix-core`'s `h-`

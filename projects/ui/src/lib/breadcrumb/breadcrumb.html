@@ -1,0 +1,36 @@
+<nav [attr.aria-label]="ariaLabel()">
+  <ol class="hx-breadcrumb-list">
+    @if (home(); as home) {
+      <li class="hx-breadcrumb-item">
+        <ng-container [ngTemplateOutlet]="entry" [ngTemplateOutletContext]="{ $implicit: home, current: false }" />
+      </li>
+    }
+    @for (item of items(); track $index; let last = $last) {
+      @if (home() || $index > 0) {
+        <li class="hx-breadcrumb-separator" aria-hidden="true"></li>
+      }
+      <li class="hx-breadcrumb-item">
+        <ng-container [ngTemplateOutlet]="entry" [ngTemplateOutletContext]="{ $implicit: item, current: last }" />
+      </li>
+    }
+  </ol>
+</nav>
+
+<ng-template #entry let-item let-current="current">
+  @if (current || item.disabled || (!item.routerLink && !item.url)) {
+    <span class="hx-breadcrumb-link" [attr.aria-current]="current ? 'page' : null" [attr.aria-disabled]="item.disabled ? 'true' : null">
+      @if (item.icon) { <span [class]="item.icon + ' hx-breadcrumb-icon'" aria-hidden="true"></span> }
+      @if (item.label) { <span>{{ item.label }}</span> }
+    </span>
+  } @else if (item.routerLink) {
+    <a class="hx-breadcrumb-link" [routerLink]="item.routerLink" [attr.target]="item.target" [attr.aria-label]="item.label ? null : 'Home'">
+      @if (item.icon) { <span [class]="item.icon + ' hx-breadcrumb-icon'" aria-hidden="true"></span> }
+      @if (item.label) { <span>{{ item.label }}</span> }
+    </a>
+  } @else {
+    <a class="hx-breadcrumb-link" [href]="item.url" [attr.target]="item.target">
+      @if (item.icon) { <span [class]="item.icon + ' hx-breadcrumb-icon'" aria-hidden="true"></span> }
+      @if (item.label) { <span>{{ item.label }}</span> }
+    </a>
+  }
+</ng-template>
