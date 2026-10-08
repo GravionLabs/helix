@@ -1,0 +1,259 @@
+/*
+ * Button: `button[hxButton]` / `a[hxButton]`. Same look as the helix-core button, from the same tokens
+ * (`--h-button-*`). A severity class only maps its tokens onto local `--hx-*` variables; the variant
+ * rules (filled, outlined, text, link) read those, so every severity works with every variant.
+ */
+
+// A severity maps its `--h-button-*` tokens onto the local `--hx-*` variables. The names are the token
+// names of the preset; primary is also the default, so it additionally sits on the bare `.hx-button`.
+$severities: primary, secondary, success, info, warn, help, danger, contrast;
+
+@mixin severity-tokens($s) {
+  --hx-bg: var(--h-button-#{$s}-background);
+  --hx-bd: var(--h-button-#{$s}-border-color);
+  --hx-fg: var(--h-button-#{$s}-color);
+  --hx-bg-h: var(--h-button-#{$s}-hover-background);
+  --hx-bd-h: var(--h-button-#{$s}-hover-border-color);
+  --hx-fg-h: var(--h-button-#{$s}-hover-color);
+  --hx-bg-a: var(--h-button-#{$s}-active-background);
+  --hx-bd-a: var(--h-button-#{$s}-active-border-color);
+  --hx-fg-a: var(--h-button-#{$s}-active-color);
+  --hx-ring: var(--h-button-#{$s}-focus-ring-color);
+  --hx-ring-shadow: var(--h-button-#{$s}-focus-ring-shadow);
+  // outlined: fg/bd + hover/active background
+  --hx-o-fg: var(--h-button-outlined-#{$s}-color);
+  --hx-o-bd: var(--h-button-outlined-#{$s}-border-color);
+  --hx-o-bg-h: var(--h-button-outlined-#{$s}-hover-background);
+  --hx-o-bg-a: var(--h-button-outlined-#{$s}-active-background);
+  // text: fg + hover/active background
+  --hx-t-fg: var(--h-button-text-#{$s}-color);
+  --hx-t-bg-h: var(--h-button-text-#{$s}-hover-background);
+  --hx-t-bg-a: var(--h-button-text-#{$s}-active-background);
+}
+
+.hx-button,
+.hx-button-primary {
+  @include severity-tokens(primary);
+}
+
+@each $s in $severities {
+  @if $s != primary {
+    .hx-button-#{$s} {
+      @include severity-tokens($s);
+    }
+  }
+}
+
+/* base: filled */
+.hx-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-button-gap);
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: var(--h-button-padding-y) var(--h-button-padding-x);
+  border: 1px solid var(--hx-bd);
+  border-radius: var(--h-button-border-radius);
+  background: var(--hx-bg);
+  color: var(--hx-fg);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: var(--h-button-label-font-weight);
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  outline-color: transparent;
+  transition:
+    background var(--h-button-transition-duration),
+    color var(--h-button-transition-duration),
+    border-color var(--h-button-transition-duration),
+    outline-color var(--h-button-transition-duration),
+    box-shadow var(--h-button-transition-duration);
+}
+
+.hx-button:not(:disabled, [aria-disabled="true"]):hover {
+  border-color: var(--hx-bd-h);
+  background: var(--hx-bg-h);
+  color: var(--hx-fg-h);
+}
+
+.hx-button:not(:disabled, [aria-disabled="true"]):active {
+  border-color: var(--hx-bd-a);
+  background: var(--hx-bg-a);
+  color: var(--hx-fg-a);
+}
+
+.hx-button:focus-visible {
+  outline: var(--h-button-focus-ring-width) var(--h-button-focus-ring-style)
+    var(--hx-ring);
+  outline-offset: var(--h-button-focus-ring-offset);
+  box-shadow: var(--hx-ring-shadow);
+}
+
+.hx-button:disabled,
+.hx-button[aria-disabled="true"] {
+  cursor: default;
+  opacity: var(--h-disabled-opacity, 0.6);
+}
+
+/* icons */
+.hx-button > svg,
+.hx-button-icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+.hx-button-icon-only {
+  width: var(--h-button-icon-only-width);
+  padding-inline: 0;
+  gap: 0;
+}
+
+/* sizes */
+.hx-button-sm {
+  padding: var(--h-button-sm-padding-y) var(--h-button-sm-padding-x);
+  font-size: var(--h-button-sm-font-size);
+}
+
+.hx-button-sm.hx-button-icon-only {
+  width: var(--h-button-sm-icon-only-width);
+}
+
+.hx-button-lg {
+  padding: var(--h-button-lg-padding-y) var(--h-button-lg-padding-x);
+  font-size: var(--h-button-lg-font-size);
+}
+
+.hx-button-lg.hx-button-icon-only {
+  width: var(--h-button-lg-icon-only-width);
+}
+
+/* shape and elevation */
+.hx-button-rounded {
+  border-radius: var(--h-button-rounded-border-radius);
+}
+
+.hx-button-icon-only.hx-button-rounded {
+  height: var(--h-button-icon-only-width);
+  border-radius: 50%;
+}
+
+.hx-button-sm.hx-button-icon-only.hx-button-rounded {
+  height: var(--h-button-sm-icon-only-width);
+}
+
+.hx-button-lg.hx-button-icon-only.hx-button-rounded {
+  height: var(--h-button-lg-icon-only-width);
+}
+
+.hx-button-raised {
+  box-shadow: var(--h-button-raised-shadow);
+}
+
+.hx-button-fluid {
+  display: flex;
+  width: 100%;
+}
+
+.hx-button-fluid.hx-button-icon-only {
+  display: inline-flex;
+  width: var(--h-button-icon-only-width);
+}
+
+/* outlined */
+.hx-button-outlined {
+  border-color: var(--hx-o-bd);
+  background: transparent;
+  color: var(--hx-o-fg);
+}
+
+.hx-button-outlined:not(:disabled, [aria-disabled="true"]):hover,
+.hx-button-outlined:not(:disabled, [aria-disabled="true"]):active {
+  border-color: var(--hx-o-bd);
+  color: var(--hx-o-fg);
+}
+
+.hx-button-outlined:not(:disabled, [aria-disabled="true"]):hover {
+  background: var(--hx-o-bg-h);
+}
+
+.hx-button-outlined:not(:disabled, [aria-disabled="true"]):active {
+  background: var(--hx-o-bg-a);
+}
+
+/* text */
+.hx-button-text {
+  border-color: transparent;
+  background: transparent;
+  color: var(--hx-t-fg);
+}
+
+.hx-button-text:not(:disabled, [aria-disabled="true"]):hover,
+.hx-button-text:not(:disabled, [aria-disabled="true"]):active {
+  border-color: transparent;
+  color: var(--hx-t-fg);
+}
+
+.hx-button-text:not(:disabled, [aria-disabled="true"]):hover {
+  background: var(--hx-t-bg-h);
+}
+
+.hx-button-text:not(:disabled, [aria-disabled="true"]):active {
+  background: var(--hx-t-bg-a);
+}
+
+/* link */
+.hx-button-link {
+  border-color: transparent;
+  background: transparent;
+  color: var(--h-button-link-color);
+}
+
+.hx-button-link:not(:disabled, [aria-disabled="true"]):hover {
+  border-color: transparent;
+  background: transparent;
+  color: var(--h-button-link-hover-color);
+  text-decoration: underline;
+}
+
+.hx-button-link:not(:disabled, [aria-disabled="true"]):active {
+  border-color: transparent;
+  background: transparent;
+  color: var(--h-button-link-active-color);
+}
+
+/* loading: a CSS spinner in front of the label; clicks are ignored by the directive */
+.hx-button-loading {
+  cursor: progress;
+}
+
+.hx-button-loading::before {
+  content: "";
+  flex: none;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+  border: 2px solid currentcolor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: hx-button-spin 0.8s linear infinite;
+}
+
+@keyframes hx-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-button {
+    transition: none;
+  }
+
+  .hx-button-loading::before {
+    animation-duration: 2.4s;
+  }
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // The CSS of @gravionlabs/helix-ui (#541): dist/ui/styles.css and dist/ui/tokens.css.
 //
-//   styles.css  projects/ui/styles/*.css, one file per component, in a `components` cascade layer:
+//   styles.css  projects/ui/styles/*.scss (compiled to plain CSS), one file per component, in a `components` cascade layer:
 //               an application's unlayered CSS and Tailwind's `utilities` layer win over it, so a
 //               component can be adjusted from the outside without specificity fights.
 //   tokens.css  the Helix tokens the components read, resolved from helixPreset with the engine of
@@ -14,6 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import * as sass from 'sass';
 import { DARK_SELECTOR, loadPreset, resolvePreset } from './export-tokens.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -21,7 +22,7 @@ export const STYLES = path.join(ROOT, 'projects/ui/styles');
 export const OUT = path.join(ROOT, 'dist/ui');
 
 /**
- * The tokens of the preset's components that each stylesheet reads (the stylesheet `input.css` reads those of
+ * The tokens of the preset's components that each stylesheet reads (the stylesheet `input.scss` reads those of
  * `inputtext`, …). A stylesheet without an entry here is an error, so a new component cannot ship without its tokens.
  */
 export const TOKEN_COMPONENTS = {
@@ -38,9 +39,13 @@ export const TOKEN_COMPONENTS = {
 export function componentStyles(dir = STYLES) {
   const own = fs
     .readdirSync(dir)
-    .filter((f) => f.endsWith('.css'))
+    .filter((f) => f.endsWith('.scss') && !f.startsWith('_'))
     .sort()
-    .map((f) => ({ name: f.slice(0, -4), css: fs.readFileSync(path.join(dir, f), 'utf8').trim() }));
+    .map((f) => ({
+      name: f.slice(0, -5),
+      // SCSS is a build-time convenience (loops, mixins, nesting): the package ships plain CSS
+      css: sass.compile(path.join(dir, f), { style: 'expanded' }).css.trim(),
+    }));
   // The CDK overlay container's structural CSS (positioning, z-index, backdrop) comes first: overlay based
   // components (Select, …) do not work without it.
   const cdk = path.join(ROOT, 'node_modules/@angular/cdk/overlay-prebuilt.css');
@@ -62,7 +67,7 @@ export async function buildTokens(styles = componentStyles()) {
     ...new Set(
       styles.flatMap((s) => {
         const tokens = TOKEN_COMPONENTS[s.name];
-        if (!tokens) throw new Error(`projects/ui/styles/${s.name}.css has no entry in TOKEN_COMPONENTS (scripts/build-ui-css.mjs)`);
+        if (!tokens) throw new Error(`projects/ui/styles/${s.name}.scss has no entry in TOKEN_COMPONENTS (scripts/build-ui-css.mjs)`);
         return tokens;
       }),
     ),

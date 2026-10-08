@@ -162,4 +162,7 @@ dependency) and the overlay styles that come with `styles.css`.
 - Nothing in `projects/ui` imports `@gravionlabs/helix-core`, `@primeuix/*` or `primeng` (`pnpm lint:no-core`).
 - A test fails when a stylesheet reads a `--h-*` token that `tokens.css` does not define, or when a
   directive sets a class its stylesheet does not style.
+- The component styles are SCSS (`projects/ui/styles/*.scss`) compiled at build time (`pnpm build:lib:css:ui`) to
+  plain CSS: loops and mixins keep repetitive parts, such as the button severities, in one place, and the
+  package ships and needs no SCSS. Components still read only `--h-*` tokens.
 - Every component has unit tests and a page here and in the demo (Helix UI Button, Form, Select).
