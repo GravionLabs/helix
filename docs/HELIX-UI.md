@@ -5,12 +5,6 @@ styling engine and no dependency on `@gravionlabs/helix-core`. It is the long-te
 vendored PrimeNG fork ([ADR 0001](adr/0001-styling-foundation.md)); components move over group by group,
 starting with the ones `helix-shell` and `helix-zod` use.
 
-::: warning Not published yet
-The package builds and is tested in this repository (`projects/ui`), but is not on npm: the first release
-needs a trusted-publisher entry for `@gravionlabs/helix-ui`. Until then it is used from source (path mapping
-`@gravionlabs/helix-ui`) as in the demo.
-:::
-
 ## Install and styles
 
 ```bash

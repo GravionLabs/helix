@@ -49,9 +49,9 @@ without a visible seam.
 
 ## Publishing
 
-Not published yet: the first release needs a trusted-publisher entry for `@gravionlabs/helix-ui` on npmjs.com
-(Settings → Trusted Publisher → GitHub Actions, owner GravionLabs, repo helix, workflow `ci.yml`), then
-`ui` joins the package loops of `.github/workflows/ci.yml`.
+Published to npm with the other packages by `.github/workflows/ci.yml` (OIDC trusted publisher, provenance).
+The package needs a trusted-publisher entry on npmjs.com once (Settings → Trusted Publisher → GitHub Actions,
+owner GravionLabs, repo helix, workflow `ci.yml`); the first release, 0.1.0, was published by hand.
 
 ## License
 
