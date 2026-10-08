@@ -8,7 +8,6 @@
     (click)="itemClick($event)"
     (keydown)="onKeydown($event)"
     tabindex="0"
-    hRipple
   >
     @if (item()?.icon) {
       <i [ngClass]="$safeNavigationMigration(item()?.icon)" class="helix-nav-rail-icon"></i>
@@ -61,7 +60,6 @@
     (click)="itemClick($event)"
     (keydown)="onKeydown($event)"
     tabindex="0"
-    hRipple
   >
     @if (isActive() && !isCollapsed()) {
       <span class="helix-nav-rail-accent"></span>

@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { HxButton } from '@gravionlabs/helix-ui';
+import { HelixDisclosure } from '../../disclosure';
 import { LayoutStore } from '../../store';
 import { HelixConfigurator } from '../configurator/configurator';
 
 @Component({
   selector: 'helix-floating-configurator',
   standalone: true,
-  imports: [CommonModule, HxButton, StyleClassModule, HelixConfigurator],
+  imports: [CommonModule, HxButton, HelixDisclosure, HelixConfigurator],
   templateUrl: './floating-configurator.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './floating-configurator.scss',

@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { HelixFeaturesWidget } from './components/features-widget/features-widget';
 import { HelixFooterWidget } from './components/footer-widget/footer-widget';
 import { HelixHeroWidget } from './components/hero-widget/hero-widget';
@@ -20,8 +18,6 @@ import { HelixTopbarWidget } from './components/topbar-widget/topbar-widget';
     HelixHighlightsWidget,
     HelixPricingWidget,
     HelixFooterWidget,
-    RippleModule,
-    StyleClassModule,
   ],
   templateUrl: './landing.html',
   changeDetection: ChangeDetectionStrategy.Eager,

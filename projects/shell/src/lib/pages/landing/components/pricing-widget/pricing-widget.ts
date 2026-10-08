@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { HxButton, HxDivider } from '@gravionlabs/helix-ui';
 import type { HelixPricingPlan } from '../../landing.model';
 
@@ -51,7 +50,7 @@ const DEFAULT_PLANS: HelixPricingPlan[] = [
 @Component({
   selector: 'helix-pricing-widget',
   standalone: true,
-  imports: [HxDivider, HxButton, RippleModule],
+  imports: [HxDivider, HxButton],
   templateUrl: './pricing-widget.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './pricing-widget.scss',

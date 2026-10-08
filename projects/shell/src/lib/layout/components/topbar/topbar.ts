@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import type { MenuItem } from '@gravionlabs/helix-core/api';
-import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
 import { HxBreadcrumb } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
+import { HelixDisclosure } from '../../disclosure';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixAlertAction } from './actions/alert-action';
 import { HelixConfiguratorAction } from './actions/configurator-action';
@@ -41,10 +41,10 @@ const DEFAULT_ITEMS: HelixTopbarItem[] = [
   imports: [
     RouterModule,
     CommonModule,
-    StyleClassModule,
     HelixAlertAction,
     HelixConfiguratorAction,
     HelixDarkModeAction,
+    HelixDisclosure,
     HxBreadcrumb,
   ],
   templateUrl: './topbar.html',
@@ -55,6 +55,8 @@ export class HelixTopbar implements OnInit, OnDestroy {
   appTitle = input('Helix');
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<MenuItem[] | undefined>(undefined);
+  /** Accessible name of the button that opens the actions menu on small screens. */
+  menuLabel = input('More actions');
   items = input<HelixTopbarItem[]>(DEFAULT_ITEMS);
 
   store = inject(LayoutStore);

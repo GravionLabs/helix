@@ -12,7 +12,6 @@ import {
   untracked,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { HxTooltip } from '@gravionlabs/helix-ui';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
@@ -31,7 +30,7 @@ function isPathActive(activePath: string, itemPath: string): boolean {
 @Component({
   selector: '[helix-nav-rail-item]',
   standalone: true,
-  imports: [CommonModule, RouterModule, RippleModule, HxTooltip],
+  imports: [CommonModule, RouterModule, HxTooltip],
   templateUrl: './nav-rail-item.html',
   styleUrl: './nav-rail-item.scss',
   changeDetection: ChangeDetectionStrategy.Eager,

@@ -37,13 +37,11 @@
     </div>
 
     <button
+      type="button"
       class="layout-topbar-menu-button layout-topbar-action"
-      hStyleClass="@next"
-      enterFromClass="hidden"
-      enterActiveClass="animate-scalein"
-      leaveToClass="hidden"
-      leaveActiveClass="animate-fadeout"
-      [hideOnOutsideClick]="true"
+      [attr.aria-label]="menuLabel()"
+      helixDisclosure
+      helixDisclosureAnimate
     >
       <i class="pi pi-ellipsis-v"></i>
     </button>
