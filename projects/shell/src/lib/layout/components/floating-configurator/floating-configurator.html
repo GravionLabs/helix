@@ -1,23 +1,31 @@
 <div class="flex gap-4 top-8 right-8" [ngClass]="{ fixed: float() }">
-  <h-button
+  <button
+    hx-button
     type="button"
-    (onClick)="toggleDarkMode()"
-    [rounded]="true"
-    [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'"
+    iconOnly
+    rounded
     severity="secondary"
-  />
+    [attr.aria-label]="darkModeLabel()"
+    (click)="toggleDarkMode()"
+  >
+    <span [class]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'" aria-hidden="true"></span>
+  </button>
   <div class="relative">
-    <h-button
-      icon="pi pi-palette"
+    <button
+      hx-button
+      type="button"
+      iconOnly
+      rounded
+      [attr.aria-label]="configuratorLabel()"
       hStyleClass="@next"
       enterFromClass="hidden"
       enterActiveClass="animate-scalein"
       leaveToClass="hidden"
       leaveActiveClass="animate-fadeout"
       [hideOnOutsideClick]="true"
-      type="button"
-      rounded
-    />
+    >
+      <span class="pi pi-palette" aria-hidden="true"></span>
+    </button>
     <helix-configurator />
   </div>
 </div>

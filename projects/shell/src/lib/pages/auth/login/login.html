@@ -61,7 +61,7 @@
             >Email</label
           >
           <input
-            hInputText
+            hx-input
             id="email1"
             type="text"
             placeholder="Email address"
@@ -86,7 +86,7 @@
 
           <div class="flex items-center justify-between mt-2 mb-8 gap-8">
             <div class="flex items-center">
-              <h-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></h-checkbox>
+              <input type="checkbox" hx-checkbox [(ngModel)]="checked" id="rememberme1" class="mr-2" />
               <label for="rememberme1">Remember me</label>
             </div>
             <span
@@ -95,7 +95,7 @@
               >{{ forgotPasswordLabel() }}</span
             >
           </div>
-          <h-button [label]="submitLabel()" styleClass="w-full" (onClick)="onSubmit()"></h-button>
+          <button hx-button type="button" fluid (click)="onSubmit()">{{ submitLabel() }}</button>
         </div>
       </div>
     </div>

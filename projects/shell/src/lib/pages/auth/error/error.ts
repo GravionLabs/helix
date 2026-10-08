@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
 import { RippleModule } from '@gravionlabs/helix-core/ripple';
+import { HxButton } from '@gravionlabs/helix-ui';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 @Component({
   selector: 'helix-error',
   standalone: true,
-  imports: [ButtonModule, RippleModule, RouterModule, HelixFloatingConfigurator],
+  imports: [HxButton, RippleModule, RouterModule, HelixFloatingConfigurator],
   templateUrl: './error.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './error.scss',

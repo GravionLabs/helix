@@ -70,7 +70,7 @@ Requires Node ≥ 24 and [pnpm](https://pnpm.io).
 ```bash
 pnpm install
 pnpm start          # Build libs + serve the demo app
-pnpm build:lib      # Build all four libraries (ends with pnpm tokens:export → dist/tokens/)
+pnpm build:lib      # Build all libraries (core, ui, shell, zod, ag-grid) (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
 pnpm lint           # biome + eslint + no-primeng import guard
 ```

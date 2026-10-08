@@ -21,14 +21,15 @@
       {{ description() }}
     </p>
     <button
-      hButton
+      hx-button
       hRipple
-      [rounded]="true"
+      rounded
       type="button"
-      [label]="buttonLabel()"
       class="text-xl! mt-8 px-4!"
       (click)="buttonClick.emit()"
-    ></button>
+    >
+      {{ buttonLabel() }}
+    </button>
   </div>
   <div class="flex justify-center md:justify-end">
     <img [src]="imageUrl()" [alt]="imageAlt()" class="w-9/12 md:w-auto" />
