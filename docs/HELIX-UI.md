@@ -192,6 +192,34 @@ schemes. The overrides live in one style sheet of the service (a constructed one
 otherwise a `<style data-hx-theme>`), with a selector that wins over `tokens.css` in light and dark; the service
 removes it when it is destroyed. Nothing touches the DOM on the server.
 
+## Menu item model
+
+`HxMenuItem` is the entry of every menu-like component (breadcrumb now; menu, menubar and split button follow):
+
+```ts
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
+
+const items: HxMenuItem[] = [
+  { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
+  { separator: true },
+  { label: 'Docs', url: 'https://example.com/docs', target: '_blank' },
+  { label: 'Sign out', command: ({ item }) => signOut(item) },
+];
+```
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `label`, `ariaLabel` | `string` | Text; `ariaLabel` is the accessible name when an icon-only entry has no label. |
+| `icon` | `string` | CSS classes of an icon font, e.g. `pi pi-home`. |
+| `routerLink`, `queryParams` | `string \| unknown[]`, `object` | Router navigation; wins over `url`. |
+| `url`, `target` | `string` | External link and its target. |
+| `command` | `(event: { originalEvent: Event; item: HxMenuItem }) => void` | Called when the entry is activated. |
+| `items` | `HxMenuItem[]` | Submenu, or a group when the entry has no action. |
+| `disabled`, `visible`, `separator`, `id`, `badge` | | State, a hidden entry, a divider line, the element id, a short text next to the label. |
+
+An item of the former helix-core menu model (`MenuItem`) is assignable to `HxMenuItem` as it is; a test keeps
+that true. `HxBreadcrumbItem` is the same type.
+
 ## Divider
 
 `hx-divider`: a line between content. Projected content is a label sitting on the line.
