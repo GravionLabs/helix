@@ -7,8 +7,8 @@ import { HxRadio, type HxRadioSize } from './radio';
 @Component({
   imports: [HxRadio, FormsModule],
   template: `
-    <label><input type="radio" hxRadio name="plan" value="free" [size]="size()" [(ngModel)]="plan" /> Free</label>
-    <label><input type="radio" hxRadio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+    <label><input type="radio" hx-radio name="plan" value="free" [size]="size()" [(ngModel)]="plan" /> Free</label>
+    <label><input type="radio" hx-radio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
   `,
 })
 class Host {

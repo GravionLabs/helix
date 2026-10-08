@@ -8,13 +8,13 @@ export type HxRadioSize = 'small' | 'medium' | 'large';
  * the selection natively.
  *
  * ```html
- * <label><input type="radio" hxRadio name="plan" value="free" [(ngModel)]="plan" /> Free</label>
- * <label><input type="radio" hxRadio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+ * <label><input type="radio" hx-radio name="plan" value="free" [(ngModel)]="plan" /> Free</label>
+ * <label><input type="radio" hx-radio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
  * ```
  */
 @Directive({
-  selector: 'input[hxRadio]',
-  exportAs: 'hxRadio',
+  selector: 'input[hx-radio]',
+  exportAs: 'hx-radio',
   host: {
     class: 'hx-radio',
     '[class.hx-radio-sm]': "size() === 'small'",

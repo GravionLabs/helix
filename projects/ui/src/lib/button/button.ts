@@ -18,17 +18,17 @@ export type HxButtonSize = 'small' | 'medium' | 'large';
  * on the `--h-button-*` design tokens.
  *
  * ```html
- * <button hxButton severity="success" (click)="save()">Save</button>
- * <button hxButton variant="outlined" [loading]="saving()">Save</button>
- * <button hxButton iconOnly aria-label="Add"><svg …/></button>
+ * <button hx-button severity="success" (click)="save()">Save</button>
+ * <button hx-button variant="outlined" [loading]="saving()">Save</button>
+ * <button hx-button iconOnly aria-label="Add"><svg …/></button>
  * ```
  *
  * A loading button stays focusable (`aria-busy`) but swallows clicks; a disabled one is the native `disabled`
  * attribute (or `aria-disabled="true"` on an anchor). An icon-only button needs an accessible name.
  */
 @Directive({
-  selector: 'button[hxButton], a[hxButton]',
-  exportAs: 'hxButton',
+  selector: 'button[hx-button], a[hx-button]',
+  exportAs: 'hx-button',
   host: {
     class: 'hx-button',
     '[class.hx-button-outlined]': "variant() === 'outlined'",

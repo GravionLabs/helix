@@ -32,20 +32,22 @@ npm install @gravionlabs/helix-ui
   kind is on the page, so a ui Button on a page without a core `h-button` would find no `--h-button-*`.
   The static tokens reference the semantic ones (`--h-primary-color`, …), which the engine always emits, so
   a runtime change of the primary colour or the dark mode still reaches the ui components.
-- Selectors and classes use the prefix `hx` (`hx-button`); helix-core owns `h-`. Both read the same `--h-*`
+- **Naming:** components are elements (`<hx-select>`), simple controls are attributes on the native element
+  (`<button hx-button>`, `<input hx-input>`), always kebab-case with the prefix `hx`; classes use it too.
+  helix-core owns `h-`. Both read the same `--h-*`
   tokens, so a page mixes them without a visible seam.
 
 ## Button
 
-`button[hxButton]` and `a[hxButton]`: a native element styled as a Helix button. The label is the content;
+`button[hx-button]` and `a[hx-button]`: a native element styled as a Helix button. The label is the content;
 an icon is an inline `<svg>` (or an element with the class `hx-button-icon`) next to it.
 
 ```html
-<button hxButton (click)="save()">Save</button>
-<button hxButton severity="success" variant="outlined" size="large">Publish</button>
-<button hxButton [loading]="saving()" (click)="save()">Save</button>
-<button hxButton iconOnly rounded aria-label="Add"><svg viewBox="0 0 24 24" …/></button>
-<a hxButton variant="link" href="/docs">Docs</a>
+<button hx-button (click)="save()">Save</button>
+<button hx-button severity="success" variant="outlined" size="large">Publish</button>
+<button hx-button [loading]="saving()" (click)="save()">Save</button>
+<button hx-button iconOnly rounded aria-label="Add"><svg viewBox="0 0 24 24" …/></button>
+<a hx-button variant="link" href="/docs">Docs</a>
 ```
 
 | Input      | Type                                                                                       | Default     | Description                                                                    |
@@ -70,18 +72,18 @@ Behaviour:
 
 ## Form controls
 
-`hxInput`, `hxCheckbox`, `hxRadio` and `hxSwitch` are **native elements drawn with CSS**, not wrapper
+`hx-input`, `hx-checkbox`, `hx-radio` and `hx-switch` are **native elements drawn with CSS**, not wrapper
 components: they work unchanged with template-driven forms, reactive forms and Angular's signal forms, keep
 the native keyboard and screen-reader behaviour, and need no `ControlValueAccessor`. The look is that of the
 helix-core controls (the `--h-inputtext-*`, `--h-checkbox-*`, `--h-radiobutton-*` and `--h-toggleswitch-*`
 tokens).
 
-### Text field and textarea: `hxInput`
+### Text field and textarea: `hx-input`
 
 ```html
 <label for="name">Name</label>
-<input hxInput id="name" [(ngModel)]="name" />
-<textarea hxInput rows="4" variant="filled"></textarea>
+<input hx-input id="name" [(ngModel)]="name" />
+<textarea hx-input rows="4" variant="filled"></textarea>
 ```
 
 | Input     | Type                           | Default      | Description                           |
@@ -93,16 +95,16 @@ tokens).
 ### Checkbox, radio, switch
 
 ```html
-<label><input type="checkbox" hxCheckbox [(ngModel)]="agreed" /> I agree</label>
-<input type="checkbox" hxCheckbox [indeterminate]="some" aria-label="Select all" />
+<label><input type="checkbox" hx-checkbox [(ngModel)]="agreed" /> I agree</label>
+<input type="checkbox" hx-checkbox [indeterminate]="some" aria-label="Select all" />
 
-<label><input type="radio" hxRadio name="plan" value="free" [(ngModel)]="plan" /> Free</label>
-<label><input type="radio" hxRadio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+<label><input type="radio" hx-radio name="plan" value="free" [(ngModel)]="plan" /> Free</label>
+<label><input type="radio" hx-radio name="plan" value="pro" [(ngModel)]="plan" /> Pro</label>
 
-<label><input type="checkbox" hxSwitch [(ngModel)]="darkMode" /> Dark mode</label>
+<label><input type="checkbox" hx-switch [(ngModel)]="darkMode" /> Dark mode</label>
 ```
 
-`hxCheckbox` and `hxRadio` take `size` (`'small' | 'medium' | 'large'`). `hxSwitch` sets `role="switch"` on its
+`hx-checkbox` and `hx-radio` take `size` (`'small' | 'medium' | 'large'`). `hx-switch` sets `role="switch"` on its
 checkbox; use it for a setting that takes effect immediately and name the setting, not the action.
 
 ### Labels, invalid state, messages
@@ -113,7 +115,7 @@ checkbox; use it for a setting that takes effect immediately and name the settin
   control at its message:
 
 ```html
-<input hxInput id="email" type="email" [formField]="form.email"
+<input hx-input id="email" type="email" [formField]="form.email"
        [attr.aria-invalid]="form.email().touched() && form.email().invalid() ? 'true' : null"
        aria-describedby="email-error" />
 <span id="email-error" aria-live="polite">@if (form.email().touched()) { {{ form.email().errors()[0]?.message }} }</span>

@@ -6,7 +6,7 @@ import { HxSwitch } from './switch';
 
 @Component({
   imports: [HxSwitch, FormsModule],
-  template: `<label><input type="checkbox" hxSwitch [(ngModel)]="on" /> Dark mode</label>`,
+  template: `<label><input type="checkbox" hx-switch [(ngModel)]="on" /> Dark mode</label>`,
 })
 class Host {
   on = false;

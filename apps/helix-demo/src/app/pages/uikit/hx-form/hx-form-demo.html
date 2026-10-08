@@ -3,7 +3,7 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Helix UI form controls</h2>
     <p class="m-0">
-      <code>hxInput</code>, <code>hxCheckbox</code>, <code>hxRadio</code> and <code>hxSwitch</code> from
+      <code>hx-input</code>, <code>hx-checkbox</code>, <code>hx-radio</code> and <code>hx-switch</code> from
       <code>&#64;gravionlabs/helix-ui</code> are native controls drawn with CSS on the same tokens as the
       helix-core ones on the left.
     </p>
@@ -17,22 +17,22 @@
     <div class="row">
       <span class="label">default</span>
       <span class="cell"><input hInputText type="text" placeholder="Default" [(ngModel)]="text" /></span>
-      <span class="cell"><input hxInput type="text" placeholder="Default" [(ngModel)]="text" /></span>
+      <span class="cell"><input hx-input type="text" placeholder="Default" [(ngModel)]="text" /></span>
     </div>
     <div class="row">
       <span class="label">disabled</span>
       <span class="cell"><input hInputText type="text" placeholder="Disabled" disabled /></span>
-      <span class="cell"><input hxInput type="text" placeholder="Disabled" disabled /></span>
+      <span class="cell"><input hx-input type="text" placeholder="Disabled" disabled /></span>
     </div>
     <div class="row">
       <span class="label">invalid</span>
       <span class="cell"><input hInputText type="text" value="x" class="ng-dirty ng-invalid" /></span>
-      <span class="cell"><input hxInput type="text" value="x" aria-invalid="true" /></span>
+      <span class="cell"><input hx-input type="text" value="x" aria-invalid="true" /></span>
     </div>
     <div class="row">
       <span class="label">filled</span>
       <span class="cell"><input hInputText type="text" placeholder="Filled" variant="filled" /></span>
-      <span class="cell"><input hxInput type="text" placeholder="Filled" variant="filled" /></span>
+      <span class="cell"><input hx-input type="text" placeholder="Filled" variant="filled" /></span>
     </div>
     <div class="row">
       <span class="label">small / large</span>
@@ -41,14 +41,14 @@
         <input hInputText type="text" placeholder="Large" pSize="large" />
       </span>
       <span class="cell">
-        <input hxInput type="text" placeholder="Small" size="small" />
-        <input hxInput type="text" placeholder="Large" size="large" />
+        <input hx-input type="text" placeholder="Small" size="small" />
+        <input hx-input type="text" placeholder="Large" size="large" />
       </span>
     </div>
     <div class="row">
       <span class="label">textarea</span>
       <span class="cell"><textarea hTextarea rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
-      <span class="cell"><textarea hxInput rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
+      <span class="cell"><textarea hx-input rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
     </div>
   </div>
 
@@ -61,11 +61,11 @@
         <label><h-checkbox [binary]="true" [disabled]="true" /> Disabled</label>
       </span>
       <span class="cell">
-        <label><input type="checkbox" hxCheckbox [(ngModel)]="agree" /> Agree</label>
-        <label><input type="checkbox" hxCheckbox disabled /> Disabled</label>
-        <label><input type="checkbox" hxCheckbox disabled checked /> Checked</label>
-        <label><input type="checkbox" hxCheckbox aria-invalid="true" /> Invalid</label>
-        <label><input type="checkbox" hxCheckbox [indeterminate]="true" /> Some</label>
+        <label><input type="checkbox" hx-checkbox [(ngModel)]="agree" /> Agree</label>
+        <label><input type="checkbox" hx-checkbox disabled /> Disabled</label>
+        <label><input type="checkbox" hx-checkbox disabled checked /> Checked</label>
+        <label><input type="checkbox" hx-checkbox aria-invalid="true" /> Invalid</label>
+        <label><input type="checkbox" hx-checkbox [indeterminate]="true" /> Some</label>
       </span>
     </div>
     <div class="row">
@@ -75,9 +75,9 @@
         <label><h-radiobutton name="core-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
       </span>
       <span class="cell">
-        <label><input type="radio" hxRadio name="ui-plan" value="free" [(ngModel)]="plan" /> Free</label>
-        <label><input type="radio" hxRadio name="ui-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
-        <label><input type="radio" hxRadio name="ui-plan-off" disabled /> Disabled</label>
+        <label><input type="radio" hx-radio name="ui-plan" value="free" [(ngModel)]="plan" /> Free</label>
+        <label><input type="radio" hx-radio name="ui-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+        <label><input type="radio" hx-radio name="ui-plan-off" disabled /> Disabled</label>
       </span>
     </div>
     <div class="row">
@@ -86,18 +86,18 @@
         <label><h-toggleswitch [(ngModel)]="dark" /> Dark mode</label>
       </span>
       <span class="cell">
-        <label><input type="checkbox" hxSwitch [(ngModel)]="dark" /> Dark mode</label>
-        <label><input type="checkbox" hxSwitch disabled /> Disabled</label>
+        <label><input type="checkbox" hx-switch [(ngModel)]="dark" /> Dark mode</label>
+        <label><input type="checkbox" hx-switch disabled /> Disabled</label>
       </span>
     </div>
     <div class="row">
       <span class="label">sizes</span>
       <span class="cell"><h-checkbox [binary]="true" size="small" /><h-checkbox [binary]="true" size="large" /></span>
       <span class="cell">
-        <input type="checkbox" hxCheckbox size="small" aria-label="Small" />
-        <input type="checkbox" hxCheckbox size="large" aria-label="Large" />
-        <input type="radio" hxRadio name="sz" size="small" aria-label="Small" />
-        <input type="radio" hxRadio name="sz" size="large" aria-label="Large" />
+        <input type="checkbox" hx-checkbox size="small" aria-label="Small" />
+        <input type="checkbox" hx-checkbox size="large" aria-label="Large" />
+        <input type="radio" hx-radio name="sz" size="small" aria-label="Small" />
+        <input type="radio" hx-radio name="sz" size="large" aria-label="Large" />
       </span>
     </div>
   </div>
@@ -112,7 +112,7 @@
       <div class="field">
         <label for="su-name">Name</label>
         <input
-          hxInput
+          hx-input
           id="su-name"
           [formField]="signup.name"
           [attr.aria-invalid]="signup.name().touched() && signup.name().invalid() ? 'true' : null"
@@ -127,7 +127,7 @@
       <div class="field">
         <label for="su-email">Email</label>
         <input
-          hxInput
+          hx-input
           id="su-email"
           type="email"
           [formField]="signup.email"
@@ -142,13 +142,13 @@
       </div>
       <fieldset>
         <legend>Plan</legend>
-        <label class="cell"><input type="radio" hxRadio value="free" [formField]="signup.plan" /> Free</label>
-        <label class="cell"><input type="radio" hxRadio value="pro" [formField]="signup.plan" /> Pro</label>
+        <label class="cell"><input type="radio" hx-radio value="free" [formField]="signup.plan" /> Free</label>
+        <label class="cell"><input type="radio" hx-radio value="pro" [formField]="signup.plan" /> Pro</label>
       </fieldset>
-      <label class="cell"><input type="checkbox" hxCheckbox [formField]="signup.newsletter" /> Send me the newsletter</label>
-      <label class="cell"><input type="checkbox" hxSwitch [formField]="signup.darkMode" /> Dark mode</label>
+      <label class="cell"><input type="checkbox" hx-checkbox [formField]="signup.newsletter" /> Send me the newsletter</label>
+      <label class="cell"><input type="checkbox" hx-switch [formField]="signup.darkMode" /> Dark mode</label>
       <div class="flex gap-2 items-center">
-        <button hxButton type="submit" [loading]="sending()">Sign up</button>
+        <button hx-button type="submit" [loading]="sending()">Sign up</button>
         @if (sent(); as s) {
           <span>Signed up {{ s.name }} ({{ s.email }}) on the {{ s.plan }} plan.</span>
         }

@@ -54,7 +54,7 @@
       @if (planForm.plan().touched() && planForm.plan().invalid()) {
         <span class="error" aria-live="polite">{{ planForm.plan().errors()[0].message }}</span>
       }
-      <div><button hxButton type="submit">Save</button></div>
+      <div><button hx-button type="submit">Save</button></div>
       @if (submitted()) { <span>Saved: {{ model().plan }}</span> }
     </form>
   </div>

@@ -7,8 +7,8 @@ import { HxCheckbox, type HxCheckboxSize } from './checkbox';
 @Component({
   imports: [HxCheckbox, FormsModule],
   template: `
-    <label><input type="checkbox" hxCheckbox [size]="size()" [(ngModel)]="checked" /> Agree</label>
-    <input type="checkbox" hxCheckbox [indeterminate]="some()" aria-label="All" id="all" />
+    <label><input type="checkbox" hx-checkbox [size]="size()" [(ngModel)]="checked" /> Agree</label>
+    <input type="checkbox" hx-checkbox [indeterminate]="some()" aria-label="All" id="all" />
   `,
 })
 class Host {

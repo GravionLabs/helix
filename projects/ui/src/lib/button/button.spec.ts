@@ -7,7 +7,7 @@ import { HxButton } from './button';
   imports: [HxButton],
   template: `
     <button
-      hxButton
+      hx-button
       [variant]="variant()"
       [severity]="severity()"
       [size]="size()"
@@ -20,7 +20,7 @@ import { HxButton } from './button';
     >
       Save
     </button>
-    <a hxButton href="#top" aria-disabled="true" (click)="clicks.update((n) => n + 1)">Docs</a>
+    <a hx-button href="#top" aria-disabled="true" (click)="clicks.update((n) => n + 1)">Docs</a>
   `,
 })
 class Host {
