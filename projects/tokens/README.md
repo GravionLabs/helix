@@ -49,6 +49,21 @@ and the muted palettes) by `scripts/tokens/extract-preset.mjs`, and a test keeps
 that preset, key by key and in the same order, while `helix-core` still exists. The script and the test go away
 with `helix-core`; the data stays. See `NOTICE` for the origin of the values.
 
+## Resolve to CSS and JSON
+
+```js
+import { helixTokens } from '../../projects/tokens/src/index.ts';
+import { resolveTokens } from '../tokens/resolve.mjs';
+
+const { css, json } = resolveTokens(helixTokens, { darkSelector: '.app-dark', components: true });
+```
+
+`scripts/tokens/resolve.mjs` is the resolver: pure functions, no I/O, no engine. It writes the layers in the order
+primitive, semantic (light, then dark), global (`color-scheme`), then one block per component; `components` is `true`
+(all, sorted by name), `false` (base layers only) or a list of names (those, in that order). `json` holds the
+variables by colour scheme. Within an object the values come first, then the nested objects, the last one first;
+that order is part of the contract, because the CSS of the golden snapshot depends on it.
+
 ## Checks
 
 ```bash
