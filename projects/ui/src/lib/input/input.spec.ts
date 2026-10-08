@@ -7,8 +7,8 @@ import { HxInput, type HxInputSize, type HxInputVariant } from './input';
 @Component({
   imports: [HxInput, FormsModule],
   template: `
-    <input hxInput id="a" [variant]="variant()" [size]="size()" [fluid]="fluid()" [(ngModel)]="value" required />
-    <textarea hxInput id="b" rows="3"></textarea>
+    <input hx-input id="a" [variant]="variant()" [size]="size()" [fluid]="fluid()" [(ngModel)]="value" required />
+    <textarea hx-input id="b" rows="3"></textarea>
   `,
 })
 class Host {

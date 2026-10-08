@@ -8,16 +8,16 @@ export type HxCheckboxSize = 'small' | 'medium' | 'large';
  * as for any checkbox.
  *
  * ```html
- * <label><input type="checkbox" hxCheckbox [(ngModel)]="agreed" /> I agree</label>
- * <input type="checkbox" hxCheckbox [indeterminate]="some" aria-label="Select all" />
+ * <label><input type="checkbox" hx-checkbox [(ngModel)]="agreed" /> I agree</label>
+ * <input type="checkbox" hx-checkbox [indeterminate]="some" aria-label="Select all" />
  * ```
  *
  * Put it in a `<label>` with its text (or give it `aria-label`); the invalid look comes from
  * `aria-invalid="true"` and from `ng-invalid ng-touched`.
  */
 @Directive({
-  selector: 'input[hxCheckbox]',
-  exportAs: 'hxCheckbox',
+  selector: 'input[hx-checkbox]',
+  exportAs: 'hx-checkbox',
   host: {
     class: 'hx-checkbox',
     '[class.hx-checkbox-sm]': "size() === 'small'",

@@ -23,11 +23,11 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 
 | Component | Selector | |
 | --- | --- | --- |
-| `HxButton` | `button[hxButton]`, `a[hxButton]` | variants, severities, sizes, loading, icon-only |
-| `HxInput` | `input[hxInput]`, `textarea[hxInput]` | outlined / filled, sizes, invalid |
-| `HxCheckbox` | `input[hxCheckbox]` | native checkbox, indeterminate |
-| `HxRadio` | `input[hxRadio]` | native radio |
-| `HxSwitch` | `input[hxSwitch]` | native checkbox with `role="switch"` |
+| `HxButton` | `button[hx-button]`, `a[hx-button]` | variants, severities, sizes, loading, icon-only |
+| `HxInput` | `input[hx-input]`, `textarea[hx-input]` | outlined / filled, sizes, invalid |
+| `HxCheckbox` | `input[hx-checkbox]` | native checkbox, indeterminate |
+| `HxRadio` | `input[hx-radio]` | native radio |
+| `HxSwitch` | `input[hx-switch]` | native checkbox with `role="switch"` |
 
 Selectors, inputs and classes use the prefix `hx` (`hx-button`), so they never clash with `helix-core`'s `h-`
 in an app that uses both while migrating. Both libraries read the same `--h-*` tokens, so a page mixes them

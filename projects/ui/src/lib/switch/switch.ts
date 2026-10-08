@@ -5,12 +5,12 @@ import { Directive } from '@angular/core';
  * Use it for a setting that takes effect immediately; label it with the setting's name, not the action.
  *
  * ```html
- * <label><input type="checkbox" hxSwitch [(ngModel)]="darkMode" /> Dark mode</label>
+ * <label><input type="checkbox" hx-switch [(ngModel)]="darkMode" /> Dark mode</label>
  * ```
  */
 @Directive({
-  selector: 'input[hxSwitch]',
-  exportAs: 'hxSwitch',
+  selector: 'input[hx-switch]',
+  exportAs: 'hx-switch',
   host: {
     class: 'hx-switch',
     role: 'switch',
