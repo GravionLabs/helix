@@ -227,6 +227,9 @@ importers:
       quill:
         specifier: 2.0.3
         version: 2.0.3
+      sass:
+        specifier: ^1.105.1
+        version: 1.105.1
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -8585,7 +8588,6 @@ snapshots:
       source-map-js: 1.2.1
     optionalDependencies:
       '@parcel/watcher': 2.6.0
-    optional: true
 
   sax@1.6.1:
     optional: true

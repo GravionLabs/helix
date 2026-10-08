@@ -1,0 +1,227 @@
+/*
+ * Select: `<hx-select>`. Same look as the helix-core Select, from the `--h-select-*` tokens. The host draws the
+ * field (border, background, focus ring), the trigger is a button inside it, the panel is a CDK connected
+ * overlay (`.hx-select-overlay` is the CDK pane, `.hx-select-panel` its content). The CDK's own overlay
+ * container CSS is part of styles.css.
+ */
+.hx-select {
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  min-width: 0;
+  border: 1px solid var(--h-select-border-color);
+  border-radius: var(--h-select-border-radius);
+  background: var(--h-select-background);
+  box-shadow: var(--h-select-shadow);
+  outline-color: transparent;
+  user-select: none;
+  transition:
+    background var(--h-select-transition-duration),
+    border-color var(--h-select-transition-duration),
+    outline-color var(--h-select-transition-duration),
+    box-shadow var(--h-select-transition-duration);
+}
+
+.hx-select:not(.hx-select-disabled):hover {
+  border-color: var(--h-select-hover-border-color);
+}
+
+.hx-select:not(.hx-select-disabled):has(.hx-select-trigger:focus-visible),
+.hx-select-open {
+  border-color: var(--h-select-focus-border-color);
+  outline: var(--h-select-focus-ring-width) var(--h-select-focus-ring-style)
+    var(--h-select-focus-ring-color);
+  outline-offset: var(--h-select-focus-ring-offset);
+  box-shadow: var(--h-select-focus-ring-shadow);
+}
+
+.hx-select-trigger {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: var(--h-select-padding-y) var(--h-select-padding-x);
+  border: 0;
+  background: transparent;
+  color: var(--h-select-color);
+  font: inherit;
+  font-size: 1rem;
+  text-align: start;
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-select-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-select-placeholder {
+  color: var(--h-select-placeholder-color);
+}
+
+.hx-select-chevron {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--h-select-dropdown-color);
+}
+
+.hx-select-clear {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--h-select-dropdown-width);
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--h-select-clear-icon-color);
+  cursor: pointer;
+}
+
+.hx-select-clear svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.hx-select-has-clear .hx-select-trigger {
+  padding-inline-end: calc(var(--h-select-dropdown-width) - 0.25rem);
+}
+
+/* variants, states, sizes */
+.hx-select-filled {
+  background: var(--h-select-filled-background);
+}
+
+.hx-select-filled:not(.hx-select-disabled):hover {
+  background: var(--h-select-filled-hover-background);
+}
+
+.hx-select-filled:not(.hx-select-disabled):has(
+  .hx-select-trigger:focus-visible
+),
+.hx-select-filled.hx-select-open {
+  background: var(--h-select-filled-focus-background);
+}
+
+.hx-select-invalid,
+.hx-select.ng-invalid.ng-touched {
+  border-color: var(--h-select-invalid-border-color);
+}
+
+.hx-select-invalid .hx-select-placeholder,
+.hx-select.ng-invalid.ng-touched .hx-select-placeholder {
+  color: var(--h-select-invalid-placeholder-color);
+}
+
+.hx-select-disabled {
+  background: var(--h-select-disabled-background);
+}
+
+.hx-select-disabled .hx-select-trigger {
+  color: var(--h-select-disabled-color);
+  cursor: default;
+}
+
+.hx-select-sm .hx-select-trigger {
+  padding: var(--h-select-sm-padding-y) var(--h-select-sm-padding-x);
+  font-size: var(--h-select-sm-font-size);
+}
+
+.hx-select-lg .hx-select-trigger {
+  padding: var(--h-select-lg-padding-y) var(--h-select-lg-padding-x);
+  font-size: var(--h-select-lg-font-size);
+}
+
+.hx-select-fluid {
+  display: flex;
+  width: 100%;
+}
+
+/* the panel */
+.hx-select-panel {
+  box-sizing: border-box;
+  max-height: 16rem;
+  overflow: auto;
+  border: 1px solid var(--h-select-overlay-border-color);
+  border-radius: var(--h-select-overlay-border-radius);
+  background: var(--h-select-overlay-background);
+  color: var(--h-select-overlay-color);
+  box-shadow: var(--h-select-overlay-shadow);
+  font-size: 1rem;
+}
+
+.hx-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-select-list-gap);
+  padding: var(--h-select-list-padding);
+  outline: 0 none;
+}
+
+.hx-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--h-select-checkmark-gutter-end);
+  padding: var(--h-select-option-padding);
+  border-radius: var(--h-select-option-border-radius);
+  color: var(--h-select-option-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hx-select-option:hover,
+.hx-select-option.cdk-option-active {
+  background: var(--h-select-option-focus-background);
+  color: var(--h-select-option-focus-color);
+}
+
+.hx-select-option[aria-selected="true"] {
+  background: var(--h-select-option-selected-background);
+  color: var(--h-select-option-selected-color);
+}
+
+.hx-select-option[aria-selected="true"]:hover,
+.hx-select-option[aria-selected="true"].cdk-option-active {
+  background: var(--h-select-option-selected-focus-background);
+  color: var(--h-select-option-selected-focus-color);
+}
+
+.hx-select-option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* the checkmark: a mask in the checkmark colour, shown for the selected option, a gap otherwise */
+.hx-select-check {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.hx-select-option[aria-selected="true"] .hx-select-check {
+  background: var(--h-select-checkmark-color);
+  mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 7.5 2.8 2.8L11 4.5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  -webkit-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 7.5 2.8 2.8L11 4.5'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.hx-select-empty {
+  padding: var(--h-select-empty-message-padding);
+  color: var(--h-select-placeholder-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-select {
+    transition: none;
+  }
+}

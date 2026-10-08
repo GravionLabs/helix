@@ -35,7 +35,7 @@
     "lint": "biome check . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" && pnpm lint:no-primeng && pnpm lint:no-primeuix && pnpm lint:no-core",
     "lint:no-primeng": "! grep -rn \"from 'primeng\" --include='*.ts' --include='*.html' projects/shell projects/zod projects/ag-grid apps/helix-demo/src",
     "lint:no-primeuix": "! grep -rnE \"from '@primeuix/|require\\('@primeuix/\" --include='*.ts' --include='*.html' projects apps",
-    "lint:no-core": "! grep -rnE \"from '(@gravionlabs/helix-core|@primeuix/|primeng)|require\\\\('(@gravionlabs/helix-core|@primeuix/|primeng)\" --include='*.ts' --include='*.html' --include='*.css' projects/ui",
+    "lint:no-core": "! grep -rnE \"from '(@gravionlabs/helix-core|@primeuix/|primeng)|require\\\\('(@gravionlabs/helix-core|@primeuix/|primeng)\" --include='*.ts' --include='*.html' --include='*.css' --include='*.scss' projects/ui",
     "lint:fix": "biome check --write . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" --fix",
     "prepare": "husky"
   },
@@ -83,6 +83,7 @@
     "lint-staged": "^17.6.0",
     "ng-packagr": "^22.2.4",
     "quill": "2.0.3",
+    "sass": "^1.105.1",
     "typescript": "~6.0.3",
     "vitest": "^5.0.0",
     "zod": "^4.6.2"
