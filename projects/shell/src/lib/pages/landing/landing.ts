@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
 import { DividerModule } from '@gravionlabs/helix-core/divider';
 import { RippleModule } from '@gravionlabs/helix-core/ripple';
 import { StyleClassModule } from '@gravionlabs/helix-core/styleclass';
@@ -24,7 +23,6 @@ import { HelixTopbarWidget } from './components/topbar-widget/topbar-widget';
     HelixFooterWidget,
     RippleModule,
     StyleClassModule,
-    ButtonModule,
     DividerModule,
   ],
   templateUrl: './landing.html',

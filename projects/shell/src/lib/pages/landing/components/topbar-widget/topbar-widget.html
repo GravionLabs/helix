@@ -33,10 +33,12 @@
 </a>
 
 <a
-  hButton
-  [text]="true"
+  hx-button
+  variant="text"
   severity="secondary"
-  [rounded]="true"
+  rounded
+  iconOnly
+  [attr.aria-label]="menuLabel()"
   hRipple
   class="lg:hidden!"
   hStyleClass="@next"
@@ -66,21 +68,8 @@
     }
   </ul>
   <div class="flex border-t lg:border-t-0 border-surface py-4 lg:py-0 mt-4 lg:mt-0 gap-2">
-    <button
-      hButton
-      hRipple
-      [label]="loginLabel()"
-      [routerLink]="loginRoute()"
-      [rounded]="true"
-      [text]="true"
-    ></button>
-    <button
-      hButton
-      hRipple
-      [label]="registerLabel()"
-      [routerLink]="registerRoute()"
-      [rounded]="true"
-    ></button>
+    <a hx-button hRipple [routerLink]="loginRoute()" rounded variant="text">{{ loginLabel() }}</a>
+    <a hx-button hRipple [routerLink]="registerRoute()" rounded>{{ registerLabel() }}</a>
     <helix-floating-configurator [float]="false" />
   </div>
 </div>

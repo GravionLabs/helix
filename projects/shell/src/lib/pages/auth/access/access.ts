@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
 import { RippleModule } from '@gravionlabs/helix-core/ripple';
+import { HxButton } from '@gravionlabs/helix-ui';
 import { HelixFloatingConfigurator } from '../../../layout/components/floating-configurator/floating-configurator';
 
 @Component({
   selector: 'helix-access',
   standalone: true,
-  imports: [ButtonModule, RouterModule, RippleModule, HelixFloatingConfigurator],
+  imports: [HxButton, RouterModule, RippleModule, HelixFloatingConfigurator],
   templateUrl: './access.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './access.scss',

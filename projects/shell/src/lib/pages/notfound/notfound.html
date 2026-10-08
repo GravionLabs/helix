@@ -79,7 +79,7 @@
             </span>
           </a>
         }
-        <h-button [label]="buttonLabel()" [routerLink]="buttonRoute()" />
+        <a hx-button [routerLink]="buttonRoute()">{{ buttonLabel() }}</a>
       </div>
     </div>
   </div>
