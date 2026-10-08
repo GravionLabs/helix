@@ -11,11 +11,10 @@ import {
   input,
   signal,
 } from '@angular/core';
+import { nextId } from '../internal/ids';
 
 export type HxTooltipPosition = 'top' | 'right' | 'bottom' | 'left';
 export type HxTooltipEvent = 'hover' | 'focus' | 'both';
-
-let nextId = 0;
 
 /** The bubble. Created by the directive in a CDK overlay. */
 @Component({
@@ -76,7 +75,7 @@ export class HxTooltip {
   /** Milliseconds before it appears. */
   readonly showDelay = input(0, { alias: 'hxTooltipShowDelay' });
 
-  protected readonly bubbleId = `hx-tooltip-${nextId++}`;
+  protected readonly bubbleId = nextId('hx-tooltip');
   protected readonly shown = signal(false);
   #ref: OverlayRef | null = null;
   #bubble: HxTooltipBubble | null = null;

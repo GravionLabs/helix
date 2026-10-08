@@ -14,8 +14,7 @@ import {
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxInput, type HxInputSize, type HxInputVariant } from '../input/input';
-
-let nextId = 0;
+import { nextId } from '../internal/ids';
 
 /**
  * A password field with a button that shows or hides the text. Works with `ngModel`, reactive forms and
@@ -99,7 +98,7 @@ export class HxPassword implements ControlValueAccessor, FormValueControl<string
   readonly invalid = input(false, { transform: booleanAttribute });
   readonly touch = output<void>();
 
-  protected readonly defaultId = `hx-password-${nextId++}`;
+  protected readonly defaultId = nextId('hx-password');
   protected readonly visible = signal(false);
   readonly #cvaDisabled = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
