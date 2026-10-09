@@ -31,12 +31,20 @@ describe('helix-core import guard', () => {
     ]);
   });
 
-  it('allows the theme entry points including their sub-paths, and vi.mock strings', () => {
+  it('allows the entry points a library still needs, including sub-paths and vi.mock strings', () => {
     const root = project({
       'projects/shell/src/a.ts':
-        "import { a } from '@gravionlabs/helix-core/themes/aura';\nvi.mock('@gravionlabs/helix-core/config', () => ({}));\n",
+        "import { a } from '@gravionlabs/helix-core/validators/x';\nvi.mock('@gravionlabs/helix-core/api', () => ({}));\n",
     });
     expect(forbiddenCoreImports(root, ALLOWED)).toEqual([]);
+  });
+
+  it('flags the theme engine in the shell: the theme runs on the theme service of helix-ui', () => {
+    const root = project({
+      'projects/shell/src/a.ts':
+        "import { updatePreset } from '@gravionlabs/helix-core/themes';\nimport { provideHelix } from '@gravionlabs/helix-core/config';\n",
+    });
+    expect(forbiddenCoreImports(root, ALLOWED).map((f) => f.entry)).toEqual(['themes', 'config']);
   });
 
   it('flags the root entry and any core import in ag-grid', () => {

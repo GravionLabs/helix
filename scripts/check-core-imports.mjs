@@ -12,8 +12,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 /** Entry points of helix-core (`@gravionlabs/helix-core/<entry>`) each library may still import. */
 export const ALLOWED = {
-  // MenuItem type, the theme engine and presets of the configurator, the message validators the form field shows
-  shell: ['api', 'config', 'themes', 'validators'],
+  // MenuItem type and the message validators the form field shows (the theme runs on helix-ui's HxTheme)
+  shell: ['api', 'validators'],
   // validators only; no UI
   zod: ['validators'],
   // no helix-core at all

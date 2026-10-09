@@ -74,6 +74,36 @@ describe('HxTheme', () => {
       expect(html.hasAttribute('data-theme')).toBe(false);
     });
 
+    it('cross-fades with the View Transitions API when asked to, but not at start-up', () => {
+      const start = vi.fn((update: () => void) => update());
+      Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });
+      try {
+        const theme = setup({ viewTransition: true, dark: true });
+        expect(start).not.toHaveBeenCalled(); // the start-up state
+        expect(html.classList).toContain('app-dark');
+        theme.setDark(false);
+        TestBed.tick();
+        expect(start).toHaveBeenCalledTimes(1);
+        expect(html.classList).not.toContain('app-dark');
+      } finally {
+        Reflect.deleteProperty(document, 'startViewTransition');
+      }
+    });
+
+    it('does not use view transitions unless asked to', () => {
+      const start = vi.fn((update: () => void) => update());
+      Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });
+      try {
+        const theme = setup();
+        theme.setDark(true);
+        TestBed.tick();
+        expect(start).not.toHaveBeenCalled();
+        expect(html.classList).toContain('app-dark');
+      } finally {
+        Reflect.deleteProperty(document, 'startViewTransition');
+      }
+    });
+
     it('follows the system setting when nothing says otherwise, and the option when given', () => {
       // jsdom has no matchMedia: the test provides one and removes it again
       Object.defineProperty(window, 'matchMedia', {

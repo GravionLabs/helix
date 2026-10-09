@@ -65,6 +65,23 @@ app loads its styles and tokens next to the shell styles:
 @import "@gravionlabs/helix-ui/tokens.css";
 ```
 
+Dark mode, the primary colour and the surface are switched by the theme service of helix-ui, which the layout
+store and the configurator use. Provide it once in the application config:
+
+```ts
+// app.config.ts
+import { provideHxTheme } from '@gravionlabs/helix-ui';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideHxTheme({ storageKey: 'my-app-theme', viewTransition: true })],
+};
+```
+
+Without `provideHxTheme` the service still works with its defaults (light or the system setting, nothing
+remembered); the options are described in [Theming](HELIX-UI.md#theming). The configurator offers the primary
+colours and surfaces of that service and the menu mode; there is no longer a choice between Aura, Lara and Nora
+presets.
+
 ---
 
 ## Quick Start
@@ -487,8 +504,9 @@ Where `breadcrumb` can be a static string or a function:
 | `configSidebarVisible` | `boolean` | Config sidebar open state |
 | `staticMenuMobileActive` | `boolean` | Static menu expanded on mobile |
 | `menuHoverActive` | `boolean` | Menu hover state (slim mode) |
-| `theme` | `string` | Active Helix theme name |
-| `darkMode` | `boolean` | Dark mode toggle |
+| `darkTheme()` | `boolean` | Dark mode: the value of `HxTheme.dark()` (read-only here) |
+| `primary()`, `surface()` | `HxPrimaryColor \| null`, `HxSurface \| null` | The chosen colours: the values of `HxTheme` |
+| `menuMode` | `'static' \| 'overlay'` | Menu mode |
 
 ### Setup
 
@@ -504,7 +522,7 @@ export class MyLayoutComponent {
   private layoutStore = inject(LayoutStore);
 
   toggleDark() {
-    this.layoutStore.setDarkMode(!this.layoutStore.darkMode());
+    this.layoutStore.toggleDarkMode(); // switches HxTheme; the class on <html> follows
   }
 }
 ```
