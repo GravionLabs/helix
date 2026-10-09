@@ -91,6 +91,14 @@ export {
 } from './lib/slider/slider';
 export { HxSwitch } from './lib/switch/switch';
 export {
+  HxTab,
+  HxTabContent,
+  HxTabList,
+  HxTabPanel,
+  HxTabPanels,
+  HxTabs,
+} from './lib/tabs/tabs';
+export {
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,
   HX_SURFACES,

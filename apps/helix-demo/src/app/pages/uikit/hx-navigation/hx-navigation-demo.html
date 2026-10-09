@@ -1,0 +1,40 @@
+<h1 class="sr-only">Helix UI Navigation</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Navigation</h2>
+    <p class="m-0">Navigation components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Tabs</h2>
+    <hx-tabs [(value)]="tab">
+      <hx-tab-list>
+        <hx-tab value="a">Profile</hx-tab>
+        <hx-tab value="b">Billing</hx-tab>
+        <hx-tab value="c" disabled>Soon</hx-tab>
+        <hx-tab value="d">Team</hx-tab>
+      </hx-tab-list>
+      <hx-tab-panels>
+        <hx-tab-panel value="a">Profile content. Left and Right move between the tabs.</hx-tab-panel>
+        <hx-tab-panel value="b"><ng-template hxTabContent>Billing content, created when first shown.</ng-template></hx-tab-panel>
+        <hx-tab-panel value="c">Not reachable.</hx-tab-panel>
+        <hx-tab-panel value="d">Team content.</hx-tab-panel>
+      </hx-tab-panels>
+    </hx-tabs>
+    <h3 class="demo-title">Scrollable</h3>
+    <div style="max-width: 22rem">
+      <hx-tabs scrollable>
+        <hx-tab-list>
+          @for (n of numbers; track n) {
+            <hx-tab [value]="'t' + n">Tab number {{ n }}</hx-tab>
+          }
+        </hx-tab-list>
+        <hx-tab-panels>
+          @for (n of numbers; track n) {
+            <hx-tab-panel [value]="'t' + n">Content {{ n }}</hx-tab-panel>
+          }
+        </hx-tab-panels>
+      </hx-tabs>
+    </div>
+  </div>
+</div>
