@@ -1,0 +1,82 @@
+// The icons helix-ui components draw themselves (no icon font needed): stroke icons on a 24 × 24 grid, drawn as
+// a CSS mask so they take the colour of the element (`currentColor`, or a token). A partial: it is `@use`d by the
+// component stylesheets and emits no CSS of its own.
+//
+//   @use 'icons' as *;
+//   .hx-select-chevron { @include hx-icon(chevron-down, 1rem, var(--h-select-dropdown-color), 2.4); }
+//
+// Add an icon: a path on the 24 grid, `(path: "…", filled: true)` for a solid shape. Keep the icon drawn with
+// round caps and joins, 2 units thick, 2 units clear of the edge, so the set stays consistent.
+
+@use 'sass:map';
+@use 'sass:meta';
+
+$hx-icons: (
+  chevron-down: 'm6 9 6 6 6-6',
+  chevron-up: 'm6 15 6-6 6 6',
+  chevron-left: 'm15 6-6 6 6 6',
+  chevron-right: 'm9 6 6 6-6 6',
+  check: 'm5 12.5 4.5 4.5L19 7.5',
+  close: 'M6 6l12 12M18 6 6 18',
+  plus: 'M12 5v14M5 12h14',
+  minus: 'M5 12h14',
+  search: 'M17.5 11a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0ZM16 16l4.5 4.5',
+  calendar: 'M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1ZM4 10.5h16M8.5 3.5v4M15.5 3.5v4',
+  eye: 'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+  eye-off: 'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM4 4l16 16',
+  upload: 'M12 16V4.5M7 9l5-5 5 5M4.5 15v3.5a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1V15',
+  spinner: 'M12 3.5a8.5 8.5 0 1 0 8.5 8.5',
+  info: 'M20.5 12a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0ZM12 11v5M12 8v.01',
+  success: 'M20.5 12a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0ZM8 12.2l2.8 2.8L16 9.5',
+  warn: 'M12 4 21 19.5H3L12 4ZM12 10v4.5M12 17.2v.01',
+  error: 'M20.5 12a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0ZM9 9l6 6M15 9l-6 6',
+  star: 'M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8L12 3.8Z',
+  star-filled: (path: 'M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8L12 3.8Z', filled: true),
+  bars: 'M4 7h16M4 12h16M4 17h16',
+);
+
+/// The `url(...)` of an icon, for `mask` and `background-image`.
+@function hx-icon-url($name, $stroke: 2) {
+  @if not map.has-key($hx-icons, $name) {
+    @error 'Unknown helix-ui icon `#{$name}`. Known icons: #{map.keys($hx-icons)}';
+  }
+  $icon: map.get($hx-icons, $name);
+  $path: $icon;
+  $paint: "fill='none' stroke='black' stroke-width='#{$stroke}'";
+  @if meta.type-of($icon) == 'map' {
+    $path: map.get($icon, path);
+    @if map.get($icon, filled) {
+      $paint: "fill='black' stroke='black' stroke-width='1.5'";
+    }
+  }
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' #{$paint} stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='#{$path}'/%3E%3C/svg%3E");
+}
+
+/// Draws the icon as a mask on the element: a box of `$size` filled with `$color`, cut to the icon.
+@mixin hx-icon($name, $size: 1em, $color: currentcolor, $stroke: 2) {
+  display: inline-block;
+  flex: none;
+  width: $size;
+  height: $size;
+  background: $color;
+  mask: hx-icon-url($name, $stroke) center / contain no-repeat;
+  -webkit-mask: hx-icon-url($name, $stroke) center / contain no-repeat;
+}
+
+/// Turns the icon, for the spinner. The keyframes are emitted where this is included, once per stylesheet.
+@mixin hx-icon-spin($duration: 0.8s) {
+  animation: hx-icon-spin $duration linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 3s;
+  }
+}
+
+/// The keyframes of `hx-icon-spin`; include once in the stylesheet that spins an icon.
+@mixin hx-icon-spin-keyframes {
+  @keyframes hx-icon-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
