@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormField } from '@angular/forms/signals';
 import { HelixFormField } from '@gravionlabs/helix-shell';
+import { HxInputNumber } from '@gravionlabs/helix-ui';
 import { HelixFieldWidgetBase } from '../widget-base';
 
 /** Built-in widget for numeric fields. */
 @Component({
   selector: 'helix-number-widget',
   standalone: true,
-  imports: [FormField, HelixFormField],
+  imports: [HelixFormField, HxInputNumber],
   templateUrl: './number-widget.html',
   styleUrl: './number-widget.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

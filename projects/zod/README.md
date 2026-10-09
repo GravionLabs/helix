@@ -17,6 +17,12 @@ Zod v4 adapter for Helix forms. The validators and their keys come from `@gravio
 
 ---
 
+## Styles
+
+The built-in widgets draw their fields with `@gravionlabs/helix-ui` (`input[hx-input]`, `hx-input-number`, `hx-select`, `input[hx-checkbox]`, `button[hx-button]`) and the field frame (label, hint, error) with `@gravionlabs/helix-shell`. They have no styles of their own for the controls: the app must load the helix-ui styles and tokens (`@gravionlabs/helix-ui/styles.css` and `tokens.css`, see the helix-ui README) or the fields render unstyled.
+
+---
+
 ## Dynamic Forms from Zod Schemas
 
 > Built on `@angular/forms/signals`, which is **experimental** — minor Angular releases may introduce breaking API changes.

@@ -24,23 +24,6 @@
     }
   }
 
-  &__add,
-  &__remove {
-    padding: 0.375rem 0.75rem;
-    font-family: inherit;
-    font-size: 0.875rem;
-    color: var(--h-text-color);
-    background-color: var(--h-content-background);
-    border: 1px solid var(--h-content-border-color);
-    border-radius: var(--h-border-radius-md);
-    cursor: pointer;
-    transition: border-color 0.2s;
-
-    &:hover {
-      border-color: var(--h-primary-color);
-    }
-  }
-
   &__add {
     align-self: flex-start;
   }
