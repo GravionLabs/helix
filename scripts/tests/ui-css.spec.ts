@@ -43,6 +43,7 @@ describe('helix-ui styles', () => {
     ['button-group', 'button-group/button-group.ts'],
     ['chip', 'chip/chip.ts'],
     ['progress', 'progress/progress.ts'],
+    ['popover', 'popover/popover.ts'],
     ['radio', 'radio/radio.ts'],
     ['avatar', 'avatar/avatar.ts'],
     ['badge', 'badge/badge.ts'],

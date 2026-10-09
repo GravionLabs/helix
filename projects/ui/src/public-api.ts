@@ -108,6 +108,7 @@ export {
 } from './lib/multi-select/multi-select';
 export { HxPanel } from './lib/panel/panel';
 export { HxPassword } from './lib/password/password';
+export { HxPopover } from './lib/popover/popover';
 export { HxProgressBar, type HxProgressMode, HxProgressSpinner } from './lib/progress/progress';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export { HxRating } from './lib/rating/rating';

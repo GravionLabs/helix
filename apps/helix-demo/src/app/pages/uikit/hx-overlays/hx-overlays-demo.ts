@@ -9,6 +9,7 @@ import {
   HxInput,
   HxMessage,
   HxMessageService,
+  HxPopover,
   HxToast,
   type HxToastSeverity,
 } from '@gravionlabs/helix-ui';
@@ -32,11 +33,11 @@ export class HxDialogContentDemo {
   protected readonly ref = inject(HxDialogRef<string>);
 }
 
-/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog, Drawer. */
+/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog, Drawer, Popover. */
 @Component({
   selector: 'app-hx-overlays-demo',
   standalone: true,
-  imports: [HxMessage, HxToast, HxButton, HxDialog, HxDrawer, HxInput],
+  imports: [HxMessage, HxToast, HxButton, HxDialog, HxDrawer, HxInput, HxPopover],
   templateUrl: './hx-overlays-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-overlays-demo.scss',
