@@ -731,7 +731,9 @@ if (await confirmation.confirmAsync({ message: 'Leave the page?' })) { … }
 ## Table
 
 `table[hx-table]` draws a native `<table>` as a Helix table, with CSS only. It is for small static tables; sorting,
-paging, filtering and selection are not part of it: use AG Grid through `helix-ag-grid` for data grids.
+paging, filtering and selection are not part of it: use AG Grid through `helix-ag-grid` for data grids (the
+`helixGridTheme`, formatters and cell renderer recipes are in the
+[helix-ag-grid README](https://github.com/GravionLabs/helix/blob/main/projects/ag-grid/README.md#data-grids)).
 
 ```html
 <div class="hx-table-scroll">

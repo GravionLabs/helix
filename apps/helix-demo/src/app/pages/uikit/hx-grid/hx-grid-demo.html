@@ -1,0 +1,36 @@
+<h1 class="sr-only">Helix UI Data grid</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Data grid</h2>
+    <p class="m-0">
+      Interactive tables use AG Grid Community through <code>&#64;gravionlabs/helix-ag-grid</code>: the Helix theme
+      (<code>helixGridTheme</code>, from the design tokens), the formatters, and cell renderers built from
+      <code>hx-tag</code> and <code>hx-button</code>. Switch light/dark or the primary colour: the grid follows.
+    </p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Invoices</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <label for="grid-quick" class="font-medium">Quick filter</label>
+      <input id="grid-quick" hx-input type="search" placeholder="Search all columns" (input)="quick.set($any($event.target).value)" />
+      <button hx-button type="button" variant="outlined" size="small" (click)="simulateLoading()">Loading overlay</button>
+      <button hx-button type="button" variant="outlined" size="small" (click)="setEmpty(!empty())">{{ empty() ? 'Show rows' : 'No rows overlay' }}</button>
+    </div>
+    <ag-grid-angular
+      style="height: 24rem"
+      [theme]="theme"
+      [rowData]="rows()"
+      [columnDefs]="columns"
+      [defaultColDef]="defaultColDef"
+      [rowSelection]="{ mode: 'multiRow' }"
+      [pagination]="true"
+      [paginationPageSize]="5"
+      [paginationPageSizeSelector]="[5, 10]"
+      [quickFilterText]="quick()"
+      [loading]="loading()"
+      [context]="context"
+    />
+    <p class="m-0">Last row action: {{ last() }}</p>
+  </div>
+</div>

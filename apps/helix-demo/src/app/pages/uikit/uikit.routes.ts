@@ -16,6 +16,7 @@ import { HxContainersDemo } from './hx-containers/hx-containers-demo';
 import { HxDataDemo } from './hx-data/hx-data-demo';
 import { HxDisplayDemo } from './hx-display/hx-display-demo';
 import { HxFormDemo } from './hx-form/hx-form-demo';
+import { HxGridDemo } from './hx-grid/hx-grid-demo';
 import { HxInputsDemo } from './hx-inputs/hx-inputs-demo';
 import { HxNavigationDemo } from './hx-navigation/hx-navigation-demo';
 import { HxOverlaysDemo } from './hx-overlays/hx-overlays-demo';
@@ -48,6 +49,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'hx-data': HxDataDemo,
   'hx-display': HxDisplayDemo,
   'hx-form': HxFormDemo,
+  'hx-grid': HxGridDemo,
   'hx-inputs': HxInputsDemo,
   'hx-navigation': HxNavigationDemo,
   'hx-overlays': HxOverlaysDemo,
