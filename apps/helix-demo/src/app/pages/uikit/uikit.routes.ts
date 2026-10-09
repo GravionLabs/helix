@@ -15,6 +15,7 @@ import { HxButtonDemo } from './hx-button/hx-button-demo';
 import { HxContainersDemo } from './hx-containers/hx-containers-demo';
 import { HxFormDemo } from './hx-form/hx-form-demo';
 import { HxInputsDemo } from './hx-inputs/hx-inputs-demo';
+import { HxNavigationDemo } from './hx-navigation/hx-navigation-demo';
 import { HxOverlaysDemo } from './hx-overlays/hx-overlays-demo';
 import { HxSelectDemo } from './hx-select/hx-select-demo';
 import { InputDemo } from './input/input-demo';
@@ -44,6 +45,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'hx-containers': HxContainersDemo,
   'hx-form': HxFormDemo,
   'hx-inputs': HxInputsDemo,
+  'hx-navigation': HxNavigationDemo,
   'hx-overlays': HxOverlaysDemo,
   'hx-select': HxSelectDemo,
   input: InputDemo,

@@ -1,0 +1,170 @@
+/*
+ * Tabs: `<hx-tabs>`. A tab list with an active bar and panels from the `--h-tabs-*` tokens; with `scrollable`
+ * the list scrolls and shows buttons at its ends.
+ */
+@use 'icons' as *;
+
+.hx-tabs {
+  display: block;
+}
+
+.hx-tab-list {
+  position: relative;
+  display: flex;
+  background: var(--h-tabs-tablist-background);
+  border: solid var(--h-tabs-tablist-border-color);
+  border-width: var(--h-tabs-tablist-border-width);
+}
+
+.hx-tab-scroller {
+  flex: 1 1 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.hx-tab-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.hx-tab-tabs {
+  display: flex;
+  position: relative;
+}
+
+.hx-tab {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-tabs-tab-gap);
+  margin: var(--h-tabs-tab-margin);
+  padding: var(--h-tabs-tab-padding);
+  border: solid var(--h-tabs-tab-border-color);
+  border-width: var(--h-tabs-tab-border-width);
+  background: var(--h-tabs-tab-background);
+  color: var(--h-tabs-tab-color);
+  font-weight: var(--h-tabs-tab-font-weight);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: 0 none;
+  user-select: none;
+  transition:
+    background var(--h-tabs-transition-duration),
+    border-color var(--h-tabs-transition-duration),
+    color var(--h-tabs-transition-duration);
+}
+
+.hx-tab:not(.hx-tab-active, .hx-tab-disabled):hover {
+  background: var(--h-tabs-tab-hover-background);
+  border-color: var(--h-tabs-tab-hover-border-color);
+  color: var(--h-tabs-tab-hover-color);
+}
+
+.hx-tab-active {
+  background: var(--h-tabs-tab-active-background);
+  border-color: var(--h-tabs-tab-active-border-color);
+  color: var(--h-tabs-tab-active-color);
+}
+
+.hx-tab-active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--h-tabs-active-bar-bottom);
+  height: var(--h-tabs-active-bar-height);
+  background: var(--h-tabs-active-bar-background);
+}
+
+.hx-tab:focus-visible {
+  outline: var(--h-tabs-tab-focus-ring-width) var(--h-tabs-tab-focus-ring-style)
+    var(--h-tabs-tab-focus-ring-color);
+  outline-offset: var(--h-tabs-tab-focus-ring-offset);
+  box-shadow: var(--h-tabs-tab-focus-ring-shadow);
+}
+
+.hx-tab-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-tab-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-tabs-nav-button-width);
+  padding: 0;
+  border: 0;
+  background: var(--h-tabs-nav-button-background);
+  color: var(--h-tabs-nav-button-color);
+  box-shadow: var(--h-tabs-nav-button-shadow);
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-tab-nav:hover {
+  color: var(--h-tabs-nav-button-hover-color);
+}
+
+.hx-tab-nav:focus-visible {
+  outline: var(--h-tabs-nav-button-focus-ring-width) var(--h-tabs-nav-button-focus-ring-style)
+    var(--h-tabs-nav-button-focus-ring-color);
+  outline-offset: var(--h-tabs-nav-button-focus-ring-offset);
+  box-shadow: var(--h-tabs-nav-button-focus-ring-shadow);
+}
+
+.hx-tab-nav-prev {
+  inset-inline-start: 0;
+}
+
+.hx-tab-nav-next {
+  inset-inline-end: 0;
+}
+
+.hx-tab-nav-icon-prev {
+  @include hx-icon(chevron-left, 1rem, currentcolor, 2.4);
+}
+
+.hx-tab-nav-icon-next {
+  @include hx-icon(chevron-right, 1rem, currentcolor, 2.4);
+}
+
+.hx-tab-list-scrollable .hx-tab-scroller {
+  scroll-behavior: smooth;
+}
+
+.hx-tab-panel {
+  display: block;
+  padding: var(--h-tabs-tabpanel-padding);
+  background: var(--h-tabs-tabpanel-background);
+  color: var(--h-tabs-tabpanel-color);
+  outline: 0 none;
+}
+
+.hx-tab-panel[hidden] {
+  display: none;
+}
+
+.hx-tab-panel:focus-visible {
+  outline: var(--h-tabs-tabpanel-focus-ring-width) var(--h-tabs-tabpanel-focus-ring-style)
+    var(--h-tabs-tabpanel-focus-ring-color);
+  outline-offset: var(--h-tabs-tabpanel-focus-ring-offset);
+  box-shadow: var(--h-tabs-tabpanel-focus-ring-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-tab {
+    transition: none;
+  }
+
+  .hx-tab-list-scrollable .hx-tab-scroller {
+    scroll-behavior: auto;
+  }
+}
+
+.hx-tab-panels {
+  display: block;
+}
