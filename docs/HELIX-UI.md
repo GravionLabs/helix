@@ -463,6 +463,35 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Multi select
+
+`hx-multi-select` is a select for several values: a `combobox` that opens a multi-select listbox in an overlay. The
+value is an array of option values. Options, `optionLabel`, `optionValue`, `optionDisabled`, `compareWith`, `size`,
+`variant`, `fluid`, `placeholder`, `emptyMessage`, `inputId` and `showClear` work as in the Select. The panel stays
+open while choosing; Escape and a click outside close it. It works with `ngModel`, reactive forms (including
+`disable()`) and signal forms.
+
+```html
+<label for="cities">Cities</label>
+<hx-multi-select inputId="cities" [options]="cities" optionLabel="name" optionValue="code"
+                 display="chip" filter showToggleAll [(ngModel)]="visited" />
+```
+
+| Input                | Type                | Default                | Description                                             |
+| -------------------- | ------------------- | ---------------------- | ------------------------------------------------------- |
+| `display`            | `'comma' \| 'chip'` | `'comma'`              | Labels in a line, or a removable chip per value.        |
+| `maxSelectedLabels`  | `number`            | `3`                    | More values show `selectedItemsLabel` instead.          |
+| `selectedItemsLabel` | `string`            | `'{0} items selected'` | Summary text; `{0}` is the count.                       |
+| `filter`             | `boolean`           | `false`                | A search field above the list (`filterPlaceholder`).    |
+| `showToggleAll`      | `boolean`           | `false`                | A checkbox that selects or clears all visible, enabled options (`toggleAllLabel`). |
+
+- **Keyboard:** Arrow Down/Up, Enter or Space on the trigger open the panel; in the list the arrows, Home, End and
+  typeahead move and Enter or Space toggle an option; Escape closes the panel and returns focus to the trigger; Tab out
+  of the panel closes it. The chips' remove buttons are for the pointer; deselect with the keyboard in the list.
+- **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
+  `listbox` with `aria-multiselectable="true"`; the select-all checkbox and the filter field have accessible names.
+  Give the field a visible label or `ariaLabel`.
+
 ## Listbox
 
 `hx-listbox` is an inline list of options, single or `multiple`, on the CDK listbox. Options, `optionLabel`,

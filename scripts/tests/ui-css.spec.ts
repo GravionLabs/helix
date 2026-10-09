@@ -43,6 +43,7 @@ describe('helix-ui styles', () => {
     ['float-label', 'float-label/float-label.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
     ['listbox', 'listbox/listbox.ts'],
+    ['multi-select', 'multi-select/multi-select.ts'],
     ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],
     ['password', 'password/password.ts'],

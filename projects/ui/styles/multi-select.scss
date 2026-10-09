@@ -1,0 +1,277 @@
+/*
+ * Select: `<hx-multi-select>`. Same look as the helix-core Select, from the `--h-multiselect-*` tokens. The host draws the
+ * field (border, background, focus ring), the trigger is a button inside it, the panel is a CDK connected
+ * overlay (`.hx-multi-select-overlay` is the CDK pane, `.hx-multi-select-panel` its content). The CDK's own overlay
+ * container CSS is part of styles.css.
+ */
+@use 'icons' as *;
+
+.hx-multi-select {
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  min-width: 0;
+  border: 1px solid var(--h-multiselect-border-color);
+  border-radius: var(--h-multiselect-border-radius);
+  background: var(--h-multiselect-background);
+  box-shadow: var(--h-multiselect-shadow);
+  outline-color: transparent;
+  user-select: none;
+  transition:
+    background var(--h-multiselect-transition-duration),
+    border-color var(--h-multiselect-transition-duration),
+    outline-color var(--h-multiselect-transition-duration),
+    box-shadow var(--h-multiselect-transition-duration);
+}
+
+.hx-multi-select:not(.hx-multi-select-disabled):hover {
+  border-color: var(--h-multiselect-hover-border-color);
+}
+
+.hx-multi-select:not(.hx-multi-select-disabled):has(.hx-multi-select-trigger:focus-visible),
+.hx-multi-select-open {
+  border-color: var(--h-multiselect-focus-border-color);
+  outline: var(--h-multiselect-focus-ring-width) var(--h-multiselect-focus-ring-style)
+    var(--h-multiselect-focus-ring-color);
+  outline-offset: var(--h-multiselect-focus-ring-offset);
+  box-shadow: var(--h-multiselect-focus-ring-shadow);
+}
+
+.hx-multi-select-trigger {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: var(--h-multiselect-padding-y) var(--h-multiselect-padding-x);
+  border: 0;
+  background: transparent;
+  color: var(--h-multiselect-color);
+  font: inherit;
+  font-size: 1rem;
+  text-align: start;
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-multi-select-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-multi-select-placeholder {
+  color: var(--h-multiselect-placeholder-color);
+}
+
+.hx-multi-select-chevron {
+  @include hx-icon(chevron-down, 1rem, var(--h-multiselect-dropdown-color), 2.4);
+}
+
+.hx-multi-select-clear {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--h-multiselect-dropdown-width);
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--h-multiselect-clear-icon-color);
+  cursor: pointer;
+}
+
+.hx-multi-select-clear-icon {
+  @include hx-icon(close, 1rem, currentcolor, 2.4);
+}
+
+.hx-multi-select-has-clear .hx-multi-select-trigger {
+  padding-inline-end: calc(var(--h-multiselect-dropdown-width) - 0.25rem);
+}
+
+/* variants, states, sizes */
+.hx-multi-select-filled {
+  background: var(--h-multiselect-filled-background);
+}
+
+.hx-multi-select-filled:not(.hx-multi-select-disabled):hover {
+  background: var(--h-multiselect-filled-hover-background);
+}
+
+.hx-multi-select-filled:not(.hx-multi-select-disabled):has(
+  .hx-multi-select-trigger:focus-visible
+),
+.hx-multi-select-filled.hx-multi-select-open {
+  background: var(--h-multiselect-filled-focus-background);
+}
+
+.hx-multi-select-invalid,
+.hx-multi-select.ng-invalid.ng-touched {
+  border-color: var(--h-multiselect-invalid-border-color);
+}
+
+.hx-multi-select-invalid .hx-multi-select-placeholder,
+.hx-multi-select.ng-invalid.ng-touched .hx-multi-select-placeholder {
+  color: var(--h-multiselect-invalid-placeholder-color);
+}
+
+.hx-multi-select-disabled {
+  background: var(--h-multiselect-disabled-background);
+}
+
+.hx-multi-select-disabled .hx-multi-select-trigger {
+  color: var(--h-multiselect-disabled-color);
+  cursor: default;
+}
+
+.hx-multi-select-sm .hx-multi-select-trigger {
+  padding: var(--h-multiselect-sm-padding-y) var(--h-multiselect-sm-padding-x);
+  font-size: var(--h-multiselect-sm-font-size);
+}
+
+.hx-multi-select-lg .hx-multi-select-trigger {
+  padding: var(--h-multiselect-lg-padding-y) var(--h-multiselect-lg-padding-x);
+  font-size: var(--h-multiselect-lg-font-size);
+}
+
+.hx-multi-select-fluid {
+  display: flex;
+  width: 100%;
+}
+
+/* the panel */
+.hx-multi-select-panel {
+  box-sizing: border-box;
+  /* the CDK pane is a flex row: without this the panel is only as wide as its content, not the field */
+  flex: 1 1 auto;
+  min-width: 0;
+  max-height: 16rem;
+  overflow: auto;
+  border: 1px solid var(--h-multiselect-overlay-border-color);
+  border-radius: var(--h-multiselect-overlay-border-radius);
+  background: var(--h-multiselect-overlay-background);
+  color: var(--h-multiselect-overlay-color);
+  box-shadow: var(--h-multiselect-overlay-shadow);
+  font-size: 1rem;
+}
+
+.hx-multi-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-multiselect-list-gap);
+  padding: var(--h-multiselect-list-padding);
+  outline: 0 none;
+}
+
+.hx-multi-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--h-multiselect-option-gap);
+  padding: var(--h-multiselect-option-padding);
+  border-radius: var(--h-multiselect-option-border-radius);
+  color: var(--h-multiselect-option-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hx-multi-select-option:hover,
+.hx-multi-select-option.cdk-option-active {
+  background: var(--h-multiselect-option-focus-background);
+  color: var(--h-multiselect-option-focus-color);
+}
+
+.hx-multi-select-option[aria-selected="true"] {
+  background: var(--h-multiselect-option-selected-background);
+  color: var(--h-multiselect-option-selected-color);
+}
+
+.hx-multi-select-option[aria-selected="true"]:hover,
+.hx-multi-select-option[aria-selected="true"].cdk-option-active {
+  background: var(--h-multiselect-option-selected-focus-background);
+  color: var(--h-multiselect-option-selected-focus-color);
+}
+
+.hx-multi-select-option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* the checkmark: a mask in the checkmark colour, shown for the selected option, a gap otherwise */
+.hx-multi-select-check {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.hx-multi-select-option[aria-selected="true"] .hx-multi-select-check {
+  @include hx-icon(check, 0.875rem, var(--h-multiselect-option-selected-color), 3.4);
+}
+
+.hx-multi-select-empty {
+  padding: var(--h-multiselect-empty-message-padding);
+  color: var(--h-multiselect-placeholder-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-multi-select {
+    transition: none;
+  }
+}
+
+/* the trigger is a div (the chips hold buttons) */
+.hx-multi-select-trigger:focus-visible {
+  outline: 0 none;
+}
+
+.hx-multi-select-label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.hx-multi-select-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.25rem 0 0.5rem;
+  border-radius: var(--h-multiselect-chip-border-radius);
+  background: var(--h-multiselect-option-selected-background);
+  color: var(--h-multiselect-option-selected-color);
+}
+
+.hx-multi-select-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hx-multi-select-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--h-multiselect-list-header-padding);
+}
+
+.hx-multi-select-filter {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  font: inherit;
+  outline: 0 none;
+}
+
+.hx-multi-select-filter:focus {
+  border-color: var(--h-inputtext-focus-border-color);
+}
