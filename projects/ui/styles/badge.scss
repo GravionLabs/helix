@@ -1,0 +1,99 @@
+/*
+ * Badge: `<hx-badge>` and `<hx-overlay-badge>`. A pill from the `--h-badge-*` tokens whose colours follow the
+ * severity; without text it is a dot. The overlay badge sits on the top right corner of the element it wraps, with a
+ * ring in the page colour (`--h-overlaybadge-*`).
+ */
+.hx-badge {
+  --hx-badge-background: var(--h-badge-primary-background);
+  --hx-badge-color: var(--h-badge-primary-color);
+  --hx-badge-font-size: var(--h-badge-font-size);
+  --hx-badge-size: var(--h-badge-height);
+  --hx-badge-min-width: var(--h-badge-min-width);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--hx-badge-min-width);
+  height: var(--hx-badge-size);
+  padding: var(--h-badge-padding);
+  border-radius: var(--h-badge-border-radius);
+  background: var(--hx-badge-background);
+  color: var(--hx-badge-color);
+  font-size: var(--hx-badge-font-size);
+  font-weight: var(--h-badge-font-weight);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.hx-badge-secondary {
+  --hx-badge-background: var(--h-badge-secondary-background);
+  --hx-badge-color: var(--h-badge-secondary-color);
+}
+
+.hx-badge-success {
+  --hx-badge-background: var(--h-badge-success-background);
+  --hx-badge-color: var(--h-badge-success-color);
+}
+
+.hx-badge-info {
+  --hx-badge-background: var(--h-badge-info-background);
+  --hx-badge-color: var(--h-badge-info-color);
+}
+
+.hx-badge-warn {
+  --hx-badge-background: var(--h-badge-warn-background);
+  --hx-badge-color: var(--h-badge-warn-color);
+}
+
+.hx-badge-danger {
+  --hx-badge-background: var(--h-badge-danger-background);
+  --hx-badge-color: var(--h-badge-danger-color);
+}
+
+.hx-badge-contrast {
+  --hx-badge-background: var(--h-badge-contrast-background);
+  --hx-badge-color: var(--h-badge-contrast-color);
+}
+
+.hx-badge-sm {
+  --hx-badge-font-size: var(--h-badge-sm-font-size);
+  --hx-badge-size: var(--h-badge-sm-height);
+  --hx-badge-min-width: var(--h-badge-sm-min-width);
+}
+
+.hx-badge-lg {
+  --hx-badge-font-size: var(--h-badge-lg-font-size);
+  --hx-badge-size: var(--h-badge-lg-height);
+  --hx-badge-min-width: var(--h-badge-lg-min-width);
+}
+
+.hx-badge-xl {
+  --hx-badge-font-size: var(--h-badge-xl-font-size);
+  --hx-badge-size: var(--h-badge-xl-height);
+  --hx-badge-min-width: var(--h-badge-xl-min-width);
+}
+
+.hx-badge-dot {
+  --hx-badge-size: var(--h-badge-dot-size);
+  --hx-badge-min-width: var(--h-badge-dot-size);
+
+  padding: 0;
+}
+
+.hx-overlay-badge {
+  position: relative;
+  display: inline-flex;
+}
+
+.hx-overlay-badge-badge {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  transform: translate(50%, -50%);
+  outline: var(--h-overlaybadge-outline-width) solid var(--h-overlaybadge-outline-color);
+}
+
+[dir="rtl"] .hx-overlay-badge-badge {
+  transform: translate(-50%, -50%);
+}

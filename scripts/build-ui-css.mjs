@@ -29,6 +29,7 @@ export const OUT = path.join(ROOT, 'dist/ui');
  */
 export const TOKEN_COMPONENTS = {
   accordion: ['accordion'],
+  badge: ['badge', 'overlaybadge'],
   breadcrumb: ['breadcrumb'],
   button: ['button'],
   card: ['card'],
