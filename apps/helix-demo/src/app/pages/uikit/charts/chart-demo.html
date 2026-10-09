@@ -1,39 +1,39 @@
 <h1 class="sr-only">Chart</h1>
-<h-fluid class="grid grid-cols-12 gap-layout">
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card">
-          <h2 class="demo-title mb-3!">Linear</h2>
-          <h-chart type="line" [data]="lineData()" [options]="lineOptions()"></h-chart>
-        </div>
-      </div>
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card">
-          <h2 class="demo-title mb-3!">Bar</h2>
-          <h-chart type="bar" [data]="barData()" [options]="barOptions()"></h-chart>
-        </div>
-      </div>
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card flex flex-col items-center">
-          <h2 class="demo-title mb-3!">Pie</h2>
-          <h-chart type="pie" [data]="pieData()" [options]="pieOptions()"></h-chart>
-        </div>
-      </div>
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card flex flex-col items-center">
-          <h2 class="demo-title mb-3!">Doughnut</h2>
-          <h-chart type="doughnut" [data]="pieData()" [options]="pieOptions()"></h-chart>
-        </div>
-      </div>
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card flex flex-col items-center">
-          <h2 class="demo-title mb-3!">Polar Area</h2>
-          <h-chart type="polarArea" [data]="polarData()" [options]="polarOptions()"></h-chart>
-        </div>
-      </div>
-      <div class="col-span-12 xl:col-span-6">
-        <div class="card flex flex-col items-center">
-          <h2 class="demo-title mb-3!">Radar</h2>
-          <h-chart type="radar" [data]="radarData()" [options]="radarOptions()"></h-chart>
-        </div>
-      </div>
-    </h-fluid>
+<div class="grid grid-cols-12 gap-layout">
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Linear</h2>
+      <hx-chart type="line" [data]="lineData" height="20rem" ariaLabel="Two datasets over seven months, as lines" />
+    </div>
+  </div>
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Bar</h2>
+      <hx-chart type="bar" [data]="barData" [options]="barOptions" height="20rem" ariaLabel="Two datasets over seven months, as bars" />
+    </div>
+  </div>
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Pie</h2>
+      <hx-chart type="pie" [data]="pieData" [options]="pieOptions" height="20rem" ariaLabel="Three shares, as a pie" />
+    </div>
+  </div>
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Doughnut</h2>
+      <hx-chart type="doughnut" [data]="pieData" [options]="pieOptions" height="20rem" ariaLabel="Three shares, as a doughnut" />
+    </div>
+  </div>
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Polar Area</h2>
+      <hx-chart type="polarArea" [data]="polarData" [options]="polarOptions" height="20rem" ariaLabel="Four values, as a polar area" />
+    </div>
+  </div>
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <h2 class="demo-title mb-3!">Radar</h2>
+      <hx-chart type="radar" [data]="radarData" height="20rem" ariaLabel="Two datasets over seven skills, as a radar" />
+    </div>
+  </div>
+</div>
