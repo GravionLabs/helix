@@ -35,6 +35,7 @@ describe('helix-ui styles', () => {
     ['radio', 'radio/radio.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
     ['divider', 'divider/divider.ts'],
+    ['float-label', 'float-label/float-label.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
     ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],
@@ -49,6 +50,8 @@ describe('helix-ui styles', () => {
       ...[...directive.matchAll(/'\[class\.(hx-[\w-]+)\]'/g)].map((m) => m[1]),
       ...[...directive.matchAll(/\bclass: '(hx-[\w-]+)'/g)].map((m) => m[1]),
     ]);
+    // `hx-filled` is the shared "holds a value" state; `float-label.scss` styles it
+    classes.delete('hx-filled');
     expect(classes.size).toBeGreaterThan(0);
     const sheet = styles.find((s) => s.name === name)?.css ?? '';
     for (const c of classes) {

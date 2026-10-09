@@ -56,6 +56,7 @@ const REPEAT_INTERVAL = 60;
     '[class.hx-input-number-stacked]': "showButtons() && buttonLayout() === 'stacked'",
     '[class.hx-input-number-horizontal]': "showButtons() && buttonLayout() === 'horizontal'",
     '[class.hx-input-number-disabled]': 'isDisabled()',
+    '[class.hx-filled]': "displayText() !== ''",
     '(focusout)': 'onFocusOut($event)',
   },
 })

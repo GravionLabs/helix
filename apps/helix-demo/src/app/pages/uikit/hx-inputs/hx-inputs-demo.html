@@ -8,6 +8,66 @@
     </p>
   </div>
 
+  <div class="card flex flex-col gap-4">
+    <h2 class="demo-title">Float label</h2>
+    <div class="row mt-3">
+      <span class="label">over</span>
+      <hx-float-label>
+        <input hx-input id="fl-over" />
+        <label for="fl-over">Username</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">in</span>
+      <hx-float-label variant="in">
+        <input hx-input id="fl-in" />
+        <label for="fl-in">Username</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">on</span>
+      <hx-float-label variant="on">
+        <input hx-input id="fl-on" />
+        <label for="fl-on">Username</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">textarea</span>
+      <hx-float-label variant="on">
+        <textarea hx-input id="fl-area" rows="3"></textarea>
+        <label for="fl-area">Notes</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">select</span>
+      <hx-float-label variant="on">
+        <hx-select inputId="fl-city" [options]="cities" [(value)]="city" />
+        <label for="fl-city">City</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">password</span>
+      <hx-float-label variant="on">
+        <hx-password inputId="fl-pw" [(value)]="secret" />
+        <label for="fl-pw">Password</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">number</span>
+      <hx-float-label variant="on">
+        <hx-input-number inputId="fl-num" [(value)]="quantity" />
+        <label for="fl-num">Quantity</label>
+      </hx-float-label>
+    </div>
+    <div class="row">
+      <span class="label">invalid</span>
+      <hx-float-label variant="on">
+        <input hx-input id="fl-bad" aria-invalid="true" />
+        <label for="fl-bad">Email</label>
+      </hx-float-label>
+    </div>
+  </div>
+
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Icon field</h2>
     <div class="row">
