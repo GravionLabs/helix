@@ -91,6 +91,7 @@ export {
   type HxSliderOrientation,
   type HxSliderValue,
 } from './lib/slider/slider';
+export { HxSplitButton } from './lib/split-button/split-button';
 export {
   HxStep,
   HxStepContent,

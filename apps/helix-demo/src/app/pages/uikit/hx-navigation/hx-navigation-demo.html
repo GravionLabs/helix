@@ -26,6 +26,18 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Split button</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-split-button label="Save" icon="pi pi-save" [model]="saveItems" (click)="saved.set('saved')" />
+      <hx-split-button label="Outlined" variant="outlined" severity="secondary" [model]="saveItems" />
+      <hx-split-button label="Rounded raised" rounded raised severity="success" [model]="saveItems" />
+      <hx-split-button label="Small" size="small" [model]="saveItems" />
+      <hx-split-button label="Disabled" disabled [model]="saveItems" />
+    </div>
+    <p class="m-0">Last action: {{ saved() || 'none' }}</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Stepper</h2>
     <p class="m-0">Linear: the later steps are disabled until Next is pressed. Going back is always possible.</p>
     <hx-stepper [(value)]="step" linear>
