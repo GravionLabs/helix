@@ -36,6 +36,7 @@ export const TOKEN_COMPONENTS = {
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],
+  'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],

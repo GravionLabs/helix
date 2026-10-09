@@ -81,6 +81,26 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Multi select</h2>
+    <div class="row">
+      <label class="label" for="ms-comma">Comma</label>
+      <hx-multi-select inputId="ms-comma" placeholder="Cities" [options]="cities" showClear [(value)]="visited" />
+    </div>
+    <div class="row">
+      <label class="label" for="ms-chip">Chips</label>
+      <hx-multi-select inputId="ms-chip" placeholder="Cities" [options]="cities" display="chip" filter showToggleAll [(value)]="visited" />
+    </div>
+    <div class="row">
+      <span class="label">filled</span>
+      <hx-multi-select ariaLabel="Filled" placeholder="Filled" variant="filled" [options]="cities" [(value)]="visited" />
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <hx-multi-select ariaLabel="Disabled" placeholder="Disabled" [options]="cities" [disabled]="true" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Listbox</h2>
     <div class="row">
       <span class="label">single</span>

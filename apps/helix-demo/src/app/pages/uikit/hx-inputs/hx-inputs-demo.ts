@@ -11,6 +11,7 @@ import {
   HxInputIcon,
   HxInputNumber,
   HxListbox,
+  HxMultiSelect,
   HxPassword,
   HxRating,
   HxSelect,
@@ -30,6 +31,7 @@ import {
     HxSlider,
     HxRating,
     HxListbox,
+    HxMultiSelect,
     HxSlider,
     HxPassword,
     HxSelect,
@@ -49,7 +51,7 @@ import {
 export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<unknown>(null);
-  readonly visited = signal<unknown>(['Lisbon']);
+  readonly visited = signal<string[]>(['Lisbon']);
   readonly secret = signal('');
   readonly score = signal<number | null>(3);
   readonly volume = signal<HxSliderValue>(30);

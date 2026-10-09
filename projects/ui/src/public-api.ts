@@ -36,6 +36,12 @@ export {
 } from './lib/input-number/input-number';
 export { HxListbox } from './lib/listbox/listbox';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
+export {
+  HxMultiSelect,
+  type HxMultiSelectDisplay,
+  type HxMultiSelectSize,
+  type HxMultiSelectVariant,
+} from './lib/multi-select/multi-select';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export { HxRating } from './lib/rating/rating';
