@@ -40,6 +40,7 @@ describe('helix-ui styles', () => {
     ['card', 'card/card.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['radio', 'radio/radio.ts'],
+    ['badge', 'badge/badge.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
     ['divider', 'divider/divider.ts'],
     ['float-label', 'float-label/float-label.ts'],

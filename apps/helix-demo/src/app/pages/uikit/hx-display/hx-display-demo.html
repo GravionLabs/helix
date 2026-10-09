@@ -1,0 +1,39 @@
+<h1 class="sr-only">Helix UI Display</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Display</h2>
+    <p class="m-0">Display components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Badge</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (severity of severities; track severity) {
+        <hx-badge [value]="severity" [severity]="severity" />
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-badge value="2" size="small" />
+      <hx-badge value="4" />
+      <hx-badge value="6" size="large" />
+      <hx-badge value="8" size="xlarge" />
+      <hx-badge severity="success" /> <span>dot</span>
+    </div>
+    <h3 class="demo-title">Overlay badge</h3>
+    <div class="flex flex-wrap items-center gap-6">
+      <hx-overlay-badge value="2" severity="danger">
+        <button hx-button iconOnly variant="outlined" severity="secondary" aria-label="Notifications, 2 new">
+          <span class="pi pi-bell hx-button-icon"></span>
+        </button>
+      </hx-overlay-badge>
+      <hx-overlay-badge severity="success">
+        <button hx-button iconOnly variant="outlined" severity="secondary" aria-label="Online">
+          <span class="pi pi-user hx-button-icon"></span>
+        </button>
+      </hx-overlay-badge>
+      <hx-overlay-badge value="99+" severity="info" size="small">
+        <button hx-button variant="outlined" severity="secondary">Inbox</button>
+      </hx-overlay-badge>
+    </div>
+  </div>
+</div>
