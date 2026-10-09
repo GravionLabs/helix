@@ -56,6 +56,7 @@ export const TOKEN_COMPONENTS = {
   slider: ['slider'],
   rating: ['rating'],
   'select-button': ['selectbutton', 'togglebutton'],
+  chip: ['chip'],
   'cdk-overlay': [],
   'split-button': ['splitbutton'],
   stepper: ['stepper'],

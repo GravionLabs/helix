@@ -1,0 +1,72 @@
+/*
+ * Chip: `<hx-chip>`. A compact pill from the `--h-chip-*` tokens with an optional picture or icon and a remove
+ * button; a removable chip is focusable and shows the focus ring of the remove icon.
+ */
+@use 'icons' as *;
+
+.hx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-chip-gap);
+  padding: var(--h-chip-padding-y) var(--h-chip-padding-x);
+  border-radius: var(--h-chip-border-radius);
+  background: var(--h-chip-background);
+  color: var(--h-chip-color);
+  outline-color: transparent;
+  transition:
+    background var(--h-chip-transition-duration),
+    outline-color var(--h-chip-transition-duration);
+}
+
+.hx-chip-removable:focus-visible,
+.hx-chip-remove:focus-visible {
+  outline: var(--h-chip-remove-icon-focus-ring-width) var(--h-chip-remove-icon-focus-ring-style)
+    var(--h-chip-remove-icon-focus-ring-color);
+  outline-offset: var(--h-chip-remove-icon-focus-ring-offset);
+  box-shadow: var(--h-chip-remove-icon-focus-ring-shadow);
+}
+
+.hx-chip-image {
+  flex: none;
+  width: var(--h-chip-image-width);
+  height: var(--h-chip-image-height);
+  /* the picture sits in the padding of the pill instead of adding to its height */
+  margin-block: calc(var(--h-chip-padding-y) * -1);
+  margin-inline-start: calc(var(--h-chip-padding-x) * -1);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.hx-chip-icon {
+  flex: none;
+  color: var(--h-chip-icon-color);
+  font-size: var(--h-chip-icon-size);
+}
+
+.hx-chip-label {
+  min-width: 0;
+}
+
+.hx-chip-remove {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--h-chip-remove-icon-color);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-chip-remove-icon {
+  @include hx-icon(close, var(--h-chip-remove-icon-size), currentcolor, 2.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-chip {
+    transition: none;
+  }
+}

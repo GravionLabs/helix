@@ -39,6 +39,7 @@ describe('helix-ui styles', () => {
     ['input', 'input/input.ts'],
     ['card', 'card/card.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
+    ['chip', 'chip/chip.ts'],
     ['radio', 'radio/radio.ts'],
     ['badge', 'badge/badge.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],

@@ -50,4 +50,21 @@
       <hx-tag severity="danger" rounded icon="pi pi-times">Rejected</hx-tag>
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Chip</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-chip label="Action" />
+      <hx-chip label="Icon" icon="pi pi-apple" />
+      <hx-chip label="Picture" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" />
+    </div>
+    <p class="m-0">Removable: press the x, or focus a chip and press Backspace or Delete.</p>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (chip of chips(); track chip) {
+        <hx-chip [label]="chip" removable [removeLabel]="'Remove ' + chip" (remove)="remove(chip)" />
+      } @empty {
+        <span>All removed. Reload the page to get them back.</span>
+      }
+    </div>
+  </div>
 </div>
