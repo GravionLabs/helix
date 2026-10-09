@@ -36,6 +36,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputGroup`, `HxInputGroupAddon` | `hx-input-group`, `hx-input-group-addon` | joins fields, selects, buttons and addons |
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
+| `HxSlider` | `hx-slider` | one value or a range on native range inputs, horizontal or vertical, all three forms APIs |
 | `HxToggleButton` | `hx-toggle-button` | on/off button with labels and icons, all three forms APIs |
 | `HxSelectButton` | `hx-select-button` | single or multiple, all three forms APIs |
 | `HxSwitch` | `input[hx-switch]` | native checkbox with `role="switch"` |

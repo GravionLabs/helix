@@ -40,6 +40,7 @@ export const TOKEN_COMPONENTS = {
   password: ['password', 'inputtext'],
   radio: ['radiobutton'],
   select: ['select'],
+  slider: ['slider'],
   'select-button': ['selectbutton', 'togglebutton'],
   'cdk-overlay': [],
   switch: ['toggleswitch'],
