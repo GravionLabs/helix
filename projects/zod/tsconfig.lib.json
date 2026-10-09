@@ -7,8 +7,8 @@
     "types": [],
     "paths": {
       "@gravionlabs/helix-shell": ["../../dist/shell"],
-      "@gravionlabs/helix-core": ["../../dist/core"],
-      "@gravionlabs/helix-core/*": ["../../dist/core/*"]
+      "@gravionlabs/helix-ui": ["../../dist/ui"],
+      "@gravionlabs/helix-ui/*": ["../../dist/ui/*"]
     }
   },
   "include": ["src/**/*.ts"],

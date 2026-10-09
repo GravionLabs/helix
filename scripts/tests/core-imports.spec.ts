@@ -47,6 +47,15 @@ describe('helix-core import guard', () => {
     expect(forbiddenCoreImports(root, ALLOWED).map((f) => f.entry)).toEqual(['themes', 'config']);
   });
 
+  it('flags every core import in zod, validators included', () => {
+    const root = project({
+      'projects/zod/src/a.ts': "import { a } from '@gravionlabs/helix-core/validators';\n",
+    });
+    expect(forbiddenCoreImports(root, ALLOWED)).toEqual([
+      { file: path.join('projects/zod/src/a.ts'), line: 1, entry: 'validators' },
+    ]);
+  });
+
   it('flags the root entry and any core import in ag-grid', () => {
     const root = project({
       'projects/ag-grid/src/a.ts': "import { a } from '@gravionlabs/helix-core/validators';\n",

@@ -14,8 +14,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const ALLOWED = {
   // MenuItem type and the message validators the form field shows (the theme runs on helix-ui's HxTheme)
   shell: ['api', 'validators'],
-  // validators only; no UI
-  zod: ['validators'],
+  // no helix-core at all (the validators come from @gravionlabs/helix-ui/validators)
+  zod: [],
   // no helix-core at all
   'ag-grid': [],
 };
