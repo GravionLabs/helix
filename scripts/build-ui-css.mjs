@@ -34,6 +34,7 @@ export const TOKEN_COMPONENTS = {
   checkbox: ['checkbox'],
   divider: ['divider'],
   'float-label': ['floatlabel'],
+  fieldset: ['fieldset'],
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],

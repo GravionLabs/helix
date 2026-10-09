@@ -463,6 +463,26 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Fieldset
+
+`hx-fieldset` is a native `<fieldset>` with a `<legend>` that groups related controls and can collapse.
+
+```html
+<hx-fieldset legend="Shipping address" toggleable [(collapsed)]="closed">
+  <label for="street">Street</label> <input hx-input id="street" />
+</hx-fieldset>
+```
+
+| Input       | Type              | Default | Description                                              |
+| ----------- | ----------------- | ------- | -------------------------------------------------------- |
+| `legend`    | `string`          | `''`    | The legend text.                                         |
+| `toggleable` | `boolean`        | `false` | The legend holds a button that collapses the content.    |
+| `collapsed` | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable fieldset collapses.   |
+
+- **Accessibility:** it is a real fieldset and legend, so the group name is announced for the controls inside. When
+  toggleable, the legend contains a `<button>` with `aria-expanded` and `aria-controls`; the content is `inert` while
+  collapsed so its controls leave the tab order. Motion stops under `prefers-reduced-motion`.
+
 ## Panel
 
 `hx-panel` is a titled container that can collapse. The `header` input is the title; `[hxPanelHeader]` adds content next
