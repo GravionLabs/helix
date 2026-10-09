@@ -1,0 +1,122 @@
+/*
+ * Input number: `<hx-input-number>`. The field is an `hx-input` inside, the step buttons sit on its edges
+ * (`stacked`: one column on the end edge, `horizontal`: minus at the start, plus at the end). Button colours
+ * come from the `--h-inputnumber-button-*` tokens, the field from the input tokens.
+ */
+.hx-input-number {
+  position: relative;
+  display: inline-flex;
+}
+
+.hx-input-number-fluid {
+  display: flex;
+  width: 100%;
+}
+
+.hx-input-number .hx-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hx-input-number-disabled {
+  cursor: default;
+}
+
+.hx-input-number-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid var(--h-inputnumber-button-border-color);
+  background: var(--h-inputnumber-button-background);
+  color: var(--h-inputnumber-button-color);
+  font-size: 1rem;
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-inputnumber-transition-duration),
+    color var(--h-inputnumber-transition-duration),
+    border-color var(--h-inputnumber-transition-duration);
+}
+
+.hx-input-number-button:enabled:hover {
+  border-color: var(--h-inputnumber-button-hover-border-color);
+  background: var(--h-inputnumber-button-hover-background);
+  color: var(--h-inputnumber-button-hover-color);
+}
+
+.hx-input-number-button:enabled:active {
+  border-color: var(--h-inputnumber-button-active-border-color);
+  background: var(--h-inputnumber-button-active-background);
+  color: var(--h-inputnumber-button-active-color);
+}
+
+.hx-input-number-button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* stacked: one column of two buttons on the end edge, inside the field's border */
+.hx-input-number-stacked .hx-input {
+  padding-inline-end: calc(var(--h-inputnumber-button-width) + 0.5rem);
+}
+
+.hx-input-number-spin {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  width: var(--h-inputnumber-button-width);
+}
+
+.hx-input-number-spin .hx-input-number-button {
+  flex: 1 1 50%;
+  min-height: 0;
+  border-width: 0;
+  border-inline-start-width: 1px;
+}
+
+.hx-input-number-spin .hx-input-number-increment {
+  border-start-end-radius: var(--h-inputnumber-button-border-radius);
+}
+
+.hx-input-number-spin .hx-input-number-decrement {
+  border-block-start-width: 1px;
+  border-end-end-radius: var(--h-inputnumber-button-border-radius);
+}
+
+/* horizontal: minus | field | plus */
+.hx-input-number-horizontal .hx-input {
+  border-radius: 0;
+  text-align: center;
+}
+
+.hx-input-number-horizontal .hx-input-number-button {
+  flex: 0 0 auto;
+  width: var(--h-inputnumber-button-width);
+  padding-block: var(--h-inputnumber-button-vertical-padding);
+}
+
+.hx-input-number-horizontal .hx-input-number-decrement {
+  border-inline-end-width: 0;
+  border-start-start-radius: var(--h-inputnumber-button-border-radius);
+  border-end-start-radius: var(--h-inputnumber-button-border-radius);
+}
+
+.hx-input-number-horizontal .hx-input-number-increment {
+  border-inline-start-width: 0;
+  border-start-end-radius: var(--h-inputnumber-button-border-radius);
+  border-end-end-radius: var(--h-inputnumber-button-border-radius);
+}
+
+.hx-input-number.ng-invalid.ng-touched .hx-input {
+  border-color: var(--h-inputtext-invalid-border-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-input-number-button {
+    transition: none;
+  }
+}

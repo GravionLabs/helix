@@ -24,6 +24,13 @@ export {
   type HxDividerType,
 } from './lib/divider/divider';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
+export {
+  HxInputNumber,
+  type HxInputNumberButtonLayout,
+  type HxInputNumberMode,
+  type HxInputNumberSize,
+  type HxInputNumberVariant,
+} from './lib/input-number/input-number';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export {

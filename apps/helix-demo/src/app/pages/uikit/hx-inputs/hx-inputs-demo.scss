@@ -1,0 +1,20 @@
+:host {
+  display: block;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 18rem) 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.row > .label {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.error {
+  color: var(--h-form-field-invalid-placeholder-color, var(--h-danger-color, #dc2626));
+  font-size: 0.875rem;
+}

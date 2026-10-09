@@ -1,0 +1,66 @@
+<h1 class="sr-only">Helix UI Inputs</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Inputs</h2>
+    <p class="m-0">
+      Input components from <code>&#64;gravionlabs/helix-ui</code>. They work with <code>ngModel</code>, reactive
+      forms and signal forms.
+    </p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Input number</h2>
+    <div class="row">
+      <label class="label" for="qty">Quantity</label>
+      <hx-input-number inputId="qty" [(ngModel)]="quantity" [min]="0" [max]="99" showButtons />
+      <span>Value: {{ quantity ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <label class="label" for="price">Price (de-DE)</label>
+      <hx-input-number inputId="price" mode="currency" currency="EUR" locale="de-DE" [(value)]="price" />
+      <span>Value: {{ price() ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <label class="label" for="step">Step 0.25</label>
+      <hx-input-number inputId="step" locale="en-US" [step]="0.25" [minFractionDigits]="2" [maxFractionDigits]="2" showButtons buttonLayout="horizontal" [(value)]="horizontal" />
+      <span>Value: {{ horizontal() ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <label class="label" for="affix">Affixes</label>
+      <hx-input-number inputId="affix" locale="en-US" suffix=" kg" [min]="0" [max]="500" [step]="5" showButtons />
+    </div>
+    <div class="row">
+      <span class="label">filled</span>
+      <hx-input-number variant="filled" ariaLabel="Filled" placeholder="Filled" />
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <hx-input-number ariaLabel="Disabled" placeholder="Disabled" showButtons [disabled]="true" />
+    </div>
+    <div class="row">
+      <span class="label">invalid</span>
+      <hx-input-number ariaLabel="Invalid" placeholder="Invalid" [invalid]="true" />
+    </div>
+    <div class="row">
+      <span class="label">small</span>
+      <hx-input-number size="small" ariaLabel="Small" placeholder="Small" showButtons />
+    </div>
+    <div class="row">
+      <span class="label">large</span>
+      <hx-input-number size="large" ariaLabel="Large" placeholder="Large" showButtons />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Input number in a signal form</h2>
+    <form class="flex flex-col gap-3" (submit)="$event.preventDefault(); submit()">
+      <label for="seats">Seats</label>
+      <hx-input-number inputId="seats" showButtons [formField]="seatsForm.seats" />
+      @if (seatsForm.seats().touched() && seatsForm.seats().invalid()) {
+        <span class="error" aria-live="polite">{{ seatsForm.seats().errors()[0].message }}</span>
+      }
+      <div><button hx-button type="submit">Save</button></div>
+      @if (submitted()) { <span>Saved: {{ model().seats }}</span> }
+    </form>
+  </div>
+</div>

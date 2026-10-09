@@ -31,6 +31,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxDivider` | `hx-divider` | horizontal/vertical, labelled |
 | `HxTooltip` | `[hx-tooltip]` | CDK overlay, hover and focus |
 | `HxBreadcrumb` | `hx-breadcrumb` | router links, home item |
+| `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
 | `HxSelectButton` | `hx-select-button` | single or multiple, all three forms APIs |
 | `HxSwitch` | `input[hx-switch]` | native checkbox with `role="switch"` |
