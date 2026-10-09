@@ -69,6 +69,18 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Textarea auto resize</h2>
+    <div class="row">
+      <label class="label" for="auto">Notes</label>
+      <textarea hx-input autoResize rows="2" id="auto" [(ngModel)]="notes"></textarea>
+    </div>
+    <div class="row">
+      <span class="label">written</span>
+      <button hx-button type="button" (click)="notes = notes + '\nAnother line'">Add a line</button>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Icon field</h2>
     <div class="row">
       <label class="label" for="search">Left</label>

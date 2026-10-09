@@ -40,6 +40,7 @@ export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<string | null>(null);
   readonly secret = signal('');
+  notes = 'Grows with the content.';
   quantity: number | null = 5;
   readonly price = signal<number | null>(1234.5);
   readonly horizontal = signal<number | null>(20);
