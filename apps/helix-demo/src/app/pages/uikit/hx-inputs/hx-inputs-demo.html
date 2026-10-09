@@ -81,6 +81,19 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Auto complete</h2>
+    <div class="row">
+      <label class="label" for="ac-one">Country</label>
+      <hx-auto-complete inputId="ac-one" placeholder="Type a country" [suggestions]="found()" (complete)="search($event.query)" forceSelection dropdown [(value)]="country" />
+      <span>{{ country() ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <label class="label" for="ac-many">Countries</label>
+      <hx-auto-complete inputId="ac-many" placeholder="Add a country" [suggestions]="found()" (complete)="search($event.query)" multiple [(value)]="countries" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Multi select</h2>
     <div class="row">
       <label class="label" for="ms-comma">Comma</label>

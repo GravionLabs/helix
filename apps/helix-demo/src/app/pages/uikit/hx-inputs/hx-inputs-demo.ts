@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormField, form, min, required } from '@angular/forms/signals';
 import {
+  HxAutoComplete,
   HxButton,
   HxFloatLabel,
   HxIconField,
@@ -32,6 +33,7 @@ import {
     HxRating,
     HxListbox,
     HxMultiSelect,
+    HxAutoComplete,
     HxSlider,
     HxPassword,
     HxSelect,
@@ -51,6 +53,13 @@ import {
 export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<unknown>(null);
+  readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
+  readonly found = signal<string[]>([]);
+  readonly country = signal<unknown>(null);
+  readonly countries = signal<unknown>([]);
+  search(query: string) {
+    this.found.set(this.allCountries.filter((c) => c.toLowerCase().includes(query.toLowerCase())));
+  }
   readonly visited = signal<string[]>(['Lisbon']);
   readonly secret = signal('');
   readonly score = signal<number | null>(3);

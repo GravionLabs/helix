@@ -37,6 +37,7 @@ export const TOKEN_COMPONENTS = {
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
+  'auto-complete': ['autocomplete', 'inputtext'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],
