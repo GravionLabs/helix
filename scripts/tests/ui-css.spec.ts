@@ -64,6 +64,7 @@ describe('helix-ui styles', () => {
     ['select', 'select/select.ts'],
     ['rating', 'rating/rating.ts'],
     ['select-button', 'select-button/select-button.ts'],
+    ['skeleton', 'skeleton/skeleton.ts'],
     ['slider', 'slider/slider.ts'],
     ['toggle-button', 'toggle-button/toggle-button.ts'],
     ['toolbar', 'toolbar/toolbar.ts'],

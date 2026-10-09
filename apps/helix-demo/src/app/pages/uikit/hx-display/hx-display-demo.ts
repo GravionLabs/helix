@@ -6,14 +6,15 @@ import {
   HxButton,
   HxChip,
   HxOverlayBadge,
+  HxSkeleton,
   HxTag,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` display components: Avatar, Badge, Tag, Chip. */
+/** `@gravionlabs/helix-ui` display components: Avatar, Badge, Tag, Chip, Skeleton. */
 @Component({
   selector: 'app-hx-display-demo',
   standalone: true,
-  imports: [HxAvatar, HxAvatarGroup, HxBadge, HxOverlayBadge, HxButton, HxChip, HxTag],
+  imports: [HxAvatar, HxAvatarGroup, HxBadge, HxOverlayBadge, HxButton, HxChip, HxSkeleton, HxTag],
   templateUrl: './hx-display-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-display-demo.scss',

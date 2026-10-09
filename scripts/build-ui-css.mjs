@@ -54,6 +54,7 @@ export const TOKEN_COMPONENTS = {
   password: ['password', 'inputtext'],
   radio: ['radiobutton'],
   select: ['select'],
+  skeleton: ['skeleton'],
   slider: ['slider'],
   rating: ['rating'],
   'select-button': ['selectbutton', 'togglebutton'],

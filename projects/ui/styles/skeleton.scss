@@ -1,0 +1,36 @@
+/*
+ * Skeleton: `<hx-skeleton>`. A placeholder block from the `--h-skeleton-*` tokens; the wave is a gradient that
+ * sweeps across it and stops under `prefers-reduced-motion`.
+ */
+.hx-skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--h-skeleton-border-radius);
+  background: var(--h-skeleton-background);
+}
+
+.hx-skeleton-circle {
+  border-radius: 50%;
+}
+
+.hx-skeleton-wave::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--h-skeleton-animation-background), transparent);
+  animation: hx-skeleton-wave 1.2s infinite;
+}
+
+@keyframes hx-skeleton-wave {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-skeleton-wave::after {
+    animation: none;
+  }
+}
