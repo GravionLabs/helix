@@ -1,8 +1,8 @@
 # @gravionlabs/helix-zod
 
-Zod v4 adapter for `@gravionlabs/helix-core` forms. Two independent features:
+Zod v4 adapter for Helix forms. The validators and their keys come from `@gravionlabs/helix-ui/validators`. Two independent features:
 
-1. **Reactive-forms validator bridge** — `HelixZodValidators.fromZod()` converts a Zod field schema into an Angular `ValidatorFn` that emits `HelixValidatorKey`-keyed `ValidationErrors` — compatible with `HelixFormField`, `HelixFirstError`, and `helixFormErrorMap` out of the box.
+1. **Reactive-forms validator bridge** — `HelixZodValidators.fromZod()` converts a Zod field schema into an Angular `ValidatorFn` that emits `ValidatorKey`-keyed `ValidationErrors` — compatible with `HelixFormField` of `@gravionlabs/helix-shell` and anything else that reads `control.errors`.
 2. **Dynamic forms** — `HelixDynamicForm` generates a complete, validated form from a single annotated Zod object schema, built on Angular's experimental signal forms (`@angular/forms/signals`, requires Angular **≥ 21.2**).
 
 ---
@@ -12,7 +12,7 @@ Zod v4 adapter for `@gravionlabs/helix-core` forms. Two independent features:
 | Package | Version |
 |---|---|
 | `zod` | `^4.0.0` |
-| `@gravionlabs/helix-core` | `>=0.2.0` |
+| `@gravionlabs/helix-ui` | `>=0.1.0` (the `validators` entry point) |
 | `@angular/core` / `@angular/common` / `@angular/forms` | `>=21` (dynamic forms: `>=21.2`) |
 
 ---
@@ -78,7 +78,7 @@ Keys: `label`, `placeholder`, `hint`, `widget`, `options`, `order`, `addLabel`/`
 provideHelixDynamicForms({
   widgets: [{ widget: 'rating', component: RatingWidget }],        // or override built-ins
   errorMessageResolver: (error, helixKey) =>
-    helixKey === HelixValidatorKey.Required ? 'Pflichtfeld' : null, // null → default message
+    helixKey === ValidatorKey.Required ? 'Pflichtfeld' : null, // null → default message
 })
 ```
 
@@ -151,19 +151,19 @@ fromZod(schema: ZodSchema, options?: ZodHelixOptions): ValidatorFn
 
 ```ts
 export interface ZodHelixOptions {
-  fallbackKey?: HelixValidatorKey; // required when schema uses .refine() / .superRefine()
+  fallbackKey?: ValidatorKey; // required when schema uses .refine() / .superRefine()
   allowEmpty?: boolean;            // default: true
 }
 ```
 
 ---
 
-## Zod v4 → `HelixValidatorKey` Mapping
+## Zod v4 → `ValidatorKey` Mapping
 
 > This library targets **Zod v4**. Zod v4 introduced breaking changes from v3:
 > `invalid_string` → `invalid_format` (with a `format` property), `too_small`/`too_big` use `origin` instead of `type`, and `not_integer` was replaced by `invalid_type` with `expected: 'int'`.
 
-| Zod v4 issue code | Condition | `HelixValidatorKey` |
+| Zod v4 issue code | Condition | `ValidatorKey` |
 |---|---|---|
 | `invalid_type` | value is `''`, `null`, or `undefined` | `Required` |
 | `invalid_type` | `expected === 'int'` | `Integer` |
@@ -178,26 +178,26 @@ export interface ZodHelixOptions {
 | `custom` | — | requires `fallbackKey` (see below) |
 | anything else | — | requires `fallbackKey` (see below) |
 
-All issues from a single `safeParse` are processed simultaneously, producing one error key per issue — equivalent to stacking multiple `HelixValidators` calls.
+All issues from a single `safeParse` are processed simultaneously, producing one error key per issue — equivalent to stacking multiple `Validators` calls.
 
 ### Known gaps — no automatic mapping
 
 | Scenario | Recommendation |
 |---|---|
-| `z.enum()` → `invalid_value` | Use `fallbackKey` or keep using `HelixValidators.oneOf` |
-| `z.array()` item-level errors | Use `fallbackKey` or `HelixValidators.allOf` |
+| `z.enum()` → `invalid_value` | Use `fallbackKey` or keep using `Validators.oneOf` |
+| `z.array()` item-level errors | Use `fallbackKey` or `Validators.allOf` |
 | `invalid_type` for `boolean` | Helix has no `Boolean` key — use `fallbackKey` |
 
 ---
 
 ## `allowEmpty` Behaviour
 
-`HelixValidators` defaults to `allowEmpty = true`: validation passes silently on empty values. `fromZod` mirrors this:
+`Validators` defaults to `allowEmpty = true`: validation passes silently on empty values. `fromZod` mirrors this:
 
 | Scenario | Recommended pattern |
 |---|---|
 | Optional field with format check | Default `allowEmpty: true` — empty passes, invalid format shows error |
-| Mandatory field (required + format) | Stack `HelixValidators.required('msg')` alongside `fromZod(schema)` |
+| Mandatory field (required + format) | Stack `Validators.required('msg')` alongside `fromZod(schema)` |
 | Required via Zod only | `allowEmpty: false` — empty triggers `Required` (null/undefined) or `MinLength` (empty string) |
 
 ```ts
@@ -209,18 +209,18 @@ HelixZodValidators.fromZod(z.string().min(1, 'Name is required'), { allowEmpty: 
 
 // Stacked — explicit required message + Zod format check
 [
-  HelixValidators.required('Email is required'),
+  Validators.required('Email is required'),
   HelixZodValidators.fromZod(z.string().email('Invalid email')),
 ]
 ```
 
-**Note:** when `allowEmpty: false` and the value is `null` or `undefined`, Zod emits `invalid_type` with its default mismatch message, not the message from `.min()` or `.email()`. Stack `HelixValidators.required('...')` for a custom required message.
+**Note:** when `allowEmpty: false` and the value is `null` or `undefined`, Zod emits `invalid_type` with its default mismatch message, not the message from `.min()` or `.email()`. Stack `Validators.required('...')` for a custom required message.
 
 ---
 
 ## `.refine()` and `fallbackKey`
 
-`.refine()` and `.superRefine()` produce `ZodIssueCode.custom`, which has no automatic `HelixValidatorKey` mapping. Provide a `fallbackKey` to capture these errors:
+`.refine()` and `.superRefine()` produce `ZodIssueCode.custom`, which has no automatic `ValidatorKey` mapping. Provide a `fallbackKey` to capture these errors:
 
 ```ts
 const bannedUsernames = ['admin', 'root', 'system'];
@@ -229,7 +229,7 @@ HelixZodValidators.fromZod(
   z.string()
     .min(3, 'At least 3 characters')
     .refine((v) => !bannedUsernames.includes(v), 'Username is not allowed'),
-  { fallbackKey: HelixValidatorKey.Pattern },
+  { fallbackKey: ValidatorKey.Pattern },
 )
 ```
 
@@ -246,7 +246,8 @@ HelixZodValidators.fromZod(
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { z } from 'zod';
-import { HelixFormField, HelixValidators, HelixValidatorKey } from '@gravionlabs/helix-core';
+import { HelixFormField } from '@gravionlabs/helix-shell';
+import { Validators, ValidatorKey } from '@gravionlabs/helix-ui/validators';
 import { HelixZodValidators } from '@gravionlabs/helix-zod';
 
 // Define your schema once — reuse it for both API parsing and form validation
@@ -288,7 +289,7 @@ export class RegisterComponent {
     email: [
       '',
       [
-        HelixValidators.required('Email is required'),
+        Validators.required('Email is required'),
         HelixZodValidators.fromZod(UserSchema.shape.email),
       ],
     ],
@@ -306,7 +307,7 @@ export class RegisterComponent {
         z.string()
           .min(3, 'At least 3 characters')
           .refine((v) => !bannedUsernames.includes(v), 'Username is not allowed'),
-        { fallbackKey: HelixValidatorKey.Pattern },
+        { fallbackKey: ValidatorKey.Pattern },
       ),
     ],
   });
@@ -327,12 +328,8 @@ export class RegisterComponent {
 
 `HelixFormField` reads `control.errors` and takes the first string value. Since `fromZod` stores the Zod error message as the value (e.g. `{ Email: 'Invalid email' }`), `activeError` picks it up with no adapter layer.
 
-```ts
-// helixFormErrorMap also works identically
-import { helixFormErrorMap } from '@gravionlabs/helix-core';
-const errors = helixFormErrorMap(this.form);
-// → { email: 'Invalid email', name: 'Name is required' }
-```
+The same errors are on `form.controls.email.errors`, so any code that reads `control.errors` (for example a summary of all field errors) works the same way.
+
 
 ---
 
@@ -343,7 +340,7 @@ Using `UserSchema.shape.<field>` directly in `fromZod` eliminates duplicated val
 ```ts
 // Without shape — rules written twice
 z.string().email()              // API parsing
-HelixValidators.email('...')    // form (same rule, again)
+Validators.email('...')    // form (same rule, again)
 
 // With shape — one definition drives both
 HelixZodValidators.fromZod(UserSchema.shape.email)
@@ -375,7 +372,7 @@ This library is the `@gravionlabs/helix-zod` portion of the broader Zod integrat
 - REST endpoint validation with `HttpClient` and `httpResource`
 - Luxon `IsoDateTime` transform schema
 - Environment config validation at startup
-- Generic `zodFieldValidator` (framework-agnostic, no `HelixValidatorKey` dependency)
+- Generic `zodFieldValidator` (framework-agnostic, no `ValidatorKey` dependency)
 
 Those patterns live in your application (`src/app/schemas/`, `src/app/api/`, etc.) — this library provides only the Angular `ValidatorFn` bridge.
 
@@ -387,8 +384,8 @@ The library fully implements the `helix-zod` scope defined in `ZOD_ARCHITECTURE_
 |---|---|
 | `ZodHelixOptions` interface (`fallbackKey`, `allowEmpty`) | Implemented |
 | `HelixZodValidators.fromZod()` factory | Implemented |
-| Full Zod v4 issue → `HelixValidatorKey` mapping | Implemented |
-| `allowEmpty = true` default mirroring `HelixValidators` | Implemented |
+| Full Zod v4 issue → `ValidatorKey` mapping | Implemented |
+| `allowEmpty = true` default mirroring `Validators` | Implemented |
 | `ngDevMode` throw on unmapped issue without `fallbackKey` | Implemented |
 | Silent skip in production builds | Implemented |
 | `z.array().min()` → `MinLength` | Implemented |

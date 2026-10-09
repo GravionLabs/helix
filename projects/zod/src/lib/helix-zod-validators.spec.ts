@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { ValidatorKey } from '@gravionlabs/helix-core/validators';
+import { ValidatorKey } from '@gravionlabs/helix-ui/validators';
 import { z } from 'zod';
 import { HelixZodValidators } from './helix-zod-validators';
 
