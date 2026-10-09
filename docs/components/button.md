@@ -1,118 +1,38 @@
 # Button
 
-> Button is an extension to standard button element with icons and theming.
+`button[hx-button]` and `a[hx-button]`: a native element styled as a Helix button. The label is the content;
+an icon is an inline `<svg>` (or an element with the class `hx-button-icon`) next to it.
 
-## Import
-
-```ts
-import { ButtonLabel, ButtonIcon, ButtonDirective, Button } from '@gravionlabs/helix-core/button';
+```html
+<button hx-button (click)="save()">Save</button>
+<button hx-button severity="success" variant="outlined" size="large">Publish</button>
+<button hx-button [loading]="saving()" (click)="save()">Save</button>
+<button hx-button iconOnly rounded aria-label="Add"><svg viewBox="0 0 24 24" …/></button>
+<a hx-button variant="link" href="/docs">Docs</a>
 ```
 
-## Components
+| Input      | Type                                                                                       | Default     | Description                                                                    |
+| ---------- | ------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------ |
+| `variant`  | `'filled' \| 'outlined' \| 'text' \| 'link'`                                               | `'filled'`  | How loud the button is.                                                        |
+| `severity` | `'primary' \| 'secondary' \| 'success' \| 'info' \| 'warn' \| 'help' \| 'danger' \| 'contrast'` | `'primary'` | What it means; every severity works with every variant.                        |
+| `size`     | `'small' \| 'medium' \| 'large'`                                                           | `'medium'`  | Font size and padding from the `--h-button-sm-*` / `-lg-*` tokens.             |
+| `rounded`  | `boolean`                                                                                  | `false`     | A pill; a circle for an icon-only button.                                      |
+| `raised`   | `boolean`                                                                                  | `false`     | Adds the elevation shadow.                                                     |
+| `fluid`    | `boolean`                                                                                  | `false`     | Takes the full width of its container.                                         |
+| `iconOnly` | `boolean`                                                                                  | `false`     | Square button for one icon. **Give it `aria-label`.**                          |
+| `loading`  | `boolean`                                                                                  | `false`     | Spinner in front of the label, `aria-busy="true"`, clicks are ignored; the button stays focusable. |
 
-### ButtonLabel
+Behaviour:
 
-Selector: `[hButtonLabel]`
+- A **disabled** button is the native `disabled` attribute; an **anchor** is disabled with
+  `aria-disabled="true"`, which the directive honours by ignoring clicks.
+- While `loading` the button is *not* `disabled`: focus is not lost when an operation starts, and screen
+  readers hear the busy state.
+- Colours, radius, padding and the focus ring come from the `--h-button-*` tokens of the preset, in light and
+  dark; override a token in your own preset, not the CSS.
 
-#### Inputs
+## Tokens
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ptButtonLabel` | `any` | — | Used to pass attributes to DOM elements inside the hButtonLabel. |
-| `pButtonLabelPT` | `any` | — | Used to pass attributes to DOM elements inside the hButtonLabel. |
-| `pButtonLabelUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
+The look comes from the design tokens `--h-button-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-### ButtonIcon
-
-Selector: `[hButtonIcon]`
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ptButtonIcon` | `any` | — | Used to pass attributes to DOM elements inside the hButtonIcon. |
-| `pButtonIconPT` | `any` | — | Used to pass attributes to DOM elements inside the hButtonIcon. |
-| `pButtonUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
-
-### ButtonDirective
-
-Selector: `[hButton]`
-
-Button directive is an extension to button component.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `ptButtonDirective` | `ButtonPassThrough` | — | Used to pass attributes to DOM elements inside the Button component. |
-| `pButtonPT` | `ButtonPassThrough` | — | Used to pass attributes to DOM elements inside the Button component. |
-| `pButtonUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
-| `hostName` | `any` | `''` | — |
-| `text` | `boolean` | `false` | Add a textual class to the button without a background initially. |
-| `plain` | `boolean` | `false` | Add a plain textual class to the button without a background initially. |
-| `raised` | `boolean` | `false` | Add a shadow to indicate elevation. |
-| `size` | `"large" \| "small" \| undefined` | — | Defines the size of the button. |
-| `outlined` | `boolean` | `false` | Add a border class without a background initially. |
-| `rounded` | `boolean` | `false` | Add a circular border radius to the button. |
-| `iconPos` | `ButtonIconPosition` | `'left'` | Position of the icon. |
-| `loadingIcon` | `string \| undefined` | — | Icon to display in loading state. |
-| `fluid` | `boolean \| undefined` | — | Spans 100% width of the container when enabled. |
-| `label` | `string \| undefined` | — | Text of the button. |
-| `icon` | `string \| undefined` | — | Name of the icon. |
-| `loading` | `boolean` | `false` | Whether the button is in loading state. |
-| `buttonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the Button component. |
-| `severity` | `ButtonSeverity` | — | Defines the style of the button. |
-
-### Button
-
-Selector: `h-button`
-
-Button is an extension to standard button element with icons and theming.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `hostName` | `any` | `''` | — |
-| `type` | `string` | `'button'` | Type of the button. |
-| `badge` | `string \| undefined` | — | Value of the badge. |
-| `disabled` | `boolean \| undefined` | — | When present, it specifies that the component should be disabled. |
-| `raised` | `boolean` | `false` | Add a shadow to indicate elevation. |
-| `rounded` | `boolean` | `false` | Add a circular border radius to the button. |
-| `text` | `boolean` | `false` | Add a textual class to the button without a background initially. |
-| `plain` | `boolean` | `false` | Add a plain textual class to the button without a background initially. |
-| `outlined` | `boolean` | `false` | Add a border class without a background initially. |
-| `link` | `boolean` | `false` | Add a link style to the button. |
-| `tabindex` | `number \| undefined` | — | Add a tabindex to the button. |
-| `size` | `"large" \| "small" \| undefined` | — | Defines the size of the button. |
-| `variant` | `"text" \| "outlined" \| undefined` | — | Specifies the variant of the component. |
-| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the element. |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `badgeClass` | `string \| undefined` | — | Style class of the badge. |
-| `badgeSeverity` | `"secondary" \| "info" \| "success" \| "warn" \| "danger" \| "contrast" \| "help" \| "primary" \| null \| undefined` | `'secondary'` | Severity type of the badge. |
-| `ariaLabel` | `string \| undefined` | — | Used to define a string that autocomplete attribute the current element. |
-| `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
-| `iconPos` | `ButtonIconPosition` | `'left'` | Position of the icon. |
-| `icon` | `string \| undefined` | — | Name of the icon. |
-| `label` | `string \| undefined` | — | Text of the button. |
-| `loading` | `boolean` | `false` | Whether the button is in loading state. |
-| `loadingIcon` | `string \| undefined` | — | Icon to display in loading state. |
-| `severity` | `ButtonSeverity` | — | Defines the style of the button. |
-| `buttonProps` | `ButtonProps \| undefined` | — | Used to pass all properties of the ButtonProps to the Button component. |
-| `fluid` | `boolean \| undefined` | — | Spans 100% width of the container when enabled. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClick` | `output&lt;MouseEvent&gt;()` | Callback to execute when button is clicked. |
-| `onFocus` | `output&lt;FocusEvent&gt;()` | Callback to execute when button is focused. |
-| `onBlur` | `output&lt;FocusEvent&gt;()` | Callback to execute when button loses focus. |
-
-## Interfaces & Types
-
-- `ButtonIconPosition`
-
-## Source
-
-[`projects/core/button`](../../projects/core/button)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

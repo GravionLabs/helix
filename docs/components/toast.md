@@ -1,74 +1,36 @@
 # Toast
 
-> Toast is used to display messages in an overlay.
+`hx-toast` shows short messages that go away. Put one in the root component and send messages with
+`HxMessageService`.
 
-## Import
-
-```ts
-import { ToastItem, Toast } from '@gravionlabs/helix-core/toast';
+```html
+<hx-toast position="top-right" />
+<hx-toast key="form" position="bottom-center" />
 ```
 
-## Components
+```ts
+readonly messages = inject(HxMessageService);
+this.messages.add({ severity: 'success', summary: 'Saved', detail: 'The order was saved.' });
+this.messages.add({ severity: 'error', summary: 'Failed', sticky: true, key: 'form' });
+this.messages.clear('form');
+```
 
-### ToastItem
+`add({ severity, summary, detail, life, sticky, closable, key })` returns the id of the message; `remove(id)` and
+`clear(key?)` take messages away. `life` is 3000 ms by default, `sticky` keeps the message until it is closed,
+`closable` (default `true`) shows the close button.
 
-Selector: `h-toastItem`
+| Input      | Type                                                                                    | Default       | Description                                 |
+| ---------- | --------------------------------------------------------------------------------------- | ------------- | ------------------------------------------- |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'center' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Where the stack sits.                       |
+| `key`      | `string`                                                                                |               | Show only messages sent with this key (without a key: those sent without). |
 
-#### Inputs
+- **Accessibility:** every message is a live region: `role="status"` with `aria-live="polite"` for info, success,
+  secondary and contrast; `role="alert"` with `aria-live="assertive"` for warn and error. The close button is named.
+  The timer of a message pauses while the pointer or the focus is on it, so it is not removed while someone reads it or
+  reaches for its close button. Motion stops under `prefers-reduced-motion`.
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `message` | `ToastMessageOptions \| null \| undefined` | — | — |
-| `index` | `number \| null \| undefined` | — | — |
-| `life` | `number` | `undefined!` | — |
-| `template` | `TemplateRef&lt;ToastMessageTemplateContext&gt; \| undefined` | — | — |
-| `headlessTemplate` | `TemplateRef&lt;ToastHeadlessTemplateContext&gt; \| undefined` | — | — |
-| `showTransformOptions` | `string \| undefined` | — | — |
-| `hideTransformOptions` | `string \| undefined` | — | — |
-| `showTransitionOptions` | `string \| undefined` | — | — |
-| `hideTransitionOptions` | `string \| undefined` | — | — |
-| `motionOptions` | `MotionOptions \| undefined` | — | — |
-| `clearAll` | `any` | `null` | — |
+## Tokens
 
-#### Outputs
+The look comes from the design tokens `--h-toast-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-| Name | Type | Description |
-| --- | --- | --- |
-| `onAnimationStart` | `output&lt;HTMLElement&gt;()` | — |
-| `onAnimationEnd` | `output&lt;HTMLElement&gt;()` | — |
-| `onClose` | `output&lt;ToastItemCloseEvent&gt;()` | — |
-
-### Toast
-
-Selector: `h-toast`
-
-Toast is used to display messages in an overlay.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `key` | `string \| undefined` | — | Key of the message in case message is targeted to a specific toast component. |
-| `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
-| `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
-| `life` | `number` | `3000` | The default time to display messages for in milliseconds. |
-| `styleClass` | `string \| undefined` | — | Inline class of the component. |
-| `position` | `ToastPositionType` | `'top-right'` | Position of the toast in viewport. |
-| `preventOpenDuplicates` | `boolean` | `false` | It does not add the new message if there is already a toast displayed with the same content |
-| `preventDuplicates` | `boolean` | `false` | Displays only once a message with the same content. |
-| `showTransformOptions` | `string` | `'translateY(100%)'` | Transform options of the show animation. |
-| `hideTransformOptions` | `string` | `'translateY(-100%)'` | Transform options of the hide animation. |
-| `showTransitionOptions` | `string` | `'300ms ease-out'` | Transition options of the show animation. |
-| `hideTransitionOptions` | `string` | `'250ms ease-in'` | Transition options of the hide animation. |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-| `breakpoints` | `{ [key: string]: any; } \| undefined` | — | Object literal to define styles per screen size. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClose` | `output&lt;ToastCloseEvent&gt;()` | Callback to invoke when a message is closed. |
-
-## Source
-
-[`projects/core/toast`](../../projects/core/toast)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

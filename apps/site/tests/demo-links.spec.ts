@@ -37,7 +37,7 @@ describe('DEMO_ROUTES', () => {
 describe('demoLinkOf', () => {
   it('builds the address under the base of the site', () => {
     expect(demoLinkOf('button', '/helix/')).toBe('/helix/demo/uikit/button');
-    expect(demoRouteOf('splitbutton')).toBe('uikit/button');
+    expect(demoRouteOf('split-button')).toBe('uikit/button');
   });
 
   it('is null for a component without a demo page', () => {

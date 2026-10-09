@@ -1,44 +1,31 @@
 # Slider
 
-> Slider is a component to provide input with a drag handle.
+`hx-slider` chooses a number, or with `range` a pair, on a track. It is built on native `<input type="range">`
+elements (one, or two for a range), so the keyboard and screen readers work natively; the track and thumbs are drawn
+with the `--h-slider-*` tokens. It works with `ngModel`, reactive forms (including `disable()`) and signal forms.
 
-## Import
-
-```ts
-import { Slider } from '@gravionlabs/helix-core/slider';
+```html
+<hx-slider ariaLabel="Volume" [(ngModel)]="volume" />
+<hx-slider range ariaLabelStart="Minimum price" ariaLabelEnd="Maximum price" [min]="0" [max]="500" [(value)]="price" />
+<hx-slider orientation="vertical" ariaLabel="Gain" [(value)]="gain" />
 ```
 
-## Components
+| Input                                   | Type                         | Default        | Description                                        |
+| --------------------------------------- | ---------------------------- | -------------- | -------------------------------------------------- |
+| `range`                                 | `boolean`                    | `false`        | Two thumbs; the value is `[start, end]`.           |
+| `min`, `max`, `step`                    | `number`                     | `0`, `100`, `1` | Bounds and step.                                  |
+| `orientation`                           | `'horizontal' \| 'vertical'` | `'horizontal'` | A vertical slider has its minimum at the bottom.   |
+| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                    |                | `id` and name of the thumb of a single slider.     |
+| `ariaLabelStart`, `ariaLabelEnd`        | `string`                     |                | Names of the two thumbs of a range.                |
 
-### Slider
+- **Behaviour:** in a range the start thumb never passes the end thumb. Only the thumbs take the pointer in a
+  range.
+- **Keyboard:** the native range keys: arrows, Page Up/Down, Home, End.
+- **Accessibility:** every thumb is an `input type="range"` with `aria-orientation`; give it a name with
+  `ariaLabel` (`ariaLabelStart` and `ariaLabelEnd` for a range) or a `<label for>` with `inputId`.
 
-Selector: `h-slider`
+## Tokens
 
-Slider is a component to provide input with a drag handle.
+The look comes from the design tokens `--h-slider-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `animate` | `boolean \| undefined` | — | When enabled, displays an animation on click of the slider bar. |
-| `min` | `number` | `0` | Mininum boundary value. |
-| `max` | `number` | `100` | Maximum boundary value. |
-| `orientation` | `"horizontal" \| "vertical"` | `'horizontal'` | Orientation of the slider. |
-| `step` | `number \| undefined` | — | Step factor to increment/decrement the value. |
-| `range` | `boolean \| undefined` | — | When specified, allows two boundary values to be picked. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `ariaLabel` | `string \| undefined` | — | Defines a string that labels the input for accessibility. |
-| `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
-| `tabindex` | `number` | `0` | Index of the element in tabbing order. |
-| `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onChange` | `output&lt;SliderChangeEvent&gt;()` | Callback to invoke on value change. |
-| `onSlideEnd` | `output&lt;SliderSlideEndEvent&gt;()` | Callback to invoke when slide ended. |
-
-## Source
-
-[`projects/core/slider`](../../projects/core/slider)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

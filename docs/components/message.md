@@ -1,46 +1,28 @@
 # Message
 
-> Message groups a collection of contents in tabs.
+`hx-message` is an inline message next to the content it is about.
 
-## Import
-
-```ts
-import { Message } from '@gravionlabs/helix-core/message';
+```html
+<hx-message severity="error" closable (close)="onClose()">The card was declined.</hx-message>
+<hx-message severity="info" variant="outlined" icon="pi pi-star" [life]="5000">Saved</hx-message>
 ```
 
-## Components
+| Input        | Type                                                          | Default    | Description                                       |
+| ------------ | ------------------------------------------------------------- | ---------- | ------------------------------------------------- |
+| `severity`   | `'success' \| 'info' \| 'warn' \| 'error' \| 'secondary' \| 'contrast'` | `'info'`   | Colours and built-in icon.                        |
+| `variant`    | `'filled' \| 'outlined' \| 'simple'`                          | `'filled'` | Tinted box, outline only, or text only.           |
+| `size`       | `'small' \| 'medium' \| 'large'`                              | `'medium'` | Padding, text and icon size.                      |
+| `icon`       | `string`                                                      | `''`       | Icon classes (any icon font) instead of the built-in icon. |
+| `closable`   | `boolean`                                                     | `false`    | A close button (`closeLabel`, default `Close`).   |
+| `life`       | `number`                                                      | `0`        | Milliseconds until the message hides itself.      |
 
-### Message
+`(close)` fires when the button or `life` hides the message.
 
-Selector: `h-message`
+- **Accessibility:** the message is a live region: `role="status"`, and `role="alert"` for `error`. The built-in icon
+  is `aria-hidden`; the close button has an accessible name. Do not rely on the colour alone: say what happened in the text.
 
-Message groups a collection of contents in tabs.
+## Tokens
 
-#### Inputs
+The look comes from the design tokens `--h-message-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `severity` | `"secondary" \| "info" \| "success" \| "warn" \| "contrast" \| "error" \| null \| undefined` | `'info'` | Severity level of the message. |
-| `text` | `string \| undefined` | — | Text content. |
-| `escape` | `boolean` | `true` | Whether displaying messages would be escaped or not. |
-| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `closable` | `boolean` | `false` | Whether the message can be closed manually using the close icon. |
-| `icon` | `string \| undefined` | — | Icon to display in the message. |
-| `closeIcon` | `string \| undefined` | — | Icon to display in the message close button. |
-| `life` | `number \| undefined` | — | Delay in milliseconds to close the message automatically. |
-| `showTransitionOptions` | `string` | `'300ms ease-out'` | Transition options of the show animation. |
-| `hideTransitionOptions` | `string` | `'200ms cubic-bezier(0.86, 0, 0.07, 1)'` | Transition options of the hide animation. |
-| `size` | `"large" \| "small" \| undefined` | — | Defines the size of the component. |
-| `variant` | `"text" \| "outlined" \| "simple" \| undefined` | — | Specifies the input variant of the component. |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClose` | `output&lt;{ originalEvent: Event; }&gt;()` | Emits when the message is closed. |
-
-## Source
-
-[`projects/core/message`](../../projects/core/message)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

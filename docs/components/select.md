@@ -1,122 +1,40 @@
 # Select
 
-> Select is used to choose an item from a collection of options.
+`hx-select` is a listbox in a CDK overlay with a combobox trigger. It needs `@angular/cdk` (a peer
+dependency) and the overlay styles that come with `styles.css`.
 
-## Import
-
-```ts
-import { SelectItem, Select } from '@gravionlabs/helix-core/select';
+```html
+<label for="city">City</label>
+<hx-select inputId="city" placeholder="Select a city" [options]="cities"
+           optionLabel="name" optionValue="code" [(ngModel)]="city" showClear />
+<hx-select [options]="['Free', 'Pro', 'Team']" [formField]="form.plan" />
 ```
 
-## Components
+| Input            | Type                                | Default        | Description                                                         |
+| ---------------- | ----------------------------------- | -------------- | ------------------------------------------------------------------- |
+| `options`        | `unknown[]`                         | `[]`           | Objects or primitives.                                              |
+| `optionLabel`    | `string`                            | `'label'`      | Property shown for an object option.                                |
+| `optionValue`    | `string`                            | `'value'`      | Property used as the value; without it the option itself is used.   |
+| `optionDisabled` | `string`                            | `'disabled'`   | Property that disables an option.                                   |
+| `placeholder`    | `string`                            |                | Shown while nothing is selected.                                    |
+| `emptyMessage`   | `string`                            | `'No options'` | Shown when there are no options.                                    |
+| `variant`        | `'outlined' \| 'filled'`            | `'outlined'`   | A tinted field instead of an outline.                               |
+| `size`           | `'small' \| 'medium' \| 'large'`     | `'medium'`     | Font size and padding.                                              |
+| `fluid`          | `boolean`                           | `false`        | Full width of the container.                                        |
+| `showClear`      | `boolean`                           | `false`        | A button that resets the value to `null`.                           |
+| `inputId`        | `string`                            |                | Id of the trigger, for `<label for>`.                               |
+| `ariaLabel`      | `string`                            |                | Accessible name when there is no visible label.                     |
+| `compareWith`    | `(a, b) => boolean`                 | `Object.is`    | How a value is matched to an option.                                |
 
-### SelectItem
+- **Forms:** works with `ngModel`, reactive forms (it is a `ControlValueAccessor`) and signal forms
+  (`[formField]`, it implements the form value control contract); `[(value)]` binds it without forms.
+- **Keyboard:** Arrow Down/Up or Enter opens it; in the list the arrows, Home, End and typeahead move,
+  Enter or Space selects, Escape closes and returns focus to the trigger, Tab closes.
+- **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
+  `listbox` of `option`s. Give it a visible label or `ariaLabel`.
 
-Selector: `h-selectItem`
+## Tokens
 
-#### Inputs
+The look comes from the design tokens `--h-select-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string \| undefined` | — | — |
-| `option` | `any` | — | — |
-| `selected` | `boolean \| undefined` | — | — |
-| `focused` | `boolean \| undefined` | — | — |
-| `label` | `string \| undefined` | — | — |
-| `disabled` | `boolean \| undefined` | — | — |
-| `visible` | `boolean \| undefined` | — | — |
-| `itemSize` | `number \| undefined` | — | — |
-| `ariaPosInset` | `string \| undefined` | — | — |
-| `ariaSetSize` | `string \| undefined` | — | — |
-| `template` | `TemplateRef&lt;any&gt; \| undefined` | — | — |
-| `checkmark` | `boolean` | `undefined!` | — |
-| `index` | `number \| undefined` | — | — |
-| `scrollerOptions` | `any` | — | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onClick` | `output&lt;any&gt;()` | — |
-| `onMouseEnter` | `output&lt;any&gt;()` | — |
-
-### Select
-
-Selector: `h-select`
-
-Select is used to choose an item from a collection of options.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string \| undefined` | — | Unique identifier of the component |
-| `scrollHeight` | `string` | `'200px'` | Height of the viewport in pixels, a scrollbar is defined if height of list exceeds this value. |
-| `filter` | `boolean \| undefined` | — | When specified, displays an input field to filter the items on keyup. |
-| `panelStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the overlay panel element. |
-| `styleClass` | `string \| undefined` | — | Style class of the element. |
-| `panelStyleClass` | `string \| undefined` | — | Style class of the overlay panel element. |
-| `readonly` | `boolean \| undefined` | — | When present, it specifies that the component cannot be edited. |
-| `editable` | `boolean \| undefined` | — | When present, custom value instead of predefined options can be entered using the editable input field. |
-| `tabindex` | `number \| undefined` | `0` | Index of the element in tabbing order. |
-| `placeholder` | `string \| undefined` | — | Default text to display when no option is selected. |
-| `loadingIcon` | `string \| undefined` | — | Icon to display in loading state. |
-| `filterPlaceholder` | `string \| undefined` | — | Placeholder text to show when filter input is empty. |
-| `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
-| `inputId` | `string \| undefined` | — | Identifier of the accessible input element. |
-| `dataKey` | `string \| undefined` | — | A property to uniquely identify a value in options. |
-| `filterBy` | `string \| undefined` | — | When filtering is enabled, filterBy decides which field or fields (comma separated) to search against. |
-| `filterFields` | `any[] \| undefined` | — | Fields used when filtering the options, defaults to optionLabel. |
-| `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
-| `resetFilterOnHide` | `boolean` | `false` | Clears the filter value when hiding the select. |
-| `checkmark` | `boolean` | `false` | Whether the selected option will be shown with a check mark. |
-| `dropdownIcon` | `string \| undefined` | — | Icon class of the select icon. |
-| `loading` | `boolean \| undefined` | `false` | Whether the select is in loading state. |
-| `optionLabel` | `string \| undefined` | — | Name of the label field of an option. |
-| `optionValue` | `string \| undefined` | — | Name of the value field of an option. |
-| `optionDisabled` | `string \| undefined` | — | Name of the disabled field of an option. |
-| `optionGroupLabel` | `string \| undefined` | `'label'` | Name of the label field of an option group. |
-| `optionGroupChildren` | `string` | `'items'` | Name of the options field of an option group. |
-| `group` | `boolean \| undefined` | — | Whether to display options as grouped when nested options are provided. |
-| `showClear` | `boolean \| undefined` | — | When enabled, a clear icon is displayed to clear the value. |
-| `emptyFilterMessage` | `string` | `''` | Text to display when filtering does not return any results. Defaults to global value in i18n translation configuration. |
-| `emptyMessage` | `string` | `''` | Text to display when there is no data. Defaults to global value in i18n translation configuration. |
-| `lazy` | `boolean` | `false` | Defines if data is loaded and interacted with in lazy manner. |
-| `virtualScroll` | `boolean \| undefined` | — | Whether the data should be loaded on demand during scroll. |
-| `virtualScrollItemSize` | `number \| undefined` | — | Height of an item in the list for VirtualScrolling. |
-| `virtualScrollOptions` | `ScrollerOptions \| undefined` | — | Whether to use the scroller feature. The properties of scroller component can be used like an object in it. |
-| `overlayOptions` | `OverlayOptions \| undefined` | — | Whether to use overlay API feature. The properties of overlay API can be used like an object in it. |
-| `ariaFilterLabel` | `string \| undefined` | — | Defines a string that labels the filter input. |
-| `ariaLabel` | `string \| undefined` | — | Used to define a aria label attribute the current element. |
-| `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
-| `filterMatchMode` | `"in" \| "contains" \| "startsWith" \| "endsWith" \| "equals" \| "notEquals" \| "lt" \| "lte" \| "gt" \| "gte"` | `'contains'` | Defines how the items are filtered. |
-| `tooltip` | `string` | `''` | Advisory information to display in a tooltip on hover. |
-| `tooltipPosition` | `"left" \| "right" \| "top" \| "bottom"` | `'right'` | Position of the tooltip. |
-| `tooltipPositionStyle` | `string` | `'absolute'` | Type of CSS position. |
-| `tooltipStyleClass` | `string \| undefined` | — | Style class of the tooltip. |
-| `focusOnHover` | `boolean` | `true` | Fields used when filtering the options, defaults to optionLabel. |
-| `selectOnFocus` | `boolean` | `false` | Determines if the option will be selected on focus. |
-| `autoOptionFocus` | `boolean` | `false` | Whether to focus on the first visible or selected element when the overlay panel is shown. |
-| `autofocusFilter` | `boolean` | `true` | Applies focus to the filter element when the overlay is shown. |
-| `filterValue` | `string \| null \| undefined` | — | When specified, filter displays with this value. |
-| `options` | `any[] \| null \| undefined` | — | An array of objects to display as the available options. |
-| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onChange` | `output&lt;SelectChangeEvent&gt;()` | Callback to invoke when value of select changes. |
-| `onFilter` | `output&lt;SelectFilterEvent&gt;()` | Callback to invoke when data is filtered. |
-| `onFocus` | `output&lt;Event&gt;()` | Callback to invoke when select gets focus. |
-| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when select loses focus. |
-| `onClick` | `output&lt;MouseEvent&gt;()` | Callback to invoke when component is clicked. |
-| `onShow` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when select overlay gets visible. |
-| `onHide` | `output&lt;AnimationEvent&gt;()` | Callback to invoke when select overlay gets hidden. |
-| `onClear` | `output&lt;Event&gt;()` | Callback to invoke when select clears the value. |
-| `onLazyLoad` | `output&lt;SelectLazyLoadEvent&gt;()` | Callback to invoke in lazy mode to load new data. |
-
-## Source
-
-[`projects/core/select`](../../projects/core/select)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

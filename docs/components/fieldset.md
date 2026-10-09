@@ -1,40 +1,25 @@
 # Fieldset
 
-> Fieldset is a grouping component with the optional content toggle feature.
+`hx-fieldset` is a native `<fieldset>` with a `<legend>` that groups related controls and can collapse.
 
-## Import
-
-```ts
-import { Fieldset } from '@gravionlabs/helix-core/fieldset';
+```html
+<hx-fieldset legend="Shipping address" toggleable [(collapsed)]="closed">
+  <label for="street">Street</label> <input hx-input id="street" />
+</hx-fieldset>
 ```
 
-## Components
+| Input       | Type              | Default | Description                                              |
+| ----------- | ----------------- | ------- | -------------------------------------------------------- |
+| `legend`    | `string`          | `''`    | The legend text.                                         |
+| `toggleable` | `boolean`        | `false` | The legend holds a button that collapses the content.    |
+| `collapsed` | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable fieldset collapses.   |
 
-### Fieldset
+- **Accessibility:** it is a real fieldset and legend, so the group name is announced for the controls inside. When
+  toggleable, the legend contains a `<button>` with `aria-expanded` and `aria-controls`; the content is `inert` while
+  collapsed so its controls leave the tab order. Motion stops under `prefers-reduced-motion`.
 
-Selector: `h-fieldset`
+## Tokens
 
-Fieldset is a grouping component with the optional content toggle feature.
+The look comes from the design tokens `--h-fieldset-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `legend` | `string \| undefined` | — | Header text of the fieldset. |
-| `toggleable` | `boolean \| undefined` | — | When specified, content can toggled by clicking the legend. |
-| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `transitionOptions` | `string` | `'400ms cubic-bezier(0.86, 0, 0.07, 1)'` | Transition options of the panel animation. |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-| `collapsed` | `boolean \| undefined` | `false` | Defines the initial state of content, supports one or two-way binding as well. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onBeforeToggle` | `output&lt;FieldsetBeforeToggleEvent&gt;()` | Callback to invoke before panel toggle. |
-| `onAfterToggle` | `output&lt;FieldsetAfterToggleEvent&gt;()` | Callback to invoke after panel toggle. |
-
-## Source
-
-[`projects/core/fieldset`](../../projects/core/fieldset)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).
