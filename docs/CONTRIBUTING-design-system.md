@@ -28,7 +28,7 @@ checks the files against the type's grammar and caps, and fails when a preview u
 | `assets/Logos/…`                    | the double helix of the shell's nav rail in `primary` (light and dark)                            |
 
 To add a component: capture its markup from the demo (class names only, no Angular attributes), add an entry
-to `PREVIEWS` with `css` (the directories of `projects/core` whose structural CSS it needs) and run the build;
+to `PREVIEWS` with `css` (the stylesheets of `projects/ui/styles` it needs, e.g. `'button'`) and run the build;
 the drift test tells you which class or `--h-*` variable is missing. Components are Angular and the type's
 runtime is React, so there is no `bundle.js`: previews are static renditions of the real markup and CSS.
 
@@ -57,7 +57,6 @@ preview's first line (`<!-- @dsCard group=… height=… -->`) is what the Desig
 
 ## What is not in it yet
 
-The shell's chrome (topbar, nav rail, status bar), the table, overlay and menu families, and 78 of the 90
-library components have no preview; icons are not mirrored (the PrimeIcons font is not redistributed). When
-the vanilla `helix-ui` library (epic #523) replaces `helix-core`, the previews are regenerated from its
-components instead of the fork's.
+The shell's chrome (topbar, nav rail, status bar), the table, overlay and menu families and most other
+library components have no preview; icons are not mirrored (the PrimeIcons font is not redistributed). The
+previews are the markup of `@gravionlabs/helix-ui`, styled by its compiled stylesheets (`projects/ui/styles`).
