@@ -153,6 +153,27 @@ dependency) and the overlay styles that come with `styles.css`.
 - **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
   `listbox` of `option`s. Give it a visible label or `ariaLabel`.
 
+## Icon field
+
+`hx-icon-field` puts an icon inside a text field. Wrap an `hx-input` (or `hx-password`) and one element with
+`hx-input-icon`: an icon font class such as `<i class="pi pi-search">` or an inline `<svg>`.
+
+```html
+<hx-icon-field>
+  <i class="pi pi-search" hx-input-icon></i>
+  <input hx-input placeholder="Search" aria-label="Search" />
+</hx-icon-field>
+```
+
+| Input          | Type                 | Default  | Description                                                   |
+| -------------- | -------------------- | -------- | ------------------------------------------------------------- |
+| `iconPosition` | `'left' \| 'right'`  | `'left'` | Start or end edge (follows the writing direction).            |
+
+- **Behaviour:** the icon is centred vertically, does not catch clicks, and the field gets inline padding for it;
+  the `small` and `large` sizes of the input are followed. Colour: `--h-iconfield-icon-color`.
+- **Accessibility:** the icon is decorative and gets `aria-hidden="true"` unless it has an `aria-label`. The
+  field still needs its own label.
+
 ## Input number
 
 `hx-input-number` is a numeric field with locale formatting and optional step buttons. The value is a

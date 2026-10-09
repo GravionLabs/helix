@@ -23,6 +23,7 @@ export {
   type HxDividerLayout,
   type HxDividerType,
 } from './lib/divider/divider';
+export { HxIconField, type HxIconPosition, HxInputIcon } from './lib/icon-field/icon-field';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
 export {
   HxInputNumber,

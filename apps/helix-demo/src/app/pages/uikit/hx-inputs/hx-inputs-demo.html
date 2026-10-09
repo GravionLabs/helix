@@ -9,6 +9,38 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Icon field</h2>
+    <div class="row">
+      <label class="label" for="search">Left</label>
+      <hx-icon-field>
+        <i class="pi pi-search" hx-input-icon></i>
+        <input hx-input id="search" placeholder="Search" />
+      </hx-icon-field>
+    </div>
+    <div class="row">
+      <label class="label" for="mail">Right</label>
+      <hx-icon-field iconPosition="right">
+        <i class="pi pi-envelope" hx-input-icon></i>
+        <input hx-input id="mail" type="email" placeholder="Email" />
+      </hx-icon-field>
+    </div>
+    <div class="row">
+      <label class="label" for="small">Small</label>
+      <hx-icon-field>
+        <i class="pi pi-search" hx-input-icon></i>
+        <input hx-input id="small" size="small" placeholder="Small" />
+      </hx-icon-field>
+    </div>
+    <div class="row">
+      <label class="label" for="large">Large</label>
+      <hx-icon-field>
+        <i class="pi pi-search" hx-input-icon></i>
+        <input hx-input id="large" size="large" placeholder="Large" />
+      </hx-icon-field>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Input number</h2>
     <div class="row">
       <label class="label" for="qty">Quantity</label>

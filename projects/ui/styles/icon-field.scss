@@ -1,0 +1,59 @@
+/*
+ * Icon field: `<hx-icon-field>` around an `hx-input` and an `[hx-input-icon]` element. The icon is placed
+ * absolutely on the start or end edge and ignores clicks; the field gets inline padding for it. Colour from
+ * `--h-iconfield-icon-color`, spacing from the input tokens (the size variants of the input are followed).
+ */
+.hx-icon-field {
+  --hx-icon-field-x: var(--h-inputtext-padding-x);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hx-icon-field:has(.hx-input-sm) {
+  --hx-icon-field-x: var(--h-inputtext-sm-padding-x);
+}
+
+.hx-icon-field:has(.hx-input-lg) {
+  --hx-icon-field-x: var(--h-inputtext-lg-padding-x);
+}
+
+.hx-icon-field:has(.hx-input-fluid) {
+  display: flex;
+  width: 100%;
+}
+
+.hx-icon-field > .hx-input,
+.hx-icon-field > .hx-password {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hx-input-icon {
+  position: absolute;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  color: var(--h-iconfield-icon-color);
+  pointer-events: none;
+}
+
+.hx-icon-field-left > .hx-input-icon {
+  inset-inline-start: var(--hx-icon-field-x);
+}
+
+.hx-icon-field-right > .hx-input-icon {
+  inset-inline-end: var(--hx-icon-field-x);
+}
+
+.hx-icon-field-left .hx-input {
+  padding-inline-start: calc(var(--hx-icon-field-x) * 2 + 1em);
+}
+
+.hx-icon-field-right .hx-input {
+  padding-inline-end: calc(var(--hx-icon-field-x) * 2 + 1em);
+}
