@@ -59,6 +59,7 @@ export {
   type HxMultiSelectSize,
   type HxMultiSelectVariant,
 } from './lib/multi-select/multi-select';
+export { HxPanel } from './lib/panel/panel';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export { HxRating } from './lib/rating/rating';
