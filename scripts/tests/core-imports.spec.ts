@@ -58,6 +58,16 @@ describe('helix-core import guard', () => {
     ]);
   });
 
+  it('flags every core import in the demo app', () => {
+    const root = project({
+      'apps/helix-demo/src/app/a.ts':
+        "import { provideHelix } from '@gravionlabs/helix-core/config';\n",
+    });
+    expect(forbiddenCoreImports(root)).toEqual([
+      { file: path.join('apps/helix-demo/src/app/a.ts'), line: 1, entry: 'config' },
+    ]);
+  });
+
   it('flags the root entry and any core import in ag-grid', () => {
     const root = project({
       'projects/ag-grid/src/a.ts': "import { a } from '@gravionlabs/helix-core/validators';\n",
