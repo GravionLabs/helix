@@ -27,6 +27,11 @@ describe('helix-ui styles', () => {
     }
   });
 
+  it('lets the select panel fill the overlay pane, which is a flex row', () => {
+    const select = styles.find((s) => s.name === 'select')?.css ?? '';
+    expect(select).toMatch(/\.hx-select-panel \{[^}]*flex: 1 1 auto/);
+  });
+
   // every class a directive can put on its host must be styled by the stylesheet of its component
   it.each([
     ['button', 'button/button.ts'],
