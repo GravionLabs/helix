@@ -10,9 +10,13 @@ import {
   HxProgressSpinner,
   HxSkeleton,
   HxTag,
+  HxTimeline,
+  HxTimelineContent,
+  HxTimelineMarker,
+  HxTimelineOpposite,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` display components: Avatar, Badge, Tag, Chip, Skeleton, Progress. */
+/** `@gravionlabs/helix-ui` display components: Avatar, Badge, Tag, Chip, Skeleton, Progress, Timeline. */
 @Component({
   selector: 'app-hx-display-demo',
   standalone: true,
@@ -27,6 +31,10 @@ import {
     HxProgressSpinner,
     HxSkeleton,
     HxTag,
+    HxTimeline,
+    HxTimelineContent,
+    HxTimelineMarker,
+    HxTimelineOpposite,
   ],
   templateUrl: './hx-display-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -37,6 +45,12 @@ export class HxDisplayDemo {
   remove(name: string) {
     this.chips.update((list) => list.filter((c) => c !== name));
   }
+  readonly orders = [
+    { status: 'Ordered', date: '15/10/2026 10:30', icon: 'pi pi-shopping-cart' },
+    { status: 'Processing', date: '15/10/2026 14:00', icon: 'pi pi-cog' },
+    { status: 'Shipped', date: '15/10/2026 16:15', icon: 'pi pi-truck' },
+    { status: 'Delivered', date: '16/10/2026 10:00', icon: 'pi pi-check' },
+  ];
   readonly progress = signal(40);
   readonly max = Math.max;
   readonly min = Math.min;

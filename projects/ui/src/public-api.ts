@@ -144,6 +144,15 @@ export {
   provideHxTheme,
 } from './lib/theme/theme';
 export {
+  HxTimeline,
+  type HxTimelineAlign,
+  HxTimelineContent,
+  type HxTimelineContext,
+  type HxTimelineLayout,
+  HxTimelineMarker,
+  HxTimelineOpposite,
+} from './lib/timeline/timeline';
+export {
   HxMessageService,
   type HxToastMessage,
   type HxToastMessageInput,

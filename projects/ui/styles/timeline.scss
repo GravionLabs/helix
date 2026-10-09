@@ -1,0 +1,118 @@
+/*
+ * Timeline: `<hx-timeline>`. Events in an ordered list, each a row (vertical) or column (horizontal) of the opposite
+ * text, the separator (marker and connector) and the content, from the `--h-timeline-*` tokens. A reversed event
+ * (align right, or every second one when alternating) swaps the opposite text and the content.
+ */
+.hx-timeline {
+  display: block;
+}
+
+.hx-timeline-events {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-timeline-horizontal .hx-timeline-events {
+  flex-direction: row;
+}
+
+.hx-timeline-event {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: var(--h-timeline-event-min-height);
+}
+
+.hx-timeline-event:last-child {
+  min-height: 0;
+}
+
+.hx-timeline-vertical .hx-timeline-event-reversed {
+  flex-direction: row-reverse;
+}
+
+.hx-timeline-horizontal .hx-timeline-event {
+  flex-direction: column;
+  min-height: 0;
+}
+
+.hx-timeline-horizontal .hx-timeline-event-reversed {
+  flex-direction: column-reverse;
+}
+
+.hx-timeline-event-opposite,
+.hx-timeline-event-content {
+  flex: 1;
+}
+
+.hx-timeline-vertical .hx-timeline-event-opposite,
+.hx-timeline-vertical .hx-timeline-event-content {
+  padding: var(--h-timeline-vertical-event-content-padding);
+}
+
+.hx-timeline-horizontal .hx-timeline-event-opposite,
+.hx-timeline-horizontal .hx-timeline-event-content {
+  padding: var(--h-timeline-horizontal-event-content-padding);
+}
+
+/* the text next to the line leans towards it */
+.hx-timeline-vertical .hx-timeline-event-opposite,
+.hx-timeline-vertical .hx-timeline-event-reversed .hx-timeline-event-content {
+  text-align: end;
+}
+
+.hx-timeline-vertical .hx-timeline-event-content,
+.hx-timeline-vertical .hx-timeline-event-reversed .hx-timeline-event-opposite {
+  text-align: start;
+}
+
+.hx-timeline-event-separator {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hx-timeline-horizontal .hx-timeline-event-separator {
+  flex-direction: row;
+}
+
+.hx-timeline-event-marker {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--h-timeline-event-marker-size);
+  height: var(--h-timeline-event-marker-size);
+  border: var(--h-timeline-event-marker-border-width) solid var(--h-timeline-event-marker-border-color);
+  border-radius: var(--h-timeline-event-marker-border-radius);
+  background: var(--h-timeline-event-marker-background);
+}
+
+.hx-timeline-event-marker::after {
+  content: "";
+  width: var(--h-timeline-event-marker-content-size);
+  height: var(--h-timeline-event-marker-content-size);
+  border-radius: var(--h-timeline-event-marker-content-border-radius);
+  background: var(--h-timeline-event-marker-content-background);
+  box-shadow: var(--h-timeline-event-marker-content-inset-shadow);
+}
+
+.hx-timeline-event-marker-custom {
+  display: inline-flex;
+  flex: none;
+}
+
+.hx-timeline-event-connector {
+  flex-grow: 1;
+  background: var(--h-timeline-event-connector-color);
+  width: var(--h-timeline-event-connector-size);
+}
+
+.hx-timeline-horizontal .hx-timeline-event-connector {
+  width: auto;
+  height: var(--h-timeline-event-connector-size);
+}
