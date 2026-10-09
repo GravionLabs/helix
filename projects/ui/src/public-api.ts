@@ -34,6 +34,7 @@ export {
   type HxDividerLayout,
   type HxDividerType,
 } from './lib/divider/divider';
+export { HxFieldset } from './lib/fieldset/fieldset';
 export {
   formatFileSize,
   HxFileUpload,
