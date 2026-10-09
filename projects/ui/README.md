@@ -48,6 +48,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxButtonGroup` | `hx-button-group` | joins `hx-button`s: square inner corners, shared borders, `role=group` |
 | `HxChart` | `hx-chart` | chart.js with colours, grid and font from the tokens; optional peer dependency loaded on demand, redraws on theme change, canvas fallback slot |
 | `HxDialog`, `HxDialogService`, `HxDialogRef` | `hx-dialog` | modal or non-modal dialog on the CDK dialog; declarative with `[(visible)]` or opened as a component from a service with data and a result |
+| `HxDrawer` | `hx-drawer` | panel that slides in from an edge, same dialog semantics as `hx-dialog`; modal, full screen, reduced motion |
 | `HxChip` | `hx-chip` | entity pill with picture or icon, removable by button, Backspace or Delete |
 | `HxTag` | `hx-tag` | label for a category or status: severities, rounded, decorative icon |
 | `HxTabs`, `HxTabList`, `HxTab`, `HxTabPanels`, `HxTabPanel` | `hx-tabs` … | WAI-ARIA tabs: roving tabindex, automatic activation, lazy panels, scrollable list |

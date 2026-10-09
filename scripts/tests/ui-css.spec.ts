@@ -50,6 +50,7 @@ describe('helix-ui styles', () => {
     ['dialog', 'dialog/dialog.ts'],
     ['divider', 'divider/divider.ts'],
     ['float-label', 'float-label/float-label.ts'],
+    ['drawer', 'drawer/drawer.ts'],
     ['fieldset', 'fieldset/fieldset.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
     ['listbox', 'listbox/listbox.ts'],
