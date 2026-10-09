@@ -1,0 +1,113 @@
+/*
+ * Panel: `<hx-panel>`. A bordered container from the `--h-panel-*` tokens with a header (title, actions, the
+ * toggle button), the content and a footer. The content collapses by animating its grid row to zero height.
+ */
+@use 'icons' as *;
+
+.hx-panel {
+  display: block;
+  border: 1px solid var(--h-panel-border-color);
+  border-radius: var(--h-panel-border-radius);
+  background: var(--h-panel-background);
+  color: var(--h-panel-color);
+}
+
+.hx-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: var(--h-panel-header-padding);
+  border: var(--h-panel-header-border-width) solid var(--h-panel-header-border-color);
+  border-radius: var(--h-panel-header-border-radius);
+  background: var(--h-panel-header-background);
+  color: var(--h-panel-header-color);
+}
+
+.hx-panel-toggleable .hx-panel-header {
+  padding: var(--h-panel-toggleable-header-padding);
+}
+
+.hx-panel-title {
+  flex: 1 1 auto;
+  font-weight: var(--h-panel-title-font-weight);
+}
+
+.hx-panel-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hx-panel-header-actions:empty {
+  display: none;
+}
+
+.hx-panel-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-panel-toggle:hover {
+  background: var(--h-panel-header-border-color);
+}
+
+.hx-panel-toggle:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+.hx-panel-toggle-icon {
+  @include hx-icon(chevron-up, 1rem, currentcolor, 2.4);
+  transition: transform 0.2s;
+}
+
+.hx-panel-collapsed .hx-panel-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.hx-panel-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.2s,
+    visibility 0.2s;
+}
+
+.hx-panel-collapsed .hx-panel-collapse {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.hx-panel-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hx-panel-content {
+  padding: var(--h-panel-content-padding);
+}
+
+.hx-panel-footer {
+  padding: var(--h-panel-footer-padding);
+}
+
+.hx-panel-footer:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-panel-collapse,
+  .hx-panel-toggle-icon {
+    transition: none;
+  }
+}

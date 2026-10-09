@@ -50,6 +50,7 @@ describe('helix-ui styles', () => {
     ['file-upload', 'file-upload/file-upload.ts'],
     ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],
+    ['panel', 'panel/panel.ts'],
     ['password', 'password/password.ts'],
     ['select', 'select/select.ts'],
     ['rating', 'rating/rating.ts'],

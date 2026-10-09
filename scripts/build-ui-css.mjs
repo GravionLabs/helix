@@ -43,6 +43,7 @@ export const TOKEN_COMPONENTS = {
   'file-upload': ['fileupload', 'button'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
+  panel: ['panel'],
   password: ['password', 'inputtext'],
   radio: ['radiobutton'],
   select: ['select'],
