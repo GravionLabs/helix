@@ -54,7 +54,7 @@
 npm install @gravionlabs/helix-shell
 ```
 
-Peer dependencies: `@angular/core >=22`, `@angular/router >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`,
+Peer dependencies: `@angular/core >=22`, `@angular/router >=22`, `@ngrx/signals >=21`,
 `@gravionlabs/helix-ui >=0.1.0` (and its own peers, `@angular/cdk` and `@angular/forms`), `primeicons >=7`.
 
 The shell draws its buttons, fields, breadcrumb and tooltips with [`@gravionlabs/helix-ui`](HELIX-UI.md), so the
@@ -157,7 +157,7 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 |------|------|---------|-------------|
 | `appTitle` | `string` | `'Helix'` | Application name |
 | `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered in the right-side dropdown |
-| `breadcrumbs` | `MenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
+| `breadcrumbs` | `HxMenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
 | `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Configuration items rendered in the right action cluster |
 
 #### Content Slots
@@ -484,7 +484,7 @@ Where `breadcrumb` can be a static string or a function:
 }
 ```
 
-**Returns:** `MenuItem[]`
+**Returns:** `HxMenuItem[]`
 
 ---
 
@@ -1020,11 +1020,13 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 ## Form Infrastructure
 
 Structural components for building reactive forms with human-readable error messages. The
-validators and error-message pipe that used to live here moved to `@gravionlabs/helix-core` (#378) — see
-[`Validators`](components/validators.md) and [`FirstErrorPipe`](components/firsterror.md):
+validators moved to `@gravionlabs/helix-ui/validators` (see [Validators](HELIX-UI.md#validators)). The shell
+itself no longer imports anything from `@gravionlabs/helix-core`. The error-message pipe and the form utilities below
+still come from `@gravionlabs/helix-core`, which has no replacement for them in helix-ui yet; they go away with
+helix-core (#600):
 
 ```ts
-import { Validators } from '@gravionlabs/helix-core/validators';
+import { Validators } from '@gravionlabs/helix-ui/validators';
 import { FirstErrorPipe } from '@gravionlabs/helix-core/firsterror';
 import { FormControl } from '@angular/forms';
 
@@ -1161,7 +1163,7 @@ const errors = helixFormErrorMap(myForm);
 
 ### HelixRouteMenuItem
 
-The core menu/route model used by `HelixAppLayout`'s `[menu]` input, `HelixNavRail`, `helixRoutesFrom`, `helixMenuLinksFrom`, and routing utilities. Extends Helix's `MenuItem` with Angular routing properties.
+The core menu/route model used by `HelixAppLayout`'s `[menu]` input, `HelixNavRail`, `helixRoutesFrom`, `helixMenuLinksFrom`, and routing utilities. Extends `HxMenuItem` of helix-ui with Angular routing properties.
 
 ```ts
 interface HelixRouteMenuItem extends MenuItem {
@@ -1177,12 +1179,12 @@ interface HelixRouteMenuItem extends MenuItem {
   canActivate?: CanActivateFn[];
   /** Additional route data (breadcrumb auto-injected) */
   data?: Record<string, unknown>;
-  /** Nested child items (typed override of MenuItem.items) */
+  /** Nested child items (typed override of HxMenuItem.items) */
   items?: HelixRouteMenuItem[];
 }
 ```
 
-All `MenuItem` fields are inherited: `label`, `icon`, `routerLink`, `visible`, `disabled`, `badge`, `target`, `command`, `url`, etc.
+All `HxMenuItem` fields are inherited: `label`, `icon`, `routerLink`, `visible`, `disabled`, `badge`, `target`, `command`, `url`, etc.
 
 ---
 

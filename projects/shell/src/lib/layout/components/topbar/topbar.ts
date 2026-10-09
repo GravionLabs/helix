@@ -10,7 +10,7 @@ import {
   signal,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { HxBreadcrumb } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
@@ -54,7 +54,7 @@ const DEFAULT_ITEMS: HelixTopbarItem[] = [
 export class HelixTopbar implements OnInit, OnDestroy {
   appTitle = input('Helix');
   topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
-  breadcrumbs = input<MenuItem[] | undefined>(undefined);
+  breadcrumbs = input<HxMenuItem[] | undefined>(undefined);
   /** Accessible name of the button that opens the actions menu on small screens. */
   menuLabel = input('More actions');
   items = input<HelixTopbarItem[]>(DEFAULT_ITEMS);
@@ -79,7 +79,7 @@ export class HelixTopbar implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  protected effectiveBreadcrumbs = computed<MenuItem[]>(() => {
+  protected effectiveBreadcrumbs = computed<HxMenuItem[]>(() => {
     const input = this.breadcrumbs();
     if (input !== undefined) return input;
     this.routeChange();
