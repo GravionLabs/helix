@@ -38,7 +38,7 @@ export const TOKEN_COMPONENTS = {
   listbox: ['listbox', 'inputtext'],
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'auto-complete': ['autocomplete', 'inputtext'],
-  'date-picker': ['datepicker'],
+  'date-picker': ['datepicker', 'inputtext'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],

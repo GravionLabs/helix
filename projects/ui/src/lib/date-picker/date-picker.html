@@ -1,3 +1,72 @@
+@if (inline()) {
+  <ng-container [ngTemplateOutlet]="calendar" />
+} @else {
+  <div class="hx-date-picker-field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+    <input
+      #field
+      type="text"
+      class="hx-date-picker-input"
+      autocomplete="off"
+      aria-haspopup="dialog"
+      [id]="inputId() ?? null"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [value]="text()"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="open() ? popupId : null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (input)="onTyping($event)"
+      (change)="commitTyping()"
+      (click)="show()"
+      (keydown)="onFieldKeydown($event)"
+    />
+    @if (showIcon()) {
+      <button
+        type="button"
+        class="hx-date-picker-trigger"
+        aria-haspopup="dialog"
+        [attr.aria-label]="chooseLabel()"
+        [attr.aria-expanded]="open()"
+        [disabled]="isDisabled()"
+        (click)="toggle()"
+      >
+        <span class="hx-date-picker-trigger-icon" aria-hidden="true"></span>
+      </button>
+    }
+  </div>
+  <ng-template
+    cdkConnectedOverlay
+    cdkConnectedOverlayPanelClass="hx-date-picker-overlay"
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="open()"
+    [cdkConnectedOverlayPositions]="positions"
+    (overlayOutsideClick)="onOutsideClick($event)"
+    (overlayKeydown)="onOverlayKeydown($event)"
+    (attach)="onAttach()"
+    (detach)="open.set(false)"
+  >
+    <div
+      class="hx-date-picker-popup"
+      role="dialog"
+      aria-modal="false"
+      [id]="popupId"
+      [attr.aria-label]="ariaLabel() ?? 'Choose date'"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+    >
+      <ng-container [ngTemplateOutlet]="calendar" />
+      @if (showButtonBar()) {
+        <div class="hx-date-picker-buttonbar">
+          <button type="button" class="hx-date-picker-button" (click)="selectToday()">{{ todayLabel() }}</button>
+          <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+        </div>
+      }
+    </div>
+  </ng-template>
+}
+
+<ng-template #calendar>
 <div
   class="hx-date-picker-panel"
   role="group"
@@ -119,3 +188,4 @@
     }
   }
 </div>
+</ng-template>

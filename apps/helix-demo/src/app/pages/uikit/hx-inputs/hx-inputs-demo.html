@@ -81,7 +81,24 @@
   </div>
 
   <div class="card flex flex-col gap-3">
-    <h2 class="demo-title">Date picker (inline)</h2>
+    <h2 class="demo-title">Date picker</h2>
+    <div class="row">
+      <label class="label" for="dp-field">Arrival</label>
+      <hx-date-picker inputId="dp-field" placeholder="dd/mm/yyyy" showIcon showButtonBar [(value)]="arrival" />
+    </div>
+    <div class="row">
+      <label class="label" for="dp-range">Stay</label>
+      <hx-date-picker inputId="dp-range" selectionMode="range" showIcon [(value)]="stay" />
+    </div>
+    <div class="row">
+      <label class="label" for="dp-de">German</label>
+      <hx-date-picker inputId="dp-de" locale="de-DE" [firstDayOfWeek]="1" placeholder="tt.mm.jjjj" showIcon [(value)]="arrival" />
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <hx-date-picker ariaLabel="Disabled" [disabled]="true" />
+    </div>
+    <h3 class="demo-title">Inline</h3>
     <div class="flex flex-wrap gap-6">
       <div class="flex flex-col gap-2">
         <span class="label">single</span>

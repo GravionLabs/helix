@@ -36,7 +36,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputGroup`, `HxInputGroupAddon` | `hx-input-group`, `hx-input-group-addon` | joins fields, selects, buttons and addons |
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
-| `HxDatePicker` | `hx-date-picker` | inline calendar: single, range or multiple days, month and year views, all three forms APIs |
+| `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, typing, month and year views, all three forms APIs |
 | `HxAutoComplete` | `hx-auto-complete` | text field with suggestions from `(complete)`, chips, dropdown, all three forms APIs |
 | `HxMultiSelect` | `hx-multi-select` | select for several values: comma or chips, filter, select all, all three forms APIs |
 | `HxListbox` | `hx-listbox` | inline single or multiple list on the CDK listbox, filter, checkmark, all three forms APIs |

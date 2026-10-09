@@ -207,3 +207,139 @@
 .hx-date-picker-inline {
   display: inline-block;
 }
+
+/* the field and its popup */
+.hx-date-picker:not(.hx-date-picker-inline) {
+  position: relative;
+  display: inline-flex;
+}
+
+.hx-date-picker-field {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hx-date-picker-input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  box-shadow: var(--h-inputtext-shadow);
+  font: inherit;
+  font-size: 1rem;
+  outline: 0 none;
+  transition:
+    border-color var(--h-datepicker-transition-duration),
+    box-shadow var(--h-datepicker-transition-duration);
+}
+
+.hx-date-picker-input::placeholder {
+  color: var(--h-inputtext-placeholder-color);
+}
+
+.hx-date-picker-input:enabled:hover {
+  border-color: var(--h-inputtext-hover-border-color);
+}
+
+.hx-date-picker-input:enabled:focus,
+.hx-date-picker-open .hx-date-picker-input {
+  border-color: var(--h-inputtext-focus-border-color);
+  outline: var(--h-inputtext-focus-ring-width) var(--h-inputtext-focus-ring-style)
+    var(--h-inputtext-focus-ring-color);
+  outline-offset: var(--h-inputtext-focus-ring-offset);
+  box-shadow: var(--h-inputtext-focus-ring-shadow);
+}
+
+.hx-date-picker-input:disabled {
+  background: var(--h-inputtext-disabled-background);
+  color: var(--h-inputtext-disabled-color);
+}
+
+.hx-date-picker-invalid .hx-date-picker-input,
+.hx-date-picker.ng-invalid.ng-touched .hx-date-picker-input,
+.hx-date-picker-input[aria-invalid="true"] {
+  border-color: var(--h-inputtext-invalid-border-color);
+}
+
+.hx-date-picker-has-icon .hx-date-picker-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.hx-date-picker-trigger {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-datepicker-dropdown-width);
+  border: 1px solid var(--h-datepicker-dropdown-border-color);
+  border-inline-start: 0;
+  border-start-end-radius: var(--h-datepicker-dropdown-border-radius);
+  border-end-end-radius: var(--h-datepicker-dropdown-border-radius);
+  background: var(--h-datepicker-dropdown-background);
+  color: var(--h-datepicker-dropdown-color);
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-date-picker-trigger:not(:disabled):hover {
+  border-color: var(--h-datepicker-dropdown-hover-border-color);
+  background: var(--h-datepicker-dropdown-hover-background);
+  color: var(--h-datepicker-dropdown-hover-color);
+}
+
+.hx-date-picker-trigger:focus-visible {
+  outline: var(--h-datepicker-dropdown-focus-ring-width) var(--h-datepicker-dropdown-focus-ring-style)
+    var(--h-datepicker-dropdown-focus-ring-color);
+  outline-offset: var(--h-datepicker-dropdown-focus-ring-offset);
+  box-shadow: var(--h-datepicker-dropdown-focus-ring-shadow);
+}
+
+.hx-date-picker-trigger-icon {
+  @include hx-icon(calendar, 1rem, currentcolor, 2);
+}
+
+.hx-date-picker-popup {
+  box-shadow: var(--h-datepicker-panel-shadow);
+  border-radius: var(--h-datepicker-panel-border-radius);
+  background: var(--h-datepicker-panel-background);
+  color: var(--h-datepicker-panel-color);
+  font-size: 1rem;
+}
+
+.hx-date-picker-popup .hx-date-picker-panel {
+  border-radius: var(--h-datepicker-panel-border-radius) var(--h-datepicker-panel-border-radius) 0 0;
+}
+
+.hx-date-picker-buttonbar {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--h-datepicker-buttonbar-padding);
+  border: 1px solid var(--h-datepicker-buttonbar-border-color);
+  border-top: 0;
+  border-radius: 0 0 var(--h-datepicker-panel-border-radius) var(--h-datepicker-panel-border-radius);
+}
+
+.hx-date-picker-button {
+  padding: var(--h-datepicker-select-month-padding);
+  border: 0;
+  border-radius: var(--h-datepicker-select-month-border-radius);
+  background: transparent;
+  color: var(--h-datepicker-select-month-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hx-date-picker-button:hover {
+  background: var(--h-datepicker-select-month-hover-background);
+}
+
+.hx-date-picker-button:focus-visible {
+  outline: var(--h-datepicker-date-focus-ring-width) var(--h-datepicker-date-focus-ring-style)
+    var(--h-datepicker-date-focus-ring-color);
+}
