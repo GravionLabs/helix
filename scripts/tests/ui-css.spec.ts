@@ -40,6 +40,7 @@ describe('helix-ui styles', () => {
     ['card', 'card/card.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['chip', 'chip/chip.ts'],
+    ['progress', 'progress/progress.ts'],
     ['radio', 'radio/radio.ts'],
     ['avatar', 'avatar/avatar.ts'],
     ['badge', 'badge/badge.ts'],
