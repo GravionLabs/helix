@@ -6,6 +6,29 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Accordion</h2>
+    <hx-accordion [(value)]="open" [headingLevel]="3">
+      <hx-accordion-panel value="a">
+        <hx-accordion-header>First panel</hx-accordion-header>
+        <hx-accordion-content>Only one panel is open at a time.</hx-accordion-content>
+      </hx-accordion-panel>
+      <hx-accordion-panel value="b">
+        <hx-accordion-header>Second panel</hx-accordion-header>
+        <hx-accordion-content>Arrow keys move between the headers.</hx-accordion-content>
+      </hx-accordion-panel>
+      <hx-accordion-panel value="c" disabled>
+        <hx-accordion-header>Disabled panel</hx-accordion-header>
+        <hx-accordion-content>Not reachable.</hx-accordion-content>
+      </hx-accordion-panel>
+    </hx-accordion>
+    <h3 class="demo-title">Multiple</h3>
+    <hx-accordion multiple [(value)]="openMany">
+      <hx-accordion-panel value="x"><hx-accordion-header>X</hx-accordion-header><hx-accordion-content>Content X</hx-accordion-content></hx-accordion-panel>
+      <hx-accordion-panel value="y"><hx-accordion-header>Y</hx-accordion-header><hx-accordion-content>Content Y</hx-accordion-content></hx-accordion-panel>
+    </hx-accordion>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Fieldset</h2>
     <hx-fieldset legend="Static fieldset">
       <label for="fs-a">Name</label> <input hx-input id="fs-a" />

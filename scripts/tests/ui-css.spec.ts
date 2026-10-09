@@ -34,6 +34,7 @@ describe('helix-ui styles', () => {
 
   // every class a directive can put on its host must be styled by the stylesheet of its component
   it.each([
+    ['accordion', 'accordion/accordion.ts'],
     ['button', 'button/button.ts'],
     ['input', 'input/input.ts'],
     ['card', 'card/card.ts'],

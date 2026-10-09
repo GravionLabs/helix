@@ -1,16 +1,39 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { HxButton, HxCard, HxFieldset, HxInput, HxPanel } from '@gravionlabs/helix-ui';
+import {
+  HxAccordion,
+  HxAccordionContent,
+  HxAccordionHeader,
+  HxAccordionPanel,
+  type HxAccordionValue,
+  HxButton,
+  HxCard,
+  HxFieldset,
+  HxInput,
+  HxPanel,
+} from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` containers: Card, Panel, Fieldset. */
+/** `@gravionlabs/helix-ui` containers: Card, Panel, Fieldset, Accordion. */
 @Component({
   selector: 'app-hx-containers-demo',
   standalone: true,
-  imports: [HxCard, HxPanel, HxFieldset, HxInput, HxButton],
+  imports: [
+    HxCard,
+    HxPanel,
+    HxFieldset,
+    HxInput,
+    HxButton,
+    HxAccordion,
+    HxAccordionPanel,
+    HxAccordionHeader,
+    HxAccordionContent,
+  ],
   templateUrl: './hx-containers-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-containers-demo.scss',
 })
 export class HxContainersDemo {
   readonly collapsed = signal(false);
+  readonly open = signal<HxAccordionValue>('a');
+  readonly openMany = signal<HxAccordionValue>(['x']);
   readonly fieldsetCollapsed = signal(false);
 }
