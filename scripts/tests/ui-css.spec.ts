@@ -35,6 +35,7 @@ describe('helix-ui styles', () => {
     ['radio', 'radio/radio.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
     ['divider', 'divider/divider.ts'],
+    ['icon-field', 'icon-field/icon-field.ts'],
     ['input-number', 'input-number/input-number.ts'],
     ['password', 'password/password.ts'],
     ['select', 'select/select.ts'],

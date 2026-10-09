@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormField, form, min, required } from '@angular/forms/signals';
-import { HxButton, HxInputNumber } from '@gravionlabs/helix-ui';
+import { HxButton, HxIconField, HxInput, HxInputIcon, HxInputNumber } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` input components: Input number. */
+/** `@gravionlabs/helix-ui` input components: Icon field, Input number. */
 @Component({
   selector: 'app-hx-inputs-demo',
   standalone: true,
-  imports: [HxInputNumber, HxButton, FormsModule, FormField],
+  imports: [HxInputNumber, HxIconField, HxInputIcon, HxInput, HxButton, FormsModule, FormField],
   templateUrl: './hx-inputs-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-inputs-demo.scss',
