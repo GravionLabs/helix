@@ -24,7 +24,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | Component | Selector | |
 | --- | --- | --- |
 | `HxButton` | `button[hx-button]`, `a[hx-button]` | variants, severities, sizes, loading, icon-only |
-| `HxInput` | `input[hx-input]`, `textarea[hx-input]` | outlined / filled, sizes, invalid |
+| `HxInput` | `input[hx-input]`, `textarea[hx-input]` | outlined / filled, sizes, invalid, textarea `autoResize` |
 | `HxCheckbox` | `input[hx-checkbox]` | native checkbox, indeterminate |
 | `HxRadio` | `input[hx-radio]` | native radio |
 | `HxSelect` | `hx-select` | CDK listbox in an overlay, all three forms APIs |

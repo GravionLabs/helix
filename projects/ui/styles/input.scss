@@ -89,3 +89,9 @@ textarea.hx-input {
   min-height: 4rem;
   resize: vertical;
 }
+
+/* the height follows the content: no handle, no scrollbar while it grows */
+textarea.hx-input-auto-resize {
+  overflow: hidden;
+  resize: none;
+}

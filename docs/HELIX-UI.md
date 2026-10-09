@@ -85,6 +85,11 @@ tokens).
 | `variant` | `'outlined' \| 'filled'`       | `'outlined'` | A tinted field instead of an outline. |
 | `size`    | `'small' \| 'medium' \| 'large'` | `'medium'`   | Font size and padding.                |
 | `fluid`   | `boolean`                      | `false`      | Full width of the container.          |
+| `autoResize` | `boolean`                   | `false`      | Textarea only: the height follows the content. |
+
+- **Auto resize:** `rows` (and `min-height`) is the minimum height; the textarea grows and shrinks on input, when a
+  form writes a value (`ngModel`, reactive or signal forms) and when its width changes the wrapping at the next render.
+  The resize handle and the scrollbar are off while it is on. Accessibility: nothing beyond the native textarea.
 
 ### Checkbox, radio, switch
 
