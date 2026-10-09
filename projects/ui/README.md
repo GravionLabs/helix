@@ -43,6 +43,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxSkeleton` | `hx-skeleton` | loading placeholder: rectangle or circle, any size, wave (off under reduced motion), `aria-hidden` |
 | `HxSplitButton` | `hx-split-button` | default action plus an `hx-menu` of related actions; severity, variant, size, rounded, raised |
 | `HxStepper`, `HxStepList`, `HxStep`, `HxStepPanels`, `HxStepPanel` | `hx-stepper` … | steps with panels: completed/active state, linear mode, `activateCallback`, lazy panels |
+| `HxButtonGroup` | `hx-button-group` | joins `hx-button`s: square inner corners, shared borders, `role=group` |
 | `HxChip` | `hx-chip` | entity pill with picture or icon, removable by button, Backspace or Delete |
 | `HxTag` | `hx-tag` | label for a category or status: severities, rounded, decorative icon |
 | `HxTabs`, `HxTabList`, `HxTab`, `HxTabPanels`, `HxTabPanel` | `hx-tabs` … | WAI-ARIA tabs: roving tabindex, automatic activation, lazy panels, scrollable list |

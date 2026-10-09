@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ButtonModule } from '@gravionlabs/helix-core/button';
 import {
   HxButton,
+  HxButtonGroup,
   type HxButtonSeverity,
   type HxButtonSize,
   type HxButtonVariant,
@@ -11,7 +12,7 @@ import {
 @Component({
   selector: 'app-hx-button-demo',
   standalone: true,
-  imports: [HxButton, ButtonModule],
+  imports: [HxButton, HxButtonGroup, ButtonModule],
   templateUrl: './hx-button-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-button-demo.scss',

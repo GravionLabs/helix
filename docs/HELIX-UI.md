@@ -551,6 +551,22 @@ The overlay badge takes the same three inputs.
   of a status, say the status in text or in the name of the element it belongs to. An icon-only element under an
   overlay badge needs its own accessible name; include the count in it (`aria-label="Notifications, 2 new"`).
 
+## Button group
+
+`hx-button-group` joins the `hx-button`s inside it into one control: the inner corners are square and neighbouring
+borders overlap instead of doubling. It reads the tokens of the button.
+
+```html
+<hx-button-group ariaLabel="Text alignment">
+  <button hx-button variant="outlined">Left</button>
+  <button hx-button variant="outlined">Center</button>
+  <button hx-button variant="outlined">Right</button>
+</hx-button-group>
+```
+
+- **Accessibility:** `role="group"`; give it `ariaLabel` when the buttons only make sense together. For a choice that
+  stays selected use `hx-select-button` or `hx-toggle-button`, not a group of plain buttons.
+
 ## Chip
 
 `hx-chip` is a compact element for an entity, optionally removable.
