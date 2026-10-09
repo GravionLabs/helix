@@ -39,6 +39,7 @@ export const TOKEN_COMPONENTS = {
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'auto-complete': ['autocomplete', 'inputtext'],
   'date-picker': ['datepicker', 'inputtext'],
+  'file-upload': ['fileupload', 'button'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],

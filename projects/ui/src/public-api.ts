@@ -33,6 +33,12 @@ export {
   type HxDividerLayout,
   type HxDividerType,
 } from './lib/divider/divider';
+export {
+  formatFileSize,
+  HxFileUpload,
+  type HxFileUploadMode,
+  matchesAccept,
+} from './lib/file-upload/file-upload';
 export { HxFloatLabel, type HxFloatLabelVariant } from './lib/float-label/float-label';
 export { HxIconField, type HxIconPosition, HxInputIcon } from './lib/icon-field/icon-field';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';

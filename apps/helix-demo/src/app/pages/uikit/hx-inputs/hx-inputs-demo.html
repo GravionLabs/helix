@@ -81,6 +81,12 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">File upload</h2>
+    <hx-file-upload accept="image/*,.pdf" multiple [maxFileSize]="1000000" [fileLimit]="3" [progress]="progress()" (upload)="fakeUpload($event)" />
+    <hx-file-upload mode="basic" chooseLabel="Import CSV" accept=".csv" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Date picker</h2>
     <div class="row">
       <label class="label" for="dp-field">Arrival</label>
