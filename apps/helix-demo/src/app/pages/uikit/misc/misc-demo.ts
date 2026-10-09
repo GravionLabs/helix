@@ -1,54 +1,57 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, type OnDestroy, type OnInit } from '@angular/core';
-import { AvatarModule } from '@gravionlabs/helix-core/avatar';
-import { AvatarGroupModule } from '@gravionlabs/helix-core/avatargroup';
-import { BadgeModule } from '@gravionlabs/helix-core/badge';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { ChipModule } from '@gravionlabs/helix-core/chip';
-import { OverlayBadgeModule } from '@gravionlabs/helix-core/overlaybadge';
-import { ProgressBarModule } from '@gravionlabs/helix-core/progressbar';
-import { ScrollPanelModule } from '@gravionlabs/helix-core/scrollpanel';
-import { ScrollTopModule } from '@gravionlabs/helix-core/scrolltop';
-import { SkeletonModule } from '@gravionlabs/helix-core/skeleton';
-import { TagModule } from '@gravionlabs/helix-core/tag';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  type OnDestroy,
+  type OnInit,
+  signal,
+} from '@angular/core';
+import {
+  HxAvatar,
+  HxAvatarGroup,
+  HxBadge,
+  HxButton,
+  HxChip,
+  HxOverlayBadge,
+  HxProgressBar,
+  HxSkeleton,
+  HxTag,
+} from '@gravionlabs/helix-ui';
 
+/** Small display components of `@gravionlabs/helix-ui` (the scroll panel and scroll top are not part of it). */
 @Component({
   selector: 'app-misc-demo',
   standalone: true,
   imports: [
-    CommonModule,
-    ProgressBarModule,
-    BadgeModule,
-    AvatarModule,
-    ScrollPanelModule,
-    TagModule,
-    ChipModule,
-    ButtonModule,
-    SkeletonModule,
-    AvatarGroupModule,
-    ScrollTopModule,
-    OverlayBadgeModule,
+    HxProgressBar,
+    HxBadge,
+    HxOverlayBadge,
+    HxAvatar,
+    HxAvatarGroup,
+    HxTag,
+    HxChip,
+    HxButton,
+    HxSkeleton,
   ],
   templateUrl: './misc-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './misc-demo.scss',
 })
 export class MiscDemo implements OnInit, OnDestroy {
-  value = 0;
+  readonly value = signal(0);
+  #interval: ReturnType<typeof setInterval> | undefined;
 
-  interval: any;
+  readonly avatars = ['amyelsner', 'asiyajavayant', 'onyamalimba', 'ionibowcher', 'xuxuefeng'];
+  readonly avatarBase = 'https://primefaces.org/cdn/primeng/images/demo/avatar/';
 
   ngOnInit() {
-    this.interval = setInterval(() => {
-      this.value = this.value + Math.floor(Math.random() * 10) + 1;
-      if (this.value >= 100) {
-        this.value = 100;
-        clearInterval(this.interval);
-      }
+    this.#interval = setInterval(() => {
+      const next = Math.min(100, this.value() + Math.floor(Math.random() * 10) + 1);
+      this.value.set(next);
+      if (next >= 100) clearInterval(this.#interval);
     }, 2000);
   }
 
   ngOnDestroy() {
-    clearInterval(this.interval);
+    clearInterval(this.#interval);
   }
 }

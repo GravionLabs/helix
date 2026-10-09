@@ -136,46 +136,50 @@ a {
 }
 
 /* ===== TYPOGRAPHY ===== */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 1.5rem 0 1rem 0;
-  font-family: var(--helix-font-display);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: var(--text-color);
-}
+/* In the base layer, so the headings inside components (accordion, card, dialog, …) keep the type of their own
+   styles (the components layer of helix-ui) instead of the page headings. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-family: var(--helix-font-display);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text-color);
+  }
 
-h1:first-child,
-h2:first-child,
-h3:first-child,
-h4:first-child,
-h5:first-child,
-h6:first-child {
-  margin-top: 0;
-}
+  h1:first-child,
+  h2:first-child,
+  h3:first-child,
+  h4:first-child,
+  h5:first-child,
+  h6:first-child {
+    margin-top: 0;
+  }
 
-h1 {
-  font-size: 2.5rem;
-}
-h2 {
-  font-size: 2rem;
-}
-h3 {
-  font-size: 1.75rem;
-}
-h4 {
-  font-size: 1.5rem;
-}
-h5 {
-  font-size: 1.25rem;
-}
-h6 {
-  font-size: 1rem;
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1.5rem;
+  }
+  h5 {
+    font-size: 1.25rem;
+  }
+  h6 {
+    font-size: 1rem;
+  }
 }
 
 mark {
