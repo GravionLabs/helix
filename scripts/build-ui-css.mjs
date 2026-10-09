@@ -69,6 +69,7 @@ export const TOKEN_COMPONENTS = {
   toolbar: ['toolbar'],
   tag: ['tag'],
   tabs: ['tabs'],
+  timeline: ['timeline'],
   toast: ['toast'],
   tooltip: ['tooltip'],
 };

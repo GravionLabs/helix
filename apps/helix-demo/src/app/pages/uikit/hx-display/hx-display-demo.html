@@ -111,4 +111,23 @@
       <hx-progress-spinner strokeWidth="4" animationDuration="1s" ariaLabel="Fast" />
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Timeline</h2>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr))">
+      <hx-timeline [value]="orders">
+        <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+      </hx-timeline>
+      <hx-timeline [value]="orders" align="alternate">
+        <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+        <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+        <ng-template hxTimelineMarker let-event><span [class]="event.icon"></span></ng-template>
+      </hx-timeline>
+    </div>
+    <h3 class="demo-title">Horizontal</h3>
+    <hx-timeline [value]="orders" layout="horizontal" align="alternate">
+      <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+      <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+    </hx-timeline>
+  </div>
 </div>
