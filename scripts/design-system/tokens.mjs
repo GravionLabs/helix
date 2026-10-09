@@ -1,4 +1,4 @@
-// Resolves helixPreset's tokens (dist/tokens/helix.json, from `pnpm tokens:export`) to the Design System
+// Resolves helixPreset's tokens (dist/tokens/helix.json, from `pnpm tokens:export`; the data is projects/tokens) to the Design System
 // type's `tokens.json` (#527, epic #519): colours per theme, spacing, radius, shadow and type.
 //
 // The type reads colours as literals (`#rrggbb`, `rgb()`, …) or `{alias}` of another colour token, never
@@ -277,7 +277,7 @@ export function buildTokens(tokens, { shell } = {}) {
       spacing: buildSpacing(tokens, shell),
       radius: buildRadius(tokens),
       shadow: buildShadow(tokens),
-      meta: { source: 'github', repo: 'GravionLabs/helix', package: 'projects/core/themes/helix', paths: { tokens: ['projects/core/themes/helix/public_api.ts', 'projects/core/themes/helix/palettes.ts'], fonts: ['@fontsource-variable/figtree', '@fontsource-variable/space-grotesk', '@fontsource-variable/fira-code'] } },
+      meta: { source: 'github', repo: 'GravionLabs/helix', package: 'projects/tokens', paths: { tokens: ['projects/tokens/src/index.ts', 'projects/tokens/src/palettes.ts'], fonts: ['@fontsource-variable/figtree', '@fontsource-variable/space-grotesk', '@fontsource-variable/fira-code'] } },
     },
     skipped,
   };
@@ -288,7 +288,7 @@ export function buildTokens(tokens, { shell } = {}) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const src = path.join(ROOT, 'dist/tokens/helix.json');
   if (!fs.existsSync(src)) {
-    console.error('dist/tokens/helix.json not found — run `pnpm build:core && pnpm tokens:export` first');
+    console.error('dist/tokens/helix.json not found — run `pnpm tokens:export` first');
     process.exit(1);
   }
   const out = path.resolve(ROOT, process.argv[2] ?? 'dist/design-system/project/tokens.json');

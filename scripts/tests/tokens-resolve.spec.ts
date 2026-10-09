@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { helixTokens } from '../../projects/tokens/src/index.ts';
-import { loadPreset, resolvePreset } from '../export-tokens.mjs';
+import { loadPreset, resolvePreset } from '../tokens/core-engine.mjs';
 import { declare, kebab, resolveTokens, variableName, variableValue } from '../tokens/resolve.mjs';
 
 const ROOT = resolve(__dirname, '../..');
@@ -171,13 +171,24 @@ describe('layers and colour schemes', () => {
     });
   });
 
-  it('fails on an unknown component and on a dark selector that is not a class', () => {
+  it('puts an attribute selector on the root element', () => {
+    const { css, json } = resolveTokens(data, {
+      darkSelector: '[data-theme="dark"]',
+      components: false,
+    });
+    expect(css).toContain(
+      ':root[data-theme="dark"],:host[data-theme="dark"]{--h-primary-color:var(--h-blue-300);}',
+    );
+    expect(json.dark['--h-primary-color']).toBe('var(--h-blue-300)');
+  });
+
+  it('fails on an unknown component and on a dark selector it does not support', () => {
     expect(() => resolveTokens(data, { components: ['nope'] })).toThrow(
       /no component token set "nope"/,
     );
-    expect(() => resolveTokens(data, { darkSelector: '[data-theme="dark"]' })).toThrow(
-      /only a class selector/,
-    );
+    expect(() =>
+      resolveTokens(data, { darkSelector: '@media (prefers-color-scheme: dark)' }),
+    ).toThrow(/only a class .* or an attribute .* selector/);
   });
 
   it('leaves out layers the data does not have', () => {
@@ -194,6 +205,10 @@ describe.skipIf(!built)('resolveTokens equals the engine of helix-core', () => {
     ['the base layers only', { components: false as const }],
     ['a component subset', { components: ['select', 'button', 'tooltip'] }],
     ['a subset in a custom selector', { darkSelector: '.my-dark', components: ['inputtext'] }],
+    [
+      'the attribute selector of the Design System',
+      { darkSelector: '[data-theme="dark"]', components: ['button', 'card'] },
+    ],
   ])('%s', async (_name, options) => {
     const { Theme, preset } = await loadPreset('helix');
     const darkSelector = options.darkSelector ?? '.app-dark';

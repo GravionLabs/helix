@@ -10,7 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DARK_SELECTOR, loadPreset, resolvePreset, tokensOf } from './export-tokens.mjs';
+import { DARK_SELECTOR, tokensOf } from './export-tokens.mjs';
+import { loadPreset, resolvePreset } from './tokens/core-engine.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const FIXTURES = path.join(ROOT, 'scripts/tests/fixtures');
