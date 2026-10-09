@@ -42,4 +42,49 @@
       <hx-chart type="doughnut" [data]="doughnutData" height="18rem" ariaLabel="Traffic sources" />
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Table</h2>
+    <p class="m-0">Plain HTML tables with the Helix look. Sorting, paging and filtering are AG Grid's job (helix-ag-grid).</p>
+    <div class="hx-table-scroll">
+      <table hx-table striped hoverable>
+        <caption>Invoices</caption>
+        <thead>
+          <tr><th scope="col">No.</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col">Amount</th></tr>
+        </thead>
+        <tbody>
+          @for (invoice of invoices; track invoice.no) {
+            <tr [attr.aria-selected]="invoice.no === 1003 ? 'true' : null">
+              <th scope="row">{{ invoice.no }}</th>
+              <td>{{ invoice.customer }}</td>
+              <td>{{ invoice.status }}</td>
+              <td>{{ invoice.amount }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot><tr><th scope="row" colspan="3">Total</th><td>{{ total }}</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))">
+      <table hx-table size="small" gridlines>
+        <caption>Small, with gridlines</caption>
+        <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+        <tbody>
+          @for (invoice of invoices.slice(0, 3); track invoice.no) {
+            <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+          }
+        </tbody>
+      </table>
+      <div class="hx-table-scroll" style="max-height: 11rem" tabindex="0" role="region" aria-label="Invoices with a sticky header">
+        <table hx-table size="large" stickyHeader>
+          <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+          <tbody>
+            @for (invoice of invoices; track invoice.no) {
+              <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

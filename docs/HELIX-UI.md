@@ -728,6 +728,40 @@ if (await confirmation.confirmAsync({ message: 'Leave the page?' })) { … }
   header, or named "Confirmation"). The focus starts on the reject button, the safe answer, and returns to where it was.
   A modal dialog traps the focus.
 
+## Table
+
+`table[hx-table]` draws a native `<table>` as a Helix table, with CSS only. It is for small static tables; sorting,
+paging, filtering and selection are not part of it: use AG Grid through `helix-ag-grid` for data grids.
+
+```html
+<div class="hx-table-scroll">
+  <table hx-table striped hoverable>
+    <caption>Invoices</caption>
+    <thead><tr><th scope="col">No.</th><th scope="col">Amount</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">1001</th><td>€ 120</td></tr>
+      <tr aria-selected="true"><th scope="row">1002</th><td>€ 80</td></tr>
+    </tbody>
+    <tfoot><tr><th scope="row">Total</th><td>€ 200</td></tr></tfoot>
+  </table>
+</div>
+```
+
+| Input         | Type                            | Default    | Description                                                   |
+| ------------- | ------------------------------- | ---------- | ------------------------------------------------------------- |
+| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Cell padding.                                                 |
+| `striped`     | `boolean`                       | `false`    | Alternate body rows get a background.                         |
+| `gridlines`   | `boolean`                       | `false`    | Borders around every cell.                                    |
+| `hoverable`   | `boolean`                       | `false`    | Body rows change colour under the pointer.                    |
+| `stickyHeader`| `boolean`                       | `false`    | The header stays at the top of its scroll container.          |
+
+- **Scrolling:** wrap a wide table in `.hx-table-scroll` (`overflow: auto`); with `stickyHeader` also give the wrapper a
+  `max-height`. A scroll container must be reachable by keyboard: give it `tabindex="0"`, `role="region"` and an
+  `aria-label` when it scrolls.
+- **Selected row:** a body row with `aria-selected="true"` is drawn as selected; the table does not select anything itself.
+- **Accessibility:** the native table semantics stay untouched, nothing is added. Use a `<caption>` (it is drawn as the
+  table header) and `<th scope="col">` / `<th scope="row">`. Do not use a table for layout.
+
 ## Chip
 
 `hx-chip` is a compact element for an entity, optionally removable.

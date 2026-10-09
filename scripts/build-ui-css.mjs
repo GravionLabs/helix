@@ -73,6 +73,7 @@ export const TOKEN_COMPONENTS = {
   'toggle-button': ['togglebutton'],
   toolbar: ['toolbar'],
   tag: ['tag'],
+  table: ['datatable'],
   tabs: ['tabs'],
   timeline: ['timeline'],
   tree: ['tree'],

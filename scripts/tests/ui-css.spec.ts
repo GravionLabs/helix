@@ -78,6 +78,7 @@ describe('helix-ui styles', () => {
     ['split-button', 'split-button/split-button.ts'],
     ['stepper', 'stepper/stepper.ts'],
     ['tag', 'tag/tag.ts'],
+    ['table', 'table/table.ts'],
     ['tabs', 'tabs/tabs.ts'],
     ['timeline', 'timeline/timeline.ts'],
     ['tree', 'tree/tree.ts'],

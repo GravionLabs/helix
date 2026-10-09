@@ -1,0 +1,142 @@
+/*
+ * Table: `table[hx-table]` on a native table, from the `--h-datatable-*` tokens. The caption is the table header, cells
+ * get their padding from the size, rows their colours from the body tokens; a row with `aria-selected="true"` is the
+ * selected one. `.hx-table-scroll` wraps a wide table (and, with a max-height, a sticky header).
+ */
+.hx-table-scroll {
+  overflow: auto;
+}
+
+.hx-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--h-datatable-row-color);
+}
+
+.hx-table caption {
+  padding: var(--h-datatable-header-padding);
+  border-block-end: 1px solid var(--h-datatable-header-border-color);
+  background: var(--h-datatable-header-background);
+  color: var(--h-datatable-header-color);
+  font-weight: var(--h-datatable-column-title-font-weight);
+  text-align: start;
+}
+
+.hx-table thead th {
+  padding: var(--h-datatable-header-cell-padding);
+  border-block-end: 1px solid var(--h-datatable-header-cell-border-color);
+  background: var(--h-datatable-header-cell-background);
+  color: var(--h-datatable-header-cell-color);
+  font-weight: var(--h-datatable-column-title-font-weight);
+  text-align: start;
+}
+
+.hx-table tbody th,
+.hx-table tbody td {
+  padding: var(--h-datatable-body-cell-padding);
+  border-block-end: 1px solid var(--h-datatable-body-cell-border-color);
+  text-align: start;
+}
+
+.hx-table tbody th {
+  font-weight: inherit;
+}
+
+.hx-table tbody tr {
+  background: var(--h-datatable-row-background);
+  color: var(--h-datatable-row-color);
+}
+
+.hx-table tfoot th,
+.hx-table tfoot td {
+  padding: var(--h-datatable-footer-cell-padding);
+  border-block-end: 1px solid var(--h-datatable-footer-cell-border-color);
+  background: var(--h-datatable-footer-cell-background);
+  color: var(--h-datatable-footer-cell-color);
+  font-weight: var(--h-datatable-column-footer-font-weight);
+  text-align: start;
+}
+
+.hx-table-striped tbody tr:nth-child(even) {
+  background: var(--h-datatable-row-striped-background);
+}
+
+.hx-table-hoverable tbody tr:hover {
+  background: var(--h-datatable-row-hover-background);
+  color: var(--h-datatable-row-hover-color);
+}
+
+.hx-table tbody tr[aria-selected="true"] {
+  background: var(--h-datatable-row-selected-background);
+  color: var(--h-datatable-row-selected-color);
+}
+
+.hx-table tbody tr[aria-selected="true"] > * {
+  border-block-end-color: var(--h-datatable-body-cell-selected-border-color);
+}
+
+/* gridlines: every cell is boxed; the outer edge is drawn by the first row and column of cells */
+.hx-table-gridlines {
+  border: 1px solid var(--h-datatable-border-color);
+}
+
+.hx-table-gridlines th,
+.hx-table-gridlines td {
+  border-inline-end: 1px solid var(--h-datatable-border-color);
+}
+
+.hx-table-gridlines th:last-child,
+.hx-table-gridlines td:last-child {
+  border-inline-end: 0;
+}
+
+/* sizes */
+.hx-table-sm caption {
+  padding: var(--h-datatable-header-sm-padding);
+}
+
+.hx-table-sm thead th {
+  padding: var(--h-datatable-header-cell-sm-padding);
+}
+
+.hx-table-sm tbody th,
+.hx-table-sm tbody td {
+  padding: var(--h-datatable-body-cell-sm-padding);
+}
+
+.hx-table-sm tfoot th,
+.hx-table-sm tfoot td {
+  padding: var(--h-datatable-footer-cell-sm-padding);
+}
+
+.hx-table-lg caption {
+  padding: var(--h-datatable-header-lg-padding);
+}
+
+.hx-table-lg thead th {
+  padding: var(--h-datatable-header-cell-lg-padding);
+}
+
+.hx-table-lg tbody th,
+.hx-table-lg tbody td {
+  padding: var(--h-datatable-body-cell-lg-padding);
+}
+
+.hx-table-lg tfoot th,
+.hx-table-lg tfoot td {
+  padding: var(--h-datatable-footer-cell-lg-padding);
+}
+
+/* the header stays at the top of its scroll container */
+.hx-table-sticky thead th {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+}
+
+.hx-table-scroll:focus-visible {
+  outline: var(--h-datatable-row-focus-ring-width) var(--h-datatable-row-focus-ring-style)
+    var(--h-datatable-row-focus-ring-color);
+  outline-offset: var(--h-datatable-row-focus-ring-offset);
+}

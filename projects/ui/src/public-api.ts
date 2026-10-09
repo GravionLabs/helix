@@ -147,6 +147,7 @@ export {
   type HxStepValue,
 } from './lib/stepper/stepper';
 export { HxSwitch } from './lib/switch/switch';
+export { HxTable, type HxTableSize } from './lib/table/table';
 export {
   HxTab,
   HxTabContent,
