@@ -1,121 +1,42 @@
-import {
-  afterNextRender,
-  ChangeDetectionStrategy,
-  Component,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
-import { ChartModule } from '@gravionlabs/helix-core/chart';
-import { LayoutStore } from '@gravionlabs/helix-shell';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HxChart } from '@gravionlabs/helix-ui';
 
+/** Quarterly revenue; `hx-chart` takes its colours, grid and font from the tokens and redraws on a theme change. */
 @Component({
   standalone: true,
   selector: 'app-revenue-stream-widget',
-  imports: [ChartModule],
+  imports: [HxChart],
   templateUrl: './revenuestreamwidget.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './revenuestreamwidget.scss',
 })
 export class RevenueStreamWidget {
-  store = inject(LayoutStore);
+  readonly quarters = ['Q1', 'Q2', 'Q3', 'Q4'];
+  readonly subscriptions = [4000, 10000, 15000, 4000];
+  readonly advertising = [2100, 8400, 2400, 7500];
+  readonly affiliate = [4100, 5200, 3400, 7400];
 
-  chartData = signal<any>(null);
-
-  chartOptions = signal<any>(null);
-
-  constructor() {
-    afterNextRender(() => {
-      setTimeout(() => {
-        this.initChart();
-      }, 150);
-    });
-
-    // The colours are read from the CSS variables, so draw again when the theme changes: dark mode,
-    // primary colour or surface (the theme service applies them as soon as the store passes them on).
-    effect(() => {
-      this.store.darkTheme();
-      this.store.primary();
-      this.store.surface();
-      setTimeout(() => {
-        this.initChart();
-      }, 150);
-    });
-  }
-
-  initChart() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const borderColor = documentStyle.getPropertyValue('--surface-border');
-    const textMutedColor = documentStyle.getPropertyValue('--text-color-secondary');
-
-    this.chartData.set({
-      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-      datasets: [
-        {
-          type: 'bar',
-          label: 'Subscriptions',
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-400'),
-          data: [4000, 10000, 15000, 4000],
-          barThickness: 32,
-        },
-        {
-          type: 'bar',
-          label: 'Advertising',
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-300'),
-          data: [2100, 8400, 2400, 7500],
-          barThickness: 32,
-        },
-        {
-          type: 'bar',
-          label: 'Affiliate',
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-200'),
-          data: [4100, 5200, 3400, 7400],
-          borderRadius: {
-            topLeft: 8,
-            topRight: 8,
-            bottomLeft: 0,
-            bottomRight: 0,
-          },
-          borderSkipped: false,
-          barThickness: 32,
-        },
-      ],
-    });
-
-    this.chartOptions.set({
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
+  readonly chartData = {
+    labels: this.quarters,
+    datasets: [
+      { type: 'bar', label: 'Subscriptions', data: this.subscriptions, barThickness: 32 },
+      { type: 'bar', label: 'Advertising', data: this.advertising, barThickness: 32 },
+      {
+        type: 'bar',
+        label: 'Affiliate',
+        data: this.affiliate,
+        borderRadius: { topLeft: 8, topRight: 8, bottomLeft: 0, bottomRight: 0 },
+        borderSkipped: false,
+        barThickness: 32,
       },
-      scales: {
-        x: {
-          stacked: true,
-          ticks: {
-            color: textMutedColor,
-          },
-          grid: {
-            color: 'transparent',
-            borderColor: 'transparent',
-          },
-        },
-        y: {
-          stacked: true,
-          ticks: {
-            color: textMutedColor,
-          },
-          grid: {
-            color: borderColor,
-            borderColor: 'transparent',
-            drawTicks: false,
-          },
-        },
-      },
-    });
-  }
+    ],
+  };
+
+  readonly chartOptions = {
+    maintainAspectRatio: false,
+    scales: {
+      x: { stacked: true, grid: { color: 'transparent' } },
+      y: { stacked: true, grid: { drawTicks: false } },
+    },
+  };
 }

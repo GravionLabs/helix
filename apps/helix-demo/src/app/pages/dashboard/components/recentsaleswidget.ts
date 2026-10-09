@@ -1,14 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { TableModule } from '@gravionlabs/helix-core/table';
+import { CurrencyPipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  type OnInit,
+  signal,
+} from '@angular/core';
+import { HxButton, HxTable } from '@gravionlabs/helix-ui';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({
   standalone: true,
   selector: 'app-recent-sales-widget',
-  imports: [CommonModule, TableModule, ButtonModule, RippleModule],
+  imports: [CurrencyPipe, HxTable, HxButton],
   templateUrl: './recentsaleswidget.html',
   styleUrl: './recentsaleswidget.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -16,6 +21,8 @@ import { type Product, ProductService } from '@/app/pages/service/product.servic
 })
 export class RecentSalesWidget implements OnInit {
   products = signal<Product[]>([]);
+  /** The five most recent: a plain table has no paging. */
+  recent = computed(() => this.products().slice(0, 5));
 
   productService = inject(ProductService);
 
