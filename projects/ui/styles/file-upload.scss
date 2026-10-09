@@ -1,0 +1,154 @@
+/*
+ * FileUpload: `<hx-file-upload>`. The choose control is a label that looks like a button (`.hx-button`) around a
+ * visually hidden `<input type="file">`; the content area is the drop zone. Colours and spacing from the
+ * `--h-fileupload-*` tokens.
+ */
+.hx-file-upload {
+  display: block;
+  box-sizing: border-box;
+  border: 1px solid var(--h-fileupload-border-color);
+  border-radius: var(--h-fileupload-border-radius);
+  background: var(--h-fileupload-background);
+  color: var(--h-fileupload-color);
+}
+
+.hx-file-upload-basic {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-fileupload-basic-gap);
+  border: 0;
+  background: transparent;
+}
+
+.hx-file-upload-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-fileupload-header-gap);
+  padding: var(--h-fileupload-header-padding);
+  background: var(--h-fileupload-header-background);
+  color: var(--h-fileupload-header-color);
+}
+
+.hx-file-upload-choose {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.hx-file-upload-choose:has(.hx-file-upload-input:focus-visible) {
+  outline: var(--h-button-focus-ring-width) var(--h-button-focus-ring-style) var(--hx-ring);
+  outline-offset: var(--h-button-focus-ring-offset);
+  box-shadow: var(--hx-ring-shadow);
+}
+
+.hx-file-upload-choose[aria-disabled="true"] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* visually hidden, still focusable: Enter or Space opens the file dialog */
+.hx-file-upload-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+}
+
+.hx-file-upload-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-fileupload-content-gap);
+  padding: var(--h-fileupload-content-padding);
+  border: 1px dashed transparent;
+  border-radius: var(--h-fileupload-border-radius);
+  transition: border-color var(--h-fileupload-transition-duration);
+}
+
+.hx-file-upload-highlight .hx-file-upload-content {
+  border-color: var(--h-fileupload-content-highlight-border-color);
+}
+
+.hx-file-upload-empty {
+  margin: 0;
+  padding: 1rem 0;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.hx-file-upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-fileupload-file-list-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-file-upload-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--h-fileupload-file-gap);
+  padding: var(--h-fileupload-file-padding);
+  border: 1px solid var(--h-fileupload-file-border-color);
+  border-radius: var(--h-fileupload-border-radius);
+}
+
+.hx-file-upload-file-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-fileupload-file-info-gap);
+  min-width: 0;
+}
+
+.hx-file-upload-file-name {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-file-upload-file-size {
+  font-size: 0.875rem;
+  opacity: 0.7;
+}
+
+.hx-file-upload-progress {
+  height: var(--h-fileupload-progressbar-height);
+  overflow: hidden;
+  border-radius: var(--h-fileupload-progressbar-height);
+  background: var(--h-fileupload-file-border-color);
+}
+
+.hx-file-upload-progress-bar {
+  height: 100%;
+  background: var(--h-fileupload-content-highlight-border-color);
+  transition: width var(--h-fileupload-transition-duration);
+}
+
+.hx-file-upload-message {
+  margin: 0;
+  color: var(--h-form-field-invalid-border-color);
+  font-size: 0.875rem;
+}
+
+.hx-file-upload-messages:empty {
+  display: none;
+}
+
+.hx-file-upload-disabled {
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-file-upload-content,
+  .hx-file-upload-progress-bar {
+    transition: none;
+  }
+}

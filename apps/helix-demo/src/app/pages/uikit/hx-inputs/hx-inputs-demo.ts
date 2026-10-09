@@ -6,6 +6,7 @@ import {
   HxButton,
   HxDatePicker,
   type HxDatePickerValue,
+  HxFileUpload,
   HxFloatLabel,
   HxIconField,
   HxInput,
@@ -37,6 +38,8 @@ import {
     HxMultiSelect,
     HxAutoComplete,
     HxDatePicker,
+    HxFileUpload,
+    HxFileUpload,
     HxSlider,
     HxPassword,
     HxSelect,
@@ -56,6 +59,19 @@ import {
 export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<unknown>(null);
+  readonly progress = signal<number | null>(null);
+  fakeUpload(files: File[]) {
+    this.progress.set(0);
+    const timer = setInterval(() => {
+      const next = Math.min(100, (this.progress() ?? 0) + 20);
+      this.progress.set(next);
+      if (next === 100) {
+        clearInterval(timer);
+        setTimeout(() => this.progress.set(null), 800);
+      }
+    }, 200);
+    return files;
+  }
   readonly arrival = signal<HxDatePickerValue>(new Date());
   readonly stay = signal<HxDatePickerValue>(null);
   readonly days = signal<HxDatePickerValue>([]);
