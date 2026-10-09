@@ -1,263 +1,149 @@
 <h1 class="sr-only">Input</h1>
-<h-fluid>
-    <div class="flex flex-col gap-layout">
-      <div class="flex flex-col md:flex-row gap-layout">
-        <div class="md:w-1/2 flex flex-col">
-          <div class="card flex flex-col gap-3 h-full">
-            <h2 class="demo-title">InputText</h2>
-            <div class="flex flex-col md:flex-row gap-3">
-              <input hInputText type="text" placeholder="Default" />
-              <input hInputText type="text" placeholder="Disabled" [disabled]="true" />
-              <input hInputText type="text" placeholder="Invalid" class="ng-dirty ng-invalid" />
-            </div>
-
-            <h2 class="demo-title">Icons</h2>
-            <h-iconfield>
-              <h-inputicon class="pi pi-user" />
-              <input hInputText type="text" placeholder="Username" />
-            </h-iconfield>
-            <h-iconfield iconPosition="left">
-              <input hInputText type="text" placeholder="Search" />
-              <h-inputicon class="pi pi-search" />
-            </h-iconfield>
-
-            <h2 class="demo-title">Float Label</h2>
-            <h-floatlabel>
-              <input hInputText id="username" type="text" [(ngModel)]="floatValue" />
-              <label for="username">Username</label>
-            </h-floatlabel>
-
-            <h2 class="demo-title">Textarea</h2>
-            <textarea
-              hTextarea
-              placeholder="Your Message"
-              [autoResize]="true"
-              rows="3"
-              cols="30"
-            ></textarea>
-
-            <h2 class="demo-title">AutoComplete</h2>
-            <h-autocomplete
-              [(ngModel)]="selectedAutoValue"
-              [suggestions]="autoFilteredValue"
-              optionLabel="name"
-              placeholder="Search"
-              dropdown
-              multiple
-              display="chip"
-              (completeMethod)="filterCountry($event)"
-            />
-
-            <h2 class="demo-title">DatePicker</h2>
-            <h-datepicker
-              [showIcon]="true"
-              [showButtonBar]="true"
-              [(ngModel)]="calendarValue"
-            ></h-datepicker>
-
-            <h2 class="demo-title">InputNumber</h2>
-            <h-inputnumber [(ngModel)]="inputNumberValue" showButtons mode="decimal"></h-inputnumber>
-          </div>
+<div class="flex flex-col gap-layout">
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3 h-full">
+        <h2 class="demo-title">InputText</h2>
+        <div class="flex flex-col md:flex-row gap-3">
+          <input hx-input type="text" placeholder="Default" aria-label="Default" />
+          <input hx-input type="text" placeholder="Disabled" aria-label="Disabled" disabled />
+          <input hx-input type="text" placeholder="Invalid" aria-label="Invalid" aria-invalid="true" />
         </div>
-        <div class="md:w-1/2 flex flex-col gap-1">
-          <div class="card flex flex-col gap-3">
-            <h2 class="demo-title">RadioButton</h2>
-            <div class="flex flex-col md:flex-row gap-3">
-              <div class="flex items-center">
-                <h-radiobutton id="option1" name="option" value="Chicago" [(ngModel)]="radioValue" />
-                <label for="option1" class="leading-none ml-2">Chicago</label>
-              </div>
-              <div class="flex items-center">
-                <h-radiobutton
-                  id="option2"
-                  name="option"
-                  value="Los Angeles"
-                  [(ngModel)]="radioValue"
-                />
-                <label for="option2" class="leading-none ml-2">Los Angeles</label>
-              </div>
-              <div class="flex items-center">
-                <h-radiobutton id="option3" name="option" value="New York" [(ngModel)]="radioValue" />
-                <label for="option3" class="leading-none ml-2">New York</label>
-              </div>
-            </div>
 
-            <h2 class="demo-title">Checkbox</h2>
-            <div class="flex flex-col md:flex-row gap-3">
-              <div class="flex items-center">
-                <h-checkbox
-                  id="checkOption1"
-                  name="option"
-                  value="Chicago"
-                  [(ngModel)]="checkboxValue"
-                />
-                <label for="checkOption1" class="ml-2">Chicago</label>
-              </div>
-              <div class="flex items-center">
-                <h-checkbox
-                  id="checkOption2"
-                  name="option"
-                  value="Los Angeles"
-                  [(ngModel)]="checkboxValue"
-                />
-                <label for="checkOption2" class="ml-2">Los Angeles</label>
-              </div>
-              <div class="flex items-center">
-                <h-checkbox
-                  id="checkOption3"
-                  name="option"
-                  value="New York"
-                  [(ngModel)]="checkboxValue"
-                />
-                <label for="checkOption3" class="ml-2">New York</label>
-              </div>
-            </div>
+        <h2 class="demo-title">Icons</h2>
+        <hx-icon-field>
+          <i class="pi pi-user" hx-input-icon></i>
+          <input hx-input type="text" placeholder="Username" aria-label="Username" />
+        </hx-icon-field>
+        <hx-icon-field>
+          <i class="pi pi-search" hx-input-icon></i>
+          <input hx-input type="text" placeholder="Search" aria-label="Search" />
+        </hx-icon-field>
 
-            <h2 class="demo-title">ToggleSwitch</h2>
-            <h-toggleswitch [(ngModel)]="switchValue" />
-          </div>
+        <h2 class="demo-title">Float Label</h2>
+        <hx-float-label>
+          <input hx-input id="username" type="text" [(ngModel)]="floatValue" />
+          <label for="username">Username</label>
+        </hx-float-label>
 
-          <div class="card flex flex-col gap-3">
-            <h2 class="demo-title">Listbox</h2>
-            <h-listbox
-              [(ngModel)]="listboxValue"
-              [options]="listboxValues"
-              optionLabel="name"
-              [filter]="true"
-            />
+        <h2 class="demo-title">Textarea</h2>
+        <textarea hx-input autoResize placeholder="Your Message" aria-label="Your message" rows="3"></textarea>
 
-            <h2 class="demo-title">Select</h2>
-            <h-select
-              [(ngModel)]="dropdownValue"
-              [options]="dropdownValues"
-              optionLabel="name"
-              placeholder="Select"
-            />
+        <h2 class="demo-title">AutoComplete</h2>
+        <hx-auto-complete
+          ariaLabel="Countries"
+          placeholder="Search"
+          optionLabel="name"
+          dropdown
+          multiple
+          [suggestions]="found()"
+          [(value)]="pickedCountries"
+          (complete)="filterCountry($event.query)"
+        />
 
-            <h2 class="demo-title">MultiSelect</h2>
-            <h-multiselect
-              [options]="multiselectCountries"
-              [(ngModel)]="multiselectSelectedCountries"
-              placeholder="Select Countries"
-              optionLabel="name"
-              display="chip"
-              [filter]="true"
-            >
-              <ng-template #selecteditems let-countries>
-                @for (country of countries; track country.code) {
-                  <div
-                    class="inline-flex items-center py-1 px-2 bg-primary text-primary-contrast rounded-border mr-2"
-                  >
-                    <span
-                      [class]="'mr-2 flag flag-' + country.code.toLowerCase()"
-                      style="width: 18px; height: 12px"
-                    ></span>
-                    <div>{{ country.name }}</div>
-                  </div>
-                }
-              </ng-template>
-              <ng-template #item let-country>
-                <div class="flex items-center">
-                  <span
-                    [class]="'mr-2 flag flag-' + country.code.toLowerCase()"
-                    style="width: 18px; height: 12px"
-                  ></span>
-                  <div>{{ country.name }}</div>
-                </div>
-              </ng-template>
-            </h-multiselect>
+        <h2 class="demo-title">DatePicker</h2>
+        <hx-date-picker ariaLabel="Date" showIcon showButtonBar [(value)]="date" />
 
-            <h2 class="demo-title">TreeSelect</h2>
-            <h-treeselect
-              [(ngModel)]="selectedNode"
-              [options]="treeSelectNodes"
-              placeholder="Select Item"
-            ></h-treeselect>
-          </div>
-        </div>
+        <h2 class="demo-title">InputNumber</h2>
+        <hx-input-number ariaLabel="Amount" showButtons [(ngModel)]="inputNumberValue" />
       </div>
-
-      <div class="flex flex-col md:flex-row gap-layout">
-        <div class="md:w-1/2 flex flex-col">
-          <div class="card flex flex-col gap-3 h-full">
-            <h2 class="demo-title">Slider</h2>
-            <input hInputText [(ngModel)]="sliderValue" type="number" />
-            <h-slider [(ngModel)]="sliderValue" />
-
-            <div class="flex flex-row mt-2">
-              <div class="flex flex-col gap-3 w-1/2">
-                <h2 class="demo-title">Rating</h2>
-                <h-rating [(ngModel)]="ratingValue" />
-              </div>
-              <div class="flex flex-col gap-3 w-1/2">
-                <h2 class="demo-title">ColorPicker</h2>
-                <h-colorpicker [style]="{ width: '2rem' }" [(ngModel)]="colorValue" />
-              </div>
+    </div>
+    <div class="md:w-1/2 flex flex-col gap-1">
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">RadioButton</h2>
+        <div class="flex flex-col md:flex-row gap-3">
+          @for (city of cityNames; track city; let i = $index) {
+            <div class="flex items-center gap-2">
+              <input hx-radio type="radio" [id]="'option' + i" name="option" [value]="city" [(ngModel)]="radioValue" />
+              <label [for]="'option' + i" class="leading-none">{{ city }}</label>
             </div>
-
-            <h2 class="demo-title">Knob</h2>
-            <h-knob
-              [(ngModel)]="knobValue"
-              [step]="10"
-              [min]="-50"
-              [max]="50"
-              valueTemplate="{value}%"
-            />
-          </div>
+          }
         </div>
-        <div class="md:w-1/2 flex flex-col">
-          <div class="card flex flex-col gap-3 h-full">
-            <h2 class="demo-title">ToggleButton</h2>
-            <h-togglebutton
-              [(ngModel)]="toggleValue"
-              onLabel="Yes"
-              offLabel="No"
-              [style]="{ width: '10em' }"
-            />
 
-            <h2 class="demo-title">SelectButton</h2>
-            <h-selectbutton
-              [(ngModel)]="selectButtonValue"
-              [options]="selectButtonValues"
-              optionLabel="name"
-            />
-          </div>
+        <h2 class="demo-title">Checkbox</h2>
+        <div class="flex flex-col md:flex-row gap-3">
+          @for (city of cityNames; track city; let i = $index) {
+            <div class="flex items-center gap-2">
+              <input hx-checkbox type="checkbox" [id]="'checkOption' + i" [(ngModel)]="cityChecks[city]" />
+              <label [for]="'checkOption' + i">{{ city }}</label>
+            </div>
+          }
         </div>
+
+        <h2 class="demo-title">ToggleSwitch</h2>
+        <label class="flex items-center gap-2"><input hx-switch type="checkbox" [(ngModel)]="switchValue" /> Notifications</label>
       </div>
 
       <div class="card flex flex-col gap-3">
-        <h2 class="demo-title">InputGroup</h2>
-        <div class="flex flex-col md:flex-row gap-3">
-          <h-inputgroup>
-            <h-inputgroup-addon>
-              <i class="pi pi-user"></i>
-            </h-inputgroup-addon>
-            <input hInputText placeholder="Username" />
-          </h-inputgroup>
-          <h-inputgroup>
-            <h-inputgroup-addon>
-              <i class="pi pi-clock"></i>
-            </h-inputgroup-addon>
-            <h-inputgroup-addon>
-              <i class="pi pi-star-fill"></i>
-            </h-inputgroup-addon>
-            <h-inputnumber placeholder="Price" />
-            <h-inputgroup-addon>$</h-inputgroup-addon>
-            <h-inputgroup-addon>.00</h-inputgroup-addon>
-          </h-inputgroup>
-        </div>
-        <div class="flex flex-col md:flex-row gap-3">
-          <h-inputgroup>
-            <h-button label="Search" />
-            <input hInputText placeholder="Keyword" />
-          </h-inputgroup>
-          <h-inputgroup>
-            <h-inputgroup-addon>
-              <h-checkbox [(ngModel)]="inputGroupValue" [binary]="true" />
-            </h-inputgroup-addon>
-            <input hInputText placeholder="Confirm" />
-          </h-inputgroup>
-        </div>
+        <h2 class="demo-title">Listbox</h2>
+        <hx-listbox ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" filter [(ngModel)]="listboxValue" />
+
+        <h2 class="demo-title">Select</h2>
+        <hx-select ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" placeholder="Select" [(ngModel)]="selectValue" />
+
+        <h2 class="demo-title">MultiSelect</h2>
+        <hx-multi-select
+          ariaLabel="Countries"
+          placeholder="Select Countries"
+          display="chip"
+          filter
+          [options]="countries"
+          optionLabel="name"
+          optionValue="code"
+          [(ngModel)]="multiselectSelected"
+        />
       </div>
     </div>
-  </h-fluid>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3 h-full">
+        <h2 class="demo-title">Slider</h2>
+        <hx-slider ariaLabel="Value" [(value)]="sliderValue" />
+        <span>Value: {{ sliderValue() }}</span>
+
+        <h2 class="demo-title">Rating</h2>
+        <hx-rating ariaLabel="Rating" [(value)]="rating" />
+      </div>
+    </div>
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3 h-full">
+        <h2 class="demo-title">ToggleButton</h2>
+        <hx-toggle-button onLabel="Yes" offLabel="No" [(ngModel)]="toggleValue" />
+
+        <h2 class="demo-title">SelectButton</h2>
+        <hx-select-button ariaLabel="Option" [options]="selectButtonValues" [(ngModel)]="selectButtonValue" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">InputGroup</h2>
+    <div class="flex flex-col md:flex-row gap-3">
+      <hx-input-group>
+        <hx-input-group-addon><i class="pi pi-user"></i></hx-input-group-addon>
+        <input hx-input placeholder="Username" aria-label="Username" />
+      </hx-input-group>
+      <hx-input-group>
+        <hx-input-group-addon><i class="pi pi-clock"></i></hx-input-group-addon>
+        <hx-input-group-addon><i class="pi pi-star-fill"></i></hx-input-group-addon>
+        <hx-input-number placeholder="Price" ariaLabel="Price" />
+        <hx-input-group-addon>$</hx-input-group-addon>
+        <hx-input-group-addon>.00</hx-input-group-addon>
+      </hx-input-group>
+    </div>
+    <div class="flex flex-col md:flex-row gap-3">
+      <hx-input-group>
+        <button hx-button type="button">Search</button>
+        <input hx-input placeholder="Keyword" aria-label="Keyword" />
+      </hx-input-group>
+      <hx-input-group>
+        <hx-input-group-addon>
+          <input hx-checkbox type="checkbox" aria-label="Confirm" [(ngModel)]="inputGroupValue" />
+        </hx-input-group-addon>
+        <input hx-input placeholder="Confirm" aria-label="Confirm text" />
+      </hx-input-group>
+    </div>
+  </div>
+</div>

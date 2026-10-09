@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { email, FormField, form, minLength, required, submit } from '@angular/forms/signals';
-import { CheckboxModule } from '@gravionlabs/helix-core/checkbox';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { RadioButtonModule } from '@gravionlabs/helix-core/radiobutton';
-import { TextareaModule } from '@gravionlabs/helix-core/textarea';
-import { ToggleSwitchModule } from '@gravionlabs/helix-core/toggleswitch';
 import { HxButton, HxCheckbox, HxInput, HxRadio, HxSwitch } from '@gravionlabs/helix-ui';
 
 interface Signup {
@@ -16,30 +11,17 @@ interface Signup {
   darkMode: boolean;
 }
 
-/** `@gravionlabs/helix-ui` form controls next to the helix-core ones, and a signal form built from them. */
+/** `@gravionlabs/helix-ui` form controls, and a signal form built from them. */
 @Component({
   selector: 'app-hx-form-demo',
   standalone: true,
-  imports: [
-    FormsModule,
-    FormField,
-    HxInput,
-    HxCheckbox,
-    HxRadio,
-    HxSwitch,
-    HxButton,
-    InputTextModule,
-    TextareaModule,
-    CheckboxModule,
-    RadioButtonModule,
-    ToggleSwitchModule,
-  ],
+  imports: [FormsModule, FormField, HxInput, HxCheckbox, HxRadio, HxSwitch, HxButton],
   templateUrl: './hx-form-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-form-demo.scss',
 })
 export class HxFormDemo {
-  // template-driven side by side
+  // template-driven
   text = 'Ada Lovelace';
   note = '';
   agree = true;
