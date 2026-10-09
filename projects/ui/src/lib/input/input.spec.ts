@@ -9,6 +9,7 @@ import { HxInput, type HxInputSize, type HxInputVariant } from './input';
   template: `
     <input hx-input id="a" [variant]="variant()" [size]="size()" [fluid]="fluid()" [(ngModel)]="value" required />
     <textarea hx-input id="b" rows="3"></textarea>
+    <textarea hx-input id="c" autoResize [ngModel]="text()"></textarea>
   `,
 })
 class Host {
@@ -16,6 +17,7 @@ class Host {
   size = signal<HxInputSize>('medium');
   fluid = signal(false);
   value = '';
+  text = signal('one');
 }
 
 describe('HxInput', () => {
@@ -75,5 +77,38 @@ describe('HxInput', () => {
   it('keeps disabled and readonly native', () => {
     input.disabled = true;
     expect(input.matches(':disabled')).toBe(true);
+  });
+
+  describe('autoResize', () => {
+    let auto: HTMLTextAreaElement;
+    beforeEach(() => {
+      auto = fixture.debugElement.query(By.css('#c')).nativeElement;
+      // jsdom has no layout: derive the content height from the lines
+      Object.defineProperty(auto, 'scrollHeight', {
+        get: () => auto.value.split('\n').length * 20,
+      });
+    });
+
+    it('sets the class and leaves other textareas alone', () => {
+      expect(auto.classList).toContain('hx-input-auto-resize');
+      expect(textarea.classList).not.toContain('hx-input-auto-resize');
+      expect(textarea.style.height).toBe('');
+    });
+
+    it('follows the content on input, growing and shrinking', () => {
+      auto.value = 'a\nb\nc';
+      auto.dispatchEvent(new Event('input'));
+      expect(auto.style.height).toBe('60px');
+      auto.value = 'a';
+      auto.dispatchEvent(new Event('input'));
+      expect(auto.style.height).toBe('20px');
+    });
+
+    it('follows a value a form writes', async () => {
+      host.text.set('x\ny\nz\nw');
+      await fixture.whenStable();
+      await new Promise((resolve) => setTimeout(resolve));
+      expect(auto.style.height).toBe('80px');
+    });
   });
 });

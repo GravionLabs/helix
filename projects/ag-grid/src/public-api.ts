@@ -1,8 +1,7 @@
 export const HELIX_AG_GRID_VERSION = '0.1.0';
 
 export { numberCellStyle } from './lib/cell-styles/cell-styles';
-
-export type { AgGridFormatterParams } from './lib/formatters/ag-grid-formatters';
+export type { AgGridFormatterParams, AnyRow } from './lib/formatters/ag-grid-formatters';
 export {
   cetDateFormatter,
   cetDateTimeFormatter,
@@ -12,7 +11,6 @@ export {
   numberFormatter,
   rawNumberFormatter,
 } from './lib/formatters/ag-grid-formatters';
-
 export type { ParseNumberOptions } from './lib/parsers/number-parsers';
 export {
   coerceValue,
@@ -20,3 +18,4 @@ export {
   parseNumber,
   parseNumberValue,
 } from './lib/parsers/number-parsers';
+export { helixGridTheme } from './lib/theme/helix-theme';

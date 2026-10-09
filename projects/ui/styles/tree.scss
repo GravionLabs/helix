@@ -1,0 +1,150 @@
+/*
+ * Tree: `<hx-tree>`. Nested lists from the `--h-tree-*` tokens: a row per node (toggle, optional checkbox, icon and
+ * label) with its children in an indented group below. The focus ring and the selected look sit on the row, not
+ * on the whole item with its children. The checkbox is the shared `hx-checkbox`.
+ */
+@use 'icons' as *;
+
+@include hx-icon-spin-keyframes;
+
+.hx-tree {
+  display: block;
+  box-sizing: border-box;
+  padding: var(--h-tree-padding);
+  background: var(--h-tree-background);
+  color: var(--h-tree-color);
+}
+
+.hx-tree-filter {
+  width: 100%;
+  margin: var(--h-tree-filter-margin);
+}
+
+.hx-tree-list,
+.hx-tree-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-tree-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-tree-group {
+  margin-block-start: var(--h-tree-gap);
+  padding-inline-start: var(--h-tree-indent);
+}
+
+.hx-tree-node {
+  outline: 0 none;
+}
+
+.hx-tree-node-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-tree-node-gap);
+  padding: var(--h-tree-node-padding);
+  border-radius: var(--h-tree-node-border-radius);
+  color: var(--h-tree-node-color);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background var(--h-tree-transition-duration),
+    color var(--h-tree-transition-duration);
+}
+
+.hx-tree-node-content:hover {
+  background: var(--h-tree-node-hover-background);
+  color: var(--h-tree-node-hover-color);
+}
+
+.hx-tree-node:focus-visible > .hx-tree-node-content {
+  outline: var(--h-tree-node-focus-ring-width) var(--h-tree-node-focus-ring-style)
+    var(--h-tree-node-focus-ring-color);
+  outline-offset: var(--h-tree-node-focus-ring-offset);
+  box-shadow: var(--h-tree-node-focus-ring-shadow);
+}
+
+.hx-tree-node-selected,
+.hx-tree-node-selected:hover {
+  background: var(--h-tree-node-selected-background);
+  color: var(--h-tree-node-selected-color);
+}
+
+.hx-tree-node-disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-tree-node-icon {
+  flex: none;
+  color: var(--h-tree-node-icon-color);
+}
+
+.hx-tree-node-content:hover .hx-tree-node-icon {
+  color: var(--h-tree-node-icon-hover-color);
+}
+
+.hx-tree-node-selected .hx-tree-node-icon {
+  color: var(--h-tree-node-icon-selected-color);
+}
+
+.hx-tree-node-label {
+  min-width: 0;
+}
+
+.hx-tree-node-toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-tree-node-toggle-button-size);
+  height: var(--h-tree-node-toggle-button-size);
+  border-radius: var(--h-tree-node-toggle-button-border-radius);
+  color: var(--h-tree-node-toggle-button-color);
+}
+
+.hx-tree-node-toggle-leaf {
+  visibility: hidden;
+}
+
+.hx-tree-node-toggle:hover {
+  background: var(--h-tree-node-toggle-button-hover-background);
+  color: var(--h-tree-node-toggle-button-hover-color);
+}
+
+.hx-tree-node-selected .hx-tree-node-toggle:hover {
+  background: var(--h-tree-node-toggle-button-selected-hover-background);
+  color: var(--h-tree-node-toggle-button-selected-hover-color);
+}
+
+.hx-tree-toggle-icon {
+  @include hx-icon(chevron-right, 1rem, currentcolor, 2.4);
+  transition: transform var(--h-tree-transition-duration);
+}
+
+.hx-tree-toggle-icon-open {
+  transform: rotate(90deg);
+}
+
+.hx-tree-loading-icon {
+  @include hx-icon(spinner, 1rem, currentcolor, 2.4);
+  @include hx-icon-spin;
+}
+
+/* the checkbox only shows the state; clicks go to the row */
+.hx-tree-node-checkbox {
+  pointer-events: none;
+}
+
+.hx-tree-empty {
+  padding: var(--h-tree-node-padding);
+  color: var(--h-tree-node-icon-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-tree-node-content,
+  .hx-tree-toggle-icon {
+    transition: none;
+  }
+}

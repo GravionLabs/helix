@@ -27,6 +27,13 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Topbar', icon: 'pi pi-fw pi-bars', path: 'topbar' },
   { label: 'Helix UI Blocks', icon: 'pi pi-fw pi-box', path: 'hx-blocks' },
   { label: 'Helix UI Button', icon: 'pi pi-fw pi-box', path: 'hx-button' },
+  { label: 'Helix UI Containers', icon: 'pi pi-fw pi-box', path: 'hx-containers' },
+  { label: 'Helix UI Data', icon: 'pi pi-fw pi-box', path: 'hx-data' },
+  { label: 'Helix UI Display', icon: 'pi pi-fw pi-box', path: 'hx-display' },
+  { label: 'Helix UI Data grid', icon: 'pi pi-fw pi-box', path: 'hx-grid' },
   { label: 'Helix UI Form', icon: 'pi pi-fw pi-box', path: 'hx-form' },
+  { label: 'Helix UI Inputs', icon: 'pi pi-fw pi-box', path: 'hx-inputs' },
+  { label: 'Helix UI Navigation', icon: 'pi pi-fw pi-box', path: 'hx-navigation' },
+  { label: 'Helix UI Overlays', icon: 'pi pi-fw pi-box', path: 'hx-overlays' },
   { label: 'Helix UI Select', icon: 'pi pi-fw pi-box', path: 'hx-select' },
 ];

@@ -1,0 +1,133 @@
+<h1 class="sr-only">Helix UI Display</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Display</h2>
+    <p class="m-0">Display components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Badge</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (severity of severities; track severity) {
+        <hx-badge [value]="severity" [severity]="severity" />
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-badge value="2" size="small" />
+      <hx-badge value="4" />
+      <hx-badge value="6" size="large" />
+      <hx-badge value="8" size="xlarge" />
+      <hx-badge severity="success" /> <span>dot</span>
+    </div>
+    <h3 class="demo-title">Overlay badge</h3>
+    <div class="flex flex-wrap items-center gap-6">
+      <hx-overlay-badge value="2" severity="danger">
+        <button hx-button iconOnly variant="outlined" severity="secondary" aria-label="Notifications, 2 new">
+          <span class="pi pi-bell hx-button-icon"></span>
+        </button>
+      </hx-overlay-badge>
+      <hx-overlay-badge severity="success">
+        <button hx-button iconOnly variant="outlined" severity="secondary" aria-label="Online">
+          <span class="pi pi-user hx-button-icon"></span>
+        </button>
+      </hx-overlay-badge>
+      <hx-overlay-badge value="99+" severity="info" size="small">
+        <button hx-button variant="outlined" severity="secondary">Inbox</button>
+      </hx-overlay-badge>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Tag</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (severity of severities; track severity) {
+        <hx-tag [value]="severity" [severity]="severity" />
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-tag severity="success" rounded icon="pi pi-check">Approved</hx-tag>
+      <hx-tag severity="warn" icon="pi pi-clock">Pending</hx-tag>
+      <hx-tag severity="danger" rounded icon="pi pi-times">Rejected</hx-tag>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Chip</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-chip label="Action" />
+      <hx-chip label="Icon" icon="pi pi-apple" />
+      <hx-chip label="Picture" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" />
+    </div>
+    <p class="m-0">Removable: press the x, or focus a chip and press Backspace or Delete.</p>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (chip of chips(); track chip) {
+        <hx-chip [label]="chip" removable [removeLabel]="'Remove ' + chip" (remove)="remove(chip)" />
+      } @empty {
+        <span>All removed. Reload the page to get them back.</span>
+      }
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Avatar</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-avatar label="JK" ariaLabel="Jerome K" />
+      <hx-avatar icon="pi pi-user" size="large" ariaLabel="User" />
+      <hx-avatar label="AE" size="xlarge" shape="circle" ariaLabel="Amy Elsner" />
+      <hx-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" size="large" ariaLabel="Amy Elsner" />
+    </div>
+    <h3 class="demo-title">Group</h3>
+    <hx-avatar-group ariaLabel="Team">
+      <hx-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" size="large" ariaLabel="Amy Elsner" />
+      <hx-avatar label="AB" shape="circle" size="large" ariaLabel="A B" />
+      <hx-avatar label="CD" shape="circle" size="large" ariaLabel="C D" />
+      <hx-avatar label="+2" shape="circle" size="large" ariaLabel="2 more members" />
+    </hx-avatar-group>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Skeleton</h2>
+    <div class="flex items-start gap-4" aria-busy="true">
+      <hx-skeleton shape="circle" size="4rem" />
+      <div class="flex flex-1 flex-col gap-2">
+        <hx-skeleton width="60%" />
+        <hx-skeleton width="90%" />
+        <hx-skeleton width="40%" height="0.75rem" />
+      </div>
+    </div>
+    <hx-skeleton height="6rem" borderRadius="12px" animation="none" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Progress</h2>
+    <hx-progress-bar [value]="progress()" ariaLabel="Upload" />
+    <div class="flex gap-2">
+      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(max(0, progress() - 10))">-10</button>
+      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(min(100, progress() + 10))">+10</button>
+    </div>
+    <hx-progress-bar mode="indeterminate" ariaLabel="Loading" />
+    <div class="flex items-center gap-4">
+      <hx-progress-spinner ariaLabel="Saving" />
+      <hx-progress-spinner strokeWidth="4" animationDuration="1s" ariaLabel="Fast" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Timeline</h2>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr))">
+      <hx-timeline [value]="orders">
+        <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+      </hx-timeline>
+      <hx-timeline [value]="orders" align="alternate">
+        <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+        <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+        <ng-template hxTimelineMarker let-event><span [class]="event.icon"></span></ng-template>
+      </hx-timeline>
+    </div>
+    <h3 class="demo-title">Horizontal</h3>
+    <hx-timeline [value]="orders" layout="horizontal" align="alternate">
+      <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
+      <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+    </hx-timeline>
+  </div>
+</div>

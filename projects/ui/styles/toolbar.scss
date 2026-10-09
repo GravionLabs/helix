@@ -1,0 +1,41 @@
+/*
+ * Toolbar: `<hx-toolbar>`. A flex bar from the `--h-toolbar-*` tokens with a start, a center and an end area; it
+ * wraps when the controls do not fit.
+ */
+.hx-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--h-toolbar-gap);
+  box-sizing: border-box;
+  padding: var(--h-toolbar-padding);
+  border: 1px solid var(--h-toolbar-border-color);
+  border-radius: var(--h-toolbar-border-radius);
+  background: var(--h-toolbar-background);
+  color: var(--h-toolbar-color);
+}
+
+.hx-toolbar-start,
+.hx-toolbar-center,
+.hx-toolbar-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-toolbar-gap);
+}
+
+.hx-toolbar-center {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+.hx-toolbar-end {
+  margin-inline-start: auto;
+}
+
+.hx-toolbar-start:empty,
+.hx-toolbar-center:empty,
+.hx-toolbar-end:empty {
+  display: none;
+}

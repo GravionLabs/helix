@@ -1,7 +1,14 @@
 import type { ValueFormatterParams } from 'ag-grid-community';
 
+/**
+ * The row type of the formatters. A formatter only reads the value, so it must fit a column of any row type;
+ * `unknown` would make it unusable in a typed `ColDef<Row>` (the row node type is invariant).
+ */
+// biome-ignore lint/suspicious/noExplicitAny: any row type, see above
+export type AnyRow = any;
+
 /** Type alias for AG Grid's `ValueFormatterParams`, used by all formatter functions. */
-export type AgGridFormatterParams<TData = unknown, TValue = unknown> = ValueFormatterParams<
+export type AgGridFormatterParams<TData = AnyRow, TValue = unknown> = ValueFormatterParams<
   TData,
   TValue
 >;
@@ -18,7 +25,7 @@ export type AgGridFormatterParams<TData = unknown, TValue = unknown> = ValueForm
  * ```
  */
 export function numberFormatter(
-  params: AgGridFormatterParams<unknown, number | null | undefined>,
+  params: AgGridFormatterParams<AnyRow, number | null | undefined>,
 ): string {
   const v = params.value;
   if (v == null || Number.isNaN(v)) return '';
@@ -35,7 +42,7 @@ export function numberFormatter(
  * ```
  */
 export function rawNumberFormatter(
-  params: AgGridFormatterParams<unknown, number | null | undefined>,
+  params: AgGridFormatterParams<AnyRow, number | null | undefined>,
 ): string {
   const v = params.value;
   if (v == null) return '';
@@ -54,7 +61,7 @@ export function rawNumberFormatter(
  * ```
  */
 export function intlNumberFormatter(
-  params: AgGridFormatterParams<unknown, number | null | undefined>,
+  params: AgGridFormatterParams<AnyRow, number | null | undefined>,
   numberFormat: Intl.NumberFormat,
 ): string {
   const v = params.value;
@@ -76,7 +83,7 @@ export function intlNumberFormatter(
 export function currencyFormatter(
   currencyCode = 'EUR',
   locale = 'de-DE',
-): (params: AgGridFormatterParams<unknown, number | null | undefined>) => string {
+): (params: AgGridFormatterParams<AnyRow, number | null | undefined>) => string {
   const fmt = new Intl.NumberFormat(locale, { style: 'currency', currency: currencyCode });
   return (params) => {
     const v = params.value;
@@ -129,7 +136,7 @@ const cetTimeFormat = new Intl.DateTimeFormat('de-DE', {
  * { field: 'date', valueFormatter: cetDateFormatter }
  * ```
  */
-export function cetDateFormatter(params: AgGridFormatterParams<unknown, DateInput>): string {
+export function cetDateFormatter(params: AgGridFormatterParams<AnyRow, DateInput>): string {
   const d = toDate(params.value);
   return d ? cetDateFormat.format(d) : '';
 }
@@ -143,7 +150,7 @@ export function cetDateFormatter(params: AgGridFormatterParams<unknown, DateInpu
  * { field: 'updatedAt', valueFormatter: cetDateTimeFormatter }
  * ```
  */
-export function cetDateTimeFormatter(params: AgGridFormatterParams<unknown, DateInput>): string {
+export function cetDateTimeFormatter(params: AgGridFormatterParams<AnyRow, DateInput>): string {
   const d = toDate(params.value);
   if (!d) return '';
   // Intl formats date and time parts separated by ', ' in de-DE — replace with ' '
@@ -159,7 +166,7 @@ export function cetDateTimeFormatter(params: AgGridFormatterParams<unknown, Date
  * { field: 'startTime', valueFormatter: cetTimeFormatter }
  * ```
  */
-export function cetTimeFormatter(params: AgGridFormatterParams<unknown, DateInput>): string {
+export function cetTimeFormatter(params: AgGridFormatterParams<AnyRow, DateInput>): string {
   const d = toDate(params.value);
   return d ? cetTimeFormat.format(d) : '';
 }

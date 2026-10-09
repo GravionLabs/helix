@@ -1,0 +1,185 @@
+/*
+ * Slider: `<hx-slider>`. A drawn track and fill under one or two native `<input type="range">` whose own track is
+ * transparent and whose thumb is styled from the `--h-slider-*` tokens. Vertical: `writing-mode` turns the inputs,
+ * the track and the fill follow.
+ */
+.hx-slider {
+  --hx-slider-handle: var(--h-slider-handle-width);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: var(--hx-slider-handle);
+  min-width: 4rem;
+}
+
+.hx-slider-track {
+  position: absolute;
+  inset-inline: calc(var(--hx-slider-handle) / 2);
+  top: 50%;
+  height: var(--h-slider-track-size);
+  margin-top: calc(var(--h-slider-track-size) / -2);
+  border-radius: var(--h-slider-track-border-radius);
+  background: var(--h-slider-track-background);
+}
+
+.hx-slider-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: var(--hx-slider-start, 0%);
+  inset-inline-end: calc(100% - var(--hx-slider-end, 0%));
+  border-radius: inherit;
+  background: var(--h-slider-range-background);
+}
+
+/* a single slider fills from the start */
+.hx-slider:not(.hx-slider-range-mode) .hx-slider-fill {
+  inset-inline-start: 0;
+}
+
+.hx-slider-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  outline: 0 none;
+}
+
+/* two thumbs share the track: only the thumbs take the pointer */
+.hx-slider-range-mode .hx-slider-input {
+  pointer-events: none;
+}
+
+.hx-slider-input::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+  border: 0;
+}
+
+.hx-slider-input::-moz-range-track {
+  height: 100%;
+  background: transparent;
+  border: 0;
+}
+
+.hx-slider-input::-webkit-slider-thumb {
+  box-sizing: border-box;
+  width: var(--h-slider-handle-width);
+  height: var(--h-slider-handle-height);
+  appearance: none;
+  border: 0;
+  border-radius: var(--h-slider-handle-border-radius);
+  background: var(--h-slider-handle-background);
+  /* the inner dot: a border of the content's inset, painted as the content background */
+  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+    var(--h-slider-handle-content-background), var(--h-slider-handle-content-shadow);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background var(--h-slider-transition-duration);
+}
+
+.hx-slider-input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--h-slider-handle-width);
+  height: var(--h-slider-handle-height);
+  border: 0;
+  border-radius: var(--h-slider-handle-border-radius);
+  background: var(--h-slider-handle-background);
+  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+    var(--h-slider-handle-content-background), var(--h-slider-handle-content-shadow);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background var(--h-slider-transition-duration);
+}
+
+.hx-slider-input:enabled:hover::-webkit-slider-thumb {
+  background: var(--h-slider-handle-hover-background);
+  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+    var(--h-slider-handle-content-hover-background), var(--h-slider-handle-content-shadow);
+}
+
+.hx-slider-input:enabled:hover::-moz-range-thumb {
+  background: var(--h-slider-handle-hover-background);
+  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+    var(--h-slider-handle-content-hover-background), var(--h-slider-handle-content-shadow);
+}
+
+.hx-slider-input:focus-visible::-webkit-slider-thumb {
+  outline: var(--h-slider-handle-focus-ring-width) var(--h-slider-handle-focus-ring-style)
+    var(--h-slider-handle-focus-ring-color);
+  outline-offset: var(--h-slider-handle-focus-ring-offset);
+}
+
+.hx-slider-input:focus-visible::-moz-range-thumb {
+  outline: var(--h-slider-handle-focus-ring-width) var(--h-slider-handle-focus-ring-style)
+    var(--h-slider-handle-focus-ring-color);
+  outline-offset: var(--h-slider-handle-focus-ring-offset);
+}
+
+.hx-slider-disabled {
+  opacity: 0.6;
+}
+
+.hx-slider-disabled .hx-slider-input,
+.hx-slider-disabled .hx-slider-input::-webkit-slider-thumb {
+  cursor: default;
+}
+
+.hx-slider-disabled .hx-slider-input::-moz-range-thumb {
+  cursor: default;
+}
+
+/* invalid: the fill and the thumb ring */
+.hx-slider-invalid .hx-slider-fill,
+.hx-slider.ng-invalid.ng-touched .hx-slider-fill {
+  background: var(--h-form-field-invalid-border-color);
+}
+
+/* vertical */
+.hx-slider-vertical {
+  width: var(--hx-slider-handle);
+  height: 12rem;
+  min-width: 0;
+}
+
+.hx-slider-vertical .hx-slider-track {
+  inset-inline: auto;
+  inset-block: calc(var(--hx-slider-handle) / 2);
+  top: calc(var(--hx-slider-handle) / 2);
+  left: 50%;
+  width: var(--h-slider-track-size);
+  height: auto;
+  margin: 0 0 0 calc(var(--h-slider-track-size) / -2);
+}
+
+.hx-slider-vertical .hx-slider-fill {
+  inset-inline: 0;
+  top: auto;
+  bottom: var(--hx-slider-start, 0%);
+  height: calc(var(--hx-slider-end, 0%) - var(--hx-slider-start, 0%));
+}
+
+.hx-slider-vertical:not(.hx-slider-range-mode) .hx-slider-fill {
+  bottom: 0;
+  height: var(--hx-slider-end, 0%);
+}
+
+.hx-slider-vertical .hx-slider-input {
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-slider-input::-webkit-slider-thumb {
+    transition: none;
+  }
+
+  .hx-slider-input::-moz-range-thumb {
+    transition: none;
+  }
+}

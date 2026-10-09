@@ -1,0 +1,94 @@
+@if (showButtons() && buttonLayout() === 'horizontal') {
+  <button
+    type="button"
+    class="hx-input-number-button hx-input-number-decrement"
+    tabindex="-1"
+    [disabled]="!canDecrement()"
+    [attr.aria-label]="decrementLabel()"
+    [attr.aria-controls]="inputId() ?? defaultId"
+    (pointerdown)="onPress($event, -1)"
+    (pointerup)="onRelease()"
+    (pointerleave)="onRelease()"
+    (pointercancel)="onRelease()"
+    (click)="onClick(-1)"
+  >
+    <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14" /></svg>
+  </button>
+}
+<input
+  #field
+  hx-input
+  type="text"
+  role="spinbutton"
+  inputmode="decimal"
+  autocomplete="off"
+  [id]="inputId() ?? defaultId"
+  [value]="displayText()"
+  [placeholder]="placeholder()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+  [attr.aria-invalid]="invalid() ? 'true' : null"
+  [attr.aria-valuenow]="value()"
+  [attr.aria-valuemin]="min()"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-valuetext]="ariaValueText()"
+  [disabled]="isDisabled()"
+  [variant]="variant()"
+  [size]="size()"
+  [fluid]="true"
+  (input)="onInput($event)"
+  (keydown)="onKeydown($event)"
+  (blur)="onBlur()"
+/>
+@if (showButtons()) {
+  @if (buttonLayout() === 'stacked') {
+    <span class="hx-input-number-spin">
+      <button
+        type="button"
+        class="hx-input-number-button hx-input-number-increment"
+        tabindex="-1"
+        [disabled]="!canIncrement()"
+        [attr.aria-label]="incrementLabel()"
+        [attr.aria-controls]="inputId() ?? defaultId"
+        (pointerdown)="onPress($event, 1)"
+        (pointerup)="onRelease()"
+        (pointerleave)="onRelease()"
+        (pointercancel)="onRelease()"
+        (click)="onClick(1)"
+      >
+        <svg viewBox="0 0 24 24" width="0.75em" height="0.75em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6" /></svg>
+      </button>
+      <button
+        type="button"
+        class="hx-input-number-button hx-input-number-decrement"
+        tabindex="-1"
+        [disabled]="!canDecrement()"
+        [attr.aria-label]="decrementLabel()"
+        [attr.aria-controls]="inputId() ?? defaultId"
+        (pointerdown)="onPress($event, -1)"
+        (pointerup)="onRelease()"
+        (pointerleave)="onRelease()"
+        (pointercancel)="onRelease()"
+        (click)="onClick(-1)"
+      >
+        <svg viewBox="0 0 24 24" width="0.75em" height="0.75em" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+    </span>
+  } @else {
+    <button
+      type="button"
+      class="hx-input-number-button hx-input-number-increment"
+      tabindex="-1"
+      [disabled]="!canIncrement()"
+      [attr.aria-label]="incrementLabel()"
+      [attr.aria-controls]="inputId() ?? defaultId"
+      (pointerdown)="onPress($event, 1)"
+      (pointerup)="onRelease()"
+      (pointerleave)="onRelease()"
+      (pointercancel)="onRelease()"
+      (click)="onClick(1)"
+    >
+      <svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+    </button>
+  }
+}

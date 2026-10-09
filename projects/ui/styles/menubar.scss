@@ -1,0 +1,185 @@
+/*
+ * Menubar: `<hx-menubar>`. A horizontal bar from the `--h-menubar-*` tokens; its submenus are the shared menu list
+ * (`hx-menu-panel`, see `menu.scss`) in a CDK overlay, restyled here with the menubar's submenu tokens. Below the
+ * breakpoint the items collapse into a button that opens an `hx-menu` popup.
+ */
+@use 'icons' as *;
+
+.hx-menubar {
+  display: flex;
+  align-items: center;
+  gap: var(--h-menubar-gap);
+  box-sizing: border-box;
+  padding: var(--h-menubar-padding);
+  border: 1px solid var(--h-menubar-border-color);
+  border-radius: var(--h-menubar-border-radius);
+  background: var(--h-menubar-background);
+  color: var(--h-menubar-color);
+}
+
+.hx-menubar-start:empty,
+.hx-menubar-end:empty {
+  display: none;
+}
+
+.hx-menubar-start,
+.hx-menubar-end {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-menubar-gap);
+}
+
+.hx-menubar-end {
+  margin-inline-start: auto;
+}
+
+.hx-menubar-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-menubar-submenu-gap);
+  min-width: 0;
+  outline: 0 none;
+}
+
+.hx-menubar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--h-menubar-item-gap);
+  padding: var(--h-menubar-base-item-padding);
+  border: 0;
+  border-radius: var(--h-menubar-base-item-border-radius);
+  background: transparent;
+  color: var(--h-menubar-item-color);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  outline: 0 none;
+  user-select: none;
+  transition:
+    background var(--h-menubar-transition-duration),
+    color var(--h-menubar-transition-duration);
+}
+
+.hx-menubar-item:hover:not([aria-disabled="true"]),
+.hx-menubar-item:focus-visible {
+  background: var(--h-menubar-item-focus-background);
+  color: var(--h-menubar-item-focus-color);
+}
+
+.hx-menubar-item[aria-expanded="true"] {
+  background: var(--h-menubar-item-active-background);
+  color: var(--h-menubar-item-active-color);
+}
+
+.hx-menubar-item[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-menubar-item .hx-menu-icon {
+  color: var(--h-menubar-item-icon-color);
+}
+
+.hx-menubar-item:hover:not([aria-disabled="true"]) .hx-menu-icon,
+.hx-menubar-item:focus-visible .hx-menu-icon {
+  color: var(--h-menubar-item-icon-focus-color);
+}
+
+.hx-menubar-item[aria-expanded="true"] .hx-menu-icon {
+  color: var(--h-menubar-item-icon-active-color);
+}
+
+.hx-menubar-submenu-icon {
+  @include hx-icon(chevron-down, var(--h-menubar-submenu-icon-size), var(--h-menubar-submenu-icon-color), 2.4);
+}
+
+.hx-menubar-item:hover .hx-menubar-submenu-icon,
+.hx-menubar-item:focus-visible .hx-menubar-submenu-icon {
+  background: var(--h-menubar-submenu-icon-focus-color);
+}
+
+.hx-menubar-item[aria-expanded="true"] .hx-menubar-submenu-icon {
+  background: var(--h-menubar-submenu-icon-active-color);
+}
+
+.hx-menubar-separator {
+  align-self: stretch;
+  margin: 0.25rem 0.125rem;
+  border-inline-start: 1px solid var(--h-menubar-separator-border-color);
+}
+
+/* the dropdown: the menu list with the submenu tokens of the menubar */
+.hx-menubar-submenu .hx-menu-list {
+  gap: var(--h-menubar-submenu-gap);
+  padding: var(--h-menubar-submenu-padding);
+  border-color: var(--h-menubar-submenu-border-color);
+  border-radius: var(--h-menubar-submenu-border-radius);
+  background: var(--h-menubar-submenu-background);
+  box-shadow: var(--h-menubar-submenu-shadow);
+}
+
+.hx-menubar-submenu .hx-menu-item {
+  gap: var(--h-menubar-item-gap);
+  padding: var(--h-menubar-item-padding);
+  border-radius: var(--h-menubar-item-border-radius);
+  color: var(--h-menubar-item-color);
+}
+
+.hx-menubar-submenu .hx-menu-item:hover:not([aria-disabled="true"]),
+.hx-menubar-submenu .hx-menu-item:focus-visible {
+  background: var(--h-menubar-item-focus-background);
+  color: var(--h-menubar-item-focus-color);
+}
+
+.hx-menubar-submenu .hx-menu-separator {
+  border-color: var(--h-menubar-separator-border-color);
+}
+
+/* collapsed: only the toggle button is shown */
+.hx-menubar-collapsed .hx-menubar-button {
+  display: inline-flex;
+}
+
+.hx-menubar-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--h-menubar-mobile-button-size);
+  height: var(--h-menubar-mobile-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-menubar-mobile-button-border-radius);
+  background: transparent;
+  color: var(--h-menubar-mobile-button-color);
+  cursor: pointer;
+  transition:
+    background var(--h-menubar-transition-duration),
+    color var(--h-menubar-transition-duration);
+}
+
+.hx-menubar-button:hover {
+  background: var(--h-menubar-mobile-button-hover-background);
+  color: var(--h-menubar-mobile-button-hover-color);
+}
+
+.hx-menubar-button:focus-visible {
+  outline: var(--h-menubar-mobile-button-focus-ring-width) var(--h-menubar-mobile-button-focus-ring-style)
+    var(--h-menubar-mobile-button-focus-ring-color);
+  outline-offset: var(--h-menubar-mobile-button-focus-ring-offset);
+  box-shadow: var(--h-menubar-mobile-button-focus-ring-shadow);
+}
+
+.hx-menubar-button-icon {
+  @include hx-icon(bars, 1rem, currentcolor, 2.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-menubar-item,
+  .hx-menubar-button {
+    transition: none;
+  }
+}

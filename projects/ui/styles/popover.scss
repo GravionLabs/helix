@@ -1,0 +1,55 @@
+/*
+ * Popover: `<hx-popover>`. A panel in a CDK connected overlay (`.hx-popover-overlay` is the pane) from the
+ * `--h-popover-*` tokens, with an arrow (a rotated square) pointing at the element: on the top edge when the popover is
+ * below it, on the bottom edge when it is above, at the arrow offset from the start or the end.
+ */
+.hx-popover-anchor {
+  display: none;
+}
+
+.hx-popover {
+  position: relative;
+  box-sizing: border-box;
+  max-width: calc(100vw - 2rem);
+  margin-block-start: var(--h-popover-gutter);
+  border: 1px solid var(--h-popover-border-color);
+  border-radius: var(--h-popover-border-radius);
+  background: var(--h-popover-background);
+  color: var(--h-popover-color);
+  box-shadow: var(--h-popover-shadow);
+}
+
+.hx-popover-above {
+  margin-block: 0 var(--h-popover-gutter);
+}
+
+.hx-popover-content {
+  padding: var(--h-popover-content-padding);
+}
+
+.hx-popover::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: var(--h-popover-arrow-offset);
+  inset-block-start: -6px;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 1px solid var(--h-popover-border-color);
+  border-inline-end: 0;
+  border-block-end: 0;
+  background: var(--h-popover-background);
+  transform: rotate(45deg);
+}
+
+.hx-popover-end::before {
+  inset-inline: auto var(--h-popover-arrow-offset);
+}
+
+.hx-popover-above::before {
+  inset-block: auto -6px;
+  border-inline-end: 1px solid var(--h-popover-border-color);
+  border-block-end: 1px solid var(--h-popover-border-color);
+  border-inline-start: 0;
+  border-block-start: 0;
+}

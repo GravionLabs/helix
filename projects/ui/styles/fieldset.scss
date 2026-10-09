@@ -1,0 +1,113 @@
+/*
+ * Fieldset: `<hx-fieldset>`. A native fieldset and legend from the `--h-fieldset-*` tokens; a toggleable legend is a
+ * button. The content collapses by animating its grid row to zero height.
+ */
+@use 'icons' as *;
+
+.hx-fieldset {
+  display: block;
+}
+
+.hx-fieldset-box {
+  min-width: 0;
+  margin: 0;
+  padding: var(--h-fieldset-padding);
+  border: 1px solid var(--h-fieldset-border-color);
+  border-radius: var(--h-fieldset-border-radius);
+  background: var(--h-fieldset-background);
+  color: var(--h-fieldset-color);
+}
+
+.hx-fieldset-legend {
+  padding: 0;
+  font-weight: var(--h-fieldset-legend-font-weight);
+}
+
+.hx-fieldset-legend-text {
+  display: inline-block;
+  padding: var(--h-fieldset-legend-padding);
+  border: var(--h-fieldset-legend-border-width) solid var(--h-fieldset-legend-border-color);
+  border-radius: var(--h-fieldset-legend-border-radius);
+  background: var(--h-fieldset-legend-background);
+  color: var(--h-fieldset-legend-color);
+}
+
+.hx-fieldset-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-fieldset-legend-gap);
+  padding: var(--h-fieldset-legend-padding);
+  border: var(--h-fieldset-legend-border-width) solid var(--h-fieldset-legend-border-color);
+  border-radius: var(--h-fieldset-legend-border-radius);
+  background: var(--h-fieldset-legend-background);
+  color: var(--h-fieldset-legend-color);
+  font: inherit;
+  cursor: pointer;
+  outline: 0 none;
+  transition:
+    background var(--h-fieldset-transition-duration),
+    color var(--h-fieldset-transition-duration);
+}
+
+.hx-fieldset-toggle:hover {
+  background: var(--h-fieldset-legend-hover-background);
+  color: var(--h-fieldset-legend-hover-color);
+}
+
+.hx-fieldset-toggle:focus-visible {
+  outline: var(--h-fieldset-legend-focus-ring-width) var(--h-fieldset-legend-focus-ring-style)
+    var(--h-fieldset-legend-focus-ring-color);
+  outline-offset: var(--h-fieldset-legend-focus-ring-offset);
+  box-shadow: var(--h-fieldset-legend-focus-ring-shadow);
+}
+
+.hx-fieldset-toggle-icon {
+  @include hx-icon(chevron-up, 1rem, var(--h-fieldset-toggle-icon-color), 2.4);
+  transition: transform 0.2s;
+}
+
+.hx-fieldset-toggle:hover .hx-fieldset-toggle-icon {
+  background: var(--h-fieldset-toggle-icon-hover-color);
+}
+
+.hx-fieldset-collapsed .hx-fieldset-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.hx-fieldset-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.2s,
+    visibility 0.2s;
+}
+
+.hx-fieldset-collapsed .hx-fieldset-collapse {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.hx-fieldset-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hx-fieldset-content {
+  padding: var(--h-fieldset-content-padding);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-fieldset-collapse,
+  .hx-fieldset-toggle-icon,
+  .hx-fieldset-toggle {
+    transition: none;
+  }
+}
+
+.hx-fieldset-toggleable .hx-fieldset-legend {
+  user-select: none;
+}
+
+.hx-fieldset-collapsed .hx-fieldset-box {
+  padding-bottom: 0;
+}

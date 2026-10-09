@@ -1,0 +1,87 @@
+<div class="hx-auto-complete-field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+  @if (multiple()) {
+    @for (item of chips(); track $index) {
+      <span class="hx-auto-complete-chip">
+        <span>{{ item.label }}</span>
+        <button
+          type="button"
+          class="hx-auto-complete-chip-remove"
+          tabindex="-1"
+          [attr.aria-label]="'Remove ' + item.label"
+          [disabled]="isDisabled()"
+          (click)="removeChip($index)"
+        >
+          <span class="hx-auto-complete-remove-icon" aria-hidden="true"></span>
+        </button>
+      </span>
+    }
+  }
+  <input
+    #field
+    type="text"
+    class="hx-auto-complete-input"
+    role="combobox"
+    autocomplete="off"
+    aria-autocomplete="list"
+    aria-haspopup="listbox"
+    [id]="inputId() ?? null"
+    [placeholder]="multiple() && chips().length ? '' : placeholder()"
+    [disabled]="isDisabled()"
+    [value]="inputText()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="open() ? panelId : null"
+    [attr.aria-activedescendant]="activeId()"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-labelledby]="ariaLabelledby() ?? null"
+    [attr.aria-invalid]="invalid() ? 'true' : null"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+    (blur)="onBlur()"
+  />
+</div>
+@if (dropdown()) {
+  <button
+    type="button"
+    class="hx-auto-complete-dropdown"
+    tabindex="-1"
+    aria-label="Show suggestions"
+    [disabled]="isDisabled()"
+    (click)="showAll()"
+  >
+    <span class="hx-auto-complete-chevron" aria-hidden="true"></span>
+  </button>
+}
+<span class="hx-auto-complete-status" role="status" aria-live="polite">{{ status() }}</span>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayPanelClass="hx-auto-complete-overlay"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayMinWidth]="panelWidth()"
+  (overlayOutsideClick)="onOutsideClick($event)"
+  (detach)="open.set(false)"
+>
+  <div class="hx-auto-complete-panel">
+    <div class="hx-auto-complete-list" role="listbox" [id]="panelId" [attr.aria-multiselectable]="multiple() ? 'true' : null" [attr.aria-label]="ariaLabel() ?? placeholder() ?? null">
+      @for (item of items(); track $index) {
+        <div
+          class="hx-auto-complete-option"
+          role="option"
+          [id]="optionId($index)"
+          [class.hx-auto-complete-option-active]="$index === active()"
+          [attr.aria-selected]="isSelected(item)"
+          [attr.aria-disabled]="item.disabled ? 'true' : null"
+          (mousedown)="$event.preventDefault()"
+          (click)="choose(item)"
+          (mousemove)="active.set($index)"
+        >
+          {{ item.label }}
+        </div>
+      } @empty {
+        <div class="hx-auto-complete-empty">{{ emptyMessage() }}</div>
+      }
+    </div>
+  </div>
+</ng-template>

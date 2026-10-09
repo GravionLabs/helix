@@ -1,43 +1,40 @@
 /*
- * AG Grid Theme — Helix
+ * AG Grid theme for legacy-theme grids — Helix
  *
- * Apply the `.helix-ag-grid` class to the ag-grid host element to get a
- * look and feel consistent with the Helix / PrimeNG design system.
+ * Prefer `helixGridTheme` (the Theming API of AG Grid 33+, see the README): it needs no stylesheet. This class is for
+ * grids that still use a legacy theme (`theme="legacy"` in AG Grid 33+, or the `ag-theme-*` classes before):
+ * put `.helix-ag-grid` next to the legacy theme class on the grid host.
  *
- * Token reference:
- *   --helix-*   design tokens defined in @gravionlabs/helix styles.css
- *   --p-*       PrimeNG Aura tokens injected at runtime by ThemeService
- *
- * Approach: https://www.ag-grid.com/javascript-data-grid/theming-css/#overriding-theme-parameters-with-custom-properties
+ * Only `--h-*` Helix tokens are read, so the grid follows dark mode (`.app-dark`) and a runtime primary colour change.
  */
 
 .helix-ag-grid {
   /* ── Colours ──────────────────────────────────────────────────────────── */
-  --ag-background-color: var(--helix-surface-card);
+  --ag-background-color: var(--h-content-background);
   --ag-foreground-color: var(--h-text-color);
   --ag-text-color: var(--ag-foreground-color);
   --ag-accent-color: var(--h-primary-color);
   --ag-invalid-color: var(--h-form-field-invalid-border-color);
-  --ag-border-color: var(--helix-border);
+  --ag-border-color: var(--h-content-border-color);
   --ag-wrapper-border: none;
-  --ag-row-border: solid 1px var(--helix-border);
+  --ag-row-border: solid 1px var(--h-content-border-color);
   --ag-odd-row-background-color: color-mix(
     in srgb,
     transparent,
-    var(--helix-border) 10%
+    var(--h-content-border-color) 10%
   );
-  --ag-row-hover-color: var(--helix-surface-hover);
+  --ag-row-hover-color: var(--h-content-hover-background);
 
   /* ── Typography ───────────────────────────────────────────────────────── */
-  --ag-font-family: "Lato", sans-serif;
-  --ag-font-size: 0.75rem;
+  --ag-font-family: inherit;
+  --ag-font-size: 0.875rem;
 
   /* ── Header ───────────────────────────────────────────────────────────── */
-  --ag-header-background-color: var(--helix-surface-card);
-  --ag-header-font-family: "Lato", sans-serif;
-  --ag-header-font-weight: 500;
-  --ag-header-font-size: 0.75rem;
-  --ag-header-text-color: var(--h-primary-color);
+  --ag-header-background-color: var(--h-content-background);
+  --ag-header-font-family: inherit;
+  --ag-header-font-weight: 600;
+  --ag-header-font-size: 0.875rem;
+  --ag-header-text-color: var(--h-text-color);
 
   /* ── Cells ────────────────────────────────────────────────────────────── */
   --ag-cell-text-color: var(--h-text-color);
@@ -69,10 +66,10 @@
   }
 
   .ag-dnd-ghost {
-    font-family: "Lato", sans-serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--h-primary-color);
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--h-text-color);
   }
 
   .ag-paging-panel {

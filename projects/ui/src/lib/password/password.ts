@@ -36,6 +36,7 @@ import { nextId } from '../internal/ids';
     class: 'hx-password',
     '[class.hx-password-fluid]': 'fluid()',
     '[class.hx-password-has-toggle]': 'toggleMask()',
+    '[class.hx-filled]': "value() !== ''",
   },
   template: `
     <input

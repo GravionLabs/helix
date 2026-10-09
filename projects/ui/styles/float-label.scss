@@ -1,0 +1,112 @@
+/*
+ * Float label: `<hx-float-label>` around one control followed by its `<label for>`. The label sits in the field
+ * and moves up when the control has focus or a value: `over` above the field, `in` inside it (the field gets
+ * room for it), `on` on its top border. Native fields float by `:focus-within` and `:placeholder-shown`, the
+ * helix-ui components by their `hx-filled` class. Colours, offsets and type from the `--h-floatlabel-*` tokens.
+ */
+@mixin floated {
+  &:is(
+      :focus-within,
+      :has(> input:not(:placeholder-shown)),
+      :has(> textarea:not(:placeholder-shown)),
+      :has(.hx-filled)
+    )
+    > label {
+    @content;
+  }
+}
+
+.hx-float-label {
+  position: relative;
+  display: block;
+}
+
+.hx-float-label > label {
+  position: absolute;
+  top: 50%;
+  inset-inline-start: var(--h-floatlabel-position-x);
+  margin-top: -0.5rem;
+  max-width: calc(100% - var(--h-floatlabel-position-x) * 2);
+  overflow: hidden;
+  color: var(--h-floatlabel-color);
+  font-weight: var(--h-floatlabel-font-weight);
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transition-property: top, inset-inline-start, font-size, font-weight, color;
+  transition-duration: var(--h-floatlabel-transition-duration);
+  transition-timing-function: ease;
+}
+
+/* a textarea's label sits at the first line, not in the middle */
+.hx-float-label:has(> textarea) > label {
+  top: var(--h-floatlabel-position-y);
+  margin-top: 0;
+}
+
+.hx-float-label > .hx-input,
+.hx-float-label > .hx-select,
+.hx-float-label > .hx-password,
+.hx-float-label > .hx-input-number {
+  width: 100%;
+}
+
+/* the hint is replaced by the label while the field is empty */
+.hx-float-label > .hx-input::placeholder {
+  color: transparent;
+}
+
+/* floated: over (default) */
+@include floated {
+  top: var(--h-floatlabel-over-active-top);
+  margin-top: 0;
+  font-size: var(--h-floatlabel-active-font-size);
+  font-weight: var(--h-floatlabel-active-font-weight);
+  color: var(--h-floatlabel-active-color);
+}
+
+.hx-float-label:focus-within > label {
+  color: var(--h-floatlabel-focus-color);
+}
+
+/* in */
+.hx-float-label-in > .hx-input {
+  padding-top: var(--h-floatlabel-in-input-padding-top);
+  padding-bottom: var(--h-floatlabel-in-input-padding-bottom);
+}
+
+.hx-float-label-in {
+  @include floated {
+    top: var(--h-floatlabel-in-active-top);
+    margin-top: 0;
+  }
+}
+
+/* on */
+.hx-float-label-on {
+  @include floated {
+    top: 0;
+    margin-top: 0;
+    padding: var(--h-floatlabel-on-active-padding);
+    border-radius: var(--h-floatlabel-on-border-radius);
+    background: var(--h-floatlabel-on-active-background);
+    transform: translateY(-50%);
+  }
+}
+
+/* invalid */
+.hx-float-label:has(
+    > [aria-invalid="true"],
+    > .ng-invalid.ng-touched,
+    > .hx-select-invalid
+  )
+  > label {
+  color: var(--h-floatlabel-invalid-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-float-label > label {
+    transition: none;
+  }
+}

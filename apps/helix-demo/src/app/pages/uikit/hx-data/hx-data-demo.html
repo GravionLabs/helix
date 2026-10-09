@@ -1,0 +1,90 @@
+<h1 class="sr-only">Helix UI Data</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Data</h2>
+    <p class="m-0">Data components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Tree</h2>
+    <p class="m-0">Arrow keys move, Right/Left expand and collapse, typing jumps by label, Enter or Space selects.</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr))">
+      <div>
+        <h3 class="demo-title">Single selection</h3>
+        <hx-tree [value]="files()" selectionMode="single" [(selection)]="single" ariaLabel="Files" />
+        <p class="m-0">Selected: {{ single() ?? 'none' }}</p>
+      </div>
+      <div>
+        <h3 class="demo-title">Checkbox, with filter</h3>
+        <hx-tree [value]="files()" selectionMode="checkbox" [(selection)]="checked" filter filterPlaceholder="Filter files" ariaLabel="Files to share" />
+        <p class="m-0">Checked: {{ checked() }}</p>
+      </div>
+      <div>
+        <h3 class="demo-title">Lazy children</h3>
+        <hx-tree [value]="lazy()" (nodeExpand)="load($event)" ariaLabel="Servers" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Chart</h2>
+    <p class="m-0">chart.js with colours from the tokens; switch light/dark or the primary colour and it redraws. Click a bar: {{ picked() }}</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))">
+      <hx-chart type="bar" [data]="barData" height="18rem" ariaLabel="Sales and costs per month" (dataSelect)="pick($event)">
+        <table hxChartFallback>
+          <tr><th>Month</th><th>Sales</th><th>Costs</th></tr>
+          @for (m of months; track m; let i = $index) {
+            <tr><td>{{ m }}</td><td>{{ sales[i] }}</td><td>{{ costs[i] }}</td></tr>
+          }
+        </table>
+      </hx-chart>
+      <hx-chart type="line" [data]="lineData" height="18rem" ariaLabel="Sales per month" />
+      <hx-chart type="doughnut" [data]="doughnutData" height="18rem" ariaLabel="Traffic sources" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Table</h2>
+    <p class="m-0">Plain HTML tables with the Helix look. Sorting, paging and filtering are AG Grid's job (helix-ag-grid).</p>
+    <div class="hx-table-scroll">
+      <table hx-table striped hoverable>
+        <caption>Invoices</caption>
+        <thead>
+          <tr><th scope="col">No.</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col">Amount</th></tr>
+        </thead>
+        <tbody>
+          @for (invoice of invoices; track invoice.no) {
+            <tr [attr.aria-selected]="invoice.no === 1003 ? 'true' : null">
+              <th scope="row">{{ invoice.no }}</th>
+              <td>{{ invoice.customer }}</td>
+              <td>{{ invoice.status }}</td>
+              <td>{{ invoice.amount }}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot><tr><th scope="row" colspan="3">Total</th><td>{{ total }}</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))">
+      <table hx-table size="small" gridlines>
+        <caption>Small, with gridlines</caption>
+        <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+        <tbody>
+          @for (invoice of invoices.slice(0, 3); track invoice.no) {
+            <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+          }
+        </tbody>
+      </table>
+      <div class="hx-table-scroll" style="max-height: 11rem" tabindex="0" role="region" aria-label="Invoices with a sticky header">
+        <table hx-table size="large" stickyHeader>
+          <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+          <tbody>
+            @for (invoice of invoices; track invoice.no) {
+              <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

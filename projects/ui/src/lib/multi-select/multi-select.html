@@ -1,0 +1,119 @@
+<div
+  #trigger
+  class="hx-multi-select-trigger"
+  role="combobox"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+  aria-haspopup="listbox"
+  [id]="inputId() ?? null"
+  [attr.tabindex]="isDisabled() ? -1 : 0"
+  [attr.aria-disabled]="isDisabled() ? 'true' : null"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? panelId : null"
+  [attr.aria-label]="ariaLabel() ?? null"
+  [attr.aria-labelledby]="ariaLabelledby() ?? null"
+  [attr.aria-invalid]="invalid() ? 'true' : null"
+  (click)="toggle()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span class="hx-multi-select-label" [class.hx-multi-select-placeholder]="!selected().length">
+    @if (!selected().length) {
+      {{ placeholder() }}
+    } @else if (summary(); as text) {
+      {{ text }}
+    } @else if (display() === 'chip') {
+      @for (item of selected(); track $index) {
+        <span class="hx-multi-select-chip">
+          <span>{{ item.label }}</span>
+          <button
+            type="button"
+            class="hx-multi-select-chip-remove"
+            tabindex="-1"
+            [attr.aria-label]="'Remove ' + item.label"
+            [disabled]="isDisabled()"
+            (click)="removeChip($event, item)"
+          >
+            <span class="hx-multi-select-clear-icon" aria-hidden="true"></span>
+          </button>
+        </span>
+      }
+    } @else {
+      {{ commaLabel() }}
+    }
+  </span>
+  <span class="hx-multi-select-chevron" aria-hidden="true"></span>
+</div>
+@if (canClear()) {
+  <button type="button" class="hx-multi-select-clear" aria-label="Clear selection" (click)="clear($event)">
+    <span class="hx-multi-select-clear-icon" aria-hidden="true"></span>
+  </button>
+}
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayPanelClass="hx-multi-select-overlay"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayMinWidth]="panelWidth()"
+  (overlayOutsideClick)="onOutsideClick($event)"
+  (overlayKeydown)="onOverlayKeydown($event)"
+  (attach)="onAttach()"
+  (detach)="close()"
+>
+  <div class="hx-multi-select-panel">
+    @if (filter() || showToggleAll()) {
+      <div class="hx-multi-select-header">
+        @if (showToggleAll()) {
+          <input
+            type="checkbox"
+            hx-checkbox
+            class="hx-multi-select-toggle-all"
+            [attr.aria-label]="toggleAllLabel()"
+            [checked]="allSelected()"
+            (change)="toggleAll()"
+          />
+        }
+        @if (filter()) {
+          <input
+            #filterField
+            type="text"
+            class="hx-multi-select-filter"
+            autocomplete="off"
+            [attr.aria-label]="filterPlaceholder()"
+            [attr.aria-controls]="panelId"
+            [placeholder]="filterPlaceholder()"
+            [value]="query()"
+            (input)="query.set($any($event.target).value)"
+          />
+        }
+      </div>
+    }
+    <div
+      cdkListbox
+      class="hx-multi-select-list"
+      [id]="panelId"
+      [cdkListboxMultiple]="true"
+      [cdkListboxValue]="selectedValues()"
+      [cdkListboxUseActiveDescendant]="true"
+      [cdkListboxCompareWith]="compareWith()"
+      [attr.aria-label]="ariaLabel() ?? placeholder() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      (cdkListboxValueChange)="onSelect($event)"
+    >
+      @for (item of visibleItems(); track item) {
+        <div
+          class="hx-multi-select-option"
+          [cdkOption]="item.value"
+          [cdkOptionDisabled]="item.disabled"
+          [cdkOptionTypeaheadLabel]="item.label"
+        >
+          <span class="hx-multi-select-check" aria-hidden="true"></span>
+          <span>{{ item.label }}</span>
+        </div>
+      } @empty {
+        <div class="hx-multi-select-empty">{{ emptyMessage() }}</div>
+      }
+    </div>
+  </div>
+</ng-template>

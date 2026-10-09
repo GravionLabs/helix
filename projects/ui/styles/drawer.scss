@@ -1,0 +1,119 @@
+/*
+ * Drawer: `<hx-drawer>`. The box is the dialog frame (see `dialog.scss`) restyled from the `--h-drawer-*` tokens:
+ * square corners, no border on the sides that touch the screen edge, full height (left, right) or full width (top,
+ * bottom). The CDK pane slides in from its edge; the slide stops under `prefers-reduced-motion`.
+ */
+.hx-drawer-anchor {
+  display: none;
+}
+
+.hx-dialog.hx-drawer {
+  height: 100%;
+  border-color: var(--h-drawer-border-color);
+  border-radius: 0;
+  background: var(--h-drawer-background);
+  color: var(--h-drawer-color);
+  box-shadow: var(--h-drawer-shadow);
+}
+
+.hx-drawer .hx-dialog-title {
+  padding: var(--h-drawer-header-padding);
+  font-size: var(--h-drawer-title-font-size);
+  font-weight: var(--h-drawer-title-font-weight);
+}
+
+.hx-drawer .hx-dialog-title:empty {
+  padding: 0;
+}
+
+.hx-drawer .hx-dialog-content {
+  padding: var(--h-drawer-content-padding);
+}
+
+.hx-drawer .hx-dialog-footer {
+  padding: var(--h-drawer-footer-padding);
+}
+
+.hx-drawer-panel-left .hx-drawer {
+  border-inline-start: 0;
+  border-block: 0;
+}
+
+.hx-drawer-panel-right .hx-drawer {
+  border-inline-end: 0;
+  border-block: 0;
+}
+
+.hx-drawer-panel-top .hx-drawer {
+  border-block-start: 0;
+  border-inline: 0;
+}
+
+.hx-drawer-panel-bottom .hx-drawer {
+  border-block-end: 0;
+  border-inline: 0;
+}
+
+.hx-drawer-panel-full .hx-drawer {
+  border: 0;
+}
+
+.hx-drawer-panel-left {
+  animation: hx-drawer-in-left 0.25s ease-out;
+}
+
+.hx-drawer-panel-right {
+  animation: hx-drawer-in-right 0.25s ease-out;
+}
+
+.hx-drawer-panel-top {
+  animation: hx-drawer-in-top 0.25s ease-out;
+}
+
+.hx-drawer-panel-bottom {
+  animation: hx-drawer-in-bottom 0.25s ease-out;
+}
+
+.hx-drawer-panel-full {
+  animation: hx-drawer-in-fade 0.2s ease-out;
+}
+
+@keyframes hx-drawer-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes hx-drawer-in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes hx-drawer-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes hx-drawer-in-bottom {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes hx-drawer-in-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-drawer-panel-left,
+  .hx-drawer-panel-right,
+  .hx-drawer-panel-top,
+  .hx-drawer-panel-bottom,
+  .hx-drawer-panel-full {
+    animation: none;
+  }
+}

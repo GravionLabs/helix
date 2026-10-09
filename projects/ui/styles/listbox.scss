@@ -1,0 +1,130 @@
+/*
+ * Listbox: `<hx-listbox>`. An inline list of options in a bordered box from the `--h-listbox-*` tokens, with an
+ * optional filter field above it. The options follow the Select's: focus and selected backgrounds, an optional
+ * checkmark in front.
+ */
+@use 'icons' as *;
+
+.hx-listbox {
+  display: block;
+  box-sizing: border-box;
+  min-width: 10rem;
+  border: 1px solid var(--h-listbox-border-color);
+  border-radius: var(--h-listbox-border-radius);
+  background: var(--h-listbox-background);
+  color: var(--h-listbox-color);
+  box-shadow: var(--h-listbox-shadow);
+  transition: border-color var(--h-listbox-transition-duration);
+}
+
+.hx-listbox-header {
+  padding: var(--h-listbox-list-header-padding);
+}
+
+.hx-listbox-filter {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  font: inherit;
+  outline: 0 none;
+}
+
+.hx-listbox-filter:focus {
+  border-color: var(--h-inputtext-focus-border-color);
+}
+
+.hx-listbox-scroll {
+  overflow: auto;
+}
+
+.hx-listbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-listbox-list-gap);
+  padding: var(--h-listbox-list-padding);
+  outline: 0 none;
+}
+
+.hx-listbox-list:focus-visible {
+  outline: 1px solid var(--h-listbox-option-selected-color);
+  outline-offset: -2px;
+}
+
+.hx-listbox-option {
+  display: flex;
+  align-items: center;
+  gap: var(--h-listbox-checkmark-gutter-end);
+  padding: var(--h-listbox-option-padding);
+  border-radius: var(--h-listbox-option-border-radius);
+  color: var(--h-listbox-option-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hx-listbox-option:hover,
+.hx-listbox-option.cdk-option-active {
+  background: var(--h-listbox-option-focus-background);
+  color: var(--h-listbox-option-focus-color);
+}
+
+.hx-listbox-option[aria-selected="true"] {
+  background: var(--h-listbox-option-selected-background);
+  color: var(--h-listbox-option-selected-color);
+}
+
+.hx-listbox-option[aria-selected="true"]:hover,
+.hx-listbox-option[aria-selected="true"].cdk-option-active {
+  background: var(--h-listbox-option-selected-focus-background);
+  color: var(--h-listbox-option-selected-focus-color);
+}
+
+.hx-listbox-option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* the checkmark column exists only with `checkmark` */
+.hx-listbox-check {
+  display: none;
+}
+
+.hx-listbox-checkmark .hx-listbox-check {
+  display: block;
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.hx-listbox-checkmark .hx-listbox-option[aria-selected="true"] .hx-listbox-check {
+  @include hx-icon(check, 0.875rem, var(--h-listbox-checkmark-color), 3.4);
+}
+
+.hx-listbox-empty {
+  padding: var(--h-listbox-empty-message-padding);
+  color: var(--h-inputtext-placeholder-color);
+}
+
+.hx-listbox-invalid,
+.hx-listbox.ng-invalid.ng-touched {
+  border-color: var(--h-listbox-invalid-border-color);
+}
+
+.hx-listbox-disabled {
+  background: var(--h-listbox-disabled-background);
+  color: var(--h-listbox-disabled-color);
+}
+
+.hx-listbox-disabled .hx-listbox-option {
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-listbox {
+    transition: none;
+  }
+}

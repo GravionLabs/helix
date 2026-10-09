@@ -1,0 +1,71 @@
+/*
+ * Confirm: `<hx-confirm-dialog>` and `<hx-confirm-popup>`. The dialog is the dialog frame (see `dialog.scss`) with an
+ * icon and the message from the `--h-confirmdialog-*` tokens; the popup is the popover panel (see `popover.scss`)
+ * restyled from the `--h-confirmpopup-*` tokens, with its message, icon and the buttons in a footer.
+ */
+.hx-confirm-anchor {
+  display: none;
+}
+
+.hx-confirm-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-confirmdialog-content-gap);
+}
+
+.hx-confirm-icon {
+  flex: none;
+  color: var(--h-confirmdialog-icon-color);
+  font-size: var(--h-confirmdialog-icon-size);
+}
+
+.hx-confirm-message {
+  margin: 0;
+}
+
+.hx-popover.hx-confirm-popup {
+  margin-block-start: var(--h-confirmpopup-gutter);
+  border-color: var(--h-confirmpopup-border-color);
+  border-radius: var(--h-confirmpopup-border-radius);
+  background: var(--h-confirmpopup-background);
+  color: var(--h-confirmpopup-color);
+  box-shadow: var(--h-confirmpopup-shadow);
+}
+
+.hx-popover.hx-confirm-popup.hx-popover-above {
+  margin-block: 0 var(--h-confirmpopup-gutter);
+}
+
+.hx-confirm-popup .hx-popover-content {
+  padding: 0;
+}
+
+.hx-confirm-popup::before {
+  inset-inline-start: var(--h-confirmpopup-arrow-offset);
+  border-color: var(--h-confirmpopup-border-color);
+  background: var(--h-confirmpopup-background);
+}
+
+.hx-confirm-popup.hx-popover-end::before {
+  inset-inline: auto var(--h-confirmpopup-arrow-offset);
+}
+
+.hx-confirm-popup-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-confirmpopup-content-gap);
+  padding: var(--h-confirmpopup-content-padding);
+}
+
+.hx-confirm-popup-icon {
+  flex: none;
+  color: var(--h-confirmpopup-icon-color);
+  font-size: var(--h-confirmpopup-icon-size);
+}
+
+.hx-confirm-popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--h-confirmpopup-footer-gap);
+  padding: var(--h-confirmpopup-footer-padding);
+}
