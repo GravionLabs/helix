@@ -40,6 +40,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
 | `HxCard` | `hx-card` | surface with header, title (a heading), subtitle, content and footer slots |
 | `HxProgressBar`, `HxProgressSpinner` | `hx-progress-bar`, `hx-progress-spinner` | determinate and indeterminate bar, spinner; `role=progressbar`, reduced motion |
+| `HxTree` | `hx-tree` | hierarchical data: selection (single, multiple, checkbox), filter, lazy children, node template, WAI-ARIA tree keyboard |
 | `HxTimeline` | `hx-timeline` | events on a line: vertical or horizontal, left/right/alternate, content, opposite and marker templates |
 | `HxSkeleton` | `hx-skeleton` | loading placeholder: rectangle or circle, any size, wave (off under reduced motion), `aria-hidden` |
 | `HxSplitButton` | `hx-split-button` | default action plus an `hx-menu` of related actions; severity, variant, size, rounded, raised |

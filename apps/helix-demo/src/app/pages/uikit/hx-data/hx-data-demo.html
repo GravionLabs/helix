@@ -1,0 +1,28 @@
+<h1 class="sr-only">Helix UI Data</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Data</h2>
+    <p class="m-0">Data components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Tree</h2>
+    <p class="m-0">Arrow keys move, Right/Left expand and collapse, typing jumps by label, Enter or Space selects.</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr))">
+      <div>
+        <h3 class="demo-title">Single selection</h3>
+        <hx-tree [value]="files()" selectionMode="single" [(selection)]="single" ariaLabel="Files" />
+        <p class="m-0">Selected: {{ single() ?? 'none' }}</p>
+      </div>
+      <div>
+        <h3 class="demo-title">Checkbox, with filter</h3>
+        <hx-tree [value]="files()" selectionMode="checkbox" [(selection)]="checked" filter filterPlaceholder="Filter files" ariaLabel="Files to share" />
+        <p class="m-0">Checked: {{ checked() }}</p>
+      </div>
+      <div>
+        <h3 class="demo-title">Lazy children</h3>
+        <hx-tree [value]="lazy()" (nodeExpand)="load($event)" ariaLabel="Servers" />
+      </div>
+    </div>
+  </div>
+</div>
