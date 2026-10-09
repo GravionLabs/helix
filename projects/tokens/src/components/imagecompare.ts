@@ -1,0 +1,24 @@
+// Component tokens of "imagecompare".
+// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+import type { TokenTree } from '../types.ts';
+
+export const imagecompare = {
+  handle: {
+    size: '15px',
+    hoverSize: '30px',
+    background: 'rgba(255,255,255,0.3)',
+    hoverBackground: 'rgba(255,255,255,0.3)',
+    borderColor: 'unset',
+    hoverBorderColor: 'unset',
+    borderWidth: '0',
+    borderRadius: '50%',
+    transitionDuration: '{transition.duration}',
+    focusRing: {
+      width: '{focus.ring.width}',
+      style: '{focus.ring.style}',
+      color: 'rgba(255,255,255,0.3)',
+      offset: '{focus.ring.offset}',
+      shadow: '{focus.ring.shadow}',
+    },
+  },
+} satisfies TokenTree;

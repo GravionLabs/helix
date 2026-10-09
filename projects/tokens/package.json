@@ -1,0 +1,6 @@
+{
+  "name": "@helix/tokens",
+  "private": true,
+  "type": "module",
+  "description": "The Helix design tokens as plain data (primitive, semantic and component layers); input of the token resolver"
+}

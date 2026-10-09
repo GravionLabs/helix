@@ -1,0 +1,24 @@
+// Component tokens of "progressspinner".
+// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+import type { TokenTree } from '../types.ts';
+
+export const progressspinner = {
+  colorScheme: {
+    light: {
+      root: {
+        colorOne: '{red.500}',
+        colorTwo: '{blue.500}',
+        colorThree: '{green.500}',
+        colorFour: '{yellow.500}',
+      },
+    },
+    dark: {
+      root: {
+        colorOne: '{red.400}',
+        colorTwo: '{blue.400}',
+        colorThree: '{green.400}',
+        colorFour: '{yellow.400}',
+      },
+    },
+  },
+} satisfies TokenTree;
