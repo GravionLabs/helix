@@ -42,6 +42,14 @@ export {
 } from './lib/button/button';
 export { HxButtonGroup } from './lib/button-group/button-group';
 export { HxCard } from './lib/card/card';
+export {
+  HX_CHART_LOADER,
+  HxChart,
+  type HxChartInstance,
+  type HxChartModule,
+  type HxChartSelectEvent,
+  type HxChartType,
+} from './lib/chart/chart';
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export { HxChip } from './lib/chip/chip';
 export {
