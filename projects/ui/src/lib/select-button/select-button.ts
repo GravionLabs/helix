@@ -11,17 +11,9 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { type Accessor, type HxOption, resolveOptions } from '../internal/options';
 
 export type HxSelectButtonSize = 'small' | 'medium' | 'large';
-
-/** A string is the name of a property of the option; a function reads it. */
-type Accessor<T> = string | ((option: never) => T);
-
-interface Item {
-  label: string;
-  value: unknown;
-  disabled: boolean;
-}
 
 /**
  * A choice among a few options shown as a joined group of toggle buttons. Single choice by default,
@@ -66,9 +58,9 @@ interface Item {
 })
 export class HxSelectButton implements ControlValueAccessor, FormValueControl<unknown> {
   readonly options = input<readonly unknown[]>([]);
-  readonly optionLabel = input<Accessor<string>>('label');
-  readonly optionValue = input<Accessor<unknown>>('value');
-  readonly optionDisabled = input<Accessor<boolean>>('disabled');
+  readonly optionLabel = input<Accessor<never, string>>('label');
+  readonly optionValue = input<Accessor<never, unknown>>('value');
+  readonly optionDisabled = input<Accessor<never, boolean>>('disabled');
   /** Several options can be chosen; the value is then an array. */
   readonly multiple = input(false, { transform: booleanAttribute });
   /** Whether the chosen option can be switched off again (single choice). */
@@ -87,27 +79,9 @@ export class HxSelectButton implements ControlValueAccessor, FormValueControl<un
   readonly #cvaDisabled = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
 
-  protected readonly items = computed<Item[]>(() => {
-    const label = this.optionLabel() as Accessor<string>;
-    const value = this.optionValue() as Accessor<unknown>;
-    const disabled = this.optionDisabled() as Accessor<boolean>;
-    return this.options().map((option) => {
-      if (option === null || typeof option !== 'object') {
-        return { label: String(option), value: option, disabled: false };
-      }
-      const read = <R>(accessor: Accessor<R>, fallback: R): R =>
-        typeof accessor === 'function'
-          ? (accessor as (o: unknown) => R)(option)
-          : accessor in option
-            ? ((option as Record<string, unknown>)[accessor] as R)
-            : fallback;
-      return {
-        label: String(read(label, '')),
-        value: read(value, option),
-        disabled: Boolean(read(disabled, false)),
-      };
-    });
-  });
+  protected readonly items = computed<HxOption[]>(() =>
+    resolveOptions(this.options(), this.optionLabel(), this.optionValue(), this.optionDisabled()),
+  );
 
   #onChange: (value: unknown) => void = () => {};
   #onTouched: () => void = () => {};
@@ -125,14 +99,14 @@ export class HxSelectButton implements ControlValueAccessor, FormValueControl<un
     this.#cvaDisabled.set(disabled);
   }
 
-  protected isChecked(item: Item): boolean {
+  protected isChecked(item: HxOption): boolean {
     const current = this.value();
     return this.multiple()
       ? Array.isArray(current) && current.some((v) => Object.is(v, item.value))
       : Object.is(current, item.value);
   }
 
-  protected toggle(item: Item): void {
+  protected toggle(item: HxOption): void {
     const checked = this.isChecked(item);
     let next: unknown;
     if (this.multiple()) {

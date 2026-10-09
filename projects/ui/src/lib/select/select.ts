@@ -22,20 +22,14 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { nextId } from '../internal/ids';
+import { type Accessor, compareValues, type HxOption, resolveOptions } from '../internal/options';
 
 export type HxSelectSize = 'small' | 'medium' | 'large';
 export type HxSelectVariant = 'outlined' | 'filled';
 
 /** An option as the select works with it, after `optionLabel`/`optionValue`/`optionDisabled` are applied. */
-export interface HxSelectItem<V = unknown> {
-  label: string;
-  value: V;
-  disabled: boolean;
-}
-
-type Accessor<O, R> = string | ((option: O) => R);
-
-let nextId = 0;
+export type HxSelectItem<V = unknown> = HxOption<V>;
 
 /**
  * A single-value select: a `combobox` button that opens a listbox in a CDK connected overlay (typeahead,
@@ -93,7 +87,7 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
   /** How values are compared to find the selected option (default: `Object.is`). */
-  readonly compareWith = input<(a: unknown, b: unknown) => boolean>(Object.is);
+  readonly compareWith = input<(a: unknown, b: unknown) => boolean>(compareValues);
 
   // The signal-forms contract (FormValueControl): value, disabled, invalid, touch.
   readonly value = model<V | null>(null);
@@ -103,7 +97,7 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
 
   readonly open = signal(false);
   protected readonly panelWidth = signal(0);
-  protected readonly panelId = `hx-select-panel-${nextId++}`;
+  protected readonly panelId = nextId('hx-select-panel');
   protected readonly positions: ConnectedPosition[] = [
     { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 2 },
     { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -2 },
@@ -115,27 +109,9 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly #cvaDisabled = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
 
-  protected readonly items = computed<HxSelectItem[]>(() => {
-    const label = this.optionLabel() as Accessor<unknown, string>;
-    const value = this.optionValue() as Accessor<unknown, unknown>;
-    const disabled = this.optionDisabled() as Accessor<unknown, boolean>;
-    return this.options().map((option) => {
-      if (option === null || typeof option !== 'object') {
-        return { label: String(option), value: option, disabled: false };
-      }
-      const read = <R>(accessor: Accessor<unknown, R>, fallback: R) =>
-        typeof accessor === 'function'
-          ? accessor(option)
-          : accessor in option
-            ? ((option as Record<string, unknown>)[accessor] as R)
-            : fallback;
-      return {
-        label: String(read(label, '')),
-        value: read(value, option),
-        disabled: Boolean(read(disabled, false)),
-      };
-    });
-  });
+  protected readonly items = computed<HxSelectItem[]>(() =>
+    resolveOptions(this.options(), this.optionLabel(), this.optionValue(), this.optionDisabled()),
+  );
 
   protected readonly selected = computed(() => {
     const compare = this.compareWith();
