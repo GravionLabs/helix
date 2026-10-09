@@ -1,0 +1,65 @@
+/*
+ * Card: `<hx-card>`. A surface from the `--h-card-*` tokens with slots for a header, a title, a subtitle, the
+ * content and a footer. Empty slots take no space.
+ */
+.hx-card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: var(--h-card-border-radius);
+  background: var(--h-card-background);
+  color: var(--h-card-color);
+  box-shadow: var(--h-card-shadow);
+}
+
+.hx-card-header:empty,
+.hx-card-content:empty,
+.hx-card-footer:empty {
+  display: none;
+}
+
+.hx-card-header > img {
+  display: block;
+  width: 100%;
+}
+
+.hx-card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--h-card-body-gap);
+  padding: var(--h-card-body-padding);
+}
+
+.hx-card-caption {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-card-caption-gap);
+}
+
+/* a caption with neither a title nor a subtitle disappears */
+.hx-card-caption:not(:has(> .hx-card-title:not(:empty), > .hx-card-subtitle:not(:empty))) {
+  display: none;
+}
+
+.hx-card-title {
+  margin: 0;
+  font-size: var(--h-card-title-font-size);
+  font-weight: var(--h-card-title-font-weight);
+}
+
+.hx-card-title:empty,
+.hx-card-subtitle:empty {
+  display: none;
+}
+
+.hx-card-subtitle {
+  color: var(--h-card-subtitle-color);
+}
+
+.hx-card-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--h-card-body-gap);
+}

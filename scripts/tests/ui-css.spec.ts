@@ -36,6 +36,7 @@ describe('helix-ui styles', () => {
   it.each([
     ['button', 'button/button.ts'],
     ['input', 'input/input.ts'],
+    ['card', 'card/card.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['radio', 'radio/radio.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],

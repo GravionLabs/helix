@@ -36,6 +36,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputGroup`, `HxInputGroupAddon` | `hx-input-group`, `hx-input-group-addon` | joins fields, selects, buttons and addons |
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
+| `HxCard` | `hx-card` | surface with header, title (a heading), subtitle, content and footer slots |
 | `HxFileUpload` | `hx-file-upload` | choose and drop files, list, validation messages, progress; no HTTP, the app uploads |
 | `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, typing, month and year views, all three forms APIs |
 | `HxAutoComplete` | `hx-auto-complete` | text field with suggestions from `(complete)`, chips, dropdown, all three forms APIs |

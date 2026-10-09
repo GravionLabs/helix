@@ -30,6 +30,7 @@ export const OUT = path.join(ROOT, 'dist/ui');
 export const TOKEN_COMPONENTS = {
   breadcrumb: ['breadcrumb'],
   button: ['button'],
+  card: ['card'],
   checkbox: ['checkbox'],
   divider: ['divider'],
   'float-label': ['floatlabel'],
