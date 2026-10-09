@@ -11,6 +11,7 @@ import {
   type ValueFormatterParams,
 } from 'ag-grid-community';
 import { type Customer, CustomerService } from '@/app/pages/service/customer.service';
+import { HxGridSection } from '../sections/grid/grid-section';
 import { ActionCell, ActivityCell, StatusCell, type TableContext } from './table-cells';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -23,7 +24,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 @Component({
   selector: 'app-table-demo',
   standalone: true,
-  imports: [AgGridAngular, HxButton, HxIconField, HxInput, HxToast],
+  imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxToast],
   templateUrl: './table-demo.html',
   styleUrl: './table-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,

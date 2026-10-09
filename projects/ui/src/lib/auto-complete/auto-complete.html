@@ -24,7 +24,7 @@
     autocomplete="off"
     aria-autocomplete="list"
     aria-haspopup="listbox"
-    [id]="inputId() ?? null"
+    [attr.id]="inputId() ?? null"
     [placeholder]="multiple() && chips().length ? '' : placeholder()"
     [disabled]="isDisabled()"
     [value]="inputText()"

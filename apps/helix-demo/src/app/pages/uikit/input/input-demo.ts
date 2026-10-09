@@ -25,12 +25,19 @@ import {
 } from '@gravionlabs/helix-ui';
 import { CountryService } from '@/app/pages/service/country.service';
 import type { Country } from '@/app/pages/service/customer.service';
+import { HxFormSection } from '../sections/form/form-section';
+import { HxInputsSection } from '../sections/inputs/inputs-section';
+import { HxSelectSection } from '../sections/select/select-section';
 
 /** The input components of `@gravionlabs/helix-ui` (the colour picker, knob and tree select are not part of it). */
 @Component({
   selector: 'app-input-demo',
   standalone: true,
   imports: [
+    HxInputsSection,
+    HxFormSection,
+    HxSelectSection,
+
     FormsModule,
     HxInput,
     HxButton,
