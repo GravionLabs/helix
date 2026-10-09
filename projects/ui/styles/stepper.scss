@@ -1,0 +1,145 @@
+/*
+ * Stepper: `<hx-stepper>`. A row of step headers (number, title, separator) above the panel of the active step, from
+ * the `--h-stepper-*` tokens. The steps before the active one are completed and show a check mark; the separator
+ * after a completed step is drawn in the active colour.
+ */
+@use 'icons' as *;
+
+.hx-stepper {
+  display: block;
+}
+
+.hx-step-list {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-step {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--h-stepper-step-gap);
+  padding: var(--h-stepper-step-padding);
+}
+
+.hx-step-last {
+  flex: 0 0 auto;
+}
+
+.hx-step-header {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-stepper-step-header-gap);
+  padding: var(--h-stepper-step-header-padding);
+  border: 0;
+  border-radius: var(--h-stepper-step-header-border-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  outline-color: transparent;
+  transition: outline-color var(--h-stepper-transition-duration);
+}
+
+.hx-step-header:focus-visible {
+  outline: var(--h-stepper-step-header-focus-ring-width) var(--h-stepper-step-header-focus-ring-style)
+    var(--h-stepper-step-header-focus-ring-color);
+  outline-offset: var(--h-stepper-step-header-focus-ring-offset);
+  box-shadow: var(--h-stepper-step-header-focus-ring-shadow);
+}
+
+.hx-step-header:disabled {
+  cursor: default;
+}
+
+.hx-step-disabled:not(.hx-step-active) .hx-step-header {
+  opacity: 0.6;
+}
+
+.hx-step-number {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--h-stepper-step-number-size);
+  height: var(--h-stepper-step-number-size);
+  border: 1px solid var(--h-stepper-step-number-border-color);
+  border-radius: var(--h-stepper-step-number-border-radius);
+  background: var(--h-stepper-step-number-background);
+  color: var(--h-stepper-step-number-color);
+  box-shadow: var(--h-stepper-step-number-shadow);
+  font-size: var(--h-stepper-step-number-font-size);
+  font-weight: var(--h-stepper-step-number-font-weight);
+}
+
+.hx-step-active .hx-step-number,
+.hx-step-completed .hx-step-number {
+  border-color: var(--h-stepper-step-number-active-border-color);
+  background: var(--h-stepper-step-number-active-background);
+  color: var(--h-stepper-step-number-active-color);
+}
+
+.hx-step-check {
+  @include hx-icon(check, 1rem, currentcolor, 3);
+}
+
+.hx-step-title {
+  color: var(--h-stepper-step-title-color);
+  font-weight: var(--h-stepper-step-title-font-weight);
+  white-space: nowrap;
+}
+
+.hx-step-active .hx-step-title,
+.hx-step-completed .hx-step-title {
+  color: var(--h-stepper-step-title-active-color);
+}
+
+.hx-step-separator {
+  flex: 1 1 auto;
+  min-width: 1rem;
+  height: var(--h-stepper-separator-size);
+  background: var(--h-stepper-separator-background);
+  transition: background var(--h-stepper-transition-duration);
+}
+
+.hx-step-completed .hx-step-separator {
+  background: var(--h-stepper-separator-active-background);
+}
+
+.hx-step-panels {
+  display: block;
+  padding: var(--h-stepper-steppanels-padding);
+}
+
+.hx-step-panel {
+  display: block;
+  padding: var(--h-stepper-steppanel-padding);
+  background: var(--h-stepper-steppanel-background);
+  color: var(--h-stepper-steppanel-color);
+}
+
+.hx-step-panel[hidden] {
+  display: none;
+}
+
+@media (max-width: 40rem) {
+  .hx-step-title {
+    display: none;
+  }
+
+  .hx-step-active .hx-step-title {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-step-header,
+  .hx-step-separator {
+    transition: none;
+  }
+}

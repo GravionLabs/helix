@@ -26,6 +26,47 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Stepper</h2>
+    <p class="m-0">Linear: the later steps are disabled until Next is pressed. Going back is always possible.</p>
+    <hx-stepper [(value)]="step" linear>
+      <hx-step-list>
+        <hx-step [value]="1">Account</hx-step>
+        <hx-step [value]="2">Address</hx-step>
+        <hx-step [value]="3">Confirm</hx-step>
+      </hx-step-list>
+      <hx-step-panels>
+        <hx-step-panel [value]="1">
+          <ng-template hxStepContent let-activateCallback="activateCallback">
+            <div class="flex flex-col items-start gap-3">
+              <span>Create your account.</span>
+              <button hx-button type="button" (click)="activateCallback(2)">Next</button>
+            </div>
+          </ng-template>
+        </hx-step-panel>
+        <hx-step-panel [value]="2">
+          <ng-template hxStepContent let-activateCallback="activateCallback">
+            <div class="flex flex-col items-start gap-3">
+              <span>Where should we send it?</span>
+              <div class="flex gap-2">
+                <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">Back</button>
+                <button hx-button type="button" (click)="activateCallback(3)">Next</button>
+              </div>
+            </div>
+          </ng-template>
+        </hx-step-panel>
+        <hx-step-panel [value]="3">
+          <ng-template hxStepContent let-activateCallback="activateCallback">
+            <div class="flex flex-col items-start gap-3">
+              <span>All done.</span>
+              <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">Start over</button>
+            </div>
+          </ng-template>
+        </hx-step-panel>
+      </hx-step-panels>
+    </hx-stepper>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Tabs</h2>
     <hx-tabs [(value)]="tab">
       <hx-tab-list>
