@@ -37,6 +37,7 @@ export const TOKEN_COMPONENTS = {
   card: ['card'],
   chart: [],
   checkbox: ['checkbox'],
+  confirm: ['confirmdialog', 'confirmpopup'],
   dialog: ['dialog'],
   divider: ['divider'],
   'float-label': ['floatlabel'],

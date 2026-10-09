@@ -54,11 +54,13 @@ import {
       <div
         #panel
         class="hx-popover"
-        role="dialog"
+        [class]="panelClass() ?? ''"
+        [attr.role]="role()"
         [class.hx-popover-above]="above()"
         [class.hx-popover-end]="end()"
         [attr.aria-label]="ariaLabel() || null"
         [attr.aria-labelledby]="ariaLabelledBy() || null"
+        [attr.aria-describedby]="ariaDescribedBy() || null"
       >
         <div class="hx-popover-content"><ng-content /></div>
       </div>
@@ -72,6 +74,11 @@ export class HxPopover {
   /** Accessible name of the popover. */
   readonly ariaLabel = input<string>();
   readonly ariaLabelledBy = input<string>();
+  readonly ariaDescribedBy = input<string>();
+  /** `alertdialog` for a question that needs an answer (the confirm popup). */
+  readonly role = input<'dialog' | 'alertdialog'>('dialog');
+  /** Extra CSS classes on the panel. */
+  readonly panelClass = input<string>();
   /** A click outside closes it. */
   readonly dismissable = input(true, { transform: booleanAttribute });
   readonly closeOnEscape = input(true, { transform: booleanAttribute });
@@ -94,14 +101,17 @@ export class HxPopover {
   ];
 
   /** Opens it at the element of the event (or `target`), or closes it when it is open. */
-  toggle(event: Event, target?: Element | null): void {
+  toggle(event: Event | Element, target?: Element | null): void {
     if (this.open()) this.hide();
     else this.show(event, target);
   }
 
-  show(event: Event, target?: Element | null): void {
+  /** Opens it at `target`, else at the element of the event; an element can be passed instead of an event. */
+  show(event: Event | Element, target?: Element | null): void {
     if (this.open()) return;
-    this.origin.set(target ?? ((event.currentTarget ?? event.target) as Element | null));
+    const fromEvent =
+      event instanceof Element ? event : ((event.currentTarget ?? event.target) as Element | null);
+    this.origin.set(target ?? fromEvent);
     this.open.set(true);
     this.shown.emit();
   }

@@ -95,4 +95,16 @@
     </div>
   </hx-popover>
   <hx-popover #info ariaLabel="About popovers">A popover holds any content. This one has only text, so nothing is focused.</hx-popover>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Confirm</h2>
+    <div class="flex flex-wrap items-center gap-2">
+      <button hx-button type="button" severity="danger" (click)="confirmDelete()">Delete (dialog)</button>
+      <button hx-button type="button" variant="outlined" aria-haspopup="dialog" (click)="confirmAt($event)">Proceed (popup)</button>
+      <button hx-button type="button" variant="outlined" (click)="confirmAsync()">Leave (async)</button>
+    </div>
+    <p class="m-0">Last answer: {{ answer() }}. The focus starts on the safe answer; Escape rejects.</p>
+  </div>
+  <hx-confirm-dialog />
+  <hx-confirm-popup />
 </div>
