@@ -16,6 +16,7 @@
     "build:lib:css:ag-grid": "tailwindcss -i projects/ag-grid/styles-src.css -o dist/ag-grid/styles.css && node scripts/add-css-export.mjs dist/ag-grid",
     "build:lib:css:ui": "node scripts/build-ui-css.mjs",
     "tokens:export": "node scripts/export-tokens.mjs",
+    "tokens:golden": "node scripts/tokens-golden.mjs",
     "tokens:site": "node scripts/export-tokens.mjs helix --base --dark=.dark --out=apps/site/.vitepress/theme/generated",
     "palettes:generate": "node scripts/helix-palettes.mjs",
     "design-system:build": "node scripts/design-system/build.mjs",
