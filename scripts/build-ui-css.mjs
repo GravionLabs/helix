@@ -31,6 +31,7 @@ export const TOKEN_COMPONENTS = {
   checkbox: ['checkbox'],
   divider: ['divider'],
   input: ['inputtext', 'textarea'],
+  'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],
   radio: ['radiobutton'],
   select: ['select'],
