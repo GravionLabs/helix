@@ -1,11 +1,11 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixTopbar } from './topbar';
 
 type HelixTopbarPrivate = {
-  effectiveBreadcrumbs: () => MenuItem[];
+  effectiveBreadcrumbs: () => HxMenuItem[];
   showBreadcrumbs: () => boolean;
 };
 

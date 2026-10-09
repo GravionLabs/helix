@@ -11,7 +11,7 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Dynamic Form Advanced', icon: 'pi pi-fw pi-star', path: 'dynamicform-advanced' },
   { label: 'Dynamic Form JSON', icon: 'pi pi-fw pi-database', path: 'dynamicform-json' },
   { label: 'Input', icon: 'pi pi-fw pi-check-square', path: 'input' },
-  { label: 'Button', icon: 'pi pi-fw pi-mobile', path: 'button', styleClass: 'rotated-icon' },
+  { label: 'Button', icon: 'pi pi-fw pi-mobile', path: 'button' },
   { label: 'Table', icon: 'pi pi-fw pi-table', path: 'table' },
   { label: 'List', icon: 'pi pi-fw pi-list', path: 'list' },
   { label: 'Tree', icon: 'pi pi-fw pi-share-alt', path: 'tree' },

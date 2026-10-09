@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import type { Environment } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
@@ -78,7 +78,7 @@ export class HelixAppLayout {
   private activatedRoute = inject(ActivatedRoute);
 
   /** Resolved menu: input takes priority, then route data, then empty. */
-  protected effectiveMenu = computed<MenuItem[]>(() => {
+  protected effectiveMenu = computed<HxMenuItem[]>(() => {
     const inputMenu = this.menu();
     if (inputMenu.length > 0) return inputMenu;
     return (this.activatedRoute.snapshot.data['menu'] as HelixRouteMenuItem[] | undefined) ?? [];

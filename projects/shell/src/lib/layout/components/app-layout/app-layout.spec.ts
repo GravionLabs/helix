@@ -1,6 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixAppLayout } from './app-layout';
 
@@ -145,14 +145,14 @@ describe('HelixAppLayout', () => {
   });
 
   it('effectiveMenu() should return empty array when no input or route data', () => {
-    const priv = component as unknown as { effectiveMenu: () => MenuItem[] };
+    const priv = component as unknown as { effectiveMenu: () => HxMenuItem[] };
     expect(priv.effectiveMenu()).toEqual([]);
   });
 
   it('effectiveMenu() should return input menu when set', () => {
     const menu = [{ label: 'Home', routerLink: ['/'] }];
     fixture.componentRef.setInput('menu', menu);
-    expect((component as unknown as { effectiveMenu: () => MenuItem[] }).effectiveMenu()).toEqual(
+    expect((component as unknown as { effectiveMenu: () => HxMenuItem[] }).effectiveMenu()).toEqual(
       menu,
     );
   });

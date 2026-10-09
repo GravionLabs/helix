@@ -11,8 +11,8 @@ Angular application shell for [Helix](../../README.md), extending
 - 🗃️ **NgRx Signal Store** — `LayoutStore` for theme, menu, and dark-mode state
 - 🔐 **Auth & error pages** — login, error, access-denied, not-found, with lazy route config
 - 🚀 **Landing widgets** — hero, features, highlights, pricing, footer sections
-- 📝 **Form infrastructure** — `HelixFormField`, `HelixValidators`, `helixFormErrorMap`
-- 🎨 **Helix theming** — the Helix preset (plus Aura / Lara / Nora), dark mode via View Transitions
+- 📝 **Form infrastructure** — `HelixFormField` (label, hint, touched-gated error); the validators come from `@gravionlabs/helix-ui/validators`
+- 🎨 **Helix theming** — dark mode, primary colour and surface through the theme service of helix-ui (`provideHxTheme`), with View Transitions
 - 📦 **Standalone components** — no NgModule required
 
 ## Installation
@@ -23,23 +23,28 @@ npm install @gravionlabs/helix-shell
 
 ### Peer Dependencies
 
-`@angular/core >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-core >=22`,
-`primeicons >=7`.
+`@angular/core >=22`, `@angular/router >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-ui >=0.1.0` (and its own
+peers, `@angular/cdk` and `@angular/forms`), `primeicons >=7`. The shell has no dependency on `@gravionlabs/helix-core`.
 
 ## Setup
 
 ```typescript
 // app.config.ts
-import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
-import { provideHelix } from '@gravionlabs/helix-core/config';
+import { provideHxTheme } from '@gravionlabs/helix-ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
     provideHttpClient(),
-    provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })
+    provideHxTheme({ storageKey: 'my-app-theme', viewTransition: true })
   ]
 };
+```
+
+```css
+/* styles.css: the shell draws its buttons, fields, breadcrumb and tooltips with helix-ui */
+@import "@gravionlabs/helix-ui/styles.css";
+@import "@gravionlabs/helix-ui/tokens.css";
 ```
 
 ```typescript

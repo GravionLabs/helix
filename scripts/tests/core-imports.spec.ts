@@ -19,7 +19,7 @@ describe('helix-core import guard', () => {
     expect(forbiddenCoreImports()).toEqual([]);
   });
 
-  it('flags a component entry point in the shell, with file and line', () => {
+  it('flags every core entry point in the shell, with file and line', () => {
     const root = project({
       'projects/shell/src/a.ts': "import { ButtonModule } from '@gravionlabs/helix-core/button';\n",
       'projects/shell/src/b.ts':
@@ -27,16 +27,18 @@ describe('helix-core import guard', () => {
     });
     expect(forbiddenCoreImports(root, ALLOWED)).toEqual([
       { file: path.join('projects/shell/src/a.ts'), line: 1, entry: 'button' },
+      { file: path.join('projects/shell/src/b.ts'), line: 1, entry: 'api' },
       { file: path.join('projects/shell/src/b.ts'), line: 2, entry: 'ripple' },
     ]);
   });
 
-  it('allows the entry points a library still needs, including sub-paths and vi.mock strings', () => {
+  it('allows the entry points a library is given, including sub-paths and vi.mock strings', () => {
     const root = project({
       'projects/shell/src/a.ts':
         "import { a } from '@gravionlabs/helix-core/validators/x';\nvi.mock('@gravionlabs/helix-core/api', () => ({}));\n",
     });
-    expect(forbiddenCoreImports(root, ALLOWED)).toEqual([]);
+    expect(forbiddenCoreImports(root, { shell: ['api', 'validators'] })).toEqual([]);
+    expect(forbiddenCoreImports(root, ALLOWED).map((f) => f.entry)).toEqual(['validators', 'api']);
   });
 
   it('flags the theme engine in the shell: the theme runs on the theme service of helix-ui', () => {
