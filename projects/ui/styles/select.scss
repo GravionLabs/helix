@@ -146,6 +146,9 @@
 /* the panel */
 .hx-select-panel {
   box-sizing: border-box;
+  /* the CDK pane is a flex row: without this the panel is only as wide as its content, not the field */
+  flex: 1 1 auto;
+  min-width: 0;
   max-height: 16rem;
   overflow: auto;
   border: 1px solid var(--h-select-overlay-border-color);
