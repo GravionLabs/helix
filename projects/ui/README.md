@@ -30,6 +30,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxSelect` | `hx-select` | CDK listbox in an overlay, all three forms APIs |
 | `HxDivider` | `hx-divider` | horizontal/vertical, labelled |
 | `HxTooltip` | `[hx-tooltip]` | CDK overlay, hover and focus |
+| `HxAvatar`, `HxAvatarGroup` | `hx-avatar`, `hx-avatar-group` | picture, icon or initials; sizes, shapes; the group overlaps its avatars |
 | `HxBadge`, `HxOverlayBadge` | `hx-badge`, `hx-overlay-badge` | count or dot marker, severities and sizes; the overlay variant sits on a corner of the wrapped element |
 | `HxBreadcrumb` | `hx-breadcrumb` | router links, home item |
 | `HxIconField`, `HxInputIcon` | `hx-icon-field`, `[hx-input-icon]` | icon on the start or end edge of a text field |

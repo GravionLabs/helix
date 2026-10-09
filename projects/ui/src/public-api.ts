@@ -19,6 +19,12 @@ export {
   type HxAutoCompleteSize,
 } from './lib/auto-complete/auto-complete';
 export {
+  HxAvatar,
+  HxAvatarGroup,
+  type HxAvatarShape,
+  type HxAvatarSize,
+} from './lib/avatar/avatar';
+export {
   HxBadge,
   type HxBadgeSeverity,
   type HxBadgeSize,
