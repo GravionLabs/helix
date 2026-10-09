@@ -23,7 +23,6 @@ import { HxOverlaysDemo } from './hx-overlays/hx-overlays-demo';
 import { HxSelectDemo } from './hx-select/hx-select-demo';
 import { InputDemo } from './input/input-demo';
 import { ListDemo } from './list/list-demo';
-import { MediaDemo } from './media/media-demo';
 import { MenuDemo } from './menu/menu-demo';
 import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
@@ -56,7 +55,6 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'hx-select': HxSelectDemo,
   input: InputDemo,
   list: ListDemo,
-  media: MediaDemo,
   menu: MenuDemo,
   message: MessagesDemo,
   misc: MiscDemo,

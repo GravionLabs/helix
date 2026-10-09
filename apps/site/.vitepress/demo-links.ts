@@ -59,7 +59,6 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
     'popover',
     'tooltip',
   ],
-  'uikit/media': ['carousel', 'galleria', 'image', 'imagecompare'],
   'uikit/menu': [
     'breadcrumb',
     'contextmenu',
