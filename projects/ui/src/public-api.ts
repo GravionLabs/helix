@@ -100,6 +100,11 @@ export {
 } from './lib/select/select';
 export { HxSelectButton, type HxSelectButtonSize } from './lib/select-button/select-button';
 export {
+  HxSkeleton,
+  type HxSkeletonAnimation,
+  type HxSkeletonShape,
+} from './lib/skeleton/skeleton';
+export {
   HxSlider,
   type HxSliderOrientation,
   type HxSliderValue,

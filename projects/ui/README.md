@@ -39,6 +39,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
 | `HxCard` | `hx-card` | surface with header, title (a heading), subtitle, content and footer slots |
+| `HxSkeleton` | `hx-skeleton` | loading placeholder: rectangle or circle, any size, wave (off under reduced motion), `aria-hidden` |
 | `HxSplitButton` | `hx-split-button` | default action plus an `hx-menu` of related actions; severity, variant, size, rounded, raised |
 | `HxStepper`, `HxStepList`, `HxStep`, `HxStepPanels`, `HxStepPanel` | `hx-stepper` … | steps with panels: completed/active state, linear mode, `activateCallback`, lazy panels |
 | `HxChip` | `hx-chip` | entity pill with picture or icon, removable by button, Backspace or Delete |
