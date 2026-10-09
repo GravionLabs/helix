@@ -47,6 +47,7 @@ describe('helix-ui styles', () => {
     ['avatar', 'avatar/avatar.ts'],
     ['badge', 'badge/badge.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
+    ['dialog', 'dialog/dialog.ts'],
     ['divider', 'divider/divider.ts'],
     ['float-label', 'float-label/float-label.ts'],
     ['fieldset', 'fieldset/fieldset.ts'],

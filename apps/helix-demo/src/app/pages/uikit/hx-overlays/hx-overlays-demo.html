@@ -30,4 +30,30 @@
     <hx-message severity="contrast" size="small">Small contrast message.</hx-message>
     <hx-message severity="info" size="large" icon="pi pi-star">Large message with a custom icon.</hx-message>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Dialog</h2>
+    <div class="flex flex-wrap items-center gap-2">
+      <button hx-button type="button" (click)="open.set(true)">Open dialog</button>
+      <button hx-button type="button" variant="outlined" (click)="nonModal.set(true)">Non-modal, top right</button>
+      <button hx-button type="button" variant="outlined" (click)="openFromService()">From the service</button>
+    </div>
+    <p class="m-0">Service result: {{ result() }}</p>
+  </div>
+
+  <hx-dialog [(visible)]="open" header="Edit profile" width="28rem" dismissableMask>
+    <div class="flex flex-col gap-3">
+      <label for="demo-dialog-name">Name</label>
+      <input id="demo-dialog-name" hx-input value="Amy Elsner" />
+      <p class="m-0">Escape, the close button or a click on the mask closes it. Tab stays inside.</p>
+    </div>
+    <div hxDialogFooter>
+      <button hx-button type="button" variant="text" (click)="open.set(false)">Cancel</button>
+      <button hx-button type="button" (click)="open.set(false)">Save</button>
+    </div>
+  </hx-dialog>
+
+  <hx-dialog [(visible)]="nonModal" header="Non-modal" [modal]="false" position="top-right" width="20rem">
+    The page behind stays usable.
+  </hx-dialog>
 </div>
