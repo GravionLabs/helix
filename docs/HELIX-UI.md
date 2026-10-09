@@ -463,6 +463,24 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Toolbar
+
+`hx-toolbar` groups actions in a start, a center and an end area. It wraps on small screens.
+
+```html
+<hx-toolbar>
+  <button hxToolbarStart hx-button>New</button>
+  <span hxToolbarCenter>3 selected</span>
+  <button hxToolbarEnd hx-button>Export</button>
+</hx-toolbar>
+```
+
+Project into `[hxToolbarStart]`, `[hxToolbarCenter]` and `[hxToolbarEnd]`; an area without content takes no space.
+
+- **Accessibility:** a plain group, deliberately without `role="toolbar"`: that role promises a single tab stop and
+  arrow-key navigation between the controls, which this component does not implement, so every control keeps its own
+  tab stop. Add `role="group"` and an `aria-label` yourself when the group needs a name.
+
 ## Accordion
 
 `hx-accordion` stacks panels of which one (or with `multiple` several) is open. It is built on `@angular/cdk/accordion`.

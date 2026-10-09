@@ -96,6 +96,7 @@ export {
   provideHxTheme,
 } from './lib/theme/theme';
 export { HxToggleButton, type HxToggleButtonSize } from './lib/toggle-button/toggle-button';
+export { HxToolbar } from './lib/toolbar/toolbar';
 export {
   HxTooltip,
   type HxTooltipEvent,

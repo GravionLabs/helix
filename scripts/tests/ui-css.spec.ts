@@ -59,6 +59,7 @@ describe('helix-ui styles', () => {
     ['select-button', 'select-button/select-button.ts'],
     ['slider', 'slider/slider.ts'],
     ['toggle-button', 'toggle-button/toggle-button.ts'],
+    ['toolbar', 'toolbar/toolbar.ts'],
     ['tooltip', 'tooltip/tooltip.ts'],
     ['switch', 'switch/switch.ts'],
   ])('styles every class the %s directive sets', (name, file) => {
