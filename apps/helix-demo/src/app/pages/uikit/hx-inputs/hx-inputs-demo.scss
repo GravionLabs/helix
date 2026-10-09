@@ -18,3 +18,7 @@
   color: var(--h-form-field-invalid-placeholder-color, var(--h-danger-color, #dc2626));
   font-size: 0.875rem;
 }
+
+.group-row {
+  max-width: 24rem;
+}

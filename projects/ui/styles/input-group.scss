@@ -1,0 +1,67 @@
+/*
+ * Input group: `<hx-input-group>` joins fields, selects, number fields, buttons and `<hx-input-group-addon>`
+ * into one control: neighbours overlap by their border, inner corners are square, the outer corners keep
+ * their radius. The addon reads the `--h-inputgroup-addon-*` tokens.
+ */
+.hx-input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.hx-input-group > .hx-input,
+.hx-input-group > .hx-input-number,
+.hx-input-group > .hx-icon-field,
+.hx-input-group > .hx-select,
+.hx-input-group > .hx-password {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+}
+
+.hx-input-group > .hx-input-number .hx-input,
+.hx-input-group > .hx-icon-field .hx-input,
+.hx-input-group > .hx-password .hx-input {
+  height: 100%;
+}
+
+.hx-input-group > :not(:first-child) {
+  margin-inline-start: -1px;
+}
+
+/* a focused or hovered member shows its whole border above its neighbours */
+.hx-input-group > :hover,
+.hx-input-group > :focus-within {
+  position: relative;
+  z-index: 1;
+}
+
+/* square inner corners: the end side of every member but the last, the start side of every one but the first */
+.hx-input-group > :not(:last-child),
+.hx-input-group > :not(:last-child) .hx-input,
+.hx-input-group > :not(:last-child) .hx-input-number-spin .hx-input-number-button,
+.hx-input-group > :not(:last-child) .hx-input-number-increment {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.hx-input-group > :not(:first-child),
+.hx-input-group > :not(:first-child) .hx-input,
+.hx-input-group > :not(:first-child) .hx-input-number-decrement {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.hx-input-group-addon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--h-inputgroup-addon-min-width);
+  padding: var(--h-inputgroup-addon-padding);
+  border: 1px solid var(--h-inputgroup-addon-border-color);
+  border-radius: var(--h-inputgroup-addon-border-radius);
+  background: var(--h-inputgroup-addon-background);
+  color: var(--h-inputgroup-addon-color);
+}

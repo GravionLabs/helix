@@ -41,6 +41,30 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Input group</h2>
+    <div class="group-row">
+      <hx-input-group>
+        <hx-input-group-addon id="scheme">https://</hx-input-group-addon>
+        <input hx-input aria-label="Domain" aria-describedby="scheme" placeholder="example.com" />
+        <button hx-button type="button">Go</button>
+      </hx-input-group>
+    </div>
+    <div class="group-row">
+      <hx-input-group>
+        <hx-input-group-addon><i class="pi pi-user" aria-hidden="true"></i></hx-input-group-addon>
+        <input hx-input aria-label="Username" placeholder="Username" />
+      </hx-input-group>
+    </div>
+    <div class="group-row">
+      <hx-input-group>
+        <hx-input-group-addon id="usd">$</hx-input-group-addon>
+        <hx-input-number ariaLabel="Amount" locale="en-US" [min]="0" showButtons />
+        <hx-input-group-addon>.00</hx-input-group-addon>
+      </hx-input-group>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Input number</h2>
     <div class="row">
       <label class="label" for="qty">Quantity</label>
