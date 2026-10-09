@@ -4,29 +4,17 @@ import { describe, expect, it } from 'vitest';
 import {
   buildComponents,
   readmeOf,
-  readStyle,
-  resolveDt,
   undefinedClasses,
   undefinedVariables,
 } from '../design-system/bundle.mjs';
 import { classesOf, PREVIEWS } from '../design-system/previews.mjs';
 
-describe('resolveDt', () => {
-  it('turns dt() into the custom property the engine emits', () => {
-    expect(resolveDt("color: dt('button.primary.color');")).toBe(
-      'color: var(--h-button-primary-color);',
-    );
-    expect(resolveDt("left: dt('imagecompare.scope.x', '50%');")).toBe(
-      'left: var(--h-imagecompare-scope-x, 50%);',
-    );
-    expect(resolveDt("gap: dt('form.fieldWidth');")).toBe('gap: var(--h-form-field-width);');
-  });
-
-  it('reads a component stylesheet from the library source', () => {
-    const css = readStyle('button');
-    expect(css).toContain('.h-button');
+describe('stylesheets', () => {
+  it('bundle the compiled helix-ui stylesheets of every previewed component', async () => {
+    const css = (await buildComponents())['components/bundle.css'];
+    expect(css).toContain('.hx-button');
     expect(css).toContain('var(--h-button-primary-background)');
-    expect(css).not.toMatch(/dt\('/);
+    expect(css).not.toMatch(/\.h-button\b/);
   });
 });
 
@@ -41,7 +29,7 @@ describe('previews', () => {
     }
   });
 
-  it('use only h- classes of their own component family or the base', () => {
+  it('render hx- markup', () => {
     for (const p of PREVIEWS) expect(classesOf(p.body).size).toBeGreaterThan(0);
   });
 });

@@ -4,7 +4,7 @@ Angular UI components (a maintained fork of PrimeNG 21.1.9), an application shel
 
 Source: https://github.com/GravionLabs/helix · docs: https://gravionlabs.github.io/helix/ · live demo: https://gravionlabs.github.io/helix/demo/
 
-This system is generated from the repository (`pnpm design-system:build`, see `docs/CONTRIBUTING-design-system.md`); the tokens are those of `helixPreset` (`@gravionlabs/helix-core/themes/helix`, ADR 0001). Change them there, not here.
+This system is generated from the repository (`pnpm design-system:build`, see `docs/CONTRIBUTING-design-system.md`); the tokens are those of `helixPreset` (`@helix/tokens`, ADR 0001); the component renditions are those of `@gravionlabs/helix-ui`. Change them there, not here.
 
 ## Content fundamentals
 
