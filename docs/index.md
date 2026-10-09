@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Helix
   text: Angular 22 UI components
-  tagline: A maintained fork of PrimeNG 21.1.9 with signals and h- selectors, plus an application shell, dynamic forms and AG Grid helpers.
+  tagline: Standalone, signal-based Angular components on design tokens with plain CSS, plus an application shell, dynamic forms and AG Grid helpers.
   actions:
     - theme: brand
       text: Components
@@ -26,8 +26,8 @@ hero:
       link: https://github.com/GravionLabs/helix
 
 features:
-  - title: '@gravionlabs/helix-core'
-    details: 90 components, 9 directives and the theming infrastructure, one secondary entry point each.
+  - title: '@gravionlabs/helix-ui'
+    details: 47 components with hx- selectors, tokens, a theme service and the validators, one page each.
     link: /components/
   - title: '@gravionlabs/helix-shell'
     details: Topbar, nav rail, status bar, auth pages, landing widgets and the layout store.
@@ -41,17 +41,23 @@ features:
 ## Install
 
 ```bash
-npm install @gravionlabs/helix-core
+npm install @gravionlabs/helix-ui
+```
+
+```css
+@import "@gravionlabs/helix-ui/styles.css";
+@import "@gravionlabs/helix-ui/tokens.css";
 ```
 
 ```ts
-import { ButtonModule } from '@gravionlabs/helix-core/button';
+import { HxButton } from '@gravionlabs/helix-ui';
 ```
 
 ```html
-<button hButton label="Save"></button>
+<button hx-button>Save</button>
 ```
 
-Every component is imported from its own entry point (`@gravionlabs/helix-core/<module>`) and uses the
-`h-` selector prefix. Browse the [component reference](components/README.md), the
-[shell API](HELIX-SHELL.md) or the [roadmap](ROADMAP.md).
+Components are standalone elements (`<hx-select>`) and attributes on native elements (`<button hx-button>`). Browse
+the [component reference](components/README.md), the [helix-ui overview](HELIX-UI.md), the
+[shell API](HELIX-SHELL.md) or the [roadmap](ROADMAP.md). Colours, dark mode and the primary colour are CSS custom
+properties (`--h-*`) that the theme service of helix-ui changes at runtime; see [Theming](THEMING.md).

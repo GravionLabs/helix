@@ -1,72 +1,34 @@
 # Menu
 
-> Menu is a navigation / command component that supports dynamic and static positioning.
+`hx-menu` shows a list of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model), inline or as a popup, with nested submenus. It is built on
+`@angular/cdk/menu`.
 
-## Import
+```html
+<button hx-button aria-haspopup="menu" (click)="menu.toggle($event)">Actions</button>
+<hx-menu #menu popup ariaLabel="Actions" [model]="items" (triggered)="onPick($event)" />
 
-```ts
-import { SafeHtmlPipe, MenuItemContent, Menu } from '@gravionlabs/helix-core/menu';
+<hx-menu [model]="items" ariaLabel="Account" />
 ```
 
-## Components
+| Input / output | Type                  | Default | Description                                                         |
+| -------------- | --------------------- | ------- | ------------------------------------------------------------------- |
+| `model`        | `HxMenuItem[]`        | `[]`    | The entries: label, icon, `routerLink`, `url`, `command`, `disabled`, `separator`, `badge`, `items`. |
+| `popup`        | `boolean`             | `false` | Open in an overlay with `toggle(event)` / `show(event)`; otherwise inline. |
+| `ariaLabel`    | `string`              |         | Name of the menu.                                                   |
+| `(triggered)`  | `HxMenuItem`          |         | An item was activated (after its `command`).                        |
 
-### SafeHtmlPipe
+`toggle(event)`, `show(event)` and `hide()` control a popup; it opens at the element of the event.
 
-Selector: `—`
+- **Items:** an item at the first level that has `items` and no action of its own is a group heading above its
+  children; deeper levels open as submenus. A disabled item runs nothing; a hidden one (`visible: false`) is left out.
+- **Keyboard:** Arrow Down/Up and Home/End move, typing jumps by label, Right or Enter opens a submenu and Left closes
+  it, Enter or Space activates, Escape closes the menu and returns the focus to the element that opened it.
+- **Accessibility:** the WAI-ARIA menu from the CDK: `role="menu"`, `menuitem`, `separator`, `group`; submenu items
+  have `aria-haspopup="menu"` and `aria-expanded`. Put `aria-haspopup="menu"` on the button that opens a popup, and
+  name an icon-only item with `ariaLabel`.
 
-### MenuItemContent
+## Tokens
 
-Selector: `[hMenuItemContent]`
+The look comes from the design tokens `--h-menu-*`, `--h-tieredmenu-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `item` | `MenuItem \| undefined` | — | — |
-| `itemTemplate` | `any` | — | — |
-| `menuitemId` | `string` | `''` | — |
-| `idx` | `number` | `0` | — |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onMenuItemClick` | `output&lt;any&gt;()` | — |
-
-### Menu
-
-Selector: `h-menu`
-
-Menu is a navigation / command component that supports dynamic and static positioning.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `model` | `MenuItem[] \| undefined` | — | An array of menuitems. |
-| `popup` | `boolean \| undefined` | — | Defines if menu would displayed as a popup. |
-| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
-| `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
-| `showTransitionOptions` | `string` | `'.12s cubic-bezier(0, 0, 0.2, 1)'` | Transition options of the show animation. |
-| `hideTransitionOptions` | `string` | `'.1s linear'` | Transition options of the hide animation. |
-| `ariaLabel` | `string \| undefined` | — | Defines a string value that labels an interactive element. |
-| `ariaLabelledBy` | `string \| undefined` | — | Identifier of the underlying input element. |
-| `id` | `string \| undefined` | — | Current id state as a string. |
-| `tabindex` | `number` | `0` | Index of the element in tabbing order. |
-| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onShow` | `output&lt;any&gt;()` | Callback to invoke when overlay menu is shown. |
-| `onHide` | `output&lt;any&gt;()` | Callback to invoke when overlay menu is hidden. |
-| `onBlur` | `output&lt;Event&gt;()` | Callback to invoke when the list loses focus. |
-| `onFocus` | `output&lt;Event \| undefined&gt;()` | Callback to invoke when the list receives focus. |
-
-## Source
-
-[`projects/core/menu`](../../projects/core/menu)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

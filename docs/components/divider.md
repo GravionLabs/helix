@@ -1,30 +1,23 @@
 # Divider
 
-> Divider is used to separate contents.
+`hx-divider`: a line between content. Projected content is a label sitting on the line.
 
-## Import
-
-```ts
-import { Divider } from '@gravionlabs/helix-core/divider';
+```html
+<hx-divider />
+<hx-divider align="center">OR</hx-divider>
+<hx-divider layout="vertical" />
 ```
 
-## Components
+| Input    | Type                               | Default        | Description                                  |
+| -------- | ---------------------------------- | -------------- | -------------------------------------------- |
+| `layout` | `'horizontal' \| 'vertical'`       | `'horizontal'` | Direction of the line.                       |
+| `type`   | `'solid' \| 'dashed' \| 'dotted'`  | `'solid'`      | Line style.                                  |
+| `align`  | `'start' \| 'center' \| 'end'`     |                | Where the label sits; no effect without one. |
 
-### Divider
+It has `role="separator"` and `aria-orientation`. Margins and colours come from the `--h-divider-*` tokens.
 
-Selector: `h-divider`
+## Tokens
 
-Divider is used to separate contents.
+The look comes from the design tokens `--h-divider-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `layout` | `"horizontal" \| "vertical" \| undefined` | `'horizontal'` | Specifies the orientation. |
-| `type` | `"solid" \| "dashed" \| "dotted" \| undefined` | `'solid'` | Border style type. |
-| `align` | `"left" \| "right" \| "top" \| "bottom" \| "center" \| undefined` | — | Alignment of the content. |
-
-## Source
-
-[`projects/core/divider`](../../projects/core/divider)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

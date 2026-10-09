@@ -1,44 +1,28 @@
 # Panel
 
-> Panel is a container with the optional content toggle feature.
+`hx-panel` is a titled container that can collapse. The `header` input is the title; `[hxPanelHeader]` adds content next
+to it (icons, buttons) and `[hxPanelFooter]` is the footer. Expanding and collapsing is animated unless the user prefers
+reduced motion.
 
-## Import
-
-```ts
-import { Panel } from '@gravionlabs/helix-core/panel';
+```html
+<hx-panel header="Filters" toggleable [(collapsed)]="closed">
+  <button hxPanelHeader hx-button size="small">Reset</button>
+  ...
+  <div hxPanelFooter>3 filters active</div>
+</hx-panel>
 ```
 
-## Components
+| Input       | Type      | Default | Description                                              |
+| ----------- | --------- | ------- | -------------------------------------------------------- |
+| `header`    | `string`  | `''`    | The title.                                               |
+| `toggleable` | `boolean` | `false` | A button in the header collapses and expands the content. |
+| `collapsed` | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable panel collapses. |
 
-### Panel
+- **Accessibility:** the toggle is a native `<button>` named by the title, with `aria-expanded` and `aria-controls`; the
+  content is a `role="region"` labelled by the title, and `inert` while collapsed so its controls leave the tab order.
 
-Selector: `h-panel`
+## Tokens
 
-Panel is a container with the optional content toggle feature.
+The look comes from the design tokens `--h-panel-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `id` | `string \| undefined` | `uuid('pn_id_')` | Id of the component. |
-| `toggleable` | `boolean \| undefined` | — | Defines if content of panel can be expanded and collapsed. |
-| `_header` | `string \| undefined` | — | Header text of the panel. |
-| `collapsed` | `boolean \| undefined` | `false` | Defines the initial state of panel content, supports one or two-way binding as well. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `iconPos` | `"center" \| "start" \| "end"` | `'end'` | Position of the icons. |
-| `showHeader` | `boolean` | `true` | Specifies if header of panel cannot be displayed. |
-| `toggler` | `"header" \| "icon"` | `'icon'` | Specifies the toggler element to toggle the panel content. |
-| `transitionOptions` | `string` | `'400ms cubic-bezier(0.86, 0, 0.07, 1)'` | Transition options of the animation. |
-| `toggleButtonProps` | `any` | — | Used to pass all properties of the ButtonProps to the Button component. |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onBeforeToggle` | `output&lt;PanelBeforeToggleEvent&gt;()` | Callback to invoke before panel toggle. |
-| `onAfterToggle` | `output&lt;PanelAfterToggleEvent&gt;()` | Callback to invoke after panel toggle. |
-
-## Source
-
-[`projects/core/panel`](../../projects/core/panel)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

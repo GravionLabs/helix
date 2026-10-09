@@ -1,33 +1,28 @@
 # Skeleton
 
-> Skeleton is a placeholder to display instead of the actual content.
+`hx-skeleton` is a placeholder shaped like the content that is still loading.
 
-## Import
-
-```ts
-import { Skeleton } from '@gravionlabs/helix-core/skeleton';
+```html
+<div aria-busy="true">
+  <hx-skeleton shape="circle" size="4rem" />
+  <hx-skeleton width="10rem" height="1rem" />
+</div>
 ```
 
-## Components
+| Input          | Type                       | Default       | Description                                           |
+| -------------- | -------------------------- | ------------- | ----------------------------------------------------- |
+| `shape`        | `'rectangle' \| 'circle'`   | `'rectangle'` | A circle is always round.                             |
+| `width`        | `string`                   | `'100%'`      | Any CSS length.                                       |
+| `height`       | `string`                   | `'1rem'`      | Any CSS length.                                       |
+| `size`         | `string`                   |               | Width and height at once; wins over both.             |
+| `borderRadius` | `string`                   |               | Replaces the theme radius.                            |
+| `animation`    | `'wave' \| 'none'`          | `'wave'`      | The sweeping gradient; off under `prefers-reduced-motion`. |
 
-### Skeleton
+- **Accessibility:** `aria-hidden="true"`, so a skeleton says nothing by itself. The container of the loading content
+  announces the state: `aria-busy="true"` on it, or a visually hidden "Loading…" in a live region.
 
-Selector: `h-skeleton`
+## Tokens
 
-Skeleton is a placeholder to display instead of the actual content.
+The look comes from the design tokens `--h-skeleton-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `shape` | `string` | `'rectangle'` | Shape of the element. |
-| `animation` | `string` | `'wave'` | Type of the animation. |
-| `borderRadius` | `string \| undefined` | — | Border radius of the element, defaults to value from theme. |
-| `size` | `string \| undefined` | — | Size of the skeleton. |
-| `width` | `string` | `'100%'` | Width of the element. |
-| `height` | `string` | `'1rem'` | Height of the element. |
-
-## Source
-
-[`projects/core/skeleton`](../../projects/core/skeleton)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

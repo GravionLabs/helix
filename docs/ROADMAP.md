@@ -132,7 +132,7 @@ helix/
     ├── ROADMAP.md
     ├── COMPONENTS.md
     ├── HELIX-SHELL.md
-    └── components/            # One generated page per @gravionlabs/helix-core entry point
+    └── components/            # One page per @gravionlabs/helix-ui component
 ```
 
 ## Published to

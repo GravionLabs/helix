@@ -1,92 +1,52 @@
 # Dialog
 
-> Dialog is a container to display content in an overlay window.
+`hx-dialog` is a modal or non-modal dialog on `@angular/cdk/dialog`. `HxDialogService` opens a component in one and
+returns its result.
 
-## Import
-
-```ts
-import { Dialog } from '@gravionlabs/helix-core/dialog';
+```html
+<hx-dialog [(visible)]="open" header="Edit profile" width="30rem">
+  <input hx-input [(ngModel)]="name" aria-label="Name" />
+  <div hxDialogFooter>
+    <button hx-button variant="text" (click)="open = false">Cancel</button>
+    <button hx-button (click)="save()">Save</button>
+  </div>
+</hx-dialog>
 ```
 
-## Components
+```ts
+const ref = inject(HxDialogService).open(EditUser, { header: 'Edit user', width: '30rem', data: { id: 7 } });
+ref.closed.subscribe((result) => console.log(result));
+// inside EditUser: inject(HX_DIALOG_DATA) is { id: 7 }; inject(HxDialogRef).close(result)
+```
 
-### Dialog
+| Input / output    | Type                     | Default    | Description                                                             |
+| ----------------- | ------------------------ | ---------- | ----------------------------------------------------------------------- |
+| `visible`         | `boolean`                | `false`    | `[(visible)]`: open or closed; closing from inside sets it to `false`.  |
+| `header`          | `string`                 |            | Title (a heading); content marked `hxDialogHeader` follows it.          |
+| `modal`           | `boolean`                | `true`     | Mask, focus trap, page behind hidden from assistive technology.         |
+| `closable`        | `boolean`                | `true`     | The close button.                                                       |
+| `closeOnEscape`   | `boolean`                | `true`     | Escape closes it.                                                       |
+| `dismissableMask` | `boolean`                | `false`    | A click on the mask closes it.                                          |
+| `position`        | `'center' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'center'` | Where it sits. |
+| `width`, `height` | CSS length               |            | Size; it never grows beyond the screen and the content scrolls.         |
+| `panelClass`      | `string \| string[]`     |            | Extra classes on the overlay pane.                                      |
+| `closeLabel`      | `string`                 | `'Close'`  | Name of the close button.                                               |
+| `ariaLabel`       | `string`                 |            | Name of the dialog when there is no `header`.                           |
+| `(shown)`, `(hidden)` | `void`               |            | Opened, closed (by whatever means).                                     |
 
-Selector: `h-dialog`
+`HxDialogService.open(Component, config)` takes the same options (`header`, `width`, `modal`, `closable`,
+`closeOnEscape`, `dismissableMask`, `position`, `panelClass`, `closeLabel`, `ariaLabel`) plus `data`. It returns an
+`HxDialogRef` with `close(result)`, `closed` (emits the result, or `undefined` when closed some other way) and
+`componentInstance`.
 
-Dialog is a container to display content in an overlay window.
+- **Content:** `hx-dialog` creates its content when it opens and destroys it when it closes.
+- **Accessibility:** the CDK container has `role="dialog"`, `aria-modal` (modal only) and `aria-labelledby` pointing at
+  the title (or `aria-label`). The focus moves to the first control of the content (the close button comes last in the
+  DOM), is trapped while a modal dialog is open, and returns to the element that had it when the dialog closes.
+  Escape closes it. If the content has no focusable element, the dialog itself is focused.
 
-#### Inputs
+## Tokens
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `hostName` | `string` | `''` | — |
-| `header` | `string \| undefined` | — | Title text of the dialog. |
-| `draggable` | `boolean` | `true` | Enables dragging to change the position using header. |
-| `resizable` | `boolean` | `true` | Enables resizing of the content. |
-| `contentStyle` | `any` | — | Style of the content section. |
-| `contentStyleClass` | `string \| undefined` | — | Style class of the content. |
-| `modal` | `boolean` | `false` | Defines if background should be blocked when dialog is displayed. |
-| `closeOnEscape` | `boolean` | `true` | Specifies if pressing escape key should hide the dialog. |
-| `dismissableMask` | `boolean` | `false` | Specifies if clicking the modal background should hide the dialog. |
-| `rtl` | `boolean` | `false` | When enabled dialog is displayed in RTL direction. |
-| `closable` | `boolean` | `true` | Adds a close icon to the header to hide the dialog. |
-| `breakpoints` | `any` | — | Object literal to define widths per screen size. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `maskStyleClass` | `string \| undefined` | — | Style class of the mask. |
-| `maskStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Style of the mask. |
-| `showHeader` | `boolean` | `true` | Whether to show the header or not. |
-| `blockScroll` | `boolean` | `false` | Whether background scroll should be blocked when dialog is visible. |
-| `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
-| `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
-| `minX` | `number` | `0` | Minimum value for the left coordinate of dialog in dragging. |
-| `minY` | `number` | `0` | Minimum value for the top coordinate of dialog in dragging. |
-| `focusOnShow` | `boolean` | `true` | When enabled, first focusable element receives focus on show. |
-| `maximizable` | `boolean` | `false` | Whether the dialog can be displayed full screen. |
-| `keepInViewport` | `boolean` | `true` | Keeps dialog in the viewport. |
-| `focusTrap` | `boolean` | `true` | When enabled, can only focus on elements inside the dialog. |
-| `transitionOptions` | `string` | `'150ms cubic-bezier(0, 0, 0.2, 1)'` | Transition options of the animation. |
-| `maskMotionOptions` | `MotionOptions \| undefined` | — | The motion options for the mask. |
-| `motionOptions` | `MotionOptions \| undefined` | — | The motion options. |
-| `closeIcon` | `string \| undefined` | — | Name of the close icon. |
-| `closeAriaLabel` | `string \| undefined` | — | Defines a string that labels the close button for accessibility. |
-| `closeTabindex` | `string` | `'0'` | Index of the close button in tabbing order. |
-| `minimizeIcon` | `string \| undefined` | — | Name of the minimize icon. |
-| `maximizeIcon` | `string \| undefined` | — | Name of the maximize icon. |
-| `closeButtonProps` | `ButtonProps` | `{
-    severity: 'secondary',
-    variant: 'text',
-    rounded: true
-}` | Used to pass all properties of the ButtonProps to the Button component. |
-| `maximizeButtonProps` | `ButtonProps` | `{
-    severity: 'secondary',
-    variant: 'text',
-    rounded: true
-}` | Used to pass all properties of the ButtonProps to the Button component. |
-| `visible` | `boolean` | `false` | Specifies the visibility of the dialog. |
-| `style` | `any` | — | Inline style of the component. |
-| `position` | `"left" \| "right" \| "top" \| "bottom" \| "center" \| "topleft" \| "topright" \| "bottomleft" \| "bottomright"` | `undefined!` | Position of the dialog. |
-| `role` | `string` | `'dialog'` | Role attribute of html element. |
-| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `headerTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Header template. |
-| `contentTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Content template. |
-| `footerTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Footer template. |
-| `closeIconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Close icon template. |
-| `maximizeIconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Maximize icon template. |
-| `minimizeIconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Minimize icon template. |
-| `headlessTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | Headless template. |
+The look comes from the design tokens `--h-dialog-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onShow` | `output&lt;any&gt;()` | Callback to invoke when dialog is shown. |
-| `onHide` | `output&lt;any&gt;()` | Callback to invoke when dialog is hidden. |
-| `onResizeInit` | `output&lt;MouseEvent&gt;()` | Callback to invoke when dialog resizing is initiated. |
-| `onResizeEnd` | `output&lt;MouseEvent&gt;()` | Callback to invoke when dialog resizing is completed. |
-| `onDragEnd` | `output&lt;DragEvent&gt;()` | Callback to invoke when dialog dragging is completed. |
-| `onMaximize` | `output&lt;any&gt;()` | Callback to invoke when dialog maximized or unmaximized. |
-
-## Source
-
-[`projects/core/dialog`](../../projects/core/dialog)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

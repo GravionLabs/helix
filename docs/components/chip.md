@@ -1,42 +1,30 @@
 # Chip
 
-> Chip represents people using icons, labels and images.
+`hx-chip` is a compact element for an entity, optionally removable.
 
-## Import
-
-```ts
-import { Chip } from '@gravionlabs/helix-core/chip';
+```html
+<hx-chip label="Amy Elsner" image="/amy.png" />
+<hx-chip label="Angular" icon="pi pi-code" removable (remove)="drop('Angular')" />
 ```
 
-## Components
+| Input / output | Type      | Default    | Description                                                              |
+| -------------- | --------- | ---------- | ------------------------------------------------------------------------ |
+| `label`        | `string`  |            | The text (or project content instead).                                   |
+| `icon`         | `string`  |            | Icon font classes; not shown when there is an `image`.                   |
+| `image`        | `string`  |            | Picture before the label.                                                |
+| `imageAlt`     | `string`  | `''`       | Alternative text; decorative by default because the label names the chip. |
+| `removable`    | `boolean` | `false`    | Shows the remove button and makes the chip focusable.                    |
+| `removeLabel`  | `string`  | `'Remove'` | Name of the remove button.                                               |
+| `(remove)`     | `void`    |            | Remove pressed, or Backspace/Delete on the chip.                         |
 
-### Chip
+The chip does not remove itself: drop it from your data in `(remove)`.
 
-Selector: `h-chip`
+- **Accessibility:** a removable chip is a focusable `role="group"` named by its label; the remove control is a real
+  `<button>` with `aria-label`. After a removal the focus is lost with the chip, so move it yourself if the list
+  continues (e.g. to the next chip).
 
-Chip represents people using icons, labels and images.
+## Tokens
 
-#### Inputs
+The look comes from the design tokens `--h-chip-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string \| undefined` | — | Defines the text to display. |
-| `icon` | `string \| undefined` | — | Defines the icon to display. |
-| `image` | `string \| undefined` | — | Defines the image to display. |
-| `alt` | `string \| undefined` | — | Alt attribute of the image. |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `disabled` | `boolean \| undefined` | `false` | When present, it specifies that the element should be disabled. |
-| `removable` | `boolean \| undefined` | `false` | Whether to display a remove icon. |
-| `removeIcon` | `string \| undefined` | — | Icon of the remove element. |
-| `chipProps` | `ChipProps \| undefined` | — | Used to pass all properties of the chipProps to the Chip component. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onRemove` | `output&lt;MouseEvent&gt;()` | Callback to invoke when a chip is removed. |
-| `onImageError` | `output&lt;Event&gt;()` | This event is triggered if an error occurs while loading an image file. |
-
-## Source
-
-[`projects/core/chip`](../../projects/core/chip)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).
