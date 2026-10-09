@@ -70,6 +70,7 @@ export const TOKEN_COMPONENTS = {
   tag: ['tag'],
   tabs: ['tabs'],
   timeline: ['timeline'],
+  tree: ['tree'],
   toast: ['toast'],
   tooltip: ['tooltip'],
 };

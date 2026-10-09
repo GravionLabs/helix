@@ -166,3 +166,13 @@ export {
   type HxTooltipEvent,
   type HxTooltipPosition,
 } from './lib/tooltip/tooltip';
+export {
+  HxTree,
+  type HxTreeFilterMode,
+  type HxTreeNode,
+  type HxTreeNodeContext,
+  type HxTreeNodeEvent,
+  HxTreeNodeTemplate,
+  type HxTreeSelection,
+  type HxTreeSelectionMode,
+} from './lib/tree/tree';
