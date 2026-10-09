@@ -39,6 +39,7 @@ export const TOKEN_COMPONENTS = {
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],
+  message: ['message'],
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'auto-complete': ['autocomplete', 'inputtext'],
   'date-picker': ['datepicker', 'inputtext'],

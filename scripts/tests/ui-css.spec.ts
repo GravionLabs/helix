@@ -46,6 +46,7 @@ describe('helix-ui styles', () => {
     ['fieldset', 'fieldset/fieldset.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
     ['listbox', 'listbox/listbox.ts'],
+    ['message', 'message/message.ts'],
     ['multi-select', 'multi-select/multi-select.ts'],
     ['auto-complete', 'auto-complete/auto-complete.ts'],
     ['date-picker', 'date-picker/date-picker.ts'],
