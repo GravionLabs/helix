@@ -4,6 +4,12 @@ import {
   HxMenu,
   HxMenubar,
   type HxMenuItem,
+  HxStep,
+  HxStepContent,
+  HxStepList,
+  HxStepPanel,
+  HxStepPanels,
+  HxStepper,
   HxTab,
   HxTabContent,
   HxTabList,
@@ -12,7 +18,7 @@ import {
   HxTabs,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Tabs. */
+/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Stepper, Tabs. */
 @Component({
   selector: 'app-hx-navigation-demo',
   standalone: true,
@@ -20,6 +26,12 @@ import {
     HxButton,
     HxMenu,
     HxMenubar,
+    HxStepper,
+    HxStepList,
+    HxStep,
+    HxStepPanels,
+    HxStepPanel,
+    HxStepContent,
     HxTabs,
     HxTabList,
     HxTab,
@@ -73,6 +85,7 @@ export class HxNavigationDemo {
     { label: 'Docs', icon: 'pi pi-book', url: 'https://angular.dev', target: '_blank' },
     { label: 'Soon', disabled: true },
   ];
+  readonly step = signal<number | string | null>(1);
   readonly tab = signal<string | null>('a');
   readonly numbers = Array.from({ length: 12 }, (_, i) => i + 1);
 }

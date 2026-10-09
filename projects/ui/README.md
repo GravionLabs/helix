@@ -37,6 +37,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
 | `HxCard` | `hx-card` | surface with header, title (a heading), subtitle, content and footer slots |
+| `HxStepper`, `HxStepList`, `HxStep`, `HxStepPanels`, `HxStepPanel` | `hx-stepper` … | steps with panels: completed/active state, linear mode, `activateCallback`, lazy panels |
 | `HxTabs`, `HxTabList`, `HxTab`, `HxTabPanels`, `HxTabPanel` | `hx-tabs` … | WAI-ARIA tabs: roving tabindex, automatic activation, lazy panels, scrollable list |
 | `HxToast`, `HxMessageService` | `hx-toast` | short messages from a service, live regions, pause on hover and focus, keys and positions |
 | `HxMenubar` | `hx-menubar` | horizontal menu with dropdown submenus on the CDK menubar, collapses into a button below a breakpoint |

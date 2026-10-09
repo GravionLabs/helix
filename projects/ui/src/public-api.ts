@@ -91,6 +91,16 @@ export {
   type HxSliderOrientation,
   type HxSliderValue,
 } from './lib/slider/slider';
+export {
+  HxStep,
+  HxStepContent,
+  type HxStepContentContext,
+  HxStepList,
+  HxStepPanel,
+  HxStepPanels,
+  HxStepper,
+  type HxStepValue,
+} from './lib/stepper/stepper';
 export { HxSwitch } from './lib/switch/switch';
 export {
   HxTab,
