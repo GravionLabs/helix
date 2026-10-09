@@ -62,6 +62,7 @@ export const TOKEN_COMPONENTS = {
   switch: ['toggleswitch'],
   'toggle-button': ['togglebutton'],
   toolbar: ['toolbar'],
+  tag: ['tag'],
   tabs: ['tabs'],
   toast: ['toast'],
   tooltip: ['tooltip'],
