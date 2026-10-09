@@ -14,9 +14,9 @@ A token value is a CSS value or a `{reference}` to another token; a reference be
 
 ## Where the tokens live
 
-The tokens are plain data in [`projects/tokens`](../projects/tokens/README.md): `primitive.ts`, `semantic.ts`
+The tokens are plain data in `projects/tokens`: `primitive.ts`, `semantic.ts`
 (with `colorScheme.light` and `colorScheme.dark`) and one file per component under `components/`. The resolver
-[`scripts/tokens/resolve.mjs`](../scripts/tokens/resolve.mjs) turns that data into CSS and JSON. Nothing needs to
+`scripts/tokens/resolve.mjs` turns that data into CSS and JSON. Nothing needs to
 be built first, and nothing runs in the browser.
 
 To change a token, edit its value in the file of its layer (the README of the project says how, and what the naming
@@ -126,8 +126,8 @@ The tokens, the brand book and static previews of the components are generated a
 
 | | |
 | --- | --- |
-| Token data | [`projects/tokens`](../projects/tokens/README.md) |
-| Resolver | [`scripts/tokens/resolve.mjs`](../scripts/tokens/resolve.mjs); users: `scripts/export-tokens.mjs`, `scripts/build-ui-css.mjs`, `scripts/design-system/` |
+| Token data | `projects/tokens` |
+| Resolver | `scripts/tokens/resolve.mjs`; users: `scripts/export-tokens.mjs`, `scripts/build-ui-css.mjs`, `scripts/design-system/` |
 | Runtime colour switching | `HxTheme` and `provideHxTheme` in `@gravionlabs/helix-ui` ([Theming](HELIX-UI.md#theming)) |
 | Shell layer (`--helix-surface-*`, layout sizes, fonts, Tailwind colour map) | `projects/shell/styles-src.css`, `projects/shell/styles/helix-tailwind` |
 | Configurator (primary / surface / menu mode) | `HelixConfigurator` in `@gravionlabs/helix-shell` |
