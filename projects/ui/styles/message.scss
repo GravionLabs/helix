@@ -1,0 +1,242 @@
+/*
+ * Message: `<hx-message>`. An inline message from the `--h-message-*` tokens; the severity picks the colours
+ * (`filled`, `outlined`, `simple`), the icon is one of the internal icons.
+ */
+@use 'icons' as *;
+
+.hx-message {
+  display: block;
+  box-sizing: border-box;
+  border: var(--h-message-border-width) solid var(--hx-message-border-color);
+  border-radius: var(--h-message-border-radius);
+  background: var(--hx-message-background);
+  color: var(--hx-message-color);
+  box-shadow: var(--hx-message-shadow);
+}
+
+.hx-message[hidden] {
+  display: none;
+}
+
+.hx-message-info {
+  --hx-message-background: var(--h-message-info-background);
+  --hx-message-border-color: var(--h-message-info-border-color);
+  --hx-message-color: var(--h-message-info-color);
+  --hx-message-shadow: var(--h-message-info-shadow);
+  --hx-message-hover: var(--h-message-info-close-button-hover-background);
+  --hx-message-ring: var(--h-message-info-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-info-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-info-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-info-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-info-simple-color);
+}
+
+.hx-message-success {
+  --hx-message-background: var(--h-message-success-background);
+  --hx-message-border-color: var(--h-message-success-border-color);
+  --hx-message-color: var(--h-message-success-color);
+  --hx-message-shadow: var(--h-message-success-shadow);
+  --hx-message-hover: var(--h-message-success-close-button-hover-background);
+  --hx-message-ring: var(--h-message-success-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-success-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-success-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-success-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-success-simple-color);
+}
+
+.hx-message-warn {
+  --hx-message-background: var(--h-message-warn-background);
+  --hx-message-border-color: var(--h-message-warn-border-color);
+  --hx-message-color: var(--h-message-warn-color);
+  --hx-message-shadow: var(--h-message-warn-shadow);
+  --hx-message-hover: var(--h-message-warn-close-button-hover-background);
+  --hx-message-ring: var(--h-message-warn-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-warn-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-warn-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-warn-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-warn-simple-color);
+}
+
+.hx-message-error {
+  --hx-message-background: var(--h-message-error-background);
+  --hx-message-border-color: var(--h-message-error-border-color);
+  --hx-message-color: var(--h-message-error-color);
+  --hx-message-shadow: var(--h-message-error-shadow);
+  --hx-message-hover: var(--h-message-error-close-button-hover-background);
+  --hx-message-ring: var(--h-message-error-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-error-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-error-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-error-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-error-simple-color);
+}
+
+.hx-message-secondary {
+  --hx-message-background: var(--h-message-secondary-background);
+  --hx-message-border-color: var(--h-message-secondary-border-color);
+  --hx-message-color: var(--h-message-secondary-color);
+  --hx-message-shadow: var(--h-message-secondary-shadow);
+  --hx-message-hover: var(--h-message-secondary-close-button-hover-background);
+  --hx-message-ring: var(--h-message-secondary-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-secondary-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-secondary-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-secondary-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-secondary-simple-color);
+}
+
+.hx-message-contrast {
+  --hx-message-background: var(--h-message-contrast-background);
+  --hx-message-border-color: var(--h-message-contrast-border-color);
+  --hx-message-color: var(--h-message-contrast-color);
+  --hx-message-shadow: var(--h-message-contrast-shadow);
+  --hx-message-hover: var(--h-message-contrast-close-button-hover-background);
+  --hx-message-ring: var(--h-message-contrast-close-button-focus-ring-color);
+  --hx-message-ring-shadow: var(--h-message-contrast-close-button-focus-ring-shadow);
+  --hx-message-outlined-color: var(--h-message-contrast-outlined-color);
+  --hx-message-outlined-border-color: var(--h-message-contrast-outlined-border-color);
+  --hx-message-simple-color: var(--h-message-contrast-simple-color);
+}
+
+.hx-message-outlined {
+  --hx-message-background: transparent;
+  --hx-message-shadow: none;
+  --hx-message-color: var(--hx-message-outlined-color);
+  --hx-message-border-color: var(--hx-message-outlined-border-color);
+  border-width: var(--h-message-outlined-border-width);
+}
+
+.hx-message-simple {
+  --hx-message-background: transparent;
+  --hx-message-shadow: none;
+  --hx-message-color: var(--hx-message-simple-color);
+  --hx-message-border-color: transparent;
+}
+
+.hx-message-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-message-content-gap);
+  padding: var(--h-message-content-padding);
+}
+
+.hx-message-simple .hx-message-content {
+  padding: var(--h-message-simple-content-padding);
+}
+
+.hx-message-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--h-message-text-font-size);
+  font-weight: var(--h-message-text-font-weight);
+}
+
+.hx-message-icon,
+.hx-message-icon-custom {
+  flex: none;
+  width: var(--h-message-icon-size);
+  height: var(--h-message-icon-size);
+  font-size: var(--h-message-icon-size);
+}
+
+.hx-message-info .hx-message-icon {
+  @include hx-icon(info, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-success .hx-message-icon {
+  @include hx-icon(success, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-warn .hx-message-icon {
+  @include hx-icon(warn, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-error .hx-message-icon {
+  @include hx-icon(error, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-secondary .hx-message-icon {
+  @include hx-icon(info, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-contrast .hx-message-icon {
+  @include hx-icon(info, var(--h-message-icon-size), currentcolor, 2);
+}
+
+.hx-message-close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-message-close-button-width);
+  height: var(--h-message-close-button-height);
+  margin-inline-start: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-message-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: 0 none;
+  transition: background var(--h-message-transition-duration);
+}
+
+.hx-message-close:hover {
+  background: var(--hx-message-hover);
+}
+
+.hx-message-close:focus-visible {
+  outline: var(--h-message-close-button-focus-ring-width) var(--h-message-close-button-focus-ring-style)
+    var(--hx-message-ring);
+  outline-offset: var(--h-message-close-button-focus-ring-offset);
+  box-shadow: var(--hx-message-ring-shadow);
+}
+
+.hx-message-close-icon {
+  @include hx-icon(close, var(--h-message-close-icon-size), currentcolor, 2.4);
+}
+
+/* sizes */
+.hx-message-sm .hx-message-content {
+  padding: var(--h-message-content-sm-padding);
+}
+
+.hx-message-sm .hx-message-text {
+  font-size: var(--h-message-text-sm-font-size);
+}
+
+.hx-message-sm .hx-message-icon,
+.hx-message-sm .hx-message-icon-custom {
+  width: var(--h-message-icon-sm-size);
+  height: var(--h-message-icon-sm-size);
+  font-size: var(--h-message-icon-sm-size);
+}
+
+.hx-message-sm .hx-message-close-icon {
+  width: var(--h-message-close-icon-sm-size);
+  height: var(--h-message-close-icon-sm-size);
+}
+
+.hx-message-lg .hx-message-content {
+  padding: var(--h-message-content-lg-padding);
+}
+
+.hx-message-lg .hx-message-text {
+  font-size: var(--h-message-text-lg-font-size);
+}
+
+.hx-message-lg .hx-message-icon,
+.hx-message-lg .hx-message-icon-custom {
+  width: var(--h-message-icon-lg-size);
+  height: var(--h-message-icon-lg-size);
+  font-size: var(--h-message-icon-lg-size);
+}
+
+.hx-message-lg .hx-message-close-icon {
+  width: var(--h-message-close-icon-lg-size);
+  height: var(--h-message-close-icon-lg-size);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-message-close {
+    transition: none;
+  }
+}

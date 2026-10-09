@@ -62,6 +62,12 @@ export {
 export { HxListbox } from './lib/listbox/listbox';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export {
+  HxMessage,
+  type HxMessageSeverity,
+  type HxMessageSize,
+  type HxMessageVariant,
+} from './lib/message/message';
+export {
   HxMultiSelect,
   type HxMultiSelectDisplay,
   type HxMultiSelectSize,
