@@ -1,0 +1,242 @@
+/*
+ * AutoComplete: `<hx-auto-complete>`. The field (border, background, focus ring) holds the chips and a borderless
+ * text input; the optional dropdown button joins its end edge; the suggestions are a CDK connected overlay.
+ * Colours from the `--h-autocomplete-*` tokens.
+ */
+@use 'icons' as *;
+
+.hx-auto-complete {
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.hx-auto-complete-fluid {
+  display: flex;
+  width: 100%;
+}
+
+.hx-auto-complete-field {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: calc(var(--h-autocomplete-padding-y) - 1px) var(--h-autocomplete-padding-x);
+  border: 1px solid var(--h-autocomplete-border-color);
+  border-radius: var(--h-autocomplete-border-radius);
+  background: var(--h-autocomplete-background);
+  color: var(--h-autocomplete-color);
+  box-shadow: var(--h-autocomplete-shadow);
+  transition:
+    background var(--h-autocomplete-transition-duration),
+    border-color var(--h-autocomplete-transition-duration),
+    box-shadow var(--h-autocomplete-transition-duration);
+}
+
+.hx-auto-complete:not(.hx-auto-complete-disabled) .hx-auto-complete-field:hover {
+  border-color: var(--h-autocomplete-hover-border-color);
+}
+
+.hx-auto-complete:not(.hx-auto-complete-disabled) .hx-auto-complete-field:focus-within {
+  border-color: var(--h-autocomplete-focus-border-color);
+  outline: var(--h-autocomplete-focus-ring-width) var(--h-autocomplete-focus-ring-style)
+    var(--h-autocomplete-focus-ring-color);
+  outline-offset: var(--h-autocomplete-focus-ring-offset);
+  box-shadow: var(--h-autocomplete-focus-ring-shadow);
+}
+
+.hx-auto-complete-open .hx-auto-complete-field {
+  border-color: var(--h-autocomplete-focus-border-color);
+}
+
+.hx-auto-complete-input {
+  flex: 1 1 4rem;
+  min-width: 0;
+  padding: 1px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+  outline: 0 none;
+}
+
+.hx-auto-complete-input::placeholder {
+  color: var(--h-autocomplete-placeholder-color);
+}
+
+.hx-auto-complete-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.25rem 0 0.5rem;
+  border-radius: var(--h-autocomplete-chip-border-radius);
+  background: var(--h-autocomplete-chip-focus-background);
+  color: var(--h-autocomplete-chip-focus-color);
+}
+
+.hx-auto-complete-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.hx-auto-complete-remove-icon {
+  @include hx-icon(close, 0.875rem, currentcolor, 2.4);
+}
+
+/* the dropdown button joins the end edge of the field */
+.hx-auto-complete-has-dropdown .hx-auto-complete-field {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.hx-auto-complete-dropdown {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-autocomplete-dropdown-width);
+  border: 1px solid var(--h-autocomplete-dropdown-border-color);
+  border-inline-start: 0;
+  border-start-end-radius: var(--h-autocomplete-dropdown-border-radius);
+  border-end-end-radius: var(--h-autocomplete-dropdown-border-radius);
+  background: var(--h-autocomplete-dropdown-background);
+  color: var(--h-autocomplete-dropdown-color);
+  cursor: pointer;
+}
+
+.hx-auto-complete-dropdown:not(:disabled):hover {
+  border-color: var(--h-autocomplete-dropdown-hover-border-color);
+  background: var(--h-autocomplete-dropdown-hover-background);
+  color: var(--h-autocomplete-dropdown-hover-color);
+}
+
+.hx-auto-complete-dropdown:not(:disabled):active {
+  border-color: var(--h-autocomplete-dropdown-active-border-color);
+  background: var(--h-autocomplete-dropdown-active-background);
+  color: var(--h-autocomplete-dropdown-active-color);
+}
+
+.hx-auto-complete-chevron {
+  @include hx-icon(chevron-down, 1rem, currentcolor, 2.4);
+}
+
+/* states */
+.hx-auto-complete-invalid .hx-auto-complete-field,
+.hx-auto-complete.ng-invalid.ng-touched .hx-auto-complete-field {
+  border-color: var(--h-autocomplete-invalid-border-color);
+}
+
+.hx-auto-complete-invalid .hx-auto-complete-input::placeholder,
+.hx-auto-complete.ng-invalid.ng-touched .hx-auto-complete-input::placeholder {
+  color: var(--h-autocomplete-invalid-placeholder-color);
+}
+
+.hx-auto-complete-disabled .hx-auto-complete-field {
+  background: var(--h-autocomplete-disabled-background);
+  color: var(--h-autocomplete-disabled-color);
+}
+
+.hx-auto-complete-disabled .hx-auto-complete-dropdown {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.hx-auto-complete-sm .hx-auto-complete-field {
+  padding: calc(var(--h-inputtext-sm-padding-y) - 1px) var(--h-inputtext-sm-padding-x);
+  font-size: var(--h-inputtext-sm-font-size);
+}
+
+.hx-auto-complete-lg .hx-auto-complete-field {
+  padding: calc(var(--h-inputtext-lg-padding-y) - 1px) var(--h-inputtext-lg-padding-x);
+  font-size: var(--h-inputtext-lg-font-size);
+}
+
+.hx-auto-complete-sm .hx-auto-complete-dropdown {
+  width: var(--h-autocomplete-dropdown-sm-width);
+}
+
+.hx-auto-complete-lg .hx-auto-complete-dropdown {
+  width: var(--h-autocomplete-dropdown-lg-width);
+}
+
+/* the live region is read, not shown */
+.hx-auto-complete-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* the suggestions */
+.hx-auto-complete-panel {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-height: 16rem;
+  overflow: auto;
+  border: 1px solid var(--h-autocomplete-overlay-border-color);
+  border-radius: var(--h-autocomplete-overlay-border-radius);
+  background: var(--h-autocomplete-overlay-background);
+  color: var(--h-autocomplete-overlay-color);
+  box-shadow: var(--h-autocomplete-overlay-shadow);
+  font-size: 1rem;
+}
+
+.hx-auto-complete-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-autocomplete-list-gap);
+  padding: var(--h-autocomplete-list-padding);
+}
+
+.hx-auto-complete-option {
+  padding: var(--h-autocomplete-option-padding);
+  border-radius: var(--h-autocomplete-option-border-radius);
+  color: var(--h-autocomplete-option-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hx-auto-complete-option-active {
+  background: var(--h-autocomplete-option-focus-background);
+  color: var(--h-autocomplete-option-focus-color);
+}
+
+.hx-auto-complete-option[aria-selected="true"] {
+  background: var(--h-autocomplete-option-selected-background);
+  color: var(--h-autocomplete-option-selected-color);
+}
+
+.hx-auto-complete-option[aria-selected="true"].hx-auto-complete-option-active {
+  background: var(--h-autocomplete-option-selected-focus-background);
+  color: var(--h-autocomplete-option-selected-focus-color);
+}
+
+.hx-auto-complete-option[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-auto-complete-empty {
+  padding: var(--h-autocomplete-empty-message-padding);
+  color: var(--h-autocomplete-placeholder-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-auto-complete-field {
+    transition: none;
+  }
+}

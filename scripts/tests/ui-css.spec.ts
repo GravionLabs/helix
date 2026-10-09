@@ -44,6 +44,7 @@ describe('helix-ui styles', () => {
     ['icon-field', 'icon-field/icon-field.ts'],
     ['listbox', 'listbox/listbox.ts'],
     ['multi-select', 'multi-select/multi-select.ts'],
+    ['auto-complete', 'auto-complete/auto-complete.ts'],
     ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],
     ['password', 'password/password.ts'],

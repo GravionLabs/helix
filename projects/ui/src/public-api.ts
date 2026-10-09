@@ -7,6 +7,11 @@
  */
 
 export {
+  HxAutoComplete,
+  type HxAutoCompleteEvent,
+  type HxAutoCompleteSize,
+} from './lib/auto-complete/auto-complete';
+export {
   HxBreadcrumb,
   type HxBreadcrumbItem,
 } from './lib/breadcrumb/breadcrumb';
