@@ -40,6 +40,7 @@ export const TOKEN_COMPONENTS = {
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],
   menu: ['menu', 'tieredmenu'],
+  menubar: ['menubar'],
   message: ['message'],
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'auto-complete': ['autocomplete', 'inputtext'],

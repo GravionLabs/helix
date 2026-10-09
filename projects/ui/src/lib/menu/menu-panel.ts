@@ -52,7 +52,7 @@ import type { HxMenuItem } from '../menu-item';
             <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item, submenu: true }" />
           </button>
           <ng-template #sub>
-            <hx-menu-panel class="hx-menu-submenu" [items]="item.items ?? []" [groups]="false" (triggered)="triggered.emit($event)" />
+            <hx-menu-panel class="hx-menu-submenu" [items]="item.items ?? []" [groups]="false" [notify]="notify() ?? emit" />
           </ng-template>
         } @else if (item.disabled) {
           <button type="button" class="hx-menu-item" cdkMenuItem [cdkMenuItemDisabled]="true" [attr.id]="item.id ?? null" [attr.aria-label]="item.ariaLabel ?? null">
@@ -109,6 +109,11 @@ export class HxMenuPanel {
   readonly ariaLabel = input<string>();
   /** An item was activated (after its `command` ran). */
   readonly triggered = output<HxMenuItem>();
+  /**
+   * Where a submenu reports an activated item. The CDK closes (and destroys) a submenu before the click handler
+   * runs, and an output of a destroyed component no longer delivers, so submenus call this function of the root.
+   */
+  readonly notify = input<(item: HxMenuItem) => void>();
 
   private readonly menu = viewChild(CdkMenu);
   protected readonly visible = (list: readonly HxMenuItem[]) =>
@@ -120,6 +125,10 @@ export class HxMenuPanel {
 
   protected run(item: HxMenuItem, originalEvent: Event): void {
     item.command?.({ originalEvent, item });
-    this.triggered.emit(item);
+    const notify = this.notify();
+    if (notify) notify(item);
+    else this.triggered.emit(item);
   }
+
+  protected readonly emit = (item: HxMenuItem) => this.triggered.emit(item);
 }
