@@ -463,6 +463,29 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Card
+
+`hx-card` is a surface for grouped content. Project a header with `hxCardHeader` (an image, say), a title with
+`hxCardTitle`, a subtitle with `hxCardSubtitle`, the content, and a footer with `hxCardFooter`; or use the `title` and
+`subtitle` inputs as a shortcut. Regions without content take no space.
+
+```html
+<hx-card title="Billing" subtitle="October" [headingLevel]="3">
+  <img hxCardHeader src="chart.png" alt="" />
+  Total due: 120 EUR
+  <div hxCardFooter><button hx-button>Pay</button></div>
+</hx-card>
+```
+
+| Input          | Type     | Default | Description                                              |
+| -------------- | -------- | ------- | -------------------------------------------------------- |
+| `title`        | `string` | `''`    | The title (a shortcut for the `hxCardTitle` slot).       |
+| `subtitle`     | `string` | `''`    | The subtitle (a shortcut for the `hxCardSubtitle` slot). |
+| `headingLevel` | `number` | `2`     | Level of the title heading, 1 to 6.                      |
+
+- **Accessibility:** the title is a real heading (`h1` to `h6` by `headingLevel`) so the page outline stays right;
+  the card adds no role. An empty title is hidden, not left as an empty heading.
+
 ## File upload
 
 `hx-file-upload` collects files and emits them; there is no HTTP in it, the app uploads. The choose control is a

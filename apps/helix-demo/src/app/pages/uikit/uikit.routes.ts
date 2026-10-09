@@ -12,6 +12,7 @@ import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
 import { HxBlocksDemo } from './hx-blocks/hx-blocks-demo';
 import { HxButtonDemo } from './hx-button/hx-button-demo';
+import { HxContainersDemo } from './hx-containers/hx-containers-demo';
 import { HxFormDemo } from './hx-form/hx-form-demo';
 import { HxInputsDemo } from './hx-inputs/hx-inputs-demo';
 import { HxSelectDemo } from './hx-select/hx-select-demo';
@@ -39,6 +40,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   formlayout: FormLayoutDemo,
   'hx-blocks': HxBlocksDemo,
   'hx-button': HxButtonDemo,
+  'hx-containers': HxContainersDemo,
   'hx-form': HxFormDemo,
   'hx-inputs': HxInputsDemo,
   'hx-select': HxSelectDemo,

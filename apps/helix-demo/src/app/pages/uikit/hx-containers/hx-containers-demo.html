@@ -1,0 +1,23 @@
+<h1 class="sr-only">Helix UI Containers</h1>
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Containers</h2>
+    <p class="m-0">Container components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Card</h2>
+    <div class="cards">
+      <hx-card title="Shortcut inputs" subtitle="title and subtitle" [headingLevel]="3">
+        Content of the card.
+        <div hxCardFooter><button hx-button type="button" size="small">Action</button></div>
+      </hx-card>
+      <hx-card [headingLevel]="3">
+        <span hxCardTitle>Slots</span>
+        <span hxCardSubtitle>Title and subtitle as slots</span>
+        <p class="m-0">More content here.</p>
+      </hx-card>
+      <hx-card>Only content, no caption.</hx-card>
+    </div>
+  </div>
+</div>

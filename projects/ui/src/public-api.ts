@@ -21,6 +21,7 @@ export {
   type HxButtonSize,
   type HxButtonVariant,
 } from './lib/button/button';
+export { HxCard } from './lib/card/card';
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export {
   HxDatePicker,
