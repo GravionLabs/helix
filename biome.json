@@ -52,6 +52,7 @@
       "!**/*.html",
       "!**/*.svg",
       "!apps/site/.vitepress/theme/generated",
+      "!scripts/tests/fixtures",
       "!**/public",
       "!projects/core"
     ]

@@ -46,12 +46,7 @@ describe('previews', () => {
   });
 });
 
-// bundle.css needs the built library (`pnpm build:core`): the presets and the styling engine.
-describe.skipIf(
-  !existsSync(
-    resolve(__dirname, '../../dist/core/fesm2022/gravionlabs-helix-core-themes-helix.mjs'),
-  ),
-)('buildComponents (built core)', () => {
+describe('buildComponents', () => {
   it('writes a self-consistent bundle', async () => {
     const files = await buildComponents();
     const css = files['components/bundle.css'];

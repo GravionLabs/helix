@@ -1,4 +1,5 @@
-import { computed, DestroyRef, effect, inject } from '@angular/core';
+import { computed, DestroyRef, inject } from '@angular/core';
+import { type HxPrimaryColor, type HxSurface, HxTheme } from '@gravionlabs/helix-ui';
 import {
   patchState,
   signalStore,
@@ -36,10 +37,6 @@ function writeCollapsed(collapsed: boolean): void {
 
 const initialState: LayoutStoreState = {
   // Config
-  preset: 'Helix',
-  primary: null,
-  surface: null,
-  darkTheme: false,
   menuMode: 'static',
   // State
   staticMenuDesktopInactive: false,
@@ -56,17 +53,21 @@ const initialState: LayoutStoreState = {
 export const LayoutStore = signalStore(
   { providedIn: 'root' },
   withState<LayoutStoreState>(initialState),
-  withComputed((store) => ({
-    isDarkTheme: computed(() => store.darkTheme()),
+  withComputed((store, theme = inject(HxTheme)) => ({
+    /** Dark mode, primary colour and surface live in the theme service of helix-ui; these are its values. */
+    darkTheme: computed(() => theme.dark()),
+    primary: computed(() => theme.primary()),
+    surface: computed(() => theme.surface()),
+    isDarkTheme: computed(() => theme.dark()),
     isOverlay: computed(() => store.menuMode() === 'overlay'),
     isStatic: computed(() => store.menuMode() === 'static'),
     isSidebarActive: computed(() => store.overlayMenuActive() || store.mobileMenuActive()),
     /** Icon-only rail. Only applies on desktop — the mobile drawer always shows labels. */
     isCollapsed: computed(() => store.sidebarCollapsed() && store.desktop()),
   })),
-  withMethods((store) => ({
+  withMethods((store, theme = inject(HxTheme)) => ({
     toggleDarkMode(): void {
-      patchState(store, { darkTheme: !store.darkTheme() });
+      theme.toggleDark();
     },
     setMenuMode(menuMode: MenuMode): void {
       patchState(store, { menuMode });
@@ -120,14 +121,11 @@ export const LayoutStore = signalStore(
     updateConfig(config: Partial<LayoutConfig>): void {
       patchState(store, config);
     },
-    setPreset(preset: string): void {
-      patchState(store, { preset });
+    setPrimary(primary: HxPrimaryColor | null): void {
+      theme.setPrimary(primary);
     },
-    setPrimary(primary: string | null): void {
-      patchState(store, { primary });
-    },
-    setSurface(surface: string | null): void {
-      patchState(store, { surface });
+    setSurface(surface: HxSurface | null): void {
+      theme.setSurface(surface);
     },
     isDesktop(): boolean {
       return window.innerWidth > 991;
@@ -147,25 +145,6 @@ export const LayoutStore = signalStore(
         window.addEventListener('resize', onResize);
         inject(DestroyRef).onDestroy(() => window.removeEventListener('resize', onResize));
       }
-
-      effect(() => {
-        const isDark = store.darkTheme();
-        const supportsViewTransition = 'startViewTransition' in document;
-
-        const applyDarkMode = () => {
-          if (isDark) {
-            document.documentElement.classList.add('app-dark');
-          } else {
-            document.documentElement.classList.remove('app-dark');
-          }
-        };
-
-        if (supportsViewTransition) {
-          (document as any).startViewTransition(() => applyDarkMode());
-        } else {
-          applyDarkMode();
-        }
-      });
     },
   }),
 );

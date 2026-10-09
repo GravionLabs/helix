@@ -34,6 +34,8 @@ export {
   type HxInputNumberSize,
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
+
+export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export {
@@ -44,6 +46,17 @@ export {
 } from './lib/select/select';
 export { HxSelectButton, type HxSelectButtonSize } from './lib/select-button/select-button';
 export { HxSwitch } from './lib/switch/switch';
+export {
+  HX_PRIMARY_COLORS,
+  HX_SURFACE_NAMES,
+  HX_SURFACES,
+  HX_THEME_OPTIONS,
+  type HxPrimaryColor,
+  type HxSurface,
+  HxTheme,
+  type HxThemeOptions,
+  provideHxTheme,
+} from './lib/theme/theme';
 export { HxToggleButton, type HxToggleButtonSize } from './lib/toggle-button/toggle-button';
 export {
   HxTooltip,

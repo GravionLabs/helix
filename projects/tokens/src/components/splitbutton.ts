@@ -1,0 +1,12 @@
+// Component tokens of "splitbutton".
+// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+import type { TokenTree } from '../types.ts';
+
+export const splitbutton = {
+  root: {
+    borderRadius: '{form.field.border.radius}',
+    roundedBorderRadius: '2rem',
+    raisedShadow:
+      '0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
+  },
+} satisfies TokenTree;

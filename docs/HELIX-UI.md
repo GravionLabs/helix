@@ -265,6 +265,121 @@ locale while the user types. It works with `ngModel`, reactive forms and signal 
   formatted text as `aria-valuetext`. The step buttons have an `aria-label` and `tabindex="-1"`: keyboard users
   use the arrow keys. Give it a visible label or `ariaLabel`.
 
+## Theming
+
+`tokens.css` gives every `--h-*` token its Helix value, light and dark. The theme service changes the colour
+choice while the app runs, with CSS custom properties only: no styling engine, no rebuild.
+
+```ts
+// app.config.ts
+provideHxTheme({ storageKey: 'my-app-theme' })
+
+// anywhere
+readonly theme = inject(HxTheme);
+theme.toggleDark();
+theme.setPrimary('emerald');   // one of HX_PRIMARY_COLORS
+theme.setSurface('zinc');      // one of HX_SURFACE_NAMES; null is the Helix default
+```
+
+| Member | What it does |
+| --- | --- |
+| `dark()`, `setDark(on)`, `toggleDark()` | Dark mode: the class `app-dark` on `<html>` (or an attribute, see `darkSelector`). |
+| `primary()`, `setPrimary(name \| null)` | The primary colour: `emerald`, `green`, `lime`, `orange`, `amber`, `yellow`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, or `noir` (black on light, white on dark). `null` is the colour of the preset. |
+| `surface()`, `setSurface(name \| null)` | The grey scale behind backgrounds, borders and text: `slate`, `gray`, `zinc`, `neutral`, `stone`, `soho`, `viva`, `ocean`. `null` is the Helix default. |
+| `css()` | The style text of the overrides, for an app that renders it itself (server rendering). |
+
+Options of `provideHxTheme`:
+
+| Option | Default | |
+| --- | --- | --- |
+| `darkSelector` | `'.app-dark'` | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. |
+| `storageKey` | `null` | Remembers the choice in `localStorage` under this key; a damaged or blocked storage is ignored. |
+| `dark` | the system setting | Dark mode when nothing is remembered (`prefers-color-scheme`). |
+| `primary`, `surface` | `null` | The colours when nothing is remembered. |
+
+How it works: the primary scale `--h-primary-50 … 950` is pointed at another colour scale
+(`var(--h-emerald-500)`), the roles that depend on it (`--h-primary-color` is step 600 in light and 400 in dark)
+stay those of the tokens, so every component follows. A surface replaces `--h-surface-0 … 950` in both colour
+schemes. The overrides live in one style sheet of the service (a constructed one where the browser has them,
+otherwise a `<style data-hx-theme>`), with a selector that wins over `tokens.css` in light and dark; the service
+removes it when it is destroyed. Nothing touches the DOM on the server.
+
+## Menu item model
+
+`HxMenuItem` is the entry of every menu-like component (breadcrumb now; menu, menubar and split button follow):
+
+```ts
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
+
+const items: HxMenuItem[] = [
+  { label: 'Settings', icon: 'pi pi-cog', routerLink: ['/settings'] },
+  { separator: true },
+  { label: 'Docs', url: 'https://example.com/docs', target: '_blank' },
+  { label: 'Sign out', command: ({ item }) => signOut(item) },
+];
+```
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `label`, `ariaLabel` | `string` | Text; `ariaLabel` is the accessible name when an icon-only entry has no label. |
+| `icon` | `string` | CSS classes of an icon font, e.g. `pi pi-home`. |
+| `routerLink`, `queryParams` | `string \| unknown[]`, `object` | Router navigation; wins over `url`. |
+| `url`, `target` | `string` | External link and its target. |
+| `command` | `(event: { originalEvent: Event; item: HxMenuItem }) => void` | Called when the entry is activated. |
+| `items` | `HxMenuItem[]` | Submenu, or a group when the entry has no action. |
+| `disabled`, `visible`, `separator`, `id`, `badge` | | State, a hidden entry, a divider line, the element id, a short text next to the label. |
+
+An item of the former helix-core menu model (`MenuItem`) is assignable to `HxMenuItem` as it is; a test keeps
+that true. `HxBreadcrumbItem` is the same type.
+
+## Validators
+
+`@gravionlabs/helix-ui/validators` (a secondary entry point) holds the validators that carry their own error
+message. The error text is the value of the error object, so a form field can show it directly.
+
+```ts
+import { FormControl } from '@angular/forms';
+import { Validators } from '@gravionlabs/helix-ui/validators';
+
+const email = new FormControl('', [
+  Validators.required('Email is required'),
+  Validators.email('Not an email address'),
+]);
+email.errors; // { Required: 'Email is required' } while the field is empty
+```
+
+- Each validator takes the message first, either a `string` or a function of the value (`(value) => string`).
+- Validators for optional values take `allowEmpty` (default `true`): an empty value is valid unless you pass
+  `false`.
+- The error key is the `ValidatorKey` enum member (`Required`, `Email`, `Number`, `Integer`, `Min`, `Max`,
+  `MinLength`, `MaxLength`, `Pattern`, `Date`, `OneOf`, `AllOf`), so templates and error resolvers can switch on it.
+- It is the same code as `@gravionlabs/helix-core/validators`; `helix-zod` and the shell move to this entry point.
+
+## Icons
+
+Components draw the few icons they need themselves, as CSS masks in the colour of the element, so an app needs no
+icon font for helix-ui to look right. The icons live in `projects/ui/styles/_icons.scss` (a partial: it emits no
+CSS of its own) on a 24 × 24 grid with round caps and joins:
+
+`chevron-down`, `chevron-up`, `chevron-left`, `chevron-right`, `check`, `close`, `plus`, `minus`, `search`,
+`calendar`, `eye`, `eye-off`, `upload`, `spinner`, `info`, `success`, `warn`, `error`, `star`, `star-filled`, `bars`.
+
+```scss
+@use 'icons' as *;
+
+.hx-select-chevron {
+  @include hx-icon(chevron-down, 1rem, var(--h-select-dropdown-color), 2.4);
+}
+```
+
+`hx-icon($name, $size: 1em, $color: currentcolor, $stroke: 2)` sets the box, the colour and the mask; an unknown name
+stops the build with the list of known icons. To add one, add its path to the `$hx-icons` map (a test compiles every
+entry). `hx-icon-spin()` and `hx-icon-spin-keyframes()` turn an icon, with a slower turn for users who prefer
+reduced motion.
+
+Apps are free to keep PrimeIcons (`pi pi-*`) for the content of their own pages and for the `icon` field of menu
+items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the classes of any icon font.
+
 ## Divider
 
 `hx-divider`: a line between content. Projected content is a label sitting on the line.

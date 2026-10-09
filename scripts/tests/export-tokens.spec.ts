@@ -1,7 +1,11 @@
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { DARK_SELECTOR, resolvePreset, tokensOf } from '../export-tokens.mjs';
+import { helixTokens } from '../../projects/tokens/src/index.ts';
+import { DARK_SELECTOR, exportPreset, loadTokens, PRESETS, tokensOf } from '../export-tokens.mjs';
+import { loadPreset, resolvePreset } from '../tokens/core-engine.mjs';
+import { resolveTokens } from '../tokens/resolve.mjs';
 
 const FESM = resolve(__dirname, '../../dist/core/fesm2022');
 
@@ -24,41 +28,52 @@ describe('tokensOf', () => {
   });
 });
 
-// The presets and the engine come from the built library (`pnpm build:core`).
-describe.skipIf(!existsSync(FESM))('resolvePreset (built core)', () => {
-  const load = async (name: string) => {
-    const { Theme } = await import(resolve(FESM, 'gravionlabs-helix-core-themes.mjs'));
-    const module = await import(resolve(FESM, `gravionlabs-helix-core-themes-${name}.mjs`));
-    return { Theme, preset: module[`${name}Preset`] };
-  };
+describe('the Helix tokens (projects/tokens)', () => {
+  const helix = resolveTokens(helixTokens).json;
 
-  it('resolves helixPreset to the full token set, light and dark', async () => {
-    const { Theme, preset } = await load('helix');
-    const tokens = tokensOf(resolvePreset(Theme, preset));
-    expect(tokens.light['--h-primary-color']).toBeDefined();
-    expect(tokens.light['--h-button-primary-background']).toBeDefined();
-    expect(tokens.dark['--h-stone-50']).toBeUndefined(); // primitive: not per scheme
-    expect(tokens.dark['--h-surface-0']).toBeDefined(); // semantic, per colour scheme
-    expect(tokens.dark['--h-primary-color']).toBeDefined();
-    expect(Object.keys(tokens.light).length).toBeGreaterThan(1000);
+  it('resolve to the full token set, light and dark', () => {
+    expect(helix.light['--h-primary-color']).toBeDefined();
+    expect(helix.light['--h-button-primary-background']).toBeDefined();
+    expect(helix.dark['--h-stone-50']).toBeUndefined(); // primitive: not per scheme
+    expect(helix.dark['--h-surface-0']).toBeDefined(); // semantic, per colour scheme
+    expect(helix.dark['--h-primary-color']).toBeDefined();
+    expect(Object.keys(helix.light).length).toBeGreaterThan(1000);
   });
 
-  it('helixPreset is Aura with the Helix identity: indigo primary, the sibling-site surfaces in both schemes', async () => {
-    const helix = tokensOf(
-      resolvePreset(...(Object.values(await load('helix')) as [unknown, unknown])),
-    );
-    const aura = tokensOf(
-      resolvePreset(...(Object.values(await load('aura')) as [unknown, unknown])),
-    );
+  it('are Aura with the Helix identity: indigo primary, the sibling-site surfaces in both schemes', () => {
     expect(helix.light['--h-primary-color']).toBe('var(--h-primary-600)');
     expect(helix.light['--h-primary-500']).toBe('var(--h-indigo-500)');
     expect(helix.light['--h-surface-500']).toBe('#67676c');
-    expect(helix.light['--h-indigo-500']).not.toBe(aura.light['--h-indigo-500']); // muted palettes
-    expect(helix.light['--h-red-500']).not.toBe(aura.light['--h-red-500']);
-    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // Aura's palettes stay available
     expect(helix.dark['--h-surface-500']).toBe('#67676c');
     expect(helix.light['--h-text-color']).toBe('var(--h-surface-600)');
     expect(helix.dark['--h-text-color']).toBe('#dfdfd6');
+  });
+
+  it('export to files for the presets that have data, and refuse the others', () => {
+    expect(PRESETS).toEqual(['helix']);
+    expect(() => loadTokens('aura')).toThrow(/only helix has token data/);
+    const dir = mkdtempSync(join(tmpdir(), 'tokens-'));
+    const { css } = exportPreset('helix', { outDir: dir, base: true, darkSelector: '.dark' });
+    expect(readFileSync(join(dir, 'helix.base.css'), 'utf8')).toBe(`${css}\n`);
+    expect(css).toContain('.dark{--h-');
+    expect(css).not.toContain('--h-button-');
+    expect(Object.keys(JSON.parse(readFileSync(join(dir, 'helix.base.json'), 'utf8')))).toEqual([
+      'light',
+      'dark',
+    ]);
+    rmSync(dir, { recursive: true });
+  });
+});
+
+// While helix-core is built: against Aura, from which the Helix preset was derived.
+describe.skipIf(!existsSync(FESM))('against Aura (built core)', () => {
+  it('differs from Aura in the colours only: muted palettes, same token set', async () => {
+    const { Theme, preset } = await loadPreset('aura');
+    const aura = tokensOf(resolvePreset(Theme, preset));
+    const helix = resolveTokens(helixTokens).json;
+    expect(helix.light['--h-indigo-500']).not.toBe(aura.light['--h-indigo-500']); // muted palettes
+    expect(helix.light['--h-red-500']).not.toBe(aura.light['--h-red-500']);
+    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // Aura's palettes stay available
     expect(helix.light['--h-button-primary-background']).toBe(
       aura.light['--h-button-primary-background'],
     ); // component layer untouched
@@ -82,20 +97,21 @@ describe('helix-palettes', () => {
   });
 });
 
-describe('helix-palettes covers the configurator', () => {
-  it('mutes every primary colour the demo configurator offers', async () => {
+describe('helix-palettes covers the theme service', () => {
+  it('mutes every primary colour the theme service offers', async () => {
     const { readFileSync } = await import('node:fs');
     const { SCALES } = await import('../helix-palettes.mjs');
     const source = readFileSync(
-      resolve(
-        __dirname,
-        '../../projects/shell/src/lib/layout/components/configurator/configurator.ts',
-      ),
+      resolve(__dirname, '../../projects/ui/src/lib/theme/theme.ts'),
       'utf8',
     );
     const offered = [
-      ...(/const colors = \[([\s\S]*?)\];/.exec(source)?.[1] ?? '').matchAll(/'([a-z]+)'/g),
-    ].map((m) => m[1]);
+      ...(/HX_PRIMARY_COLORS = \[([\s\S]*?)\] as const/.exec(source)?.[1] ?? '').matchAll(
+        /'([a-z]+)'/g,
+      ),
+    ]
+      .map((m) => m[1])
+      .filter((color) => color !== 'noir'); // noir is the surface scale, not a colour scale
     expect(offered.length).toBe(16);
     expect(offered.filter((c) => !SCALES.includes(c))).toEqual([]);
   });

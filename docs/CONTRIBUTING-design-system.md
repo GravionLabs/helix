@@ -9,7 +9,7 @@ files in `scripts/design-system/`.
 ## Regenerate
 
 ```bash
-pnpm build:lib              # builds helix-core and exports dist/tokens
+pnpm tokens:export          # resolves projects/tokens to dist/tokens (also the last step of build:lib)
 pnpm design-system:build    # writes dist/design-system/project/…
 ```
 

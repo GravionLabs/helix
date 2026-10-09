@@ -18,6 +18,7 @@
       "@gravionlabs/helix-zod": ["./projects/zod/src/public-api.ts"],
       "@gravionlabs/helix-ag-grid": ["./projects/ag-grid/src/public-api.ts"],
       "@gravionlabs/helix-ui": ["./dist/ui"],
+      "@gravionlabs/helix-ui/validators": ["./dist/ui/validators"],
       "@/*": ["./apps/helix-demo/src/*"]
     },
     "importHelpers": true,

@@ -1,16 +1,3 @@
-vi.mock('@gravionlabs/helix-core/themes', () => ({
-  $t: vi.fn(() => ({
-    preset: vi.fn().mockReturnThis(),
-    surfacePalette: vi.fn().mockReturnThis(),
-    use: vi.fn().mockReturnThis(),
-  })),
-  updatePreset: vi.fn(),
-  updateSurfacePalette: vi.fn(),
-}));
-vi.mock('@gravionlabs/helix-core/themes/aura', () => ({ auraPreset: { primitive: {} } }));
-vi.mock('@gravionlabs/helix-core/themes/lara', () => ({ laraPreset: { primitive: {} } }));
-vi.mock('@gravionlabs/helix-core/themes/nora', () => ({ noraPreset: { primitive: {} } }));
-
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HelixNavLink } from '../../landing.model';

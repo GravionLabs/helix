@@ -4,9 +4,8 @@ import { describe, expect, it } from 'vitest';
 import { buildSystem, coverOf, markOf } from '../design-system/build.mjs';
 
 const ROOT = resolve(__dirname, '../..');
-const built =
-  existsSync(resolve(ROOT, 'dist/tokens/helix.json')) &&
-  existsSync(resolve(ROOT, 'dist/core/fesm2022'));
+// needs the exported tokens (`pnpm tokens:export`), nothing else
+const built = existsSync(resolve(ROOT, 'dist/tokens/helix.json'));
 
 describe('coverOf', () => {
   const cover = coverOf();

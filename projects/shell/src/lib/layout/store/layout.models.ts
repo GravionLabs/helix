@@ -1,10 +1,10 @@
 export type MenuMode = 'static' | 'overlay';
 
+/**
+ * The layout settings the store owns. Dark mode, the primary colour and the surface are not among them: they
+ * belong to the theme service of helix-ui (`HxTheme`), which the store only exposes.
+ */
 export interface LayoutConfig {
-  preset: string;
-  primary: string | null;
-  surface: string | undefined | null;
-  darkTheme: boolean;
   menuMode: MenuMode;
 }
 
