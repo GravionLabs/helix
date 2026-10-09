@@ -38,6 +38,7 @@ export {
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
+export { HxRating } from './lib/rating/rating';
 export {
   HxSelect,
   type HxSelectItem,
