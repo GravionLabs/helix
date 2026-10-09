@@ -6,6 +6,16 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Toolbar</h2>
+    <hx-toolbar>
+      <button hxToolbarStart hx-button type="button" size="small">New</button>
+      <button hxToolbarStart hx-button type="button" size="small" variant="outlined">Edit</button>
+      <span hxToolbarCenter>3 selected</span>
+      <button hxToolbarEnd hx-button type="button" size="small" severity="secondary">Export</button>
+    </hx-toolbar>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Accordion</h2>
     <hx-accordion [(value)]="open" [headingLevel]="3">
       <hx-accordion-panel value="a">

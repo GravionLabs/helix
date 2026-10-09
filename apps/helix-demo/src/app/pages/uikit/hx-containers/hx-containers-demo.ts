@@ -10,9 +10,10 @@ import {
   HxFieldset,
   HxInput,
   HxPanel,
+  HxToolbar,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` containers: Card, Panel, Fieldset, Accordion. */
+/** `@gravionlabs/helix-ui` containers: Card, Panel, Fieldset, Accordion, Toolbar. */
 @Component({
   selector: 'app-hx-containers-demo',
   standalone: true,
@@ -26,6 +27,7 @@ import {
     HxAccordionPanel,
     HxAccordionHeader,
     HxAccordionContent,
+    HxToolbar,
   ],
   templateUrl: './hx-containers-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,

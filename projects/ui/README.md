@@ -37,6 +37,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxInputNumber` | `hx-input-number` | locale formatting, step buttons, all three forms APIs |
 | `HxPassword` | `hx-password` | show/hide toggle, all three forms APIs |
 | `HxCard` | `hx-card` | surface with header, title (a heading), subtitle, content and footer slots |
+| `HxToolbar` | `hx-toolbar` | start, center and end areas that wrap on small screens; no toolbar role |
 | `HxAccordion`, `HxAccordionPanel`, `HxAccordionHeader`, `HxAccordionContent` | `hx-accordion` … | WAI-ARIA accordion on the CDK, single or multiple |
 | `HxFieldset` | `hx-fieldset` | native fieldset and legend, optional collapse with a legend button |
 | `HxPanel` | `hx-panel` | titled container, optional collapse with a toggle button, header and footer slots |
