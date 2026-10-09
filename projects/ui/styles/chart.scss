@@ -1,0 +1,16 @@
+/*
+ * Chart: `<hx-chart>`. Layout only: the colours, grid and font are handed to chart.js from the semantic tokens by the
+ * component, so there are no `--h-chart-*` tokens. The frame is the positioned box chart.js sizes the canvas to.
+ */
+.hx-chart {
+  display: block;
+}
+
+.hx-chart-frame {
+  position: relative;
+  max-width: 100%;
+}
+
+.hx-chart-canvas {
+  display: block;
+}

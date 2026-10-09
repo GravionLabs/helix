@@ -1,16 +1,18 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
+  HxChart,
+  type HxChartSelectEvent,
   HxTree,
   type HxTreeNode,
   type HxTreeNodeEvent,
   type HxTreeSelection,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` data components: Tree. */
+/** `@gravionlabs/helix-ui` data components: Tree, Chart. */
 @Component({
   selector: 'app-hx-data-demo',
   standalone: true,
-  imports: [HxTree],
+  imports: [HxChart, HxTree],
   templateUrl: './hx-data-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-data-demo.scss',
@@ -53,6 +55,30 @@ export class HxDataDemo {
   ]);
   readonly single = signal<HxTreeSelection>('report');
   readonly checked = signal<HxTreeSelection>([]);
+
+  readonly months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  readonly sales = [65, 59, 80, 81, 56, 55];
+  readonly costs = [28, 48, 40, 19, 86, 27];
+  readonly barData = {
+    labels: this.months,
+    datasets: [
+      { label: 'Sales', data: this.sales },
+      { label: 'Costs', data: this.costs },
+    ],
+  };
+  readonly lineData = {
+    labels: this.months,
+    datasets: [{ label: 'Sales', data: this.sales, fill: true, tension: 0.4 }],
+  };
+  readonly doughnutData = {
+    labels: ['Direct', 'Referral', 'Social'],
+    datasets: [{ data: [540, 325, 702] }],
+  };
+  readonly picked = signal('none');
+  pick(event: HxChartSelectEvent) {
+    const { datasetIndex, index } = event.element as { datasetIndex: number; index: number };
+    this.picked.set(`${this.barData.datasets[datasetIndex].label}, ${this.months[index]}`);
+  }
 
   readonly lazy = signal<HxTreeNode[]>([
     { key: 'a', label: 'Server A (loads when opened)', leaf: false, icon: 'pi pi-server' },

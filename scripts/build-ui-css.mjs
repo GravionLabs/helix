@@ -35,6 +35,7 @@ export const TOKEN_COMPONENTS = {
   button: ['button'],
   'button-group': ['button'],
   card: ['card'],
+  chart: [],
   checkbox: ['checkbox'],
   divider: ['divider'],
   'float-label': ['floatlabel'],

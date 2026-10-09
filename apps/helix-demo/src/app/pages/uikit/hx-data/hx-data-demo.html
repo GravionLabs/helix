@@ -25,4 +25,21 @@
       </div>
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Chart</h2>
+    <p class="m-0">chart.js with colours from the tokens; switch light/dark or the primary colour and it redraws. Click a bar: {{ picked() }}</p>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))">
+      <hx-chart type="bar" [data]="barData" height="18rem" ariaLabel="Sales and costs per month" (dataSelect)="pick($event)">
+        <table hxChartFallback>
+          <tr><th>Month</th><th>Sales</th><th>Costs</th></tr>
+          @for (m of months; track m; let i = $index) {
+            <tr><td>{{ m }}</td><td>{{ sales[i] }}</td><td>{{ costs[i] }}</td></tr>
+          }
+        </table>
+      </hx-chart>
+      <hx-chart type="line" [data]="lineData" height="18rem" ariaLabel="Sales per month" />
+      <hx-chart type="doughnut" [data]="doughnutData" height="18rem" ariaLabel="Traffic sources" />
+    </div>
+  </div>
 </div>

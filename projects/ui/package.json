@@ -23,7 +23,13 @@
     "@angular/common": ">=22",
     "@angular/core": ">=22",
     "@angular/forms": ">=22",
-    "@angular/router": ">=22"
+    "@angular/router": ">=22",
+    "chart.js": "^4.4.0"
+  },
+  "peerDependenciesMeta": {
+    "chart.js": {
+      "optional": true
+    }
   },
   "dependencies": {
     "tslib": "^2.3.0"
