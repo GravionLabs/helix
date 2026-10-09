@@ -1,0 +1,58 @@
+/*
+ * Tag: `<hx-tag>`. A small label from the `--h-tag-*` tokens whose colours follow the severity.
+ */
+.hx-tag {
+  --hx-tag-background: var(--h-tag-primary-background);
+  --hx-tag-color: var(--h-tag-primary-color);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-tag-gap);
+  padding: var(--h-tag-padding);
+  border-radius: var(--h-tag-border-radius);
+  background: var(--hx-tag-background);
+  color: var(--hx-tag-color);
+  font-size: var(--h-tag-font-size);
+  font-weight: var(--h-tag-font-weight);
+  line-height: 1.25;
+}
+
+.hx-tag-secondary {
+  --hx-tag-background: var(--h-tag-secondary-background);
+  --hx-tag-color: var(--h-tag-secondary-color);
+}
+
+.hx-tag-success {
+  --hx-tag-background: var(--h-tag-success-background);
+  --hx-tag-color: var(--h-tag-success-color);
+}
+
+.hx-tag-info {
+  --hx-tag-background: var(--h-tag-info-background);
+  --hx-tag-color: var(--h-tag-info-color);
+}
+
+.hx-tag-warn {
+  --hx-tag-background: var(--h-tag-warn-background);
+  --hx-tag-color: var(--h-tag-warn-color);
+}
+
+.hx-tag-danger {
+  --hx-tag-background: var(--h-tag-danger-background);
+  --hx-tag-color: var(--h-tag-danger-color);
+}
+
+.hx-tag-contrast {
+  --hx-tag-background: var(--h-tag-contrast-background);
+  --hx-tag-color: var(--h-tag-contrast-color);
+}
+
+.hx-tag-rounded {
+  border-radius: var(--h-tag-rounded-border-radius);
+}
+
+.hx-tag-icon {
+  flex: none;
+  font-size: var(--h-tag-icon-size);
+}

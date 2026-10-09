@@ -67,6 +67,7 @@ describe('helix-ui styles', () => {
     ['toolbar', 'toolbar/toolbar.ts'],
     ['split-button', 'split-button/split-button.ts'],
     ['stepper', 'stepper/stepper.ts'],
+    ['tag', 'tag/tag.ts'],
     ['tabs', 'tabs/tabs.ts'],
     ['toast', 'toast/toast.ts'],
     ['tooltip', 'tooltip/tooltip.ts'],

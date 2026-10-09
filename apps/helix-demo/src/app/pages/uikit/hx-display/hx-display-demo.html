@@ -36,4 +36,18 @@
       </hx-overlay-badge>
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Tag</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      @for (severity of severities; track severity) {
+        <hx-tag [value]="severity" [severity]="severity" />
+      }
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <hx-tag severity="success" rounded icon="pi pi-check">Approved</hx-tag>
+      <hx-tag severity="warn" icon="pi pi-clock">Pending</hx-tag>
+      <hx-tag severity="danger" rounded icon="pi pi-times">Rejected</hx-tag>
+    </div>
+  </div>
 </div>

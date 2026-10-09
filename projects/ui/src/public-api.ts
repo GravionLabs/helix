@@ -117,6 +117,7 @@ export {
   HxTabPanels,
   HxTabs,
 } from './lib/tabs/tabs';
+export { HxTag, type HxTagSeverity } from './lib/tag/tag';
 export {
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,

@@ -523,6 +523,25 @@ The overlay badge takes the same three inputs.
   of a status, say the status in text or in the name of the element it belongs to. An icon-only element under an
   overlay badge needs its own accessible name; include the count in it (`aria-label="Notifications, 2 new"`).
 
+## Tag
+
+`hx-tag` is a label for a category or a status. The text is the `value` or the projected content.
+
+```html
+<hx-tag value="New" severity="success" />
+<hx-tag severity="warn" rounded icon="pi pi-exclamation-triangle">Pending</hx-tag>
+```
+
+| Input      | Type                                                                          | Default     | Description                                |
+| ---------- | ----------------------------------------------------------------------------- | ----------- | ------------------------------------------ |
+| `value`    | `string \| number \| null`                                                     | `null`      | The text (or project content instead).     |
+| `severity` | `'primary' \| 'secondary' \| 'success' \| 'info' \| 'warn' \| 'danger' \| 'contrast'` | `'primary'` | The colours.                               |
+| `rounded`  | `boolean`                                                                     | `false`     | A pill instead of the small radius.        |
+| `icon`     | `string`                                                                      |             | Icon font classes, drawn before the text.  |
+
+- **Accessibility:** plain text with no role; the icon is `aria-hidden`. The colour is not the only carrier of the
+  meaning, the text says it too.
+
 ## Split button
 
 `hx-split-button` is a default action with a menu of related actions: a button and, joined to it, a button that opens an
