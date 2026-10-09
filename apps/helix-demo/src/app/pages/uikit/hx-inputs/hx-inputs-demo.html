@@ -81,6 +81,27 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Rating</h2>
+    <div class="row">
+      <span class="label">editable</span>
+      <hx-rating ariaLabel="Quality" [(value)]="score" />
+      <span>{{ score() ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <span class="label">ten stars</span>
+      <hx-rating ariaLabel="Satisfaction" [stars]="10" [value]="7" />
+    </div>
+    <div class="row">
+      <span class="label">read only</span>
+      <hx-rating readonly [value]="4" />
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <hx-rating ariaLabel="Disabled" [disabled]="true" [value]="2" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Slider</h2>
     <div class="row">
       <label class="label" for="vol">Volume</label>

@@ -463,6 +463,28 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Rating
+
+`hx-rating` is a star rating. Each star is a visually hidden `input type="radio"` labelled "n stars", so the arrow
+keys change the value. It works with `ngModel`, reactive forms (including `disable()`) and signal forms. The value
+is a `number | null` (`null` until a star is chosen). The stars are drawn with the internal icons and the
+`--h-rating-*` tokens.
+
+```html
+<hx-rating ariaLabel="Quality" [(ngModel)]="score" />
+<hx-rating readonly [stars]="10" [value]="7" />
+```
+
+| Input                       | Type      | Default    | Description                                  |
+| --------------------------- | --------- | ---------- | -------------------------------------------- |
+| `stars`                     | `number`  | `5`        | Number of stars.                             |
+| `readonly`                  | `boolean` | `false`    | Shows the value; no way to change it.        |
+| `ariaLabel`, `ariaLabelledby` | `string` | `'Rating'` | Name of the group.                           |
+
+- **Behaviour:** hovering previews the value (the hovered star and all before it). The stars up to the value are filled.
+- **Accessibility:** `role="radiogroup"` with a radio per star named "1 star", "2 stars", …; Arrow keys move and
+  choose, Tab enters and leaves the group. With `readonly` the rating is `role="img"` with the label "3 of 5 stars".
+
 ## Slider
 
 `hx-slider` chooses a number, or with `range` a pair, on a track. It is built on native `<input type="range">`

@@ -46,6 +46,7 @@ describe('helix-ui styles', () => {
     ['input-number', 'input-number/input-number.ts'],
     ['password', 'password/password.ts'],
     ['select', 'select/select.ts'],
+    ['rating', 'rating/rating.ts'],
     ['select-button', 'select-button/select-button.ts'],
     ['slider', 'slider/slider.ts'],
     ['toggle-button', 'toggle-button/toggle-button.ts'],

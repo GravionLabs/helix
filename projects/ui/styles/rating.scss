@@ -1,0 +1,74 @@
+/*
+ * Rating: `<hx-rating>`. Stars drawn with the internal `star` and `star-filled` icons in the `--h-rating-*` token
+ * colours. Each star is a visually hidden radio input in a label, so the keyboard and screen readers work natively.
+ */
+@use 'icons' as *;
+
+.hx-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-rating-gap);
+  vertical-align: bottom;
+}
+
+.hx-rating-star {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.hx-rating-icon {
+  @include hx-icon(star, var(--h-rating-icon-size), var(--h-rating-icon-color), 1.6);
+  transition: background var(--h-rating-transition-duration);
+}
+
+.hx-rating-star-active .hx-rating-icon {
+  @include hx-icon(star-filled, var(--h-rating-icon-size), var(--h-rating-icon-active-color));
+}
+
+/* a visually hidden radio: it keeps focus and the arrow keys */
+.hx-rating-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* hover previews the value: the hovered star and every star before it */
+.hx-rating:not(.hx-rating-readonly, .hx-rating-disabled) .hx-rating-star:hover .hx-rating-icon,
+.hx-rating:not(.hx-rating-readonly, .hx-rating-disabled) .hx-rating-star:has(~ .hx-rating-star:hover) .hx-rating-icon {
+  @include hx-icon(star-filled, var(--h-rating-icon-size), var(--h-rating-icon-hover-color));
+}
+
+.hx-rating-star:has(.hx-rating-input:focus-visible) .hx-rating-icon {
+  outline: var(--h-rating-focus-ring-width) var(--h-rating-focus-ring-style) var(--h-rating-focus-ring-color);
+  outline-offset: var(--h-rating-focus-ring-offset);
+  box-shadow: var(--h-rating-focus-ring-shadow);
+}
+
+.hx-rating-readonly .hx-rating-star,
+.hx-rating-disabled .hx-rating-star {
+  cursor: default;
+}
+
+.hx-rating-disabled {
+  opacity: 0.6;
+}
+
+.hx-rating-invalid,
+.hx-rating.ng-invalid.ng-touched {
+  outline: 1px solid var(--h-form-field-invalid-border-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-rating-icon {
+    transition: none;
+  }
+}

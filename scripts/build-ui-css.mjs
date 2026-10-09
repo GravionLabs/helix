@@ -41,6 +41,7 @@ export const TOKEN_COMPONENTS = {
   radio: ['radiobutton'],
   select: ['select'],
   slider: ['slider'],
+  rating: ['rating'],
   'select-button': ['selectbutton', 'togglebutton'],
   'cdk-overlay': [],
   switch: ['toggleswitch'],
