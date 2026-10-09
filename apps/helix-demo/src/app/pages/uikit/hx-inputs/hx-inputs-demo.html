@@ -81,6 +81,38 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Toggle button</h2>
+    <div class="row">
+      <span class="label">labels</span>
+      <hx-toggle-button onLabel="Subscribed" offLabel="Subscribe" onIcon="pi pi-check" offIcon="pi pi-bell" [(value)]="subscribed" />
+    </div>
+    <div class="row">
+      <span class="label">icon only</span>
+      <hx-toggle-button ariaLabel="Bold" onLabel="" offLabel="" onIcon="pi pi-bold" offIcon="pi pi-bold" [(value)]="bold" />
+    </div>
+    <div class="row">
+      <span class="label">small</span>
+      <hx-toggle-button size="small" [(value)]="subscribed" />
+    </div>
+    <div class="row">
+      <span class="label">large</span>
+      <hx-toggle-button size="large" [(value)]="subscribed" />
+    </div>
+    <div class="row">
+      <span class="label">fluid</span>
+      <hx-toggle-button fluid [(value)]="subscribed" />
+    </div>
+    <div class="row">
+      <span class="label">disabled</span>
+      <hx-toggle-button onLabel="On" offLabel="Off" [disabled]="true" />
+    </div>
+    <div class="row">
+      <span class="label">invalid</span>
+      <hx-toggle-button onLabel="On" offLabel="Off" [invalid]="true" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Icon field</h2>
     <div class="row">
       <label class="label" for="search">Left</label>

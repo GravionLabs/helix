@@ -12,15 +12,17 @@ import {
   HxInputNumber,
   HxPassword,
   HxSelect,
+  HxToggleButton,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` input components: Float label, Icon field, Input group, Input number. */
+/** `@gravionlabs/helix-ui` input components: Float label, Toggle button, Icon field, Input group, Input number. */
 @Component({
   selector: 'app-hx-inputs-demo',
   standalone: true,
   imports: [
     HxInputNumber,
     HxFloatLabel,
+    HxToggleButton,
     HxPassword,
     HxSelect,
     HxInputGroup,
@@ -40,6 +42,8 @@ export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<string | null>(null);
   readonly secret = signal('');
+  readonly subscribed = signal(false);
+  readonly bold = signal(true);
   notes = 'Grows with the content.';
   quantity: number | null = 5;
   readonly price = signal<number | null>(1234.5);

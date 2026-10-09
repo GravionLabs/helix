@@ -44,6 +44,7 @@ export {
 } from './lib/select/select';
 export { HxSelectButton, type HxSelectButtonSize } from './lib/select-button/select-button';
 export { HxSwitch } from './lib/switch/switch';
+export { HxToggleButton, type HxToggleButtonSize } from './lib/toggle-button/toggle-button';
 export {
   HxTooltip,
   type HxTooltipEvent,

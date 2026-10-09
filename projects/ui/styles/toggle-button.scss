@@ -1,0 +1,130 @@
+/*
+ * ToggleButton: `<hx-toggle-button>`. One segment like a SelectButton option, from the `--h-togglebutton-*`
+ * tokens: a bordered button, the checked state is the raised segment.
+ */
+.hx-toggle-button {
+  display: inline-flex;
+  user-select: none;
+  vertical-align: bottom;
+}
+
+.hx-toggle-button-fluid {
+  display: flex;
+  width: 100%;
+}
+
+.hx-toggle-button-control {
+  position: relative;
+  display: inline-flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: var(--h-togglebutton-padding);
+  border: 1px solid var(--h-togglebutton-border-color);
+  border-radius: var(--h-togglebutton-border-radius);
+  background: var(--h-togglebutton-background);
+  color: var(--h-togglebutton-color);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: var(--h-togglebutton-font-weight);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-togglebutton-transition-duration),
+    color var(--h-togglebutton-transition-duration),
+    border-color var(--h-togglebutton-transition-duration),
+    box-shadow var(--h-togglebutton-transition-duration);
+}
+
+.hx-toggle-button-content {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-togglebutton-gap);
+  padding: var(--h-togglebutton-content-padding);
+  border-radius: var(--h-togglebutton-content-border-radius);
+  background: transparent;
+  transition:
+    background var(--h-togglebutton-transition-duration),
+    box-shadow var(--h-togglebutton-transition-duration);
+}
+
+.hx-toggle-button-icon {
+  color: var(--h-togglebutton-icon-color);
+}
+
+.hx-toggle-button-control:not(:disabled):hover {
+  background: var(--h-togglebutton-hover-background);
+  color: var(--h-togglebutton-hover-color);
+}
+
+.hx-toggle-button-control:not(:disabled):hover .hx-toggle-button-icon {
+  color: var(--h-togglebutton-icon-hover-color);
+}
+
+.hx-toggle-button-checked .hx-toggle-button-control {
+  border-color: var(--h-togglebutton-checked-border-color);
+  background: var(--h-togglebutton-checked-background);
+  color: var(--h-togglebutton-checked-color);
+}
+
+.hx-toggle-button-checked .hx-toggle-button-content {
+  background: var(--h-togglebutton-content-checked-background);
+  box-shadow: var(--h-togglebutton-content-checked-shadow);
+}
+
+.hx-toggle-button-checked .hx-toggle-button-icon {
+  color: var(--h-togglebutton-icon-checked-color);
+}
+
+.hx-toggle-button-control:focus-visible {
+  outline: var(--h-togglebutton-focus-ring-width) var(--h-togglebutton-focus-ring-style)
+    var(--h-togglebutton-focus-ring-color);
+  outline-offset: var(--h-togglebutton-focus-ring-offset);
+  box-shadow: var(--h-togglebutton-focus-ring-shadow);
+}
+
+.hx-toggle-button-control:disabled {
+  background: var(--h-togglebutton-disabled-background);
+  border-color: var(--h-togglebutton-disabled-border-color);
+  color: var(--h-togglebutton-disabled-color);
+  cursor: default;
+}
+
+.hx-toggle-button-control:disabled .hx-toggle-button-icon {
+  color: var(--h-togglebutton-icon-disabled-color);
+}
+
+.hx-toggle-button-sm .hx-toggle-button-control {
+  padding: var(--h-togglebutton-sm-padding);
+  font-size: var(--h-togglebutton-sm-font-size);
+}
+
+.hx-toggle-button-sm .hx-toggle-button-content {
+  padding: var(--h-togglebutton-content-sm-padding);
+}
+
+.hx-toggle-button-lg .hx-toggle-button-control {
+  padding: var(--h-togglebutton-lg-padding);
+  font-size: var(--h-togglebutton-lg-font-size);
+}
+
+.hx-toggle-button-lg .hx-toggle-button-content {
+  padding: var(--h-togglebutton-content-lg-padding);
+}
+
+.hx-toggle-button-invalid .hx-toggle-button-control,
+.hx-toggle-button.ng-invalid.ng-touched .hx-toggle-button-control {
+  border-color: var(--h-togglebutton-invalid-border-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-toggle-button-control,
+  .hx-toggle-button-content {
+    transition: none;
+  }
+}
+
+.hx-toggle-button-disabled .hx-toggle-button-control {
+  cursor: default;
+}
