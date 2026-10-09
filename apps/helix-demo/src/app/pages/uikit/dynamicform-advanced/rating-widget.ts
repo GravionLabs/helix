@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RatingModule } from '@gravionlabs/helix-core/rating';
 import { HelixFormField } from '@gravionlabs/helix-shell';
+import { HxRating } from '@gravionlabs/helix-ui';
 import { HelixFieldWidgetBase } from '@gravionlabs/helix-zod';
 
 /**
@@ -12,14 +11,15 @@ import { HelixFieldWidgetBase } from '@gravionlabs/helix-zod';
 @Component({
   selector: 'app-rating-widget',
   standalone: true,
-  imports: [FormsModule, RatingModule, HelixFormField],
+  imports: [HxRating, HelixFormField],
   template: `
     <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-      <h-rating
+      <hx-rating
+        [ariaLabel]="label()"
         [stars]="stars()"
         [disabled]="state().disabled()"
-        [ngModel]="state().value()"
-        (ngModelChange)="onChange($event)"
+        [value]="state().value()"
+        (valueChange)="onChange($event)"
       />
     </helix-form-field>
   `,

@@ -45,7 +45,7 @@ export type HxToggleButtonSize = 'small' | 'medium' | 'large';
     <button
       type="button"
       class="hx-toggle-button-control"
-      [id]="inputId()"
+      [attr.id]="inputId() ?? null"
       [attr.aria-pressed]="value()"
       [attr.aria-label]="ariaLabel()"
       [attr.aria-labelledby]="ariaLabelledby()"

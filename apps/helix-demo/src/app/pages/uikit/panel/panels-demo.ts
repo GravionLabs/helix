@@ -20,12 +20,15 @@ import {
   HxTabs,
   HxToolbar,
 } from '@gravionlabs/helix-ui';
+import { HxContainersSection } from '../sections/containers/containers-section';
 
 /** Panels on `@gravionlabs/helix-ui` (the splitter is not part of it). */
 @Component({
   selector: 'app-panels-demo',
   standalone: true,
   imports: [
+    HxContainersSection,
+
     FormsModule,
     HxToolbar,
     HxButton,

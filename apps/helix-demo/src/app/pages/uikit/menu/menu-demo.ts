@@ -18,12 +18,15 @@ import {
   HxTabs,
 } from '@gravionlabs/helix-ui';
 import { DemoSettings } from '../../../shell/demo-settings';
+import { HxNavigationSection } from '../sections/navigation/navigation-section';
 
 /** The menu components of `@gravionlabs/helix-ui` (the context, mega and panel menu are not part of it). */
 @Component({
   selector: 'app-menu-demo',
   standalone: true,
   imports: [
+    HxNavigationSection,
+
     HxMenubar,
     HxMenu,
     HxBreadcrumb,

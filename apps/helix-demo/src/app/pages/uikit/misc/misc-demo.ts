@@ -16,12 +16,17 @@ import {
   HxSkeleton,
   HxTag,
 } from '@gravionlabs/helix-ui';
+import { HxBlocksSection } from '../sections/blocks/blocks-section';
+import { HxDisplaySection } from '../sections/display/display-section';
 
 /** Small display components of `@gravionlabs/helix-ui` (the scroll panel and scroll top are not part of it). */
 @Component({
   selector: 'app-misc-demo',
   standalone: true,
   imports: [
+    HxBlocksSection,
+    HxDisplaySection,
+
     HxProgressBar,
     HxBadge,
     HxOverlayBadge,

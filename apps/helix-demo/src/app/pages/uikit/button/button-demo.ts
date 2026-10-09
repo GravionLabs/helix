@@ -6,11 +6,12 @@ import {
   type HxMenuItem,
   HxSplitButton,
 } from '@gravionlabs/helix-ui';
+import { HxButtonSection } from '../sections/button/button-section';
 
 @Component({
   selector: 'app-button-demo',
   standalone: true,
-  imports: [HxButton, HxButtonGroup, HxSplitButton],
+  imports: [HxButtonSection, HxButton, HxButtonGroup, HxSplitButton],
   templateUrl: './button-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './button-demo.scss',

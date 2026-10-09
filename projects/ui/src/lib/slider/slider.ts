@@ -81,7 +81,7 @@ export type HxSliderValue = number | readonly [number, number];
       <input
         type="range"
         class="hx-slider-input"
-        [id]="inputId()"
+        [attr.id]="inputId() ?? null"
         [min]="lower()"
         [max]="upper()"
         [step]="step()"

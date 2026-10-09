@@ -16,11 +16,14 @@ import {
   HxTooltip,
 } from '@gravionlabs/helix-ui';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
+import { HxOverlaysSection } from '../sections/overlays/overlays-section';
 
 @Component({
   selector: 'app-overlay-demo',
   standalone: true,
   imports: [
+    HxOverlaysSection,
+
     CurrencyPipe,
     FormsModule,
     HxButton,

@@ -1,22 +1,22 @@
-<h-tabs [value]="activeTab()" (valueChange)="activeTab.set($any($event))" scrollable>
-  <h-tablist>
-    <h-tab value="demo">Demo</h-tab>
+<hx-tabs [value]="activeTab()" (valueChange)="activeTab.set($event ?? 'demo')" scrollable>
+  <hx-tab-list>
+    <hx-tab value="demo">Demo</hx-tab>
     @for (tab of tabs(); track tab.file) {
-      <h-tab [value]="tab.file">{{ tab.label }}</h-tab>
+      <hx-tab [value]="tab.file">{{ tab.label }}</hx-tab>
     }
-    <h-tab value="docs">Docs</h-tab>
-  </h-tablist>
-  <h-tabpanels>
-    <h-tabpanel value="demo">
+    <hx-tab value="docs">Docs</hx-tab>
+  </hx-tab-list>
+  <hx-tab-panels>
+    <hx-tab-panel value="demo">
       <ng-content />
-    </h-tabpanel>
+    </hx-tab-panel>
     @for (tab of tabs(); track tab.file) {
-      <h-tabpanel [value]="tab.file">
+      <hx-tab-panel value="{{ tab.file }}">
         <pre class="source-tabs__code"><code [highlight]="source(tab.file)" [language]="tab.language"></code></pre>
-      </h-tabpanel>
+      </hx-tab-panel>
     }
-    <h-tabpanel value="docs">
+    <hx-tab-panel value="docs">
       <p class="text-sm text-muted-color">Documentation coming soon.</p>
-    </h-tabpanel>
-  </h-tabpanels>
-</h-tabs>
+    </hx-tab-panel>
+  </hx-tab-panels>
+</hx-tabs>

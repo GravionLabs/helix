@@ -1,0 +1,108 @@
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Button</h2>
+    <p class="m-0">
+      <code>button[hx-button]</code> from <code>&#64;gravionlabs/helix-ui</code>: a native button (or anchor)
+      styled by plain CSS on the <code>--h-button-*</code> tokens.
+    </p>
+  </div>
+
+  @for (variant of variants; track variant) {
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">{{ variant }}</h2>
+      @for (severity of severities; track severity) {
+        @if (variant !== 'link' || severity === 'primary') {
+          <div class="row">
+            <span class="label">{{ severity }}</span>
+            <span class="cell">
+              <button hx-button [variant]="variant" [severity]="severity">
+                {{ severity }} {{ variant }}
+              </button>
+              <button hx-button [variant]="variant" [severity]="severity" disabled>
+                {{ severity }} {{ variant }}
+              </button>
+            </span>
+          </div>
+        }
+      }
+    </div>
+  }
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Sizes, shape, elevation</h2>
+    @for (size of sizes; track size) {
+      <div class="row">
+        <span class="label">{{ size }}</span>
+        <span class="cell">
+          <button hx-button [size]="size">Save</button>
+          <button hx-button [size]="size" rounded>Rounded</button>
+          <button hx-button [size]="size" raised>Raised</button>
+        </span>
+      </div>
+    }
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Icons, loading, anchor</h2>
+    <div class="row">
+      <span class="label">icon + label</span>
+      <span class="cell">
+        <button hx-button>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="m5 12 5 5L20 7" />
+          </svg>
+          Save
+        </button>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">icon only</span>
+      <span class="cell">
+        <button hx-button iconOnly rounded aria-label="Add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        </button>
+        <button hx-button iconOnly severity="danger" variant="outlined" aria-label="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" />
+          </svg>
+        </button>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">loading</span>
+      <span class="cell">
+        <button hx-button [loading]="saving()" (click)="save()">Save</button>
+        <span class="label">clicked {{ clicks() }}×; ignored while loading</span>
+      </span>
+    </div>
+    <div class="row">
+      <span class="label">anchor</span>
+      <span class="cell">
+        <a hx-button variant="outlined" href="https://gravionlabs.github.io/helix/">Docs</a>
+        <a hx-button variant="link" href="https://github.com/GravionLabs/helix">GitHub</a>
+      </span>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Button group</h2>
+    <div class="flex flex-wrap items-center gap-4">
+      <hx-button-group ariaLabel="Text alignment">
+        <button hx-button variant="outlined">Left</button>
+        <button hx-button variant="outlined">Center</button>
+        <button hx-button variant="outlined">Right</button>
+      </hx-button-group>
+      <hx-button-group ariaLabel="Actions">
+        <button hx-button>Save</button>
+        <button hx-button severity="secondary">Edit</button>
+        <button hx-button severity="danger">Delete</button>
+      </hx-button-group>
+      <hx-button-group>
+        <button hx-button variant="text">One</button>
+        <button hx-button variant="text">Two</button>
+      </hx-button-group>
+    </div>
+  </div>
+</div>
