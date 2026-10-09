@@ -36,6 +36,7 @@ export {
 } from './lib/button/button';
 export { HxCard } from './lib/card/card';
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
+export { HxChip } from './lib/chip/chip';
 export {
   HxDatePicker,
   type HxDatePickerSelectionMode,

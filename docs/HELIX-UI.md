@@ -523,6 +523,31 @@ The overlay badge takes the same three inputs.
   of a status, say the status in text or in the name of the element it belongs to. An icon-only element under an
   overlay badge needs its own accessible name; include the count in it (`aria-label="Notifications, 2 new"`).
 
+## Chip
+
+`hx-chip` is a compact element for an entity, optionally removable.
+
+```html
+<hx-chip label="Amy Elsner" image="/amy.png" />
+<hx-chip label="Angular" icon="pi pi-code" removable (remove)="drop('Angular')" />
+```
+
+| Input / output | Type      | Default    | Description                                                              |
+| -------------- | --------- | ---------- | ------------------------------------------------------------------------ |
+| `label`        | `string`  |            | The text (or project content instead).                                   |
+| `icon`         | `string`  |            | Icon font classes; not shown when there is an `image`.                   |
+| `image`        | `string`  |            | Picture before the label.                                                |
+| `imageAlt`     | `string`  | `''`       | Alternative text; decorative by default because the label names the chip. |
+| `removable`    | `boolean` | `false`    | Shows the remove button and makes the chip focusable.                    |
+| `removeLabel`  | `string`  | `'Remove'` | Name of the remove button.                                               |
+| `(remove)`     | `void`    |            | Remove pressed, or Backspace/Delete on the chip.                         |
+
+The chip does not remove itself: drop it from your data in `(remove)`.
+
+- **Accessibility:** a removable chip is a focusable `role="group"` named by its label; the remove control is a real
+  `<button>` with `aria-label`. After a removal the focus is lost with the chip, so move it yourself if the list
+  continues (e.g. to the next chip).
+
 ## Tag
 
 `hx-tag` is a label for a category or a status. The text is the `value` or the projected content.
