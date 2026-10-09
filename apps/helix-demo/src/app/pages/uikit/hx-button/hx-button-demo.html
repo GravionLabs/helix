@@ -4,12 +4,8 @@
     <h2 class="demo-title">Helix UI Button</h2>
     <p class="m-0">
       <code>button[hx-button]</code> from <code>&#64;gravionlabs/helix-ui</code>: a native button (or anchor)
-      styled by plain CSS on the same <code>--h-button-*</code> tokens as the helix-core button on the left.
+      styled by plain CSS on the <code>--h-button-*</code> tokens.
     </p>
-    <div class="row">
-      <span></span><strong>helix-core <code>h-button</code></strong
-      ><strong>helix-ui <code>hx-button</code></strong>
-    </div>
   </div>
 
   @for (variant of variants; track variant) {
@@ -19,23 +15,6 @@
         @if (variant !== 'link' || severity === 'primary') {
           <div class="row">
             <span class="label">{{ severity }}</span>
-            <span class="cell">
-              <h-button
-                [label]="severity + ' ' + variant"
-                [severity]="coreSeverity(severity)"
-                [outlined]="variant === 'outlined'"
-                [text]="variant === 'text'"
-                [link]="variant === 'link'"
-              />
-              <h-button
-                [label]="severity + ' ' + variant"
-                [severity]="coreSeverity(severity)"
-                [outlined]="variant === 'outlined'"
-                [text]="variant === 'text'"
-                [link]="variant === 'link'"
-                [disabled]="true"
-              />
-            </span>
             <span class="cell">
               <button hx-button [variant]="variant" [severity]="severity">
                 {{ severity }} {{ variant }}
@@ -56,11 +35,6 @@
       <div class="row">
         <span class="label">{{ size }}</span>
         <span class="cell">
-          <h-button label="Save" [size]="coreSize(size)" />
-          <h-button label="Rounded" [size]="coreSize(size)" [rounded]="true" />
-          <h-button label="Raised" [size]="coreSize(size)" [raised]="true" />
-        </span>
-        <span class="cell">
           <button hx-button [size]="size">Save</button>
           <button hx-button [size]="size" rounded>Rounded</button>
           <button hx-button [size]="size" raised>Raised</button>
@@ -73,7 +47,6 @@
     <h2 class="demo-title">Icons, loading, anchor</h2>
     <div class="row">
       <span class="label">icon + label</span>
-      <span class="cell"><h-button label="Save" icon="pi pi-check" /></span>
       <span class="cell">
         <button hx-button>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
@@ -85,7 +58,6 @@
     </div>
     <div class="row">
       <span class="label">icon only</span>
-      <span class="cell"><h-button icon="pi pi-plus" [rounded]="true" aria-label="Add" /></span>
       <span class="cell">
         <button hx-button iconOnly rounded aria-label="Add">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
@@ -101,7 +73,6 @@
     </div>
     <div class="row">
       <span class="label">loading</span>
-      <span class="cell"><h-button label="Save" [loading]="saving()" (onClick)="save()" /></span>
       <span class="cell">
         <button hx-button [loading]="saving()" (click)="save()">Save</button>
         <span class="label">clicked {{ clicks() }}×; ignored while loading</span>
@@ -109,7 +80,6 @@
     </div>
     <div class="row">
       <span class="label">anchor</span>
-      <span class="cell"><a href="https://gravionlabs.github.io/helix/" class="h-button h-component">Docs</a></span>
       <span class="cell">
         <a hx-button variant="outlined" href="https://gravionlabs.github.io/helix/">Docs</a>
         <a hx-button variant="link" href="https://github.com/GravionLabs/helix">GitHub</a>
