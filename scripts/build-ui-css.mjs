@@ -32,6 +32,7 @@ export const TOKEN_COMPONENTS = {
   divider: ['divider'],
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
+  'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],
   radio: ['radiobutton'],

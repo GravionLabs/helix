@@ -36,6 +36,7 @@ describe('helix-ui styles', () => {
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
     ['divider', 'divider/divider.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
+    ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],
     ['password', 'password/password.ts'],
     ['select', 'select/select.ts'],
