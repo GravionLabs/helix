@@ -1,125 +1,94 @@
-import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@gravionlabs/helix-core/api';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { ConfirmPopupModule } from '@gravionlabs/helix-core/confirmpopup';
-import { DialogModule } from '@gravionlabs/helix-core/dialog';
-import { DrawerModule } from '@gravionlabs/helix-core/drawer';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { type Popover, PopoverModule } from '@gravionlabs/helix-core/popover';
-import { TableModule } from '@gravionlabs/helix-core/table';
-import { ToastModule } from '@gravionlabs/helix-core/toast';
-import { TooltipModule } from '@gravionlabs/helix-core/tooltip';
+import {
+  HxButton,
+  HxConfirmationService,
+  HxConfirmDialog,
+  HxConfirmPopup,
+  HxDialog,
+  HxDrawer,
+  HxInput,
+  HxMessageService,
+  HxPopover,
+  HxTable,
+  HxToast,
+  HxTooltip,
+} from '@gravionlabs/helix-ui';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
 
 @Component({
   selector: 'app-overlay-demo',
   standalone: true,
   imports: [
-    ToastModule,
-    DialogModule,
-    ButtonModule,
-    DrawerModule,
-    PopoverModule,
-    ConfirmPopupModule,
-    InputTextModule,
+    CurrencyPipe,
     FormsModule,
-    TooltipModule,
-    TableModule,
-    ToastModule,
+    HxButton,
+    HxInput,
+    HxDialog,
+    HxDrawer,
+    HxPopover,
+    HxConfirmDialog,
+    HxConfirmPopup,
+    HxTable,
+    HxToast,
+    HxTooltip,
   ],
   templateUrl: './overlay-demo.html',
   styleUrl: './overlay-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [ConfirmationService, MessageService, ProductService],
+  providers: [ProductService],
 })
 export class OverlayDemo implements OnInit {
-  display: boolean = false;
+  readonly #productService = inject(ProductService);
+  readonly #messages = inject(HxMessageService);
+  readonly #confirmation = inject(HxConfirmationService);
 
-  products: Product[] = [];
-
-  visibleLeft: boolean = false;
-
-  visibleRight: boolean = false;
-
-  visibleTop: boolean = false;
-
-  visibleBottom: boolean = false;
-
-  visibleFull: boolean = false;
-
-  displayConfirmation: boolean = false;
-
-  selectedProduct!: Product;
-
-  constructor(
-    private productService: ProductService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-  ) {}
+  display = false;
+  readonly products = signal<Product[]>([]);
+  readonly drawer = signal<'left' | 'right' | 'top' | 'bottom' | null>(null);
+  full = false;
+  readonly lorem =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 
   ngOnInit() {
-    this.productService.getProductsSmall().then((products) => (this.products = products));
+    this.#productService
+      .getProductsSmall()
+      .then((products) => this.products.set(products.slice(0, 5)));
   }
 
-  confirm(event: Event) {
-    this.confirmationService.confirm({
-      key: 'confirm2',
-      target: event.target || new EventTarget(),
+  confirmPopup(event: Event) {
+    this.#confirmation.confirm({
+      target: event,
       message: 'Are you sure that you want to proceed?',
       icon: 'pi pi-exclamation-triangle',
-      rejectButtonProps: {
-        label: 'Cancel',
-        severity: 'secondary',
-        outlined: true,
-      },
-      acceptButtonProps: {
-        label: 'Save',
-      },
-      accept: () => {
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'You have accepted',
-        });
-      },
-      reject: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Rejected',
-          detail: 'You have rejected',
-        });
-      },
+      rejectLabel: 'Cancel',
+      acceptLabel: 'Save',
+      accept: () =>
+        this.#messages.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }),
+      reject: () =>
+        this.#messages.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' }),
     });
   }
 
-  open() {
-    this.display = true;
+  confirmDelete() {
+    this.#confirmation.confirm({
+      header: 'Confirmation',
+      message: 'Are you sure you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Yes',
+      rejectLabel: 'No',
+      acceptSeverity: 'danger',
+    });
   }
 
-  close() {
-    this.display = false;
-  }
-
-  toggleDataTable(op: Popover, event: any) {
-    op.toggle(event);
-  }
-
-  onProductSelect(op: Popover, event: any) {
-    op.hide();
-    this.messageService.add({
+  selectProduct(popover: HxPopover, product: Product) {
+    popover.hide();
+    this.#messages.add({
       severity: 'info',
       summary: 'Product Selected',
-      detail: event?.data.name,
+      detail: product.name,
       life: 3000,
     });
-  }
-
-  openConfirmation() {
-    this.displayConfirmation = true;
-  }
-
-  closeConfirmation() {
-    this.displayConfirmation = false;
   }
 }

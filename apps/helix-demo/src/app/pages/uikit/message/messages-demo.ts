@@ -1,63 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MessageService, type ToastMessageOptions } from '@gravionlabs/helix-core/api';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { MessageModule } from '@gravionlabs/helix-core/message';
-import { ToastModule } from '@gravionlabs/helix-core/toast';
+import {
+  HxButton,
+  HxInput,
+  HxMessage,
+  HxMessageService,
+  HxToast,
+  type HxToastSeverity,
+} from '@gravionlabs/helix-ui';
 
 @Component({
   selector: 'app-messages-demo',
   standalone: true,
-  imports: [CommonModule, ToastModule, ButtonModule, InputTextModule, MessageModule, FormsModule],
+  imports: [HxToast, HxButton, HxInput, HxMessage, FormsModule],
   templateUrl: './messages-demo.html',
   styleUrl: './messages-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [MessageService],
 })
 export class MessagesDemo {
-  msgs: ToastMessageOptions[] | null = [];
+  readonly #messages = inject(HxMessageService);
 
-  username: string | undefined;
+  username = '';
+  email = '';
 
-  email: string | undefined;
-
-  constructor(private service: MessageService) {}
-
-  pt: any = {
-    contentWrapper: 'flex items-center',
-  };
-
-  showInfoViaToast() {
-    this.service.add({
-      severity: 'info',
-      summary: 'Info Message',
-      detail: 'Helix rocks',
-    });
-  }
-
-  showWarnViaToast() {
-    this.service.add({
-      severity: 'warn',
-      summary: 'Warn Message',
-      detail: 'There are unsaved changes',
-    });
-  }
-
-  showErrorViaToast() {
-    this.service.add({
-      severity: 'error',
-      summary: 'Error Message',
-      detail: 'Validation failed',
-    });
-  }
-
-  showSuccessViaToast() {
-    this.service.add({
-      severity: 'success',
-      summary: 'Success Message',
-      detail: 'Message sent',
-    });
+  show(severity: HxToastSeverity, summary: string, detail: string) {
+    this.#messages.add({ severity, summary, detail });
   }
 }
