@@ -45,6 +45,11 @@ export {
   type HxSelectVariant,
 } from './lib/select/select';
 export { HxSelectButton, type HxSelectButtonSize } from './lib/select-button/select-button';
+export {
+  HxSlider,
+  type HxSliderOrientation,
+  type HxSliderValue,
+} from './lib/slider/slider';
 export { HxSwitch } from './lib/switch/switch';
 export {
   HX_PRIMARY_COLORS,

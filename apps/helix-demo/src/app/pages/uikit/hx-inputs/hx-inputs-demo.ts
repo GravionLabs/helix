@@ -12,6 +12,8 @@ import {
   HxInputNumber,
   HxPassword,
   HxSelect,
+  HxSlider,
+  type HxSliderValue,
   HxToggleButton,
 } from '@gravionlabs/helix-ui';
 
@@ -23,6 +25,8 @@ import {
     HxInputNumber,
     HxFloatLabel,
     HxToggleButton,
+    HxSlider,
+    HxSlider,
     HxPassword,
     HxSelect,
     HxInputGroup,
@@ -42,6 +46,9 @@ export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<string | null>(null);
   readonly secret = signal('');
+  readonly volume = signal<HxSliderValue>(30);
+  readonly priceRange = signal<HxSliderValue>([100, 300]);
+  readonly gain = signal<HxSliderValue>(60);
   readonly subscribed = signal(false);
   readonly bold = signal(true);
   notes = 'Grows with the content.';
