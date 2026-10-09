@@ -1,4 +1,12 @@
 <div class="card">
   <h2 class="demo-title mb-2!">Revenue Stream</h2>
-  <h-chart type="bar" [data]="chartData()" [options]="chartOptions()" class="h-100" />
+  <hx-chart type="bar" [data]="chartData" [options]="chartOptions" height="20rem" ariaLabel="Revenue per quarter and source, stacked">
+    <table hxChartFallback>
+      <caption>Revenue per quarter</caption>
+      <tr><th scope="col">Quarter</th><th scope="col">Subscriptions</th><th scope="col">Advertising</th><th scope="col">Affiliate</th></tr>
+      @for (q of quarters; track q; let i = $index) {
+        <tr><th scope="row">{{ q }}</th><td>{{ subscriptions[i] }}</td><td>{{ advertising[i] }}</td><td>{{ affiliate[i] }}</td></tr>
+      }
+    </table>
+  </hx-chart>
 </div>
