@@ -41,6 +41,7 @@ export const TOKEN_COMPONENTS = {
   'select-button': ['selectbutton', 'togglebutton'],
   'cdk-overlay': [],
   switch: ['toggleswitch'],
+  'toggle-button': ['togglebutton'],
   tooltip: ['tooltip'],
 };
 
