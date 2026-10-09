@@ -30,6 +30,7 @@ export const TOKEN_COMPONENTS = {
   button: ['button'],
   checkbox: ['checkbox'],
   divider: ['divider'],
+  'float-label': ['floatlabel'],
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
   'input-group': ['inputgroup'],

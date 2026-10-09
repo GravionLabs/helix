@@ -63,6 +63,7 @@ export type HxSelectItem<V = unknown> = HxOption<V>;
     '[class.hx-select-disabled]': 'isDisabled()',
     '[class.hx-select-has-clear]': 'canClear()',
     '[class.hx-select-invalid]': 'invalid()',
+    '[class.hx-filled]': '!!selected()',
     '(focusout)': 'onFocusOut($event)',
   },
 })
