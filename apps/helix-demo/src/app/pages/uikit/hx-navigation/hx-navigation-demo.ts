@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   HxButton,
   HxMenu,
+  HxMenubar,
   type HxMenuItem,
   HxTab,
   HxTabContent,
@@ -11,11 +12,21 @@ import {
   HxTabs,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` navigation: Menu, Tabs. */
+/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Tabs. */
 @Component({
   selector: 'app-hx-navigation-demo',
   standalone: true,
-  imports: [HxButton, HxMenu, HxTabs, HxTabList, HxTab, HxTabPanels, HxTabPanel, HxTabContent],
+  imports: [
+    HxButton,
+    HxMenu,
+    HxMenubar,
+    HxTabs,
+    HxTabList,
+    HxTab,
+    HxTabPanels,
+    HxTabPanel,
+    HxTabContent,
+  ],
   templateUrl: './hx-navigation-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-navigation-demo.scss',
@@ -46,6 +57,21 @@ export class HxNavigationDemo {
       ],
     },
     { label: 'Help', items: [{ label: 'Docs', icon: 'pi pi-book' }] },
+  ];
+  readonly bar: HxMenuItem[] = [
+    { label: 'Home', icon: 'pi pi-home', command: () => undefined },
+    {
+      label: 'Products',
+      icon: 'pi pi-box',
+      items: [
+        { label: 'Components' },
+        { label: 'Templates', badge: 'New' },
+        { separator: true },
+        { label: 'Pricing', items: [{ label: 'Free' }, { label: 'Team' }] },
+      ],
+    },
+    { label: 'Docs', icon: 'pi pi-book', url: 'https://angular.dev', target: '_blank' },
+    { label: 'Soon', disabled: true },
   ];
   readonly tab = signal<string | null>('a');
   readonly numbers = Array.from({ length: 12 }, (_, i) => i + 1);

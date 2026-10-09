@@ -125,6 +125,20 @@ describe('HxMenu', () => {
     expect(document.activeElement).toBe(trigger());
   });
 
+  it('reports an item of a submenu as triggered and closes the menu', async () => {
+    trigger().click();
+    await settle();
+    const byText = (text: string) =>
+      items().find((i) => i.textContent?.trim() === text) as HTMLElement;
+    byText('Deeper').click();
+    await settle();
+    await settle();
+    byText('Deepest').click();
+    await settle();
+    expect(host.triggered).toBe(1);
+    expect(popupMenu()).toBeNull();
+  });
+
   it('does not run the command of a disabled item', async () => {
     trigger().click();
     await settle();

@@ -48,6 +48,7 @@ describe('helix-ui styles', () => {
     ['listbox', 'listbox/listbox.ts'],
     ['menu', 'menu/menu.ts'],
     ['menu', 'menu/menu-panel.ts'],
+    ['menubar', 'menubar/menubar.ts'],
     ['message', 'message/message.ts'],
     ['multi-select', 'multi-select/multi-select.ts'],
     ['auto-complete', 'auto-complete/auto-complete.ts'],

@@ -17,6 +17,15 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Menubar</h2>
+    <p class="m-0">Left and Right move between the items, Down opens a submenu. Below 960px wide it collapses into a button.</p>
+    <hx-menubar ariaLabel="Main" [model]="bar">
+      <strong hxMenubarStart>Helix</strong>
+      <button hxMenubarEnd hx-button type="button" size="small">Sign in</button>
+    </hx-menubar>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Tabs</h2>
     <hx-tabs [(value)]="tab">
       <hx-tab-list>
