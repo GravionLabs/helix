@@ -35,6 +35,16 @@ export {
 export { HxSelectButton, type HxSelectButtonSize } from './lib/select-button/select-button';
 export { HxSwitch } from './lib/switch/switch';
 export {
+  HX_PRIMARY_COLORS,
+  HX_SURFACE_NAMES,
+  HX_THEME_OPTIONS,
+  type HxPrimaryColor,
+  type HxSurface,
+  HxTheme,
+  type HxThemeOptions,
+  provideHxTheme,
+} from './lib/theme/theme';
+export {
   HxTooltip,
   type HxTooltipEvent,
   type HxTooltipPosition,

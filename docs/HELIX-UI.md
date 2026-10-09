@@ -153,6 +153,45 @@ dependency) and the overlay styles that come with `styles.css`.
 - **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
   `listbox` of `option`s. Give it a visible label or `ariaLabel`.
 
+## Theming
+
+`tokens.css` gives every `--h-*` token its Helix value, light and dark. The theme service changes the colour
+choice while the app runs, with CSS custom properties only: no styling engine, no rebuild.
+
+```ts
+// app.config.ts
+provideHxTheme({ storageKey: 'my-app-theme' })
+
+// anywhere
+readonly theme = inject(HxTheme);
+theme.toggleDark();
+theme.setPrimary('emerald');   // one of HX_PRIMARY_COLORS
+theme.setSurface('zinc');      // one of HX_SURFACE_NAMES; null is the Helix default
+```
+
+| Member | What it does |
+| --- | --- |
+| `dark()`, `setDark(on)`, `toggleDark()` | Dark mode: the class `app-dark` on `<html>` (or an attribute, see `darkSelector`). |
+| `primary()`, `setPrimary(name \| null)` | The primary colour: `emerald`, `green`, `lime`, `orange`, `amber`, `yellow`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, or `noir` (black on light, white on dark). `null` is the colour of the preset. |
+| `surface()`, `setSurface(name \| null)` | The grey scale behind backgrounds, borders and text: `slate`, `gray`, `zinc`, `neutral`, `stone`, `soho`, `viva`, `ocean`. `null` is the Helix default. |
+| `css()` | The style text of the overrides, for an app that renders it itself (server rendering). |
+
+Options of `provideHxTheme`:
+
+| Option | Default | |
+| --- | --- | --- |
+| `darkSelector` | `'.app-dark'` | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. |
+| `storageKey` | `null` | Remembers the choice in `localStorage` under this key; a damaged or blocked storage is ignored. |
+| `dark` | the system setting | Dark mode when nothing is remembered (`prefers-color-scheme`). |
+| `primary`, `surface` | `null` | The colours when nothing is remembered. |
+
+How it works: the primary scale `--h-primary-50 … 950` is pointed at another colour scale
+(`var(--h-emerald-500)`), the roles that depend on it (`--h-primary-color` is step 600 in light and 400 in dark)
+stay those of the tokens, so every component follows. A surface replaces `--h-surface-0 … 950` in both colour
+schemes. The overrides live in one style sheet of the service (a constructed one where the browser has them,
+otherwise a `<style data-hx-theme>`), with a selector that wins over `tokens.css` in light and dark; the service
+removes it when it is destroyed. Nothing touches the DOM on the server.
+
 ## Divider
 
 `hx-divider`: a line between content. Projected content is a label sitting on the line.
