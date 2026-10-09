@@ -1,0 +1,130 @@
+/*
+ * Accordion: `<hx-accordion>`. Stacked panels from the `--h-accordion-*` tokens: a header button inside a heading
+ * and a content region that collapses by animating its grid row to zero height.
+ */
+@use 'icons' as *;
+
+.hx-accordion {
+  display: block;
+}
+
+.hx-accordion-panel {
+  display: block;
+  border-style: solid;
+  border-width: var(--h-accordion-panel-border-width);
+  border-color: var(--h-accordion-panel-border-color);
+}
+
+.hx-accordion-heading {
+  margin: 0;
+  font: inherit;
+}
+
+.hx-accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--h-accordion-header-padding);
+  border: var(--h-accordion-header-border-width) solid var(--h-accordion-header-border-color);
+  border-radius: var(--h-accordion-header-border-radius);
+  background: var(--h-accordion-header-background);
+  color: var(--h-accordion-header-color);
+  font: inherit;
+  font-weight: var(--h-accordion-header-font-weight);
+  text-align: start;
+  cursor: pointer;
+  outline: 0 none;
+  transition:
+    background var(--h-accordion-transition-duration),
+    color var(--h-accordion-transition-duration);
+}
+
+.hx-accordion-trigger:not(:disabled):hover {
+  background: var(--h-accordion-header-hover-background);
+  color: var(--h-accordion-header-hover-color);
+}
+
+.hx-accordion-trigger[aria-expanded="true"] {
+  background: var(--h-accordion-header-active-background);
+  color: var(--h-accordion-header-active-color);
+}
+
+.hx-accordion-trigger[aria-expanded="true"]:not(:disabled):hover {
+  background: var(--h-accordion-header-active-hover-background);
+  color: var(--h-accordion-header-active-hover-color);
+}
+
+.hx-accordion-trigger:focus-visible {
+  outline: var(--h-accordion-header-focus-ring-width) var(--h-accordion-header-focus-ring-style)
+    var(--h-accordion-header-focus-ring-color);
+  outline-offset: var(--h-accordion-header-focus-ring-offset);
+  box-shadow: var(--h-accordion-header-focus-ring-shadow);
+}
+
+.hx-accordion-trigger:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.hx-accordion-icon {
+  @include hx-icon(chevron-down, 1rem, var(--h-accordion-header-toggle-icon-color), 2.4);
+  transition: transform 0.2s;
+}
+
+.hx-accordion-trigger:not(:disabled):hover .hx-accordion-icon {
+  background: var(--h-accordion-header-toggle-icon-hover-color);
+}
+
+.hx-accordion-trigger[aria-expanded="true"] .hx-accordion-icon {
+  background: var(--h-accordion-header-toggle-icon-active-color);
+  transform: rotate(180deg);
+}
+
+.hx-accordion-content {
+  display: block;
+  background: var(--h-accordion-content-background);
+  color: var(--h-accordion-content-color);
+}
+
+.hx-accordion-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.2s,
+    visibility 0.2s;
+}
+
+.hx-accordion-content[inert] .hx-accordion-collapse {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+}
+
+.hx-accordion-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hx-accordion-body {
+  padding: var(--h-accordion-content-padding);
+  border: solid var(--h-accordion-content-border-color);
+  border-width: var(--h-accordion-content-border-width);
+}
+
+.hx-accordion-panel-open {
+  border-color: var(--h-accordion-panel-border-color);
+}
+
+.hx-accordion-panel-disabled .hx-accordion-header {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-accordion-collapse,
+  .hx-accordion-icon,
+  .hx-accordion-trigger {
+    transition: none;
+  }
+}

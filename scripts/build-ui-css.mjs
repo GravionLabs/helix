@@ -28,6 +28,7 @@ export const OUT = path.join(ROOT, 'dist/ui');
  * `inputtext`, …). A stylesheet without an entry here is an error, so a new component cannot ship without its tokens.
  */
 export const TOKEN_COMPONENTS = {
+  accordion: ['accordion'],
   breadcrumb: ['breadcrumb'],
   button: ['button'],
   card: ['card'],

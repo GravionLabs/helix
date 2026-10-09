@@ -7,6 +7,13 @@
  */
 
 export {
+  HxAccordion,
+  HxAccordionContent,
+  HxAccordionHeader,
+  HxAccordionPanel,
+  type HxAccordionValue,
+} from './lib/accordion/accordion';
+export {
   HxAutoComplete,
   type HxAutoCompleteEvent,
   type HxAutoCompleteSize,
