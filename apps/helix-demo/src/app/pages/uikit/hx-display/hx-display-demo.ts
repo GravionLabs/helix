@@ -1,11 +1,19 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { HxBadge, HxButton, HxChip, HxOverlayBadge, HxTag } from '@gravionlabs/helix-ui';
+import {
+  HxAvatar,
+  HxAvatarGroup,
+  HxBadge,
+  HxButton,
+  HxChip,
+  HxOverlayBadge,
+  HxTag,
+} from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` display components: Badge, Tag, Chip. */
+/** `@gravionlabs/helix-ui` display components: Avatar, Badge, Tag, Chip. */
 @Component({
   selector: 'app-hx-display-demo',
   standalone: true,
-  imports: [HxBadge, HxOverlayBadge, HxButton, HxChip, HxTag],
+  imports: [HxAvatar, HxAvatarGroup, HxBadge, HxOverlayBadge, HxButton, HxChip, HxTag],
   templateUrl: './hx-display-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-display-demo.scss',

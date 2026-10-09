@@ -41,6 +41,7 @@ describe('helix-ui styles', () => {
     ['checkbox', 'checkbox/checkbox.ts'],
     ['chip', 'chip/chip.ts'],
     ['radio', 'radio/radio.ts'],
+    ['avatar', 'avatar/avatar.ts'],
     ['badge', 'badge/badge.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
     ['divider', 'divider/divider.ts'],
