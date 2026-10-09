@@ -1,0 +1,24 @@
+/*
+ * Button group: `<hx-button-group>`. Joins the `hx-button`s inside it: the inner corners are square (the outer ones
+ * keep the radius of the button tokens) and neighbouring borders overlap by one pixel instead of doubling. The
+ * focused or hovered button is raised so its border is not covered by the next one.
+ */
+.hx-button-group {
+  display: inline-flex;
+}
+
+.hx-button-group > .hx-button:not(:first-child) {
+  margin-inline-start: -1px;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.hx-button-group > .hx-button:not(:last-child) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.hx-button-group > .hx-button:hover,
+.hx-button-group > .hx-button:focus-visible {
+  z-index: 1;
+}

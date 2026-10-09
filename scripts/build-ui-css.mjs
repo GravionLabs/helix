@@ -33,6 +33,7 @@ export const TOKEN_COMPONENTS = {
   badge: ['badge', 'overlaybadge'],
   breadcrumb: ['breadcrumb'],
   button: ['button'],
+  'button-group': ['button'],
   card: ['card'],
   checkbox: ['checkbox'],
   divider: ['divider'],
