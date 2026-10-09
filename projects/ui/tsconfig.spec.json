@@ -4,7 +4,7 @@
     "outDir": "../../out-tsc/helix-ui-spec",
     "types": ["vitest/globals"]
   },
-  "include": ["src/**/*.d.ts", "src/**/*.spec.ts"],
+  "include": ["src/**/*.d.ts", "src/**/*.spec.ts", "validators/**/*.spec.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

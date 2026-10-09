@@ -220,6 +220,29 @@ const items: HxMenuItem[] = [
 An item of the former helix-core menu model (`MenuItem`) is assignable to `HxMenuItem` as it is; a test keeps
 that true. `HxBreadcrumbItem` is the same type.
 
+## Validators
+
+`@gravionlabs/helix-ui/validators` (a secondary entry point) holds the validators that carry their own error
+message. The error text is the value of the error object, so a form field can show it directly.
+
+```ts
+import { FormControl } from '@angular/forms';
+import { Validators } from '@gravionlabs/helix-ui/validators';
+
+const email = new FormControl('', [
+  Validators.required('Email is required'),
+  Validators.email('Not an email address'),
+]);
+email.errors; // { Required: 'Email is required' } while the field is empty
+```
+
+- Each validator takes the message first, either a `string` or a function of the value (`(value) => string`).
+- Validators for optional values take `allowEmpty` (default `true`): an empty value is valid unless you pass
+  `false`.
+- The error key is the `ValidatorKey` enum member (`Required`, `Email`, `Number`, `Integer`, `Min`, `Max`,
+  `MinLength`, `MaxLength`, `Pattern`, `Date`, `OneOf`, `AllOf`), so templates and error resolvers can switch on it.
+- It is the same code as `@gravionlabs/helix-core/validators`; `helix-zod` and the shell move to this entry point.
+
 ## Divider
 
 `hx-divider`: a line between content. Projected content is a label sitting on the line.
