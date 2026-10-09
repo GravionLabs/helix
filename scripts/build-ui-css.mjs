@@ -56,6 +56,7 @@ export const TOKEN_COMPONENTS = {
   rating: ['rating'],
   'select-button': ['selectbutton', 'togglebutton'],
   'cdk-overlay': [],
+  'split-button': ['splitbutton'],
   stepper: ['stepper'],
   switch: ['toggleswitch'],
   'toggle-button': ['togglebutton'],

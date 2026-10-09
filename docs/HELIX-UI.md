@@ -499,6 +499,32 @@ reactive forms and signal forms. Give the group a name with `ariaLabel` or `aria
   `aria-labelledby`; disabled tabs are `aria-disabled` and skipped by the arrows. The scroll buttons are for the pointer
   and are not tab stops. Motion stops under `prefers-reduced-motion`.
 
+## Split button
+
+`hx-split-button` is a default action with a menu of related actions: a button and, joined to it, a button that opens an
+[`hx-menu`](#menu).
+
+```html
+<hx-split-button label="Save" icon="pi pi-save" [model]="items" (click)="save()" (triggered)="onPick($event)" />
+```
+
+| Input / output     | Type                                     | Default           | Description                                              |
+| ------------------ | ---------------------------------------- | ----------------- | -------------------------------------------------------- |
+| `label`            | `string`                                 |                   | Text of the main button.                                 |
+| `icon`             | `string`                                 |                   | Icon font classes for the main button.                   |
+| `model`            | `HxMenuItem[]`                           | `[]`              | The related actions.                                     |
+| `variant`          | `'filled' \| 'outlined' \| 'text' \| 'link'` | `'filled'`        | As on `hx-button`.                                       |
+| `severity`         | `HxButtonSeverity`                       | `'primary'`       | As on `hx-button`.                                       |
+| `size`             | `'small' \| 'medium' \| 'large'`          | `'medium'`        | As on `hx-button`.                                       |
+| `rounded`, `raised`, `disabled` | `boolean`                   | `false`           | Pill shape, elevation shadow, disables both buttons.     |
+| `menuButtonLabel`  | `string`                                 | `'More actions'`  | Name of the menu button.                                 |
+| `(triggered)`      | `HxMenuItem`                             |                   | An item was activated (after its `command`).             |
+
+`(click)` is the native click of the main button; clicks on the menu button do not reach it.
+
+- **Accessibility:** a `role="group"` named by `label`, with two buttons; the menu button has `aria-haspopup="menu"`
+  and `aria-expanded`, and the menu moves the focus back to it when it closes. See [Menu](#menu) for the keyboard.
+
 ## Stepper
 
 `hx-stepper` shows the steps of a process as a row of headers above the panel of the active step.

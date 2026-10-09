@@ -4,6 +4,7 @@ import {
   HxMenu,
   HxMenubar,
   type HxMenuItem,
+  HxSplitButton,
   HxStep,
   HxStepContent,
   HxStepList,
@@ -18,7 +19,7 @@ import {
   HxTabs,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Stepper, Tabs. */
+/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Split button, Stepper, Tabs. */
 @Component({
   selector: 'app-hx-navigation-demo',
   standalone: true,
@@ -26,6 +27,7 @@ import {
     HxButton,
     HxMenu,
     HxMenubar,
+    HxSplitButton,
     HxStepper,
     HxStepList,
     HxStep,
@@ -84,6 +86,13 @@ export class HxNavigationDemo {
     },
     { label: 'Docs', icon: 'pi pi-book', url: 'https://angular.dev', target: '_blank' },
     { label: 'Soon', disabled: true },
+  ];
+  readonly saved = signal('');
+  readonly saveItems: HxMenuItem[] = [
+    { label: 'Save as draft', command: () => this.saved.set('draft') },
+    { label: 'Save and close', command: () => this.saved.set('closed') },
+    { separator: true },
+    { label: 'Discard', disabled: true },
   ];
   readonly step = signal<number | string | null>(1);
   readonly tab = signal<string | null>('a');
