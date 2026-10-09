@@ -78,4 +78,21 @@
     <p class="m-0">This drawer covers the whole screen.</p>
     <div hxDialogFooter><button hx-button type="button" (click)="full.set(false)">Close</button></div>
   </hx-drawer>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Popover</h2>
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <button hx-button type="button" variant="outlined" aria-haspopup="dialog" (click)="share.toggle($event)">Share</button>
+      <button hx-button type="button" variant="outlined" aria-haspopup="dialog" (click)="info.toggle($event)">Info (right edge)</button>
+    </div>
+    <p class="m-0">Click outside or press Escape to close. Near the bottom or right edge it flips.</p>
+  </div>
+  <hx-popover #share ariaLabel="Share this page">
+    <div class="flex w-72 flex-col gap-2">
+      <label for="demo-popover-link">Link</label>
+      <input id="demo-popover-link" hx-input readonly value="https://gravionlabs.github.io/helix/" />
+      <button hx-button type="button" size="small" (click)="share.hide()">Copy and close</button>
+    </div>
+  </hx-popover>
+  <hx-popover #info ariaLabel="About popovers">A popover holds any content. This one has only text, so nothing is focused.</hx-popover>
 </div>
