@@ -5,6 +5,7 @@ import {
   HxDialog,
   HxDialogRef,
   HxDialogService,
+  HxDrawer,
   HxInput,
   HxMessage,
   HxMessageService,
@@ -31,11 +32,11 @@ export class HxDialogContentDemo {
   protected readonly ref = inject(HxDialogRef<string>);
 }
 
-/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog. */
+/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog, Drawer. */
 @Component({
   selector: 'app-hx-overlays-demo',
   standalone: true,
-  imports: [HxMessage, HxToast, HxButton, HxDialog, HxInput],
+  imports: [HxMessage, HxToast, HxButton, HxDialog, HxDrawer, HxInput],
   templateUrl: './hx-overlays-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-overlays-demo.scss',
@@ -45,6 +46,8 @@ export class HxOverlaysDemo {
   readonly #dialogs = inject(HxDialogService);
   protected readonly open = signal(false);
   protected readonly nonModal = signal(false);
+  protected readonly drawer = signal<'left' | 'right' | 'top' | 'bottom' | null>(null);
+  protected readonly full = signal(false);
   protected readonly result = signal('none');
 
   openFromService() {
