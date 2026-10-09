@@ -1,0 +1,132 @@
+/*
+ * Progress: `<hx-progress-bar>` (`--h-progressbar-*`) and `<hx-progress-spinner>` (`--h-progressspinner-*`). The bar
+ * fills with the value or slides while indeterminate; the spinner cycles through four colours while it turns. Both
+ * stop moving under `prefers-reduced-motion`.
+ */
+.hx-progress-bar {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: var(--h-progressbar-height);
+  border-radius: var(--h-progressbar-border-radius);
+  background: var(--h-progressbar-background);
+}
+
+.hx-progress-bar-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+  background: var(--h-progressbar-value-background);
+  transition: width 1s ease-in-out;
+}
+
+.hx-progress-bar-label {
+  color: var(--h-progressbar-label-color);
+  font-size: var(--h-progressbar-label-font-size);
+  font-weight: var(--h-progressbar-label-font-weight);
+}
+
+.hx-progress-bar-indeterminate .hx-progress-bar-value {
+  position: absolute;
+  inset-block: 0;
+  width: 40%;
+  animation: hx-progress-bar-slide 1.5s ease-in-out infinite;
+  transition: none;
+}
+
+@keyframes hx-progress-bar-slide {
+  0% {
+    inset-inline-start: -40%;
+  }
+
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
+.hx-progress-spinner {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
+.hx-progress-spinner-svg {
+  width: 100%;
+  height: 100%;
+  animation: hx-progress-spinner-rotate 2s linear infinite;
+  transform-origin: center center;
+}
+
+.hx-progress-spinner-circle {
+  stroke: var(--h-progressspinner-color-one);
+  stroke-dasharray: 89, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation:
+    hx-progress-spinner-dash 1.5s ease-in-out infinite,
+    hx-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes hx-progress-spinner-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hx-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes hx-progress-spinner-color {
+  100%,
+  0% {
+    stroke: var(--h-progressspinner-color-one);
+  }
+
+  40% {
+    stroke: var(--h-progressspinner-color-two);
+  }
+
+  66% {
+    stroke: var(--h-progressspinner-color-three);
+  }
+
+  80%,
+  90% {
+    stroke: var(--h-progressspinner-color-four);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-progress-bar-value {
+    transition: none;
+  }
+
+  .hx-progress-bar-indeterminate .hx-progress-bar-value {
+    inset-inline-start: 0;
+    width: 100%;
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .hx-progress-spinner-svg,
+  .hx-progress-spinner-circle {
+    animation: none;
+  }
+}

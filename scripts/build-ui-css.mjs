@@ -52,6 +52,7 @@ export const TOKEN_COMPONENTS = {
   'input-number': ['inputnumber', 'inputtext'],
   panel: ['panel'],
   password: ['password', 'inputtext'],
+  progress: ['progressbar', 'progressspinner'],
   radio: ['radiobutton'],
   select: ['select'],
   skeleton: ['skeleton'],

@@ -97,4 +97,18 @@
     </div>
     <hx-skeleton height="6rem" borderRadius="12px" animation="none" />
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Progress</h2>
+    <hx-progress-bar [value]="progress()" ariaLabel="Upload" />
+    <div class="flex gap-2">
+      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(max(0, progress() - 10))">-10</button>
+      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(min(100, progress() + 10))">+10</button>
+    </div>
+    <hx-progress-bar mode="indeterminate" ariaLabel="Loading" />
+    <div class="flex items-center gap-4">
+      <hx-progress-spinner ariaLabel="Saving" />
+      <hx-progress-spinner strokeWidth="4" animationDuration="1s" ariaLabel="Fast" />
+    </div>
+  </div>
 </div>
