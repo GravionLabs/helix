@@ -6,6 +6,17 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Menu</h2>
+    <div class="flex flex-wrap items-start gap-6">
+      <div>
+        <button hx-button type="button" aria-haspopup="menu" (click)="popup.toggle($event)">Popup menu</button>
+        <hx-menu #popup popup ariaLabel="Actions" [model]="items" />
+      </div>
+      <hx-menu ariaLabel="Account (inline)" [model]="grouped" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Tabs</h2>
     <hx-tabs [(value)]="tab">
       <hx-tab-list>

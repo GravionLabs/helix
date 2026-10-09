@@ -46,6 +46,8 @@ describe('helix-ui styles', () => {
     ['fieldset', 'fieldset/fieldset.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
     ['listbox', 'listbox/listbox.ts'],
+    ['menu', 'menu/menu.ts'],
+    ['menu', 'menu/menu-panel.ts'],
     ['message', 'message/message.ts'],
     ['multi-select', 'multi-select/multi-select.ts'],
     ['auto-complete', 'auto-complete/auto-complete.ts'],

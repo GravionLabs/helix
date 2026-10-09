@@ -60,6 +60,7 @@ export {
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
 export { HxListbox } from './lib/listbox/listbox';
+export { HxMenu } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export {
   HxMessage,
