@@ -23,6 +23,11 @@ export {
 } from './lib/button/button';
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export {
+  HxDatePicker,
+  type HxDatePickerSelectionMode,
+  type HxDatePickerValue,
+} from './lib/date-picker/date-picker';
+export {
   HxDivider,
   type HxDividerAlign,
   type HxDividerLayout,

@@ -463,6 +463,35 @@ Options, `optionLabel`, `optionValue` and `optionDisabled` work as in the Select
 decides whether a chosen option can be switched off again; `size` and `fluid` as usual. It works with `ngModel`,
 reactive forms and signal forms. Give the group a name with `ariaLabel` or `ariaLabelledby`.
 
+## Date picker
+
+`hx-date-picker` is a calendar to choose a day, a range or several days. Use it inline with `[inline]="true"`; clicking
+the month or the year in the header opens the month and year views. Names of months and weekdays come from
+`Intl.DateTimeFormat` for the `locale`. The value is a `Date` (`single`) or a `Date[]` (`multiple`; with `range`
+one date while the range is open and two when it is complete). It works with `ngModel`, reactive forms
+(including `disable()`) and signal forms.
+
+```html
+<hx-date-picker inline ariaLabel="Arrival" [(ngModel)]="arrival" />
+<hx-date-picker inline selectionMode="range" [minDate]="today" [firstDayOfWeek]="1" [(value)]="stay" />
+```
+
+| Input                   | Type                                  | Default    | Description                                       |
+| ----------------------- | ------------------------------------- | ---------- | ------------------------------------------------- |
+| `inline`                | `boolean`                             | `false`    | The calendar in the page.                         |
+| `selectionMode`         | `'single' \| 'range' \| 'multiple'`   | `'single'` | What the value holds.                             |
+| `minDate`, `maxDate`    | `Date \| null`                        | `null`     | Earliest and latest day.                          |
+| `disabledDates`         | `Date[]`                              | `[]`       | Days that cannot be chosen.                       |
+| `firstDayOfWeek`        | `number`                              | `0`        | `0` Sunday … `6` Saturday.                        |
+| `locale`                | `string`                              | browser's  | BCP 47 tag for the names.                         |
+| `ariaLabel`, `ariaLabelledby` | `string`                        | `Calendar` | Name of the calendar.                             |
+
+- **Keyboard:** in the day grid the arrows move by a day or a week, Home and End to the start and end of the week, Page
+  Up and Page Down by a month (with Shift by a year), Enter or Space selects. The grid is one tab stop.
+- **Accessibility:** the WAI-ARIA date grid: `role="grid"` with column headers (`abbr` is the full weekday name),
+  `role="gridcell"` with `aria-selected`, today has `aria-current="date"`, and every day button is named with the
+  full date ("Friday, October 9, 2026"). Days outside `minDate`/`maxDate` or in `disabledDates` are `aria-disabled`.
+
 ## Auto complete
 
 `hx-auto-complete` is a text field that suggests values while the user types. It does not search: it emits

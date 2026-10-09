@@ -81,6 +81,25 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Date picker (inline)</h2>
+    <div class="flex flex-wrap gap-6">
+      <div class="flex flex-col gap-2">
+        <span class="label">single</span>
+        <hx-date-picker inline ariaLabel="Arrival" [(value)]="arrival" />
+        <span>{{ arrival() }}</span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="label">range, week from Monday</span>
+        <hx-date-picker inline ariaLabel="Stay" selectionMode="range" [firstDayOfWeek]="1" [(value)]="stay" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="label">multiple, German</span>
+        <hx-date-picker inline ariaLabel="Days" selectionMode="multiple" locale="de-DE" [firstDayOfWeek]="1" [(value)]="days" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Auto complete</h2>
     <div class="row">
       <label class="label" for="ac-one">Country</label>
