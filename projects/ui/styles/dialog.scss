@@ -1,0 +1,97 @@
+/*
+ * Dialog: `<hx-dialog>` and the dialogs of `HxDialogService`. The box (`.hx-dialog`) is a grid of the title, the
+ * content and the footer, with the close button in the title row (it comes last in the DOM, so the content gets the
+ * focus first). The mask is `.hx-dialog-backdrop`; the pane and the global positioning are the CDK's. The content
+ * scrolls when the dialog is taller than the screen.
+ */
+@use 'icons' as *;
+
+.hx-dialog-anchor {
+  display: none;
+}
+
+.hx-dialog-backdrop {
+  background: var(--h-mask-background);
+}
+
+.hx-dialog {
+  display: grid;
+  grid-template:
+    "title close" auto
+    "content content" minmax(0, 1fr)
+    "footer footer" auto / minmax(0, 1fr) auto;
+  box-sizing: border-box;
+  width: 100%;
+  max-height: inherit;
+  overflow: hidden;
+  border: 1px solid var(--h-dialog-border-color);
+  border-radius: var(--h-dialog-border-radius);
+  background: var(--h-dialog-background);
+  color: var(--h-dialog-color);
+  box-shadow: var(--h-dialog-shadow);
+}
+
+.hx-dialog-title {
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  gap: var(--h-dialog-header-gap);
+  margin: 0;
+  padding: var(--h-dialog-header-padding);
+  font-size: var(--h-dialog-title-font-size);
+  font-weight: var(--h-dialog-title-font-weight);
+}
+
+.hx-dialog-title:empty {
+  padding: 0;
+}
+
+.hx-dialog-content {
+  grid-area: content;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--h-dialog-content-padding);
+}
+
+.hx-dialog-footer {
+  grid-area: footer;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--h-dialog-footer-gap);
+  padding: var(--h-dialog-footer-padding);
+}
+
+.hx-dialog-footer:empty {
+  display: none;
+}
+
+.hx-dialog-close {
+  grid-area: close;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-inline-end: 0.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-dialog-close:hover {
+  background: var(--h-content-hover-background);
+}
+
+.hx-dialog-close:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: var(--h-focus-ring-offset);
+}
+
+.hx-dialog-close-icon {
+  @include hx-icon(close, 1rem, currentcolor, 2.4);
+}

@@ -58,6 +58,14 @@ export {
   type HxDatePickerValue,
 } from './lib/date-picker/date-picker';
 export {
+  HX_DIALOG_DATA,
+  HxDialog,
+  type HxDialogConfig,
+  type HxDialogPosition,
+  HxDialogRef,
+  HxDialogService,
+} from './lib/dialog/dialog';
+export {
   HxDivider,
   type HxDividerAlign,
   type HxDividerLayout,
