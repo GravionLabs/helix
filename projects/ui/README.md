@@ -50,6 +50,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxDialog`, `HxDialogService`, `HxDialogRef` | `hx-dialog` | modal or non-modal dialog on the CDK dialog; declarative with `[(visible)]` or opened as a component from a service with data and a result |
 | `HxDrawer` | `hx-drawer` | panel that slides in from an edge, same dialog semantics as `hx-dialog`; modal, full screen, reduced motion |
 | `HxPopover` | `hx-popover` | anchored panel with arrow: `toggle(event, target)`, outside click and Escape close, non-modal dialog with focus in and back |
+| `HxConfirmationService`, `HxConfirmDialog`, `HxConfirmPopup` | `hx-confirm-dialog`, `hx-confirm-popup` | ask the user to confirm: centred `alertdialog` or a popup anchored to a target; `confirm()` with callbacks or `confirmAsync()` |
 | `HxChip` | `hx-chip` | entity pill with picture or icon, removable by button, Backspace or Delete |
 | `HxTag` | `hx-tag` | label for a category or status: severities, rounded, decorative icon |
 | `HxTabs`, `HxTabList`, `HxTab`, `HxTabPanels`, `HxTabPanel` | `hx-tabs` … | WAI-ARIA tabs: roving tabindex, automatic activation, lazy panels, scrollable list |

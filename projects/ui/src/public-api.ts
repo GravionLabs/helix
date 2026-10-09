@@ -53,6 +53,12 @@ export {
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export { HxChip } from './lib/chip/chip';
 export {
+  type HxConfirmation,
+  HxConfirmationService,
+  HxConfirmDialog,
+  HxConfirmPopup,
+} from './lib/confirm/confirm';
+export {
   HxDatePicker,
   type HxDatePickerSelectionMode,
   type HxDatePickerValue,

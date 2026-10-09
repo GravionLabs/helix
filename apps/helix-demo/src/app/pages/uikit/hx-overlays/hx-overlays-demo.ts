@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import {
   HX_DIALOG_DATA,
   HxButton,
+  HxConfirmationService,
+  HxConfirmDialog,
+  HxConfirmPopup,
   HxDialog,
   HxDialogRef,
   HxDialogService,
@@ -33,11 +36,21 @@ export class HxDialogContentDemo {
   protected readonly ref = inject(HxDialogRef<string>);
 }
 
-/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog, Drawer, Popover. */
+/** `@gravionlabs/helix-ui` messages and overlays: Toast, Message, Dialog, Drawer, Popover, Confirm. */
 @Component({
   selector: 'app-hx-overlays-demo',
   standalone: true,
-  imports: [HxMessage, HxToast, HxButton, HxDialog, HxDrawer, HxInput, HxPopover],
+  imports: [
+    HxMessage,
+    HxToast,
+    HxButton,
+    HxDialog,
+    HxDrawer,
+    HxInput,
+    HxPopover,
+    HxConfirmDialog,
+    HxConfirmPopup,
+  ],
   templateUrl: './hx-overlays-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './hx-overlays-demo.scss',
@@ -45,6 +58,36 @@ export class HxDialogContentDemo {
 export class HxOverlaysDemo {
   protected readonly messages = inject(HxMessageService);
   readonly #dialogs = inject(HxDialogService);
+  readonly #confirmation = inject(HxConfirmationService);
+  protected readonly answer = signal('none');
+
+  confirmDelete() {
+    this.#confirmation.confirm({
+      header: 'Delete',
+      message: 'Do you want to delete this record?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      acceptSeverity: 'danger',
+      accept: () => this.answer.set('deleted'),
+      reject: () => this.answer.set('cancelled'),
+    });
+  }
+
+  confirmAt(event: Event) {
+    this.#confirmation.confirm({
+      message: 'Are you sure you want to proceed?',
+      icon: 'pi pi-question-circle',
+      target: event,
+      accept: () => this.answer.set('proceeded (popup)'),
+      reject: () => this.answer.set('stopped (popup)'),
+    });
+  }
+
+  async confirmAsync() {
+    const yes = await this.#confirmation.confirmAsync({ message: 'Leave without saving?' });
+    this.answer.set(yes ? 'left (async)' : 'stayed (async)');
+  }
   protected readonly open = signal(false);
   protected readonly nonModal = signal(false);
   protected readonly drawer = signal<'left' | 'right' | 'top' | 'bottom' | null>(null);
