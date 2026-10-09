@@ -81,6 +81,20 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Listbox</h2>
+    <div class="row">
+      <span class="label">single</span>
+      <hx-listbox ariaLabel="City" [options]="cities" [(value)]="city" scrollHeight="9rem" />
+      <span>{{ city() ?? 'none' }}</span>
+    </div>
+    <div class="row">
+      <span class="label">multiple</span>
+      <hx-listbox ariaLabel="Cities" [options]="cities" multiple checkmark filter [(value)]="visited" />
+      <span>{{ visited() }}</span>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Rating</h2>
     <div class="row">
       <span class="label">editable</span>

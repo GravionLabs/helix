@@ -34,7 +34,7 @@ export {
   type HxInputNumberSize,
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
-
+export { HxListbox } from './lib/listbox/listbox';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';

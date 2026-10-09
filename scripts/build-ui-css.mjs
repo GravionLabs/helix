@@ -35,6 +35,7 @@ export const TOKEN_COMPONENTS = {
   'float-label': ['floatlabel'],
   'icon-field': ['iconfield', 'inputtext'],
   input: ['inputtext', 'textarea'],
+  listbox: ['listbox', 'inputtext'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
   password: ['password', 'inputtext'],
