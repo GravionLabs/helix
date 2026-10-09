@@ -1,0 +1,239 @@
+/*
+ * Toast: `<hx-toast>`. A fixed stack of messages from the `--h-toast-*` tokens; the severity picks the colours.
+ * The container takes no pointer events, only the messages do.
+ */
+@use 'icons' as *;
+
+.hx-toast {
+  position: fixed;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: var(--h-toast-width);
+  max-width: calc(100vw - 2rem);
+  pointer-events: none;
+}
+
+.hx-toast-top-left {
+  top: 1.25rem;
+  inset-inline-start: 1.25rem;
+}
+
+.hx-toast-top-center {
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hx-toast-top-right {
+  top: 1.25rem;
+  inset-inline-end: 1.25rem;
+}
+
+.hx-toast-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hx-toast-bottom-left {
+  bottom: 1.25rem;
+  inset-inline-start: 1.25rem;
+  flex-direction: column-reverse;
+}
+
+.hx-toast-bottom-center {
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column-reverse;
+}
+
+.hx-toast-bottom-right {
+  bottom: 1.25rem;
+  inset-inline-end: 1.25rem;
+  flex-direction: column-reverse;
+}
+
+.hx-toast-item {
+  display: block;
+  box-sizing: border-box;
+  border: var(--h-toast-border-width) solid var(--hx-toast-border-color);
+  border-radius: var(--h-toast-border-radius);
+  background: var(--hx-toast-background);
+  color: var(--hx-toast-color);
+  box-shadow: var(--hx-toast-shadow);
+  backdrop-filter: blur(var(--h-toast-blur));
+  pointer-events: auto;
+  animation: hx-toast-in var(--h-toast-transition-duration) ease-out;
+}
+
+@keyframes hx-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
+
+.hx-toast-info {
+  --hx-toast-background: var(--h-toast-info-background);
+  --hx-toast-border-color: var(--h-toast-info-border-color);
+  --hx-toast-color: var(--h-toast-info-color);
+  --hx-toast-detail-color: var(--h-toast-info-detail-color);
+  --hx-toast-shadow: var(--h-toast-info-shadow);
+  --hx-toast-hover: var(--h-toast-info-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-info-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-info-close-button-focus-ring-shadow);
+}
+
+.hx-toast-success {
+  --hx-toast-background: var(--h-toast-success-background);
+  --hx-toast-border-color: var(--h-toast-success-border-color);
+  --hx-toast-color: var(--h-toast-success-color);
+  --hx-toast-detail-color: var(--h-toast-success-detail-color);
+  --hx-toast-shadow: var(--h-toast-success-shadow);
+  --hx-toast-hover: var(--h-toast-success-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-success-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-success-close-button-focus-ring-shadow);
+}
+
+.hx-toast-warn {
+  --hx-toast-background: var(--h-toast-warn-background);
+  --hx-toast-border-color: var(--h-toast-warn-border-color);
+  --hx-toast-color: var(--h-toast-warn-color);
+  --hx-toast-detail-color: var(--h-toast-warn-detail-color);
+  --hx-toast-shadow: var(--h-toast-warn-shadow);
+  --hx-toast-hover: var(--h-toast-warn-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-warn-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-warn-close-button-focus-ring-shadow);
+}
+
+.hx-toast-error {
+  --hx-toast-background: var(--h-toast-error-background);
+  --hx-toast-border-color: var(--h-toast-error-border-color);
+  --hx-toast-color: var(--h-toast-error-color);
+  --hx-toast-detail-color: var(--h-toast-error-detail-color);
+  --hx-toast-shadow: var(--h-toast-error-shadow);
+  --hx-toast-hover: var(--h-toast-error-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-error-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-error-close-button-focus-ring-shadow);
+}
+
+.hx-toast-secondary {
+  --hx-toast-background: var(--h-toast-secondary-background);
+  --hx-toast-border-color: var(--h-toast-secondary-border-color);
+  --hx-toast-color: var(--h-toast-secondary-color);
+  --hx-toast-detail-color: var(--h-toast-secondary-detail-color);
+  --hx-toast-shadow: var(--h-toast-secondary-shadow);
+  --hx-toast-hover: var(--h-toast-secondary-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-secondary-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-secondary-close-button-focus-ring-shadow);
+}
+
+.hx-toast-contrast {
+  --hx-toast-background: var(--h-toast-contrast-background);
+  --hx-toast-border-color: var(--h-toast-contrast-border-color);
+  --hx-toast-color: var(--h-toast-contrast-color);
+  --hx-toast-detail-color: var(--h-toast-contrast-detail-color);
+  --hx-toast-shadow: var(--h-toast-contrast-shadow);
+  --hx-toast-hover: var(--h-toast-contrast-close-button-hover-background);
+  --hx-toast-ring: var(--h-toast-contrast-close-button-focus-ring-color);
+  --hx-toast-ring-shadow: var(--h-toast-contrast-close-button-focus-ring-shadow);
+}
+
+.hx-toast-info .hx-toast-icon {
+  @include hx-icon(info, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-success .hx-toast-icon {
+  @include hx-icon(success, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-warn .hx-toast-icon {
+  @include hx-icon(warn, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-error .hx-toast-icon {
+  @include hx-icon(error, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-secondary .hx-toast-icon {
+  @include hx-icon(info, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-contrast .hx-toast-icon {
+  @include hx-icon(info, var(--h-toast-icon-size), currentcolor, 2);
+}
+
+.hx-toast-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--h-toast-content-gap);
+  padding: var(--h-toast-content-padding);
+}
+
+.hx-toast-icon {
+  margin-top: 0.125rem;
+}
+
+.hx-toast-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--h-toast-text-gap);
+  min-width: 0;
+}
+
+.hx-toast-summary {
+  font-size: var(--h-toast-summary-font-size);
+  font-weight: var(--h-toast-summary-font-weight);
+}
+
+.hx-toast-detail {
+  color: var(--hx-toast-detail-color);
+  font-size: var(--h-toast-detail-font-size);
+  font-weight: var(--h-toast-detail-font-weight);
+}
+
+.hx-toast-close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-toast-close-button-width);
+  height: var(--h-toast-close-button-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-toast-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: 0 none;
+  transition: background var(--h-toast-transition-duration);
+}
+
+.hx-toast-close:hover {
+  background: var(--hx-toast-hover);
+}
+
+.hx-toast-close:focus-visible {
+  outline: var(--h-toast-close-button-focus-ring-width) var(--h-toast-close-button-focus-ring-style)
+    var(--hx-toast-ring);
+  outline-offset: var(--h-toast-close-button-focus-ring-offset);
+  box-shadow: var(--hx-toast-ring-shadow);
+}
+
+.hx-toast-close-icon {
+  @include hx-icon(close, var(--h-toast-close-icon-size), currentcolor, 2.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-toast-item {
+    animation: none;
+  }
+
+  .hx-toast-close {
+    transition: none;
+  }
+}

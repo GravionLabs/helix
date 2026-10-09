@@ -101,6 +101,13 @@ export {
   type HxThemeOptions,
   provideHxTheme,
 } from './lib/theme/theme';
+export {
+  HxMessageService,
+  type HxToastMessage,
+  type HxToastMessageInput,
+  type HxToastSeverity,
+} from './lib/toast/message-service';
+export { HxToast, HxToastItem, type HxToastPosition } from './lib/toast/toast';
 export { HxToggleButton, type HxToggleButtonSize } from './lib/toggle-button/toggle-button';
 export { HxToolbar } from './lib/toolbar/toolbar';
 export {
