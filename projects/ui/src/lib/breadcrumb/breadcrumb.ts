@@ -1,19 +1,10 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import type { HxMenuItem } from '../menu-item';
 
-/** One step of the trail. Structurally compatible with the menu items of the shell. */
-export interface HxBreadcrumbItem {
-  label?: string;
-  /** CSS classes of an icon font, e.g. `pi pi-home`. */
-  icon?: string;
-  /** Router link (string or commands). Wins over `url`. */
-  routerLink?: string | readonly unknown[];
-  url?: string;
-  target?: string;
-  disabled?: boolean;
-  visible?: boolean;
-}
+/** One step of the trail: the menu item model, of which the breadcrumb uses label, icon, link and state. */
+export type HxBreadcrumbItem = HxMenuItem;
 
 /**
  * The path to the current page. The last item is the current page (`aria-current="page"`).

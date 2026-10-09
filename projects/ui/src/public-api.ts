@@ -24,6 +24,7 @@ export {
   type HxDividerType,
 } from './lib/divider/divider';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
+export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export { HxPassword } from './lib/password/password';
 export { HxRadio, type HxRadioSize } from './lib/radio/radio';
 export {
