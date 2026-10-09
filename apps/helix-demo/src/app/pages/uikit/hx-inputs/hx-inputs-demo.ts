@@ -4,6 +4,8 @@ import { FormField, form, min, required } from '@angular/forms/signals';
 import {
   HxAutoComplete,
   HxButton,
+  HxDatePicker,
+  type HxDatePickerValue,
   HxFloatLabel,
   HxIconField,
   HxInput,
@@ -34,6 +36,7 @@ import {
     HxListbox,
     HxMultiSelect,
     HxAutoComplete,
+    HxDatePicker,
     HxSlider,
     HxPassword,
     HxSelect,
@@ -53,6 +56,9 @@ import {
 export class HxInputsDemo {
   readonly cities = ['Berlin', 'Lisbon', 'Zurich'];
   readonly city = signal<unknown>(null);
+  readonly arrival = signal<HxDatePickerValue>(new Date());
+  readonly stay = signal<HxDatePickerValue>(null);
+  readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
   readonly found = signal<string[]>([]);
   readonly country = signal<unknown>(null);

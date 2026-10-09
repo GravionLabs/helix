@@ -1,0 +1,121 @@
+<div
+  class="hx-date-picker-panel"
+  role="group"
+  [attr.aria-label]="ariaLabel() ?? 'Calendar'"
+  [attr.aria-labelledby]="ariaLabelledby() ?? null"
+  (focusout)="onFocusOut($event)"
+>
+  <div class="hx-date-picker-header">
+    <button
+      type="button"
+      class="hx-date-picker-nav hx-date-picker-prev"
+      [attr.aria-label]="view() === 'day' ? 'Previous month' : view() === 'month' ? 'Previous year' : 'Previous years'"
+      [disabled]="isDisabled()"
+      (click)="step(-1)"
+    >
+      <span class="hx-date-picker-prev-icon" aria-hidden="true"></span>
+    </button>
+    <div class="hx-date-picker-title" [id]="titleId" aria-live="polite">
+      @switch (view()) {
+        @case ('day') {
+          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('month')">{{ monthName() }}</button>
+          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('year')">{{ viewYear() }}</button>
+        }
+        @case ('month') {
+          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('year')">{{ viewYear() }}</button>
+        }
+        @default {
+          <span class="hx-date-picker-title-text">{{ decade()[0] }} – {{ decade()[11] }}</span>
+        }
+      }
+    </div>
+    <button
+      type="button"
+      class="hx-date-picker-nav hx-date-picker-next"
+      [attr.aria-label]="view() === 'day' ? 'Next month' : view() === 'month' ? 'Next year' : 'Next years'"
+      [disabled]="isDisabled()"
+      (click)="step(1)"
+    >
+      <span class="hx-date-picker-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  @switch (view()) {
+    @case ('day') {
+      <table class="hx-date-picker-grid" role="grid" [attr.aria-labelledby]="titleId" [attr.aria-multiselectable]="selectionMode() !== 'single' ? 'true' : null">
+        <thead>
+          <tr>
+            @for (day of weekdays(); track $index) {
+              <th scope="col" class="hx-date-picker-weekday" [attr.abbr]="day.long">{{ day.short }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of weeks(); track $index) {
+            <tr>
+              @for (cell of row; track $index) {
+                @if (cell) {
+                  <td
+                    role="gridcell"
+                    class="hx-date-picker-cell"
+                    [attr.aria-selected]="isSelected(cell)"
+                  >
+                    <button
+                      type="button"
+                      class="hx-date-picker-date"
+                      [class.hx-date-picker-date-selected]="isSelected(cell)"
+                      [class.hx-date-picker-date-in-range]="isInRange(cell)"
+                      [class.hx-date-picker-date-today]="isToday(cell)"
+                      [attr.data-date]="dateKey(cell)"
+                      [attr.tabindex]="isFocusTarget(cell) ? 0 : -1"
+                      [attr.aria-label]="dayLabel(cell)"
+                      [attr.aria-current]="isToday(cell) ? 'date' : null"
+                      [attr.aria-disabled]="isDateDisabled(cell) ? 'true' : null"
+                      [disabled]="isDisabled()"
+                      (click)="pick(cell)"
+                      (keydown)="onDayKeydown($event, cell)"
+                    >
+                      {{ cell.getDate() }}
+                    </button>
+                  </td>
+                } @else {
+                  <td class="hx-date-picker-cell hx-date-picker-cell-empty" role="gridcell"></td>
+                }
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @case ('month') {
+      <div class="hx-date-picker-months">
+        @for (name of monthNames(); track $index) {
+          <button
+            type="button"
+            class="hx-date-picker-month"
+            [class.hx-date-picker-month-selected]="$index === focusedDate().getMonth() && viewYear() === focusedDate().getFullYear()"
+            [disabled]="isDisabled()"
+            (click)="chooseMonth($index)"
+          >
+            {{ name }}
+          </button>
+        }
+      </div>
+    }
+    @default {
+      <div class="hx-date-picker-years">
+        @for (year of decade(); track year) {
+          <button
+            type="button"
+            class="hx-date-picker-year"
+            [class.hx-date-picker-year-selected]="year === focusedDate().getFullYear()"
+            [disabled]="isDisabled()"
+            (click)="chooseYear(year)"
+          >
+            {{ year }}
+          </button>
+        }
+      </div>
+    }
+  }
+</div>
