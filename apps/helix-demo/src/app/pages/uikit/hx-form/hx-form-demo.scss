@@ -4,7 +4,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 7rem 1fr 1fr;
+  grid-template-columns: 7rem 1fr;
   gap: 0.75rem;
   align-items: center;
 }
@@ -55,4 +55,22 @@ legend {
   margin-bottom: 0.375rem;
   padding: 0;
   font-weight: 500;
+}
+
+/* a narrow screen puts the label above its controls instead of beside them */
+@media (max-width: 40rem) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.375rem;
+  }
+
+  .cell {
+    min-width: 0;
+  }
+
+  .cell > input:not([type='checkbox']):not([type='radio']),
+  .cell > textarea {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
