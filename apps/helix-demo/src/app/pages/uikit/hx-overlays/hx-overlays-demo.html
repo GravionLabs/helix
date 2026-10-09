@@ -5,6 +5,21 @@
     <p class="m-0">Messages and overlays from <code>&#64;gravionlabs/helix-ui</code>.</p>
   </div>
 
+  <hx-toast position="top-right" />
+  <hx-toast key="bottom" position="bottom-center" />
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Toast</h2>
+    <div class="flex flex-wrap gap-2">
+      <button hx-button type="button" severity="success" (click)="show('success')">Success</button>
+      <button hx-button type="button" severity="info" (click)="show('info')">Info</button>
+      <button hx-button type="button" severity="warn" (click)="show('warn')">Warn</button>
+      <button hx-button type="button" severity="danger" (click)="show('error')">Error (sticky)</button>
+      <button hx-button type="button" variant="outlined" (click)="showKeyed()">Bottom center</button>
+      <button hx-button type="button" variant="text" (click)="messages.clear()">Clear all</button>
+    </div>
+  </div>
+
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Message</h2>
     <hx-message severity="success">Your settings were saved.</hx-message>
