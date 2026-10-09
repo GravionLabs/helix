@@ -1,8 +1,13 @@
 <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-  <helix-select
+  <hx-select
+    fluid
     [options]="selectOptions()"
     [placeholder]="placeholder()"
+    [ariaLabel]="label()"
+    [value]="state().value()"
     [disabled]="state().disabled()"
-    [formField]="field()"
+    [invalid]="showInvalid()"
+    (valueChange)="state().value.set($event)"
+    (touch)="state().markAsTouched()"
   />
 </helix-form-field>

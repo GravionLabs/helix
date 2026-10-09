@@ -63,9 +63,10 @@ describe('HelixDynamicForm (integration)', () => {
 
   it('renders a widget per schema field', () => {
     expect(el('input[type="email"]')).toBeTruthy();
-    expect(el('input[type="number"]')).toBeTruthy();
-    expect(el('input[type="checkbox"]')).toBeTruthy();
-    expect(el('helix-select')).toBeTruthy();
+    expect(el('hx-input-number input')).toBeTruthy();
+    expect(el('input[type="checkbox"].hx-checkbox')).toBeTruthy();
+    expect(el('hx-select')).toBeTruthy();
+    expect(el('input.hx-input')).toBeTruthy();
     expect(el('helix-union-widget')).toBeTruthy();
     expect(fixture.nativeElement.textContent).toContain('E-mail');
   });
@@ -101,18 +102,26 @@ describe('HelixDynamicForm (integration)', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('.helix-array-widget__item')).toHaveLength(1);
 
-    el<HTMLButtonElement>('.helix-array-widget__remove').click();
+    el<HTMLButtonElement>('.helix-array-widget__item button.hx-button').click();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('.helix-array-widget__item')).toHaveLength(0);
   });
 
-  it('switches union variants and resets the variant value', () => {
+  it('switches union variants and resets the variant value', async () => {
+    // jsdom has no layout, and the CDK listbox of hx-select scrolls the active option into view
+    Element.prototype.scrollIntoView = () => undefined;
     expect(fixture.nativeElement.textContent).toContain('Nickname');
     expect(fixture.nativeElement.textContent).not.toContain('Vat id');
 
-    const select = el<HTMLSelectElement>('.helix-union-widget__select');
-    select.value = '1'; // index of 'company'
-    select.dispatchEvent(new Event('change', { bubbles: true }));
+    el<HTMLElement>('.helix-union-widget hx-select .hx-select-trigger').click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const company = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (option) => option.textContent?.trim() === 'company',
+    );
+    company?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).toContain('Vat id');
@@ -129,7 +138,7 @@ describe('HelixDynamicForm (integration)', () => {
 
   it('emits the parsed value on valid submit', async () => {
     setInput(el<HTMLInputElement>('input[type="email"]'), 'a@b.co');
-    setInput(el<HTMLInputElement>('input[type="number"]'), '30');
+    setInput(el<HTMLInputElement>('hx-input-number input'), '30');
     setInput(
       el<HTMLInputElement>('.helix-union-widget ~ * input, helix-union-widget input[type="text"]'),
       'zoe',

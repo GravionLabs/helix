@@ -1,6 +1,8 @@
 <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
   <textarea
-    class="helix-textarea-widget__input"
+    hx-input
+    fluid
+    autoResize
     rows="4"
     [placeholder]="placeholder()"
     [formField]="field()"

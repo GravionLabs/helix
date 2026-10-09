@@ -1,17 +1,17 @@
 <div class="helix-union-widget">
   <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-    <div class="helix-union-widget__select-wrapper">
-      <select
-        class="helix-union-widget__select"
-        [disabled]="state().disabled()"
-        (change)="onTagChange($event)"
-      >
-        @for (tag of tags(); track tag) {
-          <option [value]="$index" [selected]="tag === activeTag()">{{ tag }}</option>
-        }
-      </select>
-      <i class="helix-union-widget__icon pi pi-chevron-down"></i>
-    </div>
+    <hx-select
+      fluid
+      [options]="tags()"
+      [optionLabel]="tagText"
+      [optionValue]="tagText"
+      [ariaLabel]="label()"
+      [value]="activeTag()"
+      [disabled]="state().disabled()"
+      [invalid]="showInvalid()"
+      (valueChange)="onTagChange($event)"
+      (touch)="state().markAsTouched()"
+    />
   </helix-form-field>
 
   @for (child of variantChildren(); track child.key) {

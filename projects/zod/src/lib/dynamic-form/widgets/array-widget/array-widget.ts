@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import { HxButton } from '@gravionlabs/helix-ui';
 import { HelixDynamicField } from '../../components/dynamic-field/dynamic-field';
 import { buildDefaultValue } from '../../schema/zod-defaults';
 import { HelixFieldWidgetBase } from '../widget-base';
@@ -7,7 +8,7 @@ import { HelixFieldWidgetBase } from '../widget-base';
 @Component({
   selector: 'helix-array-widget',
   standalone: true,
-  imports: [HelixDynamicField],
+  imports: [HelixDynamicField, HxButton],
   templateUrl: './array-widget.html',
   styleUrl: './array-widget.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
