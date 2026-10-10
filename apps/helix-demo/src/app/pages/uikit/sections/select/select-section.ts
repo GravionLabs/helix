@@ -26,6 +26,11 @@ export class HxSelectSection {
     { name: 'Istanbul', code: 'IST' },
     { name: 'Paris', code: 'PRS' },
   ];
+  readonly instruments = Array.from({ length: 200 }, (_, i) => ({
+    code: `SYM${String(i + 1).padStart(3, '0')}`,
+    name: `Instrument ${i + 1}`,
+  }));
+  instrument: string | null = null;
   readonly sizes = ['Small', 'Medium', 'Large'];
 
   city: string | null = 'RM';

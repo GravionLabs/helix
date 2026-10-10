@@ -78,6 +78,13 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly optionDisabled = input<Accessor<never, boolean>>('disabled');
   readonly placeholder = input('');
   readonly emptyMessage = input('No options');
+  /** A search field above the list that narrows the options (case-insensitive "contains"). */
+  readonly filter = input(false, { transform: booleanAttribute });
+  readonly filterPlaceholder = input('Search');
+  /** What the filter matches: a property name or accessor of an option; default the label. */
+  readonly filterBy = input<Accessor<never, string>>();
+  /** Shown when the filter matches nothing. */
+  readonly emptyFilterMessage = input('No results');
   readonly size = input<HxSelectSize>('medium');
   readonly variant = input<HxSelectVariant>('outlined');
   readonly fluid = input(false, { transform: booleanAttribute });
@@ -106,6 +113,8 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
 
   private readonly trigger = viewChild.required<ElementRef<HTMLButtonElement>>('trigger');
   private readonly listbox = viewChild(CdkListbox);
+  private readonly filterField = viewChild<ElementRef<HTMLInputElement>>('filterField');
+  protected readonly query = signal('');
 
   readonly #cvaDisabled = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
@@ -113,6 +122,23 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   protected readonly items = computed<HxSelectItem[]>(() =>
     resolveOptions(this.options(), this.optionLabel(), this.optionValue(), this.optionDisabled()),
   );
+
+  protected readonly visibleItems = computed<HxSelectItem[]>(() => {
+    const query = this.query().trim().toLowerCase();
+    const items = this.items();
+    if (!this.filter() || !query) return items;
+    const by = this.filterBy();
+    const options = this.options();
+    return items.filter((item, i) => {
+      const text = by === undefined ? item.label : this.#filterText(options[i], by, item.label);
+      return text.toLowerCase().includes(query);
+    });
+  });
+
+  protected readonly resultsLabel = computed(() => {
+    const n = this.visibleItems().length;
+    return n === 1 ? '1 result' : `${n} results`;
+  });
 
   protected readonly selected = computed(() => {
     const compare = this.compareWith();
@@ -165,12 +191,33 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   protected close(refocus = false): void {
     if (!this.open()) return;
     this.open.set(false);
+    this.query.set('');
     if (refocus) this.focus();
   }
 
   protected onAttach(): void {
-    // the listbox lives in the overlay template: focus it once it has rendered
-    afterNextRender(() => this.listbox()?.focus(), { injector: this.#injector });
+    // the panel lives in the overlay template: focus the filter, or the list, once it has rendered
+    afterNextRender(
+      () => {
+        const field = this.filterField();
+        if (field) field.nativeElement.focus();
+        else this.listbox()?.focus();
+      },
+      { injector: this.#injector },
+    );
+  }
+
+  protected onFilterKeydown(event: KeyboardEvent): void {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      this.listbox()?.focus();
+    }
+  }
+
+  #filterText(option: unknown, by: Accessor<never, string>, fallback: string): string {
+    if (option === null || typeof option !== 'object') return fallback;
+    if (typeof by === 'function') return String((by as (o: unknown) => string)(option) ?? '');
+    return by in option ? String((option as Record<string, unknown>)[by] ?? '') : '';
   }
 
   protected onTriggerKeydown(event: KeyboardEvent): void {

@@ -40,6 +40,22 @@
   (detach)="close()"
 >
   <div class="hx-select-panel">
+    @if (filter()) {
+      <div class="hx-select-header">
+        <input
+          #filterField
+          type="text"
+          class="hx-select-filter"
+          autocomplete="off"
+          [attr.aria-label]="filterPlaceholder()"
+          [attr.aria-controls]="panelId"
+          [placeholder]="filterPlaceholder()"
+          [value]="query()"
+          (input)="query.set($any($event.target).value)"
+          (keydown)="onFilterKeydown($event)"
+        />
+      </div>
+    }
     <div
       cdkListbox
       class="hx-select-list"
@@ -51,7 +67,7 @@
       [attr.aria-labelledby]="ariaLabelledby() ?? null"
       (cdkListboxValueChange)="onSelect($event)"
     >
-      @for (item of items(); track $index) {
+      @for (item of visibleItems(); track item) {
         <div
           class="hx-select-option"
           [cdkOption]="item.value"
@@ -62,8 +78,11 @@
           <span>{{ item.label }}</span>
         </div>
       } @empty {
-        <div class="hx-select-empty">{{ emptyMessage() }}</div>
+        <div class="hx-select-empty">{{ query().trim() ? emptyFilterMessage() : emptyMessage() }}</div>
       }
     </div>
+    @if (filter()) {
+      <span class="hx-select-sr-only" aria-live="polite">{{ resultsLabel() }}</span>
+    }
   </div>
 </ng-template>
