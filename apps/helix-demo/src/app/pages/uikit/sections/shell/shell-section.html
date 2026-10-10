@@ -1,0 +1,39 @@
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix Shell wrappers</h2>
+    <p class="m-0">Components of <code>&#64;gravionlabs/helix-shell</code> that remove boilerplate of admin pages.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Page header</h2>
+    <p class="m-0">Breadcrumb, title, subtitle and the actions of a page; the actions wrap under the title on narrow screens.</p>
+    <helix-page-header title="Invoices" subtitle="Open and paid invoices of the current year" [breadcrumb]="crumbs" [home]="{ icon: 'pi pi-home', routerLink: '/' }" [headingLevel]="3">
+      <button helixPageActions hx-button type="button" variant="outlined" severity="secondary">Export</button>
+      <button helixPageActions hx-button type="button">New invoice</button>
+    </helix-page-header>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Stat card</h2>
+    <p class="m-0">Label, value, icon and trend; the trend direction is an arrow plus the words "up", "down" or "flat" for screen readers.</p>
+    <div class="grid gap-layout" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+      <helix-stat-card label="Orders" [value]="152" icon="pi pi-shopping-cart" [trend]="24" trendUnit="" trendLabel="since last visit" />
+      <helix-stat-card label="Revenue" [value]="2100" [format]="{ style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }" icon="pi pi-euro" severity="success" [trend]="5.2" trendLabel="since last week" />
+      <helix-stat-card label="Churn" [value]="0.018" [format]="{ style: 'percent', maximumFractionDigits: 1 }" icon="pi pi-user-minus" severity="danger" [trend]="-0.4" trendLabel="better than last month" />
+      <helix-stat-card label="Tickets" value="7 open" icon="pi pi-ticket" severity="warn" [trend]="0" trendUnit="" trendLabel="unchanged" />
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Empty state</h2>
+    <p class="m-0">Page level (medium) and inside the empty row of a data table (small, through <code>hxTableEmpty</code>).</p>
+    <helix-empty-state icon="pi pi-inbox" title="No invoices yet" description="Invoices you create appear here. Start with your first one.">
+      <button hx-button type="button">New invoice</button>
+    </helix-empty-state>
+    <hx-data-table [value]="[]" [columns]="columns" ariaLabel="Invoices">
+      <ng-template hxTableEmpty>
+        <helix-empty-state size="small" icon="pi pi-search" title="No results" description="No invoice matches the filter." />
+      </ng-template>
+    </hx-data-table>
+  </div>
+</div>

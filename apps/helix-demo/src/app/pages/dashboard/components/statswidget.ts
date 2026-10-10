@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HelixStatCard } from '@gravionlabs/helix-shell';
 
 @Component({
   standalone: true,
   selector: 'app-stats-widget',
-  imports: [CommonModule],
+  imports: [HelixStatCard],
   templateUrl: './statswidget.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './statswidget.scss',
 })
 export class StatsWidget {}

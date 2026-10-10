@@ -1,152 +1,154 @@
 <h1 class="sr-only">Input</h1>
-<div class="flex flex-col gap-layout">
-  <div class="flex flex-col md:flex-row gap-layout">
-    <div class="md:w-1/2 flex flex-col">
-      <div class="card flex flex-col gap-3 h-full">
-        <h2 class="demo-title">InputText</h2>
-        <div class="flex flex-col md:flex-row gap-3">
-          <input hx-input type="text" placeholder="Default" aria-label="Default" />
-          <input hx-input type="text" placeholder="Disabled" aria-label="Disabled" disabled />
-          <input hx-input type="text" placeholder="Invalid" aria-label="Invalid" aria-invalid="true" />
+<app-source-tabs directory="input" componentName="input-demo">
+  <div class="flex flex-col gap-layout">
+    <div class="flex flex-col md:flex-row gap-layout">
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card flex flex-col gap-3 h-full">
+          <h2 class="demo-title">InputText</h2>
+          <div class="flex flex-col md:flex-row gap-3">
+            <input hx-input type="text" placeholder="Default" aria-label="Default" />
+            <input hx-input type="text" placeholder="Disabled" aria-label="Disabled" disabled />
+            <input hx-input type="text" placeholder="Invalid" aria-label="Invalid" aria-invalid="true" />
+          </div>
+
+          <h2 class="demo-title">Icons</h2>
+          <hx-icon-field>
+            <i class="pi pi-user" hx-input-icon></i>
+            <input hx-input type="text" placeholder="Username" aria-label="Username" />
+          </hx-icon-field>
+          <hx-icon-field>
+            <i class="pi pi-search" hx-input-icon></i>
+            <input hx-input type="text" placeholder="Search" aria-label="Search" />
+          </hx-icon-field>
+
+          <h2 class="demo-title">Float Label</h2>
+          <hx-float-label>
+            <input hx-input id="username" type="text" [(ngModel)]="floatValue" />
+            <label for="username">Username</label>
+          </hx-float-label>
+
+          <h2 class="demo-title">Textarea</h2>
+          <textarea hx-input autoResize placeholder="Your Message" aria-label="Your message" rows="3"></textarea>
+
+          <h2 class="demo-title">AutoComplete</h2>
+          <hx-auto-complete
+            ariaLabel="Countries"
+            placeholder="Search"
+            optionLabel="name"
+            dropdown
+            multiple
+            [suggestions]="found()"
+            [(value)]="pickedCountries"
+            (complete)="filterCountry($event.query)"
+          />
+
+          <h2 class="demo-title">DatePicker</h2>
+          <hx-date-picker ariaLabel="Date" showIcon showButtonBar [(value)]="date" />
+
+          <h2 class="demo-title">InputNumber</h2>
+          <hx-input-number ariaLabel="Amount" showButtons [(ngModel)]="inputNumberValue" />
+        </div>
+      </div>
+      <div class="md:w-1/2 flex flex-col gap-1">
+        <div class="card flex flex-col gap-3">
+          <h2 class="demo-title">RadioButton</h2>
+          <div class="flex flex-col md:flex-row gap-3">
+            @for (city of cityNames; track city; let i = $index) {
+              <div class="flex items-center gap-2">
+                <input hx-radio type="radio" [id]="'option' + i" name="option" [value]="city" [(ngModel)]="radioValue" />
+                <label [for]="'option' + i" class="leading-none">{{ city }}</label>
+              </div>
+            }
+          </div>
+
+          <h2 class="demo-title">Checkbox</h2>
+          <div class="flex flex-col md:flex-row gap-3">
+            @for (city of cityNames; track city; let i = $index) {
+              <div class="flex items-center gap-2">
+                <input hx-checkbox type="checkbox" [id]="'checkOption' + i" [(ngModel)]="cityChecks[city]" />
+                <label [for]="'checkOption' + i">{{ city }}</label>
+              </div>
+            }
+          </div>
+
+          <h2 class="demo-title">ToggleSwitch</h2>
+          <label class="flex items-center gap-2"><input hx-switch type="checkbox" [(ngModel)]="switchValue" /> Notifications</label>
         </div>
 
-        <h2 class="demo-title">Icons</h2>
-        <hx-icon-field>
-          <i class="pi pi-user" hx-input-icon></i>
-          <input hx-input type="text" placeholder="Username" aria-label="Username" />
-        </hx-icon-field>
-        <hx-icon-field>
-          <i class="pi pi-search" hx-input-icon></i>
-          <input hx-input type="text" placeholder="Search" aria-label="Search" />
-        </hx-icon-field>
+        <div class="card flex flex-col gap-3">
+          <h2 class="demo-title">Listbox</h2>
+          <hx-listbox ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" filter [(ngModel)]="listboxValue" />
 
-        <h2 class="demo-title">Float Label</h2>
-        <hx-float-label>
-          <input hx-input id="username" type="text" [(ngModel)]="floatValue" />
-          <label for="username">Username</label>
-        </hx-float-label>
+          <h2 class="demo-title">Select</h2>
+          <hx-select ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" placeholder="Select" [(ngModel)]="selectValue" />
 
-        <h2 class="demo-title">Textarea</h2>
-        <textarea hx-input autoResize placeholder="Your Message" aria-label="Your message" rows="3"></textarea>
-
-        <h2 class="demo-title">AutoComplete</h2>
-        <hx-auto-complete
-          ariaLabel="Countries"
-          placeholder="Search"
-          optionLabel="name"
-          dropdown
-          multiple
-          [suggestions]="found()"
-          [(value)]="pickedCountries"
-          (complete)="filterCountry($event.query)"
-        />
-
-        <h2 class="demo-title">DatePicker</h2>
-        <hx-date-picker ariaLabel="Date" showIcon showButtonBar [(value)]="date" />
-
-        <h2 class="demo-title">InputNumber</h2>
-        <hx-input-number ariaLabel="Amount" showButtons [(ngModel)]="inputNumberValue" />
+          <h2 class="demo-title">MultiSelect</h2>
+          <hx-multi-select
+            ariaLabel="Countries"
+            placeholder="Select Countries"
+            display="chip"
+            filter
+            [options]="countries"
+            optionLabel="name"
+            optionValue="code"
+            [(ngModel)]="multiselectSelected"
+          />
+        </div>
       </div>
     </div>
-    <div class="md:w-1/2 flex flex-col gap-1">
-      <div class="card flex flex-col gap-3">
-        <h2 class="demo-title">RadioButton</h2>
-        <div class="flex flex-col md:flex-row gap-3">
-          @for (city of cityNames; track city; let i = $index) {
-            <div class="flex items-center gap-2">
-              <input hx-radio type="radio" [id]="'option' + i" name="option" [value]="city" [(ngModel)]="radioValue" />
-              <label [for]="'option' + i" class="leading-none">{{ city }}</label>
-            </div>
-          }
-        </div>
 
-        <h2 class="demo-title">Checkbox</h2>
-        <div class="flex flex-col md:flex-row gap-3">
-          @for (city of cityNames; track city; let i = $index) {
-            <div class="flex items-center gap-2">
-              <input hx-checkbox type="checkbox" [id]="'checkOption' + i" [(ngModel)]="cityChecks[city]" />
-              <label [for]="'checkOption' + i">{{ city }}</label>
-            </div>
-          }
-        </div>
+    <div class="flex flex-col md:flex-row gap-layout">
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card flex flex-col gap-3 h-full">
+          <h2 class="demo-title">Slider</h2>
+          <hx-slider ariaLabel="Value" [(value)]="sliderValue" />
+          <span>Value: {{ sliderValue() }}</span>
 
-        <h2 class="demo-title">ToggleSwitch</h2>
-        <label class="flex items-center gap-2"><input hx-switch type="checkbox" [(ngModel)]="switchValue" /> Notifications</label>
+          <h2 class="demo-title">Rating</h2>
+          <hx-rating ariaLabel="Rating" [(value)]="rating" />
+        </div>
       </div>
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card flex flex-col gap-3 h-full">
+          <h2 class="demo-title">ToggleButton</h2>
+          <hx-toggle-button onLabel="Yes" offLabel="No" [(ngModel)]="toggleValue" />
 
-      <div class="card flex flex-col gap-3">
-        <h2 class="demo-title">Listbox</h2>
-        <hx-listbox ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" filter [(ngModel)]="listboxValue" />
+          <h2 class="demo-title">SelectButton</h2>
+          <hx-select-button ariaLabel="Option" [options]="selectButtonValues" [(ngModel)]="selectButtonValue" />
+        </div>
+      </div>
+    </div>
 
-        <h2 class="demo-title">Select</h2>
-        <hx-select ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" placeholder="Select" [(ngModel)]="selectValue" />
-
-        <h2 class="demo-title">MultiSelect</h2>
-        <hx-multi-select
-          ariaLabel="Countries"
-          placeholder="Select Countries"
-          display="chip"
-          filter
-          [options]="countries"
-          optionLabel="name"
-          optionValue="code"
-          [(ngModel)]="multiselectSelected"
-        />
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">InputGroup</h2>
+      <div class="flex flex-col md:flex-row gap-3">
+        <hx-input-group>
+          <hx-input-group-addon><i class="pi pi-user"></i></hx-input-group-addon>
+          <input hx-input placeholder="Username" aria-label="Username" />
+        </hx-input-group>
+        <hx-input-group>
+          <hx-input-group-addon><i class="pi pi-clock"></i></hx-input-group-addon>
+          <hx-input-group-addon><i class="pi pi-star-fill"></i></hx-input-group-addon>
+          <hx-input-number placeholder="Price" ariaLabel="Price" />
+          <hx-input-group-addon>$</hx-input-group-addon>
+          <hx-input-group-addon>.00</hx-input-group-addon>
+        </hx-input-group>
+      </div>
+      <div class="flex flex-col md:flex-row gap-3">
+        <hx-input-group>
+          <button hx-button type="button">Search</button>
+          <input hx-input placeholder="Keyword" aria-label="Keyword" />
+        </hx-input-group>
+        <hx-input-group>
+          <hx-input-group-addon>
+            <input hx-checkbox type="checkbox" aria-label="Confirm" [(ngModel)]="inputGroupValue" />
+          </hx-input-group-addon>
+          <input hx-input placeholder="Confirm" aria-label="Confirm text" />
+        </hx-input-group>
       </div>
     </div>
   </div>
-
-  <div class="flex flex-col md:flex-row gap-layout">
-    <div class="md:w-1/2 flex flex-col">
-      <div class="card flex flex-col gap-3 h-full">
-        <h2 class="demo-title">Slider</h2>
-        <hx-slider ariaLabel="Value" [(value)]="sliderValue" />
-        <span>Value: {{ sliderValue() }}</span>
-
-        <h2 class="demo-title">Rating</h2>
-        <hx-rating ariaLabel="Rating" [(value)]="rating" />
-      </div>
-    </div>
-    <div class="md:w-1/2 flex flex-col">
-      <div class="card flex flex-col gap-3 h-full">
-        <h2 class="demo-title">ToggleButton</h2>
-        <hx-toggle-button onLabel="Yes" offLabel="No" [(ngModel)]="toggleValue" />
-
-        <h2 class="demo-title">SelectButton</h2>
-        <hx-select-button ariaLabel="Option" [options]="selectButtonValues" [(ngModel)]="selectButtonValue" />
-      </div>
-    </div>
-  </div>
-
-  <div class="card flex flex-col gap-3">
-    <h2 class="demo-title">InputGroup</h2>
-    <div class="flex flex-col md:flex-row gap-3">
-      <hx-input-group>
-        <hx-input-group-addon><i class="pi pi-user"></i></hx-input-group-addon>
-        <input hx-input placeholder="Username" aria-label="Username" />
-      </hx-input-group>
-      <hx-input-group>
-        <hx-input-group-addon><i class="pi pi-clock"></i></hx-input-group-addon>
-        <hx-input-group-addon><i class="pi pi-star-fill"></i></hx-input-group-addon>
-        <hx-input-number placeholder="Price" ariaLabel="Price" />
-        <hx-input-group-addon>$</hx-input-group-addon>
-        <hx-input-group-addon>.00</hx-input-group-addon>
-      </hx-input-group>
-    </div>
-    <div class="flex flex-col md:flex-row gap-3">
-      <hx-input-group>
-        <button hx-button type="button">Search</button>
-        <input hx-input placeholder="Keyword" aria-label="Keyword" />
-      </hx-input-group>
-      <hx-input-group>
-        <hx-input-group-addon>
-          <input hx-checkbox type="checkbox" aria-label="Confirm" [(ngModel)]="inputGroupValue" />
-        </hx-input-group-addon>
-        <input hx-input placeholder="Confirm" aria-label="Confirm text" />
-      </hx-input-group>
-    </div>
-  </div>
-</div>
-<app-inputs-section class="mt-6 block" />
-<app-form-section class="mt-6 block" />
-<app-select-section class="mt-6 block" />
+  <app-inputs-section class="mt-6 block" />
+  <app-form-section class="mt-6 block" />
+  <app-select-section class="mt-6 block" />
+</app-source-tabs>

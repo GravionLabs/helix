@@ -127,6 +127,12 @@ export class HxTableCaption {
   readonly template = inject<TemplateRef<unknown>>(TemplateRef);
 }
 
+/** The content of the empty row, replacing `emptyMessage`: `<ng-template hxTableEmpty>`. */
+@Directive({ selector: 'ng-template[hxTableEmpty]' })
+export class HxTableEmpty {
+  readonly template = inject<TemplateRef<unknown>>(TemplateRef);
+}
+
 /** The content of the row that opens below a row: `<ng-template hxRowExpansion let-row>`. */
 @Directive({ selector: 'ng-template[hxRowExpansion]' })
 export class HxRowExpansion {
@@ -248,6 +254,7 @@ export class HxDataTable implements OnInit {
   protected readonly footerTemplate = contentChild(HxTableFooter);
   protected readonly captionTemplate = contentChild(HxTableCaption);
   protected readonly expansionTemplate = contentChild(HxRowExpansion);
+  protected readonly emptyTemplate = contentChild(HxTableEmpty);
 
   /** The sort state as a list, whichever the mode. */
   protected readonly sortMeta = computed<HxSortMeta[]>(() =>

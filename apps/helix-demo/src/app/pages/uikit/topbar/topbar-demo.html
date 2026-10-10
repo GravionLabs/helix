@@ -1,36 +1,39 @@
 <h1 class="sr-only">Topbar</h1>
-<div class="card">
-      <h2>Topbar Controls</h2>
-      <p>Use the buttons below to interact with topbar features.</p>
+<app-source-tabs directory="topbar" componentName="topbar-demo">
+  <div class="card">
+        <h2>Topbar Controls</h2>
+        <p>Use the buttons below to interact with topbar features.</p>
 
-      <div class="grid">
-        <div class="col-12 md:col-6">
-          <div class="card flex justify-content-center">
-            <button hx-button type="button" severity="secondary" (click)="store.toggleSidebar()">
-              <span class="pi pi-angle-double-left hx-button-icon" aria-hidden="true"></span>
-              {{ store.isCollapsed() ? 'Expand Sidebar' : 'Collapse Sidebar' }}
-            </button>
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <div class="card flex justify-content-center">
+              <button hx-button type="button" severity="secondary" (click)="store.toggleSidebar()">
+                <span class="pi pi-angle-double-left hx-button-icon" aria-hidden="true"></span>
+                {{ store.isCollapsed() ? 'Expand Sidebar' : 'Collapse Sidebar' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <div class="card flex justify-content-center">
+              <button hx-button type="button" severity="secondary" (click)="store.toggleDarkMode()">
+                <span [class]="(store.isDarkTheme() ? 'pi pi-sun' : 'pi pi-moon') + ' hx-button-icon'" aria-hidden="true"></span>
+                {{ store.isDarkTheme() ? 'Light Mode' : 'Dark Mode' }}
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="col-12 md:col-6">
-          <div class="card flex justify-content-center">
-            <button hx-button type="button" severity="secondary" (click)="store.toggleDarkMode()">
-              <span [class]="(store.isDarkTheme() ? 'pi pi-sun' : 'pi pi-moon') + ' hx-button-icon'" aria-hidden="true"></span>
-              {{ store.isDarkTheme() ? 'Light Mode' : 'Dark Mode' }}
-            </button>
+        <div class="card">
+          <h5>Breadcrumbs</h5>
+          <p>Breadcrumbs are automatically generated from route data. Navigate to a sub-page to see them in the topbar.</p>
+          <div class="flex gap-1 flex-wrap">
+            <a routerLink="/uikit/button" hx-button variant="outlined">Button Demo</a>
+            <a routerLink="/uikit/table" hx-button variant="outlined">Table Demo</a>
+            <a routerLink="/pages/documentation" hx-button variant="outlined">Documentation</a>
+            <a routerLink="/uikit/menu" hx-button variant="outlined">Menus</a>
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <h5>Breadcrumbs</h5>
-        <p>Breadcrumbs are automatically generated from route data. Navigate to a sub-page to see them in the topbar.</p>
-        <div class="flex gap-1 flex-wrap">
-          <a routerLink="/uikit/button" hx-button variant="outlined">Button Demo</a>
-          <a routerLink="/uikit/table" hx-button variant="outlined">Table Demo</a>
-          <a routerLink="/pages/documentation" hx-button variant="outlined">Documentation</a>
-          <a routerLink="/uikit/menu" hx-button variant="outlined">Menus</a>
-        </div>
-      </div>
-    </div>
+</app-source-tabs>
+<app-shell-section class="mt-6 block" />

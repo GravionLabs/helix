@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from 
 import { FormsModule } from '@angular/forms';
 import { HxButton, HxSelectButton, HxTag, type HxTagSeverity } from '@gravionlabs/helix-ui';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 type Layout = 'list' | 'grid';
 
@@ -10,7 +11,7 @@ type Layout = 'list' | 'grid';
 @Component({
   selector: 'app-list-demo',
   standalone: true,
-  imports: [CurrencyPipe, FormsModule, HxSelectButton, HxTag, HxButton],
+  imports: [SourceTabsComponent, CurrencyPipe, FormsModule, HxSelectButton, HxTag, HxButton],
   templateUrl: './list-demo.html',
   styleUrl: './list-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,

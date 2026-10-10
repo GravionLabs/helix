@@ -18,6 +18,7 @@ import {
   HxTabPanels,
   HxTabs,
 } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { DemoSettings } from '../../../shell/demo-settings';
 import { HxNavigationSection } from '../sections/navigation/navigation-section';
 
@@ -26,6 +27,7 @@ import { HxNavigationSection } from '../sections/navigation/navigation-section';
   selector: 'app-menu-demo',
   standalone: true,
   imports: [
+    SourceTabsComponent,
     HxNavigationSection,
 
     HxMenubar,

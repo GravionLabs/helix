@@ -1,0 +1,67 @@
+:host {
+  display: block;
+}
+
+.helix-empty-state__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 3rem 1.5rem;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+:host(.helix-empty-state--small) .helix-empty-state__inner {
+  padding: 1.5rem 1rem;
+  gap: 0.35rem;
+}
+
+.helix-empty-state__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 50%;
+  background: var(--helix-surface-hover);
+  color: var(--text-color-secondary);
+  font-size: 1.5rem;
+}
+
+:host(.helix-empty-state--small) .helix-empty-state__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.helix-empty-state__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+:host(.helix-empty-state--small) .helix-empty-state__title {
+  font-size: 1rem;
+}
+
+.helix-empty-state__description {
+  margin: 0;
+  color: var(--text-color-secondary);
+}
+
+.helix-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.helix-empty-state__actions:empty {
+  display: none;
+}

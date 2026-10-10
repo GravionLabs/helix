@@ -73,6 +73,7 @@ export {
   HxTableBody,
   HxTableCaption,
   type HxTableColumnsContext,
+  HxTableEmpty,
   HxTableFooter,
   HxTableHeader,
   type HxTableRowContext,

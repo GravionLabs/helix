@@ -7,6 +7,7 @@ import {
   HxTimelineMarker,
   HxTimelineOpposite,
 } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 interface OrderEvent {
   status: string;
@@ -19,7 +20,15 @@ interface OrderEvent {
 @Component({
   selector: 'app-timeline-demo',
   standalone: true,
-  imports: [HxTimeline, HxTimelineContent, HxTimelineOpposite, HxTimelineMarker, HxButton, HxCard],
+  imports: [
+    SourceTabsComponent,
+    HxTimeline,
+    HxTimelineContent,
+    HxTimelineOpposite,
+    HxTimelineMarker,
+    HxButton,
+    HxCard,
+  ],
   templateUrl: './timeline-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './timeline-demo.scss',

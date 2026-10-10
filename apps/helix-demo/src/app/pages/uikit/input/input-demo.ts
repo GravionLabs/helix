@@ -26,6 +26,7 @@ import {
 } from '@gravionlabs/helix-ui';
 import { CountryService } from '@/app/pages/service/country.service';
 import type { Country } from '@/app/pages/service/customer.service';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { HxFormSection } from '../sections/form/form-section';
 import { HxInputsSection } from '../sections/inputs/inputs-section';
 import { HxSelectSection } from '../sections/select/select-section';
@@ -35,6 +36,7 @@ import { HxSelectSection } from '../sections/select/select-section';
   selector: 'app-input-demo',
   standalone: true,
   imports: [
+    SourceTabsComponent,
     HxInputsSection,
     HxFormSection,
     HxSelectSection,

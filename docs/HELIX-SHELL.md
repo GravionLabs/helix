@@ -39,6 +39,9 @@
 9. [UI Components](#ui-components)
    - [HelixBadge](#helixbadge)
    - [HelixEnvironmentBadge](#helixenviromentbadge)
+   - [HelixPageHeader](#helixpageheader)
+   - [HelixStatCard](#helixstatcard)
+   - [HelixEmptyState](#helixemptystate)
 10. [Form Infrastructure](#form-infrastructure)
     - [HelixFormField](#helixformfield)
 11. [Interfaces](#interfaces)
@@ -1011,6 +1014,90 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 ```html
 <helix-environment-badge environment="staging" />
 <helix-environment-badge [environment]="envName" />
+```
+
+### HelixPageHeader
+
+**Selector:** `<helix-page-header>`  
+**File:** `projects/shell/src/lib/ui/page-header/page-header.ts`
+
+The header of a page: an optional breadcrumb, the title (an `h1` by default) with a subtitle, and the page's actions on the end edge. The actions are projected with the `helixPageActions` attribute and wrap under the title on narrow screens.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — (required) | The page title |
+| `subtitle` | `string` | — | One line under the title |
+| `breadcrumb` | `HxBreadcrumbItem[]` | — | The trail above the title (rendered with `hx-breadcrumb`); its last item is the current page |
+| `home` | `HxBreadcrumbItem` | — | The first item of the breadcrumb, usually a home icon |
+| `headingLevel` | `1–6` | `1` | The heading element of the title |
+
+#### Example
+
+```html
+<helix-page-header title="Invoices" subtitle="Open and paid invoices" [breadcrumb]="crumbs" [home]="{ icon: 'pi pi-home', routerLink: '/' }">
+  <button helixPageActions hx-button type="button" variant="outlined">Export</button>
+  <button helixPageActions hx-button type="button">New invoice</button>
+</helix-page-header>
+```
+
+### HelixStatCard
+
+**Selector:** `<helix-stat-card>`  
+**File:** `projects/shell/src/lib/ui/stat-card/stat-card.ts`
+
+A dashboard figure on an `hx-card`: a label, the value, an icon in a tinted box, and a trend whose direction is shown by an arrow and colour and read out as "up", "down" or "flat" by screen readers. Extra content is projected below the trend.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — (required) | What the figure is; also the accessible name of the card |
+| `value` | `string \| number` | — (required) | The figure; a number is formatted with `format` |
+| `format` | `Intl.NumberFormatOptions` | — | e.g. `{ style: 'currency', currency: 'EUR' }` |
+| `locale` | `string` | browser | Locale of the number formats |
+| `icon` | `string` | — | Icon classes (`pi pi-users`) |
+| `severity` | `'primary' \| 'info' \| 'success' \| 'warn' \| 'danger'` | `'primary'` | Colour of the icon box |
+| `trend` | `number` | — | The change: positive is up (green), negative is down (red), 0 is flat |
+| `trendUnit` | `string` | `'%'` | Appended to the trend figure |
+| `trendLabel` | `string` | — | Text after the trend ("since last month") |
+| `trendDigits` | `number` | `1` | Fraction digits of the trend |
+
+#### Example
+
+```html
+<helix-stat-card label="Orders" [value]="152" icon="pi pi-shopping-cart" [trend]="24" trendUnit="" trendLabel="new since last visit" />
+<helix-stat-card label="Revenue" [value]="2100" [format]="{ style: 'currency', currency: 'EUR' }" [trend]="-3.2" trendLabel="since last week" severity="warn" />
+```
+
+### HelixEmptyState
+
+**Selector:** `<helix-empty-state>`  
+**File:** `projects/shell/src/lib/ui/empty-state/empty-state.ts`
+
+The state of a list, table or page that has nothing to show: an icon, a title, a sentence that says what to do, and projected actions. `medium` (default) is the page-level state, `small` fits inside a card or the empty row of an `hx-data-table` (project it with `hxTableEmpty`).
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — (required) | The heading |
+| `description` | `string` | — | What the user can do about it |
+| `icon` | `string` | — | Icon classes (`pi pi-inbox`) |
+| `size` | `'small' \| 'medium'` | `'medium'` | Padding and icon size |
+| `headingLevel` | `2–6` | `3` | The heading element of the title |
+
+#### Example
+
+```html
+<helix-empty-state icon="pi pi-inbox" title="No invoices yet" description="Invoices you create appear here.">
+  <button hx-button type="button">New invoice</button>
+</helix-empty-state>
+
+<hx-data-table [value]="[]" [columns]="columns">
+  <ng-template hxTableEmpty><helix-empty-state size="small" title="No results" description="Change the filter." /></ng-template>
+</hx-data-table>
 ```
 
 ---
