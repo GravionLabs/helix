@@ -1,9 +1,8 @@
 # @gravionlabs/helix-ui
 
 Vanilla Angular components on the Helix design tokens: standalone, signal-based, plain CSS, no runtime
-styling engine and no dependency on `@gravionlabs/helix-core`. It is the long-term replacement of the
-vendored PrimeNG fork ([ADR 0001](adr/0001-styling-foundation.md)); components move over group by group,
-starting with the ones `helix-shell` and `helix-zod` use.
+styling engine and no dependency on `@gravionlabs/helix-core`. It replaced the vendored PrimeNG fork
+`@gravionlabs/helix-core` ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)).
 
 ## Install and styles
 
@@ -20,16 +19,12 @@ npm install @gravionlabs/helix-ui
 
 - `styles.css` states the layer order Tailwind uses (`theme, base, components, utilities`) and puts the
   component CSS in `components`: an app's unlayered CSS and Tailwind's utilities win over it.
-- `tokens.css` is `helixPreset` resolved by the engine of helix-core at build time: light on `:root`, dark
-  under the `app-dark` class, every token the components read. **Load it in every app, also in one that
-  runs `provideHelix`:** the helix-core engine emits a component's tokens only once a core component of that
-  kind is on the page, so a ui Button on a page without a core `h-button` would find no `--h-button-*`.
-  The static tokens reference the semantic ones (`--h-primary-color`, …), which the engine always emits, so
-  a runtime change of the primary colour or the dark mode still reaches the ui components.
+- `tokens.css` is the token data of `projects/tokens` resolved at build time: light on `:root`, dark
+  under the `app-dark` class, every token the components read. **Load it in every app.** The tokens
+  reference the semantic ones (`--h-primary-color`, …), so a runtime change of the primary colour or the
+  dark mode (`provideHxTheme`) reaches every component.
 - **Naming:** components are elements (`<hx-select>`), simple controls are attributes on the native element
-  (`<button hx-button>`, `<input hx-input>`), always kebab-case with the prefix `hx`; classes use it too.
-  helix-core owns `h-`. Both read the same `--h-*`
-  tokens, so a page mixes them without a visible seam.
+  (`<button hx-button>`, `<input hx-input>`), always kebab-case with the prefix `hx`; classes use it too. The custom properties keep the prefix `--h-`.
 
 ## Components
 
@@ -161,7 +156,7 @@ items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the cl
 
 ## Migration status
 
-`helix-ui` replaces the components of the vendored PrimeNG fork ([ADR 0001](adr/0001-styling-foundation.md)).
+`helix-ui` replaced the components of the vendored PrimeNG fork ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)).
 
 | Library / app   | State                                                                                                                       |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------- |

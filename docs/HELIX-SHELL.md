@@ -242,7 +242,7 @@ Application footer with optional multi-column link layout and a branded copyrigh
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
-| `brandUrl` | `string` | `'https://primeng.org'` | URL the brand name links to |
+| `brandUrl` | `string` | `'https://gravionlabs.github.io/helix/'` | URL the brand name links to |
 | `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model |
 
 #### Content Slots

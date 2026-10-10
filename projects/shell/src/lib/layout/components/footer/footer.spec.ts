@@ -33,7 +33,7 @@ describe('HelixFooter', () => {
   });
 
   it('should have default brandUrl', () => {
-    expect(component.brandUrl()).toBe('https://primeng.org');
+    expect(component.brandUrl()).toBe('https://gravionlabs.github.io/helix/');
   });
 
   it('should reflect custom brandUrl input', () => {

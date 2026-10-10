@@ -1,7 +1,9 @@
-# @gravionlabs/helix-core – Roadmap
+# Helix – Roadmap
 
-Angular 22 UI ecosystem extending a vendored fork of [PrimeNG](https://github.com/primefaces/primeng)
-21.1.9 with NgRx Signal Store state management. Originally scaffolded from
+Angular 22 UI ecosystem: vanilla components (`@gravionlabs/helix-ui`), an application shell with NgRx Signal
+Store state, Zod forms and AG Grid helpers. Until October 2026 the components were a vendored fork of
+[PrimeNG](https://github.com/primefaces/primeng) 21.1.9 (`@gravionlabs/helix-core`, retired by
+[ADR 0002](adr/0002-retire-helix-core.md)); the shell was scaffolded from
 [sakai-ng](https://github.com/primefaces/sakai-ng).
 
 ---
@@ -9,7 +11,7 @@ Angular 22 UI ecosystem extending a vendored fork of [PrimeNG](https://github.co
 ## ✅ Phase 1 – Workspace & Library Setup
 
 - [x] Angular workspace `helix` (Angular 21 initially, upgraded to 22 in epic #233)
-- [x] Library `@gravionlabs/helix-core` (vendored PrimeNG fork, `h-` selectors)
+- [x] Library `@gravionlabs/helix-core` (vendored PrimeNG fork, `h-` selectors; retired, see Phase 7)
 - [x] Demo app `apps/helix-demo`
 - [x] Dependencies: `@ngrx/signals`, `@primeuix/*`, `tailwindcss@^4`
 - [x] GitHub Actions CI/CD workflow (build + test; publish via manual `workflow_dispatch`)
@@ -111,8 +113,16 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
       `helixPreset`. VitePress theme on the same tokens (`apps/site/.vitepress/theme`), theming guide (`docs/THEMING.md`)
 - [x] #522 – Design System sync: `pnpm design-system:build` (tokens.json, brand book, 12 component previews, cover, Inter
       font, Helix mark), published as the "Helix Design System" artifact; `docs/CONTRIBUTING-design-system.md`
-- [ ] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens, B-lite set first, `helix-shell`
-      and `helix-zod` migrated, `helix-core` retired when nothing imports it
+- [x] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens (47 components); `helix-shell`,
+      `helix-zod`, the demo and the docs migrated. Table and Paginator are deferred (data grids use AG Grid)
+
+---
+
+## ✅ Phase 7 – helix-core retired (epics #584, #585)
+
+- [x] #584 – every consumer (shell, zod, ag-grid, demo, docs, Design System) runs on `helix-ui`
+- [x] #585 – `projects/core` removed from the workspace, CI and publishing without it,
+      [ADR 0002](adr/0002-retire-helix-core.md); `npm deprecate` of `@gravionlabs/helix-core` is a manual step
 
 ---
 
@@ -121,7 +131,8 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
 ```
 helix/
 ├── projects/
-│   ├── core/                  # @gravionlabs/helix-core — vendored PrimeNG fork
+│   ├── ui/                    # @gravionlabs/helix-ui — vanilla components on the Helix tokens
+│   ├── tokens/                # token data (private; resolved to tokens.css)
 │   ├── shell/                 # @gravionlabs/helix-shell — app shell, auth/landing pages, layout store
 │   ├── zod/                   # @gravionlabs/helix-zod — Zod v4 reactive-forms adapter
 │   └── ag-grid/               # @gravionlabs/helix-ag-grid — AG Grid helpers

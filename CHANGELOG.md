@@ -18,6 +18,7 @@ All notable changes to this project are documented here. Generated with
 
 ### Changed
 
+- **[breaking]** Remove `@gravionlabs/helix-core` from the workspace: `@gravionlabs/helix-ui` is the only component library, theming runs on `tokens.css` and `provideHxTheme` (ADR 0002)
 - Migrate helix-shell and helix-demo from primeng to @gravionlabs/helix
 - Migrate to signals — slider–terminal (batch 8) (#319) (#349)
 - Migrate to signals — textarea–treetable (batch 9) (#320) (#350)

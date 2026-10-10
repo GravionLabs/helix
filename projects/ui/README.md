@@ -1,8 +1,8 @@
 # @gravionlabs/helix-ui
 
 Vanilla Angular components on the Helix design tokens: standalone, signal-based, plain CSS, no runtime
-styling engine, no dependency on `@gravionlabs/helix-core`. It is the long-term replacement of the vendored
-PrimeNG fork (see [ADR 0001](../../docs/adr/0001-styling-foundation.md), epic #523).
+styling engine, no dependency on `@gravionlabs/helix-core`. It replaced the vendored PrimeNG fork `@gravionlabs/helix-core`
+(see [ADR 0001](../../docs/adr/0001-styling-foundation.md) and [ADR 0002](../../docs/adr/0002-retire-helix-core.md)).
 
 ## Install
 
