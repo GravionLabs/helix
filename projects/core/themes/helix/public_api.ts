@@ -114,6 +114,39 @@ export const helixOverrides: Preset = {
                 }
             }
         }
+    },
+    // The contrast button is a softer neutral than Aura's near-black / white (surface 800 by day, 200 by night).
+    components: {
+        button: {
+            colorScheme: {
+                light: {
+                    root: {
+                        contrast: {
+                            background: '{surface.800}',
+                            hoverBackground: '{surface.700}',
+                            activeBackground: '{surface.600}',
+                            borderColor: '{surface.800}',
+                            hoverBorderColor: '{surface.700}',
+                            activeBorderColor: '{surface.600}',
+                            focusRing: { color: '{surface.800}' }
+                        }
+                    }
+                },
+                dark: {
+                    root: {
+                        contrast: {
+                            background: '{surface.200}',
+                            hoverBackground: '{surface.300}',
+                            activeBackground: '{surface.400}',
+                            borderColor: '{surface.200}',
+                            hoverBorderColor: '{surface.300}',
+                            activeBorderColor: '{surface.400}',
+                            focusRing: { color: '{surface.200}' }
+                        }
+                    }
+                }
+            }
+        }
     }
 };
 
