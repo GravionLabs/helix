@@ -2,9 +2,6 @@
 
 Decided in epic #233 (feature #241); analysis in
 [migrations/file-separation-analysis.md](migrations/file-separation-analysis.md).
-The vendored-fork rule was revised by epic #297 (feature #298) on 2026-07-15:
-the fork no longer tracks upstream, so fork components now also use separate
-`.html` files.
 
 ## Own code (`helix-shell`, `helix-zod`, `helix-ag-grid`, `helix-demo`)
 
@@ -20,7 +17,7 @@ the fork no longer tracks upstream, so fork components now also use separate
 
 ## Control flow
 
-All templates — own code and fork alike — use built-in control flow
+All templates use built-in control flow
 (`@if`/`@for`/`@switch`). `*ngIf`/`*ngFor`/`*ngSwitch` are forbidden and
 enforced by `@angular-eslint/template/prefer-control-flow` (see
 `eslint.config.js`), which also covers inline templates.

@@ -14,7 +14,7 @@ const componentIndex = readFileSync(resolve(repoRoot, 'docs/components/README.md
 export default defineConfig({
   title: 'Helix',
   description:
-    'Angular 22 UI components: a vendored PrimeNG fork with signals, an application shell, dynamic forms and AG Grid wrappers.',
+    'Angular 22 UI components: vanilla signal-based components on design tokens, an application shell, dynamic forms and AG Grid wrappers.',
   lang: 'en',
   // `/<repository>/` on GitHub Pages; the workflow sets SITE_BASE.
   base,

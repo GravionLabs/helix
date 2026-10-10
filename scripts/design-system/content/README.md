@@ -1,6 +1,6 @@
 # Helix
 
-Angular UI components (a maintained fork of PrimeNG 21.1.9), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: the grey surfaces of the other Gravion Labs sites, one muted indigo for action, colour reserved for meaning.
+Angular UI components (vanilla, signal-based, plain CSS on design tokens), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: the grey surfaces of the other Gravion Labs sites, one muted indigo for action, colour reserved for meaning.
 
 Source: https://github.com/GravionLabs/helix · docs: https://gravionlabs.github.io/helix/ · live demo: https://gravionlabs.github.io/helix/demo/
 

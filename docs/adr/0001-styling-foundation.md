@@ -1,6 +1,6 @@
 # ADR 0001: Styling foundation — Helix tokens on the vendored fork now, a vanilla library replaces it
 
-- Status: accepted
+- Status: accepted (the fork was retired by [ADR 0002](0002-retire-helix-core.md))
 - Date: 2026-10-07
 - Issues: #519 (epic), #520 (this record), #521 (mockups), #522 (design-system sync), #523 (the new library)
 
