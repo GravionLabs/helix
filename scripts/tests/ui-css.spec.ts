@@ -39,6 +39,7 @@ describe('helix-ui styles', () => {
     ['input', 'input/input.ts'],
     ['card', 'card/card.ts'],
     ['carousel', 'carousel/carousel.ts'],
+    ['galleria', 'galleria/galleria.ts'],
     ['chart', 'chart/chart.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['button-group', 'button-group/button-group.ts'],

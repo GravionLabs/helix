@@ -27,7 +27,7 @@ hero:
 
 features:
   - title: '@gravionlabs/helix-ui'
-    details: 50 components with hx- selectors, tokens, a theme service and the validators, one page each.
+    details: 51 components with hx- selectors, tokens, a theme service and the validators, one page each.
     link: /components/
   - title: '@gravionlabs/helix-shell'
     details: Topbar, nav rail, status bar, auth pages, landing widgets and the layout store.

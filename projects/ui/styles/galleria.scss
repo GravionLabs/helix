@@ -1,0 +1,375 @@
+/*
+ * Galleria: `<hx-galleria>`, from the `--h-galleria-*` tokens. The stage is a black box with the picture, the
+ * previous/next buttons and the caption laid over it; the thumbnails are a tablist in a strip with their own
+ * scroll buttons. Full screen is the same box in a CDK dialog over a dark backdrop.
+ */
+@use 'icons' as *;
+
+.hx-galleria-host {
+  display: block;
+}
+
+.hx-galleria {
+  display: block;
+  overflow: hidden;
+  border: var(--h-galleria-border-width) solid var(--h-galleria-border-color);
+  border-radius: var(--h-galleria-border-radius);
+  background: var(--h-content-background);
+}
+
+.hx-galleria-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hx-galleria-thumbnails-top .hx-galleria-content {
+  flex-direction: column-reverse;
+}
+
+.hx-galleria-thumbnails-left .hx-galleria-content {
+  flex-direction: row-reverse;
+}
+
+.hx-galleria-thumbnails-right .hx-galleria-content {
+  flex-direction: row;
+}
+
+.hx-galleria-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0);
+  outline-color: transparent;
+}
+
+.hx-galleria-stage:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: calc(-1 * var(--h-focus-ring-width));
+}
+
+.hx-galleria-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.hx-galleria-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.hx-galleria-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-galleria-nav-button-size);
+  height: var(--h-galleria-nav-button-size);
+  padding: 0;
+  border: 0;
+  background: var(--h-galleria-nav-button-background);
+  color: var(--h-galleria-nav-button-color);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-galleria-transition-duration),
+    color var(--h-galleria-transition-duration);
+}
+
+.hx-galleria-prev {
+  inset-inline-start: var(--h-galleria-nav-button-gutter);
+  border-radius: var(--h-galleria-nav-button-prev-border-radius);
+}
+
+.hx-galleria-next {
+  inset-inline-end: var(--h-galleria-nav-button-gutter);
+  border-radius: var(--h-galleria-nav-button-next-border-radius);
+}
+
+.hx-galleria-nav:hover:not(:disabled) {
+  background: var(--h-galleria-nav-button-hover-background);
+  color: var(--h-galleria-nav-button-hover-color);
+}
+
+.hx-galleria-nav:focus-visible {
+  outline: var(--h-galleria-nav-button-focus-ring-width) var(--h-galleria-nav-button-focus-ring-style)
+    var(--h-galleria-nav-button-focus-ring-color);
+  outline-offset: var(--h-galleria-nav-button-focus-ring-offset);
+  box-shadow: var(--h-galleria-nav-button-focus-ring-shadow);
+}
+
+.hx-galleria-nav:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hx-galleria-prev::before {
+  @include hx-icon(chevron-left, var(--h-galleria-nav-icon-size));
+  content: '';
+}
+
+.hx-galleria-next::before {
+  @include hx-icon(chevron-right, var(--h-galleria-nav-icon-size));
+  content: '';
+}
+
+.hx-galleria-caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: var(--h-galleria-caption-padding);
+  background: var(--h-galleria-caption-background);
+  color: var(--h-galleria-caption-color);
+}
+
+.hx-galleria-caption-title {
+  font-weight: 600;
+}
+
+.hx-galleria-indicators {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: var(--h-galleria-indicator-list-gap);
+  padding: var(--h-galleria-indicator-list-padding);
+  background: var(--h-galleria-inset-indicator-list-background);
+}
+
+.hx-galleria-caption ~ .hx-galleria-indicators {
+  background: transparent;
+}
+
+.hx-galleria-indicator {
+  width: var(--h-galleria-indicator-button-width);
+  height: var(--h-galleria-indicator-button-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-galleria-indicator-button-border-radius);
+  background: var(--h-galleria-inset-indicator-button-background);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-galleria-indicator:hover {
+  background: var(--h-galleria-inset-indicator-button-hover-background);
+}
+
+.hx-galleria-indicator-active,
+.hx-galleria-indicator-active:hover {
+  background: var(--h-galleria-inset-indicator-button-active-background);
+}
+
+.hx-galleria-indicator:focus-visible {
+  outline: var(--h-galleria-indicator-button-focus-ring-width) var(--h-galleria-indicator-button-focus-ring-style)
+    var(--h-galleria-indicator-button-focus-ring-color);
+  outline-offset: var(--h-galleria-indicator-button-focus-ring-offset);
+  box-shadow: var(--h-galleria-indicator-button-focus-ring-shadow);
+}
+
+.hx-galleria-thumbnails {
+  display: flex;
+  align-items: center;
+  gap: var(--h-galleria-thumbnail-nav-button-gutter);
+  padding: var(--h-galleria-thumbnails-content-padding);
+  background: var(--h-galleria-thumbnails-content-background);
+}
+
+.hx-galleria-thumbnails-left .hx-galleria-thumbnails,
+.hx-galleria-thumbnails-right .hx-galleria-thumbnails {
+  flex-direction: column;
+}
+
+.hx-galleria-thumbnail-list {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.hx-galleria-thumbnails-left .hx-galleria-thumbnail-list,
+.hx-galleria-thumbnails-right .hx-galleria-thumbnail-list {
+  flex-direction: column;
+}
+
+.hx-galleria-thumbnail {
+  flex: 0 1 auto;
+  min-width: 0;
+  padding: 0.125rem;
+  border: 0;
+  border-radius: var(--h-content-border-radius);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.6;
+  outline-color: transparent;
+  transition: opacity var(--h-galleria-transition-duration);
+}
+
+.hx-galleria-thumbnail:hover,
+.hx-galleria-thumbnail-active {
+  opacity: 1;
+}
+
+.hx-galleria-thumbnail-active {
+  box-shadow: 0 0 0 2px var(--h-primary-color);
+}
+
+.hx-galleria-thumbnail:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: var(--h-focus-ring-offset);
+}
+
+.hx-galleria-thumbnail-image {
+  display: block;
+  height: 4rem;
+  width: auto;
+  max-width: 100%;
+  border-radius: calc(var(--h-content-border-radius) - 2px);
+  object-fit: cover;
+}
+
+.hx-galleria-thumbnail-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--h-galleria-thumbnail-nav-button-size);
+  height: var(--h-galleria-thumbnail-nav-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-galleria-thumbnail-nav-button-border-radius);
+  background: transparent;
+  color: var(--h-galleria-thumbnail-nav-button-color);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-galleria-thumbnail-nav:hover:not(:disabled) {
+  background: var(--h-galleria-thumbnail-nav-button-hover-background);
+  color: var(--h-galleria-thumbnail-nav-button-hover-color);
+}
+
+.hx-galleria-thumbnail-nav:focus-visible {
+  outline: var(--h-galleria-thumbnail-nav-button-focus-ring-width) var(--h-galleria-thumbnail-nav-button-focus-ring-style)
+    var(--h-galleria-thumbnail-nav-button-focus-ring-color);
+  outline-offset: var(--h-galleria-thumbnail-nav-button-focus-ring-offset);
+  box-shadow: var(--h-galleria-thumbnail-nav-button-focus-ring-shadow);
+}
+
+.hx-galleria-thumbnail-nav:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hx-galleria-thumbnail-prev::before {
+  @include hx-icon(chevron-left, var(--h-galleria-thumbnail-nav-button-icon-size));
+  content: '';
+}
+
+.hx-galleria-thumbnail-next::before {
+  @include hx-icon(chevron-right, var(--h-galleria-thumbnail-nav-button-icon-size));
+  content: '';
+}
+
+.hx-galleria-thumbnails-left .hx-galleria-thumbnail-prev::before,
+.hx-galleria-thumbnails-right .hx-galleria-thumbnail-prev::before {
+  @include hx-icon(chevron-up, var(--h-galleria-thumbnail-nav-button-icon-size));
+}
+
+.hx-galleria-thumbnails-left .hx-galleria-thumbnail-next::before,
+.hx-galleria-thumbnails-right .hx-galleria-thumbnail-next::before {
+  @include hx-icon(chevron-down, var(--h-galleria-thumbnail-nav-button-icon-size));
+}
+
+/* full screen: the box fills the dialog pane over a dark backdrop */
+.hx-galleria-backdrop {
+  background: rgb(0 0 0 / 0.9);
+}
+
+.hx-galleria-panel {
+  display: flex;
+}
+
+.hx-galleria-fullscreen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.hx-galleria-fullscreen .hx-galleria-content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.hx-galleria-fullscreen .hx-galleria-stage {
+  background: transparent;
+}
+
+.hx-galleria-fullscreen .hx-galleria-thumbnails {
+  background: transparent;
+}
+
+.hx-galleria-fullscreen .hx-galleria-image {
+  max-height: calc(100vh - 8rem);
+}
+
+.hx-galleria-close {
+  position: absolute;
+  top: var(--h-galleria-close-button-gutter);
+  inset-inline-end: var(--h-galleria-close-button-gutter);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-galleria-close-button-size);
+  height: var(--h-galleria-close-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-galleria-close-button-border-radius);
+  background: var(--h-galleria-close-button-background);
+  color: var(--h-galleria-close-button-color);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-galleria-close:hover {
+  background: var(--h-galleria-close-button-hover-background);
+  color: var(--h-galleria-close-button-hover-color);
+}
+
+.hx-galleria-close:focus-visible {
+  outline: var(--h-galleria-close-button-focus-ring-width) var(--h-galleria-close-button-focus-ring-style)
+    var(--h-galleria-close-button-focus-ring-color);
+  outline-offset: var(--h-galleria-close-button-focus-ring-offset);
+  box-shadow: var(--h-galleria-close-button-focus-ring-shadow);
+}
+
+.hx-galleria-close::before {
+  @include hx-icon(close, var(--h-galleria-close-button-icon-size));
+  content: '';
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-galleria-nav,
+  .hx-galleria-thumbnail {
+    transition: none;
+  }
+}
