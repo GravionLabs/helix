@@ -35,3 +35,9 @@ with its own resolver, theming runs on CSS custom properties and `HxTheme`, and 
   rewriting to `helix-ui`; the component docs (`docs/components`) are the reference.
 - Table and Paginator are not available as Helix components; AG Grid and the simple `table[hx-table]` styles
   cover the cases so far.
+
+## Addendum (2026-10-10)
+
+The deferred Paginator and Table were built after this decision: `hx-paginator` and `hx-data-table` (column model,
+sorting, paging, lazy loading, selection, filters, row expansion) are part of `helix-ui`, so the last bullet of the
+consequences above no longer holds. AG Grid remains the choice for large or very interactive grids.
