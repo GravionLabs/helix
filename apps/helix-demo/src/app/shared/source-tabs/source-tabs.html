@@ -16,7 +16,19 @@
       </hx-tab-panel>
     }
     <hx-tab-panel value="docs">
-      <p class="text-sm text-muted-color">Documentation coming soon.</p>
+      <div class="card flex flex-col gap-3">
+        @if (docLinks().length) {
+          <p class="m-0">The components of this page in the documentation (usage, inputs and outputs, accessibility, tokens):</p>
+          <ul class="source-tabs__docs">
+            @for (link of docLinks(); track link.slug) {
+              <li><a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a></li>
+            }
+          </ul>
+        } @else {
+          <p class="m-0">This page has no component page of its own.</p>
+        }
+        <p class="m-0 text-sm text-muted-color">All pages: <a [href]="docsUrl + 'components/'" target="_blank" rel="noopener">component reference</a> · <a [href]="docsUrl" target="_blank" rel="noopener">documentation site</a></p>
+      </div>
     </hx-tab-panel>
   </hx-tab-panels>
 </hx-tabs>

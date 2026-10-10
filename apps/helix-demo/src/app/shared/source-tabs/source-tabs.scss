@@ -4,6 +4,12 @@
   background: transparent;
 }
 
+// The panel is the page itself: no inset, so the cards line up with the page gap like on the other pages.
+:host ::ng-deep .hx-tab-panel {
+  padding: 0;
+  background: transparent;
+}
+
 .source-tabs__code {
   margin: 0;
   border-radius: var(--h-border-radius-md);
@@ -15,5 +21,24 @@
     font-size: 0.8125rem;
     line-height: 1.5;
     overflow-x: auto;
+  }
+}
+
+.source-tabs__docs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-transform: capitalize;
+
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 }

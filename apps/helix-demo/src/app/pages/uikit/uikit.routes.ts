@@ -12,6 +12,7 @@ import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
 import { InputDemo } from './input/input-demo';
 import { ListDemo } from './list/list-demo';
+import { MediaDemo } from './media/media-demo';
 import { MenuDemo } from './menu/menu-demo';
 import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
@@ -33,6 +34,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   formlayout: FormLayoutDemo,
   input: InputDemo,
   list: ListDemo,
+  media: MediaDemo,
   menu: MenuDemo,
   message: MessagesDemo,
   misc: MiscDemo,

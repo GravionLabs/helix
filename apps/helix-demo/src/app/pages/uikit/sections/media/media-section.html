@@ -1,0 +1,66 @@
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix UI Media</h2>
+    <p class="m-0">Media components from <code>&#64;gravionlabs/helix-ui</code>.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Carousel</h2>
+    <p class="m-0">Four products at a time (3, 2 or 1 on smaller screens), circular, with page indicators. Arrow keys, Home and End move the pages when the viewport or an indicator has the focus. Current page: {{ page() + 1 }}.</p>
+    <hx-carousel [value]="products" [numVisible]="4" [numScroll]="1" [responsiveOptions]="responsive" circular [(page)]="page" ariaLabel="Products">
+      <ng-template hxCarouselItem let-product>
+        <div class="media-product">
+          <img [src]="imageBase + product.image" [alt]="product.name" class="media-product__image" />
+          <div class="media-product__name">{{ product.name }}</div>
+          <div class="media-product__price">€{{ product.price }}</div>
+          <hx-tag [severity]="severity(product.status)" [value]="product.status" />
+          <div class="flex gap-2 mt-2">
+            <button hx-button type="button" size="small" iconOnly aria-label="Add to cart"><span class="pi pi-shopping-cart hx-button-icon" aria-hidden="true"></span></button>
+            <button hx-button type="button" size="small" variant="outlined" severity="secondary" iconOnly aria-label="Add to wishlist"><span class="pi pi-heart hx-button-icon" aria-hidden="true"></span></button>
+          </div>
+        </div>
+      </ng-template>
+    </hx-carousel>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Carousel: vertical with autoplay</h2>
+    <p class="m-0">One item at a time, a new one every 3 seconds; autoplay pauses while the pointer or the focus is inside and stays off with reduced motion.</p>
+    <hx-carousel [value]="products.slice(0, 5)" orientation="vertical" verticalViewPortHeight="16rem" [autoplayInterval]="3000" circular ariaLabel="Featured products" style="max-width: 24rem">
+      <ng-template hxCarouselItem let-product>
+        <div class="media-product media-product--row">
+          <img [src]="imageBase + product.image" [alt]="product.name" class="media-product__image media-product__image--small" />
+          <div>
+            <div class="media-product__name">{{ product.name }}</div>
+            <div class="media-product__price">€{{ product.price }}</div>
+          </div>
+        </div>
+      </ng-template>
+    </hx-carousel>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Galleria</h2>
+    <p class="m-0">A stage with captions and a strip of thumbnails; Arrow keys, Home and End move on the stage and in the strip. Picture {{ galleryIndex() + 1 }} of {{ pictures.length }}.</p>
+    <hx-galleria [value]="pictures" [(activeIndex)]="galleryIndex" [numVisible]="4" circular ariaLabel="Product pictures" style="max-width: 40rem" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Galleria: full screen</h2>
+    <p class="m-0">Opens over the whole screen as a modal dialog; Escape or the close button return the focus to the button.</p>
+    <div><button hx-button type="button" (click)="galleryOpen.set(true)"><span class="pi pi-images hx-button-icon" aria-hidden="true"></span> Show pictures</button></div>
+    <hx-galleria [value]="pictures" fullScreen [(visible)]="galleryOpen" circular showIndicators [numVisible]="6" ariaLabel="Product pictures, full screen" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Image</h2>
+    <p class="m-0">The second and third picture open a preview on a click (the button over them shows on hover and focus): rotate, zoom (+ / -) and close with Escape.</p>
+    <div class="flex flex-wrap items-end gap-4">
+      <hx-image [src]="imageBase + 'bamboo-watch.jpg'" alt="Bamboo watch" width="160" />
+      <hx-image [src]="imageBase + 'black-watch.jpg'" alt="Black watch" width="160" preview />
+      <hx-image [src]="imageBase + 'blue-band.jpg'" alt="Blue band" width="160" preview [showToolbar]="false">
+        <ng-template hxImageIndicator><span class="pi pi-search-plus text-xl" aria-hidden="true"></span></ng-template>
+      </hx-image>
+    </div>
+  </div>
+</div>

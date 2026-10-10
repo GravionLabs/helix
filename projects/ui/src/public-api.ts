@@ -42,6 +42,13 @@ export {
 export { HxButtonGroup } from './lib/button-group/button-group';
 export { HxCard } from './lib/card/card';
 export {
+  HxCarousel,
+  HxCarouselItem,
+  type HxCarouselItemContext,
+  type HxCarouselOrientation,
+  type HxCarouselResponsiveOption,
+} from './lib/carousel/carousel';
+export {
   HX_CHART_LOADER,
   HxChart,
   type HxChartInstance,
@@ -107,7 +114,17 @@ export {
   matchesAccept,
 } from './lib/file-upload/file-upload';
 export { HxFloatLabel, type HxFloatLabelVariant } from './lib/float-label/float-label';
+export {
+  HxGalleria,
+  HxGalleriaCaption,
+  type HxGalleriaItem,
+  type HxGalleriaItemContext,
+  HxGalleriaItemTemplate,
+  HxGalleriaThumbnail,
+  type HxGalleriaThumbnailsPosition,
+} from './lib/galleria/galleria';
 export { HxIconField, type HxIconPosition, HxInputIcon } from './lib/icon-field/icon-field';
+export { HxImage, HxImageIndicator } from './lib/image/image';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
 export { HxInputGroup, HxInputGroupAddon } from './lib/input-group/input-group';
 export {

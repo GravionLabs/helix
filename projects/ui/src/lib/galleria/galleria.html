@@ -1,0 +1,79 @@
+<ng-template #content>
+  <div
+    [class]="'hx-galleria hx-galleria-thumbnails-' + thumbnailsPosition() + (fullScreen() ? ' hx-galleria-fullscreen' : '')"
+    (focusin)="onFocusIn()"
+    (focusout)="onFocusOut($event)"
+  >
+    <div class="hx-galleria-content">
+      <div class="hx-galleria-stage" role="region" aria-roledescription="carousel" [attr.aria-label]="ariaLabel()" [attr.aria-live]="autoplay() && !(hovered() || focused()) ? 'off' : 'polite'" tabindex="0" [style.height]="fullScreen() ? null : height()" (keydown)="onKeydown($event)">
+        @if (current(); as item) {
+          <div class="hx-galleria-item" role="group" aria-roledescription="slide" [attr.aria-label]="itemLabel(index())">
+            @if (itemTemplate(); as tpl) {
+              <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: item, index: index() }" />
+            } @else {
+              <img class="hx-galleria-image" [src]="item.src" [alt]="item.alt" />
+            }
+          </div>
+          @if (hasCaption()) {
+            <div class="hx-galleria-caption">
+              @if (captionTemplate(); as tpl) {
+                <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: item, index: index() }" />
+              } @else {
+                @if (item.title) { <div class="hx-galleria-caption-title">{{ item.title }}</div> }
+                @if (item.caption) { <div class="hx-galleria-caption-text">{{ item.caption }}</div> }
+              }
+            </div>
+          }
+        }
+        @if (showItemNavigators() && count() > 1) {
+          <button type="button" class="hx-galleria-nav hx-galleria-prev" [disabled]="prevDisabled()" [attr.aria-label]="prevLabel()" (click)="prev()"></button>
+          <button type="button" class="hx-galleria-nav hx-galleria-next" [disabled]="nextDisabled()" [attr.aria-label]="nextLabel()" (click)="next()"></button>
+        }
+        @if (showIndicators() && count() > 1) {
+          <div class="hx-galleria-indicators" role="tablist" [attr.aria-label]="ariaLabel() + ' pictures'">
+            @for (i of indices(); track i) {
+              <button type="button" class="hx-galleria-indicator" role="tab" [class.hx-galleria-indicator-active]="i === index()" [attr.aria-selected]="i === index()" [attr.aria-label]="itemLabel(i)" [attr.tabindex]="i === index() ? 0 : -1" (click)="goTo(i)" (keydown)="onThumbKeydown($event)"></button>
+            }
+          </div>
+        }
+      </div>
+      @if (showThumbnails() && count() > 1) {
+        <div class="hx-galleria-thumbnails">
+          @if (thumbNavigation()) {
+            <button type="button" class="hx-galleria-thumbnail-nav hx-galleria-thumbnail-prev" [disabled]="thumbPrevDisabled()" [attr.aria-label]="prevLabel()" (click)="scrollThumbs(-1)"></button>
+          }
+          <div class="hx-galleria-thumbnail-list" role="tablist" [attr.aria-label]="ariaLabel() + ' thumbnails'">
+            @for (i of thumbs(); track i) {
+              <button
+                type="button"
+                class="hx-galleria-thumbnail"
+                role="tab"
+                [class.hx-galleria-thumbnail-active]="i === index()"
+                [attr.aria-selected]="i === index()"
+                [attr.aria-label]="value()[i].alt"
+                [attr.tabindex]="i === index() ? 0 : -1"
+                (click)="goTo(i)"
+                (keydown)="onThumbKeydown($event)"
+              >
+                @if (thumbnailTemplate(); as tpl) {
+                  <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: value()[i], index: i }" />
+                } @else {
+                  <img class="hx-galleria-thumbnail-image" [src]="thumbnailSrc(value()[i])" alt="" />
+                }
+              </button>
+            }
+          </div>
+          @if (thumbNavigation()) {
+            <button type="button" class="hx-galleria-thumbnail-nav hx-galleria-thumbnail-next" [disabled]="thumbNextDisabled()" [attr.aria-label]="nextLabel()" (click)="scrollThumbs(1)"></button>
+          }
+        </div>
+      }
+    </div>
+    @if (fullScreen()) {
+      <button type="button" class="hx-galleria-close" [attr.aria-label]="closeLabel()" (click)="close()"></button>
+    }
+  </div>
+</ng-template>
+@if (!fullScreen()) {
+  <ng-container [ngTemplateOutlet]="content" />
+}
