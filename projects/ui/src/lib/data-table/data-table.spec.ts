@@ -11,6 +11,7 @@ import {
   type HxSortMeta,
   HxTableBody,
   HxTableCaption,
+  HxTableEmpty,
   HxTableFooter,
   HxTableHeader,
   resolveField,
@@ -54,8 +55,9 @@ class Host {
 }
 
 @Component({
-  imports: [HxDataTable, HxTableHeader, HxTableBody, HxTableFooter, HxTableCaption],
+  imports: [HxDataTable, HxTableHeader, HxTableBody, HxTableFooter, HxTableCaption, HxTableEmpty],
   template: `
+    <hx-data-table id="empty" [value]="[]" [columns]="columns"><ng-template hxTableEmpty><em class="e">Nothing</em></ng-template></hx-data-table>
     <hx-data-table [value]="value" [columns]="columns">
       <ng-template hxTableCaption><em class="cap">Custom caption</em></ng-template>
       <ng-template hxTableHeader let-columns><th scope="col" class="h">{{ columns.length }} columns</th></ng-template>
@@ -193,6 +195,7 @@ describe('HxDataTable', () => {
       '2: Blue Band',
     ]);
     expect(el.querySelector('tfoot td.f')?.textContent).toBe('Total');
+    expect(el.querySelector('#empty .hx-data-table-empty em.e')?.textContent).toBe('Nothing');
   });
 });
 
