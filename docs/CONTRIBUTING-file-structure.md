@@ -17,27 +17,6 @@ the fork no longer tracks upstream, so fork components now also use separate
   (see `projects/shell/src/lib/layout/components/` for the reference
   layout).
 
-## Vendored fork (`projects/core`)
-
-Fork components use separate `.html` template files (epic #297); styles stay
-in the TS token system (`style/*style.ts`), unchanged. Reference example:
-`projects/core/knob/`.
-
-Extraction rules:
-
-- **Main component** in `<dir>/<name>.ts`: the template moves verbatim to
-  `<dir>/<name>.html`; the decorator gets `templateUrl: './<name>.html'`.
-- **Secondary components/directives** declared in the same file: their
-  templates go to `<dir>/<lowercased-class-name>.html` (e.g. class
-  `TableBody` in `table.ts` → `table/tablebody.html`).
-- **Secondary components with templates under 10 lines** may stay inline.
-- **Exempt:** the 55 SVG icon components under `projects/core/icons/`
-  (tiny static templates) keep their inline templates.
-- Template text moves **verbatim**, only re-indented to the new file's
-  baseline. No refactoring, no formatting changes, no attribute reordering.
-
-ng-packagr inlines `templateUrl` at build time, so extraction has zero
-runtime impact on the published library.
 
 ## Control flow
 

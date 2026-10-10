@@ -40,20 +40,12 @@ module.exports = [
         },
     },
 
-    // Vendored PrimeNG fork mirrors upstream sources; don't force `===` there
-    {
-        files: ['projects/core/**/*.html'],
-        rules: {
-            '@angular-eslint/template/eqeqeq': 'off',
-        },
-    },
-
     // Guard against reintroducing decorator-based Input/Output/Query/Host APIs
-    // now that projects/core has been migrated to signals (#373). Spec files
+    // in the libraries, which are written with signals (#373). Spec files
     // are exempt: test-host components there legitimately use classic decorators.
     {
-        files: ['projects/core/**/*.ts'],
-        ignores: ['projects/core/**/*.spec.ts'],
+        files: ['projects/{ui,shell,zod,ag-grid}/**/*.ts'],
+        ignores: ['projects/**/*.spec.ts'],
         rules: {
             'no-restricted-syntax': [
                 'error',
