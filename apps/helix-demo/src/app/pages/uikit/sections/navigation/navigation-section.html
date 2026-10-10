@@ -37,6 +37,13 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Paginator</h2>
+    <hx-paginator [(first)]="first" [(rows)]="rows" [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 50]" showCurrentPageReport />
+    <p class="m-0">First record: {{ first() }}, rows per page: {{ rows() }}.</p>
+    <hx-paginator [first]="0" [rows]="10" [totalRecords]="30" [pageLinkSize]="3" [showFirstLastButtons]="false" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Stepper</h2>
     <p class="m-0">Linear: the later steps are disabled until Next is pressed. Going back is always possible.</p>
     <hx-stepper [(value)]="step" linear>

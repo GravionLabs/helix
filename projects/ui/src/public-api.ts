@@ -111,6 +111,7 @@ export {
   type HxMultiSelectSize,
   type HxMultiSelectVariant,
 } from './lib/multi-select/multi-select';
+export { type HxPageEvent, HxPaginator } from './lib/paginator/paginator';
 export { HxPanel } from './lib/panel/panel';
 export { HxPassword } from './lib/password/password';
 export { HxPopover } from './lib/popover/popover';

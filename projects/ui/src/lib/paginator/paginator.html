@@ -1,0 +1,21 @@
+<nav class="hx-paginator-nav" [attr.aria-label]="ariaLabel()">
+  @if (showCurrentPageReport()) {
+    <span class="hx-paginator-report" aria-live="polite">{{ report() }}</span>
+  }
+  <div class="hx-paginator-pages">
+    @if (showFirstLastButtons()) {
+      <button type="button" class="hx-paginator-button hx-paginator-first" [disabled]="isFirst()" [attr.aria-label]="firstPageLabel()" [title]="firstPageLabel()" (click)="goTo(0)"></button>
+    }
+    <button type="button" class="hx-paginator-button hx-paginator-prev" [disabled]="isFirst()" [attr.aria-label]="previousPageLabel()" [title]="previousPageLabel()" (click)="goTo(page() - 1)"></button>
+    @for (p of links(); track p) {
+      <button type="button" class="hx-paginator-button hx-paginator-page" [class.hx-paginator-page-current]="p === page()" [attr.aria-label]="pageLabel(p)" [attr.aria-current]="p === page() ? 'page' : null" (click)="goTo(p)">{{ p + 1 }}</button>
+    }
+    <button type="button" class="hx-paginator-button hx-paginator-next" [disabled]="isLast()" [attr.aria-label]="nextPageLabel()" [title]="nextPageLabel()" (click)="goTo(page() + 1)"></button>
+    @if (showFirstLastButtons()) {
+      <button type="button" class="hx-paginator-button hx-paginator-last" [disabled]="isLast()" [attr.aria-label]="lastPageLabel()" [title]="lastPageLabel()" (click)="goTo(pageCount() - 1)"></button>
+    }
+  </div>
+  @if (rowsOptions().length) {
+    <hx-select class="hx-paginator-rows" [options]="rowsOptions()" [value]="rows()" (valueChange)="setRows($event)" [ariaLabel]="rowsPerPageLabel()" />
+  }
+</nav>
