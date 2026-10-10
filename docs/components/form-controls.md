@@ -2,9 +2,8 @@
 
 `hx-input`, `hx-checkbox`, `hx-radio` and `hx-switch` are **native elements drawn with CSS**, not wrapper
 components: they work unchanged with template-driven forms, reactive forms and Angular's signal forms, keep
-the native keyboard and screen-reader behaviour, and need no `ControlValueAccessor`. The look is that of the
-helix-core controls (the `--h-inputtext-*`, `--h-checkbox-*`, `--h-radiobutton-*` and `--h-toggleswitch-*`
-tokens).
+the native keyboard and screen-reader behaviour, and need no `ControlValueAccessor`. The look comes from the
+tokens `--h-inputtext-*`, `--h-checkbox-*`, `--h-radiobutton-*` and `--h-toggleswitch-*`.
 
 ### Text field and textarea: `hx-input`
 
@@ -54,7 +53,7 @@ checkbox; use it for a setting that takes effect immediately and name the settin
 <span id="email-error" aria-live="polite">@if (form.email().touched()) { {{ form.email().errors()[0]?.message }} }</span>
 ```
 
-The demo page "Helix UI Form" shows all of this next to the helix-core controls, including a signal form with
+The demo page "Helix UI Form" shows all of this, including a signal form with
 `required`, `minLength` and `email` validators and a loading submit button.
 
 ## Tokens

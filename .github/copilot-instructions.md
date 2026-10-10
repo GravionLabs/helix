@@ -12,9 +12,11 @@
 
 ## Project Overview
 
-This is an Angular 21 workspace containing:
-- **`@gravionlabs/helix-shell`** – A reusable Angular UI library extending [sakai-ng](https://github.com/primefaces/sakai-ng) with NgRx Signal Store state management
-- **`demo`** – A demo application showcasing the library
+This is an Angular 22 workspace containing:
+- **`@gravionlabs/helix-ui`** – Vanilla, signal-based components (`hx-` selectors) on the Helix design tokens, plain CSS
+- **`@gravionlabs/helix-shell`** – A reusable Angular application shell (layout, nav rail, auth pages) with NgRx Signal Store state management
+- **`@gravionlabs/helix-zod`** and **`@gravionlabs/helix-ag-grid`** – Zod forms adapter and AG Grid helpers
+- **`helix-demo`** – A demo application showcasing the libraries
 
 ## Code Style
 

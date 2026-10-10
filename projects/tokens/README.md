@@ -44,10 +44,8 @@ node scripts/helix-palettes.mjs [chroma factor]   # reads tailwind.ts, writes pa
 
 ## Where the data came from
 
-It was extracted once from the Helix preset that `helix-core` resolves (Aura, merged with the Helix overrides
-and the muted palettes) by `scripts/tokens/extract-preset.mjs`, and a test keeps proving that it is identical to
-that preset, key by key and in the same order, while `helix-core` still exists. The script and the test go away
-with `helix-core`; the data stays. See `NOTICE` for the origin of the values.
+It was extracted once from the Helix preset of the former `helix-core` (Aura, merged with the Helix overrides
+and the muted palettes); this data is the source now. See `NOTICE` for the origin of the values.
 
 ## Resolve to CSS and JSON
 

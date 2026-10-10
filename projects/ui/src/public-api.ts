@@ -2,8 +2,7 @@
  * Public API Surface of @gravionlabs/helix-ui
  *
  * Standalone, signal-based components on the Helix design tokens; the CSS is
- * `@gravionlabs/helix-ui/styles.css` (components) and `tokens.css` (the tokens, for apps
- * that do not run the helix-core theme engine). Nothing here may import @gravionlabs/helix-core.
+ * `@gravionlabs/helix-ui/styles.css` (components) and `tokens.css` (the tokens).
  */
 
 export {

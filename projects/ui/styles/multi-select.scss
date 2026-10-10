@@ -1,5 +1,5 @@
 /*
- * Select: `<hx-multi-select>`. Same look as the helix-core Select, from the `--h-multiselect-*` tokens. The host draws the
+ * Select: `<hx-multi-select>`. Styled from the `--h-multiselect-*` tokens. The host draws the
  * field (border, background, focus ring), the trigger is a button inside it, the panel is a CDK connected
  * overlay (`.hx-multi-select-overlay` is the CDK pane, `.hx-multi-select-panel` its content). The CDK's own overlay
  * container CSS is part of styles.css.

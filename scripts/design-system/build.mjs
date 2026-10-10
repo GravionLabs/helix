@@ -1,6 +1,6 @@
 // The whole Design System folder (#522): `pnpm design-system:build` → dist/design-system/project/…
 //
-//   tokens.json                      helixPreset resolved (tokens.mjs)
+//   tokens.json                      the Helix tokens resolved (tokens.mjs)
 //   README.md                        the brand book (content/README.md)
 //   components/bundle.css            tokens + structural CSS of the previewed components (bundle.mjs)
 //   components/<Name>/…              README.md + preview.html per component (previews.mjs)

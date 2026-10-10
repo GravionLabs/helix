@@ -1,5 +1,5 @@
 // Primitive tokens: the radii, the Helix colour scales (muted, see palettes.ts) and the neutral scales.
-// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+// Originally extracted from the Helix preset of the former helix-core; this file is the source now.
 import { palettes } from './palettes.ts';
 import type { TokenTree } from './types.ts';
 
