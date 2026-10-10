@@ -1,37 +1,17 @@
 # Breadcrumb
 
-> Breadcrumb provides contextual information about page hierarchy.
+`hx-breadcrumb` renders the path to the current page as a `nav` landmark with an ordered list. The last item is
+the current page (`aria-current="page"`); items with `routerLink` or `url` are links. It needs `@angular/router`.
 
-## Import
-
-```ts
-import { Breadcrumb } from '@gravionlabs/helix-core/breadcrumb';
+```html
+<hx-breadcrumb [model]="items" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
 ```
 
-## Components
+An item is `{ label?, icon?, routerLink?, url?, target?, disabled?, visible? }`; `icon` is the CSS classes of an
+icon font. An item without a label (the home icon) gets `aria-label="Home"`. `ariaLabel` renames the landmark.
 
-### Breadcrumb
+## Tokens
 
-Selector: `h-breadcrumb`
+The look comes from the design tokens `--h-breadcrumb-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-Breadcrumb provides contextual information about page hierarchy.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `model` | `MenuItem[] \| undefined` | — | An array of menuitems. |
-| `style` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the component. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `home` | `MenuItem \| undefined` | — | MenuItem configuration for the home icon. |
-| `homeAriaLabel` | `string \| undefined` | — | Defines a string that labels the home icon for accessibility. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onItemClick` | `output&lt;BreadcrumbItemClickEvent&gt;()` | Fired when an item is selected. |
-
-## Source
-
-[`projects/core/breadcrumb`](../../projects/core/breadcrumb)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

@@ -1,41 +1,27 @@
 # Rating
 
-> Rating is an extension to standard radio button element with theming.
+`hx-rating` is a star rating. Each star is a visually hidden `input type="radio"` labelled "n stars", so the arrow
+keys change the value. It works with `ngModel`, reactive forms (including `disable()`) and signal forms. The value
+is a `number | null` (`null` until a star is chosen). The stars are drawn with the internal icons and the
+`--h-rating-*` tokens.
 
-## Import
-
-```ts
-import { Rating } from '@gravionlabs/helix-core/rating';
+```html
+<hx-rating ariaLabel="Quality" [(ngModel)]="score" />
+<hx-rating readonly [stars]="10" [value]="7" />
 ```
 
-## Components
+| Input                       | Type      | Default    | Description                                  |
+| --------------------------- | --------- | ---------- | -------------------------------------------- |
+| `stars`                     | `number`  | `5`        | Number of stars.                             |
+| `readonly`                  | `boolean` | `false`    | Shows the value; no way to change it.        |
+| `ariaLabel`, `ariaLabelledby` | `string` | `'Rating'` | Name of the group.                           |
 
-### Rating
+- **Behaviour:** hovering previews the value (the hovered star and all before it). The stars up to the value are filled.
+- **Accessibility:** `role="radiogroup"` with a radio per star named "1 star", "2 stars", …; Arrow keys move and
+  choose, Tab enters and leaves the group. With `readonly` the rating is `role="img"` with the label "3 of 5 stars".
 
-Selector: `h-rating`
+## Tokens
 
-Rating is an extension to standard radio button element with theming.
+The look comes from the design tokens `--h-rating-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `readonly` | `boolean \| undefined` | — | When present, changing the value is not possible. |
-| `stars` | `number` | `5` | Number of stars. |
-| `iconOnClass` | `string \| undefined` | — | Style class of the on icon. |
-| `iconOnStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the on icon. |
-| `iconOffClass` | `string \| undefined` | — | Style class of the off icon. |
-| `iconOffStyle` | `{ [klass: string]: any; } \| null \| undefined` | — | Inline style of the off icon. |
-| `autofocus` | `boolean \| undefined` | — | When present, it specifies that the component should automatically get focus on load. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onRate` | `output&lt;RatingRateEvent&gt;()` | Emitted on value change. |
-| `onFocus` | `output&lt;FocusEvent&gt;()` | Emitted when the rating receives focus. |
-| `onBlur` | `output&lt;FocusEvent&gt;()` | Emitted when the rating loses focus. |
-
-## Source
-
-[`projects/core/rating`](../../projects/core/rating)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

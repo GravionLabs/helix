@@ -1,49 +1,8 @@
 <h1 class="sr-only">Tree</h1>
 <div class="card">
-      <h2 class="demo-title">Tree</h2>
-      <h-tree
-        [value]="treeValue()"
-        selectionMode="checkbox"
-        [(selection)]="selectedTreeValue"
-      ></h-tree>
-    </div>
-
-    <div class="card">
-      <h2 class="demo-title mb-2!">TreeTable</h2>
-      <h-treetable
-        [value]="treeTableValue()"
-        [columns]="cols"
-        selectionMode="checkbox"
-        [(selectionKeys)]="selectedTreeTableValue"
-        dataKey="key"
-        [scrollable]="true"
-        [tableStyle]="{ 'min-width': '50rem' }"
-      >
-        <ng-template #header let-columns>
-          <tr>
-            @for (col of columns; track col) {
-              <th>
-                {{ col.header }}
-              </th>
-            }
-          </tr>
-        </ng-template>
-        <ng-template #body let-rowNode let-rowData="rowData" let-columns="columns">
-          <tr [ttRow]="rowNode" [ttSelectableRow]="rowNode">
-            @for (col of columns; track col; let i = $index) {
-              <td>
-                <span class="flex items-center gap-1">
-                  @if (i === 0) {
-                    <h-treeTableToggler [rowNode]="rowNode" />
-                  }
-                  @if (i === 0) {
-                    <h-treeTableCheckbox [value]="rowNode" />
-                  }
-                  {{ rowData[col.field] }}
-                </span>
-              </td>
-            }
-          </tr>
-        </ng-template>
-      </h-treetable>
-    </div>
+  <h2 class="demo-title">Tree</h2>
+  <p class="mb-3">Checking a folder checks everything below it; a folder with some children checked is mixed. Arrow keys move, Right and Left open and close, typing jumps by label.</p>
+  <hx-tree ariaLabel="Files" [value]="treeValue()" selectionMode="checkbox" filter [(selection)]="selected" />
+  <p class="mt-3 mb-0">Checked: {{ selected() }}</p>
+</div>
+<app-data-section class="mt-6 block" />

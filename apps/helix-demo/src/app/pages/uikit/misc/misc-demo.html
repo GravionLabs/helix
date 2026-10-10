@@ -1,223 +1,166 @@
 <h1 class="sr-only">Misc</h1>
 <div class="card">
-      <h2 class="demo-title mb-2!">ProgressBar</h2>
-      <div class="flex flex-col md:flex-row gap-3">
-        <div class="md:w-1/2">
-          <h-progressbar [value]="value" [showValue]="true"></h-progressbar>
+  <h2 class="demo-title mb-2!">ProgressBar</h2>
+  <div class="flex flex-col md:flex-row gap-3">
+    <div class="md:w-1/2">
+      <hx-progress-bar ariaLabel="Progress" [value]="value()" />
+    </div>
+    <div class="md:w-1/2">
+      <hx-progress-bar ariaLabel="Halfway" [value]="50" [showValue]="false" />
+    </div>
+  </div>
+</div>
+
+<div class="flex flex-col gap-layout">
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Badge</h2>
+        <div class="flex gap-1">
+          <hx-badge value="2" />
+          <hx-badge value="8" severity="success" />
+          <hx-badge value="4" severity="info" />
+          <hx-badge value="12" severity="warn" />
+          <hx-badge value="3" severity="danger" />
         </div>
-        <div class="md:w-1/2">
-          <h-progressbar [value]="50" [showValue]="false"></h-progressbar>
+
+        <div class="font-semibold my-4">Overlay</div>
+        <div class="flex gap-3">
+          <hx-overlay-badge value="2">
+            <span class="pi pi-bell" style="font-size: 2rem" role="img" aria-label="Notifications, 2 new"></span>
+          </hx-overlay-badge>
+          <hx-overlay-badge value="4" severity="danger">
+            <span class="pi pi-calendar" style="font-size: 2rem" role="img" aria-label="Calendar, 4 events"></span>
+          </hx-overlay-badge>
+          <hx-overlay-badge severity="danger">
+            <span class="pi pi-envelope" style="font-size: 2rem" role="img" aria-label="Mail, unread"></span>
+          </hx-overlay-badge>
+        </div>
+
+        <div class="font-semibold my-4">Button</div>
+        <div class="flex gap-1">
+          <button hx-button type="button">Emails <hx-badge value="8" severity="secondary" size="small" /></button>
+          <button hx-button type="button" severity="warn">
+            <span class="pi pi-users hx-button-icon" aria-hidden="true"></span>
+            Messages
+            <hx-badge value="8" severity="danger" size="small" />
+          </button>
+        </div>
+
+        <div class="font-semibold my-4">Sizes</div>
+        <div class="flex items-start gap-1">
+          <hx-badge [value]="2" />
+          <hx-badge [value]="4" size="large" severity="warn" />
+          <hx-badge [value]="6" size="xlarge" severity="success" />
         </div>
       </div>
     </div>
-
-    <div class="flex flex-col gap-layout">
-    <div class="flex flex-col md:flex-row gap-layout">
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card h-full">
-          <h2 class="demo-title mb-2!">Badge</h2>
-          <div class="flex gap-1">
-            <h-badge value="2"></h-badge>
-            <h-badge value="8" severity="success"></h-badge>
-            <h-badge value="4" severity="info"></h-badge>
-            <h-badge value="12" severity="warn"></h-badge>
-            <h-badge value="3" severity="danger"></h-badge>
-          </div>
-
-          <div class="font-semibold my-4">Overlay</div>
-          <div class="flex gap-3">
-            <h-overlaybadge value="2">
-              <i class="pi pi-bell" style="font-size: 2rem"></i>
-            </h-overlaybadge>
-            <h-overlaybadge value="4" severity="danger">
-              <i class="pi pi-calendar" style="font-size: 2rem"></i>
-            </h-overlaybadge>
-            <h-overlaybadge severity="danger">
-              <i class="pi pi-envelope" style="font-size: 2rem"></i>
-            </h-overlaybadge>
-          </div>
-
-          <div class="font-semibold my-4">Button</div>
-          <div class="flex gap-1">
-            <h-button label="Emails" badge="8"></h-button>
-            <h-button
-              label="Messages"
-              icon="pi pi-users"
-              severity="warn"
-              badge="8"
-              badgeSeverity="danger"
-            ></h-button>
-          </div>
-
-          <div class="font-semibold my-4">Sizes</div>
-          <div class="flex items-start gap-1">
-            <h-badge [value]="2"></h-badge>
-            <h-badge [value]="4" badgeSize="large" severity="warn"></h-badge>
-            <h-badge [value]="6" badgeSize="xlarge" severity="success"></h-badge>
-          </div>
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Tag</h2>
+        <div class="font-semibold mb-2">Default</div>
+        <div class="flex flex-wrap gap-1">
+          <hx-tag value="Primary" />
+          <hx-tag severity="success" value="Success" />
+          <hx-tag severity="info" value="Info" />
+          <hx-tag severity="warn" value="Warning" />
+          <hx-tag severity="danger" value="Danger" />
         </div>
-      </div>
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card h-full">
-          <h2 class="demo-title mb-2!">Tag</h2>
-          <div class="font-semibold mb-2">Default</div>
-          <div class="flex gap-1">
-            <h-tag value="Primary"></h-tag>
-            <h-tag severity="success" value="Success"></h-tag>
-            <h-tag severity="info" value="Info"></h-tag>
-            <h-tag severity="warn" value="Warning"></h-tag>
-            <h-tag severity="danger" value="Danger"></h-tag>
-          </div>
 
-          <div class="font-semibold my-4">Pills</div>
-          <div class="flex gap-1">
-            <h-tag value="Primary" [rounded]="true"></h-tag>
-            <h-tag severity="success" value="Success" [rounded]="true"></h-tag>
-            <h-tag severity="info" value="Info" [rounded]="true"></h-tag>
-            <h-tag severity="warn" value="Warning" [rounded]="true"></h-tag>
-            <h-tag severity="danger" value="Danger" [rounded]="true"></h-tag>
-          </div>
+        <div class="font-semibold my-4">Pills</div>
+        <div class="flex flex-wrap gap-1">
+          <hx-tag value="Primary" rounded />
+          <hx-tag severity="success" value="Success" rounded />
+          <hx-tag severity="info" value="Info" rounded />
+          <hx-tag severity="warn" value="Warning" rounded />
+          <hx-tag severity="danger" value="Danger" rounded />
+        </div>
 
-          <div class="font-semibold my-4">Icons</div>
-          <div class="flex gap-1">
-            <h-tag icon="pi pi-user" value="Primary"></h-tag>
-            <h-tag icon="pi pi-check" severity="success" value="Success"></h-tag>
-            <h-tag icon="pi pi-info-circle" severity="info" value="Info"></h-tag>
-            <h-tag icon="pi pi-exclamation-triangle" severity="warn" value="Warning"></h-tag>
-            <h-tag icon="pi pi-times" severity="danger" value="Danger"></h-tag>
-          </div>
+        <div class="font-semibold my-4">Icons</div>
+        <div class="flex flex-wrap gap-1">
+          <hx-tag icon="pi pi-user" value="Primary" />
+          <hx-tag icon="pi pi-check" severity="success" value="Success" />
+          <hx-tag icon="pi pi-info-circle" severity="info" value="Info" />
+          <hx-tag icon="pi pi-exclamation-triangle" severity="warn" value="Warning" />
+          <hx-tag icon="pi pi-times" severity="danger" value="Danger" />
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="flex flex-col md:flex-row gap-layout">
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card h-full">
-          <h2 class="demo-title mb-2!">Avatar</h2>
-          <div class="font-semibold mb-2">Group</div>
-          <h-avatargroup styleClass="mb-2">
-            <h-avatar
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-              size="large"
-              shape="circle"
-            ></h-avatar>
-            <h-avatar
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-              size="large"
-              shape="circle"
-            ></h-avatar>
-            <h-avatar
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
-              size="large"
-              shape="circle"
-            ></h-avatar>
-            <h-avatar
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/ionibowcher.png"
-              size="large"
-              shape="circle"
-            ></h-avatar>
-            <h-avatar
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
-              size="large"
-              shape="circle"
-            ></h-avatar>
-            <h-avatar
-              label="+2"
-              shape="circle"
-              size="large"
-              [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
-            ></h-avatar>
-          </h-avatargroup>
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Avatar</h2>
+        <div class="font-semibold mb-2">Group</div>
+        <hx-avatar-group ariaLabel="Team" class="mb-2">
+          @for (name of avatars; track name) {
+            <hx-avatar [image]="avatarBase + name + '.png'" size="large" shape="circle" [ariaLabel]="name" />
+          }
+          <hx-avatar label="+2" shape="circle" size="large" ariaLabel="2 more members" style="background-color: #9c27b0; color: #ffffff" />
+        </hx-avatar-group>
 
-          <div class="font-semibold my-4">Label - Circle</div>
-          <h-avatar class="mr-2" label="P" size="xlarge" shape="circle"></h-avatar>
-          <h-avatar
-            class="mr-2"
-            label="V"
-            size="large"
-            [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
-            shape="circle"
-          ></h-avatar>
-          <h-avatar
-            class="mr-2"
-            label="U"
-            [style]="{ 'background-color': '#9c27b0', color: '#ffffff' }"
-            shape="circle"
-          ></h-avatar>
-
-          <div class="font-semibold my-4">Icon - Badge</div>
-          <h-overlaybadge value="4" severity="danger" class="inline-flex">
-            <h-avatar label="U" size="xlarge" />
-          </h-overlaybadge>
+        <div class="font-semibold my-4">Label - Circle</div>
+        <div class="flex items-center gap-2">
+          <hx-avatar label="P" size="xlarge" shape="circle" />
+          <hx-avatar label="V" size="large" shape="circle" style="background-color: #2196f3; color: #ffffff" />
+          <hx-avatar label="U" shape="circle" style="background-color: #9c27b0; color: #ffffff" />
         </div>
+
+        <div class="font-semibold my-4">Badge</div>
+        <hx-overlay-badge value="4" severity="danger" class="inline-flex">
+          <hx-avatar label="U" size="xlarge" ariaLabel="User, 4 notifications" />
+        </hx-overlay-badge>
       </div>
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card h-full">
-          <h2 class="demo-title mb-2!">Chip</h2>
-          <div class="font-semibold mb-2">Basic</div>
-          <div class="flex items-center flex-col sm:flex-row">
-            <h-chip label="Action" styleClass="m-1"></h-chip>
-            <h-chip label="Comedy" styleClass="m-1"></h-chip>
-            <h-chip label="Mystery" styleClass="m-1"></h-chip>
-            <h-chip label="Thriller" styleClass="m-1" [removable]="true"></h-chip>
-          </div>
+    </div>
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Chip</h2>
+        <div class="font-semibold mb-2">Basic</div>
+        <div class="flex flex-wrap items-center gap-2">
+          <hx-chip label="Action" />
+          <hx-chip label="Comedy" />
+          <hx-chip label="Mystery" />
+          <hx-chip label="Thriller" removable />
+        </div>
 
-          <div class="font-semibold my-4">Icon</div>
-          <div class="flex items-center flex-col sm:flex-row">
-            <h-chip label="Apple" icon="pi pi-apple" styleClass="m-1"></h-chip>
-            <h-chip label="Facebook" icon="pi pi-facebook" styleClass="m-1"></h-chip>
-            <h-chip label="Google" icon="pi pi-google" styleClass="m-1"></h-chip>
-            <h-chip
-              label="Microsoft"
-              icon="pi pi-microsoft"
-              styleClass="m-1"
-              [removable]="true"
-            ></h-chip>
-          </div>
+        <div class="font-semibold my-4">Icon</div>
+        <div class="flex flex-wrap items-center gap-2">
+          <hx-chip label="Apple" icon="pi pi-apple" />
+          <hx-chip label="Facebook" icon="pi pi-facebook" />
+          <hx-chip label="Google" icon="pi pi-google" />
+          <hx-chip label="Microsoft" icon="pi pi-microsoft" removable />
+        </div>
 
-          <div class="font-semibold my-4">Image</div>
-          <div class="flex items-center flex-col sm:flex-row">
-            <h-chip
-              label="Amy Elsner"
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
-              styleClass="m-1"
-            ></h-chip>
-            <h-chip
-              label="Asiya Javayant"
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
-              styleClass="m-1"
-            ></h-chip>
-            <h-chip
-              label="Onyama Limba"
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/onyamalimba.png"
-              styleClass="m-1"
-            ></h-chip>
-            <h-chip
-              label="Xuxue Feng"
-              image="https://primefaces.org/cdn/primeng/images/demo/avatar/xuxuefeng.png"
-              styleClass="m-1"
-              [removable]="true"
-            ></h-chip>
-          </div>
+        <div class="font-semibold my-4">Image</div>
+        <div class="flex flex-wrap items-center gap-2">
+          <hx-chip label="Amy Elsner" [image]="avatarBase + 'amyelsner.png'" />
+          <hx-chip label="Asiya Javayant" [image]="avatarBase + 'asiyajavayant.png'" />
+          <hx-chip label="Onyama Limba" [image]="avatarBase + 'onyamalimba.png'" />
+          <hx-chip label="Xuxue Feng" [image]="avatarBase + 'xuxuefeng.png'" removable />
         </div>
       </div>
     </div>
-    <div class="card">
-      <h2 class="demo-title mb-2!">Skeleton</h2>
-      <div class="rounded-border border border-surface p-6">
-        <div class="flex mb-2">
-          <h-skeleton shape="circle" size="4rem" styleClass="mr-2"></h-skeleton>
-          <div>
-            <h-skeleton width="10rem" styleClass="mb-1"></h-skeleton>
-            <h-skeleton width="5rem" styleClass="mb-1"></h-skeleton>
-            <h-skeleton height=".5rem"></h-skeleton>
-          </div>
-        </div>
-        <h-skeleton width="100%" height="150px"></h-skeleton>
-        <div class="flex justify-between mt-1">
-          <h-skeleton width="4rem" height="2rem"></h-skeleton>
-          <h-skeleton width="4rem" height="2rem"></h-skeleton>
+  </div>
+
+  <div class="card">
+    <h2 class="demo-title mb-2!">Skeleton</h2>
+    <div class="rounded-border border border-surface p-6" aria-busy="true">
+      <div class="flex mb-2 gap-2">
+        <hx-skeleton shape="circle" size="4rem" />
+        <div class="flex flex-col gap-1">
+          <hx-skeleton width="10rem" />
+          <hx-skeleton width="5rem" />
+          <hx-skeleton height=".5rem" />
         </div>
       </div>
+      <hx-skeleton width="100%" height="150px" />
+      <div class="flex justify-between mt-1">
+        <hx-skeleton width="4rem" height="2rem" />
+        <hx-skeleton width="4rem" height="2rem" />
+      </div>
     </div>
-    </div>
+  </div>
+</div>
+<app-blocks-section class="mt-6 block" />
+<app-display-section class="mt-6 block" />

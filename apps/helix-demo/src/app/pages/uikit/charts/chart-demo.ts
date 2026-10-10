@@ -1,270 +1,57 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { ChartModule } from '@gravionlabs/helix-core/chart';
-import { FluidModule } from '@gravionlabs/helix-core/fluid';
-import { LayoutStore } from '@gravionlabs/helix-shell';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { HxChart } from '@gravionlabs/helix-ui';
 
+/**
+ * The charts of `@gravionlabs/helix-ui`: chart.js with colours, grid and font from the design tokens, redrawn when the
+ * theme changes. The data below sets no colours, so the Helix palette is used.
+ */
 @Component({
   selector: 'app-chart-demo',
   standalone: true,
-  imports: [ChartModule, FluidModule],
+  imports: [HxChart],
   templateUrl: './chart-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './chart-demo.scss',
 })
 export class ChartDemo {
-  store = inject(LayoutStore);
+  readonly months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  readonly first = [65, 59, 80, 81, 56, 55, 40];
+  readonly second = [28, 48, 40, 19, 86, 27, 90];
 
-  lineData = signal<any>(null);
+  readonly lineData = {
+    labels: this.months,
+    datasets: [
+      { label: 'First Dataset', data: this.first, tension: 0.4 },
+      { label: 'Second Dataset', data: this.second, tension: 0.4 },
+    ],
+  };
 
-  barData = signal<any>(null);
+  readonly barData = {
+    labels: this.months,
+    datasets: [
+      { label: 'My First dataset', data: this.first },
+      { label: 'My Second dataset', data: this.second },
+    ],
+  };
+  readonly barOptions = { scales: { x: { grid: { display: false } } } };
 
-  pieData = signal<any>(null);
+  readonly pieData = {
+    labels: ['A', 'B', 'C'],
+    datasets: [{ data: [540, 325, 702] }],
+  };
+  readonly pieOptions = { plugins: { legend: { labels: { usePointStyle: true } } } };
 
-  polarData = signal<any>(null);
+  readonly polarData = {
+    labels: ['Indigo', 'Purple', 'Teal', 'Orange'],
+    datasets: [{ label: 'My dataset', data: [11, 16, 7, 3] }],
+  };
+  readonly polarOptions = { scales: { r: { ticks: { display: false } } } };
 
-  radarData = signal<any>(null);
-
-  lineOptions = signal<any>(null);
-
-  barOptions = signal<any>(null);
-
-  pieOptions = signal<any>(null);
-
-  polarOptions = signal<any>(null);
-
-  radarOptions = signal<any>(null);
-
-  // The colours are read from the CSS variables: draw again when dark mode, primary colour, preset or
-  // surface palette change (the configurator applies them right after the store).
-  chartEffect = effect(() => {
-    this.store.darkTheme();
-    this.store.primary();
-    this.store.surface();
-    setTimeout(() => this.initCharts(), 150);
-  });
-
-  initCharts() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.barData.set({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-500'),
-          borderColor: documentStyle.getPropertyValue('--h-primary-500'),
-          data: [65, 59, 80, 81, 56, 55, 40],
-        },
-        {
-          label: 'My Second dataset',
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-200'),
-          borderColor: documentStyle.getPropertyValue('--h-primary-200'),
-          data: [28, 48, 40, 19, 86, 27, 90],
-        },
-      ],
-    });
-
-    this.barOptions.set({
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-            font: {
-              weight: 500,
-            },
-          },
-          grid: {
-            display: false,
-            drawBorder: false,
-          },
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    });
-
-    this.pieData.set({
-      labels: ['A', 'B', 'C'],
-      datasets: [
-        {
-          data: [540, 325, 702],
-          backgroundColor: [
-            documentStyle.getPropertyValue('--h-indigo-500'),
-            documentStyle.getPropertyValue('--h-purple-500'),
-            documentStyle.getPropertyValue('--h-teal-500'),
-          ],
-          hoverBackgroundColor: [
-            documentStyle.getPropertyValue('--h-indigo-400'),
-            documentStyle.getPropertyValue('--h-purple-400'),
-            documentStyle.getPropertyValue('--h-teal-400'),
-          ],
-        },
-      ],
-    });
-
-    this.pieOptions.set({
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: textColor,
-          },
-        },
-      },
-    });
-
-    this.lineData.set({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-500'),
-          borderColor: documentStyle.getPropertyValue('--h-primary-500'),
-          tension: 0.4,
-        },
-        {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          backgroundColor: documentStyle.getPropertyValue('--h-primary-200'),
-          borderColor: documentStyle.getPropertyValue('--h-primary-200'),
-          tension: 0.4,
-        },
-      ],
-    });
-
-    this.lineOptions.set({
-      maintainAspectRatio: false,
-      aspectRatio: 0.8,
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-        y: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    });
-
-    this.polarData.set({
-      datasets: [
-        {
-          data: [11, 16, 7, 3],
-          backgroundColor: [
-            documentStyle.getPropertyValue('--h-indigo-500'),
-            documentStyle.getPropertyValue('--h-purple-500'),
-            documentStyle.getPropertyValue('--h-teal-500'),
-            documentStyle.getPropertyValue('--h-orange-500'),
-          ],
-          label: 'My dataset',
-        },
-      ],
-      labels: ['Indigo', 'Purple', 'Teal', 'Orange'],
-    });
-
-    this.polarOptions.set({
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        r: {
-          grid: {
-            color: surfaceBorder,
-          },
-          ticks: {
-            display: false,
-            color: textColorSecondary,
-          },
-        },
-      },
-    });
-
-    this.radarData.set({
-      labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-      datasets: [
-        {
-          label: 'My First dataset',
-          borderColor: documentStyle.getPropertyValue('--h-indigo-400'),
-          pointBackgroundColor: documentStyle.getPropertyValue('--h-indigo-400'),
-          pointBorderColor: documentStyle.getPropertyValue('--h-indigo-400'),
-          pointHoverBackgroundColor: textColor,
-          pointHoverBorderColor: documentStyle.getPropertyValue('--h-indigo-400'),
-          data: [65, 59, 90, 81, 56, 55, 40],
-        },
-        {
-          label: 'My Second dataset',
-          borderColor: documentStyle.getPropertyValue('--h-purple-400'),
-          pointBackgroundColor: documentStyle.getPropertyValue('--h-purple-400'),
-          pointBorderColor: documentStyle.getPropertyValue('--h-purple-400'),
-          pointHoverBackgroundColor: textColor,
-          pointHoverBorderColor: documentStyle.getPropertyValue('--h-purple-400'),
-          data: [28, 48, 40, 19, 96, 27, 100],
-        },
-      ],
-    });
-
-    this.radarOptions.set({
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        r: {
-          pointLabels: {
-            color: textColor,
-          },
-          grid: {
-            color: surfaceBorder,
-          },
-        },
-      },
-    });
-  }
+  readonly radarData = {
+    labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+    datasets: [
+      { label: 'My First dataset', data: [65, 59, 90, 81, 56, 55, 40] },
+      { label: 'My Second dataset', data: [28, 48, 40, 19, 96, 27, 100] },
+    ],
+  };
 }

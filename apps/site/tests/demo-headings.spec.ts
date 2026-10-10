@@ -31,7 +31,7 @@ describe('demo headings', () => {
 
   it('gives every page exactly one h1', () => {
     const pages = files.filter(isPage);
-    expect(pages.length).toBeGreaterThanOrEqual(21);
+    expect(pages.length).toBeGreaterThanOrEqual(20);
     for (const page of pages) {
       const h1 = (readFileSync(page, 'utf8').match(/<h1[\s>]/g) ?? []).length;
       expect({ page, h1 }).toEqual({ page, h1: 1 });

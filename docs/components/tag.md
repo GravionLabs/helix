@@ -1,31 +1,24 @@
 # Tag
 
-> Tag component is used to categorize content.
+`hx-tag` is a label for a category or a status. The text is the `value` or the projected content.
 
-## Import
-
-```ts
-import { Tag } from '@gravionlabs/helix-core/tag';
+```html
+<hx-tag value="New" severity="success" />
+<hx-tag severity="warn" rounded icon="pi pi-exclamation-triangle">Pending</hx-tag>
 ```
 
-## Components
+| Input      | Type                                                                          | Default     | Description                                |
+| ---------- | ----------------------------------------------------------------------------- | ----------- | ------------------------------------------ |
+| `value`    | `string \| number \| null`                                                     | `null`      | The text (or project content instead).     |
+| `severity` | `'primary' \| 'secondary' \| 'success' \| 'info' \| 'warn' \| 'danger' \| 'contrast'` | `'primary'` | The colours.                               |
+| `rounded`  | `boolean`                                                                     | `false`     | A pill instead of the small radius.        |
+| `icon`     | `string`                                                                      |             | Icon font classes, drawn before the text.  |
 
-### Tag
+- **Accessibility:** plain text with no role; the icon is `aria-hidden`. The colour is not the only carrier of the
+  meaning, the text says it too.
 
-Selector: `h-tag`
+## Tokens
 
-Tag component is used to categorize content.
+The look comes from the design tokens `--h-tag-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `severity` | `"secondary" \| "info" \| "success" \| "warn" \| "danger" \| "contrast" \| null \| undefined` | — | Severity type of the tag. |
-| `value` | `string \| undefined` | — | Value to display inside the tag. |
-| `icon` | `string \| undefined` | — | Icon of the tag to display next to the value. |
-| `rounded` | `boolean \| undefined` | — | Whether the corners of the tag are rounded. |
-
-## Source
-
-[`projects/core/tag`](../../projects/core/tag)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

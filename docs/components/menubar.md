@@ -1,82 +1,33 @@
 # Menubar
 
-> Menubar is a horizontal menu component.
+`hx-menubar` is a horizontal menu of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model) with dropdown submenus, on the CDK menubar.
 
-## Import
-
-```ts
-import { MenubarSub, Menubar, MenubarService } from '@gravionlabs/helix-core/menubar';
+```html
+<hx-menubar ariaLabel="Main" [model]="items">
+  <a hxMenubarStart routerLink="/">Helix</a>
+  <button hxMenubarEnd hx-button>Sign in</button>
+</hx-menubar>
 ```
 
-## Components
+| Input / output | Type           | Default  | Description                                                           |
+| -------------- | -------------- | -------- | --------------------------------------------------------------------- |
+| `model`        | `HxMenuItem[]` | `[]`     | The entries; an entry with `items` opens a submenu.                   |
+| `breakpoint`   | `number`       | `960`    | Width in px below which the items collapse into a button.             |
+| `ariaLabel`    | `string`       |          | Name of the menubar.                                                  |
+| `buttonLabel`  | `string`       | `'Menu'` | Name of the button shown when collapsed.                              |
+| `(triggered)`  | `HxMenuItem`   |          | An item was activated (after its `command`).                          |
 
-### MenubarSub
+Content marked `hxMenubarStart` or `hxMenubarEnd` is placed before and after the items.
 
-Selector: `h-menubarSub, h-menubarsub, [hMenubarSub]`
+- **Collapsed:** below `breakpoint` the bar shows the start and end content and a button; the button opens the items as
+  an [`hx-menu`](menu.md) popup (group headings and nested submenus as there).
+- **Keyboard:** Left and Right move between the top items, Down or Enter opens a submenu and moves into it, Escape
+  closes it and returns to the item, typing jumps by label.
+- **Accessibility:** `role="menubar"` with `menuitem`s; items with a submenu have `aria-haspopup="menu"` and
+  `aria-expanded`. Name icon-only items with `ariaLabel`.
 
-#### Inputs
+## Tokens
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `items` | `any[]` | `undefined!` | — |
-| `itemTemplate` | `TemplateRef&lt;MenubarItemTemplateContext&gt; \| undefined` | — | — |
-| `root` | `boolean` | `false` | — |
-| `autoZIndex` | `boolean` | `true` | — |
-| `baseZIndex` | `number` | `0` | — |
-| `mobileActive` | `boolean \| undefined` | — | — |
-| `autoDisplay` | `boolean \| undefined` | — | — |
-| `menuId` | `string \| undefined` | — | — |
-| `ariaLabel` | `string \| undefined` | — | — |
-| `ariaLabelledBy` | `string \| undefined` | — | — |
-| `level` | `number` | `0` | — |
-| `focusedItemId` | `string \| undefined` | — | — |
-| `activeItemPath` | `any[]` | `undefined!` | — |
-| `inlineStyles` | `any` | — | — |
-| `submenuiconTemplate` | `TemplateRef&lt;void&gt; \| undefined` | — | — |
+The look comes from the design tokens `--h-menubar-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `itemClick` | `output&lt;any&gt;()` | — |
-| `itemMouseEnter` | `output&lt;any&gt;()` | — |
-| `menuFocus` | `output&lt;any&gt;()` | — |
-| `menuBlur` | `output&lt;any&gt;()` | — |
-| `menuKeydown` | `output&lt;any&gt;()` | — |
-
-### Menubar
-
-Selector: `h-menubar`
-
-Menubar is a horizontal menu component.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `model` | `MenuItem[] \| undefined` | — | An array of menuitems. |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `autoZIndex` | `boolean` | `true` | Whether to automatically manage layering. |
-| `baseZIndex` | `number` | `0` | Base zIndex value to use in layering. |
-| `autoDisplay` | `boolean \| undefined` | `true` | Whether to show a root submenu on mouse over. |
-| `autoHide` | `boolean \| undefined` | — | Whether to hide a root submenu when mouse leaves. |
-| `breakpoint` | `string` | `'960px'` | The breakpoint to define the maximum width boundary. |
-| `autoHideDelay` | `number` | `100` | Delay to hide the root submenu in milliseconds when mouse leaves. |
-| `id` | `string \| undefined` | — | Current id state as a string. |
-| `ariaLabel` | `string \| undefined` | — | Defines a string value that labels an interactive element. |
-| `ariaLabelledBy` | `string \| undefined` | — | Identifier of the underlying input element. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onFocus` | `output&lt;FocusEvent&gt;()` | Callback to execute when button is focused. |
-| `onBlur` | `output&lt;FocusEvent&gt;()` | Callback to execute when button loses focus. |
-
-## Services
-
-### MenubarService
-
-## Source
-
-[`projects/core/menubar`](../../projects/core/menubar)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

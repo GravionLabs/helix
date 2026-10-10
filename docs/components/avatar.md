@@ -1,40 +1,33 @@
 # Avatar
 
-> Avatar represents people using icons, labels and images.
+`hx-avatar` shows a picture, an icon or initials for a person; `hx-avatar-group` overlaps several.
 
-## Import
-
-```ts
-import { Avatar } from '@gravionlabs/helix-core/avatar';
+```html
+<hx-avatar image="/amy.png" ariaLabel="Amy Elsner" shape="circle" />
+<hx-avatar label="JK" size="large" />
+<hx-avatar-group ariaLabel="Team">
+  <hx-avatar image="/a.png" shape="circle" />
+  <hx-avatar label="+2" shape="circle" />
+</hx-avatar-group>
 ```
 
-## Components
+| Input       | Type                                | Default    | Description                                                       |
+| ----------- | ----------------------------------- | ---------- | ----------------------------------------------------------------- |
+| `label`     | `string`                            |            | Initials or a short text (or project content instead).            |
+| `icon`      | `string`                            |            | Icon font classes.                                                |
+| `image`     | `string`                            |            | Picture; wins over `icon`, which wins over `label`.               |
+| `size`      | `'normal' \| 'large' \| 'xlarge'`    | `'normal'` | 2rem, 3rem, 4rem.                                                 |
+| `shape`     | `'square' \| 'circle'`              | `'square'` | Corner radius or a circle.                                        |
+| `ariaLabel` | `string`                            |            | Accessible name; makes the avatar a named `img`.                  |
 
-### Avatar
+The group takes `ariaLabel` and sets `role="group"`.
 
-Selector: `h-avatar`
+- **Accessibility:** with `ariaLabel` the avatar is a named `img` and its content is hidden from assistive
+  technology. Without it, initials are read as text and a picture is decorative (empty `alt`), so name any avatar that
+  stands alone. A `+2` overflow avatar reads as text; give it an `ariaLabel` such as "2 more members".
 
-Avatar represents people using icons, labels and images.
+## Tokens
 
-#### Inputs
+The look comes from the design tokens `--h-avatar-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `label` | `string \| undefined` | — | Defines the text to display. |
-| `icon` | `string \| undefined` | — | Defines the icon to display. |
-| `image` | `string \| undefined` | — | Defines the image to display. |
-| `size` | `"normal" \| "large" \| "xlarge" \| undefined` | `'normal'` | Size of the element. |
-| `shape` | `"square" \| "circle" \| undefined` | `'square'` | Shape of the element. |
-| `styleClass` | `string \| undefined` | — | Class of the element. |
-| `ariaLabel` | `string \| undefined` | — | Establishes a string value that labels the component. |
-| `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onImageError` | `output&lt;Event&gt;()` | This event is triggered if an error occurs while loading an image file. |
-
-## Source
-
-[`projects/core/avatar`](../../projects/core/avatar)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

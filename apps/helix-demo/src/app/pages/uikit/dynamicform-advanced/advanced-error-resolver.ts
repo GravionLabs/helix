@@ -1,4 +1,4 @@
-import { ValidatorKey } from '@gravionlabs/helix-core/validators';
+import { ValidatorKey } from '@gravionlabs/helix-ui/validators';
 import type { HelixErrorMessageResolver } from '@gravionlabs/helix-zod';
 
 /**

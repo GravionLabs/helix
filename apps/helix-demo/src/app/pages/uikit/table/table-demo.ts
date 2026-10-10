@@ -1,240 +1,138 @@
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
+import { helixGridTheme } from '@gravionlabs/helix-ag-grid';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  type ElementRef,
-  type OnInit,
-  viewChild,
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@gravionlabs/helix-core/api';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { IconFieldModule } from '@gravionlabs/helix-core/iconfield';
-import { InputIconModule } from '@gravionlabs/helix-core/inputicon';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { MultiSelectModule } from '@gravionlabs/helix-core/multiselect';
-import { ProgressBarModule } from '@gravionlabs/helix-core/progressbar';
-import { RatingModule } from '@gravionlabs/helix-core/rating';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { SelectModule } from '@gravionlabs/helix-core/select';
-import { SliderModule } from '@gravionlabs/helix-core/slider';
-import { type Table, TableModule } from '@gravionlabs/helix-core/table';
-import { TagModule } from '@gravionlabs/helix-core/tag';
-import { ToastModule } from '@gravionlabs/helix-core/toast';
-import { ToggleButtonModule } from '@gravionlabs/helix-core/togglebutton';
-import { ObjectUtils } from '@gravionlabs/helix-core/utils';
+  HxButton,
+  HxIconField,
+  HxInput,
+  HxInputIcon,
+  HxMessageService,
+  HxToast,
+} from '@gravionlabs/helix-ui';
+import { AgGridAngular } from 'ag-grid-angular';
 import {
-  type Customer,
-  CustomerService,
-  type Representative,
-} from '@/app/pages/service/customer.service';
-import { type Product, ProductService } from '@/app/pages/service/product.service';
+  AllCommunityModule,
+  type ColDef,
+  type GridApi,
+  type GridReadyEvent,
+  ModuleRegistry,
+  type ValueFormatterParams,
+} from 'ag-grid-community';
+import { type Customer, CustomerService } from '@/app/pages/service/customer.service';
+import { HxGridSection } from '../sections/grid/grid-section';
+import { ActionCell, ActivityCell, StatusCell, type TableContext } from './table-cells';
 
-interface expandedRows {
-  [key: string]: boolean;
-}
+ModuleRegistry.registerModules([AllCommunityModule]);
 
+/**
+ * An AG Grid showcase on helix-ui: the Helix grid theme, text, number and date filters, a quick filter, multi-row
+ * selection, a row action, tags and progress bars in cells, paging and the loading overlay. Row grouping, master/detail
+ * and Excel export are AG Grid Enterprise and are not shown.
+ */
 @Component({
   selector: 'app-table-demo',
   standalone: true,
-  imports: [
-    TableModule,
-    MultiSelectModule,
-    SelectModule,
-    InputIconModule,
-    TagModule,
-    InputTextModule,
-    SliderModule,
-    ProgressBarModule,
-    ToggleButtonModule,
-    ToastModule,
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    RatingModule,
-    RippleModule,
-    IconFieldModule,
-  ],
+  imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxInputIcon, HxToast],
   templateUrl: './table-demo.html',
   styleUrl: './table-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [ConfirmationService, MessageService, CustomerService, ProductService],
+  providers: [CustomerService],
 })
 export class TableDemo implements OnInit {
-  customers1: Customer[] = [];
+  readonly #customers = inject(CustomerService);
+  readonly #messages = inject(HxMessageService);
+  #api: GridApi<Customer> | undefined;
 
-  customers2: Customer[] = [];
+  protected readonly theme = helixGridTheme;
+  readonly rows = signal<Customer[]>([]);
+  readonly loading = signal(true);
+  readonly quickFilter = signal('');
+  readonly selectedCount = signal(0);
 
-  customers3: Customer[] = [];
+  protected readonly context: TableContext = {
+    view: (customer) =>
+      this.#messages.add({
+        severity: 'info',
+        summary: customer.name ?? '',
+        detail: `${customer.company} · ${customer.country?.name}`,
+        life: 3000,
+      }),
+  };
 
-  selectedCustomers1: Customer[] = [];
-
-  selectedCustomer: Customer = {};
-
-  representatives: Representative[] = [];
-
-  statuses: any[] = [];
-
-  products: Product[] = [];
-
-  rowGroupMetadata: any;
-
-  expandedRows: expandedRows = {};
-
-  activityValues: number[] = [0, 100];
-
-  isExpanded: boolean = false;
-
-  balanceFrozen: boolean = false;
-
-  loading: boolean = true;
-
-  readonly filter = viewChild.required<ElementRef>('filter');
-
-  constructor(
-    private customerService: CustomerService,
-    private productService: ProductService,
-  ) {}
+  protected readonly defaultColDef: ColDef<Customer> = {
+    sortable: true,
+    filter: true,
+    resizable: true,
+  };
+  protected readonly columns: ColDef<Customer>[] = [
+    {
+      field: 'name',
+      headerName: 'Name',
+      pinned: 'left',
+      minWidth: 170,
+      filter: 'agTextColumnFilter',
+    },
+    { field: 'country.name', headerName: 'Country', minWidth: 150, filter: 'agTextColumnFilter' },
+    { field: 'company', headerName: 'Company', minWidth: 200, filter: 'agTextColumnFilter' },
+    {
+      field: 'representative.name',
+      headerName: 'Representative',
+      minWidth: 170,
+      filter: 'agTextColumnFilter',
+    },
+    {
+      field: 'date',
+      headerName: 'Date',
+      minWidth: 130,
+      filter: 'agDateColumnFilter',
+      valueFormatter: (p: ValueFormatterParams) =>
+        p.value ? new Date(p.value).toLocaleDateString('en-US') : '',
+      filterValueGetter: (p) => (p.data?.date ? new Date(p.data.date) : null),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      minWidth: 140,
+      filter: 'agTextColumnFilter',
+      cellRenderer: StatusCell,
+    },
+    {
+      field: 'activity',
+      headerName: 'Activity',
+      minWidth: 170,
+      filter: 'agNumberColumnFilter',
+      cellRenderer: ActivityCell,
+    },
+    {
+      headerName: '',
+      width: 110,
+      sortable: false,
+      filter: false,
+      resizable: false,
+      cellRenderer: ActionCell,
+    },
+  ];
 
   ngOnInit() {
-    this.customerService.getCustomersLarge().then((customers) => {
-      this.customers1 = customers;
-      this.loading = false;
-
-      this.customers1.forEach((customer) => {
-        if (customer.date) {
-          customer.date = new Date(customer.date).toISOString();
-        }
-      });
+    this.#customers.getCustomersMedium().then((customers) => {
+      this.rows.set(customers);
+      this.loading.set(false);
     });
-    this.customerService.getCustomersMedium().then((customers) => (this.customers2 = customers));
-    this.customerService.getCustomersLarge().then((customers) => (this.customers3 = customers));
-    this.productService.getProductsWithOrdersSmall().then((data) => (this.products = data));
-
-    this.representatives = [
-      { name: 'Amy Elsner', image: 'amyelsner.png' },
-      { name: 'Anna Fali', image: 'annafali.png' },
-      { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-      { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-      { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-      { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-      { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-      { name: 'Onyama Limba', image: 'onyamalimba.png' },
-      { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-      { name: 'XuXue Feng', image: 'xuxuefeng.png' },
-    ];
-
-    this.statuses = [
-      { label: 'Unqualified', value: 'unqualified' },
-      { label: 'Qualified', value: 'qualified' },
-      { label: 'New', value: 'new' },
-      { label: 'Negotiation', value: 'negotiation' },
-      { label: 'Renewal', value: 'renewal' },
-      { label: 'Proposal', value: 'proposal' },
-    ];
   }
 
-  onSort() {
-    this.updateRowGroupMetaData();
+  onGridReady(event: GridReadyEvent<Customer>) {
+    this.#api = event.api;
   }
 
-  updateRowGroupMetaData() {
-    this.rowGroupMetadata = {};
-
-    if (this.customers3) {
-      for (let i = 0; i < this.customers3.length; i++) {
-        const rowData = this.customers3[i];
-        const representativeName = rowData?.representative?.name || '';
-
-        if (i === 0) {
-          this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-        } else {
-          const previousRowData = this.customers3[i - 1];
-          const previousRowGroup = previousRowData?.representative?.name;
-          if (representativeName === previousRowGroup) {
-            this.rowGroupMetadata[representativeName].size++;
-          } else {
-            this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-          }
-        }
-      }
-    }
+  onSelectionChanged() {
+    this.selectedCount.set(this.#api?.getSelectedRows().length ?? 0);
   }
 
-  expandAll() {
-    if (ObjectUtils.isEmpty(this.expandedRows)) {
-      this.expandedRows = this.products.reduce(
-        (acc, p) => {
-          if (p.id) {
-            acc[p.id] = true;
-          }
-          return acc;
-        },
-        {} as { [key: string]: boolean },
-      );
-      this.isExpanded = true;
-    } else {
-      this.collapseAll();
-    }
+  clearFilters() {
+    this.#api?.setFilterModel(null);
+    this.quickFilter.set('');
   }
 
-  collapseAll() {
-    this.expandedRows = {};
-    this.isExpanded = false;
-  }
-
-  formatCurrency(value: number) {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  }
-
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-  }
-
-  clear(table: Table) {
-    table.clear();
-    this.filter().nativeElement.value = '';
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'qualified':
-      case 'instock':
-      case 'INSTOCK':
-      case 'DELIVERED':
-      case 'delivered':
-        return 'success';
-
-      case 'negotiation':
-      case 'lowstock':
-      case 'LOWSTOCK':
-      case 'PENDING':
-      case 'pending':
-        return 'warn';
-
-      case 'unqualified':
-      case 'outofstock':
-      case 'OUTOFSTOCK':
-      case 'CANCELLED':
-      case 'cancelled':
-        return 'danger';
-
-      default:
-        return 'info';
-    }
-  }
-
-  calculateCustomerTotal(name: string) {
-    let total = 0;
-
-    if (this.customers2) {
-      for (const customer of this.customers2) {
-        if (customer.representative?.name === name) {
-          total++;
-        }
-      }
-    }
-
-    return total;
+  clearSelection() {
+    this.#api?.deselectAll();
   }
 }

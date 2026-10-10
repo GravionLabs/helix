@@ -3,13 +3,19 @@
     <h2 class="demo-title">Notifications</h2>
     <div>
       <button
-        hButton
+        hx-button
         type="button"
-        icon="pi pi-ellipsis-v"
-        class="h-button-rounded h-button-text h-button-plain"
+        iconOnly
+        rounded
+        variant="text"
+        severity="secondary"
+        aria-haspopup="menu"
+        aria-label="Actions"
         (click)="menu.toggle($event)"
-      ></button>
-      <h-menu #menu [popup]="true" [model]="items"></h-menu>
+      >
+        <span class="pi pi-ellipsis-v hx-button-icon" aria-hidden="true"></span>
+      </button>
+      <hx-menu #menu popup ariaLabel="Actions" [model]="items" />
     </div>
   </div>
 

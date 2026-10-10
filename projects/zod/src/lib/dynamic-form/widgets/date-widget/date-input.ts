@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { type FormValueControl, transformedValue } from '@angular/forms/signals';
+import { HxInput } from '@gravionlabs/helix-ui';
 
 function toIsoDate(value: Date): string {
   const y = value.getFullYear().toString().padStart(4, '0');
@@ -15,6 +16,7 @@ function toIsoDate(value: Date): string {
 @Component({
   selector: 'helix-date-input',
   standalone: true,
+  imports: [HxInput],
   templateUrl: './date-input.html',
   styleUrl: './date-input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

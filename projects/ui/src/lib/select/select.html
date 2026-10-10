@@ -6,7 +6,7 @@
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
   aria-haspopup="listbox"
-  [id]="inputId() ?? null"
+  [attr.id]="inputId() ?? null"
   [disabled]="isDisabled()"
   [attr.aria-expanded]="open()"
   [attr.aria-controls]="open() ? panelId : null"

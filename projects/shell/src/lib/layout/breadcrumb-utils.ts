@@ -1,13 +1,13 @@
 import type { ActivatedRoute } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 
-export function helixBreadcrumbsFromRoutes(route: ActivatedRoute): MenuItem[] {
+export function helixBreadcrumbsFromRoutes(route: ActivatedRoute): HxMenuItem[] {
   let deepest: ActivatedRoute | null = route;
   while (deepest.firstChild) {
     deepest = deepest.firstChild;
   }
 
-  const breadcrumbs: MenuItem[] = [];
+  const breadcrumbs: HxMenuItem[] = [];
   const routePath: { url: string; snapshot: typeof route.snapshot }[] = [];
 
   let current: ActivatedRoute | null = deepest;

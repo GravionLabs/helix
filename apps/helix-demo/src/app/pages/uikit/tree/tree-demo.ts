@@ -1,48 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import type { TreeNode } from '@gravionlabs/helix-core/api';
-import { TreeModule } from '@gravionlabs/helix-core/tree';
-import { TreeTableModule } from '@gravionlabs/helix-core/treetable';
+import { HxTree, type HxTreeNode, type HxTreeSelection } from '@gravionlabs/helix-ui';
 import { NodeService } from '@/app/pages/service/node.service';
+import { HxDataSection } from '../sections/data/data-section';
 
+/** The tree of `@gravionlabs/helix-ui` (the tree table is not part of it: use the data grid for tabular data). */
 @Component({
   selector: 'app-tree-demo',
   standalone: true,
-  imports: [CommonModule, FormsModule, TreeModule, TreeTableModule],
+  imports: [HxDataSection, HxTree],
   templateUrl: './tree-demo.html',
   styleUrl: './tree-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [NodeService],
 })
 export class TreeDemo implements OnInit {
-  treeValue = signal<TreeNode[]>([]);
+  readonly #nodes = inject(NodeService);
 
-  treeTableValue = signal<TreeNode[]>([]);
-
-  selectedTreeValue: TreeNode[] = [];
-
-  selectedTreeTableValue = {};
-
-  cols: any[] = [];
-
-  nodeService = inject(NodeService);
+  readonly treeValue = signal<HxTreeNode[]>([]);
+  readonly selected = signal<HxTreeSelection>([]);
 
   ngOnInit() {
-    this.nodeService.getFiles().then((files) => this.treeValue.set(files));
-    this.nodeService.getTreeTableNodes().then((files: any) => this.treeTableValue.set(files));
-
-    this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'size', header: 'Size' },
-      { field: 'type', header: 'Type' },
-    ];
-
-    this.selectedTreeTableValue = {
-      '0-0': {
-        partialChecked: false,
-        checked: true,
-      },
-    };
+    this.#nodes.getFiles().then((files) => this.treeValue.set(files as HxTreeNode[]));
   }
 }

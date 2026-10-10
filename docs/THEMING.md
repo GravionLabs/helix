@@ -137,7 +137,7 @@ The tokens, the brand book and static previews of the components are generated a
 Components of `helix-core` were themed by a runtime engine: `provideHelix({ theme: { preset } })`, `definePreset`,
 `updatePreset`, `updatePrimaryPalette`, `updateSurfacePalette`, `$t` and `$dt`, with the presets `helixPreset`,
 `auraPreset`, `laraPreset` and `noraPreset`. That API belongs to `helix-core` and goes with it; it is described in
-[`themes`](components/themes.md) for as long as the package exists. The look is the same: the Helix preset is the
+`themes` of `helix-core` for as long as the package exists. The look is the same: the Helix preset is the
 data of `projects/tokens`, the variables have the same names, and an application that still renders core components
 reads the same `--h-*` variables that `HxTheme` overrides. The mapping from the old calls to the new ones is part
 of the migration guide (issue #673).

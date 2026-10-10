@@ -10,20 +10,8 @@ import { RatingWidget } from './dynamicform-advanced/rating-widget';
 import { DynamicFormJsonDemo } from './dynamicform-json/dynamic-form-json-demo';
 import { FileDemo } from './file/file-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
-import { HxBlocksDemo } from './hx-blocks/hx-blocks-demo';
-import { HxButtonDemo } from './hx-button/hx-button-demo';
-import { HxContainersDemo } from './hx-containers/hx-containers-demo';
-import { HxDataDemo } from './hx-data/hx-data-demo';
-import { HxDisplayDemo } from './hx-display/hx-display-demo';
-import { HxFormDemo } from './hx-form/hx-form-demo';
-import { HxGridDemo } from './hx-grid/hx-grid-demo';
-import { HxInputsDemo } from './hx-inputs/hx-inputs-demo';
-import { HxNavigationDemo } from './hx-navigation/hx-navigation-demo';
-import { HxOverlaysDemo } from './hx-overlays/hx-overlays-demo';
-import { HxSelectDemo } from './hx-select/hx-select-demo';
 import { InputDemo } from './input/input-demo';
 import { ListDemo } from './list/list-demo';
-import { MediaDemo } from './media/media-demo';
 import { MenuDemo } from './menu/menu-demo';
 import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
@@ -43,20 +31,8 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'dynamicform-json': DynamicFormJsonDemo,
   file: FileDemo,
   formlayout: FormLayoutDemo,
-  'hx-blocks': HxBlocksDemo,
-  'hx-button': HxButtonDemo,
-  'hx-containers': HxContainersDemo,
-  'hx-data': HxDataDemo,
-  'hx-display': HxDisplayDemo,
-  'hx-form': HxFormDemo,
-  'hx-grid': HxGridDemo,
-  'hx-inputs': HxInputsDemo,
-  'hx-navigation': HxNavigationDemo,
-  'hx-overlays': HxOverlaysDemo,
-  'hx-select': HxSelectDemo,
   input: InputDemo,
   list: ListDemo,
-  media: MediaDemo,
   menu: MenuDemo,
   message: MessagesDemo,
   misc: MiscDemo,

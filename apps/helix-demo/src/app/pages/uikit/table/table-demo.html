@@ -1,497 +1,55 @@
 <h1 class="sr-only">Table</h1>
-<div class="card">
-      <h2 class="demo-title mb-2!">Filtering</h2>
-      <h-table
-        #dt1
-        [value]="customers1"
-        dataKey="id"
-        [rows]="10"
-        [loading]="loading"
-        [rowHover]="true"
-        [showGridlines]="true"
-        [paginator]="true"
-        [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-        responsiveLayout="scroll"
-      >
-        <ng-template #caption>
-          <div class="flex justify-between items-center flex-column sm:flex-row">
-            <button
-              hButton
-              label="Clear"
-              class="h-button-outlined mb-1"
-              icon="pi pi-filter-slash"
-              (click)="clear(dt1)"
-            ></button>
-            <h-iconfield iconPosition="left" class="ml-auto">
-              <h-inputicon>
-                <i class="pi pi-search"></i>
-              </h-inputicon>
-              <input
-                hInputText
-                type="text"
-                (input)="onGlobalFilter(dt1, $event)"
-                placeholder="Search keyword"
-              />
-            </h-iconfield>
-          </div>
-        </ng-template>
-        <ng-template #header>
-          <tr>
-            <th style="min-width: 12rem">
-              <div class="flex justify-between items-center">
-                Name
-                <h-columnFilter
-                  type="text"
-                  field="name"
-                  display="menu"
-                  placeholder="Search by name"
-                ></h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 12rem">
-              <div class="flex justify-between items-center">
-                Country
-                <h-columnFilter
-                  type="text"
-                  field="country.name"
-                  display="menu"
-                  placeholder="Search by country"
-                ></h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 14rem">
-              <div class="flex justify-between items-center">
-                Agent
-                <h-columnFilter
-                  field="representative"
-                  matchMode="in"
-                  display="menu"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                >
-                  <ng-template #header>
-                    <div class="px-3 pt-3 pb-0">
-                      <span class="font-bold">Agent Picker</span>
-                    </div>
-                  </ng-template>
-                  <ng-template #filter let-value let-filter="filterCallback">
-                    <h-multiselect
-                      [ngModel]="value"
-                      [options]="representatives"
-                      placeholder="Any"
-                      (onChange)="filter($event.value)"
-                      optionLabel="name"
-                      styleClass="w-full"
-                    >
-                      <ng-template let-option #item>
-                        <div class="flex items-center gap-1 w-44">
-                          <img
-                            [alt]="option.label"
-                            src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
-                              option.image
-                            }}"
-                            width="32"
-                          />
-                          <span>{{ option.name }}</span>
-                        </div>
-                      </ng-template>
-                    </h-multiselect>
-                  </ng-template>
-                </h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 10rem">
-              <div class="flex justify-between items-center">
-                Date
-                <h-columnFilter
-                  type="date"
-                  field="date"
-                  display="menu"
-                  placeholder="mm/dd/yyyy"
-                ></h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 10rem">
-              <div class="flex justify-between items-center">
-                Balance
-                <h-columnFilter
-                  type="numeric"
-                  field="balance"
-                  display="menu"
-                  currency="USD"
-                ></h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 12rem">
-              <div class="flex justify-between items-center">
-                Status
-                <h-columnFilter field="status" matchMode="equals" display="menu">
-                  <ng-template #filter let-value let-filter="filterCallback">
-                    <h-select
-                      [ngModel]="value"
-                      [options]="statuses"
-                      (onChange)="filter($event.value)"
-                      placeholder="Any"
-                      [style]="{ 'min-width': '12rem' }"
-                    >
-                      <ng-template let-option #item>
-                        <span [class]="'customer-badge status-' + option.value">{{
-                          option.label
-                        }}</span>
-                      </ng-template>
-                    </h-select>
-                  </ng-template>
-                </h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 12rem">
-              <div class="flex justify-between items-center">
-                Activity
-                <h-columnFilter
-                  field="activity"
-                  matchMode="between"
-                  display="menu"
-                  [showMatchModes]="false"
-                  [showOperator]="false"
-                  [showAddButton]="false"
-                >
-                  <ng-template #filter let-filter="filterCallback">
-                    <h-slider
-                      [ngModel]="activityValues"
-                      [range]="true"
-                      (onSlideEnd)="filter($event.values)"
-                      styleClass="m-3"
-                      [style]="{ 'min-width': '12rem' }"
-                    ></h-slider>
-                    <div class="flex items-center justify-between px-2">
-                      <span>{{ activityValues[0] }}</span>
-                      <span>{{ activityValues[1] }}</span>
-                    </div>
-                  </ng-template>
-                </h-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 8rem">
-              <div class="flex justify-between items-center">
-                Verified
-                <h-columnFilter type="boolean" field="verified" display="menu"></h-columnFilter>
-              </div>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template #body let-customer>
-          <tr>
-            <td>
-              {{ customer.name }}
-            </td>
-            <td>
-              <div class="flex items-center gap-1">
-                <img
-                  src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                  [class]="'flag flag-' + customer.country.code"
-                  width="30"
-                />
-                <span>{{ customer.country.name }}</span>
-              </div>
-            </td>
-            <td>
-              <div class="flex items-center gap-1">
-                <img
-                  [alt]="customer.representative.name"
-                  src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
-                    customer.representative.image
-                  }}"
-                  width="32"
-                  style="vertical-align: middle"
-                />
-                <span class="image-text">{{ customer.representative.name }}</span>
-              </div>
-            </td>
-            <td>
-              {{ customer.date | date: 'MM/dd/yyyy' }}
-            </td>
-            <td>
-              {{ customer.balance | currency: 'USD' : 'symbol' }}
-            </td>
-            <td>
-              <h-tag
-                [value]="customer.status.toLowerCase()"
-                [severity]="getSeverity(customer.status.toLowerCase())"
-                styleClass="dark:bg-surface-900!"
-              />
-            </td>
-            <td>
-              <h-progressbar
-                [value]="customer.activity"
-                [showValue]="false"
-                [style]="{ height: '0.5rem' }"
-              />
-            </td>
-            <td class="text-center">
-              <h-tag
-                [value]="customer.status.toLowerCase()"
-                [severity]="getSeverity(customer.status.toLowerCase())"
-                styleClass="dark:bg-surface-900!"
-              />
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template #emptymessage>
-          <tr>
-            <td colspan="8">No customers found.</td>
-          </tr>
-        </ng-template>
-        <ng-template #loadingbody>
-          <tr>
-            <td colspan="8">Loading customers data. Please wait.</td>
-          </tr>
-        </ng-template>
-      </h-table>
-    </div>
-
-    <div class="card">
-      <h2 class="demo-title mb-2!">Frozen Columns</h2>
-      <h-togglebutton
-        [(ngModel)]="balanceFrozen"
-        [onIcon]="'pi pi-lock'"
-        offIcon="pi pi-lock-open"
-        [onLabel]="'Balance'"
-        offLabel="Balance"
+<div class="card flex flex-col gap-3">
+  <h2 class="demo-title">Customers</h2>
+  <p class="m-0">
+    Interactive tables are AG Grid Community with the Helix theme (<code>helixGridTheme</code> of
+    <code>&#64;gravionlabs/helix-ag-grid</code>): column filters (text, number, date), quick filter, sorting, pinning,
+    multi-row selection, paging, and tags, progress bars and buttons in the cells. Small static tables use
+    <code>table[hx-table]</code> (see the dashboard).
+  </p>
+  <div class="flex flex-wrap items-center gap-3">
+    <hx-icon-field>
+      <i class="pi pi-search" hx-input-icon></i>
+      <input
+        hx-input
+        type="search"
+        placeholder="Search all columns"
+        aria-label="Search all columns"
+        [value]="quickFilter()"
+        (input)="quickFilter.set($any($event.target).value)"
       />
-
-      <h-table [value]="customers2" [scrollable]="true" scrollHeight="400px" styleClass="mt-1">
-        <ng-template #header>
-          <tr>
-            <th style="min-width:200px" hFrozenColumn class="font-bold">Name</th>
-            <th style="min-width:100px">Id</th>
-            <th style="min-width:200px">Country</th>
-            <th style="min-width:200px">Date</th>
-            <th style="min-width:200px">Company</th>
-            <th style="min-width:200px">Status</th>
-            <th style="min-width:200px">Activity</th>
-            <th style="min-width:200px">Representative</th>
-            <th
-              style="min-width:200px"
-              alignFrozen="right"
-              hFrozenColumn
-              [frozen]="balanceFrozen"
-              [ngClass]="{ 'font-bold': balanceFrozen }"
-            >
-              Balance
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template #body let-customer>
-          <tr>
-            <td hFrozenColumn class="font-bold">{{ customer.name }}</td>
-            <td style="min-width:100px">{{ customer.id }}</td>
-            <td>{{ customer.country.name }}</td>
-            <td>{{ customer.date }}</td>
-            <td>{{ customer.company }}</td>
-            <td>{{ customer.status }}</td>
-            <td>{{ customer.activity }}</td>
-            <td>{{ customer.representative.name }}</td>
-            <td
-              alignFrozen="right"
-              hFrozenColumn
-              [frozen]="balanceFrozen"
-              [ngClass]="{ 'font-bold': balanceFrozen }"
-            >
-              {{ formatCurrency(customer.balance) }}
-            </td>
-          </tr>
-        </ng-template>
-      </h-table>
-    </div>
-
-    <div class="card">
-      <h2 class="demo-title mb-2!">Row Expansion</h2>
-      <h-table
-        [value]="products"
-        dataKey="id"
-        [tableStyle]="{ 'min-width': '60rem' }"
-        [expandedRowKeys]="expandedRows"
-      >
-        <ng-template #caption>
-          <button
-            hButton
-            icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}"
-            label="{{ isExpanded ? 'Collapse All' : 'Expand All' }}"
-            (click)="expandAll()"
-          ></button>
-          <div class="flex table-header"></div>
-        </ng-template>
-        <ng-template #header>
-          <tr>
-            <th style="width: 5rem"></th>
-            <th hSortableColumn="name">Name <h-sortIcon field="name" /></th>
-            <th>Image</th>
-            <th hSortableColumn="price">Price <h-sortIcon field="price" /></th>
-            <th hSortableColumn="category">Category <h-sortIcon field="category" /></th>
-            <th hSortableColumn="rating">Reviews <h-sortIcon field="rating" /></th>
-            <th hSortableColumn="inventoryStatus">Status <h-sortIcon field="inventoryStatus" /></th>
-          </tr>
-        </ng-template>
-        <ng-template #body let-product let-expanded="expanded">
-          <tr>
-            <td>
-              <h-button
-                type="button"
-                hRipple
-                [hRowToggler]="product"
-                [text]="true"
-                [rounded]="true"
-                [plain]="true"
-                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-              />
-            </td>
-            <td>{{ product.name }}</td>
-            <td>
-              <img
-                [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                [alt]="product.name"
-                width="50"
-                class="shadow-lg"
-              />
-            </td>
-            <td>{{ product.price | currency: 'USD' }}</td>
-            <td>{{ product.category }}</td>
-            <td>
-              <h-rating [ngModel]="product.rating" [readonly]="true" />
-            </td>
-            <td>
-              <h-tag
-                [value]="product.inventoryStatus"
-                [severity]="getSeverity(product.inventoryStatus)"
-              />
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template #expandedrow let-product>
-          <tr>
-            <td colspan="7">
-              <div class="p-4">
-                <h5>Orders for {{ product.name }}</h5>
-                <h-table [value]="product.orders" dataKey="id">
-                  <ng-template #header>
-                    <tr>
-                      <th hSortableColumn="id">Id <h-sortIcon field="price" /></th>
-                      <th hSortableColumn="customer">
-                        Customer
-                        <h-sortIcon field="customer" />
-                      </th>
-                      <th hSortableColumn="date">Date <h-sortIcon field="date" /></th>
-                      <th hSortableColumn="amount">
-                        Amount
-                        <h-sortIcon field="amount" />
-                      </th>
-                      <th hSortableColumn="status">
-                        Status
-                        <h-sortIcon field="status" />
-                      </th>
-                      <th style="width: 4rem"></th>
-                    </tr>
-                  </ng-template>
-                  <ng-template #body let-order>
-                    <tr>
-                      <td>{{ order.id }}</td>
-                      <td>{{ order.customer }}</td>
-                      <td>{{ order.date }}</td>
-                      <td>
-                        {{ order.amount | currency: 'USD' }}
-                      </td>
-                      <td>
-                        <h-tag [value]="order.status" [severity]="getSeverity(order.status)" />
-                      </td>
-                      <td>
-                        <h-button type="button" icon="pi pi-search" />
-                      </td>
-                    </tr>
-                  </ng-template>
-                  <ng-template #emptymessage>
-                    <tr>
-                      <td colspan="6">There are no order for this product yet.</td>
-                    </tr>
-                  </ng-template>
-                </h-table>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </h-table>
-    </div>
-
-    <div class="card">
-      <h2 class="demo-title mb-2!">Grouping</h2>
-      <h-table
-        [value]="customers3"
-        sortField="representative.name"
-        sortMode="single"
-        [scrollable]="true"
-        scrollHeight="400px"
-        rowGroupMode="subheader"
-        groupRowsBy="representative.name"
-        [tableStyle]="{ 'min-width': '60rem' }"
-      >
-        <ng-template #header>
-          <tr>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Company</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-        </ng-template>
-        <ng-template #groupheader let-customer>
-          <tr hRowGroupHeader>
-            <td colspan="5">
-              <div class="flex items-center gap-1">
-                <img
-                  [alt]="customer.representative.name"
-                  src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{
-                    customer.representative.image
-                  }}"
-                  width="32"
-                  style="vertical-align: middle"
-                />
-                <span class="font-bold">{{ customer.representative.name }}</span>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template #groupfooter let-customer>
-          <tr>
-            <td colspan="5" class="text-right font-bold pr-12">
-              Total Customers: {{ calculateCustomerTotal(customer.representative.name) }}
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template #body let-customer let-rowIndex="rowIndex">
-          <tr>
-            <td>
-              {{ customer.name }}
-            </td>
-            <td>
-              <div class="flex items-center gap-1">
-                <img
-                  src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                  [class]="'flag flag-' + customer.country.code"
-                  style="width: 20px"
-                />
-                <span>{{ customer.country.name }}</span>
-              </div>
-            </td>
-            <td>
-              {{ customer.company }}
-            </td>
-            <td>
-              <h-tag [value]="customer.status" [severity]="getSeverity(customer.status)" />
-            </td>
-            <td>
-              {{ customer.date }}
-            </td>
-          </tr>
-        </ng-template>
-      </h-table>
-    </div>
+    </hx-icon-field>
+    <button hx-button type="button" variant="outlined" severity="secondary" (click)="clearFilters()">
+      <span class="pi pi-filter-slash hx-button-icon" aria-hidden="true"></span>
+      Clear filters
+    </button>
+    <button
+      hx-button
+      type="button"
+      variant="text"
+      severity="secondary"
+      [disabled]="selectedCount() === 0"
+      (click)="clearSelection()"
+    >
+      Clear selection ({{ selectedCount() }})
+    </button>
+  </div>
+  <ag-grid-angular
+    style="height: 32rem"
+    [theme]="theme"
+    [rowData]="rows()"
+    [columnDefs]="columns"
+    [defaultColDef]="defaultColDef"
+    [rowSelection]="{ mode: 'multiRow' }"
+    [pagination]="true"
+    [paginationPageSize]="10"
+    [paginationPageSizeSelector]="[10, 20, 50]"
+    [quickFilterText]="quickFilter()"
+    [loading]="loading()"
+    [context]="context"
+    (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectionChanged()"
+  />
+</div>
+<hx-toast />
+<app-grid-section class="mt-6 block" />

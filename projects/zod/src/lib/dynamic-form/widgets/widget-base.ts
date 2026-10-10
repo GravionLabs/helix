@@ -28,6 +28,12 @@ export abstract class HelixFieldWidgetBase<T = any> {
     });
   });
 
+  /** The invalid look of a control that shows it itself: only after the user touched the field. */
+  protected readonly showInvalid = computed(() => {
+    const state = this.state();
+    return state.touched() && state.invalid();
+  });
+
   protected readonly label = computed(
     () => this.descriptor().meta.label ?? humanize(this.descriptor().key),
   );

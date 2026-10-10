@@ -1,375 +1,289 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, type OnInit, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService, MessageService } from '@gravionlabs/helix-core/api';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { ConfirmDialogModule } from '@gravionlabs/helix-core/confirmdialog';
-import { DialogModule } from '@gravionlabs/helix-core/dialog';
-import { IconFieldModule } from '@gravionlabs/helix-core/iconfield';
-import { InputIconModule } from '@gravionlabs/helix-core/inputicon';
-import { InputNumberModule } from '@gravionlabs/helix-core/inputnumber';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { RadioButtonModule } from '@gravionlabs/helix-core/radiobutton';
-import { RatingModule } from '@gravionlabs/helix-core/rating';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { SelectModule } from '@gravionlabs/helix-core/select';
-import { type Table, TableModule } from '@gravionlabs/helix-core/table';
-import { TagModule } from '@gravionlabs/helix-core/tag';
-import { TextareaModule } from '@gravionlabs/helix-core/textarea';
-import { ToastModule } from '@gravionlabs/helix-core/toast';
-import { ToolbarModule } from '@gravionlabs/helix-core/toolbar';
+import { currencyFormatter, helixGridTheme } from '@gravionlabs/helix-ag-grid';
+import {
+  HxButton,
+  HxConfirmationService,
+  HxConfirmDialog,
+  HxDialog,
+  HxIconField,
+  HxInput,
+  HxInputIcon,
+  HxInputNumber,
+  HxMessageService,
+  HxRadio,
+  HxSelect,
+  HxToast,
+  HxToolbar,
+} from '@gravionlabs/helix-ui';
+import { AgGridAngular } from 'ag-grid-angular';
+import {
+  AllCommunityModule,
+  type ColDef,
+  type GridApi,
+  type GridReadyEvent,
+  ModuleRegistry,
+} from 'ag-grid-community';
 import { type Product, ProductService } from '@/app/pages/service/product.service';
+import {
+  CrudActionsCell,
+  type CrudContext,
+  CrudImageCell,
+  CrudRatingCell,
+  CrudStatusCell,
+} from './crud-cells';
 
-interface Column {
-  field: string;
-  header: string;
-  customExportHeader?: string;
-}
+ModuleRegistry.registerModules([AllCommunityModule]);
 
-interface ExportColumn {
-  title: string;
-  dataKey: string;
-}
-
+/**
+ * Create, read, update, delete on helix-ui: `hx-toolbar`, an AG Grid (helix-ag-grid theme) for the list with row
+ * selection, quick filter, sorting and paging, `hx-dialog` for the form, `hx-confirm-dialog` for the delete questions
+ * and `hx-toast` for the result.
+ */
 @Component({
   selector: 'app-crud',
   standalone: true,
   imports: [
     CommonModule,
-    TableModule,
     FormsModule,
-    ButtonModule,
-    RippleModule,
-    ToastModule,
-    ToolbarModule,
-    RatingModule,
-    InputTextModule,
-    TextareaModule,
-    SelectModule,
-    RadioButtonModule,
-    InputNumberModule,
-    DialogModule,
-    TagModule,
-    InputIconModule,
-    IconFieldModule,
-    ConfirmDialogModule,
+    AgGridAngular,
+    HxButton,
+    HxToolbar,
+    HxIconField,
+    HxInputIcon,
+    HxInput,
+    HxInputNumber,
+    HxSelect,
+    HxRadio,
+    HxDialog,
+    HxConfirmDialog,
+    HxToast,
   ],
   template: `
-    <h-toolbar styleClass="mb-3">
-      <ng-template #start>
-        <h-button
-          label="New"
-          icon="pi pi-plus"
+    <hx-toolbar class="mb-3">
+      <span hxToolbarStart class="flex gap-2">
+        <button hx-button type="button" severity="secondary" (click)="openNew()">
+          <span class="pi pi-plus hx-button-icon" aria-hidden="true"></span>
+          New
+        </button>
+        <button
+          hx-button
+          type="button"
           severity="secondary"
-          class="mr-2"
-          (onClick)="openNew()"
+          variant="outlined"
+          [disabled]="selectedCount() === 0"
+          (click)="deleteSelectedProducts()"
+        >
+          <span class="pi pi-trash hx-button-icon" aria-hidden="true"></span>
+          Delete
+        </button>
+      </span>
+      <button hxToolbarEnd hx-button type="button" severity="secondary" (click)="exportCSV()">
+        <span class="pi pi-upload hx-button-icon" aria-hidden="true"></span>
+        Export
+      </button>
+    </hx-toolbar>
+
+    <div class="card">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="demo-title m-0">Manage Products</h2>
+        <hx-icon-field>
+          <i class="pi pi-search" hx-input-icon></i>
+          <input
+            hx-input
+            type="search"
+            placeholder="Search..."
+            aria-label="Search products"
+            (input)="quickFilter.set($any($event.target).value)"
           />
-        <h-button
-          severity="secondary"
-          label="Delete"
-          icon="pi pi-trash"
-          outlined
-          (onClick)="deleteSelectedProducts()"
-          [disabled]="!selectedProducts || !selectedProducts.length"
+        </hx-icon-field>
+      </div>
+      <ag-grid-angular
+        [theme]="theme"
+        [rowData]="products()"
+        [columnDefs]="columns"
+        [defaultColDef]="defaultColDef"
+        [getRowId]="rowId"
+        [rowSelection]="{ mode: 'multiRow' }"
+        [pagination]="true"
+        [paginationPageSize]="10"
+        [paginationPageSizeSelector]="[10, 20, 30]"
+        [quickFilterText]="quickFilter()"
+        [context]="context"
+        domLayout="autoHeight"
+        (gridReady)="onGridReady($event)"
+        (selectionChanged)="onSelectionChanged()"
+      />
+    </div>
+
+    <hx-dialog [(visible)]="productDialog" header="Product Details" width="28rem">
+      <div class="flex flex-col gap-3">
+        @if (product.image) {
+          <img
+            [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+            alt=""
+            class="m-auto block pb-4"
           />
-      </ng-template>
-    
-      <ng-template #end>
-        <h-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-      </ng-template>
-    </h-toolbar>
-    
-    <h-table
-      #dt
-      [value]="products()"
-      [rows]="10"
-      [columns]="cols"
-      [paginator]="true"
-      [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-      [tableStyle]="{ 'min-width': '75rem' }"
-      [(selection)]="selectedProducts"
-      [rowHover]="true"
-      dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10, 20, 30]"
-      >
-      <ng-template #caption>
-        <div class="flex items-center justify-between">
-          <h5 class="m-0">Manage Products</h5>
-          <h-iconfield>
-            <h-inputicon styleClass="pi pi-search" />
-            <input
-              hInputText
-              type="text"
-              (input)="onGlobalFilter(dt, $event)"
-              placeholder="Search..."
-              />
-          </h-iconfield>
-        </div>
-      </ng-template>
-      <ng-template #header>
-        <tr>
-          <th style="width: 3rem">
-            <h-tableHeaderCheckbox />
-          </th>
-          <th style="min-width: 16rem">Code</th>
-          <th hSortableColumn="name" style="min-width:16rem">
-            Name
-            <h-sortIcon field="name" />
-          </th>
-          <th>Image</th>
-          <th hSortableColumn="price" style="min-width: 8rem">
-            Price
-            <h-sortIcon field="price" />
-          </th>
-          <th hSortableColumn="category" style="min-width:10rem">
-            Category
-            <h-sortIcon field="category" />
-          </th>
-          <th hSortableColumn="rating" style="min-width: 12rem">
-            Reviews
-            <h-sortIcon field="rating" />
-          </th>
-          <th hSortableColumn="inventoryStatus" style="min-width: 12rem">
-            Status
-            <h-sortIcon field="inventoryStatus" />
-          </th>
-          <th style="min-width: 12rem"></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-product>
-        <tr>
-          <td style="width: 3rem">
-            <h-tableCheckbox [value]="product" />
-          </td>
-          <td style="min-width: 12rem">{{ product.code }}</td>
-          <td style="min-width: 16rem">{{ product.name }}</td>
-          <td>
-            <img
-              [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-              [alt]="product.name"
-              style="width: 64px"
-              class="rounded"
-              />
-          </td>
-          <td>{{ product.price | currency: 'USD' }}</td>
-          <td>{{ product.category }}</td>
-          <td>
-            <h-rating [(ngModel)]="product.rating" [readonly]="true" />
-          </td>
-          <td>
-            <h-tag
-              [value]="product.inventoryStatus"
-              [severity]="getSeverity(product.inventoryStatus)"
-              />
-          </td>
-          <td>
-            <h-button
-              icon="pi pi-pencil"
-              class="mr-2"
-              [rounded]="true"
-              [outlined]="true"
-              (click)="editProduct(product)"
-              />
-            <h-button
-              icon="pi pi-trash"
-              severity="danger"
-              [rounded]="true"
-              [outlined]="true"
-              (click)="deleteProduct(product)"
-              />
-          </td>
-        </tr>
-      </ng-template>
-    </h-table>
-    
-    <h-dialog
-      [(visible)]="productDialog"
-      [style]="{ width: '450px' }"
-      header="Product Details"
-      [modal]="true"
-      >
-      <ng-template #content>
-        <div class="flex flex-col gap-3">
-          @if (product.image) {
-            <img
-              [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-              [alt]="product.image"
-              class="block m-auto pb-4"
-              />
+        }
+        <div>
+          <label for="name" class="mb-2 block font-bold">Name</label>
+          <input hx-input fluid id="name" [(ngModel)]="product.name" required [attr.aria-invalid]="submitted && !product.name ? 'true' : null" />
+          @if (submitted && !product.name) {
+            <small class="text-red-500">Name is required.</small>
           }
-          <div>
-            <label for="name" class="block font-bold mb-3">Name</label>
-            <input
-              type="text"
-              hInputText
-              id="name"
-              [(ngModel)]="product.name"
-              required
-              autofocus
-              fluid
-              />
-            @if (submitted && !product.name) {
-              <small class="text-red-500">Name is required.</small>
+        </div>
+        <div>
+          <label for="description" class="mb-2 block font-bold">Description</label>
+          <textarea hx-input fluid autoResize id="description" [(ngModel)]="product.description" rows="3"></textarea>
+        </div>
+
+        <div>
+          <label for="inventoryStatus" class="mb-2 block font-bold">Inventory Status</label>
+          <hx-select
+            fluid
+            inputId="inventoryStatus"
+            [(ngModel)]="product.inventoryStatus"
+            [options]="statuses"
+            optionLabel="label"
+            optionValue="label"
+            placeholder="Select a Status"
+          />
+        </div>
+
+        <fieldset class="m-0 border-0 p-0">
+          <legend class="mb-2 font-bold">Category</legend>
+          <div class="grid grid-cols-12 gap-3">
+            @for (category of categories; track category) {
+              <div class="col-span-6 flex items-center gap-2">
+                <input hx-radio type="radio" name="category" [id]="'category-' + category" [value]="category" [(ngModel)]="product.category" />
+                <label [for]="'category-' + category">{{ category }}</label>
+              </div>
             }
           </div>
-          <div>
-            <label for="description" class="block font-bold mb-3">Description</label>
-            <textarea
-              id="description"
-              hTextarea
-              [(ngModel)]="product.description"
-              required
-              rows="3"
-              cols="20"
-              fluid
-            ></textarea>
+        </fieldset>
+
+        <div class="grid grid-cols-12 gap-3">
+          <div class="col-span-6">
+            <label for="price" class="mb-2 block font-bold">Price</label>
+            <hx-input-number fluid inputId="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" />
           </div>
-    
-          <div>
-            <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-            <h-select
-              [(ngModel)]="product.inventoryStatus"
-              inputId="inventoryStatus"
-              [options]="statuses"
-              optionLabel="label"
-              optionValue="label"
-              placeholder="Select a Status"
-              fluid
-              />
-          </div>
-    
-          <div>
-            <span class="block font-bold mb-2">Category</span>
-            <div class="grid grid-cols-12 gap-3">
-              <div class="flex items-center gap-1 col-span-6">
-                <h-radiobutton
-                  id="category1"
-                  name="category"
-                  value="Accessories"
-                  [(ngModel)]="product.category"
-                  />
-                <label for="category1">Accessories</label>
-              </div>
-              <div class="flex items-center gap-1 col-span-6">
-                <h-radiobutton
-                  id="category2"
-                  name="category"
-                  value="Clothing"
-                  [(ngModel)]="product.category"
-                  />
-                <label for="category2">Clothing</label>
-              </div>
-              <div class="flex items-center gap-1 col-span-6">
-                <h-radiobutton
-                  id="category3"
-                  name="category"
-                  value="Electronics"
-                  [(ngModel)]="product.category"
-                  />
-                <label for="category3">Electronics</label>
-              </div>
-              <div class="flex items-center gap-1 col-span-6">
-                <h-radiobutton
-                  id="category4"
-                  name="category"
-                  value="Fitness"
-                  [(ngModel)]="product.category"
-                  />
-                <label for="category4">Fitness</label>
-              </div>
-            </div>
-          </div>
-    
-          <div class="grid grid-cols-12 gap-3">
-            <div class="col-span-6">
-              <label for="price" class="block font-bold mb-3">Price</label>
-              <h-inputnumber
-                id="price"
-                [(ngModel)]="product.price"
-                mode="currency"
-                currency="USD"
-                locale="en-US"
-                fluid
-                />
-            </div>
-            <div class="col-span-6">
-              <label for="quantity" class="block font-bold mb-3">Quantity</label>
-              <h-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-            </div>
+          <div class="col-span-6">
+            <label for="quantity" class="mb-2 block font-bold">Quantity</label>
+            <hx-input-number fluid inputId="quantity" [(ngModel)]="product.quantity" />
           </div>
         </div>
-      </ng-template>
-    
-      <ng-template #footer>
-        <h-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-        <h-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
-      </ng-template>
-    </h-dialog>
-    
-    <h-confirmdialog [style]="{ width: '450px' }" />
-    `,
+      </div>
+      <div hxDialogFooter>
+        <button hx-button type="button" variant="text" (click)="hideDialog()">
+          <span class="pi pi-times hx-button-icon" aria-hidden="true"></span>
+          Cancel
+        </button>
+        <button hx-button type="button" (click)="saveProduct()">
+          <span class="pi pi-check hx-button-icon" aria-hidden="true"></span>
+          Save
+        </button>
+      </div>
+    </hx-dialog>
+
+    <hx-confirm-dialog />
+    <hx-toast />
+  `,
   changeDetection: ChangeDetectionStrategy.Eager,
-  providers: [MessageService, ProductService, ConfirmationService],
+  providers: [ProductService],
 })
 export class Crud implements OnInit {
-  productDialog: boolean = false;
+  readonly #productService = inject(ProductService);
+  readonly #messages = inject(HxMessageService);
+  readonly #confirmation = inject(HxConfirmationService);
 
+  protected readonly theme = helixGridTheme;
+  productDialog = false;
   products = signal<Product[]>([]);
+  product: Product = {};
+  submitted = false;
+  readonly quickFilter = signal('');
+  readonly selectedCount = signal(0);
+  readonly categories = ['Accessories', 'Clothing', 'Electronics', 'Fitness'];
+  readonly statuses = [
+    { label: 'INSTOCK', value: 'instock' },
+    { label: 'LOWSTOCK', value: 'lowstock' },
+    { label: 'OUTOFSTOCK', value: 'outofstock' },
+  ];
 
-  product!: Product;
+  #api: GridApi<Product> | undefined;
 
-  selectedProducts!: Product[] | null;
-
-  submitted: boolean = false;
-
-  statuses!: any[];
-
-  readonly dt = viewChild.required<Table>('dt');
-
-  exportColumns!: ExportColumn[];
-
-  cols!: Column[];
-
-  constructor(
-    private productService: ProductService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-  ) {}
-
-  exportCSV() {
-    this.dt().exportCSV();
-  }
+  protected readonly context: CrudContext = {
+    edit: (product) => this.editProduct(product),
+    remove: (product) => this.deleteProduct(product),
+  };
+  protected readonly rowId = (params: { data: Product }) => params.data.id as string;
+  protected readonly defaultColDef: ColDef<Product> = {
+    sortable: true,
+    filter: true,
+    resizable: true,
+  };
+  /** Cells with a component in them centre it, so the stars and tags sit on the line of the text. */
+  readonly #centered = { display: 'flex', alignItems: 'center' };
+  protected readonly columns: ColDef<Product>[] = [
+    { field: 'code', headerName: 'Code', width: 130 },
+    { field: 'name', headerName: 'Name', flex: 1, minWidth: 180 },
+    {
+      field: 'image',
+      headerName: 'Image',
+      width: 110,
+      sortable: false,
+      filter: false,
+      cellRenderer: CrudImageCell,
+      cellStyle: this.#centered,
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      width: 120,
+      filter: 'agNumberColumnFilter',
+      valueFormatter: currencyFormatter('USD', 'en-US'),
+    },
+    { field: 'category', headerName: 'Category', width: 150 },
+    {
+      field: 'rating',
+      headerName: 'Reviews',
+      width: 150,
+      filter: 'agNumberColumnFilter',
+      cellRenderer: CrudRatingCell,
+      cellStyle: this.#centered,
+    },
+    {
+      field: 'inventoryStatus',
+      headerName: 'Status',
+      width: 140,
+      cellRenderer: CrudStatusCell,
+      cellStyle: this.#centered,
+    },
+    {
+      headerName: 'Actions',
+      width: 130,
+      sortable: false,
+      filter: false,
+      cellRenderer: CrudActionsCell,
+      cellStyle: this.#centered,
+    },
+  ];
 
   ngOnInit() {
-    this.loadDemoData();
+    this.#productService.getProducts().then((data) => this.products.set(data));
   }
 
-  loadDemoData() {
-    this.productService.getProducts().then((data) => {
-      this.products.set(data);
-    });
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' },
-    ];
-
-    this.cols = [
-      { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'image', header: 'Image' },
-      { field: 'price', header: 'Price' },
-      { field: 'category', header: 'Category' },
-    ];
-
-    this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
+  onGridReady(event: GridReadyEvent<Product>) {
+    this.#api = event.api;
   }
 
-  onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  onSelectionChanged() {
+    this.selectedCount.set(this.#api?.getSelectedRows().length ?? 0);
+  }
+
+  exportCSV() {
+    this.#api?.exportDataAsCsv({ columnKeys: ['code', 'name', 'price', 'category'] });
   }
 
   openNew() {
@@ -383,15 +297,24 @@ export class Crud implements OnInit {
     this.productDialog = true;
   }
 
+  hideDialog() {
+    this.productDialog = false;
+    this.submitted = false;
+  }
+
   deleteSelectedProducts() {
-    this.confirmationService.confirm({
+    const selected = this.#api?.getSelectedRows() ?? [];
+    this.#confirmation.confirm({
       message: 'Are you sure you want to delete the selected products?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Delete',
+      acceptSeverity: 'danger',
       accept: () => {
-        this.products.set(this.products().filter((val) => !this.selectedProducts?.includes(val)));
-        this.selectedProducts = null;
-        this.messageService.add({
+        const ids = new Set(selected.map((p) => p.id));
+        this.products.set(this.products().filter((p) => !ids.has(p.id)));
+        this.selectedCount.set(0);
+        this.#messages.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'Products Deleted',
@@ -401,20 +324,17 @@ export class Crud implements OnInit {
     });
   }
 
-  hideDialog() {
-    this.productDialog = false;
-    this.submitted = false;
-  }
-
   deleteProduct(product: Product) {
-    this.confirmationService.confirm({
+    this.#confirmation.confirm({
       message: `Are you sure you want to delete ${product.name}?`,
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Delete',
+      acceptSeverity: 'danger',
       accept: () => {
-        this.products.set(this.products().filter((val) => val.id !== product.id));
-        this.product = {};
-        this.messageService.add({
+        this.products.set(this.products().filter((p) => p.id !== product.id));
+        this.selectedCount.set(this.#api?.getSelectedRows().length ?? 0);
+        this.#messages.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'Product Deleted',
@@ -424,67 +344,37 @@ export class Crud implements OnInit {
     });
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.products().length; i++) {
-      if (this.products()[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
   createId(): string {
-    let id = '';
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+    let id = '';
+    for (let i = 0; i < 5; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
     return id;
-  }
-
-  getSeverity(status: string) {
-    switch (status) {
-      case 'INSTOCK':
-        return 'success';
-      case 'LOWSTOCK':
-        return 'warn';
-      case 'OUTOFSTOCK':
-        return 'danger';
-      default:
-        return 'info';
-    }
   }
 
   saveProduct() {
     this.submitted = true;
-    const _products = this.products();
-    if (this.product.name?.trim()) {
-      if (this.product.id) {
-        _products[this.findIndexById(this.product.id)] = this.product;
-        this.products.set([..._products]);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Updated',
-          life: 3000,
-        });
-      } else {
-        this.product.id = this.createId();
-        this.product.image = 'product-placeholder.svg';
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Created',
-          life: 3000,
-        });
-        this.products.set([..._products, this.product]);
-      }
-
-      this.productDialog = false;
-      this.product = {};
+    if (!this.product.name?.trim()) return;
+    if (this.product.id) {
+      const saved = this.product;
+      this.products.set(this.products().map((p) => (p.id === saved.id ? saved : p)));
+      this.#messages.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Product Updated',
+        life: 3000,
+      });
+    } else {
+      this.product.id = this.createId();
+      this.product.image = 'product-placeholder.svg';
+      this.products.set([...this.products(), this.product]);
+      this.#messages.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Product Created',
+        life: 3000,
+      });
     }
+    this.productDialog = false;
+    this.product = {};
   }
 }

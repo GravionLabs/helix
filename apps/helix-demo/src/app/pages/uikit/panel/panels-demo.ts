@@ -1,64 +1,70 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AccordionModule } from '@gravionlabs/helix-core/accordion';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { DividerModule } from '@gravionlabs/helix-core/divider';
-import { FieldsetModule } from '@gravionlabs/helix-core/fieldset';
-import { IconFieldModule } from '@gravionlabs/helix-core/iconfield';
-import { InputIconModule } from '@gravionlabs/helix-core/inputicon';
-import { InputTextModule } from '@gravionlabs/helix-core/inputtext';
-import { MenuModule } from '@gravionlabs/helix-core/menu';
-import { PanelModule } from '@gravionlabs/helix-core/panel';
-import { RippleModule } from '@gravionlabs/helix-core/ripple';
-import { SplitButtonModule } from '@gravionlabs/helix-core/splitbutton';
-import { SplitterModule } from '@gravionlabs/helix-core/splitter';
-import { TabsModule } from '@gravionlabs/helix-core/tabs';
-import { ToolbarModule } from '@gravionlabs/helix-core/toolbar';
+import {
+  HxAccordion,
+  HxAccordionContent,
+  HxAccordionHeader,
+  HxAccordionPanel,
+  HxButton,
+  HxDivider,
+  HxFieldset,
+  HxIconField,
+  HxInput,
+  HxInputIcon,
+  type HxMenuItem,
+  HxPanel,
+  HxSplitButton,
+  HxTab,
+  HxTabList,
+  HxTabPanel,
+  HxTabPanels,
+  HxTabs,
+  HxToolbar,
+} from '@gravionlabs/helix-ui';
+import { HxContainersSection } from '../sections/containers/containers-section';
 
+/** Panels on `@gravionlabs/helix-ui` (the splitter is not part of it). */
 @Component({
   selector: 'app-panels-demo',
   standalone: true,
   imports: [
-    CommonModule,
+    HxContainersSection,
+
     FormsModule,
-    ToolbarModule,
-    ButtonModule,
-    RippleModule,
-    SplitButtonModule,
-    AccordionModule,
-    FieldsetModule,
-    MenuModule,
-    InputTextModule,
-    DividerModule,
-    SplitterModule,
-    PanelModule,
-    TabsModule,
-    IconFieldModule,
-    InputIconModule,
+    HxToolbar,
+    HxButton,
+    HxSplitButton,
+    HxAccordion,
+    HxAccordionPanel,
+    HxAccordionHeader,
+    HxAccordionContent,
+    HxFieldset,
+    HxInput,
+    HxIconField,
+    HxInputIcon,
+    HxDivider,
+    HxPanel,
+    HxTabs,
+    HxTabList,
+    HxTab,
+    HxTabPanels,
+    HxTabPanel,
   ],
   templateUrl: './panels-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './panels-demo.scss',
 })
 export class PanelsDemo {
-  items: MenuItem[] = [
-    {
-      label: 'Save',
-      icon: 'pi pi-check',
-    },
-    {
-      label: 'Update',
-      icon: 'pi pi-upload',
-    },
-    {
-      label: 'Delete',
-      icon: 'pi pi-trash',
-    },
-    {
-      label: 'Home Page',
-      icon: 'pi pi-home',
-    },
+  readonly items: HxMenuItem[] = [
+    { label: 'Save', icon: 'pi pi-check' },
+    { label: 'Update', icon: 'pi pi-upload' },
+    { label: 'Delete', icon: 'pi pi-trash' },
+    { label: 'Home Page', icon: 'pi pi-home' },
+  ];
+
+  readonly texts = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.',
+    'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.',
   ];
 }

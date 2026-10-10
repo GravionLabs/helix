@@ -1,101 +1,44 @@
 # Tree
 
-> Tree is used to display hierarchical data.
+`hx-tree` shows hierarchical data with expand and collapse, selection, a filter and lazy children, in the WAI-ARIA tree
+view pattern.
 
-## Import
-
-```ts
-import { UITreeNode, Tree } from '@gravionlabs/helix-core/tree';
+```html
+<hx-tree [value]="nodes" selectionMode="single" [(selection)]="selected" ariaLabel="Files" />
+<hx-tree [value]="nodes" selectionMode="checkbox" [(selection)]="checked" filter filterMode="strict" />
 ```
 
-## Components
+`HxTreeNode`: `{ key, label, icon?, children?, leaf?, expanded?, loading?, disabled?, data? }`. Keys must be unique in
+the whole tree.
 
-### UITreeNode
+| Input / output  | Type                                              | Default     | Description                                                          |
+| --------------- | ------------------------------------------------- | ----------- | -------------------------------------------------------------------- |
+| `value`         | `HxTreeNode[]`                                    | `[]`        | The root nodes; pass a new array to change the tree.                 |
+| `selectionMode` | `'none' \| 'single' \| 'multiple' \| 'checkbox'`  | `'none'`    | How nodes are selected.                                              |
+| `selection`     | `string \| string[] \| null`                      | `null`      | `[(selection)]`: a key (single) or keys (multiple, checkbox).        |
+| `filter`        | `boolean`                                         | `false`     | A text field above the tree filters by label.                        |
+| `filterMode`    | `'lenient' \| 'strict'`                           | `'lenient'` | Lenient: a match shows its children; strict: matches and ancestors.  |
+| `filterPlaceholder`, `filterLabel`, `emptyMessage` | `string`       | `''`, `'Filter'`, `'No results found'` | Texts.                          |
+| `ariaLabel`     | `string`                                          |             | Accessible name of the tree.                                         |
+| `(nodeExpand)`, `(nodeCollapse)` | `{ node }`                       |             | A node was expanded or collapsed.                                    |
 
-Selector: `h-treeNode`
+`expand(key)`, `collapse(key)`, `toggle(key)`, `expandAll()`, `collapseAll()` and `select(key)` are public methods.
 
-#### Inputs
+- **Node template:** `<ng-template hxTreeNode let-node let-level="level" let-selected="selected" let-expanded="expanded">`
+  replaces the icon and label of a row.
+- **Checkbox mode:** checking a node checks everything below it; a parent is checked when all its children are and
+  `aria-checked="mixed"` when only some are. Disabled nodes are skipped.
+- **Lazy children:** give the node `leaf: false`; on `(nodeExpand)` set `loading: true`, fetch, then pass a new `value`
+  with the children (and without `loading`). Filtering opens the ancestors of matches.
+- **Keyboard:** Tab enters the tree once (one tab stop); Up/Down move, Right expands or goes to the first child, Left
+  collapses or goes to the parent, Home/End jump, typing jumps by label, Enter or Space selects (checks). Ctrl-click
+  deselects in `single` mode.
+- **Accessibility:** `role="tree"`, `treeitem` (`aria-level`, `aria-setsize`, `aria-posinset`, `aria-expanded`),
+  `group`; `aria-selected` (single, multiple) or `aria-checked` (checkbox); `aria-multiselectable` when several can be
+  chosen. The toggle and the checkbox are decoration for the pointer (`aria-hidden`).
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `rowNode` | `any` | — | — |
-| `node` | `TreeNode&lt;any&gt; \| undefined` | — | — |
-| `parentNode` | `TreeNode&lt;any&gt; \| undefined` | — | — |
-| `root` | `boolean \| undefined` | — | — |
-| `index` | `number \| undefined` | — | — |
-| `firstChild` | `boolean \| undefined` | — | — |
-| `lastChild` | `boolean \| undefined` | — | — |
-| `level` | `number \| undefined` | — | — |
-| `indentation` | `number \| undefined` | — | — |
-| `itemSize` | `number \| undefined` | — | — |
-| `loadingMode` | `string` | `undefined!` | — |
+## Tokens
 
-### Tree
+The look comes from the design tokens `--h-tree-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-Selector: `h-tree`
-
-Tree is used to display hierarchical data.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `value` | `any` | — | An array of treenodes. |
-| `selectionMode` | `"single" \| "multiple" \| "checkbox" \| null \| undefined` | — | Defines the selection mode. |
-| `loadingMode` | `"icon" \| "mask"` | `'mask'` | Loading mode display. |
-| `selection` | `TreeNode&lt;any&gt; \| TreeNode&lt;any&gt;[] \| null \| undefined` | `null` | A single treenode instance or an array to refer to the selections. |
-| `styleClass` | `string \| undefined` | — | Style class of the component. |
-| `contextMenu` | `any` | — | Context menu instance. |
-| `contextMenuSelectionMode` | `"separate" \| "joint"` | `'joint'` | Defines the behavior of context menu selection, in "separate" mode context menu updates contextMenuSelection property whereas in joint mode selection property is used instead so that when row selection is enabled, both row selection and context menu selection use the same property. |
-| `contextMenuSelection` | `TreeNode&lt;any&gt; \| null` | `null` | Selected node with a context menu. |
-| `draggableScope` | `any` | — | Scope of the draggable nodes to match a droppableScope. |
-| `droppableScope` | `any` | — | Scope of the droppable nodes to match a droppableScope. |
-| `draggableNodes` | `boolean \| undefined` | — | Whether the nodes are draggable. |
-| `droppableNodes` | `boolean \| undefined` | — | Whether the nodes are droppable. |
-| `metaKeySelection` | `boolean` | `false` | Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically. |
-| `propagateSelectionUp` | `boolean` | `true` | Whether checkbox selections propagate to ancestor nodes. |
-| `propagateSelectionDown` | `boolean` | `true` | Whether checkbox selections propagate to descendant nodes. |
-| `loading` | `boolean \| undefined` | — | Displays a loader to indicate data load is in progress. |
-| `loadingIcon` | `string \| undefined` | — | The icon to show while indicating data load is in progress. |
-| `emptyMessage` | `string` | `''` | Text to display when there is no data. |
-| `ariaLabel` | `string \| undefined` | — | Used to define a string that labels the tree. |
-| `togglerAriaLabel` | `string \| undefined` | — | Defines a string that labels the toggler icon for accessibility. |
-| `ariaLabelledBy` | `string \| undefined` | — | Establishes relationships between the component and label(s) where its value should be one or more element IDs. |
-| `validateDrop` | `boolean \| undefined` | — | When enabled, drop can be accepted or rejected based on condition defined at onNodeDrop. |
-| `filter` | `boolean \| undefined` | — | When specified, displays an input field to filter the items. |
-| `filterInputAutoFocus` | `boolean` | `false` | Determines whether the filter input should be automatically focused when the component is rendered. |
-| `filterBy` | `string` | `'label'` | When filtering is enabled, filterBy decides which field or fields (comma separated) to search against. |
-| `filterMode` | `string` | `'lenient'` | Mode for filtering valid values are "lenient" and "strict". Default is lenient. |
-| `filterOptions` | `any` | — | Mode for filtering valid values are "lenient" and "strict". Default is lenient. |
-| `filterPlaceholder` | `string \| undefined` | — | Placeholder text to show when filter input is empty. |
-| `filteredNodes` | `TreeNode&lt;any&gt;[] \| null \| undefined` | — | Values after the tree nodes are filtered. |
-| `filterLocale` | `string \| undefined` | — | Locale to use in filtering. The default locale is the host environment's current locale. |
-| `scrollHeight` | `string \| undefined` | — | Height of the scrollable viewport. |
-| `lazy` | `boolean` | `false` | Defines if data is loaded and interacted with in lazy manner. |
-| `virtualScroll` | `boolean \| undefined` | — | Whether the data should be loaded on demand during scroll. |
-| `virtualScrollItemSize` | `number \| undefined` | — | Height of an item in the list for VirtualScrolling. |
-| `virtualScrollOptions` | `ScrollerOptions \| undefined` | — | Whether to use the scroller feature. The properties of scroller component can be used like an object in it. |
-| `indentation` | `number` | `1.5` | Indentation factor for spacing of the nested node when virtual scrolling is enabled. |
-| `_templateMap` | `any` | — | Custom templates of the component. |
-| `trackBy` | `Function` | `(index: number, item: any) =&gt; item` | Function to optimize the node list rendering, default algorithm checks for object identity. |
-| `highlightOnSelect` | `boolean` | `false` | Highlights the node on select. |
-
-#### Outputs
-
-| Name | Type | Description |
-| --- | --- | --- |
-| `onNodeSelect` | `output&lt;TreeNodeSelectEvent&gt;()` | Callback to invoke when a node is selected. |
-| `onNodeUnselect` | `output&lt;TreeNodeUnSelectEvent&gt;()` | Callback to invoke when a node is unselected. |
-| `onNodeExpand` | `output&lt;TreeNodeExpandEvent&gt;()` | Callback to invoke when a node is expanded. |
-| `onNodeCollapse` | `output&lt;TreeNodeCollapseEvent&gt;()` | Callback to invoke when a node is collapsed. |
-| `onNodeContextMenuSelect` | `output&lt;TreeNodeContextMenuSelectEvent&gt;()` | Callback to invoke when a node is selected with right click. |
-| `onNodeDoubleClick` | `output&lt;TreeNodeDoubleClickEvent&gt;()` | Callback to invoke when a node is double clicked. |
-| `onNodeDrop` | `output&lt;TreeNodeDropEvent&gt;()` | Callback to invoke when a node is dropped. |
-| `onLazyLoad` | `output&lt;TreeLazyLoadEvent&gt;()` | Callback to invoke in lazy mode to load new data. |
-| `onScroll` | `output&lt;TreeScrollEvent&gt;()` | Callback to invoke in virtual scroll mode when scroll position changes. |
-| `onScrollIndexChange` | `output&lt;TreeScrollIndexChangeEvent&gt;()` | Callback to invoke in virtual scroll mode when scroll position and item's range in view changes. |
-| `onFilter` | `output&lt;TreeFilterEvent&gt;()` | Callback to invoke when data is filtered. |
-
-## Source
-
-[`projects/core/tree`](../../projects/core/tree)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

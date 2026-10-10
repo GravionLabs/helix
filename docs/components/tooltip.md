@@ -1,48 +1,23 @@
 # Tooltip
 
-> Tooltip directive provides advisory information for a component.
+`[hx-tooltip]` shows a short text next to an element on hover and keyboard focus. It is a CDK overlay with
+`role="tooltip"`, the host gets `aria-describedby` while it is open, and Escape or a click closes it. Use it for
+hints, for example the name of an icon-only button, never for essential information.
 
-## Import
-
-```ts
-import { Tooltip } from '@gravionlabs/helix-core/tooltip';
+```html
+<button hx-button iconOnly aria-label="Add" hx-tooltip="Add item" hxTooltipPosition="right">+</button>
 ```
 
-## Directives
+| Input                  | Type                                       | Default  | Description                                 |
+| ---------------------- | ------------------------------------------ | -------- | ------------------------------------------- |
+| `hx-tooltip`           | `string \| null`                           |          | The text; empty shows nothing.              |
+| `hxTooltipPosition`    | `'top' \| 'right' \| 'bottom' \| 'left'`    | `'top'`  | Preferred side; it flips when it does not fit. |
+| `hxTooltipEvent`       | `'hover' \| 'focus' \| 'both'`             | `'both'` | What opens it.                              |
+| `hxTooltipDisabled`    | `boolean`                                  | `false`  | Never shows.                                |
+| `hxTooltipShowDelay`   | `number`                                   | `0`      | Milliseconds before it appears.             |
 
-### Tooltip
+## Tokens
 
-Selector: `[hTooltip]`
+The look comes from the design tokens `--h-tooltip-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
 
-Tooltip directive provides advisory information for a component.
-
-#### Inputs
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| `tooltipPosition` | `string \| undefined` | — | Position of the tooltip. |
-| `tooltipEvent` | `"both" \| "hover" \| "focus"` | `'hover'` | Event to show the tooltip. |
-| `positionStyle` | `string \| undefined` | — | Type of CSS position. |
-| `tooltipStyleClass` | `string \| undefined` | — | Style class of the tooltip. |
-| `tooltipZIndex` | `string \| undefined` | — | Whether the z-index should be managed automatically to always go on top or have a fixed value. |
-| `escape` | `boolean` | `true` | By default the tooltip contents are rendered as text. Set to false to support html tags in the content. |
-| `showDelay` | `number \| undefined` | — | Delay to show the tooltip in milliseconds. |
-| `hideDelay` | `number \| undefined` | — | Delay to hide the tooltip in milliseconds. |
-| `life` | `number \| undefined` | — | Time to wait in milliseconds to hide the tooltip even it is active. |
-| `positionTop` | `number \| undefined` | — | Specifies the additional vertical offset of the tooltip from its default position. |
-| `positionLeft` | `number \| undefined` | — | Specifies the additional horizontal offset of the tooltip from its default position. |
-| `autoHide` | `boolean` | `true` | Whether to hide tooltip when hovering over tooltip content. |
-| `fitContent` | `boolean` | `true` | Automatically adjusts the element position when there is not enough space on the selected position. |
-| `hideOnEscape` | `boolean` | `true` | Whether to hide tooltip on escape key press. |
-| `showOnEllipsis` | `boolean` | `false` | Whether to show the tooltip only when the target text overflows (e.g., ellipsis is active). |
-| `content` | `string \| TemplateRef&lt;HTMLElement&gt; \| undefined` | — | Content of the tooltip. |
-| `disabled` | `boolean` | `false` | When present, it specifies that the component should be disabled. |
-| `tooltipOptions` | `TooltipOptions \| undefined` | — | Specifies the tooltip configuration options for the component. |
-| `appendTo` | `any` | — | Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name). |
-| `ptTooltip` | `TooltipPassThrough` | — | Used to pass attributes to DOM elements inside the Tooltip component. |
-| `pTooltipPT` | `TooltipPassThrough` | — | Used to pass attributes to DOM elements inside the Tooltip component. |
-| `pTooltipUnstyled` | `boolean \| undefined` | — | Indicates whether the component should be rendered without styles. |
-
-## Source
-
-[`projects/core/tooltip`](../../projects/core/tooltip)
+Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

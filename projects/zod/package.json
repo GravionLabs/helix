@@ -22,7 +22,7 @@
     "@angular/common": ">=22",
     "@angular/core": ">=22",
     "@angular/forms": ">=22",
-    "@gravionlabs/helix-core": ">=22",
+    "@gravionlabs/helix-ui": ">=0.1.0",
     "@gravionlabs/helix-shell": ">=22",
     "zod": "^4.0.0"
   },

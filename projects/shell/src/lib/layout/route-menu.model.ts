@@ -1,12 +1,12 @@
 import type { Type } from '@angular/core';
 import type { ActivatedRouteSnapshot, CanActivateFn, Route, Routes } from '@angular/router';
-import type { MenuItem } from '@gravionlabs/helix-core/api';
+import type { HxMenuItem } from '@gravionlabs/helix-ui';
 
 /**
- * Extends Helix's MenuItem with Angular routing properties.
+ * Extends Helix's HxMenuItem with Angular routing properties.
  * Allows a single array to define both the sidebar menu and the router configuration.
  */
-export interface HelixRouteMenuItem extends MenuItem {
+export interface HelixRouteMenuItem extends HxMenuItem {
   /** Angular route path segment (relative to the parent route). */
   path?: string;
   /** Breadcrumb label or resolver for auto-generated breadcrumbs. */
@@ -19,7 +19,7 @@ export interface HelixRouteMenuItem extends MenuItem {
   canActivate?: CanActivateFn[];
   /** Additional route data (merged with the auto-injected menu data). */
   data?: Record<string, unknown>;
-  /** Typed override of MenuItem.items — supports nested HelixRouteMenuItem entries. */
+  /** Typed override of HxMenuItem.items — supports nested HelixRouteMenuItem entries. */
   items?: HelixRouteMenuItem[];
 }
 

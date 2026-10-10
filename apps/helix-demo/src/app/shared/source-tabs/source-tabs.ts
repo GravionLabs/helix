@@ -8,11 +8,11 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { TabsModule } from '@gravionlabs/helix-core/tabs';
+import { HxTab, HxTabList, HxTabPanel, HxTabPanels, HxTabs } from '@gravionlabs/helix-ui';
 import { Highlight } from 'ngx-highlightjs';
 
 interface SourceTab {
-  /** Tab header + h-tab value. */
+  /** Tab header + hx-tab value. */
   label: string;
   /** File name fetched from `/source/{directory}/{file}`. */
   file: string;
@@ -31,7 +31,7 @@ const LANGUAGES: Record<string, string> = { html: 'xml', scss: 'scss', ts: 'type
 @Component({
   selector: 'app-source-tabs',
   standalone: true,
-  imports: [TabsModule, Highlight],
+  imports: [HxTabs, HxTabList, HxTab, HxTabPanels, HxTabPanel, Highlight],
   templateUrl: './source-tabs.html',
   styleUrl: './source-tabs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

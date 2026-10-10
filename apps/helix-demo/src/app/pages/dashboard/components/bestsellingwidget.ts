@@ -1,20 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ButtonModule } from '@gravionlabs/helix-core/button';
-import { MenuModule } from '@gravionlabs/helix-core/menu';
+import { HxButton, HxMenu, type HxMenuItem } from '@gravionlabs/helix-ui';
 
 @Component({
   standalone: true,
   selector: 'app-best-selling-widget',
-  imports: [CommonModule, ButtonModule, MenuModule],
+  imports: [HxButton, HxMenu],
   templateUrl: './bestsellingwidget.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './bestsellingwidget.scss',
 })
 export class BestSellingWidget {
-  menu = null;
-
-  items = [
+  items: HxMenuItem[] = [
     { label: 'Add New', icon: 'pi pi-fw pi-plus' },
     { label: 'Remove', icon: 'pi pi-fw pi-trash' },
   ];

@@ -10,11 +10,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <h1 class="demo-title demo-title-page mb-2!">Documentation</h1>
       <h2 class="demo-title mb-2!">Get Started</h2>
       <p class="text-lg mb-2">
-        Helix is an Angular UI component ecosystem by Gravion Labs — a maintained fork of PrimeNG
-        21.1.9 rebranded with <i>h-</i> selectors, plus an application shell, form utilities, and
-        AG Grid helpers built on top of it.
+        Helix is an Angular UI component ecosystem by Gravion Labs — plain Angular components with
+        CSS on design tokens (<i>hx-</i> selectors), plus an application shell, form utilities, and
+        AG Grid helpers built on top of them.
       </p>
-      <pre class="app-code"><code>npm install &#64;gravionlabs/helix-core</code></pre>
+      <pre class="app-code"><code>npm install &#64;gravionlabs/helix-ui</code></pre>
       <p class="text-lg mb-2">
         This demo app (<i>apps/helix-demo</i>) is a monorepo workspace app used to develop and
         showcase the libraries below. To run it locally, clone the repo and use pnpm:
@@ -25,9 +25,10 @@ pnpm start</code></pre>
       <h2 class="demo-title mb-2!">Packages</h2>
       <ul class="leading-normal list-disc pl-8 text-lg mb-2">
         <li>
-          <span class="text-primary font-medium">&#64;gravionlabs/helix-core</span>: Base component
-          library — the vendored PrimeNG fork, one secondary entry point per component
-          (<i>&#64;gravionlabs/helix-core/button</i>).
+          <span class="text-primary font-medium">&#64;gravionlabs/helix-ui</span>: Component library —
+          standalone, signal-based Angular components on the Helix design tokens, plain CSS and no
+          runtime styling engine (<i>hx-button</i>, <i>hx-select</i>, …), and the
+          <i>&#64;gravionlabs/helix-ui/validators</i> entry point.
         </li>
         <li>
           <span class="text-primary font-medium">&#64;gravionlabs/helix-shell</span>: Application shell —
@@ -87,8 +88,8 @@ pnpm start</code></pre>
 
       <h2 class="demo-title mb-2!">More docs</h2>
       <p class="text-lg mb-2">
-        Full API references live in the repository under <i>docs/</i> — one page per
-        <i>&#64;gravionlabs/helix-core</i> module, plus the <i>&#64;gravionlabs/helix-shell</i> API reference and
+        Full API references live in the repository under <i>docs/</i> — the
+        <i>&#64;gravionlabs/helix-ui</i> component reference, plus the <i>&#64;gravionlabs/helix-shell</i> API reference and
         project roadmap.
       </p>
     </div>

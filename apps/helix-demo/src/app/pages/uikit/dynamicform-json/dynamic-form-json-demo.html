@@ -12,7 +12,9 @@
           the form on the right rebuilds live; break it to see the definition errors.
         </p>
         <textarea
-          hTextarea
+          hx-input
+          fluid
+          aria-label="Form definition (JSON)"
           class="dynamic-form-json-demo__editor"
           spellcheck="false"
           [value]="definitionJson()"

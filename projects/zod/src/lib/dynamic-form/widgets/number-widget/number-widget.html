@@ -1,8 +1,12 @@
 <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-  <input
-    class="helix-number-widget__input"
-    type="number"
+  <hx-input-number
+    fluid
     [placeholder]="placeholder()"
-    [formField]="field()"
+    [ariaLabel]="label()"
+    [value]="state().value()"
+    [disabled]="state().disabled()"
+    [invalid]="showInvalid()"
+    (valueChange)="state().value.set($event)"
+    (touch)="state().markAsTouched()"
   />
 </helix-form-field>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import type { TreeNode } from '@gravionlabs/helix-core/api';
+import type { HxTreeNode } from '@gravionlabs/helix-ui';
 
 @Injectable()
 export class NodeService {
@@ -806,24 +806,22 @@ export class NodeService {
     ];
   }
 
-  getDynamicTreeNodes(parentCount: number, childrenCount: number): TreeNode[] {
-    const nodes: TreeNode[] = [];
+  getDynamicTreeNodes(parentCount: number, childrenCount: number): HxTreeNode[] {
+    const nodes: HxTreeNode[] = [];
 
     for (let parentIndex = 0; parentIndex < parentCount; parentIndex++) {
-      const children: TreeNode[] = [];
+      const children: HxTreeNode[] = [];
 
       for (let childIndex = 0; childIndex < childrenCount; childIndex++) {
         children.push({
           key: `${parentIndex}-${childIndex}`,
           label: `Child ${parentIndex}-${childIndex}`,
-          selectable: true,
         });
       }
 
       nodes.push({
         key: parentIndex.toString(),
         label: `Parent ${parentIndex}`,
-        selectable: true,
         children: children,
       });
     }
