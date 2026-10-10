@@ -14,7 +14,7 @@ import { Highlight } from 'ngx-highlightjs';
 interface SourceTab {
   /** Tab header + hx-tab value. */
   label: string;
-  /** File name fetched from `/source/{directory}/{file}`. */
+  /** File name fetched from `source/{directory}/{file}`. */
   file: string;
   /** highlight.js language. */
   language: string;
@@ -22,11 +22,16 @@ interface SourceTab {
 
 const LANGUAGES: Record<string, string> = { html: 'xml', scss: 'scss', ts: 'typescript' };
 
+/** The documentation site; a component page is `components/<slug>/`. */
+export const DOCS_URL = 'https://gravionlabs.github.io/helix/';
+
 /**
  * Wraps a demo page in tabs: a live demo tab plus one lazily loaded,
  * syntax-highlighted tab per source file. Source files are copied to
  * `public/source/` by `scripts/generate-source-assets.mjs` and fetched at
- * runtime from `/source/{directory}/{file}`.
+ * runtime from `source/{directory}/{file}` (relative to the base href, so it
+ * works under `/helix/demo/` on GitHub Pages too). The Docs tab links the
+ * component pages of the documentation site (`docs`).
  */
 @Component({
   selector: 'app-source-tabs',
@@ -37,12 +42,23 @@ const LANGUAGES: Record<string, string> = { html: 'xml', scss: 'scss', ts: 'type
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SourceTabsComponent {
-  /** Directory under `/source/`, e.g. `dynamicform-advanced`. */
+  /** Directory under `source/`, e.g. `dynamicform-advanced`. */
   readonly directory = input.required<string>();
   /** Base file name of the page component, e.g. `dynamic-form-advanced-demo`. */
   readonly componentName = input.required<string>();
   /** Additional files in the same directory, e.g. `['rating-widget.ts']`. */
   readonly extraSources = input<readonly string[]>([]);
+  /** Slugs of the component pages of the docs site shown on this page (`button`, `select`). */
+  readonly docs = input<readonly string[]>([]);
+
+  protected readonly docsUrl = DOCS_URL;
+  protected readonly docLinks = computed(() =>
+    this.docs().map((slug) => ({
+      slug,
+      label: slug.replace(/-/g, ' '),
+      url: `${DOCS_URL}components/${slug}/`,
+    })),
+  );
 
   private readonly http = inject(HttpClient);
 
@@ -82,7 +98,7 @@ export class SourceTabsComponent {
 
   private load(file: string): void {
     if (this.sources()[file] !== undefined) return;
-    this.http.get(`/source/${this.directory()}/${file}`, { responseType: 'text' }).subscribe({
+    this.http.get(`source/${this.directory()}/${file}`, { responseType: 'text' }).subscribe({
       next: (content) => this.sources.update((s) => ({ ...s, [file]: content })),
       error: () => this.sources.update((s) => ({ ...s, [file]: null })),
     });
