@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HxChart } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 /**
  * The charts of `@gravionlabs/helix-ui`: chart.js with colours, grid and font from the design tokens, redrawn when the
@@ -8,7 +9,7 @@ import { HxChart } from '@gravionlabs/helix-ui';
 @Component({
   selector: 'app-chart-demo',
   standalone: true,
-  imports: [HxChart],
+  imports: [SourceTabsComponent, HxChart],
   templateUrl: './chart-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './chart-demo.scss',

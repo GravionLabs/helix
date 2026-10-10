@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HxButton, HxInput, HxSelect } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 @Component({
   selector: 'app-formlayout-demo',
   standalone: true,
-  imports: [HxInput, HxButton, HxSelect, FormsModule],
+  imports: [SourceTabsComponent, HxInput, HxButton, HxSelect, FormsModule],
   templateUrl: './form-layout-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './form-layout-demo.scss',

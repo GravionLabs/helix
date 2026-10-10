@@ -1,98 +1,100 @@
 <h1 class="sr-only">Panel</h1>
-<div class="flex flex-col">
-  <div class="card">
-    <h2 class="demo-title mb-2!">Toolbar</h2>
-    <hx-toolbar>
-      <span hxToolbarStart class="flex gap-2">
-        <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="New"><span class="pi pi-plus hx-button-icon" aria-hidden="true"></span></button>
-        <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="Print"><span class="pi pi-print hx-button-icon" aria-hidden="true"></span></button>
-        <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="Upload"><span class="pi pi-upload hx-button-icon" aria-hidden="true"></span></button>
-      </span>
-      <hx-icon-field hxToolbarCenter>
-        <i class="pi pi-search" hx-input-icon></i>
-        <input hx-input placeholder="Search" aria-label="Search" />
-      </hx-icon-field>
-      <hx-split-button hxToolbarEnd label="Save" [model]="items" />
-    </hx-toolbar>
-  </div>
+<app-source-tabs directory="panel" componentName="panels-demo">
+  <div class="flex flex-col">
+    <div class="card">
+      <h2 class="demo-title mb-2!">Toolbar</h2>
+      <hx-toolbar>
+        <span hxToolbarStart class="flex gap-2">
+          <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="New"><span class="pi pi-plus hx-button-icon" aria-hidden="true"></span></button>
+          <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="Print"><span class="pi pi-print hx-button-icon" aria-hidden="true"></span></button>
+          <button hx-button type="button" iconOnly severity="secondary" variant="text" aria-label="Upload"><span class="pi pi-upload hx-button-icon" aria-hidden="true"></span></button>
+        </span>
+        <hx-icon-field hxToolbarCenter>
+          <i class="pi pi-search" hx-input-icon></i>
+          <input hx-input placeholder="Search" aria-label="Search" />
+        </hx-icon-field>
+        <hx-split-button hxToolbarEnd label="Save" [model]="items" />
+      </hx-toolbar>
+    </div>
 
-  <div class="flex flex-col md:flex-row gap-layout">
-    <div class="md:w-1/2 flex flex-col">
-      <div class="card">
-        <h2 class="demo-title mb-2!">Accordion</h2>
-        <hx-accordion value="0">
-          @for (text of texts; track $index) {
-            <hx-accordion-panel [value]="'' + $index">
-              <hx-accordion-header>Header {{ $index + 1 }}</hx-accordion-header>
-              <hx-accordion-content><p class="m-0">{{ text }}</p></hx-accordion-content>
-            </hx-accordion-panel>
-          }
-        </hx-accordion>
+    <div class="flex flex-col md:flex-row gap-layout">
+      <div class="md:w-1/2 flex flex-col">
+        <div class="card">
+          <h2 class="demo-title mb-2!">Accordion</h2>
+          <hx-accordion value="0">
+            @for (text of texts; track $index) {
+              <hx-accordion-panel [value]="'' + $index">
+                <hx-accordion-header>Header {{ $index + 1 }}</hx-accordion-header>
+                <hx-accordion-content><p class="m-0">{{ text }}</p></hx-accordion-content>
+              </hx-accordion-panel>
+            }
+          </hx-accordion>
+        </div>
+        <div class="card">
+          <h2 class="demo-title mb-2!">Tabs</h2>
+          <hx-tabs value="0">
+            <hx-tab-list>
+              @for (text of texts; track $index) {
+                <hx-tab [value]="'' + $index">Header {{ $index + 1 }}</hx-tab>
+              }
+            </hx-tab-list>
+            <hx-tab-panels>
+              @for (text of texts; track $index) {
+                <hx-tab-panel [value]="'' + $index"><p class="m-0">{{ text }}</p></hx-tab-panel>
+              }
+            </hx-tab-panels>
+          </hx-tabs>
+        </div>
       </div>
-      <div class="card">
-        <h2 class="demo-title mb-2!">Tabs</h2>
-        <hx-tabs value="0">
-          <hx-tab-list>
+      <div class="md:w-1/2 mt-2 md:mt-0 flex flex-col">
+        <div class="card">
+          <h2 class="demo-title mb-2!">Panel</h2>
+          <hx-panel header="Header" toggleable>
             @for (text of texts; track $index) {
-              <hx-tab [value]="'' + $index">Header {{ $index + 1 }}</hx-tab>
+              <p class="m-0" [class.mt-2]="$index > 0">{{ text }}</p>
             }
-          </hx-tab-list>
-          <hx-tab-panels>
+          </hx-panel>
+        </div>
+        <div class="card">
+          <h2 class="demo-title mb-2!">Fieldset</h2>
+          <hx-fieldset legend="Legend" toggleable>
             @for (text of texts; track $index) {
-              <hx-tab-panel [value]="'' + $index"><p class="m-0">{{ text }}</p></hx-tab-panel>
+              <p class="m-0" [class.mt-2]="$index > 0">{{ text }}</p>
             }
-          </hx-tab-panels>
-        </hx-tabs>
+          </hx-fieldset>
+        </div>
       </div>
     </div>
-    <div class="md:w-1/2 mt-2 md:mt-0 flex flex-col">
-      <div class="card">
-        <h2 class="demo-title mb-2!">Panel</h2>
-        <hx-panel header="Header" toggleable>
-          @for (text of texts; track $index) {
-            <p class="m-0" [class.mt-2]="$index > 0">{{ text }}</p>
-          }
-        </hx-panel>
-      </div>
-      <div class="card">
-        <h2 class="demo-title mb-2!">Fieldset</h2>
-        <hx-fieldset legend="Legend" toggleable>
-          @for (text of texts; track $index) {
-            <p class="m-0" [class.mt-2]="$index > 0">{{ text }}</p>
-          }
-        </hx-fieldset>
-      </div>
-    </div>
-  </div>
 
-  <div class="card mt-6">
-    <h2 class="demo-title mb-2!">Divider</h2>
-    <div class="flex flex-col md:flex-row">
-      <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-2 py-5">
-        <div class="flex flex-col gap-1">
-          <label for="username">Username</label>
-          <input hx-input id="username" type="text" />
+    <div class="card mt-6">
+      <h2 class="demo-title mb-2!">Divider</h2>
+      <div class="flex flex-col md:flex-row">
+        <div class="w-full md:w-5/12 flex flex-col items-center justify-center gap-2 py-5">
+          <div class="flex flex-col gap-1">
+            <label for="username">Username</label>
+            <input hx-input id="username" type="text" />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="password">Password</label>
+            <input hx-input id="password" type="password" />
+          </div>
+          <button hx-button type="button">
+            <span class="pi pi-user hx-button-icon" aria-hidden="true"></span>
+            Login
+          </button>
         </div>
-        <div class="flex flex-col gap-1">
-          <label for="password">Password</label>
-          <input hx-input id="password" type="password" />
+        <div class="w-full md:w-2/12">
+          <hx-divider layout="vertical" class="hidden! md:flex!"><b>OR</b></hx-divider>
+          <hx-divider layout="horizontal" class="flex! md:hidden!" align="center"><b>OR</b></hx-divider>
         </div>
-        <button hx-button type="button">
-          <span class="pi pi-user hx-button-icon" aria-hidden="true"></span>
-          Login
-        </button>
-      </div>
-      <div class="w-full md:w-2/12">
-        <hx-divider layout="vertical" class="hidden! md:flex!"><b>OR</b></hx-divider>
-        <hx-divider layout="horizontal" class="flex! md:hidden!" align="center"><b>OR</b></hx-divider>
-      </div>
-      <div class="w-full md:w-5/12 flex items-center justify-center py-5">
-        <button hx-button type="button" severity="success">
-          <span class="pi pi-user-plus hx-button-icon" aria-hidden="true"></span>
-          Sign Up
-        </button>
+        <div class="w-full md:w-5/12 flex items-center justify-center py-5">
+          <button hx-button type="button" severity="success">
+            <span class="pi pi-user-plus hx-button-icon" aria-hidden="true"></span>
+            Sign Up
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<app-containers-section class="mt-6 block" />
+  <app-containers-section class="mt-6 block" />
+</app-source-tabs>

@@ -1,125 +1,127 @@
 <h1 class="sr-only">Form Layout</h1>
-    <div class="flex flex-col gap-layout">
-    <div class="flex flex-col md:flex-row gap-layout">
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Vertical</h2>
-          <div class="flex flex-col gap-1">
-            <label for="name1">Name</label>
-            <input hx-input fluid id="name1" type="text" />
+<app-source-tabs directory="formlayout" componentName="form-layout-demo">
+      <div class="flex flex-col gap-layout">
+      <div class="flex flex-col md:flex-row gap-layout">
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Vertical</h2>
+            <div class="flex flex-col gap-1">
+              <label for="name1">Name</label>
+              <input hx-input fluid id="name1" type="text" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="email1">Email</label>
+              <input hx-input fluid id="email1" type="text" />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label for="age1">Age</label>
+              <input hx-input fluid id="age1" type="text" />
+            </div>
           </div>
-          <div class="flex flex-col gap-1">
-            <label for="email1">Email</label>
-            <input hx-input fluid id="email1" type="text" />
-          </div>
-          <div class="flex flex-col gap-1">
-            <label for="age1">Age</label>
-            <input hx-input fluid id="age1" type="text" />
+        </div>
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Horizontal</h2>
+            <div class="grid grid-cols-12 gap-1">
+              <label for="name3" class="flex items-center col-span-12 mb-1 md:col-span-2 md:mb-0">Name</label>
+              <div class="col-span-12 md:col-span-10">
+                <input hx-input fluid id="name3" type="text" />
+              </div>
+            </div>
+            <div class="grid grid-cols-12 gap-1">
+              <label for="email3" class="flex items-center col-span-12 mb-1 md:col-span-2 md:mb-0">Email</label>
+              <div class="col-span-12 md:col-span-10">
+                <input hx-input fluid id="email3" type="text" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Horizontal</h2>
-          <div class="grid grid-cols-12 gap-1">
-            <label for="name3" class="flex items-center col-span-12 mb-1 md:col-span-2 md:mb-0">Name</label>
-            <div class="col-span-12 md:col-span-10">
-              <input hx-input fluid id="name3" type="text" />
+
+      <div class="flex flex-col md:flex-row gap-layout">
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Vertical Grid</h2>
+            <div class="flex flex-wrap gap-3">
+              <div class="flex flex-col grow basis-0 gap-1">
+                <label for="name2">Name</label>
+                <input hx-input fluid id="name2" type="text" />
+              </div>
+              <div class="flex flex-col grow basis-0 gap-1">
+                <label for="email2">Email</label>
+                <input hx-input fluid id="email2" type="text" />
+              </div>
             </div>
           </div>
-          <div class="grid grid-cols-12 gap-1">
-            <label for="email3" class="flex items-center col-span-12 mb-1 md:col-span-2 md:mb-0">Email</label>
-            <div class="col-span-12 md:col-span-10">
-              <input hx-input fluid id="email3" type="text" />
+        </div>
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Inline</h2>
+            <div class="flex flex-wrap items-start gap-3">
+              <div class="field">
+                <label for="firstname1" class="sr-only">Firstname</label>
+                <input hx-input fluid id="firstname1" type="text" placeholder="Firstname" />
+              </div>
+              <div class="field">
+                <label for="lastname1" class="sr-only">Lastname</label>
+                <input hx-input fluid id="lastname1" type="text" placeholder="Lastname" />
+              </div>
+              <button hx-button type="submit">Submit</button>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-layout">
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Help Text</h2>
+            <div class="flex flex-wrap gap-1">
+              <label for="username">Username</label>
+              <input hx-input fluid id="username" type="text" />
+              <small>Enter your username to reset your password.</small>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex flex-col">
+          <div class="card flex flex-col gap-3 h-full">
+            <h2 class="demo-title">Advanced</h2>
+          <div class="flex flex-col md:flex-row gap-3">
+            <div class="flex flex-wrap gap-1 w-full">
+              <label for="firstname2">Firstname</label>
+              <input hx-input fluid id="firstname2" type="text" />
+            </div>
+            <div class="flex flex-wrap gap-1 w-full">
+              <label for="lastname2">Lastname</label>
+              <input hx-input fluid id="lastname2" type="text" />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap">
+            <label for="address">Address</label>
+            <textarea hx-input fluid autoResize id="address" rows="4"></textarea>
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-3">
+            <div class="flex flex-wrap gap-1 w-full">
+              <label for="state">State</label>
+              <hx-select
+                fluid
+                inputId="state"
+                [(ngModel)]="dropdownItem"
+                [options]="dropdownItems"
+                optionLabel="name"
+                optionValue="code"
+                placeholder="Select One"
+              />
+            </div>
+            <div class="flex flex-wrap gap-1 w-full">
+              <label for="zip">Zip</label>
+              <input hx-input fluid id="zip" type="text" />
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
-
-    <div class="flex flex-col md:flex-row gap-layout">
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Vertical Grid</h2>
-          <div class="flex flex-wrap gap-3">
-            <div class="flex flex-col grow basis-0 gap-1">
-              <label for="name2">Name</label>
-              <input hx-input fluid id="name2" type="text" />
-            </div>
-            <div class="flex flex-col grow basis-0 gap-1">
-              <label for="email2">Email</label>
-              <input hx-input fluid id="email2" type="text" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Inline</h2>
-          <div class="flex flex-wrap items-start gap-3">
-            <div class="field">
-              <label for="firstname1" class="sr-only">Firstname</label>
-              <input hx-input fluid id="firstname1" type="text" placeholder="Firstname" />
-            </div>
-            <div class="field">
-              <label for="lastname1" class="sr-only">Lastname</label>
-              <input hx-input fluid id="lastname1" type="text" placeholder="Lastname" />
-            </div>
-            <button hx-button type="submit">Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row gap-layout">
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Help Text</h2>
-          <div class="flex flex-wrap gap-1">
-            <label for="username">Username</label>
-            <input hx-input fluid id="username" type="text" />
-            <small>Enter your username to reset your password.</small>
-          </div>
-        </div>
-      </div>
-      <div class="md:w-1/2 flex flex-col">
-        <div class="card flex flex-col gap-3 h-full">
-          <h2 class="demo-title">Advanced</h2>
-        <div class="flex flex-col md:flex-row gap-3">
-          <div class="flex flex-wrap gap-1 w-full">
-            <label for="firstname2">Firstname</label>
-            <input hx-input fluid id="firstname2" type="text" />
-          </div>
-          <div class="flex flex-wrap gap-1 w-full">
-            <label for="lastname2">Lastname</label>
-            <input hx-input fluid id="lastname2" type="text" />
-          </div>
-        </div>
-
-        <div class="flex flex-wrap">
-          <label for="address">Address</label>
-          <textarea hx-input fluid autoResize id="address" rows="4"></textarea>
-        </div>
-
-        <div class="flex flex-col md:flex-row gap-3">
-          <div class="flex flex-wrap gap-1 w-full">
-            <label for="state">State</label>
-            <hx-select
-              fluid
-              inputId="state"
-              [(ngModel)]="dropdownItem"
-              [options]="dropdownItems"
-              optionLabel="name"
-              optionValue="code"
-              placeholder="Select One"
-            />
-          </div>
-          <div class="flex flex-wrap gap-1 w-full">
-            <label for="zip">Zip</label>
-            <input hx-input fluid id="zip" type="text" />
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
+</app-source-tabs>

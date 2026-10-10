@@ -1,21 +1,23 @@
 <h1 class="sr-only">File</h1>
-<hx-toast />
-<div class="grid grid-cols-12 gap-layout">
-  <div class="col-span-full lg:col-span-6">
-    <div class="card h-full">
-      <h2 class="demo-title mb-2!">Advanced</h2>
-      <hx-file-upload multiple accept="image/*" [maxFileSize]="1000000" [progress]="progress()" (upload)="onUpload($event)" />
-      @if (uploadedFiles().length) {
-        <p class="mt-3 mb-0">Uploaded: {{ uploadedFiles().join(', ') }}</p>
-      }
+<app-source-tabs directory="file" componentName="file-demo">
+  <hx-toast />
+  <div class="grid grid-cols-12 gap-layout">
+    <div class="col-span-full lg:col-span-6">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Advanced</h2>
+        <hx-file-upload multiple accept="image/*" [maxFileSize]="1000000" [progress]="progress()" (upload)="onUpload($event)" />
+        @if (uploadedFiles().length) {
+          <p class="mt-3 mb-0">Uploaded: {{ uploadedFiles().join(', ') }}</p>
+        }
+      </div>
     </div>
-  </div>
-  <div class="col-span-full lg:col-span-6">
-    <div class="card h-full">
-      <h2 class="demo-title mb-2!">Basic</h2>
-      <div class="flex flex-col items-center justify-center gap-3">
-        <hx-file-upload mode="basic" chooseLabel="Choose" accept="image/*" [maxFileSize]="1000000" (select)="onBasicUpload($event)" />
+    <div class="col-span-full lg:col-span-6">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Basic</h2>
+        <div class="flex flex-col items-center justify-center gap-3">
+          <hx-file-upload mode="basic" chooseLabel="Choose" accept="image/*" [maxFileSize]="1000000" (select)="onBasicUpload($event)" />
+        </div>
       </div>
     </div>
   </div>
-</div>
+</app-source-tabs>
