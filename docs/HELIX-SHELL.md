@@ -40,6 +40,7 @@
    - [HelixBadge](#helixbadge)
    - [HelixEnvironmentBadge](#helixenviromentbadge)
    - [HelixPageHeader](#helixpageheader)
+   - [HelixStatCard](#helixstatcard)
 10. [Form Infrastructure](#form-infrastructure)
     - [HelixFormField](#helixformfield)
 11. [Interfaces](#interfaces)
@@ -1038,6 +1039,35 @@ The header of a page: an optional breadcrumb, the title (an `h1` by default) wit
   <button helixPageActions hx-button type="button" variant="outlined">Export</button>
   <button helixPageActions hx-button type="button">New invoice</button>
 </helix-page-header>
+```
+
+### HelixStatCard
+
+**Selector:** `<helix-stat-card>`  
+**File:** `projects/shell/src/lib/ui/stat-card/stat-card.ts`
+
+A dashboard figure on an `hx-card`: a label, the value, an icon in a tinted box, and a trend whose direction is shown by an arrow and colour and read out as "up", "down" or "flat" by screen readers. Extra content is projected below the trend.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — (required) | What the figure is; also the accessible name of the card |
+| `value` | `string \| number` | — (required) | The figure; a number is formatted with `format` |
+| `format` | `Intl.NumberFormatOptions` | — | e.g. `{ style: 'currency', currency: 'EUR' }` |
+| `locale` | `string` | browser | Locale of the number formats |
+| `icon` | `string` | — | Icon classes (`pi pi-users`) |
+| `severity` | `'primary' \| 'info' \| 'success' \| 'warn' \| 'danger'` | `'primary'` | Colour of the icon box |
+| `trend` | `number` | — | The change: positive is up (green), negative is down (red), 0 is flat |
+| `trendUnit` | `string` | `'%'` | Appended to the trend figure |
+| `trendLabel` | `string` | — | Text after the trend ("since last month") |
+| `trendDigits` | `number` | `1` | Fraction digits of the trend |
+
+#### Example
+
+```html
+<helix-stat-card label="Orders" [value]="152" icon="pi pi-shopping-cart" [trend]="24" trendUnit="" trendLabel="new since last visit" />
+<helix-stat-card label="Revenue" [value]="2100" [format]="{ style: 'currency', currency: 'EUR' }" [trend]="-3.2" trendLabel="since last week" severity="warn" />
 ```
 
 ---

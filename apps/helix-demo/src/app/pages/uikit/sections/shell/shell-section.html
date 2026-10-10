@@ -12,4 +12,15 @@
       <button helixPageActions hx-button type="button">New invoice</button>
     </helix-page-header>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Stat card</h2>
+    <p class="m-0">Label, value, icon and trend; the trend direction is an arrow plus the words "up", "down" or "flat" for screen readers.</p>
+    <div class="grid gap-layout" style="grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr))">
+      <helix-stat-card label="Orders" [value]="152" icon="pi pi-shopping-cart" [trend]="24" trendUnit="" trendLabel="since last visit" />
+      <helix-stat-card label="Revenue" [value]="2100" [format]="{ style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }" icon="pi pi-euro" severity="success" [trend]="5.2" trendLabel="since last week" />
+      <helix-stat-card label="Churn" [value]="1.8" [format]="{ style: 'percent', maximumFractionDigits: 1 }" icon="pi pi-user-minus" severity="danger" [trend]="-0.4" trendLabel="better than last month" />
+      <helix-stat-card label="Tickets" value="7 open" icon="pi pi-ticket" severity="warn" [trend]="0" trendUnit="" trendLabel="unchanged" />
+    </div>
+  </div>
 </div>

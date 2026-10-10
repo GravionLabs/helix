@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HelixPageHeader } from '@gravionlabs/helix-shell';
+import { HelixPageHeader, HelixStatCard } from '@gravionlabs/helix-shell';
 import { type HxBreadcrumbItem, HxButton } from '@gravionlabs/helix-ui';
 
 /** `@gravionlabs/helix-shell` wrappers: Page header, Stat card, Empty state. */
 @Component({
   selector: 'app-shell-section',
   standalone: true,
-  imports: [HelixPageHeader, HxButton],
+  imports: [HelixPageHeader, HelixStatCard, HxButton],
   templateUrl: './shell-section.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './shell-section.scss',

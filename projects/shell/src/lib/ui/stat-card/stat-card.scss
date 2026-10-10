@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  --helix-stat-accent: var(--h-primary-color);
+  --helix-stat-accent-bg: color-mix(in srgb, var(--h-primary-color) 12%, transparent);
+}
+
+:host(.helix-stat-card--info) {
+  --helix-stat-accent: var(--h-sky-500);
+  --helix-stat-accent-bg: color-mix(in srgb, var(--h-sky-500) 12%, transparent);
+}
+
+:host(.helix-stat-card--success) {
+  --helix-stat-accent: var(--h-green-500);
+  --helix-stat-accent-bg: color-mix(in srgb, var(--h-green-500) 12%, transparent);
+}
+
+:host(.helix-stat-card--warn) {
+  --helix-stat-accent: var(--h-orange-500);
+  --helix-stat-accent-bg: color-mix(in srgb, var(--h-orange-500) 12%, transparent);
+}
+
+:host(.helix-stat-card--danger) {
+  --helix-stat-accent: var(--h-red-500);
+  --helix-stat-accent-bg: color-mix(in srgb, var(--h-red-500) 12%, transparent);
+}
+
+.helix-stat-card__card {
+  display: block;
+  height: 100%;
+}
+
+.helix-stat-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.helix-stat-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.helix-stat-card__label {
+  color: var(--text-color-secondary);
+  font-weight: 500;
+}
+
+.helix-stat-card__value {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--text-color);
+  overflow-wrap: anywhere;
+}
+
+.helix-stat-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--content-border-radius);
+  background: var(--helix-stat-accent-bg);
+  color: var(--helix-stat-accent);
+  font-size: 1.25rem;
+}
+
+.helix-stat-card__trend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+  color: var(--text-color-secondary);
+}
+
+.helix-stat-card__arrow {
+  font-size: 0.75rem;
+}
+
+.helix-stat-card__trend-value {
+  font-weight: 600;
+}
+
+.helix-stat-card__trend--up .helix-stat-card__arrow,
+.helix-stat-card__trend--up .helix-stat-card__trend-value {
+  color: var(--h-green-600);
+}
+
+.helix-stat-card__trend--down .helix-stat-card__arrow,
+.helix-stat-card__trend--down .helix-stat-card__trend-value {
+  color: var(--h-red-600);
+}
+
+.helix-stat-card__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
