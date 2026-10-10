@@ -4,6 +4,12 @@
   background: transparent;
 }
 
+// The panel is the page itself: no inset, so the cards line up with the page gap like on the other pages.
+:host ::ng-deep .hx-tab-panel {
+  padding: 0;
+  background: transparent;
+}
+
 .source-tabs__code {
   margin: 0;
   border-radius: var(--h-border-radius-md);
