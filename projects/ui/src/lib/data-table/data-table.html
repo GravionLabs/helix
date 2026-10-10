@@ -31,13 +31,31 @@
             <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
           } @else {
             @for (column of columns(); track column.field) {
-              <th scope="col" [class]="'hx-data-table-align-' + (column.align ?? 'left')" [style.width]="column.width ?? null">{{ column.header }}</th>
+              <th
+                scope="col"
+                [class]="'hx-data-table-align-' + (column.align ?? 'left')"
+                [class.hx-data-table-sorted]="orderOf(column) !== 0"
+                [style.width]="column.width ?? null"
+                [attr.aria-sort]="ariaSort(column)"
+              >
+                @if (column.sortable) {
+                  <button type="button" class="hx-data-table-sort" (click)="sort(column)">
+                    <span>{{ column.header }}</span>
+                    <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
+                    @if (sortRank(column); as rank) {
+                      <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
+                    }
+                  </button>
+                } @else {
+                  {{ column.header }}
+                }
+              </th>
             }
           }
         </tr>
       </thead>
       <tbody>
-        @for (row of rows(); track trackRow(row, $index); let i = $index) {
+        @for (row of visibleRows(); track trackRow(row, $index); let i = $index) {
           <tr>
             @if (bodyTemplate(); as tpl) {
               <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
@@ -68,9 +86,21 @@
       }
     </table>
   </div>
+  <span class="hx-data-table-caption-hidden" aria-live="polite">{{ announcement() }}</span>
   @if (loading()) {
     <div class="hx-data-table-loading" role="status">
       <hx-progress-spinner ariaLabel="Loading" />
     </div>
+  }
+  @if (paginator()) {
+    <hx-paginator
+      class="hx-data-table-paginator"
+      [rows]="rows()"
+      [first]="first()"
+      [totalRecords]="total()"
+      [rowsPerPageOptions]="rowsPerPageOptions()"
+      [showCurrentPageReport]="showCurrentPageReport()"
+      (pageChange)="onPage($event)"
+    />
   }
 </div>

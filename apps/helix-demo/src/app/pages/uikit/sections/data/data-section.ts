@@ -25,9 +25,9 @@ import {
 export class HxDataSection {
   readonly columns: HxColumn[] = [
     { field: 'code', header: 'Code', width: '8rem' },
-    { field: 'name', header: 'Name' },
-    { field: 'category', header: 'Category' },
-    { field: 'price', header: 'Price', align: 'right' },
+    { field: 'name', header: 'Name', sortable: true },
+    { field: 'category', header: 'Category', sortable: true },
+    { field: 'price', header: 'Price', align: 'right', sortable: true },
   ];
   readonly products = [
     { id: 1, code: 'f230fh0g3', name: 'Bamboo Watch', category: 'Accessories', price: 65 },
@@ -35,6 +35,13 @@ export class HxDataSection {
     { id: 3, code: 'zz21cz3c1', name: 'Blue Band', category: 'Fitness', price: 79 },
     { id: 4, code: '244wgerg2', name: 'Blue T-Shirt', category: 'Clothing', price: 29 },
   ];
+  readonly manyProducts = Array.from({ length: 47 }, (_, i) => ({
+    id: i + 1,
+    code: `p${String(i + 1).padStart(4, '0')}`,
+    name: `Product ${i + 1}`,
+    category: ['Accessories', 'Fitness', 'Clothing'][i % 3],
+    price: 10 + ((i * 17) % 90),
+  }));
   readonly tableLoading = signal(false);
   readonly tableRows = signal(this.products);
   toggleLoading(): void {
