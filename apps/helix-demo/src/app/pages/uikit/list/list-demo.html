@@ -1,37 +1,39 @@
 <h1 class="sr-only">List</h1>
-<div class="card">
-  <div class="mb-3 flex items-center justify-between gap-3">
-    <h2 class="demo-title m-0">Products</h2>
-    <hx-select-button ariaLabel="Layout" [options]="options" [allowEmpty]="false" [value]="layout()" (valueChange)="layout.set($any($event))" />
-  </div>
+<app-source-tabs directory="list" componentName="list-demo">
+  <div class="card">
+    <div class="mb-3 flex items-center justify-between gap-3">
+      <h2 class="demo-title m-0">Products</h2>
+      <hx-select-button ariaLabel="Layout" [options]="options" [allowEmpty]="false" [value]="layout()" (valueChange)="layout.set($any($event))" />
+    </div>
 
-  <ul class="m-0 list-none p-0" [class.products-grid]="layout() === 'grid'" aria-label="Products">
-    @for (item of products(); track item.id; let i = $index) {
-      <li class="product" [class.product-row]="layout() === 'list'" [class.product-card]="layout() === 'grid'" [class.product-divided]="layout() === 'list' && i !== 0">
-        <div class="product-image">
-          <img [src]="'https://primefaces.org/cdn/primevue/images/product/' + item.image" [alt]="item.name" class="rounded" />
-          <hx-tag class="product-status" [value]="item.inventoryStatus ?? null" [severity]="severity(item)" />
-        </div>
-        <div class="product-body">
-          <div>
-            <span class="product-category">{{ item.category }}</span>
-            <div class="text-lg font-medium">{{ item.name }}</div>
-            <span class="product-rating"><span class="pi pi-star-fill" aria-hidden="true"></span> {{ item.rating }}</span>
+    <ul class="m-0 list-none p-0" [class.products-grid]="layout() === 'grid'" aria-label="Products">
+      @for (item of products(); track item.id; let i = $index) {
+        <li class="product" [class.product-row]="layout() === 'list'" [class.product-card]="layout() === 'grid'" [class.product-divided]="layout() === 'list' && i !== 0">
+          <div class="product-image">
+            <img [src]="'https://primefaces.org/cdn/primevue/images/product/' + item.image" [alt]="item.name" class="rounded" />
+            <hx-tag class="product-status" [value]="item.inventoryStatus ?? null" [severity]="severity(item)" />
           </div>
-          <div class="product-buy">
-            <span class="text-xl font-semibold">{{ item.price | currency: 'USD' }}</span>
-            <div class="flex gap-1">
-              <button hx-button type="button" iconOnly variant="outlined" [attr.aria-label]="'Add ' + item.name + ' to the wish list'">
-                <span class="pi pi-heart hx-button-icon" aria-hidden="true"></span>
-              </button>
-              <button hx-button type="button" [disabled]="item.inventoryStatus === 'OUTOFSTOCK'">
-                <span class="pi pi-shopping-cart hx-button-icon" aria-hidden="true"></span>
-                Buy Now
-              </button>
+          <div class="product-body">
+            <div>
+              <span class="product-category">{{ item.category }}</span>
+              <div class="text-lg font-medium">{{ item.name }}</div>
+              <span class="product-rating"><span class="pi pi-star-fill" aria-hidden="true"></span> {{ item.rating }}</span>
+            </div>
+            <div class="product-buy">
+              <span class="text-xl font-semibold">{{ item.price | currency: 'USD' }}</span>
+              <div class="flex gap-1">
+                <button hx-button type="button" iconOnly variant="outlined" [attr.aria-label]="'Add ' + item.name + ' to the wish list'">
+                  <span class="pi pi-heart hx-button-icon" aria-hidden="true"></span>
+                </button>
+                <button hx-button type="button" [disabled]="item.inventoryStatus === 'OUTOFSTOCK'">
+                  <span class="pi pi-shopping-cart hx-button-icon" aria-hidden="true"></span>
+                  Buy Now
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </li>
-    }
-  </ul>
-</div>
+        </li>
+      }
+    </ul>
+  </div>
+</app-source-tabs>

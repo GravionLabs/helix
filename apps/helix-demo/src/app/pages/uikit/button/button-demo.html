@@ -1,139 +1,141 @@
 <h1 class="sr-only">Button</h1>
-<div class="flex flex-col md:flex-row gap-layout">
-  <div class="md:w-1/2 flex flex-col">
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Default</h2>
-      <div class="flex flex-wrap gap-1">
-        <button hx-button type="button">Submit</button>
-        <button hx-button type="button" disabled>Disabled</button>
-        <button hx-button type="button" variant="link">Link</button>
+<app-source-tabs directory="button" componentName="button-demo">
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Default</h2>
+        <div class="flex flex-wrap gap-1">
+          <button hx-button type="button">Submit</button>
+          <button hx-button type="button" disabled>Disabled</button>
+          <button hx-button type="button" variant="link">Link</button>
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Severities</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <button hx-button type="button" [severity]="severity">{{ severity }}</button>
+          }
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Text</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <button hx-button type="button" variant="text" [severity]="severity">{{ severity }}</button>
+          }
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Outlined</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <button hx-button type="button" variant="outlined" [severity]="severity">{{ severity }}</button>
+          }
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Group</h2>
+        <div class="flex flex-wrap gap-1">
+          <hx-button-group ariaLabel="Actions">
+            <button hx-button type="button"><span class="pi pi-check hx-button-icon" aria-hidden="true"></span> Save</button>
+            <button hx-button type="button"><span class="pi pi-trash hx-button-icon" aria-hidden="true"></span> Delete</button>
+            <button hx-button type="button"><span class="pi pi-times hx-button-icon" aria-hidden="true"></span> Cancel</button>
+          </hx-button-group>
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">SplitButton</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <hx-split-button label="Save" [severity]="severity" [model]="items" />
+          }
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Templating</h2>
+        <div class="flex flex-wrap gap-1">
+          <button hx-button type="button" aria-label="Helix">
+            <img alt="" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
+          </button>
+          <button hx-button type="button" variant="outlined" severity="success">
+            <img alt="" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
+            <span class="font-bold">Helix</span>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Severities</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <button hx-button type="button" [severity]="severity">{{ severity }}</button>
-        }
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Icons</h2>
+        <div class="flex flex-wrap gap-1">
+          <button hx-button type="button" iconOnly aria-label="Bookmark"><span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span></button>
+          <button hx-button type="button"><span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span> Bookmark</button>
+          <button hx-button type="button">Bookmark <span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span></button>
+        </div>
       </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Text</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <button hx-button type="button" variant="text" [severity]="severity">{{ severity }}</button>
-        }
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Raised</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <button hx-button type="button" raised [severity]="severity">{{ severity }}</button>
+          }
+        </div>
       </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Outlined</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <button hx-button type="button" variant="outlined" [severity]="severity">{{ severity }}</button>
-        }
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Rounded</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (severity of severities; track severity) {
+            <button hx-button type="button" rounded [severity]="severity">{{ severity }}</button>
+          }
+        </div>
       </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Group</h2>
-      <div class="flex flex-wrap gap-1">
-        <hx-button-group ariaLabel="Actions">
-          <button hx-button type="button"><span class="pi pi-check hx-button-icon" aria-hidden="true"></span> Save</button>
-          <button hx-button type="button"><span class="pi pi-trash hx-button-icon" aria-hidden="true"></span> Delete</button>
-          <button hx-button type="button"><span class="pi pi-times hx-button-icon" aria-hidden="true"></span> Cancel</button>
-        </hx-button-group>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Rounded Icons</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (b of iconSeverities; track b.icon) {
+            <button hx-button type="button" iconOnly rounded [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
+              <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
+            </button>
+          }
+        </div>
       </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">SplitButton</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <hx-split-button label="Save" [severity]="severity" [model]="items" />
-        }
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Rounded Text</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (b of iconSeverities; track b.icon) {
+            <button hx-button type="button" iconOnly rounded raised variant="text" [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
+              <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
+            </button>
+          }
+        </div>
       </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Templating</h2>
-      <div class="flex flex-wrap gap-1">
-        <button hx-button type="button" aria-label="Helix">
-          <img alt="" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
-        </button>
-        <button hx-button type="button" variant="outlined" severity="success">
-          <img alt="" src="https://primefaces.org/cdn/primeng/images/logo.svg" style="width: 1.5rem" />
-          <span class="font-bold">Helix</span>
-        </button>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Rounded Outlined</h2>
+        <div class="flex flex-wrap gap-1">
+          @for (b of iconSeverities; track b.icon) {
+            <button hx-button type="button" iconOnly rounded variant="outlined" [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
+              <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
+            </button>
+          }
+        </div>
+      </div>
+      <div class="card flex flex-col gap-3">
+        <h2 class="demo-title">Loading</h2>
+        <div class="flex flex-wrap gap-1">
+          <button hx-button type="button" [loading]="loading()[0]" (click)="load(0)">
+            <span class="pi pi-search hx-button-icon" aria-hidden="true"></span> Search
+          </button>
+          <button hx-button type="button" [loading]="loading()[1]" (click)="load(1)">
+            Search <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button hx-button type="button" iconOnly aria-label="Search" [loading]="loading()[2]" (click)="load(2)">
+            <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button hx-button type="button" [loading]="loading()[3]" (click)="load(3)">Search</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="md:w-1/2 flex flex-col">
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Icons</h2>
-      <div class="flex flex-wrap gap-1">
-        <button hx-button type="button" iconOnly aria-label="Bookmark"><span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span></button>
-        <button hx-button type="button"><span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span> Bookmark</button>
-        <button hx-button type="button">Bookmark <span class="pi pi-bookmark hx-button-icon" aria-hidden="true"></span></button>
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Raised</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <button hx-button type="button" raised [severity]="severity">{{ severity }}</button>
-        }
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Rounded</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (severity of severities; track severity) {
-          <button hx-button type="button" rounded [severity]="severity">{{ severity }}</button>
-        }
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Rounded Icons</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (b of iconSeverities; track b.icon) {
-          <button hx-button type="button" iconOnly rounded [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
-            <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
-          </button>
-        }
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Rounded Text</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (b of iconSeverities; track b.icon) {
-          <button hx-button type="button" iconOnly rounded raised variant="text" [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
-            <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
-          </button>
-        }
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Rounded Outlined</h2>
-      <div class="flex flex-wrap gap-1">
-        @for (b of iconSeverities; track b.icon) {
-          <button hx-button type="button" iconOnly rounded variant="outlined" [severity]="b.severity" [attr.aria-label]="b.icon.slice(6)">
-            <span [class]="b.icon + ' hx-button-icon'" aria-hidden="true"></span>
-          </button>
-        }
-      </div>
-    </div>
-    <div class="card flex flex-col gap-3">
-      <h2 class="demo-title">Loading</h2>
-      <div class="flex flex-wrap gap-1">
-        <button hx-button type="button" [loading]="loading()[0]" (click)="load(0)">
-          <span class="pi pi-search hx-button-icon" aria-hidden="true"></span> Search
-        </button>
-        <button hx-button type="button" [loading]="loading()[1]" (click)="load(1)">
-          Search <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
-        </button>
-        <button hx-button type="button" iconOnly aria-label="Search" [loading]="loading()[2]" (click)="load(2)">
-          <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
-        </button>
-        <button hx-button type="button" [loading]="loading()[3]" (click)="load(3)">Search</button>
-      </div>
-    </div>
-  </div>
-</div>
-<app-button-section class="mt-6 block" />
+  <app-button-section class="mt-6 block" />
+</app-source-tabs>

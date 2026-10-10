@@ -1,38 +1,40 @@
 <h1 class="sr-only">Message</h1>
-<div class="flex flex-col md:flex-row gap-layout">
-  <div class="md:w-1/2 flex flex-col">
-    <div class="card h-full">
-      <h2 class="demo-title mb-2!">Toast</h2>
-      <div class="flex flex-wrap gap-1">
-        <button hx-button type="button" severity="success" (click)="show('success', 'Success Message', 'Message sent')">Success</button>
-        <button hx-button type="button" severity="info" (click)="show('info', 'Info Message', 'Helix rocks')">Info</button>
-        <button hx-button type="button" severity="warn" (click)="show('warn', 'Warn Message', 'There are unsaved changes')">Warn</button>
-        <button hx-button type="button" severity="danger" (click)="show('error', 'Error Message', 'Validation failed')">Error</button>
-        <hx-toast />
-      </div>
+<app-source-tabs directory="message" componentName="messages-demo">
+  <div class="flex flex-col md:flex-row gap-layout">
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Toast</h2>
+        <div class="flex flex-wrap gap-1">
+          <button hx-button type="button" severity="success" (click)="show('success', 'Success Message', 'Message sent')">Success</button>
+          <button hx-button type="button" severity="info" (click)="show('info', 'Info Message', 'Helix rocks')">Info</button>
+          <button hx-button type="button" severity="warn" (click)="show('warn', 'Warn Message', 'There are unsaved changes')">Warn</button>
+          <button hx-button type="button" severity="danger" (click)="show('error', 'Error Message', 'Validation failed')">Error</button>
+          <hx-toast />
+        </div>
 
-      <h2 class="demo-title mt-3! mb-2!">Inline</h2>
-      <div class="mb-2 flex flex-wrap items-center gap-2">
-        <input hx-input [(ngModel)]="username" placeholder="Username" aria-label="Username" aria-invalid="true" aria-describedby="username-error" />
-        <hx-message id="username-error" severity="error" size="small">Username is required</hx-message>
+        <h2 class="demo-title mt-3! mb-2!">Inline</h2>
+        <div class="mb-2 flex flex-wrap items-center gap-2">
+          <input hx-input [(ngModel)]="username" placeholder="Username" aria-label="Username" aria-invalid="true" aria-describedby="username-error" />
+          <hx-message id="username-error" severity="error" size="small">Username is required</hx-message>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <input hx-input [(ngModel)]="email" placeholder="Email" aria-label="Email" aria-invalid="true" aria-describedby="email-error" />
+          <hx-message id="email-error" severity="error" size="small" icon="pi pi-times-circle">Email is required</hx-message>
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <input hx-input [(ngModel)]="email" placeholder="Email" aria-label="Email" aria-invalid="true" aria-describedby="email-error" />
-        <hx-message id="email-error" severity="error" size="small" icon="pi pi-times-circle">Email is required</hx-message>
+    </div>
+    <div class="md:w-1/2 flex flex-col">
+      <div class="card h-full">
+        <h2 class="demo-title mb-2!">Message</h2>
+        <div class="mb-2 flex flex-col gap-3">
+          <hx-message severity="success">Success Message</hx-message>
+          <hx-message severity="info">Info Message</hx-message>
+          <hx-message severity="warn">Warn Message</hx-message>
+          <hx-message severity="error">Error Message</hx-message>
+          <hx-message severity="secondary">Secondary Message</hx-message>
+          <hx-message severity="contrast">Contrast Message</hx-message>
+        </div>
       </div>
     </div>
   </div>
-  <div class="md:w-1/2 flex flex-col">
-    <div class="card h-full">
-      <h2 class="demo-title mb-2!">Message</h2>
-      <div class="mb-2 flex flex-col gap-3">
-        <hx-message severity="success">Success Message</hx-message>
-        <hx-message severity="info">Info Message</hx-message>
-        <hx-message severity="warn">Warn Message</hx-message>
-        <hx-message severity="error">Error Message</hx-message>
-        <hx-message severity="secondary">Secondary Message</hx-message>
-        <hx-message severity="contrast">Contrast Message</hx-message>
-      </div>
-    </div>
-  </div>
-</div>
+</app-source-tabs>

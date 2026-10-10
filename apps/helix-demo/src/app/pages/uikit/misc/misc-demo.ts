@@ -16,6 +16,7 @@ import {
   HxSkeleton,
   HxTag,
 } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { HxBlocksSection } from '../sections/blocks/blocks-section';
 import { HxDisplaySection } from '../sections/display/display-section';
 
@@ -24,6 +25,7 @@ import { HxDisplaySection } from '../sections/display/display-section';
   selector: 'app-misc-demo',
   standalone: true,
   imports: [
+    SourceTabsComponent,
     HxBlocksSection,
     HxDisplaySection,
 

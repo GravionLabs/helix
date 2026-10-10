@@ -8,11 +8,12 @@ import {
   HxToast,
   type HxToastSeverity,
 } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 @Component({
   selector: 'app-messages-demo',
   standalone: true,
-  imports: [HxToast, HxButton, HxInput, HxMessage, FormsModule],
+  imports: [SourceTabsComponent, HxToast, HxButton, HxInput, HxMessage, FormsModule],
   templateUrl: './messages-demo.html',
   styleUrl: './messages-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,

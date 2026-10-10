@@ -18,6 +18,7 @@ import {
   type ValueFormatterParams,
 } from 'ag-grid-community';
 import { type Customer, CustomerService } from '@/app/pages/service/customer.service';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { HxGridSection } from '../sections/grid/grid-section';
 import { ActionCell, ActivityCell, StatusCell, type TableContext } from './table-cells';
 
@@ -31,7 +32,16 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 @Component({
   selector: 'app-table-demo',
   standalone: true,
-  imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxInputIcon, HxToast],
+  imports: [
+    SourceTabsComponent,
+    HxGridSection,
+    AgGridAngular,
+    HxButton,
+    HxIconField,
+    HxInput,
+    HxInputIcon,
+    HxToast,
+  ],
   templateUrl: './table-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [CustomerService],

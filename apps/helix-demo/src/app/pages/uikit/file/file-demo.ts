@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { HxFileUpload, HxMessageService, HxToast } from '@gravionlabs/helix-ui';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 /** File upload on helix-ui; the upload itself is simulated (no server in the demo). */
 @Component({
   selector: 'app-file-demo',
   standalone: true,
-  imports: [HxFileUpload, HxToast],
+  imports: [SourceTabsComponent, HxFileUpload, HxToast],
   templateUrl: './file-demo.html',
   styleUrl: './file-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
