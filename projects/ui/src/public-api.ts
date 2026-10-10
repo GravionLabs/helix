@@ -42,6 +42,13 @@ export {
 export { HxButtonGroup } from './lib/button-group/button-group';
 export { HxCard } from './lib/card/card';
 export {
+  HxCarousel,
+  HxCarouselItem,
+  type HxCarouselItemContext,
+  type HxCarouselOrientation,
+  type HxCarouselResponsiveOption,
+} from './lib/carousel/carousel';
+export {
   HX_CHART_LOADER,
   HxChart,
   type HxChartInstance,

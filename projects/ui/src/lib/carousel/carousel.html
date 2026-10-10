@@ -1,0 +1,50 @@
+<section class="hx-carousel-region" role="region" aria-roledescription="carousel" [attr.aria-label]="ariaLabel()" [attr.aria-live]="autoplayInterval() > 0 && !(hovered() || focused()) ? 'off' : 'polite'">
+  <div class="hx-carousel-header"><ng-content select="[hxCarouselHeader]" /></div>
+  <div class="hx-carousel-content">
+    @if (showNavigators()) {
+      <button type="button" class="hx-carousel-button hx-carousel-prev" [disabled]="prevDisabled()" [attr.aria-label]="prevLabel()" (click)="prev()"></button>
+    }
+    <div class="hx-carousel-viewport" [id]="id + '-viewport'" tabindex="0" [style.height]="orientation() === 'vertical' ? verticalViewPortHeight() : null" (keydown)="onKeydown($event)">
+      <div class="hx-carousel-track" [style.transform]="transform()">
+        @for (item of value(); track $index) {
+          <div
+            class="hx-carousel-item"
+            role="group"
+            aria-roledescription="slide"
+            [class.hx-carousel-item-active]="isVisible($index)"
+            [attr.aria-label]="itemLabel($index)"
+            [attr.aria-hidden]="isVisible($index) ? null : 'true'"
+            [attr.inert]="isVisible($index) ? null : ''"
+            [style.flex-basis.%]="itemSize()"
+          >
+            @if (itemTemplate(); as tpl) {
+              <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: item, index: $index }" />
+            }
+          </div>
+        }
+      </div>
+    </div>
+    @if (showNavigators()) {
+      <button type="button" class="hx-carousel-button hx-carousel-next" [disabled]="nextDisabled()" [attr.aria-label]="nextLabel()" (click)="next()"></button>
+    }
+  </div>
+  @if (showIndicators() && pageCount() > 1) {
+    <div class="hx-carousel-indicators" role="tablist" [attr.aria-label]="ariaLabel() + ' pages'">
+      @for (p of pages(); track p) {
+        <button
+          type="button"
+          class="hx-carousel-indicator"
+          role="tab"
+          [class.hx-carousel-indicator-active]="p === currentPage()"
+          [attr.aria-selected]="p === currentPage()"
+          [attr.aria-label]="pageLabel(p)"
+          [attr.aria-controls]="id + '-viewport'"
+          [attr.tabindex]="p === currentPage() ? 0 : -1"
+          (click)="goTo(p)"
+          (keydown)="onIndicatorKeydown($event)"
+        ></button>
+      }
+    </div>
+  }
+  <div class="hx-carousel-footer"><ng-content select="[hxCarouselFooter]" /></div>
+</section>

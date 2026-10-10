@@ -15,6 +15,7 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Table', icon: 'pi pi-fw pi-table', path: 'table' },
   { label: 'List', icon: 'pi pi-fw pi-list', path: 'list' },
   { label: 'Tree', icon: 'pi pi-fw pi-share-alt', path: 'tree' },
+  { label: 'Media', icon: 'pi pi-fw pi-image', path: 'media' },
   { label: 'Panel', icon: 'pi pi-fw pi-tablet', path: 'panel' },
   { label: 'Overlay', icon: 'pi pi-fw pi-clone', path: 'overlay' },
   { label: 'Menu', icon: 'pi pi-fw pi-bars', path: 'menu' },

@@ -33,6 +33,7 @@ export const TOKEN_COMPONENTS = {
   button: ['button'],
   'button-group': ['button'],
   card: ['card'],
+  carousel: ['carousel'],
   chart: [],
   checkbox: ['checkbox'],
   confirm: ['confirmdialog', 'confirmpopup'],

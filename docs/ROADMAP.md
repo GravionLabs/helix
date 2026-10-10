@@ -113,7 +113,7 @@ the vendored fork *now*, a vanilla Angular library replacing PrimeNG as the *lon
       `helixPreset`. VitePress theme on the same tokens (`apps/site/.vitepress/theme`), theming guide (`docs/THEMING.md`)
 - [x] #522 – Design System sync: `pnpm design-system:build` (tokens.json, brand book, 12 component previews, cover, Inter
       font, Helix mark), published as the "Helix Design System" artifact; `docs/CONTRIBUTING-design-system.md`
-- [x] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens (49 components); `helix-shell`,
+- [x] #523 – `@gravionlabs/helix-ui`: vanilla library on the Helix tokens (50 components); `helix-shell`,
       `helix-zod`, the demo and the docs migrated. `hx-paginator` and `hx-data-table` (sorting, paging, selection, filters, row expansion) followed; AG Grid stays the choice for large grids
 
 ---
