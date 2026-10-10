@@ -77,11 +77,12 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Skeleton](skeleton.md) | `hx-skeleton` is a placeholder shaped like the content that is still loading. |
 | [Timeline](timeline.md) | `hx-timeline` shows events along a line, as an ordered list. |
 
-## Data (3)
+## Data (4)
 
 | Component | Description |
 | --- | --- |
 | [Table](table.md) | `table[hx-table]` draws a native `<table>` as a Helix table, with CSS only. |
+| [Data table](data-table.md) | `hx-data-table` is a table with a column model: cell templates, caption, empty and loading state, a scrolling body with a sticky header. |
 | [Tree](tree.md) | `hx-tree` shows hierarchical data with expand and collapse, selection, a filter and lazy children, in the WAI-ARIA tree view pattern. |
 | [Chart](chart.md) | `hx-chart` is a [chart.js](https://www.chartjs.org/) chart whose colours, grid and font come from the Helix tokens. |
 
