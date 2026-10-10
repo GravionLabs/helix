@@ -34,6 +34,15 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Filter</h2>
+    <div class="row">
+      <label class="label" for="instrument">Search</label>
+      <hx-select inputId="instrument" filter filterPlaceholder="Search instruments" placeholder="Select an instrument" [options]="instruments" optionLabel="name" optionValue="code" [filterBy]="'code'" [(ngModel)]="instrument" />
+      <span>Value: {{ instrument ?? 'none' }}</span>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Sizes</h2>
     <div class="row">
       <span class="label">small</span>

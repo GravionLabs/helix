@@ -220,3 +220,37 @@
     transition: none;
   }
 }
+
+/* the filter field above the list (same look as the multi-select one) */
+.hx-select-header {
+  display: flex;
+  align-items: center;
+  padding: var(--h-multiselect-list-header-padding);
+}
+
+.hx-select-filter {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  font: inherit;
+  outline: 0 none;
+}
+
+.hx-select-filter:focus {
+  border-color: var(--h-inputtext-focus-border-color);
+}
+
+/* the results count, for screen readers only */
+.hx-select-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
