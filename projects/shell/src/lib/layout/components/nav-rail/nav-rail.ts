@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { HxTooltip } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
@@ -47,7 +48,7 @@ function filterItems(items: HelixRouteMenuItem[], query: string): HelixRouteMenu
 @Component({
   selector: 'helix-nav-rail',
   standalone: true,
-  imports: [CommonModule, HelixNavRailItem, RouterModule],
+  imports: [CommonModule, HelixNavRailItem, HxTooltip, RouterModule],
   templateUrl: './nav-rail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './nav-rail.scss',

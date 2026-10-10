@@ -107,7 +107,8 @@
       type="button"
       class="helix-nav-rail-collapse-button"
       (click)="store.toggleSidebar()"
-      [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [hx-tooltip]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      hxTooltipPosition="top"
       [attr.aria-label]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
       [attr.aria-expanded]="!store.isCollapsed()"
     >
@@ -118,9 +119,6 @@
           'pi-angle-double-right': store.isCollapsed(),
         }"
       ></i>
-      @if (!store.isCollapsed()) {
-        <span>Collapse</span>
-      }
     </button>
   </div>
 </aside>
