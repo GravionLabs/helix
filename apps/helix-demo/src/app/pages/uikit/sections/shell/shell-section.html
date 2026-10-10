@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-layout">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Helix Shell wrappers</h2>
+    <p class="m-0">Components of <code>&#64;gravionlabs/helix-shell</code> that remove boilerplate of admin pages.</p>
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Page header</h2>
+    <p class="m-0">Breadcrumb, title, subtitle and the actions of a page; the actions wrap under the title on narrow screens.</p>
+    <helix-page-header title="Invoices" subtitle="Open and paid invoices of the current year" [breadcrumb]="crumbs" [home]="{ icon: 'pi pi-home', routerLink: '/' }" [headingLevel]="3">
+      <button helixPageActions hx-button type="button" variant="outlined" severity="secondary">Export</button>
+      <button helixPageActions hx-button type="button">New invoice</button>
+    </helix-page-header>
+  </div>
+</div>
