@@ -65,6 +65,8 @@ export {
   type HxColumnAlign,
   HxDataTable,
   type HxLazyLoadEvent,
+  HxRowExpansion,
+  type HxSelectionMode,
   type HxSortFunction,
   type HxSortMeta,
   type HxSortMode,

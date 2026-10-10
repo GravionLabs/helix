@@ -15,6 +15,8 @@ import {
   signal,
   TemplateRef,
 } from '@angular/core';
+import { HxCheckbox } from '../checkbox/checkbox';
+import { HxInput } from '../input/input';
 import { type HxPageEvent, HxPaginator } from '../paginator/paginator';
 import { HxProgressSpinner } from '../progress/progress';
 import type { HxTableSize } from '../table/table';
@@ -33,6 +35,8 @@ export interface HxColumn {
   align?: HxColumnAlign;
   /** The header is a button that sorts by the column. */
   sortable?: boolean;
+  /** The column gets a text filter in the filter row (`filterDisplay="row"`). */
+  filter?: boolean;
 }
 
 /** One sorted column: `order` 1 is ascending, -1 descending. */
@@ -50,6 +54,10 @@ export interface HxLazyLoadEvent {
   sortField: string | null;
   sortOrder: 1 | -1;
   multiSortMeta: HxSortMeta[];
+  /** The text of each column filter, by field (empty filters are left out). */
+  filters: Record<string, string>;
+  /** The text of the global filter. */
+  globalFilter: string;
 }
 
 /** Replaces the client-side sort: gets the rows and the sort state, returns the sorted rows. */
@@ -119,6 +127,14 @@ export class HxTableCaption {
   readonly template = inject<TemplateRef<unknown>>(TemplateRef);
 }
 
+/** The content of the row that opens below a row: `<ng-template hxRowExpansion let-row>`. */
+@Directive({ selector: 'ng-template[hxRowExpansion]' })
+export class HxRowExpansion {
+  readonly template = inject<TemplateRef<HxTableRowContext>>(TemplateRef);
+}
+
+export type HxSelectionMode = 'single' | 'multiple';
+
 export interface HxTableColumnsContext {
   $implicit: readonly HxColumn[];
 }
@@ -145,7 +161,7 @@ export interface HxTableRowContext {
  */
 @Component({
   selector: 'hx-data-table',
-  imports: [NgTemplateOutlet, HxProgressSpinner, HxPaginator],
+  imports: [NgTemplateOutlet, HxProgressSpinner, HxPaginator, HxCheckbox, HxInput],
   templateUrl: './data-table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-data-table' },
@@ -200,13 +216,38 @@ export class HxDataTable implements OnInit {
   /** Sort, page or rows-per-page changed while `lazy`: load the data for this state. */
   readonly lazyLoad = output<HxLazyLoadEvent>();
 
+  /** `single`: a click selects a row; `multiple`: a checkbox column (or, with `metaKeySelection`, Ctrl/Cmd+click). */
+  readonly selectionMode = input<HxSelectionMode>();
+  /** The selected row (`single`) or rows (`multiple`). Rows are compared by `dataKey` when set. */
+  readonly selection = model<unknown>(null);
+  /** `multiple`: no checkbox column; a click selects only that row, Ctrl/Cmd+click adds or removes one. */
+  readonly metaKeySelection = input(false, { transform: booleanAttribute });
+  readonly selectAllLabel = input('Select all rows');
+  /** `{row}` is replaced by the row number (1-based). */
+  readonly selectRowLabel = input('Select row {row}');
+
+  /** The properties of a row the global filter looks in (`filterGlobal`). */
+  readonly globalFilterFields = input<readonly string[]>([]);
+  /** `row`: a filter row with a text input under the headers of columns with `filter: true`. */
+  readonly filterDisplay = input<'row'>();
+  /** The text of the column filters, by field. */
+  readonly filters = model<Record<string, string>>({});
+  readonly filterLabel = input('Filter {header}');
+
+  /** The rows that are open (by `dataKey`, or the row index without one); needs a `hxRowExpansion` template. */
+  readonly expandedRowKeys = model<Record<string, boolean>>({});
+  readonly expandLabel = input('Expand row');
+  readonly collapseLabel = input('Collapse row');
+
   protected readonly announcement = signal('');
+  private readonly globalText = signal('');
 
   protected readonly cellTemplates = contentChildren(HxCell);
   protected readonly headerTemplate = contentChild(HxTableHeader);
   protected readonly bodyTemplate = contentChild(HxTableBody);
   protected readonly footerTemplate = contentChild(HxTableFooter);
   protected readonly captionTemplate = contentChild(HxTableCaption);
+  protected readonly expansionTemplate = contentChild(HxRowExpansion);
 
   /** The sort state as a list, whichever the mode. */
   protected readonly sortMeta = computed<HxSortMeta[]>(() =>
@@ -217,8 +258,26 @@ export class HxDataTable implements OnInit {
         : [],
   );
 
-  private readonly sorted = computed(() => {
+  private readonly filtered = computed(() => {
     const value = this.value();
+    if (this.lazy()) return value;
+    const global = this.globalText().trim().toLowerCase();
+    const fields = this.globalFilterFields();
+    const columnFilters = Object.entries(this.filters()).filter(([, text]) => text.trim());
+    if (!global && !columnFilters.length) return value;
+    const has = (row: unknown, field: string, text: string) =>
+      String(resolveField(row, field) ?? '')
+        .toLowerCase()
+        .includes(text);
+    return value.filter(
+      (row) =>
+        (!global || fields.some((field) => has(row, field, global))) &&
+        columnFilters.every(([field, text]) => has(row, field, text.trim().toLowerCase())),
+    );
+  });
+
+  private readonly sorted = computed(() => {
+    const value = this.filtered();
     const meta = this.sortMeta();
     if (this.lazy() || !meta.length) return value;
     const custom = this.sortFunction();
@@ -251,7 +310,110 @@ export class HxDataTable implements OnInit {
     () => !!this.caption() || !!this.captionTemplate() || !!this.ariaLabel(),
   );
   protected readonly captionHidden = computed(() => !this.caption() && !this.captionTemplate());
-  protected readonly colspan = computed(() => Math.max(1, this.columns().length));
+  protected readonly checkboxColumn = computed(
+    () => this.selectionMode() === 'multiple' && !this.metaKeySelection(),
+  );
+  protected readonly expanderColumn = computed(() => !!this.expansionTemplate());
+  protected readonly selectable = computed(() => !!this.selectionMode() && !this.checkboxColumn());
+  protected readonly filterRow = computed(
+    () => this.filterDisplay() === 'row' && this.columns().some((c) => c.filter),
+  );
+  protected readonly colspan = computed(
+    () =>
+      Math.max(1, this.columns().length) +
+      (this.checkboxColumn() ? 1 : 0) +
+      (this.expanderColumn() ? 1 : 0),
+  );
+
+  private selectedRows(): unknown[] {
+    const selection = this.selection();
+    if (this.selectionMode() === 'multiple') return Array.isArray(selection) ? selection : [];
+    return selection === null || selection === undefined ? [] : [selection];
+  }
+
+  private keyOf(row: unknown): unknown {
+    const key = this.dataKey();
+    return key ? resolveField(row, key) : row;
+  }
+
+  protected isSelected(row: unknown): boolean {
+    const key = this.keyOf(row);
+    return this.selectedRows().some((selected) => this.keyOf(selected) === key);
+  }
+
+  /** All filtered rows (of every page) are selected / some are. */
+  protected readonly allSelected = computed(() => {
+    const rows = this.filtered();
+    return rows.length > 0 && rows.every((row) => this.isSelected(row));
+  });
+  protected readonly someSelected = computed(
+    () => !this.allSelected() && this.filtered().some((row) => this.isSelected(row)),
+  );
+
+  protected toggleSelectAll(checked: boolean): void {
+    const rows = this.filtered();
+    const keys = new Set(rows.map((row) => this.keyOf(row)));
+    const rest = this.selectedRows().filter((row) => !keys.has(this.keyOf(row)));
+    this.selection.set(checked ? [...rest, ...rows] : rest);
+  }
+
+  protected toggleRowCheckbox(row: unknown, checked: boolean): void {
+    const rest = this.selectedRows().filter((r) => this.keyOf(r) !== this.keyOf(row));
+    this.selection.set(checked ? [...rest, row] : rest);
+  }
+
+  /** A click or Enter/Space on a row selects it (single mode, or multiple with `metaKeySelection`). */
+  protected selectRow(row: unknown, event: Event): void {
+    if (!this.selectable()) return;
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('button, input, a, select, textarea')) return;
+    const selected = this.isSelected(row);
+    if (this.selectionMode() === 'single') {
+      this.selection.set(selected ? null : row);
+      return;
+    }
+    const additive =
+      (event as MouseEvent).ctrlKey || (event as MouseEvent).metaKey || event.type === 'keydown';
+    if (additive) this.toggleRowCheckbox(row, !selected);
+    else this.selection.set([row]);
+  }
+
+  protected onRowKey(row: unknown, event: Event): void {
+    event.preventDefault();
+    this.selectRow(row, event);
+  }
+
+  /** Filters every column in `globalFilterFields` for a text (case-insensitive, contains). */
+  filterGlobal(text: string): void {
+    this.globalText.set(text);
+    this.first.set(0);
+    if (this.lazy()) this.emitLazy();
+  }
+
+  protected setFilter(column: HxColumn, text: string): void {
+    const next = { ...this.filters() };
+    if (text) next[column.field] = text;
+    else delete next[column.field];
+    this.filters.set(next);
+    this.first.set(0);
+    if (this.lazy()) this.emitLazy();
+  }
+
+  protected rowKey(row: unknown, index: number): string {
+    return String(this.dataKey() ? (resolveField(row, this.dataKey() as string) ?? index) : index);
+  }
+
+  protected isExpanded(row: unknown, index: number): boolean {
+    return !!this.expandedRowKeys()[this.rowKey(row, index)];
+  }
+
+  protected toggleExpansion(row: unknown, index: number): void {
+    const key = this.rowKey(row, index);
+    const next = { ...this.expandedRowKeys() };
+    if (next[key]) delete next[key];
+    else next[key] = true;
+    this.expandedRowKeys.set(next);
+  }
 
   ngOnInit(): void {
     if (this.lazy() && this.lazyLoadOnInit()) this.emitLazy();
@@ -321,6 +483,8 @@ export class HxDataTable implements OnInit {
       sortOrder:
         this.sortMode() === 'multiple' ? (this.multiSortMeta()[0]?.order ?? 1) : this.sortOrder(),
       multiSortMeta: this.sortMode() === 'multiple' ? this.multiSortMeta() : this.sortMeta(),
+      filters: this.filters(),
+      globalFilter: this.globalText(),
     });
   }
 

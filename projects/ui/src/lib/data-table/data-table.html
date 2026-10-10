@@ -27,6 +27,14 @@
       }
       <thead>
         <tr>
+          @if (expanderColumn()) {
+            <th scope="col" class="hx-data-table-expander-cell"><span class="hx-data-table-caption-hidden">Row details</span></th>
+          }
+          @if (checkboxColumn()) {
+            <th scope="col" class="hx-data-table-select-cell">
+              <input type="checkbox" hx-checkbox [attr.aria-label]="selectAllLabel()" [checked]="allSelected()" [indeterminate]="someSelected()" (change)="toggleSelectAll($any($event.target).checked)" />
+            </th>
+          }
           @if (headerTemplate(); as tpl) {
             <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
           } @else {
@@ -53,10 +61,40 @@
             }
           }
         </tr>
+        @if (filterRow()) {
+          <tr class="hx-data-table-filter-row">
+            @if (expanderColumn()) { <th></th> }
+            @if (checkboxColumn()) { <th></th> }
+            @for (column of columns(); track column.field) {
+              <th>
+                @if (column.filter) {
+                  <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabel().replace('{header}', column.header)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" />
+                }
+              </th>
+            }
+          </tr>
+        }
       </thead>
       <tbody>
         @for (row of visibleRows(); track trackRow(row, $index); let i = $index) {
-          <tr>
+          <tr
+            [class.hx-data-table-selectable]="selectable()"
+            [attr.aria-selected]="selectionMode() ? (isSelected(row) ? 'true' : 'false') : null"
+            [attr.tabindex]="selectable() ? 0 : null"
+            (click)="selectRow(row, $event)"
+            (keydown.enter)="onRowKey(row, $event)"
+            (keydown.space)="onRowKey(row, $event)"
+          >
+            @if (expanderColumn()) {
+              <td class="hx-data-table-expander-cell">
+                <button type="button" class="hx-data-table-expander" [class.hx-data-table-expander-open]="isExpanded(row, i)" [attr.aria-expanded]="isExpanded(row, i)" [attr.aria-label]="isExpanded(row, i) ? collapseLabel() : expandLabel()" (click)="toggleExpansion(row, i)"></button>
+              </td>
+            }
+            @if (checkboxColumn()) {
+              <td class="hx-data-table-select-cell">
+                <input type="checkbox" hx-checkbox [attr.aria-label]="selectRowLabel().replace('{row}', '' + (first() + i + 1))" [checked]="isSelected(row)" (change)="toggleRowCheckbox(row, $any($event.target).checked)" />
+              </td>
+            }
             @if (bodyTemplate(); as tpl) {
               <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
             } @else {
@@ -71,6 +109,15 @@
               }
             }
           </tr>
+          @if (expansionTemplate(); as tpl) {
+            @if (isExpanded(row, i)) {
+              <tr class="hx-data-table-expansion">
+                <td [attr.colspan]="colspan()">
+                  <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
+                </td>
+              </tr>
+            }
+          }
         } @empty {
           <tr class="hx-data-table-empty">
             <td [attr.colspan]="colspan()">{{ emptyMessage() }}</td>
@@ -80,6 +127,8 @@
       @if (footerTemplate(); as tpl) {
         <tfoot>
           <tr>
+            @if (expanderColumn()) { <td></td> }
+            @if (checkboxColumn()) { <td></td> }
             <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
           </tr>
         </tfoot>

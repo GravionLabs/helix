@@ -7,6 +7,7 @@ import {
   type HxColumn,
   HxDataTable,
   type HxLazyLoadEvent,
+  HxRowExpansion,
   type HxSortMeta,
   HxTableBody,
   HxTableCaption,
@@ -338,6 +339,8 @@ describe('HxDataTable sorting and paging', () => {
       sortField: 'name',
       sortOrder: 1,
       multiSortMeta: [{ field: 'name', order: 1 }],
+      filters: {},
+      globalFilter: '',
     });
     (root().querySelector('.hx-paginator-next') as HTMLElement).click();
     await update();
@@ -350,5 +353,184 @@ describe('HxDataTable sorting and paging', () => {
     expect(compareValues('Item 2', 'Item 10')).toBeLessThan(0);
     expect(compareValues(null, 1)).toBeGreaterThan(0);
     expect(compareValues(new Date(2026, 0, 1), new Date(2026, 5, 1))).toBeLessThan(0);
+  });
+});
+
+@Component({
+  imports: [HxDataTable, HxRowExpansion],
+  template: `
+    <hx-data-table #table [value]="value()" [columns]="columns" dataKey="id" [selectionMode]="mode()" [(selection)]="selection" [metaKeySelection]="meta()" [globalFilterFields]="['name', 'address.city']" filterDisplay="row" [(filters)]="filters" [(expandedRowKeys)]="expanded" [lazy]="lazy()" (lazyLoad)="events.push($event)" ariaLabel="Rows">
+      @if (expandable()) {
+        <ng-template hxRowExpansion let-row><p class="details">Details of {{ row.name }}</p></ng-template>
+      }
+    </hx-data-table>
+    <button class="global" (click)="table.filterGlobal(text())">filter</button>
+  `,
+})
+class SelectHost {
+  value = signal<Row[]>(many(6));
+  mode = signal<'single' | 'multiple' | undefined>('multiple');
+  selection = signal<unknown>([]);
+  meta = signal(false);
+  filters = signal<Record<string, string>>({});
+  expanded = signal<Record<string, boolean>>({});
+  expandable = signal(false);
+  lazy = signal(false);
+  text = signal('');
+  events: HxLazyLoadEvent[] = [];
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', filter: true },
+    { field: 'address.city', header: 'City', filter: true },
+    { field: 'price', header: 'Price' },
+  ];
+}
+
+describe('HxDataTable selection, filters and expansion', () => {
+  let fixture: ComponentFixture<SelectHost>;
+  let host: SelectHost;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const rowEls = () => [
+    ...root().querySelectorAll<HTMLElement>('tbody tr:not(.hx-data-table-expansion)'),
+  ];
+  const update = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const check = async (box: HTMLInputElement, checked: boolean) => {
+    box.checked = checked;
+    box.dispatchEvent(new Event('change', { bubbles: true }));
+    await update();
+  };
+  const type = async (input: HTMLInputElement, value: string) => {
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await update();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [SelectHost] }).compileComponents();
+    fixture = TestBed.createComponent(SelectHost);
+    host = fixture.componentInstance;
+    await update();
+  });
+
+  it('adds a checkbox column with a labelled select-all box in multiple mode', async () => {
+    const boxes = root().querySelectorAll<HTMLInputElement>('input[type=checkbox]');
+    expect(boxes).toHaveLength(7);
+    expect(boxes[0].getAttribute('aria-label')).toBe('Select all rows');
+    expect(boxes[1].getAttribute('aria-label')).toBe('Select row 1');
+    expect(rowEls()[0].getAttribute('aria-selected')).toBe('false');
+    await check(boxes[1], true);
+    expect(host.selection()).toEqual([expect.objectContaining({ id: 1 })]);
+    expect(rowEls()[0].getAttribute('aria-selected')).toBe('true');
+    expect(boxes[0].indeterminate).toBe(true);
+  });
+
+  it('selects and unselects all rows with the header checkbox', async () => {
+    const all = root().querySelector('thead input[type=checkbox]') as HTMLInputElement;
+    await check(all, true);
+    expect((host.selection() as Row[]).length).toBe(6);
+    expect(all.checked).toBe(true);
+    expect(all.indeterminate).toBe(false);
+    await check(all, false);
+    expect(host.selection()).toEqual([]);
+  });
+
+  it('selects one row by click in single mode and unselects it by a second click', async () => {
+    host.mode.set('single');
+    host.selection.set(null);
+    await update();
+    expect(root().querySelector('input[type=checkbox]')).toBeNull();
+    rowEls()[2].click();
+    await update();
+    expect((host.selection() as Row).id).toBe(3);
+    expect(rowEls()[2].getAttribute('aria-selected')).toBe('true');
+    rowEls()[2].click();
+    await update();
+    expect(host.selection()).toBeNull();
+  });
+
+  it('selects with Enter and Space on a focusable row', async () => {
+    host.mode.set('single');
+    host.selection.set(null);
+    await update();
+    expect(rowEls()[1].getAttribute('tabindex')).toBe('0');
+    rowEls()[1].dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await update();
+    expect((host.selection() as Row).id).toBe(2);
+  });
+
+  it('with metaKeySelection a plain click replaces the selection and Ctrl+click adds', async () => {
+    host.meta.set(true);
+    host.selection.set([]);
+    await update();
+    expect(root().querySelector('input[type=checkbox]')).toBeNull();
+    rowEls()[0].click();
+    rowEls()[1].dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true }));
+    await update();
+    expect((host.selection() as Row[]).map((r) => r.id)).toEqual([1, 2]);
+    rowEls()[3].click();
+    await update();
+    expect((host.selection() as Row[]).map((r) => r.id)).toEqual([4]);
+  });
+
+  it('filters with the global filter over the given fields', async () => {
+    host.text.set('rome');
+    (root().querySelector('button.global') as HTMLElement).click();
+    await update();
+    expect(rowEls().map((r) => r.children[1].textContent?.trim())).toEqual(['Item 01', 'Item 04']);
+  });
+
+  it('filters by column with the labelled inputs of the filter row', async () => {
+    const inputs = root().querySelectorAll<HTMLInputElement>('.hx-data-table-filter-row input');
+    expect(inputs).toHaveLength(2);
+    expect(inputs[0].getAttribute('aria-label')).toBe('Filter Name');
+    await type(inputs[1], 'osl');
+    expect(host.filters()).toEqual({ 'address.city': 'osl' });
+    expect(rowEls()).toHaveLength(2);
+    await type(inputs[1], '');
+    expect(host.filters()).toEqual({});
+    expect(rowEls()).toHaveLength(6);
+  });
+
+  it('select-all covers the filtered rows only', async () => {
+    const inputs = root().querySelectorAll<HTMLInputElement>('.hx-data-table-filter-row input');
+    await type(inputs[1], 'osl');
+    await check(root().querySelector('thead input[type=checkbox]') as HTMLInputElement, true);
+    expect((host.selection() as Row[]).map((r) => r.id)).toEqual([3, 6]);
+  });
+
+  it('puts the filters into lazyLoad and leaves the rows alone when lazy', async () => {
+    host.lazy.set(true);
+    await update();
+    host.events.length = 0;
+    const inputs = root().querySelectorAll<HTMLInputElement>('.hx-data-table-filter-row input');
+    await type(inputs[0], 'item 0');
+    expect(host.events.at(-1)?.filters).toEqual({ name: 'item 0' });
+    expect(rowEls()).toHaveLength(6);
+    host.text.set('x');
+    (root().querySelector('button.global') as HTMLElement).click();
+    await update();
+    expect(host.events.at(-1)?.globalFilter).toBe('x');
+  });
+
+  it('opens and closes a row below the row with an expander button', async () => {
+    host.expandable.set(true);
+    await update();
+    const button = root().querySelector('.hx-data-table-expander') as HTMLButtonElement;
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    expect(button.getAttribute('aria-label')).toBe('Expand row');
+    button.click();
+    await update();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(root().querySelector('.hx-data-table-expansion .details')?.textContent).toBe(
+      'Details of Item 01',
+    );
+    expect(host.expanded()).toEqual({ '1': true });
+    expect(root().querySelector('.hx-data-table-expansion td')?.getAttribute('colspan')).toBe('5');
+    button.click();
+    await update();
+    expect(root().querySelector('.hx-data-table-expansion')).toBeNull();
   });
 });
