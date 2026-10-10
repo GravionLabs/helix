@@ -202,31 +202,27 @@
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   height: var(--helix-status-bar-height, 3rem);
-  padding-left: 0.65rem;
+  padding-right: 1.25rem;
 }
 
 .helix-nav-rail-collapsed .helix-nav-rail-footer {
   justify-content: center;
-  padding-left: 0;
+  padding-right: 0;
 }
 
 .helix-nav-rail-collapse-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  min-width: 2.5rem;
+  width: 2.5rem;
   height: 2.5rem;
-  padding: 0 0.85rem 0 0.75rem;
+  padding: 0;
   border: none;
-  border-radius: var(--content-border-radius);
+  border-radius: 50%;
   background-color: transparent;
   color: var(--helix-nav-text-muted);
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
   cursor: pointer;
   transition: background-color var(--element-transition-duration), color var(--element-transition-duration);
 
@@ -239,12 +235,6 @@
     outline: 2px solid var(--primary-color);
     outline-offset: -2px;
   }
-}
-
-.helix-nav-rail-collapsed .helix-nav-rail-collapse-button {
-  padding: 0;
-  width: 2.5rem;
-  border-radius: 50%;
 }
 
 // The mobile drawer has no collapse mode; the hamburger is its only control.
