@@ -1,0 +1,196 @@
+/*
+ * Data table: `<hx-data-table>`. The table itself is drawn by `table.scss` (`.hx-table`); this sheet adds the frame
+ * with the loading cover, the visually hidden caption, the empty row and the column alignment, from the
+ * `--h-datatable-*` tokens.
+ */
+@use 'icons' as *;
+
+.hx-data-table {
+  display: block;
+}
+
+.hx-data-table-frame {
+  position: relative;
+}
+
+.hx-data-table-scroll:not(.hx-data-table-scrolls) {
+  overflow: visible;
+}
+
+.hx-data-table-caption-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hx-table .hx-data-table-align-center {
+  text-align: center;
+}
+
+.hx-table .hx-data-table-align-right {
+  text-align: end;
+}
+
+.hx-data-table-empty td {
+  color: var(--h-datatable-row-color);
+  text-align: center;
+  opacity: 0.7;
+}
+
+.hx-data-table-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--h-datatable-row-background) 60%, transparent);
+}
+
+.hx-data-table-loading hx-progress-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* sortable headers: a button that fills the header cell */
+.hx-data-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-datatable-header-cell-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border-radius: 2px;
+  outline-color: transparent;
+}
+
+.hx-data-table-align-center .hx-data-table-sort {
+  justify-content: center;
+}
+
+.hx-data-table-align-right .hx-data-table-sort {
+  justify-content: flex-end;
+}
+
+.hx-data-table-sort:hover {
+  color: var(--h-datatable-header-cell-hover-color);
+}
+
+.hx-data-table-sort:focus-visible {
+  outline: var(--h-datatable-header-cell-focus-ring-width) var(--h-datatable-header-cell-focus-ring-style)
+    var(--h-datatable-header-cell-focus-ring-color);
+  outline-offset: var(--h-datatable-header-cell-focus-ring-offset);
+  box-shadow: var(--h-datatable-header-cell-focus-ring-shadow);
+}
+
+.hx-table thead th.hx-data-table-sorted {
+  background: var(--h-datatable-header-cell-selected-background);
+  color: var(--h-datatable-header-cell-selected-color);
+}
+
+.hx-data-table-sort-icon {
+  @include hx-icon(sort, var(--h-datatable-sort-icon-size), var(--h-datatable-sort-icon-color));
+}
+
+.hx-data-table-sort:hover .hx-data-table-sort-icon {
+  background: var(--h-datatable-sort-icon-hover-color);
+}
+
+.hx-data-table-sort-asc {
+  @include hx-icon(chevron-up, var(--h-datatable-sort-icon-size), currentcolor);
+}
+
+.hx-data-table-sort-desc {
+  @include hx-icon(chevron-down, var(--h-datatable-sort-icon-size), currentcolor);
+}
+
+.hx-data-table-sort-rank {
+  font-size: 0.75em;
+  opacity: 0.8;
+}
+
+.hx-data-table-paginator {
+  border-block-start: 1px solid var(--h-datatable-border-color);
+}
+
+/* selection and expansion */
+.hx-data-table-select-cell,
+.hx-data-table-expander-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.hx-data-table-selectable {
+  cursor: pointer;
+}
+
+.hx-data-table-selectable:focus-visible {
+  outline: var(--h-datatable-row-focus-ring-width) var(--h-datatable-row-focus-ring-style)
+    var(--h-datatable-row-focus-ring-color);
+  outline-offset: calc(-1 * var(--h-datatable-row-focus-ring-width));
+  box-shadow: var(--h-datatable-row-focus-ring-shadow);
+}
+
+.hx-data-table-filter-row th {
+  padding-block: 0.25rem 0.5rem;
+  font-weight: normal;
+}
+
+.hx-data-table-expander {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-datatable-row-toggle-button-size);
+  height: var(--h-datatable-row-toggle-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-datatable-row-toggle-button-border-radius);
+  background: transparent;
+  color: var(--h-datatable-row-toggle-button-color);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-data-table-expander::before {
+  @include hx-icon(chevron-right, 1em);
+  content: '';
+  transition: transform 0.15s;
+}
+
+.hx-data-table-expander-open::before {
+  transform: rotate(90deg);
+}
+
+.hx-data-table-expander:hover {
+  background: var(--h-datatable-row-toggle-button-hover-background);
+  color: var(--h-datatable-row-toggle-button-hover-color);
+}
+
+.hx-data-table-expander:focus-visible {
+  outline: var(--h-datatable-row-toggle-button-focus-ring-width) var(--h-datatable-row-toggle-button-focus-ring-style)
+    var(--h-datatable-row-toggle-button-focus-ring-color);
+  outline-offset: var(--h-datatable-row-toggle-button-focus-ring-offset);
+  box-shadow: var(--h-datatable-row-toggle-button-focus-ring-shadow);
+}
+
+.hx-table tbody tr.hx-data-table-expansion > td {
+  background: var(--h-datatable-row-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-data-table-expander::before {
+    transition: none;
+  }
+}

@@ -48,6 +48,7 @@ describe('helix-ui styles', () => {
     ['avatar', 'avatar/avatar.ts'],
     ['badge', 'badge/badge.ts'],
     ['breadcrumb', 'breadcrumb/breadcrumb.ts'],
+    ['paginator', 'paginator/paginator.ts'],
     ['confirm', 'confirm/confirm.ts'],
     ['dialog', 'dialog/dialog.ts'],
     ['divider', 'divider/divider.ts'],

@@ -54,7 +54,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Message](message.md) | `hx-message` is an inline message next to the content it is about. |
 | [Tooltip](tooltip.md) | `[hx-tooltip]` shows a short text next to an element on hover and keyboard focus. |
 
-## Navigation (5)
+## Navigation (6)
 
 | Component | Description |
 | --- | --- |
@@ -62,6 +62,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Menubar](menubar.md) | `hx-menubar` is a horizontal menu of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model) with dropdown submenus, on the CDK menubar. |
 | [Tabs](tabs.md) | `hx-tabs` shows one panel at a time, chosen by a row of tabs, in the WAI-ARIA tabs pattern. |
 | [Stepper](stepper.md) | `hx-stepper` shows the steps of a process as a row of headers above the panel of the active step. |
+| [Paginator](paginator.md) | `hx-paginator` is the page navigation of a list or table: first, previous, page links, next, last and a rows-per-page select. |
 | [Breadcrumb](breadcrumb.md) | `hx-breadcrumb` renders the path to the current page as a `nav` landmark with an ordered list. |
 
 ## Display (7)
@@ -76,11 +77,12 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Skeleton](skeleton.md) | `hx-skeleton` is a placeholder shaped like the content that is still loading. |
 | [Timeline](timeline.md) | `hx-timeline` shows events along a line, as an ordered list. |
 
-## Data (3)
+## Data (4)
 
 | Component | Description |
 | --- | --- |
 | [Table](table.md) | `table[hx-table]` draws a native `<table>` as a Helix table, with CSS only. |
+| [Data table](data-table.md) | `hx-data-table` is a table with a column model: cell templates, sorting, paging (client side or lazy), selection, filters, row expansion, caption, empty and loading state, a scrolling body with a sticky header. |
 | [Tree](tree.md) | `hx-tree` shows hierarchical data with expand and collapse, selection, a filter and lazy children, in the WAI-ARIA tree view pattern. |
 | [Chart](chart.md) | `hx-chart` is a [chart.js](https://www.chartjs.org/) chart whose colours, grid and font come from the Helix tokens. |
 

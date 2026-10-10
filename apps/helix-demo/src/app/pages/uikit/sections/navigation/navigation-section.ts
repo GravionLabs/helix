@@ -4,6 +4,7 @@ import {
   HxMenu,
   HxMenubar,
   type HxMenuItem,
+  HxPaginator,
   HxSplitButton,
   HxStep,
   HxStepContent,
@@ -19,7 +20,7 @@ import {
   HxTabs,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Split button, Stepper, Tabs. */
+/** `@gravionlabs/helix-ui` navigation: Menu, Menubar, Paginator, Split button, Stepper, Tabs. */
 @Component({
   selector: 'app-navigation-section',
   standalone: true,
@@ -27,6 +28,7 @@ import {
     HxButton,
     HxMenu,
     HxMenubar,
+    HxPaginator,
     HxSplitButton,
     HxStepper,
     HxStepList,
@@ -46,6 +48,8 @@ import {
   styleUrl: './navigation-section.scss',
 })
 export class HxNavigationSection {
+  readonly first = signal(0);
+  readonly rows = signal(10);
   readonly items: HxMenuItem[] = [
     { label: 'New', icon: 'pi pi-plus', command: () => undefined },
     { label: 'Open', icon: 'pi pi-folder-open' },

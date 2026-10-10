@@ -58,6 +58,27 @@ export {
   HxConfirmPopup,
 } from './lib/confirm/confirm';
 export {
+  compareValues,
+  HxCell,
+  type HxCellContext,
+  type HxColumn,
+  type HxColumnAlign,
+  HxDataTable,
+  type HxLazyLoadEvent,
+  HxRowExpansion,
+  type HxSelectionMode,
+  type HxSortFunction,
+  type HxSortMeta,
+  type HxSortMode,
+  HxTableBody,
+  HxTableCaption,
+  type HxTableColumnsContext,
+  HxTableFooter,
+  HxTableHeader,
+  type HxTableRowContext,
+  resolveField,
+} from './lib/data-table/data-table';
+export {
   HxDatePicker,
   type HxDatePickerSelectionMode,
   type HxDatePickerValue,
@@ -111,6 +132,7 @@ export {
   type HxMultiSelectSize,
   type HxMultiSelectVariant,
 } from './lib/multi-select/multi-select';
+export { type HxPageEvent, HxPaginator } from './lib/paginator/paginator';
 export { HxPanel } from './lib/panel/panel';
 export { HxPassword } from './lib/password/password';
 export { HxPopover } from './lib/popover/popover';

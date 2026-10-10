@@ -1,7 +1,13 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
+  HxButton,
+  HxCell,
   HxChart,
   type HxChartSelectEvent,
+  type HxColumn,
+  HxDataTable,
+  HxInput,
+  HxRowExpansion,
   HxTable,
   HxTree,
   type HxTreeNode,
@@ -9,16 +15,51 @@ import {
   type HxTreeSelection,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` data components: Tree, Chart, Table. */
+/** `@gravionlabs/helix-ui` data components: Tree, Chart, Table, Data table. */
 @Component({
   selector: 'app-data-section',
   standalone: true,
-  imports: [HxChart, HxTable, HxTree],
+  imports: [HxButton, HxCell, HxChart, HxDataTable, HxInput, HxRowExpansion, HxTable, HxTree],
   templateUrl: './data-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-section.scss',
 })
 export class HxDataSection {
+  readonly columns: HxColumn[] = [
+    { field: 'code', header: 'Code', width: '8rem' },
+    { field: 'name', header: 'Name', sortable: true },
+    { field: 'category', header: 'Category', sortable: true },
+    { field: 'price', header: 'Price', align: 'right', sortable: true },
+  ];
+  readonly products = [
+    { id: 1, code: 'f230fh0g3', name: 'Bamboo Watch', category: 'Accessories', price: 65 },
+    { id: 2, code: 'nvklal433', name: 'Black Watch', category: 'Accessories', price: 72 },
+    { id: 3, code: 'zz21cz3c1', name: 'Blue Band', category: 'Fitness', price: 79 },
+    { id: 4, code: '244wgerg2', name: 'Blue T-Shirt', category: 'Clothing', price: 29 },
+  ];
+  readonly manyProducts = Array.from({ length: 47 }, (_, i) => ({
+    id: i + 1,
+    code: `p${String(i + 1).padStart(4, '0')}`,
+    name: `Product ${i + 1}`,
+    category: ['Accessories', 'Fitness', 'Clothing'][i % 3],
+    price: 10 + ((i * 17) % 90),
+  }));
+  readonly selected = signal<unknown>([]);
+  readonly filters = signal<Record<string, string>>({});
+  readonly filterColumns: HxColumn[] = [
+    { field: 'name', header: 'Name', filter: true, sortable: true },
+    { field: 'category', header: 'Category', filter: true },
+    { field: 'price', header: 'Price', align: 'right', sortable: true },
+  ];
+  readonly tableLoading = signal(false);
+  readonly tableRows = signal(this.products);
+  toggleLoading(): void {
+    this.tableLoading.update((v) => !v);
+  }
+  toggleEmpty(): void {
+    this.tableRows.update((rows) => (rows.length ? [] : this.products));
+  }
+
   readonly files = signal<HxTreeNode[]>([
     {
       key: 'docs',
