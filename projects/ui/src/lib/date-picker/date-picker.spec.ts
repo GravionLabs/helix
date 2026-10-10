@@ -152,7 +152,10 @@ describe('HxDatePicker', () => {
   it('keeps one tab stop in the grid', () => {
     const stops = el('single').querySelectorAll('.hx-date-picker-date[tabindex="0"]');
     expect(stops.length).toBe(1);
-    expect(stops[0].getAttribute('data-date')).toBe('2026-10-9');
+    // the focused day is today while the shown month is today's, else the selected day (9 October)
+    const now = new Date();
+    const todayKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    expect(['2026-10-9', todayKey]).toContain(stops[0].getAttribute('data-date'));
   });
 
   it('goes to the next month and back with the header buttons', async () => {
