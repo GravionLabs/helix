@@ -39,6 +39,7 @@
 9. [UI Components](#ui-components)
    - [HelixBadge](#helixbadge)
    - [HelixEnvironmentBadge](#helixenviromentbadge)
+   - [HelixPageHeader](#helixpageheader)
 10. [Form Infrastructure](#form-infrastructure)
     - [HelixFormField](#helixformfield)
 11. [Interfaces](#interfaces)
@@ -1011,6 +1012,32 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 ```html
 <helix-environment-badge environment="staging" />
 <helix-environment-badge [environment]="envName" />
+```
+
+### HelixPageHeader
+
+**Selector:** `<helix-page-header>`  
+**File:** `projects/shell/src/lib/ui/page-header/page-header.ts`
+
+The header of a page: an optional breadcrumb, the title (an `h1` by default) with a subtitle, and the page's actions on the end edge. The actions are projected with the `helixPageActions` attribute and wrap under the title on narrow screens.
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — (required) | The page title |
+| `subtitle` | `string` | — | One line under the title |
+| `breadcrumb` | `HxBreadcrumbItem[]` | — | The trail above the title (rendered with `hx-breadcrumb`); its last item is the current page |
+| `home` | `HxBreadcrumbItem` | — | The first item of the breadcrumb, usually a home icon |
+| `headingLevel` | `1–6` | `1` | The heading element of the title |
+
+#### Example
+
+```html
+<helix-page-header title="Invoices" subtitle="Open and paid invoices" [breadcrumb]="crumbs" [home]="{ icon: 'pi pi-home', routerLink: '/' }">
+  <button helixPageActions hx-button type="button" variant="outlined">Export</button>
+  <button helixPageActions hx-button type="button">New invoice</button>
+</helix-page-header>
 ```
 
 ---

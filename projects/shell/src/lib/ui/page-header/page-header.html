@@ -1,0 +1,23 @@
+<header class="helix-page-header__inner">
+  @if (breadcrumb()?.length || home()) {
+    <hx-breadcrumb class="helix-page-header__breadcrumb" [model]="breadcrumb() ?? []" [home]="home()" />
+  }
+  <div class="helix-page-header__row">
+    <div class="helix-page-header__text">
+      @switch (headingLevel()) {
+        @case (2) { <h2 class="helix-page-header__title">{{ title() }}</h2> }
+        @case (3) { <h3 class="helix-page-header__title">{{ title() }}</h3> }
+        @case (4) { <h4 class="helix-page-header__title">{{ title() }}</h4> }
+        @case (5) { <h5 class="helix-page-header__title">{{ title() }}</h5> }
+        @case (6) { <h6 class="helix-page-header__title">{{ title() }}</h6> }
+        @default { <h1 class="helix-page-header__title">{{ title() }}</h1> }
+      }
+      @if (subtitle(); as subtitle) {
+        <p class="helix-page-header__subtitle">{{ subtitle }}</p>
+      }
+    </div>
+    <div class="helix-page-header__actions">
+      <ng-content select="[helixPageActions]" />
+    </div>
+  </div>
+</header>
