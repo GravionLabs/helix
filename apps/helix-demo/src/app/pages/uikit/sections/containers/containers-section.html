@@ -40,10 +40,16 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Fieldset</h2>
     <hx-fieldset legend="Static fieldset">
-      <label for="fs-a">Name</label> <input hx-input id="fs-a" />
+      <div class="flex flex-col gap-2">
+        <label for="fs-a">Name</label>
+        <input hx-input id="fs-a" />
+      </div>
     </hx-fieldset>
     <hx-fieldset legend="Toggleable fieldset" toggleable [(collapsed)]="fieldsetCollapsed">
-      <label for="fs-b">Street</label> <input hx-input id="fs-b" />
+      <div class="flex flex-col gap-2">
+        <label for="fs-b">Street</label>
+        <input hx-input id="fs-b" />
+      </div>
     </hx-fieldset>
   </div>
 
