@@ -1,0 +1,177 @@
+/*
+ * Image: `<hx-image>`, from the `--h-image-*` tokens. Inline it is the picture with, when `preview` is set, a button
+ * over it that shows a mask and an eye on hover and focus. The preview is a CDK dialog over a dark backdrop with a
+ * floating toolbar (rotate, zoom, close); the picture turns and scales with a transform.
+ */
+@use 'icons' as *;
+
+.hx-image {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.hx-image-img {
+  display: block;
+  max-width: 100%;
+}
+
+/* with a preview the picture itself hints at the click */
+.hx-image-preview .hx-image-img {
+  cursor: zoom-in;
+}
+
+.hx-image-preview-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--h-image-preview-mask-color);
+  cursor: pointer;
+  opacity: 0;
+  outline-color: transparent;
+  transition: opacity var(--h-image-transition-duration);
+}
+
+.hx-image-preview-mask:hover,
+.hx-image-preview-mask:focus-visible {
+  background: var(--h-image-preview-mask-background);
+  opacity: 1;
+}
+
+.hx-image-preview-mask:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: calc(-1 * var(--h-focus-ring-width));
+}
+
+.hx-image-preview-icon {
+  @include hx-icon(eye, var(--h-image-preview-icon-size));
+}
+
+/* the preview overlay */
+.hx-image-backdrop {
+  background: rgb(0 0 0 / 0.9);
+}
+
+.hx-image-panel {
+  display: flex;
+}
+
+.hx-image-overlay {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+}
+
+.hx-image-stage {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.hx-image-original {
+  display: block;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100vh - 2rem);
+  object-fit: contain;
+  transition: transform var(--h-image-transition-duration);
+}
+
+.hx-image-toolbar {
+  position: absolute;
+  top: var(--h-image-toolbar-position-top);
+  right: var(--h-image-toolbar-position-right);
+  bottom: var(--h-image-toolbar-position-bottom);
+  left: var(--h-image-toolbar-position-left);
+  z-index: 1;
+  display: flex;
+  gap: var(--h-image-toolbar-gap);
+  padding: var(--h-image-toolbar-padding);
+  border: var(--h-image-toolbar-border-width) solid var(--h-image-toolbar-border-color);
+  border-radius: var(--h-image-toolbar-border-radius);
+  background: var(--h-image-toolbar-background);
+  backdrop-filter: blur(var(--h-image-toolbar-blur));
+}
+
+.hx-image-close-only {
+  position: absolute;
+  top: var(--h-image-toolbar-position-top);
+  right: var(--h-image-toolbar-position-right);
+  z-index: 1;
+}
+
+.hx-image-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-image-action-size);
+  height: var(--h-image-action-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-image-action-border-radius);
+  background: transparent;
+  color: var(--h-image-action-color);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-image-transition-duration),
+    color var(--h-image-transition-duration);
+}
+
+.hx-image-action:hover:not(:disabled) {
+  background: var(--h-image-action-hover-background);
+  color: var(--h-image-action-hover-color);
+}
+
+.hx-image-action:focus-visible {
+  outline: var(--h-image-action-focus-ring-width) var(--h-image-action-focus-ring-style)
+    var(--h-image-action-focus-ring-color);
+  outline-offset: var(--h-image-action-focus-ring-offset);
+  box-shadow: var(--h-image-action-focus-ring-shadow);
+}
+
+.hx-image-action:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hx-image-action::before {
+  content: '';
+}
+
+.hx-image-rotate-left::before {
+  @include hx-icon(rotate-left, var(--h-image-action-icon-size));
+}
+
+.hx-image-rotate-right::before {
+  @include hx-icon(rotate-right, var(--h-image-action-icon-size));
+}
+
+.hx-image-zoom-out::before {
+  @include hx-icon(zoom-out, var(--h-image-action-icon-size));
+}
+
+.hx-image-zoom-in::before {
+  @include hx-icon(zoom-in, var(--h-image-action-icon-size));
+}
+
+.hx-image-close::before {
+  @include hx-icon(close, var(--h-image-action-icon-size));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-image-preview-mask,
+  .hx-image-original,
+  .hx-image-action {
+    transition: none;
+  }
+}

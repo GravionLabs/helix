@@ -45,6 +45,7 @@ export const TOKEN_COMPONENTS = {
   drawer: ['drawer'],
   fieldset: ['fieldset'],
   'icon-field': ['iconfield', 'inputtext'],
+  image: ['image'],
   input: ['inputtext', 'textarea'],
   listbox: ['listbox', 'inputtext'],
   menu: ['menu', 'tieredmenu'],

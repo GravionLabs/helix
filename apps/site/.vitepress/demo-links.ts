@@ -23,7 +23,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/button': ['button', 'button-group', 'split-button'],
   'uikit/table': ['table'],
   'uikit/tree': ['tree'],
-  'uikit/media': ['carousel', 'galleria'],
+  'uikit/media': ['carousel', 'galleria', 'image'],
   'uikit/panel': ['accordion', 'card', 'divider', 'fieldset', 'panel', 'tabs', 'toolbar'],
   'uikit/overlay': ['confirm', 'dialog', 'drawer', 'popover', 'tooltip'],
   'uikit/menu': ['breadcrumb', 'menu', 'menubar', 'stepper'],

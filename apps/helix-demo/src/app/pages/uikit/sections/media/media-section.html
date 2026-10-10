@@ -51,4 +51,16 @@
     <div><button hx-button type="button" (click)="galleryOpen.set(true)"><span class="pi pi-images hx-button-icon" aria-hidden="true"></span> Show pictures</button></div>
     <hx-galleria [value]="pictures" fullScreen [(visible)]="galleryOpen" circular showIndicators [numVisible]="6" ariaLabel="Product pictures, full screen" />
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Image</h2>
+    <p class="m-0">The second and third picture open a preview on a click (the button over them shows on hover and focus): rotate, zoom (+ / -) and close with Escape.</p>
+    <div class="flex flex-wrap items-end gap-4">
+      <hx-image [src]="imageBase + 'bamboo-watch.jpg'" alt="Bamboo watch" width="160" />
+      <hx-image [src]="imageBase + 'black-watch.jpg'" alt="Black watch" width="160" preview />
+      <hx-image [src]="imageBase + 'blue-band.jpg'" alt="Blue band" width="160" preview [showToolbar]="false">
+        <ng-template hxImageIndicator><span class="pi pi-search-plus text-xl" aria-hidden="true"></span></ng-template>
+      </hx-image>
+    </div>
+  </div>
 </div>
