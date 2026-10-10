@@ -25,12 +25,15 @@ const CITIES: City[] = [
     <hx-select id="strings" [options]="['Small', 'Medium', 'Large']" emptyMessage="Nothing" [(ngModel)]="sized" />
     <hx-select id="reactive" [options]="['a', 'b']" [formControl]="control" />
     <hx-select id="signal" [options]="['x', 'y']" [formField]="model.choice" />
+    <hx-select id="filtered" filter filterPlaceholder="Find" [options]="cities" optionLabel="name" optionValue="code" [(value)]="chosen" />
+    <hx-select id="by" filter [options]="cities" optionLabel="name" optionValue="code" [filterBy]="'code'" />
     <hx-select id="empty" [options]="[]" emptyMessage="No cities" />
   `,
 })
 class Host {
   cities = CITIES;
   picked = signal<string | null>(null);
+  chosen = signal<string | null>('RM');
   clearable = signal(false);
   disabled = signal(false);
   invalid = signal(false);
@@ -182,6 +185,82 @@ describe('HxSelect', () => {
     expect(select('plain').classList).toContain('hx-select-lg');
     expect(select('plain').classList).toContain('hx-select-invalid');
     expect(trigger('plain').getAttribute('aria-invalid')).toBe('true');
+  });
+
+  describe('filter', () => {
+    const field = () => document.querySelector('.hx-select-filter') as HTMLInputElement | null;
+    const type = async (text: string) => {
+      const input = field() as HTMLInputElement;
+      input.value = text;
+      input.dispatchEvent(new Event('input'));
+      await settle();
+    };
+    const labels = () => options().map((o) => o.textContent?.trim());
+
+    it('has no field without the filter input', async () => {
+      trigger('plain').click();
+      await settle();
+      expect(field()).toBeNull();
+    });
+
+    it('shows a named field and focuses it when the panel opens', async () => {
+      trigger('filtered').click();
+      await settle();
+      expect(field()?.getAttribute('aria-label')).toBe('Find');
+      expect(document.activeElement).toBe(field());
+    });
+
+    it('filters by label, case-insensitive contains', async () => {
+      trigger('filtered').click();
+      await settle();
+      await type('ISTAN');
+      expect(labels()).toEqual(['Istanbul']);
+      await type('o');
+      expect(labels()).toEqual(['New York', 'Rome', 'London']);
+    });
+
+    it('filters by filterBy', async () => {
+      trigger('by').click();
+      await settle();
+      await type('ld');
+      expect(labels()).toEqual(['London']);
+    });
+
+    it('shows the empty filter message and announces the count', async () => {
+      trigger('filtered').click();
+      await settle();
+      await type('zzz');
+      expect(document.querySelector('.hx-select-empty')?.textContent?.trim()).toBe('No results');
+      const live = document.querySelector('.hx-select-sr-only');
+      expect(live?.getAttribute('aria-live')).toBe('polite');
+      expect(live?.textContent?.trim()).toBe('0 results');
+    });
+
+    it('clears the field when the panel closes and keeps the selection while filtered out', async () => {
+      trigger('filtered').click();
+      await settle();
+      await type('york');
+      expect(host.chosen()).toBe('RM');
+      expect(label('filtered')).toBe('Rome');
+      trigger('filtered').click();
+      await settle();
+      trigger('filtered').click();
+      await settle();
+      expect(field()?.value).toBe('');
+      expect(labels().length).toBe(4);
+    });
+
+    it('moves from the field into the list with the arrow keys and closes with Escape', async () => {
+      trigger('filtered').click();
+      await settle();
+      field()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      await settle();
+      expect(document.activeElement).toBe(document.querySelector('.hx-select-list'));
+      field()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await settle();
+      expect(panel()).toBeNull();
+      expect(document.activeElement).toBe(trigger('filtered'));
+    });
   });
 
   describe('forms', () => {

@@ -18,6 +18,10 @@ dependency) and the overlay styles that come with `styles.css`.
 | `optionDisabled` | `string`                            | `'disabled'`   | Property that disables an option.                                   |
 | `placeholder`    | `string`                            |                | Shown while nothing is selected.                                    |
 | `emptyMessage`   | `string`                            | `'No options'` | Shown when there are no options.                                    |
+| `filter`         | `boolean`                           | `false`        | A search field above the list (case-insensitive "contains").        |
+| `filterPlaceholder` | `string`                         | `'Search'`     | Placeholder and accessible name of the search field.                |
+| `filterBy`       | `string \| (option) => string`      | the label      | What the filter matches: a property name or accessor.               |
+| `emptyFilterMessage` | `string`                        | `'No results'` | Shown when the filter matches nothing.                              |
 | `variant`        | `'outlined' \| 'filled'`            | `'outlined'`   | A tinted field instead of an outline.                               |
 | `size`           | `'small' \| 'medium' \| 'large'`     | `'medium'`     | Font size and padding.                                              |
 | `fluid`          | `boolean`                           | `false`        | Full width of the container.                                        |
@@ -29,7 +33,7 @@ dependency) and the overlay styles that come with `styles.css`.
 - **Forms:** works with `ngModel`, reactive forms (it is a `ControlValueAccessor`) and signal forms
   (`[formField]`, it implements the form value control contract); `[(value)]` binds it without forms.
 - **Keyboard:** Arrow Down/Up or Enter opens it; in the list the arrows, Home, End and typeahead move,
-  Enter or Space selects, Escape closes and returns focus to the trigger, Tab closes.
+  Enter or Space selects (with `filter` the field has focus first and Arrow Down moves into the list; the field is cleared when the panel closes), Escape closes and returns focus to the trigger, Tab closes.
 - **Accessibility:** the trigger is a `combobox` with `aria-expanded` and `aria-controls`, the list a
   `listbox` of `option`s. Give it a visible label or `ariaLabel`.
 
