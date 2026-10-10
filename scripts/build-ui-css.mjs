@@ -41,6 +41,7 @@ export const TOKEN_COMPONENTS = {
   dialog: ['dialog'],
   divider: ['divider'],
   'float-label': ['floatlabel'],
+  galleria: ['galleria'],
   drawer: ['drawer'],
   fieldset: ['fieldset'],
   'icon-field': ['iconfield', 'inputtext'],

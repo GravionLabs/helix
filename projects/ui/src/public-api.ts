@@ -114,6 +114,15 @@ export {
   matchesAccept,
 } from './lib/file-upload/file-upload';
 export { HxFloatLabel, type HxFloatLabelVariant } from './lib/float-label/float-label';
+export {
+  HxGalleria,
+  HxGalleriaCaption,
+  type HxGalleriaItem,
+  type HxGalleriaItemContext,
+  HxGalleriaItemTemplate,
+  HxGalleriaThumbnail,
+  type HxGalleriaThumbnailsPosition,
+} from './lib/galleria/galleria';
 export { HxIconField, type HxIconPosition, HxInputIcon } from './lib/icon-field/icon-field';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
 export { HxInputGroup, HxInputGroupAddon } from './lib/input-group/input-group';

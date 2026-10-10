@@ -38,4 +38,17 @@
       </ng-template>
     </hx-carousel>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Galleria</h2>
+    <p class="m-0">A stage with captions and a strip of thumbnails; Arrow keys, Home and End move on the stage and in the strip. Picture {{ galleryIndex() + 1 }} of {{ pictures.length }}.</p>
+    <hx-galleria [value]="pictures" [(activeIndex)]="galleryIndex" [numVisible]="4" circular ariaLabel="Product pictures" style="max-width: 40rem" />
+  </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Galleria: full screen</h2>
+    <p class="m-0">Opens over the whole screen as a modal dialog; Escape or the close button return the focus to the button.</p>
+    <div><button hx-button type="button" (click)="galleryOpen.set(true)"><span class="pi pi-images hx-button-icon" aria-hidden="true"></span> Show pictures</button></div>
+    <hx-galleria [value]="pictures" fullScreen [(visible)]="galleryOpen" circular showIndicators [numVisible]="6" ariaLabel="Product pictures, full screen" />
+  </div>
 </div>

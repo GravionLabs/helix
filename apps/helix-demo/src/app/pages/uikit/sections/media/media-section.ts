@@ -4,6 +4,8 @@ import {
   HxCarousel,
   HxCarouselItem,
   type HxCarouselResponsiveOption,
+  HxGalleria,
+  type HxGalleriaItem,
   HxTag,
 } from '@gravionlabs/helix-ui';
 
@@ -14,11 +16,11 @@ interface Product {
   status: 'In stock' | 'Low stock' | 'Out of stock';
 }
 
-/** `@gravionlabs/helix-ui` media components: Carousel. */
+/** `@gravionlabs/helix-ui` media components: Carousel, Galleria. */
 @Component({
   selector: 'app-media-section',
   standalone: true,
-  imports: [HxButton, HxCarousel, HxCarouselItem, HxTag],
+  imports: [HxButton, HxCarousel, HxCarouselItem, HxGalleria, HxTag],
   templateUrl: './media-section.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './media-section.scss',
@@ -42,6 +44,14 @@ export class HxMediaSection {
     { breakpoint: '640px', numVisible: 1, numScroll: 1 },
   ];
   readonly page = signal(0);
+  readonly pictures: HxGalleriaItem[] = this.products.slice(0, 6).map((p) => ({
+    src: this.imageBase + p.image,
+    alt: p.name,
+    title: p.name,
+    caption: `€${p.price} · ${p.status}`,
+  }));
+  readonly galleryIndex = signal(0);
+  readonly galleryOpen = signal(false);
 
   severity(status: Product['status']): 'success' | 'warn' | 'danger' {
     return status === 'In stock' ? 'success' : status === 'Low stock' ? 'warn' : 'danger';
