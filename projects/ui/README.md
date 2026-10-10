@@ -33,6 +33,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxAvatar`, `HxAvatarGroup` | `hx-avatar`, `hx-avatar-group` | picture, icon or initials; sizes, shapes; the group overlaps its avatars |
 | `HxBadge`, `HxOverlayBadge` | `hx-badge`, `hx-overlay-badge` | count or dot marker, severities and sizes; the overlay variant sits on a corner of the wrapped element |
 | `HxBreadcrumb` | `hx-breadcrumb` | router links, home item |
+| `HxPaginator` | `hx-paginator` | first/previous/page links/next/last, rows per page, current page report; `first` and `rows` models |
 | `HxIconField`, `HxInputIcon` | `hx-icon-field`, `[hx-input-icon]` | icon on the start or end edge of a text field |
 | `HxFloatLabel` | `hx-float-label` | a label that sits in the field and floats up on focus or a value (`over`, `in`, `on`) |
 | `HxInputGroup`, `HxInputGroupAddon` | `hx-input-group`, `hx-input-group-addon` | joins fields, selects, buttons and addons |

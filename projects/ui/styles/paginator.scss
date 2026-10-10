@@ -1,0 +1,101 @@
+/*
+ * Paginator: `<hx-paginator>`, from the `--h-paginator-*` tokens. Page buttons are round, the current page is
+ * highlighted; the first/previous/next/last icons are masks that follow the text colour.
+ */
+@use 'icons' as *;
+
+.hx-paginator {
+  display: block;
+  padding: var(--h-paginator-padding);
+  border-radius: var(--h-paginator-border-radius);
+  background: var(--h-paginator-background);
+  color: var(--h-paginator-color);
+}
+
+.hx-paginator-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--h-paginator-gap);
+}
+
+.hx-paginator-pages {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-paginator-gap);
+}
+
+.hx-paginator-report {
+  margin-inline-end: auto;
+  color: var(--h-paginator-current-page-report-color);
+}
+
+.hx-paginator-rows {
+  margin-inline-start: auto;
+}
+
+.hx-paginator-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--h-paginator-nav-button-width);
+  height: var(--h-paginator-nav-button-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-paginator-nav-button-border-radius);
+  background: var(--h-paginator-nav-button-background);
+  color: var(--h-paginator-nav-button-color);
+  font: inherit;
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-paginator-transition-duration),
+    color var(--h-paginator-transition-duration),
+    outline-color var(--h-paginator-transition-duration);
+}
+
+.hx-paginator-button:hover:not(:disabled) {
+  background: var(--h-paginator-nav-button-hover-background);
+  color: var(--h-paginator-nav-button-hover-color);
+}
+
+.hx-paginator-button:focus-visible {
+  outline: var(--h-paginator-nav-button-focus-ring-width) var(--h-paginator-nav-button-focus-ring-style)
+    var(--h-paginator-nav-button-focus-ring-color);
+  outline-offset: var(--h-paginator-nav-button-focus-ring-offset);
+  box-shadow: var(--h-paginator-nav-button-focus-ring-shadow);
+}
+
+.hx-paginator-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hx-paginator-page-current,
+.hx-paginator-page-current:hover:not(:disabled) {
+  background: var(--h-paginator-nav-button-selected-background);
+  color: var(--h-paginator-nav-button-selected-color);
+}
+
+.hx-paginator-first::before {
+  @include hx-icon(chevrons-left, 1.1em);
+}
+
+.hx-paginator-prev::before {
+  @include hx-icon(chevron-left, 1.1em);
+}
+
+.hx-paginator-next::before {
+  @include hx-icon(chevron-right, 1.1em);
+}
+
+.hx-paginator-last::before {
+  @include hx-icon(chevrons-right, 1.1em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-paginator-button {
+    transition: none;
+  }
+}

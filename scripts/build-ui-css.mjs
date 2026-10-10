@@ -53,6 +53,7 @@ export const TOKEN_COMPONENTS = {
   'file-upload': ['fileupload', 'button'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],
+  paginator: ['paginator'],
   panel: ['panel'],
   password: ['password', 'inputtext'],
   progress: ['progressbar', 'progressspinner'],
