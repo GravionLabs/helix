@@ -169,15 +169,14 @@ items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the cl
 | `helix-zod`     | No import from `helix-core`; the validators come from `@gravionlabs/helix-ui/validators`, the widgets draw `hx-*` controls. |
 | `helix-ag-grid` | No import from `helix-core`; `helixGridTheme` styles AG Grid from the tokens.                                               |
 | demo app        | No import from `helix-core`, no `provideHelix`.                                                                             |
-| `helix-core`    | Nothing depends on it any more; it is removed from the workspace in a following step.                                       |
+| `helix-core`    | Removed from the workspace (#671); it is no longer built, tested or published.                                               |
 
-`pnpm lint:core-imports` fails when one of these libraries or the demo imports `helix-core`, so a migrated
-library cannot slide back.
+`pnpm lint:no-core` fails when anything in `projects/` or the demo imports `helix-core`, so it cannot slide back.
 
 ## Rules of the package
 
-- Nothing in `helix-shell`, `helix-zod`, `helix-ag-grid` or the demo app imports `@gravionlabs/helix-core` (`pnpm lint:core-imports`).
-- Nothing in `projects/ui` imports `@gravionlabs/helix-core`, `@primeuix/*` or `primeng` (`pnpm lint:no-core`).
+- Nothing in `helix-shell`, `helix-zod`, `helix-ag-grid` or the demo app imports `@gravionlabs/helix-core` (`pnpm lint:no-core`).
+- Nothing imports `@primeuix/*` or `primeng` (`pnpm lint:no-primeuix`, `pnpm lint:no-primeng`).
 - A test fails when a stylesheet reads a `--h-*` token that `tokens.css` does not define, or when a
   directive sets a class its stylesheet does not style.
 - The component styles are SCSS (`projects/ui/styles/*.scss`) compiled at build time (`pnpm build:lib:css:ui`) to
