@@ -74,3 +74,4 @@ export { HelixBadge } from './lib/ui/badge/badge';
 export type { Environment } from './lib/ui/badge/environment-badge';
 export { HelixEnvironmentBadge } from './lib/ui/badge/environment-badge';
 export { HelixPageHeader } from './lib/ui/page-header/page-header';
+export { HelixStatCard, type HelixStatSeverity } from './lib/ui/stat-card/stat-card';
