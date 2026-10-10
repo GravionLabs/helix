@@ -44,7 +44,6 @@
   align-items: center;
   padding: 0 1.25rem;
   gap: 0.65rem;
-  border-bottom: 1px solid var(--helix-nav-border);
   overflow: hidden;
 
   a {
@@ -127,7 +126,6 @@
   justify-content: flex-end;
   height: var(--helix-status-bar-height, 3rem);
   padding-right: 1.25rem;
-  border-top: 1px solid var(--helix-nav-border);
 }
 
 .helix-nav-rail-collapsed .helix-nav-rail-footer {
