@@ -1,7 +1,7 @@
 # @gravionlabs/helix-ui
 
 Vanilla Angular components on the Helix design tokens: standalone, signal-based, plain CSS, no runtime
-styling engine and no dependency on `@gravionlabs/helix-core`. It replaced the vendored PrimeNG fork
+styling engine. It replaced the vendored PrimeNG fork
 `@gravionlabs/helix-core` ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)).
 
 ## Install and styles
@@ -103,8 +103,7 @@ const items: HxMenuItem[] = [
 | `items` | `HxMenuItem[]` | Submenu, or a group when the entry has no action. |
 | `disabled`, `visible`, `separator`, `id`, `badge` | | State, a hidden entry, a divider line, the element id, a short text next to the label. |
 
-An item of the former helix-core menu model (`MenuItem`) is assignable to `HxMenuItem` as it is; a test keeps
-that true. `HxBreadcrumbItem` is the same type.
+`HxBreadcrumbItem` is the same type.
 
 ## Validators
 
@@ -127,7 +126,7 @@ email.errors; // { Required: 'Email is required' } while the field is empty
   `false`.
 - The error key is the `ValidatorKey` enum member (`Required`, `Email`, `Number`, `Integer`, `Min`, `Max`,
   `MinLength`, `MaxLength`, `Pattern`, `Date`, `OneOf`, `AllOf`), so templates and error resolvers can switch on it.
-- It is the same code as `@gravionlabs/helix-core/validators`; `helix-zod` and the shell move to this entry point.
+- `helix-zod` and the shell use this entry point.
 
 ## Icons
 
@@ -154,19 +153,9 @@ reduced motion.
 Apps are free to keep PrimeIcons (`pi pi-*`) for the content of their own pages and for the `icon` field of menu
 items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the classes of any icon font.
 
-## Migration status
+## Relation to helix-core
 
-`helix-ui` replaced the components of the vendored PrimeNG fork ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)).
-
-| Library / app   | State                                                                                                                       |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `helix-shell`   | No import from `helix-core`; `helix-ui` is a peer dependency (menu model, validators, theme service).                       |
-| `helix-zod`     | No import from `helix-core`; the validators come from `@gravionlabs/helix-ui/validators`, the widgets draw `hx-*` controls. |
-| `helix-ag-grid` | No import from `helix-core`; `helixGridTheme` styles AG Grid from the tokens.                                               |
-| demo app        | No import from `helix-core`, no `provideHelix`.                                                                             |
-| `helix-core`    | Removed from the workspace (#671); it is no longer built, tested or published.                                               |
-
-`pnpm lint:no-core` fails when anything in `projects/` or the demo imports `helix-core`, so it cannot slide back.
+`helix-ui` replaced the components of the vendored PrimeNG fork `@gravionlabs/helix-core` ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)). The fork is removed from the workspace; `helix-shell`, `helix-zod`, `helix-ag-grid` and the demo use `helix-ui` only, and `pnpm lint:no-core` fails when anything imports `helix-core`.
 
 ## Rules of the package
 

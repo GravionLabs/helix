@@ -59,7 +59,7 @@ describe('shellConstants', () => {
 });
 
 // The exported tokens come from the built library (`pnpm tokens:export`).
-describe.skipIf(!existsSync(EXPORT))('buildTokens (helixPreset)', () => {
+describe.skipIf(!existsSync(EXPORT))('buildTokens (Helix tokens)', () => {
   const { tokens, skipped } = buildTokens(JSON.parse(readFileSync(EXPORT, 'utf8')));
   const colors = tokens.color.tokens as {
     name: string;

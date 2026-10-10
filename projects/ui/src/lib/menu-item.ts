@@ -5,8 +5,7 @@ export interface HxMenuItemCommandEvent {
 }
 
 /**
- * One entry of a menu, menubar, split button or breadcrumb. The shape is compatible with the menu items of
- * the apps that came from helix-core, so an existing model can be passed on as it is.
+ * One entry of a menu, menubar, split button or breadcrumb.
  *
  * A router link wins over `url`; an item with neither and without `command` is a plain label.
  */

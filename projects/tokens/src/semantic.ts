@@ -1,5 +1,5 @@
 // Semantic tokens: what the primitives mean (primary, surface, text, form field, overlay …), with the light and dark colour schemes.
-// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+// Originally extracted from the Helix preset of the former helix-core; this file is the source now.
 import type { TokenTree } from './types.ts';
 
 export const semantic = {

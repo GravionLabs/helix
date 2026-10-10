@@ -1,5 +1,5 @@
 // Every component token set of the Helix preset, in the order of the preset.
-// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+// Originally extracted from the Helix preset of the former helix-core; this file is the source now.
 import { accordion } from './accordion.ts';
 import { autocomplete } from './autocomplete.ts';
 import { avatar } from './avatar.ts';

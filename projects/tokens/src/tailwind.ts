@@ -1,5 +1,5 @@
 // Tailwind CSS's colour scales (MIT, Tailwind Labs) that the palette generator mutes: the input of scripts/helix-palettes.mjs.
-// Extracted once from the Helix preset of helix-core (scripts/tokens/extract-preset.mjs); this file is the source now.
+// Originally extracted from the Helix preset of the former helix-core; this file is the source now.
 import type { TokenTree } from './types.ts';
 
 export const tailwind = {

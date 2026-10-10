@@ -1,10 +1,9 @@
 // The token resolver of Helix (#648): turns the token data of projects/tokens into the `--h-*` CSS variables and
-// the JSON the docs site, the Design System and helix-ui read, without the styling engine of helix-core.
+// the JSON the docs site, the Design System and helix-ui read, without a styling engine.
 //
 //   const { css, json } = resolveTokens(helixTokens, { darkSelector: '.app-dark', components: true });
 //
-// It reproduces what the engine emitted for the Helix preset, byte for byte (scripts/tests/fixtures holds the
-// proof until helix-core is gone). The rules, in the words of the data model of projects/tokens/README.md:
+// scripts/tests/fixtures holds the recorded output for the Helix tokens. The rules, in the words of the data model of projects/tokens/README.md:
 //
 //  - Name:   `--h-` + the path of the token in kebab case. The structural keys `primitive`, `semantic`,
 //            `components`, `colorScheme`, `light`, `dark` and `root` are not part of the name

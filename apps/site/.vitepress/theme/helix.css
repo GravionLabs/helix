@@ -1,6 +1,6 @@
 /*
  * VitePress on the Helix tokens. Every colour here is a `--h-*` variable from
- * `generated/helix.base.css` (helixPreset: the neutrals of the stock VitePress theme, muted indigo primary); nothing is
+ * `generated/helix.base.css` (the Helix tokens: the neutrals of the stock VitePress theme, muted indigo primary); nothing is
  * a second palette. Dark values follow VitePress's `.dark` class, which the export
  * uses as the dark-scheme selector.
  */

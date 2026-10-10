@@ -10,7 +10,7 @@ plain CSS (`@gravionlabs/helix-ui`), an application shell, dynamic forms from Zo
 | [`@gravionlabs/helix-shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
 | [`@gravionlabs/helix-zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
-| [`@gravionlabs/helix-ui`](projects/ui) | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): the successor of `helix-core` — button, form controls, select, divider, tooltip, breadcrumb, password, select button. |
+| [`@gravionlabs/helix-ui`](projects/ui) | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): button, form controls, select, divider, tooltip, breadcrumb, password, select button. |
 
 The documentation is published at
 [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/) (built from [`docs/`](docs) by

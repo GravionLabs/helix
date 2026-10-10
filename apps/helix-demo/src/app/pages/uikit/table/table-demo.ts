@@ -33,7 +33,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   standalone: true,
   imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxInputIcon, HxToast],
   templateUrl: './table-demo.html',
-  styleUrl: './table-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   providers: [CustomerService],
 })

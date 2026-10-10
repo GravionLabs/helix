@@ -1,4 +1,4 @@
-// Resolves helixPreset's tokens (dist/tokens/helix.json, from `pnpm tokens:export`; the data is projects/tokens) to the Design System
+// Resolves the Helix tokens (dist/tokens/helix.json, from `pnpm tokens:export`; the data is projects/tokens) to the Design System
 // type's `tokens.json` (#527, epic #519): colours per theme, spacing, radius, shadow and type.
 //
 // The type reads colours as literals (`#rrggbb`, `rgb()`, …) or `{alias}` of another colour token, never
