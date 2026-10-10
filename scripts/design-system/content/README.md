@@ -1,10 +1,10 @@
 # Helix
 
-Angular UI components (a maintained fork of PrimeNG 21.1.9), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: the grey surfaces of the other Gravion Labs sites, one muted indigo for action, colour reserved for meaning.
+Angular UI components (vanilla, signal-based, plain CSS on design tokens), an application shell with a navigation rail and layout store, dynamic forms from Zod schemas, and AG Grid helpers, by Gravion Labs. The look is quiet and neutral: the grey surfaces of the other Gravion Labs sites, one muted indigo for action, colour reserved for meaning.
 
 Source: https://github.com/GravionLabs/helix · docs: https://gravionlabs.github.io/helix/ · live demo: https://gravionlabs.github.io/helix/demo/
 
-This system is generated from the repository (`pnpm design-system:build`, see `docs/CONTRIBUTING-design-system.md`); the tokens are those of `helixPreset` (`@helix/tokens`, ADR 0001); the component renditions are those of `@gravionlabs/helix-ui`. Change them there, not here.
+This system is generated from the repository (`pnpm design-system:build`, see `docs/CONTRIBUTING-design-system.md`); the tokens are the Helix tokens (`projects/tokens`, ADR 0001); the component renditions are those of `@gravionlabs/helix-ui`. Change them there, not here.
 
 ## Content fundamentals
 
@@ -33,11 +33,11 @@ Colour means something: `success`, `info`, `warn`, `help` and `danger` (muted gr
 
 ## Iconography
 
-Icons come from the **PrimeIcons** font (MIT; `pi pi-home`, …), 1rem by default, inheriting the text colour; `HelixIcons` names them. The Helix mark (`assets/Logos`) is the double helix of the shell's navigation rail, drawn in `primary`; it is a single-ink glyph, so use the light file on light grounds and the dark file on dark ones.
+Icons come from the **PrimeIcons** font (MIT; `pi pi-home`, …), 1rem by default, inheriting the text colour. The Helix mark (`assets/Logos`) is the double helix of the shell's navigation rail, drawn in `primary`; it is a single-ink glyph, so use the light file on light grounds and the dark file on dark ones.
 
 ## Using it
 
-- In an Angular app: `provideHelix({ theme: { preset: helixPreset, options: { darkModeSelector: '.app-dark' } } })`, the `@fontsource-variable/inter` stylesheet and `@gravionlabs/helix-shell/styles.css` (docs: Theming).
+- In an Angular app: `@gravionlabs/helix-ui/tokens.css` and `styles.css`, `provideHxTheme()`, the `@fontsource-variable/inter` stylesheet and, with the shell, `@gravionlabs/helix-shell/styles.css` (docs: Theming).
 - Outside Angular: `pnpm tokens:export` writes the same tokens as CSS and JSON (`dist/tokens`).
 - The component previews here are static renditions of the real markup and CSS; the components themselves are Angular, so there is no runtime bundle.
 

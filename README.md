@@ -1,19 +1,16 @@
 # Helix
 
-Angular UI component ecosystem by Gravion Labs. Helix is a maintained fork of
-[PrimeNG](https://github.com/primefaces/primeng) 21.1.9 — the last MIT community
-version — rebranded as `@gravionlabs/helix-core` with `h-` selectors, plus an
-application shell, form utilities, and AG Grid helpers built on top of it.
+Angular UI component ecosystem by Gravion Labs: vanilla, signal-based components on design tokens with
+plain CSS (`@gravionlabs/helix-ui`), an application shell, dynamic forms from Zod schemas, and AG Grid helpers.
 
 ## Packages
 
 | Package | Description |
 | --- | --- |
-| [`@gravionlabs/helix-core`](projects/core) | Base component library — 90 components, 7 directives, and theming/infra modules, one secondary entry point each (`@gravionlabs/helix-core/button`). |
 | [`@gravionlabs/helix-shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
 | [`@gravionlabs/helix-zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
-| [`@gravionlabs/helix-ui`](projects/ui) | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): the successor of `helix-core` — button, form controls, select, divider, tooltip, breadcrumb, password, select button. |
+| [`@gravionlabs/helix-ui`](projects/ui) | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): button, form controls, select, divider, tooltip, breadcrumb, password, select button. |
 
 The documentation is published at
 [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/) (built from [`docs/`](docs) by
@@ -24,29 +21,33 @@ showcase application used for development — live at
 ## Quick Start
 
 ```bash
-npm install @gravionlabs/helix-core
+npm install @gravionlabs/helix-ui
+```
+
+```css
+/* styles.css: the components and the tokens they read */
+@import "@gravionlabs/helix-ui/styles.css";
+@import "@gravionlabs/helix-ui/tokens.css";
 ```
 
 ```ts
-import { Button } from '@gravionlabs/helix-core/button';
+import { HxButton } from '@gravionlabs/helix-ui';
 ```
 
 ```html
-<h-button label="Save" />
+<button hx-button type="button">Save</button>
 ```
 
-Theming ships `helixPreset` (`themes/helix`) — Helix's own look as tokens on top of Aura: the
-neutral greys of the sibling sites, indigo primary, Inter (see
-[ADR 0001](docs/adr/0001-styling-foundation.md), epic #519) — plus the Aura, Lara and Nora presets
-vendored into `helix-core`:
+Theming runs on CSS custom properties (`--h-*`): `tokens.css` is Helix's own look (the neutral greys of the
+sibling sites, indigo primary, Inter; see [ADR 0001](docs/adr/0001-styling-foundation.md)), dark mode and the
+primary colour are switched with `provideHxTheme`:
 
 ```ts
 // app.config.ts
-import { helixPreset } from '@gravionlabs/helix-core/themes/helix';
-import { provideHelix } from '@gravionlabs/helix-core/config';
+import { provideHxTheme } from '@gravionlabs/helix-ui';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHelix({ theme: { preset: helixPreset } })],
+  providers: [provideHxTheme({ storageKey: 'my-app-theme' })],
 };
 ```
 
@@ -54,10 +55,10 @@ export const appConfig: ApplicationConfig = {
 
 Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/), or read the Markdown here:
 
-- [Module docs](docs/components/README.md) — one page per `@gravionlabs/helix-core` entry point
+- [Component docs](docs/components/README.md) — one page per `@gravionlabs/helix-ui` component
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
-- [Helix UI](docs/HELIX-UI.md) — the vanilla component library that replaces the fork (`@gravionlabs/helix-ui`)
-- [Theming](docs/THEMING.md) — the Helix preset, dark mode, overriding tokens, static token export
+- [Helix UI](docs/HELIX-UI.md) — the component library: install, theming, validators, rules
+- [Theming](docs/THEMING.md) — the Helix tokens, dark mode, overriding tokens, static token export
 - [Design System](docs/CONTRIBUTING-design-system.md) — the generated brand book, tokens and component previews
 - [Roadmap](docs/ROADMAP.md)
 - [Architecture decision records](docs/adr/README.md)
@@ -70,15 +71,11 @@ Requires Node ≥ 24 and [pnpm](https://pnpm.io).
 ```bash
 pnpm install
 pnpm start          # Build libs + serve the demo app
-pnpm build:lib      # Build all libraries (core, ui, shell, zod, ag-grid) (ends with pnpm tokens:export → dist/tokens/)
+pnpm build:lib      # Build all libraries (ui, shell, zod, ag-grid) (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
-pnpm lint           # biome + eslint + no-primeng import guard
+pnpm lint           # biome + eslint + import guards
 ```
 
 ## Attribution & License
 
-MIT. `projects/core` is a vendored fork of PrimeNG by PrimeTek Informatics at
-tag `21.1.9` (MIT "PRIMENG COMMUNITY VERSIONS LICENSE") — see
-[LICENSE.md](projects/core/LICENSE.md) and [VENDOR.md](projects/core/VENDOR.md)
-for the upstream commit and the list of local modifications. All credit for the
-original component implementations belongs to PrimeTek.
+MIT. The design token values derive from the Aura preset of PrimeNG / PrimeUIX (PrimeTek, MIT) and from Tailwind CSS (MIT); see [projects/tokens/NOTICE](projects/tokens/NOTICE).

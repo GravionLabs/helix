@@ -14,12 +14,12 @@ Tailwind v4 CSS plugin, which maps Tailwind utilities/variants to PrimeNG's
 
 ## Why
 
-Feature #431 renames the `.p-*` CSS classes, `--p-*` design tokens, and
-`data-p-*`/`data-p` state attributes produced by `@gravionlabs/helix-core`
-to `.h-*`/`--h-*`/`data-h-*`/`data-h`. `tailwindcss-primeui` hardcodes the
+Feature #431 renamed the `.p-*` CSS classes, `--p-*` design tokens, and
+`data-p-*`/`data-p` state attributes of the former `@gravionlabs/helix-core`
+(retired, ADR 0002) to `.h-*`/`--h-*`/`data-h-*`/`data-h`. `tailwindcss-primeui` hardcodes the
 old `--p-*`/`data-p-*` names throughout its utilities and custom variants
 (color tokens, state variants like `p-invalid`/`p-disabled`, enter/leave
-animation variables), so it would silently stop matching once helix-core's
+animation variables), so it would silently stop matching once the output of the
 own output changed. The package is tiny (~600 lines across 15 files) and
 MIT-licensed, so it is vendored and renamed alongside the rest of the
 prefix, rather than dropped or reconfigured (it has no `prefix` option

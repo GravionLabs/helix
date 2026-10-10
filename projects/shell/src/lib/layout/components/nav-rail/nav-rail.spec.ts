@@ -152,4 +152,62 @@ describe('HelixNavRail', () => {
       expect(fixture.nativeElement.querySelector('.helix-nav-rail-flyout')).toBeNull();
     });
   });
+
+  describe('filter, groups and shortcut', () => {
+    const model = [
+      {
+        section: 'Overview',
+        items: [
+          { label: 'Dashboard', path: '/dashboard' },
+          { label: 'Analytics', path: '/analytics' },
+        ],
+      },
+      { section: 'Workspace', items: [{ label: 'Projects', path: '/projects' }] },
+    ];
+    const type = (value: string) => {
+      const input = fixture.nativeElement.querySelector('.helix-nav-rail-search input');
+      input.value = value;
+      input.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+    };
+
+    beforeEach(() => {
+      fixture.componentRef.setInput('model', model);
+      fixture.detectChanges();
+    });
+
+    it('filters the items by label and drops sections without a match', () => {
+      type('proj');
+      const items = fixture.nativeElement.querySelectorAll('[helix-nav-rail-item]');
+      expect(items.length).toBe(1);
+      expect(fixture.nativeElement.querySelectorAll('.helix-nav-rail-section').length).toBe(1);
+      type('');
+      expect(fixture.nativeElement.querySelectorAll('[helix-nav-rail-item]').length).toBe(3);
+    });
+
+    it('collapses a section and remembers it', () => {
+      const section = fixture.nativeElement.querySelector('.helix-nav-rail-section');
+      expect(section.getAttribute('aria-expanded')).toBe('true');
+      section.click();
+      fixture.detectChanges();
+      expect(section.getAttribute('aria-expanded')).toBe('false');
+      expect(localStorage.getItem('helix.nav-rail.collapsed-groups')).toBe('["Overview"]');
+      expect(fixture.nativeElement.querySelector('.helix-nav-rail-list').hidden).toBe(true);
+    });
+
+    it('focuses the filter on Ctrl+K and expands a collapsed rail', async () => {
+      const store = TestBed.inject(LayoutStore);
+      store.toggleSidebar();
+      fixture.detectChanges();
+      expect(store.isCollapsed()).toBe(true);
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+      await new Promise((resolve) => setTimeout(resolve));
+      fixture.detectChanges();
+      expect(store.isCollapsed()).toBe(false);
+      await new Promise((resolve) => setTimeout(resolve));
+      expect(document.activeElement).toBe(
+        fixture.nativeElement.querySelector('.helix-nav-rail-search input'),
+      );
+    });
+  });
 });

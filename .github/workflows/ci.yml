@@ -83,8 +83,8 @@ jobs:
       # OIDC "trusted publisher" flow (npm CLI >= 11.5, this job's
       # id-token: write permission) — no NPM_TOKEN secret needed, and no auth
       # token is configured below on purpose. This requires a one-time setup
-      # on npmjs.com per package — for each of @gravionlabs/helix-core,
-      # helix-ui, helix-shell, helix-zod, helix-ag-grid: Settings → Trusted Publisher →
+      # on npmjs.com per package — for each of @gravionlabs/helix-ui,
+      # helix-shell, helix-zod, helix-ag-grid: Settings → Trusted Publisher →
       # GitHub Actions → owner GravionLabs, repo helix, workflow ci.yml. Until
       # that's configured for a given package, its publish step below 404s /
       # 401s with no trusted publisher found — configuring it is a manual,
@@ -97,16 +97,15 @@ jobs:
       - name: Set package versions
         run: |
           set -euo pipefail
-          for dir in core ui shell zod ag-grid; do
+          for dir in ui shell zod ag-grid; do
             npm --prefix "./$dir" version "${{ needs.determine-version.outputs.npm-version }}" --no-git-tag-version --allow-same-version
           done
 
       - name: Publish packages
         run: |
           set -euo pipefail
-          for dir in core ui shell zod ag-grid; do
-            # The leading ./ matters: a bare "core" is ambiguous with npm's
-            # "user/repo" git-shorthand package spec and gets misparsed as one.
+          for dir in ui shell zod ag-grid; do
+            # The leading ./ keeps npm from reading the name as a "user/repo" git shorthand.
             npm publish "./$dir" --access public --provenance
           done
 

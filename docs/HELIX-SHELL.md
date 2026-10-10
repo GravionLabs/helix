@@ -41,8 +41,6 @@
    - [HelixEnvironmentBadge](#helixenviromentbadge)
 10. [Form Infrastructure](#form-infrastructure)
     - [HelixFormField](#helixformfield)
-    - [HelixFormArrayWithFactory](#helixformarraywithfactory)
-    - [helixFormErrorMap](#helixformerrormap)
 11. [Interfaces](#interfaces)
     - [HelixRouteMenuItem](#helixroutemenuitem)
 
@@ -244,7 +242,7 @@ Application footer with optional multi-column link layout and a branded copyrigh
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
-| `brandUrl` | `string` | `'https://primeng.org'` | URL the brand name links to |
+| `brandUrl` | `string` | `'https://gravionlabs.github.io/helix/'` | URL the brand name links to |
 | `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model |
 
 #### Content Slots
@@ -1020,14 +1018,11 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 ## Form Infrastructure
 
 Structural components for building reactive forms with human-readable error messages. The
-validators moved to `@gravionlabs/helix-ui/validators` (see [Validators](HELIX-UI.md#validators)). The shell
-itself no longer imports anything from `@gravionlabs/helix-core`. The error-message pipe and the form utilities below
-still come from `@gravionlabs/helix-core`, which has no replacement for them in helix-ui yet; they go away with
-helix-core (#600):
+validators come from `@gravionlabs/helix-ui/validators` (see [Validators](HELIX-UI.md#validators)); the shell
+itself does not depend on anything else for forms:
 
 ```ts
 import { Validators } from '@gravionlabs/helix-ui/validators';
-import { FirstErrorPipe } from '@gravionlabs/helix-core/firsterror';
 import { FormControl } from '@angular/forms';
 
 const emailCtrl = new FormControl('', [
@@ -1036,11 +1031,7 @@ const emailCtrl = new FormControl('', [
 ]);
 ```
 
-```html
-@if (ctrl.touched && ctrl.invalid) {
-  <small class="p-error">{{ ctrl.errors | firstError }}</small>
-}
-```
+`helix-form-field` shows the first error message of the control once it is touched and invalid.
 
 ---
 
@@ -1071,91 +1062,19 @@ Priority: `error()` input > control validation error (when touched + invalid) > 
 ```html
 <!-- Text input with label, control, and hint -->
 <helix-form-field label="Email" [control]="emailCtrl" hint="Work email preferred">
-  <input hInputText id="email" [formControl]="emailCtrl" class="w-full" />
+  <input hx-input fluid id="email" [formControl]="emailCtrl" />
 </helix-form-field>
 
 <!-- Helix number input -->
 <helix-form-field label="Price" [control]="priceCtrl">
-  <h-inputnumber [formControl]="priceCtrl" mode="currency" currency="EUR" />
+  <hx-input-number [formControl]="priceCtrl" mode="currency" currency="EUR" />
 </helix-form-field>
 
 <!-- External error (e.g. from server) -->
 <helix-form-field label="Username" [control]="userCtrl" [error]="serverError()">
-  <input hInputText [formControl]="userCtrl" class="w-full" />
+  <input hx-input fluid [formControl]="userCtrl" />
 </helix-form-field>
 ```
-
----
-
-### HelixFormArrayWithFactory
-
-**File:** `projects/core/utils/form.utils.ts` (moved from `shell` in #378)
-
-Extends Angular's `FormArray` with a factory function that produces new controls on demand — ideal for dynamic form lists.
-
-```ts
-import { HelixFormArrayWithFactory } from '@gravionlabs/helix-core/utils';
-import { FormControl, Validators } from '@angular/forms';
-
-const emails = new HelixFormArrayWithFactory(
-  () => new FormControl('', [Validators.required, Validators.email]),
-);
-
-// Automatically creates/removes controls to match the desired length
-emails.alignLength(3);
-// → [FormControl, FormControl, FormControl]
-
-// setValue also aligns length automatically
-emails.setValue(['a@b.com', 'c@d.com']);
-// → array shrinks to 2 controls
-```
-
-#### Constructor
-
-| Param | Type | Description |
-|-------|------|-------------|
-| `createControl` | `() => TControl` | Factory that creates a new control |
-| `validatorOrOpts` | `ValidatorFn \| ValidatorFn[] \| AbstractControlOptions \| null` | Optional sync validators |
-| `asyncValidator` | `AsyncValidatorFn \| AsyncValidatorFn[] \| null` | Optional async validators |
-
-#### Methods
-
-| Method | Signature | Description |
-|--------|-----------|-------------|
-| `alignLength` | `alignLength(length: number): void` | Add / remove controls to match the given length |
-| `reset` | `override reset(value?, options?): void` | Aligns length before resetting when value is an array |
-| `setValue` | `override setValue(value, options?): void` | Aligns length before setting values when value is an array |
-
----
-
-### helixFormErrorMap
-
-**File:** `projects/core/utils/form.utils.ts` (moved from `shell` in #378)
-
-Recursively walks an `AbstractControl` tree and produces a flat map of field-name → first error message.
-
-```ts
-import { helixFormErrorMap } from '@gravionlabs/helix-core/utils';
-
-const errors = helixFormErrorMap(myForm);
-// → { email: 'Invalid email address', 'items[0]': 'Required' }
-```
-
-#### Parameters
-
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `control` | `AbstractControl` | — | Form control tree to traverse |
-| `name` | `string` | `'form'` | Base name for the current level |
-| `result` | `Record<string, string>` | `{}` | Accumulator object (mutated and returned) |
-
-#### Behaviour
-
-- `FormGroup` controls recurse into each child using the child's key as the name.
-- `FormArray` controls recurse using index notation (`items[0]`, `items[1]`).
-- Leaf controls with errors produce a `name → firstError` entry (only string error values are recorded).
-
-**Returns:** `Record<string, string>`
 
 ---
 

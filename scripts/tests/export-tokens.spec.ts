@@ -1,13 +1,10 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { helixTokens } from '../../projects/tokens/src/index.ts';
 import { DARK_SELECTOR, exportPreset, loadTokens, PRESETS, tokensOf } from '../export-tokens.mjs';
-import { loadPreset, resolvePreset } from '../tokens/core-engine.mjs';
 import { resolveTokens } from '../tokens/resolve.mjs';
-
-const FESM = resolve(__dirname, '../../dist/core/fesm2022');
 
 describe('tokensOf', () => {
   it('splits custom properties by colour scheme', () => {
@@ -62,22 +59,6 @@ describe('the Helix tokens (projects/tokens)', () => {
       'dark',
     ]);
     rmSync(dir, { recursive: true });
-  });
-});
-
-// While helix-core is built: against Aura, from which the Helix preset was derived.
-describe.skipIf(!existsSync(FESM))('against Aura (built core)', () => {
-  it('differs from Aura in the colours only: muted palettes, same token set', async () => {
-    const { Theme, preset } = await loadPreset('aura');
-    const aura = tokensOf(resolvePreset(Theme, preset));
-    const helix = resolveTokens(helixTokens).json;
-    expect(helix.light['--h-indigo-500']).not.toBe(aura.light['--h-indigo-500']); // muted palettes
-    expect(helix.light['--h-red-500']).not.toBe(aura.light['--h-red-500']);
-    expect(helix.light['--h-zinc-500']).toBe(aura.light['--h-zinc-500']); // Aura's palettes stay available
-    expect(helix.light['--h-button-primary-background']).toBe(
-      aura.light['--h-button-primary-background'],
-    ); // component layer untouched
-    expect(Object.keys(helix.light)).toEqual(Object.keys(aura.light)); // same token set, different values
   });
 });
 

@@ -1,7 +1,0 @@
-<ng-template #defaultContent>
-    <ng-content />
-</ng-template>
-
-@if (shouldRender()) {
-    <ng-container *ngTemplateOutlet="content() ? content() : defaultContent" />
-}

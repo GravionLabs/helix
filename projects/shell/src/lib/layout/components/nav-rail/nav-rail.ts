@@ -9,21 +9,50 @@ import {
   input,
   type OnDestroy,
   type OnInit,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { HxTooltip } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
+import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from '../nav-rail-item/nav-rail-item';
 import type { HelixNavGroup } from './nav-rail.model';
 
+const GROUPS_STORAGE_KEY = 'helix.nav-rail.collapsed-groups';
+
+function readCollapsedGroups(): string[] {
+  try {
+    const raw = JSON.parse(localStorage.getItem(GROUPS_STORAGE_KEY) ?? '[]');
+    return Array.isArray(raw) ? raw.filter((x) => typeof x === 'string') : [];
+  } catch {
+    return [];
+  }
+}
+
+/** The items whose label (or whose descendants' label) contains `query`, with their matching children only. */
+function filterItems(items: HelixRouteMenuItem[], query: string): HelixRouteMenuItem[] {
+  const result: HelixRouteMenuItem[] = [];
+  for (const item of items) {
+    if (item.label?.toLowerCase().includes(query)) result.push(item);
+    else if (item.items?.length) {
+      const children = filterItems(item.items, query);
+      if (children.length) result.push({ ...item, items: children });
+    }
+  }
+  return result;
+}
+
 @Component({
   selector: 'helix-nav-rail',
   standalone: true,
-  imports: [CommonModule, HelixNavRailItem, RouterModule],
+  imports: [CommonModule, HelixNavRailItem, HxTooltip, RouterModule],
   templateUrl: './nav-rail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './nav-rail.scss',
+  host: { '(document:keydown)': 'onDocumentKeydown($event)' },
 })
 export class HelixNavRail implements OnInit, OnDestroy {
   store = inject(LayoutStore);
@@ -53,6 +82,68 @@ export class HelixNavRail implements OnInit, OnDestroy {
     }
     return icon;
   });
+
+  /** The filter field; `Ctrl/Cmd+K` focuses it (and expands a collapsed rail). */
+  protected readonly searchField = viewChild<ElementRef<HTMLInputElement>>('search');
+
+  protected readonly query = signal('');
+  protected readonly collapsedGroups = signal<string[]>(readCollapsedGroups());
+  protected readonly isFiltering = computed(() => this.query().trim().length > 0);
+
+  /** The model the template renders: filtered by the query, sections kept only when something matches. */
+  protected readonly visibleModel = computed(() => {
+    const query = this.query().trim().toLowerCase();
+    if (!query) return this.model();
+    return this.model()
+      .map((group) => ({ ...group, items: filterItems(group.items, query) }))
+      .filter((group) => group.items.length > 0);
+  });
+
+  protected isGroupCollapsed(group: HelixNavGroup): boolean {
+    return !!group.section && !this.isFiltering() && this.collapsedGroups().includes(group.section);
+  }
+
+  protected toggleGroup(group: HelixNavGroup): void {
+    const name = group.section;
+    if (!name) return;
+    const current = this.collapsedGroups();
+    const next = current.includes(name) ? current.filter((n) => n !== name) : [...current, name];
+    this.collapsedGroups.set(next);
+    try {
+      localStorage.setItem(GROUPS_STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // Storage unavailable: the state just isn't remembered.
+    }
+  }
+
+  protected onSearchInput(event: Event): void {
+    this.query.set((event.target as HTMLInputElement).value);
+  }
+
+  /** Enter opens the first match, ArrowDown moves into the list, Escape clears the filter. */
+  protected onSearchKeydown(event: KeyboardEvent): void {
+    const first = () =>
+      this.el.nativeElement.querySelector(
+        '.helix-nav-rail-nav .helix-nav-rail-link',
+      ) as HTMLElement | null;
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      first()?.click();
+    } else if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      first()?.focus();
+    } else if (event.key === 'Escape') {
+      this.query.set('');
+    }
+  }
+
+  protected onDocumentKeydown(event: KeyboardEvent): void {
+    if (event.key.toLowerCase() !== 'k' || !(event.ctrlKey || event.metaKey)) return;
+    event.preventDefault();
+    if (!this.store.isDesktop() && !this.store.mobileMenuActive()) this.store.onMenuToggle();
+    if (this.store.isCollapsed()) this.store.toggleSidebar();
+    setTimeout(() => this.searchField()?.nativeElement.focus());
+  }
 
   private outsideClickListener: ((event: MouseEvent) => void) | null = null;
   private destroy$ = new Subject<void>();

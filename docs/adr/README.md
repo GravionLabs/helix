@@ -8,6 +8,7 @@ that status line and links to later records.
 | ADR                                   | Title                                                                                | Status   |
 | ------------------------------------- | ------------------------------------------------------------------------------------ | -------- |
 | [0001](0001-styling-foundation.md)    | Styling foundation: Helix tokens on the vendored fork now, a vanilla library replaces it | accepted |
+| [0002](0002-retire-helix-core.md)     | Retire helix-core: helix-ui is the only component library                            | accepted |
 
 Template:
 

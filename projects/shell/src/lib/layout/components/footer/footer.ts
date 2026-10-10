@@ -16,6 +16,6 @@ export type { HelixFooterColumn };
 })
 export class HelixFooter {
   brandName = input('Helix');
-  brandUrl = input('https://primeng.org');
+  brandUrl = input('https://gravionlabs.github.io/helix/');
   columns = input<HelixFooterColumn[]>([]);
 }

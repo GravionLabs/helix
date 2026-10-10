@@ -40,16 +40,45 @@
     </a>
   </div>
 
-  <nav class="helix-nav-rail-nav">
-    @for (group of model(); track group.section ?? $index) {
+  @if (!store.isCollapsed()) {
+    <div class="helix-nav-rail-search">
+      <i class="pi pi-search" aria-hidden="true"></i>
+      <input
+        #search
+        type="search"
+        autocomplete="off"
+        placeholder="Search"
+        aria-label="Filter navigation"
+        [value]="query()"
+        (input)="onSearchInput($event)"
+        (keydown)="onSearchKeydown($event)"
+      />
+      <kbd aria-hidden="true">Ctrl K</kbd>
+    </div>
+  }
+
+  <nav class="helix-nav-rail-nav" aria-label="Main">
+    @for (group of visibleModel(); track group.section ?? $index) {
       <div class="helix-nav-rail-group">
         @if (group.section && !store.isCollapsed()) {
-          <div class="helix-nav-rail-section">{{ group.section }}</div>
+          <button
+            type="button"
+            class="helix-nav-rail-section"
+            [attr.aria-expanded]="!isGroupCollapsed(group)"
+            (click)="toggleGroup(group)"
+          >
+            <span>{{ group.section }}</span>
+            <i
+              class="pi pi-chevron-down helix-nav-rail-section-chevron"
+              [class.helix-nav-rail-section-chevron-closed]="isGroupCollapsed(group)"
+              aria-hidden="true"
+            ></i>
+          </button>
         }
         @if (group.section && store.isCollapsed() && $index > 0) {
           <div class="helix-nav-rail-divider"></div>
         }
-        <ul class="helix-nav-rail-list">
+        <ul class="helix-nav-rail-list" [hidden]="isGroupCollapsed(group)">
           @if (store.isCollapsed() && group.section && group.icon) {
             <li
               helix-nav-rail-item
@@ -59,7 +88,13 @@
             ></li>
           } @else {
             @for (item of group.items; track item.label) {
-              <li helix-nav-rail-item [item]="item" [parentPath]="null" [depth]="0"></li>
+              <li
+                helix-nav-rail-item
+                [item]="item"
+                [parentPath]="null"
+                [depth]="0"
+                [expandAll]="isFiltering()"
+              ></li>
             }
           }
         </ul>
@@ -72,7 +107,8 @@
       type="button"
       class="helix-nav-rail-collapse-button"
       (click)="store.toggleSidebar()"
-      [title]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      [hx-tooltip]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
+      hxTooltipPosition="top"
       [attr.aria-label]="store.isCollapsed() ? 'Expand navigation' : 'Collapse navigation'"
       [attr.aria-expanded]="!store.isCollapsed()"
     >

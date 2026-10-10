@@ -24,7 +24,7 @@ npm install @gravionlabs/helix-shell
 ### Peer Dependencies
 
 `@angular/core >=22`, `@angular/router >=22`, `@ngrx/signals >=21`, `@gravionlabs/helix-ui >=0.1.0` (and its own
-peers, `@angular/cdk` and `@angular/forms`), `primeicons >=7`. The shell has no dependency on `@gravionlabs/helix-core`.
+peers, `@angular/cdk` and `@angular/forms`), `primeicons >=7`.
 
 ## Setup
 

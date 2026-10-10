@@ -1,7 +1,6 @@
 /*
- * Button: `button[hx-button]` / `a[hx-button]`. Same look as the helix-core button, from the same tokens
- * (`--h-button-*`). A severity class only maps its tokens onto local `--hx-*` variables; the variant
- * rules (filled, outlined, text, link) read those, so every severity works with every variant.
+ * Button: `button[hx-button]` / `a[hx-button]`. Styled by the tokens (`--h-button-*`). A severity class only maps its tokens onto local `--hx-*`
+ * variables; the variant rules (filled, outlined, text, link) read those, so every severity works with every variant.
  */
 
 // A severity maps its `--h-button-*` tokens onto the local `--hx-*` variables. The names are the token

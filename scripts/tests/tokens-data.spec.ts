@@ -1,14 +1,12 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { helixTokens, palettes } from '../../projects/tokens/src/index.ts';
 import { TOKEN_COMPONENTS } from '../build-ui-css.mjs';
 import { auraPrimitive, mute, SCALES } from '../helix-palettes.mjs';
-import { loadPreset } from '../tokens/core-engine.mjs';
 
 const ROOT = resolve(__dirname, '../..');
 const SRC = join(ROOT, 'projects/tokens/src');
-const built = existsSync(join(ROOT, 'dist/core/fesm2022'));
 
 type Tree = { [key: string]: string | number | Tree };
 
@@ -108,18 +106,5 @@ describe('palettes', () => {
         palettes[name as keyof typeof palettes],
       );
     }
-  });
-});
-
-// What helix-core resolves for the Helix preset: the data must be the same, key by key and in the same order
-// (the order is the order of the CSS the resolver emits).
-describe.skipIf(!built)('token data equals the Helix preset of helix-core', () => {
-  it.each(['primitive', 'semantic', 'components'] as const)('%s layer', async (layer) => {
-    const { preset } = await loadPreset('helix');
-    const now = JSON.stringify(helixTokens[layer]);
-    const then = JSON.stringify(preset[layer]);
-    expect(now === then, `${layer} differs from the preset (compare with JSON.stringify)`).toBe(
-      true,
-    );
   });
 });

@@ -1,8 +1,8 @@
 # @gravionlabs/helix-ui
 
 Vanilla Angular components on the Helix design tokens: standalone, signal-based, plain CSS, no runtime
-styling engine, no dependency on `@gravionlabs/helix-core`. It is the long-term replacement of the vendored
-PrimeNG fork (see [ADR 0001](../../docs/adr/0001-styling-foundation.md), epic #523).
+styling engine. It replaced the vendored PrimeNG fork `@gravionlabs/helix-core`
+(see [ADR 0001](../../docs/adr/0001-styling-foundation.md) and [ADR 0002](../../docs/adr/0002-retire-helix-core.md)).
 
 ## Install
 
@@ -13,7 +13,7 @@ npm install @gravionlabs/helix-ui
 ```css
 /* the components */
 @import "@gravionlabs/helix-ui/styles.css";
-/* the tokens the components read; load them in every app, also with the helix-core theme engine */
+/* the tokens the components read; load them in every app */
 @import "@gravionlabs/helix-ui/tokens.css";
 ```
 
@@ -74,9 +74,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxSelectButton` | `hx-select-button` | single or multiple, all three forms APIs |
 | `HxSwitch` | `input[hx-switch]` | native checkbox with `role="switch"` |
 
-Selectors, inputs and classes use the prefix `hx` (`hx-button`), so they never clash with `helix-core`'s `h-`
-in an app that uses both while migrating. Both libraries read the same `--h-*` tokens, so a page mixes them
-without a visible seam.
+Selectors, inputs and classes use the prefix `hx` (`hx-button`); the custom properties keep the prefix `--h-`.
 
 ## Rules of this package
 

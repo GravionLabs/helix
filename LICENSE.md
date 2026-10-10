@@ -22,8 +22,5 @@ THE SOFTWARE.
 
 ---
 
-`@gravionlabs/helix-core` (`projects/core`) is a vendored fork of PrimeNG
-21.1.9 and the `@primeuix/*` packages, both originally MIT-licensed by
-PrimeTek. See `projects/core/LICENSE.md` for the upstream license text this
-package's code carries forward, and `projects/core/VENDOR.md` for details of
-what was vendored.
+The design token values of `projects/tokens` derive from the Aura preset of PrimeNG / PrimeUIX
+(MIT, PrimeTek) and from Tailwind CSS (MIT); see `projects/tokens/NOTICE` for the notices.

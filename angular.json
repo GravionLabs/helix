@@ -6,29 +6,6 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "core": {
-      "projectType": "library",
-      "root": "projects/core",
-      "sourceRoot": "projects/core",
-      "prefix": "h",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "options": {
-            "project": "projects/core/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/core/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/core/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        }
-      }
-    },
     "shell": {
       "projectType": "library",
       "root": "projects/shell",
