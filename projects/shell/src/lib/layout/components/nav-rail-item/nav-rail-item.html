@@ -43,7 +43,13 @@
       [animate.leave]="'helix-nav-rail-submenu-leave'"
     >
       @for (child of item()?.items; track child.label) {
-        <li helix-nav-rail-item [item]="child" [parentPath]="fullPath()" [depth]="depth() + 1"></li>
+        <li
+          helix-nav-rail-item
+          [item]="child"
+          [parentPath]="fullPath()"
+          [depth]="depth() + 1"
+          [expandAll]="expandAll()"
+        ></li>
       }
     </ul>
   }
@@ -61,7 +67,7 @@
     (keydown)="onKeydown($event)"
     tabindex="0"
   >
-    @if (isActive() && !isCollapsed()) {
+    @if (isActive()) {
       <span class="helix-nav-rail-accent"></span>
     }
     @if (item()?.icon) {

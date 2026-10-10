@@ -52,26 +52,28 @@
   &.active {
     color: var(--helix-nav-active-text);
     background-color: var(--helix-nav-active-bg);
+    font-weight: 600;
 
     .helix-nav-rail-icon {
       color: var(--helix-nav-accent);
     }
   }
 
-  &:focus {
-    outline-offset: -1px;
-    box-shadow: inset var(--focus-ring-shadow);
+  // A visible ring for the keyboard only
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
   }
 }
 
 .helix-nav-rail-accent {
   position: absolute;
-  left: -0.5rem;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
-  height: 24px;
-  border-radius: 3px;
+  height: 60%;
+  border-radius: 0 3px 3px 0;
   background: var(--helix-nav-accent);
 }
 
