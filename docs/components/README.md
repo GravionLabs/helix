@@ -77,6 +77,12 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Skeleton](skeleton.md) | `hx-skeleton` is a placeholder shaped like the content that is still loading. |
 | [Timeline](timeline.md) | `hx-timeline` shows events along a line, as an ordered list. |
 
+## Media (1)
+
+| Component | Description |
+| --- | --- |
+| [Carousel](carousel.md) | `hx-carousel` slides over a list of items, `numVisible` at a time, with buttons, indicators, arrow keys, autoplay and responsive counts. |
+
 ## Data (4)
 
 | Component | Description |

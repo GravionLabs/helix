@@ -1,0 +1,156 @@
+/*
+ * Carousel: `<hx-carousel>`, from the `--h-carousel-*` tokens. The track is a flex row (column when vertical) that
+ * slides with a transform; items outside the viewport stay in the DOM but are inert. The previous/next buttons are
+ * neutral icon buttons on the content tokens, the indicators a tablist of pills.
+ */
+@use 'icons' as *;
+
+.hx-carousel {
+  display: block;
+}
+
+.hx-carousel-header:empty,
+.hx-carousel-footer:empty {
+  display: none;
+}
+
+.hx-carousel-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-carousel-content-gap);
+}
+
+.hx-carousel-viewport {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  outline-color: transparent;
+  border-radius: var(--h-content-border-radius);
+}
+
+.hx-carousel-viewport:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: var(--h-focus-ring-offset);
+  box-shadow: var(--h-focus-ring-shadow);
+}
+
+.hx-carousel-track {
+  display: flex;
+  transition: transform var(--h-carousel-transition-duration) ease;
+}
+
+.hx-carousel-item {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.hx-carousel-vertical .hx-carousel-content {
+  flex-direction: column;
+}
+
+.hx-carousel-vertical .hx-carousel-viewport {
+  width: 100%;
+}
+
+.hx-carousel-vertical .hx-carousel-track {
+  flex-direction: column;
+  height: 100%;
+}
+
+.hx-carousel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--h-text-muted-color);
+  cursor: pointer;
+  outline-color: transparent;
+  transition:
+    background var(--h-carousel-transition-duration),
+    color var(--h-carousel-transition-duration);
+}
+
+.hx-carousel-button:hover:not(:disabled) {
+  background: var(--h-content-hover-background);
+  color: var(--h-text-hover-muted-color);
+}
+
+.hx-carousel-button:focus-visible {
+  outline: var(--h-focus-ring-width) var(--h-focus-ring-style) var(--h-focus-ring-color);
+  outline-offset: var(--h-focus-ring-offset);
+  box-shadow: var(--h-focus-ring-shadow);
+}
+
+.hx-carousel-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.hx-carousel-prev::before {
+  @include hx-icon(chevron-left, 1.25rem);
+  content: '';
+}
+
+.hx-carousel-next::before {
+  @include hx-icon(chevron-right, 1.25rem);
+  content: '';
+}
+
+.hx-carousel-vertical .hx-carousel-prev::before {
+  @include hx-icon(chevron-up, 1.25rem);
+}
+
+.hx-carousel-vertical .hx-carousel-next::before {
+  @include hx-icon(chevron-down, 1.25rem);
+}
+
+.hx-carousel-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--h-carousel-indicator-list-gap);
+  padding: var(--h-carousel-indicator-list-padding);
+}
+
+.hx-carousel-indicator {
+  width: var(--h-carousel-indicator-width);
+  height: var(--h-carousel-indicator-height);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-carousel-indicator-border-radius);
+  background: var(--h-carousel-indicator-background);
+  cursor: pointer;
+  outline-color: transparent;
+  transition: background var(--h-carousel-transition-duration);
+}
+
+.hx-carousel-indicator:hover {
+  background: var(--h-carousel-indicator-hover-background);
+}
+
+.hx-carousel-indicator-active,
+.hx-carousel-indicator-active:hover {
+  background: var(--h-carousel-indicator-active-background);
+}
+
+.hx-carousel-indicator:focus-visible {
+  outline: var(--h-carousel-indicator-focus-ring-width) var(--h-carousel-indicator-focus-ring-style)
+    var(--h-carousel-indicator-focus-ring-color);
+  outline-offset: var(--h-carousel-indicator-focus-ring-offset);
+  box-shadow: var(--h-carousel-indicator-focus-ring-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-carousel-track,
+  .hx-carousel-button,
+  .hx-carousel-indicator {
+    transition: none;
+  }
+}

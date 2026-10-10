@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.media-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.25rem;
+  padding: 1rem;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--content-border-radius);
+  text-align: center;
+}
+
+.media-product--row {
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: start;
+  gap: 1rem;
+  height: calc(16rem - 0.5rem);
+  box-sizing: border-box;
+}
+
+.media-product__image {
+  width: 100%;
+  max-width: 10rem;
+  border-radius: var(--content-border-radius);
+}
+
+.media-product__image--small {
+  width: 6rem;
+}
+
+.media-product__name {
+  font-weight: 600;
+}
+
+.media-product__price {
+  color: var(--text-color-secondary);
+}
