@@ -58,11 +58,16 @@ export {
   HxConfirmPopup,
 } from './lib/confirm/confirm';
 export {
+  compareValues,
   HxCell,
   type HxCellContext,
   type HxColumn,
   type HxColumnAlign,
   HxDataTable,
+  type HxLazyLoadEvent,
+  type HxSortFunction,
+  type HxSortMeta,
+  type HxSortMode,
   HxTableBody,
   HxTableCaption,
   type HxTableColumnsContext,

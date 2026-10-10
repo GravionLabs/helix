@@ -2,9 +2,12 @@ import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
+  compareValues,
   HxCell,
   type HxColumn,
   HxDataTable,
+  type HxLazyLoadEvent,
+  type HxSortMeta,
   HxTableBody,
   HxTableCaption,
   HxTableFooter,
@@ -189,5 +192,163 @@ describe('HxDataTable', () => {
       '2: Blue Band',
     ]);
     expect(el.querySelector('tfoot td.f')?.textContent).toBe('Total');
+  });
+});
+
+const many = (n: number): Row[] =>
+  Array.from({ length: n }, (_, i) => ({
+    id: i + 1,
+    name: `Item ${String(i + 1).padStart(2, '0')}`,
+    price: (i * 37) % 100,
+    address: { city: ['Rome', 'Berlin', 'Oslo'][i % 3] },
+  }));
+
+@Component({
+  imports: [HxDataTable],
+  template: `
+    <hx-data-table [value]="value()" [columns]="columns" dataKey="id" [sortMode]="mode()" [(sortField)]="field" [(sortOrder)]="order" [(multiSortMeta)]="meta" [paginator]="true" [(first)]="first" [(rows)]="rows" [rowsPerPageOptions]="[5, 10]" [lazy]="lazy()" [totalRecords]="total()" (lazyLoad)="events.push($event)" ariaLabel="Items" />
+  `,
+})
+class SortHost {
+  value = signal<Row[]>(many(12));
+  mode = signal<'single' | 'multiple'>('single');
+  field = signal<string | null>(null);
+  order = signal<1 | -1>(1);
+  meta = signal<HxSortMeta[]>([]);
+  first = signal(0);
+  rows = signal(5);
+  lazy = signal(false);
+  total = signal<number | undefined>(undefined);
+  events: HxLazyLoadEvent[] = [];
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true },
+    { field: 'address.city', header: 'City', sortable: true },
+    { field: 'price', header: 'Price', sortable: true, align: 'right' },
+    { field: 'id', header: 'Id' },
+  ];
+}
+
+describe('HxDataTable sorting and paging', () => {
+  let fixture: ComponentFixture<SortHost>;
+  let host: SortHost;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+  const sortButton = (i: number) => th(i).querySelector('button') as HTMLButtonElement;
+  const names = () =>
+    [...root().querySelectorAll('tbody tr td:first-child')].map((e) => e.textContent?.trim());
+  const update = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const click = async (el: HTMLElement) => {
+    el.click();
+    await update();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [SortHost] }).compileComponents();
+    fixture = TestBed.createComponent(SortHost);
+    host = fixture.componentInstance;
+    await update();
+  });
+
+  it('puts a button in sortable headers only, with aria-sort', () => {
+    expect(sortButton(0)).toBeTruthy();
+    expect(th(3).querySelector('button')).toBeNull();
+    expect(th(3).getAttribute('aria-sort')).toBeNull();
+    expect(th(0).getAttribute('aria-sort')).toBe('none');
+  });
+
+  it('cycles ascending, descending, off and announces it', async () => {
+    await click(sortButton(2));
+    expect(th(2).getAttribute('aria-sort')).toBe('ascending');
+    expect(host.field()).toBe('price');
+    expect(host.order()).toBe(1);
+    expect(root().querySelector('[aria-live="polite"]:not(hx-paginator *)')?.textContent).toContain(
+      'Sorted by Price, ascending',
+    );
+    await click(sortButton(2));
+    expect(th(2).getAttribute('aria-sort')).toBe('descending');
+    expect(host.order()).toBe(-1);
+    await click(sortButton(2));
+    expect(th(2).getAttribute('aria-sort')).toBe('none');
+    expect(host.field()).toBeNull();
+  });
+
+  it('sorts the rows by value, numbers numerically', async () => {
+    await click(sortButton(2));
+    const prices = [...root().querySelectorAll('tbody tr td:nth-child(3)')].map((e) =>
+      Number(e.textContent),
+    );
+    expect(prices).toEqual([...prices].sort((a, b) => a - b));
+    await click(sortButton(2));
+    const desc = [...root().querySelectorAll('tbody tr td:nth-child(3)')].map((e) =>
+      Number(e.textContent),
+    );
+    expect(desc).toEqual([...desc].sort((a, b) => b - a));
+  });
+
+  it('pages the rows and goes back to the first page when the sort changes', async () => {
+    expect(names()).toEqual(['Item 01', 'Item 02', 'Item 03', 'Item 04', 'Item 05']);
+    (root().querySelector('.hx-paginator-next') as HTMLElement).click();
+    await update();
+    expect(names()[0]).toBe('Item 06');
+    expect(host.first()).toBe(5);
+    await click(sortButton(0));
+    expect(host.first()).toBe(0);
+  });
+
+  it('sorts several columns in multiple mode, most important first', async () => {
+    host.mode.set('multiple');
+    await update();
+    await click(sortButton(1));
+    await click(sortButton(2));
+    expect(host.meta()).toEqual([
+      { field: 'address.city', order: 1 },
+      { field: 'price', order: 1 },
+    ]);
+    expect(th(1).querySelector('.hx-data-table-sort-rank')?.textContent).toBe('1');
+    expect(th(2).querySelector('.hx-data-table-sort-rank')?.textContent).toBe('2');
+    const rows = [...root().querySelectorAll('tbody tr')].map((tr) => [
+      tr.children[1].textContent?.trim(),
+      Number(tr.children[2].textContent),
+    ]);
+    for (let i = 1; i < rows.length; i++) {
+      const [c0, p0] = rows[i - 1] as [string, number];
+      const [c1, p1] = rows[i] as [string, number];
+      expect(c0 < c1 || (c0 === c1 && p0 <= p1)).toBe(true);
+    }
+    await click(sortButton(1));
+    expect(host.meta()[0]).toEqual({ field: 'address.city', order: -1 }); // keeps its place, flips the order
+    await click(sortButton(1));
+    expect(host.meta()).toEqual([{ field: 'price', order: 1 }]); // third click removes it
+  });
+
+  it('does not sort or page itself when lazy: it emits lazyLoad', async () => {
+    host.lazy.set(true);
+    host.total.set(100);
+    await update();
+    host.events.length = 0;
+    expect(names()).toHaveLength(12);
+    await click(sortButton(0));
+    expect(host.events.at(-1)).toEqual({
+      first: 0,
+      rows: 5,
+      sortField: 'name',
+      sortOrder: 1,
+      multiSortMeta: [{ field: 'name', order: 1 }],
+    });
+    (root().querySelector('.hx-paginator-next') as HTMLElement).click();
+    await update();
+    expect(host.events.at(-1)?.first).toBe(5);
+    expect(root().querySelector('.hx-paginator-report')?.textContent).toBe('6 - 10 of 100');
+  });
+
+  it('orders values with empty ones last', () => {
+    expect(compareValues(2, 10)).toBeLessThan(0);
+    expect(compareValues('Item 2', 'Item 10')).toBeLessThan(0);
+    expect(compareValues(null, 1)).toBeGreaterThan(0);
+    expect(compareValues(new Date(2026, 0, 1), new Date(2026, 5, 1))).toBeLessThan(0);
   });
 });

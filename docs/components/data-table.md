@@ -2,8 +2,8 @@
 
 `hx-data-table` is a table with a column model on a native `<table>`: cell templates, caption, empty and loading
 state, striped rows, gridlines, sizes and a scrolling body with a sticky header. It draws with the CSS of
-[`table[hx-table]`](table.md). Sorting, paging, selection, filters and row expansion are described below as they are
-added to the component.
+[`table[hx-table]`](table.md). Sorting and paging (client side or lazy) are built in; selection, filters and row expansion are described
+below as they are added.
 
 ```html
 <hx-data-table [value]="invoices" [columns]="columns" dataKey="id" caption="Invoices" stripedRows>
@@ -19,8 +19,8 @@ columns: HxColumn[] = [
 ];
 ```
 
-A column is `{ field, header, width?, align? }`; `field` can be a path (`customer.name`), `align` is `left`,
-`center` or `right`.
+A column is `{ field, header, width?, align?, sortable? }`; `field` can be a path (`customer.name`), `align` is
+`left`, `center` or `right`.
 
 ## Inputs
 
@@ -39,6 +39,46 @@ A column is `{ field, header, width?, align? }`; `field` can be a path (`custome
 | `scrollHeight` | `string` | none | The body scrolls inside this height, the header stays in view. |
 | `scrollable` | `boolean` | `false` | A wide table scrolls horizontally. |
 
+## Sorting
+
+A `sortable` column has a button in its header: a click sorts ascending, the next descending, the next removes the
+sort. The state is in models, so it can be bound and restored:
+
+```html
+<hx-data-table [value]="rows" [columns]="columns" [(sortField)]="field" [(sortOrder)]="order" />
+```
+
+| Name | Type | Default | |
+| --- | --- | --- | --- |
+| `sortMode` | `'single' \| 'multiple'` | `'single'` | In `multiple` mode a click adds the column to the sort order (ascending, descending, removed); a small number shows the position. |
+| `sortField` (model), `sortOrder` (model) | `string \| null`, `1 \| -1` | `null`, `1` | The sorted column in `single` mode. |
+| `multiSortMeta` (model) | `{ field, order }[]` | `[]` | The sorted columns in `multiple` mode, most important first. |
+| `sortFunction` | `(rows, meta) => rows` | none | Replaces the client-side sort. |
+
+The default order puts empty values last, compares numbers and dates by value and text by locale with numeric
+parts (`Item 2` before `Item 10`); `compareValues` is exported.
+
+## Paging
+
+```html
+<hx-data-table [value]="rows" [columns]="columns" paginator [(first)]="first" [(rows)]="rows" [rowsPerPageOptions]="[10, 25, 50]" />
+```
+
+`paginator` adds an [`hx-paginator`](paginator.md) below the table; `rows`, `first`, `rowsPerPageOptions` and
+`showCurrentPageReport` (default on) are its settings. A change of the sort goes back to the first page.
+
+## Lazy loading
+
+With `lazy` the table neither sorts nor pages: it shows `value` as given and emits `lazyLoad` when the sort, the page
+or the rows per page change (and once on init unless `lazyLoadOnInit` is off). Set `totalRecords` to the number of
+all records so the paginator knows how many pages there are.
+
+```html
+<hx-data-table [value]="page" [columns]="columns" lazy paginator [totalRecords]="total" [rows]="20" (lazyLoad)="load($event)" />
+```
+
+`HxLazyLoadEvent` is `{ first, rows, sortField, sortOrder, multiSortMeta }`.
+
 ## Templates
 
 Templates are `ng-template`s inside the table:
@@ -54,7 +94,8 @@ Templates are `ng-template`s inside the table:
 ## Accessibility
 
 A native `<table>` with a `<caption>` (visually hidden when only `ariaLabel` is set) and `<th scope="col">` header
-cells. While `loading` the frame has `aria-busy="true"` and the spinner is a `role="status"`. A table that scrolls
+cells. A sortable header contains a `<button>` and its `th` has `aria-sort` (`ascending`, `descending`, `none`); a polite
+live region announces "Sorted by Name, ascending" or that the sort was removed. The paginator is a labelled `nav`. While `loading` the frame has `aria-busy="true"` and the spinner is a `role="status"`. A table that scrolls
 (`scrollHeight` or `scrollable`) is a focusable `region` named by `ariaLabel` or `caption`, so the keyboard can scroll it.
 
 ## Tokens

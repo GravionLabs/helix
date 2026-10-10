@@ -9,8 +9,13 @@ import {
   Directive,
   inject,
   input,
+  model,
+  type OnInit,
+  output,
+  signal,
   TemplateRef,
 } from '@angular/core';
+import { type HxPageEvent, HxPaginator } from '../paginator/paginator';
 import { HxProgressSpinner } from '../progress/progress';
 import type { HxTableSize } from '../table/table';
 
@@ -26,6 +31,41 @@ export interface HxColumn {
   width?: string;
   /** Horizontal alignment of header and cells (the start edge by default). */
   align?: HxColumnAlign;
+  /** The header is a button that sorts by the column. */
+  sortable?: boolean;
+}
+
+/** One sorted column: `order` 1 is ascending, -1 descending. */
+export interface HxSortMeta {
+  field: string;
+  order: 1 | -1;
+}
+
+export type HxSortMode = 'single' | 'multiple';
+
+/** What `lazyLoad` carries: the state the data has to be loaded for. */
+export interface HxLazyLoadEvent {
+  first: number;
+  rows: number;
+  sortField: string | null;
+  sortOrder: 1 | -1;
+  multiSortMeta: HxSortMeta[];
+}
+
+/** Replaces the client-side sort: gets the rows and the sort state, returns the sorted rows. */
+export type HxSortFunction = (
+  rows: readonly unknown[],
+  meta: readonly HxSortMeta[],
+) => readonly unknown[];
+
+/** The default order of two values: empty values last, numbers and dates by value, text by locale. */
+export function compareValues(a: unknown, b: unknown): number {
+  const aEmpty = a === null || a === undefined || a === '';
+  const bEmpty = b === null || b === undefined || b === '';
+  if (aEmpty || bEmpty) return aEmpty && bEmpty ? 0 : aEmpty ? 1 : -1;
+  if (typeof a === 'number' && typeof b === 'number') return a - b;
+  if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
+  return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
 }
 
 /** The value of a (nested) property of a row. */
@@ -105,12 +145,12 @@ export interface HxTableRowContext {
  */
 @Component({
   selector: 'hx-data-table',
-  imports: [NgTemplateOutlet, HxProgressSpinner],
+  imports: [NgTemplateOutlet, HxProgressSpinner, HxPaginator],
   templateUrl: './data-table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-data-table' },
 })
-export class HxDataTable {
+export class HxDataTable implements OnInit {
   /** The rows. */
   readonly value = input<readonly unknown[]>([]);
   readonly columns = input<readonly HxColumn[]>([]);
@@ -133,14 +173,76 @@ export class HxDataTable {
   /** A wide table scrolls horizontally instead of overflowing. */
   readonly scrollable = input(false, { transform: booleanAttribute });
 
+  /** `single`: one sorted column; `multiple`: a click adds the column to the sort order. */
+  readonly sortMode = input<HxSortMode>('single');
+  /** The sorted column in `single` mode. */
+  readonly sortField = model<string | null>(null);
+  /** 1 ascending, -1 descending (`single` mode). */
+  readonly sortOrder = model<1 | -1>(1);
+  /** The sorted columns in `multiple` mode, most important first. */
+  readonly multiSortMeta = model<HxSortMeta[]>([]);
+  /** Replaces the client-side sort. */
+  readonly sortFunction = input<HxSortFunction>();
+
+  /** Shows a paginator below the table. */
+  readonly paginator = input(false, { transform: booleanAttribute });
+  readonly rows = model(10);
+  readonly first = model(0);
+  readonly rowsPerPageOptions = input<readonly number[]>();
+  readonly showCurrentPageReport = input(true, { transform: booleanAttribute });
+  /** The rows are paged and sorted elsewhere: the table only shows `value` and emits `lazyLoad`. */
+  readonly lazy = input(false, { transform: booleanAttribute });
+  /** The number of all records when `lazy` (otherwise the length of `value`). */
+  readonly totalRecords = input<number>();
+  /** Emits `lazyLoad` once on init (default on). */
+  readonly lazyLoadOnInit = input(true, { transform: booleanAttribute });
+
+  /** Sort, page or rows-per-page changed while `lazy`: load the data for this state. */
+  readonly lazyLoad = output<HxLazyLoadEvent>();
+
+  protected readonly announcement = signal('');
+
   protected readonly cellTemplates = contentChildren(HxCell);
   protected readonly headerTemplate = contentChild(HxTableHeader);
   protected readonly bodyTemplate = contentChild(HxTableBody);
   protected readonly footerTemplate = contentChild(HxTableFooter);
   protected readonly captionTemplate = contentChild(HxTableCaption);
 
-  /** The rows the table draws. */
-  protected readonly rows = computed(() => this.value());
+  /** The sort state as a list, whichever the mode. */
+  protected readonly sortMeta = computed<HxSortMeta[]>(() =>
+    this.sortMode() === 'multiple'
+      ? this.multiSortMeta()
+      : this.sortField()
+        ? [{ field: this.sortField() as string, order: this.sortOrder() }]
+        : [],
+  );
+
+  private readonly sorted = computed(() => {
+    const value = this.value();
+    const meta = this.sortMeta();
+    if (this.lazy() || !meta.length) return value;
+    const custom = this.sortFunction();
+    if (custom) return custom(value, meta);
+    return [...value].sort((a, b) => {
+      for (const { field, order } of meta) {
+        const result = compareValues(resolveField(a, field), resolveField(b, field));
+        if (result) return result * order;
+      }
+      return 0;
+    });
+  });
+
+  /** The number of records the paginator pages over. */
+  protected readonly total = computed(() =>
+    this.lazy() ? (this.totalRecords() ?? this.value().length) : this.sorted().length,
+  );
+
+  /** The rows the table draws: sorted, then the current page. */
+  protected readonly visibleRows = computed(() => {
+    const rows = this.sorted();
+    if (!this.paginator() || this.lazy()) return rows;
+    return rows.slice(this.first(), this.first() + this.rows());
+  });
   protected readonly cells = computed(
     () => new Map(this.cellTemplates().map((cell) => [cell.field(), cell.template])),
   );
@@ -150,6 +252,77 @@ export class HxDataTable {
   );
   protected readonly captionHidden = computed(() => !this.caption() && !this.captionTemplate());
   protected readonly colspan = computed(() => Math.max(1, this.columns().length));
+
+  ngOnInit(): void {
+    if (this.lazy() && this.lazyLoadOnInit()) this.emitLazy();
+  }
+
+  /** The order of a column (1, -1) or 0 when it is not sorted. */
+  protected orderOf(column: HxColumn): 0 | 1 | -1 {
+    return this.sortMeta().find((m) => m.field === column.field)?.order ?? 0;
+  }
+
+  protected ariaSort(column: HxColumn): 'ascending' | 'descending' | 'none' | null {
+    if (!column.sortable) return null;
+    const order = this.orderOf(column);
+    return order === 1 ? 'ascending' : order === -1 ? 'descending' : 'none';
+  }
+
+  /** The position (1-based) of a column in a multi-column sort, when more than one column is sorted. */
+  protected sortRank(column: HxColumn): number | null {
+    const meta = this.sortMeta();
+    if (this.sortMode() !== 'multiple' || meta.length < 2) return null;
+    const index = meta.findIndex((m) => m.field === column.field);
+    return index < 0 ? null : index + 1;
+  }
+
+  /** Sorts by a column: ascending, then descending, then not at all. */
+  sort(column: HxColumn): void {
+    const order = this.orderOf(column);
+    const next: 0 | 1 | -1 = order === 0 ? 1 : order === 1 ? -1 : 0;
+    if (this.sortMode() === 'multiple') {
+      const rest = this.multiSortMeta().filter((m) => m.field !== column.field);
+      this.multiSortMeta.set(
+        next === 0
+          ? rest
+          : order === 0
+            ? [...rest, { field: column.field, order: next }]
+            : this.multiSortMeta().map((m) =>
+                m.field === column.field ? { ...m, order: next as 1 | -1 } : m,
+              ),
+      );
+    } else {
+      this.sortField.set(next === 0 ? null : column.field);
+      this.sortOrder.set(next === 0 ? 1 : next);
+    }
+    this.announcement.set(
+      next === 0
+        ? `Sorting by ${column.header} removed`
+        : `Sorted by ${column.header}, ${next === 1 ? 'ascending' : 'descending'}`,
+    );
+    this.first.set(0);
+    if (this.lazy()) this.emitLazy();
+  }
+
+  protected onPage(event: HxPageEvent): void {
+    this.first.set(event.first);
+    this.rows.set(event.rows);
+    if (this.lazy()) this.emitLazy();
+  }
+
+  private emitLazy(): void {
+    this.lazyLoad.emit({
+      first: this.first(),
+      rows: this.rows(),
+      sortField:
+        this.sortMode() === 'multiple'
+          ? (this.multiSortMeta()[0]?.field ?? null)
+          : this.sortField(),
+      sortOrder:
+        this.sortMode() === 'multiple' ? (this.multiSortMeta()[0]?.order ?? 1) : this.sortOrder(),
+      multiSortMeta: this.sortMode() === 'multiple' ? this.multiSortMeta() : this.sortMeta(),
+    });
+  }
 
   protected trackRow(row: unknown, index: number): unknown {
     const key = this.dataKey();

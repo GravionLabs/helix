@@ -3,6 +3,8 @@
  * with the loading cover, the visually hidden caption, the empty row and the column alignment, from the
  * `--h-datatable-*` tokens.
  */
+@use 'icons' as *;
+
 .hx-data-table {
   display: block;
 }
@@ -54,4 +56,71 @@
 .hx-data-table-loading hx-progress-spinner {
   width: 2.5rem;
   height: 2.5rem;
+}
+
+/* sortable headers: a button that fills the header cell */
+.hx-data-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--h-datatable-header-cell-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border-radius: 2px;
+  outline-color: transparent;
+}
+
+.hx-data-table-align-center .hx-data-table-sort {
+  justify-content: center;
+}
+
+.hx-data-table-align-right .hx-data-table-sort {
+  justify-content: flex-end;
+}
+
+.hx-data-table-sort:hover {
+  color: var(--h-datatable-header-cell-hover-color);
+}
+
+.hx-data-table-sort:focus-visible {
+  outline: var(--h-datatable-header-cell-focus-ring-width) var(--h-datatable-header-cell-focus-ring-style)
+    var(--h-datatable-header-cell-focus-ring-color);
+  outline-offset: var(--h-datatable-header-cell-focus-ring-offset);
+  box-shadow: var(--h-datatable-header-cell-focus-ring-shadow);
+}
+
+.hx-table thead th.hx-data-table-sorted {
+  background: var(--h-datatable-header-cell-selected-background);
+  color: var(--h-datatable-header-cell-selected-color);
+}
+
+.hx-data-table-sort-icon {
+  @include hx-icon(sort, var(--h-datatable-sort-icon-size), var(--h-datatable-sort-icon-color));
+}
+
+.hx-data-table-sort:hover .hx-data-table-sort-icon {
+  background: var(--h-datatable-sort-icon-hover-color);
+}
+
+.hx-data-table-sort-asc {
+  @include hx-icon(chevron-up, var(--h-datatable-sort-icon-size), currentcolor);
+}
+
+.hx-data-table-sort-desc {
+  @include hx-icon(chevron-down, var(--h-datatable-sort-icon-size), currentcolor);
+}
+
+.hx-data-table-sort-rank {
+  font-size: 0.75em;
+  opacity: 0.8;
+}
+
+.hx-data-table-paginator {
+  border-block-start: 1px solid var(--h-datatable-border-color);
 }
