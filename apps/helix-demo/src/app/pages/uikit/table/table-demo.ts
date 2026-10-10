@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, type OnInit, signal } from '@angular/core';
 import { helixGridTheme } from '@gravionlabs/helix-ag-grid';
-import { HxButton, HxIconField, HxInput, HxMessageService, HxToast } from '@gravionlabs/helix-ui';
+import {
+  HxButton,
+  HxIconField,
+  HxInput,
+  HxInputIcon,
+  HxMessageService,
+  HxToast,
+} from '@gravionlabs/helix-ui';
 import { AgGridAngular } from 'ag-grid-angular';
 import {
   AllCommunityModule,
@@ -24,7 +31,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 @Component({
   selector: 'app-table-demo',
   standalone: true,
-  imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxToast],
+  imports: [HxGridSection, AgGridAngular, HxButton, HxIconField, HxInput, HxInputIcon, HxToast],
   templateUrl: './table-demo.html',
   styleUrl: './table-demo.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
