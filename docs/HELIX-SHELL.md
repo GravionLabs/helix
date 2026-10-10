@@ -41,6 +41,7 @@
    - [HelixEnvironmentBadge](#helixenviromentbadge)
    - [HelixPageHeader](#helixpageheader)
    - [HelixStatCard](#helixstatcard)
+   - [HelixEmptyState](#helixemptystate)
 10. [Form Infrastructure](#form-infrastructure)
     - [HelixFormField](#helixformfield)
 11. [Interfaces](#interfaces)
@@ -1068,6 +1069,35 @@ A dashboard figure on an `hx-card`: a label, the value, an icon in a tinted box,
 ```html
 <helix-stat-card label="Orders" [value]="152" icon="pi pi-shopping-cart" [trend]="24" trendUnit="" trendLabel="new since last visit" />
 <helix-stat-card label="Revenue" [value]="2100" [format]="{ style: 'currency', currency: 'EUR' }" [trend]="-3.2" trendLabel="since last week" severity="warn" />
+```
+
+### HelixEmptyState
+
+**Selector:** `<helix-empty-state>`  
+**File:** `projects/shell/src/lib/ui/empty-state/empty-state.ts`
+
+The state of a list, table or page that has nothing to show: an icon, a title, a sentence that says what to do, and projected actions. `medium` (default) is the page-level state, `small` fits inside a card or the empty row of an `hx-data-table` (project it with `hxTableEmpty`).
+
+#### Inputs
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — (required) | The heading |
+| `description` | `string` | — | What the user can do about it |
+| `icon` | `string` | — | Icon classes (`pi pi-inbox`) |
+| `size` | `'small' \| 'medium'` | `'medium'` | Padding and icon size |
+| `headingLevel` | `2–6` | `3` | The heading element of the title |
+
+#### Example
+
+```html
+<helix-empty-state icon="pi pi-inbox" title="No invoices yet" description="Invoices you create appear here.">
+  <button hx-button type="button">New invoice</button>
+</helix-empty-state>
+
+<hx-data-table [value]="[]" [columns]="columns">
+  <ng-template hxTableEmpty><helix-empty-state size="small" title="No results" description="Change the filter." /></ng-template>
+</hx-data-table>
 ```
 
 ---

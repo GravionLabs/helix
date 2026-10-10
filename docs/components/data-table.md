@@ -126,6 +126,7 @@ Templates are `ng-template`s inside the table:
 | `hxTableFooter` | adds a footer row (write `<td>`) | `$implicit` columns |
 | `hxTableCaption` | the caption text | none |
 | `hxRowExpansion` | adds the content of an opened row | `$implicit` row, `index`, `columns` |
+| `hxTableEmpty` | the content of the empty row (instead of `emptyMessage`) | none |
 
 ## Accessibility
 

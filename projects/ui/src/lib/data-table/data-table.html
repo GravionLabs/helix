@@ -120,7 +120,13 @@
           }
         } @empty {
           <tr class="hx-data-table-empty">
-            <td [attr.colspan]="colspan()">{{ emptyMessage() }}</td>
+            <td [attr.colspan]="colspan()">
+              @if (emptyTemplate(); as tpl) {
+                <ng-container [ngTemplateOutlet]="tpl.template" />
+              } @else {
+                {{ emptyMessage() }}
+              }
+            </td>
           </tr>
         }
       </tbody>

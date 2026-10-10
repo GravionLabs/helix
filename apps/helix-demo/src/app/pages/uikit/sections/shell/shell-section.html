@@ -23,4 +23,17 @@
       <helix-stat-card label="Tickets" value="7 open" icon="pi pi-ticket" severity="warn" [trend]="0" trendUnit="" trendLabel="unchanged" />
     </div>
   </div>
+
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Empty state</h2>
+    <p class="m-0">Page level (medium) and inside the empty row of a data table (small, through <code>hxTableEmpty</code>).</p>
+    <helix-empty-state icon="pi pi-inbox" title="No invoices yet" description="Invoices you create appear here. Start with your first one.">
+      <button hx-button type="button">New invoice</button>
+    </helix-empty-state>
+    <hx-data-table [value]="[]" [columns]="columns" ariaLabel="Invoices">
+      <ng-template hxTableEmpty>
+        <helix-empty-state size="small" icon="pi pi-search" title="No results" description="No invoice matches the filter." />
+      </ng-template>
+    </hx-data-table>
+  </div>
 </div>
