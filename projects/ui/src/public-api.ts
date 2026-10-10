@@ -58,6 +58,20 @@ export {
   HxConfirmPopup,
 } from './lib/confirm/confirm';
 export {
+  HxCell,
+  type HxCellContext,
+  type HxColumn,
+  type HxColumnAlign,
+  HxDataTable,
+  HxTableBody,
+  HxTableCaption,
+  type HxTableColumnsContext,
+  HxTableFooter,
+  HxTableHeader,
+  type HxTableRowContext,
+  resolveField,
+} from './lib/data-table/data-table';
+export {
   HxDatePicker,
   type HxDatePickerSelectionMode,
   type HxDatePickerValue,

@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
+  HxButton,
+  HxCell,
   HxChart,
   type HxChartSelectEvent,
+  type HxColumn,
+  HxDataTable,
   HxTable,
   HxTree,
   type HxTreeNode,
@@ -9,16 +13,37 @@ import {
   type HxTreeSelection,
 } from '@gravionlabs/helix-ui';
 
-/** `@gravionlabs/helix-ui` data components: Tree, Chart, Table. */
+/** `@gravionlabs/helix-ui` data components: Tree, Chart, Table, Data table. */
 @Component({
   selector: 'app-data-section',
   standalone: true,
-  imports: [HxChart, HxTable, HxTree],
+  imports: [HxButton, HxCell, HxChart, HxDataTable, HxTable, HxTree],
   templateUrl: './data-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-section.scss',
 })
 export class HxDataSection {
+  readonly columns: HxColumn[] = [
+    { field: 'code', header: 'Code', width: '8rem' },
+    { field: 'name', header: 'Name' },
+    { field: 'category', header: 'Category' },
+    { field: 'price', header: 'Price', align: 'right' },
+  ];
+  readonly products = [
+    { id: 1, code: 'f230fh0g3', name: 'Bamboo Watch', category: 'Accessories', price: 65 },
+    { id: 2, code: 'nvklal433', name: 'Black Watch', category: 'Accessories', price: 72 },
+    { id: 3, code: 'zz21cz3c1', name: 'Blue Band', category: 'Fitness', price: 79 },
+    { id: 4, code: '244wgerg2', name: 'Blue T-Shirt', category: 'Clothing', price: 29 },
+  ];
+  readonly tableLoading = signal(false);
+  readonly tableRows = signal(this.products);
+  toggleLoading(): void {
+    this.tableLoading.update((v) => !v);
+  }
+  toggleEmpty(): void {
+    this.tableRows.update((rows) => (rows.length ? [] : this.products));
+  }
+
   readonly files = signal<HxTreeNode[]>([
     {
       key: 'docs',

@@ -1,0 +1,76 @@
+<div class="hx-data-table-frame" [attr.aria-busy]="loading() ? 'true' : null">
+  <div
+    class="hx-table-scroll hx-data-table-scroll"
+    [class.hx-data-table-scrolls]="scrolls()"
+    [style.max-height]="scrollHeight() ?? null"
+    [attr.role]="scrolls() ? 'region' : null"
+    [attr.aria-label]="scrolls() ? (ariaLabel() ?? caption() ?? null) : null"
+    [attr.tabindex]="scrolls() ? 0 : null"
+  >
+    <table
+      class="hx-table"
+      [class.hx-table-sm]="size() === 'small'"
+      [class.hx-table-lg]="size() === 'large'"
+      [class.hx-table-striped]="stripedRows()"
+      [class.hx-table-gridlines]="showGridlines()"
+      [class.hx-table-hoverable]="hoverRows()"
+      [class.hx-table-sticky]="!!scrollHeight()"
+    >
+      @if (hasCaption()) {
+        <caption [class.hx-data-table-caption-hidden]="captionHidden()">
+          @if (captionTemplate(); as tpl) {
+            <ng-container [ngTemplateOutlet]="tpl.template" />
+          } @else {
+            {{ caption() ?? ariaLabel() }}
+          }
+        </caption>
+      }
+      <thead>
+        <tr>
+          @if (headerTemplate(); as tpl) {
+            <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
+          } @else {
+            @for (column of columns(); track column.field) {
+              <th scope="col" [class]="'hx-data-table-align-' + (column.align ?? 'left')" [style.width]="column.width ?? null">{{ column.header }}</th>
+            }
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track trackRow(row, $index); let i = $index) {
+          <tr>
+            @if (bodyTemplate(); as tpl) {
+              <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
+            } @else {
+              @for (column of columns(); track column.field) {
+                <td [class]="'hx-data-table-align-' + (column.align ?? 'left')">
+                  @if (cells().get(column.field); as cell) {
+                    <ng-container [ngTemplateOutlet]="cell" [ngTemplateOutletContext]="{ $implicit: row, value: valueOf(row, column), index: i }" />
+                  } @else {
+                    {{ valueOf(row, column) }}
+                  }
+                </td>
+              }
+            }
+          </tr>
+        } @empty {
+          <tr class="hx-data-table-empty">
+            <td [attr.colspan]="colspan()">{{ emptyMessage() }}</td>
+          </tr>
+        }
+      </tbody>
+      @if (footerTemplate(); as tpl) {
+        <tfoot>
+          <tr>
+            <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
+          </tr>
+        </tfoot>
+      }
+    </table>
+  </div>
+  @if (loading()) {
+    <div class="hx-data-table-loading" role="status">
+      <hx-progress-spinner ariaLabel="Loading" />
+    </div>
+  }
+</div>

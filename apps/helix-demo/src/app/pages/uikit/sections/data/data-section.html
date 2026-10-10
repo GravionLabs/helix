@@ -5,6 +5,18 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Data table</h2>
+    <p class="m-0">A column model, a cell template for the price, a caption, stripes and a scrolling body with a sticky header.</p>
+    <div class="flex gap-2">
+      <button hx-button type="button" size="small" variant="outlined" (click)="toggleLoading()">Toggle loading</button>
+      <button hx-button type="button" size="small" variant="outlined" (click)="toggleEmpty()">Toggle empty</button>
+    </div>
+    <hx-data-table [value]="tableRows()" [columns]="columns" dataKey="id" caption="Products" stripedRows [loading]="tableLoading()" scrollHeight="14rem">
+      <ng-template hxCell="price" let-value><b>{{ value }} EUR</b></ng-template>
+    </hx-data-table>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Tree</h2>
     <p class="m-0">Arrow keys move, Right/Left expand and collapse, typing jumps by label, Enter or Space selects.</p>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr))">
