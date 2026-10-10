@@ -27,6 +27,19 @@ function isPathActive(activePath: string, itemPath: string): boolean {
   return next === undefined || next === '/' || next === '?' || next === '#' || next === ';';
 }
 
+/** The absolute URL an item's `routerLink` points to (without the leading slash), or null. */
+function linkTarget(item: HelixRouteMenuItem): string | null {
+  const link = item.routerLink;
+  if (typeof link === 'string') return link.replace(/^\//, '');
+  if (Array.isArray(link) && link.length && link.every((part) => typeof part === 'string')) {
+    return link
+      .join('/')
+      .replace(/\/{2,}/g, '/')
+      .replace(/^\//, '');
+  }
+  return null;
+}
+
 @Component({
   selector: '[helix-nav-rail-item]',
   standalone: true,
@@ -53,6 +66,9 @@ export class HelixNavRailItem implements AfterViewInit {
 
   /** Renders inside a collapsed-rail flyout: always expanded (labels visible), never itself a flyout. */
   flyout = input(false);
+
+  /** Shows the children of every expandable item (while the rail is filtered). */
+  expandAll = input(false);
 
   /** Whether this item's submenu, having animated open at least once, may transition on leave too. */
   initialized = signal(false);
@@ -100,7 +116,12 @@ export class HelixNavRailItem implements AfterViewInit {
     if (itemPath == null) return false;
     const normalizedPath = this.store.activePath()?.replace(/^\//, '') ?? '';
     const normalizedFull = (this.fullPath() ?? '').replace(/^\//, '');
-    return isPathActive(normalizedPath, normalizedFull);
+    // The router link is the absolute URL; `path` alone is relative to the parent route.
+    const target = linkTarget(this.item() as HelixRouteMenuItem);
+    return (
+      isPathActive(normalizedPath, normalizedFull) ||
+      (target !== null && isPathActive(normalizedPath, target))
+    );
   });
 
   hasActiveDescendant = computed(() => {
@@ -117,16 +138,20 @@ export class HelixNavRailItem implements AfterViewInit {
             ? `${prefix}/${child.path.replace(/^\//, '')}`
             : child.path.replace(/^\//, '')
           : prefix;
+        const childTarget = linkTarget(child);
         if (childFullPath && isPathActive(normalized, childFullPath)) {
           return true;
         }
+        if (childTarget && isPathActive(normalized, childTarget)) return true;
         return child.items ? match(child.items, childFullPath) : false;
       });
 
     return match(items, parentFullPath);
   });
 
-  isExpanded = computed(() => this.store.expandedKeys().includes(this.itemKey()));
+  isExpanded = computed(
+    () => this.expandAll() || this.store.expandedKeys().includes(this.itemKey()),
+  );
 
   constructor() {
     // Navigating (or expanding the rail) always dismisses an open flyout.

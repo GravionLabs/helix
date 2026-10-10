@@ -380,4 +380,16 @@ describe('HelixNavRailItem', () => {
       expect(flyout()).toBeNull();
     });
   });
+
+  it('isActive() follows the absolute router link when the path is relative to a parent route', () => {
+    fixture.componentRef.setInput('item', {
+      label: 'Button',
+      path: 'button',
+      routerLink: ['/uikit/button'],
+    });
+    TestBed.inject(LayoutStore).setActivePath('/uikit/button');
+    expect(component.isActive()).toBe(true);
+    TestBed.inject(LayoutStore).setActivePath('/uikit/buttons');
+    expect(component.isActive()).toBe(false);
+  });
 });
