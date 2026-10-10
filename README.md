@@ -9,7 +9,6 @@ application shell, form utilities, and AG Grid helpers built on top of it.
 
 | Package | Description |
 | --- | --- |
-| [`@gravionlabs/helix-core`](projects/core) | Base component library — 90 components, 7 directives, and theming/infra modules, one secondary entry point each (`@gravionlabs/helix-core/button`). |
 | [`@gravionlabs/helix-shell`](projects/shell) | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure. |
 | [`@gravionlabs/helix-zod`](projects/zod) | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas. |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles. |
@@ -72,13 +71,9 @@ pnpm install
 pnpm start          # Build libs + serve the demo app
 pnpm build:lib      # Build all libraries (core, ui, shell, zod, ag-grid) (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
-pnpm lint           # biome + eslint + no-primeng import guard
+pnpm lint           # biome + eslint + import guards
 ```
 
 ## Attribution & License
 
-MIT. `projects/core` is a vendored fork of PrimeNG by PrimeTek Informatics at
-tag `21.1.9` (MIT "PRIMENG COMMUNITY VERSIONS LICENSE") — see
-[LICENSE.md](projects/core/LICENSE.md) and [VENDOR.md](projects/core/VENDOR.md)
-for the upstream commit and the list of local modifications. All credit for the
-original component implementations belongs to PrimeTek.
+MIT. The design token values derive from the Aura preset of PrimeNG / PrimeUIX (PrimeTek, MIT) and from Tailwind CSS (MIT); see [projects/tokens/NOTICE](projects/tokens/NOTICE).

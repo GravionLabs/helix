@@ -5,8 +5,8 @@ const files = (entries: Record<string, 'file' | 'directory'>): RepoFiles => ({
 });
 
 const repo = files({
-  'projects/core/README.md': 'file',
-  'projects/core/button/button.ts': 'file',
+  'projects/ui/README.md': 'file',
+  'projects/ui/src/lib/button/button.ts': 'file',
   'projects/shell': 'directory',
   'docs/HELIX-SHELL.md': 'file',
   'docs/components/button.md': 'file',
@@ -19,14 +19,14 @@ const main = `${REPO_URL}/blob/main`;
 
 describe('repoLink', () => {
   it('sends a source file to GitHub (blob)', () => {
-    expect(repoLink('../../projects/core/button/button.ts', 'components/button.md', repo)).toBe(
-      `${main}/projects/core/button/button.ts`,
-    );
+    expect(
+      repoLink('../../projects/ui/src/lib/button/button.ts', 'components/button.md', repo),
+    ).toBe(`${main}/projects/ui/src/lib/button/button.ts`);
   });
 
   it('sends a package README to GitHub, keeping the anchor', () => {
-    expect(repoLink('../projects/core/README.md#install', 'COMPONENTS.md', repo)).toBe(
-      `${main}/projects/core/README.md#install`,
+    expect(repoLink('../projects/ui/README.md#install', 'COMPONENTS.md', repo)).toBe(
+      `${main}/projects/ui/README.md#install`,
     );
   });
 
@@ -80,7 +80,7 @@ describe('repoLinksPlugin', () => {
     let rule: (state: never) => void = () => {};
     repoLinksPlugin({ core: { ruler: { push: (_name, fn) => (rule = fn as never) } } }, repo);
 
-    const attrs: Record<string, string> = { href: '../projects/core/README.md' };
+    const attrs: Record<string, string> = { href: '../projects/ui/README.md' };
     const link = {
       type: 'link_open',
       children: null,
@@ -95,7 +95,7 @@ describe('repoLinksPlugin', () => {
       env: { relativePath: 'COMPONENTS.md' },
     } as never);
 
-    expect(attrs['href']).toBe(`${main}/projects/core/README.md`);
+    expect(attrs['href']).toBe(`${main}/projects/ui/README.md`);
   });
 
   it('does nothing without a page', () => {

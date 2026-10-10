@@ -1,13 +1,10 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { helixTokens } from '../../projects/tokens/src/index.ts';
-import { loadPreset, resolvePreset } from '../tokens/core-engine.mjs';
 import { declare, kebab, resolveTokens, variableName, variableValue } from '../tokens/resolve.mjs';
 
-const ROOT = resolve(__dirname, '../..');
 const FIXTURES = resolve(__dirname, 'fixtures');
-const built = existsSync(resolve(ROOT, 'dist/core/fesm2022'));
 // the golden files end with a newline that `resolveTokens` does not add
 const goldenCss = readFileSync(resolve(FIXTURES, 'helix-tokens.golden.css'), 'utf8').replace(
   /\n$/,
@@ -15,7 +12,7 @@ const goldenCss = readFileSync(resolve(FIXTURES, 'helix-tokens.golden.css'), 'ut
 );
 const goldenJson = JSON.parse(readFileSync(resolve(FIXTURES, 'helix-tokens.golden.json'), 'utf8'));
 
-describe('resolveTokens: the golden tokens (what helix-core emitted)', () => {
+describe('resolveTokens: the golden tokens (the recorded output of the pipeline)', () => {
   const resolved = resolveTokens(helixTokens);
 
   it('emits the same CSS, byte for byte', () => {
@@ -195,28 +192,5 @@ describe('layers and colour schemes', () => {
     expect(resolveTokens({ primitive: { a: '1' } }, { components: false }).css).toBe(
       ':root,:host{--h-a:1;}\n:root,:host{color-scheme:light}.app-dark{color-scheme:dark}',
     );
-  });
-});
-
-// The engine of helix-core is the reference while it exists: other selectors and subsets must match it too.
-describe.skipIf(!built)('resolveTokens equals the engine of helix-core', () => {
-  it.each([
-    ['the docs site selector', { darkSelector: '.dark' }],
-    ['the base layers only', { components: false as const }],
-    ['a component subset', { components: ['select', 'button', 'tooltip'] }],
-    ['a subset in a custom selector', { darkSelector: '.my-dark', components: ['inputtext'] }],
-    [
-      'the attribute selector of the Design System',
-      { darkSelector: '[data-theme="dark"]', components: ['button', 'card'] },
-    ],
-  ])('%s', async (_name, options) => {
-    const { Theme, preset } = await loadPreset('helix');
-    const darkSelector = options.darkSelector ?? '.app-dark';
-    const engine = resolvePreset(Theme, preset, darkSelector, {
-      components: options.components ?? true,
-    });
-    const ours = resolveTokens(helixTokens, options).css;
-    expect(ours.length).toBe(engine.length);
-    expect(ours === engine).toBe(true);
   });
 });
