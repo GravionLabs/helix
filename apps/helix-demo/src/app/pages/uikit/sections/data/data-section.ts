@@ -6,6 +6,8 @@ import {
   type HxChartSelectEvent,
   type HxColumn,
   HxDataTable,
+  HxInput,
+  HxRowExpansion,
   HxTable,
   HxTree,
   type HxTreeNode,
@@ -17,7 +19,7 @@ import {
 @Component({
   selector: 'app-data-section',
   standalone: true,
-  imports: [HxButton, HxCell, HxChart, HxDataTable, HxTable, HxTree],
+  imports: [HxButton, HxCell, HxChart, HxDataTable, HxInput, HxRowExpansion, HxTable, HxTree],
   templateUrl: './data-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-section.scss',
@@ -42,6 +44,13 @@ export class HxDataSection {
     category: ['Accessories', 'Fitness', 'Clothing'][i % 3],
     price: 10 + ((i * 17) % 90),
   }));
+  readonly selected = signal<unknown>([]);
+  readonly filters = signal<Record<string, string>>({});
+  readonly filterColumns: HxColumn[] = [
+    { field: 'name', header: 'Name', filter: true, sortable: true },
+    { field: 'category', header: 'Category', filter: true },
+    { field: 'price', header: 'Price', align: 'right', sortable: true },
+  ];
   readonly tableLoading = signal(false);
   readonly tableRows = signal(this.products);
   toggleLoading(): void {

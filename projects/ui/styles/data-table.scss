@@ -124,3 +124,73 @@
 .hx-data-table-paginator {
   border-block-start: 1px solid var(--h-datatable-border-color);
 }
+
+/* selection and expansion */
+.hx-data-table-select-cell,
+.hx-data-table-expander-cell {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.hx-data-table-selectable {
+  cursor: pointer;
+}
+
+.hx-data-table-selectable:focus-visible {
+  outline: var(--h-datatable-row-focus-ring-width) var(--h-datatable-row-focus-ring-style)
+    var(--h-datatable-row-focus-ring-color);
+  outline-offset: calc(-1 * var(--h-datatable-row-focus-ring-width));
+  box-shadow: var(--h-datatable-row-focus-ring-shadow);
+}
+
+.hx-data-table-filter-row th {
+  padding-block: 0.25rem 0.5rem;
+  font-weight: normal;
+}
+
+.hx-data-table-expander {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-datatable-row-toggle-button-size);
+  height: var(--h-datatable-row-toggle-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--h-datatable-row-toggle-button-border-radius);
+  background: transparent;
+  color: var(--h-datatable-row-toggle-button-color);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.hx-data-table-expander::before {
+  @include hx-icon(chevron-right, 1em);
+  content: '';
+  transition: transform 0.15s;
+}
+
+.hx-data-table-expander-open::before {
+  transform: rotate(90deg);
+}
+
+.hx-data-table-expander:hover {
+  background: var(--h-datatable-row-toggle-button-hover-background);
+  color: var(--h-datatable-row-toggle-button-hover-color);
+}
+
+.hx-data-table-expander:focus-visible {
+  outline: var(--h-datatable-row-toggle-button-focus-ring-width) var(--h-datatable-row-toggle-button-focus-ring-style)
+    var(--h-datatable-row-toggle-button-focus-ring-color);
+  outline-offset: var(--h-datatable-row-toggle-button-focus-ring-offset);
+  box-shadow: var(--h-datatable-row-toggle-button-focus-ring-shadow);
+}
+
+.hx-table tbody tr.hx-data-table-expansion > td {
+  background: var(--h-datatable-row-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-data-table-expander::before {
+    transition: none;
+  }
+}
