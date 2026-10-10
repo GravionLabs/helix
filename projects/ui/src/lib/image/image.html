@@ -1,0 +1,36 @@
+<img
+  [class]="'hx-image-img ' + (imageClass() ?? '')"
+  [src]="src()"
+  [alt]="alt()"
+  [style.width]="cssSize(width())"
+  [style.height]="cssSize(height())"
+  [ngStyle]="imageStyle() ?? null"
+/>
+@if (preview()) {
+  <button type="button" class="hx-image-preview-mask" [attr.aria-label]="previewLabel()" (click)="open()">
+    @if (indicatorTemplate(); as tpl) {
+      <ng-container [ngTemplateOutlet]="tpl.template" />
+    } @else {
+      <span class="hx-image-preview-icon" aria-hidden="true"></span>
+    }
+  </button>
+}
+
+<ng-template #overlay>
+  <div class="hx-image-overlay">
+    @if (showToolbar()) {
+      <div class="hx-image-toolbar">
+        <button type="button" class="hx-image-action hx-image-rotate-left" [attr.aria-label]="rotateLeftLabel()" (click)="rotate(-90)"></button>
+        <button type="button" class="hx-image-action hx-image-rotate-right" [attr.aria-label]="rotateRightLabel()" (click)="rotate(90)"></button>
+        <button type="button" class="hx-image-action hx-image-zoom-out" [disabled]="zoomOutDisabled()" [attr.aria-label]="zoomOutLabel()" (click)="zoom(-1)"></button>
+        <button type="button" class="hx-image-action hx-image-zoom-in" [disabled]="zoomInDisabled()" [attr.aria-label]="zoomInLabel()" (click)="zoom(1)"></button>
+        <button type="button" class="hx-image-action hx-image-close" [attr.aria-label]="closeLabel()" (click)="close()"></button>
+      </div>
+    } @else {
+      <button type="button" class="hx-image-action hx-image-close hx-image-close-only" [attr.aria-label]="closeLabel()" (click)="close()"></button>
+    }
+    <div class="hx-image-stage">
+      <img class="hx-image-original" [src]="previewSrc()" [alt]="alt()" [style.transform]="transform()" />
+    </div>
+  </div>
+</ng-template>

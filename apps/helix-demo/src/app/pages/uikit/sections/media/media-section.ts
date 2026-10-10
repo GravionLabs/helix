@@ -6,6 +6,7 @@ import {
   type HxCarouselResponsiveOption,
   HxGalleria,
   type HxGalleriaItem,
+  HxImage,
   HxTag,
 } from '@gravionlabs/helix-ui';
 
@@ -16,11 +17,11 @@ interface Product {
   status: 'In stock' | 'Low stock' | 'Out of stock';
 }
 
-/** `@gravionlabs/helix-ui` media components: Carousel, Galleria. */
+/** `@gravionlabs/helix-ui` media components: Carousel, Galleria, Image. */
 @Component({
   selector: 'app-media-section',
   standalone: true,
-  imports: [HxButton, HxCarousel, HxCarouselItem, HxGalleria, HxTag],
+  imports: [HxButton, HxCarousel, HxCarouselItem, HxGalleria, HxImage, HxTag],
   templateUrl: './media-section.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './media-section.scss',

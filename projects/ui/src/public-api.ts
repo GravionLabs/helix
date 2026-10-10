@@ -124,6 +124,7 @@ export {
   type HxGalleriaThumbnailsPosition,
 } from './lib/galleria/galleria';
 export { HxIconField, type HxIconPosition, HxInputIcon } from './lib/icon-field/icon-field';
+export { HxImage, HxImageIndicator } from './lib/image/image';
 export { HxInput, type HxInputSize, type HxInputVariant } from './lib/input/input';
 export { HxInputGroup, HxInputGroupAddon } from './lib/input-group/input-group';
 export {
