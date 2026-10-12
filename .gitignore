@@ -57,3 +57,7 @@ apm_modules/
 /apps/site/.vitepress/dist
 /apps/site/.vitepress/cache
 /apps/site/.vitepress/theme/generated
+
+# apm-installed agent skills (run `apm install`)
+apm_modules/
+.agents/skills/

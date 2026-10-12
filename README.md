@@ -51,6 +51,10 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
+## Agent skills
+
+Run `apm install` before working in this repo. It installs the Angular agent skills declared in `apm.yml`. The skill folders are git-ignored, so a fresh clone has none. Requires [apm](https://github.com/microsoft/apm).
+
 ## Documentation
 
 Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.github.io/helix/), or read the Markdown here:
