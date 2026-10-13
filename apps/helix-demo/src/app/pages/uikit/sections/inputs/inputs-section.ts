@@ -6,6 +6,8 @@ import {
   HxButton,
   HxDatePicker,
   type HxDatePickerValue,
+  HxDateTimePicker,
+  type HxDateTimePickerValue,
   HxDateTimeRangePicker,
   type HxDateTimeRangeValue,
   HxFileUpload,
@@ -43,6 +45,7 @@ import {
     HxAutoComplete,
     HxDatePicker,
     HxTimePicker,
+    HxDateTimePicker,
     HxDateTimeRangePicker,
     HxFileUpload,
     HxFileUpload,
@@ -80,7 +83,7 @@ export class HxInputsSection {
   }
   readonly arrival = signal<HxDatePickerValue>(new Date());
   readonly stay = signal<HxDatePickerValue>(null);
-  readonly start = signal<HxDatePickerValue>(new Date(2026, 9, 13, 9, 30));
+  readonly start = signal<HxDateTimePickerValue>(new Date(2026, 9, 13, 9, 30));
   readonly alarm = signal<HxTimePickerValue>(null);
   readonly opens = signal<HxTimePickerValue>(null);
   readonly shift = signal<HxDateTimeRangeValue>({
