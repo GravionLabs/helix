@@ -41,7 +41,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * A from and a to date-time range in one field with one button. The field shows the range as one text
  * (`1/1/2026 00:00 - 1/2/2026 00:15`); the popup holds one calendar (an inline range `hx-date-picker`) and a time row for each end,
  * from and to. The value is `{ from, to }` (`null` while a side is empty); `to` is never before `from`: the `to`
- * calendar starts at `from` (including the time), the `from` calendar ends at `to`, and a choice that crosses the
+ * time row starts at `from` (including the time), the `from` time row ends at `to`, and a choice that crosses the
  * other side moves it. The field is read-only; the popup stays open until Escape, an outside click or the focus
  * leaving it.
  *
@@ -51,7 +51,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * ```
  *
  * It works with `ngModel`, reactive forms and signal forms (`[formField]`). The time options are those of
- * `hx-time-picker`. The popup is a dialog named by `ariaLabel` / `ariaLabelledby`; its calendars are named
+ * `hx-time-picker`. The popup is a dialog named by `ariaLabel` / `ariaLabelledby`; its time rows are named
  * `fromLabel` / `toLabel`.
  */
 @Component({
@@ -74,7 +74,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
 export class HxDateTimeRangePicker
   implements ControlValueAccessor, FormValueControl<HxDateTimeRangeValue>
 {
-  /** The names of the two calendars in the popup. */
+  /** The names of the two time rows in the popup. */
   readonly fromLabel = input('From');
   readonly toLabel = input('To');
   /** The text between the two dates in the field. */
