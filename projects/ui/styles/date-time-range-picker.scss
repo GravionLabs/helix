@@ -27,15 +27,16 @@
 
 .hx-date-time-range-picker-times {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: var(--h-datepicker-title-gap);
 }
 
-/* one line per end: the name, then the time with its arrows beside the value */
+/* from and to side by side: the name above the time, the arrows beside the value */
 .hx-date-time-range-picker-time {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: var(--h-datepicker-title-gap);
 }
 
