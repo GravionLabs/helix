@@ -81,7 +81,7 @@
                 inline
                 timeOnly
                 [ariaLabel]="fromLabel()"
-                [value]="value().from"
+                [value]="draft().from"
                 [minDate]="minDate()"
                 [maxDate]="fromMax()"
                 [hourFormat]="hourFormat()"
@@ -101,7 +101,7 @@
                 inline
                 timeOnly
                 [ariaLabel]="toLabel()"
-                [value]="value().to"
+                [value]="draft().to"
                 [minDate]="toMin()"
                 [maxDate]="maxDate()"
                 [hourFormat]="hourFormat()"
@@ -117,11 +117,14 @@
           </div>
         }
       </div>
-      @if (showButtonBar()) {
-        <div class="hx-date-picker-buttonbar">
+      <div class="hx-date-picker-buttonbar hx-date-time-range-picker-footer">
+        @if (showButtonBar()) {
           <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
-        </div>
-      }
+        }
+        <span class="hx-date-time-range-picker-spacer"></span>
+        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-cancel" (click)="close(true)">{{ cancelLabel() }}</button>
+        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-submit" (click)="submit()">{{ submitLabel() }}</button>
+      </div>
     </div>
   </ng-template>
 </div>

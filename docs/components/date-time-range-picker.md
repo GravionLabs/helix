@@ -16,18 +16,18 @@ to) and, below it, a time row for the start and one for the end. The value is `{
 | `fromLabel`, `toLabel` | `string` | `From`, `To` | Names of the two time rows. |
 | `separator` | `string` | `-` | The text between the two dates in the field. |
 | `placeholder`, `inputId` | `string` | | Of the text field. |
-| `chooseLabel`, `clearLabel` | `string` | `Choose date range`, `Clear` | Name of the button and the popup; text of the Clear button. |
+| `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time rows; `false` picks days only (midnight). |
 | `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the date picker | See [date picker](date-picker.md). `timeOnly` shows the time rows without the calendar. |
 | `stepHour`, `stepMinute`, `stepSecond` | `number` | `1` | Step of the time columns. |
 | `dateFormat`, `locale`, `firstDayOfWeek` | | as the date picker | Format of the text, names, first weekday. |
 | `minDate`, `maxDate`, `disabledDates` | `Date`, `Date[]` | | Limits, compared including the time. |
-| `showButtonBar` | `boolean` | `false` | A Clear button under the popup's content. |
+| `showButtonBar` | `boolean` | `false` | A Clear button (empties the range being edited) beside Cancel and Submit. |
 | `disabled`, `invalid` | `boolean` | `false` | |
 | `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
 
-- **Field:** read-only; click, the button, Arrow Down, Enter or Space open the popup. Escape, a click outside or the
-  focus leaving the control close it.
+- **Field:** read-only; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
+  Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.
 - **Calendar:** the first click sets `from`, the second `to` (a click before `from` swaps them); a third click starts
   a new range. Days keep the times already chosen (midnight at first).
 - **Order:** `to` is never before `from`: the `to` time row starts at `from` (including the time), the `from` row ends

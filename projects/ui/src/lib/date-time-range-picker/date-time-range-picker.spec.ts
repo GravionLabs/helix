@@ -109,6 +109,8 @@ describe('HxDateTimeRangePicker', () => {
     button.click();
     await settle();
   };
+  const submit = async () =>
+    click(popup()?.querySelector('.hx-date-time-range-picker-submit') as HTMLElement);
   const spin = (side: 'from' | 'to', name: string) =>
     popup()?.querySelector(
       `.hx-date-time-range-picker-${side} [role=spinbutton][aria-label="${name}"]`,
@@ -158,22 +160,50 @@ describe('HxDateTimeRangePicker', () => {
     expect(captions.map((c) => c.textContent?.trim())).toEqual(['Start', 'End']);
   });
 
-  it('chooses the range with two day clicks and shows it in the field', async () => {
+  it('chooses the range with two day clicks and applies it with Submit', async () => {
     await open('basic');
     await click(day(12));
-    expect(host.basic()).toEqual({
-      from: new Date(2026, 9, 12, 0, 0),
-      to: null,
-    });
     await click(day(15));
+    expect(host.basic()).toEqual({ from: null, to: null });
+    expect(input('basic').value).toBe('');
+    await submit();
     expect(host.basic()).toEqual({
       from: new Date(2026, 9, 12, 0, 0),
       to: new Date(2026, 9, 15, 0, 0),
     });
     expect(input('basic').value).toBe('10/12/2026 00:00 - 10/15/2026 00:00');
-    expect(popup()).not.toBeNull();
+    expect(popup()).toBeNull();
   });
 
+  it('drops the changes with Cancel', async () => {
+    host.basic.set({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 13, 9, 0),
+    });
+    await settle();
+    await open('basic');
+    await click(day(20));
+    await click(day(22));
+    await click(popup()!.querySelector('.hx-date-time-range-picker-cancel') as HTMLElement);
+    expect(popup()).toBeNull();
+    expect(host.basic()).toEqual({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 13, 9, 0),
+    });
+    await open('basic');
+    expect(
+      day(12).getAttribute('aria-selected') ?? day(12).parentElement?.getAttribute('aria-selected'),
+    ).toBe('true');
+  });
+
+  it('drops the changes with Escape', async () => {
+    await open('basic');
+    await click(day(12));
+    await click(day(15));
+    popup()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await settle();
+    expect(host.basic()).toEqual({ from: null, to: null });
+  });
   it('marks the range in the calendar', async () => {
     host.basic.set({
       from: new Date(2026, 9, 12, 8, 0),
@@ -198,6 +228,7 @@ describe('HxDateTimeRangePicker', () => {
     await open('basic');
     await click(day(20));
     await click(day(22));
+    await submit();
     expect(host.basic()).toEqual({
       from: new Date(2026, 9, 20, 8, 45),
       to: new Date(2026, 9, 22, 17, 30),
@@ -212,8 +243,10 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
     await open('basic');
     await press(spin('from', 'Minute'), 'ArrowUp');
-    expect(host.basic().from).toEqual(new Date(2026, 9, 12, 8, 15));
+    expect(popup()?.querySelector('.hx-date-time-range-picker-from')?.textContent).toContain('15');
+    expect(host.basic().from).toEqual(new Date(2026, 9, 12, 8, 0));
     await press(spin('to', 'Hour'), 'ArrowUp');
+    await submit();
     expect(host.basic().to).toEqual(new Date(2026, 9, 13, 10, 0));
   });
 
@@ -226,6 +259,7 @@ describe('HxDateTimeRangePicker', () => {
     await open('basic');
     await press(spin('to', 'Hour'), 'ArrowDown');
     await press(spin('to', 'Hour'), 'ArrowDown');
+    await submit();
     const { from, to } = host.basic();
     expect(from && to && to.getTime() >= from.getTime()).toBe(true);
   });
@@ -239,6 +273,7 @@ describe('HxDateTimeRangePicker', () => {
     await open('basic');
     await click(day(18));
     await click(day(18));
+    await submit();
     const { from, to } = host.basic();
     expect(from?.getDate()).toBe(18);
     expect(to && from && to >= from).toBe(true);
@@ -249,6 +284,7 @@ describe('HxDateTimeRangePicker', () => {
     expect(day(4).getAttribute('aria-disabled')).toBe('true');
     expect(day(29).getAttribute('aria-disabled')).toBe('true');
     await click(day(5));
+    await submit();
     expect(host.limits().from).toEqual(new Date(2026, 9, 5, 8, 0));
   });
 
@@ -258,12 +294,13 @@ describe('HxDateTimeRangePicker', () => {
     expect(spin('from', 'Minute')).toBeNull();
     await press(spin('from', 'Hour'), 'ArrowUp');
     await press(spin('to', 'Hour'), 'ArrowUp');
+    await submit();
     const { from, to } = host.clock();
     expect([from?.getMinutes(), to?.getMinutes()]).toEqual([0, 0]);
     expect(input('clock').value).toMatch(/\d - \d/);
   });
 
-  it('clears both sides with the button bar', async () => {
+  it('clears the draft with the Clear button, applied with Submit', async () => {
     host.basic.set({
       from: new Date(2026, 9, 12, 8, 0),
       to: new Date(2026, 9, 13, 9, 0),
@@ -271,10 +308,11 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
     await open('basic');
     await click(popup()!.querySelector('.hx-date-picker-button') as HTMLElement);
+    expect(host.basic().from).not.toBeNull();
+    await submit();
     expect(host.basic()).toEqual({ from: null, to: null });
     expect(popup()).toBeNull();
   });
-
   it('closes with Escape and returns the focus to the field', async () => {
     await open('basic');
     popup()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -306,6 +344,7 @@ describe('HxDateTimeRangePicker', () => {
     expect(input('model').value).toBe('9/9/2026'.replace('9/9', '10/9') + ' 09:00 -');
     await open('model');
     await click(day(12));
+    await submit();
     expect(host.modelValue).toEqual({
       from: new Date(2026, 9, 9, 9, 0),
       to: new Date(2026, 9, 12, 9, 0),
@@ -331,6 +370,7 @@ describe('HxDateTimeRangePicker', () => {
     await open('signal');
     await click(day(10));
     await click(day(11));
+    await submit();
     expect(host.state().span).toEqual({
       from: new Date(2026, 9, 10, 7, 0),
       to: new Date(2026, 9, 11, 7, 0),

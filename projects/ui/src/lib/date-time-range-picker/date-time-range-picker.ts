@@ -10,7 +10,6 @@ import {
   Component,
   computed,
   ElementRef,
-  effect,
   forwardRef,
   Injector,
   inject,
@@ -82,6 +81,8 @@ export class HxDateTimeRangePicker
   readonly separator = input('-');
   readonly placeholder = input('');
   readonly clearLabel = input('Clear');
+  readonly cancelLabel = input('Cancel');
+  readonly submitLabel = input('Submit');
   readonly chooseLabel = input('Choose date range');
   /** The `id` of the text field, for a `<label for>`. */
   readonly inputId = input<string>();
@@ -101,6 +102,7 @@ export class HxDateTimeRangePicker
   readonly minDate = input<Date | null>(null);
   readonly maxDate = input<Date | null>(null);
   readonly disabledDates = input<readonly Date[]>([]);
+  /** A Clear button next to Cancel and Submit. */
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
@@ -114,6 +116,8 @@ export class HxDateTimeRangePicker
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly #injector = inject(Injector);
   readonly open = signal(false);
+  /** The range being edited in the popup; Submit makes it the value, Cancel drops it. */
+  protected readonly draft = signal<HxDateTimeRangeValue>(EMPTY);
   protected readonly popupId = nextId('hx-date-time-range-picker-popup');
   protected readonly positions: ConnectedPosition[] = [
     {
@@ -161,8 +165,8 @@ export class HxDateTimeRangePicker
   });
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
   /** `from` ends at `to`, `to` starts at `from`, each inside `minDate`..`maxDate`. */
-  protected readonly fromMax = computed(() => earlier(this.value().to, this.maxDate()));
-  protected readonly toMin = computed(() => later(this.value().from, this.minDate()));
+  protected readonly fromMax = computed(() => earlier(this.draft().to, this.maxDate()));
+  protected readonly toMin = computed(() => later(this.draft().from, this.minDate()));
 
   #onChange: (value: HxDateTimeRangeValue) => void = () => {};
   #onTouched: () => void = () => {};
@@ -187,6 +191,7 @@ export class HxDateTimeRangePicker
 
   protected show(): void {
     if (this.isDisabled() || this.open()) return;
+    this.#stage(this.value());
     this.open.set(true);
   }
 
@@ -231,7 +236,11 @@ export class HxDateTimeRangePicker
   }
 
   protected clear(): void {
-    this.#commit(EMPTY);
+    this.#stage(EMPTY);
+  }
+
+  protected submit(): void {
+    this.#commit(this.draft());
     this.close(true);
   }
 
@@ -263,7 +272,7 @@ export class HxDateTimeRangePicker
 
   /** The days of the calendar: `[from]` while the range is open, `[from, to]` when complete. */
   protected readonly days = computed<Date[]>(() => {
-    const { from, to } = this.value();
+    const { from, to } = this.draft();
     return [from, to].filter((d): d is Date => d !== null);
   });
 
@@ -272,7 +281,7 @@ export class HxDateTimeRangePicker
     const [first, second] = (Array.isArray(picked) ? [...picked] : [picked])
       .filter(isValidDate)
       .sort((a, b) => a.getTime() - b.getTime());
-    const old = this.value();
+    const old = this.draft();
     const [fromTime, toTime] = [old.from ?? this.#lastFrom, old.to ?? this.#lastTo ?? old.from];
     const at = (day: Date | undefined, time: Date | null) =>
       day
@@ -285,19 +294,19 @@ export class HxDateTimeRangePicker
         : null;
     const from = at(first, fromTime);
     const to = at(second, toTime);
-    this.#commit({ from, to: from && to && to < from ? from : to });
+    this.#stage({ from, to: from && to && to < from ? from : to });
   }
 
   protected setFrom(picked: HxDatePickerValue): void {
     const from = single(picked);
-    const { to } = this.value();
-    this.#commit({ from, to: from && to && to < from ? from : to });
+    const { to } = this.draft();
+    this.#stage({ from, to: from && to && to < from ? from : to });
   }
 
   protected setTo(picked: HxDatePickerValue): void {
-    const { from } = this.value();
+    const { from } = this.draft();
     const to = single(picked);
-    this.#commit({ from, to: from && to && to < from ? from : to });
+    this.#stage({ from, to: from && to && to < from ? from : to });
   }
 
   protected markTouched(): void {
@@ -305,20 +314,18 @@ export class HxDateTimeRangePicker
     this.touch.emit();
   }
 
-  constructor() {
-    effect(() => {
-      const { from, to } = this.value();
-      if (from) this.#lastFrom = from;
-      if (to) this.#lastTo = to;
-    });
-  }
-
-  #commit(next: HxDateTimeRangeValue): void {
-    // a day chosen in the calendar is moved into `minDate`..`maxDate` including the time
+  /** Sets the draft; a side is moved into `minDate`..`maxDate` including the time. */
+  #stage(next: HxDateTimeRangeValue): void {
     const inside = (d: Date | null) =>
       isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
     const clean = { from: inside(next.from), to: inside(next.to) };
-    this.value.set(clean);
-    this.#onChange(clean);
+    if (clean.from) this.#lastFrom = clean.from;
+    if (clean.to) this.#lastTo = clean.to;
+    this.draft.set(clean);
+  }
+
+  #commit(next: HxDateTimeRangeValue): void {
+    this.value.set(next);
+    this.#onChange(next);
   }
 }
