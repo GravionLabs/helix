@@ -25,6 +25,20 @@ import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-ra
       [(value)]="limits"
     />
     <hx-date-time-range-picker
+      id="twelve"
+      locale="en-US"
+      hourFormat="12"
+      showSeconds
+      [stepSecond]="15"
+      [(value)]="twelve"
+    />
+    <hx-date-time-range-picker
+      id="blocked"
+      locale="en-US"
+      [disabledDates]="blockedDays"
+      [(value)]="blocked"
+    />
+    <hx-date-time-range-picker
       id="clock"
       locale="en-US"
       timeOnly
@@ -68,6 +82,9 @@ class Host {
   basic = signal<HxDateTimeRangeValue>({ from: null, to: null });
   limits = signal<HxDateTimeRangeValue>({ from: null, to: null });
   clock = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  twelve = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  blockedDays = [new Date(2026, 9, 13)];
+  blocked = signal<HxDateTimeRangeValue>({ from: null, to: null });
   labels = signal<HxDateTimeRangeValue>({
     from: new Date(2026, 0, 1, 0, 0),
     to: new Date(2026, 0, 2, 0, 15),
@@ -271,7 +288,58 @@ describe('HxDateTimeRangePicker', () => {
     await press(spin('to', 'Hour'), 'ArrowDown');
     await submit();
     const { from, to } = host.basic();
-    expect(from && to && to.getTime() >= from.getTime()).toBe(true);
+    expect(from).toEqual(new Date(2026, 9, 12, 8, 0));
+    expect(to).toEqual(new Date(2026, 9, 12, 8, 0));
+  });
+
+  it('keeps from from going after to on the same day', async () => {
+    host.basic.set({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 12, 9, 0),
+    });
+    await settle();
+    await open('basic');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    await submit();
+    const { from, to } = host.basic();
+    expect(from).toEqual(new Date(2026, 9, 12, 9, 0));
+    expect(to).toEqual(new Date(2026, 9, 12, 9, 0));
+  });
+
+  it('puts an empty to on the day of from', async () => {
+    host.basic.set({ from: new Date(2026, 9, 12, 8, 0), to: null });
+    await settle();
+    await open('basic');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await submit();
+    // the empty to row starts at 00:00: the first press (1:00) is held at from (8:00), the next two count on from there
+    expect(host.basic().to).toEqual(new Date(2026, 9, 12, 10, 0));
+  });
+
+  it('puts an empty from on the day of to', async () => {
+    host.basic.set({ from: null, to: new Date(2026, 9, 12, 8, 0) });
+    await settle();
+    await open('basic');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    await submit();
+    expect(host.basic().from).toEqual(new Date(2026, 9, 12, 1, 0));
+  });
+
+  it('does not set a time on a day in disabledDates', async () => {
+    host.blocked.set({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 13, 9, 0),
+    });
+    await settle();
+    await open('blocked');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    await submit();
+    expect(host.blocked().to).toEqual(new Date(2026, 9, 13, 9, 0));
+    expect(host.blocked().from).toEqual(new Date(2026, 9, 12, 9, 0));
   });
 
   it('moves from to to when a day click is the same day with an earlier to time', async () => {
@@ -298,6 +366,40 @@ describe('HxDateTimeRangePicker', () => {
     expect(host.limits().from).toEqual(new Date(2026, 9, 5, 8, 0));
   });
 
+  it('keeps the times of the time rows inside minDate and maxDate', async () => {
+    host.limits.set({
+      from: new Date(2026, 9, 5, 9, 0),
+      to: new Date(2026, 9, 28, 16, 0),
+    });
+    await settle();
+    await open('limits');
+    for (let i = 0; i < 3; i++) await press(spin('from', 'Hour'), 'ArrowDown');
+    for (let i = 0; i < 3; i++) await press(spin('to', 'Hour'), 'ArrowUp');
+    await submit();
+    expect(host.limits().from).toEqual(new Date(2026, 9, 5, 8, 0));
+    expect(host.limits().to).toEqual(new Date(2026, 9, 28, 17, 0));
+  });
+
+  it('shows 12 hours with AM/PM and seconds in the time rows', async () => {
+    host.twelve.set({
+      from: new Date(2026, 9, 12, 9, 0, 0),
+      to: new Date(2026, 9, 13, 10, 0, 0),
+    });
+    await settle();
+    await open('twelve');
+    await press(spin('from', 'AM/PM'), 'ArrowUp');
+    await press(spin('to', 'Second'), 'ArrowUp');
+    await submit();
+    expect(host.twelve().from).toEqual(new Date(2026, 9, 12, 21, 0, 0));
+    expect(host.twelve().to).toEqual(new Date(2026, 9, 13, 10, 0, 15));
+  });
+
+  it('moves the focus into the popup when it opens', async () => {
+    await open('basic');
+    expect(popup()?.contains(document.activeElement)).toBe(true);
+    expect(document.activeElement).not.toBe(input('basic'));
+  });
+
   it('shows only the time rows with timeOnly', async () => {
     await open('clock');
     expect(popup()?.querySelector('[role=grid]')).toBeNull();
@@ -308,6 +410,11 @@ describe('HxDateTimeRangePicker', () => {
     const { from, to } = host.clock();
     expect([from?.getMinutes(), to?.getMinutes()]).toEqual([0, 0]);
     expect(input('clock').value).toMatch(/\d - \d/);
+  });
+
+  it('focuses the first time spinbutton with timeOnly', async () => {
+    await open('clock');
+    expect(document.activeElement).toBe(spin('from', 'Hour'));
   });
 
   it('clears the draft with the Clear button, applied with Submit', async () => {

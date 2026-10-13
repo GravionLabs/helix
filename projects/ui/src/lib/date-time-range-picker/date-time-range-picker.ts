@@ -23,7 +23,7 @@ import {
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
-import { clampTime, isValidDate, startOfDay, withTime } from '../internal/dates';
+import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { nextId } from '../internal/ids';
 import { HxTimeRow } from '../internal/time-row/time-row';
 import type { TimeOfDay } from '../internal/time-row/time-row-helpers';
@@ -308,19 +308,28 @@ export class HxDateTimeRangePicker
     };
   }
 
-  /** The `from` row changed: the day of `from` (today while empty) at the new time, not after `to`. */
+  /** The `from` row changed: the day of `from` (else of `to`, else today) at the new time, not after `to`. */
   protected setFromTime(time: TimeOfDay): void {
     const { from, to } = this.draft();
-    const next = clampTime(this.#atTime(from ?? new Date(), time), this.minDate(), this.fromMax());
+    const day = from ?? to ?? new Date();
+    if (this.#isBlocked(day)) return;
+    const next = clampTime(this.#atTime(day, time), this.minDate(), this.fromMax());
     this.#stage({ from: next, to });
   }
 
-  /** The `to` row changed: the day of `to` (today while empty) at the new time, not before `from`. */
+  /** The `to` row changed: the day of `to` (else of `from`, else today) at the new time, not before `from`. */
   protected setToTime(time: TimeOfDay): void {
     const { from, to } = this.draft();
-    const next = clampTime(this.#atTime(to ?? new Date(), time), this.toMin(), this.maxDate());
+    const day = to ?? from ?? new Date();
+    if (this.#isBlocked(day)) return;
+    const next = clampTime(this.#atTime(day, time), this.toMin(), this.maxDate());
     // a `to` chosen while `from` is empty starts the range at midnight of that day (what the `from` row shows)
     this.#stage({ from: from ?? startOfDay(next), to: next });
+  }
+
+  /** A time is not set on a day in `disabledDates`. */
+  #isBlocked(day: Date): boolean {
+    return this.disabledDates().some((d) => isSameDay(d, day));
   }
 
   #atTime(day: Date, time: TimeOfDay): Date {

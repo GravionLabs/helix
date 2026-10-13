@@ -333,6 +333,12 @@ describe('HxDatePicker field and popup', () => {
     expect(host.date).toEqual(new Date(2026, 9, 9));
   });
 
+  it('rejects a typed text with a time, as the picker is days only', async () => {
+    await type('field', '03.11.2027 14:05');
+    expect(host.date).toEqual(new Date(2026, 9, 9));
+    expect(input('field').value).toBe('09.10.2026');
+  });
+
   it('clears the value when the text is emptied', async () => {
     await type('field', '');
     expect(host.date).toBeNull();
