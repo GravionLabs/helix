@@ -1,56 +1,127 @@
-<div class="hx-date-time-range-picker-fields" role="group" [attr.aria-label]="ariaLabel() ?? null" [attr.aria-labelledby]="ariaLabelledby() ?? null">
-  <hx-date-picker
-    class="hx-date-time-range-picker-from"
-    [inputId]="inputId()"
-    [ariaLabel]="fromLabel()"
-    [placeholder]="fromLabel()"
-    [value]="value().from"
-    [minDate]="minDate()"
-    [maxDate]="fromMax()"
-    [showTime]="showTime()"
-    [timeOnly]="timeOnly()"
-    [hourFormat]="hourFormat()"
-    [showMinutes]="showMinutes()"
-    [showSeconds]="showSeconds()"
-    [stepHour]="stepHour()"
-    [stepMinute]="stepMinute()"
-    [stepSecond]="stepSecond()"
-    [dateFormat]="dateFormat()"
-    [locale]="locale()"
-    [firstDayOfWeek]="firstDayOfWeek()"
-    [disabledDates]="disabledDates()"
-    [showIcon]="showIcon()"
-    [showButtonBar]="showButtonBar()"
-    [disabled]="isDisabled()"
-    [invalid]="invalid()"
-    (valueChange)="setFrom($event)"
-    (touch)="markTouched()"
-  />
-  <span class="hx-date-time-range-picker-separator" aria-hidden="true">{{ separator() }}</span>
-  <hx-date-picker
-    class="hx-date-time-range-picker-to"
-    [ariaLabel]="toLabel()"
-    [placeholder]="toLabel()"
-    [value]="value().to"
-    [minDate]="toMin()"
-    [maxDate]="maxDate()"
-    [showTime]="showTime()"
-    [timeOnly]="timeOnly()"
-    [hourFormat]="hourFormat()"
-    [showMinutes]="showMinutes()"
-    [showSeconds]="showSeconds()"
-    [stepHour]="stepHour()"
-    [stepMinute]="stepMinute()"
-    [stepSecond]="stepSecond()"
-    [dateFormat]="dateFormat()"
-    [locale]="locale()"
-    [firstDayOfWeek]="firstDayOfWeek()"
-    [disabledDates]="disabledDates()"
-    [showIcon]="showIcon()"
-    [showButtonBar]="showButtonBar()"
-    [disabled]="isDisabled()"
-    [invalid]="invalid()"
-    (valueChange)="setTo($event)"
-    (touch)="markTouched()"
-  />
+<div
+  class="hx-date-picker hx-date-picker-has-icon hx-date-time-range-picker-control"
+  [class.hx-date-picker-open]="open()"
+  [class.hx-date-picker-disabled]="isDisabled()"
+  [class.hx-date-picker-invalid]="invalid()"
+>
+  <div class="hx-date-picker-field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+    <input
+      #field
+      type="text"
+      readonly
+      class="hx-date-picker-input"
+      autocomplete="off"
+      aria-haspopup="dialog"
+      [attr.id]="inputId() ?? null"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [value]="text()"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="open() ? popupId : null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (click)="show()"
+      (keydown)="onFieldKeydown($event)"
+    />
+    <button
+      type="button"
+      class="hx-date-picker-trigger"
+      aria-haspopup="dialog"
+      [attr.aria-label]="chooseLabel()"
+      [attr.aria-expanded]="open()"
+      [disabled]="isDisabled()"
+      (click)="toggle()"
+    >
+      <span class="hx-date-picker-trigger-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <ng-template
+    cdkConnectedOverlay
+    cdkConnectedOverlayPanelClass="hx-date-picker-overlay"
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="open()"
+    [cdkConnectedOverlayPositions]="positions"
+    (overlayOutsideClick)="onOutsideClick($event)"
+    (overlayKeydown)="onOverlayKeydown($event)"
+    (attach)="onAttach()"
+    (detach)="open.set(false)"
+  >
+    <div
+      class="hx-date-picker-popup hx-date-time-range-picker-popup"
+      role="dialog"
+      aria-modal="false"
+      [id]="popupId"
+      [attr.aria-label]="ariaLabel() ?? chooseLabel()"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      (focusout)="onPopupFocusOut($event)"
+    >
+      <div class="hx-date-time-range-picker-body">
+        @if (!timeOnly()) {
+          <hx-date-picker
+            class="hx-date-time-range-picker-days"
+            inline
+            selectionMode="range"
+            [ariaLabel]="chooseLabel()"
+            [value]="days()"
+            [minDate]="minDate()"
+            [maxDate]="maxDate()"
+            [locale]="locale()"
+            [firstDayOfWeek]="firstDayOfWeek()"
+            [disabledDates]="disabledDates()"
+            (valueChange)="setDays($event)"
+          />
+        }
+        @if (showTime() || timeOnly()) {
+          <div class="hx-date-time-range-picker-times">
+            <div class="hx-date-time-range-picker-time">
+              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ fromLabel() }}</span>
+              <hx-date-picker
+                class="hx-date-time-range-picker-from"
+                inline
+                timeOnly
+                [ariaLabel]="fromLabel()"
+                [value]="value().from"
+                [minDate]="minDate()"
+                [maxDate]="fromMax()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                (valueChange)="setFrom($event)"
+              />
+            </div>
+            <div class="hx-date-time-range-picker-time">
+              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ toLabel() }}</span>
+              <hx-date-picker
+                class="hx-date-time-range-picker-to"
+                inline
+                timeOnly
+                [ariaLabel]="toLabel()"
+                [value]="value().to"
+                [minDate]="toMin()"
+                [maxDate]="maxDate()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                (valueChange)="setTo($event)"
+              />
+            </div>
+          </div>
+        }
+      </div>
+      @if (showButtonBar()) {
+        <div class="hx-date-picker-buttonbar">
+          <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+        </div>
+      }
+    </div>
+  </ng-template>
 </div>

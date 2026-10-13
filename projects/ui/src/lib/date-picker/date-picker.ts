@@ -333,9 +333,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   });
 
   constructor() {
-    // a value set from outside (a binding, a form) brings its month into view
+    // a value set from outside (a binding, a form) brings its month into view; without a value, today moved into
+    // `minDate`..`maxDate` does
     effect(() => {
-      const first = this.selectedDates()[0];
+      const first =
+        this.selectedDates()[0] ??
+        clampTime(this.#today, startOfDayOrNull(this.minDate()), this.maxDate());
       const shown = untracked(() => this.focusedDate());
       if (
         first &&
