@@ -1,0 +1,29 @@
+<div class="hx-date-picker-time" role="group" [attr.aria-label]="timeLabel()">
+  @for (column of columns(); track column.unit) {
+    @if (column.unit !== 'hour' && column.unit !== 'period') {
+      <span class="hx-date-picker-time-separator" aria-hidden="true">:</span>
+    }
+    <div class="hx-date-picker-time-column">
+      <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="disabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, 1)">
+        <span class="hx-date-picker-time-up-icon" aria-hidden="true"></span>
+      </button>
+      <div
+        class="hx-date-picker-time-spin"
+        role="spinbutton"
+        [attr.tabindex]="disabled() ? -1 : 0"
+        [attr.aria-label]="column.label"
+        [attr.aria-valuenow]="column.now"
+        [attr.aria-valuemin]="column.min"
+        [attr.aria-valuemax]="column.max"
+        [attr.aria-valuetext]="column.valueText"
+        [attr.aria-disabled]="disabled() ? 'true' : null"
+        (keydown)="onTimeKeydown($event, column)"
+      >
+        {{ column.text }}
+      </div>
+      <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="disabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, -1)">
+        <span class="hx-date-picker-time-down-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  }
+</div>
