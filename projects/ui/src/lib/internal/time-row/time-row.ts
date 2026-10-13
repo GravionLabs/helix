@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import {
   applyUnit,
   buildTimeColumns,
@@ -19,6 +27,8 @@ import {
   host: { style: 'display: contents' },
 })
 export class HxTimeRow {
+  readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
+
   /** The time of day shown. */
   readonly time = input.required<TimeOfDay>();
   readonly hour12 = input(false);
@@ -58,6 +68,11 @@ export class HxTimeRow {
       },
     }),
   );
+
+  /** Moves the focus to the first spinbutton. */
+  focus(): void {
+    this.#host.nativeElement.querySelector<HTMLElement>('.hx-date-picker-time-spin')?.focus();
+  }
 
   #set(column: TimeColumn, value: number): void {
     if (this.disabled()) return;

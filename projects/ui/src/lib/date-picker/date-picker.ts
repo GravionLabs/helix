@@ -170,6 +170,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly calendar = viewChild(HxCalendar);
+  private readonly timeRow = viewChild(HxTimeRow);
   /** The text typed and not yet committed; `null` while the field shows the value. */
   readonly #typed = signal<string | null>(null);
   protected readonly view = signal<CalendarView>('day');
@@ -179,7 +180,6 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   /** The day with the focus in the grid, and the month the grid shows. */
   protected readonly focusedDate = signal(startOfDay(new Date()));
   protected readonly today = startOfDay(new Date());
-  readonly #today = this.today;
 
   protected readonly selectedDates = computed<Date[]>(() => {
     const value = this.value();
@@ -234,7 +234,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     effect(() => {
       const first =
         this.selectedDates()[0] ??
-        clampTime(this.#today, startOfDayOrNull(this.minDate()), this.maxDate());
+        clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate());
       const shown = untracked(() => this.focusedDate());
       if (
         first &&
@@ -321,7 +321,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   }
 
   /** `day` at a time of day, moved into `minDate`..`maxDate` including their times. */
-  #atTime(day: Date, time: { hours: number; minutes: number; seconds: number }): Date {
+  #atTime(day: Date, time: TimeOfDay): Date {
     return clampTime(
       withTime(day, time.hours, time.minutes, time.seconds),
       this.minDate(),
@@ -332,7 +332,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   /** The time row changed a unit: keep the day, or take today. */
   protected setTime(time: TimeOfDay): void {
     if (this.isDisabled()) return;
-    const day = this.selectedDates()[0] ?? this.#today;
+    const day = this.selectedDates()[0] ?? this.today;
     if (this.isDateDisabled(day)) return;
     this.#typed.set(null);
     this.#commit(this.#atTime(day, time));
@@ -350,11 +350,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
           this.calendar()?.focusDay();
           return;
         }
-        // the popup lives in the overlay, outside the host
-        const root = this.inline()
-          ? this.#host.nativeElement
-          : document.getElementById(this.popupId);
-        root?.querySelector<HTMLElement>('.hx-date-picker-time-spin')?.focus();
+        this.timeRow()?.focus();
       },
       { injector: this.#injector },
     );
@@ -381,7 +377,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     const first = this.selectedDates()[0];
     this.view.set('day');
     this.focusedDate.set(
-      startOfDay(first ?? clampTime(this.#today, startOfDayOrNull(this.minDate()), this.maxDate())),
+      startOfDay(first ?? clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate())),
     );
     this.#focusDay();
   }
@@ -444,7 +440,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
       locale: this.locale(),
       showMinutes: this.showMinutes(),
       timeOnly: this.timeOnly(),
-      fallbackDay: this.selectedDates()[0] ?? this.#today,
+      fallbackDay: this.selectedDates()[0] ?? this.today,
     });
   }
 
@@ -453,7 +449,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   }
 
   protected selectToday(): void {
-    this.pick(this.#today);
+    this.pick(this.today);
     // a time row keeps the popup open on a day: the button bar closes it
     if (this.timeEnabled()) this.close(true);
   }
