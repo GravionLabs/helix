@@ -6,6 +6,8 @@ import {
   HxButton,
   HxDatePicker,
   type HxDatePickerValue,
+  HxDateTimeRangePicker,
+  type HxDateTimeRangeValue,
   HxFileUpload,
   HxFloatLabel,
   HxIconField,
@@ -38,6 +40,7 @@ import {
     HxMultiSelect,
     HxAutoComplete,
     HxDatePicker,
+    HxDateTimeRangePicker,
     HxFileUpload,
     HxFileUpload,
     HxSlider,
@@ -77,6 +80,11 @@ export class HxInputsSection {
   readonly start = signal<HxDatePickerValue>(new Date(2026, 9, 13, 9, 30));
   readonly alarm = signal<HxDatePickerValue>(null);
   readonly opens = signal<HxDatePickerValue>(null);
+  readonly shift = signal<HxDateTimeRangeValue>({
+    from: new Date(2026, 9, 13, 9, 0),
+    to: new Date(2026, 9, 16, 17, 30),
+  });
+  readonly hours = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
   readonly found = signal<string[]>([]);

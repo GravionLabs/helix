@@ -26,6 +26,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Auto complete](auto-complete.md) | `hx-auto-complete` is a text field that suggests values while the user types. |
 | [Multi select](multi-select.md) | `hx-multi-select` is a select for several values: a `combobox` that opens a multi-select listbox in an overlay. |
 | [Listbox](listbox.md) | `hx-listbox` is an inline list of options, single or `multiple`, on the CDK listbox. |
+| [Date time range picker](date-time-range-picker.md) | `hx-date-time-range-picker` is a date-time range in one field: one calendar marks the range, a time row sets each end. |
 | [Date picker](date-picker.md) | `hx-date-picker` is a date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a range or several days. |
 | [File upload](file-upload.md) | `hx-file-upload` collects files and emits them; there is no HTTP in it, the app uploads. |
 | [Rating](rating.md) | `hx-rating` is a star rating. |
