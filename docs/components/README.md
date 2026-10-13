@@ -12,7 +12,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Toggle button](toggle-button.md) | `hx-toggle-button` is a two-state button with its own labels, the look of one Select button segment. |
 | [Select button](select-button.md) | `hx-select-button` is a choice among a few options as a joined group of toggle buttons: native buttons with `aria-pressed` in a `role="group"`. |
 
-## Form controls (14)
+## Form controls (15)
 
 | Component | Description |
 | --- | --- |
@@ -28,6 +28,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Listbox](listbox.md) | `hx-listbox` is an inline list of options, single or `multiple`, on the CDK listbox. |
 | [Date time range picker](date-time-range-picker.md) | `hx-date-time-range-picker` is a date-time range in one field: one calendar marks the range, a time row sets each end. |
 | [Date picker](date-picker.md) | `hx-date-picker` is a date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a range or several days. |
+| [Time picker](time-picker.md) | `hx-time-picker` is a time field that opens a time row (hour, minute, second, AM/PM), or with `[inline]="true"` the row alone. |
 | [File upload](file-upload.md) | `hx-file-upload` collects files and emits them; there is no HTTP in it, the app uploads. |
 | [Rating](rating.md) | `hx-rating` is a star rating. |
 | [Slider](slider.md) | `hx-slider` chooses a number, or with `range` a pair, on a track. |

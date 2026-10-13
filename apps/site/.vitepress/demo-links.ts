@@ -19,6 +19,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
     'select',
     'select-button',
     'slider',
+    'time-picker',
     'toggle-button',
   ],
   'uikit/button': ['button', 'button-group', 'split-button'],
