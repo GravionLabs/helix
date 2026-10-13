@@ -24,7 +24,8 @@ one date while the range is open and two when it is complete). It works with `ng
 | `showTime`              | `boolean`                             | `false`    | A time row under the calendar (popup and `inline`). |
 | `timeOnly`              | `boolean`                             | `false`    | The time row without the calendar.                |
 | `hourFormat`            | `'24' \| '12'`                        | `'24'`     | `'12'` adds an AM/PM column.                      |
-| `showSeconds`           | `boolean`                             | `false`    | A seconds column.                                 |
+| `showMinutes`           | `boolean`                             | `true`     | `false` picks the hour only: no minute and second column, minutes and seconds are `0`. |
+| `showSeconds`           | `boolean`                             | `false`    | A seconds column (ignored with `showMinutes` off). |
 | `stepHour`, `stepMinute`, `stepSecond` | `number`               | `1`        | Step of the arrow keys and buttons of the column. |
 | `timeLabel`, `hourLabel`, `minuteLabel`, `secondLabel`, `periodLabel` | `string` | `Time`, `Hour`, `Minute`, `Second`, `AM/PM` | Accessible names of the time row and its columns. |
 | `placeholder`, `inputId` | `string`                             |            | Of the text field.                                |
@@ -45,7 +46,7 @@ one date while the range is open and two when it is complete). It works with `ng
   With `showTime` a day click does not close the popup: Escape, the focus leaving the control or the button bar
   (Today, Clear) close it; without `showTime` nothing changes. The field shows and parses the date and time (`10/09/2026,
   14:05`, `03:45 PM` or `3:45 pm` with AM/PM). Time applies to `selectionMode="single"`; `range` and `multiple` ignore `showTime`
-  and `timeOnly`. Time zones are not handled: the value is a local `Date`.
+  and `timeOnly`. With `[showMinutes]="false"` the row holds only the hour (and AM/PM), the field shows the hour (`10/09/2026, 14`) and parses `14`, `14:00` or `2 PM`. Time zones are not handled: the value is a local `Date`.
 - **Keyboard:** in the day grid the arrows move by a day or a week, Home and End to the start and end of the week, Page
   Up and Page Down by a month (with Shift by a year), Enter or Space selects. The grid is one tab stop. Each time column is a `role="spinbutton"` (`aria-valuenow`,
   `aria-valuemin`, `aria-valuemax`, `aria-valuetext`, named Hour, Minute …) and a tab stop: Arrow Up and Down change it

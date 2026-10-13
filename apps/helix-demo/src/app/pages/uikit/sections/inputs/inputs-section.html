@@ -109,6 +109,10 @@
       <hx-date-picker inputId="dp-time" timeOnly hourFormat="12" showSeconds showIcon [(value)]="alarm" />
     </div>
     <div class="row">
+      <label class="label" for="dp-hour">Hour only</label>
+      <hx-date-picker inputId="dp-hour" timeOnly [showMinutes]="false" showIcon [(value)]="opens" />
+    </div>
+    <div class="row">
       <span class="label">disabled</span>
       <hx-date-picker ariaLabel="Disabled" [disabled]="true" />
     </div>

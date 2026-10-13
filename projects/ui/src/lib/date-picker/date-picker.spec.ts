@@ -384,6 +384,10 @@ describe('HxDatePicker field and popup', () => {
     <hx-date-picker id="plain" inline locale="en-US" [(value)]="plain" />
     <hx-date-picker id="multiT" inline showTime selectionMode="multiple" locale="en-US" [(value)]="multiT" />
     <hx-date-picker id="off" inline showTime locale="en-US" [disabled]="true" [(value)]="off" />
+    <hx-date-picker id="hrs" inline showTime [showMinutes]="false" showSeconds locale="en-US" [(value)]="hrs" />
+    <hx-date-picker id="hrs12" inline timeOnly [showMinutes]="false" hourFormat="12" locale="en-US" [(value)]="hrs12" />
+    <hx-date-picker id="hrsField" showTime [showMinutes]="false" locale="en-US" [(value)]="hrsTyped" />
+    <hx-date-picker id="hrsField12" timeOnly [showMinutes]="false" hourFormat="12" locale="en-US" [(value)]="hrsTyped12" />
     <hx-date-picker id="rng" inline showTime selectionMode="range" locale="en-US" [(value)]="rng" />
     <hx-date-picker id="model" inline showTime locale="en-US" [(ngModel)]="modelValue" />
     <hx-date-picker id="reactive" inline showTime locale="en-US" [formControl]="control" />
@@ -401,6 +405,10 @@ class TimeHost {
   only = signal<HxDatePickerValue>(null);
   plain = signal<HxDatePickerValue>(new Date(2026, 9, 9, 10, 30));
   rng = signal<HxDatePickerValue>(null);
+  hrs = signal<HxDatePickerValue>(new Date(2026, 9, 9, 10, 30, 15));
+  hrs12 = signal<HxDatePickerValue>(null);
+  hrsTyped = signal<HxDatePickerValue>(null);
+  hrsTyped12 = signal<HxDatePickerValue>(null);
   multiT = signal<HxDatePickerValue>([]);
   off = signal<HxDatePickerValue>(new Date(2026, 9, 9, 10, 30));
   modelValue: Date | null = new Date(2026, 9, 9, 10, 30);
@@ -565,6 +573,46 @@ describe('HxDatePicker time', () => {
     day('rng', 3).click();
     await settle();
     expect(host.rng()).toEqual([new Date(2026, 9, 3)]);
+  });
+
+  it('picks only the hour with showMinutes off: no minute or second column', async () => {
+    expect(spin('hrs', 'Hour').getAttribute('aria-valuenow')).toBe('10');
+    expect(spin('hrs', 'Minute')).toBeNull();
+    expect(spin('hrs', 'Second')).toBeNull(); // showSeconds is ignored
+    expect(el('hrs').querySelectorAll('[role=spinbutton]').length).toBe(1);
+    await press(spin('hrs', 'Hour'), 'ArrowUp');
+    expect(host.hrs()).toEqual(new Date(2026, 9, 9, 11, 0, 0));
+    day('hrs', 14).click();
+    await settle();
+    expect(host.hrs()).toEqual(new Date(2026, 9, 14, 11, 0, 0));
+  });
+
+  it('picks the hour with AM/PM for timeOnly', async () => {
+    expect(el('hrs12').querySelectorAll('[role=spinbutton]').length).toBe(2);
+    await press(spin('hrs12', 'Hour'), 'ArrowUp');
+    const now = new Date();
+    expect(host.hrs12()).toEqual(
+      new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1, 0, 0),
+    );
+    await press(spin('hrs12', 'AM/PM'), 'ArrowUp');
+    expect((host.hrs12() as Date).getHours()).toBe(13);
+  });
+
+  it('formats and parses the hour only', async () => {
+    host.hrsTyped.set(new Date(2026, 9, 9, 14, 30));
+    await settle();
+    expect(input('hrsField').value).toBe('10/09/2026, 14');
+    await type('hrsField', '10/12/2026, 08');
+    expect(host.hrsTyped()).toEqual(new Date(2026, 9, 12, 8, 0));
+    await type('hrsField', '10/13/2026 9:00');
+    expect(host.hrsTyped()).toEqual(new Date(2026, 9, 13, 9, 0));
+    await type('hrsField', '10/14/2026, 9:30');
+    expect(host.hrsTyped()).toEqual(new Date(2026, 9, 13, 9, 0));
+    await type('hrsField12', '2 PM');
+    expect((host.hrsTyped12() as Date).getHours()).toBe(14);
+    expect(input('hrsField12').value).toBe('02 PM');
+    await type('hrsField12', '14');
+    expect((host.hrsTyped12() as Date).getHours()).toBe(14);
   });
 
   it('ignores showTime for multiple and changes nothing while disabled', async () => {
