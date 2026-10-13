@@ -25,8 +25,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { nextId } from '../internal/ids';
-import { HxTimeRow } from '../internal/time-row/time-row';
-import type { TimeOfDay } from '../internal/time-row/time-row-helpers';
+import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 
 export interface HxDateTimeRangeValue {
   from: Date | null;
@@ -39,7 +38,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
 
 /**
  * A from and a to date-time range in one field with one button. The field shows the range as one text
- * (`1/1/2026 00:00 - 1/2/2026 00:15`); the popup holds one calendar (an inline range `hx-date-picker`) and a time row for each end,
+ * (`1/1/2026 00:00 - 1/2/2026 00:15`); the popup holds one calendar (an inline range `hx-date-picker`) and a time picker for each end,
  * from and to. The value is `{ from, to }` (`null` while a side is empty); `to` is never before `from`: the `to`
  * time row starts at `from` (including the time), the `from` time row ends at `to`, and a choice that crosses the
  * other side moves it. The field is read-only; the popup stays open until Escape, an outside click or the focus
@@ -56,7 +55,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  */
 @Component({
   selector: 'hx-date-time-range-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxTimeRow],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxTimePicker],
   templateUrl: './date-time-range-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -137,7 +136,7 @@ export class HxDateTimeRangePicker
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly daysPicker = viewChild(HxDatePicker);
-  private readonly timeRow = viewChild(HxTimeRow);
+  private readonly timeRow = viewChild(HxTimePicker);
   /** The times of the last complete sides, kept while a side is empty (a range being chosen in the calendar). */
   #lastFrom: Date | null = null;
   #lastTo: Date | null = null;
@@ -298,33 +297,46 @@ export class HxDateTimeRangePicker
     this.#stage({ from, to: from && to && to < from ? from : to });
   }
 
-  /** The time of day a time row shows: the side's, or midnight while it is empty. */
-  protected timeOf(date: Date | null): TimeOfDay {
-    const minutes = this.showMinutes();
-    return {
-      hours: date?.getHours() ?? 0,
-      minutes: minutes ? (date?.getMinutes() ?? 0) : 0,
-      seconds: minutes ? (date?.getSeconds() ?? 0) : 0,
-    };
-  }
+  /** The values of the two time pickers: a fresh `Date` per draft change, so a clamped time is shown again. */
+  protected readonly fromValue = computed<HxTimePickerValue>(() => {
+    const { from } = this.draft();
+    return from ? new Date(from) : null;
+  });
+  protected readonly toValue = computed<HxTimePickerValue>(() => {
+    const { to } = this.draft();
+    return to ? new Date(to) : null;
+  });
 
-  /** The `from` row changed: the day of `from` (else of `to`, else today) at the new time, not after `to`. */
-  protected setFromTime(time: TimeOfDay): void {
+  /** The `from` picker changed: the day of `from` (else of `to`, else today) at the new time, not after `to`. */
+  protected setFromTime(picked: HxTimePickerValue): void {
+    if (!picked) return;
     const { from, to } = this.draft();
     const day = from ?? to ?? new Date();
-    if (this.#isBlocked(day)) return;
-    const next = clampTime(this.#atTime(day, time), this.minDate(), this.fromMax());
+    if (this.#isBlocked(day)) {
+      this.#restage();
+      return;
+    }
+    const next = clampTime(this.#atTime(day, picked), this.minDate(), this.fromMax());
     this.#stage({ from: next, to });
   }
 
-  /** The `to` row changed: the day of `to` (else of `from`, else today) at the new time, not before `from`. */
-  protected setToTime(time: TimeOfDay): void {
+  /** The `to` picker changed: the day of `to` (else of `from`, else today) at the new time, not before `from`. */
+  protected setToTime(picked: HxTimePickerValue): void {
+    if (!picked) return;
     const { from, to } = this.draft();
     const day = to ?? from ?? new Date();
-    if (this.#isBlocked(day)) return;
-    const next = clampTime(this.#atTime(day, time), this.toMin(), this.maxDate());
-    // a `to` chosen while `from` is empty starts the range at midnight of that day (what the `from` row shows)
+    if (this.#isBlocked(day)) {
+      this.#restage();
+      return;
+    }
+    const next = clampTime(this.#atTime(day, picked), this.toMin(), this.maxDate());
+    // a `to` chosen while `from` is empty starts the range at midnight of that day (what the `from` picker shows)
     this.#stage({ from: from ?? startOfDay(next), to: next });
+  }
+
+  /** Puts the draft back into the pickers after a time they changed was refused. */
+  #restage(): void {
+    this.draft.update((d) => ({ ...d }));
   }
 
   /** A time is not set on a day in `disabledDates`. */
@@ -332,8 +344,8 @@ export class HxDateTimeRangePicker
     return this.disabledDates().some((d) => isSameDay(d, day));
   }
 
-  #atTime(day: Date, time: TimeOfDay): Date {
-    return withTime(startOfDay(day), time.hours, time.minutes, time.seconds);
+  #atTime(day: Date, time: Date): Date {
+    return withTime(startOfDay(day), time.getHours(), time.getMinutes(), time.getSeconds());
   }
 
   protected markTouched(): void {

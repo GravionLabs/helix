@@ -1,6 +1,6 @@
 /*
  * DateTimeRangePicker: `<hx-date-time-range-picker>`. One read-only field with a button (styled by `date-picker.scss`)
- * and a popup with one calendar for the range and a time row for each end; every colour and size comes from the
+ * and a popup with one calendar for the range and an inline `hx-time-picker` for each end; every colour and size comes from the
  * date picker and input tokens.
  */
 .hx-date-time-range-picker {
@@ -44,7 +44,7 @@
   font-weight: var(--h-datepicker-title-font-weight);
 }
 
-.hx-date-time-range-picker-popup .hx-date-picker-panel {
+.hx-date-time-range-picker-popup .hx-time-picker-panel {
   border-radius: var(--h-datepicker-panel-border-radius);
 }
 
