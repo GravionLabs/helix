@@ -78,4 +78,28 @@ describe('time row helpers', () => {
   it('ignores other keys', () => {
     expect(jumpKeyTarget('a', column({}), steps)).toBeNull();
   });
+
+  describe('12 h', () => {
+    const hour12 = (partial: Partial<TimeColumn> = {}) =>
+      column({ unit: 'hour', label: 'Hour', now: 12, min: 1, max: 12, ...partial });
+    const hourSteps = { hour: 1, minute: 1, second: 1 };
+
+    it('sets hour 12 in the morning to 0', () => {
+      expect(applyUnit({ hours: 3, minutes: 0, seconds: 0 }, 'hour', 12, true).hours).toBe(0);
+      expect(applyUnit({ hours: 0, minutes: 0, seconds: 0 }, 'hour', 5, true).hours).toBe(5);
+    });
+
+    it('wraps the hour between 12 and 1', () => {
+      expect(nextUnitValue(hour12({ now: 12 }), hourSteps, 1)).toBe(1);
+      expect(nextUnitValue(hour12({ now: 1 }), hourSteps, -1)).toBe(12);
+    });
+
+    it('jumps the hour by 6 within 1 to 12', () => {
+      expect(jumpKeyTarget('PageUp', hour12({ now: 3 }), hourSteps)).toBe(9);
+      expect(jumpKeyTarget('PageUp', hour12({ now: 9 }), hourSteps)).toBe(12);
+      expect(jumpKeyTarget('PageDown', hour12({ now: 3 }), hourSteps)).toBe(1);
+      expect(jumpKeyTarget('Home', hour12(), hourSteps)).toBe(1);
+      expect(jumpKeyTarget('End', hour12({ now: 1 }), hourSteps)).toBe(12);
+    });
+  });
 });

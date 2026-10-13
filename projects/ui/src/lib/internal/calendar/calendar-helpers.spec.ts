@@ -40,7 +40,7 @@ describe('calendar helpers', () => {
     expect(stepFocus('year', d(2026, 5, 3), 1)).toEqual(d(2038, 5, 3));
   });
 
-  it('focuses a chosen month and year, clamping the day', () => {
+  it('clamps the day for a chosen month and focuses the first of the month for a chosen year', () => {
     expect(focusMonth(d(2026, 1, 31), 1)).toEqual(d(2026, 2, 28));
     expect(focusYear(d(2026, 5, 31), 2030)).toEqual(d(2030, 5, 1));
   });
