@@ -8,8 +8,9 @@
   position: relative;
 }
 
-.hx-date-time-range-picker-control {
+.hx-date-time-range-picker .hx-date-time-range-picker-control {
   display: flex;
+  width: 100%;
 }
 
 .hx-date-time-range-picker-popup {
