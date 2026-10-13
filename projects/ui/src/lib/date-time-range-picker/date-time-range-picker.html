@@ -76,37 +76,39 @@
           <div class="hx-date-time-range-picker-times">
             <div class="hx-date-time-range-picker-time">
               <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ fromLabel() }}</span>
-              <div class="hx-date-picker-panel hx-date-time-range-picker-from" role="group" [attr.aria-label]="fromLabel()">
-                <hx-time-row
-                  [time]="timeOf(draft().from)"
-                  [hour12]="hourFormat() === '12'"
-                  [showMinutes]="showMinutes()"
-                  [showSeconds]="showSeconds()"
-                  [stepHour]="stepHour()"
-                  [stepMinute]="stepMinute()"
-                  [stepSecond]="stepSecond()"
-                  [locale]="locale()"
-                  [disabled]="isDisabled()"
-                  (timeChange)="setFromTime($event)"
-                />
-              </div>
+              <hx-time-picker
+                inline
+                class="hx-date-time-range-picker-from"
+                [ariaLabel]="fromLabel()"
+                [value]="fromValue()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                [disabled]="isDisabled()"
+                (valueChange)="setFromTime($event)"
+              />
             </div>
             <div class="hx-date-time-range-picker-time">
               <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ toLabel() }}</span>
-              <div class="hx-date-picker-panel hx-date-time-range-picker-to" role="group" [attr.aria-label]="toLabel()">
-                <hx-time-row
-                  [time]="timeOf(draft().to)"
-                  [hour12]="hourFormat() === '12'"
-                  [showMinutes]="showMinutes()"
-                  [showSeconds]="showSeconds()"
-                  [stepHour]="stepHour()"
-                  [stepMinute]="stepMinute()"
-                  [stepSecond]="stepSecond()"
-                  [locale]="locale()"
-                  [disabled]="isDisabled()"
-                  (timeChange)="setToTime($event)"
-                />
-              </div>
+              <hx-time-picker
+                inline
+                class="hx-date-time-range-picker-to"
+                [ariaLabel]="toLabel()"
+                [value]="toValue()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                [disabled]="isDisabled()"
+                (valueChange)="setToTime($event)"
+              />
             </div>
           </div>
         }
