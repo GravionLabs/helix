@@ -2,7 +2,8 @@
 
 `hx-date-time-range-picker` is a date-time range in one field with one button. The field shows the range as one text
 (`1/1/2026 00:00 - 1/2/2026 00:15`). The popup holds one calendar in which the range is marked (two clicks: from, then
-to) and, below it, a time picker for the start and one for the end. It is built on three controls: an inline range `hx-date-picker` for the days and two inline `hx-time-picker` for the times. The value is `{ from: Date | null; to: Date | null }`
+to) and, below it, a time picker for the start and one for the end. It is built on three controls: an inline range
+`hx-date-picker` for the days and two inline `hx-time-picker` for the times. The value is `{ from: Date | null; to: Date | null }`
 (`HxDateTimeRangeValue`); a side is `null` while it is empty. It works with `ngModel`, reactive forms (including
 `disable()`) and signal forms.
 
@@ -33,8 +34,8 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 - **Order:** `to` is never before `from`: the `to` time picker starts at `from` (including the time), the `from` picker ends
   at `to`, and a day or time that crosses the other side moves it.
 - **Validation:** there is no built-in required rule; use the validators of the form.
-- **Accessibility:** the popup is a non-modal dialog; the calendar is the date picker's, the time pickers (`role="spinbutton"` columns) are the time picker's;
-  they are named `fromLabel` / `toLabel`.
+- **Accessibility:** the popup is a non-modal dialog; the calendar is the date picker's, the two time pickers are inline `hx-time-picker`s (a group with `role="spinbutton"` columns) named
+  `fromLabel` / `toLabel`.
 - **Time zones** are not handled: the values are local `Date`s.
 
 ## Tokens

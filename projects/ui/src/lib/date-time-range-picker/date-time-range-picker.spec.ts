@@ -39,6 +39,12 @@ import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-ra
       [(value)]="blocked"
     />
     <hx-date-time-range-picker
+      id="today"
+      locale="en-US"
+      [disabledDates]="[today]"
+      [(value)]="empty"
+    />
+    <hx-date-time-range-picker
       id="clock"
       locale="en-US"
       timeOnly
@@ -85,6 +91,8 @@ class Host {
   twelve = signal<HxDateTimeRangeValue>({ from: null, to: null });
   blockedDays = [new Date(2026, 9, 13)];
   blocked = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  today = new Date();
+  empty = signal<HxDateTimeRangeValue>({ from: null, to: null });
   labels = signal<HxDateTimeRangeValue>({
     from: new Date(2026, 0, 1, 0, 0),
     to: new Date(2026, 0, 2, 0, 15),
@@ -132,6 +140,7 @@ describe('HxDateTimeRangePicker', () => {
     popup()?.querySelector(
       `.hx-date-time-range-picker-${side} [role=spinbutton][aria-label="${name}"]`,
     ) as HTMLElement;
+  const now = (side: 'from' | 'to', name: string) => spin(side, name).getAttribute('aria-valuenow');
   const press = async (target: HTMLElement, key: string) => {
     target.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
     await settle();
@@ -162,7 +171,7 @@ describe('HxDateTimeRangePicker', () => {
     expect(input('basic').value).toBe('');
   });
 
-  it('opens one calendar with a time row for from and for to', async () => {
+  it('opens one calendar with a time picker for from and for to', async () => {
     await open('basic');
     expect(popup()?.getAttribute('role')).toBe('dialog');
     expect(popup()?.querySelectorAll('[role=grid]').length).toBe(1);
@@ -171,7 +180,18 @@ describe('HxDateTimeRangePicker', () => {
     expect(popup()?.querySelector('.hx-date-time-range-picker-to [role=grid]')).toBeNull();
   });
 
-  it('takes the labels of the time rows', async () => {
+  it('names the time pickers and disables them with the control', async () => {
+    await open('labels');
+    const names = ['from', 'to'].map((side) =>
+      popup()
+        ?.querySelector(`hx-time-picker.hx-date-time-range-picker-${side} [role=group]`)
+        ?.getAttribute('aria-label'),
+    );
+    expect(names).toEqual(['Start', 'End']);
+    expect(spin('from', 'Hour').getAttribute('aria-disabled')).toBeNull();
+  });
+
+  it('takes the labels of the time pickers', async () => {
     await open('labels');
     const captions = [...popup()!.querySelectorAll('.hx-date-time-range-picker-caption')];
     expect(captions.map((c) => c.textContent?.trim())).toEqual(['Start', 'End']);
@@ -252,7 +272,7 @@ describe('HxDateTimeRangePicker', () => {
     });
   });
 
-  it('changes the time of each end with its time row', async () => {
+  it('changes the time of each end with its time picker', async () => {
     host.basic.set({
       from: new Date(2026, 9, 12, 8, 0),
       to: new Date(2026, 9, 13, 9, 0),
@@ -260,7 +280,7 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
     await open('basic');
     await press(spin('from', 'Minute'), 'ArrowUp');
-    expect(popup()?.querySelector('.hx-date-time-range-picker-from')?.textContent).toContain('15');
+    expect(now('from', 'Minute')).toBe('15');
     expect(host.basic().from).toEqual(new Date(2026, 9, 12, 8, 0));
     await press(spin('to', 'Hour'), 'ArrowUp');
     await submit();
@@ -315,7 +335,7 @@ describe('HxDateTimeRangePicker', () => {
     await press(spin('to', 'Hour'), 'ArrowUp');
     await press(spin('to', 'Hour'), 'ArrowUp');
     await submit();
-    // the empty to row starts at 00:00: the first press (1:00) is held at from (8:00), the next two count on from there
+    // the empty to picker starts at 00:00: the first press (1:00) is held at from (8:00), the next two count on from there
     expect(host.basic().to).toEqual(new Date(2026, 9, 12, 10, 0));
   });
 
@@ -342,6 +362,29 @@ describe('HxDateTimeRangePicker', () => {
     expect(host.blocked().from).toEqual(new Date(2026, 9, 12, 9, 0));
   });
 
+  it('shows the old time again when a time on a disabled day is refused', async () => {
+    host.blocked.set({
+      from: new Date(2026, 9, 13, 8, 0),
+      to: new Date(2026, 9, 13, 9, 0),
+    });
+    await settle();
+    await open('blocked');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    expect(now('from', 'Hour')).toBe('8');
+    expect(now('to', 'Hour')).toBe('9');
+  });
+
+  it('shows midnight again when a time on a disabled day is refused and the range is empty', async () => {
+    await open('today');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await press(spin('from', 'Hour'), 'ArrowUp');
+    expect(now('to', 'Hour')).toBe('0');
+    expect(now('from', 'Hour')).toBe('0');
+    await submit();
+    expect(host.empty()).toEqual({ from: null, to: null });
+  });
+
   it('moves from to to when a day click is the same day with an earlier to time', async () => {
     host.basic.set({
       from: new Date(2026, 9, 12, 8, 0),
@@ -366,7 +409,7 @@ describe('HxDateTimeRangePicker', () => {
     expect(host.limits().from).toEqual(new Date(2026, 9, 5, 8, 0));
   });
 
-  it('keeps the times of the time rows inside minDate and maxDate', async () => {
+  it('keeps the times of the time pickers inside minDate and maxDate', async () => {
     host.limits.set({
       from: new Date(2026, 9, 5, 9, 0),
       to: new Date(2026, 9, 28, 16, 0),
@@ -375,12 +418,14 @@ describe('HxDateTimeRangePicker', () => {
     await open('limits');
     for (let i = 0; i < 3; i++) await press(spin('from', 'Hour'), 'ArrowDown');
     for (let i = 0; i < 3; i++) await press(spin('to', 'Hour'), 'ArrowUp');
+    expect(now('from', 'Hour')).toBe('8');
+    expect(now('to', 'Hour')).toBe('17');
     await submit();
     expect(host.limits().from).toEqual(new Date(2026, 9, 5, 8, 0));
     expect(host.limits().to).toEqual(new Date(2026, 9, 28, 17, 0));
   });
 
-  it('shows 12 hours with AM/PM and seconds in the time rows', async () => {
+  it('shows 12 hours with AM/PM and seconds in the time pickers', async () => {
     host.twelve.set({
       from: new Date(2026, 9, 12, 9, 0, 0),
       to: new Date(2026, 9, 13, 10, 0, 0),
@@ -400,7 +445,7 @@ describe('HxDateTimeRangePicker', () => {
     expect(document.activeElement).not.toBe(input('basic'));
   });
 
-  it('shows only the time rows with timeOnly', async () => {
+  it('shows only the time pickers with timeOnly', async () => {
     await open('clock');
     expect(popup()?.querySelector('[role=grid]')).toBeNull();
     expect(spin('from', 'Minute')).toBeNull();

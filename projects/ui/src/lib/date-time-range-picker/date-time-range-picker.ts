@@ -40,7 +40,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * A from and a to date-time range in one field with one button. The field shows the range as one text
  * (`1/1/2026 00:00 - 1/2/2026 00:15`); the popup holds one calendar (an inline range `hx-date-picker`) and a time picker for each end,
  * from and to. The value is `{ from, to }` (`null` while a side is empty); `to` is never before `from`: the `to`
- * time row starts at `from` (including the time), the `from` time row ends at `to`, and a choice that crosses the
+ * time picker starts at `from` (including the time), the `from` time picker ends at `to`, and a choice that crosses the
  * other side moves it. The field is read-only; the popup stays open until Escape, an outside click or the focus
  * leaving it.
  *
@@ -50,7 +50,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * ```
  *
  * It works with `ngModel`, reactive forms and signal forms (`[formField]`). The time options are those of
- * `hx-time-picker`. The popup is a dialog named by `ariaLabel` / `ariaLabelledby`; its time rows are named
+ * `hx-time-picker`. The popup is a dialog named by `ariaLabel` / `ariaLabelledby`; its time pickers are named
  * `fromLabel` / `toLabel`.
  */
 @Component({
@@ -73,7 +73,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
 export class HxDateTimeRangePicker
   implements ControlValueAccessor, FormValueControl<HxDateTimeRangeValue>
 {
-  /** The names of the two time rows in the popup. */
+  /** The names of the two time pickers in the popup. */
   readonly fromLabel = input('From');
   readonly toLabel = input('To');
   /** The text between the two dates in the field. */
@@ -86,7 +86,7 @@ export class HxDateTimeRangePicker
   /** The `id` of the text field, for a `<label for>`. */
   readonly inputId = input<string>();
 
-  /** The time row options, for both ends. */
+  /** The time picker options, for both ends. */
   readonly showTime = input(true, { transform: booleanAttribute });
   readonly timeOnly = input(false, { transform: booleanAttribute });
   readonly hourFormat = input<'24' | '12'>('24');
@@ -136,7 +136,7 @@ export class HxDateTimeRangePicker
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly daysPicker = viewChild(HxDatePicker);
-  private readonly timeRow = viewChild(HxTimePicker);
+  private readonly timePicker = viewChild(HxTimePicker);
   /** The times of the last complete sides, kept while a side is empty (a range being chosen in the calendar). */
   #lastFrom: Date | null = null;
   #lastTo: Date | null = null;
@@ -167,6 +167,15 @@ export class HxDateTimeRangePicker
   /** `from` ends at `to`, `to` starts at `from`, each inside `minDate`..`maxDate`. */
   protected readonly fromMax = computed(() => earlier(this.draft().to, this.maxDate()));
   protected readonly toMin = computed(() => later(this.draft().from, this.minDate()));
+  /** Counts the refused changes of a time picker; the pickers' values depend on it, so they show the draft again. */
+  readonly #refused = signal(0);
+  /** The values of the two time pickers: a fresh `Date` per draft change (midnight while a side is empty). */
+  protected readonly fromValue = computed<HxTimePickerValue>(() =>
+    this.#pickerValue(this.draft().from),
+  );
+  protected readonly toValue = computed<HxTimePickerValue>(() =>
+    this.#pickerValue(this.draft().to),
+  );
 
   #onChange: (value: HxDateTimeRangeValue) => void = () => {};
   #onTouched: () => void = () => {};
@@ -207,7 +216,7 @@ export class HxDateTimeRangePicker
   }
 
   protected onAttach(): void {
-    afterNextRender(() => (this.daysPicker() ?? this.timeRow())?.focus(), {
+    afterNextRender(() => (this.daysPicker() ?? this.timePicker())?.focus(), {
       injector: this.#injector,
     });
   }
@@ -297,19 +306,12 @@ export class HxDateTimeRangePicker
     this.#stage({ from, to: from && to && to < from ? from : to });
   }
 
-  /** The values of the two time pickers: a fresh `Date` per draft change, so a clamped time is shown again. */
-  protected readonly fromValue = computed<HxTimePickerValue>(() => {
-    const { from } = this.draft();
-    return from ? new Date(from) : null;
-  });
-  protected readonly toValue = computed<HxTimePickerValue>(() => {
-    const { to } = this.draft();
-    return to ? new Date(to) : null;
-  });
-
   /** The `from` picker changed: the day of `from` (else of `to`, else today) at the new time, not after `to`. */
   protected setFromTime(picked: HxTimePickerValue): void {
-    if (!picked) return;
+    if (!picked) {
+      this.#restage();
+      return;
+    }
     const { from, to } = this.draft();
     const day = from ?? to ?? new Date();
     if (this.#isBlocked(day)) {
@@ -322,7 +324,10 @@ export class HxDateTimeRangePicker
 
   /** The `to` picker changed: the day of `to` (else of `from`, else today) at the new time, not before `from`. */
   protected setToTime(picked: HxTimePickerValue): void {
-    if (!picked) return;
+    if (!picked) {
+      this.#restage();
+      return;
+    }
     const { from, to } = this.draft();
     const day = to ?? from ?? new Date();
     if (this.#isBlocked(day)) {
@@ -334,9 +339,14 @@ export class HxDateTimeRangePicker
     this.#stage({ from: from ?? startOfDay(next), to: next });
   }
 
+  #pickerValue(side: Date | null): Date {
+    this.#refused();
+    return side ? new Date(side) : startOfDay(new Date());
+  }
+
   /** Puts the draft back into the pickers after a time they changed was refused. */
   #restage(): void {
-    this.draft.update((d) => ({ ...d }));
+    this.#refused.update((n) => n + 1);
   }
 
   /** A time is not set on a day in `disabledDates`. */
