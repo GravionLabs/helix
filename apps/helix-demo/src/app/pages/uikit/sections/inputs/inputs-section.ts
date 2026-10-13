@@ -76,6 +76,7 @@ export class HxInputsSection {
   readonly stay = signal<HxDatePickerValue>(null);
   readonly start = signal<HxDatePickerValue>(new Date(2026, 9, 13, 9, 30));
   readonly alarm = signal<HxDatePickerValue>(null);
+  readonly opens = signal<HxDatePickerValue>(null);
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
   readonly found = signal<string[]>([]);

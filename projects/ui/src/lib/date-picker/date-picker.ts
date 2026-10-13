@@ -138,6 +138,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   readonly timeOnly = input(false, { transform: booleanAttribute });
   /** `'12'` shows hours from 1 to 12 and an AM/PM column. */
   readonly hourFormat = input<'24' | '12'>('24');
+  /** A minutes column in the time row; `false` picks the hour only (minutes and seconds are `0`, `showSeconds` is ignored). */
+  readonly showMinutes = input(true, { transform: booleanAttribute });
   /** A seconds column in the time row. */
   readonly showSeconds = input(false, { transform: booleanAttribute });
   /** Step of the arrow keys and buttons of the hour column. */
@@ -219,8 +221,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
       : {};
     if (this.timeEnabled()) {
       options.hour = '2-digit';
-      options.minute = '2-digit';
-      if (this.showSeconds()) options.second = '2-digit';
+      if (this.showMinutes()) options.minute = '2-digit';
+      if (this.showMinutes() && this.showSeconds()) options.second = '2-digit';
       options.hourCycle = this.#hour12() ? 'h12' : 'h23';
     }
     return new Intl.DateTimeFormat(this.locale(), options);
@@ -229,10 +231,11 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   /** The time of day shown in the time row: the value's, or midnight while there is none. */
   readonly #time = computed(() => {
     const date = this.selectedDates()[0];
+    const minutes = this.showMinutes();
     return {
       hours: date?.getHours() ?? 0,
-      minutes: date?.getMinutes() ?? 0,
-      seconds: date?.getSeconds() ?? 0,
+      minutes: minutes ? (date?.getMinutes() ?? 0) : 0,
+      seconds: minutes ? (date?.getSeconds() ?? 0) : 0,
     };
   });
 
@@ -251,7 +254,9 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
         text: pad(hourNow),
         valueText: String(hourNow),
       },
-      {
+    ];
+    if (this.showMinutes()) {
+      columns.push({
         unit: 'minute',
         label: this.minuteLabel(),
         now: minutes,
@@ -259,9 +264,9 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
         max: 59,
         text: pad(minutes),
         valueText: String(minutes),
-      },
-    ];
-    if (this.showSeconds()) {
+      });
+    }
+    if (this.showMinutes() && this.showSeconds()) {
       columns.push({
         unit: 'second',
         label: this.secondLabel(),
@@ -694,17 +699,22 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   /** A date and a time from the text (`10/09/2026, 3:45 PM`), or only a time for `timeOnly` (today). */
   #parseWithTime(text: string): Date | null {
-    const match = /(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s*([ap])\.?\s*m\.?)?/i.exec(text);
+    const period12 = '(?:\\s*([ap])\\.?\\s*m\\.?)?';
+    // hour only: `14` or `2 PM` at the end (with a date before it), else `14:30` or `14:30:05`
+    const match = this.showMinutes()
+      ? new RegExp(`(\\d{1,2}):(\\d{2})(?::(\\d{2}))?${period12}`, 'i').exec(text)
+      : new RegExp(`(?:^|[\\s,;T])(\\d{1,2})(?::00(?::00)?)?${period12}\\s*$`, 'i').exec(text);
     if (!match) return null;
     let hours = Number(match[1]);
-    const [minutes, seconds] = [Number(match[2]), Number(match[3] ?? 0)];
-    const period = match[4]?.toLowerCase();
+    const hourOnly = !this.showMinutes();
+    const [minutes, seconds] = hourOnly ? [0, 0] : [Number(match[2]), Number(match[3] ?? 0)];
+    const period = (hourOnly ? match[2] : match[4])?.toLowerCase();
     if (period) {
       if (hours < 1 || hours > 12) return null;
       hours = (hours % 12) + (period === 'p' ? 12 : 0);
     }
     if (hours > 23 || minutes > 59 || seconds > 59) return null;
-    const rest = text.replace(match[0], '').replace(/^[\s,;T]+|[\s,;T]+$/g, '');
+    const rest = text.replace(match[0], hourOnly ? ' ' : '').replace(/^[\s,;T]+|[\s,;T]+$/g, '');
     if (/\p{L}/u.test(rest)) return null;
     const kept = this.selectedDates()[0] ?? this.#today;
     const day = this.timeOnly() && rest === '' ? startOfDay(kept) : this.#parse(rest);
