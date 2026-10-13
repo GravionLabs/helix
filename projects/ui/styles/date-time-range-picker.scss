@@ -1,0 +1,45 @@
+/*
+ * DateTimeRangePicker: `<hx-date-time-range-picker>`. Two date pickers side by side, stacked below 375 px of the
+ * container; every colour and size comes from the date picker and input tokens.
+ */
+.hx-date-time-range-picker {
+  display: block;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.hx-date-time-range-picker-fields {
+  display: flex;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-from,
+.hx-date-time-range-picker-to {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.hx-date-time-range-picker-separator {
+  flex: none;
+  color: var(--h-inputtext-placeholder-color);
+}
+
+.hx-date-time-range-picker-disabled .hx-date-time-range-picker-separator {
+  color: var(--h-inputtext-disabled-color);
+}
+
+.hx-date-time-range-picker-invalid .hx-date-time-range-picker-separator {
+  color: var(--h-inputtext-invalid-placeholder-color);
+}
+
+@container (max-width: 375px) {
+  .hx-date-time-range-picker-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hx-date-time-range-picker-separator {
+    display: none;
+  }
+}
