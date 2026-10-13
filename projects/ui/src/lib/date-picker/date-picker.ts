@@ -27,18 +27,9 @@ import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxCalendar } from '../internal/calendar/calendar';
 import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
-import {
-  clampTime,
-  compareDays,
-  isSameDay,
-  isValidDate,
-  startOfDay,
-  withTime,
-} from '../internal/dates';
-import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
+import { clampTime, compareDays, isSameDay, isValidDate, startOfDay } from '../internal/dates';
+import { parseDateText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
-import { HxTimeRow } from '../internal/time-row/time-row';
-import type { TimeOfDay } from '../internal/time-row/time-row-helpers';
 
 const startOfDayOrNull = (date: Date | null) => (isValidDate(date) ? startOfDay(date) : null);
 
@@ -61,25 +52,12 @@ export type HxDatePickerValue = Date | Date[] | null;
  * typed date parses back). The popup is a non-modal dialog: focus moves to the selected or today's day and returns
  * to the field on close; a range keeps it open until the second date.
  *
- * `showTime` adds a time row under the calendar (hour, minute, optionally second and AM/PM), `timeOnly` shows the time
- * row alone. The value stays a `Date`; choosing a day keeps the time already set, and with `showTime` the popup stays
- * open until Escape, the focus leaves the control or a button of the button bar. Time applies to `selectionMode="single"`;
- * `range` and `multiple` ignore it.
- *
- * ```html
- * <hx-date-picker showTime [stepMinute]="15" [(ngModel)]="start" />
- * <hx-date-picker timeOnly hourFormat="12" [(ngModel)]="alarm" />
- * ```
- *
- * Each time column is a `spinbutton`: Arrow Up and Down change it by the step, Page Up and Page Down by a larger step,
- * Home and End go to the first and last value.
- *
  * Keyboard in the day grid: arrows move by a day or a week, Home and End to the start and end of the week,
  * Page Up and Page Down by a month (with Shift by a year), Enter or Space selects.
  */
 @Component({
   selector: 'hx-date-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar, HxTimeRow],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar],
   templateUrl: './date-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -107,38 +85,14 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   /** Today and Clear buttons under the calendar of the popup. */
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   /**
-   * `Intl.DateTimeFormat` options of the text in the field. By default numeric, so a typed date parses back: day,
-   * month and year, plus hour and minute (and second) with the time, with the `hourCycle` of `hourFormat`.
+   * `Intl.DateTimeFormat` options of the text in the field. By default numeric, so a typed date parses back.
    */
   readonly dateFormat = input<Intl.DateTimeFormatOptions>();
   readonly todayLabel = input('Today');
   readonly clearLabel = input('Clear');
   readonly chooseLabel = input('Choose date');
-  /** Accessible names of the time row and its columns. */
-  readonly timeLabel = input('Time');
-  readonly hourLabel = input('Hour');
-  readonly minuteLabel = input('Minute');
-  readonly secondLabel = input('Second');
-  readonly periodLabel = input('AM/PM');
   /** The `id` of the text field, for a `<label for>`. */
   readonly inputId = input<string>();
-
-  /** A time row under the calendar (`single` only). */
-  readonly showTime = input(false, { transform: booleanAttribute });
-  /** The time row without the calendar (`single` only). */
-  readonly timeOnly = input(false, { transform: booleanAttribute });
-  /** `'12'` shows hours from 1 to 12 and an AM/PM column. */
-  readonly hourFormat = input<'24' | '12'>('24');
-  /** A minutes column in the time row; `false` picks the hour only (minutes and seconds are `0`, `showSeconds` is ignored). */
-  readonly showMinutes = input(true, { transform: booleanAttribute });
-  /** A seconds column in the time row. */
-  readonly showSeconds = input(false, { transform: booleanAttribute });
-  /** Step of the arrow keys and buttons of the hour column. */
-  readonly stepHour = input(1, { transform: numberAttribute });
-  /** Step of the minute column. */
-  readonly stepMinute = input(1, { transform: numberAttribute });
-  /** Step of the second column. */
-  readonly stepSecond = input(1, { transform: numberAttribute });
 
   /** Shows the calendar in the page. */
   readonly inline = input(false, { transform: booleanAttribute });
@@ -170,7 +124,6 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly calendar = viewChild(HxCalendar);
-  private readonly timeRow = viewChild(HxTimeRow);
   /** The text typed and not yet committed; `null` while the field shows the value. */
   readonly #typed = signal<string | null>(null);
   protected readonly view = signal<CalendarView>('day');
@@ -187,38 +140,14 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return isValidDate(value) ? [value] : [];
   });
 
-  /** Whether the value carries a time chosen here: only `single` has one. */
-  protected readonly timeEnabled = computed(
-    () => (this.showTime() || this.timeOnly()) && this.selectionMode() === 'single',
+  readonly #format = computed(
+    () =>
+      new Intl.DateTimeFormat(
+        this.locale(),
+        this.dateFormat() ?? { day: '2-digit', month: '2-digit', year: 'numeric' },
+      ),
   );
-  protected readonly calendarShown = computed(() => !(this.timeOnly() && this.timeEnabled()));
-  protected readonly hour12 = computed(() => this.hourFormat() === '12');
 
-  readonly #format = computed(() => {
-    const custom = this.dateFormat();
-    if (custom) return new Intl.DateTimeFormat(this.locale(), custom);
-    const options: Intl.DateTimeFormatOptions = this.calendarShown()
-      ? { day: '2-digit', month: '2-digit', year: 'numeric' }
-      : {};
-    if (this.timeEnabled()) {
-      options.hour = '2-digit';
-      if (this.showMinutes()) options.minute = '2-digit';
-      if (this.showMinutes() && this.showSeconds()) options.second = '2-digit';
-      options.hourCycle = this.hour12() ? 'h12' : 'h23';
-    }
-    return new Intl.DateTimeFormat(this.locale(), options);
-  });
-
-  /** The time of day shown in the time row: the value's, or midnight while there is none. */
-  protected readonly time = computed<TimeOfDay>(() => {
-    const date = this.selectedDates()[0];
-    const minutes = this.showMinutes();
-    return {
-      hours: date?.getHours() ?? 0,
-      minutes: minutes ? (date?.getMinutes() ?? 0) : 0,
-      seconds: minutes ? (date?.getSeconds() ?? 0) : 0,
-    };
-  });
   protected readonly text = computed(() => {
     const typed = this.#typed();
     if (typed !== null) return typed;
@@ -281,11 +210,6 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return this.selectedDates().some((d) => isSameDay(d, date));
   }
 
-  /** Whether a date with a time lies outside `minDate`..`maxDate`, compared including the time. */
-  #outsideTimeRange(date: Date): boolean {
-    return clampTime(date, this.minDate(), this.maxDate()).getTime() !== date.getTime();
-  }
-
   protected pick(date: Date): void {
     if (this.isDisabled() || this.isDateDisabled(date)) return;
     const day = startOfDay(date);
@@ -308,34 +232,15 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
         break;
       }
       default:
-        next = this.timeEnabled() ? this.#atTime(day, this.time()) : day;
+        next = day;
     }
     this.#typed.set(null);
     this.#commit(next);
     if (!this.inline()) {
       const done =
-        (mode === 'single' && !this.timeEnabled()) ||
-        (mode === 'range' && Array.isArray(next) && next.length === 2);
+        mode === 'single' || (mode === 'range' && Array.isArray(next) && next.length === 2);
       if (done) this.close(true);
     }
-  }
-
-  /** `day` at a time of day, moved into `minDate`..`maxDate` including their times. */
-  #atTime(day: Date, time: TimeOfDay): Date {
-    return clampTime(
-      withTime(day, time.hours, time.minutes, time.seconds),
-      this.minDate(),
-      this.maxDate(),
-    );
-  }
-
-  /** The time row changed a unit: keep the day, or take today. */
-  protected setTime(time: TimeOfDay): void {
-    if (this.isDisabled()) return;
-    const day = this.selectedDates()[0] ?? this.today;
-    if (this.isDateDisabled(day)) return;
-    this.#typed.set(null);
-    this.#commit(this.#atTime(day, time));
   }
 
   #commit(next: HxDatePickerValue): void {
@@ -346,11 +251,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   #focusDay(): void {
     afterNextRender(
       () => {
-        if (this.calendarShown()) {
-          this.calendar()?.focusDay();
-          return;
-        }
-        this.timeRow()?.focus();
+        this.calendar()?.focusDay();
       },
       { injector: this.#injector },
     );
@@ -424,24 +325,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
       return;
     }
     const parts = this.selectionMode() === 'single' ? [text] : text.split(/\s*(?:,|–)\s*/);
-    const dates = parts.map((part) =>
-      this.timeEnabled() ? this.#parseWithTime(part) : this.#parse(part),
-    );
+    const dates = parts.map((part) => this.#parse(part));
     if (dates.some((d) => d === null || this.isDateDisabled(d))) return;
-    if (this.timeEnabled() && this.#outsideTimeRange(dates[0] as Date)) return;
     const valid = dates as Date[];
     if (this.selectionMode() === 'range' && valid.length > 2) return;
     this.#commit(this.selectionMode() === 'single' ? valid[0] : valid);
     if (valid[0]) this.focusedDate.set(startOfDay(valid[0]));
-  }
-
-  #parseWithTime(text: string): Date | null {
-    return parseDateTimeText(text, {
-      locale: this.locale(),
-      showMinutes: this.showMinutes(),
-      timeOnly: this.timeOnly(),
-      fallbackDay: this.selectedDates()[0] ?? this.today,
-    });
   }
 
   #parse(text: string): Date | null {
@@ -450,8 +339,6 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   protected selectToday(): void {
     this.pick(this.today);
-    // a time row keeps the popup open on a day: the button bar closes it
-    if (this.timeEnabled()) this.close(true);
   }
 
   protected clear(): void {
@@ -464,24 +351,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     if (this.inline()) return;
     const next = event.relatedTarget as HTMLElement | null;
     if (next?.closest('.hx-date-picker-popup') || this.#host.nativeElement.contains(next)) return;
-    // with a time row the popup does not close on a day, so the focus leaving the control closes it
-    if (this.open() && !(this.timeEnabled() && next)) return;
-    this.close();
-    this.commitTyping();
-    this.#onTouched();
-    this.touch.emit();
-  }
-
-  /** The focus left the popup for something outside the control: a popup with a time row closes. */
-  protected onPopupFocusOut(event: FocusEvent): void {
-    const next = event.relatedTarget as HTMLElement | null;
-    if (
-      !this.timeEnabled() ||
-      !next ||
-      next.closest('.hx-date-picker-popup') ||
-      this.#host.nativeElement.contains(next)
-    )
-      return;
+    if (this.open()) return;
     this.close();
     this.commitTyping();
     this.#onTouched();

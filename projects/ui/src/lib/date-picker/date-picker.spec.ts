@@ -80,6 +80,16 @@ describe('HxDatePicker', () => {
     expect(selected('single')).toEqual(['15']);
   });
 
+  it('writes the start of the day and has no time row', async () => {
+    host.arrival = new Date(2026, 9, 9, 14, 30, 15);
+    fixture.changeDetectorRef.markForCheck();
+    await settle();
+    day('single', 15).click();
+    await settle();
+    expect(host.arrival).toEqual(new Date(2026, 9, 15, 0, 0, 0));
+    expect(el('single').querySelector('.hx-date-picker-time')).toBeNull();
+  });
+
   it('does not choose days outside min/max or disabled dates', async () => {
     for (const d of [4, 12, 29]) {
       expect(day('single', d).getAttribute('aria-disabled')).toBe('true');
@@ -372,129 +382,5 @@ describe('HxDatePicker field and popup', () => {
     input('field').dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
     await settle();
     expect(el('field').classList).toContain('ng-touched');
-  });
-});
-
-@Component({
-  imports: [HxDatePicker],
-  template: `
-    <hx-date-picker id="only" inline timeOnly locale="en-US" [(value)]="only" />
-    <hx-date-picker id="plain" inline locale="en-US" [(value)]="plain" />
-    <hx-date-picker id="multiT" inline showTime selectionMode="multiple" locale="en-US" [(value)]="multiT" />
-    <hx-date-picker id="hrs12" inline timeOnly [showMinutes]="false" hourFormat="12" locale="en-US" [(value)]="hrs12" />
-    <hx-date-picker id="hrsField12" timeOnly [showMinutes]="false" hourFormat="12" locale="en-US" [(value)]="hrsTyped12" />
-    <hx-date-picker id="rng" inline showTime selectionMode="range" locale="en-US" [(value)]="rng" />
-    <hx-date-picker id="fieldOnly" timeOnly locale="en-US" [(value)]="typedOnly" />
-  `,
-})
-class TimeHost {
-  only = signal<HxDatePickerValue>(null);
-  plain = signal<HxDatePickerValue>(new Date(2026, 9, 9, 10, 30));
-  rng = signal<HxDatePickerValue>(null);
-  hrs12 = signal<HxDatePickerValue>(null);
-  hrsTyped12 = signal<HxDatePickerValue>(null);
-  multiT = signal<HxDatePickerValue>([]);
-  typedOnly = signal<HxDatePickerValue>(null);
-}
-
-describe('HxDatePicker time only', () => {
-  let fixture: ComponentFixture<TimeHost>;
-  let host: TimeHost;
-  const el = (id: string) => fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
-  const spin = (id: string, name: string) =>
-    el(id).querySelector(`[role=spinbutton][aria-label="${name}"]`) as HTMLElement;
-  const day = (id: string, d: number) =>
-    el(id).querySelector<HTMLButtonElement>(
-      `.hx-date-picker-date[data-date="2026-10-${d}"]`,
-    ) as HTMLButtonElement;
-  const settle = async () => {
-    await fixture.whenStable();
-    fixture.detectChanges();
-  };
-  const press = async (target: HTMLElement, key: string) => {
-    target.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
-    await settle();
-  };
-  const input = (id: string) => el(id).querySelector('input') as HTMLInputElement;
-  const popup = () => document.querySelector('.hx-date-picker-popup') as HTMLElement | null;
-  const type = async (id: string, text: string) => {
-    input(id).value = text;
-    input(id).dispatchEvent(new Event('input'));
-    input(id).dispatchEvent(new Event('change'));
-    await settle();
-  };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [TimeHost] }).compileComponents();
-    fixture = TestBed.createComponent(TimeHost);
-    host = fixture.componentInstance;
-    await settle();
-  });
-
-  afterEach(() => {
-    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
-      c.innerHTML = '';
-    });
-  });
-
-  it('shows the time row only with showTime or timeOnly', () => {
-    expect(el('plain').querySelector('.hx-date-picker-time')).toBeNull();
-    expect(el('rng').querySelector('.hx-date-picker-time')).toBeNull();
-    expect(el('only').querySelector('[role=grid]')).toBeNull();
-    expect(el('only').querySelector('.hx-date-picker-header')).toBeNull();
-  });
-
-  it('takes today when a time is set without a date', async () => {
-    await press(spin('only', 'Hour'), 'ArrowUp');
-    const now = new Date();
-    expect(host.only()).toEqual(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1, 0));
-  });
-
-  it('ignores showTime for range and multiple', async () => {
-    day('rng', 3).click();
-    await settle();
-    expect(host.rng()).toEqual([new Date(2026, 9, 3)]);
-  });
-
-  it('picks the hour with AM/PM for timeOnly', async () => {
-    expect(el('hrs12').querySelectorAll('[role=spinbutton]').length).toBe(2);
-    await press(spin('hrs12', 'Hour'), 'ArrowUp');
-    const now = new Date();
-    expect(host.hrs12()).toEqual(
-      new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1, 0, 0),
-    );
-    await press(spin('hrs12', 'AM/PM'), 'ArrowUp');
-    expect((host.hrs12() as Date).getHours()).toBe(13);
-  });
-
-  it('formats and parses the hour only for timeOnly', async () => {
-    await type('hrsField12', '2 PM');
-    expect((host.hrsTyped12() as Date).getHours()).toBe(14);
-    expect(input('hrsField12').value).toBe('02 PM');
-    await type('hrsField12', '14');
-    expect((host.hrsTyped12() as Date).getHours()).toBe(14);
-  });
-
-  it('ignores showTime for multiple', async () => {
-    expect(el('multiT').querySelector('.hx-date-picker-time')).toBeNull();
-    day('multiT', 3).click();
-    await settle();
-    expect(host.multiT()).toEqual([new Date(2026, 9, 3)]);
-  });
-
-  it('shows and parses only the time for timeOnly', async () => {
-    await type('fieldOnly', '07:30');
-    const now = new Date();
-    expect(host.typedOnly()).toEqual(
-      new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 30),
-    );
-    expect(input('fieldOnly').value).toBe('07:30');
-  });
-
-  it('keeps the day of the value when a time is typed for timeOnly', async () => {
-    host.typedOnly.set(new Date(2026, 9, 2, 10, 0));
-    await settle();
-    await type('fieldOnly', '07:30');
-    expect(host.typedOnly()).toEqual(new Date(2026, 9, 2, 7, 30));
   });
 });

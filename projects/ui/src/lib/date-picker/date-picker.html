@@ -54,7 +54,6 @@
       [id]="popupId"
       [attr.aria-label]="ariaLabel() ?? 'Choose date'"
       [attr.aria-labelledby]="ariaLabelledby() ?? null"
-      (focusout)="onPopupFocusOut($event)"
     >
       <ng-container [ngTemplateOutlet]="calendar" />
       @if (showButtonBar()) {
@@ -75,7 +74,6 @@
   [attr.aria-labelledby]="ariaLabelledby() ?? null"
   (focusout)="onFocusOut($event)"
 >
-  @if (calendarShown()) {
     <hx-calendar
       [(focusedDate)]="focusedDate"
       [(view)]="view"
@@ -91,25 +89,5 @@
       [today]="today"
       (picked)="pick($event)"
     />
-  }
-  @if (timeEnabled()) {
-    <hx-time-row
-      [time]="time()"
-      [hour12]="hour12()"
-      [showMinutes]="showMinutes()"
-      [showSeconds]="showSeconds()"
-      [stepHour]="stepHour()"
-      [stepMinute]="stepMinute()"
-      [stepSecond]="stepSecond()"
-      [locale]="locale()"
-      [disabled]="isDisabled()"
-      [timeLabel]="timeLabel()"
-      [hourLabel]="hourLabel()"
-      [minuteLabel]="minuteLabel()"
-      [secondLabel]="secondLabel()"
-      [periodLabel]="periodLabel()"
-      (timeChange)="setTime($event)"
-    />
-  }
 </div>
 </ng-template>

@@ -72,7 +72,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxDateTimeRangePicker` | `hx-date-time-range-picker` | date-time range in one field with one popup calendar and a time row per end (`{ from, to }`), same time options as the date picker, all three forms APIs |
 | `HxDateTimePicker` | `hx-date-time-picker` | date and time in one field: a calendar popup (or inline) with a time row under it (`Date`), 24 h or 12 h, hour only, steps, `minDate`/`maxDate` with the time, typing, all three forms APIs |
 | `HxTimePicker` | `hx-time-picker` | time field with a time row popup or inline (`Date` today at that time), 24 h or 12 h, hour only, steps, `minTime`/`maxTime`, typing, all three forms APIs |
-| `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, optional time (`showTime`, `timeOnly`), typing, month and year views, all three forms APIs |
+| `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, typing, month and year views, all three forms APIs |
 | `HxAutoComplete` | `hx-auto-complete` | text field with suggestions from `(complete)`, chips, dropdown, all three forms APIs |
 | `HxMultiSelect` | `hx-multi-select` | select for several values: comma or chips, filter, select all, all three forms APIs |
 | `HxListbox` | `hx-listbox` | inline single or multiple list on the CDK listbox, filter, checkmark, all three forms APIs |

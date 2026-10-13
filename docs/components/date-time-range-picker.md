@@ -18,7 +18,7 @@ to) and, below it, a time row for the start and one for the end. The value is `{
 | `placeholder`, `inputId` | `string` | | Of the text field. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time rows; `false` picks days only (midnight). |
-| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the date picker | See [date picker](date-picker.md). `timeOnly` shows the time rows without the calendar. |
+| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time rows without the calendar. |
 | `stepHour`, `stepMinute`, `stepSecond` | `number` | `1` | Step of the time columns. |
 | `dateFormat`, `locale`, `firstDayOfWeek` | | as the date picker | Format of the text, names, first weekday. |
 | `minDate`, `maxDate`, `disabledDates` | `Date`, `Date[]` | | Limits, compared including the time. |
