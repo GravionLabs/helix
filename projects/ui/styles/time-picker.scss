@@ -1,0 +1,166 @@
+/*
+ * TimePicker: `<hx-time-picker>`. The field, button and popup of the date picker with a time row inside; the
+ * columns are styled by `date-picker.scss` (`hx-date-picker-time-*`). Every colour and size comes from the
+ * `--h-datepicker-*` and `--h-inputtext-*` tokens.
+ */
+@use 'icons' as *;
+
+.hx-time-picker {
+  display: inline-block;
+}
+
+.hx-time-picker:not(.hx-time-picker-inline) {
+  position: relative;
+  display: inline-flex;
+}
+
+.hx-time-picker-field {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hx-time-picker-panel {
+  box-sizing: border-box;
+  padding: var(--h-datepicker-panel-padding);
+  border: 1px solid var(--h-datepicker-panel-border-color);
+  border-radius: var(--h-datepicker-panel-border-radius);
+  background: var(--h-datepicker-panel-background);
+  color: var(--h-datepicker-panel-color);
+}
+
+.hx-time-picker-popup .hx-time-picker-panel {
+  border-radius: var(--h-datepicker-panel-border-radius) var(--h-datepicker-panel-border-radius) 0 0;
+}
+
+.hx-time-picker-popup .hx-time-picker-panel:last-child {
+  border-radius: var(--h-datepicker-panel-border-radius);
+}
+
+.hx-time-picker-input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--h-inputtext-padding-y) var(--h-inputtext-padding-x);
+  border: 1px solid var(--h-inputtext-border-color);
+  border-radius: var(--h-inputtext-border-radius);
+  background: var(--h-inputtext-background);
+  color: var(--h-inputtext-color);
+  box-shadow: var(--h-inputtext-shadow);
+  font: inherit;
+  font-size: 1rem;
+  outline: 0 none;
+  transition:
+    border-color var(--h-datepicker-transition-duration),
+    box-shadow var(--h-datepicker-transition-duration);
+}
+
+.hx-time-picker-input::placeholder {
+  color: var(--h-inputtext-placeholder-color);
+}
+
+.hx-time-picker-input:enabled:hover {
+  border-color: var(--h-inputtext-hover-border-color);
+}
+
+.hx-time-picker-input:enabled:focus,
+.hx-time-picker-open .hx-time-picker-input {
+  border-color: var(--h-inputtext-focus-border-color);
+  outline: var(--h-inputtext-focus-ring-width) var(--h-inputtext-focus-ring-style)
+    var(--h-inputtext-focus-ring-color);
+  outline-offset: var(--h-inputtext-focus-ring-offset);
+  box-shadow: var(--h-inputtext-focus-ring-shadow);
+}
+
+.hx-time-picker-input:disabled {
+  background: var(--h-inputtext-disabled-background);
+  color: var(--h-inputtext-disabled-color);
+}
+
+.hx-time-picker-invalid .hx-time-picker-input,
+.hx-time-picker.ng-invalid.ng-touched .hx-time-picker-input,
+.hx-time-picker-input[aria-invalid="true"] {
+  border-color: var(--h-inputtext-invalid-border-color);
+}
+
+.hx-time-picker-invalid .hx-time-picker-panel,
+.hx-time-picker.ng-invalid.ng-touched .hx-time-picker-panel {
+  border-color: var(--h-form-field-invalid-border-color);
+}
+
+.hx-time-picker-has-icon .hx-time-picker-input {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.hx-time-picker-disabled {
+  opacity: 0.6;
+}
+
+.hx-time-picker-disabled .hx-date-picker-time-button {
+  cursor: default;
+}
+
+.hx-time-picker-trigger {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--h-datepicker-dropdown-width);
+  border: 1px solid var(--h-datepicker-dropdown-border-color);
+  border-inline-start: 0;
+  border-start-end-radius: var(--h-datepicker-dropdown-border-radius);
+  border-end-end-radius: var(--h-datepicker-dropdown-border-radius);
+  background: var(--h-datepicker-dropdown-background);
+  color: var(--h-datepicker-dropdown-color);
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-time-picker-trigger:not(:disabled):hover {
+  border-color: var(--h-datepicker-dropdown-hover-border-color);
+  background: var(--h-datepicker-dropdown-hover-background);
+  color: var(--h-datepicker-dropdown-hover-color);
+}
+
+.hx-time-picker-trigger:focus-visible {
+  outline: var(--h-datepicker-dropdown-focus-ring-width) var(--h-datepicker-dropdown-focus-ring-style)
+    var(--h-datepicker-dropdown-focus-ring-color);
+  outline-offset: var(--h-datepicker-dropdown-focus-ring-offset);
+  box-shadow: var(--h-datepicker-dropdown-focus-ring-shadow);
+}
+
+.hx-time-picker-trigger-icon {
+  @include hx-icon(clock, 1rem, currentcolor, 2);
+}
+
+.hx-time-picker-popup {
+  box-shadow: var(--h-datepicker-panel-shadow);
+  border-radius: var(--h-datepicker-panel-border-radius);
+  background: var(--h-datepicker-panel-background);
+  color: var(--h-datepicker-panel-color);
+  font-size: 1rem;
+}
+
+.hx-time-picker-buttonbar {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--h-datepicker-buttonbar-padding);
+  border: 1px solid var(--h-datepicker-buttonbar-border-color);
+  border-top: 0;
+  border-radius: 0 0 var(--h-datepicker-panel-border-radius) var(--h-datepicker-panel-border-radius);
+}
+
+.hx-time-picker-button {
+  padding: var(--h-datepicker-select-month-padding);
+  border: 0;
+  border-radius: var(--h-datepicker-select-month-border-radius);
+  background: transparent;
+  color: var(--h-datepicker-select-month-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hx-time-picker-button:hover {
+  background: var(--h-datepicker-select-month-hover-background);
+}

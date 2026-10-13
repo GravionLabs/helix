@@ -105,12 +105,12 @@
       <span>{{ start() }}</span>
     </div>
     <div class="row">
-      <label class="label" for="dp-time">Time only</label>
-      <hx-date-picker inputId="dp-time" timeOnly hourFormat="12" showSeconds showIcon [(value)]="alarm" />
+      <label class="label" for="dp-time">Time</label>
+      <hx-time-picker inputId="dp-time" hourFormat="12" showSeconds showIcon showButtonBar [(value)]="alarm" />
     </div>
     <div class="row">
       <label class="label" for="dp-hour">Hour only</label>
-      <hx-date-picker inputId="dp-hour" timeOnly [showMinutes]="false" [(value)]="opens" />
+      <hx-time-picker inputId="dp-hour" [showMinutes]="false" [(value)]="opens" />
     </div>
     <div class="row">
       <label class="label" for="dtr-shift">Date time range</label>

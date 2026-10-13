@@ -70,6 +70,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxPanel` | `hx-panel` | titled container, optional collapse with a toggle button, header and footer slots |
 | `HxFileUpload` | `hx-file-upload` | choose and drop files, list, validation messages, progress; no HTTP, the app uploads |
 | `HxDateTimeRangePicker` | `hx-date-time-range-picker` | date-time range in one field with one popup calendar and a time row per end (`{ from, to }`), same time options as the date picker, all three forms APIs |
+| `HxTimePicker` | `hx-time-picker` | time field with a time row popup or inline (`Date` today at that time), 24 h or 12 h, hour only, steps, `minTime`/`maxTime`, typing, all three forms APIs |
 | `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, optional time (`showTime`, `timeOnly`), typing, month and year views, all three forms APIs |
 | `HxAutoComplete` | `hx-auto-complete` | text field with suggestions from `(complete)`, chips, dropdown, all three forms APIs |
 | `HxMultiSelect` | `hx-multi-select` | select for several values: comma or chips, filter, select all, all three forms APIs |
