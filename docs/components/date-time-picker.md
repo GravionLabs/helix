@@ -36,7 +36,7 @@ optionally second and AM/PM), or with `[inline]="true"` the calendar and the tim
   time is the hour (`14`, `14:00` or `2 PM`). Enter or leaving the field commits it; an unreadable, disabled or out of
   range date and time puts the value back.
 - **Value:** choosing a day keeps the time already set; setting a time with no date takes today. Time zones are not
-  handled: the value is a local `Date`.
+  handled: the value is a local `Date`. Setting a time with no date does nothing when today is in `disabledDates` or outside `minDate`..`maxDate`.
 - **Popup:** click, the button, Arrow Down or Alt+Arrow Up open it; it is a non-modal dialog that stays open until
   Escape, the focus leaving the control or a button of the button bar (Today, Clear). Focus moves to the selected or
   today's day and returns to the field on close.

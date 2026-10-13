@@ -71,8 +71,8 @@
   <div
     class="hx-date-time-picker-panel"
     role="group"
-    [attr.aria-label]="ariaLabel() ?? 'Calendar and time'"
-    [attr.aria-labelledby]="ariaLabelledby() ?? null"
+    [attr.aria-label]="inline() ? (ariaLabel() ?? chooseLabel()) : null"
+    [attr.aria-labelledby]="inline() ? (ariaLabelledby() ?? null) : null"
     (focusout)="onInlineFocusOut($event)"
   >
     <hx-calendar

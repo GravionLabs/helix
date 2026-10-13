@@ -199,6 +199,15 @@ export class HxDateTimePicker
   });
 
   constructor() {
+    // a value set from outside drops the text typed and not yet committed (as `writeValue` does)
+    effect(() => {
+      this.value();
+      untracked(() => this.#typed.set(null));
+    });
+    // a control that becomes disabled closes its popup
+    effect(() => {
+      if (this.isDisabled()) untracked(() => this.open.set(false));
+    });
     // a value set from outside (a binding, a form) brings its month into view; without a value, today moved into
     // `minDate`..`maxDate` does
     effect(() => {
@@ -252,12 +261,14 @@ export class HxDateTimePicker
     return clampTime(date, this.minDate(), this.maxDate()).getTime() !== date.getTime();
   }
 
-  protected pick(date: Date): void {
-    if (this.isDisabled() || this.isDateDisabled(date)) return;
+  /** Chooses a day, keeping the time; `false` when the day is not accepted. */
+  protected pick(date: Date): boolean {
+    if (this.isDisabled() || this.isDateDisabled(date)) return false;
     const day = startOfDay(date);
     this.focusedDate.set(day);
     this.#typed.set(null);
     this.#commit(this.#atTime(day, this.time()));
+    return true;
   }
 
   /** `day` at a time of day, moved into `minDate`..`maxDate` including their times. */
@@ -336,17 +347,18 @@ export class HxDateTimePicker
   }
 
   protected onTyping(event: Event): void {
+    if (this.isDisabled()) return;
     this.#typed.set((event.target as HTMLInputElement).value);
   }
 
   /** Parses the typed text; an unreadable, disabled or out of range date and time puts the value back. */
   protected commitTyping(): void {
     const typed = this.#typed();
-    if (typed === null) return;
+    if (typed === null || this.isDisabled()) return;
     this.#typed.set(null);
     const text = typed.trim();
     if (text === '') {
-      this.#commit(null);
+      if (this.value() !== null) this.#commit(null);
     } else {
       const parsed = parseDateTimeText(text, {
         locale: this.locale(),
@@ -365,12 +377,12 @@ export class HxDateTimePicker
   }
 
   protected selectToday(): void {
-    this.pick(this.today);
     // the time row keeps the popup open on a day: the button bar closes it
-    this.close(true);
+    if (this.pick(this.today)) this.close(true);
   }
 
   protected clear(): void {
+    if (this.isDisabled()) return;
     this.#typed.set(null);
     this.#commit(null);
     this.close(true);
