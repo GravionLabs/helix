@@ -306,8 +306,11 @@ export class HxDateTimeRangePicker
   protected setTo(picked: HxDatePickerValue): void {
     const { from } = this.draft();
     const to = single(picked);
-    // a `to` chosen while `from` is empty starts the range at that time
-    this.#stage({ from: from ?? to, to: from && to && to < from ? from : to });
+    // a `to` chosen while `from` is empty starts the range at midnight of that day (what the `from` row shows)
+    this.#stage({
+      from: from ?? (to ? startOfDay(to) : null),
+      to: from && to && to < from ? from : to,
+    });
   }
 
   protected markTouched(): void {
