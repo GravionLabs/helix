@@ -1,4 +1,4 @@
-/** Date helpers of the date picker: all work on local calendar days (the time of day is ignored). */
+/** Date helpers of the date picker: they work on local calendar days; only `withTime` and `clampTime` look at the time of day. */
 
 export function startOfDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -32,6 +32,18 @@ export function isSameDay(a: Date | null | undefined, b: Date | null | undefined
 /** Negative when `a` is before `b`, by day. */
 export function compareDays(a: Date, b: Date): number {
   return startOfDay(a).getTime() - startOfDay(b).getTime();
+}
+
+/** The same day at the given local time. */
+export function withTime(date: Date, hours: number, minutes: number, seconds = 0): Date {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes, seconds);
+}
+
+/** `date` moved into `min`..`max` (either may be missing), compared including the time of day. */
+export function clampTime(date: Date, min?: Date | null, max?: Date | null): Date {
+  if (isValidDate(min) && date.getTime() < min.getTime()) return new Date(min);
+  if (isValidDate(max) && date.getTime() > max.getTime()) return new Date(max);
+  return date;
 }
 
 export function isValidDate(value: unknown): value is Date {
