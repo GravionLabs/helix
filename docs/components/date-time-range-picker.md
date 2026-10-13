@@ -18,7 +18,7 @@ to) and, below it, a time row for the start and one for the end. The value is `{
 | `placeholder`, `inputId` | `string` | | Of the text field. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time rows; `false` picks days only (midnight). |
-| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the date picker | See [date picker](date-picker.md). `timeOnly` shows the time rows without the calendar. |
+| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time rows without the calendar. |
 | `stepHour`, `stepMinute`, `stepSecond` | `number` | `1` | Step of the time columns. |
 | `dateFormat`, `locale`, `firstDayOfWeek` | | as the date picker | Format of the text, names, first weekday. |
 | `minDate`, `maxDate`, `disabledDates` | `Date`, `Date[]` | | Limits, compared including the time. |
@@ -33,7 +33,7 @@ to) and, below it, a time row for the start and one for the end. The value is `{
 - **Order:** `to` is never before `from`: the `to` time row starts at `from` (including the time), the `from` row ends
   at `to`, and a day or time that crosses the other side moves it.
 - **Validation:** there is no built-in required rule; use the validators of the form.
-- **Accessibility:** the popup is a non-modal dialog; the calendar and the time rows are those of the date picker
+- **Accessibility:** the popup is a non-modal dialog; the calendar is the date picker's, the time rows (`role="spinbutton"` columns) are the time picker's
   (`role="grid"`, `role="spinbutton"` columns), the time rows are named `fromLabel` / `toLabel`.
 - **Time zones** are not handled: the values are local `Date`s.
 

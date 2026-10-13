@@ -5,11 +5,13 @@ import type { TimeOfDay } from './time-row-helpers';
 
 @Component({
   imports: [HxTimeRow],
-  template: `<hx-time-row [time]="time()" [disabled]="disabled()" [stepMinute]="15" locale="en-US" (timeChange)="changes.push($event)" />`,
+  template: `<hx-time-row [time]="time()" [disabled]="disabled()" [hour12]="hour12()" [showSeconds]="seconds()" [stepMinute]="15" locale="en-US" (timeChange)="changes.push($event)" />`,
 })
 class Host {
   time = signal<TimeOfDay>({ hours: 9, minutes: 30, seconds: 0 });
   disabled = signal(false);
+  hour12 = signal(false);
+  seconds = signal(false);
   changes: TimeOfDay[] = [];
 }
 
@@ -70,6 +72,31 @@ describe('HxTimeRow', () => {
     const event = press(hour, 'ArrowUp');
     expect(event.defaultPrevented).toBe(false);
     expect(host.changes).toEqual([]);
+  });
+
+  it('describes each column as a spinbutton', () => {
+    const [hour, minute] = spins();
+    expect(hour.getAttribute('aria-label')).toBe('Hour');
+    expect(hour.getAttribute('aria-valuenow')).toBe('9');
+    expect(hour.getAttribute('aria-valuemin')).toBe('0');
+    expect(hour.getAttribute('aria-valuemax')).toBe('23');
+    expect(minute.getAttribute('aria-label')).toBe('Minute');
+    expect(minute.getAttribute('aria-valuenow')).toBe('30');
+    expect(minute.getAttribute('aria-valuemax')).toBe('59');
+    expect(fixture.nativeElement.querySelector('[role=group]').getAttribute('aria-label')).toBe(
+      'Time',
+    );
+  });
+
+  it('shows an AM/PM column in 12 hour mode and seconds on request', () => {
+    expect(spins().map((s) => s.getAttribute('aria-label'))).toEqual(['Hour', 'Minute']);
+    host.hour12.set(true);
+    host.seconds.set(true);
+    fixture.detectChanges();
+    const labels = spins().map((s) => s.getAttribute('aria-label'));
+    expect(labels).toEqual(['Hour', 'Minute', 'Second', 'AM/PM']);
+    expect(spins()[0].getAttribute('aria-valuemax')).toBe('12');
+    expect(spins()[3].textContent?.trim()).toBe('AM');
   });
 
   it('focuses the first spinbutton', () => {

@@ -101,7 +101,7 @@
     </div>
     <div class="row">
       <label class="label" for="dp-datetime">Date and time</label>
-      <hx-date-picker inputId="dp-datetime" showTime showIcon showButtonBar [stepMinute]="15" [(value)]="start" />
+      <hx-date-time-picker inputId="dp-datetime" showIcon showButtonBar [stepMinute]="15" [(value)]="start" />
       <span>{{ start() }}</span>
     </div>
     <div class="row">
@@ -137,7 +137,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <span class="label">date and time</span>
-        <hx-date-picker inline showTime ariaLabel="Start" [(value)]="start" />
+        <hx-date-time-picker inline ariaLabel="Start" [(value)]="start" />
       </div>
       <div class="flex flex-col gap-2">
         <span class="label">multiple, German</span>

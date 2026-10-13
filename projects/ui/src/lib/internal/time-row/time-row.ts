@@ -17,8 +17,8 @@ import {
 } from './time-row-helpers';
 
 /**
- * The time row of `hx-date-picker`: one spinbutton column per unit (hour, minute, second, AM/PM) with the arrow
- * buttons and the keys. It holds no value: the picker passes the time in and takes `timeChange` out.
+ * The time row of `hx-time-picker`, `hx-date-time-picker` and `hx-date-time-range-picker`: one spinbutton column per unit (hour, minute, second, AM/PM) with the arrow
+ * buttons and the keys. It holds no value: the control passes the time in and takes `timeChange` out.
  */
 @Component({
   selector: 'hx-time-row',

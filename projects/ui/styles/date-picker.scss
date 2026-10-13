@@ -149,65 +149,6 @@
   cursor: default;
 }
 
-/* time row */
-.hx-date-picker-time {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--h-datepicker-title-gap);
-  padding: var(--h-datepicker-header-padding);
-}
-
-.hx-date-picker-time-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hx-date-picker-time-button,
-.hx-date-picker-time-spin {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--h-datepicker-date-width);
-  height: var(--h-datepicker-date-height);
-  border: 0;
-  border-radius: var(--h-datepicker-date-border-radius);
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  outline: 0 none;
-}
-
-.hx-date-picker-time-button {
-  cursor: pointer;
-}
-
-.hx-date-picker-time-spin {
-  font-variant-numeric: tabular-nums;
-}
-
-.hx-date-picker-time-button:not(:disabled):hover {
-  background: var(--h-datepicker-date-hover-background);
-  color: var(--h-datepicker-date-hover-color);
-}
-
-.hx-date-picker-time-button:focus-visible,
-.hx-date-picker-time-spin:focus-visible {
-  outline: var(--h-datepicker-date-focus-ring-width) var(--h-datepicker-date-focus-ring-style)
-    var(--h-datepicker-date-focus-ring-color);
-  outline-offset: var(--h-datepicker-date-focus-ring-offset);
-  box-shadow: var(--h-datepicker-date-focus-ring-shadow);
-}
-
-.hx-date-picker-time-up-icon {
-  @include hx-icon(chevron-up, 1rem, currentcolor, 2.4);
-}
-
-.hx-date-picker-time-down-icon {
-  @include hx-icon(chevron-down, 1rem, currentcolor, 2.4);
-}
-
 /* month and year grids */
 .hx-date-picker-months,
 .hx-date-picker-years {
@@ -254,7 +195,6 @@
 .hx-date-picker-disabled .hx-date-picker-month,
 .hx-date-picker-disabled .hx-date-picker-year,
 .hx-date-picker-disabled .hx-date-picker-nav,
-.hx-date-picker-disabled .hx-date-picker-time-button,
 .hx-date-picker-disabled .hx-date-picker-title-button {
   cursor: default;
 }

@@ -92,6 +92,10 @@ export {
   type HxDatePickerValue,
 } from './lib/date-picker/date-picker';
 export {
+  HxDateTimePicker,
+  type HxDateTimePickerValue,
+} from './lib/date-time-picker/date-time-picker';
+export {
   HxDateTimeRangePicker,
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
