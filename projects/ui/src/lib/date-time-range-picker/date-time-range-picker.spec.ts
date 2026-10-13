@@ -250,6 +250,16 @@ describe('HxDateTimeRangePicker', () => {
     expect(host.basic().to).toEqual(new Date(2026, 9, 13, 10, 0));
   });
 
+  it('starts from at the to time when only to is changed on an empty range', async () => {
+    await open('basic');
+    await press(spin('to', 'Hour'), 'ArrowUp');
+    await submit();
+    const { from, to } = host.basic();
+    expect(to).not.toBeNull();
+    expect(from).toEqual(to);
+    expect(input('basic').value.trim().startsWith('-')).toBe(false);
+  });
+
   it('keeps to from going before from on the same day', async () => {
     host.basic.set({
       from: new Date(2026, 9, 12, 8, 0),
