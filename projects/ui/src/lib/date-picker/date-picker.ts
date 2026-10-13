@@ -25,36 +25,25 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { HxCalendar } from '../internal/calendar/calendar';
+import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
 import {
-  addDays,
-  addMonths,
   clampTime,
   compareDays,
   isSameDay,
   isValidDate,
-  monthCells,
   startOfDay,
   withTime,
 } from '../internal/dates';
+import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
+import { HxTimeRow } from '../internal/time-row/time-row';
+import type { TimeOfDay } from '../internal/time-row/time-row-helpers';
 
 const startOfDayOrNull = (date: Date | null) => (isValidDate(date) ? startOfDay(date) : null);
 
 export type HxDatePickerSelectionMode = 'single' | 'range' | 'multiple';
 export type HxDatePickerValue = Date | Date[] | null;
-type CalendarView = 'day' | 'month' | 'year';
-type TimeUnit = 'hour' | 'minute' | 'second' | 'period';
-
-interface TimeColumn {
-  unit: TimeUnit;
-  label: string;
-  now: number;
-  min: number;
-  max: number;
-  text: string;
-  valueText: string;
-}
-
 /**
  * A date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a range or
  * several days. Typing a date in the field parses it; month and year views are one click on the title. Day, month and weekday names come from `Intl.DateTimeFormat` for the `locale`.
@@ -90,7 +79,7 @@ interface TimeColumn {
  */
 @Component({
   selector: 'hx-date-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar, HxTimeRow],
   templateUrl: './date-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -180,6 +169,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -2 },
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
+  private readonly calendar = viewChild(HxCalendar);
+  private readonly timeRow = viewChild(HxTimeRow);
   /** The text typed and not yet committed; `null` while the field shows the value. */
   readonly #typed = signal<string | null>(null);
   protected readonly view = signal<CalendarView>('day');
@@ -188,8 +179,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   /** The day with the focus in the grid, and the month the grid shows. */
   protected readonly focusedDate = signal(startOfDay(new Date()));
-  protected readonly viewYear = computed(() => this.focusedDate().getFullYear());
-  readonly #today = startOfDay(new Date());
+  protected readonly today = startOfDay(new Date());
 
   protected readonly selectedDates = computed<Date[]>(() => {
     const value = this.value();
@@ -197,23 +187,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return isValidDate(value) ? [value] : [];
   });
 
-  readonly #formats = computed(() => {
-    const locale = this.locale();
-    return {
-      month: new Intl.DateTimeFormat(locale, { month: 'long' }),
-      monthShort: new Intl.DateTimeFormat(locale, { month: 'short' }),
-      weekdayShort: new Intl.DateTimeFormat(locale, { weekday: 'short' }),
-      weekdayLong: new Intl.DateTimeFormat(locale, { weekday: 'long' }),
-      full: new Intl.DateTimeFormat(locale, { dateStyle: 'full' }),
-    };
-  });
-
   /** Whether the value carries a time chosen here: only `single` has one. */
   protected readonly timeEnabled = computed(
     () => (this.showTime() || this.timeOnly()) && this.selectionMode() === 'single',
   );
   protected readonly calendarShown = computed(() => !(this.timeOnly() && this.timeEnabled()));
-  readonly #hour12 = computed(() => this.hourFormat() === '12');
+  protected readonly hour12 = computed(() => this.hourFormat() === '12');
 
   readonly #format = computed(() => {
     const custom = this.dateFormat();
@@ -225,13 +204,13 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
       options.hour = '2-digit';
       if (this.showMinutes()) options.minute = '2-digit';
       if (this.showMinutes() && this.showSeconds()) options.second = '2-digit';
-      options.hourCycle = this.#hour12() ? 'h12' : 'h23';
+      options.hourCycle = this.hour12() ? 'h12' : 'h23';
     }
     return new Intl.DateTimeFormat(this.locale(), options);
   });
 
   /** The time of day shown in the time row: the value's, or midnight while there is none. */
-  readonly #time = computed(() => {
+  protected readonly time = computed<TimeOfDay>(() => {
     const date = this.selectedDates()[0];
     const minutes = this.showMinutes();
     return {
@@ -239,63 +218,6 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
       minutes: minutes ? (date?.getMinutes() ?? 0) : 0,
       seconds: minutes ? (date?.getSeconds() ?? 0) : 0,
     };
-  });
-
-  protected readonly timeColumns = computed<TimeColumn[]>(() => {
-    const { hours, minutes, seconds } = this.#time();
-    const twelve = this.#hour12();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const hourNow = twelve ? hours % 12 || 12 : hours;
-    const columns: TimeColumn[] = [
-      {
-        unit: 'hour',
-        label: this.hourLabel(),
-        now: hourNow,
-        min: twelve ? 1 : 0,
-        max: twelve ? 12 : 23,
-        text: pad(hourNow),
-        valueText: String(hourNow),
-      },
-    ];
-    if (this.showMinutes()) {
-      columns.push({
-        unit: 'minute',
-        label: this.minuteLabel(),
-        now: minutes,
-        min: 0,
-        max: 59,
-        text: pad(minutes),
-        valueText: String(minutes),
-      });
-    }
-    if (this.showMinutes() && this.showSeconds()) {
-      columns.push({
-        unit: 'second',
-        label: this.secondLabel(),
-        now: seconds,
-        min: 0,
-        max: 59,
-        text: pad(seconds),
-        valueText: String(seconds),
-      });
-    }
-    if (twelve) {
-      const parts = new Intl.DateTimeFormat(this.locale(), { hour: 'numeric', hourCycle: 'h12' });
-      const period = (h: number) =>
-        parts.formatToParts(new Date(2026, 0, 1, h)).find((p) => p.type === 'dayPeriod')?.value ??
-        (h < 12 ? 'AM' : 'PM');
-      const pm = hours >= 12 ? 1 : 0;
-      columns.push({
-        unit: 'period',
-        label: this.periodLabel(),
-        now: pm,
-        min: 0,
-        max: 1,
-        text: period(pm ? 12 : 0),
-        valueText: period(pm ? 12 : 0),
-      });
-    }
-    return columns;
   });
   protected readonly text = computed(() => {
     const typed = this.#typed();
@@ -306,39 +228,13 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return dates.map((d) => fmt.format(d)).join(', ');
   });
 
-  protected readonly monthName = computed(() => this.#formats().month.format(this.focusedDate()));
-  protected readonly monthNames = computed(() =>
-    Array.from({ length: 12 }, (_, m) => this.#formats().monthShort.format(new Date(2026, m, 1))),
-  );
-  protected readonly weekdays = computed(() => {
-    const first = this.firstDayOfWeek();
-    return Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(2026, 0, 4 + ((first + i) % 7)); // 4 January 2026 is a Sunday
-      return {
-        short: this.#formats().weekdayShort.format(day),
-        long: this.#formats().weekdayLong.format(day),
-      };
-    });
-  });
-  protected readonly weeks = computed(() =>
-    monthCells(
-      this.focusedDate().getFullYear(),
-      this.focusedDate().getMonth(),
-      this.firstDayOfWeek(),
-    ),
-  );
-  protected readonly decade = computed(() => {
-    const start = Math.floor(this.focusedDate().getFullYear() / 12) * 12;
-    return Array.from({ length: 12 }, (_, i) => start + i);
-  });
-
   constructor() {
     // a value set from outside (a binding, a form) brings its month into view; without a value, today moved into
     // `minDate`..`maxDate` does
     effect(() => {
       const first =
         this.selectedDates()[0] ??
-        clampTime(this.#today, startOfDayOrNull(this.minDate()), this.maxDate());
+        clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate());
       const shown = untracked(() => this.focusedDate());
       if (
         first &&
@@ -373,73 +269,21 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     else this.#focusDay();
   }
 
-  protected dateKey(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  }
-
-  protected dayLabel(date: Date): string {
-    return this.#formats().full.format(date);
-  }
-
-  protected isToday(date: Date): boolean {
-    return isSameDay(date, this.#today);
+  protected isDateDisabled(date: Date): boolean {
+    return isDateDisabled(date, {
+      min: this.minDate(),
+      max: this.maxDate(),
+      disabledDates: this.disabledDates(),
+    });
   }
 
   protected isSelected(date: Date): boolean {
     return this.selectedDates().some((d) => isSameDay(d, date));
   }
 
-  protected isInRange(date: Date): boolean {
-    const [from, to] = this.selectedDates();
-    return (
-      this.selectionMode() === 'range' &&
-      !!from &&
-      !!to &&
-      compareDays(date, from) > 0 &&
-      compareDays(date, to) < 0
-    );
-  }
-
-  protected isDateDisabled(date: Date): boolean {
-    const [min, max] = [this.minDate(), this.maxDate()];
-    return (
-      (!!min && compareDays(date, min) < 0) ||
-      (!!max && compareDays(date, max) > 0) ||
-      this.disabledDates().some((d) => isSameDay(d, date))
-    );
-  }
-
   /** Whether a date with a time lies outside `minDate`..`maxDate`, compared including the time. */
   #outsideTimeRange(date: Date): boolean {
     return clampTime(date, this.minDate(), this.maxDate()).getTime() !== date.getTime();
-  }
-
-  /** One day of the grid takes the tab stop: the focused day, or the first day when the focus is elsewhere. */
-  protected isFocusTarget(date: Date): boolean {
-    return isSameDay(date, this.focusedDate());
-  }
-
-  protected step(direction: 1 | -1): void {
-    const current = this.focusedDate();
-    const next =
-      this.view() === 'day'
-        ? addMonths(current, direction)
-        : this.view() === 'month'
-          ? addMonths(current, 12 * direction)
-          : addMonths(current, 144 * direction);
-    this.focusedDate.set(next);
-  }
-
-  protected chooseMonth(month: number): void {
-    const current = this.focusedDate();
-    this.focusedDate.set(addMonths(new Date(current.getFullYear(), 0, current.getDate()), month));
-    this.view.set('day');
-  }
-
-  protected chooseYear(year: number): void {
-    const current = this.focusedDate();
-    this.focusedDate.set(addMonths(new Date(year, current.getMonth(), 1), 0));
-    this.view.set('month');
   }
 
   protected pick(date: Date): void {
@@ -464,7 +308,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
         break;
       }
       default:
-        next = this.timeEnabled() ? this.#atTime(day, this.#time()) : day;
+        next = this.timeEnabled() ? this.#atTime(day, this.time()) : day;
     }
     this.#typed.set(null);
     this.#commit(next);
@@ -477,7 +321,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   }
 
   /** `day` at a time of day, moved into `minDate`..`maxDate` including their times. */
-  #atTime(day: Date, time: { hours: number; minutes: number; seconds: number }): Date {
+  #atTime(day: Date, time: TimeOfDay): Date {
     return clampTime(
       withTime(day, time.hours, time.minutes, time.seconds),
       this.minDate(),
@@ -485,85 +329,13 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     );
   }
 
-  /** The values a time unit can take: from its minimum in steps, up to its maximum. */
-  #unitValues(column: TimeColumn): number[] {
-    const step =
-      column.unit === 'hour'
-        ? this.stepHour()
-        : column.unit === 'minute'
-          ? this.stepMinute()
-          : column.unit === 'second'
-            ? this.stepSecond()
-            : 1;
-    const values: number[] = [];
-    for (let v = column.min; v <= column.max; v += Math.max(1, step || 1)) values.push(v);
-    return values;
-  }
-
-  /** Sets one unit of the time (in the units shown: 1 to 12 with AM/PM) and keeps the day, or takes today. */
-  #setUnit(column: TimeColumn, value: number): void {
+  /** The time row changed a unit: keep the day, or take today. */
+  protected setTime(time: TimeOfDay): void {
     if (this.isDisabled()) return;
-    const { hours, minutes, seconds } = this.#time();
-    const pm = hours >= 12;
-    let next = { hours, minutes, seconds };
-    switch (column.unit) {
-      case 'hour':
-        next = { ...next, hours: this.#hour12() ? (value % 12) + (pm ? 12 : 0) : value };
-        break;
-      case 'minute':
-        next = { ...next, minutes: value };
-        break;
-      case 'second':
-        next = { ...next, seconds: value };
-        break;
-      default:
-        next = { ...next, hours: (hours % 12) + (value ? 12 : 0) };
-    }
-    const day = this.selectedDates()[0] ?? this.#today;
+    const day = this.selectedDates()[0] ?? this.today;
     if (this.isDateDisabled(day)) return;
     this.#typed.set(null);
-    this.#commit(this.#atTime(day, next));
-  }
-
-  /** Moves a time column to the next (`1`) or previous (`-1`) value of its steps, wrapping around. */
-  protected stepTime(column: TimeColumn, direction: 1 | -1): void {
-    const values = this.#unitValues(column);
-    const next =
-      direction > 0
-        ? (values.find((v) => v > column.now) ?? values[0])
-        : (values.filter((v) => v < column.now).pop() ?? values[values.length - 1]);
-    this.#setUnit(column, next);
-  }
-
-  protected onTimeKeydown(event: KeyboardEvent, column: TimeColumn): void {
-    if (this.isDisabled()) return;
-    const values = this.#unitValues(column);
-    const page = column.unit === 'hour' ? 6 : 10;
-    const nearest = (target: number) =>
-      values.reduce((best, v) => (Math.abs(v - target) < Math.abs(best - target) ? v : best));
-    switch (event.key) {
-      case 'ArrowUp':
-        this.stepTime(column, 1);
-        break;
-      case 'ArrowDown':
-        this.stepTime(column, -1);
-        break;
-      case 'PageUp':
-        this.#setUnit(column, nearest(Math.min(column.max, column.now + page)));
-        break;
-      case 'PageDown':
-        this.#setUnit(column, nearest(Math.max(column.min, column.now - page)));
-        break;
-      case 'Home':
-        this.#setUnit(column, values[0]);
-        break;
-      case 'End':
-        this.#setUnit(column, values[values.length - 1]);
-        break;
-      default:
-        return;
-    }
-    event.preventDefault();
+    this.#commit(this.#atTime(day, time));
   }
 
   #commit(next: HxDatePickerValue): void {
@@ -571,55 +343,14 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     this.#onChange(next);
   }
 
-  protected onDayKeydown(event: KeyboardEvent, date: Date): void {
-    const first = this.firstDayOfWeek();
-    const weekday = (date.getDay() - first + 7) % 7;
-    let target: Date | null = null;
-    switch (event.key) {
-      case 'ArrowLeft':
-        target = addDays(date, -1);
-        break;
-      case 'ArrowRight':
-        target = addDays(date, 1);
-        break;
-      case 'ArrowUp':
-        target = addDays(date, -7);
-        break;
-      case 'ArrowDown':
-        target = addDays(date, 7);
-        break;
-      case 'Home':
-        target = addDays(date, -weekday);
-        break;
-      case 'End':
-        target = addDays(date, 6 - weekday);
-        break;
-      case 'PageUp':
-        target = addMonths(date, event.shiftKey ? -12 : -1);
-        break;
-      case 'PageDown':
-        target = addMonths(date, event.shiftKey ? 12 : 1);
-        break;
-      default:
-        return;
-    }
-    event.preventDefault();
-    this.focusedDate.set(target);
-    this.#focusDay();
-  }
-
   #focusDay(): void {
     afterNextRender(
       () => {
-        const key = this.dateKey(this.focusedDate());
-        // the popup lives in the overlay, outside the host
-        const root = this.inline()
-          ? this.#host.nativeElement
-          : document.getElementById(this.popupId);
-        const target = this.calendarShown()
-          ? `.hx-date-picker-date[data-date="${key}"]`
-          : '.hx-date-picker-time-spin';
-        root?.querySelector<HTMLElement>(target)?.focus();
+        if (this.calendarShown()) {
+          this.calendar()?.focusDay();
+          return;
+        }
+        this.timeRow()?.focus();
       },
       { injector: this.#injector },
     );
@@ -646,7 +377,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     const first = this.selectedDates()[0];
     this.view.set('day');
     this.focusedDate.set(
-      startOfDay(first ?? clampTime(this.#today, startOfDayOrNull(this.minDate()), this.maxDate())),
+      startOfDay(first ?? clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate())),
     );
     this.#focusDay();
   }
@@ -704,58 +435,21 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     if (valid[0]) this.focusedDate.set(startOfDay(valid[0]));
   }
 
-  /** A date and a time from the text (`10/09/2026, 3:45 PM`), or only a time for `timeOnly` (today). */
   #parseWithTime(text: string): Date | null {
-    const period12 = '(?:\\s*([ap])\\.?\\s*m\\.?)?';
-    // hour only: `14` or `2 PM` at the end (with a date before it), else `14:30` or `14:30:05`
-    const match = this.showMinutes()
-      ? new RegExp(`(\\d{1,2}):(\\d{2})(?::(\\d{2}))?${period12}`, 'i').exec(text)
-      : new RegExp(`(?:^|[\\s,;T])(\\d{1,2})(?::00(?::00)?)?${period12}\\s*$`, 'i').exec(text);
-    if (!match) return null;
-    let hours = Number(match[1]);
-    const hourOnly = !this.showMinutes();
-    const [minutes, seconds] = hourOnly ? [0, 0] : [Number(match[2]), Number(match[3] ?? 0)];
-    const period = (hourOnly ? match[2] : match[4])?.toLowerCase();
-    if (period) {
-      if (hours < 1 || hours > 12) return null;
-      hours = (hours % 12) + (period === 'p' ? 12 : 0);
-    }
-    if (hours > 23 || minutes > 59 || seconds > 59) return null;
-    const rest = text.replace(match[0], hourOnly ? ' ' : '').replace(/^[\s,;T]+|[\s,;T]+$/g, '');
-    if (/\p{L}/u.test(rest)) return null;
-    const kept = this.selectedDates()[0] ?? this.#today;
-    const day = this.timeOnly() && rest === '' ? startOfDay(kept) : this.#parse(rest);
-    return day && withTime(day, hours, minutes, seconds);
+    return parseDateTimeText(text, {
+      locale: this.locale(),
+      showMinutes: this.showMinutes(),
+      timeOnly: this.timeOnly(),
+      fallbackDay: this.selectedDates()[0] ?? this.today,
+    });
   }
 
-  /** A date from the text: numbers in the order the locale writes them, or `yyyy-mm-dd`. */
   #parse(text: string): Date | null {
-    const numbers = text.match(/\d+/g)?.map(Number);
-    if (!numbers || numbers.length !== 3) return null;
-    let [year, month, day] = [0, 0, 0];
-    if (/^\d{4}\D/.test(text.trim())) {
-      [year, month, day] = numbers;
-    } else {
-      const order = new Intl.DateTimeFormat(this.locale(), {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-      })
-        .formatToParts(new Date(2000, 10, 22))
-        .filter((p) => ['day', 'month', 'year'].includes(p.type))
-        .map((p) => p.type);
-      const byType = Object.fromEntries(order.map((type, i) => [type, numbers[i]]));
-      [year, month, day] = [byType['year'], byType['month'], byType['day']];
-    }
-    if (year < 100) year += 2000;
-    const date = new Date(year, month - 1, day);
-    const sane =
-      date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-    return sane ? date : null;
+    return parseDateText(text, this.locale());
   }
 
   protected selectToday(): void {
-    this.pick(this.#today);
+    this.pick(this.today);
     // a time row keeps the popup open on a day: the button bar closes it
     if (this.timeEnabled()) this.close(true);
   }

@@ -76,150 +76,40 @@
   (focusout)="onFocusOut($event)"
 >
   @if (calendarShown()) {
-  <div class="hx-date-picker-header">
-    <button
-      type="button"
-      class="hx-date-picker-nav hx-date-picker-prev"
-      [attr.aria-label]="view() === 'day' ? 'Previous month' : view() === 'month' ? 'Previous year' : 'Previous years'"
+    <hx-calendar
+      [(focusedDate)]="focusedDate"
+      [(view)]="view"
+      [selectedDates]="selectedDates()"
+      [selectionMode]="selectionMode()"
+      [minDate]="minDate()"
+      [maxDate]="maxDate()"
+      [disabledDates]="disabledDates()"
+      [firstDayOfWeek]="firstDayOfWeek()"
+      [locale]="locale()"
       [disabled]="isDisabled()"
-      (click)="step(-1)"
-    >
-      <span class="hx-date-picker-prev-icon" aria-hidden="true"></span>
-    </button>
-    <div class="hx-date-picker-title" [id]="titleId" aria-live="polite">
-      @switch (view()) {
-        @case ('day') {
-          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('month')">{{ monthName() }}</button>
-          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('year')">{{ viewYear() }}</button>
-        }
-        @case ('month') {
-          <button type="button" class="hx-date-picker-title-button" [disabled]="isDisabled()" (click)="view.set('year')">{{ viewYear() }}</button>
-        }
-        @default {
-          <span class="hx-date-picker-title-text">{{ decade()[0] }} – {{ decade()[11] }}</span>
-        }
-      }
-    </div>
-    <button
-      type="button"
-      class="hx-date-picker-nav hx-date-picker-next"
-      [attr.aria-label]="view() === 'day' ? 'Next month' : view() === 'month' ? 'Next year' : 'Next years'"
-      [disabled]="isDisabled()"
-      (click)="step(1)"
-    >
-      <span class="hx-date-picker-next-icon" aria-hidden="true"></span>
-    </button>
-  </div>
-
-  @switch (view()) {
-    @case ('day') {
-      <table class="hx-date-picker-grid" role="grid" [attr.aria-labelledby]="titleId" [attr.aria-multiselectable]="selectionMode() !== 'single' ? 'true' : null">
-        <thead>
-          <tr>
-            @for (day of weekdays(); track $index) {
-              <th scope="col" class="hx-date-picker-weekday" [attr.abbr]="day.long">{{ day.short }}</th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of weeks(); track $index) {
-            <tr>
-              @for (cell of row; track $index) {
-                @if (cell) {
-                  <td
-                    role="gridcell"
-                    class="hx-date-picker-cell"
-                    [attr.aria-selected]="isSelected(cell)"
-                  >
-                    <button
-                      type="button"
-                      class="hx-date-picker-date"
-                      [class.hx-date-picker-date-selected]="isSelected(cell)"
-                      [class.hx-date-picker-date-in-range]="isInRange(cell)"
-                      [class.hx-date-picker-date-today]="isToday(cell)"
-                      [attr.data-date]="dateKey(cell)"
-                      [attr.tabindex]="isFocusTarget(cell) ? 0 : -1"
-                      [attr.aria-label]="dayLabel(cell)"
-                      [attr.aria-current]="isToday(cell) ? 'date' : null"
-                      [attr.aria-disabled]="isDateDisabled(cell) ? 'true' : null"
-                      [disabled]="isDisabled()"
-                      (click)="pick(cell)"
-                      (keydown)="onDayKeydown($event, cell)"
-                    >
-                      {{ cell.getDate() }}
-                    </button>
-                  </td>
-                } @else {
-                  <td class="hx-date-picker-cell hx-date-picker-cell-empty" role="gridcell"></td>
-                }
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
-    }
-    @case ('month') {
-      <div class="hx-date-picker-months">
-        @for (name of monthNames(); track $index) {
-          <button
-            type="button"
-            class="hx-date-picker-month"
-            [class.hx-date-picker-month-selected]="$index === focusedDate().getMonth() && viewYear() === focusedDate().getFullYear()"
-            [disabled]="isDisabled()"
-            (click)="chooseMonth($index)"
-          >
-            {{ name }}
-          </button>
-        }
-      </div>
-    }
-    @default {
-      <div class="hx-date-picker-years">
-        @for (year of decade(); track year) {
-          <button
-            type="button"
-            class="hx-date-picker-year"
-            [class.hx-date-picker-year-selected]="year === focusedDate().getFullYear()"
-            [disabled]="isDisabled()"
-            (click)="chooseYear(year)"
-          >
-            {{ year }}
-          </button>
-        }
-      </div>
-    }
-  }
+      [titleId]="titleId"
+      [today]="today"
+      (picked)="pick($event)"
+    />
   }
   @if (timeEnabled()) {
-    <div class="hx-date-picker-time" role="group" [attr.aria-label]="timeLabel()">
-      @for (column of timeColumns(); track column.unit) {
-        @if (column.unit !== 'hour' && column.unit !== 'period') {
-          <span class="hx-date-picker-time-separator" aria-hidden="true">:</span>
-        }
-        <div class="hx-date-picker-time-column">
-          <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="isDisabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, 1)">
-            <span class="hx-date-picker-time-up-icon" aria-hidden="true"></span>
-          </button>
-          <div
-            class="hx-date-picker-time-spin"
-            role="spinbutton"
-            [attr.tabindex]="isDisabled() ? -1 : 0"
-            [attr.aria-label]="column.label"
-            [attr.aria-valuenow]="column.now"
-            [attr.aria-valuemin]="column.min"
-            [attr.aria-valuemax]="column.max"
-            [attr.aria-valuetext]="column.valueText"
-            [attr.aria-disabled]="isDisabled() ? 'true' : null"
-            (keydown)="onTimeKeydown($event, column)"
-          >
-            {{ column.text }}
-          </div>
-          <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="isDisabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, -1)">
-            <span class="hx-date-picker-time-down-icon" aria-hidden="true"></span>
-          </button>
-        </div>
-      }
-    </div>
+    <hx-time-row
+      [time]="time()"
+      [hour12]="hour12()"
+      [showMinutes]="showMinutes()"
+      [showSeconds]="showSeconds()"
+      [stepHour]="stepHour()"
+      [stepMinute]="stepMinute()"
+      [stepSecond]="stepSecond()"
+      [locale]="locale()"
+      [disabled]="isDisabled()"
+      [timeLabel]="timeLabel()"
+      [hourLabel]="hourLabel()"
+      [minuteLabel]="minuteLabel()"
+      [secondLabel]="secondLabel()"
+      [periodLabel]="periodLabel()"
+      (timeChange)="setTime($event)"
+    />
   }
 </div>
 </ng-template>
