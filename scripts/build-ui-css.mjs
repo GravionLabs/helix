@@ -54,6 +54,7 @@ export const TOKEN_COMPONENTS = {
   'multi-select': ['multiselect', 'inputtext', 'checkbox'],
   'auto-complete': ['autocomplete', 'inputtext'],
   'date-picker': ['datepicker', 'inputtext'],
+  'time-picker': ['datepicker', 'inputtext'],
   'date-time-range-picker': ['datepicker', 'inputtext'],
   'file-upload': ['fileupload', 'button'],
   'input-group': ['inputgroup'],

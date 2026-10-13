@@ -211,6 +211,7 @@ export {
   type HxThemeOptions,
   provideHxTheme,
 } from './lib/theme/theme';
+export { HxTimePicker, type HxTimePickerValue } from './lib/time-picker/time-picker';
 export {
   HxTimeline,
   type HxTimelineAlign,
