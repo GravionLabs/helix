@@ -1,6 +1,6 @@
 /*
  * DateTimePicker: `<hx-date-time-picker>`. The field, button and popup of the date picker with the calendar and a
- * time row inside; both are styled by `date-picker.scss` (`hx-date-picker-*`). Every colour and size comes from the
+ * time row inside; styled by `date-picker.scss` (`hx-date-picker-*`) and `time-row.scss`. Every colour and size comes from the
  * `--h-datepicker-*` and `--h-inputtext-*` tokens.
  */
 @use 'icons' as *;
