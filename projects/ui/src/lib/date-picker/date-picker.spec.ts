@@ -80,6 +80,16 @@ describe('HxDatePicker', () => {
     expect(selected('single')).toEqual(['15']);
   });
 
+  it('writes the start of the day and has no time row', async () => {
+    host.arrival = new Date(2026, 9, 9, 14, 30, 15);
+    fixture.changeDetectorRef.markForCheck();
+    await settle();
+    day('single', 15).click();
+    await settle();
+    expect(host.arrival).toEqual(new Date(2026, 9, 15, 0, 0, 0));
+    expect(el('single').querySelector('.hx-date-picker-time')).toBeNull();
+  });
+
   it('does not choose days outside min/max or disabled dates', async () => {
     for (const d of [4, 12, 29]) {
       expect(day('single', d).getAttribute('aria-disabled')).toBe('true');
@@ -321,6 +331,12 @@ describe('HxDatePicker field and popup', () => {
     expect(input('field').value).toBe('09.10.2026');
     await type('field', '31.02.2026');
     expect(host.date).toEqual(new Date(2026, 9, 9));
+  });
+
+  it('rejects a typed text with a time, as the picker is days only', async () => {
+    await type('field', '03.11.2027 14:05');
+    expect(host.date).toEqual(new Date(2026, 9, 9));
+    expect(input('field').value).toBe('09.10.2026');
   });
 
   it('clears the value when the text is emptied', async () => {

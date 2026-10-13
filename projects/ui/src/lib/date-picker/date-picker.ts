@@ -25,21 +25,16 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
-import {
-  addDays,
-  addMonths,
-  compareDays,
-  isSameDay,
-  isValidDate,
-  monthCells,
-  startOfDay,
-} from '../internal/dates';
+import { HxCalendar } from '../internal/calendar/calendar';
+import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
+import { clampTime, compareDays, isSameDay, isValidDate, startOfDay } from '../internal/dates';
+import { parseDateText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
+
+const startOfDayOrNull = (date: Date | null) => (isValidDate(date) ? startOfDay(date) : null);
 
 export type HxDatePickerSelectionMode = 'single' | 'range' | 'multiple';
 export type HxDatePickerValue = Date | Date[] | null;
-type CalendarView = 'day' | 'month' | 'year';
-
 /**
  * A date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a range or
  * several days. Typing a date in the field parses it; month and year views are one click on the title. Day, month and weekday names come from `Intl.DateTimeFormat` for the `locale`.
@@ -62,7 +57,7 @@ type CalendarView = 'day' | 'month' | 'year';
  */
 @Component({
   selector: 'hx-date-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar],
   templateUrl: './date-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -89,12 +84,10 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   readonly showIcon = input(false, { transform: booleanAttribute });
   /** Today and Clear buttons under the calendar of the popup. */
   readonly showButtonBar = input(false, { transform: booleanAttribute });
-  /** `Intl.DateTimeFormat` options of the text in the field (numeric by default, so a typed date parses back). */
-  readonly dateFormat = input<Intl.DateTimeFormatOptions>({
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  });
+  /**
+   * `Intl.DateTimeFormat` options of the text in the field. By default numeric, so a typed date parses back.
+   */
+  readonly dateFormat = input<Intl.DateTimeFormatOptions>();
   readonly todayLabel = input('Today');
   readonly clearLabel = input('Clear');
   readonly chooseLabel = input('Choose date');
@@ -130,6 +123,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -2 },
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
+  private readonly calendar = viewChild(HxCalendar);
   /** The text typed and not yet committed; `null` while the field shows the value. */
   readonly #typed = signal<string | null>(null);
   protected readonly view = signal<CalendarView>('day');
@@ -138,8 +132,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   /** The day with the focus in the grid, and the month the grid shows. */
   protected readonly focusedDate = signal(startOfDay(new Date()));
-  protected readonly viewYear = computed(() => this.focusedDate().getFullYear());
-  readonly #today = startOfDay(new Date());
+  protected readonly today = startOfDay(new Date());
 
   protected readonly selectedDates = computed<Date[]>(() => {
     const value = this.value();
@@ -147,18 +140,14 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return isValidDate(value) ? [value] : [];
   });
 
-  readonly #formats = computed(() => {
-    const locale = this.locale();
-    return {
-      month: new Intl.DateTimeFormat(locale, { month: 'long' }),
-      monthShort: new Intl.DateTimeFormat(locale, { month: 'short' }),
-      weekdayShort: new Intl.DateTimeFormat(locale, { weekday: 'short' }),
-      weekdayLong: new Intl.DateTimeFormat(locale, { weekday: 'long' }),
-      full: new Intl.DateTimeFormat(locale, { dateStyle: 'full' }),
-    };
-  });
+  readonly #format = computed(
+    () =>
+      new Intl.DateTimeFormat(
+        this.locale(),
+        this.dateFormat() ?? { day: '2-digit', month: '2-digit', year: 'numeric' },
+      ),
+  );
 
-  readonly #format = computed(() => new Intl.DateTimeFormat(this.locale(), this.dateFormat()));
   protected readonly text = computed(() => {
     const typed = this.#typed();
     if (typed !== null) return typed;
@@ -168,36 +157,13 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     return dates.map((d) => fmt.format(d)).join(', ');
   });
 
-  protected readonly monthName = computed(() => this.#formats().month.format(this.focusedDate()));
-  protected readonly monthNames = computed(() =>
-    Array.from({ length: 12 }, (_, m) => this.#formats().monthShort.format(new Date(2026, m, 1))),
-  );
-  protected readonly weekdays = computed(() => {
-    const first = this.firstDayOfWeek();
-    return Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(2026, 0, 4 + ((first + i) % 7)); // 4 January 2026 is a Sunday
-      return {
-        short: this.#formats().weekdayShort.format(day),
-        long: this.#formats().weekdayLong.format(day),
-      };
-    });
-  });
-  protected readonly weeks = computed(() =>
-    monthCells(
-      this.focusedDate().getFullYear(),
-      this.focusedDate().getMonth(),
-      this.firstDayOfWeek(),
-    ),
-  );
-  protected readonly decade = computed(() => {
-    const start = Math.floor(this.focusedDate().getFullYear() / 12) * 12;
-    return Array.from({ length: 12 }, (_, i) => start + i);
-  });
-
   constructor() {
-    // a value set from outside (a binding, a form) brings its month into view
+    // a value set from outside (a binding, a form) brings its month into view; without a value, today moved into
+    // `minDate`..`maxDate` does
     effect(() => {
-      const first = this.selectedDates()[0];
+      const first =
+        this.selectedDates()[0] ??
+        clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate());
       const shown = untracked(() => this.focusedDate());
       if (
         first &&
@@ -232,68 +198,16 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     else this.#focusDay();
   }
 
-  protected dateKey(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  }
-
-  protected dayLabel(date: Date): string {
-    return this.#formats().full.format(date);
-  }
-
-  protected isToday(date: Date): boolean {
-    return isSameDay(date, this.#today);
+  protected isDateDisabled(date: Date): boolean {
+    return isDateDisabled(date, {
+      min: this.minDate(),
+      max: this.maxDate(),
+      disabledDates: this.disabledDates(),
+    });
   }
 
   protected isSelected(date: Date): boolean {
     return this.selectedDates().some((d) => isSameDay(d, date));
-  }
-
-  protected isInRange(date: Date): boolean {
-    const [from, to] = this.selectedDates();
-    return (
-      this.selectionMode() === 'range' &&
-      !!from &&
-      !!to &&
-      compareDays(date, from) > 0 &&
-      compareDays(date, to) < 0
-    );
-  }
-
-  protected isDateDisabled(date: Date): boolean {
-    const [min, max] = [this.minDate(), this.maxDate()];
-    return (
-      (!!min && compareDays(date, min) < 0) ||
-      (!!max && compareDays(date, max) > 0) ||
-      this.disabledDates().some((d) => isSameDay(d, date))
-    );
-  }
-
-  /** One day of the grid takes the tab stop: the focused day, or the first day when the focus is elsewhere. */
-  protected isFocusTarget(date: Date): boolean {
-    return isSameDay(date, this.focusedDate());
-  }
-
-  protected step(direction: 1 | -1): void {
-    const current = this.focusedDate();
-    const next =
-      this.view() === 'day'
-        ? addMonths(current, direction)
-        : this.view() === 'month'
-          ? addMonths(current, 12 * direction)
-          : addMonths(current, 144 * direction);
-    this.focusedDate.set(next);
-  }
-
-  protected chooseMonth(month: number): void {
-    const current = this.focusedDate();
-    this.focusedDate.set(addMonths(new Date(current.getFullYear(), 0, current.getDate()), month));
-    this.view.set('day');
-  }
-
-  protected chooseYear(year: number): void {
-    const current = this.focusedDate();
-    this.focusedDate.set(addMonths(new Date(year, current.getMonth(), 1), 0));
-    this.view.set('month');
   }
 
   protected pick(date: Date): void {
@@ -334,52 +248,10 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     this.#onChange(next);
   }
 
-  protected onDayKeydown(event: KeyboardEvent, date: Date): void {
-    const first = this.firstDayOfWeek();
-    const weekday = (date.getDay() - first + 7) % 7;
-    let target: Date | null = null;
-    switch (event.key) {
-      case 'ArrowLeft':
-        target = addDays(date, -1);
-        break;
-      case 'ArrowRight':
-        target = addDays(date, 1);
-        break;
-      case 'ArrowUp':
-        target = addDays(date, -7);
-        break;
-      case 'ArrowDown':
-        target = addDays(date, 7);
-        break;
-      case 'Home':
-        target = addDays(date, -weekday);
-        break;
-      case 'End':
-        target = addDays(date, 6 - weekday);
-        break;
-      case 'PageUp':
-        target = addMonths(date, event.shiftKey ? -12 : -1);
-        break;
-      case 'PageDown':
-        target = addMonths(date, event.shiftKey ? 12 : 1);
-        break;
-      default:
-        return;
-    }
-    event.preventDefault();
-    this.focusedDate.set(target);
-    this.#focusDay();
-  }
-
   #focusDay(): void {
     afterNextRender(
       () => {
-        const key = this.dateKey(this.focusedDate());
-        // the popup lives in the overlay, outside the host
-        const root = this.inline()
-          ? this.#host.nativeElement
-          : document.getElementById(this.popupId);
-        root?.querySelector<HTMLElement>(`.hx-date-picker-date[data-date="${key}"]`)?.focus();
+        this.calendar()?.focusDay();
       },
       { injector: this.#injector },
     );
@@ -402,10 +274,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   }
 
   protected onAttach(): void {
-    // the day to take the focus: the first selected day, or today
+    // the day to take the focus: the first selected day, or today moved into `minDate`..`maxDate`
     const first = this.selectedDates()[0];
     this.view.set('day');
-    this.focusedDate.set(first ? startOfDay(first) : this.#today);
+    this.focusedDate.set(
+      startOfDay(first ?? clampTime(this.today, startOfDayOrNull(this.minDate()), this.maxDate())),
+    );
     this.#focusDay();
   }
 
@@ -459,34 +333,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     if (valid[0]) this.focusedDate.set(startOfDay(valid[0]));
   }
 
-  /** A date from the text: numbers in the order the locale writes them, or `yyyy-mm-dd`. */
   #parse(text: string): Date | null {
-    const numbers = text.match(/\d+/g)?.map(Number);
-    if (!numbers || numbers.length !== 3) return null;
-    let [year, month, day] = [0, 0, 0];
-    if (/^\d{4}\D/.test(text.trim())) {
-      [year, month, day] = numbers;
-    } else {
-      const order = new Intl.DateTimeFormat(this.locale(), {
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric',
-      })
-        .formatToParts(new Date(2000, 10, 22))
-        .filter((p) => ['day', 'month', 'year'].includes(p.type))
-        .map((p) => p.type);
-      const byType = Object.fromEntries(order.map((type, i) => [type, numbers[i]]));
-      [year, month, day] = [byType['year'], byType['month'], byType['day']];
-    }
-    if (year < 100) year += 2000;
-    const date = new Date(year, month - 1, day);
-    const sane =
-      date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
-    return sane ? date : null;
+    return parseDateText(text, this.locale());
   }
 
   protected selectToday(): void {
-    this.pick(this.#today);
+    this.pick(this.today);
   }
 
   protected clear(): void {
@@ -498,12 +350,9 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   protected onHostFocusOut(event: FocusEvent): void {
     if (this.inline()) return;
     const next = event.relatedTarget as HTMLElement | null;
-    if (
-      this.open() ||
-      next?.closest('.hx-date-picker-popup') ||
-      this.#host.nativeElement.contains(next)
-    )
-      return;
+    if (next?.closest('.hx-date-picker-popup') || this.#host.nativeElement.contains(next)) return;
+    if (this.open()) return;
+    this.close();
     this.commitTyping();
     this.#onTouched();
     this.touch.emit();

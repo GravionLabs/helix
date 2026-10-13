@@ -1,0 +1,127 @@
+<div
+  class="hx-date-picker hx-date-picker-has-icon hx-date-time-range-picker-control"
+  [class.hx-date-picker-open]="open()"
+  [class.hx-date-picker-disabled]="isDisabled()"
+  [class.hx-date-picker-invalid]="invalid()"
+>
+  <div class="hx-date-picker-field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+    <input
+      #field
+      type="text"
+      readonly
+      class="hx-date-picker-input"
+      autocomplete="off"
+      aria-haspopup="dialog"
+      [attr.id]="inputId() ?? null"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [value]="text()"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="open() ? popupId : null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (click)="show()"
+      (keydown)="onFieldKeydown($event)"
+    />
+    <button
+      type="button"
+      class="hx-date-picker-trigger"
+      aria-haspopup="dialog"
+      [attr.aria-label]="chooseLabel()"
+      [attr.aria-expanded]="open()"
+      [disabled]="isDisabled()"
+      (click)="toggle()"
+    >
+      <span class="hx-date-picker-trigger-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <ng-template
+    cdkConnectedOverlay
+    cdkConnectedOverlayPanelClass="hx-date-picker-overlay"
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="open()"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayPush]="true"
+    (overlayOutsideClick)="onOutsideClick($event)"
+    (overlayKeydown)="onOverlayKeydown($event)"
+    (attach)="onAttach()"
+    (detach)="open.set(false)"
+  >
+    <div
+      class="hx-date-picker-popup hx-date-time-range-picker-popup"
+      role="dialog"
+      aria-modal="false"
+      [id]="popupId"
+      [attr.aria-label]="ariaLabel() ?? chooseLabel()"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      (focusout)="onPopupFocusOut($event)"
+    >
+      <div class="hx-date-time-range-picker-body">
+        @if (!timeOnly()) {
+          <hx-date-picker
+            class="hx-date-time-range-picker-days"
+            inline
+            selectionMode="range"
+            [ariaLabel]="chooseLabel()"
+            [value]="days()"
+            [minDate]="minDate()"
+            [maxDate]="maxDate()"
+            [locale]="locale()"
+            [firstDayOfWeek]="firstDayOfWeek()"
+            [disabledDates]="disabledDates()"
+            (valueChange)="setDays($event)"
+          />
+        }
+        @if (showTime() || timeOnly()) {
+          <div class="hx-date-time-range-picker-times">
+            <div class="hx-date-time-range-picker-time">
+              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ fromLabel() }}</span>
+              <hx-time-picker
+                inline
+                class="hx-date-time-range-picker-from"
+                [ariaLabel]="fromLabel()"
+                [value]="fromValue()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                [disabled]="isDisabled()"
+                (valueChange)="setFromTime($event)"
+              />
+            </div>
+            <div class="hx-date-time-range-picker-time">
+              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ toLabel() }}</span>
+              <hx-time-picker
+                inline
+                class="hx-date-time-range-picker-to"
+                [ariaLabel]="toLabel()"
+                [value]="toValue()"
+                [hourFormat]="hourFormat()"
+                [showMinutes]="showMinutes()"
+                [showSeconds]="showSeconds()"
+                [stepHour]="stepHour()"
+                [stepMinute]="stepMinute()"
+                [stepSecond]="stepSecond()"
+                [locale]="locale()"
+                [disabled]="isDisabled()"
+                (valueChange)="setToTime($event)"
+              />
+            </div>
+          </div>
+        }
+      </div>
+      <div class="hx-date-picker-buttonbar hx-date-time-range-picker-footer">
+        @if (showButtonBar()) {
+          <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+        }
+        <span class="hx-date-time-range-picker-spacer"></span>
+        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-cancel" (click)="close(true)">{{ cancelLabel() }}</button>
+        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-submit" (click)="submit()">{{ submitLabel() }}</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -6,6 +6,10 @@ import {
   HxButton,
   HxDatePicker,
   type HxDatePickerValue,
+  HxDateTimePicker,
+  type HxDateTimePickerValue,
+  HxDateTimeRangePicker,
+  type HxDateTimeRangeValue,
   HxFileUpload,
   HxFloatLabel,
   HxIconField,
@@ -21,6 +25,8 @@ import {
   HxSelect,
   HxSlider,
   type HxSliderValue,
+  HxTimePicker,
+  type HxTimePickerValue,
   HxToggleButton,
 } from '@gravionlabs/helix-ui';
 
@@ -38,6 +44,9 @@ import {
     HxMultiSelect,
     HxAutoComplete,
     HxDatePicker,
+    HxTimePicker,
+    HxDateTimePicker,
+    HxDateTimeRangePicker,
     HxFileUpload,
     HxFileUpload,
     HxSlider,
@@ -74,6 +83,14 @@ export class HxInputsSection {
   }
   readonly arrival = signal<HxDatePickerValue>(new Date());
   readonly stay = signal<HxDatePickerValue>(null);
+  readonly start = signal<HxDateTimePickerValue>(new Date(2026, 9, 13, 9, 30));
+  readonly alarm = signal<HxTimePickerValue>(null);
+  readonly opens = signal<HxTimePickerValue>(null);
+  readonly shift = signal<HxDateTimeRangeValue>({
+    from: new Date(2026, 9, 13, 9, 0),
+    to: new Date(2026, 9, 16, 17, 30),
+  });
+  readonly hours = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
   readonly found = signal<string[]>([]);

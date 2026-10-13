@@ -6,6 +6,8 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/input': [
     'auto-complete',
     'date-picker',
+    'date-time-picker',
+    'date-time-range-picker',
     'float-label',
     'form-controls',
     'icon-field',
@@ -18,6 +20,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
     'select',
     'select-button',
     'slider',
+    'time-picker',
     'toggle-button',
   ],
   'uikit/button': ['button', 'button-group', 'split-button'],

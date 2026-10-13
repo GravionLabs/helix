@@ -1,0 +1,559 @@
+lockfile_version: '1'
+apm_version: 0.33.0
+dependencies:
+- repo_url: gravionlabs/apm-hub
+  materialization_repo_url: GravionLabs/apm-hub
+  name: ng
+  host: github.com
+  resolved_commit: 1db5b636f99248b106ed17089c452867725e1114
+  version: 1.0.24
+  virtual_path: packages/ng
+  is_virtual: true
+  package_type: apm_package
+  deployed_files:
+  - .agents/skills/ng-ag-grid-developer
+  - .agents/skills/ng-ag-grid-developer/SKILL.md
+  - .agents/skills/ng-ag-grid-developer/references/api-events-filtering.md
+  - .agents/skills/ng-ag-grid-developer/references/cell-rendering-editing.md
+  - .agents/skills/ng-ag-grid-developer/references/column-definitions.md
+  - .agents/skills/ng-ag-grid-developer/references/excel-export.md
+  - .agents/skills/ng-ag-grid-developer/references/grouping-pivoting.md
+  - .agents/skills/ng-ag-grid-developer/references/master-detail.md
+  - .agents/skills/ng-ag-grid-developer/references/row-models.md
+  - .agents/skills/ng-ag-grid-developer/references/setup.md
+  - .agents/skills/ng-ag-grid-developer/references/theming.md
+  - .agents/skills/ng-create-project
+  - .agents/skills/ng-create-project/SKILL.md
+  - .agents/skills/ng-create-project/scripts/New-AngularProject.ps1
+  - .agents/skills/ng-create-project/templates/tsconfig.json
+  - .agents/skills/ng-create-project/templates/vitest.config.ts
+  - .agents/skills/ng-create-project/templates/vitest.setup.ts
+  - .agents/skills/ng-implementation
+  - .agents/skills/ng-implementation/SKILL.md
+  - .agents/skills/ng-implementation/references/component.md
+  - .agents/skills/ng-implementation/references/mcp.md
+  - .agents/skills/ng-implementation/references/signal-store.md
+  - .agents/skills/ng-implementation/references/version-notes.md
+  - .agents/skills/ng-test
+  - .agents/skills/ng-test/SKILL.md
+  - .claude/skills/ng-ag-grid-developer
+  - .claude/skills/ng-ag-grid-developer/SKILL.md
+  - .claude/skills/ng-ag-grid-developer/references/api-events-filtering.md
+  - .claude/skills/ng-ag-grid-developer/references/cell-rendering-editing.md
+  - .claude/skills/ng-ag-grid-developer/references/column-definitions.md
+  - .claude/skills/ng-ag-grid-developer/references/excel-export.md
+  - .claude/skills/ng-ag-grid-developer/references/grouping-pivoting.md
+  - .claude/skills/ng-ag-grid-developer/references/master-detail.md
+  - .claude/skills/ng-ag-grid-developer/references/row-models.md
+  - .claude/skills/ng-ag-grid-developer/references/setup.md
+  - .claude/skills/ng-ag-grid-developer/references/theming.md
+  - .claude/skills/ng-create-project
+  - .claude/skills/ng-create-project/SKILL.md
+  - .claude/skills/ng-create-project/scripts/New-AngularProject.ps1
+  - .claude/skills/ng-create-project/templates/tsconfig.json
+  - .claude/skills/ng-create-project/templates/vitest.config.ts
+  - .claude/skills/ng-create-project/templates/vitest.setup.ts
+  - .claude/skills/ng-implementation
+  - .claude/skills/ng-implementation/SKILL.md
+  - .claude/skills/ng-implementation/references/component.md
+  - .claude/skills/ng-implementation/references/mcp.md
+  - .claude/skills/ng-implementation/references/signal-store.md
+  - .claude/skills/ng-implementation/references/version-notes.md
+  - .claude/skills/ng-test
+  - .claude/skills/ng-test/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/ng-ag-grid-developer/SKILL.md: sha256:45cdc40502e08f6b1d082a73ed22563b335974ac6102bacc4bf8b17d129b98ba
+    .agents/skills/ng-ag-grid-developer/references/api-events-filtering.md: sha256:6589a588f0c64ed6549164c533d3cf4d14171273788c6c3bc7ee4b86277c5587
+    .agents/skills/ng-ag-grid-developer/references/cell-rendering-editing.md: sha256:9bd11112cf29e944211d231cd78fae95053c0dd234bb51b9e22a165c48fe61cd
+    .agents/skills/ng-ag-grid-developer/references/column-definitions.md: sha256:f49725d94fd3ff35506e5326afaf06d54f028538577f8e09119df491f6793d76
+    .agents/skills/ng-ag-grid-developer/references/excel-export.md: sha256:144b7862c4559eece541a9fa5d1aaaff6438499268c0d5137a55e7ed8661a558
+    .agents/skills/ng-ag-grid-developer/references/grouping-pivoting.md: sha256:185a1337e19c62549938723b20b3b7bfcef206f9645e9b13fb4e273c810f6312
+    .agents/skills/ng-ag-grid-developer/references/master-detail.md: sha256:9c160fbd313d45f81fa3e1d4107d18f361236e8bc1ed192bfdb846a8d5650875
+    .agents/skills/ng-ag-grid-developer/references/row-models.md: sha256:d33c8f33ee339d748a312008e0fcbe44f9117e7a174274bfa69fe3cd47882320
+    .agents/skills/ng-ag-grid-developer/references/setup.md: sha256:9f865f2fb4b6227f2a1bbcf84f76fbba058ba2d8e6ce31c44ebf8a3f774636e6
+    .agents/skills/ng-ag-grid-developer/references/theming.md: sha256:47a024ca7df6ddc91424c2eaeb3e3547d6eefc58d1cea6202f68f89e0665cc35
+    .agents/skills/ng-create-project/SKILL.md: sha256:9923b04283074348646fd484e1e8c29b5c9c035f9c3f1d5705643224afd2d157
+    .agents/skills/ng-create-project/scripts/New-AngularProject.ps1: sha256:53faf65979cd7b34aa7dde3c9168ca2cd331c76447254d95d6a2f4671d3d355f
+    .agents/skills/ng-create-project/templates/tsconfig.json: sha256:eb7f52d015787282c7fea714d6c26c6a112c75a72e9708c6aed07459d250f162
+    .agents/skills/ng-create-project/templates/vitest.config.ts: sha256:6c934746efc3101556d46484c8ad1dc22790ae4d8210b904fa76b8f6b3b9eb26
+    .agents/skills/ng-create-project/templates/vitest.setup.ts: sha256:7fe3dc555ab2b389080866bae9e8c39cb1ad8e7af0b74a04ef32b9b19367e4d5
+    .agents/skills/ng-implementation/SKILL.md: sha256:50657d4fd3b7512c3cc853b2a79448a4c1e7e3c1bb404956588cadd6a744cd51
+    .agents/skills/ng-implementation/references/component.md: sha256:849102f8a2940fb4f895684fee9e5eb7cb0bee825dacfed482c06ade13916025
+    .agents/skills/ng-implementation/references/mcp.md: sha256:f5705e5a70ed12109ee163deae2c98ad519e504d3613b212b1c6541ea604be69
+    .agents/skills/ng-implementation/references/signal-store.md: sha256:9a0b3bcc68fa32de9a32c681705cd461051ade094b897dcbd584527c1db211f4
+    .agents/skills/ng-implementation/references/version-notes.md: sha256:7c6544ac65bd38cf21a4d211b03745413df9815c9ccaec6bf1178a7eaec6b700
+    .agents/skills/ng-test/SKILL.md: sha256:b4df9e047d70390aa5fcc8095cf2c11df1408b276a115ce6c8f33ba92e73f850
+    .claude/skills/ng-ag-grid-developer/SKILL.md: sha256:45cdc40502e08f6b1d082a73ed22563b335974ac6102bacc4bf8b17d129b98ba
+    .claude/skills/ng-ag-grid-developer/references/api-events-filtering.md: sha256:6589a588f0c64ed6549164c533d3cf4d14171273788c6c3bc7ee4b86277c5587
+    .claude/skills/ng-ag-grid-developer/references/cell-rendering-editing.md: sha256:9bd11112cf29e944211d231cd78fae95053c0dd234bb51b9e22a165c48fe61cd
+    .claude/skills/ng-ag-grid-developer/references/column-definitions.md: sha256:f49725d94fd3ff35506e5326afaf06d54f028538577f8e09119df491f6793d76
+    .claude/skills/ng-ag-grid-developer/references/excel-export.md: sha256:144b7862c4559eece541a9fa5d1aaaff6438499268c0d5137a55e7ed8661a558
+    .claude/skills/ng-ag-grid-developer/references/grouping-pivoting.md: sha256:185a1337e19c62549938723b20b3b7bfcef206f9645e9b13fb4e273c810f6312
+    .claude/skills/ng-ag-grid-developer/references/master-detail.md: sha256:9c160fbd313d45f81fa3e1d4107d18f361236e8bc1ed192bfdb846a8d5650875
+    .claude/skills/ng-ag-grid-developer/references/row-models.md: sha256:d33c8f33ee339d748a312008e0fcbe44f9117e7a174274bfa69fe3cd47882320
+    .claude/skills/ng-ag-grid-developer/references/setup.md: sha256:9f865f2fb4b6227f2a1bbcf84f76fbba058ba2d8e6ce31c44ebf8a3f774636e6
+    .claude/skills/ng-ag-grid-developer/references/theming.md: sha256:47a024ca7df6ddc91424c2eaeb3e3547d6eefc58d1cea6202f68f89e0665cc35
+    .claude/skills/ng-create-project/SKILL.md: sha256:9923b04283074348646fd484e1e8c29b5c9c035f9c3f1d5705643224afd2d157
+    .claude/skills/ng-create-project/scripts/New-AngularProject.ps1: sha256:53faf65979cd7b34aa7dde3c9168ca2cd331c76447254d95d6a2f4671d3d355f
+    .claude/skills/ng-create-project/templates/tsconfig.json: sha256:eb7f52d015787282c7fea714d6c26c6a112c75a72e9708c6aed07459d250f162
+    .claude/skills/ng-create-project/templates/vitest.config.ts: sha256:6c934746efc3101556d46484c8ad1dc22790ae4d8210b904fa76b8f6b3b9eb26
+    .claude/skills/ng-create-project/templates/vitest.setup.ts: sha256:7fe3dc555ab2b389080866bae9e8c39cb1ad8e7af0b74a04ef32b9b19367e4d5
+    .claude/skills/ng-implementation/SKILL.md: sha256:50657d4fd3b7512c3cc853b2a79448a4c1e7e3c1bb404956588cadd6a744cd51
+    .claude/skills/ng-implementation/references/component.md: sha256:849102f8a2940fb4f895684fee9e5eb7cb0bee825dacfed482c06ade13916025
+    .claude/skills/ng-implementation/references/mcp.md: sha256:f5705e5a70ed12109ee163deae2c98ad519e504d3613b212b1c6541ea604be69
+    .claude/skills/ng-implementation/references/signal-store.md: sha256:9a0b3bcc68fa32de9a32c681705cd461051ade094b897dcbd584527c1db211f4
+    .claude/skills/ng-implementation/references/version-notes.md: sha256:7c6544ac65bd38cf21a4d211b03745413df9815c9ccaec6bf1178a7eaec6b700
+    .claude/skills/ng-test/SKILL.md: sha256:b4df9e047d70390aa5fcc8095cf2c11df1408b276a115ce6c8f33ba92e73f850
+  content_hash: sha256:c44e1fadc97474e8852246c06b4aebb7d4769ac1deb1180b1015f9493c816a43
+  declared_license: MIT
+deployments:
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:45cdc40502e08f6b1d082a73ed22563b335974ac6102bacc4bf8b17d129b98ba
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/api-events-filtering.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:6589a588f0c64ed6549164c533d3cf4d14171273788c6c3bc7ee4b86277c5587
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/cell-rendering-editing.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9bd11112cf29e944211d231cd78fae95053c0dd234bb51b9e22a165c48fe61cd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/column-definitions.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:f49725d94fd3ff35506e5326afaf06d54f028538577f8e09119df491f6793d76
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/excel-export.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:144b7862c4559eece541a9fa5d1aaaff6438499268c0d5137a55e7ed8661a558
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/grouping-pivoting.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:185a1337e19c62549938723b20b3b7bfcef206f9645e9b13fb4e273c810f6312
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/master-detail.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9c160fbd313d45f81fa3e1d4107d18f361236e8bc1ed192bfdb846a8d5650875
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/row-models.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:d33c8f33ee339d748a312008e0fcbe44f9117e7a174274bfa69fe3cd47882320
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/setup.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9f865f2fb4b6227f2a1bbcf84f76fbba058ba2d8e6ce31c44ebf8a3f774636e6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-ag-grid-developer/references/theming.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:47a024ca7df6ddc91424c2eaeb3e3547d6eefc58d1cea6202f68f89e0665cc35
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9923b04283074348646fd484e1e8c29b5c9c035f9c3f1d5705643224afd2d157
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project/scripts/New-AngularProject.ps1
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:53faf65979cd7b34aa7dde3c9168ca2cd331c76447254d95d6a2f4671d3d355f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project/templates/tsconfig.json
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:eb7f52d015787282c7fea714d6c26c6a112c75a72e9708c6aed07459d250f162
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project/templates/vitest.config.ts
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:6c934746efc3101556d46484c8ad1dc22790ae4d8210b904fa76b8f6b3b9eb26
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-create-project/templates/vitest.setup.ts
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:7fe3dc555ab2b389080866bae9e8c39cb1ad8e7af0b74a04ef32b9b19367e4d5
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:50657d4fd3b7512c3cc853b2a79448a4c1e7e3c1bb404956588cadd6a744cd51
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation/references/component.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:849102f8a2940fb4f895684fee9e5eb7cb0bee825dacfed482c06ade13916025
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation/references/mcp.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:f5705e5a70ed12109ee163deae2c98ad519e504d3613b212b1c6541ea604be69
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation/references/signal-store.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9a0b3bcc68fa32de9a32c681705cd461051ade094b897dcbd584527c1db211f4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-implementation/references/version-notes.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:7c6544ac65bd38cf21a4d211b03745413df9815c9ccaec6bf1178a7eaec6b700
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-test
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ng-test/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:b4df9e047d70390aa5fcc8095cf2c11df1408b276a115ce6c8f33ba92e73f850
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:45cdc40502e08f6b1d082a73ed22563b335974ac6102bacc4bf8b17d129b98ba
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/api-events-filtering.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:6589a588f0c64ed6549164c533d3cf4d14171273788c6c3bc7ee4b86277c5587
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/cell-rendering-editing.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9bd11112cf29e944211d231cd78fae95053c0dd234bb51b9e22a165c48fe61cd
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/column-definitions.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:f49725d94fd3ff35506e5326afaf06d54f028538577f8e09119df491f6793d76
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/excel-export.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:144b7862c4559eece541a9fa5d1aaaff6438499268c0d5137a55e7ed8661a558
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/grouping-pivoting.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:185a1337e19c62549938723b20b3b7bfcef206f9645e9b13fb4e273c810f6312
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/master-detail.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9c160fbd313d45f81fa3e1d4107d18f361236e8bc1ed192bfdb846a8d5650875
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/row-models.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:d33c8f33ee339d748a312008e0fcbe44f9117e7a174274bfa69fe3cd47882320
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/setup.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9f865f2fb4b6227f2a1bbcf84f76fbba058ba2d8e6ce31c44ebf8a3f774636e6
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-ag-grid-developer/references/theming.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:47a024ca7df6ddc91424c2eaeb3e3547d6eefc58d1cea6202f68f89e0665cc35
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9923b04283074348646fd484e1e8c29b5c9c035f9c3f1d5705643224afd2d157
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project/scripts/New-AngularProject.ps1
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:53faf65979cd7b34aa7dde3c9168ca2cd331c76447254d95d6a2f4671d3d355f
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project/templates/tsconfig.json
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:eb7f52d015787282c7fea714d6c26c6a112c75a72e9708c6aed07459d250f162
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project/templates/vitest.config.ts
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:6c934746efc3101556d46484c8ad1dc22790ae4d8210b904fa76b8f6b3b9eb26
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-create-project/templates/vitest.setup.ts
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:7fe3dc555ab2b389080866bae9e8c39cb1ad8e7af0b74a04ef32b9b19367e4d5
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:50657d4fd3b7512c3cc853b2a79448a4c1e7e3c1bb404956588cadd6a744cd51
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation/references/component.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:849102f8a2940fb4f895684fee9e5eb7cb0bee825dacfed482c06ade13916025
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation/references/mcp.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:f5705e5a70ed12109ee163deae2c98ad519e504d3613b212b1c6541ea604be69
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation/references/signal-store.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:9a0b3bcc68fa32de9a32c681705cd461051ade094b897dcbd584527c1db211f4
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-implementation/references/version-notes.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:7c6544ac65bd38cf21a4d211b03745413df9815c9ccaec6bf1178a7eaec6b700
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-test
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: null
+- kind: project-relative
+  target: copilot
+  value: .agents/skills/ng-test/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gravionlabs/apm-hub/packages/ng
+  active_owner: gravionlabs/apm-hub/packages/ng
+  content_hash: sha256:b4df9e047d70390aa5fcc8095cf2c11df1408b276a115ce6c8f33ba92e73f850

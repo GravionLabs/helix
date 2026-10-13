@@ -1,0 +1,73 @@
+/*
+ * DateTimeRangePicker: `<hx-date-time-range-picker>`. One read-only field with a button (styled by `date-picker.scss`)
+ * and a popup with one calendar for the range and an inline `hx-time-picker` for each end; every colour and size comes from the
+ * date picker and input tokens.
+ */
+.hx-date-time-range-picker {
+  display: block;
+  position: relative;
+}
+
+.hx-date-time-range-picker .hx-date-time-range-picker-control {
+  display: flex;
+  width: 100%;
+}
+
+.hx-date-time-range-picker-popup {
+  max-width: calc(100vw - 2rem);
+  overflow: auto;
+}
+
+.hx-date-time-range-picker-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+  padding: var(--h-datepicker-panel-padding);
+}
+
+.hx-date-time-range-picker-times {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: var(--h-datepicker-title-gap);
+}
+
+/* from and to side by side: the name above the time, the arrows beside the value */
+.hx-date-time-range-picker-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-caption {
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-time-range-picker-popup .hx-date-picker-time {
+  padding: 0;
+}
+
+.hx-date-time-range-picker-popup .hx-date-picker-time-column {
+  flex-direction: row-reverse;
+}
+
+.hx-date-time-range-picker-popup .hx-date-picker-time-up-icon {
+  transform: rotate(90deg);
+}
+
+.hx-date-time-range-picker-popup .hx-date-picker-time-down-icon {
+  transform: rotate(90deg);
+}
+
+.hx-date-time-range-picker-spacer {
+  flex: 1 1 auto;
+}
+
+.hx-date-time-range-picker-footer {
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-submit {
+  font-weight: var(--h-datepicker-title-font-weight);
+}

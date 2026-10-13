@@ -1,0 +1,6 @@
+name: helix
+version: 1.0.0
+dependencies:
+  apm:
+    - GravionLabs/apm-hub/packages/ng
+targets: [claude, copilot, opencode]

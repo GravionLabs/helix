@@ -2,9 +2,9 @@
 
 `hx-date-picker` is a date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a
 range or several days. Clicking the month or the year in the header opens the month and year views. Names of months and weekdays come from
-`Intl.DateTimeFormat` for the `locale`. The value is a `Date` (`single`) or a `Date[]` (`multiple`; with `range`
+`Intl.DateTimeFormat` for the `locale`. The value is a `Date` at the start of the day (`single`) or a `Date[]` (`multiple`; with `range`
 one date while the range is open and two when it is complete). It works with `ngModel`, reactive forms
-(including `disable()`) and signal forms.
+(including `disable()`) and signal forms. For a time use [time picker](time-picker.md), [date-time picker](date-time-picker.md) or [date-time range picker](date-time-range-picker.md).
 
 ```html
 <label for="arrival">Arrival</label>

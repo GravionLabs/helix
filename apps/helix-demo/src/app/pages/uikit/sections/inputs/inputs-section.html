@@ -100,6 +100,27 @@
       <hx-date-picker inputId="dp-de" locale="de-DE" [firstDayOfWeek]="1" placeholder="tt.mm.jjjj" showIcon [(value)]="arrival" />
     </div>
     <div class="row">
+      <label class="label" for="dp-datetime">Date and time</label>
+      <hx-date-time-picker inputId="dp-datetime" showIcon showButtonBar [stepMinute]="15" [(value)]="start" />
+      <span>{{ start() }}</span>
+    </div>
+    <div class="row">
+      <label class="label" for="dp-time">Time</label>
+      <hx-time-picker inputId="dp-time" hourFormat="12" showSeconds showIcon showButtonBar [(value)]="alarm" />
+    </div>
+    <div class="row">
+      <label class="label" for="dp-hour">Hour only</label>
+      <hx-time-picker inputId="dp-hour" [showMinutes]="false" [(value)]="opens" />
+    </div>
+    <div class="row">
+      <label class="label" for="dtr-shift">Date time range</label>
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-shift" ariaLabel="Shift" [stepMinute]="15" [(value)]="shift" />
+    </div>
+    <div class="row">
+      <label class="label" for="dtr-hours">Time range</label>
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-hours" ariaLabel="Opening hours" timeOnly [showMinutes]="false" [(value)]="hours" />
+    </div>
+    <div class="row">
       <span class="label">disabled</span>
       <hx-date-picker ariaLabel="Disabled" [disabled]="true" />
     </div>
@@ -113,6 +134,10 @@
       <div class="flex flex-col gap-2">
         <span class="label">range, week from Monday</span>
         <hx-date-picker inline ariaLabel="Stay" selectionMode="range" [firstDayOfWeek]="1" [(value)]="stay" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="label">date and time</span>
+        <hx-date-time-picker inline ariaLabel="Start" [(value)]="start" />
       </div>
       <div class="flex flex-col gap-2">
         <span class="label">multiple, German</span>
