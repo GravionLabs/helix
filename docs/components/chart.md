@@ -16,7 +16,7 @@ import { HxChart } from '@gravionlabs/helix-ui/chart';
 @Component({ imports: [HxChart], … })
 ```
 
-> **Breaking (#924):** `HxChart`, `HX_CHART_LOADER` and the types `HxChartInstance`, `HxChartModule`,
+> **Breaking change:** `HxChart`, `HX_CHART_LOADER` and the types `HxChartInstance`, `HxChartModule`,
 > `HxChartSelectEvent` and `HxChartType` are no longer exported from `@gravionlabs/helix-ui`. Change
 > `from '@gravionlabs/helix-ui'` to `from '@gravionlabs/helix-ui/chart'` for these names.
 

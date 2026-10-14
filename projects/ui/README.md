@@ -33,7 +33,7 @@ npm install chart.js
 import { HxChart } from '@gravionlabs/helix-ui/chart';
 ```
 
-**Breaking (#924):** `HxChart`, `HX_CHART_LOADER` and the `HxChart*` types are no longer exported from
+**Breaking change:** `HxChart`, `HX_CHART_LOADER` and the `HxChart*` types are no longer exported from
 `@gravionlabs/helix-ui`; import them from `@gravionlabs/helix-ui/chart`.
 
 ## Components
