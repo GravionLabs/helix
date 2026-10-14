@@ -219,6 +219,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   if (fs.existsSync(path.join(OUT, 'package.json'))) addCssExports(OUT);
   const kB = (css) => `${(Buffer.byteLength(css) / 1024).toFixed(1)} kB`;
   console.log(
-    `dist/ui (raw): styles.css ${kB(stylesCss)} (${styles.length} components), core.css ${kB(coreCss)} (${CORE_COMPONENTS.length} components), tokens.css ${kB(tokensCss)}`,
+    `dist/ui (raw): styles.css ${kB(stylesCss)} (${styles.length} stylesheets), core.css ${kB(coreCss)} (${CORE_COMPONENTS.length} stylesheets), tokens.css ${kB(tokensCss)}`,
   );
 }

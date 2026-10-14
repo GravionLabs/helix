@@ -17,7 +17,7 @@ import { join } from 'node:path';
 
 const [distDir, ...extraFiles] = process.argv.slice(2);
 if (!distDir) {
-  console.error('usage: add-css-export.mjs <dist-dir>');
+  console.error('usage: add-css-export.mjs <dist-dir> [extra.css ...]');
   process.exit(1);
 }
 

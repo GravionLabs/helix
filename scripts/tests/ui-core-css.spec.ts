@@ -2,7 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import {
   buildCore,
   buildStyles,
@@ -17,12 +17,15 @@ const LAYER_ORDER = '@layer theme, base, components, utilities;';
 
 describe('helix-ui core.css build (#925)', () => {
   const out = mkdtempSync(join(tmpdir(), 'ui-css-'));
-  writeFileSync(join(out, 'package.json'), '{"name":"@gravionlabs/helix-ui","exports":{".":{}}}');
-  const log = execFileSync('node', [join(ROOT, 'scripts/build-ui-css.mjs')], {
-    cwd: ROOT,
-    env: { ...process.env, HELIX_UI_CSS_OUT: out },
-    stdio: 'pipe',
-  }).toString();
+  let log = '';
+  beforeAll(() => {
+    writeFileSync(join(out, 'package.json'), '{"name":"@gravionlabs/helix-ui","exports":{".":{}}}');
+    log = execFileSync('node', [join(ROOT, 'scripts/build-ui-css.mjs')], {
+      cwd: ROOT,
+      env: { ...process.env, HELIX_UI_CSS_OUT: out },
+      stdio: 'pipe',
+    }).toString();
+  }, 120_000);
   const read = (f: string) => readFileSync(join(out, f), 'utf8');
 
   it('emits core.css next to styles.css and tokens.css', () => {
@@ -113,7 +116,7 @@ describe('helix-ui core.css content', () => {
     'styles every hx- class the %s sources use that styles.css styles',
     (name) => {
       const dir = resolve(ROOT, 'projects/ui/src/lib', name);
-      if (!existsSync(dir)) return;
+      expect(existsSync(dir), `${dir} exists`).toBe(true);
       const source = readdirSync(dir)
         .filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts'))
         .map((f) => readFileSync(join(dir, f), 'utf8'))

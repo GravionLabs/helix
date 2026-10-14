@@ -53,9 +53,14 @@ Load the tokens and the component styles of helix-ui, and the font:
   "node_modules/@fontsource-variable/inter/index.css",
   "node_modules/@gravionlabs/helix-ui/tokens.css",
   "node_modules/@gravionlabs/helix-ui/styles.css",
-  "node_modules/@gravionlabs/helix-shell/styles.css"
+  "node_modules/@gravionlabs/helix-shell/styles.css",
+  "node_modules/@gravionlabs/helix-shell/globals.css"
 ]
 ```
+
+`globals.css` is opt-in (the Helix page look, see below); leave it out to keep your own `html` and `body`. With
+`core.css` instead of `styles.css` (see "Component styles only"), the list is:
+`tokens.css`, `core.css`, then the shell styles.
 
 `tokens.css` defines every token the helix-ui components read, light on `:root,:host` and dark under `.app-dark`.
 `styles.css` is the component CSS, in the cascade layer `components`, so your own CSS and Tailwind's utilities
