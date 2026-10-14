@@ -32,6 +32,13 @@ export interface HxDateTimeRangeValue {
   to: Date | null;
 }
 
+/** A relative range in the popup's preset list; `from` and `to` are read when it is chosen (`now` stays current). */
+export interface HxDateTimeRangePreset {
+  label: string;
+  from: () => Date;
+  to: () => Date;
+}
+
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
 const earlier = (a: Date | null, b: Date | null) => (a && b ? (a <= b ? a : b) : (a ?? b));
 const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (a ?? b));
@@ -79,6 +86,9 @@ export class HxDateTimeRangePicker
   /** The text between the two dates in the field. */
   readonly separator = input('-');
   readonly placeholder = input('');
+  /** Ready-made ranges listed in the popup; choosing one fills the draft, Submit applies it. */
+  readonly presetsLabel = input('Presets');
+  readonly presets = input<readonly HxDateTimeRangePreset[]>([]);
   readonly clearLabel = input('Clear');
   readonly cancelLabel = input('Cancel');
   readonly submitLabel = input('Submit');
@@ -246,6 +256,14 @@ export class HxDateTimeRangePicker
 
   protected clear(): void {
     this.#stage(EMPTY);
+  }
+
+  /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
+  protected applyPreset(preset: HxDateTimeRangePreset): void {
+    const [from, to] = [preset.from(), preset.to()];
+    this.#stage(
+      isValidDate(from) && isValidDate(to) && to < from ? { from: to, to: from } : { from, to },
+    );
   }
 
   protected submit(): void {

@@ -16,7 +16,9 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | ----- | ---- | ------- | ----------- |
 | `fromLabel`, `toLabel` | `string` | `From`, `To` | Names of the two time pickers. |
 | `separator` | `string` | `-` | The text between the two dates in the field. |
-| `placeholder`, `inputId` | `string` | | Of the text field. |
+| `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
+| `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
+| `presetsLabel` | `string` | `Presets` | Name of the preset group. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time pickers; `false` picks days only (midnight). |
 | `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time pickers without the calendar. |
@@ -27,6 +29,20 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `disabled`, `invalid` | `boolean` | `false` | |
 | `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
 
+- **Presets:** each `{ label, from: () => Date, to: () => Date }` (`HxDateTimeRangePreset`) is a button in the popup; the
+  functions run when it is chosen, so `now` stays current. A preset fills the draft (calendar and time pickers show it);
+  Submit applies it, Cancel drops it. No list is shown without presets.
+
+  ```ts
+  readonly presets: HxDateTimeRangePreset[] = [
+    { label: 'Last 6 hours', from: () => new Date(Date.now() - 6 * 3_600_000), to: () => new Date() },
+    { label: 'Last 7 days', from: () => new Date(Date.now() - 7 * 86_400_000), to: () => new Date() },
+  ];
+  ```
+
+  ```html
+  <hx-date-time-range-picker placeholder="Pick a range" [presets]="presets" [(value)]="range" />
+  ```
 - **Field:** read-only; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
   Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.
 - **Calendar:** the first click sets `from`, the second `to` (a click before `from` swaps them); a third click starts

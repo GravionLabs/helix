@@ -57,6 +57,13 @@
       [attr.aria-labelledby]="ariaLabelledby() ?? null"
       (focusout)="onPopupFocusOut($event)"
     >
+      @if (presets().length > 0) {
+        <div class="hx-date-time-range-picker-presets" role="group" [attr.aria-label]="presetsLabel()">
+          @for (preset of presets(); track $index) {
+            <button type="button" class="hx-date-picker-button hx-date-time-range-picker-preset" (click)="applyPreset(preset)">{{ preset.label }}</button>
+          }
+        </div>
+      }
       <div class="hx-date-time-range-picker-body">
         @if (!timeOnly()) {
           <hx-date-picker

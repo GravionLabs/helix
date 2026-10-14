@@ -2,7 +2,11 @@ import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
-import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-range-picker';
+import {
+  HxDateTimeRangePicker,
+  type HxDateTimeRangePreset,
+  type HxDateTimeRangeValue,
+} from './date-time-range-picker';
 
 @Component({
   imports: [HxDateTimeRangePicker, FormsModule, ReactiveFormsModule, FormField],
@@ -76,6 +80,12 @@ import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-ra
       [formControl]="control"
     />
     <hx-date-time-range-picker
+      id="presets"
+      locale="en-US"
+      [presets]="presetList"
+      [(value)]="withPresets"
+    />
+    <hx-date-time-range-picker
       id="signal"
       locale="en-US"
       [formField]="f.span"
@@ -83,6 +93,19 @@ import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-ra
   `,
 })
 class Host {
+  presetList: HxDateTimeRangePreset[] = [
+    {
+      label: 'Morning',
+      from: () => new Date(2026, 9, 7, 6, 0),
+      to: () => new Date(2026, 9, 7, 12, 30),
+    },
+    {
+      label: 'Two days',
+      from: () => new Date(2026, 9, 8, 0, 0),
+      to: () => new Date(2026, 9, 10, 0, 0),
+    },
+  ];
+  withPresets = signal<HxDateTimeRangeValue>({ from: null, to: null });
   min = new Date(2026, 9, 5, 8, 0);
   max = new Date(2026, 9, 28, 17, 0);
   basic = signal<HxDateTimeRangeValue>({ from: null, to: null });
@@ -164,6 +187,42 @@ describe('HxDateTimeRangePicker', () => {
     expect(input('basic').id).toBe('shift');
     expect(input('basic').placeholder).toBe('Pick a range');
     expect(input('basic').getAttribute('aria-label')).toBe('Shift');
+  });
+
+  it('shows the placeholder while empty', () => {
+    expect(input('basic').value).toBe('');
+    expect(input('basic').placeholder).toBe('Pick a range');
+    expect(input('labels').placeholder).toBe('');
+  });
+
+  it('renders no preset list without presets', async () => {
+    await open('basic');
+    expect(popup()?.querySelector('.hx-date-time-range-picker-presets')).toBeNull();
+  });
+
+  it('applies a preset to from and to on submit', async () => {
+    await open('presets');
+    const buttons = [
+      ...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset'),
+    ];
+    expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days']);
+    await click(buttons[0]);
+    expect(host.withPresets()).toEqual({ from: null, to: null });
+    expect(now('from', 'Hour')).toBe('6');
+    expect(now('to', 'Minute')).toBe('30');
+    await submit();
+    expect(host.withPresets()).toEqual({
+      from: new Date(2026, 9, 7, 6, 0),
+      to: new Date(2026, 9, 7, 12, 30),
+    });
+    expect(input('presets').value).toBe('10/7/2026 06:00 - 10/7/2026 12:30');
+  });
+
+  it('drops a chosen preset on cancel', async () => {
+    await open('presets');
+    await click(popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')[1]);
+    await click(popup()!.querySelector('.hx-date-time-range-picker-cancel') as HTMLElement);
+    expect(host.withPresets()).toEqual({ from: null, to: null });
   });
 
   it('shows the range as one text', () => {
