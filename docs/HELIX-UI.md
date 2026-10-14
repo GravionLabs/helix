@@ -37,7 +37,7 @@ One page per component (usage, inputs and outputs, accessibility, tokens): see t
 - **Navigation:** [Menu](components/menu.md), [Menubar](components/menubar.md), [Tabs](components/tabs.md), [Stepper](components/stepper.md), [Paginator](components/paginator.md), [Breadcrumb](components/breadcrumb.md)
 - **Display:** [Avatar](components/avatar.md), [Badge](components/badge.md), [Chip](components/chip.md), [Tag](components/tag.md), [Progress](components/progress.md), [Skeleton](components/skeleton.md), [Timeline](components/timeline.md)
 - **Media:** [Carousel](components/carousel.md), [Galleria](components/galleria.md), [Image](components/image.md)
-- **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md)
+- **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md) (entry point `@gravionlabs/helix-ui/chart`)
 
 
 ## Theming

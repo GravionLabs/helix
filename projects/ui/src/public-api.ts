@@ -2,7 +2,8 @@
  * Public API Surface of @gravionlabs/helix-ui
  *
  * Standalone, signal-based components on the Helix design tokens; the CSS is
- * `@gravionlabs/helix-ui/styles.css` (components) and `tokens.css` (the tokens).
+ * `@gravionlabs/helix-ui/styles.css` (components) and `tokens.css` (the tokens). The chart is in the secondary
+ * entry point `@gravionlabs/helix-ui/chart`, so this entry does not reference chart.js (an optional peer).
  */
 
 export {
@@ -48,14 +49,6 @@ export {
   type HxCarouselOrientation,
   type HxCarouselResponsiveOption,
 } from './lib/carousel/carousel';
-export {
-  HX_CHART_LOADER,
-  HxChart,
-  type HxChartInstance,
-  type HxChartModule,
-  type HxChartSelectEvent,
-  type HxChartType,
-} from './lib/chart/chart';
 export { HxCheckbox, type HxCheckboxSize } from './lib/checkbox/checkbox';
 export { HxChip } from './lib/chip/chip';
 export {
