@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, TemplateRef } from '@angular/core';
-import type { Environment } from '../../../ui/badge/environment-badge';
+import type { EnvironmentValue } from '../../../ui/badge/environment-badge';
 import { HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from './status-bar.model';
 
@@ -30,14 +30,14 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
 })
 export class HelixStatusBar {
   brand = input('');
-  environment = input<string | undefined>();
+  environment = input<EnvironmentValue | string | undefined>();
   /** Note text, or a template for richer content such as links. */
   note = input<string | TemplateRef<unknown> | undefined>();
   versions = input<HelixStatusBarVersion[]>([]);
   tone = input<HelixStatusBarTone>('neutral');
   height = input<string>('var(--helix-status-bar-height, 3rem)');
 
-  protected envForBadge = computed(() => this.environment() as Environment | undefined);
+  protected envForBadge = computed(() => this.environment() || undefined);
   protected noteTemplate = computed(() => {
     const n = this.note();
     return n instanceof TemplateRef ? n : undefined;

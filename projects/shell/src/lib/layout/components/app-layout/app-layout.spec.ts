@@ -188,6 +188,19 @@ describe('HelixAppLayout', () => {
       expect(groups()).toEqual(explicit);
     });
   });
+
+  it('should pass a custom environment through effectiveEnvironment', () => {
+    const custom = { label: 'Sample data', severity: 'warn' } as const;
+    fixture.componentRef.setInput('environment', custom);
+    const priv = component as unknown as { effectiveEnvironment: () => unknown };
+    expect(priv.effectiveEnvironment()).toEqual(custom);
+  });
+
+  it('should accept a custom statusBarEnvironment', () => {
+    const custom = { label: 'Sample data', severity: 'info' } as const;
+    fixture.componentRef.setInput('statusBarEnvironment', custom);
+    expect(component.statusBarEnvironment()).toEqual(custom);
+  });
 });
 
 @Component({

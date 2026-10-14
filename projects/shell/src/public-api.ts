@@ -71,7 +71,11 @@ export type { HelixNotfoundSuggestion } from './lib/pages/notfound/notfound';
 export { HelixNotfound } from './lib/pages/notfound/notfound';
 export type { BadgeSeverity } from './lib/ui/badge/badge';
 export { HelixBadge } from './lib/ui/badge/badge';
-export type { Environment } from './lib/ui/badge/environment-badge';
+export type {
+  CustomEnvironment,
+  Environment,
+  EnvironmentValue,
+} from './lib/ui/badge/environment-badge';
 export { HelixEnvironmentBadge } from './lib/ui/badge/environment-badge';
 export { HelixEmptyState, type HelixEmptyStateSize } from './lib/ui/empty-state/empty-state';
 export { HelixPageHeader } from './lib/ui/page-header/page-header';

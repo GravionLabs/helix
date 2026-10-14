@@ -39,6 +39,26 @@ describe('HelixStatusBar', () => {
     expect(el.textContent).toContain('Testing');
   });
 
+  it('should render a custom environment label and severity', () => {
+    fixture.componentRef.setInput('environment', { label: 'Canary', severity: 'error' });
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.helix-badge__label')?.textContent).toBe('Canary');
+    expect(el.querySelector('.helix-badge--error')).not.toBeNull();
+  });
+
+  it('should render Unknown for an unrecognised environment string', () => {
+    fixture.componentRef.setInput('environment', 'qa-7');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.helix-badge__label')?.textContent).toBe('Unknown');
+  });
+
+  it('should render no badge for an empty environment string', () => {
+    fixture.componentRef.setInput('environment', '');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('helix-environment-badge')).toBeNull();
+  });
+
   it('should render note when set', () => {
     fixture.componentRef.setInput('note', 'Build #1234');
     fixture.detectChanges();
