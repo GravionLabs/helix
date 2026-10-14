@@ -7,6 +7,7 @@ All notable changes to this project are documented here. Generated with
 
 ### Added
 
+- Custom label and severity for EnvironmentBadge and StatusBar (#920)
 - Vendor PrimeNG 21.1.9 as @gravionlabs/helix with h- selectors
 - Vendor @primeuix/utils into helix-core (uix/utils) (#433)
 - Vendor @primeuix/motion into helix-core (uix/motion) (#434)

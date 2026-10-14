@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import type { Environment } from '../../../ui/badge/environment-badge';
+import type { EnvironmentValue } from '../../../ui/badge/environment-badge';
 import { HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from './status-bar.model';
 
@@ -29,13 +29,13 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
 })
 export class HelixStatusBar {
   brand = input('');
-  environment = input<string | undefined>();
+  environment = input<EnvironmentValue | string | undefined>();
   note = input<string | undefined>();
   versions = input<HelixStatusBarVersion[]>([]);
   tone = input<HelixStatusBarTone>('neutral');
   height = input<string>('var(--helix-status-bar-height, 3rem)');
 
-  protected envForBadge = computed(() => this.environment() as Environment | undefined);
+  protected envForBadge = computed(() => this.environment() as EnvironmentValue | undefined);
   protected bgColor = computed(() => TONE_BG[this.tone()]);
   protected textColor = computed(() => TONE_TEXT[this.tone()]);
 }

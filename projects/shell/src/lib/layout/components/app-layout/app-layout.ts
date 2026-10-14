@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
-import type { Environment } from '../../../ui/badge/environment-badge';
+import type { EnvironmentValue } from '../../../ui/badge/environment-badge';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRail } from '../nav-rail/nav-rail';
@@ -32,7 +32,7 @@ import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model'
 })
 export class HelixAppLayout {
   appTitle = input('Helix');
-  environment = input<Environment | undefined>();
+  environment = input<EnvironmentValue | undefined>();
 
   /** Topbar items. When provided, overrides the default darkmode / configurator / mobile items. */
   topbarItems = input<HelixTopbarItem[] | undefined>();
@@ -47,7 +47,7 @@ export class HelixAppLayout {
   brandIcon = input<string>();
 
   /** Status bar inputs */
-  statusBarEnvironment = input<string | undefined>();
+  statusBarEnvironment = input<EnvironmentValue | string | undefined>();
   statusBarNote = input<string | undefined>();
   statusBarTone = input<HelixStatusBarTone>('neutral');
   statusBarVersions = input<HelixStatusBarVersion[]>([]);
@@ -90,10 +90,10 @@ export class HelixAppLayout {
       helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[], this.navStyle()),
   );
 
-  protected effectiveEnvironment = computed<Environment | undefined>(() => {
+  protected effectiveEnvironment = computed<EnvironmentValue | undefined>(() => {
     const input = this.environment();
     if (input !== undefined) return input;
-    return this.activatedRoute.snapshot.data['environment'] as Environment | undefined;
+    return this.activatedRoute.snapshot.data['environment'] as EnvironmentValue | undefined;
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {

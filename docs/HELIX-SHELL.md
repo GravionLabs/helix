@@ -200,7 +200,7 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `brand` | `string` | `''` | Brand name displayed on the left |
-| `environment` | `string \| undefined` | `undefined` | Environment label (e.g. "staging", "production"). Rendered as an uppercase pill |
+| `environment` | `Environment \| CustomEnvironment \| string \| undefined` | `undefined` | `'development'`, `'testing'`, `'staging'`, `'production'` or a custom `{ label, severity }`. Unknown strings render as "Unknown" |
 | `note` | `string \| undefined` | `undefined` | Optional note text (e.g. "Build #1234") |
 | `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
 | `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
@@ -997,7 +997,7 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `environment` | `Environment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'` |
+| `environment` | `Environment \| CustomEnvironment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'`, or `{ label: string; severity: 'info' \| 'warn' \| 'error' \| 'success' }` |
 
 #### Mapped appearance
 
@@ -1008,12 +1008,14 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 | `staging` | warn | `pi pi-layers` | Staging |
 | `production` | error | `pi pi-verified` | Production |
 | *unknown* | info | `pi pi-question` | Unknown |
+| `{ label, severity }` | given severity | none | given label (also the accessible name) |
 
 #### Example
 
 ```html
 <helix-environment-badge environment="staging" />
 <helix-environment-badge [environment]="envName" />
+<helix-environment-badge [environment]="{ label: 'Canary', severity: 'warn' }" />
 ```
 
 ### HelixPageHeader
