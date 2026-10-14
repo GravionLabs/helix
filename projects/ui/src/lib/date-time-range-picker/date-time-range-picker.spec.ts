@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
+import { By } from '@angular/platform-browser';
 import {
   HxDateTimeRangePicker,
   type HxDateTimeRangePreset,
@@ -85,7 +86,37 @@ import {
       [presets]="presetList"
       [(value)]="withPresets"
     />
+    <hx-date-time-range-picker
+      id="presetsDays"
+      locale="en-US"
+      presetsLabel="Quick ranges"
+      [showTime]="false"
+      [disabledDates]="blockedDays"
+      [presets]="dayPresets"
+      [(value)]="presetDays"
+    />
+    <hx-date-time-range-picker
+      id="presetsClock"
+      locale="en-US"
+      timeOnly
+      [presets]="clockPresets"
+      [(value)]="presetClock"
+    />
     <hx-date-time-range-picker id="typed" locale="en-US" typeable [(value)]="typed" />
+    <hx-date-time-range-picker
+      id="typedSep"
+      locale="en-US"
+      typeable
+      [separator]="sep()"
+      [(value)]="typedSep"
+    />
+    <hx-date-time-range-picker
+      id="typedOff"
+      locale="en-US"
+      typeable
+      [disabled]="true"
+      [(value)]="typed"
+    />
     <hx-date-time-range-picker
       id="typedDays"
       locale="en-US"
@@ -129,7 +160,38 @@ class Host {
       from: () => new Date(2026, 9, 8, 0, 0),
       to: () => new Date(2026, 9, 10, 0, 0),
     },
+    {
+      label: 'Reversed',
+      from: () => new Date(2026, 9, 20, 18, 0),
+      to: () => new Date(2026, 9, 19, 8, 15),
+    },
   ];
+  dayPresets: HxDateTimeRangePreset[] = [
+    {
+      label: 'Late days',
+      from: () => new Date(2026, 9, 7, 6, 30),
+      to: () => new Date(2026, 9, 9, 18, 45),
+    },
+    {
+      label: 'Over a blocked day',
+      from: () => new Date(2026, 9, 13, 9, 0),
+      to: () => new Date(2026, 9, 14, 9, 0),
+    },
+  ];
+  presetDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  clockPresets: HxDateTimeRangePreset[] = [
+    {
+      label: 'Early',
+      from: () => new Date(2025, 0, 1, 6, 0),
+      to: () => new Date(2025, 0, 3, 7, 30),
+    },
+  ];
+  presetClock = signal<HxDateTimeRangeValue>({
+    from: new Date(2026, 9, 9, 9, 0),
+    to: new Date(2026, 9, 10, 17, 0),
+  });
+  sep = signal('.');
+  typedSep = signal<HxDateTimeRangeValue>({ from: null, to: null });
   typed = signal<HxDateTimeRangeValue>({
     from: new Date(2026, 9, 9, 9, 0),
     to: new Date(2026, 9, 10, 17, 0),
@@ -212,6 +274,11 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
   };
 
+  const close = async () => {
+    popup()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await settle();
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Host],
@@ -232,10 +299,14 @@ describe('HxDateTimeRangePicker', () => {
     expect(input('basic').getAttribute('aria-label')).toBe('Shift');
   });
 
-  it('shows the placeholder while empty', () => {
+  it('shows the placeholder only while empty', async () => {
     expect(input('basic').value).toBe('');
-    expect(input('basic').placeholder).toBe('Pick a range');
+    expect(input('basic').matches(':placeholder-shown')).toBe(true);
     expect(input('labels').placeholder).toBe('');
+    host.basic.set({ from: new Date(2026, 9, 12, 8, 0), to: null });
+    await settle();
+    expect(input('basic').value).toBe('10/12/2026 08:00 -');
+    expect(input('basic').matches(':placeholder-shown')).toBe(false);
   });
 
   it('renders no preset list without presets', async () => {
@@ -248,7 +319,7 @@ describe('HxDateTimeRangePicker', () => {
     const buttons = [
       ...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset'),
     ];
-    expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days']);
+    expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days', 'Reversed']);
     await click(buttons[0]);
     expect(host.withPresets()).toEqual({ from: null, to: null });
     expect(now('from', 'Hour')).toBe('6');
@@ -261,11 +332,114 @@ describe('HxDateTimeRangePicker', () => {
     expect(input('presets').value).toBe('10/7/2026 06:00 - 10/7/2026 12:30');
   });
 
+  const preset = (label: string) =>
+    [...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')].find(
+      (b) => b.textContent?.trim() === label,
+    ) as HTMLElement;
+  const marked = () =>
+    [
+      ...popup()!.querySelectorAll(
+        '[role=gridcell][aria-selected=true] button, .hx-date-picker-date-in-range',
+      ),
+    ]
+      .map((b) => b.textContent?.trim())
+      .sort();
+
   it('drops a chosen preset on cancel', async () => {
+    host.withPresets.set({
+      from: new Date(2026, 9, 21, 10, 0),
+      to: new Date(2026, 9, 22, 11, 45),
+    });
+    await settle();
     await open('presets');
-    await click(popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')[1]);
+    await click(preset('Two days'));
+    expect(now('to', 'Minute')).toBe('0');
     await click(popup()!.querySelector('.hx-date-time-range-picker-cancel') as HTMLElement);
-    expect(host.withPresets()).toEqual({ from: null, to: null });
+    expect(host.withPresets()).toEqual({
+      from: new Date(2026, 9, 21, 10, 0),
+      to: new Date(2026, 9, 22, 11, 45),
+    });
+    await open('presets');
+    expect(now('from', 'Hour')).toBe('10');
+    expect(now('to', 'Hour')).toBe('11');
+    expect(now('to', 'Minute')).toBe('45');
+    expect(marked()).toEqual(['21', '22']);
+  });
+
+  it('swaps a preset whose to is before its from', async () => {
+    await open('presets');
+    await click(preset('Reversed'));
+    await submit();
+    expect(host.withPresets()).toEqual({
+      from: new Date(2026, 9, 19, 8, 15),
+      to: new Date(2026, 9, 20, 18, 0),
+    });
+  });
+
+  it('replaces a chosen preset with the next one', async () => {
+    await open('presets');
+    await click(preset('Morning'));
+    await click(preset('Two days'));
+    await submit();
+    expect(host.withPresets()).toEqual({
+      from: new Date(2026, 9, 8, 0, 0),
+      to: new Date(2026, 9, 10, 0, 0),
+    });
+  });
+
+  it('shows a chosen preset in the to time picker and the calendar', async () => {
+    await open('presets');
+    await click(preset('Two days'));
+    expect(now('to', 'Hour')).toBe('0');
+    expect(marked()).toEqual(['10', '8', '9']);
+    await click(preset('Morning'));
+    expect(now('to', 'Hour')).toBe('12');
+    expect(now('to', 'Minute')).toBe('30');
+    expect(marked()).toEqual(['7']);
+  });
+
+  it('names the preset group with presetsLabel and lists native buttons', async () => {
+    await open('presets');
+    expect(
+      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
+    ).toBe('Presets');
+    // a native `type=button` is activated by Enter and Space by the browser (synthetic keys do not activate it)
+    expect(preset('Morning').tagName).toBe('BUTTON');
+    expect(preset('Morning').getAttribute('type')).toBe('button');
+    preset('Morning').focus();
+    expect(document.activeElement).toBe(preset('Morning'));
+    await close();
+    await open('presetsDays');
+    expect(
+      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
+    ).toBe('Quick ranges');
+  });
+
+  it('takes the days of a preset without the time pickers', async () => {
+    await open('presetsDays');
+    await click(preset('Late days'));
+    await submit();
+    expect(host.presetDays()).toEqual({
+      from: new Date(2026, 9, 7),
+      to: new Date(2026, 9, 9),
+    });
+  });
+
+  it('refuses a preset with a side on a day in disabledDates', async () => {
+    await open('presetsDays');
+    await click(preset('Over a blocked day'));
+    await submit();
+    expect(host.presetDays()).toEqual({ from: null, to: null });
+  });
+
+  it('puts the times of a preset on the days of the value with timeOnly', async () => {
+    await open('presetsClock');
+    await click(preset('Early'));
+    await submit();
+    expect(host.presetClock()).toEqual({
+      from: new Date(2026, 9, 9, 6, 0),
+      to: new Date(2026, 9, 10, 7, 30),
+    });
   });
 
   it('shows the range as one text', () => {
@@ -712,8 +886,16 @@ describe('HxDateTimeRangePicker', () => {
       to: new Date(2026, 9, 14),
     });
     expect(input('typedDays').value).toBe('10/12/2026 - 10/14/2026');
-    await type('typedDays', '10/12/2026 08:00 - 10/14/2026');
-    expect(host.typedDays().from).toEqual(new Date(2026, 9, 12));
+  });
+
+  it('refuses a typed time when the time pickers are hidden', async () => {
+    await type('typedDays', '10/12/2026 - 10/14/2026');
+    await type('typedDays', '10/20/2026 08:00 - 10/21/2026');
+    expect(host.typedDays()).toEqual({
+      from: new Date(2026, 9, 12),
+      to: new Date(2026, 9, 14),
+    });
+    expect(input('typedDays').value).toBe('10/12/2026 - 10/14/2026');
   });
 
   it('types hours on the day of the value with timeOnly', async () => {
@@ -751,6 +933,121 @@ describe('HxDateTimeRangePicker', () => {
     input('typed').dispatchEvent(new Event('change'));
     await settle();
     expect(host.typed()).toEqual({ from: new Date(2026, 9, 1, 6, 0), to: null });
+  });
+
+  it('reverts the typed text with Escape', async () => {
+    input('typed').value = '10/12/2026 08:';
+    input('typed').dispatchEvent(new Event('input'));
+    await settle();
+    await press(input('typed'), 'Escape');
+    expect(input('typed').value).toBe('10/9/2026 09:00 - 10/10/2026 17:00');
+    input('typed').dispatchEvent(new Event('change'));
+    await settle();
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 9, 9, 0),
+      to: new Date(2026, 9, 10, 17, 0),
+    });
+  });
+
+  it('keeps a surrounding form from submitting on Enter', async () => {
+    input('typed').value = '10/12/2026 08:00 - 10/14/2026 09:00';
+    input('typed').dispatchEvent(new Event('input'));
+    const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    input('typed').dispatchEvent(enter);
+    await settle();
+    expect(enter.defaultPrevented).toBe(true);
+    expect(host.typed().from).toEqual(new Date(2026, 9, 12, 8, 0));
+  });
+
+  it('puts a range typed while the popup is open into the draft', async () => {
+    await press(input('typed'), 'ArrowDown');
+    await type('typed', '10/12/2026 08:00 - 10/14/2026 09:00', 'Enter');
+    expect(now('from', 'Hour')).toBe('8');
+    await submit();
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 14, 9, 0),
+    });
+  });
+
+  it('does not emit when the typed range is the value', async () => {
+    const before = host.typed();
+    const changes: HxDateTimeRangeValue[] = [];
+    const picker = fixture.debugElement.query(By.css('#typed'))
+      .componentInstance as HxDateTimeRangePicker;
+    picker.value.subscribe((v) => changes.push(v));
+    await type('typed', '10/9/2026 9:00 - 10/10/2026 5:00 PM');
+    expect(host.typed()).toBe(before);
+    expect(changes).toEqual([]);
+  });
+
+  it('splits on a separator with regex characters only where it stands alone', async () => {
+    await type('typedSep', '10/12/2026 08:00 . 10/14/2026 09:00');
+    expect(host.typedSep()).toEqual({
+      from: new Date(2026, 9, 12, 8, 0),
+      to: new Date(2026, 9, 14, 9, 0),
+    });
+    await type('typedSep', '10/15/2026 08:00 x 10/16/2026 09:00');
+    expect(host.typedSep().from).toEqual(new Date(2026, 9, 12, 8, 0));
+    host.sep.set('|');
+    await settle();
+    await type('typedSep', '10/20/2026 08:00 | 10/21/2026 09:00');
+    expect(host.typedSep()).toEqual({
+      from: new Date(2026, 9, 20, 8, 0),
+      to: new Date(2026, 9, 21, 9, 0),
+    });
+    expect(input('typedSep').value).toBe('10/20/2026 08:00 | 10/21/2026 09:00');
+  });
+
+  it('takes a typed text without the separator as from', async () => {
+    await type('typed', '10/12/2026 08:00');
+    expect(host.typed()).toEqual({ from: new Date(2026, 9, 12, 8, 0), to: null });
+  });
+
+  it('puts a typed to time on the day of to, else of from, with timeOnly', async () => {
+    host.typedClock.set({ from: new Date(2026, 9, 9, 9, 0), to: new Date(2026, 9, 11, 17, 0) });
+    await settle();
+    await type('typedClock', '8 - 18');
+    expect(host.typedClock()).toEqual({
+      from: new Date(2026, 9, 9, 8, 0),
+      to: new Date(2026, 9, 11, 18, 0),
+    });
+    host.typedClock.set({ from: new Date(2026, 9, 9, 9, 0), to: null });
+    await settle();
+    await type('typedClock', '8 - 18');
+    expect(host.typedClock()).toEqual({
+      from: new Date(2026, 9, 9, 8, 0),
+      to: new Date(2026, 9, 9, 18, 0),
+    });
+  });
+
+  it('takes no typing while disabled', async () => {
+    expect(input('typedOff').disabled).toBe(true);
+    await type('typedOff', '10/12/2026 08:00 - 10/14/2026 09:00');
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 9, 9, 0),
+      to: new Date(2026, 9, 10, 17, 0),
+    });
+  });
+
+  it('opens a typeable field with Alt+Arrow Up', async () => {
+    input('typed').dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowUp', altKey: true, bubbles: true }),
+    );
+    await settle();
+    expect(popup()).not.toBeNull();
+  });
+
+  it('opens a read-only field with a click, Enter and Space', async () => {
+    await click(input('basic'));
+    expect(popup()).not.toBeNull();
+    await close();
+    expect(popup()).toBeNull();
+    await press(input('basic'), 'Enter');
+    expect(popup()).not.toBeNull();
+    await close();
+    await press(input('basic'), ' ');
+    expect(popup()).not.toBeNull();
   });
 
   it('opens a typeable field with the button or Arrow Down, not with a click or Space', async () => {

@@ -33,7 +33,9 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 
 - **Presets:** each `{ label, from: () => Date, to: () => Date }` (`HxDateTimeRangePreset`) is a button in the popup; the
   functions run when it is chosen, so `now` stays current. A preset fills the draft (calendar and time pickers show it);
-  Submit applies it, Cancel drops it. No list is shown without presets.
+  Submit applies it, Cancel drops it. No list is shown without presets. A preset is taken as the picker shows it: a
+  reversed one is swapped, `[showTime]="false"` keeps its days (midnight), `timeOnly` keeps its times on the days of the
+  range being edited (or today), `minDate`..`maxDate` move it inside, and a side on a day in `disabledDates` refuses it.
 
   ```ts
   readonly presets: HxDateTimeRangePreset[] = [
@@ -51,8 +53,10 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   Each side is read like the [date time picker](date-time-picker.md)'s field: the date in the order of the locale (also
   `yyyy-mm-dd`) and the time (`14:30`, `3:45 PM`; the hour alone with `[showMinutes]="false"`, the date alone with
   `[showTime]="false"`, the time alone with `timeOnly`, on the day of the value or today). Enter or leaving the field
-  commits it; a side may be empty (`10/12/2026 08:30 -`), a text without the separator is `from`, an empty text empties
-  the range and a reversed range is put in order. An unreadable side, a day in `disabledDates` or a time outside
+  commits it (Enter does not submit a surrounding form), Escape drops the typed text and shows the value again; a range
+  typed while the popup is open is also what the popup edits. A typed range equal to the value changes nothing; a side
+  may be empty (`10/12/2026 08:30 -`), a text without the separator is `from`, an empty text empties the range and a
+  reversed range is put in order. An unreadable side, a day in `disabledDates` or a time outside
   `minDate`..`maxDate` puts the value back; a value set from outside drops the typed text. Only the numeric default
   format reads back: with a `dateFormat` that writes month names, typing is refused. The field opens the popup with the
   button, Arrow Down or Alt+Arrow Up (click, Enter and Space are for typing); it keeps its label and `aria-*`.

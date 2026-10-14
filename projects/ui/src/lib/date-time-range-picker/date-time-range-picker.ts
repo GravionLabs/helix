@@ -44,6 +44,9 @@ export interface HxDateTimeRangePreset {
 
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
 const earlier = (a: Date | null, b: Date | null) => (a && b ? (a <= b ? a : b) : (a ?? b));
+const sameTime = (a: Date | null, b: Date | null) => a?.getTime() === b?.getTime();
+const sameRange = (a: HxDateTimeRangeValue, b: HxDateTimeRangeValue) =>
+  sameTime(a.from, b.from) && sameTime(a.to, b.to);
 const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (a ?? b));
 
 /**
@@ -90,8 +93,9 @@ export class HxDateTimeRangePicker
   /** The text between the two dates in the field. */
   readonly separator = input('-');
   readonly placeholder = input('');
-  /** Ready-made ranges listed in the popup; choosing one fills the draft, Submit applies it. */
+  /** The name of the group of preset buttons. */
   readonly presetsLabel = input('Presets');
+  /** Ready-made ranges listed in the popup; choosing one fills the draft, Submit applies it. */
   readonly presets = input<readonly HxDateTimeRangePreset[]>([]);
   readonly clearLabel = input('Clear');
   readonly cancelLabel = input('Cancel');
@@ -256,7 +260,12 @@ export class HxDateTimeRangePicker
 
   protected onFieldKeydown(event: KeyboardEvent): void {
     if (this.typeable() && event.key === 'Enter') {
+      // a surrounding form is not submitted: Enter commits the typed text
+      event.preventDefault();
       this.commitTyping();
+    } else if (this.typeable() && event.key === 'Escape' && this.#typed() !== null) {
+      event.preventDefault();
+      this.#revertTyping();
     } else if (
       event.key === 'ArrowDown' ||
       (event.altKey && event.key === 'ArrowUp') ||
@@ -278,8 +287,22 @@ export class HxDateTimeRangePicker
     if (typed === null || this.isDisabled()) return;
     this.#typed.set(null);
     const next = this.#parseRange(typed);
-    if (next) this.#commit(next);
-    // the binding does not change when the value stays: put the field's text back by hand
+    if (next && !sameRange(next, this.value())) {
+      this.#commit(next);
+      // an open popup edits the typed range from now on: a later Submit keeps it
+      if (this.open()) this.#stage(next);
+    }
+    this.#showValue();
+  }
+
+  /** Escape drops the typed text and shows the value again. */
+  #revertTyping(): void {
+    this.#typed.set(null);
+    this.#showValue();
+  }
+
+  /** The binding does not change when the value stays: puts the field's text back by hand. */
+  #showValue(): void {
     const field = this.field();
     if (field) field.nativeElement.value = this.text();
   }
@@ -305,8 +328,7 @@ export class HxDateTimeRangePicker
   #parseSide(part: string, old: Date | null): Date | null | undefined {
     const text = part.trim();
     if (text === '') return null;
-    const timed = this.showTime() || this.timeOnly();
-    const date = timed
+    const date = this.#timed()
       ? parseDateTimeText(text, {
           locale: this.locale(),
           showMinutes: this.showMinutes(),
@@ -337,10 +359,31 @@ export class HxDateTimeRangePicker
 
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
   protected applyPreset(preset: HxDateTimeRangePreset): void {
-    const [from, to] = [preset.from(), preset.to()];
-    this.#stage(
-      isValidDate(from) && isValidDate(to) && to < from ? { from: to, to: from } : { from, to },
-    );
+    const { from: oldFrom, to: oldTo } = this.draft();
+    const from = this.#fitPreset(preset.from(), oldFrom);
+    const to = this.#fitPreset(preset.to(), oldTo ?? oldFrom);
+    // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
+    if (from === undefined || to === undefined) return;
+    this.#stage(from && to && to < from ? { from: to, to: from } : { from, to });
+  }
+
+  /**
+   * A preset side as the picker can show it (as a typed side is read): the day only without the time pickers, the
+   * time only on the day of the draft (or today) with `timeOnly`; `undefined` on a disabled day.
+   */
+  #fitPreset(date: Date, old: Date | null): Date | null | undefined {
+    if (!isValidDate(date)) return null;
+    const fitted = this.timeOnly()
+      ? this.#atTime(old ?? new Date(), date)
+      : this.#timed()
+        ? date
+        : startOfDay(date);
+    return this.#isBlocked(fitted) ? undefined : fitted;
+  }
+
+  /** The value has a time (the time pickers are shown). */
+  #timed(): boolean {
+    return this.showTime() || this.timeOnly();
   }
 
   protected submit(): void {
