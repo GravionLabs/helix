@@ -1,9 +1,9 @@
 <helix-app-layout
   appTitle="Helix Demo"
-  environment="development"
+  [environment]="{ label: 'Sample data', severity: 'warn' }"
   [menu]="menu"
   [navStyle]="settings.navStyle()"
   statusBarBrand="Helix"
-  statusBarEnvironment="development"
+  [statusBarEnvironment]="{ label: 'Sample data', severity: 'warn' }"
   [statusBarVersions]="versions"
 />

@@ -21,6 +21,10 @@ const ENV_MAP: Record<Environment, { severity: BadgeSeverity; icon: string; labe
 
 const DEFAULT_ENV = { severity: 'info' as BadgeSeverity, icon: 'pi pi-question', label: 'Unknown' };
 
+function isKnownEnvironment(value: string): value is Environment {
+  return Object.hasOwn(ENV_MAP, value);
+}
+
 @Component({
   selector: 'helix-environment-badge',
   standalone: true,
@@ -35,13 +39,13 @@ const DEFAULT_ENV = { severity: 'info' as BadgeSeverity, icon: 'pi pi-question',
   `,
 })
 export class HelixEnvironmentBadge {
-  environment = input.required<EnvironmentValue>();
+  environment = input.required<EnvironmentValue | string>();
 
   protected mapped = computed(() => {
     const env = this.environment();
     if (typeof env === 'object' && env !== null) {
       return { severity: env.severity, icon: '', label: env.label };
     }
-    return ENV_MAP[env] ?? DEFAULT_ENV;
+    return isKnownEnvironment(env) ? ENV_MAP[env] : DEFAULT_ENV;
   });
 }

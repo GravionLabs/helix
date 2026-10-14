@@ -62,7 +62,7 @@ describe('HelixEnvironmentBadge', () => {
     fixture.componentRef.setInput('environment', { label: 'Canary', severity: 'warn' });
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
-    expect(el.querySelector('.helix-badge--warn')).toBeTruthy();
+    expect(el.querySelector('.helix-badge--warn')).not.toBeNull();
     expect(el.textContent?.trim()).toBe('Canary');
     expect(el.querySelector('i')).toBeNull();
   });
@@ -72,12 +72,62 @@ describe('HelixEnvironmentBadge', () => {
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.textContent?.trim()).toBe('Unknown');
-    expect(el.querySelector('.helix-badge--info')).toBeTruthy();
+    expect(el.querySelector('.helix-badge--info')).not.toBeNull();
   });
 
   it('should keep the visible label of known environments', () => {
     fixture.componentRef.setInput('environment', 'staging');
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).textContent?.trim()).toBe('Staging');
+  });
+
+  it('should expose the custom label as the whole visible text', () => {
+    fixture.componentRef.setInput('environment', { label: 'Sample data', severity: 'info' });
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.helix-badge__label')?.textContent).toBe('Sample data');
+    expect(el.textContent?.trim()).toBe('Sample data');
+  });
+
+  it('should show only the label text for a known value (icon has no text)', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.textContent?.trim()).toBe('Development');
+  });
+
+  it.each(['constructor', 'toString', '__proto__', 'hasOwnProperty'])(
+    'should fall back to Unknown for inherited key %s',
+    (key) => {
+      fixture.componentRef.setInput('environment', key);
+      fixture.detectChanges();
+      expect((fixture.nativeElement as HTMLElement).textContent?.trim()).toBe('Unknown');
+    },
+  );
+
+  it('should render no label element for an empty custom label', () => {
+    fixture.componentRef.setInput('environment', { label: '', severity: 'warn' });
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.querySelector('.helix-badge__label')).toBeNull();
+    expect(el.textContent?.trim()).toBe('');
+  });
+
+  it('should switch between custom and known values', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    fixture.componentRef.setInput('environment', { label: 'Canary', severity: 'error' });
+    fixture.detectChanges();
+    expect(el.textContent?.trim()).toBe('Canary');
+    expect(el.querySelector('.helix-badge--error')).not.toBeNull();
+    expect(el.querySelector('i')).toBeNull();
+
+    fixture.componentRef.setInput('environment', 'production');
+    fixture.detectChanges();
+    expect(el.textContent?.trim()).toBe('Production');
+    expect(el.querySelector('i.pi-verified')).not.toBeNull();
+
+    fixture.componentRef.setInput('environment', { label: 'Back', severity: 'success' });
+    fixture.detectChanges();
+    expect(el.textContent?.trim()).toBe('Back');
+    expect(el.querySelector('.helix-badge--success')).not.toBeNull();
+    expect(el.querySelector('.helix-badge--error')).toBeNull();
   });
 });

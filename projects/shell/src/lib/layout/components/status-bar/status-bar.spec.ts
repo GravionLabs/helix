@@ -43,13 +43,19 @@ describe('HelixStatusBar', () => {
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     expect(el.querySelector('.helix-badge__label')?.textContent).toBe('Canary');
-    expect(el.querySelector('.helix-badge--error')).toBeTruthy();
+    expect(el.querySelector('.helix-badge--error')).not.toBeNull();
   });
 
   it('should render Unknown for an unrecognised environment string', () => {
     fixture.componentRef.setInput('environment', 'qa-7');
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.helix-badge__label')?.textContent).toBe('Unknown');
+  });
+
+  it('should render no badge for an empty environment string', () => {
+    fixture.componentRef.setInput('environment', '');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('helix-environment-badge')).toBeNull();
   });
 
   it('should render note when set', () => {

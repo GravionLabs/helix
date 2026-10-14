@@ -32,7 +32,7 @@ import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model'
 })
 export class HelixAppLayout {
   appTitle = input('Helix');
-  environment = input<EnvironmentValue | undefined>();
+  environment = input<EnvironmentValue | string | undefined>();
 
   /** Topbar items. When provided, overrides the default darkmode / configurator / mobile items. */
   topbarItems = input<HelixTopbarItem[] | undefined>();
@@ -90,10 +90,10 @@ export class HelixAppLayout {
       helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[], this.navStyle()),
   );
 
-  protected effectiveEnvironment = computed<EnvironmentValue | undefined>(() => {
+  protected effectiveEnvironment = computed<EnvironmentValue | string | undefined>(() => {
     const input = this.environment();
     if (input !== undefined) return input;
-    return this.activatedRoute.snapshot.data['environment'] as EnvironmentValue | undefined;
+    return this.activatedRoute.snapshot.data['environment'];
   });
 
   protected effectiveItems = computed<HelixTopbarItem[]>(() => {

@@ -35,7 +35,7 @@ export class HelixStatusBar {
   tone = input<HelixStatusBarTone>('neutral');
   height = input<string>('var(--helix-status-bar-height, 3rem)');
 
-  protected envForBadge = computed(() => this.environment() as EnvironmentValue | undefined);
+  protected envForBadge = computed(() => this.environment() || undefined);
   protected bgColor = computed(() => TONE_BG[this.tone()]);
   protected textColor = computed(() => TONE_TEXT[this.tone()]);
 }
