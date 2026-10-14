@@ -19,6 +19,8 @@ export interface HxPageEvent {
   /** The page, 0-based. */
   page: number;
   pageCount: number;
+  /** Set when the "All" size is chosen: `rows` is then the number of all records (at least 1). */
+  all?: true;
 }
 
 /**
@@ -47,7 +49,7 @@ export class HxPaginator {
   /** Index of the first record shown. */
   readonly first = model(0);
   /** Offers a rows-per-page select when given. */
-  readonly rowsPerPageOptions = input<readonly number[]>();
+  readonly rowsPerPageOptions = input<readonly (number | 'all')[]>();
   /** Page links shown at most (the current page stays in the middle). */
   readonly pageLinkSize = input(5, { transform: numberAttribute });
   readonly showCurrentPageReport = input(false, { transform: booleanAttribute });
@@ -63,14 +65,28 @@ export class HxPaginator {
   /** `{page}` is replaced by the page number (1-based). */
   readonly pageLabelTemplate = input('Page {page}');
   readonly rowsPerPageLabel = input('Rows per page');
+  /** The label of the `'all'` entry of `rowsPerPageOptions`. */
+  readonly allLabel = input('All');
+
+  /** The "All" size is chosen: one page with every record; `rows` is left as it was. */
+  readonly showAll = model(false);
+  /** "All" is chosen and still offered by `rowsPerPageOptions`. */
+  private readonly allSelected = computed(
+    () => this.showAll() && !!this.rowsPerPageOptions()?.includes('all'),
+  );
+  /** The records per page in effect: all of them when "All" is chosen. */
+  private readonly perPage = computed(() =>
+    this.allSelected() ? Math.max(1, this.totalRecords()) : this.rows(),
+  );
+  protected readonly rowsValue = computed(() => (this.allSelected() ? 'all' : this.rows()));
 
   readonly pageChange = output<HxPageEvent>();
 
   protected readonly pageCount = computed(() =>
-    Math.max(1, Math.ceil(this.totalRecords() / Math.max(1, this.rows()))),
+    Math.max(1, Math.ceil(this.totalRecords() / Math.max(1, this.perPage()))),
   );
   protected readonly page = computed(() =>
-    Math.min(this.pageCount() - 1, Math.floor(this.first() / Math.max(1, this.rows()))),
+    Math.min(this.pageCount() - 1, Math.floor(this.first() / Math.max(1, this.perPage()))),
   );
   protected readonly isFirst = computed(() => this.page() === 0);
   protected readonly isLast = computed(() => this.page() >= this.pageCount() - 1);
@@ -85,13 +101,16 @@ export class HxPaginator {
   });
 
   protected readonly rowsOptions = computed(() =>
-    (this.rowsPerPageOptions() ?? []).map((n) => ({ label: String(n), value: n })),
+    (this.rowsPerPageOptions() ?? []).map((n) => ({
+      label: n === 'all' ? this.allLabel() : String(n),
+      value: n,
+    })),
   );
 
   protected readonly report = computed(() => {
     const total = this.totalRecords();
-    const first = total === 0 ? 0 : this.page() * this.rows() + 1;
-    const last = Math.min(total, (this.page() + 1) * this.rows());
+    const first = total === 0 ? 0 : this.page() * this.perPage() + 1;
+    const last = Math.min(total, (this.page() + 1) * this.perPage());
     return this.currentPageReportTemplate()
       .replace('{first}', String(first))
       .replace('{last}', String(last))
@@ -107,14 +126,22 @@ export class HxPaginator {
   /** Goes to a page (0-based); an out-of-range page is clamped. */
   goTo(page: number): void {
     const target = Math.min(this.pageCount() - 1, Math.max(0, page));
-    if (target === this.page() && this.first() === target * this.rows()) return;
-    this.first.set(target * this.rows());
+    if (target === this.page() && this.first() === target * this.perPage()) return;
+    this.first.set(target * this.perPage());
     this.emit();
   }
 
   protected setRows(value: unknown): void {
+    if (value === 'all') {
+      if (this.allSelected()) return;
+      this.showAll.set(true);
+      this.first.set(0);
+      this.emit();
+      return;
+    }
     const rows = Number(value);
-    if (!rows || rows === this.rows()) return;
+    if (!rows || (rows === this.rows() && !this.allSelected())) return;
+    this.showAll.set(false);
     this.rows.set(rows);
     // keep the first record of the page on screen
     this.first.set(Math.floor(this.first() / rows) * rows);
@@ -124,9 +151,10 @@ export class HxPaginator {
   private emit(): void {
     this.pageChange.emit({
       first: this.first(),
-      rows: this.rows(),
+      rows: this.perPage(),
       page: this.page(),
       pageCount: this.pageCount(),
+      ...(this.allSelected() ? { all: true as const } : {}),
     });
   }
 }

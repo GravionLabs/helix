@@ -7,6 +7,7 @@ import {
   contentChild,
   contentChildren,
   Directive,
+  effect,
   inject,
   input,
   isDevMode,
@@ -15,6 +16,7 @@ import {
   output,
   signal,
   TemplateRef,
+  untracked,
 } from '@angular/core';
 import { HxCheckbox } from '../checkbox/checkbox';
 import { HxInput } from '../input/input';
@@ -40,7 +42,20 @@ export interface HxColumn {
   sortable?: boolean;
   /** The column gets a text filter in the filter row (`filterDisplay="row"`). */
   filter?: boolean;
+  /** The direction of the first click on the sort button (the table's `sortFirstOrder` by default). */
+  sortFirstOrder?: HxSortFirstOrder;
 }
+
+/** The direction a sort starts with. */
+export type HxSortFirstOrder = 'asc' | 'desc';
+
+/** What `rowClass` may return: anything `[class]` accepts. */
+export type HxRowClass =
+  | string
+  | readonly string[]
+  | Record<string, boolean | null | undefined>
+  | null
+  | undefined;
 
 /** One sorted column: `order` 1 is ascending, -1 descending. */
 export interface HxSortMeta {
@@ -202,6 +217,12 @@ export class HxDataTable implements OnInit {
   /** Rows change colour under the pointer (default on). */
   readonly hoverRows = input(true, { transform: booleanAttribute });
   readonly emptyMessage = input('No records found');
+  /** Classes for the `<tr>` of a row: a string, an array or an object, as for `[class]`. */
+  readonly rowClass = input<(row: never) => HxRowClass>();
+  /** Text shown in a cell whose value is `null` or `undefined` (not for `0`, `false` or `''`). */
+  readonly emptyValue = input('');
+  /** The label of the `'all'` entry of `rowsPerPageOptions`. */
+  readonly allLabel = input('All');
   /** Covers the table with a spinner and sets `aria-busy`. */
   readonly loading = input(false, { transform: booleanAttribute });
   /** Visible caption text above the table. */
@@ -223,12 +244,14 @@ export class HxDataTable implements OnInit {
   readonly multiSortMeta = model<HxSortMeta[]>([]);
   /** Replaces the client-side sort. */
   readonly sortFunction = input<HxSortFunction>();
+  /** The direction of the first click on a sortable column; a column's own `sortFirstOrder` wins. */
+  readonly sortFirstOrder = input<HxSortFirstOrder>('asc');
 
   /** Shows a paginator below the table. */
   readonly paginator = input(false, { transform: booleanAttribute });
   readonly rows = model(10);
   readonly first = model(0);
-  readonly rowsPerPageOptions = input<readonly number[]>();
+  readonly rowsPerPageOptions = input<readonly (number | 'all')[]>();
   readonly showCurrentPageReport = input(true, { transform: booleanAttribute });
   /** The rows are paged and sorted elsewhere: the table only shows `value` and emits `lazyLoad`. */
   readonly lazy = input(false, { transform: booleanAttribute });
@@ -265,6 +288,16 @@ export class HxDataTable implements OnInit {
 
   protected readonly announcement = signal('');
   private readonly globalText = signal('');
+  /** The paginator's "All" size is chosen: every row is shown, whatever `rows` says. */
+  private readonly showAll = signal(false);
+  /** A `rows` set from outside (or by the user) ends "All". */
+  private readonly resetAll = effect(() => {
+    this.rows();
+    untracked(() => this.showAll.set(false));
+  });
+  private readonly allActive = computed(
+    () => this.showAll() && !!this.rowsPerPageOptions()?.includes('all'),
+  );
 
   protected readonly cellTemplates = contentChildren(HxCell);
   protected readonly columnHeaderTemplates = contentChildren(HxColumnHeader);
@@ -325,7 +358,7 @@ export class HxDataTable implements OnInit {
   /** The rows the table draws: sorted, then the current page. */
   protected readonly visibleRows = computed(() => {
     const rows = this.sorted();
-    if (!this.paginator() || this.lazy()) return rows;
+    if (!this.paginator() || this.lazy() || this.allActive()) return rows;
     return rows.slice(this.first(), this.first() + this.rows());
   });
   protected readonly cells = computed(
@@ -479,10 +512,12 @@ export class HxDataTable implements OnInit {
     return index < 0 ? null : index + 1;
   }
 
-  /** Sorts by a column: ascending, then descending, then not at all. */
+  /** Sorts by a column: the first order, then the opposite, then not at all (ascending first by default). */
   sort(column: HxColumn): void {
     const order = this.orderOf(column);
-    const next: 0 | 1 | -1 = order === 0 ? 1 : order === 1 ? -1 : 0;
+    const firstOrder: 1 | -1 = (column.sortFirstOrder ?? this.sortFirstOrder()) === 'desc' ? -1 : 1;
+    const next: 0 | 1 | -1 =
+      order === 0 ? firstOrder : order === firstOrder ? (-firstOrder as 1 | -1) : 0;
     if (this.sortMode() === 'multiple') {
       const rest = this.multiSortMeta().filter((m) => m.field !== column.field);
       this.multiSortMeta.set(
@@ -509,14 +544,14 @@ export class HxDataTable implements OnInit {
 
   protected onPage(event: HxPageEvent): void {
     this.first.set(event.first);
-    this.rows.set(event.rows);
+    if (!event.all) this.rows.set(event.rows);
     if (this.lazy()) this.emitLazy();
   }
 
   private emitLazy(): void {
     this.lazyLoad.emit({
       first: this.first(),
-      rows: this.rows(),
+      rows: this.allActive() && this.total() > 0 ? this.total() : this.rows(),
       sortField:
         this.sortMode() === 'multiple'
           ? (this.multiSortMeta()[0]?.field ?? null)
@@ -532,6 +567,10 @@ export class HxDataTable implements OnInit {
   protected trackRow(row: unknown, index: number): unknown {
     const key = this.dataKey();
     return key ? (resolveField(row, key) ?? index) : index;
+  }
+
+  protected rowClassOf(row: unknown): HxRowClass {
+    return this.rowClass()?.(row as never);
   }
 
   protected valueOf(row: unknown, column: HxColumn): unknown {

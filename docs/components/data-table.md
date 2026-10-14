@@ -32,6 +32,8 @@ A column is `{ field, header, width?, align?, sortable?, filter? }`; `field` can
 | `stripedRows`, `showGridlines` | `boolean` | `false` | Alternate row background; borders around every cell. |
 | `hoverRows` | `boolean` | `true` | Rows change colour under the pointer. |
 | `emptyMessage` | `string` | `'No records found'` | Shown in one cell across the table when there are no rows. |
+| `rowClass` | `(row) => string \| string[] \| Record<string, boolean>` | none | Classes for the `<tr>` of a row, as for `[class]`. |
+| `emptyValue` | `string` | `''` | Text for a cell whose value is `null` or `undefined` (not `0`, `false` or `''`); cell templates still get the raw value. |
 | `loading` | `boolean` | `false` | A spinner covers the table; `aria-busy="true"`. |
 | `caption` | `string` | none | Visible caption above the table. |
 | `ariaLabel` | `string` | none | Accessible name; without `caption` it is a visually hidden caption. |
@@ -52,6 +54,7 @@ sort. The state is in models, so it can be bound and restored:
 | `sortMode` | `'single' \| 'multiple'` | `'single'` | In `multiple` mode a click adds the column to the sort order (ascending, descending, removed); a small number shows the position. |
 | `sortField` (model), `sortOrder` (model) | `string \| null`, `1 \| -1` | `null`, `1` | The sorted column in `single` mode. |
 | `multiSortMeta` (model) | `{ field, order }[]` | `[]` | The sorted columns in `multiple` mode, most important first. |
+| `sortFirstOrder` | `'asc' \| 'desc'` | `'asc'` | The direction of the first click on a column (descending for numbers, say); `HxColumn.sortFirstOrder` overrides it per column. The next click gives the opposite order, then the sort is removed. |
 | `sortFunction` | `(rows, meta) => rows` | none | Replaces the client-side sort. |
 
 The default order puts empty values last, compares numbers and dates by value and text by locale with numeric
@@ -64,7 +67,12 @@ parts (`Item 2` before `Item 10`); `compareValues` is exported.
 ```
 
 `paginator` adds an [`hx-paginator`](paginator.md) below the table; `rows`, `first`, `rowsPerPageOptions` and
-`showCurrentPageReport` (default on) are its settings. A change of the sort goes back to the first page.
+`showCurrentPageReport` (default on) are its settings. `rowsPerPageOptions` accepts `'all'` (`[10, 25, 'all']`): the
+select gets an "All" entry (label: `allLabel`, default `'All'`) and the table shows every row. `rows` is left as it was;
+"All" ends when the user picks a number, when `rows` is set from outside or when `'all'` leaves `rowsPerPageOptions`.
+It stays active when filters or the data change, so the page then shows every matching row. With `lazy`, `lazyLoad`
+carries `totalRecords` as `rows` (the current `rows` while the total is unknown); the table does not load again when the
+total grows later.
 
 ## Selection
 

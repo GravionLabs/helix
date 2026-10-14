@@ -20,7 +20,7 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Data table: sorting and paging</h2>
     <p class="m-0">Click a header to sort (ascending, descending, off); hold several columns with the multiple mode; 47 rows over pages.</p>
-    <hx-data-table [value]="manyProducts" [columns]="columns" dataKey="id" ariaLabel="Many products" sortMode="multiple" paginator [rows]="5" [rowsPerPageOptions]="[5, 10, 25]" />
+    <hx-data-table [value]="manyProducts" [columns]="columns" dataKey="id" ariaLabel="Many products" sortMode="multiple" paginator [rows]="5" [rowsPerPageOptions]="[5, 10, 25, 'all']" sortFirstOrder="desc" emptyValue="n/a" [rowClass]="dimCheap" />
   </div>
 
   <div class="card flex flex-col gap-3">
