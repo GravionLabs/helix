@@ -9,6 +9,7 @@ import {
   Directive,
   inject,
   input,
+  isDevMode,
   model,
   type OnInit,
   output,
@@ -29,6 +30,8 @@ export interface HxColumn {
   field: string;
   /** The header text. */
   header: string;
+  /** The `title` attribute of the header cell (a tooltip). */
+  title?: string;
   /** CSS width of the column (`8rem`, `20%`). */
   width?: string;
   /** Horizontal alignment of header and cells (the start edge by default). */
@@ -95,6 +98,21 @@ export class HxCell {
   /** The `field` of the column. */
   readonly field = input.required<string>({ alias: 'hxCell' });
   readonly template = inject<TemplateRef<HxCellContext>>(TemplateRef);
+}
+
+/**
+ * Extra content in the header of one column, beside the label and outside the sort button:
+ * `<ng-template hxColumnHeader="price" let-column>…</ng-template>`. The context has the column (`$implicit`).
+ */
+@Directive({ selector: 'ng-template[hxColumnHeader]' })
+export class HxColumnHeader {
+  /** The `field` of the column. */
+  readonly field = input.required<string>({ alias: 'hxColumnHeader' });
+  readonly template = inject<TemplateRef<HxColumnHeaderContext>>(TemplateRef);
+}
+
+export interface HxColumnHeaderContext {
+  $implicit: HxColumn;
 }
 
 export interface HxCellContext {
@@ -249,6 +267,7 @@ export class HxDataTable implements OnInit {
   private readonly globalText = signal('');
 
   protected readonly cellTemplates = contentChildren(HxCell);
+  protected readonly columnHeaderTemplates = contentChildren(HxColumnHeader);
   protected readonly headerTemplate = contentChild(HxTableHeader);
   protected readonly bodyTemplate = contentChild(HxTableBody);
   protected readonly footerTemplate = contentChild(HxTableFooter);
@@ -312,6 +331,21 @@ export class HxDataTable implements OnInit {
   protected readonly cells = computed(
     () => new Map(this.cellTemplates().map((cell) => [cell.field(), cell.template])),
   );
+  private readonly warnedFields = new Set<string>();
+  protected readonly columnHeaders = computed(() => {
+    const map = new Map<string, TemplateRef<HxColumnHeaderContext>>();
+    for (const header of this.columnHeaderTemplates()) {
+      const field = header.field();
+      if (map.has(field) && isDevMode() && !this.warnedFields.has(field)) {
+        this.warnedFields.add(field);
+        console.warn(
+          `hx-data-table: more than one hxColumnHeader template for "${field}"; the last one wins.`,
+        );
+      }
+      map.set(field, header.template);
+    }
+    return map;
+  });
   protected readonly scrolls = computed(() => this.scrollable() || !!this.scrollHeight());
   protected readonly hasCaption = computed(
     () => !!this.caption() || !!this.captionTemplate() || !!this.ariaLabel(),
