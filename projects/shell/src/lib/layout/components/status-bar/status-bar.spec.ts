@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { HelixStatusBar } from './status-bar';
 
@@ -71,5 +72,64 @@ describe('HelixStatusBar', () => {
     fixture.detectChanges();
     const el = fixture.nativeElement.querySelector('.helix-status-bar');
     expect(el.style.height).toBe('3rem');
+  });
+});
+
+@Component({
+  imports: [HelixStatusBar],
+  template: `
+    <ng-template #tpl>See <a href="/notes">release notes</a></ng-template>
+    <helix-status-bar [note]="useTemplate ? tpl : 'Build #1'" [versions]="[{ label: 'UI', value: '1.0' }]">
+      @if (withEnd) {
+        <button hxStatusBarEnd type="button">Feedback</button>
+      }
+    </helix-status-bar>
+  `,
+})
+class HostComponent {
+  useTemplate = false;
+  withEnd = true;
+}
+
+describe('HelixStatusBar slots', () => {
+  let fixture: ComponentFixture<HostComponent>;
+
+  function setup(useTemplate: boolean, withEnd = true) {
+    fixture = TestBed.createComponent(HostComponent);
+    fixture.componentInstance.useTemplate = useTemplate;
+    fixture.componentInstance.withEnd = withEnd;
+    fixture.detectChanges();
+    fixture.detectChanges();
+  }
+
+  beforeEach(() => TestBed.configureTestingModule({ imports: [HostComponent] }));
+
+  it('renders the end slot inside the bar, after the versions', () => {
+    setup(false);
+    const bar: HTMLElement = fixture.nativeElement.querySelector('.helix-status-bar');
+    const end = bar.querySelector('.helix-status-bar-end') as HTMLElement;
+    const versions = bar.querySelector('.helix-status-bar-versions') as HTMLElement;
+    expect(end.querySelector('button')?.textContent).toContain('Feedback');
+    expect(versions.compareDocumentPosition(end) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('leaves the end container empty when nothing is projected', () => {
+    setup(false, false);
+    const end = fixture.nativeElement.querySelector('.helix-status-bar-end') as HTMLElement;
+    expect(end.children.length).toBe(0);
+  });
+
+  it('renders a TemplateRef note including its link', () => {
+    setup(true);
+    const note = fixture.nativeElement.querySelector('.helix-status-bar-note') as HTMLElement;
+    expect(note.textContent).toContain('See');
+    expect(note.querySelector('a')?.getAttribute('href')).toBe('/notes');
+  });
+
+  it('still renders a string note as text', () => {
+    setup(false);
+    const note = fixture.nativeElement.querySelector('.helix-status-bar-note') as HTMLElement;
+    expect(note.textContent?.trim()).toBe('Build #1');
+    expect(note.querySelector('a')).toBeNull();
   });
 });

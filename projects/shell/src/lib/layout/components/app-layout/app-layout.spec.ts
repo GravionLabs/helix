@@ -1,7 +1,9 @@
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
+import { HelixStatusBar } from '../status-bar/status-bar';
 import { HelixAppLayout } from './app-layout';
 
 describe('HelixAppLayout', () => {
@@ -185,5 +187,56 @@ describe('HelixAppLayout', () => {
       fixture.componentRef.setInput('navGroups', explicit);
       expect(groups()).toEqual(explicit);
     });
+  });
+});
+
+@Component({
+  imports: [HelixAppLayout],
+  template: `
+    <ng-template #tpl>Docs <a href="/docs">here</a></ng-template>
+    <helix-app-layout [statusBarNote]="useTemplate ? tpl : 'Plain note'">
+      <button hxStatusBarEnd type="button">Help</button>
+    </helix-app-layout>
+  `,
+})
+class LayoutHostComponent {
+  useTemplate = false;
+}
+
+describe('HelixAppLayout status bar forwarding', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+
+  async function setup(useTemplate: boolean) {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        set: { imports: [HelixStatusBar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    fixture.componentInstance.useTemplate = useTemplate;
+    fixture.detectChanges();
+    fixture.detectChanges();
+  }
+
+  it('projects [hxStatusBarEnd] content into the status bar end slot', async () => {
+    await setup(false);
+    const end = fixture.nativeElement.querySelector('.helix-status-bar .helix-status-bar-end');
+    expect(end.querySelector('button')?.textContent).toContain('Help');
+  });
+
+  it('renders a string statusBarNote', async () => {
+    await setup(false);
+    const note = fixture.nativeElement.querySelector('.helix-status-bar-note');
+    expect(note.textContent.trim()).toBe('Plain note');
+  });
+
+  it('renders a TemplateRef statusBarNote', async () => {
+    await setup(true);
+    const note = fixture.nativeElement.querySelector('.helix-status-bar-note');
+    expect(note.querySelector('a')?.getAttribute('href')).toBe('/docs');
   });
 });
