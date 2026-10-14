@@ -74,6 +74,49 @@ describe('HxTheme', () => {
       expect(html.hasAttribute('data-theme')).toBe(false);
     });
 
+    it('is left to the host app with manageDark: false', () => {
+      TestBed.resetTestingModule();
+      const theme = setup({ manageDark: false });
+      theme.setDark(false);
+      TestBed.tick();
+      expect(theme.dark()).toBe(false);
+      expect(html.classList).not.toContain('app-dark');
+      theme.setDark(true);
+      TestBed.tick();
+      expect(theme.dark()).toBe(true);
+      expect(html.classList).not.toContain('app-dark');
+      expect(html.hasAttribute('data-theme')).toBe(false);
+    });
+
+    it('still scopes the colour overrides to the dark selector with manageDark: false', () => {
+      TestBed.resetTestingModule();
+      const theme = setup({ manageDark: false });
+      theme.setSurface('zinc');
+      theme.setDark(true);
+      TestBed.tick();
+      expect(theme.dark()).toBe(true);
+      expect(theme.css()).toContain('app-dark');
+      expect(sheet()).toBe(theme.css());
+      expect(html.classList).not.toContain('app-dark');
+    });
+
+    it('does not write an attribute dark selector with manageDark: false', () => {
+      TestBed.resetTestingModule();
+      const theme = setup({ manageDark: false, darkSelector: '[data-theme="dark"]' });
+      theme.setSurface('zinc');
+      theme.setDark(true);
+      TestBed.tick();
+      expect(theme.dark()).toBe(true);
+      expect(html.hasAttribute('data-theme')).toBe(false);
+      expect(theme.css()).toContain('[data-theme="dark"]');
+    });
+
+    it('still writes the dark class when manageDark is true', () => {
+      TestBed.resetTestingModule();
+      setup({ manageDark: true, dark: true });
+      expect(html.classList).toContain('app-dark');
+    });
+
     it('cross-fades with the View Transitions API when asked to, but not at start-up', () => {
       const start = vi.fn((update: () => void) => update());
       Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });

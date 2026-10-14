@@ -1,9 +1,18 @@
 <helix-app-layout
   appTitle="Helix Demo"
-  environment="development"
+  [environment]="{ label: 'Sample data', severity: 'warn' }"
   [menu]="menu"
   [navStyle]="settings.navStyle()"
   statusBarBrand="Helix"
-  statusBarEnvironment="development"
+  [statusBarEnvironment]="{ label: 'Sample data', severity: 'warn' }"
+  [statusBarNote]="buildNote"
   [statusBarVersions]="versions"
-/>
+>
+  <button hxStatusBarEnd type="button" class="status-end-action" (click)="reloadApp()">
+    Reload
+  </button>
+</helix-app-layout>
+
+<ng-template #buildNote>
+  <a href="https://github.com/gravionlabs/helix" target="_blank" rel="noopener">Source on GitHub</a>
+</ng-template>

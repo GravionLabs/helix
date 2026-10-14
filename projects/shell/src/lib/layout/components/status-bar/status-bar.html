@@ -11,7 +11,13 @@
   }
 
   @if (note(); as n) {
-    <span class="helix-status-bar-note">{{ n }}</span>
+    <span class="helix-status-bar-note">
+      @if (noteTemplate(); as tpl) {
+        <ng-container [ngTemplateOutlet]="tpl" />
+      } @else {
+        {{ noteText() }}
+      }
+    </span>
   }
 
   <div class="helix-status-bar-versions">
@@ -22,4 +28,5 @@
       </span>
     }
   </div>
+  <div class="helix-status-bar-end"><ng-content select="[hxStatusBarEnd]" /></div>
 </div>

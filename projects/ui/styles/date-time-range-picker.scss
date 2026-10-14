@@ -16,6 +16,13 @@
 .hx-date-time-range-picker-popup {
   max-width: calc(100vw - 2rem);
   overflow: auto;
+  /* the presets row and the body sit inside the popup, so the popup carries the outer border */
+  border: 1px solid var(--h-datepicker-panel-border-color);
+}
+
+/* the popup border already closes the button bar */
+.hx-date-time-range-picker-popup .hx-date-picker-buttonbar {
+  border: 0;
 }
 
 .hx-date-time-range-picker-body {
@@ -70,4 +77,11 @@
 
 .hx-date-time-range-picker-submit {
   font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-time-range-picker-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-datepicker-title-gap);
+  padding: var(--h-datepicker-panel-padding) var(--h-datepicker-panel-padding) 0;
 }

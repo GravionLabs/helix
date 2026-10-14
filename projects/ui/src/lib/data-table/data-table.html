@@ -45,17 +45,15 @@
                 [class.hx-data-table-sorted]="orderOf(column) !== 0"
                 [style.width]="column.width ?? null"
                 [attr.aria-sort]="ariaSort(column)"
+                [attr.title]="column.title ?? null"
               >
-                @if (column.sortable) {
-                  <button type="button" class="hx-data-table-sort" (click)="sort(column)">
-                    <span>{{ column.header }}</span>
-                    <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
-                    @if (sortRank(column); as rank) {
-                      <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
-                    }
-                  </button>
+                @if (columnHeaders().get(column.field); as extra) {
+                  <div class="hx-data-table-header-content">
+                    <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
+                    <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletContext]="{ $implicit: column }" />
+                  </div>
                 } @else {
-                  {{ column.header }}
+                  <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
                 }
               </th>
             }
@@ -78,6 +76,7 @@
       <tbody>
         @for (row of visibleRows(); track trackRow(row, $index); let i = $index) {
           <tr
+            [class]="rowClassOf(row)"
             [class.hx-data-table-selectable]="selectable()"
             [attr.aria-selected]="selectionMode() ? (isSelected(row) ? 'true' : 'false') : null"
             [attr.tabindex]="selectable() ? 0 : null"
@@ -103,7 +102,7 @@
                   @if (cells().get(column.field); as cell) {
                     <ng-container [ngTemplateOutlet]="cell" [ngTemplateOutletContext]="{ $implicit: row, value: valueOf(row, column), index: i }" />
                   } @else {
-                    {{ valueOf(row, column) }}
+                    {{ valueOf(row, column) ?? emptyValue() }}
                   }
                 </td>
               }
@@ -154,8 +153,25 @@
       [first]="first()"
       [totalRecords]="total()"
       [rowsPerPageOptions]="rowsPerPageOptions()"
+      [showAll]="showAll()"
+      (showAllChange)="showAll.set($event)"
+      [allLabel]="allLabel()"
       [showCurrentPageReport]="showCurrentPageReport()"
       (pageChange)="onPage($event)"
     />
   }
 </div>
+
+<ng-template #label let-column>
+  @if (column.sortable) {
+    <button type="button" class="hx-data-table-sort" (click)="sort(column)">
+      <span>{{ column.header }}</span>
+      <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
+      @if (sortRank(column); as rank) {
+        <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
+      }
+    </button>
+  } @else {
+    {{ column.header }}
+  }
+</ng-template>

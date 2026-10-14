@@ -1,12 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { HxPaginator } from '../paginator/paginator';
 import {
   compareValues,
   HxCell,
   type HxColumn,
+  HxColumnHeader,
   HxDataTable,
   type HxLazyLoadEvent,
+  type HxRowClass,
   HxRowExpansion,
   type HxSortMeta,
   HxTableBody,
@@ -535,5 +538,521 @@ describe('HxDataTable selection, filters and expansion', () => {
     button.click();
     await update();
     expect(root().querySelector('.hx-data-table-expansion')).toBeNull();
+  });
+});
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="price" let-column><a class="info" href="#p">About {{ column.header }}</a></ng-template>
+      <ng-template hxColumnHeader="id"><i class="plain">i</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class HeaderHost {
+  value = rows();
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true, title: 'The product name' },
+    { field: 'price', header: 'Price', sortable: true },
+    { field: 'id', header: 'Id' },
+    { field: 'address.city', header: 'City' },
+  ];
+}
+
+describe('HxDataTable column header title and template', () => {
+  let fixture: ComponentFixture<HeaderHost>;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [HeaderHost] }).compileComponents();
+    fixture = TestBed.createComponent(HeaderHost);
+    fixture.detectChanges();
+  });
+
+  it('sets the title attribute on the header only for columns with a title', () => {
+    expect(th(0).getAttribute('title')).toBe('The product name');
+    expect(th(0).hasAttribute('aria-describedby')).toBe(false);
+    expect(th(1).hasAttribute('title')).toBe(false);
+  });
+
+  it('renders the template beside the sort button, not inside it', () => {
+    const link = th(1).querySelector('a.info') as HTMLAnchorElement;
+    expect(link.textContent).toBe('About Price');
+    expect(link.closest('button')).toBeNull();
+    expect(th(1).querySelectorAll('button').length).toBe(1);
+  });
+
+  it('keeps sorting and aria-sort of the column', () => {
+    expect(th(1).getAttribute('aria-sort')).toBe('none');
+    th(1).querySelector('button')?.click();
+    fixture.detectChanges();
+    expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+  });
+
+  it('adds the template to a column that is not sortable', () => {
+    expect(th(2).querySelector('i.plain')).toBeTruthy();
+    expect(th(2).querySelector('button')).toBeNull();
+    expect(th(2).textContent).toContain('Id');
+    expect(th(2).hasAttribute('aria-sort')).toBe(false);
+  });
+
+  it('leaves other headers without extra content', () => {
+    expect(th(0).querySelector('.hx-data-table-header-content')).toBeNull();
+    expect(th(3).querySelector('.hx-data-table-header-content')).toBeNull();
+  });
+});
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name" let-column><a class="link" href="#n" (click)="seen.push(column); $event.preventDefault()">Info</a></ng-template>
+      <ng-template hxColumnHeader="price"><i class="r">r</i></ng-template>
+      <ng-template hxColumnHeader="id"><i class="c">c</i></ng-template>
+      <ng-template hxColumnHeader="missing"><i class="ghost">x</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class ExtraHost {
+  value = rows();
+  seen: unknown[] = [];
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true, title: 'The product name' },
+    { field: 'price', header: 'Price', sortable: true, align: 'right' },
+    { field: 'id', header: 'Id', align: 'center' },
+  ];
+}
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader, HxTableHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name"><i class="extra">x</i></ng-template>
+      <ng-template hxTableHeader let-columns><th scope="col" class="own">Own</th></ng-template>
+    </hx-data-table>
+  `,
+})
+class ReplacedHost {
+  value = rows();
+  columns: HxColumn[] = [{ field: 'name', header: 'Name', title: 'Hint' }];
+}
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name"><i>a</i></ng-template>
+      <ng-template hxColumnHeader="name"><i>b</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class DuplicateHost {
+  value = rows();
+  columns: HxColumn[] = [{ field: 'name', header: 'Name' }];
+}
+
+describe('HxDataTable column header template details', () => {
+  const setup = async <T>(type: new () => T) => {
+    await TestBed.configureTestingModule({ imports: [type] }).compileComponents();
+    const fixture = TestBed.createComponent(type);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture;
+  };
+  const ths = (f: ComponentFixture<unknown>) => [
+    ...(f.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('thead th'),
+  ];
+
+  it('keeps the title on a header that also has a template', async () => {
+    const f = await setup(ExtraHost);
+    expect(ths(f)[0].getAttribute('title')).toBe('The product name');
+    expect(ths(f)[0].querySelector('a.link')).toBeTruthy();
+  });
+
+  it('puts the label or sort button before the extra content', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    const button = th.querySelector('button') as HTMLElement;
+    const link = th.querySelector('a.link') as HTMLElement;
+    expect(button.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const plain = ths(f)[2];
+    expect(plain.textContent?.indexOf('Id')).toBeLessThan(plain.textContent?.indexOf('c') ?? -1);
+  });
+
+  it('passes the column object as context and a click on the link does not sort', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    (th.querySelector('a.link') as HTMLElement).click();
+    f.detectChanges();
+    expect(f.componentInstance.seen[0]).toBe(f.componentInstance.columns[0]);
+    expect(th.getAttribute('aria-sort')).toBe('none');
+  });
+
+  it('sorts through the native button and cycles aria-sort with a template', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    const button = th.querySelector('button') as HTMLButtonElement;
+    expect(button.tagName).toBe('BUTTON');
+    expect(button.type).toBe('button');
+    for (const expected of ['ascending', 'descending', 'none']) {
+      button.click();
+      f.detectChanges();
+      expect(th.getAttribute('aria-sort')).toBe(expected);
+    }
+  });
+
+  it('keeps the alignment of the header with a template', async () => {
+    const f = await setup(ExtraHost);
+    const [, right, center] = ths(f);
+    expect(right.classList.contains('hx-data-table-align-right')).toBe(true);
+    expect(right.querySelector('i.r')).toBeTruthy();
+    expect(center.classList.contains('hx-data-table-align-center')).toBe(true);
+    expect(center.querySelector('i.c')).toBeTruthy();
+  });
+
+  it('renders nothing for a template of an unknown field', async () => {
+    const f = await setup(ExtraHost);
+    expect((f.nativeElement as HTMLElement).querySelector('i.ghost')).toBeNull();
+  });
+
+  it('ignores the template and title when hxTableHeader replaces the headers', async () => {
+    const f = await setup(ReplacedHost);
+    const all = ths(f);
+    expect(all.length).toBe(1);
+    expect(all[0].classList.contains('own')).toBe(true);
+    expect(all[0].hasAttribute('title')).toBe(false);
+    expect((f.nativeElement as HTMLElement).querySelector('i.extra')).toBeNull();
+  });
+
+  it('warns once in development about two templates for one field', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const f = await setup(DuplicateHost);
+    f.detectChanges();
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('"name"');
+    warn.mockRestore();
+  });
+});
+
+@Component({
+  imports: [HxDataTable, HxCell],
+  template: `
+    <hx-data-table [value]="value()" [columns]="columns" [rowClass]="rowClass()" [emptyValue]="empty()" [sortFirstOrder]="first()" [sortMode]="mode()" [selectionMode]="selectionMode()" [paginator]="paging()" [(rows)]="rows" [rowsPerPageOptions]="options()" [allLabel]="allLabel()" [lazy]="lazy()" [totalRecords]="total()" [(filters)]="filters" (lazyLoad)="events.push($event)">
+      <ng-template hxCell="note" let-value="value"><i class="note">[{{ value === null ? 'null' : value }}]</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class OptionsHost {
+  value = signal<Row[]>(many(12));
+  empty = signal('');
+  first = signal<'asc' | 'desc'>('asc');
+  mode = signal<'single' | 'multiple'>('single');
+  selectionMode = signal<'single' | undefined>(undefined);
+  paging = signal(false);
+  lazy = signal(false);
+  rows = signal(5);
+  total = signal<number | undefined>(12);
+  options = signal<(number | 'all')[]>([5, 'all']);
+  allLabel = signal('All');
+  filters = signal<Record<string, string>>({});
+  events: HxLazyLoadEvent[] = [];
+  rowClass = signal<((row: Row) => HxRowClass) | undefined>((row: Row) =>
+    row.price > 90
+      ? 'expensive'
+      : row.price === 0
+        ? ['free']
+        : { odd: row.id % 2 === 1, even: row.id % 2 === 0 && false },
+  );
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true },
+    { field: 'price', header: 'Price', sortable: true, sortFirstOrder: 'desc' },
+    { field: 'note', header: 'Note' },
+    { field: 'address.zip', header: 'Zip' },
+    { field: 'id', header: 'Id', sortable: true, filter: true },
+  ];
+}
+
+describe('HxDataTable row class, empty value, show-all paging and first sort order', () => {
+  let fixture: ComponentFixture<OptionsHost>;
+  let host: OptionsHost;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const update = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const trs = () => [...root().querySelectorAll<HTMLElement>('tbody tr')];
+  const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+  const sortBtn = (i: number) => th(i).querySelector('button') as HTMLElement;
+  const click = async (el: HTMLElement) => {
+    el.click();
+    await update();
+  };
+  const names = () => trs().map((tr) => tr.children[0].textContent?.trim());
+  const paginator = () => fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
+  const selectEl = () => root().querySelector('hx-paginator hx-select') as HTMLElement;
+  afterEach(() => {
+    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
+      c.innerHTML = '';
+    });
+  });
+  const live = () => root().querySelector('.hx-data-table-caption-hidden')?.textContent ?? '';
+
+  beforeEach(async () => {
+    // jsdom has no layout: the CDK listbox scrolls the active option into view
+    Element.prototype.scrollIntoView = () => {};
+    await TestBed.configureTestingModule({ imports: [OptionsHost] }).compileComponents();
+    fixture = TestBed.createComponent(OptionsHost);
+    host = fixture.componentInstance;
+    await update();
+  });
+
+  // prices: id1 0, id2 37, id3 74, id4 11, id5 48, id6 85, id7 22, id8 59, id9 96, id10 33, id11 70, id12 4
+  describe('rowClass', () => {
+    it('applies a string, an array and the truthy keys of an object', () => {
+      expect(trs()[0].classList.contains('free')).toBe(true);
+      expect(trs()[2].classList.contains('odd')).toBe(true);
+      expect(trs()[8].classList.contains('expensive')).toBe(true);
+    });
+
+    it('gives a row that matches nothing no classes of its own and drops falsy keys', () => {
+      expect(trs()[1].classList.contains('odd')).toBe(false);
+      expect(trs()[1].classList.contains('even')).toBe(false);
+      expect(trs()[1].className.trim()).toBe('');
+    });
+
+    it('handles null, undefined and no function', async () => {
+      host.rowClass.set(() => null);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+      host.rowClass.set(() => undefined);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+      host.rowClass.set(undefined);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+    });
+
+    it('coexists with the selectable row class', async () => {
+      host.selectionMode.set('single');
+      await update();
+      expect(trs()[8].classList.contains('hx-data-table-selectable')).toBe(true);
+      expect(trs()[8].classList.contains('expensive')).toBe(true);
+    });
+
+    it('follows the value of the row', async () => {
+      host.value.update((rows) => rows.map((r) => (r.id === 2 ? { ...r, price: 99 } : r)));
+      await update();
+      expect(trs()[1].classList.contains('expensive')).toBe(true);
+    });
+  });
+
+  describe('emptyValue', () => {
+    const withNotes = async () => {
+      host.value.set([
+        { id: 1, name: 'A', price: 0, address: { city: 'x' }, note: null },
+        { id: 2, name: 'B', price: 5, address: { city: 'x' } },
+        { id: 3, name: 'C', price: 5, address: { city: 'x' }, note: false },
+        { id: 4, name: 'D', price: 5, address: { city: 'x' }, note: '' },
+      ] as unknown as Row[]);
+      await update();
+    };
+
+    it('replaces null and undefined, also nested, but not 0, false or an empty string', async () => {
+      host.empty.set('n/a');
+      await withNotes();
+      expect(trs().map((tr) => tr.children[3].textContent?.trim())).toEqual([
+        'n/a',
+        'n/a',
+        'n/a',
+        'n/a',
+      ]);
+      expect(trs().map((tr) => tr.children[1].textContent?.trim())).toEqual(['0', '5', '5', '5']);
+    });
+
+    it('leaves the cell empty by default and for an empty string', async () => {
+      await withNotes();
+      expect(trs()[0].children[3].textContent?.trim()).toBe('');
+      host.empty.set('n/a');
+      await update();
+      expect(trs()[3].children[3].textContent?.trim()).toBe('n/a');
+    });
+
+    it('does not show false or an empty string as empty (default cells)', async () => {
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.columns = [{ field: 'flag', header: 'Flag' }];
+      fixture.componentInstance.empty.set('n/a');
+      fixture.componentInstance.value.set([
+        { flag: false },
+        { flag: '' },
+        { flag: 0 },
+      ] as unknown as Row[]);
+      await update();
+      expect(trs().map((tr) => tr.children[0].textContent?.trim())).toEqual(['false', '', '0']);
+    });
+
+    it('hands the raw value to an hxCell template', async () => {
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.columns = [{ field: 'note', header: 'Note' }];
+      fixture.componentInstance.empty.set('n/a');
+      fixture.componentInstance.value.set([{ note: null }] as unknown as Row[]);
+      await update();
+      expect(root().querySelector('.note')?.textContent).toBe('[null]');
+    });
+  });
+
+  describe('sortFirstOrder', () => {
+    it('starts a column with its own first order, then the opposite, then off, announcing each step', async () => {
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('descending');
+      expect(live()).toContain('Sorted by Price, descending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('96');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      expect(live()).toContain('Sorted by Price, ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('0');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('none');
+      expect(live()).toContain('Sorting by Price removed');
+    });
+
+    it('falls back to ascending, and to the table input when set', async () => {
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('ascending');
+      expect(names()[0]).toBe('Item 01');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('descending');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('none');
+    });
+
+    it('uses the table order for a column without its own', async () => {
+      host.first.set('desc');
+      await update();
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('descending');
+      expect(names()[0]).toBe('Item 12');
+    });
+
+    it('lets a column ascending win over a descending table, and the reverse', async () => {
+      const columns = host.columns.map((c) =>
+        c.field === 'price' ? { ...c, sortFirstOrder: 'asc' as const } : c,
+      );
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.first.set('desc');
+      fixture.componentInstance.columns = columns;
+      host = fixture.componentInstance;
+      await update();
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('0');
+    });
+
+    it('applies in multiple mode', async () => {
+      host.mode.set('multiple');
+      await update();
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('descending');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('96');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('none');
+    });
+  });
+
+  describe('show all', () => {
+    beforeEach(async () => {
+      host.paging.set(true);
+      await update();
+    });
+
+    const pick = async (label: string) => {
+      selectEl().querySelector<HTMLElement>('button.hx-select-trigger')?.click();
+      await update();
+      const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+        (o) => o.textContent?.trim() === label,
+      );
+      option?.click();
+      await update();
+    };
+
+    it('offers the All label in the real select, shows every row, then pages again', async () => {
+      expect(trs().length).toBe(5);
+      await pick('All');
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('All');
+      expect(host.rows()).toBe(5);
+      await pick('5');
+      expect(trs().length).toBe(5);
+    });
+
+    it('uses a custom allLabel', async () => {
+      host.allLabel.set('Everything');
+      await update();
+      await pick('Everything');
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('Everything');
+    });
+
+    it('keeps showing every row when the data grows or filters change', async () => {
+      paginator().setRows('all');
+      host.value.set(many(20));
+      await update();
+      expect(trs().length).toBe(20);
+      host.filters.set({ id: '1' });
+      await update();
+      expect(trs().length).toBe(11);
+    });
+
+    it('ends when rows is set from outside or when all leaves the options', async () => {
+      paginator().setRows('all');
+      await update();
+      host.rows.set(10);
+      await update();
+      expect(trs().length).toBe(10);
+      paginator().setRows('all');
+      await update();
+      expect(trs().length).toBe(12);
+      host.options.set([5, 10]);
+      await update();
+      expect(trs().length).toBe(10);
+    });
+
+    it('survives a recreated paginator', async () => {
+      paginator().setRows('all');
+      await update();
+      host.paging.set(false);
+      await update();
+      host.paging.set(true);
+      await update();
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('All');
+    });
+
+    it('emits all records as rows to a lazy load, and keeps them for a following sort', async () => {
+      host.lazy.set(true);
+      await update();
+      paginator().setRows('all');
+      await update();
+      expect(host.events.at(-1)?.rows).toBe(12);
+      expect(host.events.at(-1)?.first).toBe(0);
+      await click(sortBtn(0));
+      expect(host.events.at(-1)?.rows).toBe(12);
+      expect(host.events.at(-1)?.sortField).toBe('name');
+    });
+
+    it('does not request one row from a lazy table with an unknown total', async () => {
+      host.lazy.set(true);
+      host.total.set(0);
+      await update();
+      paginator().setRows('all');
+      await update();
+      expect(host.events.at(-1)?.rows).toBe(5);
+    });
   });
 });

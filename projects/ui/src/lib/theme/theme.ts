@@ -47,6 +47,11 @@ export interface HxThemeOptions {
    * `tokens.css`) or an attribute (`[data-theme="dark"]`).
    */
   darkSelector?: string;
+  /**
+   * `false`: the host app owns the dark class/attribute (e.g. from `prefers-color-scheme`), HxTheme never writes it
+   * to `<html>`. `dark()` still follows `setDark()` for the colour overrides. Default `true`.
+   */
+  manageDark?: boolean;
   /** Where the choice is remembered (localStorage). `null` (the default) remembers nothing. */
   storageKey?: string | null;
   /** Dark mode when nothing is remembered; by default the system setting (`prefers-color-scheme`). */
@@ -179,7 +184,7 @@ export class HxTheme {
   constructor() {
     effect(() => {
       const dark = this.#dark();
-      if (!this.#browser) return;
+      if (!this.#browser || this.#options.manageDark === false) return;
       const root = this.#doc.documentElement;
       const doc = this.#doc as Document & { startViewTransition?: (update: () => void) => unknown };
       const apply = () => this.#darkSelector.apply(root, dark);

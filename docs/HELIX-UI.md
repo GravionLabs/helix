@@ -19,12 +19,37 @@ npm install @gravionlabs/helix-ui
 
 - `styles.css` states the layer order Tailwind uses (`theme, base, components, utilities`) and puts the
   component CSS in `components`: an app's unlayered CSS and Tailwind's utilities win over it.
+- `core.css` is the smaller alternative to `styles.css`, see [Component-only CSS](#component-only-css).
 - `tokens.css` is the token data of `projects/tokens` resolved at build time: light on `:root`, dark
   under the `app-dark` class, every token the components read. **Load it in every app.** The tokens
   reference the semantic ones (`--h-primary-color`, …), so a runtime change of the primary colour or the
   dark mode (`provideHxTheme`) reaches every component.
 - **Naming:** components are elements (`<hx-select>`), simple controls are attributes on the native element
   (`<button hx-button>`, `<input hx-input>`), always kebab-case with the prefix `hx`; classes use it too. The custom properties keep the prefix `--h-`.
+
+### Component-only CSS
+
+`@gravionlabs/helix-ui/core.css` has the same header (layer order statement) and the same single `components` layer as
+`styles.css`, but only 36 stylesheets. Load **either** `styles.css` **or** `core.css`, plus `tokens.css`.
+
+| Output of `pnpm build:lib:css:ui` | Raw size |
+| --- | --- |
+| `styles.css` (60 components) | 266.1 kB |
+| `core.css` (36 stylesheets, 48 %) | 128.3 kB |
+| `tokens.css` | 129.0 kB |
+
+For comparison, `@gravionlabs/helix-shell/styles.css` is about 47 kB and `primeicons.css` about 19 kB, all raw.
+`tokens.css` stays whole in both cases, so it is the larger share of a component-only setup.
+
+- **In `core.css`:** accordion, avatar, badge, button, button-group, card, checkbox, chip, confirm, dialog, divider,
+  drawer, fieldset, float-label, icon-field, input, input-group, input-number, listbox, menu, message, panel,
+  password, popover, progress, radio, select, skeleton, split-button, switch, tabs, tag, toast, toolbar, tooltip, and
+  the CDK overlay styles.
+- **Only in `styles.css`:** chart; galleria, carousel, image; table, data-table, tree, timeline, paginator;
+  date-picker, time-picker, date-time-picker, date-time-range-picker; menubar, breadcrumb, stepper; auto-complete,
+  multi-select, file-upload, rating, slider, select-button, toggle-button.
+
+A component outside the list renders unstyled with `core.css`; use `styles.css` then.
 
 ## Components
 
@@ -37,7 +62,7 @@ One page per component (usage, inputs and outputs, accessibility, tokens): see t
 - **Navigation:** [Menu](components/menu.md), [Menubar](components/menubar.md), [Tabs](components/tabs.md), [Stepper](components/stepper.md), [Paginator](components/paginator.md), [Breadcrumb](components/breadcrumb.md)
 - **Display:** [Avatar](components/avatar.md), [Badge](components/badge.md), [Chip](components/chip.md), [Tag](components/tag.md), [Progress](components/progress.md), [Skeleton](components/skeleton.md), [Timeline](components/timeline.md)
 - **Media:** [Carousel](components/carousel.md), [Galleria](components/galleria.md), [Image](components/image.md)
-- **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md)
+- **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md) (entry point `@gravionlabs/helix-ui/chart`)
 
 
 ## Theming
@@ -67,7 +92,8 @@ Options of `provideHxTheme`:
 
 | Option | Default | |
 | --- | --- | --- |
-| `darkSelector` | `'.app-dark'` | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. |
+| `darkSelector` | `'.app-dark'` | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. The published `tokens.css` keys on `.app-dark` only. |
+| `manageDark` | `true` | `false`: the host app owns the dark class or attribute, `HxTheme` never writes it to `<html>`; `dark()` still follows `setDark()` for the colour overrides. Example: [Theming](THEMING.md#an-app-that-owns-its-dark-mode). |
 | `storageKey` | `null` | Remembers the choice in `localStorage` under this key; a damaged or blocked storage is ignored. |
 | `dark` | the system setting | Dark mode when nothing is remembered (`prefers-color-scheme`). |
 | `primary`, `surface` | `null` | The colours when nothing is remembered. |

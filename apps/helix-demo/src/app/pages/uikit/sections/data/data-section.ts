@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   HxButton,
   HxCell,
-  HxChart,
-  type HxChartSelectEvent,
   type HxColumn,
+  HxColumnHeader,
   HxDataTable,
   HxInput,
   HxRowExpansion,
@@ -14,12 +13,23 @@ import {
   type HxTreeNodeEvent,
   type HxTreeSelection,
 } from '@gravionlabs/helix-ui';
+import { HxChart, type HxChartSelectEvent } from '@gravionlabs/helix-ui/chart';
 
 /** `@gravionlabs/helix-ui` data components: Tree, Chart, Table, Data table. */
 @Component({
   selector: 'app-data-section',
   standalone: true,
-  imports: [HxButton, HxCell, HxChart, HxDataTable, HxInput, HxRowExpansion, HxTable, HxTree],
+  imports: [
+    HxButton,
+    HxCell,
+    HxColumnHeader,
+    HxChart,
+    HxDataTable,
+    HxInput,
+    HxRowExpansion,
+    HxTable,
+    HxTree,
+  ],
   templateUrl: './data-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-section.scss',
@@ -28,7 +38,7 @@ export class HxDataSection {
   readonly columns: HxColumn[] = [
     { field: 'code', header: 'Code', width: '8rem' },
     { field: 'name', header: 'Name', sortable: true },
-    { field: 'category', header: 'Category', sortable: true },
+    { field: 'category', header: 'Category', title: 'The product group', sortable: true },
     { field: 'price', header: 'Price', align: 'right', sortable: true },
   ];
   readonly products = [
@@ -44,6 +54,8 @@ export class HxDataSection {
     category: ['Accessories', 'Fitness', 'Clothing'][i % 3],
     price: 10 + ((i * 17) % 90),
   }));
+  /** Dims the cheap products (the `rowClass` demo). */
+  readonly dimCheap = (row: { price: number }) => (row.price < 30 ? 'data-section-dim' : null);
   readonly selected = signal<unknown>([]);
   readonly filters = signal<Record<string, string>>({});
   readonly filterColumns: HxColumn[] = [

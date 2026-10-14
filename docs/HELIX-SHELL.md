@@ -66,6 +66,20 @@ app loads its styles and tokens next to the shell styles:
 @import "@gravionlabs/helix-ui/tokens.css";
 ```
 
+The shell stylesheet sets no rules on `html` and `body`. The Helix page look (14 px root font size, body font,
+text colour and ground background) is opt-in:
+
+```css
+@import "@gravionlabs/helix-shell/styles.css";
+/* optional: html/body rules of the Helix page look */
+@import "@gravionlabs/helix-shell/globals.css";
+```
+
+**Breaking change:** earlier versions of `styles.css` contained these rules. An app that relied on them must
+now load `@gravionlabs/helix-shell/globals.css` after `styles.css`; apps that did not want them need nothing.
+`styles.css` still reads `[class*="app-dark"]` or `[data-theme="dark"]` for dark mode, see
+[Theming](THEMING.md#dark-mode).
+
 Dark mode, the primary colour and the surface are switched by the theme service of helix-ui, which the layout
 store and the configurator use. Provide it once in the application config:
 
@@ -200,11 +214,17 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `brand` | `string` | `''` | Brand name displayed on the left |
-| `environment` | `string \| undefined` | `undefined` | Environment label (e.g. "staging", "production"). Rendered as an uppercase pill |
-| `note` | `string \| undefined` | `undefined` | Optional note text (e.g. "Build #1234") |
+| `environment` | `Environment \| CustomEnvironment \| string \| undefined` | `undefined` | `'development'`, `'testing'`, `'staging'`, `'production'` or a custom `{ label, severity }`. Unknown strings render as "Unknown" |
+| `note` | `string \| TemplateRef<unknown> \| undefined` | `undefined` | Optional note: plain text (e.g. "Build #1234") or a template for rich content such as a link. Links inherit the bar color and underline on hover |
 | `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
 | `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
 | `height` | `string` | `'var(--helix-status-bar-height, 3rem)'` | Bar height |
+
+#### Content slots
+
+| Selector | Description |
+|----------|-------------|
+| `[hxStatusBarEnd]` | Projected at the right end of the bar, after the versions. Hidden when empty |
 
 #### Example
 
@@ -212,13 +232,27 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 <helix-status-bar
   brand="MyApp"
   environment="staging"
-  note="Build #456"
+  [note]="buildNote"
   tone="staging"
   [versions]="[
     { label: 'UI', value: '2.1.0' },
     { label: 'API', value: '3.0.1' },
   ]"
-/>
+>
+  <button hxStatusBarEnd type="button" (click)="reload()">Reload</button>
+</helix-status-bar>
+
+<ng-template #buildNote>
+  <a href="https://ci.example.com/builds/456">Build #456</a>
+</ng-template>
+```
+
+With `<helix-app-layout>`, pass the template through `statusBarNote` (`string | TemplateRef<unknown>`) and project the end control with the same `hxStatusBarEnd` attribute:
+
+```html
+<helix-app-layout statusBarBrand="MyApp" [statusBarNote]="buildNote">
+  <button hxStatusBarEnd type="button">Reload</button>
+</helix-app-layout>
 ```
 
 #### Tones
@@ -997,7 +1031,7 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `environment` | `Environment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'` |
+| `environment` | `Environment \| CustomEnvironment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'`, or `{ label: string; severity: 'info' \| 'warn' \| 'error' \| 'success' }` |
 
 #### Mapped appearance
 
@@ -1008,12 +1042,14 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 | `staging` | warn | `pi pi-layers` | Staging |
 | `production` | error | `pi pi-verified` | Production |
 | *unknown* | info | `pi pi-question` | Unknown |
+| `{ label, severity }` | given severity | none | given label (also the accessible name) |
 
 #### Example
 
 ```html
 <helix-environment-badge environment="staging" />
 <helix-environment-badge [environment]="envName" />
+<helix-environment-badge [environment]="{ label: 'Canary', severity: 'warn' }" />
 ```
 
 ### HelixPageHeader

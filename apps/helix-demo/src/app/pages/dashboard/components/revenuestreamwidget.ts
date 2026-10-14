@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HxChart } from '@gravionlabs/helix-ui';
+import { HxChart } from '@gravionlabs/helix-ui/chart';
 
 /** Quarterly revenue; `hx-chart` takes its colours, grid and font from the tokens and redraws on a theme change. */
 @Component({

@@ -17,6 +17,7 @@
       "@gravionlabs/helix-ag-grid": ["./projects/ag-grid/src/public-api.ts"],
       "@gravionlabs/helix-ui": ["./dist/ui"],
       "@gravionlabs/helix-ui/validators": ["./dist/ui/validators"],
+      "@gravionlabs/helix-ui/chart": ["./dist/ui/chart"],
       "@/*": ["./apps/helix-demo/src/*"]
     },
     "importHelpers": true,

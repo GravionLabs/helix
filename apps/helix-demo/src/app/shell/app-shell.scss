@@ -1,1 +1,10 @@
-// App shell has no local styles — the nav-rail handles brand rendering internally.
+// Demo control projected into the status bar end slot.
+.status-end-action {
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0 0.5rem;
+}

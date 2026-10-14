@@ -41,7 +41,8 @@ describe('helix-ui styles', () => {
     ['carousel', 'carousel/carousel.ts'],
     ['galleria', 'galleria/galleria.ts'],
     ['image', 'image/image.ts'],
-    ['chart', 'chart/chart.ts'],
+    // the chart is the secondary entry point @gravionlabs/helix-ui/chart, outside src/lib
+    ['chart', '../../chart/chart.ts'],
     ['checkbox', 'checkbox/checkbox.ts'],
     ['button-group', 'button-group/button-group.ts'],
     ['chip', 'chip/chip.ts'],

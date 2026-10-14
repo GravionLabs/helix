@@ -114,7 +114,7 @@
     </div>
     <div class="row">
       <label class="label" for="dtr-shift">Date time range</label>
-      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-shift" ariaLabel="Shift" [stepMinute]="15" [(value)]="shift" />
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-shift" ariaLabel="Shift" placeholder="Pick or type a shift" typeable [presets]="shiftPresets" [stepMinute]="15" [(value)]="shift" />
     </div>
     <div class="row">
       <label class="label" for="dtr-hours">Time range</label>

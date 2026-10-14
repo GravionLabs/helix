@@ -9,6 +9,7 @@ import {
   HxDateTimePicker,
   type HxDateTimePickerValue,
   HxDateTimeRangePicker,
+  type HxDateTimeRangePreset,
   type HxDateTimeRangeValue,
   HxFileUpload,
   HxFloatLabel,
@@ -90,6 +91,18 @@ export class HxInputsSection {
     from: new Date(2026, 9, 13, 9, 0),
     to: new Date(2026, 9, 16, 17, 30),
   });
+  readonly shiftPresets: HxDateTimeRangePreset[] = [
+    {
+      label: 'Last 6 hours',
+      from: () => new Date(Date.now() - 6 * 3_600_000),
+      to: () => new Date(),
+    },
+    {
+      label: 'Last 7 days',
+      from: () => new Date(Date.now() - 7 * 86_400_000),
+      to: () => new Date(),
+    },
+  ];
   readonly hours = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
