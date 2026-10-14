@@ -74,6 +74,23 @@ describe('HxTheme', () => {
       expect(html.hasAttribute('data-theme')).toBe(false);
     });
 
+    it('is left to the host app with manageDark: false', () => {
+      TestBed.resetTestingModule();
+      const theme = setup({ manageDark: false, dark: true });
+      theme.toggleDark();
+      theme.toggleDark();
+      TestBed.tick();
+      expect(theme.dark()).toBe(true);
+      expect(html.classList).not.toContain('app-dark');
+      expect(html.hasAttribute('data-theme')).toBe(false);
+    });
+
+    it('still writes the dark class when manageDark is true', () => {
+      TestBed.resetTestingModule();
+      setup({ manageDark: true, dark: true });
+      expect(html.classList).toContain('app-dark');
+    });
+
     it('cross-fades with the View Transitions API when asked to, but not at start-up', () => {
       const start = vi.fn((update: () => void) => update());
       Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });

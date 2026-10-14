@@ -2,7 +2,7 @@
 
 @import "./styles/helix-tailwind/index.css";
 
-@custom-variant dark (&:where([class*="app-dark"], [class*="app-dark"] *));
+@custom-variant dark (&:where([class*="app-dark"], [class*="app-dark"] *, [data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
   --breakpoint-*: initial;
@@ -64,7 +64,8 @@
 }
 
 /* Dark theme surface scale */
-:root[class*="app-dark"] {
+:root[class*="app-dark"],
+:root[data-theme="dark"] {
   --helix-surface-ground: var(--h-surface-900);
   --helix-surface-chrome: var(--h-surface-950);
   --helix-surface-card: var(--h-surface-800);
