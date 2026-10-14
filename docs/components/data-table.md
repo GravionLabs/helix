@@ -68,8 +68,11 @@ parts (`Item 2` before `Item 10`); `compareValues` is exported.
 
 `paginator` adds an [`hx-paginator`](paginator.md) below the table; `rows`, `first`, `rowsPerPageOptions` and
 `showCurrentPageReport` (default on) are its settings. `rowsPerPageOptions` accepts `'all'` (`[10, 25, 'all']`): the
-select gets an "All" entry (label: `allLabel` of the paginator), the table shows every row and `rows` becomes the number
-of all records. With `lazy`, `lazyLoad` then carries that number as `rows`. A change of the sort goes back to the first page.
+select gets an "All" entry (label: `allLabel`, default `'All'`) and the table shows every row. `rows` is left as it was;
+"All" ends when the user picks a number, when `rows` is set from outside or when `'all'` leaves `rowsPerPageOptions`.
+It stays active when filters or the data change, so the page then shows every matching row. With `lazy`, `lazyLoad`
+carries `totalRecords` as `rows` (the current `rows` while the total is unknown); the table does not load again when the
+total grows later.
 
 ## Selection
 

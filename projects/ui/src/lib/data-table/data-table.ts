@@ -7,6 +7,7 @@ import {
   contentChild,
   contentChildren,
   Directive,
+  effect,
   inject,
   input,
   isDevMode,
@@ -15,6 +16,7 @@ import {
   output,
   signal,
   TemplateRef,
+  untracked,
 } from '@angular/core';
 import { HxCheckbox } from '../checkbox/checkbox';
 import { HxInput } from '../input/input';
@@ -216,9 +218,11 @@ export class HxDataTable implements OnInit {
   readonly hoverRows = input(true, { transform: booleanAttribute });
   readonly emptyMessage = input('No records found');
   /** Classes for the `<tr>` of a row: a string, an array or an object, as for `[class]`. */
-  readonly rowClass = input<(row: any) => HxRowClass>();
+  readonly rowClass = input<(row: never) => HxRowClass>();
   /** Text shown in a cell whose value is `null` or `undefined` (not for `0`, `false` or `''`). */
   readonly emptyValue = input('');
+  /** The label of the `'all'` entry of `rowsPerPageOptions`. */
+  readonly allLabel = input('All');
   /** Covers the table with a spinner and sets `aria-busy`. */
   readonly loading = input(false, { transform: booleanAttribute });
   /** Visible caption text above the table. */
@@ -286,6 +290,14 @@ export class HxDataTable implements OnInit {
   private readonly globalText = signal('');
   /** The paginator's "All" size is chosen: every row is shown, whatever `rows` says. */
   private readonly showAll = signal(false);
+  /** A `rows` set from outside (or by the user) ends "All". */
+  private readonly resetAll = effect(() => {
+    this.rows();
+    untracked(() => this.showAll.set(false));
+  });
+  private readonly allActive = computed(
+    () => this.showAll() && !!this.rowsPerPageOptions()?.includes('all'),
+  );
 
   protected readonly cellTemplates = contentChildren(HxCell);
   protected readonly columnHeaderTemplates = contentChildren(HxColumnHeader);
@@ -346,7 +358,7 @@ export class HxDataTable implements OnInit {
   /** The rows the table draws: sorted, then the current page. */
   protected readonly visibleRows = computed(() => {
     const rows = this.sorted();
-    if (!this.paginator() || this.lazy() || this.showAll()) return rows;
+    if (!this.paginator() || this.lazy() || this.allActive()) return rows;
     return rows.slice(this.first(), this.first() + this.rows());
   });
   protected readonly cells = computed(
@@ -532,15 +544,14 @@ export class HxDataTable implements OnInit {
 
   protected onPage(event: HxPageEvent): void {
     this.first.set(event.first);
-    this.rows.set(event.rows);
-    this.showAll.set(!!event.all);
+    if (!event.all) this.rows.set(event.rows);
     if (this.lazy()) this.emitLazy();
   }
 
   private emitLazy(): void {
     this.lazyLoad.emit({
       first: this.first(),
-      rows: this.rows(),
+      rows: this.allActive() && this.total() > 0 ? this.total() : this.rows(),
       sortField:
         this.sortMode() === 'multiple'
           ? (this.multiSortMeta()[0]?.field ?? null)
@@ -556,6 +567,10 @@ export class HxDataTable implements OnInit {
   protected trackRow(row: unknown, index: number): unknown {
     const key = this.dataKey();
     return key ? (resolveField(row, key) ?? index) : index;
+  }
+
+  protected rowClassOf(row: unknown): HxRowClass {
+    return this.rowClass()?.(row as never);
   }
 
   protected valueOf(row: unknown, column: HxColumn): unknown {

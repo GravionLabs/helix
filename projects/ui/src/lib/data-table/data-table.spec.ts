@@ -9,6 +9,7 @@ import {
   HxColumnHeader,
   HxDataTable,
   type HxLazyLoadEvent,
+  type HxRowClass,
   HxRowExpansion,
   type HxSortMeta,
   HxTableBody,
@@ -736,24 +737,40 @@ describe('HxDataTable column header template details', () => {
 });
 
 @Component({
-  imports: [HxDataTable],
+  imports: [HxDataTable, HxCell],
   template: `
-    <hx-data-table [value]="value()" [columns]="columns" [rowClass]="rowClass" [emptyValue]="empty()" [sortFirstOrder]="first()" [paginator]="paging()" [rows]="5" [rowsPerPageOptions]="[5, 'all']" [lazy]="lazy()" [totalRecords]="12" (lazyLoad)="events.push($event)" />
+    <hx-data-table [value]="value()" [columns]="columns" [rowClass]="rowClass()" [emptyValue]="empty()" [sortFirstOrder]="first()" [sortMode]="mode()" [selectionMode]="selectionMode()" [paginator]="paging()" [(rows)]="rows" [rowsPerPageOptions]="options()" [allLabel]="allLabel()" [lazy]="lazy()" [totalRecords]="total()" [(filters)]="filters" (lazyLoad)="events.push($event)">
+      <ng-template hxCell="note" let-value="value"><i class="note">[{{ value === null ? 'null' : value }}]</i></ng-template>
+    </hx-data-table>
   `,
 })
 class OptionsHost {
   value = signal<Row[]>(many(12));
   empty = signal('');
   first = signal<'asc' | 'desc'>('asc');
+  mode = signal<'single' | 'multiple'>('single');
+  selectionMode = signal<'single' | undefined>(undefined);
   paging = signal(false);
   lazy = signal(false);
+  rows = signal(5);
+  total = signal<number | undefined>(12);
+  options = signal<(number | 'all')[]>([5, 'all']);
+  allLabel = signal('All');
+  filters = signal<Record<string, string>>({});
   events: HxLazyLoadEvent[] = [];
-  rowClass = (row: Row) =>
-    row.price > 90 ? 'expensive' : row.price === 0 ? ['free'] : { odd: row.id % 2 === 1 };
+  rowClass = signal<((row: Row) => HxRowClass) | undefined>((row: Row) =>
+    row.price > 90
+      ? 'expensive'
+      : row.price === 0
+        ? ['free']
+        : { odd: row.id % 2 === 1, even: row.id % 2 === 0 && false },
+  );
   columns: HxColumn[] = [
     { field: 'name', header: 'Name', sortable: true },
     { field: 'price', header: 'Price', sortable: true, sortFirstOrder: 'desc' },
     { field: 'note', header: 'Note' },
+    { field: 'address.zip', header: 'Zip' },
+    { field: 'id', header: 'Id', sortable: true, filter: true },
   ];
 }
 
@@ -768,86 +785,274 @@ describe('HxDataTable row class, empty value, show-all paging and first sort ord
   };
   const trs = () => [...root().querySelectorAll<HTMLElement>('tbody tr')];
   const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+  const sortBtn = (i: number) => th(i).querySelector('button') as HTMLElement;
   const click = async (el: HTMLElement) => {
     el.click();
     await update();
   };
+  const names = () => trs().map((tr) => tr.children[0].textContent?.trim());
+  const paginator = () => fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
+  const selectEl = () => root().querySelector('hx-paginator hx-select') as HTMLElement;
+  afterEach(() => {
+    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
+      c.innerHTML = '';
+    });
+  });
+  const live = () => root().querySelector('.hx-data-table-caption-hidden')?.textContent ?? '';
 
   beforeEach(async () => {
+    // jsdom has no layout: the CDK listbox scrolls the active option into view
+    Element.prototype.scrollIntoView = () => {};
     await TestBed.configureTestingModule({ imports: [OptionsHost] }).compileComponents();
     fixture = TestBed.createComponent(OptionsHost);
     host = fixture.componentInstance;
     await update();
   });
 
-  it('applies the row class as string, array or object', () => {
-    // prices: id1 0, id2 37, id3 74, id4 11, id5 48, id6 85, id7 22, id8 59, id9 96
-    expect(trs()[0].classList.contains('free')).toBe(true);
-    expect(trs()[1].classList.contains('odd')).toBe(false);
-    expect(trs()[2].classList.contains('odd')).toBe(true);
-    expect(trs()[8].classList.contains('expensive')).toBe(true);
+  // prices: id1 0, id2 37, id3 74, id4 11, id5 48, id6 85, id7 22, id8 59, id9 96, id10 33, id11 70, id12 4
+  describe('rowClass', () => {
+    it('applies a string, an array and the truthy keys of an object', () => {
+      expect(trs()[0].classList.contains('free')).toBe(true);
+      expect(trs()[2].classList.contains('odd')).toBe(true);
+      expect(trs()[8].classList.contains('expensive')).toBe(true);
+    });
+
+    it('gives a row that matches nothing no classes of its own and drops falsy keys', () => {
+      expect(trs()[1].classList.contains('odd')).toBe(false);
+      expect(trs()[1].classList.contains('even')).toBe(false);
+      expect(trs()[1].className.trim()).toBe('');
+    });
+
+    it('handles null, undefined and no function', async () => {
+      host.rowClass.set(() => null);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+      host.rowClass.set(() => undefined);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+      host.rowClass.set(undefined);
+      await update();
+      expect(trs()[0].className.trim()).toBe('');
+    });
+
+    it('coexists with the selectable row class', async () => {
+      host.selectionMode.set('single');
+      await update();
+      expect(trs()[8].classList.contains('hx-data-table-selectable')).toBe(true);
+      expect(trs()[8].classList.contains('expensive')).toBe(true);
+    });
+
+    it('follows the value of the row', async () => {
+      host.value.update((rows) => rows.map((r) => (r.id === 2 ? { ...r, price: 99 } : r)));
+      await update();
+      expect(trs()[1].classList.contains('expensive')).toBe(true);
+    });
   });
 
-  it('shows the empty value for null and undefined cells only', async () => {
-    host.value.set([
-      { id: 1, name: 'A', price: 0, address: { city: 'x' }, note: null },
-      { id: 2, name: 'B', price: 5, address: { city: 'x' } },
-      { id: 3, name: 'C', price: 5, address: { city: 'x' }, note: false },
-    ] as unknown as Row[]);
-    host.empty.set('n/a');
-    await update();
-    const cells = (n: number) => trs().map((tr) => tr.children[n].textContent?.trim());
-    expect(cells(2)).toEqual(['n/a', 'n/a', 'false']);
-    expect(cells(1)).toEqual(['0', '5', '5']);
+  describe('emptyValue', () => {
+    const withNotes = async () => {
+      host.value.set([
+        { id: 1, name: 'A', price: 0, address: { city: 'x' }, note: null },
+        { id: 2, name: 'B', price: 5, address: { city: 'x' } },
+        { id: 3, name: 'C', price: 5, address: { city: 'x' }, note: false },
+        { id: 4, name: 'D', price: 5, address: { city: 'x' }, note: '' },
+      ] as unknown as Row[]);
+      await update();
+    };
+
+    it('replaces null and undefined, also nested, but not 0, false or an empty string', async () => {
+      host.empty.set('n/a');
+      await withNotes();
+      expect(trs().map((tr) => tr.children[3].textContent?.trim())).toEqual([
+        'n/a',
+        'n/a',
+        'n/a',
+        'n/a',
+      ]);
+      expect(trs().map((tr) => tr.children[1].textContent?.trim())).toEqual(['0', '5', '5', '5']);
+    });
+
+    it('leaves the cell empty by default and for an empty string', async () => {
+      await withNotes();
+      expect(trs()[0].children[3].textContent?.trim()).toBe('');
+      host.empty.set('n/a');
+      await update();
+      expect(trs()[3].children[3].textContent?.trim()).toBe('n/a');
+    });
+
+    it('does not show false or an empty string as empty (default cells)', async () => {
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.columns = [{ field: 'flag', header: 'Flag' }];
+      fixture.componentInstance.empty.set('n/a');
+      fixture.componentInstance.value.set([
+        { flag: false },
+        { flag: '' },
+        { flag: 0 },
+      ] as unknown as Row[]);
+      await update();
+      expect(trs().map((tr) => tr.children[0].textContent?.trim())).toEqual(['false', '', '0']);
+    });
+
+    it('hands the raw value to an hxCell template', async () => {
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.columns = [{ field: 'note', header: 'Note' }];
+      fixture.componentInstance.empty.set('n/a');
+      fixture.componentInstance.value.set([{ note: null }] as unknown as Row[]);
+      await update();
+      expect(root().querySelector('.note')?.textContent).toBe('[null]');
+    });
   });
 
-  it('leaves null cells empty by default', () => {
-    expect(trs()[0].children[2].textContent?.trim()).toBe('');
+  describe('sortFirstOrder', () => {
+    it('starts a column with its own first order, then the opposite, then off, announcing each step', async () => {
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('descending');
+      expect(live()).toContain('Sorted by Price, descending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('96');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      expect(live()).toContain('Sorted by Price, ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('0');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('none');
+      expect(live()).toContain('Sorting by Price removed');
+    });
+
+    it('falls back to ascending, and to the table input when set', async () => {
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('ascending');
+      expect(names()[0]).toBe('Item 01');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('descending');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('none');
+    });
+
+    it('uses the table order for a column without its own', async () => {
+      host.first.set('desc');
+      await update();
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('descending');
+      expect(names()[0]).toBe('Item 12');
+    });
+
+    it('lets a column ascending win over a descending table, and the reverse', async () => {
+      const columns = host.columns.map((c) =>
+        c.field === 'price' ? { ...c, sortFirstOrder: 'asc' as const } : c,
+      );
+      fixture = TestBed.createComponent(OptionsHost);
+      fixture.componentInstance.first.set('desc');
+      fixture.componentInstance.columns = columns;
+      host = fixture.componentInstance;
+      await update();
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('0');
+    });
+
+    it('applies in multiple mode', async () => {
+      host.mode.set('multiple');
+      await update();
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('descending');
+      await click(sortBtn(0));
+      expect(th(0).getAttribute('aria-sort')).toBe('ascending');
+      expect(trs()[0].children[1].textContent?.trim()).toBe('96');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+      await click(sortBtn(1));
+      expect(th(1).getAttribute('aria-sort')).toBe('none');
+    });
   });
 
-  it('starts a column with its own first order, then the opposite, then off', async () => {
-    await click(th(1).querySelector('button') as HTMLElement);
-    expect(th(1).getAttribute('aria-sort')).toBe('descending');
-    expect(root().querySelector('[aria-live="polite"]')?.textContent).toContain(
-      'Sorted by Price, descending',
-    );
-    await click(th(1).querySelector('button') as HTMLElement);
-    expect(th(1).getAttribute('aria-sort')).toBe('ascending');
-    await click(th(1).querySelector('button') as HTMLElement);
-    expect(th(1).getAttribute('aria-sort')).toBe('none');
-  });
+  describe('show all', () => {
+    beforeEach(async () => {
+      host.paging.set(true);
+      await update();
+    });
 
-  it('falls back to the table first order, ascending by default', async () => {
-    await click(th(0).querySelector('button') as HTMLElement);
-    expect(th(0).getAttribute('aria-sort')).toBe('ascending');
-    await click(th(0).querySelector('button') as HTMLElement);
-    await click(th(0).querySelector('button') as HTMLElement);
-    host.first.set('desc');
-    await update();
-    await click(th(0).querySelector('button') as HTMLElement);
-    expect(th(0).getAttribute('aria-sort')).toBe('descending');
-  });
+    const pick = async (label: string) => {
+      selectEl().querySelector<HTMLElement>('button.hx-select-trigger')?.click();
+      await update();
+      const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+        (o) => o.textContent?.trim() === label,
+      );
+      option?.click();
+      await update();
+    };
 
-  it('shows all rows with the All size and goes back to pages', async () => {
-    host.paging.set(true);
-    await update();
-    expect(trs().length).toBe(5);
-    const paginator = fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
-    paginator.setRows('all');
-    await update();
-    expect(trs().length).toBe(12);
-    paginator.setRows(5);
-    await update();
-    expect(trs().length).toBe(5);
-  });
+    it('offers the All label in the real select, shows every row, then pages again', async () => {
+      expect(trs().length).toBe(5);
+      await pick('All');
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('All');
+      expect(host.rows()).toBe(5);
+      await pick('5');
+      expect(trs().length).toBe(5);
+    });
 
-  it('emits all records as rows to a lazy load with All', async () => {
-    host.lazy.set(true);
-    host.paging.set(true);
-    await update();
-    fixture.debugElement.query(By.directive(HxPaginator)).componentInstance.setRows('all');
-    await update();
-    expect(host.events.at(-1)?.rows).toBe(12);
-    expect(host.events.at(-1)?.first).toBe(0);
+    it('uses a custom allLabel', async () => {
+      host.allLabel.set('Everything');
+      await update();
+      await pick('Everything');
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('Everything');
+    });
+
+    it('keeps showing every row when the data grows or filters change', async () => {
+      paginator().setRows('all');
+      host.value.set(many(20));
+      await update();
+      expect(trs().length).toBe(20);
+      host.filters.set({ id: '1' });
+      await update();
+      expect(trs().length).toBe(11);
+    });
+
+    it('ends when rows is set from outside or when all leaves the options', async () => {
+      paginator().setRows('all');
+      await update();
+      host.rows.set(10);
+      await update();
+      expect(trs().length).toBe(10);
+      paginator().setRows('all');
+      await update();
+      expect(trs().length).toBe(12);
+      host.options.set([5, 10]);
+      await update();
+      expect(trs().length).toBe(10);
+    });
+
+    it('survives a recreated paginator', async () => {
+      paginator().setRows('all');
+      await update();
+      host.paging.set(false);
+      await update();
+      host.paging.set(true);
+      await update();
+      expect(trs().length).toBe(12);
+      expect(selectEl().textContent).toContain('All');
+    });
+
+    it('emits all records as rows to a lazy load, and keeps them for a following sort', async () => {
+      host.lazy.set(true);
+      await update();
+      paginator().setRows('all');
+      await update();
+      expect(host.events.at(-1)?.rows).toBe(12);
+      expect(host.events.at(-1)?.first).toBe(0);
+      await click(sortBtn(0));
+      expect(host.events.at(-1)?.rows).toBe(12);
+      expect(host.events.at(-1)?.sortField).toBe('name');
+    });
+
+    it('does not request one row from a lazy table with an unknown total', async () => {
+      host.lazy.set(true);
+      host.total.set(0);
+      await update();
+      paginator().setRows('all');
+      await update();
+      expect(host.events.at(-1)?.rows).toBe(5);
+    });
   });
 });

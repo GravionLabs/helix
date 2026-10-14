@@ -7,7 +7,6 @@ import {
   model,
   numberAttribute,
   output,
-  signal,
 } from '@angular/core';
 import { HxSelect } from '../select/select';
 
@@ -20,7 +19,7 @@ export interface HxPageEvent {
   /** The page, 0-based. */
   page: number;
   pageCount: number;
-  /** Set when the "All" size is chosen: `rows` is then the number of all records. */
+  /** Set when the "All" size is chosen: `rows` is then the number of all records (at least 1). */
   all?: true;
 }
 
@@ -69,8 +68,12 @@ export class HxPaginator {
   /** The label of the `'all'` entry of `rowsPerPageOptions`. */
   readonly allLabel = input('All');
 
-  /** The "All" size is chosen: one page with every record. */
-  private readonly allSelected = signal(false);
+  /** The "All" size is chosen: one page with every record; `rows` is left as it was. */
+  readonly showAll = model(false);
+  /** "All" is chosen and still offered by `rowsPerPageOptions`. */
+  private readonly allSelected = computed(
+    () => this.showAll() && !!this.rowsPerPageOptions()?.includes('all'),
+  );
   /** The records per page in effect: all of them when "All" is chosen. */
   private readonly perPage = computed(() =>
     this.allSelected() ? Math.max(1, this.totalRecords()) : this.rows(),
@@ -131,15 +134,14 @@ export class HxPaginator {
   protected setRows(value: unknown): void {
     if (value === 'all') {
       if (this.allSelected()) return;
-      this.allSelected.set(true);
-      this.rows.set(Math.max(1, this.totalRecords()));
+      this.showAll.set(true);
       this.first.set(0);
       this.emit();
       return;
     }
     const rows = Number(value);
     if (!rows || (rows === this.rows() && !this.allSelected())) return;
-    this.allSelected.set(false);
+    this.showAll.set(false);
     this.rows.set(rows);
     // keep the first record of the page on screen
     this.first.set(Math.floor(this.first() / rows) * rows);

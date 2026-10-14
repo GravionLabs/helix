@@ -7,7 +7,3 @@
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   gap: 1rem;
 }
-
-:host ::ng-deep .data-section-dim {
-  opacity: 0.6;
-}

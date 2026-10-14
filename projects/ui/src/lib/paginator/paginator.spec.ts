@@ -6,12 +6,13 @@ import { type HxPageEvent, HxPaginator } from './paginator';
 @Component({
   imports: [HxPaginator],
   template: `
-    <hx-paginator [rows]="rows()" [totalRecords]="total()" [(first)]="first" [rowsPerPageOptions]="options()" showCurrentPageReport (pageChange)="events.push($event)" />
+    <hx-paginator [rows]="rows()" [totalRecords]="total()" [(first)]="first" [rowsPerPageOptions]="options()" [allLabel]="allLabel()" showCurrentPageReport (pageChange)="events.push($event)" />
   `,
 })
 class Host {
   rows = signal(10);
   total = signal(95);
+  allLabel = signal('All');
   first = signal(0);
   options = signal<(number | 'all')[] | undefined>([10, 20, 50]);
   events: HxPageEvent[] = [];
@@ -107,16 +108,64 @@ describe('HxPaginator', () => {
     expect(host.events.at(-1)).toEqual({ first: 20, rows: 20, page: 1, pageCount: 5 });
   });
 
-  it('offers an All size that shows one page with every record', () => {
+  const paginator = () => fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
+
+  it('offers an All size that shows one page with every record and leaves rows alone', () => {
     host.options.set([10, 'all']);
     fixture.detectChanges();
-    const paginator = fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
-    paginator.setRows('all');
+    paginator().setRows('all');
     fixture.detectChanges();
     expect(host.events.at(-1)).toEqual({ first: 0, rows: 95, page: 0, pageCount: 1, all: true });
     expect(el().querySelector('.hx-paginator-report')?.textContent).toBe('1 - 95 of 95');
-    paginator.setRows(10);
+    expect(paginator().rows()).toBe(10);
+    expect(el().querySelector('hx-select')?.textContent).toContain('All');
+  });
+
+  it('has no all key after All then a number', () => {
+    host.options.set([10, 20, 'all']);
     fixture.detectChanges();
-    expect(host.events.at(-1)).toEqual({ first: 0, rows: 10, page: 0, pageCount: 10 });
+    paginator().setRows('all');
+    paginator().setRows(20);
+    fixture.detectChanges();
+    expect(host.events.at(-1)).toEqual({ first: 0, rows: 20, page: 0, pageCount: 5 });
+    expect('all' in (host.events.at(-1) ?? {})).toBe(false);
+  });
+
+  it('emits once when All is picked twice', () => {
+    host.options.set([10, 'all']);
+    fixture.detectChanges();
+    paginator().setRows('all');
+    const count = host.events.length;
+    paginator().setRows('all');
+    expect(host.events.length).toBe(count);
+  });
+
+  it('follows totalRecords under All and reports 1 row at least for no records', () => {
+    host.options.set([10, 'all']);
+    fixture.detectChanges();
+    paginator().setRows('all');
+    host.total.set(40);
+    fixture.detectChanges();
+    expect(el().querySelector('.hx-paginator-report')?.textContent).toBe('1 - 40 of 40');
+    host.total.set(0);
+    fixture.detectChanges();
+    expect(el().querySelector('.hx-paginator-report')?.textContent).toBe('0 - 0 of 0');
+  });
+
+  it('asks for one row at least when All is picked without records', () => {
+    host.options.set([10, 'all']);
+    host.total.set(0);
+    fixture.detectChanges();
+    paginator().setRows('all');
+    expect(host.events.at(-1)?.rows).toBe(1);
+  });
+
+  it('uses a custom allLabel', () => {
+    host.options.set([10, 'all']);
+    fixture.detectChanges();
+    host.allLabel.set('Everything');
+    paginator().setRows('all');
+    fixture.detectChanges();
+    expect(el().querySelector('hx-select')?.textContent).toContain('Everything');
   });
 });

@@ -76,7 +76,7 @@
       <tbody>
         @for (row of visibleRows(); track trackRow(row, $index); let i = $index) {
           <tr
-            [class]="rowClass()?.(row)"
+            [class]="rowClassOf(row)"
             [class.hx-data-table-selectable]="selectable()"
             [attr.aria-selected]="selectionMode() ? (isSelected(row) ? 'true' : 'false') : null"
             [attr.tabindex]="selectable() ? 0 : null"
@@ -153,6 +153,9 @@
       [first]="first()"
       [totalRecords]="total()"
       [rowsPerPageOptions]="rowsPerPageOptions()"
+      [showAll]="showAll()"
+      (showAllChange)="showAll.set($event)"
+      [allLabel]="allLabel()"
       [showCurrentPageReport]="showCurrentPageReport()"
       (pageChange)="onPage($event)"
     />
