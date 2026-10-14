@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input, TemplateRef } from '@angular/core';
 import type { EnvironmentValue } from '../../../ui/badge/environment-badge';
 import { HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from './status-bar.model';
@@ -22,7 +23,7 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
 @Component({
   selector: 'helix-status-bar',
   standalone: true,
-  imports: [HelixEnvironmentBadge],
+  imports: [HelixEnvironmentBadge, NgTemplateOutlet],
   templateUrl: './status-bar.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './status-bar.scss',
@@ -30,12 +31,21 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
 export class HelixStatusBar {
   brand = input('');
   environment = input<EnvironmentValue | string | undefined>();
-  note = input<string | undefined>();
+  /** Note text, or a template for richer content such as links. */
+  note = input<string | TemplateRef<unknown> | undefined>();
   versions = input<HelixStatusBarVersion[]>([]);
   tone = input<HelixStatusBarTone>('neutral');
   height = input<string>('var(--helix-status-bar-height, 3rem)');
 
   protected envForBadge = computed(() => this.environment() || undefined);
+  protected noteTemplate = computed(() => {
+    const n = this.note();
+    return n instanceof TemplateRef ? n : undefined;
+  });
+  protected noteText = computed(() => {
+    const n = this.note();
+    return typeof n === 'string' ? n : '';
+  });
   protected bgColor = computed(() => TONE_BG[this.tone()]);
   protected textColor = computed(() => TONE_TEXT[this.tone()]);
 }

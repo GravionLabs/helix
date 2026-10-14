@@ -1,7 +1,9 @@
+import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
+import { HelixStatusBar } from '../status-bar/status-bar';
 import { HelixAppLayout } from './app-layout';
 
 describe('HelixAppLayout', () => {
@@ -198,5 +200,84 @@ describe('HelixAppLayout', () => {
     const custom = { label: 'Sample data', severity: 'info' } as const;
     fixture.componentRef.setInput('statusBarEnvironment', custom);
     expect(component.statusBarEnvironment()).toEqual(custom);
+  });
+});
+
+@Component({
+  imports: [HelixAppLayout],
+  template: `
+    <ng-template #tpl>Docs <a href="/docs">here</a></ng-template>
+    <helix-app-layout [statusBarNote]="useTemplate() ? tpl : 'Plain note'">
+      @if (withEnd()) {
+        <button hxStatusBarEnd type="button">Help</button>
+      }
+    </helix-app-layout>
+  `,
+})
+class LayoutHostComponent {
+  useTemplate = signal(false);
+  withEnd = signal(true);
+}
+
+describe('HelixAppLayout status bar forwarding', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+  let host: LayoutHostComponent;
+
+  const note = (): HTMLElement => fixture.nativeElement.querySelector('.helix-status-bar-note');
+  const end = (): HTMLElement => fixture.nativeElement.querySelector('.helix-status-bar-end');
+
+  async function render(): Promise<void> {
+    fixture.detectChanges();
+    await fixture.whenStable();
+  }
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        // Real template; only the status bar is real. Topbar, nav-rail and router-outlet are
+        // left unknown (their CSS chokes jsdom), hence the schema.
+        set: { imports: [HelixStatusBar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    host = fixture.componentInstance;
+  });
+
+  it('projects [hxStatusBarEnd] content into the status bar end slot', async () => {
+    await render();
+    expect(end().querySelector('button')?.textContent).toContain('Help');
+  });
+
+  it('leaves the end slot empty when no content is projected', async () => {
+    host.withEnd.set(false);
+    await render();
+    expect(end().children.length).toBe(0);
+    expect(Array.from(end().childNodes).filter((n) => n.nodeType === Node.TEXT_NODE)).toEqual([]);
+  });
+
+  it('renders a string statusBarNote', async () => {
+    await render();
+    expect(note().textContent?.trim()).toBe('Plain note');
+  });
+
+  it('renders a TemplateRef statusBarNote', async () => {
+    host.useTemplate.set(true);
+    await render();
+    expect(note().querySelector('a')?.getAttribute('href')).toBe('/docs');
+  });
+
+  it('switches the note between string and TemplateRef at runtime', async () => {
+    await render();
+    host.useTemplate.set(true);
+    await render();
+    expect(note().querySelector('a')).not.toBeNull();
+    host.useTemplate.set(false);
+    await render();
+    expect(note().querySelector('a')).toBeNull();
+    expect(note().textContent?.trim()).toBe('Plain note');
   });
 });

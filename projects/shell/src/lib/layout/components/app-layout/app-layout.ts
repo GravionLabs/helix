@@ -6,6 +6,7 @@ import {
   effect,
   inject,
   input,
+  type TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -48,7 +49,7 @@ export class HelixAppLayout {
 
   /** Status bar inputs */
   statusBarEnvironment = input<EnvironmentValue | string | undefined>();
-  statusBarNote = input<string | undefined>();
+  statusBarNote = input<string | TemplateRef<unknown> | undefined>();
   statusBarTone = input<HelixStatusBarTone>('neutral');
   statusBarVersions = input<HelixStatusBarVersion[]>([]);
   statusBarBrand = input('');
