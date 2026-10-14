@@ -20,6 +20,10 @@ export class AppShell {
   protected menu = DEMO_MENU_MODEL;
   protected readonly settings = inject(DemoSettings);
 
+  protected reloadApp(): void {
+    window.location.reload();
+  }
+
   protected versions: HelixStatusBarVersion[] = [{ label: 'Helix', value: '0.0.0' }];
 
   // Keep the highlight.js theme in sync with the app's dark mode toggle.
