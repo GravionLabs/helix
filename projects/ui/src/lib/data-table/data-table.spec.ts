@@ -5,6 +5,7 @@ import {
   compareValues,
   HxCell,
   type HxColumn,
+  HxColumnHeader,
   HxDataTable,
   type HxLazyLoadEvent,
   HxRowExpansion,
@@ -535,5 +536,71 @@ describe('HxDataTable selection, filters and expansion', () => {
     button.click();
     await update();
     expect(root().querySelector('.hx-data-table-expansion')).toBeNull();
+  });
+});
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="price" let-column><a class="info" href="#p">About {{ column.header }}</a></ng-template>
+      <ng-template hxColumnHeader="id"><i class="plain">i</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class HeaderHost {
+  value = rows();
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true, title: 'The product name' },
+    { field: 'price', header: 'Price', sortable: true },
+    { field: 'id', header: 'Id' },
+    { field: 'address.city', header: 'City' },
+  ];
+}
+
+describe('HxDataTable column header title and template', () => {
+  let fixture: ComponentFixture<HeaderHost>;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [HeaderHost] }).compileComponents();
+    fixture = TestBed.createComponent(HeaderHost);
+    fixture.detectChanges();
+  });
+
+  it('shows the title as tooltip and as description', () => {
+    expect(th(0).getAttribute('title')).toBe('The product name');
+    const id = th(0).getAttribute('aria-describedby');
+    expect(id).toBeTruthy();
+    expect(root().querySelector(`#${id}`)?.textContent).toBe('The product name');
+    expect(th(1).hasAttribute('title')).toBe(false);
+    expect(th(1).hasAttribute('aria-describedby')).toBe(false);
+  });
+
+  it('renders the template beside the sort button, not inside it', () => {
+    const link = th(1).querySelector('a.info') as HTMLAnchorElement;
+    expect(link.textContent).toBe('About Price');
+    expect(link.closest('button')).toBeNull();
+    expect(th(1).querySelectorAll('button').length).toBe(1);
+  });
+
+  it('keeps sorting and aria-sort of the column', () => {
+    expect(th(1).getAttribute('aria-sort')).toBe('none');
+    th(1).querySelector('button')?.click();
+    fixture.detectChanges();
+    expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+  });
+
+  it('adds the template to a column that is not sortable', () => {
+    expect(th(2).querySelector('i.plain')).toBeTruthy();
+    expect(th(2).querySelector('button')).toBeNull();
+    expect(th(2).textContent).toContain('Id');
+    expect(th(2).hasAttribute('aria-sort')).toBe(false);
+  });
+
+  it('leaves other headers without extra content', () => {
+    expect(th(0).querySelector('.hx-data-table-header-content')).toBeNull();
+    expect(th(3).querySelector('.hx-data-table-header-content')).toBeNull();
   });
 });

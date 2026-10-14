@@ -21,6 +21,8 @@ import { type HxPageEvent, HxPaginator } from '../paginator/paginator';
 import { HxProgressSpinner } from '../progress/progress';
 import type { HxTableSize } from '../table/table';
 
+let nextId = 0;
+
 export type HxColumnAlign = 'left' | 'center' | 'right';
 
 /** One column of an `hx-data-table`. */
@@ -29,6 +31,8 @@ export interface HxColumn {
   field: string;
   /** The header text. */
   header: string;
+  /** A hint for the header: shown as a tooltip and read as the description of the column. */
+  title?: string;
   /** CSS width of the column (`8rem`, `20%`). */
   width?: string;
   /** Horizontal alignment of header and cells (the start edge by default). */
@@ -95,6 +99,21 @@ export class HxCell {
   /** The `field` of the column. */
   readonly field = input.required<string>({ alias: 'hxCell' });
   readonly template = inject<TemplateRef<HxCellContext>>(TemplateRef);
+}
+
+/**
+ * Extra content in the header of one column, beside the label and outside the sort button:
+ * `<ng-template hxColumnHeader="price" let-column>…</ng-template>`. The context has the column (`$implicit`).
+ */
+@Directive({ selector: 'ng-template[hxColumnHeader]' })
+export class HxColumnHeader {
+  /** The `field` of the column. */
+  readonly field = input.required<string>({ alias: 'hxColumnHeader' });
+  readonly template = inject<TemplateRef<HxColumnHeaderContext>>(TemplateRef);
+}
+
+export interface HxColumnHeaderContext {
+  $implicit: HxColumn;
 }
 
 export interface HxCellContext {
@@ -249,6 +268,7 @@ export class HxDataTable implements OnInit {
   private readonly globalText = signal('');
 
   protected readonly cellTemplates = contentChildren(HxCell);
+  protected readonly columnHeaderTemplates = contentChildren(HxColumnHeader);
   protected readonly headerTemplate = contentChild(HxTableHeader);
   protected readonly bodyTemplate = contentChild(HxTableBody);
   protected readonly footerTemplate = contentChild(HxTableFooter);
@@ -312,6 +332,10 @@ export class HxDataTable implements OnInit {
   protected readonly cells = computed(
     () => new Map(this.cellTemplates().map((cell) => [cell.field(), cell.template])),
   );
+  protected readonly columnHeaders = computed(
+    () => new Map(this.columnHeaderTemplates().map((h) => [h.field(), h.template])),
+  );
+  protected readonly uid = `hx-data-table-${nextId++}`;
   protected readonly scrolls = computed(() => this.scrollable() || !!this.scrollHeight());
   protected readonly hasCaption = computed(
     () => !!this.caption() || !!this.captionTemplate() || !!this.ariaLabel(),

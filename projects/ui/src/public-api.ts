@@ -70,6 +70,8 @@ export {
   type HxCellContext,
   type HxColumn,
   type HxColumnAlign,
+  HxColumnHeader,
+  type HxColumnHeaderContext,
   HxDataTable,
   type HxLazyLoadEvent,
   HxRowExpansion,

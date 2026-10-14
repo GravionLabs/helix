@@ -114,6 +114,16 @@ all records so the paginator knows how many pages there are.
 
 `HxLazyLoadEvent` is `{ first, rows, sortField, sortOrder, multiSortMeta, filters, globalFilter }`.
 
+## Header hint
+
+`title` on a column shows a tooltip on the header and is read as its description. `hxColumnHeader="field"` adds content (an info icon, a link) next to the label; the sort button, `aria-sort` and keyboard use stay as they are.
+
+```html
+<hx-data-table [value]="rows" [columns]="[{ field: 'price', header: 'Price', title: 'Gross, in EUR', sortable: true }]">
+  <ng-template hxColumnHeader="price"><a href="/pricing">Pricing</a></ng-template>
+</hx-data-table>
+```
+
 ## Templates
 
 Templates are `ng-template`s inside the table:
@@ -121,6 +131,7 @@ Templates are `ng-template`s inside the table:
 | Directive | Replaces | Context |
 | --- | --- | --- |
 | `hxCell="field"` | the cell content of that column | `$implicit` row, `value`, `index` |
+| `hxColumnHeader="field"` | adds content beside the label of that header, outside the sort button (links, icons) | `$implicit` column |
 | `hxTableHeader` | the header cells (inside the `<tr>`; write `<th scope="col">`) | `$implicit` columns |
 | `hxTableBody` | the cells of every row (write `<td>`) | `$implicit` row, `index`, `columns` |
 | `hxTableFooter` | adds a footer row (write `<td>`) | `$implicit` columns |

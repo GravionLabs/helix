@@ -12,6 +12,7 @@
       <button hx-button type="button" size="small" variant="outlined" (click)="toggleEmpty()">Toggle empty</button>
     </div>
     <hx-data-table [value]="tableRows()" [columns]="columns" dataKey="id" caption="Products" stripedRows [loading]="tableLoading()" scrollHeight="14rem">
+      <ng-template hxColumnHeader="price"><a href="#pricing">Pricing</a></ng-template>
       <ng-template hxCell="price" let-value><b>{{ value }} EUR</b></ng-template>
     </hx-data-table>
   </div>

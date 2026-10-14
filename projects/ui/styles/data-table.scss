@@ -58,6 +58,26 @@
   height: 2.5rem;
 }
 
+/* a header with extra content: the label (or sort button) and the content side by side */
+.hx-data-table-header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--h-datatable-header-cell-gap);
+}
+
+.hx-data-table-header-content > .hx-data-table-sort {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.hx-data-table-align-center .hx-data-table-header-content {
+  justify-content: center;
+}
+
+.hx-data-table-align-right .hx-data-table-header-content {
+  justify-content: flex-end;
+}
+
 /* sortable headers: a button that fills the header cell */
 .hx-data-table-sort {
   display: inline-flex;

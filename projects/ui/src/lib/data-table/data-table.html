@@ -45,17 +45,19 @@
                 [class.hx-data-table-sorted]="orderOf(column) !== 0"
                 [style.width]="column.width ?? null"
                 [attr.aria-sort]="ariaSort(column)"
+                [attr.title]="column.title ?? null"
+                [attr.aria-describedby]="column.title ? uid + '-title-' + $index : null"
               >
-                @if (column.sortable) {
-                  <button type="button" class="hx-data-table-sort" (click)="sort(column)">
-                    <span>{{ column.header }}</span>
-                    <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
-                    @if (sortRank(column); as rank) {
-                      <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
-                    }
-                  </button>
+                @if (columnHeaders().get(column.field); as extra) {
+                  <div class="hx-data-table-header-content">
+                    <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
+                    <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletContext]="{ $implicit: column }" />
+                  </div>
                 } @else {
-                  {{ column.header }}
+                  <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
+                }
+                @if (column.title) {
+                  <span class="hx-data-table-caption-hidden" [id]="uid + '-title-' + $index">{{ column.title }}</span>
                 }
               </th>
             }
@@ -159,3 +161,17 @@
     />
   }
 </div>
+
+<ng-template #label let-column>
+  @if (column.sortable) {
+    <button type="button" class="hx-data-table-sort" (click)="sort(column)">
+      <span>{{ column.header }}</span>
+      <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
+      @if (sortRank(column); as rank) {
+        <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
+      }
+    </button>
+  } @else {
+    {{ column.header }}
+  }
+</ng-template>

@@ -5,6 +5,7 @@ import {
   HxChart,
   type HxChartSelectEvent,
   type HxColumn,
+  HxColumnHeader,
   HxDataTable,
   HxInput,
   HxRowExpansion,
@@ -19,7 +20,17 @@ import {
 @Component({
   selector: 'app-data-section',
   standalone: true,
-  imports: [HxButton, HxCell, HxChart, HxDataTable, HxInput, HxRowExpansion, HxTable, HxTree],
+  imports: [
+    HxButton,
+    HxCell,
+    HxColumnHeader,
+    HxChart,
+    HxDataTable,
+    HxInput,
+    HxRowExpansion,
+    HxTable,
+    HxTree,
+  ],
   templateUrl: './data-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './data-section.scss',
@@ -28,7 +39,7 @@ export class HxDataSection {
   readonly columns: HxColumn[] = [
     { field: 'code', header: 'Code', width: '8rem' },
     { field: 'name', header: 'Name', sortable: true },
-    { field: 'category', header: 'Category', sortable: true },
+    { field: 'category', header: 'Category', title: 'The product group', sortable: true },
     { field: 'price', header: 'Price', align: 'right', sortable: true },
   ];
   readonly products = [
