@@ -61,6 +61,33 @@ Load the tokens and the component styles of helix-ui, and the font:
 `styles.css` is the component CSS, in the cascade layer `components`, so your own CSS and Tailwind's utilities
 win over it without specificity fights.
 
+The shell's `styles.css` no longer sets rules on `html` and `body`. They moved to the opt-in
+`@gravionlabs/helix-shell/globals.css` (14 px root font size, body font, colour and background); add it after
+`styles.css` for the Helix page look, leave it out to keep the `rem` and the `body` of your own application.
+
+### Component styles only
+
+An app that does not use `helix-shell` and only needs everyday components can load `core.css` instead of
+`styles.css`. Raw sizes, measured from `pnpm build:lib:css:ui`:
+
+| File | Raw size | |
+| --- | --- | --- |
+| `@gravionlabs/helix-ui/styles.css` | 266.1 kB | all 60 components |
+| `@gravionlabs/helix-ui/core.css` | 128.3 kB | 36 stylesheets, same `components` layer and layer order |
+| `@gravionlabs/helix-ui/tokens.css` | 129.0 kB | tokens of all components; load it with either |
+| `@gravionlabs/helix-shell/styles.css` | 47.1 kB | shell layout and Tailwind utilities |
+| `primeicons/primeicons.css` | 19.0 kB | icon font classes (`pi pi-*`) |
+
+```json
+[
+  "node_modules/@fontsource-variable/inter/index.css",
+  "node_modules/@gravionlabs/helix-ui/tokens.css",
+  "node_modules/@gravionlabs/helix-ui/core.css"
+]
+```
+
+Which components are in `core.css` and which are not: [HELIX-UI](HELIX-UI.md#component-only-css).
+
 Provide the theme service to switch colours while the app runs ([details](HELIX-UI.md#theming)):
 
 ```ts
@@ -79,6 +106,53 @@ sets it (`setDark`, `toggleDark`, and the system setting as the first value when
 store of `helix-shell` and its top-bar button go through it, with a view transition when `viewTransition` is on.
 An attribute (`[data-theme="dark"]`) works too: pass it as `darkSelector` to `provideHxTheme`, and build the tokens
 with it (`pnpm tokens:export --dark='[data-theme="dark"]'`).
+
+Who matches what:
+
+| Piece | Dark when |
+| --- | --- |
+| `helix-ui` `tokens.css` | `.app-dark`, fixed when the file is built (the published file keys on the class only) |
+| `helix-shell` `styles.css` (the `dark:` variant and the dark surface overrides) | `[class*="app-dark"]` or `[data-theme="dark"]` |
+| `HxTheme` | writes `darkSelector` (class or attribute) to `<html>` unless `manageDark` is `false` |
+
+So the shell follows either marker, but the published helix-ui tokens follow the class only: an app that marks dark
+mode with `data-theme` alone needs `tokens.css` built with `--dark='[data-theme="dark"]'`, or must set the class too.
+
+### An app that owns its dark mode
+
+With `manageDark: false`, `HxTheme` never writes to `<html>`. `dark()` and `setDark()` still drive the colour
+overrides, so the app sets the marker itself and tells the service:
+
+```ts
+// app.config.ts
+import { provideHxTheme } from '@gravionlabs/helix-ui';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideHxTheme({ manageDark: false, darkSelector: '.app-dark' })],
+};
+```
+
+```ts
+// app.component.ts: system setting first, an explicit choice (data-theme) wins
+const theme = inject(HxTheme);
+const media = matchMedia('(prefers-color-scheme: dark)');
+
+const apply = () => {
+  const choice = document.documentElement.dataset['theme']; // 'dark' | 'light' | undefined
+  const dark = choice ? choice === 'dark' : media.matches;
+  document.documentElement.classList.toggle('app-dark', dark); // what tokens.css reads
+  theme.setDark(dark); // keep the colour overrides in step
+};
+apply();
+media.addEventListener('change', apply);
+```
+
+```css
+/* the app's own rules follow the same decision */
+:root { color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark; } }
+:root[data-theme="dark"] { color-scheme: dark; }
+```
 
 ## Colours at runtime
 
@@ -104,6 +178,35 @@ reaches every component that refers to the token:
   --h-form-field-border-color: var(--h-surface-600);
 }
 ```
+
+### Mapping the roles to the app's own tokens
+
+An app with its own design tokens can point the Helix roles at them instead of overriding component tokens one by
+one. Load a stylesheet after `tokens.css` (or `core.css`) that sets the semantic roles; the components follow:
+
+```css
+/* helix-roles.css, loaded after @gravionlabs/helix-ui/tokens.css */
+:root:root {
+  --h-primary-color: var(--brand-600);
+  --h-primary-contrast-color: var(--brand-on-600);
+  --h-primary-hover-color: var(--brand-700);
+  --h-text-color: var(--ink);
+  --h-text-muted-color: var(--ink-soft);
+  --h-content-background: var(--paper);
+  --h-content-border-color: var(--line);
+  --h-form-field-border-color: var(--line-strong);
+}
+
+/* the app's own dark rule */
+:root:root.app-dark {
+  --h-primary-color: var(--brand-400);
+  --h-text-color: var(--ink-on-dark);
+  --h-content-background: var(--paper-dark);
+}
+```
+
+`:root:root` is stronger than the `:root` of `tokens.css`, so the file wins whatever the load order. Names are
+those of the generated `tokens.css`; look them up there (`grep -- '--h-primary' node_modules/@gravionlabs/helix-ui/tokens.css`).
 
 To make the change for everyone, edit the token itself in `projects/tokens` instead.
 

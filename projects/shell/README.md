@@ -71,9 +71,13 @@ app's global styles, since Tailwind's content scanning does not look inside
 // angular.json
 "styles": [
   "node_modules/@gravionlabs/helix-shell/styles.css",
+  "node_modules/@gravionlabs/helix-shell/globals.css",
   "src/styles.scss"
 ]
 ```
+
+`globals.css` is optional: it holds the `html` and `body` rules (14 px root font size, body font, colour and
+background) that `styles.css` no longer contains. Apps that relied on them must add it; others can leave it out.
 
 ## Layout Store
 
