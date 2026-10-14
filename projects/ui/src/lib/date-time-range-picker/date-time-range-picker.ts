@@ -10,6 +10,7 @@ import {
   Component,
   computed,
   ElementRef,
+  effect,
   forwardRef,
   Injector,
   inject,
@@ -18,12 +19,14 @@ import {
   numberAttribute,
   output,
   signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
+import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 
@@ -48,8 +51,9 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * (`1/1/2026 00:00 - 1/2/2026 00:15`); the popup holds one calendar (an inline range `hx-date-picker`) and a time picker for each end,
  * from and to. The value is `{ from, to }` (`null` while a side is empty); `to` is never before `from`: the `to`
  * time picker starts at `from` (including the time), the `from` time picker ends at `to`, and a choice that crosses the
- * other side moves it. The field is read-only; the popup stays open until Escape, an outside click or the focus
- * leaving it.
+ * other side moves it. The field is read-only unless `typeable`, which lets the range be typed in the field's
+ * format (Enter or leaving the field commits it, an unreadable range puts the value back); the popup stays open
+ * until Escape, an outside click or the focus leaving it.
  *
  * ```html
  * <hx-date-time-range-picker [stepMinute]="15" [(ngModel)]="shift" />
@@ -95,6 +99,8 @@ export class HxDateTimeRangePicker
   readonly chooseLabel = input('Choose date range');
   /** The `id` of the text field, for a `<label for>`. */
   readonly inputId = input<string>();
+  /** The range can be typed into the field (`from separator to`); otherwise the field is read-only. */
+  readonly typeable = input(false, { transform: booleanAttribute });
 
   /** The time picker options, for both ends. */
   readonly showTime = input(true, { transform: booleanAttribute });
@@ -151,6 +157,8 @@ export class HxDateTimeRangePicker
   #lastFrom: Date | null = null;
   #lastTo: Date | null = null;
   readonly #cvaDisabled = signal(false);
+  /** The text typed and not yet committed; `null` while the field shows the value. */
+  readonly #typed = signal<string | null>(null);
   readonly #format = computed(() => {
     const custom = this.dateFormat();
     if (custom) return new Intl.DateTimeFormat(this.locale(), custom);
@@ -167,6 +175,8 @@ export class HxDateTimeRangePicker
   });
   /** `1/1/2026 00:00 - 1/2/2026 00:15`: the date and the time are separated by a space, not a comma. */
   protected readonly text = computed(() => {
+    const typed = this.#typed();
+    if (typed !== null) return typed;
     const { from, to } = this.value();
     if (!from && !to) return '';
     const fmt = this.#format();
@@ -189,6 +199,14 @@ export class HxDateTimeRangePicker
 
   #onChange: (value: HxDateTimeRangeValue) => void = () => {};
   #onTouched: () => void = () => {};
+
+  constructor() {
+    // a value set from outside drops the text typed and not yet committed (as `writeValue` does)
+    effect(() => {
+      this.value();
+      untracked(() => this.#typed.set(null));
+    });
+  }
 
   writeValue(value: HxDateTimeRangeValue | null): void {
     this.value.set({ from: value?.from ?? null, to: value?.to ?? null });
@@ -231,16 +249,75 @@ export class HxDateTimeRangePicker
     });
   }
 
+  /** A typeable field opens with the button, Arrow Down or Alt+Arrow Up (click, Enter and Space are for typing). */
+  protected onFieldClick(): void {
+    if (!this.typeable()) this.show();
+  }
+
   protected onFieldKeydown(event: KeyboardEvent): void {
-    if (
+    if (this.typeable() && event.key === 'Enter') {
+      this.commitTyping();
+    } else if (
       event.key === 'ArrowDown' ||
-      event.key === 'Enter' ||
-      event.key === ' ' ||
-      (event.altKey && event.key === 'ArrowUp')
+      (event.altKey && event.key === 'ArrowUp') ||
+      (!this.typeable() && (event.key === 'Enter' || event.key === ' '))
     ) {
       event.preventDefault();
       this.show();
     }
+  }
+
+  protected onTyping(event: Event): void {
+    if (!this.typeable() || this.isDisabled()) return;
+    this.#typed.set((event.target as HTMLInputElement).value);
+  }
+
+  /** Parses the typed range; an unreadable side, a disabled day or a time outside the limits puts the value back. */
+  protected commitTyping(): void {
+    const typed = this.#typed();
+    if (typed === null || this.isDisabled()) return;
+    this.#typed.set(null);
+    const next = this.#parseRange(typed);
+    if (next) this.#commit(next);
+    // the binding does not change when the value stays: put the field's text back by hand
+    const field = this.field();
+    if (field) field.nativeElement.value = this.text();
+  }
+
+  /** `from separator to`; either side may be empty (`10/9/2026 09:00 -`), a text without the separator is `from`. */
+  #parseRange(typed: string): HxDateTimeRangeValue | null {
+    const text = typed.trim();
+    if (text === '') return EMPTY;
+    const separator = this.separator()
+      .trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // the separator stands alone: the `-` of `2026-10-09` is not one
+    const parts = separator ? text.split(new RegExp(`(?:^|\\s+)${separator}(?:\\s+|$)`)) : [text];
+    if (parts.length > 2) return null;
+    const { from: oldFrom, to: oldTo } = this.value();
+    const from = this.#parseSide(parts[0], oldFrom);
+    const to = this.#parseSide(parts[1] ?? '', oldTo ?? oldFrom);
+    if (from === undefined || to === undefined) return null;
+    return from && to && to < from ? { from: to, to: from } : { from, to };
+  }
+
+  /** `null` for an empty side, `undefined` for one that is unreadable, on a disabled day or outside the limits. */
+  #parseSide(part: string, old: Date | null): Date | null | undefined {
+    const text = part.trim();
+    if (text === '') return null;
+    const timed = this.showTime() || this.timeOnly();
+    const date = timed
+      ? parseDateTimeText(text, {
+          locale: this.locale(),
+          showMinutes: this.showMinutes(),
+          timeOnly: this.timeOnly(),
+          fallbackDay: old ?? new Date(),
+        })
+      : parseDateText(text, this.locale());
+    if (!date || this.#isBlocked(date)) return undefined;
+    const [min, max] = [this.minDate(), this.maxDate()];
+    if ((min && date < min) || (max && date > max)) return undefined;
+    return date;
   }
 
   protected onOverlayKeydown(event: KeyboardEvent): void {

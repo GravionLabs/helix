@@ -9,6 +9,7 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 
 ```html
 <hx-date-time-range-picker [stepMinute]="15" [(ngModel)]="shift" />
+<hx-date-time-range-picker typeable [(value)]="period" />
 <hx-date-time-range-picker timeOnly [showMinutes]="false" [(value)]="opening" />
 ```
 
@@ -17,6 +18,7 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `fromLabel`, `toLabel` | `string` | `From`, `To` | Names of the two time pickers. |
 | `separator` | `string` | `-` | The text between the two dates in the field. |
 | `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
+| `typeable` | `boolean` | `false` | The range can be typed into the field (see Typing); otherwise the field is read-only. |
 | `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
 | `presetsLabel` | `string` | `Presets` | Name of the preset group. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
@@ -43,8 +45,17 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   ```html
   <hx-date-time-range-picker placeholder="Pick a range" [presets]="presets" [(value)]="range" />
   ```
-- **Field:** read-only; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
+- **Field:** read-only unless `typeable`; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
   Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.
+- **Typing** (`typeable`): the field takes the range as it shows it, `from separator to` (`10/12/2026 08:30 - 10/14/2026 16:45`).
+  Each side is read like the [date time picker](date-time-picker.md)'s field: the date in the order of the locale (also
+  `yyyy-mm-dd`) and the time (`14:30`, `3:45 PM`; the hour alone with `[showMinutes]="false"`, the date alone with
+  `[showTime]="false"`, the time alone with `timeOnly`, on the day of the value or today). Enter or leaving the field
+  commits it; a side may be empty (`10/12/2026 08:30 -`), a text without the separator is `from`, an empty text empties
+  the range and a reversed range is put in order. An unreadable side, a day in `disabledDates` or a time outside
+  `minDate`..`maxDate` puts the value back; a value set from outside drops the typed text. Only the numeric default
+  format reads back: with a `dateFormat` that writes month names, typing is refused. The field opens the popup with the
+  button, Arrow Down or Alt+Arrow Up (click, Enter and Space are for typing); it keeps its label and `aria-*`.
 - **Calendar:** the first click sets `from`, the second `to` (a click before `from` swaps them); a third click starts
   a new range. Days keep the times already chosen (midnight at first).
 - **Order:** `to` is never before `from`: the `to` time picker starts at `from` (including the time), the `from` picker ends

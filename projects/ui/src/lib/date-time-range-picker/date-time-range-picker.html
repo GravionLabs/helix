@@ -8,7 +8,7 @@
     <input
       #field
       type="text"
-      readonly
+      [readOnly]="!typeable()"
       class="hx-date-picker-input"
       autocomplete="off"
       aria-haspopup="dialog"
@@ -21,7 +21,9 @@
       [attr.aria-label]="ariaLabel() ?? null"
       [attr.aria-labelledby]="ariaLabelledby() ?? null"
       [attr.aria-invalid]="invalid() ? 'true' : null"
-      (click)="show()"
+      (input)="onTyping($event)"
+      (change)="commitTyping()"
+      (click)="onFieldClick()"
       (keydown)="onFieldKeydown($event)"
     />
     <button

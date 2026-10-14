@@ -85,6 +85,31 @@ import {
       [presets]="presetList"
       [(value)]="withPresets"
     />
+    <hx-date-time-range-picker id="typed" locale="en-US" typeable [(value)]="typed" />
+    <hx-date-time-range-picker
+      id="typedDays"
+      locale="en-US"
+      typeable
+      [showTime]="false"
+      [(value)]="typedDays"
+    />
+    <hx-date-time-range-picker
+      id="typedLimits"
+      locale="en-US"
+      typeable
+      [minDate]="min"
+      [maxDate]="max"
+      [disabledDates]="blockedDays"
+      [(value)]="typedLimits"
+    />
+    <hx-date-time-range-picker
+      id="typedClock"
+      locale="en-US"
+      typeable
+      timeOnly
+      [showMinutes]="false"
+      [(value)]="typedClock"
+    />
     <hx-date-time-range-picker
       id="signal"
       locale="en-US"
@@ -105,6 +130,16 @@ class Host {
       to: () => new Date(2026, 9, 10, 0, 0),
     },
   ];
+  typed = signal<HxDateTimeRangeValue>({
+    from: new Date(2026, 9, 9, 9, 0),
+    to: new Date(2026, 9, 10, 17, 0),
+  });
+  typedDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  typedLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  typedClock = signal<HxDateTimeRangeValue>({
+    from: new Date(2026, 9, 9, 9, 0),
+    to: new Date(2026, 9, 9, 17, 0),
+  });
   withPresets = signal<HxDateTimeRangeValue>({ from: null, to: null });
   min = new Date(2026, 9, 5, 8, 0);
   max = new Date(2026, 9, 28, 17, 0);
@@ -166,6 +201,14 @@ describe('HxDateTimeRangePicker', () => {
   const now = (side: 'from' | 'to', name: string) => spin(side, name).getAttribute('aria-valuenow');
   const press = async (target: HTMLElement, key: string) => {
     target.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+    await settle();
+  };
+
+  const type = async (id: string, text: string, commit: 'change' | 'Enter' = 'change') => {
+    input(id).value = text;
+    input(id).dispatchEvent(new Event('input'));
+    if (commit === 'change') input(id).dispatchEvent(new Event('change'));
+    else await press(input(id), 'Enter');
     await settle();
   };
 
@@ -596,6 +639,126 @@ describe('HxDateTimeRangePicker', () => {
       from: new Date(2026, 9, 10, 7, 0),
       to: new Date(2026, 9, 11, 7, 0),
     });
+  });
+
+  it('keeps the field readonly unless typeable', async () => {
+    expect(input('basic').readOnly).toBe(true);
+    expect(input('typed').readOnly).toBe(false);
+    // a read-only field takes no typing: an input event (as from a script) changes nothing
+    input('labels').value = '1/5/2026 00:00 to 1/6/2026 00:00';
+    input('labels').dispatchEvent(new Event('input'));
+    input('labels').dispatchEvent(new Event('change'));
+    await settle();
+    expect(host.labels()).toEqual({
+      from: new Date(2026, 0, 1, 0, 0),
+      to: new Date(2026, 0, 2, 0, 15),
+    });
+  });
+
+  it('commits a typed range', async () => {
+    await type('typed', '10/12/2026 08:30 - 10/14/2026 16:45');
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 12, 8, 30),
+      to: new Date(2026, 9, 14, 16, 45),
+    });
+    expect(input('typed').value).toBe('10/12/2026 08:30 - 10/14/2026 16:45');
+  });
+
+  it('commits a typed range with Enter without opening the popup', async () => {
+    await type('typed', '2026-10-20 7:05 - 2026-10-21 3:15 PM', 'Enter');
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 20, 7, 5),
+      to: new Date(2026, 9, 21, 15, 15),
+    });
+    expect(popup()).toBeNull();
+  });
+
+  it('orders a typed range whose to is before its from', async () => {
+    await type('typed', '10/14/2026 10:00 - 10/12/2026 09:00');
+    expect(host.typed()).toEqual({
+      from: new Date(2026, 9, 12, 9, 0),
+      to: new Date(2026, 9, 14, 10, 0),
+    });
+  });
+
+  it('takes a typed side alone and empties the range for an empty text', async () => {
+    await type('typed', '10/12/2026 08:00 -');
+    expect(host.typed()).toEqual({ from: new Date(2026, 9, 12, 8, 0), to: null });
+    expect(input('typed').value).toBe('10/12/2026 08:00 -');
+    await type('typed', '   ');
+    expect(host.typed()).toEqual({ from: null, to: null });
+    expect(input('typed').value).toBe('');
+  });
+
+  it('reverts invalid typed text', async () => {
+    const before = host.typed();
+    for (const text of [
+      'soon',
+      '10/12/2026 08:00 - later',
+      '2/31/2026 08:00 - 3/1/2026 08:00',
+      '10/12/2026 25:00 - 10/14/2026 08:00',
+      '10/12/2026 08:00 - 10/13/2026 08:00 - 10/14/2026 08:00',
+    ]) {
+      await type('typed', text);
+      expect(host.typed()).toBe(before);
+      expect(input('typed').value).toBe('10/9/2026 09:00 - 10/10/2026 17:00');
+    }
+  });
+
+  it('types days only without the time pickers', async () => {
+    await type('typedDays', '2026-10-12 - 2026-10-14');
+    expect(host.typedDays()).toEqual({
+      from: new Date(2026, 9, 12),
+      to: new Date(2026, 9, 14),
+    });
+    expect(input('typedDays').value).toBe('10/12/2026 - 10/14/2026');
+    await type('typedDays', '10/12/2026 08:00 - 10/14/2026');
+    expect(host.typedDays().from).toEqual(new Date(2026, 9, 12));
+  });
+
+  it('types hours on the day of the value with timeOnly', async () => {
+    await type('typedClock', '8 - 18');
+    expect(host.typedClock()).toEqual({
+      from: new Date(2026, 9, 9, 8, 0),
+      to: new Date(2026, 9, 9, 18, 0),
+    });
+  });
+
+  it('refuses a typed side on a disabled day or outside minDate and maxDate', async () => {
+    for (const text of [
+      '10/13/2026 09:00 - 10/14/2026 09:00',
+      '10/5/2026 07:59 - 10/6/2026 09:00',
+      '10/27/2026 09:00 - 10/28/2026 17:01',
+    ]) {
+      await type('typedLimits', text);
+      expect(host.typedLimits()).toEqual({ from: null, to: null });
+      expect(input('typedLimits').value).toBe('');
+    }
+    await type('typedLimits', '10/5/2026 08:00 - 10/28/2026 17:00');
+    expect(host.typedLimits()).toEqual({
+      from: new Date(2026, 9, 5, 8, 0),
+      to: new Date(2026, 9, 28, 17, 0),
+    });
+  });
+
+  it('drops the typed text when the value changes from outside', async () => {
+    input('typed').value = '10/12/2026 08:';
+    input('typed').dispatchEvent(new Event('input'));
+    await settle();
+    host.typed.set({ from: new Date(2026, 9, 1, 6, 0), to: null });
+    await settle();
+    expect(input('typed').value).toBe('10/1/2026 06:00 -');
+    input('typed').dispatchEvent(new Event('change'));
+    await settle();
+    expect(host.typed()).toEqual({ from: new Date(2026, 9, 1, 6, 0), to: null });
+  });
+
+  it('opens a typeable field with the button or Arrow Down, not with a click or Space', async () => {
+    await click(input('typed'));
+    await press(input('typed'), ' ');
+    expect(popup()).toBeNull();
+    await press(input('typed'), 'ArrowDown');
+    expect(popup()).not.toBeNull();
   });
 
   it('marks ngModel touched when the focus leaves', async () => {
