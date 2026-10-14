@@ -16,6 +16,6 @@
     }
   </div>
   @if (rowsOptions().length) {
-    <hx-select class="hx-paginator-rows" [options]="rowsOptions()" [value]="rows()" (valueChange)="setRows($event)" [ariaLabel]="rowsPerPageLabel()" />
+    <hx-select class="hx-paginator-rows" [options]="rowsOptions()" [value]="rowsValue()" (valueChange)="setRows($event)" [ariaLabel]="rowsPerPageLabel()" />
   }
 </nav>

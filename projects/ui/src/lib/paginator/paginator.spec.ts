@@ -13,7 +13,7 @@ class Host {
   rows = signal(10);
   total = signal(95);
   first = signal(0);
-  options = signal<number[] | undefined>([10, 20, 50]);
+  options = signal<(number | 'all')[] | undefined>([10, 20, 50]);
   events: HxPageEvent[] = [];
 }
 
@@ -105,5 +105,18 @@ describe('HxPaginator', () => {
     fixture.detectChanges();
     expect(host.first()).toBe(20);
     expect(host.events.at(-1)).toEqual({ first: 20, rows: 20, page: 1, pageCount: 5 });
+  });
+
+  it('offers an All size that shows one page with every record', () => {
+    host.options.set([10, 'all']);
+    fixture.detectChanges();
+    const paginator = fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
+    paginator.setRows('all');
+    fixture.detectChanges();
+    expect(host.events.at(-1)).toEqual({ first: 0, rows: 95, page: 0, pageCount: 1, all: true });
+    expect(el().querySelector('.hx-paginator-report')?.textContent).toBe('1 - 95 of 95');
+    paginator.setRows(10);
+    fixture.detectChanges();
+    expect(host.events.at(-1)).toEqual({ first: 0, rows: 10, page: 0, pageCount: 10 });
   });
 });

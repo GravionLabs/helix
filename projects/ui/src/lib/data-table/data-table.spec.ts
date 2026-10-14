@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { HxPaginator } from '../paginator/paginator';
 import {
   compareValues,
   HxCell,
@@ -731,5 +732,122 @@ describe('HxDataTable column header template details', () => {
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0][0]).toContain('"name"');
     warn.mockRestore();
+  });
+});
+
+@Component({
+  imports: [HxDataTable],
+  template: `
+    <hx-data-table [value]="value()" [columns]="columns" [rowClass]="rowClass" [emptyValue]="empty()" [sortFirstOrder]="first()" [paginator]="paging()" [rows]="5" [rowsPerPageOptions]="[5, 'all']" [lazy]="lazy()" [totalRecords]="12" (lazyLoad)="events.push($event)" />
+  `,
+})
+class OptionsHost {
+  value = signal<Row[]>(many(12));
+  empty = signal('');
+  first = signal<'asc' | 'desc'>('asc');
+  paging = signal(false);
+  lazy = signal(false);
+  events: HxLazyLoadEvent[] = [];
+  rowClass = (row: Row) =>
+    row.price > 90 ? 'expensive' : row.price === 0 ? ['free'] : { odd: row.id % 2 === 1 };
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true },
+    { field: 'price', header: 'Price', sortable: true, sortFirstOrder: 'desc' },
+    { field: 'note', header: 'Note' },
+  ];
+}
+
+describe('HxDataTable row class, empty value, show-all paging and first sort order', () => {
+  let fixture: ComponentFixture<OptionsHost>;
+  let host: OptionsHost;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const update = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const trs = () => [...root().querySelectorAll<HTMLElement>('tbody tr')];
+  const th = (i: number) => root().querySelectorAll<HTMLElement>('thead th')[i];
+  const click = async (el: HTMLElement) => {
+    el.click();
+    await update();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [OptionsHost] }).compileComponents();
+    fixture = TestBed.createComponent(OptionsHost);
+    host = fixture.componentInstance;
+    await update();
+  });
+
+  it('applies the row class as string, array or object', () => {
+    // prices: id1 0, id2 37, id3 74, id4 11, id5 48, id6 85, id7 22, id8 59, id9 96
+    expect(trs()[0].classList.contains('free')).toBe(true);
+    expect(trs()[1].classList.contains('odd')).toBe(false);
+    expect(trs()[2].classList.contains('odd')).toBe(true);
+    expect(trs()[8].classList.contains('expensive')).toBe(true);
+  });
+
+  it('shows the empty value for null and undefined cells only', async () => {
+    host.value.set([
+      { id: 1, name: 'A', price: 0, address: { city: 'x' }, note: null },
+      { id: 2, name: 'B', price: 5, address: { city: 'x' } },
+      { id: 3, name: 'C', price: 5, address: { city: 'x' }, note: false },
+    ] as unknown as Row[]);
+    host.empty.set('n/a');
+    await update();
+    const cells = (n: number) => trs().map((tr) => tr.children[n].textContent?.trim());
+    expect(cells(2)).toEqual(['n/a', 'n/a', 'false']);
+    expect(cells(1)).toEqual(['0', '5', '5']);
+  });
+
+  it('leaves null cells empty by default', () => {
+    expect(trs()[0].children[2].textContent?.trim()).toBe('');
+  });
+
+  it('starts a column with its own first order, then the opposite, then off', async () => {
+    await click(th(1).querySelector('button') as HTMLElement);
+    expect(th(1).getAttribute('aria-sort')).toBe('descending');
+    expect(root().querySelector('[aria-live="polite"]')?.textContent).toContain(
+      'Sorted by Price, descending',
+    );
+    await click(th(1).querySelector('button') as HTMLElement);
+    expect(th(1).getAttribute('aria-sort')).toBe('ascending');
+    await click(th(1).querySelector('button') as HTMLElement);
+    expect(th(1).getAttribute('aria-sort')).toBe('none');
+  });
+
+  it('falls back to the table first order, ascending by default', async () => {
+    await click(th(0).querySelector('button') as HTMLElement);
+    expect(th(0).getAttribute('aria-sort')).toBe('ascending');
+    await click(th(0).querySelector('button') as HTMLElement);
+    await click(th(0).querySelector('button') as HTMLElement);
+    host.first.set('desc');
+    await update();
+    await click(th(0).querySelector('button') as HTMLElement);
+    expect(th(0).getAttribute('aria-sort')).toBe('descending');
+  });
+
+  it('shows all rows with the All size and goes back to pages', async () => {
+    host.paging.set(true);
+    await update();
+    expect(trs().length).toBe(5);
+    const paginator = fixture.debugElement.query(By.directive(HxPaginator)).componentInstance;
+    paginator.setRows('all');
+    await update();
+    expect(trs().length).toBe(12);
+    paginator.setRows(5);
+    await update();
+    expect(trs().length).toBe(5);
+  });
+
+  it('emits all records as rows to a lazy load with All', async () => {
+    host.lazy.set(true);
+    host.paging.set(true);
+    await update();
+    fixture.debugElement.query(By.directive(HxPaginator)).componentInstance.setRows('all');
+    await update();
+    expect(host.events.at(-1)?.rows).toBe(12);
+    expect(host.events.at(-1)?.first).toBe(0);
   });
 });

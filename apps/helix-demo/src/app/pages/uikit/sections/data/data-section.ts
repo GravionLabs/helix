@@ -55,6 +55,8 @@ export class HxDataSection {
     category: ['Accessories', 'Fitness', 'Clothing'][i % 3],
     price: 10 + ((i * 17) % 90),
   }));
+  /** Dims the cheap products (the `rowClass` demo). */
+  readonly dimCheap = (row: { price: number }) => (row.price < 30 ? 'data-section-dim' : null);
   readonly selected = signal<unknown>([]);
   readonly filters = signal<Record<string, string>>({});
   readonly filterColumns: HxColumn[] = [
