@@ -201,10 +201,16 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 |------|------|---------|-------------|
 | `brand` | `string` | `''` | Brand name displayed on the left |
 | `environment` | `string \| undefined` | `undefined` | Environment label (e.g. "staging", "production"). Rendered as an uppercase pill |
-| `note` | `string \| undefined` | `undefined` | Optional note text (e.g. "Build #1234") |
+| `note` | `string \| TemplateRef<unknown> \| undefined` | `undefined` | Optional note: plain text (e.g. "Build #1234") or a template for rich content such as a link. Links inherit the bar color and underline on hover |
 | `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
 | `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
 | `height` | `string` | `'var(--helix-status-bar-height, 3rem)'` | Bar height |
+
+#### Content slots
+
+| Selector | Description |
+|----------|-------------|
+| `[hxStatusBarEnd]` | Projected at the right end of the bar, after the versions. Hidden when empty |
 
 #### Example
 
@@ -212,13 +218,27 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 <helix-status-bar
   brand="MyApp"
   environment="staging"
-  note="Build #456"
+  [note]="buildNote"
   tone="staging"
   [versions]="[
     { label: 'UI', value: '2.1.0' },
     { label: 'API', value: '3.0.1' },
   ]"
-/>
+>
+  <button hxStatusBarEnd type="button" (click)="reload()">Reload</button>
+</helix-status-bar>
+
+<ng-template #buildNote>
+  <a href="https://ci.example.com/builds/456">Build #456</a>
+</ng-template>
+```
+
+With `<helix-app-layout>`, pass the template through `statusBarNote` (`string | TemplateRef<unknown>`) and project the end control with the same `hxStatusBarEnd` attribute:
+
+```html
+<helix-app-layout statusBarBrand="MyApp" [statusBarNote]="buildNote">
+  <button hxStatusBarEnd type="button">Reload</button>
+</helix-app-layout>
 ```
 
 #### Tones

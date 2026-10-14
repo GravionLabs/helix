@@ -22,6 +22,10 @@ export class AppShell {
 
   protected versions: HelixStatusBarVersion[] = [{ label: 'Helix', value: '0.0.0' }];
 
+  protected reloadApp(): void {
+    window.location.reload();
+  }
+
   // Keep the highlight.js theme in sync with the app's dark mode toggle.
   protected readonly hljsThemeEffect = effect(() => {
     this.highlightLoader.setTheme(

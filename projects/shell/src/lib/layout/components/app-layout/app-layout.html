@@ -19,6 +19,8 @@
     [note]="statusBarNote()"
     [tone]="statusBarTone()"
     [versions]="statusBarVersions()"
-  />
+  >
+    <ng-content select="[hxStatusBarEnd]" ngProjectAs="[hxStatusBarEnd]" />
+  </helix-status-bar>
   <div class="layout-mask"></div>
 </div>
