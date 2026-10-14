@@ -601,3 +601,135 @@ describe('HxDataTable column header title and template', () => {
     expect(th(3).querySelector('.hx-data-table-header-content')).toBeNull();
   });
 });
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name" let-column><a class="link" href="#n" (click)="seen.push(column); $event.preventDefault()">Info</a></ng-template>
+      <ng-template hxColumnHeader="price"><i class="r">r</i></ng-template>
+      <ng-template hxColumnHeader="id"><i class="c">c</i></ng-template>
+      <ng-template hxColumnHeader="missing"><i class="ghost">x</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class ExtraHost {
+  value = rows();
+  seen: unknown[] = [];
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', sortable: true, title: 'The product name' },
+    { field: 'price', header: 'Price', sortable: true, align: 'right' },
+    { field: 'id', header: 'Id', align: 'center' },
+  ];
+}
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader, HxTableHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name"><i class="extra">x</i></ng-template>
+      <ng-template hxTableHeader let-columns><th scope="col" class="own">Own</th></ng-template>
+    </hx-data-table>
+  `,
+})
+class ReplacedHost {
+  value = rows();
+  columns: HxColumn[] = [{ field: 'name', header: 'Name', title: 'Hint' }];
+}
+
+@Component({
+  imports: [HxDataTable, HxColumnHeader],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" ariaLabel="Products">
+      <ng-template hxColumnHeader="name"><i>a</i></ng-template>
+      <ng-template hxColumnHeader="name"><i>b</i></ng-template>
+    </hx-data-table>
+  `,
+})
+class DuplicateHost {
+  value = rows();
+  columns: HxColumn[] = [{ field: 'name', header: 'Name' }];
+}
+
+describe('HxDataTable column header template details', () => {
+  const setup = async <T>(type: new () => T) => {
+    await TestBed.configureTestingModule({ imports: [type] }).compileComponents();
+    const fixture = TestBed.createComponent(type);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture;
+  };
+  const ths = (f: ComponentFixture<unknown>) => [
+    ...(f.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('thead th'),
+  ];
+
+  it('keeps the title on a header that also has a template', async () => {
+    const f = await setup(ExtraHost);
+    expect(ths(f)[0].getAttribute('title')).toBe('The product name');
+    expect(ths(f)[0].querySelector('a.link')).toBeTruthy();
+  });
+
+  it('puts the label or sort button before the extra content', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    const button = th.querySelector('button') as HTMLElement;
+    const link = th.querySelector('a.link') as HTMLElement;
+    expect(button.compareDocumentPosition(link) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const plain = ths(f)[2];
+    expect(plain.textContent?.indexOf('Id')).toBeLessThan(plain.textContent?.indexOf('c') ?? -1);
+  });
+
+  it('passes the column object as context and a click on the link does not sort', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    (th.querySelector('a.link') as HTMLElement).click();
+    f.detectChanges();
+    expect(f.componentInstance.seen[0]).toBe(f.componentInstance.columns[0]);
+    expect(th.getAttribute('aria-sort')).toBe('none');
+  });
+
+  it('sorts through the native button and cycles aria-sort with a template', async () => {
+    const f = await setup(ExtraHost);
+    const th = ths(f)[0];
+    const button = th.querySelector('button') as HTMLButtonElement;
+    expect(button.tagName).toBe('BUTTON');
+    expect(button.type).toBe('button');
+    for (const expected of ['ascending', 'descending', 'none']) {
+      button.click();
+      f.detectChanges();
+      expect(th.getAttribute('aria-sort')).toBe(expected);
+    }
+  });
+
+  it('keeps the alignment of the header with a template', async () => {
+    const f = await setup(ExtraHost);
+    const [, right, center] = ths(f);
+    expect(right.classList.contains('hx-data-table-align-right')).toBe(true);
+    expect(right.querySelector('i.r')).toBeTruthy();
+    expect(center.classList.contains('hx-data-table-align-center')).toBe(true);
+    expect(center.querySelector('i.c')).toBeTruthy();
+  });
+
+  it('renders nothing for a template of an unknown field', async () => {
+    const f = await setup(ExtraHost);
+    expect((f.nativeElement as HTMLElement).querySelector('i.ghost')).toBeNull();
+  });
+
+  it('ignores the template and title when hxTableHeader replaces the headers', async () => {
+    const f = await setup(ReplacedHost);
+    const all = ths(f);
+    expect(all.length).toBe(1);
+    expect(all[0].classList.contains('own')).toBe(true);
+    expect(all[0].hasAttribute('title')).toBe(false);
+    expect((f.nativeElement as HTMLElement).querySelector('i.extra')).toBeNull();
+  });
+
+  it('warns once in development about two templates for one field', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const f = await setup(DuplicateHost);
+    f.detectChanges();
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('"name"');
+    warn.mockRestore();
+  });
+});

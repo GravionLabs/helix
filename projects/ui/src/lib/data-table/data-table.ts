@@ -9,6 +9,7 @@ import {
   Directive,
   inject,
   input,
+  isDevMode,
   model,
   type OnInit,
   output,
@@ -29,7 +30,7 @@ export interface HxColumn {
   field: string;
   /** The header text. */
   header: string;
-  /** A hint for the header: the title attribute of the header: a tooltip, and its accessible description. */
+  /** The `title` attribute of the header cell (a tooltip). */
   title?: string;
   /** CSS width of the column (`8rem`, `20%`). */
   width?: string;
@@ -330,9 +331,21 @@ export class HxDataTable implements OnInit {
   protected readonly cells = computed(
     () => new Map(this.cellTemplates().map((cell) => [cell.field(), cell.template])),
   );
-  protected readonly columnHeaders = computed(
-    () => new Map(this.columnHeaderTemplates().map((h) => [h.field(), h.template])),
-  );
+  private readonly warnedFields = new Set<string>();
+  protected readonly columnHeaders = computed(() => {
+    const map = new Map<string, TemplateRef<HxColumnHeaderContext>>();
+    for (const header of this.columnHeaderTemplates()) {
+      const field = header.field();
+      if (map.has(field) && isDevMode() && !this.warnedFields.has(field)) {
+        this.warnedFields.add(field);
+        console.warn(
+          `hx-data-table: more than one hxColumnHeader template for "${field}"; the last one wins.`,
+        );
+      }
+      map.set(field, header.template);
+    }
+    return map;
+  });
   protected readonly scrolls = computed(() => this.scrollable() || !!this.scrollHeight());
   protected readonly hasCaption = computed(
     () => !!this.caption() || !!this.captionTemplate() || !!this.ariaLabel(),
