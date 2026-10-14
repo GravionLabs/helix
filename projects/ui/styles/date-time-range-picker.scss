@@ -71,3 +71,10 @@
 .hx-date-time-range-picker-submit {
   font-weight: var(--h-datepicker-title-font-weight);
 }
+
+.hx-date-time-range-picker-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-datepicker-title-gap);
+  padding: var(--h-datepicker-panel-padding) var(--h-datepicker-panel-padding) 0;
+}
