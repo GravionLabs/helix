@@ -116,7 +116,7 @@ all records so the paginator knows how many pages there are.
 
 ## Header hint
 
-`title` on a column shows a tooltip on the header and is read as its description. `hxColumnHeader="field"` adds content (an info icon, a link) next to the label; the sort button, `aria-sort` and keyboard use stay as they are.
+`title` on a column is set as the `title` attribute of the header: a tooltip, and the accessible description of the column. `hxColumnHeader="field"` adds content (an info icon, a link) next to the label; the sort button, `aria-sort` and keyboard use stay as they are.
 
 ```html
 <hx-data-table [value]="rows" [columns]="[{ field: 'price', header: 'Price', title: 'Gross, in EUR', sortable: true }]">

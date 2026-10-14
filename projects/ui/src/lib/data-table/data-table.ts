@@ -21,8 +21,6 @@ import { type HxPageEvent, HxPaginator } from '../paginator/paginator';
 import { HxProgressSpinner } from '../progress/progress';
 import type { HxTableSize } from '../table/table';
 
-let nextId = 0;
-
 export type HxColumnAlign = 'left' | 'center' | 'right';
 
 /** One column of an `hx-data-table`. */
@@ -31,7 +29,7 @@ export interface HxColumn {
   field: string;
   /** The header text. */
   header: string;
-  /** A hint for the header: shown as a tooltip and read as the description of the column. */
+  /** A hint for the header: the title attribute of the header: a tooltip, and its accessible description. */
   title?: string;
   /** CSS width of the column (`8rem`, `20%`). */
   width?: string;
@@ -335,7 +333,6 @@ export class HxDataTable implements OnInit {
   protected readonly columnHeaders = computed(
     () => new Map(this.columnHeaderTemplates().map((h) => [h.field(), h.template])),
   );
-  protected readonly uid = `hx-data-table-${nextId++}`;
   protected readonly scrolls = computed(() => this.scrollable() || !!this.scrollHeight());
   protected readonly hasCaption = computed(
     () => !!this.caption() || !!this.captionTemplate() || !!this.ariaLabel(),

@@ -46,7 +46,6 @@
                 [style.width]="column.width ?? null"
                 [attr.aria-sort]="ariaSort(column)"
                 [attr.title]="column.title ?? null"
-                [attr.aria-describedby]="column.title ? uid + '-title-' + $index : null"
               >
                 @if (columnHeaders().get(column.field); as extra) {
                   <div class="hx-data-table-header-content">
@@ -55,9 +54,6 @@
                   </div>
                 } @else {
                   <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
-                }
-                @if (column.title) {
-                  <span class="hx-data-table-caption-hidden" [id]="uid + '-title-' + $index">{{ column.title }}</span>
                 }
               </th>
             }

@@ -569,13 +569,10 @@ describe('HxDataTable column header title and template', () => {
     fixture.detectChanges();
   });
 
-  it('shows the title as tooltip and as description', () => {
+  it('sets the title attribute on the header only for columns with a title', () => {
     expect(th(0).getAttribute('title')).toBe('The product name');
-    const id = th(0).getAttribute('aria-describedby');
-    expect(id).toBeTruthy();
-    expect(root().querySelector(`#${id}`)?.textContent).toBe('The product name');
+    expect(th(0).hasAttribute('aria-describedby')).toBe(false);
     expect(th(1).hasAttribute('title')).toBe(false);
-    expect(th(1).hasAttribute('aria-describedby')).toBe(false);
   });
 
   it('renders the template beside the sort button, not inside it', () => {
