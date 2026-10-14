@@ -130,7 +130,11 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/ui/tsconfig.spec.json",
-            "include": ["**/*.spec.ts", "../validators/**/*.spec.ts"]
+            "include": [
+              "**/*.spec.ts",
+              "../validators/**/*.spec.ts",
+              "../chart/**/*.spec.ts"
+            ]
           },
           "configurations": {
             "ci": {

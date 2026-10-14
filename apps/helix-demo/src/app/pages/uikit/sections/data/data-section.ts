@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   HxButton,
   HxCell,
-  HxChart,
-  type HxChartSelectEvent,
   type HxColumn,
   HxColumnHeader,
   HxDataTable,
@@ -15,6 +13,7 @@ import {
   type HxTreeNodeEvent,
   type HxTreeSelection,
 } from '@gravionlabs/helix-ui';
+import { HxChart, type HxChartSelectEvent } from '@gravionlabs/helix-ui/chart';
 
 /** `@gravionlabs/helix-ui` data components: Tree, Chart, Table, Data table. */
 @Component({

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HxChart } from '@gravionlabs/helix-ui';
+import { HxChart } from '@gravionlabs/helix-ui/chart';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 /**

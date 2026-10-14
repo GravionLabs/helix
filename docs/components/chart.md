@@ -1,8 +1,24 @@
 # Chart
 
 `hx-chart` is a [chart.js](https://www.chartjs.org/) chart whose colours, grid and font come from the Helix tokens.
-chart.js is an **optional peer dependency** (`pnpm add chart.js`); it is loaded with a dynamic import the first time a
-chart is shown, so apps without charts do not ship it.
+It is in the secondary entry point **`@gravionlabs/helix-ui/chart`**, the only part of the package that imports
+chart.js. chart.js is an **optional peer dependency**: install it only when you use the chart. It is loaded with a
+dynamic import the first time a chart is shown, so apps without charts do not ship it. An app that does not install
+chart.js builds without any extra configuration (no `externalDependencies` in `angular.json`).
+
+```bash
+pnpm add chart.js
+```
+
+```ts
+import { HxChart } from '@gravionlabs/helix-ui/chart';
+
+@Component({ imports: [HxChart], … })
+```
+
+> **Breaking (#924):** `HxChart`, `HX_CHART_LOADER` and the types `HxChartInstance`, `HxChartModule`,
+> `HxChartSelectEvent` and `HxChartType` are no longer exported from `@gravionlabs/helix-ui`. Change
+> `from '@gravionlabs/helix-ui'` to `from '@gravionlabs/helix-ui/chart'` for these names.
 
 ```html
 <hx-chart type="bar" [data]="data" [options]="options" height="20rem" ariaLabel="Sales per month" (dataSelect)="onPick($event)">

@@ -19,6 +19,23 @@ npm install @gravionlabs/helix-ui
 
 Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-shell`.
 
+### Chart
+
+`HxChart` is in the secondary entry point `@gravionlabs/helix-ui/chart`, the only place that imports chart.js. chart.js
+is an optional peer dependency: install it only when you use the chart. An app without chart.js builds without any
+extra configuration.
+
+```bash
+npm install chart.js
+```
+
+```ts
+import { HxChart } from '@gravionlabs/helix-ui/chart';
+```
+
+**Breaking (#924):** `HxChart`, `HX_CHART_LOADER` and the `HxChart*` types are no longer exported from
+`@gravionlabs/helix-ui`; import them from `@gravionlabs/helix-ui/chart`.
+
 ## Components
 
 | Component | Selector | |
@@ -51,7 +68,7 @@ Dark mode: tokens switch under the `app-dark` class on `<html>`, as in `helix-sh
 | `HxSplitButton` | `hx-split-button` | default action plus an `hx-menu` of related actions; severity, variant, size, rounded, raised |
 | `HxStepper`, `HxStepList`, `HxStep`, `HxStepPanels`, `HxStepPanel` | `hx-stepper` … | steps with panels: completed/active state, linear mode, `activateCallback`, lazy panels |
 | `HxButtonGroup` | `hx-button-group` | joins `hx-button`s: square inner corners, shared borders, `role=group` |
-| `HxChart` | `hx-chart` | chart.js with colours, grid and font from the tokens; optional peer dependency loaded on demand, redraws on theme change, canvas fallback slot |
+| `HxChart` | `hx-chart` | from `@gravionlabs/helix-ui/chart`: chart.js with colours, grid and font from the tokens; optional peer dependency loaded on demand, redraws on theme change, canvas fallback slot |
 | `HxDialog`, `HxDialogService`, `HxDialogRef` | `hx-dialog` | modal or non-modal dialog on the CDK dialog; declarative with `[(visible)]` or opened as a component from a service with data and a result |
 | `HxDrawer` | `hx-drawer` | panel that slides in from an edge, same dialog semantics as `hx-dialog`; modal, full screen, reduced motion |
 | `HxPopover` | `hx-popover` | anchored panel with arrow: `toggle(event, target)`, outside click and Escape close, non-modal dialog with focus in and back |
