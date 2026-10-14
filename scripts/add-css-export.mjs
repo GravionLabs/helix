@@ -7,14 +7,17 @@
  * Node's strict exports resolution 404s on
  * `@gravionlabs/helix-shell/styles.css` even though the file exists.
  *
- * Run after the CSS build step: `node scripts/add-css-export.mjs dist/shell`
+ * Further file names after the dist dir are exported the same way (the shell's opt-in
+ * globals.css).
+ *
+ * Run after the CSS build step: `node scripts/add-css-export.mjs dist/shell [extra.css ...]`
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const distDir = process.argv[2];
+const [distDir, ...extraFiles] = process.argv.slice(2);
 if (!distDir) {
-  console.error('usage: add-css-export.mjs <dist-dir>');
+  console.error('usage: add-css-export.mjs <dist-dir> [extra.css ...]');
   process.exit(1);
 }
 
@@ -29,5 +32,12 @@ if (!existsSync(cssPath)) {
 const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
 pkg.exports ??= {};
 pkg.exports['./styles.css'] = './styles.css';
+for (const file of extraFiles) {
+  if (!existsSync(join(distDir, file))) {
+    console.error(`add-css-export: ${join(distDir, file)} does not exist — run the CSS build first`);
+    process.exit(1);
+  }
+  pkg.exports[`./${file}`] = `./${file}`;
+}
 writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
-console.log(`add-css-export: added "./styles.css" to ${pkgPath}`);
+console.log(`add-css-export: added "./styles.css"${extraFiles.map((f) => `, "./${f}"`).join("")} to ${pkgPath}`);

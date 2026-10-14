@@ -180,6 +180,7 @@
               "node_modules/@fontsource-variable/inter/index.css",
               "apps/helix-demo/src/styles.scss",
               "dist/shell/styles.css",
+              "dist/shell/globals.css",
               "dist/ag-grid/styles.css",
               "dist/ui/tokens.css",
               "dist/ui/styles.css"

@@ -2,7 +2,7 @@
 
 @import "./styles/helix-tailwind/index.css";
 
-@custom-variant dark (&:where([class*="app-dark"], [class*="app-dark"] *));
+@custom-variant dark (&:where([class*="app-dark"], [class*="app-dark"] *, [data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
   --breakpoint-*: initial;
@@ -64,7 +64,8 @@
 }
 
 /* Dark theme surface scale */
-:root[class*="app-dark"] {
+:root[class*="app-dark"],
+:root[data-theme="dark"] {
   --helix-surface-ground: var(--h-surface-900);
   --helix-surface-chrome: var(--h-surface-950);
   --helix-surface-card: var(--h-surface-800);
@@ -76,12 +77,6 @@
 }
 
 /* ===== BASE ===== */
-html {
-  height: 100%;
-  font-size: 14px;
-  line-height: 1.2;
-}
-
 /* Type (ADR 0001, #521): Inter for text and headings (one family; `display` is its own
    token so an application can give headings another face) and the system monospace for
    code, as on the documentation sites of the other Gravion Labs projects. The stacks are
@@ -93,17 +88,6 @@ html {
   --helix-font-display: var(--helix-font-sans);
   --helix-font-mono:
     ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
-}
-
-body {
-  font-family: var(--helix-font-sans);
-  color: var(--text-color);
-  background-color: var(--helix-surface-ground);
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 a {

@@ -1,0 +1,18 @@
+/* Opt-in page globals of the shell (#938). Not part of styles.css, so component-only adopters keep the
+   rem and the body of their own application. Load it after styles.css (and the tokens) to get the Helix page look. */
+html {
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+body {
+  font-family: var(--helix-font-sans);
+  color: var(--text-color);
+  background-color: var(--helix-surface-ground);
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

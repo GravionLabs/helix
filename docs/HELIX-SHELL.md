@@ -66,6 +66,20 @@ app loads its styles and tokens next to the shell styles:
 @import "@gravionlabs/helix-ui/tokens.css";
 ```
 
+The shell stylesheet sets no rules on `html` and `body`. The Helix page look (14 px root font size, body font,
+text colour and ground background) is opt-in:
+
+```css
+@import "@gravionlabs/helix-shell/styles.css";
+/* optional: html/body rules of the Helix page look */
+@import "@gravionlabs/helix-shell/globals.css";
+```
+
+**Breaking change:** earlier versions of `styles.css` contained these rules. An app that relied on them must
+now load `@gravionlabs/helix-shell/globals.css` after `styles.css`; apps that did not want them need nothing.
+`styles.css` still reads `[class*="app-dark"]` or `[data-theme="dark"]` for dark mode, see
+[Theming](THEMING.md#dark-mode).
+
 Dark mode, the primary colour and the surface are switched by the theme service of helix-ui, which the layout
 store and the configurator use. Provide it once in the application config:
 
