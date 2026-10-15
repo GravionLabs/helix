@@ -3,7 +3,7 @@ import { CellsDemo } from '../pages/ag-grid/cells/cells-demo';
 import { Crud } from '../pages/ag-grid/crud/crud';
 import { TableDemo } from '../pages/ag-grid/overview/table-demo';
 import chartsRoutes from '../pages/charts/charts.routes';
-import { ChartDemo } from '../pages/charts/overview/chart-demo';
+import { LineChartDemo } from '../pages/charts/line/line-chart-demo';
 import pagesRoutes from '../pages/pages.routes';
 import { DataTableDemo } from '../pages/uikit/data-table/data-table-demo';
 import { UikitTableDemo } from '../pages/uikit/table/table-demo';
@@ -75,11 +75,18 @@ describe('uikit table route', () => {
 });
 
 describe('charts routes', () => {
-  it('serves overview with a breadcrumb and redirects the empty path to it', () => {
-    expect(chartsRoutes.find((r) => r.path === 'overview')?.data).toEqual({
-      breadcrumb: 'Overview',
+  it('serves one page per chart type and redirects the empty path to line', () => {
+    expect(chartsRoutes.find((r) => r.path === 'pie')?.data).toEqual({
+      breadcrumb: 'Pie & Doughnut',
     });
-    expect(chartsRoutes.find((r) => r.path === '')?.redirectTo).toBe('overview');
+    expect(chartsRoutes.filter((r) => r.component).map((r) => r.path)).toEqual([
+      'line',
+      'bar',
+      'pie',
+      'polar-area',
+      'radar',
+    ]);
+    expect(chartsRoutes.find((r) => r.path === '')?.redirectTo).toBe('line');
   });
 
   it('redirects the old uikit/charts path to /charts', () => {
@@ -163,6 +170,6 @@ describe('lazy group routes', () => {
   it('loads the charts routes for the Charts group', async () => {
     const loaded = (await group('Charts')?.loadChildren?.()) as { default: unknown };
     expect(loaded.default).toBe(chartsRoutes);
-    expect(chartsRoutes.find((r) => r.path === 'overview')?.component).toBe(ChartDemo);
+    expect(chartsRoutes.find((r) => r.path === 'line')?.component).toBe(LineChartDemo);
   });
 });

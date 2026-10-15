@@ -60,7 +60,8 @@ describe('demo pages: app-source-tabs', () => {
         'ag-grid/overview/table-demo.html',
         'ag-grid/cells/cells-demo.html',
         'ag-grid/crud/crud.html',
-        'charts/overview/chart-demo.html',
+        'charts/line/line-chart-demo.html',
+        'charts/bar/bar-chart-demo.html',
         'uikit/button/button-demo.html',
       ]),
     );

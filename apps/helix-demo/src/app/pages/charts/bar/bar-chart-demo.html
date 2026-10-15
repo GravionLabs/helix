@@ -1,0 +1,25 @@
+<h1 class="sr-only">Bar chart</h1>
+<app-source-tabs library="helix-ui" directory="charts/bar" componentName="bar-chart-demo" [docs]="['chart']">
+  <div class="grid grid-cols-12 gap-layout">
+    <div class="col-span-12 xl:col-span-6">
+      <div class="card">
+        <h2 class="demo-title mb-3!">Bar</h2>
+        <hx-chart type="bar" [data]="barData" [options]="barOptions" height="20rem" ariaLabel="Two datasets over seven months, as bars" />
+      </div>
+    </div>
+    <div class="col-span-12 xl:col-span-6">
+      <div class="card">
+        <h2 class="demo-title mb-3!">Fallback table and click</h2>
+        <p class="mt-0 mb-3">The canvas is named for screen readers and carries a table with the same numbers. Click a bar: {{ picked() }}</p>
+        <hx-chart type="bar" [data]="fallbackData" height="18rem" ariaLabel="Sales and costs per month" (dataSelect)="pick($event)">
+          <table hxChartFallback>
+            <tr><th>Month</th><th>Sales</th><th>Costs</th></tr>
+            @for (m of fallbackMonths; track m; let i = $index) {
+              <tr><td>{{ m }}</td><td>{{ sales[i] }}</td><td>{{ costs[i] }}</td></tr>
+            }
+          </table>
+        </hx-chart>
+      </div>
+    </div>
+  </div>
+</app-source-tabs>

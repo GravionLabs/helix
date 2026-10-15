@@ -4,9 +4,9 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HxChart } from '@gravionlabs/helix-ui/chart';
 import { provideHighlightOptions } from 'ngx-highlightjs';
-import { ChartDemo } from './chart-demo';
+import { BarChartDemo } from './bar-chart-demo';
 
-describe('ChartDemo fallback card', () => {
+describe('BarChartDemo', () => {
   function create() {
     TestBed.configureTestingModule({
       providers: [
@@ -18,7 +18,7 @@ describe('ChartDemo fallback card', () => {
         }),
       ],
     });
-    const fixture = TestBed.createComponent(ChartDemo);
+    const fixture = TestBed.createComponent(BarChartDemo);
     fixture.detectChanges();
     return fixture;
   }
