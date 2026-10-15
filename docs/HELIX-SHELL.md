@@ -174,7 +174,7 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 **Selector:** `<helix-topbar>`  
 **File:** `projects/shell/src/lib/layout/components/topbar/topbar.ts`
 
-Application header bar. Renders a menu toggle, breadcrumb trail on the left, and configurable action buttons on the right.
+Application header bar. Renders a menu toggle and breadcrumb trail on the left, and on the right the projected `[helixTopbarEnd]` content (in a `layout-topbar-slot` wrapper), the config items and the action buttons.
 
 #### Inputs
 
@@ -189,7 +189,13 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 
 | Slot | Selector | Description |
 |------|----------|-------------|
-| End | `[helixTopbarEnd]` | Rendered inside `layout-topbar-end` in a `layout-topbar-slot` wrapper, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width. At every width it shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The wrapper is hidden when empty. Focus order follows DOM order: slot content, config items, ellipsis button, menu actions |
+| End | `[helixTopbarEnd]` | Always-visible content at the start of the right cluster, e.g. a global filter |
+
+Behaviour of the End slot:
+- Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width.
+- Shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The config and action buttons keep their size.
+- The wrapper is collapsed when it contains no element, so unused layouts get no extra gap.
+- Focus order follows DOM order: slot content, config items, ellipsis button, menu actions.
 
 **Behaviour change for direct `<helix-topbar>` users:** `[helixTopbarEnd]` content used to sit after the actions and, on narrow widths, behind the ellipsis menu. It now renders before the config items and stays visible. The ellipsis menu switches at the shell breakpoint (992px), not Tailwind `lg` (1024px).
 
@@ -197,7 +203,7 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 
 The topbar is split into two sections:
 - **Left (`layout-topbar-start`)**: Menu toggle button followed by the breadcrumb with a home icon
-- **Right (`layout-topbar-end`)**: Config menu (dark mode, configurator, alerts) and action buttons
+- **Right (`layout-topbar-end`)**: `[helixTopbarEnd]` slot wrapper (`layout-topbar-slot`), then the config menu (dark mode, configurator, alerts), the ellipsis button and the collapsible action menu
 
 #### Example
 
