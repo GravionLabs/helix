@@ -46,7 +46,7 @@
       <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div class="layout-topbar-menu hidden lg:block">
+    <div class="layout-topbar-menu hidden">
       <div class="layout-topbar-menu-content">
         @for (action of topbarActions(); track action.icon) {
           <button type="button" class="layout-topbar-action" (click)="action.command?.()">

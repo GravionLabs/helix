@@ -92,6 +92,11 @@
     .layout-menu-button-mobile-only {
       display: none;
     }
+
+    // Always visible on desktop; outranks the `hidden` class the disclosure toggles on mobile.
+    .layout-topbar-menu {
+      display: block;
+    }
   }
 
   .layout-topbar-menu-button {

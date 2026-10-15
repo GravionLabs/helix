@@ -97,6 +97,32 @@ describe('HelixTopbar', () => {
     });
   });
 
+  describe('actions menu', () => {
+    const menu = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-menu');
+    const toggle = (): HTMLButtonElement =>
+      fixture.nativeElement.querySelector('.layout-topbar-menu-button');
+
+    it('is hidden by default and does not use the Tailwind lg breakpoint', () => {
+      fixture.detectChanges();
+      expect(menu().classList.contains('hidden')).toBe(true);
+      expect(menu().classList.contains('lg:block')).toBe(false);
+    });
+
+    it('toggles the hidden class when the ellipsis button is clicked', () => {
+      vi.useFakeTimers();
+      try {
+        fixture.detectChanges();
+        toggle().click();
+        expect(menu().classList.contains('hidden')).toBe(false);
+        toggle().click();
+        vi.advanceTimersByTime(400); // the close fade-out ends via its fallback timer
+        expect(menu().classList.contains('hidden')).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+  });
+
   describe('menu button', () => {
     const button = (): HTMLButtonElement =>
       fixture.nativeElement.querySelector('.layout-menu-button');
