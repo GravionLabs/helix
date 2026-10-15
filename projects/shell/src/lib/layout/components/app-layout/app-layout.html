@@ -2,7 +2,9 @@
   <helix-topbar
     [items]="effectiveItems()"
     [topbarActions]="effectiveTopbarActions()"
-  ></helix-topbar>
+  >
+    <ng-content select="[helixTopbarEnd]" ngProjectAs="[helixTopbarEnd]" />
+  </helix-topbar>
   <helix-nav-rail
     [model]="effectiveNavGroups()"
     [appTitle]="appTitle()"
