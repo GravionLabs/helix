@@ -39,15 +39,27 @@ describe('generate-source-assets', () => {
     expect(existsSync(join(cwd, OUT, 'button/button-demo.spec.ts'))).toBe(false);
   });
 
-  it('collects pages from the ag-grid and charts groups too', () => {
+  it('copies ag-grid and charts pages to source/{group}/{page}', () => {
     write(`${PAGES}/uikit/button/button-demo.ts`);
-    write(`${PAGES}/ag-grid/table/table-demo.ts`);
-    write(`${PAGES}/charts/chart/chart-demo.ts`);
+    write(`${PAGES}/ag-grid/cells/cells-demo.ts`, 'cells');
+    write(`${PAGES}/charts/overview/chart-demo.ts`);
 
     expect(run().status).toBe(0);
     expect(existsSync(join(cwd, OUT, 'button/button-demo.ts'))).toBe(true);
-    expect(existsSync(join(cwd, OUT, 'table/table-demo.ts'))).toBe(true);
-    expect(existsSync(join(cwd, OUT, 'chart/chart-demo.ts'))).toBe(true);
+    expect(readFileSync(join(cwd, OUT, 'ag-grid/cells/cells-demo.ts'), 'utf8')).toBe('cells');
+    expect(existsSync(join(cwd, OUT, 'charts/overview/chart-demo.ts'))).toBe(true);
+    expect(existsSync(join(cwd, OUT, 'cells'))).toBe(false);
+  });
+
+  it('keeps pages of the same name in different groups apart', () => {
+    write(`${PAGES}/uikit/table/table-demo.ts`, 'uikit');
+    write(`${PAGES}/ag-grid/overview/table-demo.ts`, 'ag-grid');
+    write(`${PAGES}/charts/overview/chart-demo.ts`, 'charts');
+
+    expect(run().status).toBe(0);
+    expect(readFileSync(join(cwd, OUT, 'table/table-demo.ts'), 'utf8')).toBe('uikit');
+    expect(readFileSync(join(cwd, OUT, 'ag-grid/overview/table-demo.ts'), 'utf8')).toBe('ag-grid');
+    expect(readFileSync(join(cwd, OUT, 'charts/overview/chart-demo.ts'), 'utf8')).toBe('charts');
   });
 
   it('skips groups that do not exist', () => {
@@ -56,14 +68,5 @@ describe('generate-source-assets', () => {
     const result = run();
     expect(result.status).toBe(0);
     expect(result.stdout).toContain('1 file(s) copied');
-  });
-
-  it('fails loudly when two groups have a page of the same name', () => {
-    write(`${PAGES}/uikit/table/table-demo.ts`);
-    write(`${PAGES}/ag-grid/table/table-demo.ts`);
-
-    const result = run();
-    expect(result.status).not.toBe(0);
-    expect(result.stderr).toContain('page directory "table" exists in both');
   });
 });
