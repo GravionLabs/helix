@@ -221,7 +221,7 @@ describe('HelixTopbar [helixTopbarEnd] slot', () => {
     const slot = root.querySelector('.layout-topbar-slot') as HTMLElement;
 
     expect(slot).toBeTruthy();
-    expect(slot.childNodes.length).toBe(0);
-    expect(slot.matches(':empty')).toBe(true);
+    expect(slot.children.length).toBe(0);
+    expect(slot.matches(':not(:has(*))')).toBe(true);
   });
 });

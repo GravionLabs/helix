@@ -36,22 +36,33 @@
     min-width: 0;
   }
 
+  // May give way to the breadcrumbs' minimum width; only the slot inside it shrinks, the
+  // buttons stay rigid (flex-shrink: 0 below).
   .layout-topbar-end {
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex-shrink: 0;
+    min-width: 0;
   }
 
   // [helixTopbarEnd] projection: always visible, never inside the collapsible menu.
+  // The topbar has a fixed height, so the slot shrinks and scrolls instead of wrapping.
+  // overflow-y is hidden rather than auto to avoid a vertical scrollbar; the vertical
+  // padding keeps the default focus ring (1px + 2px offset) inside the clip box.
   .layout-topbar-slot {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 1 1 auto;
     min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 0.25rem;
+    scrollbar-width: thin;
 
-    // No projected content: collapse the wrapper so the flex gap does not apply.
-    &:empty {
+    // No projected element: collapse the wrapper so the flex gap does not apply.
+    // Not :empty, because projected control-flow blocks leave comment anchors behind.
+    &:not(:has(*)) {
       display: none;
     }
   }
@@ -63,6 +74,7 @@
 
   .layout-topbar-action {
     display: inline-flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
@@ -106,6 +118,11 @@
       display: none;
     }
 
+    // Breadcrumbs keep a readable width; a wide slot gives way before them.
+    .layout-topbar-start {
+      min-width: 12rem;
+    }
+
     // Always visible on desktop; outranks the `hidden` class the disclosure toggles on mobile.
     .layout-topbar-menu {
       display: block;
@@ -114,6 +131,7 @@
 
   .layout-topbar-menu-button {
     display: none;
+    flex-shrink: 0;
   }
 
   .layout-topbar-menu-content {
@@ -123,6 +141,7 @@
 
   .layout-config-menu {
     display: flex;
+    flex-shrink: 0;
     gap: 1rem;
   }
 }
@@ -137,19 +156,6 @@
 
     .layout-topbar-menu-button {
       display: inline-flex;
-    }
-
-    // Let the end cluster give way so the slot (min-width: 0) is the part that shrinks;
-    // the fixed-size action buttons keep their intrinsic width.
-    .layout-topbar-end {
-      flex-shrink: 1;
-      min-width: 0;
-    }
-
-    // The topbar has a fixed height, so the slot shrinks and scrolls instead of wrapping.
-    .layout-topbar-slot {
-      flex: 1 1 auto;
-      overflow-x: auto;
     }
 
     .layout-topbar-menu {

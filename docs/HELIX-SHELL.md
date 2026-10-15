@@ -189,7 +189,7 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 
 | Slot | Selector | Description |
 |------|----------|-------------|
-| End | `[helixTopbarEnd]` | Rendered inside `layout-topbar-end` in a `layout-topbar-slot` wrapper, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width. Below the shell breakpoint (992px) it shrinks or scrolls horizontally; it never wraps and the topbar height stays fixed. The wrapper is hidden when empty. Focus order follows DOM order: slot content, config items, ellipsis button, menu actions |
+| End | `[helixTopbarEnd]` | Rendered inside `layout-topbar-end` in a `layout-topbar-slot` wrapper, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width. At every width it shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The wrapper is hidden when empty. Focus order follows DOM order: slot content, config items, ellipsis button, menu actions |
 
 **Behaviour change for direct `<helix-topbar>` users:** `[helixTopbarEnd]` content used to sit after the actions and, on narrow widths, behind the ellipsis menu. It now renders before the config items and stays visible. The ellipsis menu switches at the shell breakpoint (992px), not Tailwind `lg` (1024px).
 
