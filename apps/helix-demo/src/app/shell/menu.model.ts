@@ -1,4 +1,6 @@
 import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravionlabs/helix-shell';
+import { AG_GRID_MENU_ITEMS } from '../pages/ag-grid/ag-grid-menu-items';
+import { CHARTS_MENU_ITEMS } from '../pages/charts/charts-menu-items';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { Documentation } from '../pages/documentation/documentation';
 import { PAGES_MENU_ITEMS } from '../pages/pages-menu-items';
@@ -20,6 +22,22 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
     path: 'uikit',
     loadChildren: () => import('../pages/uikit/uikit.routes'),
     items: helixMenuLinksFrom(UIKIT_MENU_ITEMS, '/uikit'),
+  },
+  {
+    label: 'AG Grid',
+    icon: 'pi pi-fw pi-table',
+    breadcrumb: 'AG Grid',
+    path: 'ag-grid',
+    loadChildren: () => import('../pages/ag-grid/ag-grid.routes'),
+    items: helixMenuLinksFrom(AG_GRID_MENU_ITEMS, '/ag-grid'),
+  },
+  {
+    label: 'Charts',
+    icon: 'pi pi-fw pi-chart-bar',
+    breadcrumb: 'Charts',
+    path: 'charts',
+    loadChildren: () => import('../pages/charts/charts.routes'),
+    items: helixMenuLinksFrom(CHARTS_MENU_ITEMS, '/charts'),
   },
   {
     label: 'Pages',
