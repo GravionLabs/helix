@@ -4,18 +4,26 @@ import { DEMO_ROUTES, demoLinkOf, demoLinksPlugin, demoRouteOf } from '../.vitep
 
 const repo = resolve(__dirname, '../../..');
 
-/** The routes of the demo's UI kit: `path: '<name>'` of each menu item, under `/uikit/`. */
-const uikitRoutes = [
-  ...readFileSync(
-    resolve(repo, 'apps/helix-demo/src/app/pages/uikit/uikit-menu-items.ts'),
-    'utf8',
-  ).matchAll(/path:\s*'([^']+)'/g),
-].map((m) => `uikit/${m[1]}`);
+/** The routes of a demo section: `path: '<name>'` of each menu item, under `/<section>/`. */
+function sectionRoutes(section: string, file: string): string[] {
+  return [...readFileSync(resolve(repo, file), 'utf8').matchAll(/path:\s*'([^']+)'/g)].map(
+    (m) => `${section}/${m[1]}`,
+  );
+}
+
+const uikitRoutes = sectionRoutes(
+  'uikit',
+  'apps/helix-demo/src/app/pages/uikit/uikit-menu-items.ts',
+);
+const demoRoutes = [
+  ...uikitRoutes,
+  ...sectionRoutes('charts', 'apps/helix-demo/src/app/pages/charts/charts-menu-items.ts'),
+];
 
 describe('DEMO_ROUTES', () => {
   it('only maps to routes that exist in the demo', () => {
     expect(uikitRoutes.length).toBeGreaterThan(10);
-    expect(Object.keys(DEMO_ROUTES).filter((route) => !uikitRoutes.includes(route))).toEqual([]);
+    expect(Object.keys(DEMO_ROUTES).filter((route) => !demoRoutes.includes(route))).toEqual([]);
   });
 
   it('only names component pages that exist', () => {
