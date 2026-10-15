@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
@@ -133,5 +134,41 @@ describe('HelixTopbar', () => {
         value: original,
       });
     });
+  });
+});
+
+@Component({
+  imports: [HelixTopbar],
+  template: `
+    <helix-topbar [topbarActions]="actions">
+      <button helixTopbarEnd type="button" class="end-slot">End</button>
+    </helix-topbar>
+  `,
+})
+class TopbarEndHostComponent {
+  actions = [{ icon: 'pi pi-star', label: 'Star' }];
+}
+
+describe('HelixTopbar [helixTopbarEnd] slot', () => {
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [TopbarEndHostComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
+  });
+
+  it('renders projected content after the topbarActions buttons', async () => {
+    const fixture = TestBed.createComponent(TopbarEndHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const action = root.querySelector('.layout-topbar-action') as HTMLElement;
+    const end = root.querySelector('.end-slot') as HTMLElement;
+
+    // Placement: currently inside the menu content column; task #948 may relocate the slot.
+    expect(root.querySelector('.layout-topbar-menu-content')?.contains(end)).toBe(true);
+    // Keyboard/focus order: the end slot follows the action buttons.
+    expect(action.compareDocumentPosition(end) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });

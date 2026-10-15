@@ -208,6 +208,9 @@ describe('HelixAppLayout', () => {
   template: `
     <ng-template #tpl>Docs <a href="/docs">here</a></ng-template>
     <helix-app-layout [statusBarNote]="useTemplate() ? tpl : 'Plain note'">
+      @if (withTopbarEnd()) {
+        <input helixTopbarEnd aria-label="Filter" />
+      }
       @if (withEnd()) {
         <button hxStatusBarEnd type="button">Help</button>
       }
@@ -217,6 +220,7 @@ describe('HelixAppLayout', () => {
 class LayoutHostComponent {
   useTemplate = signal(false);
   withEnd = signal(true);
+  withTopbarEnd = signal(true);
 }
 
 describe('HelixAppLayout status bar forwarding', () => {
@@ -279,5 +283,47 @@ describe('HelixAppLayout status bar forwarding', () => {
     await render();
     expect(note().querySelector('a')).toBeNull();
     expect(note().textContent?.trim()).toBe('Plain note');
+  });
+});
+
+describe('HelixAppLayout topbar forwarding', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+  let host: LayoutHostComponent;
+
+  const topbar = (): HTMLElement => fixture.nativeElement.querySelector('helix-topbar');
+  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
+
+  async function render(): Promise<void> {
+    fixture.detectChanges();
+    await fixture.whenStable();
+  }
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        // Topbar, nav-rail and router-outlet are left unknown (their CSS chokes jsdom), so the
+        // projected node is rendered as a direct child of the <helix-topbar> element.
+        set: { imports: [], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    host = fixture.componentInstance;
+  });
+
+  it('projects [helixTopbarEnd] content into helix-topbar', async () => {
+    await render();
+    expect(topbar().contains(filter())).toBe(true);
+    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
+  });
+
+  it('renders nothing inside helix-topbar when no content is projected', async () => {
+    host.withTopbarEnd.set(false);
+    await render();
+    expect(filter()).toBeNull();
+    expect(topbar().children.length).toBe(0);
   });
 });
