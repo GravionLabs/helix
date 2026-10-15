@@ -6,7 +6,7 @@ state, striped rows, gridlines, sizes and a scrolling body with a sticky header.
 
 ```html
 <hx-data-table [value]="invoices" [columns]="columns" dataKey="id" caption="Invoices" stripedRows>
-  <ng-template hxCell="amount" let-value>{{ value | currency: 'EUR' }}</ng-template>
+  <ng-template hxCell="amount" let-value="value">{{ value | currency: 'EUR' }}</ng-template>
 </hx-data-table>
 ```
 
