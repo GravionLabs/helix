@@ -145,6 +145,13 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 | `navStyle` | `'sections' \| 'tree'` | `'sections'` | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
 | `navGroups` | `HelixNavGroup[]` | — | Explicit nav groups; win over the mapped `menu` |
 
+#### Content slots
+
+| Selector | Description |
+|----------|-------------|
+| `[helixTopbarEnd]` | Forwarded into the [`HelixTopbar`](#helixtopbar) end slot (attribute selector, no directive needed). See the topbar section for placement and narrow-width behaviour |
+| `[hxStatusBarEnd]` | Projected at the right end of the status bar. See [status bar](#helixstatusbar) |
+
 #### Example
 
 ```html
@@ -154,7 +161,10 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
   [topbarItems]="myItems"
   [topbarActions]="myActions"
   brandIcon="/assets/logo.svg"
-/>
+>
+  <input helixTopbarEnd type="search" aria-label="Filter" placeholder="Filter" />
+  <button hxStatusBarEnd type="button">Reload</button>
+</helix-app-layout>
 ```
 
 ---
@@ -179,7 +189,9 @@ Application header bar. Renders a menu toggle, breadcrumb trail on the left, and
 
 | Slot | Selector | Description |
 |------|----------|-------------|
-| End | `[helixTopbarEnd]` | Content rendered to the right of the action buttons |
+| End | `[helixTopbarEnd]` | Rendered inside `layout-topbar-end` in a `layout-topbar-slot` wrapper, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width. Below the shell breakpoint (992px) it shrinks or scrolls horizontally; it never wraps and the topbar height stays fixed. The wrapper is hidden when empty. Focus order follows DOM order: slot content, config items, ellipsis button, menu actions |
+
+**Behaviour change for direct `<helix-topbar>` users:** `[helixTopbarEnd]` content used to sit after the actions and, on narrow widths, behind the ellipsis menu. It now renders before the config items and stays visible. The ellipsis menu switches at the shell breakpoint (992px), not Tailwind `lg` (1024px).
 
 #### Layout
 
