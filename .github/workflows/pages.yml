@@ -26,8 +26,23 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  determine-version:
+    name: Determine Version
+    if: github.event_name == 'pull_request' || vars.DEPLOY_PAGES == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      npm-version: ${{ steps.version.outputs.npm-version }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Determine version
+        id: version
+        uses: GravionLabs/ci/versioning/determine-version@cbb01f83374efa76491226e97bcf1d5cf9674fab # main
+
   build:
     name: Build the site
+    needs: determine-version
     if: github.event_name == 'pull_request' || vars.DEPLOY_PAGES == 'true'
     runs-on: ubuntu-latest
     env:
@@ -48,6 +63,11 @@ jobs:
         run: SITE_BASE="$PAGES_BASE" pnpm build:site
       - name: Build the demo
         run: pnpm build:demo:pages
+        env:
+          # Shown in the demo's status bar (scripts/generate-build-info.mjs).
+          HELIX_VERSION: ${{ needs.determine-version.outputs.npm-version }}
+          # An empty version fails the build instead of deploying a dev value.
+          HELIX_VERSION_REQUIRED: '1'
       - name: Put the pieces together
         run: pnpm pages:assemble
       - name: Upload the site
