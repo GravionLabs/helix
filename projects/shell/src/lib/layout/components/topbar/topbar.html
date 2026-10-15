@@ -15,6 +15,10 @@
   </div>
 
   <div class="layout-topbar-end">
+    <div class="layout-topbar-slot">
+      <ng-content select="[helixTopbarEnd]" />
+    </div>
+
     <div class="layout-config-menu">
       @for (item of items(); track $index) {
         @switch (item.type) {
@@ -54,7 +58,6 @@
             <span>{{ action.label }}</span>
           </button>
         }
-        <ng-content select="[helixTopbarEnd]" />
       </div>
     </div>
   </div>

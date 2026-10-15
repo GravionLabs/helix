@@ -179,22 +179,49 @@ describe('HelixTopbar [helixTopbarEnd] slot', () => {
   beforeEach(async () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
-      imports: [TopbarEndHostComponent],
+      imports: [TopbarEndHostComponent, HelixTopbar],
       providers: [provideRouter([])],
     }).compileComponents();
   });
 
-  it('renders projected content after the topbarActions buttons', async () => {
-    const fixture = TestBed.createComponent(TopbarEndHostComponent);
+  const render = async <T>(type: new () => T): Promise<HTMLElement> => {
+    const fixture = TestBed.createComponent(type);
     fixture.detectChanges();
     await fixture.whenStable();
-    const root: HTMLElement = fixture.nativeElement;
-    const action = root.querySelector('.layout-topbar-action') as HTMLElement;
+    return fixture.nativeElement as HTMLElement;
+  };
+
+  it('renders projected content in the end cluster, outside the collapsible menu', async () => {
+    const root = await render(TopbarEndHostComponent);
     const end = root.querySelector('.end-slot') as HTMLElement;
 
-    // Placement: currently inside the menu content column; task #948 may relocate the slot.
-    expect(root.querySelector('.layout-topbar-menu-content')?.contains(end)).toBe(true);
-    // Keyboard/focus order: the end slot follows the action buttons.
-    expect(action.compareDocumentPosition(end) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(root.querySelector('.layout-topbar-end')?.contains(end)).toBe(true);
+    expect(root.querySelector('.layout-topbar-slot')?.contains(end)).toBe(true);
+    expect(root.querySelector('.layout-topbar-menu')?.contains(end)).toBe(false);
+    expect(root.querySelector('.layout-topbar-menu-content')?.contains(end)).toBe(false);
+  });
+
+  it('places projected content before the config items, the ellipsis button and the menu actions', async () => {
+    const root = await render(TopbarEndHostComponent);
+    const end = root.querySelector('.end-slot') as HTMLElement;
+    const configMenu = root.querySelector('.layout-config-menu') as HTMLElement;
+    const ellipsis = root.querySelector('.layout-topbar-menu-button') as HTMLElement;
+    const action = root.querySelector('.layout-topbar-menu .layout-topbar-action') as HTMLElement;
+
+    const follows = (a: Node, b: Node): boolean =>
+      (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+    expect(follows(end, configMenu)).toBe(true);
+    expect(follows(configMenu, ellipsis)).toBe(true);
+    expect(follows(ellipsis, action)).toBe(true);
+  });
+
+  it('leaves the slot wrapper empty without projected content', async () => {
+    const root = await render(HelixTopbar);
+    const slot = root.querySelector('.layout-topbar-slot') as HTMLElement;
+
+    expect(slot).toBeTruthy();
+    expect(slot.childNodes.length).toBe(0);
+    expect(slot.matches(':empty')).toBe(true);
   });
 });

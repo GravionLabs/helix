@@ -43,6 +43,19 @@
     flex-shrink: 0;
   }
 
+  // [helixTopbarEnd] projection: always visible, never inside the collapsible menu.
+  .layout-topbar-slot {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+
+    // No projected content: collapse the wrapper so the flex gap does not apply.
+    &:empty {
+      display: none;
+    }
+  }
+
   ::ng-deep .hx-breadcrumb {
     background: inherit;
     color: inherit;
@@ -124,6 +137,19 @@
 
     .layout-topbar-menu-button {
       display: inline-flex;
+    }
+
+    // Let the end cluster give way so the slot (min-width: 0) is the part that shrinks;
+    // the fixed-size action buttons keep their intrinsic width.
+    .layout-topbar-end {
+      flex-shrink: 1;
+      min-width: 0;
+    }
+
+    // The topbar has a fixed height, so the slot shrinks and scrolls instead of wrapping.
+    .layout-topbar-slot {
+      flex: 1 1 auto;
+      overflow-x: auto;
     }
 
     .layout-topbar-menu {
