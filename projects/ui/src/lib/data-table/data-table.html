@@ -47,10 +47,27 @@
                 [attr.aria-sort]="ariaSort(column)"
                 [attr.title]="column.title ?? null"
               >
-                @if (columnHeaders().get(column.field); as extra) {
+                @let extra = columnHeaders().get(column.field);
+                @let menu = filterDisplay() === 'menu' && column.filter;
+                @if (extra || menu) {
                   <div class="hx-data-table-header-content">
                     <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
-                    <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletContext]="{ $implicit: column }" />
+                    @if (extra) {
+                      <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletContext]="{ $implicit: column }" />
+                    }
+                    @if (menu) {
+                      <button
+                        type="button"
+                        class="hx-data-table-filter-button"
+                        [class.hx-data-table-filter-active]="!!filters()[column.field]"
+                        aria-haspopup="dialog"
+                        [attr.aria-expanded]="activeFilterColumn() === column"
+                        [attr.aria-label]="filterLabel().replace('{header}', column.header)"
+                        (click)="openFilter($event, column)"
+                      >
+                        <span class="hx-data-table-filter-icon" aria-hidden="true"></span>
+                      </button>
+                    }
                   </div>
                 } @else {
                   <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
@@ -161,6 +178,17 @@
     />
   }
 </div>
+
+@if (filterDisplay() === 'menu') {
+  <hx-popover panelClass="hx-data-table-filter-popover" [ariaLabel]="activeFilterColumn() ? filterLabel().replace('{header}', activeFilterColumn()!.header) : undefined" (hidden)="activeFilterColumn.set(null)">
+    @if (activeFilterColumn(); as column) {
+      <div class="hx-data-table-filter-menu">
+        <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabel().replace('{header}', column.header)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" (keydown.enter)="filterPopover()?.hide()" />
+        <button hx-button type="button" size="small" variant="text" class="hx-data-table-filter-clear" (click)="clearFilter(column)">Clear</button>
+      </div>
+    }
+  </hx-popover>
+}
 
 <ng-template #label let-column>
   @if (column.sortable) {

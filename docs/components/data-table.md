@@ -95,6 +95,10 @@ The select-all box selects all *filtered* rows of every page and is indeterminat
   `hx-input` next to the table through a template reference). It is a case-insensitive "contains".
 - **Column filters:** `filterDisplay="row"` adds a row of `hx-input`s under the headers of columns with `filter: true`;
   the texts are in the `filters` model (`{ field: text }`). The inputs are named `Filter {header}` (`filterLabel`).
+- **Header menu:** `filterDisplay="menu"` puts a filter icon button in the header of each column with `filter: true`
+  instead of the filter row. It opens a popover with a text input (live filtering, same `filters` model) and a "Clear"
+  button; the button shows an active state while the column is filtered. Keyboard: Tab to the button, Enter or Space
+  opens, the focus moves to the input, Enter in the input or Escape closes and returns the focus to the button.
 
 A change of a filter goes back to the first page. In `lazy` mode nothing is filtered by the table: the texts are in `lazyLoad`.
 
@@ -151,7 +155,7 @@ Templates are `ng-template`s inside the table:
 
 A native `<table>` with a `<caption>` (visually hidden when only `ariaLabel` is set) and `<th scope="col">` header
 cells. A sortable header contains a `<button>` and its `th` has `aria-sort` (`ascending`, `descending`, `none`); a polite
-live region announces "Sorted by Name, ascending" or that the sort was removed. The paginator is a labelled `nav`. Selectable rows have `aria-selected` and, in `single` or meta-key mode, `tabindex="0"` with Enter/Space; the checkboxes are labelled "Select row 3" and "Select all rows"; an expander is a button with `aria-expanded`. While `loading` the frame has `aria-busy="true"` and the spinner is a `role="status"`. A table that scrolls
+live region announces "Sorted by Name, ascending" or that the sort was removed. The paginator is a labelled `nav`. Selectable rows have `aria-selected` and, in `single` or meta-key mode, `tabindex="0"` with Enter/Space; a filter button (`filterDisplay="menu"`) is named `Filter {header}`, has `aria-haspopup="dialog"` and `aria-expanded`, and opens a non-modal `role="dialog"` popover with the same name; the checkboxes are labelled "Select row 3" and "Select all rows"; an expander is a button with `aria-expanded`. While `loading` the frame has `aria-busy="true"` and the spinner is a `role="status"`. A table that scrolls
 (`scrollHeight` or `scrollable`) is a focusable `region` named by `ariaLabel` or `caption`, so the keyboard can scroll it.
 
 ## Tokens

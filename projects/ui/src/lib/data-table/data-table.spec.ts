@@ -1056,3 +1056,121 @@ describe('HxDataTable row class, empty value, show-all paging and first sort ord
     });
   });
 });
+
+@Component({
+  imports: [HxDataTable],
+  template: `
+    <hx-data-table [value]="value" [columns]="columns" filterDisplay="menu" [(filters)]="filters" ariaLabel="Rows" />
+  `,
+})
+class FilterMenuHost {
+  value = many(6);
+  filters = signal<Record<string, string>>({});
+  columns: HxColumn[] = [
+    { field: 'name', header: 'Name', filter: true },
+    { field: 'address.city', header: 'City', filter: true },
+    { field: 'price', header: 'Price' },
+  ];
+}
+
+describe('HxDataTable header filter menu', () => {
+  let fixture: ComponentFixture<FilterMenuHost>;
+  let host: FilterMenuHost;
+  const root = () => fixture.nativeElement as HTMLElement;
+  const rowEls = () => [...root().querySelectorAll<HTMLElement>('tbody tr')];
+  const buttons = () => [
+    ...root().querySelectorAll<HTMLButtonElement>('.hx-data-table-filter-button'),
+  ];
+  const popoverInput = () =>
+    document.querySelector<HTMLInputElement>('.hx-data-table-filter-menu input');
+  const update = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const open = async (index: number) => {
+    buttons()[index].click();
+    await update();
+    await update();
+  };
+  const type = async (input: HTMLInputElement, value: string) => {
+    input.value = value;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await update();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [FilterMenuHost] }).compileComponents();
+    fixture = TestBed.createComponent(FilterMenuHost);
+    host = fixture.componentInstance;
+    await update();
+  });
+
+  it('renders a labelled filter button per filter column and no filter row', () => {
+    expect(buttons()).toHaveLength(2);
+    expect(buttons()[0].getAttribute('aria-label')).toBe('Filter Name');
+    expect(buttons()[1].getAttribute('aria-label')).toBe('Filter City');
+    expect(buttons()[0].getAttribute('aria-haspopup')).toBe('dialog');
+    expect(buttons()[0].getAttribute('aria-expanded')).toBe('false');
+    expect(root().querySelector('.hx-data-table-filter-row')).toBeNull();
+  });
+
+  it('opens a popover with the input and focuses it', async () => {
+    await open(1);
+    expect(popoverInput()).not.toBeNull();
+    expect(popoverInput()?.getAttribute('aria-label')).toBe('Filter City');
+    expect(document.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe(
+      'Filter City',
+    );
+    expect(buttons()[1].getAttribute('aria-expanded')).toBe('true');
+    expect(document.activeElement).toBe(popoverInput());
+  });
+
+  it('filters the rows live and writes the text to the filters model', async () => {
+    await open(1);
+    await type(popoverInput() as HTMLInputElement, 'osl');
+    expect(host.filters()).toEqual({ 'address.city': 'osl' });
+    expect(rowEls()).toHaveLength(2);
+  });
+
+  it('clears the filter and closes with the Clear button', async () => {
+    host.filters.set({ name: 'item 0' });
+    await update();
+    await open(0);
+    expect(popoverInput()?.value).toBe('item 0');
+    (document.querySelector('.hx-data-table-filter-clear') as HTMLElement).click();
+    await update();
+    expect(host.filters()).toEqual({});
+    expect(rowEls()).toHaveLength(6);
+    expect(popoverInput()).toBeNull();
+  });
+
+  it('closes on Escape and returns the focus to the button', async () => {
+    await open(0);
+    popoverInput()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await update();
+    expect(popoverInput()).toBeNull();
+    expect(document.activeElement).toBe(buttons()[0]);
+    expect(buttons()[0].getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('closes on Enter in the input and keeps the filter', async () => {
+    await open(0);
+    await type(popoverInput() as HTMLInputElement, 'item 01');
+    popoverInput()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await update();
+    expect(popoverInput()).toBeNull();
+    expect(host.filters()).toEqual({ name: 'item 01' });
+  });
+
+  it('marks the button of a filtered column, also when the model is set from outside', async () => {
+    expect(root().querySelector('.hx-data-table-filter-active')).toBeNull();
+    host.filters.set({ 'address.city': 'osl' });
+    await update();
+    expect(buttons()[0].classList).not.toContain('hx-data-table-filter-active');
+    expect(buttons()[1].classList).toContain('hx-data-table-filter-active');
+    host.filters.set({});
+    await update();
+    expect(root().querySelector('.hx-data-table-filter-active')).toBeNull();
+  });
+});
