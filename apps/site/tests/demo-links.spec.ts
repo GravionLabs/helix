@@ -37,6 +37,10 @@ describe('DEMO_ROUTES', () => {
     expect(unknown).toEqual([]);
   });
 
+  it('links the chart docs to the first chart demo page', () => {
+    expect(demoRouteOf('chart')).toBe('charts/line');
+  });
+
   it('maps a component to one demo page only', () => {
     const all = Object.values(DEMO_ROUTES).flat();
     expect(all.filter((c, i) => all.indexOf(c) !== i)).toEqual([]);

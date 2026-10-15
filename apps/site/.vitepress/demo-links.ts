@@ -34,10 +34,6 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/message': ['message', 'toast'],
   'uikit/file': ['file-upload'],
   'charts/line': ['chart'],
-  'charts/bar': ['chart'],
-  'charts/pie': ['chart'],
-  'charts/polar-area': ['chart'],
-  'charts/radar': ['chart'],
   'uikit/timeline': ['timeline'],
   'uikit/misc': ['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag'],
 };

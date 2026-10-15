@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { HxChart, type HxChartSelectEvent } from '@gravionlabs/helix-ui/chart';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
-import { first, months, second } from '../chart-sample-data';
+import { sampleFirst, sampleMonths, sampleSecond } from '../chart-sample-data';
 
 function isPickedElement(value: unknown): value is { datasetIndex: number; index: number } {
   return (
@@ -17,18 +17,16 @@ function isPickedElement(value: unknown): value is { datasetIndex: number; index
 /** Bar chart of `@gravionlabs/helix-ui`; no colours are set, so the Helix palette is used. */
 @Component({
   selector: 'app-bar-chart-demo',
-  standalone: true,
   imports: [SourceTabsComponent, HxChart],
   templateUrl: './bar-chart-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './bar-chart-demo.scss',
 })
 export class BarChartDemo {
   readonly barData = {
-    labels: months,
+    labels: sampleMonths,
     datasets: [
-      { label: 'My First dataset', data: first },
-      { label: 'My Second dataset', data: second },
+      { label: 'My First dataset', data: sampleFirst },
+      { label: 'My Second dataset', data: sampleSecond },
     ],
   };
   readonly barOptions = { scales: { x: { grid: { display: false } } } };

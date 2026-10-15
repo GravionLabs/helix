@@ -5,11 +5,9 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 /** Polar area chart of `@gravionlabs/helix-ui`; no colours are set, so the Helix palette is used. */
 @Component({
   selector: 'app-polar-area-chart-demo',
-  standalone: true,
   imports: [SourceTabsComponent, HxChart],
   templateUrl: './polar-area-chart-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './polar-area-chart-demo.scss',
 })
 export class PolarAreaChartDemo {
   readonly polarData = {

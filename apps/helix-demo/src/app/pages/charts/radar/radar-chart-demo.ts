@@ -5,11 +5,9 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 /** Radar chart of `@gravionlabs/helix-ui`; no colours are set, so the Helix palette is used. */
 @Component({
   selector: 'app-radar-chart-demo',
-  standalone: true,
   imports: [SourceTabsComponent, HxChart],
   templateUrl: './radar-chart-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './radar-chart-demo.scss',
 })
 export class RadarChartDemo {
   readonly radarData = {

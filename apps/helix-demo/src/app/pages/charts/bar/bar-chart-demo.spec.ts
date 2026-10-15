@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HxChart } from '@gravionlabs/helix-ui/chart';
 import { provideHighlightOptions } from 'ngx-highlightjs';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 import { BarChartDemo } from './bar-chart-demo';
 
 describe('BarChartDemo', () => {
@@ -22,6 +23,20 @@ describe('BarChartDemo', () => {
     fixture.detectChanges();
     return fixture;
   }
+
+  it('shows the bar source tabs of helix-ui', () => {
+    const tabs = create().debugElement.query(By.directive(SourceTabsComponent))
+      .componentInstance as SourceTabsComponent;
+    expect(tabs.directory()).toBe('charts/bar');
+    expect(tabs.componentName()).toBe('bar-chart-demo');
+    expect(tabs.docs()).toEqual([]);
+    expect(tabs.library()).toBe('helix-ui');
+  });
+
+  it('renders the bar chart and the fallback bar chart', () => {
+    const charts = create().debugElement.queryAll(By.directive(HxChart));
+    expect(charts.map((c) => (c.componentInstance as HxChart).type())).toEqual(['bar', 'bar']);
+  });
 
   function fallbackChart(fixture: ReturnType<typeof create>) {
     const chart = fixture.debugElement
