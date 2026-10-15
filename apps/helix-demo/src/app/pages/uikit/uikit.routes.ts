@@ -18,6 +18,7 @@ import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
 import { OverlayDemo } from './overlay/overlay-demo';
 import { PanelsDemo } from './panel/panels-demo';
+import { TableDemo } from './table/table-demo';
 import { TimelineDemo } from './timeline/timeline-demo';
 import { TopbarDemo } from './topbar/topbar-demo';
 import { TreeDemo } from './tree/tree-demo';
@@ -39,6 +40,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   misc: MiscDemo,
   overlay: OverlayDemo,
   panel: PanelsDemo,
+  table: TableDemo,
   timeline: TimelineDemo,
   topbar: TopbarDemo,
   tree: TreeDemo,
@@ -60,7 +62,6 @@ const PROVIDERS: Record<string, (Provider | EnvironmentProviders)[]> = {
 export default [
   { path: '', redirectTo: 'formlayout', pathMatch: 'full' },
   { path: 'charts', redirectTo: '/charts', pathMatch: 'full' },
-  { path: 'table', redirectTo: '/ag-grid/overview', pathMatch: 'full' },
   ...UIKIT_MENU_ITEMS.filter((item) => item.path != null && COMPONENTS[item.path]).map((item) => ({
     path: item.path!,
     component: COMPONENTS[item.path!],
