@@ -1,12 +1,12 @@
 import agGridRoutes from '../pages/ag-grid/ag-grid.routes';
 import { CellsDemo } from '../pages/ag-grid/cells/cells-demo';
 import { Crud } from '../pages/ag-grid/crud/crud';
-import { TableDemo as AgGridOverviewDemo } from '../pages/ag-grid/overview/table-demo';
+import { TableDemo } from '../pages/ag-grid/overview/table-demo';
 import chartsRoutes from '../pages/charts/charts.routes';
 import { ChartDemo } from '../pages/charts/overview/chart-demo';
 import pagesRoutes from '../pages/pages.routes';
 import { DataTableDemo } from '../pages/uikit/data-table/data-table-demo';
-import { TableDemo } from '../pages/uikit/table/table-demo';
+import { UikitTableDemo } from '../pages/uikit/table/table-demo';
 import uikitRoutes from '../pages/uikit/uikit.routes';
 import { DEMO_MENU_MODEL } from './menu.model';
 
@@ -42,10 +42,35 @@ describe('DEMO_MENU_MODEL Data table item', () => {
     expect(item?.icon).toBe('pi pi-fw pi-table');
   });
 
+  it('lists Table right after Data table under Components', () => {
+    const uikit = DEMO_MENU_MODEL.find((item) => item.label === 'Components');
+    const labels = uikit?.items?.map((i) => i.label) ?? [];
+    expect(labels.indexOf('Table')).toBe(labels.indexOf('Data table') + 1);
+    const item = uikit?.items?.find((i) => i.label === 'Table');
+    expect(item?.routerLink).toEqual(['/uikit/table']);
+    expect(item?.icon).toBe('pi pi-fw pi-table');
+  });
+
+  it('resolves Data table and Table to their own routes', () => {
+    const resolve = (path: string) => uikitRoutes.find((r) => r.path === path)?.component;
+    expect(resolve('data-table')).toBe(DataTableDemo);
+    expect(resolve('table')).toBe(UikitTableDemo);
+    expect(resolve('data-table')).not.toBe(resolve('table'));
+  });
+
   it('serves /uikit/data-table with DataTableDemo and a breadcrumb', () => {
     const route = uikitRoutes.find((r) => r.path === 'data-table');
     expect(route?.component).toBe(DataTableDemo);
     expect(route?.data).toEqual({ breadcrumb: 'Data table' });
+  });
+});
+
+describe('uikit table route', () => {
+  it('serves /uikit/table with UikitTableDemo and a breadcrumb instead of redirecting', () => {
+    const route = uikitRoutes.find((r) => r.path === 'table');
+    expect(route?.component).toBe(UikitTableDemo);
+    expect(route?.redirectTo).toBeUndefined();
+    expect(route?.data).toEqual({ breadcrumb: 'Table' });
   });
 });
 
@@ -113,13 +138,6 @@ describe('ag-grid routes', () => {
     expect(agGridRoutes.find((r) => r.path === '**')?.redirectTo).toBe('/notfound');
   });
 
-  it('serves /uikit/table with TableDemo and a breadcrumb instead of redirecting', () => {
-    const route = uikitRoutes.find((r) => r.path === 'table');
-    expect(route?.component).toBe(TableDemo);
-    expect(route?.redirectTo).toBeUndefined();
-    expect(route?.data).toEqual({ breadcrumb: 'Table' });
-  });
-
   it('redirects the old pages/crud path to /ag-grid/crud and pages to empty', () => {
     expect(pagesRoutes.find((r) => r.path === 'crud')?.redirectTo).toBe('/ag-grid/crud');
     expect(pagesRoutes.some((r) => r.path === 'crud' && r.component)).toBe(false);
@@ -132,7 +150,7 @@ describe('lazy group routes', () => {
 
   it('serves each AG Grid page with its own component', () => {
     const component = (path: string) => agGridRoutes.find((r) => r.path === path)?.component;
-    expect(component('overview')).toBe(AgGridOverviewDemo);
+    expect(component('overview')).toBe(TableDemo);
     expect(component('cells')).toBe(CellsDemo);
     expect(component('crud')).toBe(Crud);
   });

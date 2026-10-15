@@ -49,7 +49,7 @@ export class DataTableDemo {
   }));
   /** Dims the cheap products (the `rowClass` demo). */
   readonly dimCheap = (row: { price: number }) => (row.price < 30 ? 'data-table-dim' : null);
-  readonly selected = signal<unknown>([]);
+  readonly selected = signal<unknown[]>([]);
   readonly filters = signal<Record<string, string>>({});
   readonly filterColumns: HxColumn[] = [
     { field: 'name', header: 'Name', filter: true, sortable: true },

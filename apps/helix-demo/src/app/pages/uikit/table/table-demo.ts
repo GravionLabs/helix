@@ -4,13 +4,13 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 /** The plain `table[hx-table]` of `@gravionlabs/helix-ui`: striped, hoverable, small, gridlines and a sticky header. */
 @Component({
-  selector: 'app-table-demo',
+  selector: 'app-uikit-table-demo',
   standalone: true,
   imports: [SourceTabsComponent, HxTable],
   templateUrl: './table-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class TableDemo {
+export class UikitTableDemo {
   readonly invoices = [
     { no: 1001, customer: 'Amy Elsner', amount: 120, status: 'Paid' },
     { no: 1002, customer: 'Anna Fali', amount: 80.5, status: 'Open' },

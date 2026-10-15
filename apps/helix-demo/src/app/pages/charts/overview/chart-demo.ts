@@ -2,6 +2,17 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { HxChart, type HxChartSelectEvent } from '@gravionlabs/helix-ui/chart';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
+function isPickedElement(value: unknown): value is { datasetIndex: number; index: number } {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'datasetIndex' in value &&
+    typeof value.datasetIndex === 'number' &&
+    'index' in value &&
+    typeof value.index === 'number'
+  );
+}
+
 /**
  * The charts of `@gravionlabs/helix-ui`: chart.js with colours, grid and font from the design tokens, redrawn when the
  * theme changes. The data below sets no colours, so the Helix palette is used.
@@ -69,7 +80,9 @@ export class ChartDemo {
   readonly picked = signal('none');
 
   pick(event: HxChartSelectEvent): void {
-    const { datasetIndex, index } = event.element as { datasetIndex: number; index: number };
+    const picked = event.element;
+    if (!isPickedElement(picked)) return;
+    const { datasetIndex, index } = picked;
     this.picked.set(
       `${this.fallbackData.datasets[datasetIndex].label}, ${this.fallbackMonths[index]}`,
     );
