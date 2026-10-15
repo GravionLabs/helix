@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   HxButton,
@@ -22,6 +23,7 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
     HxDataTable,
     HxInput,
     HxRowExpansion,
+    JsonPipe,
   ],
   templateUrl: './data-table-demo.html',
   styleUrl: './data-table-demo.scss',
@@ -55,6 +57,12 @@ export class DataTableDemo {
     { field: 'name', header: 'Name', filter: true, sortable: true },
     { field: 'category', header: 'Category', filter: true },
     { field: 'price', header: 'Price', align: 'right', sortable: true },
+  ];
+  readonly menuFilters = signal<Record<string, string>>({});
+  readonly menuColumns: HxColumn[] = [
+    { field: 'name', header: 'Name', filter: true, sortable: true },
+    { field: 'category', header: 'Category', filter: true },
+    { field: 'price', header: 'Price', align: 'right', filter: true, sortable: true },
   ];
   readonly tableLoading = signal(false);
   readonly tableRows = signal(this.products);

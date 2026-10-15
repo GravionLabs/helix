@@ -21,9 +21,9 @@ describe('DataTableDemo', () => {
     return fixture;
   }
 
-  it('renders the three data table cards', () => {
+  it('renders the four data table cards', () => {
     const el = create().nativeElement as HTMLElement;
-    expect(el.querySelectorAll('hx-data-table')).toHaveLength(3);
+    expect(el.querySelectorAll('hx-data-table')).toHaveLength(4);
   });
 
   const click = (el: HTMLElement, label: string) => {
@@ -99,5 +99,60 @@ describe('DataTableDemo', () => {
     const el = create().nativeElement as HTMLElement;
     const paged = el.querySelectorAll('hx-data-table')[1];
     expect(paged.querySelectorAll('tbody tr')).toHaveLength(5);
+  });
+
+  const menuTable = (el: HTMLElement) => {
+    const table = Array.from(el.querySelectorAll('hx-data-table')).find((t) =>
+      t.querySelector('button[aria-label="Filter Name"]'),
+    );
+    if (!table) throw new Error('header filter table not found');
+    return table;
+  };
+
+  it('renders a filter button per filterable header in the header filter card', () => {
+    const table = menuTable(create().nativeElement as HTMLElement);
+    for (const label of ['Filter Name', 'Filter Category', 'Filter Price']) {
+      expect(table.querySelector(`button[aria-label="${label}"]`)).not.toBeNull();
+    }
+    expect(table.querySelectorAll('input[aria-label^="Filter "]')).toHaveLength(0);
+  });
+
+  it('prints the menuFilters model as JSON', () => {
+    const fixture = create();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.textContent).toContain('Filters: {}');
+    fixture.componentInstance.menuFilters.set({ name: 'Product 47' });
+    fixture.detectChanges();
+    expect(el.textContent).toContain('"name": "Product 47"');
+    expect(menuTable(el).querySelectorAll('tbody tr')).toHaveLength(1);
+  });
+
+  describe('driving the header menu', () => {
+    afterEach(() => document.querySelector('.cdk-overlay-container')?.replaceChildren());
+
+    const settle = async (fixture: { detectChanges(): void; whenStable(): Promise<unknown> }) => {
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+    };
+
+    it('filters the rows and updates the printed JSON when typing in the menu', async () => {
+      const fixture = create();
+      const el = fixture.nativeElement as HTMLElement;
+      menuTable(el).querySelector<HTMLButtonElement>('button[aria-label="Filter Name"]')?.click();
+      await settle(fixture);
+      await settle(fixture);
+      const input = document.querySelector<HTMLInputElement>(
+        '.cdk-overlay-container input[aria-label="Filter Name"]',
+      );
+      if (!input) throw new Error('menu input not found');
+      input.value = 'Product 47';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      await settle(fixture);
+      expect(menuTable(el).querySelectorAll('tbody tr')).toHaveLength(1);
+      expect(menuTable(el).querySelector('tbody tr')?.textContent).toContain('Product 47');
+      expect(fixture.componentInstance.menuFilters()).toEqual({ name: 'Product 47' });
+      expect(el.textContent).toContain('"name": "Product 47"');
+    });
   });
 });
