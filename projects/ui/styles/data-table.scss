@@ -84,6 +84,7 @@
   flex: none;
   align-items: center;
   margin: 0;
+  position: relative;
   padding: 0.125rem;
   border: 0;
   background: transparent;
@@ -110,10 +111,6 @@
 
 .hx-data-table-filter-button.hx-data-table-filter-active {
   color: var(--h-datatable-header-cell-selected-color);
-}
-
-.hx-data-table-filter-button {
-  position: relative;
 }
 
 .hx-data-table-filter-button.hx-data-table-filter-active::after {

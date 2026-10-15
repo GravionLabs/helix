@@ -61,8 +61,8 @@
                         class="hx-data-table-filter-button"
                         [class.hx-data-table-filter-active]="!!filters()[column.field]"
                         aria-haspopup="dialog"
-                        [attr.aria-expanded]="activeFilterColumn() === column"
-                        [attr.aria-label]="filterLabel().replace('{header}', column.header)"
+                        [attr.aria-expanded]="activeFilterColumn()?.field === column.field"
+                        [attr.aria-label]="filterLabelFor(column)"
                         (click)="openFilter($event, column)"
                       >
                         <span class="hx-data-table-filter-icon" aria-hidden="true"></span>
@@ -83,7 +83,7 @@
             @for (column of columns(); track column.field) {
               <th>
                 @if (column.filter) {
-                  <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabel().replace('{header}', column.header)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" />
+                  <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabelFor(column)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" />
                 }
               </th>
             }
@@ -180,11 +180,12 @@
 </div>
 
 @if (filterDisplay() === 'menu') {
-  <hx-popover panelClass="hx-data-table-filter-popover" [ariaLabel]="activeFilterColumn() ? filterLabel().replace('{header}', activeFilterColumn()!.header) : undefined" (hidden)="activeFilterColumn.set(null)">
-    @if (activeFilterColumn(); as column) {
+  @let active = activeFilterColumn();
+  <hx-popover panelClass="hx-data-table-filter-popover" [ariaLabel]="active ? filterLabelFor(active) : undefined" (hidden)="activeFilterColumn.set(null)">
+    @if (active) {
       <div class="hx-data-table-filter-menu">
-        <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabel().replace('{header}', column.header)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" (keydown.enter)="filterPopover()?.hide()" />
-        <button hx-button type="button" size="small" variant="text" class="hx-data-table-filter-clear" (click)="clearFilter(column)">Clear</button>
+        <input #filterInput type="text" hx-input size="small" fluid [attr.aria-label]="filterLabelFor(active)" [value]="filters()[active.field] ?? ''" (input)="setFilter(active, $any($event.target).value)" (keydown.enter)="filterPopover()?.hide()" />
+        <button hx-button type="button" size="small" variant="text" class="hx-data-table-filter-clear" (click)="clearFilter(active)">{{ clearLabel() }}</button>
       </div>
     }
   </hx-popover>

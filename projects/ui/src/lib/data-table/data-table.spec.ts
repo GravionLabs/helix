@@ -1058,16 +1058,22 @@ describe('HxDataTable row class, empty value, show-all paging and first sort ord
 });
 
 @Component({
-  imports: [HxDataTable],
+  imports: [HxDataTable, HxColumnHeader],
   template: `
-    <hx-data-table [value]="value" [columns]="columns" filterDisplay="menu" [(filters)]="filters" ariaLabel="Rows" />
+    <hx-data-table [value]="value" [columns]="columns" [filterDisplay]="display()" [(filters)]="filters" [paginator]="true" [rows]="2" [lazy]="lazy()" [totalRecords]="6" (lazyLoad)="events.push($event)" [(first)]="first" ariaLabel="Rows">
+      <ng-template hxColumnHeader="address.city"><i class="extra">i</i></ng-template>
+    </hx-data-table>
   `,
 })
 class FilterMenuHost {
   value = many(6);
+  display = signal<'row' | 'menu'>('menu');
+  lazy = signal(false);
+  first = signal(0);
+  events: HxLazyLoadEvent[] = [];
   filters = signal<Record<string, string>>({});
   columns: HxColumn[] = [
-    { field: 'name', header: 'Name', filter: true },
+    { field: 'name', header: 'Name', filter: true, sortable: true },
     { field: 'address.city', header: 'City', filter: true },
     { field: 'price', header: 'Price' },
   ];
@@ -1081,8 +1087,10 @@ describe('HxDataTable header filter menu', () => {
   const buttons = () => [
     ...root().querySelectorAll<HTMLButtonElement>('.hx-data-table-filter-button'),
   ];
+  const dialog = () =>
+    document.querySelector<HTMLElement>('.cdk-overlay-container [role="dialog"]');
   const popoverInput = () =>
-    document.querySelector<HTMLInputElement>('.hx-data-table-filter-menu input');
+    dialog()?.querySelector<HTMLInputElement>('.hx-data-table-filter-menu input') ?? null;
   const update = async () => {
     fixture.detectChanges();
     await fixture.whenStable();
@@ -1098,12 +1106,21 @@ describe('HxDataTable header filter menu', () => {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     await update();
   };
+  const key = async (target: Element | null, name: string) => {
+    target?.dispatchEvent(new KeyboardEvent('keydown', { key: name, bubbles: true }));
+    await update();
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [FilterMenuHost] }).compileComponents();
     fixture = TestBed.createComponent(FilterMenuHost);
     host = fixture.componentInstance;
     await update();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    document.querySelector('.cdk-overlay-container')?.replaceChildren();
   });
 
   it('renders a labelled filter button per filter column and no filter row', () => {
@@ -1115,13 +1132,41 @@ describe('HxDataTable header filter menu', () => {
     expect(root().querySelector('.hx-data-table-filter-row')).toBeNull();
   });
 
+  it('renders no popover and no filter button in row mode', async () => {
+    host.display.set('row');
+    await update();
+    expect(buttons()).toHaveLength(0);
+    expect(root().querySelector('hx-popover')).toBeNull();
+    expect(root().querySelectorAll('.hx-data-table-filter-row input')).toHaveLength(2);
+  });
+
   it('opens a popover with the input and focuses it', async () => {
     await open(1);
     expect(popoverInput()).not.toBeNull();
     expect(popoverInput()?.getAttribute('aria-label')).toBe('Filter City');
-    expect(document.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe(
-      'Filter City',
-    );
+    expect(dialog()?.getAttribute('aria-label')).toBe('Filter City');
+    expect(buttons()[1].getAttribute('aria-expanded')).toBe('true');
+    expect(document.activeElement).toBe(popoverInput());
+  });
+
+  it('closes when the same button is clicked again', async () => {
+    await open(0);
+    buttons()[0].click();
+    await update();
+    expect(dialog()).toBeNull();
+    expect(buttons()[0].getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('switches to another column with its own content and the focus in the input', async () => {
+    host.filters.set({ 'address.city': 'osl' });
+    await update();
+    await open(0);
+    expect(popoverInput()?.value).toBe('');
+    await open(1);
+    await update();
+    expect(popoverInput()?.getAttribute('aria-label')).toBe('Filter City');
+    expect(popoverInput()?.value).toBe('osl');
+    expect(buttons()[0].getAttribute('aria-expanded')).toBe('false');
     expect(buttons()[1].getAttribute('aria-expanded')).toBe('true');
     expect(document.activeElement).toBe(popoverInput());
   });
@@ -1130,7 +1175,25 @@ describe('HxDataTable header filter menu', () => {
     await open(1);
     await type(popoverInput() as HTMLInputElement, 'osl');
     expect(host.filters()).toEqual({ 'address.city': 'osl' });
-    expect(rowEls()).toHaveLength(2);
+    expect(root().querySelector('.hx-paginator-report')?.textContent).toBe('1 - 2 of 2');
+  });
+
+  it('goes back to the first page when the filter changes', async () => {
+    (root().querySelector('.hx-paginator-next') as HTMLElement).click();
+    await update();
+    expect(host.first()).toBe(2);
+    await open(1);
+    await type(popoverInput() as HTMLInputElement, 'o');
+    expect(host.first()).toBe(0);
+  });
+
+  it('puts the filter into lazyLoad and leaves the rows alone when lazy', async () => {
+    host.lazy.set(true);
+    await update();
+    await open(0);
+    await type(popoverInput() as HTMLInputElement, 'item 0');
+    expect(host.events.at(-1)?.filters).toEqual({ name: 'item 0' });
+    expect(rowEls()).toHaveLength(6);
   });
 
   it('clears the filter and closes with the Clear button', async () => {
@@ -1138,18 +1201,16 @@ describe('HxDataTable header filter menu', () => {
     await update();
     await open(0);
     expect(popoverInput()?.value).toBe('item 0');
-    (document.querySelector('.hx-data-table-filter-clear') as HTMLElement).click();
+    dialog()?.querySelector<HTMLElement>('.hx-data-table-filter-clear')?.click();
     await update();
     expect(host.filters()).toEqual({});
-    expect(rowEls()).toHaveLength(6);
-    expect(popoverInput()).toBeNull();
+    expect(dialog()).toBeNull();
   });
 
   it('closes on Escape and returns the focus to the button', async () => {
     await open(0);
-    popoverInput()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    await update();
-    expect(popoverInput()).toBeNull();
+    await key(popoverInput(), 'Escape');
+    expect(dialog()).toBeNull();
     expect(document.activeElement).toBe(buttons()[0]);
     expect(buttons()[0].getAttribute('aria-expanded')).toBe('false');
   });
@@ -1157,10 +1218,44 @@ describe('HxDataTable header filter menu', () => {
   it('closes on Enter in the input and keeps the filter', async () => {
     await open(0);
     await type(popoverInput() as HTMLInputElement, 'item 01');
-    popoverInput()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
-    await update();
-    expect(popoverInput()).toBeNull();
+    await key(popoverInput(), 'Enter');
+    expect(dialog()).toBeNull();
     expect(host.filters()).toEqual({ name: 'item 01' });
+  });
+
+  it('is a native button in the tab order that the keyboard can open and close', async () => {
+    const button = buttons()[0];
+    expect(button.tagName).toBe('BUTTON');
+    expect(button.type).toBe('button');
+    expect(button.tabIndex).toBe(0);
+    button.focus();
+    expect(document.activeElement).toBe(button);
+    // a native button turns Enter/Space into a click
+    button.click();
+    await update();
+    await update();
+    expect(document.activeElement).toBe(popoverInput());
+    await key(popoverInput(), 'Escape');
+    expect(document.activeElement).toBe(button);
+  });
+
+  it('does not sort when the filter button of a sortable column is clicked', async () => {
+    await open(0);
+    expect(root().querySelector('th')?.getAttribute('aria-sort')).toBe('none');
+    expect(host.events).toHaveLength(0);
+  });
+
+  it('renders a column header template and the filter button side by side in the wrapper', () => {
+    const wrapper = root()
+      .querySelectorAll('thead th')[1]
+      .querySelector('.hx-data-table-header-content');
+    expect(wrapper?.querySelector('i.extra')).not.toBeNull();
+    expect(wrapper?.querySelector('.hx-data-table-filter-button')).not.toBeNull();
+    const sortable = root()
+      .querySelectorAll('thead th')[0]
+      .querySelector('.hx-data-table-header-content');
+    expect(sortable?.querySelector('.hx-data-table-sort')).not.toBeNull();
+    expect(sortable?.querySelector('.hx-data-table-filter-button')).not.toBeNull();
   });
 
   it('marks the button of a filtered column, also when the model is set from outside', async () => {

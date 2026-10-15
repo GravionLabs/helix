@@ -100,6 +100,11 @@ The select-all box selects all *filtered* rows of every page and is indeterminat
   button; the button shows an active state while the column is filtered. Keyboard: Tab to the button, Enter or Space
   opens, the focus moves to the input, Enter in the input or Escape closes and returns the focus to the button.
 
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| `filterDisplay` | `'row' \| 'menu'` | none | Where the column filters are: a filter row, or a popover from the header. |
+| `filterLabel`, `clearLabel` | `string` | `'Filter {header}'`, `'Clear'` | The accessible name of the filter inputs and buttons, and the text of the menu's clear button. |
+
 A change of a filter goes back to the first page. In `lazy` mode nothing is filtered by the table: the texts are in `lazyLoad`.
 
 ## Row expansion
@@ -160,6 +165,6 @@ live region announces "Sorted by Name, ascending" or that the sort was removed. 
 
 ## Tokens
 
-The look comes from the design tokens `--h-datatable-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS.
+The look comes from the design tokens `--h-datatable-*` (see [Theming](../HELIX-UI.md#theming)); override them in your theme, never the component CSS. The filter button of `filterDisplay="menu"` uses the sort icon tokens (`--h-datatable-sort-icon-size`, `-color`, `-hover-color`) and the header focus ring and selected tokens for its active state.
 
 Part of [`@gravionlabs/helix-ui`](../HELIX-UI.md); all components are listed in the [component reference](README.md).

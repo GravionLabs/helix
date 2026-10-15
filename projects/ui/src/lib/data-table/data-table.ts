@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +8,9 @@ import {
   contentChild,
   contentChildren,
   Directive,
+  type ElementRef,
   effect,
+  Injector,
   inject,
   input,
   isDevMode,
@@ -294,6 +297,13 @@ export class HxDataTable implements OnInit {
   /** The text of the column filters, by field. */
   readonly filters = model<Record<string, string>>({});
   readonly filterLabel = input('Filter {header}');
+  /** The text of the button that empties a filter in the header menu. */
+  readonly clearLabel = input('Clear');
+  protected readonly filterPopover = viewChild(HxPopover);
+  protected readonly filterInput = viewChild<ElementRef<HTMLInputElement>>('filterInput');
+  /** The column whose filter popover is open. */
+  protected readonly activeFilterColumn = signal<HxColumn | null>(null);
+  private readonly injector = inject(Injector);
 
   /** The rows that are open (by `dataKey`, or the row index without one); needs a `hxRowExpansion` template. */
   readonly expandedRowKeys = model<Record<string, boolean>>({});
@@ -478,20 +488,25 @@ export class HxDataTable implements OnInit {
     if (this.lazy()) this.emitLazy();
   }
 
-  protected readonly filterPopover = viewChild(HxPopover);
-  /** The column whose filter popover is open. */
-  protected readonly activeFilterColumn = signal<HxColumn | null>(null);
-
   protected openFilter(event: Event, column: HxColumn): void {
     const popover = this.filterPopover();
     if (!popover) return;
-    if (popover.open() && this.activeFilterColumn() === column) {
+    if (popover.open() && this.activeFilterColumn()?.field === column.field) {
       popover.hide();
       return;
     }
+    const switching = popover.open();
     popover.hide(false);
     this.activeFilterColumn.set(column);
     popover.show(event, event.currentTarget as Element);
+    // switching columns re-uses the open popover, which does not move the focus again
+    if (switching) {
+      afterNextRender(() => this.filterInput()?.nativeElement.focus(), { injector: this.injector });
+    }
+  }
+
+  protected filterLabelFor(column: HxColumn): string {
+    return this.filterLabel().replace('{header}', column.header);
   }
 
   protected clearFilter(column: HxColumn): void {
