@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0
       - name: Determine version
         id: version
-        uses: GravionLabs/ci/versioning/determine-version@main
+        uses: GravionLabs/ci/versioning/determine-version@cbb01f83374efa76491226e97bcf1d5cf9674fab # main
 
   build:
     name: Build the site
@@ -66,6 +66,8 @@ jobs:
         env:
           # Shown in the demo's status bar (scripts/generate-build-info.mjs).
           HELIX_VERSION: ${{ needs.determine-version.outputs.npm-version }}
+          # An empty version fails the build instead of deploying a dev value.
+          HELIX_VERSION_REQUIRED: '1'
       - name: Put the pieces together
         run: pnpm pages:assemble
       - name: Upload the site

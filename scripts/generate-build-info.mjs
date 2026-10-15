@@ -1,19 +1,43 @@
 /**
- * Writes the demo's build version to `apps/helix-demo/src/app/shell/build-info.ts` (git-ignored).
- * The Pages workflow sets HELIX_VERSION from the determined version; without it (local builds) the
- * version is `0.0.0-dev`, so a development build is visibly not a release.
- * Run via `pnpm demo:generate-build-info` (wired into `demo:generate-sources`, `lint` and `test:ci`).
+ * Writes the demo's build version to `apps/helix-demo/src/app/shell/build-info.ts` (git-ignored), next to the
+ * repository root this script lives under, whatever the working directory.
+ * The Pages workflow sets HELIX_VERSION from the determined version. Without it (local builds) the version is
+ * `0.0.0-dev`, so a development build is visibly not a release. With HELIX_VERSION_REQUIRED=1 (the Pages build)
+ * an empty HELIX_VERSION fails instead. A set but malformed version always fails.
+ * Run via `pnpm demo:generate-build-info` (wired into `demo:generate-sources`, `lint`, `test`, `test:ci`, `watch`).
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const OUT_FILE = 'apps/helix-demo/src/app/shell/build-info.ts';
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const OUT_FILE = join(ROOT, 'apps/helix-demo/src/app/shell/build-info.ts');
 const FALLBACK = '0.0.0-dev';
+const SEMVER = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
 
 /** A single-quoted TS string literal, as the repo's formatter writes it. */
-const literal = (value) => `'${value.replace(/[\\']/g, '\\$&').replace(/\r?\n/g, '\\n')}'`;
+const escapeChar = (c) => {
+  if (c === '\\' || c === "'") return `\\${c}`;
+  if (c === '\r') return '\\r';
+  if (c === '\n') return '\\n';
+  if (c === ' ' || c === ' ') return `\\u${c.charCodeAt(0).toString(16)}`;
+  return c;
+};
+const literal = (value) => `'${[...value].map(escapeChar).join('')}'`;
 
-const version = process.env.HELIX_VERSION?.trim() || FALLBACK;
+const fail = (message) => {
+  process.stderr.write(`generate-build-info: ${message}\n`);
+  process.exit(1);
+};
+
+const given = process.env.HELIX_VERSION?.trim() ?? '';
+if (!given && process.env.HELIX_VERSION_REQUIRED === '1') {
+  fail('HELIX_VERSION is empty but required (HELIX_VERSION_REQUIRED=1)');
+}
+if (given && !SEMVER.test(given)) {
+  fail(`HELIX_VERSION ${JSON.stringify(given)} is not a version like 22.2.7 or 22.3.0-rc.1`);
+}
+const version = given || FALLBACK;
 
 mkdirSync(dirname(OUT_FILE), { recursive: true });
 writeFileSync(
