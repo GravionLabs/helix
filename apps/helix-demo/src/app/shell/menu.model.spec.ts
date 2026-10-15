@@ -5,6 +5,7 @@ import { TableDemo } from '../pages/ag-grid/overview/table-demo';
 import chartsRoutes from '../pages/charts/charts.routes';
 import { ChartDemo } from '../pages/charts/overview/chart-demo';
 import pagesRoutes from '../pages/pages.routes';
+import { DataTableDemo } from '../pages/uikit/data-table/data-table-demo';
 import uikitRoutes from '../pages/uikit/uikit.routes';
 import { DEMO_MENU_MODEL } from './menu.model';
 
@@ -27,6 +28,23 @@ describe('DEMO_MENU_MODEL charts group', () => {
   it('no longer lists Chart under Components', () => {
     const uikit = DEMO_MENU_MODEL.find((item) => item.label === 'Components');
     expect(uikit?.items?.map((i) => i.label)).not.toContain('Chart');
+  });
+});
+
+describe('DEMO_MENU_MODEL Data table item', () => {
+  it('lists Data table right after Tree under Components', () => {
+    const uikit = DEMO_MENU_MODEL.find((item) => item.label === 'Components');
+    const labels = uikit?.items?.map((i) => i.label) ?? [];
+    expect(labels.indexOf('Data table')).toBe(labels.indexOf('Tree') + 1);
+    const item = uikit?.items?.find((i) => i.label === 'Data table');
+    expect(item?.routerLink).toEqual(['/uikit/data-table']);
+    expect(item?.icon).toBe('pi pi-fw pi-table');
+  });
+
+  it('serves /uikit/data-table with DataTableDemo and a breadcrumb', () => {
+    const route = uikitRoutes.find((r) => r.path === 'data-table');
+    expect(route?.component).toBe(DataTableDemo);
+    expect(route?.data).toEqual({ breadcrumb: 'Data table' });
   });
 });
 

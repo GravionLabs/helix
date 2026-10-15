@@ -1,0 +1,32 @@
+<h1 class="sr-only">Data table</h1>
+<app-source-tabs library="helix-ui" directory="data-table" componentName="data-table-demo" [docs]="['data-table']">
+  <div class="flex flex-col gap-layout">
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">Data table</h2>
+      <p class="m-0">A column model, a cell template for the price, a header template (a link) and a title tooltip on columns, a caption, stripes and a scrolling body with a sticky header.</p>
+      <div class="flex gap-2">
+        <button hx-button type="button" size="small" variant="outlined" (click)="toggleLoading()">Toggle loading</button>
+        <button hx-button type="button" size="small" variant="outlined" (click)="toggleEmpty()">Toggle empty</button>
+      </div>
+      <hx-data-table [value]="tableRows()" [columns]="columns" dataKey="id" caption="Products" stripedRows [loading]="tableLoading()" scrollHeight="14rem">
+        <ng-template hxColumnHeader="price"><a href="#pricing">Pricing</a></ng-template>
+        <ng-template hxCell="price" let-value="value"><b>{{ value }} EUR</b></ng-template>
+      </hx-data-table>
+    </div>
+
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">Data table: sorting and paging</h2>
+      <p class="m-0">Click a header to sort (ascending, descending, off); hold several columns with the multiple mode; 47 rows over pages.</p>
+      <hx-data-table [value]="manyProducts" [columns]="columns" dataKey="id" ariaLabel="Many products" sortMode="multiple" paginator [rows]="5" [rowsPerPageOptions]="[5, 10, 25, 'all']" sortFirstOrder="desc" emptyValue="n/a" [rowClass]="dimCheap" />
+    </div>
+
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">Data table: selection, filters and expansion</h2>
+      <p class="m-0">Tick rows or all of them, filter with the global field or the column inputs, open a row for its details. Selected: {{ $any(selected()).length }}.</p>
+      <input hx-input #global type="text" placeholder="Global filter" aria-label="Global filter" (input)="dt.filterGlobal(global.value)" />
+      <hx-data-table #dt [value]="manyProducts" [columns]="filterColumns" dataKey="id" ariaLabel="Selectable products" selectionMode="multiple" [(selection)]="selected" [globalFilterFields]="['name', 'category']" filterDisplay="row" [(filters)]="filters" paginator [rows]="5">
+        <ng-template hxRowExpansion let-row>Details of <b>{{ row.name }}</b> ({{ row.code }}): {{ row.category }}, {{ row.price }} EUR.</ng-template>
+      </hx-data-table>
+    </div>
+  </div>
+</app-source-tabs>

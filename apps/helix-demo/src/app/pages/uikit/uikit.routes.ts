@@ -2,6 +2,7 @@ import type { EnvironmentProviders, Provider, Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { provideHelixDynamicForms } from '@gravionlabs/helix-zod';
 import { ButtonDemo } from './button/button-demo';
+import { DataTableDemo } from './data-table/data-table-demo';
 import { DynamicFormDemo } from './dynamicform/dynamic-form-demo';
 import { advancedErrorResolver } from './dynamicform-advanced/advanced-error-resolver';
 import { DynamicFormAdvancedDemo } from './dynamicform-advanced/dynamic-form-advanced-demo';
@@ -24,6 +25,7 @@ import { UIKIT_MENU_ITEMS } from './uikit-menu-items';
 
 const COMPONENTS: Record<string, Type<unknown>> = {
   button: ButtonDemo,
+  'data-table': DataTableDemo,
   dynamicform: DynamicFormDemo,
   'dynamicform-advanced': DynamicFormAdvancedDemo,
   'dynamicform-json': DynamicFormJsonDemo,
