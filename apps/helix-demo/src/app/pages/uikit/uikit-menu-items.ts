@@ -12,7 +12,6 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Dynamic Form JSON', icon: 'pi pi-fw pi-database', path: 'dynamicform-json' },
   { label: 'Input', icon: 'pi pi-fw pi-check-square', path: 'input' },
   { label: 'Button', icon: 'pi pi-fw pi-mobile', path: 'button' },
-  { label: 'Table', icon: 'pi pi-fw pi-table', path: 'table' },
   { label: 'List', icon: 'pi pi-fw pi-list', path: 'list' },
   { label: 'Tree', icon: 'pi pi-fw pi-share-alt', path: 'tree' },
   { label: 'Media', icon: 'pi pi-fw pi-image', path: 'media' },

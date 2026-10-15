@@ -5,7 +5,7 @@ import { DEMO_ROUTES } from '../../apps/site/.vitepress/demo-links';
 
 const ROOT = resolve(__dirname, '../..');
 const PAGES = join(ROOT, 'apps/helix-demo/src/app/pages');
-const SECTIONS = ['uikit', 'charts'];
+const SECTIONS = ['uikit', 'ag-grid', 'charts'];
 
 /** The `docs` slugs each demo page passes to `app-source-tabs`. */
 function pageDocs(): Record<string, string[]> {

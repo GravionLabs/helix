@@ -17,6 +17,7 @@ const uikitRoutes = sectionRoutes(
 );
 const demoRoutes = [
   ...uikitRoutes,
+  ...sectionRoutes('ag-grid', 'apps/helix-demo/src/app/pages/ag-grid/ag-grid-menu-items.ts'),
   ...sectionRoutes('charts', 'apps/helix-demo/src/app/pages/charts/charts-menu-items.ts'),
 ];
 

@@ -1,0 +1,130 @@
+<h1 class="sr-only">AG Grid CRUD</h1>
+<app-source-tabs library="helix-ag-grid" directory="ag-grid/crud" componentName="crud" [extraSources]="['crud-cells.ts']">
+  <hx-toolbar class="mb-3">
+    <span hxToolbarStart class="flex gap-2">
+      <button hx-button type="button" severity="secondary" (click)="openNew()">
+        <span class="pi pi-plus hx-button-icon" aria-hidden="true"></span>
+        New
+      </button>
+      <button
+        hx-button
+        type="button"
+        severity="secondary"
+        variant="outlined"
+        [disabled]="selectedCount() === 0"
+        (click)="deleteSelectedProducts()"
+      >
+        <span class="pi pi-trash hx-button-icon" aria-hidden="true"></span>
+        Delete
+      </button>
+    </span>
+    <button hxToolbarEnd hx-button type="button" severity="secondary" (click)="exportCSV()">
+      <span class="pi pi-upload hx-button-icon" aria-hidden="true"></span>
+      Export
+    </button>
+  </hx-toolbar>
+
+  <div class="card">
+    <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+      <h2 class="demo-title m-0">Manage Products</h2>
+      <hx-icon-field>
+        <i class="pi pi-search" hx-input-icon></i>
+        <input
+          hx-input
+          type="search"
+          placeholder="Search..."
+          aria-label="Search products"
+          (input)="quickFilter.set($any($event.target).value)"
+        />
+      </hx-icon-field>
+    </div>
+    <ag-grid-angular
+      [theme]="theme"
+      [rowData]="products()"
+      [columnDefs]="columns"
+      [defaultColDef]="defaultColDef"
+      [getRowId]="rowId"
+      [rowSelection]="{ mode: 'multiRow' }"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      [paginationPageSizeSelector]="[10, 20, 30]"
+      [quickFilterText]="quickFilter()"
+      [context]="context"
+      domLayout="autoHeight"
+      (gridReady)="onGridReady($event)"
+      (selectionChanged)="onSelectionChanged()"
+    />
+  </div>
+
+  <hx-dialog [(visible)]="productDialog" header="Product Details" width="28rem">
+    <div class="flex flex-col gap-3">
+      @if (product.image) {
+        <img
+          [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+          alt=""
+          class="m-auto block pb-4"
+        />
+      }
+      <div>
+        <label for="name" class="mb-2 block font-bold">Name</label>
+        <input hx-input fluid id="name" [(ngModel)]="product.name" required [attr.aria-invalid]="submitted && !product.name ? 'true' : null" />
+        @if (submitted && !product.name) {
+          <small class="text-red-500">Name is required.</small>
+        }
+      </div>
+      <div>
+        <label for="description" class="mb-2 block font-bold">Description</label>
+        <textarea hx-input fluid autoResize id="description" [(ngModel)]="product.description" rows="3"></textarea>
+      </div>
+
+      <div>
+        <label for="inventoryStatus" class="mb-2 block font-bold">Inventory Status</label>
+        <hx-select
+          fluid
+          inputId="inventoryStatus"
+          [(ngModel)]="product.inventoryStatus"
+          [options]="statuses"
+          optionLabel="label"
+          optionValue="label"
+          placeholder="Select a Status"
+        />
+      </div>
+
+      <fieldset class="m-0 border-0 p-0">
+        <legend class="mb-2 font-bold">Category</legend>
+        <div class="grid grid-cols-12 gap-3">
+          @for (category of categories; track category) {
+            <div class="col-span-6 flex items-center gap-2">
+              <input hx-radio type="radio" name="category" [id]="'category-' + category" [value]="category" [(ngModel)]="product.category" />
+              <label [for]="'category-' + category">{{ category }}</label>
+            </div>
+          }
+        </div>
+      </fieldset>
+
+      <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-6">
+          <label for="price" class="mb-2 block font-bold">Price</label>
+          <hx-input-number fluid inputId="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" />
+        </div>
+        <div class="col-span-6">
+          <label for="quantity" class="mb-2 block font-bold">Quantity</label>
+          <hx-input-number fluid inputId="quantity" [(ngModel)]="product.quantity" />
+        </div>
+      </div>
+    </div>
+    <div hxDialogFooter>
+      <button hx-button type="button" variant="text" (click)="hideDialog()">
+        <span class="pi pi-times hx-button-icon" aria-hidden="true"></span>
+        Cancel
+      </button>
+      <button hx-button type="button" (click)="saveProduct()">
+        <span class="pi pi-check hx-button-icon" aria-hidden="true"></span>
+        Save
+      </button>
+    </div>
+  </hx-dialog>
+
+  <hx-confirm-dialog />
+  <hx-toast />
+</app-source-tabs>
