@@ -21,9 +21,9 @@ describe('DataTableDemo', () => {
     return fixture;
   }
 
-  it('renders the three data table cards', () => {
+  it('renders the four data table cards', () => {
     const el = create().nativeElement as HTMLElement;
-    expect(el.querySelectorAll('hx-data-table')).toHaveLength(3);
+    expect(el.querySelectorAll('hx-data-table')).toHaveLength(4);
   });
 
   const click = (el: HTMLElement, label: string) => {
@@ -99,5 +99,22 @@ describe('DataTableDemo', () => {
     const el = create().nativeElement as HTMLElement;
     const paged = el.querySelectorAll('hx-data-table')[1];
     expect(paged.querySelectorAll('tbody tr')).toHaveLength(5);
+  });
+
+  it('renders a filter button per filterable header in the header filter card', () => {
+    const el = create().nativeElement as HTMLElement;
+    const table = el.querySelectorAll('hx-data-table')[3];
+    expect(table.querySelectorAll('.hx-data-table-filter-button')).toHaveLength(3);
+    expect(table.querySelector('.hx-data-table-filter-row')).toBeNull();
+  });
+
+  it('prints the menuFilters model as JSON', () => {
+    const fixture = create();
+    const el = fixture.nativeElement as HTMLElement;
+    expect(el.textContent).toContain('Filters: {}');
+    fixture.componentInstance.menuFilters.set({ name: 'Product 4' });
+    fixture.detectChanges();
+    expect(el.textContent).toContain('"name": "Product 4"');
+    expect(el.querySelectorAll('hx-data-table')[3].querySelectorAll('tbody tr')).toHaveLength(5);
   });
 });

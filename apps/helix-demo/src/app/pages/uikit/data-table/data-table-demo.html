@@ -22,11 +22,18 @@
 
     <div class="card flex flex-col gap-3">
       <h2 class="demo-title">Data table: selection, filters and expansion</h2>
-      <p class="m-0">Tick rows or all of them, filter with the global field or the column inputs, open a row for its details. Selected: {{ selected().length }}.</p>
+      <p class="m-0">Tick rows or all of them, filter with the global field or the column inputs (the row mode, a field under each header), open a row for its details. Selected: {{ selected().length }}.</p>
       <input hx-input #global type="text" placeholder="Global filter" aria-label="Global filter" (input)="dt.filterGlobal(global.value)" />
       <hx-data-table #dt [value]="manyProducts" [columns]="filterColumns" dataKey="id" ariaLabel="Selectable products" selectionMode="multiple" [(selection)]="selected" [globalFilterFields]="['name', 'category']" filterDisplay="row" [(filters)]="filters" paginator [rows]="5">
         <ng-template hxRowExpansion let-row>Details of <b>{{ row.name }}</b> ({{ row.code }}): {{ row.category }}, {{ row.price }} EUR.</ng-template>
       </hx-data-table>
+    </div>
+
+    <div class="card flex flex-col gap-3">
+      <h2 class="demo-title">Data table: filters in the header</h2>
+      <p class="m-0">The menu mode: a filter button in each header opens a small menu with the input, reachable by keyboard. The two-way <code>filters</code> model is printed below. See <a href="https://gravionlabs.github.io/helix/components/data-table/#filtering" target="_blank" rel="noopener">Filtering</a> in the docs.</p>
+      <p class="m-0">Filters: <code>{{ menuFilters() | json }}</code></p>
+      <hx-data-table [value]="manyProducts" [columns]="menuColumns" dataKey="id" ariaLabel="Products with header filters" filterDisplay="menu" [(filters)]="menuFilters" paginator [rows]="5" />
     </div>
   </div>
 </app-source-tabs>
