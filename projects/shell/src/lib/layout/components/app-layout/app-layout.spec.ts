@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixStatusBar } from '../status-bar/status-bar';
+import { HelixTopbar } from '../topbar/topbar';
 import { HelixAppLayout } from './app-layout';
 
 describe('HelixAppLayout', () => {
@@ -325,5 +326,52 @@ describe('HelixAppLayout topbar forwarding', () => {
     await render();
     expect(filter()).toBeNull();
     expect(topbar().children.length).toBe(0);
+  });
+});
+
+describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+  let host: LayoutHostComponent;
+
+  const slot = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-slot');
+  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
+
+  async function render(): Promise<void> {
+    fixture.detectChanges();
+    await fixture.whenStable();
+  }
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        // Real topbar so ngProjectAs is exercised end-to-end; nav-rail and router-outlet stay
+        // unknown (their CSS chokes jsdom), hence the schema.
+        set: { imports: [HelixTopbar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    host = fixture.componentInstance;
+  });
+
+  it('lands [helixTopbarEnd] content inside the topbar slot wrapper', async () => {
+    await render();
+    expect(slot().contains(filter())).toBe(true);
+    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
+    expect(fixture.nativeElement.querySelector('.layout-topbar-menu')?.contains(filter())).toBe(
+      false,
+    );
+  });
+
+  it('leaves the topbar slot wrapper empty when nothing is projected', async () => {
+    host.withTopbarEnd.set(false);
+    await render();
+    expect(filter()).toBeNull();
+    // The host's @if anchor comment is projected too, so only element children count.
+    expect(slot().children.length).toBe(0);
+    expect(slot().matches(':not(:has(*))')).toBe(true);
   });
 });
