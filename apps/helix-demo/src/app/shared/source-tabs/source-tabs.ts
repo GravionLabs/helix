@@ -8,7 +8,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { HxTab, HxTabList, HxTabPanel, HxTabPanels, HxTabs } from '@gravionlabs/helix-ui';
+import { HxTab, HxTabList, HxTabPanel, HxTabPanels, HxTabs, HxTag } from '@gravionlabs/helix-ui';
 import { Highlight } from 'ngx-highlightjs';
 
 interface SourceTab {
@@ -21,6 +21,9 @@ interface SourceTab {
 }
 
 const LANGUAGES: Record<string, string> = { html: 'xml', scss: 'scss', ts: 'typescript' };
+
+/** The package a demo page belongs to; shown as a tag beside the tabs. */
+export type DemoLibrary = 'helix-ui' | 'helix-ag-grid' | 'helix-shell' | 'helix-zod';
 
 /** The documentation site; a component page is `components/<slug>/`. */
 export const DOCS_URL = 'https://gravionlabs.github.io/helix/';
@@ -36,7 +39,7 @@ export const DOCS_URL = 'https://gravionlabs.github.io/helix/';
 @Component({
   selector: 'app-source-tabs',
   standalone: true,
-  imports: [HxTabs, HxTabList, HxTab, HxTabPanels, HxTabPanel, Highlight],
+  imports: [HxTabs, HxTabList, HxTab, HxTabPanels, HxTabPanel, HxTag, Highlight],
   templateUrl: './source-tabs.html',
   styleUrl: './source-tabs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,6 +53,9 @@ export class SourceTabsComponent {
   readonly extraSources = input<readonly string[]>([]);
   /** Slugs of the component pages of the docs site shown on this page (`button`, `select`). */
   readonly docs = input<readonly string[]>([]);
+
+  /** Library the page demonstrates; shown as an `@gravionlabs/<library>` tag beside the tabs. */
+  readonly library = input<DemoLibrary>();
 
   protected readonly docsUrl = DOCS_URL;
   protected readonly docLinks = computed(() =>

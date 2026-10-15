@@ -42,3 +42,14 @@
     text-decoration: underline;
   }
 }
+
+.source-tabs {
+  position: relative;
+}
+
+// Beside the tab list, right-aligned on the tab row.
+.source-tabs__library {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
