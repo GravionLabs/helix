@@ -1,34 +1,39 @@
-<hx-tabs [value]="activeTab()" (valueChange)="activeTab.set($event ?? 'demo')" scrollable>
-  <hx-tab-list>
-    <hx-tab value="demo">Demo</hx-tab>
-    @for (tab of tabs(); track tab.file) {
-      <hx-tab [value]="tab.file">{{ tab.label }}</hx-tab>
-    }
-    <hx-tab value="docs">Docs</hx-tab>
-  </hx-tab-list>
-  <hx-tab-panels>
-    <hx-tab-panel value="demo">
-      <ng-content />
-    </hx-tab-panel>
-    @for (tab of tabs(); track tab.file) {
-      <hx-tab-panel value="{{ tab.file }}">
-        <pre class="source-tabs__code"><code [highlight]="source(tab.file)" [language]="tab.language"></code></pre>
+<div class="source-tabs">
+  <hx-tabs [value]="activeTab()" (valueChange)="activeTab.set($event ?? 'demo')" scrollable>
+    <hx-tab-list>
+      <hx-tab value="demo">Demo</hx-tab>
+      @for (tab of tabs(); track tab.file) {
+        <hx-tab [value]="tab.file">{{ tab.label }}</hx-tab>
+      }
+      <hx-tab value="docs">Docs</hx-tab>
+    </hx-tab-list>
+    <hx-tab-panels>
+      <hx-tab-panel value="demo">
+        <ng-content />
       </hx-tab-panel>
-    }
-    <hx-tab-panel value="docs">
-      <div class="card flex flex-col gap-3">
-        @if (docLinks().length) {
-          <p class="m-0">The components of this page in the documentation (usage, inputs and outputs, accessibility, tokens):</p>
-          <ul class="source-tabs__docs">
-            @for (link of docLinks(); track link.slug) {
-              <li><a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a></li>
-            }
-          </ul>
-        } @else {
-          <p class="m-0">This page has no component page of its own.</p>
-        }
-        <p class="m-0 text-sm text-muted-color">All pages: <a [href]="docsUrl + 'components/'" target="_blank" rel="noopener">component reference</a> · <a [href]="docsUrl" target="_blank" rel="noopener">documentation site</a></p>
-      </div>
-    </hx-tab-panel>
-  </hx-tab-panels>
-</hx-tabs>
+      @for (tab of tabs(); track tab.file) {
+        <hx-tab-panel value="{{ tab.file }}">
+          <pre class="source-tabs__code"><code [highlight]="source(tab.file)" [language]="tab.language"></code></pre>
+        </hx-tab-panel>
+      }
+      <hx-tab-panel value="docs">
+        <div class="card flex flex-col gap-3">
+          @if (docLinks().length) {
+            <p class="m-0">The components of this page in the documentation (usage, inputs and outputs, accessibility, tokens):</p>
+            <ul class="source-tabs__docs">
+              @for (link of docLinks(); track link.slug) {
+                <li><a [href]="link.url" target="_blank" rel="noopener">{{ link.label }}</a></li>
+              }
+            </ul>
+          } @else {
+            <p class="m-0">This page has no component page of its own.</p>
+          }
+          <p class="m-0 text-sm text-muted-color">All pages: <a [href]="docsUrl + 'components/'" target="_blank" rel="noopener">component reference</a> · <a [href]="docsUrl" target="_blank" rel="noopener">documentation site</a></p>
+        </div>
+      </hx-tab-panel>
+    </hx-tab-panels>
+  </hx-tabs>
+  @if (library(); as lib) {
+    <hx-tag class="source-tabs__library" severity="secondary" [value]="'@gravionlabs/' + lib" />
+  }
+</div>

@@ -202,6 +202,9 @@
               ],
               "outputHashing": "all"
             },
+            "test": {
+              "styles": []
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -209,6 +212,19 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "apps/helix-demo/tsconfig.spec.json",
+            "buildTarget": "helix-demo:build:test"
+          },
+          "configurations": {
+            "ci": {
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit-demo.xml"
+            }
+          }
         },
         "serve": {
           "builder": "@angular/build:dev-server",

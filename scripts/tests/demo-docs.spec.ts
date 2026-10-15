@@ -4,18 +4,24 @@ import { describe, expect, it } from 'vitest';
 import { DEMO_ROUTES } from '../../apps/site/.vitepress/demo-links';
 
 const ROOT = resolve(__dirname, '../..');
-const PAGES = join(ROOT, 'apps/helix-demo/src/app/pages/uikit');
+const PAGES = join(ROOT, 'apps/helix-demo/src/app/pages');
+const SECTIONS = ['uikit', 'ag-grid', 'charts'];
 
 /** The `docs` slugs each demo page passes to `app-source-tabs`. */
 function pageDocs(): Record<string, string[]> {
   const result: Record<string, string[]> = {};
-  for (const dir of readdirSync(PAGES, { withFileTypes: true })) {
-    if (!dir.isDirectory() || dir.name === 'sections') continue;
-    const html = readdirSync(join(PAGES, dir.name)).find((f) => f.endsWith('-demo.html'));
-    if (!html) continue;
-    const source = readFileSync(join(PAGES, dir.name, html), 'utf8');
-    const match = /<app-source-tabs[^>]*\[docs\]="\[([^\]]*)\]"/.exec(source);
-    result[dir.name] = match ? [...match[1].matchAll(/'([\w-]+)'/g)].map((m) => m[1]) : [];
+  for (const section of SECTIONS) {
+    for (const dir of readdirSync(join(PAGES, section), { withFileTypes: true })) {
+      if (!dir.isDirectory() || dir.name === 'sections') continue;
+      const folder = join(PAGES, section, dir.name);
+      const html = readdirSync(folder).find((f) => f.endsWith('-demo.html'));
+      if (!html) continue;
+      const source = readFileSync(join(folder, html), 'utf8');
+      const match = /<app-source-tabs[^>]*\[docs\]="\[([^\]]*)\]"/.exec(source);
+      result[`${section}/${dir.name}`] = match
+        ? [...match[1].matchAll(/'([\w-]+)'/g)].map((m) => m[1])
+        : [];
+    }
   }
   return result;
 }
@@ -29,11 +35,10 @@ describe('demo pages: Docs tab', () => {
 
   it('links the same component pages as the site maps to the demo route', () => {
     for (const [route, slugs] of Object.entries(DEMO_ROUTES)) {
-      const page = route.replace(/^uikit\//, '');
-      expect(docs[page], route).toEqual([...slugs]);
+      expect(docs[route], route).toEqual([...slugs]);
     }
     for (const [page, slugs] of Object.entries(docs)) {
-      if (slugs.length) expect(DEMO_ROUTES[`uikit/${page}`], page).toBeDefined();
+      if (slugs.length) expect(DEMO_ROUTES[page], page).toBeDefined();
     }
   });
 

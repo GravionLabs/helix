@@ -8,6 +8,13 @@
   [statusBarNote]="buildNote"
   [statusBarVersions]="versions"
 >
+  <input
+    helixTopbarEnd
+    type="search"
+    class="topbar-filter"
+    aria-label="Filter"
+    placeholder="Filter"
+  />
   <button hxStatusBarEnd type="button" class="status-end-action" (click)="reloadApp()">
     Reload
   </button>

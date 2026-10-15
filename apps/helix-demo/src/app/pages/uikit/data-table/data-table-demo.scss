@@ -1,0 +1,8 @@
+:host {
+  display: block;
+}
+
+/* rowClass demo: the class lands on rows inside hx-data-table, so it needs ::ng-deep */
+:host ::ng-deep .data-table-dim {
+  opacity: 0.6;
+}

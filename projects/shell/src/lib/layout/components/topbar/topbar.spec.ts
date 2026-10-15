@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
@@ -96,6 +97,32 @@ describe('HelixTopbar', () => {
     });
   });
 
+  describe('actions menu', () => {
+    const menu = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-menu');
+    const toggle = (): HTMLButtonElement =>
+      fixture.nativeElement.querySelector('.layout-topbar-menu-button');
+
+    it('is hidden by default and does not use the Tailwind lg breakpoint', () => {
+      fixture.detectChanges();
+      expect(menu().classList.contains('hidden')).toBe(true);
+      expect(menu().classList.contains('lg:block')).toBe(false);
+    });
+
+    it('toggles the hidden class when the ellipsis button is clicked', () => {
+      vi.useFakeTimers();
+      try {
+        fixture.detectChanges();
+        toggle().click();
+        expect(menu().classList.contains('hidden')).toBe(false);
+        toggle().click();
+        vi.advanceTimersByTime(400); // the close fade-out ends via its fallback timer
+        expect(menu().classList.contains('hidden')).toBe(true);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+  });
+
   describe('menu button', () => {
     const button = (): HTMLButtonElement =>
       fixture.nativeElement.querySelector('.layout-menu-button');
@@ -133,5 +160,68 @@ describe('HelixTopbar', () => {
         value: original,
       });
     });
+  });
+});
+
+@Component({
+  imports: [HelixTopbar],
+  template: `
+    <helix-topbar [topbarActions]="actions">
+      <button helixTopbarEnd type="button" class="end-slot">End</button>
+    </helix-topbar>
+  `,
+})
+class TopbarEndHostComponent {
+  actions = [{ icon: 'pi pi-star', label: 'Star' }];
+}
+
+describe('HelixTopbar [helixTopbarEnd] slot', () => {
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [TopbarEndHostComponent, HelixTopbar],
+      providers: [provideRouter([])],
+    }).compileComponents();
+  });
+
+  const render = async <T>(type: new () => T): Promise<HTMLElement> => {
+    const fixture = TestBed.createComponent(type);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture.nativeElement as HTMLElement;
+  };
+
+  it('renders projected content in the end cluster, outside the collapsible menu', async () => {
+    const root = await render(TopbarEndHostComponent);
+    const end = root.querySelector('.end-slot') as HTMLElement;
+
+    expect(root.querySelector('.layout-topbar-end')?.contains(end)).toBe(true);
+    expect(root.querySelector('.layout-topbar-slot')?.contains(end)).toBe(true);
+    expect(root.querySelector('.layout-topbar-menu')?.contains(end)).toBe(false);
+    expect(root.querySelector('.layout-topbar-menu-content')?.contains(end)).toBe(false);
+  });
+
+  it('places projected content before the config items, the ellipsis button and the menu actions', async () => {
+    const root = await render(TopbarEndHostComponent);
+    const end = root.querySelector('.end-slot') as HTMLElement;
+    const configMenu = root.querySelector('.layout-config-menu') as HTMLElement;
+    const ellipsis = root.querySelector('.layout-topbar-menu-button') as HTMLElement;
+    const action = root.querySelector('.layout-topbar-menu .layout-topbar-action') as HTMLElement;
+
+    const follows = (a: Node, b: Node): boolean =>
+      (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
+
+    expect(follows(end, configMenu)).toBe(true);
+    expect(follows(configMenu, ellipsis)).toBe(true);
+    expect(follows(ellipsis, action)).toBe(true);
+  });
+
+  it('leaves the slot wrapper empty without projected content', async () => {
+    const root = await render(HelixTopbar);
+    const slot = root.querySelector('.layout-topbar-slot') as HTMLElement;
+
+    expect(slot).toBeTruthy();
+    expect(slot.children.length).toBe(0);
+    expect(slot.matches(':not(:has(*))')).toBe(true);
   });
 });

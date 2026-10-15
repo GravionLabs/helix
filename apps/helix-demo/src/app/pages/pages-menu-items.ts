@@ -6,6 +6,5 @@ import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
  * `pages.routes.ts` uses this same array to generate Angular routes.
  */
 export const PAGES_MENU_ITEMS: HelixRouteMenuItem[] = [
-  { label: 'Crud', icon: 'pi pi-fw pi-pencil', path: 'crud' },
   { label: 'Empty', icon: 'pi pi-fw pi-circle-off', path: 'empty' },
 ];

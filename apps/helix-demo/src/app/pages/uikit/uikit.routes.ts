@@ -2,7 +2,7 @@ import type { EnvironmentProviders, Provider, Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { provideHelixDynamicForms } from '@gravionlabs/helix-zod';
 import { ButtonDemo } from './button/button-demo';
-import { ChartDemo } from './charts/chart-demo';
+import { DataTableDemo } from './data-table/data-table-demo';
 import { DynamicFormDemo } from './dynamicform/dynamic-form-demo';
 import { advancedErrorResolver } from './dynamicform-advanced/advanced-error-resolver';
 import { DynamicFormAdvancedDemo } from './dynamicform-advanced/dynamic-form-advanced-demo';
@@ -18,7 +18,7 @@ import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
 import { OverlayDemo } from './overlay/overlay-demo';
 import { PanelsDemo } from './panel/panels-demo';
-import { TableDemo } from './table/table-demo';
+import { UikitTableDemo } from './table/table-demo';
 import { TimelineDemo } from './timeline/timeline-demo';
 import { TopbarDemo } from './topbar/topbar-demo';
 import { TreeDemo } from './tree/tree-demo';
@@ -26,7 +26,7 @@ import { UIKIT_MENU_ITEMS } from './uikit-menu-items';
 
 const COMPONENTS: Record<string, Type<unknown>> = {
   button: ButtonDemo,
-  charts: ChartDemo,
+  'data-table': DataTableDemo,
   dynamicform: DynamicFormDemo,
   'dynamicform-advanced': DynamicFormAdvancedDemo,
   'dynamicform-json': DynamicFormJsonDemo,
@@ -40,7 +40,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   misc: MiscDemo,
   overlay: OverlayDemo,
   panel: PanelsDemo,
-  table: TableDemo,
+  table: UikitTableDemo,
   timeline: TimelineDemo,
   topbar: TopbarDemo,
   tree: TreeDemo,
@@ -61,6 +61,7 @@ const PROVIDERS: Record<string, (Provider | EnvironmentProviders)[]> = {
 
 export default [
   { path: '', redirectTo: 'formlayout', pathMatch: 'full' },
+  { path: 'charts', redirectTo: '/charts', pathMatch: 'full' },
   ...UIKIT_MENU_ITEMS.filter((item) => item.path != null && COMPONENTS[item.path]).map((item) => ({
     path: item.path!,
     component: COMPONENTS[item.path!],

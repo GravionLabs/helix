@@ -15,6 +15,10 @@
   </div>
 
   <div class="layout-topbar-end">
+    <div class="layout-topbar-slot">
+      <ng-content select="[helixTopbarEnd]" />
+    </div>
+
     <div class="layout-config-menu">
       @for (item of items(); track $index) {
         @switch (item.type) {
@@ -46,7 +50,7 @@
       <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div class="layout-topbar-menu hidden lg:block">
+    <div class="layout-topbar-menu hidden">
       <div class="layout-topbar-menu-content">
         @for (action of topbarActions(); track action.icon) {
           <button type="button" class="layout-topbar-action" (click)="action.command?.()">
@@ -54,7 +58,6 @@
             <span>{{ action.label }}</span>
           </button>
         }
-        <ng-content select="[helixTopbarEnd]" />
       </div>
     </div>
   </div>

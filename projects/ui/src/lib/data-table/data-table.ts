@@ -1,5 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +8,9 @@ import {
   contentChild,
   contentChildren,
   Directive,
+  type ElementRef,
   effect,
+  Injector,
   inject,
   input,
   isDevMode,
@@ -17,10 +20,13 @@ import {
   signal,
   TemplateRef,
   untracked,
+  viewChild,
 } from '@angular/core';
+import { HxButton } from '../button/button';
 import { HxCheckbox } from '../checkbox/checkbox';
 import { HxInput } from '../input/input';
 import { type HxPageEvent, HxPaginator } from '../paginator/paginator';
+import { HxPopover } from '../popover/popover';
 import { HxProgressSpinner } from '../progress/progress';
 import type { HxTableSize } from '../table/table';
 
@@ -40,7 +46,7 @@ export interface HxColumn {
   align?: HxColumnAlign;
   /** The header is a button that sorts by the column. */
   sortable?: boolean;
-  /** The column gets a text filter in the filter row (`filterDisplay="row"`). */
+  /** The column gets a text filter: in the filter row (`filterDisplay="row"`) or in a popover from its header (`"menu"`). */
   filter?: boolean;
   /** The direction of the first click on the sort button (the table's `sortFirstOrder` by default). */
   sortFirstOrder?: HxSortFirstOrder;
@@ -190,17 +196,25 @@ export interface HxTableRowContext {
  *
  * ```html
  * <hx-data-table [value]="invoices" [columns]="columns" dataKey="id" caption="Invoices" stripedRows>
- *   <ng-template hxCell="amount" let-value>{{ value | currency: 'EUR' }}</ng-template>
+ *   <ng-template hxCell="amount" let-value="value">{{ value | currency: 'EUR' }}</ng-template>
  * </hx-data-table>
  * ```
  *
  * The table keeps the native semantics: a `<caption>` (drawn as the table header; visually hidden when only
  * `ariaLabel` is set), `<th scope="col">` cells and `aria-busy` while `loading`. A scrolling table is a labelled,
- * focusable `region`.
+ * focusable `region`. `filterDisplay="menu"` puts the column filters in a popover opened from the header.
  */
 @Component({
   selector: 'hx-data-table',
-  imports: [NgTemplateOutlet, HxProgressSpinner, HxPaginator, HxCheckbox, HxInput],
+  imports: [
+    NgTemplateOutlet,
+    HxProgressSpinner,
+    HxPaginator,
+    HxCheckbox,
+    HxInput,
+    HxButton,
+    HxPopover,
+  ],
   templateUrl: './data-table.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-data-table' },
@@ -275,11 +289,21 @@ export class HxDataTable implements OnInit {
 
   /** The properties of a row the global filter looks in (`filterGlobal`). */
   readonly globalFilterFields = input<readonly string[]>([]);
-  /** `row`: a filter row with a text input under the headers of columns with `filter: true`. */
-  readonly filterDisplay = input<'row'>();
+  /**
+   * `row`: a filter row with a text input under the headers of columns with `filter: true`. `menu`: a filter button in
+   * those headers that opens a popover with the text input.
+   */
+  readonly filterDisplay = input<'row' | 'menu'>();
   /** The text of the column filters, by field. */
   readonly filters = model<Record<string, string>>({});
   readonly filterLabel = input('Filter {header}');
+  /** The text of the button that empties a filter in the header menu. */
+  readonly clearLabel = input('Clear');
+  protected readonly filterPopover = viewChild(HxPopover);
+  protected readonly filterInput = viewChild<ElementRef<HTMLInputElement>>('filterInput');
+  /** The column whose filter popover is open. */
+  protected readonly activeFilterColumn = signal<HxColumn | null>(null);
+  private readonly injector = inject(Injector);
 
   /** The rows that are open (by `dataKey`, or the row index without one); needs a `hxRowExpansion` template. */
   readonly expandedRowKeys = model<Record<string, boolean>>({});
@@ -462,6 +486,32 @@ export class HxDataTable implements OnInit {
     this.globalText.set(text);
     this.first.set(0);
     if (this.lazy()) this.emitLazy();
+  }
+
+  protected openFilter(event: Event, column: HxColumn): void {
+    const popover = this.filterPopover();
+    if (!popover) return;
+    if (popover.open() && this.activeFilterColumn()?.field === column.field) {
+      popover.hide();
+      return;
+    }
+    const switching = popover.open();
+    popover.hide(false);
+    this.activeFilterColumn.set(column);
+    popover.show(event, event.currentTarget as Element);
+    // switching columns re-uses the open popover, which does not move the focus again
+    if (switching) {
+      afterNextRender(() => this.filterInput()?.nativeElement.focus(), { injector: this.injector });
+    }
+  }
+
+  protected filterLabelFor(column: HxColumn): string {
+    return this.filterLabel().replace('{header}', column.header);
+  }
+
+  protected clearFilter(column: HxColumn): void {
+    this.setFilter(column, '');
+    this.filterPopover()?.hide();
   }
 
   protected setFilter(column: HxColumn, text: string): void {

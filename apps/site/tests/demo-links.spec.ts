@@ -4,18 +4,27 @@ import { DEMO_ROUTES, demoLinkOf, demoLinksPlugin, demoRouteOf } from '../.vitep
 
 const repo = resolve(__dirname, '../../..');
 
-/** The routes of the demo's UI kit: `path: '<name>'` of each menu item, under `/uikit/`. */
-const uikitRoutes = [
-  ...readFileSync(
-    resolve(repo, 'apps/helix-demo/src/app/pages/uikit/uikit-menu-items.ts'),
-    'utf8',
-  ).matchAll(/path:\s*'([^']+)'/g),
-].map((m) => `uikit/${m[1]}`);
+/** The routes of a demo section: `path: '<name>'` of each menu item, under `/<section>/`. */
+function sectionRoutes(section: string, file: string): string[] {
+  return [...readFileSync(resolve(repo, file), 'utf8').matchAll(/path:\s*'([^']+)'/g)].map(
+    (m) => `${section}/${m[1]}`,
+  );
+}
+
+const uikitRoutes = sectionRoutes(
+  'uikit',
+  'apps/helix-demo/src/app/pages/uikit/uikit-menu-items.ts',
+);
+const demoRoutes = [
+  ...uikitRoutes,
+  ...sectionRoutes('ag-grid', 'apps/helix-demo/src/app/pages/ag-grid/ag-grid-menu-items.ts'),
+  ...sectionRoutes('charts', 'apps/helix-demo/src/app/pages/charts/charts-menu-items.ts'),
+];
 
 describe('DEMO_ROUTES', () => {
   it('only maps to routes that exist in the demo', () => {
     expect(uikitRoutes.length).toBeGreaterThan(10);
-    expect(Object.keys(DEMO_ROUTES).filter((route) => !uikitRoutes.includes(route))).toEqual([]);
+    expect(Object.keys(DEMO_ROUTES).filter((route) => !demoRoutes.includes(route))).toEqual([]);
   });
 
   it('only names component pages that exist', () => {
@@ -28,6 +37,10 @@ describe('DEMO_ROUTES', () => {
     expect(unknown).toEqual([]);
   });
 
+  it('links the chart docs to the first chart demo page', () => {
+    expect(demoRouteOf('chart')).toBe('charts/line');
+  });
+
   it('maps a component to one demo page only', () => {
     const all = Object.values(DEMO_ROUTES).flat();
     expect(all.filter((c, i) => all.indexOf(c) !== i)).toEqual([]);
@@ -38,6 +51,17 @@ describe('demoLinkOf', () => {
   it('builds the address under the base of the site', () => {
     expect(demoLinkOf('button', '/helix/')).toBe('/helix/demo/uikit/button');
     expect(demoRouteOf('split-button')).toBe('uikit/button');
+  });
+
+  it('gives data-table and tree their own demo pages', () => {
+    expect(demoRouteOf('data-table')).toBe('uikit/data-table');
+    expect(demoRouteOf('tree')).toBe('uikit/tree');
+    expect(demoLinkOf('data-table', '/helix/')).toBe('/helix/demo/uikit/data-table');
+  });
+
+  it('gives table its own Components page and the AG Grid page no docs link', () => {
+    expect(demoRouteOf('table')).toBe('uikit/table');
+    expect(DEMO_ROUTES['ag-grid/overview']).toBeUndefined();
   });
 
   it('is null for a component without a demo page', () => {

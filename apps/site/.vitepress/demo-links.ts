@@ -1,5 +1,5 @@
 /**
- * The demo page (a route under `/uikit/`, see `UIKIT_MENU_ITEMS` of the demo) that shows each component
+ * The demo page (a route under `/uikit/`, `/ag-grid/` or `/charts/`, see the `*_MENU_ITEMS` of the demo) that shows each component
  * page of `docs/components`: `{ demo route: component pages }`. A component without an entry has no demo.
  */
 export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
@@ -24,15 +24,16 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
     'toggle-button',
   ],
   'uikit/button': ['button', 'button-group', 'split-button'],
+  'uikit/tree': ['tree'],
+  'uikit/data-table': ['data-table'],
   'uikit/table': ['table'],
-  'uikit/tree': ['data-table', 'tree'],
   'uikit/media': ['carousel', 'galleria', 'image'],
   'uikit/panel': ['accordion', 'card', 'divider', 'fieldset', 'panel', 'tabs', 'toolbar'],
   'uikit/overlay': ['confirm', 'dialog', 'drawer', 'popover', 'tooltip'],
   'uikit/menu': ['breadcrumb', 'menu', 'menubar', 'paginator', 'stepper'],
   'uikit/message': ['message', 'toast'],
   'uikit/file': ['file-upload'],
-  'uikit/charts': ['chart'],
+  'charts/line': ['chart'],
   'uikit/timeline': ['timeline'],
   'uikit/misc': ['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag'],
 };

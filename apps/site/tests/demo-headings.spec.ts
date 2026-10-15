@@ -15,7 +15,8 @@ function* sources(dir: string): Generator<string> {
 }
 
 const isPage = (path: string) =>
-  /uikit\/[^/]+\/[^/]+-demo\.html$/.test(path) ||
+  /(uikit|ag-grid|charts)\/[^/]+\/[^/]+-demo\.html$/.test(path) ||
+  path.endsWith('ag-grid/crud/crud.html') ||
   path.endsWith('dashboard/dashboard.html') ||
   path.endsWith('documentation/documentation.ts');
 

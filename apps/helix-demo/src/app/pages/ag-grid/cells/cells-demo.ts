@@ -8,6 +8,7 @@ import {
   type ICellRendererParams,
   ModuleRegistry,
 } from 'ag-grid-community';
+import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -50,6 +51,7 @@ export class StatusCell implements ICellRendererAngularComp {
 /** A cell renderer built from `button[hx-button]`: the row actions. */
 @Component({
   selector: 'app-actions-cell',
+  host: { style: 'display: flex; align-items: center; height: 100%' },
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,16 +80,19 @@ export class ActionsCell implements ICellRendererAngularComp {
   }
 }
 
-/** `@gravionlabs/helix-ag-grid` and AG Grid Community: the Helix theme and the usual patterns. */
+/**
+ * AG Grid cells built from helix-ui: `hx-tag` and `hx-button` cell renderers, the formatters of
+ * `@gravionlabs/helix-ag-grid`, and the loading and no-rows overlays.
+ */
 @Component({
-  selector: 'app-grid-section',
+  selector: 'app-cells-demo',
   standalone: true,
-  imports: [AgGridAngular, HxButton, HxInput],
-  templateUrl: './grid-section.html',
+  imports: [SourceTabsComponent, AgGridAngular, HxButton, HxInput],
+  templateUrl: './cells-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './grid-section.scss',
+  styleUrl: './cells-demo.scss',
 })
-export class HxGridSection {
+export class CellsDemo {
   protected readonly theme = helixGridTheme;
   protected readonly context = {
     onAction: (action: string, row: Invoice) =>
