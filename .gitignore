@@ -47,6 +47,7 @@ pnpm.approved-builds.json
 
 # Generated demo source assets (see scripts/generate-source-assets.mjs)
 apps/helix-demo/public/source/
+apps/helix-demo/src/app/shell/build-info.ts
 
 
 # APM dependencies
