@@ -1,6 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HxChart } from '@gravionlabs/helix-ui/chart';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { HxChart, type HxChartSelectEvent } from '@gravionlabs/helix-ui/chart';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
+
+function isPickedElement(value: unknown): value is { datasetIndex: number; index: number } {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'datasetIndex' in value &&
+    typeof value.datasetIndex === 'number' &&
+    'index' in value &&
+    typeof value.index === 'number'
+  );
+}
 
 /**
  * The charts of `@gravionlabs/helix-ui`: chart.js with colours, grid and font from the design tokens, redrawn when the
@@ -55,4 +66,25 @@ export class ChartDemo {
       { label: 'My Second dataset', data: [28, 48, 40, 19, 96, 27, 100] },
     ],
   };
+
+  readonly fallbackMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+  readonly sales = [65, 59, 80, 81, 56, 55];
+  readonly costs = [28, 48, 40, 19, 86, 27];
+  readonly fallbackData = {
+    labels: this.fallbackMonths,
+    datasets: [
+      { label: 'Sales', data: this.sales },
+      { label: 'Costs', data: this.costs },
+    ],
+  };
+  readonly picked = signal('none');
+
+  pick(event: HxChartSelectEvent): void {
+    const picked = event.element;
+    if (!isPickedElement(picked)) return;
+    const { datasetIndex, index } = picked;
+    this.picked.set(
+      `${this.fallbackData.datasets[datasetIndex].label}, ${this.fallbackMonths[index]}`,
+    );
+  }
 }

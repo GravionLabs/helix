@@ -49,6 +49,17 @@ describe('demoLinkOf', () => {
     expect(demoRouteOf('split-button')).toBe('uikit/button');
   });
 
+  it('gives data-table and tree their own demo pages', () => {
+    expect(demoRouteOf('data-table')).toBe('uikit/data-table');
+    expect(demoRouteOf('tree')).toBe('uikit/tree');
+    expect(demoLinkOf('data-table', '/helix/')).toBe('/helix/demo/uikit/data-table');
+  });
+
+  it('gives table its own Components page and the AG Grid page no docs link', () => {
+    expect(demoRouteOf('table')).toBe('uikit/table');
+    expect(DEMO_ROUTES['ag-grid/overview']).toBeUndefined();
+  });
+
   it('is null for a component without a demo page', () => {
     expect(demoLinkOf('themes', '/helix/')).toBeNull();
   });

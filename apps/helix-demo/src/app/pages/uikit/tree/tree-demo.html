@@ -1,10 +1,25 @@
 <h1 class="sr-only">Tree</h1>
-<app-source-tabs library="helix-ui" directory="tree" componentName="tree-demo" [docs]="['data-table', 'tree']">
+<app-source-tabs library="helix-ui" directory="tree" componentName="tree-demo" [docs]="['tree']">
   <div class="card">
     <h2 class="demo-title">Tree</h2>
     <p class="mb-3">Checking a folder checks everything below it; a folder with some children checked is mixed. Arrow keys move, Right and Left open and close, typing jumps by label.</p>
     <hx-tree ariaLabel="Files" [value]="treeValue()" selectionMode="checkbox" filter [(selection)]="selected" />
     <p class="mt-3 mb-0">Checked: {{ selected() }}</p>
   </div>
-  <app-data-section class="mt-6 block" />
+  <div class="card mt-6">
+    <h2 class="demo-title">Single selection</h2>
+    <p class="mb-3">Enter or Space selects one node.</p>
+    <hx-tree [value]="files()" selectionMode="single" [(selection)]="single" ariaLabel="Files" />
+    <p class="mt-3 mb-0">Selected: {{ single() ?? 'none' }}</p>
+  </div>
+  <div class="card mt-6">
+    <h2 class="demo-title">Checkbox, with filter</h2>
+    <hx-tree [value]="files()" selectionMode="checkbox" [(selection)]="checked" filter filterPlaceholder="Filter files" ariaLabel="Files to share" />
+    <p class="mt-3 mb-0">Checked: {{ checked() }}</p>
+  </div>
+  <div class="card mt-6">
+    <h2 class="demo-title">Lazy children</h2>
+    <p class="mb-3">The disks load when a server is opened.</p>
+    <hx-tree [value]="lazy()" (nodeExpand)="load($event)" ariaLabel="Servers" />
+  </div>
 </app-source-tabs>
