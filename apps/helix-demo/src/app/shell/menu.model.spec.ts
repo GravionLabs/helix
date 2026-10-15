@@ -1,5 +1,9 @@
 import agGridRoutes from '../pages/ag-grid/ag-grid.routes';
+import { CellsDemo } from '../pages/ag-grid/cells/cells-demo';
+import { Crud } from '../pages/ag-grid/crud/crud';
+import { TableDemo } from '../pages/ag-grid/overview/table-demo';
 import chartsRoutes from '../pages/charts/charts.routes';
+import { ChartDemo } from '../pages/charts/overview/chart-demo';
 import pagesRoutes from '../pages/pages.routes';
 import uikitRoutes from '../pages/uikit/uikit.routes';
 import { DEMO_MENU_MODEL } from './menu.model';
@@ -99,5 +103,27 @@ describe('ag-grid routes', () => {
     expect(pagesRoutes.find((r) => r.path === 'crud')?.redirectTo).toBe('/ag-grid/crud');
     expect(pagesRoutes.some((r) => r.path === 'crud' && r.component)).toBe(false);
     expect(pagesRoutes.find((r) => r.path === '')?.redirectTo).toBe('empty');
+  });
+});
+
+describe('lazy group routes', () => {
+  const group = (label: string) => DEMO_MENU_MODEL.find((item) => item.label === label);
+
+  it('serves each AG Grid page with its own component', () => {
+    const component = (path: string) => agGridRoutes.find((r) => r.path === path)?.component;
+    expect(component('overview')).toBe(TableDemo);
+    expect(component('cells')).toBe(CellsDemo);
+    expect(component('crud')).toBe(Crud);
+  });
+
+  it('loads the AG Grid routes for the AG Grid group', async () => {
+    const loaded = (await group('AG Grid')?.loadChildren?.()) as { default: unknown };
+    expect(loaded.default).toBe(agGridRoutes);
+  });
+
+  it('loads the charts routes for the Charts group', async () => {
+    const loaded = (await group('Charts')?.loadChildren?.()) as { default: unknown };
+    expect(loaded.default).toBe(chartsRoutes);
+    expect(chartsRoutes.find((r) => r.path === 'overview')?.component).toBe(ChartDemo);
   });
 });

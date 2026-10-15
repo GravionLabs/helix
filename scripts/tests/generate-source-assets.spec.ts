@@ -69,4 +69,21 @@ describe('generate-source-assets', () => {
     expect(result.status).toBe(0);
     expect(result.stdout).toContain('1 file(s) copied');
   });
+
+  it('fails loudly when a uikit page folder takes the path of another group', () => {
+    write(`${PAGES}/uikit/ag-grid/ag-grid-demo.ts`);
+    write(`${PAGES}/ag-grid/cells/cells-demo.ts`);
+
+    const result = run();
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('source path "ag-grid/cells"');
+    expect(existsSync(join(cwd, OUT, 'ag-grid'))).toBe(false);
+  });
+
+  it('allows a uikit page named like a group when that group has no pages', () => {
+    write(`${PAGES}/uikit/charts/charts-demo.ts`);
+
+    expect(run().status).toBe(0);
+    expect(existsSync(join(cwd, OUT, 'charts/charts-demo.ts'))).toBe(true);
+  });
 });

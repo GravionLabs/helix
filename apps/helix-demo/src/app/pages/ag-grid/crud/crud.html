@@ -1,5 +1,11 @@
 <h1 class="sr-only">AG Grid CRUD</h1>
 <app-source-tabs library="helix-ag-grid" directory="ag-grid/crud" componentName="crud" [extraSources]="['crud-cells.ts']">
+  <p class="mt-0 mb-3">
+    This page shows create, read, update and delete on AG Grid Community with the Helix theme of
+    <code>&#64;gravionlabs/helix-ag-grid</code>: the list is an AG Grid with row selection, quick filter, sorting and
+    paging; <code>hx-toolbar</code>, <code>hx-dialog</code>, <code>hx-confirm-dialog</code> and <code>hx-toast</code>
+    from helix-ui do the rest.
+  </p>
   <hx-toolbar class="mb-3">
     <span hxToolbarStart class="flex gap-2">
       <button hx-button type="button" severity="secondary" (click)="openNew()">
