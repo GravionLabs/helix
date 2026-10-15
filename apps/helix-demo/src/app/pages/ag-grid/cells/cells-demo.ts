@@ -51,6 +51,7 @@ export class StatusCell implements ICellRendererAngularComp {
 /** A cell renderer built from `button[hx-button]`: the row actions. */
 @Component({
   selector: 'app-actions-cell',
+  host: { style: 'display: flex; align-items: center; height: 100%' },
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,

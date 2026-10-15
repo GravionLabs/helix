@@ -67,6 +67,7 @@ export interface TableContext {
 /** One row action, named after the customer. */
 @Component({
   selector: 'app-table-action-cell',
+  host: { style: 'display: flex; align-items: center; height: 100%' },
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
