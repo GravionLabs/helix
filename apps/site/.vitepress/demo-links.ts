@@ -33,7 +33,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/menu': ['breadcrumb', 'menu', 'menubar', 'paginator', 'stepper'],
   'uikit/message': ['message', 'toast'],
   'uikit/file': ['file-upload'],
-  'charts/overview': ['chart'],
+  'charts/line': ['chart'],
   'uikit/timeline': ['timeline'],
   'uikit/misc': ['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag'],
 };

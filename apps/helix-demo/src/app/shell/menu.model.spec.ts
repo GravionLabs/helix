@@ -3,7 +3,8 @@ import { CellsDemo } from '../pages/ag-grid/cells/cells-demo';
 import { Crud } from '../pages/ag-grid/crud/crud';
 import { TableDemo } from '../pages/ag-grid/overview/table-demo';
 import chartsRoutes from '../pages/charts/charts.routes';
-import { ChartDemo } from '../pages/charts/overview/chart-demo';
+import { CHARTS_MENU_ITEMS } from '../pages/charts/charts-menu-items';
+import { LineChartDemo } from '../pages/charts/line/line-chart-demo';
 import pagesRoutes from '../pages/pages.routes';
 import { DataTableDemo } from '../pages/uikit/data-table/data-table-demo';
 import { UikitTableDemo } from '../pages/uikit/table/table-demo';
@@ -18,11 +19,15 @@ describe('DEMO_MENU_MODEL charts group', () => {
     expect(labels.indexOf('Pages')).toBe(labels.indexOf('Charts') + 1);
   });
 
-  it('links the Overview item to /charts/overview', () => {
+  it('links one item per chart type under /charts', () => {
     const charts = DEMO_MENU_MODEL.find((item) => item.label === 'Charts');
     expect(charts?.path).toBe('charts');
     expect(charts?.items?.map((i) => [i.label, i.routerLink])).toEqual([
-      ['Overview', ['/charts/overview']],
+      ['Line', ['/charts/line']],
+      ['Bar', ['/charts/bar']],
+      ['Pie & Doughnut', ['/charts/pie']],
+      ['Polar Area', ['/charts/polar-area']],
+      ['Radar', ['/charts/radar']],
     ]);
   });
 
@@ -75,11 +80,30 @@ describe('uikit table route', () => {
 });
 
 describe('charts routes', () => {
-  it('serves overview with a breadcrumb and redirects the empty path to it', () => {
-    expect(chartsRoutes.find((r) => r.path === 'overview')?.data).toEqual({
-      breadcrumb: 'Overview',
-    });
-    expect(chartsRoutes.find((r) => r.path === '')?.redirectTo).toBe('overview');
+  const pages = chartsRoutes.filter((r) => r.component);
+
+  it('has a component route for every menu item, in menu order', () => {
+    expect(pages.map((r) => r.path)).toEqual(CHARTS_MENU_ITEMS.map((i) => i.path));
+  });
+
+  it('uses the menu label as breadcrumb', () => {
+    expect(pages.map((r) => r.data)).toEqual(
+      CHARTS_MENU_ITEMS.map((i) => ({ breadcrumb: i.label })),
+    );
+  });
+
+  it('lists the chart types with their icons', () => {
+    expect(CHARTS_MENU_ITEMS.map((i) => [i.label, i.icon])).toEqual([
+      ['Line', 'pi pi-fw pi-chart-line'],
+      ['Bar', 'pi pi-fw pi-chart-bar'],
+      ['Pie & Doughnut', 'pi pi-fw pi-chart-pie'],
+      ['Polar Area', 'pi pi-fw pi-compass'],
+      ['Radar', 'pi pi-fw pi-chart-scatter'],
+    ]);
+  });
+
+  it('redirects the empty path to line', () => {
+    expect(chartsRoutes.find((r) => r.path === '')?.redirectTo).toBe('line');
   });
 
   it('redirects the old uikit/charts path to /charts', () => {
@@ -163,6 +187,6 @@ describe('lazy group routes', () => {
   it('loads the charts routes for the Charts group', async () => {
     const loaded = (await group('Charts')?.loadChildren?.()) as { default: unknown };
     expect(loaded.default).toBe(chartsRoutes);
-    expect(chartsRoutes.find((r) => r.path === 'overview')?.component).toBe(ChartDemo);
+    expect(chartsRoutes.find((r) => r.path === 'line')?.component).toBe(LineChartDemo);
   });
 });

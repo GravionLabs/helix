@@ -1,0 +1,17 @@
+<h1 class="sr-only">Pie and doughnut chart</h1>
+<app-source-tabs library="helix-ui" directory="charts/pie" componentName="pie-chart-demo">
+  <div class="grid grid-cols-12 gap-layout">
+    <div class="col-span-12 xl:col-span-6">
+      <div class="card">
+        <h2 class="demo-title mb-3!">Pie</h2>
+        <hx-chart type="pie" [data]="pieData" [options]="pieOptions" height="20rem" ariaLabel="Three shares, as a pie" />
+      </div>
+    </div>
+    <div class="col-span-12 xl:col-span-6">
+      <div class="card">
+        <h2 class="demo-title mb-3!">Doughnut</h2>
+        <hx-chart type="doughnut" [data]="pieData" [options]="pieOptions" height="20rem" ariaLabel="Three shares, as a doughnut" />
+      </div>
+    </div>
+  </div>
+</app-source-tabs>
