@@ -537,6 +537,13 @@ describe('HxDateTimeRangePicker', () => {
       });
     });
 
+    it('starts This week on the given first day of the week', () => {
+      const week = HX_DATE_RANGE_PRESETS.find((x) => x.label === 'This week')!;
+      expect(week.from({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 12));
+      expect(week.to({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 18, 23, 59, 59));
+      expect(week.from({ firstDayOfWeek: 4 })).toEqual(new Date(2026, 9, 8));
+    });
+
     it('keeps midnight for a built-in preset in date-only mode', async () => {
       await open('presetSelectDays');
       await click(selectTrigger());

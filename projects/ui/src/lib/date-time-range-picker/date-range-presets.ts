@@ -31,8 +31,9 @@ const minutesAgo = (minutes: number) => () => new Date(Date.now() - minutes * 60
 const now = () => new Date();
 const endOfDay = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59);
-/** Monday-first weeks are not assumed: the week starts on Sunday, as `firstDayOfWeek` defaults to 0. */
-const startOfWeek = (date: Date) => addDays(startOfDay(date), -date.getDay());
+/** The week starts on `firstDayOfWeek` (0 = Sunday, the picker's default). */
+const startOfWeek = (date: Date, firstDayOfWeek = 0) =>
+  addDays(startOfDay(date), -((date.getDay() - firstDayOfWeek + 7) % 7));
 
 /**
  * The built-in presets with `labels` in place of the English ones (any id may be left out). `Today`, `Yesterday`,
@@ -58,8 +59,8 @@ export function hxDateRangePresets(
     },
     {
       label: label('thisWeek'),
-      from: () => startOfWeek(new Date()),
-      to: () => endOfDay(addDays(startOfWeek(new Date()), 6)),
+      from: (c) => startOfWeek(new Date(), c?.firstDayOfWeek),
+      to: (c) => endOfDay(addDays(startOfWeek(new Date(), c?.firstDayOfWeek), 6)),
     },
     {
       label: label('thisMonth'),

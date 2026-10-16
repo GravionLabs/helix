@@ -39,8 +39,13 @@ export interface HxDateTimeRangeValue {
 /** A relative range in the popup's preset list; `from` and `to` are read when it is chosen (`now` stays current). */
 export interface HxDateTimeRangePreset {
   label: string;
-  from: () => Date;
-  to: () => Date;
+  /** Called with the picker's settings, so a calendar range can follow its `firstDayOfWeek`. */
+  from: (context?: HxDateTimeRangePresetContext) => Date;
+  to: (context?: HxDateTimeRangePresetContext) => Date;
+}
+
+export interface HxDateTimeRangePresetContext {
+  firstDayOfWeek: number;
 }
 
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
@@ -379,8 +384,9 @@ export class HxDateTimeRangePicker
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
   protected applyPreset(preset: HxDateTimeRangePreset): void {
     const { from: oldFrom, to: oldTo } = this.draft();
-    const from = this.#fitPreset(preset.from(), oldFrom);
-    const to = this.#fitPreset(preset.to(), oldTo ?? oldFrom);
+    const context = { firstDayOfWeek: this.firstDayOfWeek() };
+    const from = this.#fitPreset(preset.from(context), oldFrom);
+    const to = this.#fitPreset(preset.to(context), oldTo ?? oldFrom);
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
     if (from === undefined || to === undefined) return;
     this.#stage(from && to && to < from ? { from: to, to: from } : { from, to });
