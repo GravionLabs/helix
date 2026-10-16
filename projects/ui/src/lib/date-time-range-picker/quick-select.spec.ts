@@ -82,6 +82,13 @@ describe('quick select helpers', () => {
       ).toEqual({ from: new Date(2026, 9, 12), to: new Date('2026-10-20T08:00:00.000Z') });
     });
 
+    it('reads a date-only ISO side as local midnight and refuses one that rolls over', () => {
+      expect(hxResolveRangeSide('2026-10-14')).toEqual(new Date(2026, 9, 14));
+      expect(hxResolveRangeSide(' 2026-02-28 ')).toEqual(new Date(2026, 1, 28));
+      expect(hxResolveRangeSide('2026-02-30')).toBeNull();
+      expect(hxResolveRangeSide('2026-10-14 junk')).toBeNull();
+    });
+
     it('gives null for an unreadable side', () => {
       expect(hxResolveRangeSide('later', { now })).toBeNull();
       expect(hxResolveRangeSide('2026-13-45', { now })).toBeNull();
@@ -151,6 +158,21 @@ describe('quick select helpers', () => {
       expect(readRecentRanges(key)).toEqual([]);
       localStorage.setItem(key, JSON.stringify([{ from: 1 }, { from: 'now-1h', to: 'now', x: 1 }]));
       expect(readRecentRanges(key)).toEqual([{ from: 'now-1h', to: 'now' }]);
+    });
+
+    it('drops duplicates when reading', () => {
+      localStorage.setItem(
+        key,
+        JSON.stringify([
+          { from: 'now-1h', to: 'now' },
+          { from: 'now-1h', to: 'now' },
+          { from: 'now/d', to: 'now/d' },
+        ]),
+      );
+      expect(readRecentRanges(key)).toEqual([
+        { from: 'now-1h', to: 'now' },
+        { from: 'now/d', to: 'now/d' },
+      ]);
     });
 
     it('is safe when the storage is blocked', () => {

@@ -180,7 +180,10 @@ describe('hxRelativeRangeExpressions', () => {
     expect(hxParseDateMath(range.to, { now })).toEqual(now);
   });
 
-  it.each([0, -1, 1.5, NaN, Infinity])('returns null for the amount %s', (amount) => {
-    expect(hxRelativeRangeExpressions('last', amount, 'd')).toBeNull();
-  });
+  it.each([0, -1, 1.5, NaN, Infinity, 1e21, Number.MAX_SAFE_INTEGER + 1])(
+    'returns null for the amount %s',
+    (amount) => {
+      expect(hxRelativeRangeExpressions('last', amount, 'd')).toBeNull();
+    },
+  );
 });

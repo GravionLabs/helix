@@ -106,14 +106,15 @@ export function hxParseDateMath(expression: string, options: HxDateMathOptions =
 /**
  * The from/to expressions of a "Last N" or "Next N" range: `{ from: 'now-15m', to: 'now' }` for
  * `('last', 15, 'm')`, `{ from: 'now', to: 'now+2d' }` for `('next', 2, 'd')`. The amount must be a positive
- * integer, otherwise `null` is returned.
+ * safe integer, otherwise `null` is returned.
  */
 export function hxRelativeRangeExpressions(
   direction: 'last' | 'next',
   amount: number,
   unit: HxDateMathUnit,
 ): { from: string; to: string } | null {
-  if (!Number.isInteger(amount) || amount < 1) return null;
+  // a safe integer keeps the text plain digits (1e21 would print as `1e+21`, which is no date math)
+  if (!Number.isSafeInteger(amount) || amount < 1) return null;
   return direction === 'last'
     ? { from: `now-${amount}${unit}`, to: 'now' }
     : { from: 'now', to: `now+${amount}${unit}` };

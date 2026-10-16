@@ -114,7 +114,12 @@
                 [value]="quickUnit()"
                 (valueChange)="setQuickUnit($event)"
               />
-              <button type="button" class="hx-date-picker-button hx-date-time-range-picker-quick-apply" (click)="applyQuick()">{{ l.apply }}</button>
+              <button
+                type="button"
+                class="hx-date-picker-button hx-date-time-range-picker-quick-apply"
+                [attr.aria-describedby]="quickError() ? quickErrorId : null"
+                (click)="applyQuick()"
+              >{{ l.apply }}</button>
             </div>
           </section>
           @if (commonlyUsed().length > 0) {

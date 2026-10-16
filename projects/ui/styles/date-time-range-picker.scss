@@ -75,7 +75,8 @@
   gap: var(--h-datepicker-title-gap);
 }
 
-.hx-date-time-range-picker-submit {
+.hx-date-time-range-picker-submit,
+.hx-date-time-range-picker-quick-apply {
   font-weight: var(--h-datepicker-title-font-weight);
 }
 
@@ -187,4 +188,20 @@
 .hx-date-time-range-picker-error {
   margin: 0;
   color: var(--h-inputtext-invalid-border-color);
+}
+
+/* the selects of the quick select keep a readable width; the other new classes (`-common`, `-recent`, `-side-date`)
+   are hooks styled through their parts */
+.hx-date-time-range-picker-quick-direction,
+.hx-date-time-range-picker-quick-unit {
+  min-width: 7rem;
+}
+
+.hx-date-time-range-picker-side-unit {
+  flex: 1 1 10rem;
+}
+
+/* the date math of a relative side, as it will be resolved */
+.hx-date-time-range-picker-expression {
+  color: var(--h-datepicker-week-day-color);
 }

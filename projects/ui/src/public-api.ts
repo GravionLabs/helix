@@ -107,6 +107,7 @@ export {
 export {
   HxDateTimeRangePicker,
   type HxDateTimeRangePreset,
+  type HxDateTimeRangePresetContext,
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
 export {

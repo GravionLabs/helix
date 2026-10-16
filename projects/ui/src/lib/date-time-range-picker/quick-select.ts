@@ -46,7 +46,9 @@ export interface HxQuickSelectLabels {
   unitsFromNow: Record<HxDateMathUnit, string>;
 }
 
-export const HX_QUICK_SELECT_UNITS: readonly HxDateMathUnit[] = ['s', 'm', 'h', 'd', 'w', 'M', 'y'];
+// Internal: the helpers without the `hx` prefix are shared with the picker but are not part of the public API.
+
+export const QUICK_SELECT_UNITS: readonly HxDateMathUnit[] = ['s', 'm', 'h', 'd', 'w', 'M', 'y'];
 
 /** The English texts of the quick select (the default of `quickSelectLabels`). */
 export const HX_QUICK_SELECT_LABELS: HxQuickSelectLabels = {
@@ -115,10 +117,10 @@ export const HX_QUICK_SELECT_COMMONLY_USED: readonly HxQuickSelectRange[] = [
 ];
 
 /** How many ranges the "Recently used" list keeps. */
-export const HX_QUICK_SELECT_RECENT_MAX = 5;
+export const RECENT_MAX = 5;
 
 /** The state of one side (start or end) in the quick select: its tab and the fields of the Relative tab. */
-export interface HxQuickSelectSide {
+export interface QuickSelectSide {
   mode: 'absolute' | 'relative' | 'now';
   amount: number;
   unit: HxDateMathUnit;
@@ -130,7 +132,7 @@ export interface HxQuickSelectSide {
   raw: string | null;
 }
 
-export const DEFAULT_SIDE: HxQuickSelectSide = {
+export const DEFAULT_SIDE: QuickSelectSide = {
   mode: 'absolute',
   amount: 15,
   unit: 'm',
@@ -139,13 +141,23 @@ export const DEFAULT_SIDE: HxQuickSelectSide = {
   raw: null,
 };
 
+/** A side of the range: `from` (Start) or `to` (End). */
+export type Side = 'from' | 'to';
+export type SideMode = QuickSelectSide['mode'];
+/** The tabs of a side, in their order. */
+export const SIDE_MODES: readonly SideMode[] = ['absolute', 'relative', 'now'];
+export const ABSOLUTE_SIDES: Readonly<Record<Side, QuickSelectSide>> = {
+  from: DEFAULT_SIDE,
+  to: DEFAULT_SIDE,
+};
+
 const SIMPLE = /^now(?:([+-])(\d+)([smhdwMy]))?(?:\/([smhdwMy]))?$/;
 
 /**
  * The side state for an expression: `now` is the Now tab, `now-15m`, `now+2d/d` or `now/w` the Relative tab,
  * another valid date math expression the Relative tab with `raw`; anything else (an ISO date) is absolute.
  */
-export function sideFromExpression(expression: string): HxQuickSelectSide {
+export function sideFromExpression(expression: string): QuickSelectSide {
   const text = expression.trim();
   if (text === 'now') return { ...DEFAULT_SIDE, mode: 'now' };
   const match = SIMPLE.exec(text);
@@ -168,24 +180,38 @@ export function sideFromExpression(expression: string): HxQuickSelectSide {
 }
 
 /** The date math expression of a relative or now side (`now-15m`, `now+2d/d`); `null` for an absolute side. */
-export function sideExpression(side: HxQuickSelectSide): string | null {
+export function sideExpression(side: QuickSelectSide): string | null {
   if (side.mode === 'now') return 'now';
   if (side.mode === 'absolute') return null;
   if (side.raw) return side.raw;
+  // an amount too big for a plain integer text (1e21) stays in the text, so it is refused when resolved
   const amount = Math.max(0, Math.floor(side.amount || 0));
   const shift = amount > 0 ? `${side.direction === 'ago' ? '-' : '+'}${amount}${side.unit}` : '';
   return `now${shift}${side.round ? `/${side.unit}` : ''}`;
 }
 
-/** Resolves one side: date math against `now` (rounding up for the end), else an ISO date; `null` when unreadable. */
+const DATE_ONLY = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+/**
+ * Resolves one side: date math against `now` (rounding up for the end), else an ISO date-time; a date-only ISO
+ * text (`2026-10-14`) is local midnight, as `new Date(2026, 9, 14)`, not UTC. `null` when unreadable.
+ */
 export function hxResolveRangeSide(
   expression: string,
   options: { now?: Date; firstDayOfWeek?: number; roundUp?: boolean } = {},
 ): Date | null {
   const math = hxParseDateMath(expression, options);
   if (math) return math;
-  if (!/^\d{4}-\d{2}-\d{2}/.test(expression.trim())) return null;
-  const date = new Date(expression.trim());
+  const text = typeof expression === 'string' ? expression.trim() : '';
+  const day = DATE_ONLY.exec(text);
+  if (day) {
+    const [y, m, d] = [Number(day[1]), Number(day[2]) - 1, Number(day[3])];
+    const date = new Date(y, m, d);
+    // 2026-02-30 rolls over: refuse it
+    return date.getFullYear() === y && date.getMonth() === m && date.getDate() === d ? date : null;
+  }
+  if (!/^\d{4}-\d{2}-\d{2}T/.test(text)) return null;
+  const date = new Date(text);
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
@@ -269,12 +295,16 @@ export function readRecentRanges(key: string | null): HxDateRangeExpression[] | 
   }
   try {
     const parsed: unknown = JSON.parse(text ?? '[]');
-    return Array.isArray(parsed)
-      ? parsed
-          .filter(isRange)
-          .slice(0, HX_QUICK_SELECT_RECENT_MAX)
-          .map(({ from, to }) => ({ from, to }))
-      : [];
+    if (!Array.isArray(parsed)) return [];
+    // de-duplicated on read too: an edited or older list may hold the same range twice
+    return parsed
+      .filter(isRange)
+      .reduce<HxDateRangeExpression[]>(
+        (list, { from, to }) =>
+          list.some((r) => r.from === from && r.to === to) ? list : [...list, { from, to }],
+        [],
+      )
+      .slice(0, RECENT_MAX);
   } catch {
     return []; // damaged data: start empty
   }
@@ -297,7 +327,7 @@ export function writeRecentRanges(
 export function addRecentRange(
   ranges: readonly HxDateRangeExpression[],
   range: HxDateRangeExpression,
-  max = HX_QUICK_SELECT_RECENT_MAX,
+  max = RECENT_MAX,
 ): HxDateRangeExpression[] {
   const rest = ranges.filter((r) => r.from !== range.from || r.to !== range.to);
   return [{ from: range.from, to: range.to }, ...rest].slice(0, max);
