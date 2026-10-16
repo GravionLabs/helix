@@ -13,16 +13,16 @@ export interface HxDateTimeRangePresetContext {
 }
 
 /** The ends of a preset as a picker takes them: `null` for an empty end, `undefined` when the picker refuses one. */
-export type PresetFit = (date: Date, side: 'from' | 'to') => Date | null | undefined;
+export type HxPresetFit = (date: Date, side: 'from' | 'to') => Date | null | undefined;
 
 /**
  * Reads a preset against the current time and fits each end with `fit` (the day only without a time, refused on a
  * disabled day, ...); ends that come out reversed are ordered. `undefined` when `fit` refuses an end.
  */
-export function resolvePreset(
+export function hxResolvePreset(
   preset: HxDateTimeRangePreset,
   context: HxDateTimeRangePresetContext,
-  fit: PresetFit,
+  fit: HxPresetFit,
 ): { from: Date | null; to: Date | null } | undefined {
   const from = fit(preset.from(context), 'from');
   const to = fit(preset.to(context), 'to');

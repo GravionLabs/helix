@@ -20,6 +20,7 @@ const B = preset('Beta');
       label="Quick ranges"
       [disabled]="disabled()"
       [selected]="selected()"
+      [describedBy]="describedBy()"
       (chosen)="choose($event)"
     />
   `,
@@ -29,6 +30,7 @@ class Host {
   display = signal<'buttons' | 'select'>('buttons');
   disabled = signal(false);
   selected = signal<HxDateTimeRangePreset | null>(null);
+  describedBy = signal<string | null>(null);
   /** Takes a choice (the picker accepting it) unless `refuse`. */
   refuse = false;
   chosen: HxDateTimeRangePreset[] = [];
@@ -110,5 +112,39 @@ describe('HxRangePresets', () => {
     await pick('Beta');
     expect(host.chosen).toEqual([B]);
     expect(trigger().textContent?.trim()).toBe('Alpha');
+  });
+
+  it('puts the select back to the placeholder when the first choice is refused', async () => {
+    host.display.set('select');
+    await settle();
+    host.refuse = true;
+    await pick('Beta');
+    expect(host.chosen).toEqual([B]);
+    expect(trigger().textContent?.trim()).toBe('Quick ranges');
+  });
+
+  it('keeps a choice whose selected arrives in the same tick, and takes the next one', async () => {
+    host.display.set('select');
+    await settle();
+    await pick('Beta');
+    expect(trigger().textContent?.trim()).toBe('Beta');
+    await pick('Alpha');
+    expect(host.chosen).toEqual([B, A]);
+    expect(host.selected()).toBe(A);
+    expect(trigger().textContent?.trim()).toBe('Alpha');
+  });
+
+  it('points the buttons and the select at the describing message', async () => {
+    host.describedBy.set('why');
+    await settle();
+    expect(
+      [...root().querySelectorAll('button')].map((b) => b.getAttribute('aria-describedby')),
+    ).toEqual(['why', 'why']);
+    host.display.set('select');
+    await settle();
+    expect(trigger().getAttribute('aria-describedby')).toBe('why');
+    host.describedBy.set(null);
+    await settle();
+    expect(trigger().hasAttribute('aria-describedby')).toBe(false);
   });
 });

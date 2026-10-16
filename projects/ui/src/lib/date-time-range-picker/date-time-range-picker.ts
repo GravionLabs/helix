@@ -27,7 +27,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
 import {
   type HxDateTimeRangePreset,
-  resolvePreset,
+  hxResolvePreset,
 } from '../date-range-presets/date-range-presets';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
@@ -374,7 +374,7 @@ export class HxDateTimeRangePicker
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
   protected applyPreset(preset: HxDateTimeRangePreset): boolean {
     const { from: oldFrom, to: oldTo } = this.draft();
-    const range = resolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date, side) =>
+    const range = hxResolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date, side) =>
       this.#fitPreset(date, side === 'from' ? oldFrom : (oldTo ?? oldFrom)),
     );
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would

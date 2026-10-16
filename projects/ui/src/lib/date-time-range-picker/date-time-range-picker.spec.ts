@@ -1423,5 +1423,16 @@ describe('HxDateTimeRangePicker', () => {
       'Last 7 days',
       'This month',
     ]);
+    const relabelled = hxDateRangePresets({
+      today: 'Heute',
+      last7Days: '7 Tage',
+      thisMonth: 'Monat',
+    });
+    expect(relabelled.filter((p) => ['Heute', '7 Tage', 'Monat'].includes(p.label))).toHaveLength(
+      3,
+    );
+    expect(relabelled.find((p) => p.label === '7 Tage')?.from()).toEqual(
+      HX_DATE_RANGE_DAY_PRESETS[1].from(),
+    );
   });
 });
