@@ -34,6 +34,7 @@ import {
   HxTimePicker,
   type HxTimePickerValue,
   HxToggleButton,
+  hxResolveRangeExpression,
 } from '@gravionlabs/helix-ui';
 
 /** `@gravionlabs/helix-ui` input components: Float label, Toggle button, Icon field, Input group, Input number. */
@@ -115,6 +116,13 @@ export class HxInputsSection {
   readonly reportingDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly quick = signal<HxDateRangeQuickSelectValue>({ from: null, to: null });
   readonly quickExpression = signal<HxDateRangeExpression | null>(null);
+  /** The expression resolved again against the current time, as an app would to refresh a dashboard. */
+  readonly resolvedText = computed(() => {
+    const expression = this.quickExpression();
+    if (!expression) return '';
+    const { from, to } = hxResolveRangeExpression(expression);
+    return `${from?.toLocaleString() ?? ''} - ${to?.toLocaleString() ?? ''}`;
+  });
   /** The expression as text for the demo row. */
   readonly expressionText = computed(() => {
     const expression = this.quickExpression();

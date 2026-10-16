@@ -136,7 +136,11 @@
     <div class="row">
       <label class="label" for="drq-range">Quick select</label>
       <hx-date-range-quick-select style="grid-column: span 2; max-width: 22rem" inputId="drq-range" ariaLabel="Time range" placeholder="Pick a time range" [(value)]="quick" [(expression)]="quickExpression" />
-      <span>{{ expressionText() }}</span>
+    </div>
+    <div class="row">
+      <span class="label">expression</span>
+      <code>{{ expressionText() }}</code>
+      <span>{{ resolvedText() }}</span>
     </div>
     <div class="row">
       <label class="label" for="dtr-hours">Time range</label>
