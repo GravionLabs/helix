@@ -897,6 +897,28 @@ describe('HxDateRangeQuickSelect', () => {
       expect(host.quick()).toEqual(EMPTY);
     });
 
+    it('commits a typed date once when Enter is followed by change', async () => {
+      const changes = vi.fn();
+      fixture.debugElement
+        .query((d) => d.nativeElement === el('quick'))
+        .componentInstance.value.subscribe(changes);
+      await open('quick');
+      await click(sideButton('from'));
+      sideDate().value = '10/9/2026 08:30';
+      await press(sideDate(), 'Enter');
+      sideDate().dispatchEvent(new Event('change'));
+      await settle();
+      expect(changes).toHaveBeenCalledTimes(1);
+      expect(host.quick().from).toEqual(new Date(2026, 9, 9, 8, 30));
+
+      // typing the applied date back after a refused one only drops the message
+      await typeDate('soon');
+      expect(error()).not.toBeNull();
+      await typeDate('10/9/2026 08:30');
+      expect(error()).toBeNull();
+      expect(changes).toHaveBeenCalledTimes(1);
+    });
+
     it('refuses an empty, negative or too big relative amount and keeps the applied range', async () => {
       await editAfterLast15('from');
       const applied = host.quick();

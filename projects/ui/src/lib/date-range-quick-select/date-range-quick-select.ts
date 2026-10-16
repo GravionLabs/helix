@@ -525,11 +525,16 @@ export class HxDateRangeQuickSelect
 
   /**
    * The date typed on an Absolute tab (a date with a time, or a date at midnight; empty clears the side); an
-   * unreadable date or one outside `minDate`..`maxDate` is refused with the inline message.
+   * unreadable date or one outside `minDate`..`maxDate` is refused with the inline message. Enter and the `change`
+   * that follows it commit once: a text that shows the applied date is no edit.
    */
   protected setAbsoluteSide(side: Side, event: Event): void {
     const field = event.target as HTMLInputElement;
     const text = field.value.trim();
+    if (text === this.sideText(side)) {
+      this.#dropRefusedEdit();
+      return;
+    }
     let date: Date | null = null;
     if (text !== '') {
       date =
