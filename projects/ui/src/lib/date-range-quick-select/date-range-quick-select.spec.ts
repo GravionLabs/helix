@@ -307,6 +307,22 @@ describe('HxDateRangeQuickSelect', () => {
       expect(host.quickExpr()).toBeNull();
     });
 
+    it('refuses the same amounts for Next N with the error described by the fields', async () => {
+      await open('quick');
+      await choose('hx-date-range-quick-select-direction', 'Next');
+      for (const text of ['', '-3', '1.5', '9000000000000000']) {
+        await fill(amount(), text);
+        expect(error()).toBeNull();
+        await applyQuick();
+        expect({ text, open: popup() !== null }).toEqual({ text, open: true });
+        expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
+        expect(amount().getAttribute('aria-describedby')).toBe(error()!.id);
+        expect(applyButton().getAttribute('aria-describedby')).toBe(error()!.id);
+      }
+      expect(host.quick()).toEqual(EMPTY);
+      expect(host.quickExpr()).toBeNull();
+    });
+
     it('drops the message when the popup opens again', async () => {
       await open('quick');
       await fill(amount(), '0');
