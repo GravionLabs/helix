@@ -13,6 +13,8 @@ import {
 } from './date-range-quick-select';
 
 type Value = HxDateRangeQuickSelectValue;
+/** Amounts the Quick select refuses: empty, zero, negative, fractional, too big or not a safe integer. */
+const AMOUNTS = ['', '0', '-3', '1.5', '1e21', '9007199254740993', '9000000000000000'];
 const EMPTY: Value = { from: null, to: null };
 
 @Component({
@@ -79,6 +81,47 @@ const EMPTY: Value = { from: null, to: null };
       [(expression)]="signalExpr"
     />
     <hx-date-range-quick-select
+      id="labelled"
+      locale="en-US"
+      [recentStorageKey]="null"
+      [labels]="{
+        nowSummary: 'jetzt',
+        agoSummary: 'vor {n} {unit}',
+        resolvesTo: 'ergibt {date}',
+        emptySide: 'leer',
+        range: 'Beginn und Ende'
+      }"
+      [(value)]="labelledValue"
+      [(expression)]="labelledExpr"
+    />
+    <hx-date-range-quick-select
+      id="twin"
+      locale="en-US"
+      recentStorageKey="hx-test-recent"
+      [(value)]="twinValue"
+    />
+    <hx-date-range-quick-select
+      id="minOnly"
+      locale="en-US"
+      [recentStorageKey]="null"
+      [minDate]="min"
+      [(value)]="minOnlyValue"
+    />
+    <hx-date-range-quick-select
+      id="maxOnly"
+      locale="en-US"
+      [recentStorageKey]="null"
+      [maxDate]="max"
+      [(value)]="maxOnlyValue"
+    />
+    <hx-date-range-quick-select
+      id="toggle"
+      locale="en-US"
+      [recentStorageKey]="null"
+      [disabled]="toggleOff()"
+      [(value)]="toggleValue"
+    />
+    <hx-date-range-quick-select
       id="off"
       locale="en-US"
       [disabled]="true"
@@ -103,6 +146,13 @@ class Host {
   state = signal<{ span: Value }>({ span: EMPTY });
   f = form(this.state);
   signalExpr = signal<HxDateRangeExpression | null>(null);
+  labelledValue = signal<Value>(EMPTY);
+  labelledExpr = signal<HxDateRangeExpression | null>(null);
+  twinValue = signal<Value>(EMPTY);
+  minOnlyValue = signal<Value>(EMPTY);
+  maxOnlyValue = signal<Value>(EMPTY);
+  toggleValue = signal<Value>(EMPTY);
+  toggleOff = signal(false);
   offValue = signal<Value>(EMPTY);
   offExpr = signal<HxDateRangeExpression | null>({ from: 'now-15m', to: 'now' });
 }
@@ -193,6 +243,10 @@ describe('HxDateRangeQuickSelect', () => {
 
   afterEach(() => {
     fixture.destroy();
+    // destroying the control leaves no popup behind, whatever the test left open
+    const left = popup();
+    left?.closest('.cdk-overlay-pane')?.remove();
+    expect(left).toBeNull();
     Element.prototype.scrollIntoView = scrollIntoView;
     vi.useRealTimers();
     vi.restoreAllMocks();
@@ -312,7 +366,7 @@ describe('HxDateRangeQuickSelect', () => {
 
     it('refuses an amount that is not a positive whole number with an inline error', async () => {
       await open('quick');
-      for (const text of ['', '0', '-3', '1.5', '1e21', '9007199254740993', '9000000000000000']) {
+      for (const text of AMOUNTS) {
         await fill(amount(), text);
         // a new attempt drops the message
         expect(error()).toBeNull();
@@ -327,22 +381,39 @@ describe('HxDateRangeQuickSelect', () => {
       }
       expect(host.quick()).toEqual(EMPTY);
       expect(host.quickExpr()).toBeNull();
+      // a valid retry takes the refusal back and applies
+      await fill(amount(), '3');
+      expect(error()).toBeNull();
+      expect(amount().hasAttribute('aria-invalid')).toBe(false);
+      expect(amount().hasAttribute('aria-describedby')).toBe(false);
+      expect(applyButton().hasAttribute('aria-describedby')).toBe(false);
+      await applyQuick();
+      expect(popup()).toBeNull();
+      expect(host.quickExpr()).toEqual({ from: 'now-3m', to: 'now' });
     });
 
     it('refuses the same amounts for Next N with the error described by the fields', async () => {
       await open('quick');
       await choose('hx-date-range-quick-select-direction', 'Next');
-      for (const text of ['', '-3', '1.5', '9000000000000000']) {
+      for (const text of AMOUNTS) {
         await fill(amount(), text);
         expect(error()).toBeNull();
         await applyQuick();
         expect({ text, open: popup() !== null }).toEqual({ text, open: true });
         expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
         expect(amount().getAttribute('aria-describedby')).toBe(error()!.id);
+        expect(amount().getAttribute('aria-invalid')).toBe('true');
         expect(applyButton().getAttribute('aria-describedby')).toBe(error()!.id);
       }
       expect(host.quick()).toEqual(EMPTY);
       expect(host.quickExpr()).toBeNull();
+      await fill(amount(), '2');
+      expect(error()).toBeNull();
+      expect(amount().hasAttribute('aria-invalid')).toBe(false);
+      expect(amount().hasAttribute('aria-describedby')).toBe(false);
+      expect(applyButton().hasAttribute('aria-describedby')).toBe(false);
+      await applyQuick();
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now+2m' });
     });
 
     it('keeps an emptied amount empty instead of turning it into 0', async () => {
@@ -738,19 +809,210 @@ describe('HxDateRangeQuickSelect', () => {
       }
     });
 
-    it('closes and is touched when the focus leaves the control', async () => {
-      const touched = vi.fn();
-      fixture.debugElement
-        .query((d) => d.nativeElement === el('quick'))
-        .componentInstance.touch.subscribe(touched);
-      await open('quick');
+    it('closes and marks a form control touched when the focus leaves the control', async () => {
       const outside = document.createElement('button');
       document.body.append(outside);
-      popup()!.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: outside }));
+      try {
+        await open('reactive');
+        expect(host.control.touched).toBe(false);
+        popup()!.dispatchEvent(
+          new FocusEvent('focusout', { bubbles: true, relatedTarget: outside }),
+        );
+        await settle();
+        expect(popup()).toBeNull();
+        expect(host.control.touched).toBe(true);
+        expect(el('reactive').classList).toContain('ng-touched');
+      } finally {
+        outside.remove();
+      }
+    });
+  });
+
+  describe('keyboard flow', () => {
+    it('keeps Tab free, in the order of the popup, and returns the focus after Enter on a Commonly used button', async () => {
+      localStorage.setItem('hx-test-recent', JSON.stringify([{ from: 'now-45m', to: 'now' }]));
+      input('quick').focus();
+      await press(input('quick'), 'ArrowDown');
+      const order = [...popup()!.querySelectorAll<HTMLElement>('button, input')].map((e) => {
+        if (e.tagName === 'INPUT') return 'amount';
+        if (e.classList.contains('hx-select-trigger')) return 'select';
+        return e.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+      });
+      expect(order).toEqual([
+        'select',
+        'amount',
+        'select',
+        'Apply',
+        'Today',
+        'This week',
+        'Last 15 minutes',
+        'Last 30 minutes',
+        'Last 1 hour',
+        'Last 24 hours',
+        'Last 7 days',
+        'Last 30 days',
+        'Last 90 days',
+        'Last 1 year',
+        'Last 45 minutes',
+        'Start Not set',
+        'End Not set',
+      ]);
+      // Tab is not trapped or taken over: the keydown is left to the browser
+      const button = rangeButton('hx-date-range-quick-select-common', 'Today');
+      button.focus();
+      const tab = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true });
+      button.dispatchEvent(tab);
+      expect(tab.defaultPrevented).toBe(false);
+      expect(popup()).not.toBeNull();
+      // Enter on a native button activates it, which applies the range
+      const enter = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+      button.dispatchEvent(enter);
+      expect(enter.defaultPrevented).toBe(false);
+      await click(button);
+      expect(host.quickExpr()).toEqual({ from: 'now/d', to: 'now/d' });
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(input('quick'));
+    });
+
+    it('returns the focus to the field after Apply with the keyboard and focuses Quick select again on reopening', async () => {
+      input('quick').focus();
+      await press(input('quick'), 'ArrowDown');
+      await fill(amount(), '5');
+      await press(amount(), 'Enter');
+      expect(host.quickExpr()).toEqual({ from: 'now-5m', to: 'now' });
+      expect(document.activeElement).toBe(input('quick'));
+      await press(input('quick'), 'ArrowDown');
+      expect(document.activeElement).toBe(
+        q('.hx-date-range-quick-select-direction .hx-select-trigger'),
+      );
+      expect(amount().value).toBe('5');
+    });
+  });
+
+  describe('teardown', () => {
+    it('removes the popup overlay when the control is destroyed while it is open', async () => {
+      await open('quick');
+      expect(popup()).not.toBeNull();
+      fixture.destroy();
+      expect(popup()).toBeNull();
+      expect(
+        document.querySelector('.cdk-overlay-pane:has(.hx-date-range-quick-select-popup)'),
+      ).toBeNull();
+    });
+  });
+
+  describe('summary labels', () => {
+    const side = (s: 'from' | 'to') =>
+      q(`.hx-date-range-quick-select-side-line-${s}`).textContent?.replace(/\s+/g, ' ').trim();
+
+    it('uses labels given in part and keeps the others English', async () => {
+      await open('labelled');
+      expect(popup()!.querySelector('[role=group]')!.getAttribute('aria-label')).toBe(
+        'Beginn und Ende',
+      );
+      expect(side('from')).toBe('Start leer');
+      expect(side('to')).toBe('End leer');
+      await click(rangeButton('hx-date-range-quick-select-common', 'Last 15 minutes'));
+      await open('labelled');
+      expect(side('from')).toBe('Start vor 15 minutes');
+      expect(side('to')).toBe('End jetzt');
+      await click(q('.hx-date-range-quick-select-side-line-from'));
+      await click(q('[role=tab]:nth-of-type(2)'));
+      expect(q('.hx-date-range-quick-select-resolved-date').textContent?.trim()).toBe(
+        'ergibt 10/14/2026 15:15',
+      );
+      expect(q('.hx-date-range-quick-select-caption').textContent).toBe('Quick select');
+    });
+  });
+
+  describe('expression from outside', () => {
+    it('shows an unreadable expression as typed, keeps the value and summarises the value', async () => {
+      host.quick.set({ from: new Date(2026, 9, 1, 8, 0), to: new Date(2026, 9, 2, 8, 0) });
+      host.quickExpr.set({ from: 'now-1h', to: 'now' });
+      await settle();
+      host.quickExpr.set({ from: 'soon', to: 'now' });
+      await settle();
+      expect(input('quick').value).toBe('soon - now');
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 1, 8, 0),
+        to: new Date(2026, 9, 2, 8, 0),
+      });
+      await open('quick');
+      // the side editor cannot read the expression, so the summary falls back to the dates of the value
+      expect(summary('from')).toBe('Start 10/1/2026 08:00');
+      expect(summary('to')).toBe('End now');
+    });
+  });
+
+  describe('disabled while open', () => {
+    it('closes the popup, so Apply cannot change the value of a disabled control', async () => {
+      await open('toggle');
+      expect(popup()).not.toBeNull();
+      host.toggleOff.set(true);
       await settle();
       expect(popup()).toBeNull();
-      expect(touched).toHaveBeenCalled();
-      outside.remove();
+      expect(input('toggle').disabled).toBe(true);
+      expect(host.toggleValue()).toEqual(EMPTY);
+      await open('toggle');
+      expect(popup()).toBeNull();
+      host.toggleOff.set(false);
+      await settle();
+      await open('toggle');
+      await applyQuick();
+      expect(host.toggleValue().to).toEqual(NOW);
+    });
+  });
+
+  describe('Recently used shared by storage key', () => {
+    it('shows a range applied in one control in another with the same key', async () => {
+      await open('quick');
+      await common('Last 7 days');
+      await open('twin');
+      expect(listed('hx-date-range-quick-select-recent')).toEqual(['Last 7 days']);
+      await pressEscape();
+      await open('twin');
+      await common('Today');
+      await open('quick');
+      expect(listed('hx-date-range-quick-select-recent')).toEqual(['Today', 'Last 7 days']);
+    });
+
+    it.each([
+      ['not JSON', '{not json'],
+      ['not a list', '{"from":"now-1h","to":"now"}'],
+      ['a list of other things', '[1, "a", null, {"from":5}]'],
+    ])('starts with an empty list when the storage holds %s', async (_name, text) => {
+      localStorage.setItem('hx-test-recent', text);
+      await open('quick');
+      expect(popup()!.querySelector('.hx-date-range-quick-select-recent')).toBeNull();
+      await applyQuick();
+      await open('quick');
+      expect(listed('hx-date-range-quick-select-recent')).toEqual(['Last 15 minutes']);
+    });
+  });
+
+  describe('only one limit', () => {
+    it('keeps an applied range after minDate when only minDate is set', async () => {
+      await open('minOnly');
+      await common('Last 30 days');
+      expect(host.minOnlyValue()).toEqual({ from: host.min, to: NOW });
+      await open('minOnly');
+      await choose('hx-date-range-quick-select-direction', 'Next');
+      await fill(amount(), '2');
+      await choose('hx-date-range-quick-select-unit', 'years');
+      await applyQuick();
+      expect(host.minOnlyValue()).toEqual({ from: NOW, to: new Date(2028, 9, 14, 15, 30, 20) });
+    });
+
+    it('keeps an applied range before maxDate when only maxDate is set', async () => {
+      await open('maxOnly');
+      await common('Last 30 days');
+      expect(host.maxOnlyValue()).toEqual({ from: new Date(2026, 8, 14, 15, 30, 20), to: NOW });
+      await open('maxOnly');
+      await choose('hx-date-range-quick-select-direction', 'Next');
+      await fill(amount(), '2');
+      await choose('hx-date-range-quick-select-unit', 'years');
+      await applyQuick();
+      expect(host.maxOnlyValue()).toEqual({ from: NOW, to: host.max });
     });
   });
 
@@ -1024,6 +1286,7 @@ describe('HxDateRangeQuickSelect', () => {
       await fill(sideAmount(), '20');
       expect(error()).toBeNull();
       expect(sideAmount().getAttribute('aria-invalid')).toBeNull();
+      expect(sideAmount().hasAttribute('aria-describedby')).toBe(false);
       expect(host.quickExpr()).toEqual({ from: 'now-20m', to: 'now' });
     });
 

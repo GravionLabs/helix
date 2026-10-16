@@ -32,6 +32,19 @@ class Host {
   f = form(this.state);
 }
 
+/**
+ * Removes what the date picker left open: it detaches the overlay panes of its popup and the preset select list
+ * (their content is destroyed with the pane), and takes the emptied panes out of the container, nothing else.
+ */
+const removeOwnOverlays = () => {
+  document
+    .querySelectorAll('.cdk-overlay-pane:has(.hx-date-picker-popup, .hx-select-list)')
+    .forEach((pane) => {
+      pane.replaceChildren();
+      pane.remove();
+    });
+};
+
 describe('HxDatePicker', () => {
   let fixture: ComponentFixture<Host>;
   let host: Host;
@@ -396,15 +409,6 @@ describe('HxDatePicker field and popup', () => {
   });
 });
 
-/** Removes the overlay panes the date picker left open (its popup and the preset select list), and nothing else. */
-const removeOwnOverlays = () => {
-  document
-    .querySelectorAll('.cdk-overlay-pane:has(.hx-date-picker-popup, .hx-select-list)')
-    .forEach((pane) => {
-      pane.remove();
-    });
-};
-
 const at = (d: number, h = 0, m = 0) => new Date(2026, 9, d, h, m);
 const preset = (label: string, from: Date, to: Date): HxDateTimeRangePreset => ({
   label,
@@ -578,6 +582,30 @@ describe('HxDatePicker range presets', () => {
     await settle();
     await choose('limits', 'Wide');
     expect(host.limits()).toBeNull();
+  });
+
+  it('ignores a choice in the select list that arrives after the picker became disabled', async () => {
+    trigger(el('reactive')).click();
+    await settle();
+    expect(options()).toContain('Two days');
+    host.control.disable();
+    await settle();
+    const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === 'Two days',
+    );
+    option?.click();
+    await settle();
+    expect(host.control.value).toBeNull();
+    expect(el('reactive').querySelector('.hx-date-picker-error')).toBeNull();
+    expect(trigger(el('reactive')).disabled).toBe(true);
+  });
+
+  it('keeps the value when the picker is disabled after a preset was taken', async () => {
+    await pick(el('reactive'), 'Two days');
+    host.control.disable();
+    await settle();
+    expect(host.control.value).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+    expect(trigger(el('reactive')).disabled).toBe(true);
   });
 
   it('does not apply a preset while disabled', async () => {

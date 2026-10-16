@@ -1417,22 +1417,48 @@ describe('HxDateTimeRangePicker', () => {
     });
   });
 
-  it('builds the day presets from their ids, whatever the labels', () => {
-    expect(HX_DATE_RANGE_DAY_PRESETS.map((p) => p.label)).toEqual([
-      'Today',
-      'Last 7 days',
-      'This month',
-    ]);
-    const relabelled = hxDateRangePresets({
-      today: 'Heute',
-      last7Days: '7 Tage',
-      thisMonth: 'Monat',
+  describe('day presets from their ids', () => {
+    beforeEach(() =>
+      vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] }),
+    );
+    afterEach(() => vi.useRealTimers());
+    const range = (list: readonly HxDateTimeRangePreset[], label: string) => {
+      const p = list.find((x) => x.label === label);
+      if (!p) throw new Error(`no preset ${label}`);
+      return { from: p.from(), to: p.to() };
+    };
+
+    it('lists Today, Last 7 days and This month for a picker without time', () => {
+      expect(HX_DATE_RANGE_DAY_PRESETS.map((p) => p.label)).toEqual([
+        'Today',
+        'Last 7 days',
+        'This month',
+      ]);
+      expect(range(HX_DATE_RANGE_DAY_PRESETS, 'Last 7 days')).toEqual({
+        from: new Date(2026, 9, 8),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
     });
-    expect(relabelled.filter((p) => ['Heute', '7 Tage', 'Monat'].includes(p.label))).toHaveLength(
-      3,
-    );
-    expect(relabelled.find((p) => p.label === '7 Tage')?.from()).toEqual(
-      HX_DATE_RANGE_DAY_PRESETS[1].from(),
-    );
+
+    it('puts each label on its own range, whatever the labels', () => {
+      const relabelled = hxDateRangePresets({
+        today: 'Heute',
+        last7Days: '7 Tage',
+        thisMonth: 'Monat',
+      });
+      expect(range(relabelled, 'Heute')).toEqual({
+        from: new Date(2026, 9, 14),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range(relabelled, '7 Tage')).toEqual({
+        from: new Date(2026, 9, 8),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range(relabelled, 'Monat')).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31, 23, 59, 59, 999),
+      });
+      expect(relabelled.map((p) => p.label)).not.toContain('Today');
+    });
   });
 });
