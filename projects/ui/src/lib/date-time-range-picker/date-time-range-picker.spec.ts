@@ -6,13 +6,10 @@ import { By } from '@angular/platform-browser';
 import {
   HX_DATE_RANGE_DAY_PRESETS,
   HX_DATE_RANGE_PRESETS,
-  hxDateRangePresets,
-} from './date-range-presets';
-import {
-  HxDateTimeRangePicker,
   type HxDateTimeRangePreset,
-  type HxDateTimeRangeValue,
-} from './date-time-range-picker';
+  hxDateRangePresets,
+} from '../date-range-presets/date-range-presets';
+import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-range-picker';
 import type { HxDateRangeExpression } from './quick-select';
 
 @Component({

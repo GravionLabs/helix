@@ -28,7 +28,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import {
   type HxDateTimeRangePreset,
   resolvePreset,
-} from '../date-time-range-picker/date-range-presets';
+} from '../date-range-presets/date-range-presets';
 import { HxCalendar } from '../internal/calendar/calendar';
 import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
 import { clampTime, compareDays, isSameDay, isValidDate, startOfDay } from '../internal/dates';

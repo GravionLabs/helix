@@ -6,7 +6,7 @@ import {
   HX_DATE_RANGE_DAY_PRESETS,
   type HxDateTimeRangePreset,
   hxDateRangePresets,
-} from '../date-time-range-picker/date-range-presets';
+} from '../date-range-presets/date-range-presets';
 import { HxDatePicker, type HxDatePickerValue } from './date-picker';
 
 @Component({

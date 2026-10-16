@@ -26,6 +26,10 @@ import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxCheckbox } from '../checkbox/checkbox';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
+import {
+  type HxDateTimeRangePreset,
+  resolvePreset,
+} from '../date-range-presets/date-range-presets';
 import { HxInput } from '../input/input';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
@@ -33,11 +37,6 @@ import { nextId } from '../internal/ids';
 import { HxSelect } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
-import {
-  type HxDateTimeRangePreset,
-  type HxDateTimeRangePresetContext,
-  resolvePreset,
-} from './date-range-presets';
 import {
   ABSOLUTE_SIDES,
   addRecentRange,
@@ -63,8 +62,6 @@ export interface HxDateTimeRangeValue {
   from: Date | null;
   to: Date | null;
 }
-
-export type { HxDateTimeRangePreset, HxDateTimeRangePresetContext };
 
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
 const earlier = (a: Date | null, b: Date | null) => (a && b ? (a <= b ? a : b) : (a ?? b));

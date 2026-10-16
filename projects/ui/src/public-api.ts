@@ -89,6 +89,14 @@ export {
   type HxDatePickerValue,
 } from './lib/date-picker/date-picker';
 export {
+  HX_DATE_RANGE_DAY_PRESETS,
+  HX_DATE_RANGE_PRESETS,
+  type HxDateRangePresetId,
+  type HxDateTimeRangePreset,
+  type HxDateTimeRangePresetContext,
+  hxDateRangePresets,
+} from './lib/date-range-presets/date-range-presets';
+export {
   HxDateTimePicker,
   type HxDateTimePickerValue,
 } from './lib/date-time-picker/date-time-picker';
@@ -99,15 +107,7 @@ export {
   hxRelativeRangeExpressions,
 } from './lib/date-time-range-picker/date-math';
 export {
-  HX_DATE_RANGE_DAY_PRESETS,
-  HX_DATE_RANGE_PRESETS,
-  type HxDateRangePresetId,
-  hxDateRangePresets,
-} from './lib/date-time-range-picker/date-range-presets';
-export {
   HxDateTimeRangePicker,
-  type HxDateTimeRangePreset,
-  type HxDateTimeRangePresetContext,
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
 export {
