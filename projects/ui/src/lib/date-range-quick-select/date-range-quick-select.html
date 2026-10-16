@@ -127,6 +127,7 @@
       <div class="hx-date-range-quick-select-summary" role="group" [attr.aria-label]="l.range">
         @for (s of sideKeys; track s) {
           <button
+            #sideButton
             type="button"
             class="hx-date-range-quick-select-side-line"
             [class]="'hx-date-range-quick-select-side-line-' + s"
@@ -157,6 +158,7 @@
           >
             @for (mode of sideModes; track mode) {
               <button
+                #sideTab
                 type="button"
                 role="tab"
                 class="hx-date-range-quick-select-tab"

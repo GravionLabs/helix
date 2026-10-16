@@ -21,6 +21,7 @@ import {
   signal,
   untracked,
   viewChild,
+  viewChildren,
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
@@ -222,6 +223,9 @@ export class HxDateRangeQuickSelect
 
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly quickFirst = viewChild('quickFirst', { read: HxSelect });
+  /** The summary buttons and the tabs live in the overlay, outside the host: found through the view, not the document. */
+  private readonly sideButtons = viewChildren<ElementRef<HTMLElement>>('sideButton');
+  private readonly sideTabs = viewChildren<ElementRef<HTMLElement>>('sideTab');
   readonly #cvaDisabled = signal(false);
   readonly #format = computed(
     () =>
@@ -424,8 +428,10 @@ export class HxDateRangeQuickSelect
     this.openSide.set(side);
     this.#showDay(side);
     afterNextRender(
-      () => document.getElementById(this.tabId(side, this.sides()[side].mode))?.focus(),
-      { injector: this.#injector },
+      () => this.#focusById(this.sideTabs(), this.tabId(side, this.sides()[side].mode)),
+      {
+        injector: this.#injector,
+      },
     );
   }
 
@@ -435,7 +441,7 @@ export class HxDateRangeQuickSelect
     if (!side) return;
     this.#dropRefusedEdit();
     this.openSide.set(null);
-    document.getElementById(this.sideButtonId(side))?.focus();
+    this.#focusById(this.sideButtons(), this.sideButtonId(side));
   }
 
   /** A tab chosen: the side becomes absolute (its current date), relative or now, and is applied at once. */
@@ -633,6 +639,10 @@ export class HxDateRangeQuickSelect
     this.#commit(next);
     this.expression.set(expression);
     return true;
+  }
+
+  #focusById(elements: readonly ElementRef<HTMLElement>[], id: string): void {
+    elements.find((e) => e.nativeElement.id === id)?.nativeElement.focus();
   }
 
   /** A refused edit goes back to the sides as applied. */
