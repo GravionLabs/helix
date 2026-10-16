@@ -134,13 +134,13 @@
       <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-days" ariaLabel="Reporting days" placeholder="Pick days" [showTime]="false" [presets]="dayPresets" presetDisplay="select" [(value)]="reportingDays" />
     </div>
     <div class="row">
-      <label class="label" for="dtr-quick">Quick select</label>
-      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-quick" ariaLabel="Quick select range" placeholder="Pick a range" quickSelect [firstDayOfWeek]="1" [(value)]="quick" [(expression)]="quickExpression" />
+      <label class="label" for="drq-range">Quick select</label>
+      <hx-date-range-quick-select style="grid-column: span 2; max-width: 22rem" inputId="drq-range" ariaLabel="Time range" placeholder="Pick a time range" [(value)]="quick" [(expression)]="quickExpression" />
     </div>
     <div class="row">
       <span class="label">expression</span>
       <code>{{ expressionText() }}</code>
-      <span>{{ resolved()?.from?.toLocaleString() ?? '' }}</span>
+      <span>{{ resolvedText() }}</span>
     </div>
     <div class="row">
       <label class="label" for="dtr-hours">Time range</label>

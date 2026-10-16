@@ -62,6 +62,7 @@ export const TOKEN_COMPONENTS = {
   'time-row': ['datepicker'],
   'date-time-picker': ['datepicker', 'inputtext'],
   'date-time-range-picker': ['datepicker', 'inputtext'],
+  'date-range-quick-select': ['datepicker', 'inputtext'],
   'file-upload': ['fileupload', 'button'],
   'input-group': ['inputgroup'],
   'input-number': ['inputnumber', 'inputtext'],

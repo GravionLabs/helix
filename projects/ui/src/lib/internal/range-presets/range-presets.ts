@@ -40,7 +40,9 @@ import { HxSelect } from '../../select/select';
           [disabled]="disabled()"
           [attr.aria-describedby]="describedBy()"
           (click)="chosen.emit(preset)"
-        >{{ preset.label }}</button>
+        >
+          {{ preset.label }}
+        </button>
       }
     }
   `,

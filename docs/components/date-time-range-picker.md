@@ -22,11 +22,6 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
 | `presetDisplay` | `'buttons' \| 'select'` | `'buttons'` | Presets as buttons, or as one select (see below). |
 | `presetsLabel` | `string` | `Presets` | Name of the preset group. |
-| `quickSelect` | `boolean` | `false` | A Kibana-style quick select above the calendar (see Quick select). |
-| `quickSelectLabels` | `Partial<HxQuickSelectLabels>` | English | Texts of the quick select, merged over the defaults. |
-| `commonlyUsed` | `HxQuickSelectRange[]` | `HX_QUICK_SELECT_COMMONLY_USED` | The "Commonly used" list: `{ label, from, to }` with date math or ISO sides. |
-| `recentStorageKey` | `string \| null` | `hx-date-range-recent` | `localStorage` key of the "Recently used" list; `null` keeps it in memory only. |
-| `expression` (model) | `HxDateRangeExpression \| null` | `null` | The relative range last applied (`{ from, to }` as text); see Quick select. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time pickers; `false` picks days only (midnight). |
 | `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time pickers without the calendar. |
@@ -39,8 +34,7 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 
 ## Exports
 
-Besides the component, `@gravionlabs/helix-ui` exports these types, lists and functions for ranges, presets and the
-quick select:
+Besides the component, `@gravionlabs/helix-ui` exports these types, lists and functions for ranges and presets:
 
 | Export | Description |
 | ------ | ----------- |
@@ -48,11 +42,14 @@ quick select:
 | `HxDateTimeRangePreset` | A preset, `{ label, from(context?), to(context?) }`. |
 | `HxDateTimeRangePresetContext` | What a preset's functions receive: `{ firstDayOfWeek }` of the picker. |
 | `HX_DATE_RANGE_PRESETS`, `HX_DATE_RANGE_DAY_PRESETS`, `hxDateRangePresets(labels)` | The built-in presets (see below). |
-| `HxDateRangeExpression` | The `expression` model, `{ from: string; to: string }`. |
-| `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })` | Resolves an expression to `{ from, to }`; the end rounds up. |
-| `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` | Resolves one side (date math, an ISO date-time, or a date-only ISO text as local midnight). |
 | `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
-| `HxQuickSelectLabels`, `HX_QUICK_SELECT_LABELS`, `HxQuickSelectRange`, `HX_QUICK_SELECT_COMMONLY_USED` | The texts and the "Commonly used" list of the quick select. |
+
+## When to use which
+
+- Use this picker for a fixed range of days and times chosen on a calendar (a shift, a booking, a reporting period),
+  with optional ready-made presets and a Submit / Cancel draft.
+- Use the [date range quick select](date-range-quick-select.md) for time windows that move with the clock ("Last 15
+  minutes", "Next 7 days"), with commonly and recently used lists and an `expression` you can resolve again later.
 
 ## Behaviour
 
@@ -95,37 +92,6 @@ quick select:
   of buttons. It has no value of its own: it shows the placeholder each time the popup opens, and choosing an entry
   fills the draft exactly as a button does (Submit applies it, Cancel drops it). Once the draft changes otherwise (a
   day click, a time), the select shows its placeholder again, so the same preset can be chosen again.
-- **Quick select:** `quickSelect` adds, above the calendar, a row "Last / Next, amount, unit, Apply" (for example
-  Last 15 minutes), a "Commonly used" list and a "Recently used" list (the last 5 applied ranges, newest first, without
-  duplicates, kept in `localStorage` under `recentStorageKey`; if storage is blocked the list lives in memory for the
-  session). Apply, a commonly used entry and a recent entry bypass the draft: they apply the range at once and close
-  the popup (as in Kibana; Cancel does not undo them), unlike presets, which only fill the draft. Submit applies the
-  Start and End tabs. Start and End each have the tabs **Absolute** (a typed date), **Relative** (an amount, "ago" or
-  "from now", and "Round to the unit") and **Now**. A relative range is stored as text and resolved when it is applied,
-  so "Last 15 minutes" means the 15 minutes before you clicked. Presets and the calendar still work and set both sides
-  back to Absolute, and so do Clear and a range typed while the popup is open. A range that cannot be applied (a
-  relative side next to an empty absolute side, a Relative tab whose amount is empty or negative (it is not taken
-  as `now`; `0` is), a side on a day in `disabledDates`, an amount that is not a positive whole number or is too large
-  for a date) keeps the popup open with an inline message (`role="alert"`, named by the
-  Apply and Submit buttons through `aria-describedby`).
-
-  ```html
-  <hx-date-time-range-picker quickSelect [(value)]="range" [(expression)]="expression" />
-  ```
-
-  ```ts
-  readonly expression = signal<HxDateRangeExpression | null>(null);
-  // later: resolve it again, e.g. to refresh a dashboard
-  const { from, to } = hxResolveRangeExpression(this.expression()!, { firstDayOfWeek: 1 });
-  ```
-- **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is
-  an ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`, and so does a value
-  set from outside (`ngModel`, `setValue`/`reset`, a signal form, a new `[value]`) unless a new expression is set with
-  it. It is only read when the popup opens, to set up the tabs; setting it from outside does not change `value`. When
-  the resolved ends are reversed (`now+1d` to `now`), the value is put in order and the expression is swapped with it.
-  `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })` turns it into `{ from, to }` (the end side rounds
-  up) and `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` does one side; both return `null` for a side
-  they cannot read.
 - **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
   invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
   (round down to the start of the unit; to its last millisecond with `roundUp`). Units are case-sensitive: `s`, `m`,

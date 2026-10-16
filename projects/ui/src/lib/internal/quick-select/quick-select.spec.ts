@@ -2,6 +2,7 @@ import {
   addRecentRange,
   DEFAULT_SIDE,
   describeRange,
+  describeSide,
   HX_QUICK_SELECT_COMMONLY_USED,
   HX_QUICK_SELECT_LABELS,
   hxResolveRangeExpression,
@@ -66,6 +67,7 @@ describe('quick select helpers', () => {
 
     it('writes no expression for an empty, NaN or negative amount', () => {
       const side = { ...DEFAULT_SIDE, mode: 'relative' as const };
+      expect(sideExpression({ ...side, amount: null })).toBeNull();
       expect(sideExpression({ ...side, amount: Number.NaN })).toBeNull();
       expect(sideExpression({ ...side, amount: -1 })).toBeNull();
       expect(sideExpression({ ...side, amount: Number.POSITIVE_INFINITY })).toBeNull();
@@ -198,6 +200,35 @@ describe('quick select helpers', () => {
     it('writes nothing without a key', () => {
       writeRecentRanges(null, [{ from: 'now', to: 'now' }]);
       expect(localStorage.length).toBe(0);
+    });
+  });
+  describe('describeSide', () => {
+    const L = HX_QUICK_SELECT_LABELS;
+    const side = (expression: string) => describeSide(sideFromExpression(expression), L);
+
+    it('summarises now, a shift and a rounding', () => {
+      expect(side('now')).toBe('now');
+      expect(side('now-15m')).toBe('~ 15 minutes ago');
+      expect(side('now+1d')).toBe('~ 1 day from now');
+      expect(side('now-3h/h')).toBe('~ 3 hours ago, rounded to the hour');
+      // a rounding without a shift is now, rounded
+      expect(side('now/d')).toBe('now, rounded to the day');
+    });
+
+    it('shows a raw expression as is and nothing for an absolute side', () => {
+      expect(side('now-1d/d+2h')).toBe('now-1d/d+2h');
+      expect(side('2026-10-14T08:00:00.000Z')).toBeNull();
+    });
+
+    it('summarises an amount that gives no expression as not set', () => {
+      for (const amount of [null, Number.NaN, -2]) {
+        expect(describeSide({ ...DEFAULT_SIDE, mode: 'relative', amount }, L)).toBe('Not set');
+      }
+    });
+
+    it('takes other labels', () => {
+      const de = { ...L, agoSummary: 'vor ~ {n} {unit}', units: { ...L.units, m: 'Minuten' } };
+      expect(describeSide(sideFromExpression('now-5m'), de)).toBe('vor ~ 5 Minuten');
     });
   });
 });

@@ -27,7 +27,7 @@ import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import {
   type HxDateTimeRangePreset,
-  resolvePreset,
+  hxResolvePreset,
 } from '../date-range-presets/date-range-presets';
 import { HxCalendar } from '../internal/calendar/calendar';
 import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
@@ -302,7 +302,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
    */
   protected applyPreset(preset: HxDateTimeRangePreset): void {
     if (this.isDisabled()) return;
-    const range = resolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date) =>
+    const range = hxResolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date) =>
       this.#presetDay(date),
     );
     const [min, max] = [this.minDate(), this.maxDate()];

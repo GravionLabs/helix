@@ -9,6 +9,8 @@ import {
   HxDatePicker,
   type HxDatePickerValue,
   type HxDateRangeExpression,
+  HxDateRangeQuickSelect,
+  type HxDateRangeQuickSelectValue,
   HxDateTimePicker,
   type HxDateTimePickerValue,
   HxDateTimeRangePicker,
@@ -52,6 +54,7 @@ import {
     HxTimePicker,
     HxDateTimePicker,
     HxDateTimeRangePicker,
+    HxDateRangeQuickSelect,
     HxFileUpload,
     HxFileUpload,
     HxSlider,
@@ -111,12 +114,14 @@ export class HxInputsSection {
   readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
   readonly selected = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly reportingDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
-  readonly quick = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  readonly quick = signal<HxDateRangeQuickSelectValue>({ from: null, to: null });
   readonly quickExpression = signal<HxDateRangeExpression | null>(null);
   /** The expression resolved again against the current time, as an app would to refresh a dashboard. */
-  readonly resolved = computed(() => {
+  readonly resolvedText = computed(() => {
     const expression = this.quickExpression();
-    return expression ? hxResolveRangeExpression(expression, { firstDayOfWeek: 1 }) : null;
+    if (!expression) return '';
+    const { from, to } = hxResolveRangeExpression(expression);
+    return `${from?.toLocaleString() ?? ''} - ${to?.toLocaleString() ?? ''}`;
   });
   /** The expression as text for the demo row. */
   readonly expressionText = computed(() => {

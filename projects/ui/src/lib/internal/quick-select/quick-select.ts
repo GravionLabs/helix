@@ -1,4 +1,4 @@
-import { type HxDateMathUnit, hxParseDateMath } from './date-math';
+import { type HxDateMathUnit, hxParseDateMath } from '../date-math/date-math';
 
 /** A range as two expressions: date math (`now-15m`, `now/d`) or an ISO date-time for an absolute side. */
 export interface HxDateRangeExpression {
@@ -30,8 +30,8 @@ export interface HxQuickSelectLabels {
   /** The text of the Now tab. */
   nowHint: string;
   /**
-   * Shown when Submit cannot apply the range (a relative side next to an empty absolute side, a Relative tab with an
-   * empty or invalid amount, a refused day).
+   * Shown when a range cannot be applied (a relative side next to an empty absolute side, a Relative tab with an
+   * empty or invalid amount, a refused day, a typed date that cannot be read).
    */
   incompleteRange: string;
   /** The label of the typed date on the Absolute tab. */
@@ -41,6 +41,17 @@ export interface HxQuickSelectLabels {
   /** `Last {n} {unit}` / `Next {n} {unit}` in the Recently used list. */
   lastRange: string;
   nextRange: string;
+  /** The name of the start/end summary lines (`hx-date-range-quick-select`). */
+  range: string;
+  /** The summary of a side: `now`, `~ {n} {unit} ago`, `~ {n} {unit} from now`, with `rounded to the {unit}`. */
+  nowSummary: string;
+  agoSummary: string;
+  fromNowSummary: string;
+  roundedSummary: string;
+  /** The summary of an empty side. */
+  emptySide: string;
+  /** `Resolves to {date}`: the date a relative or now side stands for at this moment (the side editor). */
+  resolvesTo: string;
   /** The plural unit names (`minutes`) and the singular ones (`minute`, for `{n}` = 1 and `roundTo`). */
   units: Record<HxDateMathUnit, string>;
   unitsOne: Record<HxDateMathUnit, string>;
@@ -75,6 +86,13 @@ export const HX_QUICK_SELECT_LABELS: HxQuickSelectLabels = {
   roundTo: 'Round to the {unit}',
   lastRange: 'Last {n} {unit}',
   nextRange: 'Next {n} {unit}',
+  range: 'Start and end',
+  nowSummary: 'now',
+  agoSummary: '~ {n} {unit} ago',
+  fromNowSummary: '~ {n} {unit} from now',
+  roundedSummary: 'rounded to the {unit}',
+  emptySide: 'Not set',
+  resolvesTo: 'Resolves to {date}',
   units: {
     s: 'seconds',
     m: 'minutes',
@@ -125,7 +143,8 @@ export const RECENT_MAX = 5;
 /** The state of one side (start or end) in the quick select: its tab and the fields of the Relative tab. */
 export interface QuickSelectSide {
   mode: 'absolute' | 'relative' | 'now';
-  amount: number;
+  /** The amount of the Relative tab; `null` while its field is empty. */
+  amount: number | null;
   unit: HxDateMathUnit;
   /** `ago` subtracts the amount (`now-15m`), `fromNow` adds it (`now+15m`). */
   direction: 'ago' | 'fromNow';
@@ -190,7 +209,7 @@ export function sideExpression(side: QuickSelectSide): string | null {
   if (side.mode === 'now') return 'now';
   if (side.mode === 'absolute') return null;
   if (side.raw) return side.raw;
-  if (!Number.isFinite(side.amount) || side.amount < 0) return null;
+  if (side.amount === null || !Number.isFinite(side.amount) || side.amount < 0) return null;
   // an amount too big for a plain integer text (1e21) stays in the text, so it is refused when resolved
   const amount = Math.floor(side.amount);
   const shift = amount > 0 ? `${side.direction === 'ago' ? '-' : '+'}${amount}${side.unit}` : '';
@@ -238,6 +257,26 @@ export function hxResolveRangeExpression(
 
 const fill = (template: string, n: number | string, unit: string) =>
   template.replace('{n}', String(n)).replace('{unit}', unit);
+
+/**
+ * The one-line summary of a relative or now side (`~ 15 minutes ago`, `now`, `~ 2 days from now, rounded to the
+ * day`); a raw expression as is, `emptySide` for an amount that gives no expression. `null` for an absolute side.
+ */
+export function describeSide(side: QuickSelectSide, labels: HxQuickSelectLabels): string | null {
+  if (side.mode === 'absolute') return null;
+  if (side.mode === 'now') return labels.nowSummary;
+  if (side.raw) return side.raw;
+  if (sideExpression(side) === null) return labels.emptySide;
+  const n = Math.floor(side.amount ?? 0);
+  const unit = n === 1 ? labels.unitsOne[side.unit] : labels.units[side.unit];
+  const text =
+    n === 0
+      ? labels.nowSummary
+      : fill(side.direction === 'ago' ? labels.agoSummary : labels.fromNowSummary, n, unit);
+  return side.round
+    ? `${text}, ${fill(labels.roundedSummary, n, labels.unitsOne[side.unit])}`
+    : text;
+}
 
 /**
  * A label for a range: the label of a commonly used range with the same expressions, `Last 15 minutes` /

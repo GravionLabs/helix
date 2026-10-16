@@ -8,7 +8,6 @@ import {
   type HxDateTimeRangePreset,
   hxDateRangePresets,
 } from '../date-range-presets/date-range-presets';
-import { HxRangePresets } from '../internal/range-presets/range-presets';
 import { HxDatePicker, type HxDatePickerValue } from './date-picker';
 
 @Component({
@@ -32,6 +31,19 @@ class Host {
   state = signal<{ day: Date | null }>({ day: null });
   f = form(this.state);
 }
+
+/**
+ * Removes what the date picker left open: it detaches the overlay panes of its popup and the preset select list
+ * (their content is destroyed with the pane), and takes the emptied panes out of the container, nothing else.
+ */
+const removeOwnOverlays = () => {
+  document
+    .querySelectorAll('.cdk-overlay-pane:has(.hx-date-picker-popup, .hx-select-list)')
+    .forEach((pane) => {
+      pane.replaceChildren();
+      pane.remove();
+    });
+};
 
 describe('HxDatePicker', () => {
   let fixture: ComponentFixture<Host>;
@@ -275,9 +287,8 @@ describe('HxDatePicker field and popup', () => {
   });
 
   afterEach(() => {
-    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
-      c.innerHTML = '';
-    });
+    fixture.destroy();
+    removeOwnOverlays();
   });
 
   it('shows the formatted value and a labelled field', () => {
@@ -419,6 +430,9 @@ const preset = (label: string, from: Date, to: Date): HxDateTimeRangePreset => (
     <hx-date-picker id="popup" selectionMode="range" locale="en-US" ariaLabel="Stay" [presets]="list" [(value)]="popup" />
     <hx-date-picker id="popupLimits" selectionMode="range" locale="en-US" ariaLabel="Limited stay" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
     <hx-date-picker id="popupSelect" selectionMode="range" locale="en-US" ariaLabel="Stay" presetDisplay="select" [presets]="list" [(value)]="popup" />
+    <hx-date-picker id="custom" inline selectionMode="range" locale="en-US" presetRefusedLabel="Nicht möglich" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="customSelect" inline selectionMode="range" locale="en-US" presetDisplay="select" presetRefusedLabel="Nicht möglich" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="popupLimitsSelect" selectionMode="range" locale="en-US" ariaLabel="Limited select" presetDisplay="select" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
     <hx-date-picker id="model" inline selectionMode="range" locale="en-US" [presets]="list" [(ngModel)]="model" />
     <hx-date-picker id="reactive" inline selectionMode="range" locale="en-US" presetDisplay="select" [presets]="list" [formControl]="control" />
     <hx-date-picker id="signal" inline selectionMode="range" locale="en-US" [presets]="list" [formField]="f.stay" />
@@ -519,9 +533,7 @@ describe('HxDatePicker range presets', () => {
   afterEach(() => {
     fixture.destroy();
     Element.prototype.scrollIntoView = scrollIntoView;
-    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
-      c.innerHTML = '';
-    });
+    removeOwnOverlays();
   });
 
   it('lists no presets by default and none outside range mode', () => {
@@ -570,6 +582,30 @@ describe('HxDatePicker range presets', () => {
     await settle();
     await choose('limits', 'Wide');
     expect(host.limits()).toBeNull();
+  });
+
+  it('ignores a choice in the select list that arrives after the picker became disabled', async () => {
+    trigger(el('reactive')).click();
+    await settle();
+    expect(options()).toContain('Two days');
+    host.control.disable();
+    await settle();
+    const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === 'Two days',
+    );
+    option?.click();
+    await settle();
+    expect(host.control.value).toBeNull();
+    expect(el('reactive').querySelector('.hx-date-picker-error')).toBeNull();
+    expect(trigger(el('reactive')).disabled).toBe(true);
+  });
+
+  it('keeps the value when the picker is disabled after a preset was taken', async () => {
+    await pick(el('reactive'), 'Two days');
+    host.control.disable();
+    await settle();
+    expect(host.control.value).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+    expect(trigger(el('reactive')).disabled).toBe(true);
   });
 
   it('does not apply a preset while disabled', async () => {
@@ -751,6 +787,45 @@ describe('HxDatePicker range presets', () => {
       expect(trigger(el('limitsSelect')).textContent?.trim()).toBe('Overlap');
     });
 
+    it('shows the text of presetRefusedLabel with the buttons and with the select', async () => {
+      await choose('custom', 'Before');
+      expect(error('custom')?.textContent?.trim()).toBe('Nicht möglich');
+      await pick(el('customSelect'), 'After');
+      expect(error('customSelect')?.textContent?.trim()).toBe('Nicht möglich');
+    });
+
+    it('clears the message in the popup after a valid preset', async () => {
+      await openPopup('popupLimits');
+      const inPopup = (label: string) =>
+        [...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-range-preset') ?? [])].find(
+          (b) => b.textContent?.trim() === label,
+        ) as HTMLButtonElement;
+      inPopup('Before').click();
+      await settle();
+      expect(popup()?.querySelector('.hx-date-picker-error')).not.toBeNull();
+      inPopup('Overlap').click();
+      await settle();
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 10)]);
+      expect(popup()).toBeNull();
+      await openPopup('popupLimits');
+      expect(popup()?.querySelector('.hx-date-picker-error')).toBeNull();
+    });
+
+    it('keeps the popup with a select open on a refused preset and clears the message after a valid one', async () => {
+      await openPopup('popupLimitsSelect');
+      await pick(popup() as HTMLElement, 'After');
+      expect(popup()).not.toBeNull();
+      expect(popup()?.querySelector('.hx-date-picker-error')?.textContent?.trim()).toBe(
+        'This range cannot be chosen.',
+      );
+      expect(host.limits()).toBeNull();
+      await pick(popup() as HTMLElement, 'Overlap');
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 10)]);
+      expect(popup()).toBeNull();
+      await openPopup('popupLimitsSelect');
+      expect(popup()?.querySelector('.hx-date-picker-error')).toBeNull();
+    });
+
     it('keeps the popup open on a refused preset and drops the message when it opens again', async () => {
       await openPopup('popupLimits');
       const before = [
@@ -774,11 +849,10 @@ describe('HxDatePicker range presets', () => {
       expect(trigger(el('offSelect')).disabled).toBe(true);
     });
 
-    it('ignores a preset reported while disabled', async () => {
-      const presets = fixture.debugElement.query(By.css('#off')).query(By.directive(HxRangePresets))
-        .componentInstance as HxRangePresets;
-      presets.chosen.emit(host.list[0]);
-      await settle();
+    it('ignores a click on a preset button while disabled', async () => {
+      const button = presetButton('off', 'Two days');
+      expect(button.disabled).toBe(true);
+      await choose('off', 'Two days');
       expect(host.buttons()).toBeNull();
       expect(el('off').querySelector('.hx-date-picker-error')).toBeNull();
     });

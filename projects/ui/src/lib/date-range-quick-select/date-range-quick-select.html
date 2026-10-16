@@ -1,0 +1,261 @@
+<div
+  class="hx-date-picker hx-date-picker-has-icon hx-date-range-quick-select-control"
+  [class.hx-date-picker-open]="open()"
+  [class.hx-date-picker-disabled]="isDisabled()"
+  [class.hx-date-picker-invalid]="invalid()"
+>
+  <div class="hx-date-picker-field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+    <input
+      #field
+      type="text"
+      readonly
+      class="hx-date-picker-input"
+      autocomplete="off"
+      aria-haspopup="dialog"
+      [attr.id]="inputId() ?? null"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [value]="text()"
+      [attr.aria-expanded]="open()"
+      [attr.aria-controls]="open() ? popupId : null"
+      [attr.aria-label]="ariaLabel() ?? null"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      [attr.aria-invalid]="invalid() ? 'true' : null"
+      (click)="show()"
+      (keydown)="onFieldKeydown($event)"
+    />
+    <button
+      type="button"
+      class="hx-date-picker-trigger"
+      aria-haspopup="dialog"
+      [attr.aria-label]="chooseLabel()"
+      [attr.aria-expanded]="open()"
+      [disabled]="isDisabled()"
+      (click)="toggle()"
+    >
+      <span class="hx-date-picker-trigger-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <ng-template
+    cdkConnectedOverlay
+    cdkConnectedOverlayPanelClass="hx-date-picker-overlay"
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="open()"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayPush]="true"
+    (overlayOutsideClick)="onOutsideClick($event)"
+    (overlayKeydown)="onOverlayKeydown($event)"
+    (attach)="onAttach()"
+    (detach)="close()"
+  >
+    @let l = texts();
+    <div
+      class="hx-date-picker-popup hx-date-range-quick-select-popup"
+      role="dialog"
+      aria-modal="false"
+      [id]="popupId"
+      [attr.aria-label]="ariaLabel() ?? chooseLabel()"
+      [attr.aria-labelledby]="ariaLabelledby() ?? null"
+      (focusout)="onPopupFocusOut($event)"
+    >
+      <section class="hx-date-range-quick-select-section" [attr.aria-labelledby]="popupId + '-quick'">
+        <span class="hx-date-range-quick-select-caption" [id]="popupId + '-quick'">{{ l.quickSelect }}</span>
+        <div class="hx-date-range-quick-select-row">
+          <hx-select
+            #quickFirst
+            class="hx-date-range-quick-select-direction"
+            [options]="directionOptions()"
+            [ariaLabel]="l.direction"
+            [value]="quickDirection()"
+            (valueChange)="setQuickDirection($event)"
+          />
+          <input
+            hx-input
+            type="number"
+            min="1"
+            step="1"
+            class="hx-date-range-quick-select-amount"
+            [attr.aria-label]="l.amount"
+            [attr.aria-invalid]="quickError() ? 'true' : null"
+            [attr.aria-describedby]="quickError() ? quickErrorId : null"
+            [value]="quickAmount()"
+            (input)="setQuickAmount($event)"
+            (keydown.enter)="$event.preventDefault(); applyQuick()"
+          />
+          <hx-select
+            class="hx-date-range-quick-select-unit"
+            [options]="unitOptions()"
+            [ariaLabel]="l.unit"
+            [value]="quickUnit()"
+            (valueChange)="setQuickUnit($event)"
+          />
+          <button
+            type="button"
+            class="hx-date-picker-button hx-date-range-quick-select-apply"
+            [attr.aria-describedby]="quickError() ? quickErrorId : null"
+            (click)="applyQuick()"
+          >
+            {{ l.apply }}
+          </button>
+        </div>
+      </section>
+      @if (commonlyUsed().length > 0) {
+        <section class="hx-date-range-quick-select-section" [attr.aria-labelledby]="popupId + '-common'">
+          <span class="hx-date-range-quick-select-caption" [id]="popupId + '-common'">{{ l.commonlyUsed }}</span>
+          <ul class="hx-date-range-quick-select-ranges hx-date-range-quick-select-common">
+            @for (range of commonlyUsed(); track $index) {
+              <li>
+                <button type="button" class="hx-date-picker-button" (click)="applyRange(range)">{{ range.label }}</button>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+      @if (recentItems().length > 0) {
+        <section class="hx-date-range-quick-select-section" [attr.aria-labelledby]="popupId + '-recent'">
+          <span class="hx-date-range-quick-select-caption" [id]="popupId + '-recent'">{{ l.recentlyUsed }}</span>
+          <ul class="hx-date-range-quick-select-ranges hx-date-range-quick-select-recent">
+            @for (item of recentItems(); track item.range.from + ' ' + item.range.to) {
+              <li>
+                <button type="button" class="hx-date-picker-button" (click)="applyRange(item.range)">{{ item.label }}</button>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+      <!-- one line per side; a click opens the editor of that side (Absolute / Relative / Now) below -->
+      <div class="hx-date-range-quick-select-summary" role="group" [attr.aria-label]="l.range">
+        @for (s of sideKeys; track s) {
+          <button
+            #sideButton
+            type="button"
+            class="hx-date-range-quick-select-side-line"
+            [class]="'hx-date-range-quick-select-side-line-' + s"
+            [id]="sideButtonId(s)"
+            [attr.aria-expanded]="openSide() === s"
+            [attr.aria-controls]="openSide() === s ? editorId(s) : null"
+            (click)="toggleSide(s)"
+          >
+            <span class="hx-date-range-quick-select-side-name">{{ s === 'from' ? l.start : l.end }}</span>&ngsp;
+            <span class="hx-date-range-quick-select-side-value">{{ sideSummary(s) }}</span>
+          </button>
+        }
+      </div>
+      @if (openSide(); as s) {
+        @let state = sides()[s];
+        @let sideName = s === 'from' ? l.start : l.end;
+        <section
+          class="hx-date-range-quick-select-editor"
+          [class]="'hx-date-range-quick-select-editor-' + s"
+          [id]="editorId(s)"
+          [attr.aria-labelledby]="sideButtonId(s)"
+        >
+          <div
+            class="hx-date-range-quick-select-tabs"
+            role="tablist"
+            [attr.aria-labelledby]="sideButtonId(s)"
+            (keydown)="onTabKeydown(s, $event)"
+          >
+            @for (mode of sideModes; track mode) {
+              <button
+                #sideTab
+                type="button"
+                role="tab"
+                class="hx-date-range-quick-select-tab"
+                [id]="tabId(s, mode)"
+                [attr.aria-selected]="state.mode === mode"
+                [attr.aria-controls]="panelId(s)"
+                [attr.tabindex]="state.mode === mode ? 0 : -1"
+                (click)="setSideMode(s, mode)"
+              >
+                {{ mode === 'absolute' ? l.absolute : mode === 'relative' ? l.relative : l.now }}
+              </button>
+            }
+          </div>
+          <div
+            class="hx-date-range-quick-select-tabpanel"
+            role="tabpanel"
+            tabindex="0"
+            [id]="panelId(s)"
+            [attr.aria-labelledby]="tabId(s, state.mode)"
+            [attr.aria-describedby]="sideError() ? quickErrorId : null"
+          >
+            @switch (state.mode) {
+              @case ('absolute') {
+                <input
+                  hx-input
+                  fluid
+                  type="text"
+                  autocomplete="off"
+                  class="hx-date-range-quick-select-side-date"
+                  [attr.aria-label]="sideName + ' ' + l.date"
+                  [attr.aria-invalid]="sideError() ? 'true' : null"
+                  [attr.aria-describedby]="sideError() ? quickErrorId : null"
+                  [value]="sideText(s)"
+                  (change)="setAbsoluteSide(s, $event)"
+                  (keydown.enter)="$event.preventDefault(); setAbsoluteSide(s, $event)"
+                />
+                <div class="hx-date-range-quick-select-calendar" role="group" [attr.aria-label]="sideName + ' ' + l.date">
+                  <hx-calendar
+                    [(focusedDate)]="calendarFocus"
+                    [(view)]="calendarView"
+                    [selectedDates]="sideDays(s)"
+                    selectionMode="single"
+                    [minDate]="minDate()"
+                    [maxDate]="maxDate()"
+                    [firstDayOfWeek]="firstDayOfWeek()"
+                    [locale]="locale()"
+                    [disabled]="isDisabled()"
+                    [titleId]="calendarTitleId"
+                    [today]="today()"
+                    (picked)="pickDay(s, $event)"
+                  />
+                </div>
+              }
+              @case ('relative') {
+                <div class="hx-date-range-quick-select-row">
+                  <input
+                    hx-input
+                    type="number"
+                    min="0"
+                    step="1"
+                    class="hx-date-range-quick-select-side-amount"
+                    [attr.aria-label]="l.amount"
+                    [attr.aria-invalid]="sideError() ? 'true' : null"
+                    [attr.aria-describedby]="sideError() ? quickErrorId : null"
+                    [value]="state.amount ?? ''"
+                    (input)="setSideAmount(s, $event)"
+                  />
+                  <hx-select
+                    class="hx-date-range-quick-select-side-unit"
+                    [options]="relativeOptions()"
+                    [ariaLabel]="l.unit"
+                    [value]="sideUnitValue(s)"
+                    (valueChange)="setSideUnit(s, $event)"
+                  />
+                </div>
+                <label class="hx-date-range-quick-select-side-round">
+                  <input type="checkbox" hx-checkbox [checked]="state.round" (change)="setSideRound(s, $event)" />
+                  {{ sideRoundLabel(s) }}
+                </label>
+                <p class="hx-date-range-quick-select-side-resolved">
+                  <code class="hx-date-range-quick-select-expression">{{ sideExpressionText(s) }}</code>&ngsp;
+                  <span class="hx-date-range-quick-select-resolved-date">{{ sideResolvedText(s) }}</span>
+                </p>
+              }
+              @case ('now') {
+                <p class="hx-date-range-quick-select-now-hint">{{ l.nowHint }}</p>
+                <p class="hx-date-range-quick-select-side-resolved">
+                  <span class="hx-date-range-quick-select-resolved-date">{{ sideResolvedText(s) }}</span>
+                </p>
+              }
+            }
+          </div>
+        </section>
+      }
+      @if (quickError() || sideError()) {
+        <p class="hx-date-range-quick-select-error" role="alert" [id]="quickErrorId">{{ l.incompleteRange }}</p>
+      }
+    </div>
+  </ng-template>
+</div>

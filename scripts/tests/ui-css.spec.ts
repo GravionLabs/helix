@@ -71,6 +71,7 @@ describe('helix-ui styles', () => {
     ['time-picker', 'time-picker/time-picker.ts'],
     ['date-time-picker', 'date-time-picker/date-time-picker.ts'],
     ['date-time-range-picker', 'date-time-range-picker/date-time-range-picker.ts'],
+    ['date-range-quick-select', 'date-range-quick-select/date-range-quick-select.ts'],
     ['file-upload', 'file-upload/file-upload.ts'],
     ['input-group', 'input-group/input-group.ts'],
     ['input-number', 'input-number/input-number.ts'],

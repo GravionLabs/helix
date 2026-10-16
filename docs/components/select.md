@@ -28,6 +28,7 @@ dependency) and the overlay styles that come with `styles.css`.
 | `showClear`      | `boolean`                           | `false`        | A button that resets the value to `null`.                           |
 | `inputId`        | `string`                            |                | Id of the trigger, for `<label for>`.                               |
 | `ariaLabel`      | `string`                            |                | Accessible name when there is no visible label.                     |
+| `ariaLabelledby` | `string`                            |                | Id of the element that names the select (`aria-labelledby` of the trigger). |
 | `ariaDescribedby` | `string \| null`                   |                | Id of a text that describes the select (`aria-describedby` of the trigger). |
 | `compareWith`    | `(a, b) => boolean`                 | `Object.is`    | How a value is matched to an option.                                |
 

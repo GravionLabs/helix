@@ -56,8 +56,8 @@ readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS; // Today, Last 7 days, This mon
 - **Preset keyboard and state:** the preset buttons are native buttons before the calendar in the tab order; the select
   works as `hx-select` (Arrow Down opens, the arrows move, Enter chooses, Escape closes only the list and leaves the
   popup open). Presets are disabled with the picker (`disabled`, a disabled form control). Times of day, a draft with
-  Submit and the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`,
-  `presetDisplay`, `quickSelect`; with `[showTime]="false"` it picks days only).
+  Submit live in [date-time range picker](date-time-range-picker.md) (`presets`,
+  `presetDisplay`; with `[showTime]="false"` it picks days only).
 - **Field:** it shows the value with `Intl.DateTimeFormat`. Typing a date parses it in the order the locale writes
   numbers (also `yyyy-mm-dd`); unreadable or disabled dates put the value back. A range reads as `a – b`, several days
   as `a, b`. The popup opens by click, by the button or Arrow Down; a range keeps it open until the second date.

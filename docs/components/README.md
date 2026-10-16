@@ -27,6 +27,7 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Multi select](multi-select.md) | `hx-multi-select` is a select for several values: a `combobox` that opens a multi-select listbox in an overlay. |
 | [Listbox](listbox.md) | `hx-listbox` is an inline list of options, single or `multiple`, on the CDK listbox. |
 | [Date time range picker](date-time-range-picker.md) | `hx-date-time-range-picker` is a date-time range in one field: one calendar marks the range, a time row sets each end. |
+| [Date range quick select](date-range-quick-select.md) | `hx-date-range-quick-select` is a Kibana-style quick select for a date range: relative ranges as date math, commonly and recently used lists. |
 | [Date picker](date-picker.md) | `hx-date-picker` is a date field that opens a calendar, or with `[inline]="true"` the calendar alone, to choose a day, a range or several days. |
 | [Date time picker](date-time-picker.md) | `hx-date-time-picker` is a date and time field that opens a calendar with a time row, or with `[inline]="true"` both alone. |
 | [Time picker](time-picker.md) | `hx-time-picker` is a time field that opens a time row (hour, minute, second, AM/PM), or with `[inline]="true"` the row alone. |
