@@ -9,8 +9,8 @@ import {
   type HxDateTimeRangePreset,
   hxDateRangePresets,
 } from '../date-range-presets/date-range-presets';
+import type { HxDateRangeExpression } from '../internal/quick-select/quick-select';
 import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-range-picker';
-import type { HxDateRangeExpression } from './quick-select';
 
 @Component({
   imports: [HxDateTimeRangePicker, FormsModule, ReactiveFormsModule, FormField],

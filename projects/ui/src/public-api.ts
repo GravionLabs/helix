@@ -111,15 +111,6 @@ export {
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
 export {
-  HX_QUICK_SELECT_COMMONLY_USED,
-  HX_QUICK_SELECT_LABELS,
-  type HxDateRangeExpression,
-  type HxQuickSelectLabels,
-  type HxQuickSelectRange,
-  hxResolveRangeExpression,
-  hxResolveRangeSide,
-} from './lib/date-time-range-picker/quick-select';
-export {
   HX_DIALOG_DATA,
   HxDialog,
   type HxDialogConfig,
@@ -162,6 +153,15 @@ export {
   type HxInputNumberSize,
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
+export {
+  HX_QUICK_SELECT_COMMONLY_USED,
+  HX_QUICK_SELECT_LABELS,
+  type HxDateRangeExpression,
+  type HxQuickSelectLabels,
+  type HxQuickSelectRange,
+  hxResolveRangeExpression,
+  hxResolveRangeSide,
+} from './lib/internal/quick-select/quick-select';
 export { HxListbox } from './lib/listbox/listbox';
 export { HxMenu } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';

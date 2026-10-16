@@ -34,10 +34,6 @@ import { HxInput } from '../input/input';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
-import { HxRangePresets } from '../internal/range-presets/range-presets';
-import { HxSelect, isInSelectOverlay } from '../select/select';
-import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
-import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
 import {
   ABSOLUTE_SIDES,
   addRecentRange,
@@ -57,7 +53,11 @@ import {
   sideExpression,
   sideFromExpression,
   writeRecentRanges,
-} from './quick-select';
+} from '../internal/quick-select/quick-select';
+import { HxRangePresets } from '../internal/range-presets/range-presets';
+import { HxSelect, isInSelectOverlay } from '../select/select';
+import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
+import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
 
 export interface HxDateTimeRangeValue {
   from: Date | null;
