@@ -75,13 +75,127 @@
   gap: var(--h-datepicker-title-gap);
 }
 
-.hx-date-time-range-picker-submit {
+.hx-date-time-range-picker-submit,
+.hx-date-time-range-picker-quick-apply {
   font-weight: var(--h-datepicker-title-font-weight);
 }
 
-.hx-date-time-range-picker-presets {
+/* the preset row (`.hx-range-presets`, styled by `date-picker.scss`) at the top of the popup */
+.hx-date-time-range-picker-popup > .hx-range-presets {
+  padding: var(--h-datepicker-panel-padding) var(--h-datepicker-panel-padding) 0;
+}
+
+/* quick select (`quickSelect`): Last/Next N unit, commonly and recently used ranges, a tab list per side */
+.hx-date-time-range-picker-quick {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--h-datepicker-title-gap);
   padding: var(--h-datepicker-panel-padding) var(--h-datepicker-panel-padding) 0;
+}
+
+.hx-date-time-range-picker-quick-section,
+.hx-date-time-range-picker-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-quick-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-quick-amount,
+.hx-date-time-range-picker-side-amount {
+  width: 5rem;
+}
+
+.hx-date-time-range-picker-ranges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-date-time-range-picker-ranges .hx-date-picker-button {
+  width: 100%;
+  text-align: start;
+}
+
+.hx-date-time-range-picker-sides {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--h-datepicker-panel-border-color);
+}
+
+.hx-date-time-range-picker-tab {
+  padding: var(--h-datepicker-select-month-padding);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--h-datepicker-select-month-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hx-date-time-range-picker-tab:hover {
+  background: var(--h-datepicker-select-month-hover-background);
+}
+
+.hx-date-time-range-picker-tab[aria-selected='true'] {
+  border-bottom-color: var(--h-datepicker-date-selected-background);
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-time-range-picker-tab:focus-visible,
+.hx-date-time-range-picker-tabpanel:focus-visible {
+  outline: var(--h-datepicker-date-focus-ring-width) var(--h-datepicker-date-focus-ring-style)
+    var(--h-datepicker-date-focus-ring-color);
+  outline-offset: var(--h-datepicker-date-focus-ring-offset);
+}
+
+.hx-date-time-range-picker-tabpanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-side-round {
+  display: flex;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-time-range-picker-now-hint {
+  margin: 0;
+}
+
+/* Submit could not apply the quick select's sides */
+.hx-date-time-range-picker-error {
+  margin: 0;
+  color: var(--h-inputtext-invalid-border-color);
+}
+
+/* the selects of the quick select keep a readable width; the other new classes (`-common`, `-recent`, `-side-date`)
+   are hooks styled through their parts */
+.hx-date-time-range-picker-quick-direction,
+.hx-date-time-range-picker-quick-unit {
+  min-width: 7rem;
+}
+
+.hx-date-time-range-picker-side-unit {
+  flex: 1 1 10rem;
+}
+
+/* the date math of a relative side, as it will be resolved */
+.hx-date-time-range-picker-expression {
+  color: var(--h-datepicker-week-day-color);
 }

@@ -75,6 +75,20 @@
   [attr.aria-labelledby]="ariaLabelledby() ?? null"
   (focusout)="onFocusOut($event)"
 >
+    @if (shownPresets().length > 0) {
+      <hx-range-presets
+        [presets]="shownPresets()"
+        [display]="presetDisplay()"
+        [label]="presetsLabel()"
+        [disabled]="isDisabled()"
+        [selected]="selectedPreset()"
+        [describedBy]="presetError() ? presetErrorId : null"
+        (chosen)="applyPreset($event)"
+      />
+      @if (presetError()) {
+        <p class="hx-date-picker-error" role="alert" [id]="presetErrorId">{{ presetRefusedLabel() }}</p>
+      }
+    }
     <hx-calendar
       [(focusedDate)]="focusedDate"
       [(view)]="view"

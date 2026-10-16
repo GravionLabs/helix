@@ -28,6 +28,14 @@ import { type Accessor, compareValues, type HxOption, resolveOptions } from '../
 export type HxSelectSize = 'small' | 'medium' | 'large';
 export type HxSelectVariant = 'outlined' | 'filled';
 
+/** The class of the select's list overlay (the CDK pane): a popup holding a select treats it as its own. */
+export const HX_SELECT_OVERLAY_CLASS = 'hx-select-overlay';
+
+/** Whether `target` lies in the list overlay of an `hx-select` (a click or a focus move into an open list). */
+export function isInSelectOverlay(target: EventTarget | null | undefined): boolean {
+  return target instanceof Element && target.closest(`.${HX_SELECT_OVERLAY_CLASS}`) !== null;
+}
+
 /** An option as the select works with it, after `optionLabel`/`optionValue`/`optionDisabled` are applied. */
 export type HxSelectItem<V = unknown> = HxOption<V>;
 
@@ -70,6 +78,7 @@ export type HxSelectItem<V = unknown> = HxOption<V>;
 export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueControl<V | null> {
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly #injector = inject(Injector);
+  protected readonly overlayClass = HX_SELECT_OVERLAY_CLASS;
 
   /** The options: primitives or objects. */
   readonly options = input<readonly unknown[]>([]);
@@ -94,6 +103,8 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly inputId = input<string>();
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
+  /** The `id` of a text that describes the select (a message about the last choice). */
+  readonly ariaDescribedby = input<string | null>();
   /** How values are compared to find the selected option (default: `Object.is`). */
   readonly compareWith = input<(a: unknown, b: unknown) => boolean>(compareValues);
 

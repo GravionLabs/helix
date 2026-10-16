@@ -4,10 +4,13 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
 import {
-  HxDateTimeRangePicker,
+  HX_DATE_RANGE_DAY_PRESETS,
+  HX_DATE_RANGE_PRESETS,
   type HxDateTimeRangePreset,
-  type HxDateTimeRangeValue,
-} from './date-time-range-picker';
+  hxDateRangePresets,
+} from '../date-range-presets/date-range-presets';
+import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-range-picker';
+import type { HxDateRangeExpression } from './quick-select';
 
 @Component({
   imports: [HxDateTimeRangePicker, FormsModule, ReactiveFormsModule, FormField],
@@ -96,6 +99,22 @@ import {
       [(value)]="presetDays"
     />
     <hx-date-time-range-picker
+      id="presetSelect"
+      locale="en-US"
+      presetDisplay="select"
+      presetsLabel="Quick ranges"
+      [presets]="presetList"
+      [(value)]="selectValue"
+    />
+    <hx-date-time-range-picker
+      id="presetSelectDays"
+      locale="en-US"
+      presetDisplay="select"
+      [showTime]="false"
+      [presets]="builtIn"
+      [(value)]="selectDays"
+    />
+    <hx-date-time-range-picker
       id="presetsClock"
       locale="en-US"
       timeOnly
@@ -146,6 +165,107 @@ import {
       locale="en-US"
       [formField]="f.span"
     />
+    <hx-date-time-range-picker
+      id="quick"
+      locale="en-US"
+      quickSelect
+      typeable
+      showButtonBar
+      recentStorageKey="hx-test-recent"
+      [presets]="presetList"
+      [(value)]="quick"
+      [(expression)]="quickExpr"
+    />
+    <hx-date-time-range-picker
+      id="quickLimits"
+      locale="en-US"
+      quickSelect
+      [recentStorageKey]="null"
+      [minDate]="min"
+      [maxDate]="max"
+      [(value)]="quickLimits"
+    />
+    <hx-date-time-range-picker
+      id="quickDays"
+      locale="en-US"
+      quickSelect
+      [recentStorageKey]="null"
+      [showTime]="false"
+      [disabledDates]="blockedDays"
+      [quickSelectLabels]="{ quickSelect: 'Schnellauswahl', apply: 'Anwenden' }"
+      [commonlyUsed]="[{ label: 'Heute', from: 'now/d', to: 'now/d' }]"
+      [(value)]="quickDays"
+    />
+    <hx-date-time-range-picker
+      id="quickModel"
+      locale="en-US"
+      quickSelect
+      [recentStorageKey]="null"
+      [(ngModel)]="quickModel"
+      [(expression)]="modelExpr"
+    />
+    <hx-date-time-range-picker
+      id="quickReactive"
+      locale="en-US"
+      quickSelect
+      [recentStorageKey]="null"
+      [formControl]="quickControl"
+      [(expression)]="reactiveExpr"
+    />
+    <hx-date-time-range-picker
+      id="quickSignal"
+      locale="en-US"
+      quickSelect
+      [recentStorageKey]="null"
+      [formField]="qf.span"
+      [(expression)]="signalExpr"
+    />
+    <hx-date-time-range-picker
+      id="quickOff"
+      locale="en-US"
+      quickSelect
+      [disabled]="true"
+      [(value)]="offValue"
+      [(expression)]="offExpr"
+    />
+    <hx-date-time-range-picker
+      id="selModel"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [(ngModel)]="selModel"
+    />
+    <hx-date-time-range-picker
+      id="selReactive"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [formControl]="selControl"
+    />
+    <hx-date-time-range-picker
+      id="selSignal"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [formField]="sf.span"
+    />
+    <hx-date-time-range-picker
+      id="selOff"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [disabled]="true"
+    />
+    <hx-date-time-range-picker
+      id="selLimits"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="limitPresets"
+      [minDate]="min"
+      [maxDate]="max"
+      [disabledDates]="blockedDays"
+      [(value)]="selLimits"
+    />
   `,
 })
 class Host {
@@ -178,6 +298,9 @@ class Host {
       to: () => new Date(2026, 9, 14, 9, 0),
     },
   ];
+  builtIn = hxDateRangePresets({ today: 'Heute', last7Days: 'Letzte 7 Tage' });
+  selectValue = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  selectDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
   presetDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
   clockPresets: HxDateTimeRangePreset[] = [
     {
@@ -229,6 +352,36 @@ class Host {
     span: { from: null, to: null },
   });
   f = form(this.state);
+  quick = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  quickExpr = signal<HxDateRangeExpression | null>(null);
+  quickLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  quickDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  quickModel = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  quickControl = new FormControl<HxDateTimeRangeValue>({ from: null, to: null });
+  modelExpr = signal<HxDateRangeExpression | null>(null);
+  reactiveExpr = signal<HxDateRangeExpression | null>(null);
+  signalExpr = signal<HxDateRangeExpression | null>(null);
+  quickState = signal<{ span: HxDateTimeRangeValue }>({ span: { from: null, to: null } });
+  qf = form(this.quickState);
+  offValue = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  offExpr = signal<HxDateRangeExpression | null>({ from: 'now-15m', to: 'now' });
+  selModel: HxDateTimeRangeValue = { from: null, to: null };
+  selControl = new FormControl<HxDateTimeRangeValue>({ from: null, to: null });
+  selState = signal<{ span: HxDateTimeRangeValue }>({ span: { from: null, to: null } });
+  sf = form(this.selState);
+  selLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  limitPresets: HxDateTimeRangePreset[] = [
+    {
+      label: 'Wide',
+      from: () => new Date(2026, 9, 1, 0, 0),
+      to: () => new Date(2026, 10, 2, 0, 0),
+    },
+    {
+      label: 'Over a blocked day',
+      from: () => new Date(2026, 9, 13, 9, 0),
+      to: () => new Date(2026, 9, 14, 9, 0),
+    },
+  ];
 }
 
 describe('HxDateTimeRangePicker', () => {
@@ -280,6 +433,8 @@ describe('HxDateTimeRangePicker', () => {
   };
 
   beforeEach(async () => {
+    // jsdom has no layout: the CDK listbox of the preset select scrolls the active option into view
+    Element.prototype.scrollIntoView = () => {};
     await TestBed.configureTestingModule({
       imports: [Host],
     }).compileComponents();
@@ -288,7 +443,11 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
   });
 
-  afterEach(() => fixture.destroy());
+  const scrollIntoView = Element.prototype.scrollIntoView;
+  afterEach(() => {
+    fixture.destroy();
+    Element.prototype.scrollIntoView = scrollIntoView;
+  });
 
   it('is one read-only field with one button', () => {
     expect(el('basic').querySelectorAll('input').length).toBe(1);
@@ -311,14 +470,12 @@ describe('HxDateTimeRangePicker', () => {
 
   it('renders no preset list without presets', async () => {
     await open('basic');
-    expect(popup()?.querySelector('.hx-date-time-range-picker-presets')).toBeNull();
+    expect(popup()?.querySelector('.hx-range-presets')).toBeNull();
   });
 
   it('applies a preset to from and to on submit', async () => {
     await open('presets');
-    const buttons = [
-      ...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset'),
-    ];
+    const buttons = [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')];
     expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days', 'Reversed']);
     await click(buttons[0]);
     expect(host.withPresets()).toEqual({ from: null, to: null });
@@ -333,7 +490,7 @@ describe('HxDateTimeRangePicker', () => {
   });
 
   const preset = (label: string) =>
-    [...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')].find(
+    [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')].find(
       (b) => b.textContent?.trim() === label,
     ) as HTMLElement;
   const marked = () =>
@@ -400,9 +557,7 @@ describe('HxDateTimeRangePicker', () => {
 
   it('names the preset group with presetsLabel and lists native buttons', async () => {
     await open('presets');
-    expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Presets');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe('Presets');
     // a native `type=button` is activated by Enter and Space by the browser (synthetic keys do not activate it)
     expect(preset('Morning').tagName).toBe('BUTTON');
     expect(preset('Morning').getAttribute('type')).toBe('button');
@@ -410,9 +565,136 @@ describe('HxDateTimeRangePicker', () => {
     expect(document.activeElement).toBe(preset('Morning'));
     await close();
     await open('presetsDays');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe(
+      'Quick ranges',
+    );
+  });
+
+  const option = (label: string) =>
+    [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === label,
+    ) as HTMLElement;
+  const selectTrigger = () => popup()!.querySelector('.hx-select-trigger') as HTMLButtonElement;
+
+  it('shows the presets in a select with presetDisplay select', async () => {
+    await open('presetSelect');
+    expect(popup()!.querySelector('.hx-range-preset')).toBeNull();
+    expect(selectTrigger().getAttribute('aria-label')).toBe('Quick ranges');
+    await click(selectTrigger());
     expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Quick ranges');
+      [...document.querySelectorAll('.hx-select-option')].map((o) => o.textContent?.trim()),
+    ).toEqual(['Morning', 'Two days', 'Reversed']);
+  });
+
+  it('fills the draft with a preset chosen in the select and keeps the popup open', async () => {
+    await open('presetSelect');
+    await click(selectTrigger());
+    await click(option('Morning'));
+    expect(popup()).not.toBeNull();
+    expect(selectTrigger().textContent?.trim()).toBe('Morning');
+    expect(now('from', 'Hour')).toBe('6');
+    expect(now('to', 'Minute')).toBe('30');
+    expect(host.selectValue()).toEqual({ from: null, to: null });
+    await submit();
+    expect(host.selectValue()).toEqual({
+      from: new Date(2026, 9, 7, 6, 0),
+      to: new Date(2026, 9, 7, 12, 30),
+    });
+  });
+
+  it('keeps the buttons by default', async () => {
+    await open('presets');
+    expect(popup()!.querySelector('hx-select')).toBeNull();
+  });
+
+  it('starts the select empty each time the popup opens', async () => {
+    await open('presetSelect');
+    await click(selectTrigger());
+    await click(option('Two days'));
+    await click(popup()!.querySelector('.hx-date-time-range-picker-cancel') as HTMLElement);
+    await open('presetSelect');
+    expect(selectTrigger().textContent?.trim()).toBe('Quick ranges');
+  });
+
+  it('lists the built-in presets with a localizable label', () => {
+    expect(HX_DATE_RANGE_PRESETS.map((p) => p.label)).toEqual([
+      'Last 15 minutes',
+      'Last 1 hour',
+      'Last 6 hours',
+      'Last 24 hours',
+      'Last 7 days',
+      'Last 30 days',
+      'Today',
+      'Yesterday',
+      'This week',
+      'This month',
+    ]);
+    expect(host.builtIn.map((p) => p.label)).toContain('Letzte 7 Tage');
+    expect(host.builtIn.map((p) => p.label)).toContain('Heute');
+    expect(host.builtIn.map((p) => p.label)).toContain('Last 24 hours');
+  });
+
+  describe('built-in ranges', () => {
+    beforeEach(() =>
+      vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] }),
+    );
+    afterEach(() => vi.useRealTimers());
+    const range = (label: string) => {
+      const p = HX_DATE_RANGE_PRESETS.find((x) => x.label === label)!;
+      return { from: p.from(), to: p.to() };
+    };
+
+    it('resolves relative ranges against the current time', () => {
+      expect(range('Last 15 minutes')).toEqual({
+        from: new Date(2026, 9, 14, 15, 15, 20),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range('Last 24 hours').from).toEqual(new Date(2026, 9, 13, 15, 30, 20));
+    });
+
+    it('resolves the calendar ranges', () => {
+      expect(range('Today').from).toEqual(new Date(2026, 9, 14));
+      expect(range('Yesterday')).toEqual({
+        from: new Date(2026, 9, 13),
+        to: new Date(2026, 9, 13, 23, 59, 59, 999),
+      });
+      expect(range('Last 7 days').from).toEqual(new Date(2026, 9, 8));
+      expect(range('Last 30 days').from).toEqual(new Date(2026, 8, 15));
+      expect(range('This week')).toEqual({
+        from: new Date(2026, 9, 11),
+        to: new Date(2026, 9, 17, 23, 59, 59, 999),
+      });
+      expect(range('This month')).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31, 23, 59, 59, 999),
+      });
+    });
+
+    it('starts This week on the given first day of the week', () => {
+      const week = HX_DATE_RANGE_PRESETS.find((x) => x.label === 'This week')!;
+      expect(week.from({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 12));
+      expect(week.to({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 18, 23, 59, 59, 999));
+      expect(week.from({ firstDayOfWeek: 4 })).toEqual(new Date(2026, 9, 8));
+    });
+
+    it('keeps midnight for a built-in preset in date-only mode', async () => {
+      await open('presetSelectDays');
+      await click(selectTrigger());
+      expect(
+        [...document.querySelectorAll('.hx-select-option')].map((o) => o.textContent?.trim()),
+      ).toContain('Heute');
+      await click(option('This month'));
+      await submit();
+      expect(host.selectDays()).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31),
+      });
+      await open('presetSelectDays');
+      await click(selectTrigger());
+      await click(option('Letzte 7 Tage'));
+      await submit();
+      expect(host.selectDays()).toEqual({ from: new Date(2026, 9, 8), to: new Date(2026, 9, 14) });
+    });
   });
 
   it('takes the days of a preset without the time pickers', async () => {
@@ -1062,5 +1344,801 @@ describe('HxDateTimeRangePicker', () => {
     el('model').dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
     await settle();
     expect(el('model').classList).toContain('ng-touched');
+  });
+
+  describe('quick select', () => {
+    const NOW = new Date(2026, 9, 14, 15, 30, 20);
+    beforeEach(() => {
+      localStorage.clear();
+      vi.useFakeTimers({ now: NOW, toFake: ['Date'] });
+    });
+    afterEach(() => {
+      vi.useRealTimers();
+      vi.restoreAllMocks();
+      localStorage.clear();
+    });
+    const q = <T extends Element = HTMLElement>(selector: string) =>
+      popup()!.querySelector(selector) as T;
+    const choose = async (selectClass: string, label: string) => {
+      await click(q(`.${selectClass} .hx-select-trigger`));
+      const opt = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+        (o) => o.textContent?.trim() === label,
+      );
+      if (!opt) throw new Error(`no option ${label}`);
+      await click(opt);
+    };
+    const fill = async (field: HTMLInputElement, text: string) => {
+      field.value = text;
+      field.dispatchEvent(new Event('input'));
+      field.dispatchEvent(new Event('change'));
+      await settle();
+    };
+    const listed = (cls: string) =>
+      [...popup()!.querySelectorAll(`.${cls} button`)].map((b) => b.textContent?.trim());
+    const rangeButton = (cls: string, label: string) =>
+      [...popup()!.querySelectorAll<HTMLElement>(`.${cls} button`)].find(
+        (b) => b.textContent?.trim() === label,
+      ) as HTMLElement;
+    const tabs = (side: 'from' | 'to') => [
+      ...popup()!.querySelectorAll<HTMLElement>(
+        `.hx-date-time-range-picker-side-${side} [role=tab]`,
+      ),
+    ];
+    const tab = (side: 'from' | 'to', label: string) =>
+      tabs(side).find((t) => t.textContent?.trim() === label) as HTMLElement;
+    const sidePanel = (side: 'from' | 'to') =>
+      q(`.hx-date-time-range-picker-side-${side} [role=tabpanel]`);
+    const applyQuick = () => click(q('.hx-date-time-range-picker-quick-apply'));
+
+    it('is off by default: the popup stays as it was', async () => {
+      await open('basic');
+      expect(popup()!.querySelector('.hx-date-time-range-picker-quick')).toBeNull();
+      expect(popup()!.querySelector('[role=tablist]')).toBeNull();
+    });
+
+    it('shows the quick select above the calendar and focuses its first control', async () => {
+      await open('quick');
+      expect(q('.hx-date-time-range-picker-quick')).not.toBeNull();
+      expect(q('.hx-date-time-range-picker-days')).not.toBeNull();
+      expect(document.activeElement).toBe(
+        q('.hx-date-time-range-picker-quick-direction .hx-select-trigger'),
+      );
+      expect(listed('hx-date-time-range-picker-common')).toEqual([
+        'Today',
+        'This week',
+        'Last 15 minutes',
+        'Last 30 minutes',
+        'Last 1 hour',
+        'Last 24 hours',
+        'Last 7 days',
+        'Last 30 days',
+        'Last 90 days',
+        'Last 1 year',
+      ]);
+      // nothing applied yet: no Recently used list
+      expect(popup()!.querySelector('.hx-date-time-range-picker-recent')).toBeNull();
+    });
+
+    it('applies Last 15 minutes against the current time and sets the expression', async () => {
+      await open('quick');
+      await applyQuick();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 14, 15, 15, 20),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(input('quick'));
+    });
+
+    it('applies Next N unit chosen with the selects and the amount', async () => {
+      await open('quick');
+      await choose('hx-date-time-range-picker-quick-direction', 'Next');
+      // the select list is its own overlay: choosing in it keeps the popup open
+      expect(popup()).not.toBeNull();
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'), '2');
+      await choose('hx-date-time-range-picker-quick-unit', 'days');
+      await applyQuick();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 14, 15, 30, 20),
+        to: new Date(2026, 9, 16, 15, 30, 20),
+      });
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now+2d' });
+    });
+
+    it('resolves the expression when applied, not when the popup opened', async () => {
+      await open('quick');
+      vi.setSystemTime(new Date(2026, 9, 14, 16, 0, 0));
+      await applyQuick();
+      expect(host.quick().to).toEqual(new Date(2026, 9, 14, 16, 0, 0));
+    });
+
+    it('applies nothing for an amount that is not a positive whole number', async () => {
+      await open('quick');
+      for (const amount of ['0', '-3', '1.5', '']) {
+        await fill(q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'), amount);
+        await applyQuick();
+        expect(popup()).not.toBeNull();
+      }
+      expect(host.quick()).toEqual({ from: null, to: null });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('applies the quick range with Enter in the amount field', async () => {
+      await open('quick');
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'), '30');
+      await press(q('.hx-date-time-range-picker-quick-amount'), 'Enter');
+      expect(host.quickExpr()).toEqual({ from: 'now-30m', to: 'now' });
+    });
+
+    it('applies a commonly used range, rounding the end up', async () => {
+      await open('quick');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Today'));
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 14),
+        to: new Date(2026, 9, 14, 23, 59, 59, 999),
+      });
+      expect(host.quickExpr()).toEqual({ from: 'now/d', to: 'now/d' });
+    });
+
+    it('lists recently used ranges, newest first, de-duplicated, at most five', async () => {
+      const apply = async (label: string) => {
+        await open('quick');
+        await click(rangeButton('hx-date-time-range-picker-common', label));
+      };
+      for (const label of [
+        'Today',
+        'Last 1 hour',
+        'Today',
+        'Last 7 days',
+        'Last 30 days',
+        'Last 90 days',
+        'Last 1 year',
+      ]) {
+        await apply(label);
+      }
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual([
+        'Last 1 year',
+        'Last 90 days',
+        'Last 30 days',
+        'Last 7 days',
+        'Today',
+      ]);
+      expect(JSON.parse(localStorage.getItem('hx-test-recent')!)[0]).toEqual({
+        from: 'now-1y',
+        to: 'now',
+      });
+    });
+
+    it('reads the recently used ranges from localStorage and applies one', async () => {
+      localStorage.setItem(
+        'hx-test-recent',
+        JSON.stringify([
+          { from: 'now-45m', to: 'now' },
+          {
+            from: new Date(2026, 9, 1, 8, 0).toISOString(),
+            to: new Date(2026, 9, 2, 8, 0).toISOString(),
+          },
+        ]),
+      );
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual([
+        'Last 45 minutes',
+        '10/1/2026 08:00 - 10/2/2026 08:00',
+      ]);
+      await click(rangeButton('hx-date-time-range-picker-recent', 'Last 45 minutes'));
+      expect(host.quick().from).toEqual(new Date(2026, 9, 14, 14, 45, 20));
+      await open('quick');
+      await click(
+        popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-recent button')[1],
+      );
+      // an absolute recent range is applied as is and clears the expression
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 1, 8, 0),
+        to: new Date(2026, 9, 2, 8, 0),
+      });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('works when the storage is blocked', async () => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new DOMException('blocked', 'SecurityError');
+      });
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new DOMException('blocked', 'SecurityError');
+      });
+      await open('quick');
+      await applyQuick();
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+      // the list cannot be read back: the in-memory list of the session stays
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual(['Last 15 minutes']);
+      await click(rangeButton('hx-date-time-range-picker-common', 'Today'));
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual(['Today', 'Last 15 minutes']);
+    });
+
+    it('keeps the recently used list in memory without a storage key', async () => {
+      await open('quickLimits');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Last 1 hour'));
+      await open('quickLimits');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual(['Last 1 hour']);
+      expect(localStorage.length).toBe(0);
+    });
+
+    it('has a tab list per side with the ARIA roles', async () => {
+      await open('quick');
+      for (const side of ['from', 'to'] as const) {
+        const list = q(`.hx-date-time-range-picker-side-${side} [role=tablist]`);
+        expect(list.getAttribute('aria-labelledby')).toBeTruthy();
+        expect(tabs(side).map((t) => t.textContent?.trim())).toEqual([
+          'Absolute',
+          'Relative',
+          'Now',
+        ]);
+        expect(tabs(side).map((t) => t.getAttribute('aria-selected'))).toEqual([
+          'true',
+          'false',
+          'false',
+        ]);
+        expect(tabs(side).map((t) => t.tabIndex)).toEqual([0, -1, -1]);
+        expect(tabs(side)[0].getAttribute('aria-controls')).toBe(sidePanel(side).id);
+        expect(sidePanel(side).getAttribute('aria-labelledby')).toBe(tabs(side)[0].id);
+      }
+      expect(
+        document.getElementById(
+          q('.hx-date-time-range-picker-side-from').getAttribute('aria-labelledby')!,
+        )?.textContent,
+      ).toBe('Start');
+    });
+
+    it('moves between the tabs with the arrow keys, Home and End', async () => {
+      await open('quick');
+      tabs('from')[0].focus();
+      await press(tabs('from')[0], 'ArrowRight');
+      expect(tab('from', 'Relative').getAttribute('aria-selected')).toBe('true');
+      expect(document.activeElement).toBe(tab('from', 'Relative'));
+      expect(sidePanel('from').getAttribute('aria-labelledby')).toBe(tab('from', 'Relative').id);
+      await press(tab('from', 'Relative'), 'End');
+      expect(document.activeElement).toBe(tab('from', 'Now'));
+      await press(tab('from', 'Now'), 'ArrowRight');
+      expect(document.activeElement).toBe(tab('from', 'Absolute'));
+      await press(tab('from', 'Absolute'), 'ArrowLeft');
+      expect(document.activeElement).toBe(tab('from', 'Now'));
+      await press(tab('from', 'Now'), 'Home');
+      expect(document.activeElement).toBe(tab('from', 'Absolute'));
+      // the other side keeps its tab
+      expect(tab('to', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      // other keys are left alone
+      await press(tab('from', 'Absolute'), 'ArrowDown');
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('applies a relative start and a Now end with Submit', async () => {
+      await open('quick');
+      await click(tab('from', 'Relative'));
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '3');
+      await choose('hx-date-time-range-picker-side-unit', 'Hours ago');
+      await click(q('.hx-date-time-range-picker-side-round input'));
+      expect(q('.hx-date-time-range-picker-side-round').textContent?.trim()).toBe(
+        'Round to the hour',
+      );
+      expect(q('.hx-date-time-range-picker-expression').textContent).toBe('now-3h/h');
+      // the calendar and the time pickers show the relative side until it is applied
+      expect(now('from', 'Hour')).toBe('12');
+      await click(tab('to', 'Now'));
+      expect(sidePanel('to').textContent).toContain('current time');
+      vi.setSystemTime(new Date(2026, 9, 14, 17, 10, 0));
+      await submit();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 14, 14, 0, 0),
+        to: new Date(2026, 9, 14, 17, 10, 0),
+      });
+      expect(host.quickExpr()).toEqual({ from: 'now-3h/h', to: 'now' });
+      expect(popup()).toBeNull();
+    });
+
+    it('refuses a Relative tab with an emptied amount instead of taking it as now', async () => {
+      const before = host.quick();
+      await open('quick');
+      await click(tab('from', 'Relative'));
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '');
+      expect(q('.hx-date-time-range-picker-expression').textContent).toBe('');
+      await click(tab('to', 'Now'));
+      await submit();
+      const error = q('.hx-date-time-range-picker-error');
+      expect(error?.getAttribute('role')).toBe('alert');
+      expect(q('.hx-date-time-range-picker-submit').getAttribute('aria-describedby')).toBe(
+        error.id,
+      );
+      expect(popup()).not.toBeNull();
+      expect(host.quick()).toBe(before);
+      // a negative amount is refused too; 0 is now
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '-2');
+      expect(q('.hx-date-time-range-picker-error')).toBeNull();
+      await submit();
+      expect(q('.hx-date-time-range-picker-error')).not.toBeNull();
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '0');
+      expect(q('.hx-date-time-range-picker-expression').textContent).toBe('now');
+      await submit();
+      expect(popup()).toBeNull();
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now' });
+    });
+
+    it('keeps an absolute side as an ISO date next to a relative one', async () => {
+      host.quick.set({ from: null, to: new Date(2026, 9, 20, 12, 0) });
+      await settle();
+      await open('quick');
+      await click(tab('from', 'Now'));
+      await submit();
+      expect(host.quick()).toEqual({ from: NOW, to: new Date(2026, 9, 20, 12, 0) });
+      expect(host.quickExpr()).toEqual({
+        from: 'now',
+        to: new Date(2026, 9, 20, 12, 0).toISOString(),
+      });
+    });
+
+    const error = () => popup()!.querySelector('.hx-date-time-range-picker-error');
+    const submitButton = () => q('.hx-date-time-range-picker-submit');
+
+    it('shows an error linked to Submit for a relative side next to an empty absolute side', async () => {
+      await open('quick');
+      expect(error()).toBeNull();
+      expect(submitButton().hasAttribute('aria-describedby')).toBe(false);
+      await click(tab('from', 'Now'));
+      await submit();
+      expect(popup()).not.toBeNull();
+      expect(host.quick()).toEqual({ from: null, to: null });
+      expect(error()?.getAttribute('role')).toBe('alert');
+      expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
+      expect(submitButton().getAttribute('aria-describedby')).toBe(error()!.id);
+      // a new attempt drops the error
+      await click(tab('to', 'Now'));
+      expect(error()).toBeNull();
+      expect(submitButton().hasAttribute('aria-describedby')).toBe(false);
+      await submit();
+      expect(host.quick()).toEqual({ from: NOW, to: NOW });
+    });
+
+    it('shows the error when Submit is refused on a day in disabledDates', async () => {
+      vi.setSystemTime(new Date(2026, 9, 13, 10, 0));
+      await open('quickDays');
+      await click(tab('from', 'Now'));
+      await click(tab('to', 'Now'));
+      await submit();
+      expect(error()).not.toBeNull();
+      expect(host.quickDays()).toEqual({ from: null, to: null });
+      // the error is gone when the popup opens again
+      await close();
+      await open('quickDays');
+      expect(error()).toBeNull();
+    });
+
+    it('resets the tabs to Absolute when a preset is chosen', async () => {
+      host.quickExpr.set({ from: 'now-1d/d', to: 'now' });
+      await settle();
+      await open('quick');
+      expect(tab('from', 'Relative').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Now').getAttribute('aria-selected')).toBe('true');
+      await click(preset('Morning'));
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 7, 6, 0),
+        to: new Date(2026, 9, 7, 12, 30),
+      });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('sets up the tabs from the expression model', async () => {
+      host.quickExpr.set({ from: 'now-1d/d', to: 'now' });
+      await settle();
+      await open('quick');
+      expect(tab('from', 'Relative').getAttribute('aria-selected')).toBe('true');
+      expect(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount').value).toBe('1');
+      expect(q('.hx-date-time-range-picker-side-unit .hx-select-trigger').textContent?.trim()).toBe(
+        'Days ago',
+      );
+      expect(q<HTMLInputElement>('.hx-date-time-range-picker-side-round input').checked).toBe(true);
+      expect(tab('to', 'Now').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({ from: new Date(2026, 9, 13), to: NOW });
+    });
+
+    it('clears the expression when an absolute range is picked', async () => {
+      host.quickExpr.set({ from: 'now-15m', to: 'now' });
+      await settle();
+      await open('quick');
+      // a day click makes both sides absolute
+      await click(day(20));
+      await click(day(22));
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({ from: new Date(2026, 9, 20), to: new Date(2026, 9, 22) });
+      expect(host.quickExpr()).toBeNull();
+      // the absolute range is remembered too
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toHaveLength(1);
+    });
+
+    it('clears the expression when a range is typed into the field', async () => {
+      await open('quick');
+      await applyQuick();
+      expect(host.quickExpr()).not.toBeNull();
+      await type('quick', '10/1/2026 08:00 - 10/2/2026 08:00');
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 1, 8, 0),
+        to: new Date(2026, 9, 2, 8, 0),
+      });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('types a date on the Absolute tab and refuses an unreadable or crossing one', async () => {
+      host.quick.set({ from: new Date(2026, 9, 10, 9, 0), to: new Date(2026, 9, 12, 9, 0) });
+      await settle();
+      await open('quick');
+      const from = q<HTMLInputElement>('.hx-date-time-range-picker-side-from input');
+      expect(from.value).toBe('10/10/2026 09:00');
+      expect(from.getAttribute('aria-label')).toBe('Start Date');
+      await fill(from, '10/11/2026 07:30');
+      expect(now('from', 'Hour')).toBe('7');
+      await fill(from, 'soon');
+      expect(from.value).toBe('10/11/2026 07:30');
+      await fill(from, '10/13/2026 07:30');
+      expect(from.value).toBe('10/11/2026 07:30');
+      await submit();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 11, 7, 30),
+        to: new Date(2026, 9, 12, 9, 0),
+      });
+    });
+
+    it('keeps an applied range inside minDate and maxDate', async () => {
+      await open('quickLimits');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Last 30 days'));
+      expect(host.quickLimits()).toEqual({ from: host.min, to: NOW });
+      await open('quickLimits');
+      await choose('hx-date-time-range-picker-quick-direction', 'Next');
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'), '1');
+      await choose('hx-date-time-range-picker-quick-unit', 'months');
+      await applyQuick();
+      expect(host.quickLimits()).toEqual({ from: NOW, to: host.max });
+    });
+
+    it('keeps midnight without the time pickers and takes labels and commonly used ranges', async () => {
+      await open('quickDays');
+      expect(
+        q('.hx-date-time-range-picker-quick-section .hx-date-time-range-picker-caption')
+          .textContent,
+      ).toBe('Schnellauswahl');
+      expect(q('.hx-date-time-range-picker-quick-apply').textContent).toBe('Anwenden');
+      expect(listed('hx-date-time-range-picker-common')).toEqual(['Heute']);
+      await click(rangeButton('hx-date-time-range-picker-common', 'Heute'));
+      expect(host.quickDays()).toEqual({ from: new Date(2026, 9, 14), to: new Date(2026, 9, 14) });
+      await open('quickDays');
+      await applyQuick();
+      expect(host.quickDays()).toEqual({ from: new Date(2026, 9, 14), to: new Date(2026, 9, 14) });
+    });
+
+    it('refuses a range with a side on a day in disabledDates', async () => {
+      vi.setSystemTime(new Date(2026, 9, 13, 10, 0));
+      await open('quickDays');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Heute'));
+      expect(popup()).not.toBeNull();
+      expect(host.quickDays()).toEqual({ from: null, to: null });
+    });
+
+    it('works with ngModel, a reactive FormControl and a signal form field', async () => {
+      await open('quickModel');
+      await applyQuick();
+      expect(host.quickModel()).toEqual({
+        from: new Date(2026, 9, 14, 15, 15, 20),
+        to: NOW,
+      });
+      await open('quickReactive');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Last 1 hour'));
+      expect(host.quickControl.value).toEqual({ from: new Date(2026, 9, 14, 14, 30, 20), to: NOW });
+      expect(host.quickControl.dirty).toBe(true);
+      await open('quickSignal');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Today'));
+      expect(host.quickState().span).toEqual({
+        from: new Date(2026, 9, 14),
+        to: new Date(2026, 9, 14, 23, 59, 59, 999),
+      });
+    });
+
+    it('does not open while disabled', async () => {
+      await open('quickOff');
+      expect(popup()).toBeNull();
+      host.quickControl.disable();
+      await settle();
+      await open('quickReactive');
+      expect(popup()).toBeNull();
+    });
+
+    it('closes with Escape without applying', async () => {
+      await open('quick');
+      await click(tab('from', 'Now'));
+      await close();
+      expect(popup()).toBeNull();
+      expect(host.quick()).toEqual({ from: null, to: null });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    describe('expression and outside values', () => {
+      const later = { from: new Date(2026, 9, 1, 8, 0), to: new Date(2026, 9, 2, 8, 0) };
+
+      it('drops the expression when [value] is set from outside, so Submit keeps that value', async () => {
+        await open('quick');
+        await applyQuick();
+        expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+        host.quick.set(later);
+        await settle();
+        expect(host.quickExpr()).toBeNull();
+        await open('quick');
+        expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+        await submit();
+        expect(host.quick()).toEqual(later);
+      });
+
+      it('keeps an expression set from outside together with the value', async () => {
+        host.quick.set(later);
+        host.quickExpr.set({ from: 'now-1h', to: 'now' });
+        await settle();
+        expect(host.quickExpr()).toEqual({ from: 'now-1h', to: 'now' });
+        await open('quick');
+        expect(tab('from', 'Relative').getAttribute('aria-selected')).toBe('true');
+      });
+
+      it('drops the expression on writeValue from ngModel', async () => {
+        await open('quickModel');
+        await applyQuick();
+        expect(host.modelExpr()).toEqual({ from: 'now-15m', to: 'now' });
+        host.quickModel.set(later);
+        await settle();
+        await settle();
+        expect(input('quickModel').value).toBe('10/1/2026 08:00 - 10/2/2026 08:00');
+        expect(host.modelExpr()).toBeNull();
+      });
+
+      it('drops the expression on setValue and reset of a FormControl', async () => {
+        await open('quickReactive');
+        await applyQuick();
+        expect(host.reactiveExpr()).not.toBeNull();
+        host.quickControl.setValue(later);
+        await settle();
+        expect(host.reactiveExpr()).toBeNull();
+        await open('quickReactive');
+        await applyQuick();
+        expect(host.reactiveExpr()).not.toBeNull();
+        host.quickControl.reset({ from: null, to: null });
+        await settle();
+        expect(host.reactiveExpr()).toBeNull();
+      });
+
+      it('drops the expression when the signal form sets the value', async () => {
+        await open('quickSignal');
+        await applyQuick();
+        expect(host.signalExpr()).toEqual({ from: 'now-15m', to: 'now' });
+        expect(host.quickState().span.from).toEqual(new Date(2026, 9, 14, 15, 15, 20));
+        host.quickState.set({ span: later });
+        await settle();
+        expect(host.signalExpr()).toBeNull();
+      });
+
+      it('is inert while disabled: no popup, the value and the expression stay', async () => {
+        await open('quickOff');
+        expect(popup()).toBeNull();
+        expect(host.offValue()).toEqual({ from: null, to: null });
+        expect(host.offExpr()).toEqual({ from: 'now-15m', to: 'now' });
+        await open('quickReactive');
+        await applyQuick();
+        const applied = host.quickControl.value;
+        host.quickControl.disable();
+        await settle();
+        await open('quickReactive');
+        expect(popup()).toBeNull();
+        expect(host.quickControl.value).toEqual(applied);
+        expect(host.reactiveExpr()).toEqual({ from: 'now-15m', to: 'now' });
+      });
+    });
+
+    it('makes the sides absolute on Clear, so Submit applies the empty range', async () => {
+      host.quick.set({ from: new Date(2026, 9, 10, 9, 0), to: new Date(2026, 9, 12, 9, 0) });
+      await settle();
+      await open('quick');
+      await click(tab('from', 'Now'));
+      await click(tab('to', 'Now'));
+      await click(
+        [...popup()!.querySelectorAll<HTMLElement>('.hx-date-picker-buttonbar button')].find(
+          (b) => b.textContent?.trim() === 'Clear',
+        )!,
+      );
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({ from: null, to: null });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('makes the sides absolute when a range is typed while the popup is open', async () => {
+      await open('quick');
+      await click(tab('from', 'Relative'));
+      await type('quick', '10/1/2026 08:00 - 10/2/2026 08:00');
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 1, 8, 0),
+        to: new Date(2026, 9, 2, 8, 0),
+      });
+      expect(host.quickExpr()).toBeNull();
+    });
+
+    it('swaps the expression with reversed ends, so from belongs to value.from', async () => {
+      localStorage.setItem('hx-test-recent', JSON.stringify([{ from: 'now+1d', to: 'now' }]));
+      await open('quick');
+      await click(popup()!.querySelector<HTMLElement>('.hx-date-time-range-picker-recent button')!);
+      expect(host.quick()).toEqual({ from: NOW, to: new Date(2026, 9, 15, 15, 30, 20) });
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now+1d' });
+    });
+
+    it('shows the inline error for an amount out of range and links it to Apply', async () => {
+      await open('quick');
+      const apply = q('.hx-date-time-range-picker-quick-apply');
+      for (const amount of ['1e21', '9007199254740993', '0']) {
+        await fill(q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'), amount);
+        await applyQuick();
+        expect(popup()).not.toBeNull();
+        expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
+        expect(apply.getAttribute('aria-describedby')).toBe(error()!.id);
+      }
+      // a number of minutes too far for a Date resolves to nothing
+      await fill(
+        q<HTMLInputElement>('.hx-date-time-range-picker-quick-amount'),
+        '9000000000000000',
+      );
+      await applyQuick();
+      expect(error()).not.toBeNull();
+      expect(host.quick()).toEqual({ from: null, to: null });
+    });
+
+    it('shows the inline error for a refused commonly or recently used range', async () => {
+      vi.setSystemTime(new Date(2026, 9, 13, 10, 0));
+      await open('quickDays');
+      await click(rangeButton('hx-date-time-range-picker-common', 'Heute'));
+      expect(error()).not.toBeNull();
+      expect(host.quickDays()).toEqual({ from: null, to: null });
+      localStorage.setItem('hx-test-recent', JSON.stringify([{ from: 'soon', to: 'now' }]));
+      await open('quick');
+      await click(popup()!.querySelector<HTMLElement>('.hx-date-time-range-picker-recent button')!);
+      expect(popup()).not.toBeNull();
+      expect(error()).not.toBeNull();
+    });
+
+    it('offers Apply and the list entries as native buttons in the tab order', async () => {
+      localStorage.setItem('hx-test-recent', JSON.stringify([{ from: 'now-45m', to: 'now' }]));
+      await open('quick');
+      const buttons = [
+        q<HTMLButtonElement>('.hx-date-time-range-picker-quick-apply'),
+        rangeButton('hx-date-time-range-picker-common', 'Today') as HTMLButtonElement,
+        rangeButton('hx-date-time-range-picker-recent', 'Last 45 minutes') as HTMLButtonElement,
+      ];
+      for (const button of buttons) {
+        expect(button.tagName).toBe('BUTTON');
+        expect(button.type).toBe('button');
+        expect(button.disabled).toBe(false);
+        expect(button.tabIndex).toBe(0);
+      }
+      // Enter and Space on a focused native button are its click
+      buttons[2].focus();
+      expect(document.activeElement).toBe(buttons[2]);
+      await click(buttons[2]);
+      expect(host.quickExpr()).toEqual({ from: 'now-45m', to: 'now' });
+    });
+  });
+
+  describe('preset select', () => {
+    const trigger = () => popup()!.querySelector('.hx-select-trigger') as HTMLElement;
+    const pick = async (label: string) => {
+      await click(trigger());
+      const opt = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+        (o) => o.textContent?.trim() === label,
+      );
+      if (!opt) throw new Error(`no option ${label}`);
+      await click(opt);
+    };
+    const listOpen = () => document.querySelector('.hx-select-list') !== null;
+
+    it('is usable with the keyboard only', async () => {
+      await open('presetSelect');
+      trigger().focus();
+      await press(trigger(), 'ArrowDown');
+      expect(listOpen()).toBe(true);
+      // Escape closes the list only: the popup stays, the focus goes back to the select
+      const panes = document.querySelectorAll('.cdk-overlay-pane');
+      panes[panes.length - 1].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      );
+      await settle();
+      expect(listOpen()).toBe(false);
+      expect(popup()).not.toBeNull();
+      expect(document.activeElement).toBe(trigger());
+      await press(trigger(), 'ArrowDown');
+      // the CDK listbox reads keyCode
+      const list = document.querySelector('.hx-select-list') as HTMLElement;
+      const key = async (k: string, keyCode: number) => {
+        list.dispatchEvent(new KeyboardEvent('keydown', { key: k, keyCode, bubbles: true }));
+        await settle();
+      };
+      await key('ArrowDown', 40);
+      await key('ArrowDown', 40);
+      await key('Enter', 13);
+      expect(listOpen()).toBe(false);
+      expect(trigger().textContent?.trim()).toBe('Two days');
+      await submit();
+      expect(host.selectValue()).toEqual({
+        from: new Date(2026, 9, 8, 0, 0),
+        to: new Date(2026, 9, 10, 0, 0),
+      });
+    });
+
+    it('chooses the same preset again after the draft changed', async () => {
+      await open('presetSelect');
+      await pick('Morning');
+      await click(day(20));
+      expect(trigger().textContent?.trim()).toBe('Quick ranges');
+      await pick('Morning');
+      expect(now('from', 'Hour')).toBe('6');
+      await submit();
+      expect(host.selectValue()).toEqual({
+        from: new Date(2026, 9, 7, 6, 0),
+        to: new Date(2026, 9, 7, 12, 30),
+      });
+    });
+
+    it('works with ngModel, a reactive FormControl and a signal form field', async () => {
+      const morning = { from: new Date(2026, 9, 7, 6, 0), to: new Date(2026, 9, 7, 12, 30) };
+      await open('selModel');
+      await pick('Morning');
+      await submit();
+      expect(host.selModel).toEqual(morning);
+      await open('selReactive');
+      await pick('Morning');
+      await submit();
+      expect(host.selControl.value).toEqual(morning);
+      expect(host.selControl.dirty).toBe(true);
+      await open('selSignal');
+      await pick('Morning');
+      await submit();
+      expect(host.selState().span).toEqual(morning);
+    });
+
+    it('does not open while disabled', async () => {
+      await open('selOff');
+      expect(popup()).toBeNull();
+      host.selControl.disable();
+      await settle();
+      await open('selReactive');
+      expect(popup()).toBeNull();
+    });
+
+    it('keeps a preset inside minDate and maxDate and refuses one over a disabled day', async () => {
+      await open('selLimits');
+      await pick('Wide');
+      await pick('Over a blocked day');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.min, to: host.max });
+    });
+  });
+
+  it('builds the day presets from their ids, whatever the labels', () => {
+    expect(HX_DATE_RANGE_DAY_PRESETS.map((p) => p.label)).toEqual([
+      'Today',
+      'Last 7 days',
+      'This month',
+    ]);
   });
 });

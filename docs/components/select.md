@@ -28,6 +28,7 @@ dependency) and the overlay styles that come with `styles.css`.
 | `showClear`      | `boolean`                           | `false`        | A button that resets the value to `null`.                           |
 | `inputId`        | `string`                            |                | Id of the trigger, for `<label for>`.                               |
 | `ariaLabel`      | `string`                            |                | Accessible name when there is no visible label.                     |
+| `ariaDescribedby` | `string \| null`                   |                | Id of a text that describes the select (`aria-describedby` of the trigger). |
 | `compareWith`    | `(a, b) => boolean`                 | `Object.is`    | How a value is matched to an option.                                |
 
 - **Forms:** works with `ngModel`, reactive forms (it is a `ControlValueAccessor`) and signal forms
