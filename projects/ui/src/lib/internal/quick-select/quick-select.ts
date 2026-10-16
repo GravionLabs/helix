@@ -1,4 +1,4 @@
-import { type HxDateMathUnit, hxParseDateMath } from '../../date-time-range-picker/date-math';
+import { type HxDateMathUnit, hxParseDateMath } from '../date-math/date-math';
 
 /** A range as two expressions: date math (`now-15m`, `now/d`) or an ISO date-time for an absolute side. */
 export interface HxDateRangeExpression {

@@ -1,4 +1,4 @@
-import { addMonths } from '../internal/dates';
+import { addMonths } from '../dates';
 
 /** A date math unit: second, minute, hour, day, week, Month (capital M, as in Kibana), year. */
 export type HxDateMathUnit = 's' | 'm' | 'h' | 'd' | 'w' | 'M' | 'y';

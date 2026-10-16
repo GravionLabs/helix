@@ -105,12 +105,6 @@ export {
   type HxDateTimePickerValue,
 } from './lib/date-time-picker/date-time-picker';
 export {
-  type HxDateMathOptions,
-  type HxDateMathUnit,
-  hxParseDateMath,
-  hxRelativeRangeExpressions,
-} from './lib/date-time-range-picker/date-math';
-export {
   HxDateTimeRangePicker,
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
@@ -157,6 +151,12 @@ export {
   type HxInputNumberSize,
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
+export {
+  type HxDateMathOptions,
+  type HxDateMathUnit,
+  hxParseDateMath,
+  hxRelativeRangeExpressions,
+} from './lib/internal/date-math/date-math';
 export {
   HX_QUICK_SELECT_COMMONLY_USED,
   HX_QUICK_SELECT_LABELS,
