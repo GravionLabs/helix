@@ -228,6 +228,8 @@ export class HxDateTimeRangePicker
   protected readonly quickError = signal(false);
   protected readonly quickErrorId = `${this.popupId}-error`;
   protected readonly sideModes = SIDE_MODES;
+  /** The two sides of the quick select, Start then End. */
+  protected readonly sideKeys: readonly Side[] = ['from', 'to'];
   protected readonly labels = computed<HxQuickSelectLabels>(() => ({
     ...HX_QUICK_SELECT_LABELS,
     ...this.quickSelectLabels(),
@@ -542,6 +544,13 @@ export class HxDateTimeRangePicker
   protected submit(): void {
     if (this.quickSelect()) {
       const { from, to } = this.sides();
+      // a Relative tab with an empty or invalid amount is no side to apply (not `now`): say so
+      const unreadable = (state: QuickSelectSide) =>
+        state.mode !== 'absolute' && sideExpression(state) === null;
+      if (unreadable(from) || unreadable(to)) {
+        this.quickError.set(true);
+        return;
+      }
       if (from.mode !== 'absolute' || to.mode !== 'absolute') {
         const draft = this.draft();
         const side = (state: QuickSelectSide, date: Date | null) =>
@@ -645,8 +654,10 @@ export class HxDateTimeRangePicker
     tabs[next]?.focus();
   }
 
+  /** The amount of a Relative tab; an emptied field is `NaN` (invalid), not `0` (`now`). */
   protected setSideAmount(side: Side, event: Event): void {
-    this.#patchSide(side, { amount: Number((event.target as HTMLInputElement).value) });
+    const text = (event.target as HTMLInputElement).value.trim();
+    this.#patchSide(side, { amount: text === '' ? Number.NaN : Number(text) });
   }
 
   protected setSideUnit(side: Side, value: unknown): void {

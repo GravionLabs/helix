@@ -1639,6 +1639,33 @@ describe('HxDateTimeRangePicker', () => {
       expect(popup()).toBeNull();
     });
 
+    it('refuses a Relative tab with an emptied amount instead of taking it as now', async () => {
+      const before = host.quick();
+      await open('quick');
+      await click(tab('from', 'Relative'));
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '');
+      expect(q('.hx-date-time-range-picker-expression').textContent).toBe('');
+      await click(tab('to', 'Now'));
+      await submit();
+      const error = q('.hx-date-time-range-picker-error');
+      expect(error?.getAttribute('role')).toBe('alert');
+      expect(q('.hx-date-time-range-picker-submit').getAttribute('aria-describedby')).toBe(
+        error.id,
+      );
+      expect(popup()).not.toBeNull();
+      expect(host.quick()).toBe(before);
+      // a negative amount is refused too; 0 is now
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '-2');
+      expect(q('.hx-date-time-range-picker-error')).toBeNull();
+      await submit();
+      expect(q('.hx-date-time-range-picker-error')).not.toBeNull();
+      await fill(q<HTMLInputElement>('.hx-date-time-range-picker-side-amount'), '0');
+      expect(q('.hx-date-time-range-picker-expression').textContent).toBe('now');
+      await submit();
+      expect(popup()).toBeNull();
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now' });
+    });
+
     it('keeps an absolute side as an ISO date next to a relative one', async () => {
       host.quick.set({ from: null, to: new Date(2026, 9, 20, 12, 0) });
       await settle();

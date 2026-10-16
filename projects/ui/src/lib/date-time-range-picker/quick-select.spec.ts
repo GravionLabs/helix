@@ -60,7 +60,16 @@ describe('quick select helpers', () => {
       );
       expect(sideExpression({ ...side, amount: 0, unit: 'd', round: true })).toBe('now/d');
       expect(sideExpression({ ...side, raw: 'now-1d/d+2h' })).toBe('now-1d/d+2h');
-      expect(sideExpression({ ...side, amount: Number.NaN })).toBe('now');
+      expect(sideExpression({ ...side, amount: 2.7 })).toBe('now-2m');
+      expect(sideExpression(DEFAULT_SIDE)).toBeNull();
+    });
+
+    it('writes no expression for an empty, NaN or negative amount', () => {
+      const side = { ...DEFAULT_SIDE, mode: 'relative' as const };
+      expect(sideExpression({ ...side, amount: Number.NaN })).toBeNull();
+      expect(sideExpression({ ...side, amount: -1 })).toBeNull();
+      expect(sideExpression({ ...side, amount: Number.POSITIVE_INFINITY })).toBeNull();
+      expect(sideExpression({ ...side, amount: 0 })).toBe('now');
       expect(sideExpression(DEFAULT_SIDE)).toBeNull();
     });
   });

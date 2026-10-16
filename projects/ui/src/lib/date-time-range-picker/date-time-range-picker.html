@@ -130,8 +130,7 @@
             </section>
           }
           <div class="hx-date-time-range-picker-sides">
-            @for (side of ['from', 'to']; track side) {
-              @let s = side === 'from' ? 'from' : 'to';
+            @for (s of sideKeys; track s) {
               @let state = sides()[s];
               <section class="hx-date-time-range-picker-side" [class]="'hx-date-time-range-picker-side-' + s" [attr.aria-labelledby]="popupId + '-' + s + '-caption'">
                 <span class="hx-date-time-range-picker-caption" [id]="popupId + '-' + s + '-caption'">{{ s === 'from' ? l.start : l.end }}</span>

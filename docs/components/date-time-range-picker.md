@@ -37,6 +37,11 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `disabled`, `invalid` | `boolean` | `false` | |
 | `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
 
+## Exports
+
+Besides the component, `@gravionlabs/helix-ui` exports these types, lists and functions for ranges, presets and the
+quick select:
+
 | Export | Description |
 | ------ | ----------- |
 | `HxDateTimeRangeValue` | The value, `{ from: Date \| null; to: Date \| null }`. |
@@ -48,6 +53,8 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` | Resolves one side (date math, an ISO date-time, or a date-only ISO text as local midnight). |
 | `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
 | `HxQuickSelectLabels`, `HX_QUICK_SELECT_LABELS`, `HxQuickSelectRange`, `HX_QUICK_SELECT_COMMONLY_USED` | The texts and the "Commonly used" list of the quick select. |
+
+## Behaviour
 
 - **Presets:** each `{ label, from: () => Date, to: () => Date }` (`HxDateTimeRangePreset`) is a button in the popup; the
   functions run when it is chosen, so `now` stays current. A preset fills the draft (calendar and time pickers show it);
@@ -97,8 +104,9 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   "from now", and "Round to the unit") and **Now**. A relative range is stored as text and resolved when it is applied,
   so "Last 15 minutes" means the 15 minutes before you clicked. Presets and the calendar still work and set both sides
   back to Absolute, and so do Clear and a range typed while the popup is open. A range that cannot be applied (a
-  relative side next to an empty absolute side, a side on a day in `disabledDates`, an amount that is not a positive
-  whole number or is too large for a date) keeps the popup open with an inline message (`role="alert"`, named by the
+  relative side next to an empty absolute side, a Relative tab whose amount is empty or negative (it is not taken
+  as `now`; `0` is), a side on a day in `disabledDates`, an amount that is not a positive whole number or is too large
+  for a date) keeps the popup open with an inline message (`role="alert"`, named by the
   Apply and Submit buttons through `aria-describedby`).
 
   ```html
@@ -110,13 +118,14 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   // later: resolve it again, e.g. to refresh a dashboard
   const { from, to } = hxResolveRangeExpression(this.expression()!, { firstDayOfWeek: 1 });
   ```
-- **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is an
-  ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`, and so does a value set
-  from outside (`ngModel`, `setValue`/`reset`, a signal form, a new `[value]`) unless a new expression is set with it.
-  It is only read when the popup opens, to set up the tabs; setting it from outside does not change `value`. When the
-  resolved ends are reversed (`now+1d` to `now`), the value is put in order and the expression is swapped with it. `hxResolveRangeExpression(expression,
-  { now?, firstDayOfWeek? })` turns it into `{ from, to }` (the end side rounds up) and `hxResolveRangeSide(text,
-  { now?, firstDayOfWeek?, roundUp? })` does one side; both return `null` for a side they cannot read.
+- **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is
+  an ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`, and so does a value
+  set from outside (`ngModel`, `setValue`/`reset`, a signal form, a new `[value]`) unless a new expression is set with
+  it. It is only read when the popup opens, to set up the tabs; setting it from outside does not change `value`. When
+  the resolved ends are reversed (`now+1d` to `now`), the value is put in order and the expression is swapped with it.
+  `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })` turns it into `{ from, to }` (the end side rounds
+  up) and `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` does one side; both return `null` for a side
+  they cannot read.
 - **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
   invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
   (round down to the start of the unit; to its last millisecond with `roundUp`). Units are case-sensitive: `s`, `m`,

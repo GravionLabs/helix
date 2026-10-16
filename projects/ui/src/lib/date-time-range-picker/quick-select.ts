@@ -29,7 +29,10 @@ export interface HxQuickSelectLabels {
   now: string;
   /** The text of the Now tab. */
   nowHint: string;
-  /** Shown when Submit cannot apply the range (a relative side next to an empty absolute side, a refused day). */
+  /**
+   * Shown when Submit cannot apply the range (a relative side next to an empty absolute side, a Relative tab with an
+   * empty or invalid amount, a refused day).
+   */
   incompleteRange: string;
   /** The label of the typed date on the Absolute tab. */
   date: string;
@@ -179,13 +182,17 @@ export function sideFromExpression(expression: string): QuickSelectSide {
   return { ...DEFAULT_SIDE };
 }
 
-/** The date math expression of a relative or now side (`now-15m`, `now+2d/d`); `null` for an absolute side. */
+/**
+ * The date math expression of a relative or now side (`now-15m`, `now+2d/d`); `null` for an absolute side and for
+ * a relative side whose amount is empty, not a number or negative (it is not taken as `now`).
+ */
 export function sideExpression(side: QuickSelectSide): string | null {
   if (side.mode === 'now') return 'now';
   if (side.mode === 'absolute') return null;
   if (side.raw) return side.raw;
+  if (!Number.isFinite(side.amount) || side.amount < 0) return null;
   // an amount too big for a plain integer text (1e21) stays in the text, so it is refused when resolved
-  const amount = Math.max(0, Math.floor(side.amount || 0));
+  const amount = Math.floor(side.amount);
   const shift = amount > 0 ? `${side.direction === 'ago' ? '-' : '+'}${amount}${side.unit}` : '';
   return `now${shift}${side.round ? `/${side.unit}` : ''}`;
 }
