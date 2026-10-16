@@ -202,6 +202,15 @@ import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-ra
       [disabledDates]="blockedDays"
       [(value)]="selLimits"
     />
+    <hx-date-time-range-picker
+      id="btnLimits"
+      locale="en-US"
+      [presets]="limitPresets"
+      [minDate]="min"
+      [maxDate]="max"
+      [disabledDates]="blockedDays"
+      [(value)]="btnLimits"
+    />
   `,
 })
 class Host {
@@ -293,6 +302,7 @@ class Host {
   selState = signal<{ span: HxDateTimeRangeValue }>({ span: { from: null, to: null } });
   sf = form(this.selState);
   selLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  btnLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
   limitPresets: HxDateTimeRangePreset[] = [
     {
       label: 'Wide',
@@ -303,6 +313,16 @@ class Host {
       label: 'Over a blocked day',
       from: () => new Date(2026, 9, 13, 9, 0),
       to: () => new Date(2026, 9, 14, 9, 0),
+    },
+    {
+      label: 'Before the minimum',
+      from: () => new Date(2026, 8, 1, 0, 0),
+      to: () => new Date(2026, 8, 3, 0, 0),
+    },
+    {
+      label: 'After the maximum',
+      from: () => new Date(2026, 10, 10, 0, 0),
+      to: () => new Date(2026, 10, 12, 0, 0),
     },
   ];
 }
@@ -635,6 +655,25 @@ describe('HxDateTimeRangePicker', () => {
     await click(preset('Over a blocked day'));
     await submit();
     expect(host.presetDays()).toEqual({ from: null, to: null });
+  });
+
+  it('refuses a preset button over a disabled day and keeps the draft', async () => {
+    await open('btnLimits');
+    await click(preset('Wide'));
+    await click(preset('Over a blocked day'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.min, to: host.max });
+  });
+
+  it('moves a preset button outside minDate and maxDate to the nearest limit', async () => {
+    await open('btnLimits');
+    await click(preset('Before the minimum'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.min, to: host.min });
+    await open('btnLimits');
+    await click(preset('After the maximum'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.max, to: host.max });
   });
 
   it('puts the times of a preset on the days of the value with timeOnly', async () => {
@@ -1357,9 +1396,24 @@ describe('HxDateTimeRangePicker', () => {
     it('keeps a preset inside minDate and maxDate and refuses one over a disabled day', async () => {
       await open('selLimits');
       await pick('Wide');
+      expect(trigger().textContent?.trim()).toBe('Wide');
       await pick('Over a blocked day');
+      // the refused preset leaves the draft and the label of the last preset that was taken
+      expect(trigger().textContent?.trim()).toBe('Wide');
       await submit();
       expect(host.selLimits()).toEqual({ from: host.min, to: host.max });
+    });
+
+    it('moves a preset outside minDate and maxDate to the nearest limit', async () => {
+      await open('selLimits');
+      await pick('Before the minimum');
+      expect(trigger().textContent?.trim()).toBe('Before the minimum');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.min, to: host.min });
+      await open('selLimits');
+      await pick('After the maximum');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.max, to: host.max });
     });
   });
 
