@@ -323,6 +323,19 @@ describe('HxDateRangeQuickSelect', () => {
       expect(host.quickExpr()).toBeNull();
     });
 
+    it('keeps an emptied amount empty instead of turning it into 0', async () => {
+      await open('quick');
+      await fill(amount(), '');
+      expect(amount().value).toBe('');
+      await applyQuick();
+      expect(amount().value).toBe('');
+      expect(error()).not.toBeNull();
+      await fill(amount(), '3');
+      expect(amount().value).toBe('3');
+      await applyQuick();
+      expect(host.quickExpr()).toEqual({ from: 'now-3m', to: 'now' });
+    });
+
     it('drops the message when the popup opens again', async () => {
       await open('quick');
       await fill(amount(), '0');

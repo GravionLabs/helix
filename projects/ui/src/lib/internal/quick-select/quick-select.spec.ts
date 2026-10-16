@@ -67,6 +67,7 @@ describe('quick select helpers', () => {
 
     it('writes no expression for an empty, NaN or negative amount', () => {
       const side = { ...DEFAULT_SIDE, mode: 'relative' as const };
+      expect(sideExpression({ ...side, amount: null })).toBeNull();
       expect(sideExpression({ ...side, amount: Number.NaN })).toBeNull();
       expect(sideExpression({ ...side, amount: -1 })).toBeNull();
       expect(sideExpression({ ...side, amount: Number.POSITIVE_INFINITY })).toBeNull();
@@ -220,7 +221,7 @@ describe('quick select helpers', () => {
     });
 
     it('summarises an amount that gives no expression as not set', () => {
-      for (const amount of [Number.NaN, -2]) {
+      for (const amount of [null, Number.NaN, -2]) {
         expect(describeSide({ ...DEFAULT_SIDE, mode: 'relative', amount }, L)).toBe('Not set');
       }
     });

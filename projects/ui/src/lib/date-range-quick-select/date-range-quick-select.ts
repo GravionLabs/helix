@@ -161,7 +161,8 @@ export class HxDateRangeQuickSelect
   ];
   /** Last/Next N unit. */
   protected readonly quickDirection = signal<'last' | 'next'>('last');
-  protected readonly quickAmount = signal(15);
+  /** The amount as typed: an emptied field stays empty (it does not turn into `0`). */
+  protected readonly quickAmount = signal('15');
   protected readonly quickUnit = signal<HxDateMathUnit>('m');
   protected readonly recent = signal<HxDateRangeExpression[]>([]);
   /** A range could not be applied; shown under the lists and named by the Apply button. */
@@ -358,7 +359,7 @@ export class HxDateRangeQuickSelect
 
   protected setQuickAmount(event: Event): void {
     this.quickError.set(false);
-    this.quickAmount.set(Number((event.target as HTMLInputElement).value));
+    this.quickAmount.set((event.target as HTMLInputElement).value);
   }
 
   protected setQuickUnit(unit: unknown): void {
@@ -372,9 +373,10 @@ export class HxDateRangeQuickSelect
    * the range of `Date`, shows the inline message instead.
    */
   protected applyQuick(): void {
+    const text = this.quickAmount().trim();
     const range = hxRelativeRangeExpressions(
       this.quickDirection(),
-      this.quickAmount(),
+      text === '' ? Number.NaN : Number(text),
       this.quickUnit(),
     );
     if (!range || !this.#applyRange(range)) this.quickError.set(true);
@@ -465,10 +467,10 @@ export class HxDateRangeQuickSelect
     tabs[next]?.focus();
   }
 
-  /** The amount of a Relative tab; an emptied field is `NaN` (refused), not `0` (`now`). */
+  /** The amount of a Relative tab; an emptied field is `null` (refused, and shown empty), not `0` (`now`). */
   protected setSideAmount(side: Side, event: Event): void {
     const text = (event.target as HTMLInputElement).value.trim();
-    this.#patchSide(side, { amount: text === '' ? Number.NaN : Number(text) });
+    this.#patchSide(side, { amount: text === '' ? null : Number(text) });
   }
 
   protected setSideUnit(side: Side, value: unknown): void {

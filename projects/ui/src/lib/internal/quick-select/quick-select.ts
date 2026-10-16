@@ -143,7 +143,8 @@ export const RECENT_MAX = 5;
 /** The state of one side (start or end) in the quick select: its tab and the fields of the Relative tab. */
 export interface QuickSelectSide {
   mode: 'absolute' | 'relative' | 'now';
-  amount: number;
+  /** The amount of the Relative tab; `null` while its field is empty. */
+  amount: number | null;
   unit: HxDateMathUnit;
   /** `ago` subtracts the amount (`now-15m`), `fromNow` adds it (`now+15m`). */
   direction: 'ago' | 'fromNow';
@@ -208,7 +209,7 @@ export function sideExpression(side: QuickSelectSide): string | null {
   if (side.mode === 'now') return 'now';
   if (side.mode === 'absolute') return null;
   if (side.raw) return side.raw;
-  if (!Number.isFinite(side.amount) || side.amount < 0) return null;
+  if (side.amount === null || !Number.isFinite(side.amount) || side.amount < 0) return null;
   // an amount too big for a plain integer text (1e21) stays in the text, so it is refused when resolved
   const amount = Math.floor(side.amount);
   const shift = amount > 0 ? `${side.direction === 'ago' ? '-' : '+'}${amount}${side.unit}` : '';
@@ -266,7 +267,7 @@ export function describeSide(side: QuickSelectSide, labels: HxQuickSelectLabels)
   if (side.mode === 'now') return labels.nowSummary;
   if (side.raw) return side.raw;
   if (sideExpression(side) === null) return labels.emptySide;
-  const n = Math.floor(side.amount);
+  const n = Math.floor(side.amount ?? 0);
   const unit = n === 1 ? labels.unitsOne[side.unit] : labels.units[side.unit];
   const text =
     n === 0

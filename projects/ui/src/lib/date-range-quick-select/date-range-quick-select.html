@@ -221,7 +221,7 @@
                     [attr.aria-label]="l.amount"
                     [attr.aria-invalid]="sideError() ? 'true' : null"
                     [attr.aria-describedby]="sideError() ? quickErrorId : null"
-                    [value]="state.amount"
+                    [value]="state.amount ?? ''"
                     (input)="setSideAmount(s, $event)"
                   />
                   <hx-select
