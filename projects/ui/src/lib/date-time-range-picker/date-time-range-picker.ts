@@ -28,6 +28,7 @@ import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
+import { HxSelect } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 
 export interface HxDateTimeRangeValue {
@@ -69,7 +70,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  */
 @Component({
   selector: 'hx-date-time-range-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxTimePicker],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxSelect, HxTimePicker],
   templateUrl: './date-time-range-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -97,6 +98,8 @@ export class HxDateTimeRangePicker
   readonly presetsLabel = input('Presets');
   /** Ready-made ranges listed in the popup; choosing one fills the draft, Submit applies it. */
   readonly presets = input<readonly HxDateTimeRangePreset[]>([]);
+  /** The presets as a row of `buttons` (default) or in a compact `select`. */
+  readonly presetDisplay = input<'buttons' | 'select'>('buttons');
   readonly clearLabel = input('Clear');
   readonly cancelLabel = input('Cancel');
   readonly submitLabel = input('Submit');
@@ -136,7 +139,10 @@ export class HxDateTimeRangePicker
   readonly #injector = inject(Injector);
   readonly open = signal(false);
   /** The range being edited in the popup; Submit makes it the value, Cancel drops it. */
+  protected readonly presetValue = (preset: HxDateTimeRangePreset) => preset;
   protected readonly draft = signal<HxDateTimeRangeValue>(EMPTY);
+  /** The preset chosen in the select (shown until the popup opens again). */
+  protected readonly selectedPreset = signal<HxDateTimeRangePreset | null>(null);
   protected readonly popupId = nextId('hx-date-time-range-picker-popup');
   protected readonly positions: ConnectedPosition[] = [
     {
@@ -233,6 +239,7 @@ export class HxDateTimeRangePicker
   protected show(): void {
     if (this.isDisabled() || this.open()) return;
     this.#stage(this.value());
+    this.selectedPreset.set(null);
     this.open.set(true);
   }
 
@@ -350,11 +357,23 @@ export class HxDateTimeRangePicker
   }
 
   protected onOutsideClick(event: MouseEvent): void {
+    // the list of the preset select is its own overlay
+    if (this.#inSelectList(event.target)) return;
     if (!this.#host.nativeElement.contains(event.target as Node)) this.close();
   }
 
   protected clear(): void {
     this.#stage(EMPTY);
+  }
+
+  /** The choice in the preset select: fills the draft like a button. */
+  protected selectPreset(preset: HxDateTimeRangePreset | null): void {
+    this.selectedPreset.set(preset);
+    if (preset) this.applyPreset(preset);
+  }
+
+  #inSelectList(target: EventTarget | null): boolean {
+    return target instanceof Element && target.closest('.hx-select-overlay') !== null;
   }
 
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
@@ -395,6 +414,7 @@ export class HxDateTimeRangePicker
   protected onHostFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget as HTMLElement | null;
     if (
+      this.#inSelectList(next) ||
       next?.closest('.hx-date-time-range-picker-popup') ||
       this.#host.nativeElement.contains(next)
     )
@@ -409,6 +429,7 @@ export class HxDateTimeRangePicker
     const next = event.relatedTarget as HTMLElement | null;
     if (
       !next ||
+      this.#inSelectList(next) ||
       next.closest('.hx-date-time-range-picker-popup') ||
       this.#host.nativeElement.contains(next)
     )
