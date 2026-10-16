@@ -142,9 +142,9 @@ describe('quick select helpers', () => {
       expect(readRecentRanges(key)).toEqual([{ from: 'now-15m', to: 'now' }]);
     });
 
-    it('reads an empty list for nothing stored, a null key or damaged data', () => {
+    it('reads an empty list for nothing stored or damaged data, null without a key', () => {
       expect(readRecentRanges(key)).toEqual([]);
-      expect(readRecentRanges(null)).toEqual([]);
+      expect(readRecentRanges(null)).toBeNull();
       localStorage.setItem(key, '{not json');
       expect(readRecentRanges(key)).toEqual([]);
       localStorage.setItem(key, JSON.stringify({ from: 'now', to: 'now' }));
@@ -160,7 +160,7 @@ describe('quick select helpers', () => {
       vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
         throw new DOMException('full', 'QuotaExceededError');
       });
-      expect(readRecentRanges(key)).toEqual([]);
+      expect(readRecentRanges(key)).toBeNull();
       expect(() => writeRecentRanges(key, [{ from: 'now', to: 'now' }])).not.toThrow();
     });
 

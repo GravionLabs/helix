@@ -29,6 +29,8 @@ export interface HxQuickSelectLabels {
   now: string;
   /** The text of the Now tab. */
   nowHint: string;
+  /** Shown when Submit cannot apply the range (a relative side next to an empty absolute side, a refused day). */
+  incompleteRange: string;
   /** The label of the typed date on the Absolute tab. */
   date: string;
   /** `Round to the {unit}` (with the singular unit name). */
@@ -63,6 +65,7 @@ export const HX_QUICK_SELECT_LABELS: HxQuickSelectLabels = {
   relative: 'Relative',
   now: 'Now',
   nowHint: 'Set to the current time when the range is applied.',
+  incompleteRange: 'Choose a start and an end that can be applied.',
   date: 'Date',
   roundTo: 'Round to the {unit}',
   lastRange: 'Last {n} {unit}',
@@ -250,11 +253,22 @@ function storage(): Storage | null {
   }
 }
 
-/** The recently used ranges stored under `key`; empty when nothing (valid) is stored or storage is blocked. */
-export function readRecentRanges(key: string | null): HxDateRangeExpression[] {
-  if (!key) return [];
+/**
+ * The recently used ranges stored under `key`: empty when nothing (valid) is stored, `null` when there is no key
+ * or the storage cannot be read (blocked), so the caller can keep its in-memory list.
+ */
+export function readRecentRanges(key: string | null): HxDateRangeExpression[] | null {
+  if (!key) return null;
+  let text: string | null;
   try {
-    const parsed: unknown = JSON.parse(storage()?.getItem(key) ?? '[]');
+    const store = storage();
+    if (!store) return null;
+    text = store.getItem(key);
+  } catch {
+    return null; // blocked storage
+  }
+  try {
+    const parsed: unknown = JSON.parse(text ?? '[]');
     return Array.isArray(parsed)
       ? parsed
           .filter(isRange)
@@ -262,7 +276,7 @@ export function readRecentRanges(key: string | null): HxDateRangeExpression[] {
           .map(({ from, to }) => ({ from, to }))
       : [];
   } catch {
-    return []; // blocked or damaged storage: start empty
+    return []; // damaged data: start empty
   }
 }
 

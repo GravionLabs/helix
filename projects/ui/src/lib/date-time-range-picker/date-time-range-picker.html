@@ -206,6 +206,9 @@
               </section>
             }
           </div>
+          @if (quickError()) {
+            <p class="hx-date-time-range-picker-error" role="alert" [id]="quickErrorId">{{ l.incompleteRange }}</p>
+          }
         </div>
       }
       <div class="hx-date-time-range-picker-body">
@@ -271,7 +274,12 @@
         }
         <span class="hx-date-time-range-picker-spacer"></span>
         <button type="button" class="hx-date-picker-button hx-date-time-range-picker-cancel" (click)="close(true)">{{ cancelLabel() }}</button>
-        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-submit" (click)="submit()">{{ submitLabel() }}</button>
+        <button
+          type="button"
+          class="hx-date-picker-button hx-date-time-range-picker-submit"
+          [attr.aria-describedby]="quickError() ? quickErrorId : null"
+          (click)="submit()"
+        >{{ submitLabel() }}</button>
       </div>
     </div>
   </ng-template>

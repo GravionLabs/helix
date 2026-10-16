@@ -170,6 +170,7 @@ import type { HxDateRangeExpression } from './quick-select';
       quickSelect
       typeable
       recentStorageKey="hx-test-recent"
+      [presets]="presetList"
       [(value)]="quick"
       [(expression)]="quickExpr"
     />
@@ -1468,9 +1469,12 @@ describe('HxDateTimeRangePicker', () => {
       await open('quick');
       await applyQuick();
       expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
-      // the list cannot be read back
+      // the list cannot be read back: the in-memory list of the session stays
       await open('quick');
-      expect(listed('hx-date-time-range-picker-recent')).toEqual([]);
+      expect(listed('hx-date-time-range-picker-recent')).toEqual(['Last 15 minutes']);
+      await click(rangeButton('hx-date-time-range-picker-common', 'Today'));
+      await open('quick');
+      expect(listed('hx-date-time-range-picker-recent')).toEqual(['Today', 'Last 15 minutes']);
     });
 
     it('keeps the recently used list in memory without a storage key', async () => {
@@ -1566,12 +1570,57 @@ describe('HxDateTimeRangePicker', () => {
       });
     });
 
-    it('applies nothing for a relative side next to an empty absolute side', async () => {
+    const error = () => popup()!.querySelector('.hx-date-time-range-picker-error');
+    const submitButton = () => q('.hx-date-time-range-picker-submit');
+
+    it('shows an error linked to Submit for a relative side next to an empty absolute side', async () => {
       await open('quick');
+      expect(error()).toBeNull();
+      expect(submitButton().hasAttribute('aria-describedby')).toBe(false);
       await click(tab('from', 'Now'));
       await submit();
       expect(popup()).not.toBeNull();
       expect(host.quick()).toEqual({ from: null, to: null });
+      expect(error()?.getAttribute('role')).toBe('alert');
+      expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
+      expect(submitButton().getAttribute('aria-describedby')).toBe(error()!.id);
+      // a new attempt drops the error
+      await click(tab('to', 'Now'));
+      expect(error()).toBeNull();
+      expect(submitButton().hasAttribute('aria-describedby')).toBe(false);
+      await submit();
+      expect(host.quick()).toEqual({ from: NOW, to: NOW });
+    });
+
+    it('shows the error when Submit is refused on a day in disabledDates', async () => {
+      vi.setSystemTime(new Date(2026, 9, 13, 10, 0));
+      await open('quickDays');
+      await click(tab('from', 'Now'));
+      await click(tab('to', 'Now'));
+      await submit();
+      expect(error()).not.toBeNull();
+      expect(host.quickDays()).toEqual({ from: null, to: null });
+      // the error is gone when the popup opens again
+      await close();
+      await open('quickDays');
+      expect(error()).toBeNull();
+    });
+
+    it('resets the tabs to Absolute when a preset is chosen', async () => {
+      host.quickExpr.set({ from: 'now-1d/d', to: 'now' });
+      await settle();
+      await open('quick');
+      expect(tab('from', 'Relative').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Now').getAttribute('aria-selected')).toBe('true');
+      await click(preset('Morning'));
+      expect(tab('from', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      expect(tab('to', 'Absolute').getAttribute('aria-selected')).toBe('true');
+      await submit();
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 7, 6, 0),
+        to: new Date(2026, 9, 7, 12, 30),
+      });
+      expect(host.quickExpr()).toBeNull();
     });
 
     it('sets up the tabs from the expression model', async () => {

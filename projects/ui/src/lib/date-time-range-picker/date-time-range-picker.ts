@@ -171,7 +171,11 @@ export class HxDateTimeRangePicker
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
-  /** The Kibana-style quick select in the popup (Last/Next N unit, relative sides, commonly and recently used). */
+  /**
+   * The Kibana-style quick select in the popup (Last/Next N unit, relative sides, commonly and recently used).
+   * As in Kibana, the quick Apply and a click on a commonly or recently used range commit the range and close the
+   * popup at once (preset buttons only fill the draft); the Start/End tabs are applied with Submit.
+   */
   readonly quickSelect = input(false, { transform: booleanAttribute });
   /** The texts of the quick select; any text left out stays English. */
   readonly quickSelectLabels = input<Partial<HxQuickSelectLabels>>({});
@@ -181,7 +185,8 @@ export class HxDateTimeRangePicker
   readonly recentStorageKey = input<string | null>('hx-date-range-recent');
   /**
    * The applied range as expressions (`{ from: 'now-15m', to: 'now' }`, an absolute side as an ISO date-time);
-   * `null` once an absolute range is chosen. Read when the popup opens to set up the quick select's tabs.
+   * `null` once an absolute range is chosen. Setting it from outside does not change `value`: it only sets up the
+   * quick select's tabs the next time the popup opens (resolve it yourself with `hxResolveRangeExpression`).
    */
   readonly expression = model<HxDateRangeExpression | null>(null);
 
@@ -222,6 +227,9 @@ export class HxDateTimeRangePicker
   protected readonly quickUnit = signal<HxDateMathUnit>('m');
   protected readonly sides = signal<Record<Side, HxQuickSelectSide>>(ABSOLUTE_SIDES);
   protected readonly recent = signal<HxDateRangeExpression[]>([]);
+  /** Submit could not apply the quick select's sides; shown under the sides and named by the Submit button. */
+  protected readonly quickError = signal(false);
+  protected readonly quickErrorId = `${this.popupId}-error`;
   protected readonly sideModes = SIDE_MODES;
   protected readonly labels = computed<HxQuickSelectLabels>(() => ({
     ...HX_QUICK_SELECT_LABELS,
@@ -515,10 +523,12 @@ export class HxDateTimeRangePicker
         const side = (state: HxQuickSelectSide, date: Date | null) =>
           sideExpression(state) ?? date?.toISOString() ?? null;
         const range = { from: side(from, draft.from), to: side(to, draft.to) };
-        // an empty absolute side next to a relative one is no range to apply
-        if (range.from !== null && range.to !== null) {
+        // an empty absolute side next to a relative one is no range to apply: say so instead
+        const applied =
+          range.from !== null &&
+          range.to !== null &&
           this.#applyRange({ from: range.from, to: range.to });
-        }
+        if (!applied) this.quickError.set(true);
         return;
       }
       const { from: start, to: end } = this.draft();
@@ -533,8 +543,10 @@ export class HxDateTimeRangePicker
 
   /** Opening the popup: the recently used list from storage, the tabs from the `expression` model. */
   #setUpQuickSelect(): void {
-    const key = this.recentStorageKey();
-    if (key) this.recent.set(readRecentRanges(key));
+    // blocked storage (or no key) reads `null`: the in-memory list of this session stays
+    const stored = readRecentRanges(this.recentStorageKey());
+    if (stored) this.recent.set(stored);
+    this.quickError.set(false);
     const expression = this.expression();
     this.sides.set(
       expression
@@ -582,6 +594,7 @@ export class HxDateTimeRangePicker
 
   /** A tab chosen: Relative and Now show their date in the calendar and the time pickers until it is applied. */
   protected setSideMode(side: Side, mode: SideMode): void {
+    this.quickError.set(false);
     this.sides.update((s) => ({ ...s, [side]: { ...s[side], mode } }));
     this.#preview(side);
   }
@@ -659,6 +672,7 @@ export class HxDateTimeRangePicker
   }
 
   #patchSide(side: Side, patch: Partial<HxQuickSelectSide>): void {
+    this.quickError.set(false);
     this.sides.update((s) => ({ ...s, [side]: { ...s[side], ...patch, raw: null } }));
     this.#preview(side);
   }
@@ -684,22 +698,23 @@ export class HxDateTimeRangePicker
    * pickers, refused on a day in `disabledDates` or for an unreadable side, inside `minDate`..`maxDate`), then
    * remembers it, sets the `expression` model and closes the popup.
    */
-  #applyRange(range: HxDateRangeExpression): void {
+  #applyRange(range: HxDateRangeExpression): boolean {
     const now = new Date();
     const options = { now, firstDayOfWeek: this.firstDayOfWeek() };
     const resolvedFrom = hxResolveRangeSide(range.from, { ...options, roundUp: false });
     const resolvedTo = hxResolveRangeSide(range.to, { ...options, roundUp: true });
-    if (!resolvedFrom || !resolvedTo) return;
+    if (!resolvedFrom || !resolvedTo) return false;
     const { from: oldFrom, to: oldTo } = this.value();
     const from = this.#fitPreset(resolvedFrom, oldFrom);
     const to = this.#fitPreset(resolvedTo, oldTo ?? oldFrom);
-    if (!from || !to) return;
+    if (!from || !to) return false;
     const next = this.#inside(to < from ? { from: to, to: from } : { from, to });
     const relative = hxParseDateMath(range.from) !== null || hxParseDateMath(range.to) !== null;
     this.#remember(range);
     this.#commit(next);
     this.expression.set(relative ? { from: range.from, to: range.to } : null);
     this.close(true);
+    return true;
   }
 
   #remember(range: HxDateRangeExpression): void {
@@ -838,6 +853,8 @@ export class HxDateTimeRangePicker
   /** Sets the draft; a side is moved into `minDate`..`maxDate` including the time. */
   #stage(next: HxDateTimeRangeValue): void {
     const clean = this.#inside(next);
+    // a changed draft is a new attempt: the Submit error goes away
+    this.quickError.set(false);
     if (clean.from) this.#lastFrom = clean.from;
     if (clean.to) this.#lastTo = clean.to;
     this.draft.set(clean);
