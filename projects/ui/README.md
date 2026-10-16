@@ -87,6 +87,7 @@ import { HxChart } from '@gravionlabs/helix-ui/chart';
 | `HxPanel` | `hx-panel` | titled container, optional collapse with a toggle button, header and footer slots |
 | `HxFileUpload` | `hx-file-upload` | choose and drop files, list, validation messages, progress; no HTTP, the app uploads |
 | `HxDateTimeRangePicker` | `hx-date-time-range-picker` | date-time range in one field with one popup calendar and a time row per end (`{ from, to }`), same time options as the time picker, all three forms APIs |
+| `HxDateRangeQuickSelect` | `hx-date-range-quick-select` | Kibana-style quick select for a date range: Last/Next N unit, commonly and recently used ranges, a start and an end editor (absolute, relative, now), date-math `expression` model, all three forms APIs |
 | `HxDateTimePicker` | `hx-date-time-picker` | date and time in one field: a calendar popup (or inline) with a time row under it (`Date`), 24 h or 12 h, hour only, steps, `minDate`/`maxDate` with the time, typing, all three forms APIs |
 | `HxTimePicker` | `hx-time-picker` | time field with a time row popup or inline (`Date` today at that time), 24 h or 12 h, hour only, steps, `minTime`/`maxTime`, typing, all three forms APIs |
 | `HxDatePicker` | `hx-date-picker` | date field with a calendar popup or inline: single, range or multiple days, typing, month and year views, all three forms APIs |

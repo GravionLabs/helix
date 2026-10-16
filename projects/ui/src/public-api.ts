@@ -97,6 +97,10 @@ export {
   hxDateRangePresets,
 } from './lib/date-range-presets/date-range-presets';
 export {
+  HxDateRangeQuickSelect,
+  type HxDateRangeQuickSelectValue,
+} from './lib/date-range-quick-select/date-range-quick-select';
+export {
   HxDateTimePicker,
   type HxDateTimePickerValue,
 } from './lib/date-time-picker/date-time-picker';

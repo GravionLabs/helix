@@ -9,6 +9,8 @@ import {
   HxDatePicker,
   type HxDatePickerValue,
   type HxDateRangeExpression,
+  HxDateRangeQuickSelect,
+  type HxDateRangeQuickSelectValue,
   HxDateTimePicker,
   type HxDateTimePickerValue,
   HxDateTimeRangePicker,
@@ -32,7 +34,6 @@ import {
   HxTimePicker,
   type HxTimePickerValue,
   HxToggleButton,
-  hxResolveRangeExpression,
 } from '@gravionlabs/helix-ui';
 
 /** `@gravionlabs/helix-ui` input components: Float label, Toggle button, Icon field, Input group, Input number. */
@@ -52,6 +53,7 @@ import {
     HxTimePicker,
     HxDateTimePicker,
     HxDateTimeRangePicker,
+    HxDateRangeQuickSelect,
     HxFileUpload,
     HxFileUpload,
     HxSlider,
@@ -111,13 +113,8 @@ export class HxInputsSection {
   readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
   readonly selected = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly reportingDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
-  readonly quick = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  readonly quick = signal<HxDateRangeQuickSelectValue>({ from: null, to: null });
   readonly quickExpression = signal<HxDateRangeExpression | null>(null);
-  /** The expression resolved again against the current time, as an app would to refresh a dashboard. */
-  readonly resolved = computed(() => {
-    const expression = this.quickExpression();
-    return expression ? hxResolveRangeExpression(expression, { firstDayOfWeek: 1 }) : null;
-  });
   /** The expression as text for the demo row. */
   readonly expressionText = computed(() => {
     const expression = this.quickExpression();
