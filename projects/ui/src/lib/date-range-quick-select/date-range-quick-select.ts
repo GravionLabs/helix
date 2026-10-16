@@ -47,6 +47,7 @@ import {
   type HxDateRangeExpression,
   type HxQuickSelectLabels,
   type HxQuickSelectRange,
+  hxResolveRangeExpression,
   hxResolveRangeSide,
   QUICK_SELECT_UNITS,
   type QuickSelectSide,
@@ -67,6 +68,15 @@ export interface HxDateRangeQuickSelectValue {
 }
 
 const EMPTY: HxDateRangeQuickSelectValue = { from: null, to: null };
+/** How far a written value may be from the expression resolved now and still belong to it (the time between). */
+const RESOLVE_TOLERANCE_MS = 1000;
+
+const sameTime = (a: Date | null, b: Date | null, tolerance = 0) =>
+  a === null || b === null ? a === b : Math.abs(a.getTime() - b.getTime()) <= tolerance;
+
+/** Two values with the same start and end times. */
+const sameRange = (a: HxDateRangeQuickSelectValue, b: HxDateRangeQuickSelectValue | null) =>
+  b !== null && sameTime(a.from, b.from) && sameTime(a.to, b.to);
 const SIDE_KEYS: readonly Side[] = ['from', 'to'];
 
 /** The tabs of both sides for an expression (`null`: both absolute). */
@@ -96,7 +106,9 @@ const sidesFrom = (expression: HxDateRangeExpression | null): Record<Side, Quick
  * (`now-15m`, `now/d`) is resolved against the current time when the range is applied; the value is
  * `{ from, to }` (moved into `minDate`..`maxDate`) and the expressions are in the `expression` model (`null` for an
  * absolute range). A range that cannot be applied (an amount out of range, an unreadable side) keeps the popup open
- * with an inline message. It works with `ngModel`, reactive forms and signal forms (`[formField]`).
+ * with an inline message. It works with `ngModel`, reactive forms and signal forms (`[formField]`). To restore a
+ * persisted `expression`, bind the value resolved from it (`hxResolveRangeExpression`) with it: a value written from
+ * outside keeps the expression only when it has the same times (see `expression`).
  */
 @Component({
   selector: 'hx-date-range-quick-select',
@@ -127,9 +139,12 @@ export class HxDateRangeQuickSelect
   /**
    * The applied range as expressions (`{ from: 'now-15m', to: 'now' }`, an absolute side as an ISO date-time);
    * `null` for an absolute range, and when `value` is set from outside (`writeValue`, a form's `setValue`/`reset`, a
-   * new `[value]`) without a new expression with it. Setting it from outside does not change `value` (resolve it
-   * yourself with `hxResolveRangeExpression`); it changes the field's text and the summary. When the resolved ends
-   * come out reversed (`now+1d` to `now`), the value is ordered and the expression is swapped with it.
+   * new `[value]`) to a different range without a new expression with it. A value written with the same times as the
+   * last one, or with the times the expression resolves to now (within a second, as `hxResolveRangeExpression` gives
+   * them), keeps the expression: a persisted expression with `[(ngModel)]` survives ngModel's later `writeValue` when
+   * the model holds the range resolved from it. Setting it from outside does not change `value` (resolve it yourself
+   * with `hxResolveRangeExpression`); it changes the field's text and the summary. When the resolved ends come out
+   * reversed (`now+1d` to `now`), the value is ordered and the expression is swapped with it.
    */
   readonly expression = model<HxDateRangeExpression | null>(null);
   readonly minDate = input<Date | null>(null);
@@ -257,7 +272,9 @@ export class HxDateRangeQuickSelect
 
   constructor() {
     // A new expression (the control's own apply or one set from outside) belongs to the value of that moment. A value
-    // that changes without a new expression (writeValue, setValue, reset, [value]) makes it stale: it is dropped.
+    // that changes without a new expression (writeValue, setValue, reset, [value]) makes it stale: it is dropped,
+    // unless the value is the same range (the same times as before, or the expression resolved now). So ngModel's
+    // later writeValue of the range resolved from a persisted expression keeps that expression.
     effect(() => {
       const value = this.value();
       const expression = this.expression();
@@ -266,7 +283,11 @@ export class HxDateRangeQuickSelect
           this.#seenExpression = expression;
           this.#expressionValue = value;
         } else if (expression !== null && value !== this.#expressionValue) {
-          this.expression.set(null);
+          if (sameRange(value, this.#expressionValue) || this.#resolvesTo(expression, value)) {
+            this.#expressionValue = value;
+          } else {
+            this.expression.set(null);
+          }
         }
         // a value or an expression that the side editor did not set (Apply, a list entry, a form, a binding) sets the
         // tabs of both sides again
@@ -705,6 +726,23 @@ export class HxDateRangeQuickSelect
     this.expression.set(relative ? stored : null);
     this.close(true);
     return true;
+  }
+
+  /**
+   * The value is the expression resolved now, give or take `RESOLVE_TOLERANCE_MS` (as an app resolves it with
+   * `hxResolveRangeExpression`, or as the control applies it: moved into `minDate`..`maxDate`, reversed ends ordered).
+   */
+  #resolvesTo(expression: HxDateRangeExpression, value: HxDateRangeQuickSelectValue): boolean {
+    const { from, to } = hxResolveRangeExpression(expression, {
+      firstDayOfWeek: this.firstDayOfWeek(),
+    });
+    const inside = (d: Date | null) =>
+      isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
+    const near = (a: Date | null, b: Date | null) => sameTime(a, b, RESOLVE_TOLERANCE_MS);
+    const matches = (start: Date | null, end: Date | null) =>
+      (near(value.from, start) && near(value.to, end)) ||
+      (near(value.from, inside(start)) && near(value.to, inside(end)));
+    return matches(from, to) || matches(to, from);
   }
 
   #remember(range: HxDateRangeExpression): void {

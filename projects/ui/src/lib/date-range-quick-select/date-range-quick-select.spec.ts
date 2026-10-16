@@ -3,7 +3,10 @@ import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
-import type { HxDateRangeExpression } from '../internal/quick-select/quick-select';
+import {
+  type HxDateRangeExpression,
+  hxResolveRangeExpression,
+} from '../internal/quick-select/quick-select';
 import {
   HxDateRangeQuickSelect,
   type HxDateRangeQuickSelectValue,
@@ -102,6 +105,24 @@ class Host {
   signalExpr = signal<HxDateRangeExpression | null>(null);
   offValue = signal<Value>(EMPTY);
   offExpr = signal<HxDateRangeExpression | null>({ from: 'now-15m', to: 'now' });
+}
+
+/** An app that restores a persisted expression with the range resolved from it, through ngModel. */
+@Component({
+  imports: [HxDateRangeQuickSelect, FormsModule],
+  template: `
+    <hx-date-range-quick-select
+      locale="en-US"
+      [recentStorageKey]="null"
+      [(ngModel)]="range"
+      [(expression)]="expression"
+    />
+  `,
+})
+class RestoreHost {
+  readonly persisted: HxDateRangeExpression = { from: 'now-1h', to: 'now' };
+  expression = signal<HxDateRangeExpression | null>(this.persisted);
+  range: Value = hxResolveRangeExpression(this.persisted);
 }
 
 describe('HxDateRangeQuickSelect', () => {
@@ -527,6 +548,60 @@ describe('HxDateRangeQuickSelect', () => {
       await settle();
       expect(input('model').value).toBe('10/1/2026 08:00 - 10/2/2026 08:00');
       expect(host.modelExpr()).toBeNull();
+    });
+
+    it('keeps a persisted expression when ngModel writes the range resolved from it', async () => {
+      const restore = TestBed.createComponent(RestoreHost);
+      // the write comes a moment after the app resolved the range
+      vi.setSystemTime(NOW.getTime() + 500);
+      await restore.whenStable();
+      restore.detectChanges();
+      await restore.whenStable();
+      restore.detectChanges();
+      expect(restore.componentInstance.expression()).toEqual({ from: 'now-1h', to: 'now' });
+      const field = restore.nativeElement.querySelector('input') as HTMLInputElement;
+      expect(field.value).toBe('Last 1 hour');
+      restore.destroy();
+    });
+
+    it('keeps an expression set with the range it resolves to, and drops it for another range', async () => {
+      host.modelExpr.set({ from: 'now/d', to: 'now/d' });
+      host.modelValue.set(hxResolveRangeExpression({ from: 'now/d', to: 'now/d' }));
+      await settle();
+      await settle();
+      expect(host.modelExpr()).toEqual({ from: 'now/d', to: 'now/d' });
+      expect(input('model').value).toBe('Today');
+
+      // the same times as a new object keep it too
+      host.modelValue.set({
+        from: new Date(2026, 9, 14),
+        to: new Date(2026, 9, 14, 23, 59, 59, 999),
+      });
+      await settle();
+      await settle();
+      expect(host.modelExpr()).toEqual({ from: 'now/d', to: 'now/d' });
+
+      // a range a few seconds off is another range
+      host.modelValue.set({ from: new Date(2026, 9, 14, 0, 0, 5), to: new Date(2026, 9, 15) });
+      await settle();
+      await settle();
+      expect(host.modelExpr()).toBeNull();
+      expect(input('model').value).toBe('10/14/2026 00:00 - 10/15/2026 00:00');
+    });
+
+    it('keeps the expression when a FormControl gets the same range again', async () => {
+      await open('reactive');
+      await common('Last 1 hour');
+      expect(host.reactiveExpr()).toEqual({ from: 'now-1h', to: 'now' });
+      const { from, to } = host.control.value!;
+      // later, when `now` has moved on: the same times keep it, other ones drop it
+      vi.setSystemTime(new Date(2026, 9, 14, 15, 40, 0));
+      host.control.setValue({ from: new Date(from!), to: new Date(to!) });
+      await settle();
+      expect(host.reactiveExpr()).toEqual({ from: 'now-1h', to: 'now' });
+      host.control.setValue({ from: new Date(from!), to: new Date(2026, 9, 14, 15, 40, 0) });
+      await settle();
+      expect(host.reactiveExpr()).toBeNull();
     });
 
     it('works with a reactive FormControl: dirty, touched, setValue and reset', async () => {

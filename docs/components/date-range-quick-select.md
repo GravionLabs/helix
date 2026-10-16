@@ -77,14 +77,30 @@ used** list and one summary line each for the start and the end. The value is `{
   applied range and shows an inline message until the side changes or its editor closes.
 - **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is
   an ISO string, and an absolute range gives `null`. A value set from outside (`ngModel`, `setValue`/`reset`, a signal
-  form, a new `[value]`) sets it to `null` unless a new expression is set with it. Setting it from outside changes the
-  field's text and the summary but not `value`; resolve it yourself with `hxResolveRangeExpression`. When the resolved
-  ends are reversed (`now+1d` to `now`), the value is put in order and the expression is swapped with it.
+  form, a new `[value]`) to a different range sets it to `null` unless a new expression is set with it. A value with
+  the same times as the last one, or with the times the expression resolves to now (within a second), keeps it. Setting
+  it from outside changes the field's text and the summary but not `value`; resolve it yourself with
+  `hxResolveRangeExpression`. When the resolved ends are reversed (`now+1d` to `now`), the value is put in order and
+  the expression is swapped with it.
 
   ```ts
   readonly expression = signal<HxDateRangeExpression | null>(null);
   // later: resolve it again, e.g. to refresh a dashboard
   const { from, to } = hxResolveRangeExpression(this.expression()!, { firstDayOfWeek: 1 });
+  ```
+
+  To restore a persisted expression (after a reload), set the value resolved from it together with it.
+  `ngModel` writes its value a moment later than the `expression` binding; the expression survives that write
+  because the value is what it resolves to. A stored value from an earlier session is a different range and drops
+  the expression.
+
+  ```ts
+  // <hx-date-range-quick-select [(ngModel)]="range" [(expression)]="expression" />
+  readonly expression = signal<HxDateRangeExpression | null>(
+    JSON.parse(localStorage.getItem('range-expression') ?? 'null'),
+  );
+  // the range the expression stands for now
+  range = this.expression() ? hxResolveRangeExpression(this.expression()!) : { from: null, to: null };
   ```
 - **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
   invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
