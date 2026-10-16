@@ -952,17 +952,52 @@ describe('HxDateRangeQuickSelect', () => {
       expect(host.quickExpr()).toEqual({ from: 'now-20m', to: 'now' });
     });
 
-    it('refuses a start after the end and a day after the end', async () => {
+    it('swaps a relative start after the end, as Apply does, and the editor follows it', async () => {
       await editAfterLast15('from');
       await choose('hx-date-range-quick-select-side-unit', 'Minutes from now');
-      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
-      expect(error()).not.toBeNull();
-      await click(tab('Absolute'));
+      // now+15m to now: the ends are ordered and the expression is swapped with them
+      expect(host.quick()).toEqual({ from: NOW, to: new Date(2026, 9, 14, 15, 45, 20) });
+      expect(host.quickExpr()).toEqual({ from: 'now', to: 'now+15m' });
       expect(error()).toBeNull();
+      expect(summary('from')).toBe('Start now');
+      expect(summary('to')).toBe('End ~ 15 minutes from now');
+      // the edited side is the end now: its editor stays open
+      expect(editor()!.classList).toContain('hx-date-range-quick-select-editor-to');
+      expect(sideButton('to').getAttribute('aria-expanded')).toBe('true');
+      expect(tab('Relative').getAttribute('aria-selected')).toBe('true');
+      expect(sideAmount().value).toBe('15');
+    });
+
+    it('swaps a picked or typed start after the end', async () => {
+      await editAfterLast15('from');
+      await click(tab('Absolute'));
       await click(day('2026-10-20'));
-      expect(host.quick().from).toEqual(new Date(2026, 9, 14, 15, 15, 20));
-      expect(error()).not.toBeNull();
-      expect(panel().getAttribute('aria-describedby')).toBe(error()!.id);
+      expect(host.quick()).toEqual({ from: NOW, to: new Date(2026, 9, 20, 15, 15, 20) });
+      expect(host.quickExpr()).toEqual({
+        from: 'now',
+        to: new Date(2026, 9, 20, 15, 15, 20).toISOString(),
+      });
+      expect(error()).toBeNull();
+      expect(editor()!.classList).toContain('hx-date-range-quick-select-editor-to');
+      expect(sideDate().value).toBe('10/20/2026 15:15');
+
+      // two absolute sides: a typed start after the end swaps them too
+      await click(sideButton('from'));
+      await click(tab('Absolute'));
+      await typeDate('10/25/2026 08:00');
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 20, 15, 15, 20),
+        to: new Date(2026, 9, 25, 8, 0),
+      });
+      expect(host.quickExpr()).toBeNull();
+      expect(editor()!.classList).toContain('hx-date-range-quick-select-editor-to');
+      expect(sideDate().value).toBe('10/25/2026 08:00');
+      await pressEscape();
+      await pressEscape();
+      await open('quick');
+      expect(listed('hx-date-range-quick-select-recent')[0]).toBe(
+        '10/20/2026 15:15 - 10/25/2026 08:00',
+      );
     });
 
     it('drops a refused edit when its editor closes', async () => {

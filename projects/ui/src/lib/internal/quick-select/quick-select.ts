@@ -31,7 +31,7 @@ export interface HxQuickSelectLabels {
   nowHint: string;
   /**
    * Shown when a range cannot be applied (a relative side next to an empty absolute side, a Relative tab with an
-   * empty or invalid amount, a refused day, a typed date that cannot be read, a start after the end).
+   * empty or invalid amount, a refused day, a typed date that cannot be read).
    */
   incompleteRange: string;
   /** The label of the typed date on the Absolute tab. */

@@ -90,8 +90,9 @@ const sidesFrom = (expression: HxDateRangeExpression | null): Record<Side, Quick
  *
  * Apply and a click on a commonly or recently used range commit the range at once and close the popup; an edit in
  * the side editor commits that side at once and keeps the popup open (the range is added to *Recently used* when
- * the popup closes). An edit that cannot be applied (an empty amount, a start after the end, an unreadable date)
- * keeps the last applied range and shows the inline message until the side changes or its editor closes. Date math
+ * the popup closes). An edit that puts the start after the end swaps the ends (the editor follows the edited side),
+ * as Apply and the lists do. An edit that cannot be applied (an empty amount, an unreadable date) keeps the last
+ * applied range and shows the inline message until the side changes or its editor closes. Date math
  * (`now-15m`, `now/d`) is resolved against the current time when the range is applied; the value is
  * `{ from, to }` (moved into `minDate`..`maxDate`) and the expressions are in the `expression` model (`null` for an
  * absolute range). A range that cannot be applied (an amount out of range, an unreadable side) keeps the popup open
@@ -565,7 +566,8 @@ export class HxDateRangeQuickSelect
     }
     if (!this.#editSides(this.sides(), { [side]: date })) return;
     if (date) this.calendarFocus.set(startOfDay(date));
-    field.value = this.sideText(side);
+    // a date across the other side swapped the ends: the field now edits the other side
+    field.value = this.sideText(this.openSide() ?? side);
   }
 
   /**
@@ -603,14 +605,16 @@ export class HxDateRangeQuickSelect
   /**
    * Applies the sides as edited: an absolute side keeps its date (or takes the one of `dates`), a relative or now
    * side is resolved against the current time (`to` rounds up) and moved into `minDate`..`maxDate`. Refused for a
-   * relative side that gives no expression or no date, and for a start after the end. An empty side is allowed
-   * (the other side is set alone); the expression model holds both sides only when both are set and one of them is
-   * relative.
+   * relative side that gives no expression or no date. A start after the end swaps the ends, as Apply and the lists
+   * do: the sides and the expression are swapped with the value and the open editor follows the edited side. An
+   * empty side is allowed (the other side is set alone); the expression model holds both sides only when both are set
+   * and one of them is relative.
    */
   #applySides(
-    sides: Record<Side, QuickSelectSide>,
+    edited: Record<Side, QuickSelectSide>,
     dates: Partial<Record<Side, Date | null>>,
   ): boolean {
+    let sides = edited;
     const options = { now: new Date(), firstDayOfWeek: this.firstDayOfWeek() };
     const resolved: Record<Side, Date | null> = { from: null, to: null };
     const texts: Record<Side, string | null> = { from: null, to: null };
@@ -630,7 +634,15 @@ export class HxDateRangeQuickSelect
       resolved[side] = date;
       texts[side] = expression;
     }
-    if (resolved.from && resolved.to && resolved.from > resolved.to) return false;
+    // reversed ends are ordered; the sides and their texts are swapped with them (as in #applyRange)
+    if (resolved.from && resolved.to && resolved.from > resolved.to) {
+      [resolved.from, resolved.to] = [resolved.to, resolved.from];
+      [texts.from, texts.to] = [texts.to, texts.from];
+      sides = { from: sides.to, to: sides.from };
+      this.sides.set(sides);
+      const open = this.openSide();
+      if (open) this.openSide.set(open === 'from' ? 'to' : 'from');
+    }
     const inside = (d: Date | null) => d && clampTime(d, this.minDate(), this.maxDate());
     const next = { from: inside(resolved.from), to: inside(resolved.to) };
     const range =

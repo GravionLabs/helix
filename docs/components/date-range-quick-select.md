@@ -71,9 +71,10 @@ used** list and one summary line each for the start and the end. The value is `{
   `now`, `Oct 12, 2026, 08:30`). A click on a line opens the editor of that side alone, with the tabs **Absolute** (a
   typed date and a calendar), **Relative** (an amount, a unit with "ago" or "from now", "Round to the unit", and the
   resolved date) and **Now**; a click on the line again closes it. One editor is open at a time. An edit in the editor
-  commits that side at once and keeps the popup open. An edit that cannot be applied (an empty amount, a start after
-  the end, an unreadable date) keeps the last applied range and shows an inline message until the side changes or its
-  editor closes.
+  commits that side at once and keeps the popup open. An edit that puts the start after the end swaps the two ends, as
+  Apply and the lists do (the editor moves with the edited side, so a start typed after the end becomes the end). An
+  edit that cannot be applied (an empty amount, an unreadable date, a date outside `minDate`..`maxDate`) keeps the last
+  applied range and shows an inline message until the side changes or its editor closes.
 - **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is
   an ISO string, and an absolute range gives `null`. A value set from outside (`ngModel`, `setValue`/`reset`, a signal
   form, a new `[value]`) sets it to `null` unless a new expression is set with it. Setting it from outside changes the
