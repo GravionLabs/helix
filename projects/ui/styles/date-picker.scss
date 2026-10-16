@@ -364,3 +364,9 @@
 .hx-date-picker-panel > .hx-range-presets {
   padding-bottom: var(--h-datepicker-title-gap);
 }
+
+/* the message of a refused preset, under the presets */
+.hx-date-picker-panel > .hx-date-picker-error {
+  margin: 0 0 var(--h-datepicker-title-gap);
+  color: var(--h-inputtext-invalid-border-color);
+}

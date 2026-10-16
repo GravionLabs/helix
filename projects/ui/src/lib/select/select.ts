@@ -103,6 +103,8 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly inputId = input<string>();
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
+  /** The `id` of a text that describes the select (a message about the last choice). */
+  readonly ariaDescribedby = input<string | null>();
   /** How values are compared to find the selected option (default: `Object.is`). */
   readonly compareWith = input<(a: unknown, b: unknown) => boolean>(compareValues);
 

@@ -27,6 +27,7 @@ import { HxSelect } from '../../select/select';
         [optionValue]="presetValue"
         [placeholder]="label()"
         [ariaLabel]="label()"
+        [ariaDescribedby]="describedBy()"
         [disabled]="disabled()"
         [value]="selected()"
         (valueChange)="chooseInSelect($event)"
@@ -37,6 +38,7 @@ import { HxSelect } from '../../select/select';
           type="button"
           class="hx-date-picker-button hx-range-preset"
           [disabled]="disabled()"
+          [attr.aria-describedby]="describedBy()"
           (click)="chosen.emit(preset)"
         >{{ preset.label }}</button>
       }
@@ -59,6 +61,8 @@ export class HxRangePresets {
   readonly disabled = input(false, { transform: booleanAttribute });
   /** The preset the select shows (`null`: the placeholder). */
   readonly selected = input<HxDateTimeRangePreset | null>(null);
+  /** The `id` of a message about the last choice (a refused preset) for the buttons and the select. */
+  readonly describedBy = input<string | null>(null);
   /** A preset was chosen (a button or an entry of the select). */
   readonly chosen = output<HxDateTimeRangePreset>();
 

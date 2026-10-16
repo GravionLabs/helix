@@ -36,18 +36,27 @@ readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS; // Today, Last 7 days, This mon
 | `presets`               | `HxDateTimeRangePreset[]`             | `[]`       | Ready-made ranges above the calendar, with `selectionMode="range"` only. |
 | `presetDisplay`         | `'buttons' \| 'select'`              | `'buttons'` | The presets as a row of buttons or in a select.  |
 | `presetsLabel`          | `string`                              | `'Presets'` | Name of the preset group and the select's placeholder. |
+| `presetRefusedLabel`    | `string`                              | `'This range cannot be chosen.'` | Message shown when a preset is refused. |
 
-- **Range presets:** with `selectionMode="range"`, `presets` lists ready-made ranges above the calendar (none by
-  default; they are ignored in `single` and `multiple`). Use the day-based `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days,
-  This month), pick from `hxDateRangePresets({ ... })` (localized labels; `This week` follows `firstDayOfWeek`), add your
-  own `{ label, from, to }` or replace the list entirely. Choosing a preset sets the value at once to the days of its two
-  ends: midnight (the time is dropped), in order when the ends are reversed, moved into `minDate`..`maxDate`; a preset
-  with an end on a day in `disabledDates` is refused. The popup then closes and the focus returns to the field.
-  `presetDisplay="select"` shows them in a compact `hx-select` (named by `presetsLabel`) instead of buttons; the select
-  shows the chosen preset while the value is the one it made. The preset buttons are native buttons before the
-  calendar in the tab order; the select is used with the keyboard as `hx-select` (Arrow Down opens, Enter chooses).
-  Presets are disabled with the picker (`disabled`, a disabled form control). Times of day, a draft with Submit and
-  the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`,
+- **Range presets:** with `selectionMode="range"`, `presets` lists ready-made ranges above the calendar. They are
+  opt-in: the list is empty by default, so no preset shows until you pass one (for the built-in day presets,
+  `[presets]="dayPresets"` with `dayPresets = HX_DATE_RANGE_DAY_PRESETS`: Today, Last 7 days, This month). Presets are
+  ignored in `single` and `multiple`. You can also take `hxDateRangePresets({ ... })` (localized labels; `This week`
+  follows `firstDayOfWeek`), add your own `{ label, from, to }` or replace the list entirely.
+- **Choosing a preset** sets the value at once to the days of its two ends: midnight (the time is dropped), in order
+  when the ends are reversed. A preset that overlaps `minDate`..`maxDate` is cut to the limits; one that lies wholly
+  outside them (both ends before `minDate` or both after `maxDate`) or has an end on a day in `disabledDates` is
+  refused: the value stays, the popup stays open and an inline message (`presetRefusedLabel`, `role="alert"`, named by
+  the preset buttons or the select through `aria-describedby`) says so until the next choice, edit or opening. A taken
+  preset closes the popup and the focus returns to the field.
+- **Preset select:** `presetDisplay="select"` shows the presets in a compact `hx-select` (named by `presetsLabel`)
+  instead of buttons. It shows the chosen preset while the value still holds its days (a new `presets` array with an
+  entry of the same label keeps it); a value written from outside (`ngModel`, `setValue`/`reset`, `[value]`) shows the
+  placeholder again, and the same preset can be chosen again.
+- **Preset keyboard and state:** the preset buttons are native buttons before the calendar in the tab order; the select
+  works as `hx-select` (Arrow Down opens, the arrows move, Enter chooses, Escape closes only the list and leaves the
+  popup open). Presets are disabled with the picker (`disabled`, a disabled form control). Times of day, a draft with
+  Submit and the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`,
   `presetDisplay`, `quickSelect`; with `[showTime]="false"` it picks days only).
 - **Field:** it shows the value with `Intl.DateTimeFormat`. Typing a date parses it in the order the locale writes
   numbers (also `yyyy-mm-dd`); unreadable or disabled dates put the value back. A range reads as `a – b`, several days

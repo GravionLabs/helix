@@ -82,8 +82,12 @@
         [label]="presetsLabel()"
         [disabled]="isDisabled()"
         [selected]="selectedPreset()"
+        [describedBy]="presetError() ? presetErrorId : null"
         (chosen)="applyPreset($event)"
       />
+      @if (presetError()) {
+        <p class="hx-date-picker-error" role="alert" [id]="presetErrorId">{{ presetRefusedLabel() }}</p>
+      }
     }
     <hx-calendar
       [(focusedDate)]="focusedDate"
