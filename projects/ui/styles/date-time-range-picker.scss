@@ -80,15 +80,9 @@
   font-weight: var(--h-datepicker-title-font-weight);
 }
 
-.hx-date-time-range-picker-presets {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--h-datepicker-title-gap);
+/* the preset row (`.hx-range-presets`, styled by `date-picker.scss`) at the top of the popup */
+.hx-date-time-range-picker-popup > .hx-range-presets {
   padding: var(--h-datepicker-panel-padding) var(--h-datepicker-panel-padding) 0;
-}
-
-.hx-date-time-range-picker-presets-select {
-  display: block;
 }
 
 /* quick select (`quickSelect`): Last/Next N unit, commonly and recently used ranges, a tab list per side */

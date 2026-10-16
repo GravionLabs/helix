@@ -458,7 +458,7 @@ describe('HxDatePicker range presets', () => {
     fixture.detectChanges();
   };
   const presetButton = (id: string, label: string) =>
-    [...el(id).querySelectorAll<HTMLButtonElement>('.hx-date-picker-preset')].find(
+    [...el(id).querySelectorAll<HTMLButtonElement>('.hx-range-preset')].find(
       (b) => b.textContent?.trim() === label,
     ) as HTMLButtonElement;
   const choose = async (id: string, label: string) => {
@@ -508,12 +508,12 @@ describe('HxDatePicker range presets', () => {
   });
 
   it('lists no presets by default and none outside range mode', () => {
-    expect(el('none').querySelector('.hx-date-picker-presets')).toBeNull();
-    expect(el('single').querySelector('.hx-date-picker-presets')).toBeNull();
+    expect(el('none').querySelector('.hx-range-presets')).toBeNull();
+    expect(el('single').querySelector('.hx-range-presets')).toBeNull();
   });
 
   it('names the preset group with presetsLabel and lists native buttons', () => {
-    const group = el('buttons').querySelector('.hx-date-picker-presets') as HTMLElement;
+    const group = el('buttons').querySelector('.hx-range-presets') as HTMLElement;
     expect(group.getAttribute('role')).toBe('group');
     expect(group.getAttribute('aria-label')).toBe('Quick ranges');
     const buttons = [...group.querySelectorAll('button')];
@@ -571,9 +571,7 @@ describe('HxDatePicker range presets', () => {
 
     it('offers Today, Last 7 days and This month and keeps midnight', async () => {
       expect(
-        [...el('builtIn').querySelectorAll('.hx-date-picker-preset')].map((b) =>
-          b.textContent?.trim(),
-        ),
+        [...el('builtIn').querySelectorAll('.hx-range-preset')].map((b) => b.textContent?.trim()),
       ).toEqual(['Today', 'Last 7 days', 'This month']);
       await choose('builtIn', 'Today');
       expect(host.builtIn()).toEqual([new Date(2026, 9, 14), new Date(2026, 9, 14)]);
@@ -592,7 +590,7 @@ describe('HxDatePicker range presets', () => {
   describe('select', () => {
     it('shows the presets in a select named by presetsLabel', async () => {
       const root = el('select');
-      expect(root.querySelector('.hx-date-picker-preset')).toBeNull();
+      expect(root.querySelector('.hx-range-preset')).toBeNull();
       expect(trigger(root).getAttribute('aria-label')).toBe('Presets');
       trigger(root).click();
       await settle();
@@ -646,7 +644,7 @@ describe('HxDatePicker range presets', () => {
     it('sets the value, closes the popup and returns the focus to the field', async () => {
       await openPopup('popup');
       const button = [
-        ...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-date-picker-preset') ?? []),
+        ...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-range-preset') ?? []),
       ][0];
       expect(button.textContent?.trim()).toBe('Two days');
       button.click();
@@ -668,7 +666,7 @@ describe('HxDatePicker range presets', () => {
       await openPopup('popup');
       const focused = document.activeElement as HTMLElement;
       expect(focused.classList).toContain('hx-date-picker-date');
-      const first = popup()?.querySelector('.hx-date-picker-preset') as HTMLButtonElement;
+      const first = popup()?.querySelector('.hx-range-preset') as HTMLButtonElement;
       expect(first.tabIndex).toBe(0);
       expect(
         first.compareDocumentPosition(focused) & Node.DOCUMENT_POSITION_FOLLOWING,

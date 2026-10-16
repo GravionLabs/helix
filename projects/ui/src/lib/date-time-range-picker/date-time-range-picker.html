@@ -60,27 +60,14 @@
       (focusout)="onPopupFocusOut($event)"
     >
       @if (presets().length > 0) {
-        @if (presetDisplay() === 'select') {
-          <div class="hx-date-time-range-picker-presets hx-date-time-range-picker-presets-select">
-            <hx-select
-              class="hx-date-time-range-picker-preset-select"
-              fluid
-              [options]="presets()"
-              optionLabel="label"
-              [optionValue]="presetValue"
-              [placeholder]="presetsLabel()"
-              [ariaLabel]="presetsLabel()"
-              [value]="selectedPreset()"
-              (valueChange)="selectPreset($event)"
-            />
-          </div>
-        } @else {
-          <div class="hx-date-time-range-picker-presets" role="group" [attr.aria-label]="presetsLabel()">
-            @for (preset of presets(); track $index) {
-              <button type="button" class="hx-date-picker-button hx-date-time-range-picker-preset" (click)="applyPreset(preset)">{{ preset.label }}</button>
-            }
-          </div>
-        }
+        <hx-range-presets
+          [presets]="presets()"
+          [display]="presetDisplay()"
+          [label]="presetsLabel()"
+          [disabled]="isDisabled()"
+          [selected]="selectedPreset()"
+          (chosen)="selectPreset($event)"
+        />
       }
       @if (quickSelect()) {
         @let l = labels();

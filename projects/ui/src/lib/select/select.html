@@ -29,7 +29,7 @@
 
 <ng-template
   cdkConnectedOverlay
-  cdkConnectedOverlayPanelClass="hx-select-overlay"
+  [cdkConnectedOverlayPanelClass]="overlayClass"
   [cdkConnectedOverlayOrigin]="origin"
   [cdkConnectedOverlayOpen]="open()"
   [cdkConnectedOverlayPositions]="positions"

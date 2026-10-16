@@ -3,7 +3,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
-import { HxSelect } from './select';
+import { HX_SELECT_OVERLAY_CLASS, HxSelect, isInSelectOverlay } from './select';
 
 interface City {
   name: string;
@@ -102,6 +102,17 @@ describe('HxSelect', () => {
     trigger('plain').click();
     await settle();
     expect(trigger('plain').getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('tells whether a target lies in the list overlay', async () => {
+    trigger('plain').click();
+    await settle();
+    expect(HX_SELECT_OVERLAY_CLASS).toBe('hx-select-overlay');
+    expect(options()[0].closest('.cdk-overlay-pane')?.classList).toContain(HX_SELECT_OVERLAY_CLASS);
+    expect(isInSelectOverlay(options()[0])).toBe(true);
+    expect(isInSelectOverlay(trigger('plain'))).toBe(false);
+    expect(isInSelectOverlay(null)).toBe(false);
+    expect(isInSelectOverlay(window)).toBe(false);
   });
 
   it('selects by click: value is the option value, the label is shown, the panel closes, the trigger regains focus', async () => {

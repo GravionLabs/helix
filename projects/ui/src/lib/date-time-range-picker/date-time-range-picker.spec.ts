@@ -470,14 +470,12 @@ describe('HxDateTimeRangePicker', () => {
 
   it('renders no preset list without presets', async () => {
     await open('basic');
-    expect(popup()?.querySelector('.hx-date-time-range-picker-presets')).toBeNull();
+    expect(popup()?.querySelector('.hx-range-presets')).toBeNull();
   });
 
   it('applies a preset to from and to on submit', async () => {
     await open('presets');
-    const buttons = [
-      ...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset'),
-    ];
+    const buttons = [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')];
     expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days', 'Reversed']);
     await click(buttons[0]);
     expect(host.withPresets()).toEqual({ from: null, to: null });
@@ -492,7 +490,7 @@ describe('HxDateTimeRangePicker', () => {
   });
 
   const preset = (label: string) =>
-    [...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')].find(
+    [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')].find(
       (b) => b.textContent?.trim() === label,
     ) as HTMLElement;
   const marked = () =>
@@ -559,9 +557,7 @@ describe('HxDateTimeRangePicker', () => {
 
   it('names the preset group with presetsLabel and lists native buttons', async () => {
     await open('presets');
-    expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Presets');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe('Presets');
     // a native `type=button` is activated by Enter and Space by the browser (synthetic keys do not activate it)
     expect(preset('Morning').tagName).toBe('BUTTON');
     expect(preset('Morning').getAttribute('type')).toBe('button');
@@ -569,9 +565,9 @@ describe('HxDateTimeRangePicker', () => {
     expect(document.activeElement).toBe(preset('Morning'));
     await close();
     await open('presetsDays');
-    expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Quick ranges');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe(
+      'Quick ranges',
+    );
   });
 
   const option = (label: string) =>
@@ -582,7 +578,7 @@ describe('HxDateTimeRangePicker', () => {
 
   it('shows the presets in a select with presetDisplay select', async () => {
     await open('presetSelect');
-    expect(popup()!.querySelector('.hx-date-time-range-picker-preset')).toBeNull();
+    expect(popup()!.querySelector('.hx-range-preset')).toBeNull();
     expect(selectTrigger().getAttribute('aria-label')).toBe('Quick ranges');
     await click(selectTrigger());
     expect(

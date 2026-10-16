@@ -196,7 +196,7 @@
 .hx-date-picker-disabled .hx-date-picker-year,
 .hx-date-picker-disabled .hx-date-picker-nav,
 .hx-date-picker-disabled .hx-date-picker-title-button,
-.hx-date-picker-disabled .hx-date-picker-preset {
+.hx-date-picker-disabled .hx-range-preset {
   cursor: default;
 }
 
@@ -345,14 +345,22 @@
     var(--h-datepicker-date-focus-ring-color);
 }
 
-/* range presets (`presets` with `selectionMode="range"`) above the calendar, as the date-time range picker's */
-.hx-date-picker-presets {
+/* range presets (`presets` of a range date picker and of the date-time range picker): a row of buttons or one select */
+.hx-range-presets {
   display: flex;
   flex-wrap: wrap;
   gap: var(--h-datepicker-title-gap);
-  padding-bottom: var(--h-datepicker-title-gap);
 }
 
-.hx-date-picker-presets-select {
+.hx-range-presets-select {
   display: block;
+}
+
+.hx-range-preset:disabled {
+  cursor: default;
+}
+
+/* above the calendar, inside the panel's padding */
+.hx-date-picker-panel > .hx-range-presets {
+  padding-bottom: var(--h-datepicker-title-gap);
 }

@@ -34,7 +34,8 @@ import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar
 import { clampTime, compareDays, isSameDay, isValidDate, startOfDay } from '../internal/dates';
 import { parseDateText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
-import { HxSelect } from '../select/select';
+import { HxRangePresets } from '../internal/range-presets/range-presets';
+import { isInSelectOverlay } from '../select/select';
 
 const startOfDayOrNull = (date: Date | null) => (isValidDate(date) ? startOfDay(date) : null);
 
@@ -71,7 +72,7 @@ export type HxDatePickerValue = Date | Date[] | null;
  */
 @Component({
   selector: 'hx-date-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar, HxSelect],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar, HxRangePresets],
   templateUrl: './date-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -144,13 +145,10 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly calendar = viewChild(HxCalendar);
-  private readonly presetSelect = viewChild(HxSelect);
   /** The presets shown: range mode only. */
   protected readonly shownPresets = computed(() =>
     this.selectionMode() === 'range' ? this.presets() : [],
   );
-  /** The value of an option of the preset select: the preset itself. */
-  protected readonly presetValue = (preset: HxDateTimeRangePreset) => preset;
   /** The last preset chosen and the value it made. */
   readonly #chosen = signal<{ preset: HxDateTimeRangePreset; value: HxDatePickerValue } | null>(
     null,
@@ -283,16 +281,12 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
    * Sets the value to the days of a preset (midnight, in order, inside `minDate`..`maxDate`) and closes the popup;
    * a preset with an end on a disabled day changes nothing.
    */
-  protected applyPreset(preset: HxDateTimeRangePreset | null): void {
-    if (!preset || this.isDisabled()) return;
+  protected applyPreset(preset: HxDateTimeRangePreset): void {
+    if (this.isDisabled()) return;
     const range = resolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date) =>
       this.#fitPresetDay(date),
     );
-    if (!range?.from || !range.to) {
-      // the select shows its last choice: put it back to the preset of the value
-      this.presetSelect()?.value.set(this.selectedPreset());
-      return;
-    }
+    if (!range?.from || !range.to) return;
     const next = [range.from, range.to];
     this.#typed.set(null);
     this.focusedDate.set(range.from);
@@ -364,9 +358,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   protected onOutsideClick(event: MouseEvent): void {
     // the list of the preset select is its own overlay
-    const target = event.target;
-    if (target instanceof Element && target.closest('.hx-select-overlay')) return;
-    if (!this.#host.nativeElement.contains(target as Node)) this.close();
+    if (isInSelectOverlay(event.target)) return;
+    if (!this.#host.nativeElement.contains(event.target as Node)) this.close();
   }
 
   protected onFieldKeydown(event: KeyboardEvent): void {
@@ -436,8 +429,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   protected onFocusOut(event: FocusEvent): void {
     if (!this.inline()) return;
     const host = this.#host.nativeElement;
-    const next = event.relatedTarget as Element | null;
-    if (host.contains(next) || next?.closest?.('.hx-select-overlay')) return;
+    const next = event.relatedTarget as Node | null;
+    if (host.contains(next) || isInSelectOverlay(next)) return;
     this.#onTouched();
     this.touch.emit();
   }

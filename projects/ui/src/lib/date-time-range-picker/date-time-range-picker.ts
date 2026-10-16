@@ -34,7 +34,8 @@ import { HxInput } from '../input/input';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
-import { HxSelect } from '../select/select';
+import { HxRangePresets } from '../internal/range-presets/range-presets';
+import { HxSelect, isInSelectOverlay } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
 import {
@@ -102,6 +103,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
     HxCheckbox,
     HxDatePicker,
     HxInput,
+    HxRangePresets,
     HxSelect,
     HxTimePicker,
   ],
@@ -195,8 +197,6 @@ export class HxDateTimeRangePicker
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly #injector = inject(Injector);
   readonly open = signal(false);
-  /** The value of an option of the preset select: the preset itself. */
-  protected readonly presetValue = (preset: HxDateTimeRangePreset) => preset;
   /** The range being edited in the popup; Submit makes it the value, Cancel drops it. */
   protected readonly draft = signal<HxDateTimeRangeValue>(EMPTY);
   /** The preset chosen in the select (shown until the draft changes otherwise or the popup opens again). */
@@ -497,27 +497,27 @@ export class HxDateTimeRangePicker
     this.#makeAbsolute('to');
   }
 
-  /** The choice in the preset select: fills the draft like a button (staging resets the select, so set it after). */
-  protected selectPreset(preset: HxDateTimeRangePreset | null): void {
-    if (preset) this.applyPreset(preset);
-    this.selectedPreset.set(preset);
+  /** A preset chosen (a button or the select): fills the draft; the select shows it (staging resets it, so set after). */
+  protected selectPreset(preset: HxDateTimeRangePreset): void {
+    if (this.applyPreset(preset)) this.selectedPreset.set(preset);
   }
 
   #inSelectList(target: EventTarget | null): boolean {
-    return target instanceof Element && target.closest('.hx-select-overlay') !== null;
+    return isInSelectOverlay(target);
   }
 
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
-  protected applyPreset(preset: HxDateTimeRangePreset): void {
+  protected applyPreset(preset: HxDateTimeRangePreset): boolean {
     const { from: oldFrom, to: oldTo } = this.draft();
     const range = resolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date, side) =>
       this.#fitPreset(date, side === 'from' ? oldFrom : (oldTo ?? oldFrom)),
     );
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
-    if (!range) return;
+    if (!range) return false;
     this.#stage(range);
     this.#makeAbsolute('from');
     this.#makeAbsolute('to');
+    return true;
   }
 
   /**
