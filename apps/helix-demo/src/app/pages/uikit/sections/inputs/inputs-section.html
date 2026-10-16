@@ -96,6 +96,14 @@
       <hx-date-picker inputId="dp-range" selectionMode="range" showIcon [(value)]="stay" />
     </div>
     <div class="row">
+      <label class="label" for="dp-range-presets">Stay, presets</label>
+      <hx-date-picker inputId="dp-range-presets" selectionMode="range" showIcon [presets]="dayPresets" [(value)]="stay" />
+    </div>
+    <div class="row">
+      <label class="label" for="dp-range-select">Stay, preset select</label>
+      <hx-date-picker inputId="dp-range-select" selectionMode="range" showIcon [presets]="dayPresets" presetDisplay="select" [(value)]="stay" />
+    </div>
+    <div class="row">
       <label class="label" for="dp-de">German</label>
       <hx-date-picker inputId="dp-de" locale="de-DE" [firstDayOfWeek]="1" placeholder="tt.mm.jjjj" showIcon [(value)]="arrival" />
     </div>

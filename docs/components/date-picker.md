@@ -11,6 +11,13 @@ one date while the range is open and two when it is complete). It works with `ng
 <hx-date-picker inputId="arrival" showIcon showButtonBar [(ngModel)]="arrival" />
 <hx-date-picker inline ariaLabel="Arrival" [(ngModel)]="arrival" />
 <hx-date-picker inline selectionMode="range" [minDate]="today" [firstDayOfWeek]="1" [(value)]="stay" />
+<hx-date-picker selectionMode="range" showIcon [presets]="dayPresets" presetDisplay="select" [(ngModel)]="stay" />
+```
+
+```ts
+import { HX_DATE_RANGE_DAY_PRESETS } from '@gravionlabs/helix-ui';
+
+readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS; // Today, Last 7 days, This month
 ```
 
 | Input                   | Type                                  | Default    | Description                                       |
@@ -26,10 +33,22 @@ one date while the range is open and two when it is complete). It works with `ng
 | `firstDayOfWeek`        | `number`                              | `0`        | `0` Sunday … `6` Saturday.                        |
 | `locale`                | `string`                              | browser's  | BCP 47 tag for the names.                         |
 | `ariaLabel`, `ariaLabelledby` | `string`                        | `Calendar` | Name of the calendar.                             |
+| `presets`               | `HxDateTimeRangePreset[]`             | `[]`       | Ready-made ranges above the calendar, with `selectionMode="range"` only. |
+| `presetDisplay`         | `'buttons' \| 'select'`              | `'buttons'` | The presets as a row of buttons or in a select.  |
+| `presetsLabel`          | `string`                              | `'Presets'` | Name of the preset group and the select's placeholder. |
 
-- **Ranges and presets:** `selectionMode="range"` here has no presets or quick select. Ready-made ranges (Today, Last 7 days, ...)
-  and the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`, `presetDisplay`,
-  `quickSelect`); with `[showTime]="false"` it picks days only.
+- **Range presets:** with `selectionMode="range"`, `presets` lists ready-made ranges above the calendar (none by
+  default; they are ignored in `single` and `multiple`). Use the day-based `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days,
+  This month), pick from `hxDateRangePresets({ ... })` (localized labels; `This week` follows `firstDayOfWeek`), add your
+  own `{ label, from, to }` or replace the list entirely. Choosing a preset sets the value at once to the days of its two
+  ends: midnight (the time is dropped), in order when the ends are reversed, moved into `minDate`..`maxDate`; a preset
+  with an end on a day in `disabledDates` is refused. The popup then closes and the focus returns to the field.
+  `presetDisplay="select"` shows them in a compact `hx-select` (named by `presetsLabel`) instead of buttons; the select
+  shows the chosen preset while the value is the one it made. The preset buttons are native buttons before the
+  calendar in the tab order; the select is used with the keyboard as `hx-select` (Arrow Down opens, Enter chooses).
+  Presets are disabled with the picker (`disabled`, a disabled form control). Times of day, a draft with Submit and
+  the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`,
+  `presetDisplay`, `quickSelect`; with `[showTime]="false"` it picks days only).
 - **Field:** it shows the value with `Intl.DateTimeFormat`. Typing a date parses it in the order the locale writes
   numbers (also `yyyy-mm-dd`); unreadable or disabled dates put the value back. A range reads as `a – b`, several days
   as `a, b`. The popup opens by click, by the button or Arrow Down; a range keeps it open until the second date.

@@ -195,7 +195,8 @@
 .hx-date-picker-disabled .hx-date-picker-month,
 .hx-date-picker-disabled .hx-date-picker-year,
 .hx-date-picker-disabled .hx-date-picker-nav,
-.hx-date-picker-disabled .hx-date-picker-title-button {
+.hx-date-picker-disabled .hx-date-picker-title-button,
+.hx-date-picker-disabled .hx-date-picker-preset {
   cursor: default;
 }
 
@@ -335,11 +336,23 @@
   cursor: pointer;
 }
 
-.hx-date-picker-button:hover {
+.hx-date-picker-button:not(:disabled):hover {
   background: var(--h-datepicker-select-month-hover-background);
 }
 
 .hx-date-picker-button:focus-visible {
   outline: var(--h-datepicker-date-focus-ring-width) var(--h-datepicker-date-focus-ring-style)
     var(--h-datepicker-date-focus-ring-color);
+}
+
+/* range presets (`presets` with `selectionMode="range"`) above the calendar, as the date-time range picker's */
+.hx-date-picker-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--h-datepicker-title-gap);
+  padding-bottom: var(--h-datepicker-title-gap);
+}
+
+.hx-date-picker-presets-select {
+  display: block;
 }

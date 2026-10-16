@@ -34,6 +34,11 @@ import { HxSelect } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
 import {
+  type HxDateTimeRangePreset,
+  type HxDateTimeRangePresetContext,
+  resolvePreset,
+} from './date-range-presets';
+import {
   ABSOLUTE_SIDES,
   addRecentRange,
   describeRange,
@@ -59,17 +64,7 @@ export interface HxDateTimeRangeValue {
   to: Date | null;
 }
 
-/** A relative range in the popup's preset list; `from` and `to` are read when it is chosen (`now` stays current). */
-export interface HxDateTimeRangePreset {
-  label: string;
-  /** Called with the picker's settings, so a calendar range can follow its `firstDayOfWeek`. */
-  from: (context?: HxDateTimeRangePresetContext) => Date;
-  to: (context?: HxDateTimeRangePresetContext) => Date;
-}
-
-export interface HxDateTimeRangePresetContext {
-  firstDayOfWeek: number;
-}
+export type { HxDateTimeRangePreset, HxDateTimeRangePresetContext };
 
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
 const earlier = (a: Date | null, b: Date | null) => (a && b ? (a <= b ? a : b) : (a ?? b));
@@ -518,12 +513,12 @@ export class HxDateTimeRangePicker
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
   protected applyPreset(preset: HxDateTimeRangePreset): void {
     const { from: oldFrom, to: oldTo } = this.draft();
-    const context = { firstDayOfWeek: this.firstDayOfWeek() };
-    const from = this.#fitPreset(preset.from(context), oldFrom);
-    const to = this.#fitPreset(preset.to(context), oldTo ?? oldFrom);
+    const range = resolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date, side) =>
+      this.#fitPreset(date, side === 'from' ? oldFrom : (oldTo ?? oldFrom)),
+    );
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
-    if (from === undefined || to === undefined) return;
-    this.#stage(from && to && to < from ? { from: to, to: from } : { from, to });
+    if (!range) return;
+    this.#stage(range);
     this.#makeAbsolute('from');
     this.#makeAbsolute('to');
   }

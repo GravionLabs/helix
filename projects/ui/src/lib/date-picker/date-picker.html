@@ -75,6 +75,30 @@
   [attr.aria-labelledby]="ariaLabelledby() ?? null"
   (focusout)="onFocusOut($event)"
 >
+    @if (shownPresets().length > 0) {
+      @if (presetDisplay() === 'select') {
+        <div class="hx-date-picker-presets hx-date-picker-presets-select">
+          <hx-select
+            class="hx-date-picker-preset-select"
+            fluid
+            [options]="shownPresets()"
+            optionLabel="label"
+            [optionValue]="presetValue"
+            [placeholder]="presetsLabel()"
+            [ariaLabel]="presetsLabel()"
+            [disabled]="isDisabled()"
+            [value]="selectedPreset()"
+            (valueChange)="applyPreset($event)"
+          />
+        </div>
+      } @else {
+        <div class="hx-date-picker-presets" role="group" [attr.aria-label]="presetsLabel()">
+          @for (preset of shownPresets(); track $index) {
+            <button type="button" class="hx-date-picker-button hx-date-picker-preset" [disabled]="isDisabled()" (click)="applyPreset(preset)">{{ preset.label }}</button>
+          }
+        </div>
+      }
+    }
     <hx-calendar
       [(focusedDate)]="focusedDate"
       [(view)]="view"
