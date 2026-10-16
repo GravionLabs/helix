@@ -117,6 +117,23 @@
       <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-shift" ariaLabel="Shift" placeholder="Pick or type a shift" typeable [presets]="shiftPresets" [stepMinute]="15" [(value)]="shift" />
     </div>
     <div class="row">
+      <label class="label" for="dtr-select">Preset select</label>
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-select" ariaLabel="Reporting period" placeholder="Pick a period" [presets]="builtInPresets" presetDisplay="select" [(value)]="selected" />
+    </div>
+    <div class="row">
+      <label class="label" for="dtr-days">Preset select, days</label>
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-days" ariaLabel="Reporting days" placeholder="Pick days" [showTime]="false" [presets]="dayPresets" presetDisplay="select" [(value)]="reportingDays" />
+    </div>
+    <div class="row">
+      <label class="label" for="dtr-quick">Quick select</label>
+      <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-quick" ariaLabel="Quick select range" placeholder="Pick a range" quickSelect [firstDayOfWeek]="1" [(value)]="quick" [(expression)]="quickExpression" />
+    </div>
+    <div class="row">
+      <span class="label">expression</span>
+      <code>{{ quickExpression() ? quickExpression()!.from + ' to ' + quickExpression()!.to : 'none (absolute)' }}</code>
+      <span>{{ resolved()?.from?.toLocaleString() ?? '' }}</span>
+    </div>
+    <div class="row">
       <label class="label" for="dtr-hours">Time range</label>
       <hx-date-time-range-picker style="grid-column: span 2; max-width: 22rem" inputId="dtr-hours" ariaLabel="Opening hours" timeOnly [showMinutes]="false" [(value)]="hours" />
     </div>

@@ -20,7 +20,13 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
 | `typeable` | `boolean` | `false` | The range can be typed into the field (see Typing); otherwise the field is read-only. |
 | `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
+| `presetDisplay` | `'buttons' \| 'select'` | `'buttons'` | Presets as buttons, or as one select (see below). |
 | `presetsLabel` | `string` | `Presets` | Name of the preset group. |
+| `quickSelect` | `boolean` | `false` | A Kibana-style quick select above the calendar (see Quick select). |
+| `quickSelectLabels` | `Partial<HxQuickSelectLabels>` | English | Texts of the quick select, merged over the defaults. |
+| `commonlyUsed` | `HxQuickSelectRange[]` | `HX_QUICK_SELECT_COMMONLY_USED` | The "Commonly used" list: `{ label, from, to }` with date math or ISO sides. |
+| `recentStorageKey` | `string \| null` | `hx-date-range-recent` | `localStorage` key of the "Recently used" list; `null` keeps it in memory only. |
+| `expression` (model) | `HxDateRangeExpression \| null` | `null` | The relative range last applied (`{ from, to }` as text); see Quick select. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time pickers; `false` picks days only (midnight). |
 | `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time pickers without the calendar. |
@@ -46,6 +52,67 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 
   ```html
   <hx-date-time-range-picker placeholder="Pick a range" [presets]="presets" [(value)]="range" />
+  ```
+- **Built-in presets:** `presets` is empty by default; opt in with the ready-made lists. `HX_DATE_RANGE_PRESETS` has
+  Last 15 minutes, Last 1 hour, Last 6 hours, Last 24 hours, Last 7 days, Last 30 days, Today, Yesterday, This week and
+  This month. `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days, This month) starts at midnight and suits
+  `[showTime]="false"`. `hxDateRangePresets(labels)` returns the list with your own (translated) labels per id
+  (`last15Minutes`, `last1Hour`, `last6Hours`, `last24Hours`, `last7Days`, `last30Days`, `today`, `yesterday`,
+  `thisWeek`, `thisMonth`; ids you leave out keep the English label). "This week" starts on `firstDayOfWeek`.
+
+  ```html
+  <hx-date-time-range-picker [presets]="presets" presetDisplay="select" [(value)]="range" />
+  <hx-date-time-range-picker [showTime]="false" [presets]="dayPresets" [(value)]="days" />
+  ```
+
+  ```ts
+  readonly presets = HX_DATE_RANGE_PRESETS;
+  readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
+  readonly german = hxDateRangePresets({ today: 'Heute', yesterday: 'Gestern' });
+  ```
+- **Preset select:** with `presetDisplay="select"` the presets are one `hx-select` above the calendar instead of a row
+  of buttons. It has no value of its own: it shows the placeholder each time the popup opens, and choosing an entry
+  fills the draft exactly as a button does (Submit applies it, Cancel drops it).
+- **Quick select:** `quickSelect` adds, above the calendar, a row "Last / Next, amount, unit, Apply" (for example
+  Last 15 minutes), a "Commonly used" list and a "Recently used" list (the last 5 applied ranges, newest first, without
+  duplicates, kept in `localStorage` under `recentStorageKey`; if storage is blocked the list lives in memory for the
+  session). Apply, a commonly used entry and a recent entry apply the range at once and close the popup; Submit applies
+  the Start and End tabs. Start and End each have the tabs **Absolute** (a typed date), **Relative** (an amount, "ago" or
+  "from now", and "Round to the unit") and **Now**. A relative range is stored as text and resolved when it is applied,
+  so "Last 15 minutes" means the 15 minutes before you clicked. Presets and the calendar still work and set both sides
+  back to Absolute. A relative side next to an empty absolute side is refused with an inline message.
+
+  ```html
+  <hx-date-time-range-picker quickSelect [(value)]="range" [(expression)]="expression" />
+  ```
+
+  ```ts
+  readonly expression = signal<HxDateRangeExpression | null>(null);
+  // later: resolve it again, e.g. to refresh a dashboard
+  const { from, to } = hxResolveRangeExpression(this.expression()!, { firstDayOfWeek: 1 });
+  ```
+- **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is an
+  ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`. It is only read when the
+  popup opens, to set up the tabs; setting it from outside does not change `value`. `hxResolveRangeExpression(expression,
+  { now?, firstDayOfWeek? })` turns it into `{ from, to }` (the end side rounds up) and `hxResolveRangeSide(text,
+  { now?, firstDayOfWeek?, roundUp? })` does one side; both return `null` for a side they cannot read.
+- **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
+  invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
+  (round down to the start of the unit; to its last millisecond with `roundUp`). Units are case-sensitive: `s`, `m`,
+  `h`, `d`, `w`, `M` (month), `y`. Day, week, month and year shifts follow the calendar (DST-safe, a month shift clamps
+  the day). `/w` starts on `firstDayOfWeek`.
+
+  | Expression | Meaning |
+  | ---------- | ------- |
+  | `now` | The moment of the call. |
+  | `now-15m` | 15 minutes ago. |
+  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`). |
+  | `now/w` | Start of this week (the end of this week with `roundUp`). |
+  | `now+1M/M` | Start of next month. |
+
+  ```ts
+  hxParseDateMath('now-7d/d', { firstDayOfWeek: 1 }); // 7 days ago, 00:00
+  hxParseDateMath('now-7x'); // null
   ```
 - **Field:** read-only unless `typeable`; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
   Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.

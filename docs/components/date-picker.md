@@ -27,6 +27,9 @@ one date while the range is open and two when it is complete). It works with `ng
 | `locale`                | `string`                              | browser's  | BCP 47 tag for the names.                         |
 | `ariaLabel`, `ariaLabelledby` | `string`                        | `Calendar` | Name of the calendar.                             |
 
+- **Ranges and presets:** `selectionMode="range"` here has no presets or quick select. Ready-made ranges (Today, Last 7 days, ...)
+  and the Kibana-style quick select live in [date-time range picker](date-time-range-picker.md) (`presets`, `presetDisplay`,
+  `quickSelect`); with `[showTime]="false"` it picks days only.
 - **Field:** it shows the value with `Intl.DateTimeFormat`. Typing a date parses it in the order the locale writes
   numbers (also `yyyy-mm-dd`); unreadable or disabled dates put the value back. A range reads as `a – b`, several days
   as `a, b`. The popup opens by click, by the button or Arrow Down; a range keeps it open until the second date.
