@@ -93,6 +93,12 @@ export {
   type HxDateTimePickerValue,
 } from './lib/date-time-picker/date-time-picker';
 export {
+  type HxDateMathOptions,
+  type HxDateMathUnit,
+  hxParseDateMath,
+  hxRelativeRangeExpressions,
+} from './lib/date-time-range-picker/date-math';
+export {
   HX_DATE_RANGE_DAY_PRESETS,
   HX_DATE_RANGE_PRESETS,
   type HxDateRangePresetId,
