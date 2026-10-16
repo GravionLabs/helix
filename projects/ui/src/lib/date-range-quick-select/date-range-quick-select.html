@@ -195,6 +195,9 @@
                   (change)="setAbsoluteSide(s, $event)"
                   (keydown.enter)="$event.preventDefault(); setAbsoluteSide(s, $event)"
                 />
+                <p class="hx-date-range-quick-select-side-resolved">
+                  <span class="hx-date-range-quick-select-resolved-date">{{ sideResolvedText(s) }}</span>
+                </p>
                 <div class="hx-date-range-quick-select-calendar" role="group" [attr.aria-label]="sideName + ' ' + l.date">
                   <hx-calendar
                     [(focusedDate)]="calendarFocus"

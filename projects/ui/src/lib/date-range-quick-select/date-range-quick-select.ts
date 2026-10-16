@@ -538,13 +538,18 @@ export class HxDateRangeQuickSelect
 
   /** `Resolves to <date>`: a relative or now side as it would be applied at this moment (inside the limits). */
   protected sideResolvedText(side: Side): string {
-    const expression = sideExpression(this.sides()[side]);
-    const resolved = expression
-      ? hxResolveRangeSide(expression, {
-          firstDayOfWeek: this.firstDayOfWeek(),
-          roundUp: side === 'to',
-        })
-      : null;
+    const state = this.sides()[side];
+    // an absolute side has no expression: it resolves to the date it holds
+    const expression = sideExpression(state);
+    const resolved =
+      state.mode === 'absolute'
+        ? this.value()[side]
+        : expression
+          ? hxResolveRangeSide(expression, {
+              firstDayOfWeek: this.firstDayOfWeek(),
+              roundUp: side === 'to',
+            })
+          : null;
     if (!isValidDate(resolved)) return '';
     const date = clampTime(resolved, this.minDate(), this.maxDate());
     return this.texts().resolvesTo.replace('{date}', this.#formatDate(date));
