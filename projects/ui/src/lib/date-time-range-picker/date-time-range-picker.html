@@ -82,6 +82,132 @@
           </div>
         }
       }
+      @if (quickSelect()) {
+        @let l = labels();
+        <div class="hx-date-time-range-picker-quick">
+          <section class="hx-date-time-range-picker-quick-section" [attr.aria-labelledby]="popupId + '-quick'">
+            <span class="hx-date-time-range-picker-caption" [id]="popupId + '-quick'">{{ l.quickSelect }}</span>
+            <div class="hx-date-time-range-picker-quick-row">
+              <hx-select
+                #quickFirst
+                class="hx-date-time-range-picker-quick-direction"
+                [options]="directionOptions()"
+                [ariaLabel]="l.direction"
+                [value]="quickDirection()"
+                (valueChange)="setQuickDirection($event)"
+              />
+              <input
+                hx-input
+                type="number"
+                min="1"
+                step="1"
+                class="hx-date-time-range-picker-quick-amount"
+                [attr.aria-label]="l.amount"
+                [value]="quickAmount()"
+                (input)="setQuickAmount($event)"
+                (keydown.enter)="$event.preventDefault(); applyQuick()"
+              />
+              <hx-select
+                class="hx-date-time-range-picker-quick-unit"
+                [options]="unitOptions()"
+                [ariaLabel]="l.unit"
+                [value]="quickUnit()"
+                (valueChange)="setQuickUnit($event)"
+              />
+              <button type="button" class="hx-date-picker-button hx-date-time-range-picker-quick-apply" (click)="applyQuick()">{{ l.apply }}</button>
+            </div>
+          </section>
+          @if (commonlyUsed().length > 0) {
+            <section class="hx-date-time-range-picker-quick-section" [attr.aria-labelledby]="popupId + '-common'">
+              <span class="hx-date-time-range-picker-caption" [id]="popupId + '-common'">{{ l.commonlyUsed }}</span>
+              <ul class="hx-date-time-range-picker-ranges hx-date-time-range-picker-common">
+                @for (range of commonlyUsed(); track $index) {
+                  <li><button type="button" class="hx-date-picker-button" (click)="applyRange(range)">{{ range.label }}</button></li>
+                }
+              </ul>
+            </section>
+          }
+          @if (recentItems().length > 0) {
+            <section class="hx-date-time-range-picker-quick-section" [attr.aria-labelledby]="popupId + '-recent'">
+              <span class="hx-date-time-range-picker-caption" [id]="popupId + '-recent'">{{ l.recentlyUsed }}</span>
+              <ul class="hx-date-time-range-picker-ranges hx-date-time-range-picker-recent">
+                @for (item of recentItems(); track item.range.from + ' ' + item.range.to) {
+                  <li><button type="button" class="hx-date-picker-button" (click)="applyRange(item.range)">{{ item.label }}</button></li>
+                }
+              </ul>
+            </section>
+          }
+          <div class="hx-date-time-range-picker-sides">
+            @for (side of ['from', 'to']; track side) {
+              @let s = side === 'from' ? 'from' : 'to';
+              @let state = sides()[s];
+              <section class="hx-date-time-range-picker-side" [class]="'hx-date-time-range-picker-side-' + s" [attr.aria-labelledby]="popupId + '-' + s + '-caption'">
+                <span class="hx-date-time-range-picker-caption" [id]="popupId + '-' + s + '-caption'">{{ s === 'from' ? l.start : l.end }}</span>
+                <div class="hx-date-time-range-picker-tabs" role="tablist" [attr.aria-labelledby]="popupId + '-' + s + '-caption'" (keydown)="onTabKeydown(s, $event)">
+                  @for (mode of sideModes; track mode) {
+                    <button
+                      type="button"
+                      role="tab"
+                      class="hx-date-time-range-picker-tab"
+                      [id]="tabId(s, mode)"
+                      [attr.aria-selected]="state.mode === mode"
+                      [attr.aria-controls]="panelId(s)"
+                      [attr.tabindex]="state.mode === mode ? 0 : -1"
+                      (click)="setSideMode(s, mode)"
+                    >{{ mode === 'absolute' ? l.absolute : mode === 'relative' ? l.relative : l.now }}</button>
+                  }
+                </div>
+                <div class="hx-date-time-range-picker-tabpanel" role="tabpanel" tabindex="0" [id]="panelId(s)" [attr.aria-labelledby]="tabId(s, state.mode)">
+                  @switch (state.mode) {
+                    @case ('absolute') {
+                      <input
+                        hx-input
+                        fluid
+                        type="text"
+                        autocomplete="off"
+                        class="hx-date-time-range-picker-side-date"
+                        [attr.aria-label]="(s === 'from' ? l.start : l.end) + ' ' + l.date"
+                        [value]="sideText(s)"
+                        (change)="setAbsoluteSide(s, $event)"
+                        (keydown.enter)="$event.preventDefault(); setAbsoluteSide(s, $event)"
+                      />
+                    }
+                    @case ('relative') {
+                      <div class="hx-date-time-range-picker-quick-row">
+                        <input
+                          hx-input
+                          type="number"
+                          min="0"
+                          step="1"
+                          class="hx-date-time-range-picker-side-amount"
+                          [attr.aria-label]="l.amount"
+                          [value]="state.amount"
+                          (input)="setSideAmount(s, $event)"
+                        />
+                        <hx-select
+                          class="hx-date-time-range-picker-side-unit"
+                          [options]="relativeOptions()"
+                          [ariaLabel]="l.unit"
+                          [value]="sideUnitValue(s)"
+                          (valueChange)="setSideUnit(s, $event)"
+                        />
+                      </div>
+                      <label class="hx-date-time-range-picker-side-round">
+                        <input type="checkbox" hx-checkbox [checked]="state.round" (change)="setSideRound(s, $event)" />
+                        {{ sideRoundLabel(s) }}
+                      </label>
+                      <code class="hx-date-time-range-picker-expression">{{ sideExpressionText(s) }}</code>
+                    }
+                    @case ('now') {
+                      <p class="hx-date-time-range-picker-now-hint">{{ l.nowHint }}</p>
+                    }
+                  }
+                </div>
+              </section>
+            }
+          </div>
+        </div>
+      }
       <div class="hx-date-time-range-picker-body">
         @if (!timeOnly()) {
           <hx-date-picker

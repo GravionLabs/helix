@@ -110,6 +110,15 @@ export {
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
 export {
+  HX_QUICK_SELECT_COMMONLY_USED,
+  HX_QUICK_SELECT_LABELS,
+  type HxDateRangeExpression,
+  type HxQuickSelectLabels,
+  type HxQuickSelectRange,
+  hxResolveRangeExpression,
+  hxResolveRangeSide,
+} from './lib/date-time-range-picker/quick-select';
+export {
   HX_DIALOG_DATA,
   HxDialog,
   type HxDialogConfig,

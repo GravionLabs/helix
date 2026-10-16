@@ -24,12 +24,32 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { HxCheckbox } from '../checkbox/checkbox';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
+import { HxInput } from '../input/input';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
 import { HxSelect } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
+import { type HxDateMathUnit, hxParseDateMath, hxRelativeRangeExpressions } from './date-math';
+import {
+  addRecentRange,
+  DEFAULT_SIDE,
+  describeRange,
+  HX_QUICK_SELECT_COMMONLY_USED,
+  HX_QUICK_SELECT_LABELS,
+  HX_QUICK_SELECT_UNITS,
+  type HxDateRangeExpression,
+  type HxQuickSelectLabels,
+  type HxQuickSelectRange,
+  type HxQuickSelectSide,
+  hxResolveRangeSide,
+  readRecentRanges,
+  sideExpression,
+  sideFromExpression,
+  writeRecentRanges,
+} from './quick-select';
 
 export interface HxDateTimeRangeValue {
   from: Date | null;
@@ -54,6 +74,10 @@ const sameTime = (a: Date | null, b: Date | null) => a?.getTime() === b?.getTime
 const sameRange = (a: HxDateTimeRangeValue, b: HxDateTimeRangeValue) =>
   sameTime(a.from, b.from) && sameTime(a.to, b.to);
 const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (a ?? b));
+type Side = 'from' | 'to';
+type SideMode = HxQuickSelectSide['mode'];
+const SIDE_MODES: readonly SideMode[] = ['absolute', 'relative', 'now'];
+const ABSOLUTE_SIDES = { from: DEFAULT_SIDE, to: DEFAULT_SIDE };
 
 /**
  * A from and a to date-time range in one field with one button. The field shows the range as one text
@@ -72,10 +96,24 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  * It works with `ngModel`, reactive forms and signal forms (`[formField]`). The time options are those of
  * `hx-time-picker`. The popup is a dialog named by `ariaLabel` / `ariaLabelledby`; its time pickers are named
  * `fromLabel` / `toLabel`.
+ *
+ * With `quickSelect` the popup also holds a Kibana-style quick select: *Last/Next N unit*, a tab list
+ * *Absolute / Relative / Now* for the start and for the end, a *Commonly used* and a *Recently used* list (the last
+ * five applied ranges, kept in `localStorage` under `recentStorageKey`). Date math (`now-15m`, `now/d`) is resolved
+ * against the current time when the range is applied; the value stays `{ from, to }` and the expressions are in
+ * the `expression` model (`null` for an absolute range).
  */
 @Component({
   selector: 'hx-date-time-range-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxSelect, HxTimePicker],
+  imports: [
+    CdkConnectedOverlay,
+    CdkOverlayOrigin,
+    HxCheckbox,
+    HxDatePicker,
+    HxInput,
+    HxSelect,
+    HxTimePicker,
+  ],
   templateUrl: './date-time-range-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -133,6 +171,19 @@ export class HxDateTimeRangePicker
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
+  /** The Kibana-style quick select in the popup (Last/Next N unit, relative sides, commonly and recently used). */
+  readonly quickSelect = input(false, { transform: booleanAttribute });
+  /** The texts of the quick select; any text left out stays English. */
+  readonly quickSelectLabels = input<Partial<HxQuickSelectLabels>>({});
+  /** The "Commonly used" ranges of the quick select. */
+  readonly commonlyUsed = input<readonly HxQuickSelectRange[]>(HX_QUICK_SELECT_COMMONLY_USED);
+  /** The `localStorage` key of the "Recently used" list; `null` keeps the list only while the picker lives. */
+  readonly recentStorageKey = input<string | null>('hx-date-range-recent');
+  /**
+   * The applied range as expressions (`{ from: 'now-15m', to: 'now' }`, an absolute side as an ISO date-time);
+   * `null` once an absolute range is chosen. Read when the popup opens to set up the quick select's tabs.
+   */
+  readonly expression = model<HxDateRangeExpression | null>(null);
 
   // The signal-forms contract (FormValueControl): value, disabled, invalid, touch.
   readonly value = model<HxDateTimeRangeValue>(EMPTY);
@@ -165,7 +216,49 @@ export class HxDateTimeRangePicker
       offsetY: -2,
     },
   ];
+  /** The quick select: Last/Next N unit, the state of each side's tabs and the recently used ranges. */
+  protected readonly quickDirection = signal<'last' | 'next'>('last');
+  protected readonly quickAmount = signal(15);
+  protected readonly quickUnit = signal<HxDateMathUnit>('m');
+  protected readonly sides = signal<Record<Side, HxQuickSelectSide>>(ABSOLUTE_SIDES);
+  protected readonly recent = signal<HxDateRangeExpression[]>([]);
+  protected readonly sideModes = SIDE_MODES;
+  protected readonly labels = computed<HxQuickSelectLabels>(() => ({
+    ...HX_QUICK_SELECT_LABELS,
+    ...this.quickSelectLabels(),
+  }));
+  protected readonly directionOptions = computed(() => [
+    { label: this.labels().last, value: 'last' },
+    { label: this.labels().next, value: 'next' },
+  ]);
+  protected readonly unitOptions = computed(() =>
+    HX_QUICK_SELECT_UNITS.map((unit) => ({ label: this.labels().units[unit], value: unit })),
+  );
+  /** The unit and direction of a relative side in one select (`Minutes ago`, `Minutes from now`). */
+  protected readonly relativeOptions = computed(() => {
+    const l = this.labels();
+    return [
+      ...HX_QUICK_SELECT_UNITS.map((unit) => ({ label: l.unitsAgo[unit], value: `${unit}-ago` })),
+      ...HX_QUICK_SELECT_UNITS.map((unit) => ({
+        label: l.unitsFromNow[unit],
+        value: `${unit}-fromNow`,
+      })),
+    ];
+  });
+  protected readonly recentItems = computed(() =>
+    this.recent().map((range) => ({
+      range,
+      label: describeRange(
+        range,
+        this.labels(),
+        this.commonlyUsed(),
+        (d) => this.#formatDate(d),
+        this.separator(),
+      ),
+    })),
+  );
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
+  private readonly quickFirst = viewChild('quickFirst', { read: HxSelect });
   private readonly daysPicker = viewChild(HxDatePicker);
   private readonly timePicker = viewChild(HxTimePicker);
   /** The times of the last complete sides, kept while a side is empty (a range being chosen in the calendar). */
@@ -194,8 +287,7 @@ export class HxDateTimeRangePicker
     if (typed !== null) return typed;
     const { from, to } = this.value();
     if (!from && !to) return '';
-    const fmt = this.#format();
-    const one = (d: Date | null) => (d ? fmt.format(d).replace(/,\s*/, ' ') : '');
+    const one = (d: Date | null) => (d ? this.#formatDate(d) : '');
     return `${one(from)} ${this.separator()} ${one(to)}`.trim();
   });
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
@@ -245,6 +337,7 @@ export class HxDateTimeRangePicker
     if (this.isDisabled() || this.open()) return;
     this.#stage(this.value());
     this.selectedPreset.set(null);
+    if (this.quickSelect()) this.#setUpQuickSelect();
     this.open.set(true);
   }
 
@@ -260,7 +353,7 @@ export class HxDateTimeRangePicker
   }
 
   protected onAttach(): void {
-    afterNextRender(() => (this.daysPicker() ?? this.timePicker())?.focus(), {
+    afterNextRender(() => (this.quickFirst() ?? this.daysPicker() ?? this.timePicker())?.focus(), {
       injector: this.#injector,
     });
   }
@@ -301,6 +394,7 @@ export class HxDateTimeRangePicker
     const next = this.#parseRange(typed);
     if (next && !sameRange(next, this.value())) {
       this.#commit(next);
+      this.expression.set(null);
       // an open popup edits the typed range from now on: a later Submit keeps it
       if (this.open()) this.#stage(next);
     }
@@ -390,6 +484,8 @@ export class HxDateTimeRangePicker
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
     if (from === undefined || to === undefined) return;
     this.#stage(from && to && to < from ? { from: to, to: from } : { from, to });
+    this.#makeAbsolute('from');
+    this.#makeAbsolute('to');
   }
 
   /**
@@ -412,8 +508,208 @@ export class HxDateTimeRangePicker
   }
 
   protected submit(): void {
+    if (this.quickSelect()) {
+      const { from, to } = this.sides();
+      if (from.mode !== 'absolute' || to.mode !== 'absolute') {
+        const draft = this.draft();
+        const side = (state: HxQuickSelectSide, date: Date | null) =>
+          sideExpression(state) ?? date?.toISOString() ?? null;
+        const range = { from: side(from, draft.from), to: side(to, draft.to) };
+        // an empty absolute side next to a relative one is no range to apply
+        if (range.from !== null && range.to !== null) {
+          this.#applyRange({ from: range.from, to: range.to });
+        }
+        return;
+      }
+      const { from: start, to: end } = this.draft();
+      if (start && end) this.#remember({ from: start.toISOString(), to: end.toISOString() });
+    }
     this.#commit(this.draft());
+    this.expression.set(null);
     this.close(true);
+  }
+
+  // ---- quick select ----
+
+  /** Opening the popup: the recently used list from storage, the tabs from the `expression` model. */
+  #setUpQuickSelect(): void {
+    const key = this.recentStorageKey();
+    if (key) this.recent.set(readRecentRanges(key));
+    const expression = this.expression();
+    this.sides.set(
+      expression
+        ? { from: sideFromExpression(expression.from), to: sideFromExpression(expression.to) }
+        : ABSOLUTE_SIDES,
+    );
+  }
+
+  protected setQuickDirection(direction: unknown): void {
+    if (direction === 'last' || direction === 'next') this.quickDirection.set(direction);
+  }
+
+  protected setQuickAmount(event: Event): void {
+    this.quickAmount.set(Number((event.target as HTMLInputElement).value));
+  }
+
+  protected setQuickUnit(unit: unknown): void {
+    if (HX_QUICK_SELECT_UNITS.includes(unit as HxDateMathUnit)) {
+      this.quickUnit.set(unit as HxDateMathUnit);
+    }
+  }
+
+  /** Applies *Last/Next N unit* at once; an amount that is not a positive whole number does nothing. */
+  protected applyQuick(): void {
+    const range = hxRelativeRangeExpressions(
+      this.quickDirection(),
+      this.quickAmount(),
+      this.quickUnit(),
+    );
+    if (range) this.#applyRange(range);
+  }
+
+  /** A commonly or recently used range is applied at once. */
+  protected applyRange(range: HxDateRangeExpression): void {
+    this.#applyRange(range);
+  }
+
+  protected tabId(side: Side, mode: SideMode): string {
+    return `${this.popupId}-${side}-${mode}`;
+  }
+
+  protected panelId(side: Side): string {
+    return `${this.popupId}-${side}-panel`;
+  }
+
+  /** A tab chosen: Relative and Now show their date in the calendar and the time pickers until it is applied. */
+  protected setSideMode(side: Side, mode: SideMode): void {
+    this.sides.update((s) => ({ ...s, [side]: { ...s[side], mode } }));
+    this.#preview(side);
+  }
+
+  /** Arrow Left/Right move between the tabs of a side (wrapping), Home and End go to the first and last. */
+  protected onTabKeydown(side: Side, event: KeyboardEvent): void {
+    const index = SIDE_MODES.indexOf(this.sides()[side].mode);
+    const last = SIDE_MODES.length - 1;
+    const next =
+      event.key === 'ArrowRight'
+        ? (index + 1) % SIDE_MODES.length
+        : event.key === 'ArrowLeft'
+          ? (index + last) % SIDE_MODES.length
+          : event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? last
+              : -1;
+    if (next < 0) return;
+    event.preventDefault();
+    this.setSideMode(side, SIDE_MODES[next]);
+    const tabs = (event.currentTarget as HTMLElement).querySelectorAll<HTMLElement>('[role=tab]');
+    tabs[next]?.focus();
+  }
+
+  protected setSideAmount(side: Side, event: Event): void {
+    this.#patchSide(side, { amount: Number((event.target as HTMLInputElement).value) });
+  }
+
+  protected setSideUnit(side: Side, value: unknown): void {
+    const [unit, direction] = String(value).split('-');
+    if (!HX_QUICK_SELECT_UNITS.includes(unit as HxDateMathUnit)) return;
+    this.#patchSide(side, {
+      unit: unit as HxDateMathUnit,
+      direction: direction === 'fromNow' ? 'fromNow' : 'ago',
+    });
+  }
+
+  protected setSideRound(side: Side, event: Event): void {
+    this.#patchSide(side, { round: (event.target as HTMLInputElement).checked });
+  }
+
+  protected sideUnitValue(side: Side): string {
+    const state = this.sides()[side];
+    return `${state.unit}-${state.direction}`;
+  }
+
+  protected sideRoundLabel(side: Side): string {
+    return this.labels().roundTo.replace('{unit}', this.labels().unitsOne[this.sides()[side].unit]);
+  }
+
+  protected sideExpressionText(side: Side): string {
+    return sideExpression(this.sides()[side]) ?? '';
+  }
+
+  protected sideText(side: Side): string {
+    const date = this.draft()[side];
+    return date ? this.#formatDate(date) : '';
+  }
+
+  /** The date typed on a side's Absolute tab: read like a typed side of the field, not across the other side. */
+  protected setAbsoluteSide(side: Side, event: Event): void {
+    const field = event.target as HTMLInputElement;
+    const old = this.draft();
+    const date = this.#parseSide(field.value, old[side] ?? old.from ?? old.to);
+    const other = side === 'from' ? old.to : old.from;
+    const crosses =
+      date && other && (side === 'from' ? date.getTime() > other.getTime() : date < other);
+    if (date === undefined || crosses) {
+      field.value = this.sideText(side);
+      return;
+    }
+    this.#stage({ ...old, [side]: date });
+    field.value = this.sideText(side);
+  }
+
+  #patchSide(side: Side, patch: Partial<HxQuickSelectSide>): void {
+    this.sides.update((s) => ({ ...s, [side]: { ...s[side], ...patch, raw: null } }));
+    this.#preview(side);
+  }
+
+  /** Shows a relative side's date in the draft (resolved now); a date across the other side is not shown. */
+  #preview(side: Side): void {
+    const expression = sideExpression(this.sides()[side]);
+    if (!expression) return;
+    const old = this.draft();
+    const resolved = hxResolveRangeSide(expression, {
+      firstDayOfWeek: this.firstDayOfWeek(),
+      roundUp: side === 'to',
+    });
+    const date = resolved ? this.#fitPreset(resolved, old[side] ?? old.from) : undefined;
+    if (!date) return;
+    const other = side === 'from' ? old.to : old.from;
+    if (other && (side === 'from' ? date > other : date < other)) return;
+    this.#stage({ ...old, [side]: date });
+  }
+
+  /**
+   * Resolves a range against the current time and applies it as a preset would be (the day only without the time
+   * pickers, refused on a day in `disabledDates` or for an unreadable side, inside `minDate`..`maxDate`), then
+   * remembers it, sets the `expression` model and closes the popup.
+   */
+  #applyRange(range: HxDateRangeExpression): void {
+    const now = new Date();
+    const options = { now, firstDayOfWeek: this.firstDayOfWeek() };
+    const resolvedFrom = hxResolveRangeSide(range.from, { ...options, roundUp: false });
+    const resolvedTo = hxResolveRangeSide(range.to, { ...options, roundUp: true });
+    if (!resolvedFrom || !resolvedTo) return;
+    const { from: oldFrom, to: oldTo } = this.value();
+    const from = this.#fitPreset(resolvedFrom, oldFrom);
+    const to = this.#fitPreset(resolvedTo, oldTo ?? oldFrom);
+    if (!from || !to) return;
+    const next = this.#inside(to < from ? { from: to, to: from } : { from, to });
+    const relative = hxParseDateMath(range.from) !== null || hxParseDateMath(range.to) !== null;
+    this.#remember(range);
+    this.#commit(next);
+    this.expression.set(relative ? { from: range.from, to: range.to } : null);
+    this.close(true);
+  }
+
+  #remember(range: HxDateRangeExpression): void {
+    const next = addRecentRange(this.recent(), range);
+    this.recent.set(next);
+    writeRecentRanges(this.recentStorageKey(), next);
+  }
+
+  #formatDate(date: Date): string {
+    return this.#format().format(date).replace(/,\s*/, ' ');
   }
 
   /** The focus left the control (field, button and popup): the popup closes and the control is touched. */
@@ -469,6 +765,8 @@ export class HxDateTimeRangePicker
     const from = at(first, fromTime);
     const to = at(second, toTime);
     this.#stage({ from, to: from && to && to < from ? from : to });
+    this.#makeAbsolute('from');
+    this.#makeAbsolute('to');
   }
 
   /** The `from` picker changed: the day of `from` (else of `to`, else today) at the new time, not after `to`. */
@@ -485,6 +783,7 @@ export class HxDateTimeRangePicker
     }
     const next = clampTime(this.#atTime(day, picked), this.minDate(), this.fromMax());
     this.#stage({ from: next, to });
+    this.#makeAbsolute('from');
   }
 
   /** The `to` picker changed: the day of `to` (else of `from`, else today) at the new time, not before `from`. */
@@ -502,6 +801,14 @@ export class HxDateTimeRangePicker
     const next = clampTime(this.#atTime(day, picked), this.toMin(), this.maxDate());
     // a `to` chosen while `from` is empty starts the range at midnight of that day (what the `from` picker shows)
     this.#stage({ from: from ?? startOfDay(next), to: next });
+    this.#makeAbsolute('to');
+    if (!from) this.#makeAbsolute('from');
+  }
+
+  /** A side chosen in the calendar or a time picker is absolute from now on. */
+  #makeAbsolute(side: Side): void {
+    if (this.sides()[side].mode === 'absolute') return;
+    this.sides.update((s) => ({ ...s, [side]: { ...s[side], mode: 'absolute' } }));
   }
 
   #pickerValue(side: Date | null): Date {
@@ -530,12 +837,17 @@ export class HxDateTimeRangePicker
 
   /** Sets the draft; a side is moved into `minDate`..`maxDate` including the time. */
   #stage(next: HxDateTimeRangeValue): void {
-    const inside = (d: Date | null) =>
-      isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
-    const clean = { from: inside(next.from), to: inside(next.to) };
+    const clean = this.#inside(next);
     if (clean.from) this.#lastFrom = clean.from;
     if (clean.to) this.#lastTo = clean.to;
     this.draft.set(clean);
+  }
+
+  /** A range with each side moved into `minDate`..`maxDate` including the time (an invalid side is empty). */
+  #inside(next: HxDateTimeRangeValue): HxDateTimeRangeValue {
+    const inside = (d: Date | null) =>
+      isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
+    return { from: inside(next.from), to: inside(next.to) };
   }
 
   #commit(next: HxDateTimeRangeValue): void {
