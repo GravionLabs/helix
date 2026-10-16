@@ -37,6 +37,18 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `disabled`, `invalid` | `boolean` | `false` | |
 | `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
 
+| Export | Description |
+| ------ | ----------- |
+| `HxDateTimeRangeValue` | The value, `{ from: Date \| null; to: Date \| null }`. |
+| `HxDateTimeRangePreset` | A preset, `{ label, from(context?), to(context?) }`. |
+| `HxDateTimeRangePresetContext` | What a preset's functions receive: `{ firstDayOfWeek }` of the picker. |
+| `HX_DATE_RANGE_PRESETS`, `HX_DATE_RANGE_DAY_PRESETS`, `hxDateRangePresets(labels)` | The built-in presets (see below). |
+| `HxDateRangeExpression` | The `expression` model, `{ from: string; to: string }`. |
+| `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })` | Resolves an expression to `{ from, to }`; the end rounds up. |
+| `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` | Resolves one side (date math, an ISO date-time, or a date-only ISO text as local midnight). |
+| `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
+| `HxQuickSelectLabels`, `HX_QUICK_SELECT_LABELS`, `HxQuickSelectRange`, `HX_QUICK_SELECT_COMMONLY_USED` | The texts and the "Commonly used" list of the quick select. |
+
 - **Presets:** each `{ label, from: () => Date, to: () => Date }` (`HxDateTimeRangePreset`) is a button in the popup; the
   functions run when it is chosen, so `now` stays current. A preset fills the draft (calendar and time pickers show it);
   Submit applies it, Cancel drops it. No list is shown without presets. A preset is taken as the picker shows it: a
@@ -55,7 +67,9 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   ```
 - **Built-in presets:** `presets` is empty by default; opt in with the ready-made lists. `HX_DATE_RANGE_PRESETS` has
   Last 15 minutes, Last 1 hour, Last 6 hours, Last 24 hours, Last 7 days, Last 30 days, Today, Yesterday, This week and
-  This month. `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days, This month) starts at midnight and suits
+  This month. Last 7 days and Last 30 days count calendar days: they start at midnight of the first day (today and the
+  6 or 29 days before), not 7 x 24 hours ago, and end now; Yesterday, This week and This month end at 23:59:59.999 of
+  their last day. `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days, This month) starts at midnight and suits
   `[showTime]="false"`. `hxDateRangePresets(labels)` returns the list with your own (translated) labels per id
   (`last15Minutes`, `last1Hour`, `last6Hours`, `last24Hours`, `last7Days`, `last30Days`, `today`, `yesterday`,
   `thisWeek`, `thisMonth`; ids you leave out keep the English label). "This week" starts on `firstDayOfWeek`.
@@ -72,15 +86,20 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   ```
 - **Preset select:** with `presetDisplay="select"` the presets are one `hx-select` above the calendar instead of a row
   of buttons. It has no value of its own: it shows the placeholder each time the popup opens, and choosing an entry
-  fills the draft exactly as a button does (Submit applies it, Cancel drops it).
+  fills the draft exactly as a button does (Submit applies it, Cancel drops it). Once the draft changes otherwise (a
+  day click, a time), the select shows its placeholder again, so the same preset can be chosen again.
 - **Quick select:** `quickSelect` adds, above the calendar, a row "Last / Next, amount, unit, Apply" (for example
   Last 15 minutes), a "Commonly used" list and a "Recently used" list (the last 5 applied ranges, newest first, without
   duplicates, kept in `localStorage` under `recentStorageKey`; if storage is blocked the list lives in memory for the
-  session). Apply, a commonly used entry and a recent entry apply the range at once and close the popup; Submit applies
-  the Start and End tabs. Start and End each have the tabs **Absolute** (a typed date), **Relative** (an amount, "ago" or
+  session). Apply, a commonly used entry and a recent entry bypass the draft: they apply the range at once and close
+  the popup (as in Kibana; Cancel does not undo them), unlike presets, which only fill the draft. Submit applies the
+  Start and End tabs. Start and End each have the tabs **Absolute** (a typed date), **Relative** (an amount, "ago" or
   "from now", and "Round to the unit") and **Now**. A relative range is stored as text and resolved when it is applied,
   so "Last 15 minutes" means the 15 minutes before you clicked. Presets and the calendar still work and set both sides
-  back to Absolute. A relative side next to an empty absolute side is refused with an inline message.
+  back to Absolute, and so do Clear and a range typed while the popup is open. A range that cannot be applied (a
+  relative side next to an empty absolute side, a side on a day in `disabledDates`, an amount that is not a positive
+  whole number or is too large for a date) keeps the popup open with an inline message (`role="alert"`, named by the
+  Apply and Submit buttons through `aria-describedby`).
 
   ```html
   <hx-date-time-range-picker quickSelect [(value)]="range" [(expression)]="expression" />
@@ -92,8 +111,10 @@ to) and, below it, a time picker for the start and one for the end. It is built 
   const { from, to } = hxResolveRangeExpression(this.expression()!, { firstDayOfWeek: 1 });
   ```
 - **Expression model:** after a relative apply, `expression` is `{ from: 'now-15m', to: 'now' }`; an absolute side is an
-  ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`. It is only read when the
-  popup opens, to set up the tabs; setting it from outside does not change `value`. `hxResolveRangeExpression(expression,
+  ISO string. An absolute Submit, a typed range, a calendar pick or a preset sets it to `null`, and so does a value set
+  from outside (`ngModel`, `setValue`/`reset`, a signal form, a new `[value]`) unless a new expression is set with it.
+  It is only read when the popup opens, to set up the tabs; setting it from outside does not change `value`. When the
+  resolved ends are reversed (`now+1d` to `now`), the value is put in order and the expression is swapped with it. `hxResolveRangeExpression(expression,
   { now?, firstDayOfWeek? })` turns it into `{ from, to }` (the end side rounds up) and `hxResolveRangeSide(text,
   { now?, firstDayOfWeek?, roundUp? })` does one side; both return `null` for a side they cannot read.
 - **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an

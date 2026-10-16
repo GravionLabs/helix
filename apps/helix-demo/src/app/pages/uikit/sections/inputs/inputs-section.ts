@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormField, form, min, required } from '@angular/forms/signals';
 import {
@@ -114,10 +114,15 @@ export class HxInputsSection {
   readonly quick = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly quickExpression = signal<HxDateRangeExpression | null>(null);
   /** The expression resolved again against the current time, as an app would to refresh a dashboard. */
-  resolved() {
+  readonly resolved = computed(() => {
     const expression = this.quickExpression();
     return expression ? hxResolveRangeExpression(expression, { firstDayOfWeek: 1 }) : null;
-  }
+  });
+  /** The expression as text for the demo row. */
+  readonly expressionText = computed(() => {
+    const expression = this.quickExpression();
+    return expression ? `${expression.from} to ${expression.to}` : 'none (absolute)';
+  });
   readonly hours = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];
