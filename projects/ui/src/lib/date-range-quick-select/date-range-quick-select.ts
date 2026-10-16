@@ -271,6 +271,10 @@ export class HxDateRangeQuickSelect
   #editedRange: HxDateRangeExpression | null = null;
 
   constructor() {
+    // a control that is disabled while its popup is open closes it, so Apply cannot change a disabled control
+    effect(() => {
+      if (this.isDisabled()) untracked(() => this.close());
+    });
     // A new expression (the control's own apply or one set from outside) belongs to the value of that moment. A value
     // that changes without a new expression (writeValue, setValue, reset, [value]) makes it stale: it is dropped,
     // unless the value is the same range (the same times as before, or the expression resolved now). So ngModel's
