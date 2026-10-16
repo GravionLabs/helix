@@ -554,15 +554,10 @@ describe('HxDateRangeQuickSelect', () => {
       expect(localStorage.length).toBe(0);
     });
 
-    it('refuses an unreadable entry with the inline error', async () => {
+    it('does not list a stored entry that cannot be read', async () => {
       localStorage.setItem('hx-test-recent', JSON.stringify([{ from: 'soon', to: 'now' }]));
       await open('quick');
-      await click(
-        popup()!.querySelector<HTMLElement>('.hx-date-range-quick-select-recent button')!,
-      );
-      expect(popup()).not.toBeNull();
-      expect(error()).not.toBeNull();
-      expect(host.quick()).toEqual(EMPTY);
+      expect(popup()!.querySelector('.hx-date-range-quick-select-recent button')).toBeNull();
     });
 
     it('swaps the expression with reversed ends, so from belongs to value.from', async () => {
@@ -1224,6 +1219,7 @@ describe('HxDateRangeQuickSelect', () => {
       await click(sideButton('from'));
       await typeDate('10/9/2026 08:30');
       expect(host.quick().from).toEqual(new Date(2026, 9, 9, 8, 30));
+      expect(resolved()).toBe('Resolves to 10/9/2026 08:30');
       expect(error()).toBeNull();
       expect(sideDate().getAttribute('aria-invalid')).toBeNull();
 

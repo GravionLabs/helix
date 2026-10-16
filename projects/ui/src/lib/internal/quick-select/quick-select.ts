@@ -311,10 +311,19 @@ export function describeRange(
   return `${side(range.from)} ${separator} ${side(range.to)}`;
 }
 
+/** Longest stored side; a date math expression or an ISO date is far shorter. */
+const RECENT_SIDE_MAX = 64;
+
+const isRangeSide = (value: unknown): value is string =>
+  typeof value === 'string' &&
+  value.length <= RECENT_SIDE_MAX &&
+  hxResolveRangeSide(value) !== null;
+
+/** A stored entry is kept only when both sides are short and resolve to a date. */
 const isRange = (value: unknown): value is HxDateRangeExpression =>
   !!value &&
-  typeof (value as HxDateRangeExpression).from === 'string' &&
-  typeof (value as HxDateRangeExpression).to === 'string';
+  isRangeSide((value as HxDateRangeExpression).from) &&
+  isRangeSide((value as HxDateRangeExpression).to);
 
 /** The browser storage, or `null` where there is none or touching it throws (blocked cookies, sandbox). */
 function storage(): Storage | null {

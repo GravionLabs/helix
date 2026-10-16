@@ -171,6 +171,22 @@ describe('quick select helpers', () => {
       expect(readRecentRanges(key)).toEqual([{ from: 'now-1h', to: 'now' }]);
     });
 
+    it('drops stored entries that are too long or do not resolve to a date', () => {
+      localStorage.setItem(
+        key,
+        JSON.stringify([
+          { from: 'now-1h', to: 'now' },
+          { from: 'garbage', to: 'now' },
+          { from: 'now-1h', to: 'x'.repeat(5000) },
+          { from: '2026-01-01', to: '2026-01-02' },
+        ]),
+      );
+      expect(readRecentRanges(key)).toEqual([
+        { from: 'now-1h', to: 'now' },
+        { from: '2026-01-01', to: '2026-01-02' },
+      ]);
+    });
+
     it('drops duplicates when reading', () => {
       localStorage.setItem(
         key,
