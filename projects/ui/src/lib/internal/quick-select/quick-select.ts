@@ -30,8 +30,8 @@ export interface HxQuickSelectLabels {
   /** The text of the Now tab. */
   nowHint: string;
   /**
-   * Shown when Submit cannot apply the range (a relative side next to an empty absolute side, a Relative tab with an
-   * empty or invalid amount, a refused day).
+   * Shown when a range cannot be applied (a relative side next to an empty absolute side, a Relative tab with an
+   * empty or invalid amount, a refused day, a typed date that cannot be read, a start after the end).
    */
   incompleteRange: string;
   /** The label of the typed date on the Absolute tab. */
@@ -50,6 +50,8 @@ export interface HxQuickSelectLabels {
   roundedSummary: string;
   /** The summary of an empty side. */
   emptySide: string;
+  /** `Resolves to {date}`: the date a relative or now side stands for at this moment (the side editor). */
+  resolvesTo: string;
   /** The plural unit names (`minutes`) and the singular ones (`minute`, for `{n}` = 1 and `roundTo`). */
   units: Record<HxDateMathUnit, string>;
   unitsOne: Record<HxDateMathUnit, string>;
@@ -90,6 +92,7 @@ export const HX_QUICK_SELECT_LABELS: HxQuickSelectLabels = {
   fromNowSummary: '~ {n} {unit} from now',
   roundedSummary: 'rounded to the {unit}',
   emptySide: 'Not set',
+  resolvesTo: 'Resolves to {date}',
   units: {
     s: 'seconds',
     m: 'minutes',

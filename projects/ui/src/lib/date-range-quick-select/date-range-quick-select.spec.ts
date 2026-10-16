@@ -648,4 +648,367 @@ describe('HxDateRangeQuickSelect', () => {
       outside.remove();
     });
   });
+
+  describe('side editor', () => {
+    const sideButton = (side: 'from' | 'to') =>
+      q<HTMLButtonElement>(`.hx-date-range-quick-select-side-line-${side}`);
+    const editor = () =>
+      popup()?.querySelector<HTMLElement>('.hx-date-range-quick-select-editor') ?? null;
+    const tabs = () => [...popup()!.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+    const tab = (label: string) => tabs().find((t) => t.textContent?.trim() === label)!;
+    const panel = () => q('[role=tabpanel]');
+    const calendar = () => popup()?.querySelector('hx-calendar') ?? null;
+    const day = (date: string) => q<HTMLButtonElement>(`.hx-date-picker-date[data-date="${date}"]`);
+    const sideAmount = () => q<HTMLInputElement>('.hx-date-range-quick-select-side-amount');
+    const sideDate = () => q<HTMLInputElement>('.hx-date-range-quick-select-side-date');
+    const resolved = () => q('.hx-date-range-quick-select-resolved-date').textContent?.trim();
+    const typeDate = async (text: string) => {
+      sideDate().value = text;
+      sideDate().dispatchEvent(new Event('change'));
+      await settle();
+    };
+    /** The popup of `quick` with Last 15 minutes applied and the editor of `side` open. */
+    const editAfterLast15 = async (side: 'from' | 'to') => {
+      await open('quick');
+      await applyQuick();
+      await open('quick');
+      await click(sideButton(side));
+    };
+
+    it('opens the editor of one side from its summary button and closes it with a second click', async () => {
+      await open('quick');
+      expect(editor()).toBeNull();
+      expect(sideButton('from').tagName).toBe('BUTTON');
+      expect(sideButton('from').type).toBe('button');
+      expect(sideButton('from').getAttribute('aria-expanded')).toBe('false');
+      expect(sideButton('from').getAttribute('aria-controls')).toBeNull();
+
+      await click(sideButton('from'));
+      expect(sideButton('from').getAttribute('aria-expanded')).toBe('true');
+      expect(sideButton('from').getAttribute('aria-controls')).toBe(editor()!.id);
+      expect(editor()!.getAttribute('aria-labelledby')).toBe(sideButton('from').id);
+      expect(q('[role=tablist]').getAttribute('aria-labelledby')).toBe(sideButton('from').id);
+      expect(tabs().map((t) => t.textContent?.trim())).toEqual(['Absolute', 'Relative', 'Now']);
+      // the selected tab takes the focus
+      expect(document.activeElement).toBe(tab('Absolute'));
+
+      // the other side opens alone
+      await click(sideButton('to'));
+      expect(popup()!.querySelectorAll('.hx-date-range-quick-select-editor').length).toBe(1);
+      expect(editor()!.classList).toContain('hx-date-range-quick-select-editor-to');
+      expect(sideButton('from').getAttribute('aria-expanded')).toBe('false');
+
+      await click(sideButton('to'));
+      expect(editor()).toBeNull();
+      expect(popup()).not.toBeNull();
+    });
+
+    it('opens on the tab of the applied side and switches tabs with roving focus and ARIA', async () => {
+      await editAfterLast15('from');
+      expect(tab('Relative').getAttribute('aria-selected')).toBe('true');
+      expect(tabs().map((t) => t.tabIndex)).toEqual([-1, 0, -1]);
+      expect(panel().getAttribute('aria-labelledby')).toBe(tab('Relative').id);
+      for (const t of tabs()) expect(t.getAttribute('aria-controls')).toBe(panel().id);
+      expect(panel().tabIndex).toBe(0);
+
+      await click(tab('Now'));
+      expect(tab('Now').getAttribute('aria-selected')).toBe('true');
+      expect(tab('Relative').getAttribute('aria-selected')).toBe('false');
+      expect(panel().getAttribute('aria-labelledby')).toBe(tab('Now').id);
+      expect(q('.hx-date-range-quick-select-now-hint').textContent?.trim()).toBe(
+        'Set to the current time when the range is applied.',
+      );
+    });
+
+    it('moves between the tabs with Arrow Left/Right (wrapping), Home and End', async () => {
+      await open('quick');
+      await click(sideButton('from'));
+      const list = q('[role=tablist]');
+      const selected = () => tabs().find((t) => t.getAttribute('aria-selected') === 'true')!;
+      await press(list, 'ArrowRight');
+      expect(selected().textContent?.trim()).toBe('Relative');
+      expect(document.activeElement).toBe(selected());
+      await press(list, 'End');
+      expect(selected().textContent?.trim()).toBe('Now');
+      await press(list, 'ArrowRight');
+      expect(selected().textContent?.trim()).toBe('Absolute');
+      await press(list, 'ArrowLeft');
+      expect(selected().textContent?.trim()).toBe('Now');
+      await press(list, 'Home');
+      expect(selected().textContent?.trim()).toBe('Absolute');
+      expect(document.activeElement).toBe(selected());
+      // other keys leave the tabs alone
+      await press(list, 'a');
+      expect(selected().textContent?.trim()).toBe('Absolute');
+    });
+
+    it('renders the calendar only in the Absolute tab', async () => {
+      await open('quick');
+      await click(sideButton('from'));
+      expect(calendar()).not.toBeNull();
+      expect(sideDate()).not.toBeNull();
+      await click(tab('Relative'));
+      expect(calendar()).toBeNull();
+      expect(popup()!.querySelector('.hx-date-range-quick-select-side-date')).toBeNull();
+      await click(tab('Now'));
+      expect(calendar()).toBeNull();
+      await click(tab('Absolute'));
+      expect(calendar()).not.toBeNull();
+      await click(sideButton('from'));
+      expect(calendar()).toBeNull();
+    });
+
+    it('applies a Relative side at once, keeping the popup open, with the round option and the resolved date', async () => {
+      await editAfterLast15('from');
+      expect(sideAmount().value).toBe('15');
+      expect(q('.hx-date-range-quick-select-side-unit .hx-select-trigger').textContent).toContain(
+        'Minutes ago',
+      );
+      expect(q('.hx-date-range-quick-select-side-round').textContent?.trim()).toBe(
+        'Round to the minute',
+      );
+      expect(q('.hx-date-range-quick-select-expression').textContent).toBe('now-15m');
+      expect(resolved()).toBe('Resolves to 10/14/2026 15:15');
+
+      await fill(sideAmount(), '2');
+      expect(host.quick()).toEqual({ from: new Date(2026, 9, 14, 15, 28, 20), to: NOW });
+      expect(host.quickExpr()).toEqual({ from: 'now-2m', to: 'now' });
+      expect(summary('from')).toBe('Start ~ 2 minutes ago');
+      expect(popup()).not.toBeNull();
+      expect(editor()).not.toBeNull();
+
+      const round = q<HTMLInputElement>('.hx-date-range-quick-select-side-round input');
+      round.click();
+      await settle();
+      expect(host.quickExpr()).toEqual({ from: 'now-2m/m', to: 'now' });
+      expect(host.quick().from).toEqual(new Date(2026, 9, 14, 15, 28, 0));
+      expect(summary('from')).toBe('Start ~ 2 minutes ago, rounded to the minute');
+
+      await choose('hx-date-range-quick-select-side-unit', 'Hours ago');
+      expect(host.quickExpr()).toEqual({ from: 'now-2h/h', to: 'now' });
+      expect(q('.hx-date-range-quick-select-side-round').textContent?.trim()).toBe(
+        'Round to the hour',
+      );
+      expect(resolved()).toBe('Resolves to 10/14/2026 13:00');
+      expect(input('quick').value).toBe('now-2h/h - now');
+    });
+
+    it('applies the end as a relative side from now, rounding it up', async () => {
+      await editAfterLast15('to');
+      await click(tab('Relative'));
+      await choose('hx-date-range-quick-select-side-unit', 'Days from now');
+      await fill(sideAmount(), '1');
+      await click(q('.hx-date-range-quick-select-side-round input'));
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now+1d/d' });
+      expect(host.quick().to).toEqual(new Date(2026, 9, 15, 23, 59, 59, 999));
+      expect(summary('to')).toBe('End ~ 1 day from now, rounded to the day');
+    });
+
+    it('applies the Now tab with the resolved date', async () => {
+      await editAfterLast15('to');
+      await click(tab('Relative'));
+      await fill(sideAmount(), '5');
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now-5m' });
+      await click(tab('Now'));
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+      expect(host.quick().to).toEqual(NOW);
+      expect(resolved()).toBe('Resolves to 10/14/2026 15:30');
+      expect(summary('to')).toBe('End now');
+    });
+
+    it('makes a side absolute with its date, keeping the time when a day is picked', async () => {
+      await editAfterLast15('from');
+      await click(tab('Absolute'));
+      const start = new Date(2026, 9, 14, 15, 15, 20);
+      // the side keeps its date; the other side stays relative
+      expect(host.quick()).toEqual({ from: start, to: NOW });
+      expect(host.quickExpr()).toEqual({ from: start.toISOString(), to: 'now' });
+      expect(sideDate().value).toBe('10/14/2026 15:15');
+      expect(day('2026-10-14').classList).toContain('hx-date-picker-date-selected');
+
+      await click(day('2026-10-10'));
+      expect(host.quick().from).toEqual(new Date(2026, 9, 10, 15, 15, 20));
+      expect(summary('from')).toBe('Start 10/10/2026 15:15');
+      expect(sideDate().value).toBe('10/10/2026 15:15');
+      expect(popup()).not.toBeNull();
+    });
+
+    it('sets an empty side alone and drops the expression for an absolute range', async () => {
+      await open('quick');
+      await click(sideButton('from'));
+      await click(day('2026-10-10'));
+      expect(host.quick()).toEqual({ from: new Date(2026, 9, 10), to: null });
+      expect(host.quickExpr()).toBeNull();
+      expect(summary('to')).toBe('End Not set');
+
+      await click(sideButton('to'));
+      await click(day('2026-10-12'));
+      // an empty end takes the end of the day
+      expect(host.quick()).toEqual({
+        from: new Date(2026, 9, 10),
+        to: new Date(2026, 9, 12, 23, 59, 59, 999),
+      });
+      expect(host.quickExpr()).toBeNull();
+      expect(input('quick').value).toBe('10/10/2026 00:00 - 10/12/2026 23:59');
+    });
+
+    it('takes a typed date on the Absolute tab and refuses an unreadable one', async () => {
+      await open('quick');
+      await click(sideButton('from'));
+      await typeDate('10/9/2026 08:30');
+      expect(host.quick().from).toEqual(new Date(2026, 9, 9, 8, 30));
+      expect(error()).toBeNull();
+      expect(sideDate().getAttribute('aria-invalid')).toBeNull();
+
+      await typeDate('soon');
+      expect(host.quick().from).toEqual(new Date(2026, 9, 9, 8, 30));
+      expect(error()?.textContent).toBe('Choose a start and an end that can be applied.');
+      expect(error()?.getAttribute('role')).toBe('alert');
+      expect(sideDate().getAttribute('aria-invalid')).toBe('true');
+      expect(sideDate().getAttribute('aria-describedby')).toBe(error()!.id);
+      expect(panel().getAttribute('aria-describedby')).toBe(error()!.id);
+      // the Quick select fields are not the cause
+      expect(applyButton().getAttribute('aria-describedby')).toBeNull();
+      expect(amount().getAttribute('aria-invalid')).toBeNull();
+
+      // a date alone is midnight; the message goes
+      await typeDate('10/11/2026');
+      expect(host.quick().from).toEqual(new Date(2026, 9, 11));
+      expect(error()).toBeNull();
+
+      // an emptied field clears the side
+      await typeDate('');
+      expect(host.quick()).toEqual(EMPTY);
+    });
+
+    it('refuses an empty, negative or too big relative amount and keeps the applied range', async () => {
+      await editAfterLast15('from');
+      const applied = host.quick();
+      for (const text of ['', '-3', '1e21']) {
+        await fill(sideAmount(), text);
+        expect({ text, value: host.quick() }).toEqual({ text, value: applied });
+        expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+        expect(error()?.textContent).toBe('Choose a start and an end that can be applied.');
+        expect(sideAmount().getAttribute('aria-invalid')).toBe('true');
+        expect(sideAmount().getAttribute('aria-describedby')).toBe(error()!.id);
+        // the summary keeps the applied side
+        expect(summary('from')).toBe('Start ~ 15 minutes ago');
+      }
+      await fill(sideAmount(), '20');
+      expect(error()).toBeNull();
+      expect(sideAmount().getAttribute('aria-invalid')).toBeNull();
+      expect(host.quickExpr()).toEqual({ from: 'now-20m', to: 'now' });
+    });
+
+    it('refuses a start after the end and a day after the end', async () => {
+      await editAfterLast15('from');
+      await choose('hx-date-range-quick-select-side-unit', 'Minutes from now');
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+      expect(error()).not.toBeNull();
+      await click(tab('Absolute'));
+      expect(error()).toBeNull();
+      await click(day('2026-10-20'));
+      expect(host.quick().from).toEqual(new Date(2026, 9, 14, 15, 15, 20));
+      expect(error()).not.toBeNull();
+      expect(panel().getAttribute('aria-describedby')).toBe(error()!.id);
+    });
+
+    it('drops a refused edit when its editor closes', async () => {
+      await editAfterLast15('from');
+      await fill(sideAmount(), '');
+      expect(error()).not.toBeNull();
+      await click(sideButton('from'));
+      expect(error()).toBeNull();
+      await click(sideButton('from'));
+      expect(sideAmount().value).toBe('15');
+      expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
+    });
+
+    it('keeps the side editor inside minDate and maxDate', async () => {
+      await open('limits');
+      await click(sideButton('from'));
+      // days outside the limits are disabled and ignored
+      expect(day('2026-10-4').getAttribute('aria-disabled')).toBe('true');
+      await click(day('2026-10-4'));
+      expect(host.limits()).toEqual(EMPTY);
+      // a typed date outside the limits is refused
+      await typeDate('10/29/2026 08:00');
+      expect(host.limits()).toEqual(EMPTY);
+      expect(error()).not.toBeNull();
+      // a relative side is moved inside the limits, and so is its resolved date
+      await click(tab('Relative'));
+      await choose('hx-date-range-quick-select-side-unit', 'Days ago');
+      await fill(sideAmount(), '30');
+      expect(host.limits().from).toEqual(host.min);
+      expect(host.limitsExpr()).toBeNull();
+      expect(resolved()).toBe('Resolves to 10/5/2026 08:00');
+      // a picked day keeps an empty start at 00:00, moved up to the minimum time
+      await click(tab('Absolute'));
+      await click(day('2026-10-5'));
+      expect(host.limits().from).toEqual(host.min);
+    });
+
+    it('adds the range of the side editor to Recently used when the popup closes', async () => {
+      await editAfterLast15('from');
+      await fill(sideAmount(), '45');
+      expect(listed('hx-date-range-quick-select-recent')).toEqual(['Last 15 minutes']);
+      await pressEscape();
+      await pressEscape();
+      await open('quick');
+      expect(listed('hx-date-range-quick-select-recent')).toEqual([
+        'Last 45 minutes',
+        'Last 15 minutes',
+      ]);
+      expect(JSON.parse(localStorage.getItem('hx-test-recent')!)[0]).toEqual({
+        from: 'now-45m',
+        to: 'now',
+      });
+    });
+
+    it('sets the tabs again from an expression set from outside', async () => {
+      host.quickExpr.set({ from: 'now-1h', to: 'now' });
+      await settle();
+      await open('quick');
+      await click(sideButton('from'));
+      expect(tab('Relative').getAttribute('aria-selected')).toBe('true');
+      expect(sideAmount().value).toBe('1');
+      await click(sideButton('to'));
+      expect(tab('Now').getAttribute('aria-selected')).toBe('true');
+    });
+
+    describe('Escape', () => {
+      it('closes the side editor first and focuses its summary button, then the popup', async () => {
+        await open('quick');
+        await click(sideButton('to'));
+        await pressEscape();
+        expect(editor()).toBeNull();
+        expect(popup()).not.toBeNull();
+        expect(document.activeElement).toBe(sideButton('to'));
+        await pressEscape();
+        expect(popup()).toBeNull();
+        expect(document.activeElement).toBe(input('quick'));
+      });
+
+      it('closes the side editor from the calendar and from a tab', async () => {
+        await open('quick');
+        await click(sideButton('from'));
+        await press(day('2026-10-14'), 'Escape');
+        expect(editor()).toBeNull();
+        expect(popup()).not.toBeNull();
+        await click(sideButton('from'));
+        await press(tab('Absolute'), 'Escape');
+        expect(editor()).toBeNull();
+        expect(popup()).not.toBeNull();
+      });
+
+      it('opens the popup again with the editor closed', async () => {
+        await open('quick');
+        await click(sideButton('from'));
+        await click(el('quick').querySelector<HTMLButtonElement>('.hx-date-picker-trigger')!);
+        expect(popup()).toBeNull();
+        await open('quick');
+        expect(editor()).toBeNull();
+      });
+    });
+  });
 });
