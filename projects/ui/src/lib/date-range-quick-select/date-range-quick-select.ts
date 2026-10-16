@@ -300,13 +300,14 @@ export class HxDateRangeQuickSelect
     this.field()?.nativeElement.focus();
   }
 
-  /** Opening the popup: the recently used list from storage, no message. */
+  /** Opening the popup: the recently used list from storage, no message, no side editor, no refused edit. */
   protected show(): void {
     if (this.isDisabled() || this.open()) return;
     // blocked storage (or no key) reads `null`: the in-memory list of this session stays
     const stored = readRecentRanges(this.recentStorageKey());
     if (stored) this.recent.set(stored);
     this.quickError.set(false);
+    this.#dropRefusedEdit();
     this.openSide.set(null);
     this.open.set(true);
   }
@@ -316,6 +317,10 @@ export class HxDateRangeQuickSelect
     else this.show();
   }
 
+  /**
+   * Closes the popup, also when the overlay detaches itself (`detach`): a refused edit goes back, the side editor
+   * closes and the range of the side editor is added to Recently used.
+   */
   protected close(refocus = false): void {
     if (!this.open()) return;
     this.#dropRefusedEdit();

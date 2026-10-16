@@ -46,7 +46,7 @@
     (overlayOutsideClick)="onOutsideClick($event)"
     (overlayKeydown)="onOverlayKeydown($event)"
     (attach)="onAttach()"
-    (detach)="open.set(false)"
+    (detach)="close()"
   >
     @let l = texts();
     <div

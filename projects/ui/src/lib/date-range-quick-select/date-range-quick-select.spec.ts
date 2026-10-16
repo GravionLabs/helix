@@ -1,3 +1,4 @@
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -1025,6 +1026,42 @@ describe('HxDateRangeQuickSelect', () => {
       expect(sideAmount().value).toBe('1');
       await click(sideButton('to'));
       expect(tab('Now').getAttribute('aria-selected')).toBe('true');
+    });
+
+    describe('when the overlay detaches itself', () => {
+      /** Detaches the overlay as the CDK does (a scroll strategy, the origin going away), not through `open`. */
+      const detach = async () => {
+        const node = fixture.debugElement
+          .query((d) => d.nativeElement === el('quick'))
+          .queryAllNodes((n) => !!n.injector.get(CdkConnectedOverlay, null, { self: true }))[0];
+        node.injector.get(CdkConnectedOverlay).overlayRef.detach();
+        await settle();
+      };
+
+      it('adds the range of the side editor to Recently used', async () => {
+        await editAfterLast15('from');
+        await fill(sideAmount(), '45');
+        await detach();
+        expect(popup()).toBeNull();
+        await open('quick');
+        expect(editor()).toBeNull();
+        expect(listed('hx-date-range-quick-select-recent')).toEqual([
+          'Last 45 minutes',
+          'Last 15 minutes',
+        ]);
+      });
+
+      it('drops a refused edit and its message', async () => {
+        await editAfterLast15('from');
+        await fill(sideAmount(), '');
+        expect(error()).not.toBeNull();
+        await detach();
+        await open('quick');
+        expect(error()).toBeNull();
+        await click(sideButton('from'));
+        expect(sideAmount().value).toBe('15');
+        expect(sideAmount().getAttribute('aria-invalid')).toBeNull();
+      });
     });
 
     describe('Escape', () => {
