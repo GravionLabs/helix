@@ -1,0 +1,190 @@
+/*
+ * DateRangeQuickSelect: `<hx-date-range-quick-select>`. One read-only field with a button (styled by `date-picker.scss`)
+ * and a compact Kibana-style popup: Quick select (Last/Next N unit, Apply), Commonly used, Recently used and one
+ * summary button each for the start and the end, which opens the editor of that side (tabs Absolute / Relative / Now,
+ * the calendar in the Absolute tab); every colour and size comes from the date picker and input tokens.
+ */
+.hx-date-range-quick-select {
+  display: block;
+  position: relative;
+}
+
+.hx-date-range-quick-select .hx-date-range-quick-select-control {
+  display: flex;
+  width: 100%;
+}
+
+/* kept compact, about 360px wide; the popup carries the outer border */
+.hx-date-range-quick-select-popup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+  width: 24rem;
+  max-width: calc(100vw - 2rem);
+  overflow: auto;
+  padding: var(--h-datepicker-panel-padding);
+  border: 1px solid var(--h-datepicker-panel-border-color);
+}
+
+.hx-date-range-quick-select-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-caption {
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-range-quick-select-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-amount {
+  width: 4.5rem;
+}
+
+/* the selects keep a readable width */
+.hx-date-range-quick-select-direction {
+  min-width: 5.5rem;
+}
+
+.hx-date-range-quick-select-unit {
+  min-width: 6.5rem;
+}
+
+.hx-date-range-quick-select-apply {
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+/* the other list classes (`-common`, `-recent`) are hooks styled through their parts */
+.hx-date-range-quick-select-ranges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-date-range-quick-select-ranges .hx-date-picker-button {
+  width: 100%;
+  text-align: start;
+}
+
+/* one line per side: the name above its value */
+.hx-date-range-quick-select-summary {
+  display: flex;
+  align-items: stretch;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-side-line {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: var(--h-datepicker-select-month-padding);
+  border: 1px solid var(--h-datepicker-panel-border-color);
+  border-radius: var(--h-datepicker-select-month-border-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.hx-date-range-quick-select-side-line:hover {
+  background: var(--h-datepicker-select-month-hover-background);
+}
+
+/* the side whose editor is open */
+.hx-date-range-quick-select-side-line[aria-expanded='true'] {
+  border-color: var(--h-datepicker-date-selected-background);
+}
+
+.hx-date-range-quick-select-side-line:focus-visible,
+.hx-date-range-quick-select-tab:focus-visible,
+.hx-date-range-quick-select-tabpanel:focus-visible {
+  outline: var(--h-datepicker-date-focus-ring-width) var(--h-datepicker-date-focus-ring-style)
+    var(--h-datepicker-date-focus-ring-color);
+  outline-offset: var(--h-datepicker-date-focus-ring-offset);
+}
+
+.hx-date-range-quick-select-side-name {
+  color: var(--h-datepicker-week-day-color);
+  font-weight: var(--h-datepicker-week-day-font-weight);
+}
+
+.hx-date-range-quick-select-side-value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* the editor of one side: tabs Absolute / Relative / Now; the other classes (`-editor-from`, `-editor-to`,
+   `-side-date`, `-expression`, `-resolved-date`) are hooks styled through their parts */
+.hx-date-range-quick-select-editor,
+.hx-date-range-quick-select-tabpanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--h-datepicker-panel-border-color);
+}
+
+.hx-date-range-quick-select-tab {
+  padding: var(--h-datepicker-select-month-padding);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--h-datepicker-select-month-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+.hx-date-range-quick-select-tab:hover {
+  background: var(--h-datepicker-select-month-hover-background);
+}
+
+.hx-date-range-quick-select-tab[aria-selected='true'] {
+  border-bottom-color: var(--h-datepicker-date-selected-background);
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-range-quick-select-side-amount {
+  width: 4.5rem;
+}
+
+.hx-date-range-quick-select-side-unit {
+  flex: 1 1 10rem;
+}
+
+.hx-date-range-quick-select-side-round {
+  display: flex;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-now-hint,
+.hx-date-range-quick-select-side-resolved {
+  margin: 0;
+}
+
+/* the date math of a relative side and the date it resolves to */
+.hx-date-range-quick-select-side-resolved {
+  color: var(--h-datepicker-week-day-color);
+}
+
+/* a range could not be applied */
+.hx-date-range-quick-select-error {
+  margin: 0;
+  color: var(--h-inputtext-invalid-border-color);
+}

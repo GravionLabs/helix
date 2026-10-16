@@ -12,6 +12,7 @@
   [attr.aria-controls]="open() ? panelId : null"
   [attr.aria-label]="ariaLabel() ?? null"
   [attr.aria-labelledby]="ariaLabelledby() ?? null"
+  [attr.aria-describedby]="ariaDescribedby() ?? null"
   [attr.aria-invalid]="invalid() ? 'true' : null"
   (click)="toggle()"
   (keydown)="onTriggerKeydown($event)"
@@ -29,7 +30,7 @@
 
 <ng-template
   cdkConnectedOverlay
-  cdkConnectedOverlayPanelClass="hx-select-overlay"
+  [cdkConnectedOverlayPanelClass]="overlayClass"
   [cdkConnectedOverlayOrigin]="origin"
   [cdkConnectedOverlayOpen]="open()"
   [cdkConnectedOverlayPositions]="positions"

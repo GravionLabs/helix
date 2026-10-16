@@ -25,21 +25,20 @@ import {
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { HxDatePicker, type HxDatePickerValue } from '../date-picker/date-picker';
+import {
+  type HxDateTimeRangePreset,
+  hxResolvePreset,
+} from '../date-range-presets/date-range-presets';
 import { clampTime, isSameDay, isValidDate, startOfDay, withTime } from '../internal/dates';
 import { parseDateText, parseDateTimeText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
+import { HxRangePresets } from '../internal/range-presets/range-presets';
+import { isInSelectOverlay } from '../select/select';
 import { HxTimePicker, type HxTimePickerValue } from '../time-picker/time-picker';
 
 export interface HxDateTimeRangeValue {
   from: Date | null;
   to: Date | null;
-}
-
-/** A relative range in the popup's preset list; `from` and `to` are read when it is chosen (`now` stays current). */
-export interface HxDateTimeRangePreset {
-  label: string;
-  from: () => Date;
-  to: () => Date;
 }
 
 const EMPTY: HxDateTimeRangeValue = { from: null, to: null };
@@ -69,7 +68,7 @@ const later = (a: Date | null, b: Date | null) => (a && b ? (a >= b ? a : b) : (
  */
 @Component({
   selector: 'hx-date-time-range-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxTimePicker],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, HxDatePicker, HxRangePresets, HxTimePicker],
   templateUrl: './date-time-range-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -97,6 +96,8 @@ export class HxDateTimeRangePicker
   readonly presetsLabel = input('Presets');
   /** Ready-made ranges listed in the popup; choosing one fills the draft, Submit applies it. */
   readonly presets = input<readonly HxDateTimeRangePreset[]>([]);
+  /** The presets as a row of `buttons` (default) or in a compact `select`. */
+  readonly presetDisplay = input<'buttons' | 'select'>('buttons');
   readonly clearLabel = input('Clear');
   readonly cancelLabel = input('Cancel');
   readonly submitLabel = input('Submit');
@@ -125,7 +126,6 @@ export class HxDateTimeRangePicker
   readonly showButtonBar = input(false, { transform: booleanAttribute });
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
-
   // The signal-forms contract (FormValueControl): value, disabled, invalid, touch.
   readonly value = model<HxDateTimeRangeValue>(EMPTY);
   readonly disabled = input(false, { transform: booleanAttribute });
@@ -137,6 +137,8 @@ export class HxDateTimeRangePicker
   readonly open = signal(false);
   /** The range being edited in the popup; Submit makes it the value, Cancel drops it. */
   protected readonly draft = signal<HxDateTimeRangeValue>(EMPTY);
+  /** The preset chosen in the select (shown until the draft changes otherwise or the popup opens again). */
+  protected readonly selectedPreset = signal<HxDateTimeRangePreset | null>(null);
   protected readonly popupId = nextId('hx-date-time-range-picker-popup');
   protected readonly positions: ConnectedPosition[] = [
     {
@@ -183,8 +185,7 @@ export class HxDateTimeRangePicker
     if (typed !== null) return typed;
     const { from, to } = this.value();
     if (!from && !to) return '';
-    const fmt = this.#format();
-    const one = (d: Date | null) => (d ? fmt.format(d).replace(/,\s*/, ' ') : '');
+    const one = (d: Date | null) => (d ? this.#formatDate(d) : '');
     return `${one(from)} ${this.separator()} ${one(to)}`.trim();
   });
   protected readonly isDisabled = computed(() => this.disabled() || this.#cvaDisabled());
@@ -233,6 +234,7 @@ export class HxDateTimeRangePicker
   protected show(): void {
     if (this.isDisabled() || this.open()) return;
     this.#stage(this.value());
+    this.selectedPreset.set(null);
     this.open.set(true);
   }
 
@@ -289,7 +291,7 @@ export class HxDateTimeRangePicker
     const next = this.#parseRange(typed);
     if (next && !sameRange(next, this.value())) {
       this.#commit(next);
-      // an open popup edits the typed range from now on: a later Submit keeps it
+      // an open popup edits the typed range from now on
       if (this.open()) this.#stage(next);
     }
     this.#showValue();
@@ -350,21 +352,35 @@ export class HxDateTimeRangePicker
   }
 
   protected onOutsideClick(event: MouseEvent): void {
+    // the list of the preset select is its own overlay
+    if (this.#inSelectList(event.target)) return;
     if (!this.#host.nativeElement.contains(event.target as Node)) this.close();
   }
 
+  /** Empties the draft; Submit applies the empty range. */
   protected clear(): void {
     this.#stage(EMPTY);
   }
 
+  /** A preset chosen (a button or the select): fills the draft; the select shows it (staging resets it, so set after). */
+  protected selectPreset(preset: HxDateTimeRangePreset): void {
+    if (this.applyPreset(preset)) this.selectedPreset.set(preset);
+  }
+
+  #inSelectList(target: EventTarget | null): boolean {
+    return isInSelectOverlay(target);
+  }
+
   /** Puts a preset into the draft (the calendar and the time pickers show it); Submit commits it. */
-  protected applyPreset(preset: HxDateTimeRangePreset): void {
+  protected applyPreset(preset: HxDateTimeRangePreset): boolean {
     const { from: oldFrom, to: oldTo } = this.draft();
-    const from = this.#fitPreset(preset.from(), oldFrom);
-    const to = this.#fitPreset(preset.to(), oldTo ?? oldFrom);
+    const range = hxResolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date, side) =>
+      this.#fitPreset(date, side === 'from' ? oldFrom : (oldTo ?? oldFrom)),
+    );
     // a side on a day in `disabledDates` refuses the preset, as a click or a typed day would
-    if (from === undefined || to === undefined) return;
-    this.#stage(from && to && to < from ? { from: to, to: from } : { from, to });
+    if (!range) return false;
+    this.#stage(range);
+    return true;
   }
 
   /**
@@ -391,10 +407,15 @@ export class HxDateTimeRangePicker
     this.close(true);
   }
 
+  #formatDate(date: Date): string {
+    return this.#format().format(date).replace(/,\s*/, ' ');
+  }
+
   /** The focus left the control (field, button and popup): the popup closes and the control is touched. */
   protected onHostFocusOut(event: FocusEvent): void {
     const next = event.relatedTarget as HTMLElement | null;
     if (
+      this.#inSelectList(next) ||
       next?.closest('.hx-date-time-range-picker-popup') ||
       this.#host.nativeElement.contains(next)
     )
@@ -409,6 +430,7 @@ export class HxDateTimeRangePicker
     const next = event.relatedTarget as HTMLElement | null;
     if (
       !next ||
+      this.#inSelectList(next) ||
       next.closest('.hx-date-time-range-picker-popup') ||
       this.#host.nativeElement.contains(next)
     )
@@ -503,12 +525,19 @@ export class HxDateTimeRangePicker
 
   /** Sets the draft; a side is moved into `minDate`..`maxDate` including the time. */
   #stage(next: HxDateTimeRangeValue): void {
-    const inside = (d: Date | null) =>
-      isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
-    const clean = { from: inside(next.from), to: inside(next.to) };
+    const clean = this.#inside(next);
+    // a changed draft is a new attempt: the preset select can take any preset again
+    this.selectedPreset.set(null);
     if (clean.from) this.#lastFrom = clean.from;
     if (clean.to) this.#lastTo = clean.to;
     this.draft.set(clean);
+  }
+
+  /** A range with each side moved into `minDate`..`maxDate` including the time (an invalid side is empty). */
+  #inside(next: HxDateTimeRangeValue): HxDateTimeRangeValue {
+    const inside = (d: Date | null) =>
+      isValidDate(d) ? clampTime(d, this.minDate(), this.maxDate()) : null;
+    return { from: inside(next.from), to: inside(next.to) };
   }
 
   #commit(next: HxDateTimeRangeValue): void {

@@ -89,12 +89,23 @@ export {
   type HxDatePickerValue,
 } from './lib/date-picker/date-picker';
 export {
+  HX_DATE_RANGE_DAY_PRESETS,
+  HX_DATE_RANGE_PRESETS,
+  type HxDateRangePresetId,
+  type HxDateTimeRangePreset,
+  type HxDateTimeRangePresetContext,
+  hxDateRangePresets,
+} from './lib/date-range-presets/date-range-presets';
+export {
+  HxDateRangeQuickSelect,
+  type HxDateRangeQuickSelectValue,
+} from './lib/date-range-quick-select/date-range-quick-select';
+export {
   HxDateTimePicker,
   type HxDateTimePickerValue,
 } from './lib/date-time-picker/date-time-picker';
 export {
   HxDateTimeRangePicker,
-  type HxDateTimeRangePreset,
   type HxDateTimeRangeValue,
 } from './lib/date-time-range-picker/date-time-range-picker';
 export {
@@ -140,6 +151,21 @@ export {
   type HxInputNumberSize,
   type HxInputNumberVariant,
 } from './lib/input-number/input-number';
+export {
+  type HxDateMathOptions,
+  type HxDateMathUnit,
+  hxParseDateMath,
+  hxRelativeRangeExpressions,
+} from './lib/internal/date-math/date-math';
+export {
+  HX_QUICK_SELECT_COMMONLY_USED,
+  HX_QUICK_SELECT_LABELS,
+  type HxDateRangeExpression,
+  type HxQuickSelectLabels,
+  type HxQuickSelectRange,
+  hxResolveRangeExpression,
+  hxResolveRangeSide,
+} from './lib/internal/quick-select/quick-select';
 export { HxListbox } from './lib/listbox/listbox';
 export { HxMenu } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';

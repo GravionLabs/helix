@@ -60,11 +60,14 @@
       (focusout)="onPopupFocusOut($event)"
     >
       @if (presets().length > 0) {
-        <div class="hx-date-time-range-picker-presets" role="group" [attr.aria-label]="presetsLabel()">
-          @for (preset of presets(); track $index) {
-            <button type="button" class="hx-date-picker-button hx-date-time-range-picker-preset" (click)="applyPreset(preset)">{{ preset.label }}</button>
-          }
-        </div>
+        <hx-range-presets
+          [presets]="presets()"
+          [display]="presetDisplay()"
+          [label]="presetsLabel()"
+          [disabled]="isDisabled()"
+          [selected]="selectedPreset()"
+          (chosen)="selectPreset($event)"
+        />
       }
       <div class="hx-date-time-range-picker-body">
         @if (!timeOnly()) {
@@ -129,7 +132,11 @@
         }
         <span class="hx-date-time-range-picker-spacer"></span>
         <button type="button" class="hx-date-picker-button hx-date-time-range-picker-cancel" (click)="close(true)">{{ cancelLabel() }}</button>
-        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-submit" (click)="submit()">{{ submitLabel() }}</button>
+        <button
+          type="button"
+          class="hx-date-picker-button hx-date-time-range-picker-submit"
+          (click)="submit()"
+        >{{ submitLabel() }}</button>
       </div>
     </div>
   </ng-template>

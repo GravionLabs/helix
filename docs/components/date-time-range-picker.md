@@ -20,6 +20,7 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
 | `typeable` | `boolean` | `false` | The range can be typed into the field (see Typing); otherwise the field is read-only. |
 | `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
+| `presetDisplay` | `'buttons' \| 'select'` | `'buttons'` | Presets as buttons, or as one select (see below). |
 | `presetsLabel` | `string` | `Presets` | Name of the preset group. |
 | `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
 | `showTime` | `boolean` | `true` | The time pickers; `false` picks days only (midnight). |
@@ -30,6 +31,27 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 | `showButtonBar` | `boolean` | `false` | A Clear button (empties the range being edited) beside Cancel and Submit. |
 | `disabled`, `invalid` | `boolean` | `false` | |
 | `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
+
+## Exports
+
+Besides the component, `@gravionlabs/helix-ui` exports these types, lists and functions for ranges and presets:
+
+| Export | Description |
+| ------ | ----------- |
+| `HxDateTimeRangeValue` | The value, `{ from: Date \| null; to: Date \| null }`. |
+| `HxDateTimeRangePreset` | A preset, `{ label, from(context?), to(context?) }`. |
+| `HxDateTimeRangePresetContext` | What a preset's functions receive: `{ firstDayOfWeek }` of the picker. |
+| `HX_DATE_RANGE_PRESETS`, `HX_DATE_RANGE_DAY_PRESETS`, `hxDateRangePresets(labels)` | The built-in presets (see below). |
+| `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
+
+## When to use which
+
+- Use this picker for a fixed range of days and times chosen on a calendar (a shift, a booking, a reporting period),
+  with optional ready-made presets and a Submit / Cancel draft.
+- Use the [date range quick select](date-range-quick-select.md) for time windows that move with the clock ("Last 15
+  minutes", "Next 7 days"), with commonly and recently used lists and an `expression` you can resolve again later.
+
+## Behaviour
 
 - **Presets:** each `{ label, from: () => Date, to: () => Date }` (`HxDateTimeRangePreset`) is a button in the popup; the
   functions run when it is chosen, so `now` stays current. A preset fills the draft (calendar and time pickers show it);
@@ -46,6 +68,47 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 
   ```html
   <hx-date-time-range-picker placeholder="Pick a range" [presets]="presets" [(value)]="range" />
+  ```
+- **Built-in presets:** `presets` is empty by default; opt in with the ready-made lists. `HX_DATE_RANGE_PRESETS` has
+  Last 15 minutes, Last 1 hour, Last 6 hours, Last 24 hours, Last 7 days, Last 30 days, Today, Yesterday, This week and
+  This month. Last 7 days and Last 30 days count calendar days: they start at midnight of the first day (today and the
+  6 or 29 days before), not 7 x 24 hours ago, and end now; Yesterday, This week and This month end at 23:59:59.999 of
+  their last day. `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days, This month) starts at midnight and suits
+  `[showTime]="false"`. `hxDateRangePresets(labels)` returns the list with your own (translated) labels per id
+  (`last15Minutes`, `last1Hour`, `last6Hours`, `last24Hours`, `last7Days`, `last30Days`, `today`, `yesterday`,
+  `thisWeek`, `thisMonth`; ids you leave out keep the English label). "This week" starts on `firstDayOfWeek`.
+
+  ```html
+  <hx-date-time-range-picker [presets]="presets" presetDisplay="select" [(value)]="range" />
+  <hx-date-time-range-picker [showTime]="false" [presets]="dayPresets" [(value)]="days" />
+  ```
+
+  ```ts
+  readonly presets = HX_DATE_RANGE_PRESETS;
+  readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
+  readonly german = hxDateRangePresets({ today: 'Heute', yesterday: 'Gestern' });
+  ```
+- **Preset select:** with `presetDisplay="select"` the presets are one `hx-select` above the calendar instead of a row
+  of buttons. It has no value of its own: it shows the placeholder each time the popup opens, and choosing an entry
+  fills the draft exactly as a button does (Submit applies it, Cancel drops it). Once the draft changes otherwise (a
+  day click, a time), the select shows its placeholder again, so the same preset can be chosen again.
+- **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
+  invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
+  (round down to the start of the unit; to its last millisecond with `roundUp`). Units are case-sensitive: `s`, `m`,
+  `h`, `d`, `w`, `M` (month), `y`. Day, week, month and year shifts follow the calendar (DST-safe, a month shift clamps
+  the day). `/w` starts on `firstDayOfWeek`.
+
+  | Expression | Meaning |
+  | ---------- | ------- |
+  | `now` | The moment of the call. |
+  | `now-15m` | 15 minutes ago. |
+  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`). |
+  | `now/w` | Start of this week (the end of this week with `roundUp`). |
+  | `now+1M/M` | Start of next month. |
+
+  ```ts
+  hxParseDateMath('now-7d/d', { firstDayOfWeek: 1 }); // 7 days ago, 00:00
+  hxParseDateMath('now-7x'); // null
   ```
 - **Field:** read-only unless `typeable`; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
   Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.

@@ -25,11 +25,17 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import {
+  type HxDateTimeRangePreset,
+  hxResolvePreset,
+} from '../date-range-presets/date-range-presets';
 import { HxCalendar } from '../internal/calendar/calendar';
 import { type CalendarView, isDateDisabled } from '../internal/calendar/calendar-helpers';
 import { clampTime, compareDays, isSameDay, isValidDate, startOfDay } from '../internal/dates';
 import { parseDateText } from '../internal/field/date-text';
 import { nextId } from '../internal/ids';
+import { HxRangePresets } from '../internal/range-presets/range-presets';
+import { isInSelectOverlay } from '../select/select';
 
 const startOfDayOrNull = (date: Date | null) => (isValidDate(date) ? startOfDay(date) : null);
 
@@ -54,10 +60,20 @@ export type HxDatePickerValue = Date | Date[] | null;
  *
  * Keyboard in the day grid: arrows move by a day or a week, Home and End to the start and end of the week,
  * Page Up and Page Down by a month (with Shift by a year), Enter or Space selects.
+ *
+ * With `selectionMode="range"`, `presets` lists ready-made ranges above the calendar (as buttons, or with
+ * `presetDisplay="select"` in a select), for example `HX_DATE_RANGE_DAY_PRESETS` (Today, Last 7 days, This month).
+ * Choosing one sets the value at once to the days of its ends (midnight, in order; moved into `minDate`..`maxDate`)
+ * and closes the popup. A preset with an end on a disabled day, or one that lies wholly outside
+ * `minDate`..`maxDate`, is refused with an inline message (`presetRefusedLabel`, `role="alert"`).
+ *
+ * ```html
+ * <hx-date-picker selectionMode="range" [presets]="dayPresets" presetDisplay="select" [(ngModel)]="stay" />
+ * ```
  */
 @Component({
   selector: 'hx-date-picker',
-  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar],
+  imports: [CdkConnectedOverlay, CdkOverlayOrigin, NgTemplateOutlet, HxCalendar, HxRangePresets],
   templateUrl: './date-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
@@ -108,6 +124,14 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   readonly locale = input<string>();
   readonly ariaLabel = input<string>();
   readonly ariaLabelledby = input<string>();
+  /** Ready-made ranges above the calendar, only with `selectionMode="range"`; choosing one sets the value. */
+  readonly presets = input<readonly HxDateTimeRangePreset[]>([]);
+  /** The presets as a row of `buttons` (default) or in a compact `select`. */
+  readonly presetDisplay = input<'buttons' | 'select'>('buttons');
+  /** The name of the group of preset buttons, and of the preset select. */
+  readonly presetsLabel = input('Presets');
+  /** The message shown when a preset cannot be chosen (a disabled day, outside `minDate`..`maxDate`). */
+  readonly presetRefusedLabel = input('This range cannot be chosen.');
 
   // The signal-forms contract (FormValueControl): value, disabled, invalid, touch.
   readonly value = model<HxDatePickerValue>(null);
@@ -124,6 +148,33 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   ];
   private readonly field = viewChild<ElementRef<HTMLInputElement>>('field');
   private readonly calendar = viewChild(HxCalendar);
+  /** The presets shown: range mode only. */
+  protected readonly shownPresets = computed(() =>
+    this.selectionMode() === 'range' ? this.presets() : [],
+  );
+  /** The last preset chosen and the value it made. */
+  readonly #chosen = signal<{ preset: HxDateTimeRangePreset; from: Date; to: Date } | null>(null);
+  /**
+   * The preset the select shows: the chosen one while the value still holds its days, looked up by label in the
+   * current list (a new `presets` array with the same entries keeps it).
+   */
+  protected readonly selectedPreset = computed(() => {
+    const chosen = this.#chosen();
+    if (!chosen) return null;
+    const days = this.selectedDates();
+    const same =
+      days.length === 2 && isSameDay(days[0], chosen.from) && isSameDay(days[1], chosen.to);
+    if (!same) return null;
+    const list = this.shownPresets();
+    return (
+      list.find((p) => p === chosen.preset) ??
+      list.find((p) => p.label === chosen.preset.label) ??
+      null
+    );
+  });
+  /** A preset was refused: the message under the presets, until the next choice or edit. */
+  protected readonly presetError = signal(false);
+  protected readonly presetErrorId = nextId('hx-date-picker-preset-error');
   /** The text typed and not yet committed; `null` while the field shows the value. */
   readonly #typed = signal<string | null>(null);
   protected readonly view = signal<CalendarView>('day');
@@ -179,6 +230,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   writeValue(value: HxDatePickerValue): void {
     this.#typed.set(null);
+    this.presetError.set(false);
     this.value.set(value ?? null);
   }
   registerOnChange(fn: (value: HxDatePickerValue) => void): void {
@@ -243,7 +295,58 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
     }
   }
 
+  /**
+   * Sets the value to the days of a preset (midnight, in order, inside `minDate`..`maxDate`) and closes the popup.
+   * A preset with an end on a disabled day, or wholly outside `minDate`..`maxDate` (both ends before `minDate` or
+   * both after `maxDate`), changes nothing and shows the inline message; one that overlaps the limits is cut to them.
+   */
+  protected applyPreset(preset: HxDateTimeRangePreset): void {
+    if (this.isDisabled()) return;
+    const range = hxResolvePreset(preset, { firstDayOfWeek: this.firstDayOfWeek() }, (date) =>
+      this.#presetDay(date),
+    );
+    const [min, max] = [this.minDate(), this.maxDate()];
+    const outside =
+      !range?.from ||
+      !range.to ||
+      (isValidDate(min) && compareDays(range.to, min) < 0) ||
+      (isValidDate(max) && compareDays(range.from, max) > 0);
+    const from = range?.from && this.#inLimits(range.from);
+    const to = range?.to && this.#inLimits(range.to);
+    if (outside || !from || !to || this.isDateDisabled(from) || this.isDateDisabled(to)) {
+      this.presetError.set(true);
+      return;
+    }
+    const next = [from, to];
+    this.#typed.set(null);
+    this.focusedDate.set(from);
+    this.#commit(next);
+    this.#chosen.set({ preset, from, to });
+    if (this.inline() || !this.open()) return;
+    this.close();
+    // after the render: the preset select puts the focus back on itself first, then the popup is gone
+    afterNextRender(() => this.field()?.nativeElement.focus(), { injector: this.#injector });
+  }
+
+  /** An end of a preset as a day: midnight; `undefined` on a day in `disabledDates`, `null` for an invalid date. */
+  #presetDay(date: Date): Date | null | undefined {
+    if (!isValidDate(date)) return null;
+    const day = startOfDay(date);
+    return this.disabledDates().some((d) => isSameDay(d, day)) ? undefined : day;
+  }
+
+  /** A day moved into the days `minDate`..`maxDate`. */
+  #inLimits(day: Date): Date {
+    const max = this.maxDate();
+    return clampTime(
+      day,
+      startOfDayOrNull(this.minDate()),
+      isValidDate(max) ? startOfDay(max) : null,
+    );
+  }
+
   #commit(next: HxDatePickerValue): void {
+    this.presetError.set(false);
     this.value.set(next);
     this.#onChange(next);
   }
@@ -259,6 +362,7 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
 
   protected show(): void {
     if (this.isDisabled() || this.inline() || this.open()) return;
+    this.presetError.set(false);
     this.open.set(true);
   }
 
@@ -291,6 +395,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   }
 
   protected onOutsideClick(event: MouseEvent): void {
+    // the list of the preset select is its own overlay
+    if (isInSelectOverlay(event.target)) return;
     if (!this.#host.nativeElement.contains(event.target as Node)) this.close();
   }
 
@@ -361,7 +467,8 @@ export class HxDatePicker implements ControlValueAccessor, FormValueControl<HxDa
   protected onFocusOut(event: FocusEvent): void {
     if (!this.inline()) return;
     const host = this.#host.nativeElement;
-    if (host.contains(event.relatedTarget as Node | null)) return;
+    const next = event.relatedTarget as Node | null;
+    if (host.contains(next) || isInSelectOverlay(next)) return;
     this.#onTouched();
     this.touch.emit();
   }

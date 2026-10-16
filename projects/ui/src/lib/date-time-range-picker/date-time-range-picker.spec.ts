@@ -4,10 +4,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
 import { By } from '@angular/platform-browser';
 import {
-  HxDateTimeRangePicker,
+  HX_DATE_RANGE_DAY_PRESETS,
+  HX_DATE_RANGE_PRESETS,
   type HxDateTimeRangePreset,
-  type HxDateTimeRangeValue,
-} from './date-time-range-picker';
+  hxDateRangePresets,
+} from '../date-range-presets/date-range-presets';
+import { HxDateTimeRangePicker, type HxDateTimeRangeValue } from './date-time-range-picker';
 
 @Component({
   imports: [HxDateTimeRangePicker, FormsModule, ReactiveFormsModule, FormField],
@@ -96,6 +98,22 @@ import {
       [(value)]="presetDays"
     />
     <hx-date-time-range-picker
+      id="presetSelect"
+      locale="en-US"
+      presetDisplay="select"
+      presetsLabel="Quick ranges"
+      [presets]="presetList"
+      [(value)]="selectValue"
+    />
+    <hx-date-time-range-picker
+      id="presetSelectDays"
+      locale="en-US"
+      presetDisplay="select"
+      [showTime]="false"
+      [presets]="builtIn"
+      [(value)]="selectDays"
+    />
+    <hx-date-time-range-picker
       id="presetsClock"
       locale="en-US"
       timeOnly
@@ -146,6 +164,53 @@ import {
       locale="en-US"
       [formField]="f.span"
     />
+    <hx-date-time-range-picker
+      id="selModel"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [(ngModel)]="selModel"
+    />
+    <hx-date-time-range-picker
+      id="selReactive"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [formControl]="selControl"
+    />
+    <hx-date-time-range-picker
+      id="selSignal"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [formField]="sf.span"
+    />
+    <hx-date-time-range-picker
+      id="selOff"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="presetList"
+      [disabled]="true"
+    />
+    <hx-date-time-range-picker
+      id="selLimits"
+      locale="en-US"
+      presetDisplay="select"
+      [presets]="limitPresets"
+      [minDate]="min"
+      [maxDate]="max"
+      [disabledDates]="blockedDays"
+      [(value)]="selLimits"
+    />
+    <hx-date-time-range-picker
+      id="btnLimits"
+      locale="en-US"
+      [presets]="limitPresets"
+      [minDate]="min"
+      [maxDate]="max"
+      [disabledDates]="blockedDays"
+      [(value)]="btnLimits"
+    />
   `,
 })
 class Host {
@@ -178,6 +243,9 @@ class Host {
       to: () => new Date(2026, 9, 14, 9, 0),
     },
   ];
+  builtIn = hxDateRangePresets({ today: 'Heute', last7Days: 'Letzte 7 Tage' });
+  selectValue = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  selectDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
   presetDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
   clockPresets: HxDateTimeRangePreset[] = [
     {
@@ -229,6 +297,34 @@ class Host {
     span: { from: null, to: null },
   });
   f = form(this.state);
+  selModel: HxDateTimeRangeValue = { from: null, to: null };
+  selControl = new FormControl<HxDateTimeRangeValue>({ from: null, to: null });
+  selState = signal<{ span: HxDateTimeRangeValue }>({ span: { from: null, to: null } });
+  sf = form(this.selState);
+  selLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  btnLimits = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  limitPresets: HxDateTimeRangePreset[] = [
+    {
+      label: 'Wide',
+      from: () => new Date(2026, 9, 1, 0, 0),
+      to: () => new Date(2026, 10, 2, 0, 0),
+    },
+    {
+      label: 'Over a blocked day',
+      from: () => new Date(2026, 9, 13, 9, 0),
+      to: () => new Date(2026, 9, 14, 9, 0),
+    },
+    {
+      label: 'Before the minimum',
+      from: () => new Date(2026, 8, 1, 0, 0),
+      to: () => new Date(2026, 8, 3, 0, 0),
+    },
+    {
+      label: 'After the maximum',
+      from: () => new Date(2026, 10, 10, 0, 0),
+      to: () => new Date(2026, 10, 12, 0, 0),
+    },
+  ];
 }
 
 describe('HxDateTimeRangePicker', () => {
@@ -280,6 +376,8 @@ describe('HxDateTimeRangePicker', () => {
   };
 
   beforeEach(async () => {
+    // jsdom has no layout: the CDK listbox of the preset select scrolls the active option into view
+    Element.prototype.scrollIntoView = () => {};
     await TestBed.configureTestingModule({
       imports: [Host],
     }).compileComponents();
@@ -288,7 +386,11 @@ describe('HxDateTimeRangePicker', () => {
     await settle();
   });
 
-  afterEach(() => fixture.destroy());
+  const scrollIntoView = Element.prototype.scrollIntoView;
+  afterEach(() => {
+    fixture.destroy();
+    Element.prototype.scrollIntoView = scrollIntoView;
+  });
 
   it('is one read-only field with one button', () => {
     expect(el('basic').querySelectorAll('input').length).toBe(1);
@@ -311,14 +413,12 @@ describe('HxDateTimeRangePicker', () => {
 
   it('renders no preset list without presets', async () => {
     await open('basic');
-    expect(popup()?.querySelector('.hx-date-time-range-picker-presets')).toBeNull();
+    expect(popup()?.querySelector('.hx-range-presets')).toBeNull();
   });
 
   it('applies a preset to from and to on submit', async () => {
     await open('presets');
-    const buttons = [
-      ...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset'),
-    ];
+    const buttons = [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')];
     expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Morning', 'Two days', 'Reversed']);
     await click(buttons[0]);
     expect(host.withPresets()).toEqual({ from: null, to: null });
@@ -333,7 +433,7 @@ describe('HxDateTimeRangePicker', () => {
   });
 
   const preset = (label: string) =>
-    [...popup()!.querySelectorAll<HTMLElement>('.hx-date-time-range-picker-preset')].find(
+    [...popup()!.querySelectorAll<HTMLElement>('.hx-range-preset')].find(
       (b) => b.textContent?.trim() === label,
     ) as HTMLElement;
   const marked = () =>
@@ -400,9 +500,7 @@ describe('HxDateTimeRangePicker', () => {
 
   it('names the preset group with presetsLabel and lists native buttons', async () => {
     await open('presets');
-    expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Presets');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe('Presets');
     // a native `type=button` is activated by Enter and Space by the browser (synthetic keys do not activate it)
     expect(preset('Morning').tagName).toBe('BUTTON');
     expect(preset('Morning').getAttribute('type')).toBe('button');
@@ -410,9 +508,136 @@ describe('HxDateTimeRangePicker', () => {
     expect(document.activeElement).toBe(preset('Morning'));
     await close();
     await open('presetsDays');
+    expect(popup()?.querySelector('.hx-range-presets')?.getAttribute('aria-label')).toBe(
+      'Quick ranges',
+    );
+  });
+
+  const option = (label: string) =>
+    [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === label,
+    ) as HTMLElement;
+  const selectTrigger = () => popup()!.querySelector('.hx-select-trigger') as HTMLButtonElement;
+
+  it('shows the presets in a select with presetDisplay select', async () => {
+    await open('presetSelect');
+    expect(popup()!.querySelector('.hx-range-preset')).toBeNull();
+    expect(selectTrigger().getAttribute('aria-label')).toBe('Quick ranges');
+    await click(selectTrigger());
     expect(
-      popup()?.querySelector('.hx-date-time-range-picker-presets')?.getAttribute('aria-label'),
-    ).toBe('Quick ranges');
+      [...document.querySelectorAll('.hx-select-option')].map((o) => o.textContent?.trim()),
+    ).toEqual(['Morning', 'Two days', 'Reversed']);
+  });
+
+  it('fills the draft with a preset chosen in the select and keeps the popup open', async () => {
+    await open('presetSelect');
+    await click(selectTrigger());
+    await click(option('Morning'));
+    expect(popup()).not.toBeNull();
+    expect(selectTrigger().textContent?.trim()).toBe('Morning');
+    expect(now('from', 'Hour')).toBe('6');
+    expect(now('to', 'Minute')).toBe('30');
+    expect(host.selectValue()).toEqual({ from: null, to: null });
+    await submit();
+    expect(host.selectValue()).toEqual({
+      from: new Date(2026, 9, 7, 6, 0),
+      to: new Date(2026, 9, 7, 12, 30),
+    });
+  });
+
+  it('keeps the buttons by default', async () => {
+    await open('presets');
+    expect(popup()!.querySelector('hx-select')).toBeNull();
+  });
+
+  it('starts the select empty each time the popup opens', async () => {
+    await open('presetSelect');
+    await click(selectTrigger());
+    await click(option('Two days'));
+    await click(popup()!.querySelector('.hx-date-time-range-picker-cancel') as HTMLElement);
+    await open('presetSelect');
+    expect(selectTrigger().textContent?.trim()).toBe('Quick ranges');
+  });
+
+  it('lists the built-in presets with a localizable label', () => {
+    expect(HX_DATE_RANGE_PRESETS.map((p) => p.label)).toEqual([
+      'Last 15 minutes',
+      'Last 1 hour',
+      'Last 6 hours',
+      'Last 24 hours',
+      'Last 7 days',
+      'Last 30 days',
+      'Today',
+      'Yesterday',
+      'This week',
+      'This month',
+    ]);
+    expect(host.builtIn.map((p) => p.label)).toContain('Letzte 7 Tage');
+    expect(host.builtIn.map((p) => p.label)).toContain('Heute');
+    expect(host.builtIn.map((p) => p.label)).toContain('Last 24 hours');
+  });
+
+  describe('built-in ranges', () => {
+    beforeEach(() =>
+      vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] }),
+    );
+    afterEach(() => vi.useRealTimers());
+    const range = (label: string) => {
+      const p = HX_DATE_RANGE_PRESETS.find((x) => x.label === label)!;
+      return { from: p.from(), to: p.to() };
+    };
+
+    it('resolves relative ranges against the current time', () => {
+      expect(range('Last 15 minutes')).toEqual({
+        from: new Date(2026, 9, 14, 15, 15, 20),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range('Last 24 hours').from).toEqual(new Date(2026, 9, 13, 15, 30, 20));
+    });
+
+    it('resolves the calendar ranges', () => {
+      expect(range('Today').from).toEqual(new Date(2026, 9, 14));
+      expect(range('Yesterday')).toEqual({
+        from: new Date(2026, 9, 13),
+        to: new Date(2026, 9, 13, 23, 59, 59, 999),
+      });
+      expect(range('Last 7 days').from).toEqual(new Date(2026, 9, 8));
+      expect(range('Last 30 days').from).toEqual(new Date(2026, 8, 15));
+      expect(range('This week')).toEqual({
+        from: new Date(2026, 9, 11),
+        to: new Date(2026, 9, 17, 23, 59, 59, 999),
+      });
+      expect(range('This month')).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31, 23, 59, 59, 999),
+      });
+    });
+
+    it('starts This week on the given first day of the week', () => {
+      const week = HX_DATE_RANGE_PRESETS.find((x) => x.label === 'This week')!;
+      expect(week.from({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 12));
+      expect(week.to({ firstDayOfWeek: 1 })).toEqual(new Date(2026, 9, 18, 23, 59, 59, 999));
+      expect(week.from({ firstDayOfWeek: 4 })).toEqual(new Date(2026, 9, 8));
+    });
+
+    it('keeps midnight for a built-in preset in date-only mode', async () => {
+      await open('presetSelectDays');
+      await click(selectTrigger());
+      expect(
+        [...document.querySelectorAll('.hx-select-option')].map((o) => o.textContent?.trim()),
+      ).toContain('Heute');
+      await click(option('This month'));
+      await submit();
+      expect(host.selectDays()).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31),
+      });
+      await open('presetSelectDays');
+      await click(selectTrigger());
+      await click(option('Letzte 7 Tage'));
+      await submit();
+      expect(host.selectDays()).toEqual({ from: new Date(2026, 9, 8), to: new Date(2026, 9, 14) });
+    });
   });
 
   it('takes the days of a preset without the time pickers', async () => {
@@ -430,6 +655,25 @@ describe('HxDateTimeRangePicker', () => {
     await click(preset('Over a blocked day'));
     await submit();
     expect(host.presetDays()).toEqual({ from: null, to: null });
+  });
+
+  it('refuses a preset button over a disabled day and keeps the draft', async () => {
+    await open('btnLimits');
+    await click(preset('Wide'));
+    await click(preset('Over a blocked day'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.min, to: host.max });
+  });
+
+  it('moves a preset button outside minDate and maxDate to the nearest limit', async () => {
+    await open('btnLimits');
+    await click(preset('Before the minimum'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.min, to: host.min });
+    await open('btnLimits');
+    await click(preset('After the maximum'));
+    await submit();
+    expect(host.btnLimits()).toEqual({ from: host.max, to: host.max });
   });
 
   it('puts the times of a preset on the days of the value with timeOnly', async () => {
@@ -1062,5 +1306,159 @@ describe('HxDateTimeRangePicker', () => {
     el('model').dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
     await settle();
     expect(el('model').classList).toContain('ng-touched');
+  });
+
+  describe('preset select', () => {
+    const trigger = () => popup()!.querySelector('.hx-select-trigger') as HTMLElement;
+    const pick = async (label: string) => {
+      await click(trigger());
+      const opt = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+        (o) => o.textContent?.trim() === label,
+      );
+      if (!opt) throw new Error(`no option ${label}`);
+      await click(opt);
+    };
+    const listOpen = () => document.querySelector('.hx-select-list') !== null;
+
+    it('is usable with the keyboard only', async () => {
+      await open('presetSelect');
+      trigger().focus();
+      await press(trigger(), 'ArrowDown');
+      expect(listOpen()).toBe(true);
+      // Escape closes the list only: the popup stays, the focus goes back to the select
+      const panes = document.querySelectorAll('.cdk-overlay-pane');
+      panes[panes.length - 1].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+      );
+      await settle();
+      expect(listOpen()).toBe(false);
+      expect(popup()).not.toBeNull();
+      expect(document.activeElement).toBe(trigger());
+      await press(trigger(), 'ArrowDown');
+      // the CDK listbox reads keyCode
+      const list = document.querySelector('.hx-select-list') as HTMLElement;
+      const key = async (k: string, keyCode: number) => {
+        list.dispatchEvent(new KeyboardEvent('keydown', { key: k, keyCode, bubbles: true }));
+        await settle();
+      };
+      await key('ArrowDown', 40);
+      await key('ArrowDown', 40);
+      await key('Enter', 13);
+      expect(listOpen()).toBe(false);
+      expect(trigger().textContent?.trim()).toBe('Two days');
+      await submit();
+      expect(host.selectValue()).toEqual({
+        from: new Date(2026, 9, 8, 0, 0),
+        to: new Date(2026, 9, 10, 0, 0),
+      });
+    });
+
+    it('chooses the same preset again after the draft changed', async () => {
+      await open('presetSelect');
+      await pick('Morning');
+      await click(day(20));
+      expect(trigger().textContent?.trim()).toBe('Quick ranges');
+      await pick('Morning');
+      expect(now('from', 'Hour')).toBe('6');
+      await submit();
+      expect(host.selectValue()).toEqual({
+        from: new Date(2026, 9, 7, 6, 0),
+        to: new Date(2026, 9, 7, 12, 30),
+      });
+    });
+
+    it('works with ngModel, a reactive FormControl and a signal form field', async () => {
+      const morning = { from: new Date(2026, 9, 7, 6, 0), to: new Date(2026, 9, 7, 12, 30) };
+      await open('selModel');
+      await pick('Morning');
+      await submit();
+      expect(host.selModel).toEqual(morning);
+      await open('selReactive');
+      await pick('Morning');
+      await submit();
+      expect(host.selControl.value).toEqual(morning);
+      expect(host.selControl.dirty).toBe(true);
+      await open('selSignal');
+      await pick('Morning');
+      await submit();
+      expect(host.selState().span).toEqual(morning);
+    });
+
+    it('does not open while disabled', async () => {
+      await open('selOff');
+      expect(popup()).toBeNull();
+      host.selControl.disable();
+      await settle();
+      await open('selReactive');
+      expect(popup()).toBeNull();
+    });
+
+    it('keeps a preset inside minDate and maxDate and refuses one over a disabled day', async () => {
+      await open('selLimits');
+      await pick('Wide');
+      expect(trigger().textContent?.trim()).toBe('Wide');
+      await pick('Over a blocked day');
+      // the refused preset leaves the draft and the label of the last preset that was taken
+      expect(trigger().textContent?.trim()).toBe('Wide');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.min, to: host.max });
+    });
+
+    it('moves a preset outside minDate and maxDate to the nearest limit', async () => {
+      await open('selLimits');
+      await pick('Before the minimum');
+      expect(trigger().textContent?.trim()).toBe('Before the minimum');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.min, to: host.min });
+      await open('selLimits');
+      await pick('After the maximum');
+      await submit();
+      expect(host.selLimits()).toEqual({ from: host.max, to: host.max });
+    });
+  });
+
+  describe('day presets from their ids', () => {
+    beforeEach(() =>
+      vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] }),
+    );
+    afterEach(() => vi.useRealTimers());
+    const range = (list: readonly HxDateTimeRangePreset[], label: string) => {
+      const p = list.find((x) => x.label === label);
+      if (!p) throw new Error(`no preset ${label}`);
+      return { from: p.from(), to: p.to() };
+    };
+
+    it('lists Today, Last 7 days and This month for a picker without time', () => {
+      expect(HX_DATE_RANGE_DAY_PRESETS.map((p) => p.label)).toEqual([
+        'Today',
+        'Last 7 days',
+        'This month',
+      ]);
+      expect(range(HX_DATE_RANGE_DAY_PRESETS, 'Last 7 days')).toEqual({
+        from: new Date(2026, 9, 8),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+    });
+
+    it('puts each label on its own range, whatever the labels', () => {
+      const relabelled = hxDateRangePresets({
+        today: 'Heute',
+        last7Days: '7 Tage',
+        thisMonth: 'Monat',
+      });
+      expect(range(relabelled, 'Heute')).toEqual({
+        from: new Date(2026, 9, 14),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range(relabelled, '7 Tage')).toEqual({
+        from: new Date(2026, 9, 8),
+        to: new Date(2026, 9, 14, 15, 30, 20),
+      });
+      expect(range(relabelled, 'Monat')).toEqual({
+        from: new Date(2026, 9, 1),
+        to: new Date(2026, 9, 31, 23, 59, 59, 999),
+      });
+      expect(relabelled.map((p) => p.label)).not.toContain('Today');
+    });
   });
 });

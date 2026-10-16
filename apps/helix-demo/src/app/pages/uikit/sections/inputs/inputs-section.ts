@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormField, form, min, required } from '@angular/forms/signals';
 import {
+  HX_DATE_RANGE_DAY_PRESETS,
+  HX_DATE_RANGE_PRESETS,
   HxAutoComplete,
   HxButton,
   HxDatePicker,
   type HxDatePickerValue,
+  type HxDateRangeExpression,
+  HxDateRangeQuickSelect,
+  type HxDateRangeQuickSelectValue,
   HxDateTimePicker,
   type HxDateTimePickerValue,
   HxDateTimeRangePicker,
@@ -29,6 +34,7 @@ import {
   HxTimePicker,
   type HxTimePickerValue,
   HxToggleButton,
+  hxResolveRangeExpression,
 } from '@gravionlabs/helix-ui';
 
 /** `@gravionlabs/helix-ui` input components: Float label, Toggle button, Icon field, Input group, Input number. */
@@ -48,6 +54,7 @@ import {
     HxTimePicker,
     HxDateTimePicker,
     HxDateTimeRangePicker,
+    HxDateRangeQuickSelect,
     HxFileUpload,
     HxFileUpload,
     HxSlider,
@@ -103,6 +110,24 @@ export class HxInputsSection {
       to: () => new Date(),
     },
   ];
+  readonly builtInPresets = HX_DATE_RANGE_PRESETS;
+  readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
+  readonly selected = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  readonly reportingDays = signal<HxDateTimeRangeValue>({ from: null, to: null });
+  readonly quick = signal<HxDateRangeQuickSelectValue>({ from: null, to: null });
+  readonly quickExpression = signal<HxDateRangeExpression | null>(null);
+  /** The expression resolved again against the current time, as an app would to refresh a dashboard. */
+  readonly resolvedText = computed(() => {
+    const expression = this.quickExpression();
+    if (!expression) return '';
+    const { from, to } = hxResolveRangeExpression(expression);
+    return `${from?.toLocaleString() ?? ''} - ${to?.toLocaleString() ?? ''}`;
+  });
+  /** The expression as text for the demo row. */
+  readonly expressionText = computed(() => {
+    const expression = this.quickExpression();
+    return expression ? `${expression.from} to ${expression.to}` : 'none (absolute)';
+  });
   readonly hours = signal<HxDateTimeRangeValue>({ from: null, to: null });
   readonly days = signal<HxDatePickerValue>([]);
   readonly allCountries = ['Germany', 'Greece', 'France', 'Portugal', 'Switzerland'];

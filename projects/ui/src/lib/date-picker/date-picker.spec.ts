@@ -1,7 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form } from '@angular/forms/signals';
+import { By } from '@angular/platform-browser';
+import {
+  HX_DATE_RANGE_DAY_PRESETS,
+  type HxDateTimeRangePreset,
+  hxDateRangePresets,
+} from '../date-range-presets/date-range-presets';
 import { HxDatePicker, type HxDatePickerValue } from './date-picker';
 
 @Component({
@@ -25,6 +31,19 @@ class Host {
   state = signal<{ day: Date | null }>({ day: null });
   f = form(this.state);
 }
+
+/**
+ * Removes what the date picker left open: it detaches the overlay panes of its popup and the preset select list
+ * (their content is destroyed with the pane), and takes the emptied panes out of the container, nothing else.
+ */
+const removeOwnOverlays = () => {
+  document
+    .querySelectorAll('.cdk-overlay-pane:has(.hx-date-picker-popup, .hx-select-list)')
+    .forEach((pane) => {
+      pane.replaceChildren();
+      pane.remove();
+    });
+};
 
 describe('HxDatePicker', () => {
   let fixture: ComponentFixture<Host>;
@@ -268,9 +287,8 @@ describe('HxDatePicker field and popup', () => {
   });
 
   afterEach(() => {
-    document.querySelectorAll('.cdk-overlay-container').forEach((c) => {
-      c.innerHTML = '';
-    });
+    fixture.destroy();
+    removeOwnOverlays();
   });
 
   it('shows the formatted value and a labelled field', () => {
@@ -388,5 +406,573 @@ describe('HxDatePicker field and popup', () => {
     input('field').dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
     await settle();
     expect(el('field').classList).toContain('ng-touched');
+  });
+});
+
+const at = (d: number, h = 0, m = 0) => new Date(2026, 9, d, h, m);
+const preset = (label: string, from: Date, to: Date): HxDateTimeRangePreset => ({
+  label,
+  from: () => from,
+  to: () => to,
+});
+
+@Component({
+  imports: [HxDatePicker, FormsModule, ReactiveFormsModule, FormField],
+  template: `
+    <hx-date-picker id="buttons" inline selectionMode="range" locale="en-US" presetsLabel="Quick ranges" [presets]="list" [(value)]="buttons" />
+    <hx-date-picker id="none" inline selectionMode="range" locale="en-US" [(value)]="buttons" />
+    <hx-date-picker id="single" inline locale="en-US" [presets]="list" [(value)]="single" />
+    <hx-date-picker id="select" inline selectionMode="range" locale="en-US" presetDisplay="select" [presets]="selectList()" [(value)]="select" />
+    <hx-date-picker id="limits" inline selectionMode="range" locale="en-US" [minDate]="min" [maxDate]="max" [disabledDates]="blocked()" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="limitsSelect" inline selectionMode="range" locale="en-US" presetDisplay="select" [minDate]="min" [maxDate]="max" [disabledDates]="blocked()" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="builtIn" inline selectionMode="range" locale="en-US" [presets]="dayPresets" [(value)]="builtIn" />
+    <hx-date-picker id="week" inline selectionMode="range" locale="en-US" [firstDayOfWeek]="1" [presets]="weekPresets" [(value)]="week" />
+    <hx-date-picker id="popup" selectionMode="range" locale="en-US" ariaLabel="Stay" [presets]="list" [(value)]="popup" />
+    <hx-date-picker id="popupLimits" selectionMode="range" locale="en-US" ariaLabel="Limited stay" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="popupSelect" selectionMode="range" locale="en-US" ariaLabel="Stay" presetDisplay="select" [presets]="list" [(value)]="popup" />
+    <hx-date-picker id="custom" inline selectionMode="range" locale="en-US" presetRefusedLabel="Nicht möglich" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="customSelect" inline selectionMode="range" locale="en-US" presetDisplay="select" presetRefusedLabel="Nicht möglich" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="popupLimitsSelect" selectionMode="range" locale="en-US" ariaLabel="Limited select" presetDisplay="select" [minDate]="min" [maxDate]="max" [presets]="limitList" [(value)]="limits" />
+    <hx-date-picker id="model" inline selectionMode="range" locale="en-US" [presets]="list" [(ngModel)]="model" />
+    <hx-date-picker id="reactive" inline selectionMode="range" locale="en-US" presetDisplay="select" [presets]="list" [formControl]="control" />
+    <hx-date-picker id="signal" inline selectionMode="range" locale="en-US" [presets]="list" [formField]="f.stay" />
+    <hx-date-picker id="off" inline selectionMode="range" locale="en-US" [disabled]="true" [presets]="list" [(value)]="buttons" />
+    <hx-date-picker id="offSelect" inline selectionMode="range" locale="en-US" presetDisplay="select" [disabled]="true" [presets]="list" [(value)]="buttons" />
+    <hx-date-picker id="modelSelect" inline selectionMode="range" locale="en-US" presetDisplay="select" [presets]="list" [(ngModel)]="modelSel" />
+  `,
+})
+class PresetHost {
+  list = [
+    preset('Two days', at(8, 9, 30), at(10, 18, 15)),
+    preset('Reversed', at(20), at(16)),
+    preset('Wide', new Date(2026, 8, 1), new Date(2026, 11, 31)),
+    preset('Over a blocked day', at(11), at(12, 8)),
+  ];
+  selectList = signal(this.list);
+  limitList = [
+    ...this.list,
+    preset('Before', new Date(2026, 8, 1), at(4)),
+    preset('After', at(29), new Date(2026, 10, 5)),
+    preset('Overlap', at(1), at(10)),
+  ];
+  dayPresets = HX_DATE_RANGE_DAY_PRESETS;
+  weekPresets = hxDateRangePresets({ thisWeek: 'Diese Woche' }).filter(
+    (p) => p.label === 'Diese Woche',
+  );
+  min = new Date(2026, 9, 5, 12, 0);
+  max = new Date(2026, 9, 28, 6, 0);
+  blocked = signal([new Date(2026, 9, 12)]);
+  buttons = signal<HxDatePickerValue>(null);
+  single = signal<HxDatePickerValue>(null);
+  select = signal<HxDatePickerValue>(null);
+  limits = signal<HxDatePickerValue>(null);
+  builtIn = signal<HxDatePickerValue>(null);
+  week = signal<HxDatePickerValue>(null);
+  popup = signal<HxDatePickerValue>(null);
+  model: HxDatePickerValue = null;
+  modelSel: HxDatePickerValue = null;
+  control = new FormControl<HxDatePickerValue>(null);
+  state = signal<{ stay: HxDatePickerValue }>({ stay: null });
+  f = form(this.state);
+}
+
+describe('HxDatePicker range presets', () => {
+  let fixture: ComponentFixture<PresetHost>;
+  let host: PresetHost;
+  const el = (id: string) => fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
+  const settle = async () => {
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const presetButton = (id: string, label: string) =>
+    [...el(id).querySelectorAll<HTMLButtonElement>('.hx-range-preset')].find(
+      (b) => b.textContent?.trim() === label,
+    ) as HTMLButtonElement;
+  const choose = async (id: string, label: string) => {
+    presetButton(id, label).click();
+    await settle();
+  };
+  const trigger = (root: HTMLElement) =>
+    root.querySelector('.hx-select-trigger') as HTMLButtonElement;
+  const options = () =>
+    [...document.querySelectorAll<HTMLElement>('.hx-select-option')].map((o) =>
+      o.textContent?.trim(),
+    );
+  const pick = async (root: HTMLElement, label: string) => {
+    trigger(root).click();
+    await settle();
+    const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === label,
+    );
+    if (!option) throw new Error(`no option ${label}`);
+    option.click();
+    await settle();
+  };
+  const popup = () => document.querySelector('.hx-date-picker-popup') as HTMLElement | null;
+  const field = (id: string) => el(id).querySelector('input') as HTMLInputElement;
+  const selectedDays = (id: string) =>
+    [...el(id).querySelectorAll('[role=gridcell][aria-selected=true] button')].map((b) =>
+      b.textContent?.trim(),
+    );
+  const openPopup = async (id: string) => {
+    field(id).click();
+    await settle();
+    await settle();
+  };
+
+  const scrollIntoView = Element.prototype.scrollIntoView;
+  beforeEach(async () => {
+    // jsdom has no layout: the CDK listbox of the preset select scrolls the active option into view
+    Element.prototype.scrollIntoView = () => {};
+    await TestBed.configureTestingModule({ imports: [PresetHost] }).compileComponents();
+    fixture = TestBed.createComponent(PresetHost);
+    host = fixture.componentInstance;
+    await settle();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+    Element.prototype.scrollIntoView = scrollIntoView;
+    removeOwnOverlays();
+  });
+
+  it('lists no presets by default and none outside range mode', () => {
+    expect(el('none').querySelector('.hx-range-presets')).toBeNull();
+    expect(el('single').querySelector('.hx-range-presets')).toBeNull();
+  });
+
+  it('names the preset group with presetsLabel and lists native buttons', () => {
+    const group = el('buttons').querySelector('.hx-range-presets') as HTMLElement;
+    expect(group.getAttribute('role')).toBe('group');
+    expect(group.getAttribute('aria-label')).toBe('Quick ranges');
+    const buttons = [...group.querySelectorAll('button')];
+    expect(buttons.map((b) => b.textContent?.trim())).toEqual([
+      'Two days',
+      'Reversed',
+      'Wide',
+      'Over a blocked day',
+    ]);
+    expect(buttons.every((b) => b.type === 'button')).toBe(true);
+    expect(el('buttons').querySelector('hx-select')).toBeNull();
+  });
+
+  it('sets the value to the days of a preset at midnight', async () => {
+    await choose('buttons', 'Two days');
+    expect(host.buttons()).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+    expect(el('buttons').querySelector('.hx-date-picker-title-button')?.textContent?.trim()).toBe(
+      'October',
+    );
+    expect(el('buttons').querySelectorAll('.hx-date-picker-date-in-range').length).toBe(1);
+  });
+
+  it('orders a preset whose to is before its from', async () => {
+    await choose('buttons', 'Reversed');
+    expect(host.buttons()).toEqual([new Date(2026, 9, 16), new Date(2026, 9, 20)]);
+  });
+
+  it('moves a preset into minDate and maxDate and refuses one over a disabled day', async () => {
+    await choose('limits', 'Wide');
+    expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 28)]);
+    await choose('limits', 'Over a blocked day');
+    expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 28)]);
+  });
+
+  it('refuses a preset that a limit moves onto a disabled day', async () => {
+    host.blocked.set([new Date(2026, 9, 5)]);
+    await settle();
+    await choose('limits', 'Wide');
+    expect(host.limits()).toBeNull();
+  });
+
+  it('ignores a choice in the select list that arrives after the picker became disabled', async () => {
+    trigger(el('reactive')).click();
+    await settle();
+    expect(options()).toContain('Two days');
+    host.control.disable();
+    await settle();
+    const option = [...document.querySelectorAll<HTMLElement>('.hx-select-option')].find(
+      (o) => o.textContent?.trim() === 'Two days',
+    );
+    option?.click();
+    await settle();
+    expect(host.control.value).toBeNull();
+    expect(el('reactive').querySelector('.hx-date-picker-error')).toBeNull();
+    expect(trigger(el('reactive')).disabled).toBe(true);
+  });
+
+  it('keeps the value when the picker is disabled after a preset was taken', async () => {
+    await pick(el('reactive'), 'Two days');
+    host.control.disable();
+    await settle();
+    expect(host.control.value).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+    expect(trigger(el('reactive')).disabled).toBe(true);
+  });
+
+  it('does not apply a preset while disabled', async () => {
+    const button = presetButton('off', 'Two days');
+    expect(button.disabled).toBe(true);
+    button.click();
+    await settle();
+    expect(host.buttons()).toBeNull();
+  });
+
+  describe('built-in day presets', () => {
+    beforeEach(() =>
+      vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] }),
+    );
+    afterEach(() => vi.useRealTimers());
+
+    it('offers Today, Last 7 days and This month and keeps midnight', async () => {
+      expect(
+        [...el('builtIn').querySelectorAll('.hx-range-preset')].map((b) => b.textContent?.trim()),
+      ).toEqual(['Today', 'Last 7 days', 'This month']);
+      await choose('builtIn', 'Today');
+      expect(host.builtIn()).toEqual([new Date(2026, 9, 14), new Date(2026, 9, 14)]);
+      await choose('builtIn', 'Last 7 days');
+      expect(host.builtIn()).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 14)]);
+      await choose('builtIn', 'This month');
+      expect(host.builtIn()).toEqual([new Date(2026, 9, 1), new Date(2026, 9, 31)]);
+    });
+
+    it('starts This week on the firstDayOfWeek of the picker', async () => {
+      await choose('week', 'Diese Woche');
+      expect(host.week()).toEqual([new Date(2026, 9, 12), new Date(2026, 9, 18)]);
+    });
+  });
+
+  describe('select', () => {
+    it('shows the presets in a select named by presetsLabel', async () => {
+      const root = el('select');
+      expect(root.querySelector('.hx-range-preset')).toBeNull();
+      expect(trigger(root).getAttribute('aria-label')).toBe('Presets');
+      trigger(root).click();
+      await settle();
+      expect(options()).toEqual(['Two days', 'Reversed', 'Wide', 'Over a blocked day']);
+    });
+
+    it('sets the value with a preset chosen in the select and shows it', async () => {
+      await pick(el('select'), 'Two days');
+      expect(host.select()).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+      expect(trigger(el('select')).textContent?.trim()).toBe('Two days');
+    });
+
+    it('empties the select once the value changes otherwise', async () => {
+      await pick(el('select'), 'Two days');
+      el('select').querySelector<HTMLButtonElement>('[data-date="2026-10-20"]')?.click();
+      await settle();
+      expect(host.select()).toEqual([new Date(2026, 9, 20)]);
+      expect(trigger(el('select')).textContent?.trim()).toBe('Presets');
+    });
+
+    it('puts the select back when a preset is refused', async () => {
+      await pick(el('limitsSelect'), 'Wide');
+      await pick(el('limitsSelect'), 'Over a blocked day');
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 28)]);
+      expect(trigger(el('limitsSelect')).textContent?.trim()).toBe('Wide');
+    });
+
+    it('is usable with the keyboard only', async () => {
+      const root = el('select');
+      trigger(root).focus();
+      trigger(root).dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+      );
+      await settle();
+      // the CDK listbox reads keyCode
+      const list = document.querySelector('.hx-select-list') as HTMLElement;
+      const key = async (k: string, keyCode: number) => {
+        list.dispatchEvent(new KeyboardEvent('keydown', { key: k, keyCode, bubbles: true }));
+        await settle();
+      };
+      await key('ArrowDown', 40);
+      await key('ArrowDown', 40);
+      await key('Enter', 13);
+      expect(document.querySelector('.hx-select-list')).toBeNull();
+      expect(trigger(root).textContent?.trim()).toBe('Reversed');
+      expect(host.select()).toEqual([new Date(2026, 9, 16), new Date(2026, 9, 20)]);
+    });
+  });
+
+  describe('popup', () => {
+    it('sets the value, closes the popup and returns the focus to the field', async () => {
+      await openPopup('popup');
+      const button = [
+        ...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-range-preset') ?? []),
+      ][0];
+      expect(button.textContent?.trim()).toBe('Two days');
+      button.click();
+      await settle();
+      expect(host.popup()).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(field('popup'));
+      expect(field('popup').value).toBe('10/08/2026 – 10/10/2026');
+    });
+
+    it('keeps the popup open while the select list is clicked and applies the choice', async () => {
+      await openPopup('popupSelect');
+      await pick(popup() as HTMLElement, 'Reversed');
+      expect(host.popup()).toEqual([new Date(2026, 9, 16), new Date(2026, 9, 20)]);
+      expect(popup()).toBeNull();
+    });
+
+    it('focuses the day and keeps the preset buttons as tab stops before the calendar', async () => {
+      await openPopup('popup');
+      const focused = document.activeElement as HTMLElement;
+      expect(focused.classList).toContain('hx-date-picker-date');
+      const first = popup()?.querySelector('.hx-range-preset') as HTMLButtonElement;
+      expect(first.tabIndex).toBe(0);
+      expect(
+        first.compareDocumentPosition(focused) & Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
+    });
+  });
+
+  it('works with ngModel, a reactive FormControl and a signal form field', async () => {
+    const twoDays = [new Date(2026, 9, 8), new Date(2026, 9, 10)];
+    await choose('model', 'Two days');
+    expect(host.model).toEqual(twoDays);
+    await pick(el('reactive'), 'Two days');
+    expect(host.control.value).toEqual(twoDays);
+    expect(host.control.dirty).toBe(true);
+    await choose('signal', 'Two days');
+    expect(host.state().stay).toEqual(twoDays);
+  });
+
+  it('disables the preset select with a disabled FormControl', async () => {
+    host.control.disable();
+    await settle();
+    expect(trigger(el('reactive')).disabled).toBe(true);
+  });
+
+  describe('refused presets', () => {
+    const error = (id: string) =>
+      el(id).querySelector('.hx-date-picker-error') as HTMLElement | null;
+
+    it('refuses a preset wholly before minDate or after maxDate instead of cutting it to one day', async () => {
+      await choose('limits', 'Before');
+      expect(host.limits()).toBeNull();
+      await choose('limits', 'After');
+      expect(host.limits()).toBeNull();
+    });
+
+    it('cuts a preset that overlaps the limits', async () => {
+      await choose('limits', 'Overlap');
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 10)]);
+    });
+
+    it('says so in an alert named by the preset buttons, until the next choice', async () => {
+      expect(error('limits')).toBeNull();
+      await choose('limits', 'Before');
+      const message = error('limits') as HTMLElement;
+      expect(message.getAttribute('role')).toBe('alert');
+      expect(message.textContent?.trim()).toBe('This range cannot be chosen.');
+      expect(presetButton('limits', 'Wide').getAttribute('aria-describedby')).toBe(message.id);
+      el('limits').querySelector<HTMLButtonElement>('[data-date="2026-10-20"]')?.click();
+      await settle();
+      expect(error('limits')).toBeNull();
+      expect(presetButton('limits', 'Wide').getAttribute('aria-describedby')).toBeNull();
+      await choose('limits', 'Over a blocked day');
+      expect(error('limits')).not.toBeNull();
+      await choose('limits', 'Overlap');
+      expect(error('limits')).toBeNull();
+    });
+
+    it('names the message from the select and clears it when a preset is taken', async () => {
+      await pick(el('limitsSelect'), 'After');
+      const message = error('limitsSelect') as HTMLElement;
+      expect(trigger(el('limitsSelect')).getAttribute('aria-describedby')).toBe(message.id);
+      expect(trigger(el('limitsSelect')).textContent?.trim()).toBe('Presets');
+      await pick(el('limitsSelect'), 'Overlap');
+      expect(error('limitsSelect')).toBeNull();
+      expect(trigger(el('limitsSelect')).textContent?.trim()).toBe('Overlap');
+    });
+
+    it('shows the text of presetRefusedLabel with the buttons and with the select', async () => {
+      await choose('custom', 'Before');
+      expect(error('custom')?.textContent?.trim()).toBe('Nicht möglich');
+      await pick(el('customSelect'), 'After');
+      expect(error('customSelect')?.textContent?.trim()).toBe('Nicht möglich');
+    });
+
+    it('clears the message in the popup after a valid preset', async () => {
+      await openPopup('popupLimits');
+      const inPopup = (label: string) =>
+        [...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-range-preset') ?? [])].find(
+          (b) => b.textContent?.trim() === label,
+        ) as HTMLButtonElement;
+      inPopup('Before').click();
+      await settle();
+      expect(popup()?.querySelector('.hx-date-picker-error')).not.toBeNull();
+      inPopup('Overlap').click();
+      await settle();
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 10)]);
+      expect(popup()).toBeNull();
+      await openPopup('popupLimits');
+      expect(popup()?.querySelector('.hx-date-picker-error')).toBeNull();
+    });
+
+    it('keeps the popup with a select open on a refused preset and clears the message after a valid one', async () => {
+      await openPopup('popupLimitsSelect');
+      await pick(popup() as HTMLElement, 'After');
+      expect(popup()).not.toBeNull();
+      expect(popup()?.querySelector('.hx-date-picker-error')?.textContent?.trim()).toBe(
+        'This range cannot be chosen.',
+      );
+      expect(host.limits()).toBeNull();
+      await pick(popup() as HTMLElement, 'Overlap');
+      expect(host.limits()).toEqual([new Date(2026, 9, 5), new Date(2026, 9, 10)]);
+      expect(popup()).toBeNull();
+      await openPopup('popupLimitsSelect');
+      expect(popup()?.querySelector('.hx-date-picker-error')).toBeNull();
+    });
+
+    it('keeps the popup open on a refused preset and drops the message when it opens again', async () => {
+      await openPopup('popupLimits');
+      const before = [
+        ...(popup()?.querySelectorAll<HTMLButtonElement>('.hx-range-preset') ?? []),
+      ].find((b) => b.textContent?.trim() === 'Before') as HTMLButtonElement;
+      before.click();
+      await settle();
+      expect(popup()).not.toBeNull();
+      expect(popup()?.querySelector('.hx-date-picker-error')).not.toBeNull();
+      expect(host.limits()).toBeNull();
+      popup()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await settle();
+      expect(popup()).toBeNull();
+      await openPopup('popupLimits');
+      expect(popup()?.querySelector('.hx-date-picker-error')).toBeNull();
+    });
+  });
+
+  describe('disabled', () => {
+    it('disables the preset select with the disabled input', () => {
+      expect(trigger(el('offSelect')).disabled).toBe(true);
+    });
+
+    it('ignores a click on a preset button while disabled', async () => {
+      const button = presetButton('off', 'Two days');
+      expect(button.disabled).toBe(true);
+      await choose('off', 'Two days');
+      expect(host.buttons()).toBeNull();
+      expect(el('off').querySelector('.hx-date-picker-error')).toBeNull();
+    });
+  });
+
+  describe('selected preset', () => {
+    it('keeps the chosen preset when the presets array is replaced by an equal one', async () => {
+      await pick(el('select'), 'Two days');
+      host.selectList.set(host.list.map((p) => ({ ...p })));
+      await settle();
+      expect(trigger(el('select')).textContent?.trim()).toBe('Two days');
+      host.selectList.set(host.list.filter((p) => p.label !== 'Two days'));
+      await settle();
+      expect(trigger(el('select')).textContent?.trim()).toBe('Presets');
+    });
+
+    it('resets on control.reset() and takes the same preset again', async () => {
+      const twoDays = [new Date(2026, 9, 8), new Date(2026, 9, 10)];
+      await pick(el('reactive'), 'Two days');
+      expect(trigger(el('reactive')).textContent?.trim()).toBe('Two days');
+      host.control.reset();
+      await settle();
+      expect(trigger(el('reactive')).textContent?.trim()).toBe('Presets');
+      await pick(el('reactive'), 'Two days');
+      expect(host.control.value).toEqual(twoDays);
+      expect(trigger(el('reactive')).textContent?.trim()).toBe('Two days');
+    });
+
+    it('resets on a value written through ngModel and takes the same preset again', async () => {
+      await pick(el('modelSelect'), 'Reversed');
+      expect(trigger(el('modelSelect')).textContent?.trim()).toBe('Reversed');
+      // what ngModel does when the bound property changes: the control writes the value into the picker
+      const ngModel = fixture.debugElement.query(By.css('#modelSelect')).injector.get(NgModel);
+      ngModel.control.setValue([new Date(2026, 9, 1), new Date(2026, 9, 2)]);
+      await settle();
+      expect(selectedDays('modelSelect')).toEqual(['1', '2']);
+      expect(trigger(el('modelSelect')).textContent?.trim()).toBe('Presets');
+      await pick(el('modelSelect'), 'Reversed');
+      expect(host.modelSel).toEqual([new Date(2026, 9, 16), new Date(2026, 9, 20)]);
+      expect(trigger(el('modelSelect')).textContent?.trim()).toBe('Reversed');
+    });
+
+    it('resets on a value set from outside and takes the same preset again', async () => {
+      await pick(el('select'), 'Two days');
+      host.select.set([new Date(2026, 9, 1)]);
+      await settle();
+      expect(trigger(el('select')).textContent?.trim()).toBe('Presets');
+      await pick(el('select'), 'Two days');
+      expect(host.select()).toEqual([new Date(2026, 9, 8), new Date(2026, 9, 10)]);
+      expect(trigger(el('select')).textContent?.trim()).toBe('Two days');
+    });
+  });
+
+  describe('focus and keyboard', () => {
+    const listbox = () => document.querySelector('.hx-select-list') as HTMLElement | null;
+    const key = async (target: HTMLElement, k: string, keyCode = 0) => {
+      target.dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, keyCode, bubbles: true, cancelable: true }),
+      );
+      await settle();
+    };
+
+    it('does not touch an inline picker when the focus moves into the select list, but does when it leaves', async () => {
+      const panel = el('reactive').querySelector('.hx-date-picker-panel') as HTMLElement;
+      trigger(el('reactive')).click();
+      await settle();
+      const option = document.querySelector('.hx-select-option') as HTMLElement;
+      panel.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: option }));
+      await settle();
+      expect(host.control.touched).toBe(false);
+      panel.dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, relatedTarget: document.body }),
+      );
+      await settle();
+      expect(host.control.touched).toBe(true);
+    });
+
+    it('closes only the preset list with Escape: the popup stays and the select keeps the focus', async () => {
+      await openPopup('popupSelect');
+      const t = trigger(popup() as HTMLElement);
+      t.focus();
+      await key(t, 'ArrowDown');
+      expect(listbox()).not.toBeNull();
+      const panes = document.querySelectorAll('.cdk-overlay-pane');
+      await key(panes[panes.length - 1] as HTMLElement, 'Escape');
+      expect(listbox()).toBeNull();
+      expect(popup()).not.toBeNull();
+      expect(document.activeElement).toBe(t);
+      // a second Escape closes the popup and returns the focus to the field
+      await key(t, 'Escape');
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(field('popupSelect'));
+    });
+
+    it('chooses a preset in the popup select with the keyboard only', async () => {
+      await openPopup('popupSelect');
+      const t = trigger(popup() as HTMLElement);
+      t.focus();
+      await key(t, 'ArrowDown');
+      const list = listbox() as HTMLElement;
+      await key(list, 'ArrowDown', 40);
+      await key(list, 'ArrowDown', 40);
+      await key(list, 'Enter', 13);
+      expect(host.popup()).toEqual([new Date(2026, 9, 16), new Date(2026, 9, 20)]);
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(field('popupSelect'));
+    });
+
+    it('opens with Arrow Down, reaches a preset button and closes with Escape from it', async () => {
+      field('popup').focus();
+      await key(field('popup'), 'ArrowDown');
+      await settle();
+      expect(popup()).not.toBeNull();
+      const first = popup()?.querySelector('.hx-range-preset') as HTMLButtonElement;
+      first.focus();
+      expect(document.activeElement).toBe(first);
+      await key(first, 'Escape');
+      expect(popup()).toBeNull();
+      expect(document.activeElement).toBe(field('popup'));
+      expect(host.popup()).toBeNull();
+    });
   });
 });
