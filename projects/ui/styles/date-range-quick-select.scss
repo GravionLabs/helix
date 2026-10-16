@@ -1,0 +1,109 @@
+/*
+ * DateRangeQuickSelect: `<hx-date-range-quick-select>`. One read-only field with a button (styled by `date-picker.scss`)
+ * and a compact Kibana-style popup: Quick select (Last/Next N unit, Apply), Commonly used, Recently used and one
+ * summary line each for the start and the end; every colour and size comes from the date picker and input tokens.
+ */
+.hx-date-range-quick-select {
+  display: block;
+  position: relative;
+}
+
+.hx-date-range-quick-select .hx-date-range-quick-select-control {
+  display: flex;
+  width: 100%;
+}
+
+/* kept compact, about 360px wide; the popup carries the outer border */
+.hx-date-range-quick-select-popup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+  width: 24rem;
+  max-width: calc(100vw - 2rem);
+  overflow: auto;
+  padding: var(--h-datepicker-panel-padding);
+  border: 1px solid var(--h-datepicker-panel-border-color);
+}
+
+.hx-date-range-quick-select-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-caption {
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+.hx-date-range-quick-select-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-amount {
+  width: 4.5rem;
+}
+
+/* the selects keep a readable width */
+.hx-date-range-quick-select-direction {
+  min-width: 5.5rem;
+}
+
+.hx-date-range-quick-select-unit {
+  min-width: 6.5rem;
+}
+
+.hx-date-range-quick-select-apply {
+  font-weight: var(--h-datepicker-title-font-weight);
+}
+
+/* the other list classes (`-common`, `-recent`) are hooks styled through their parts */
+.hx-date-range-quick-select-ranges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hx-date-range-quick-select-ranges .hx-date-picker-button {
+  width: 100%;
+  text-align: start;
+}
+
+/* one line per side: the name above its value */
+.hx-date-range-quick-select-summary {
+  display: flex;
+  align-items: stretch;
+  gap: var(--h-datepicker-title-gap);
+}
+
+.hx-date-range-quick-select-side-line {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--h-datepicker-select-month-padding);
+  border: 1px solid var(--h-datepicker-panel-border-color);
+  border-radius: var(--h-datepicker-select-month-border-radius);
+}
+
+.hx-date-range-quick-select-side-name {
+  color: var(--h-datepicker-week-day-color);
+  font-weight: var(--h-datepicker-week-day-font-weight);
+}
+
+.hx-date-range-quick-select-side-value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* a range could not be applied */
+.hx-date-range-quick-select-error {
+  margin: 0;
+  color: var(--h-inputtext-invalid-border-color);
+}
