@@ -10,6 +10,7 @@ module.exports = [
             'apps/site/.vitepress/dist/**',
             'apps/site/.vitepress/cache/**',
             'node_modules/**',
+            '.claude/**',
             '.angular/**',
             'coverage/**',
             '**/*.js',
