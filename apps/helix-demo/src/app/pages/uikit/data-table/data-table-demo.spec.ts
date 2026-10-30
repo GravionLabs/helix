@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { DataTableDemo } from './data-table-demo';
 
@@ -8,6 +9,7 @@ describe('DataTableDemo', () => {
   function create() {
     TestBed.configureTestingModule({
       providers: [
+        provideRouter([]),
         provideHttpClient(),
         provideHttpClientTesting(),
         provideHighlightOptions({
@@ -20,6 +22,12 @@ describe('DataTableDemo', () => {
     fixture.detectChanges();
     return fixture;
   }
+
+  it('links to the Native table page', () => {
+    const el = create().nativeElement as HTMLElement;
+    const link = el.querySelector<HTMLAnchorElement>('a[href="/uikit/table"]');
+    expect(link?.textContent).toBe('Native table');
+  });
 
   it('renders the four data table cards', () => {
     const el = create().nativeElement as HTMLElement;

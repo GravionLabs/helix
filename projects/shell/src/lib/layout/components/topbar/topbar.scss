@@ -67,6 +67,19 @@
     }
   }
 
+  // With projected content the end cluster takes the free width instead of the start part, so a
+  // growing slot control (e.g. a filter bar) can stretch up to the breadcrumbs. The start part
+  // keeps its min-width, the config and action buttons stay rigid.
+  &:has(.layout-topbar-slot > *) {
+    .layout-topbar-start {
+      flex: 0 1 auto;
+    }
+
+    .layout-topbar-end {
+      flex: 1 1 auto;
+    }
+  }
+
   ::ng-deep .hx-breadcrumb {
     background: inherit;
     color: inherit;
