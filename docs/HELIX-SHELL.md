@@ -193,6 +193,7 @@ Application header bar. Renders a menu toggle and breadcrumb trail on the left, 
 
 Behaviour of the End slot:
 - Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width.
+- With content, the right cluster takes the free topbar width and the left part shrinks to the menu toggle and breadcrumbs, so a projected flex child with `flex: 1` (e.g. a filter bar) stretches up to the breadcrumbs. Without content the layout is unchanged.
 - Shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The config and action buttons keep their size.
 - The wrapper is collapsed when it contains no element, so unused layouts get no extra gap.
 - Focus order follows DOM order: slot content, config items, ellipsis button, menu actions.

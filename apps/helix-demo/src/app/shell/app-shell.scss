@@ -9,14 +9,14 @@
   padding: 0 0.5rem;
 }
 
-// Demo control projected into the topbar end slot.
+// Demo control projected into the topbar end slot; grows into the free topbar width.
 .topbar-filter {
   background: transparent;
   border: 1px solid currentColor;
   border-radius: 0.25rem;
   color: inherit;
+  flex: 1 1 auto;
   font: inherit;
   min-width: 6rem;
   padding: 0.25rem 0.5rem;
-  width: 10rem;
 }
