@@ -33,13 +33,16 @@
     "lineEnding": "lf"
   },
   "markdown": {
+    "parser": {
+      "frontmatter": true
+    },
     "formatter": {
-      "enabled": false
+      "formatEmbeds": false
     }
   },
   "yaml": {
     "formatter": {
-      "enabled": false
+      "quoteStyle": "single"
     }
   },
   "css": {
@@ -67,7 +70,9 @@
       "!**/*.svg",
       "!apps/site/.vitepress/theme/generated",
       "!scripts/tests/fixtures",
-      "!**/public"
+      "!**/public",
+      "!CHANGELOG.md",
+      "!apm.lock.yaml"
     ]
   },
   "overrides": [
