@@ -67,7 +67,7 @@
     "@angular/build": "^22.2.5",
     "@angular/cli": "^22.2.5",
     "@angular/compiler-cli": "^22.2.3",
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "^2.6.4",
     "@tailwindcss/cli": "^4.3.3",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
