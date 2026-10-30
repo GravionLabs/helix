@@ -43,7 +43,9 @@
   white-space: nowrap;
   outline: 0 none;
   color: var(--helix-nav-text);
-  transition: background-color var(--element-transition-duration), color var(--element-transition-duration);
+  transition:
+    background-color var(--element-transition-duration),
+    color var(--element-transition-duration);
 
   &:hover {
     background-color: var(--helix-nav-hover-bg);

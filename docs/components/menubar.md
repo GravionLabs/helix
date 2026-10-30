@@ -9,13 +9,13 @@
 </hx-menubar>
 ```
 
-| Input / output | Type           | Default  | Description                                                           |
-| -------------- | -------------- | -------- | --------------------------------------------------------------------- |
-| `model`        | `HxMenuItem[]` | `[]`     | The entries; an entry with `items` opens a submenu.                   |
-| `breakpoint`   | `number`       | `960`    | Width in px below which the items collapse into a button.             |
-| `ariaLabel`    | `string`       |          | Name of the menubar.                                                  |
-| `buttonLabel`  | `string`       | `'Menu'` | Name of the button shown when collapsed.                              |
-| `(triggered)`  | `HxMenuItem`   |          | An item was activated (after its `command`).                          |
+| Input / output | Type           | Default  | Description                                               |
+| -------------- | -------------- | -------- | --------------------------------------------------------- |
+| `model`        | `HxMenuItem[]` | `[]`     | The entries; an entry with `items` opens a submenu.       |
+| `breakpoint`   | `number`       | `960`    | Width in px below which the items collapse into a button. |
+| `ariaLabel`    | `string`       |          | Name of the menubar.                                      |
+| `buttonLabel`  | `string`       | `'Menu'` | Name of the button shown when collapsed.                  |
+| `(triggered)`  | `HxMenuItem`   |          | An item was activated (after its `command`).              |
 
 Content marked `hxMenubarStart` or `hxMenubarEnd` is placed before and after the items.
 

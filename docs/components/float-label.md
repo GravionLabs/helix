@@ -14,9 +14,9 @@ the field and moves up when the control has focus or a value.
 </hx-float-label>
 ```
 
-| Input     | Type                      | Default  | Description                                                                          |
-| --------- | ------------------------- | -------- | ------------------------------------------------------------------------------------ |
-| `variant` | `'over' \| 'in' \| 'on'`  | `'over'` | `over`: above the field, `in`: inside it (the field gets room), `on`: on its top border. |
+| Input     | Type                     | Default  | Description                                                                              |
+| --------- | ------------------------ | -------- | ---------------------------------------------------------------------------------------- |
+| `variant` | `'over' \| 'in' \| 'on'` | `'over'` | `over`: above the field, `in`: inside it (the field gets room), `on`: on its top border. |
 
 - **Behaviour:** a native `hx-input` or `textarea` floats by `:focus-within` and `:placeholder-shown`; an input
   without a `placeholder` gets a blank one, and an explicit placeholder is hidden while the label sits in the field.

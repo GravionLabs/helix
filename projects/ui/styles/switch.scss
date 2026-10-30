@@ -11,8 +11,7 @@
   height: var(--h-toggleswitch-height);
   box-sizing: border-box;
   margin: 0;
-  border: var(--h-toggleswitch-border-width) solid
-    var(--h-toggleswitch-border-color);
+  border: var(--h-toggleswitch-border-width) solid var(--h-toggleswitch-border-color);
   border-radius: var(--h-toggleswitch-border-radius);
   appearance: none;
   background: var(--h-toggleswitch-background);
@@ -27,7 +26,7 @@
 }
 
 .hx-switch::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   inset-inline-start: var(--h-toggleswitch-gap);
@@ -48,11 +47,8 @@
 
 .hx-switch:checked::before {
   inset-inline-start: calc(
-    var(--h-toggleswitch-width) -
-    var(--h-toggleswitch-handle-size) -
-    var(--h-toggleswitch-gap) -
-    2 *
-    var(--h-toggleswitch-border-width)
+    var(--h-toggleswitch-width) - var(--h-toggleswitch-handle-size) - var(--h-toggleswitch-gap) -
+      2 * var(--h-toggleswitch-border-width)
   );
   background: var(--h-toggleswitch-handle-checked-background);
 }
@@ -76,8 +72,7 @@
 }
 
 .hx-switch:focus-visible {
-  outline: var(--h-toggleswitch-focus-ring-width)
-    var(--h-toggleswitch-focus-ring-style)
+  outline: var(--h-toggleswitch-focus-ring-width) var(--h-toggleswitch-focus-ring-style)
     var(--h-toggleswitch-focus-ring-color);
   outline-offset: var(--h-toggleswitch-focus-ring-offset);
   box-shadow: var(--h-toggleswitch-focus-ring-shadow);
@@ -92,7 +87,7 @@
   background: var(--h-toggleswitch-handle-disabled-background);
 }
 
-.hx-switch[aria-invalid="true"],
+.hx-switch[aria-invalid='true'],
 .hx-switch.ng-invalid.ng-touched {
   border-color: var(--h-toggleswitch-invalid-border-color);
 }

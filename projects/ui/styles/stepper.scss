@@ -46,8 +46,8 @@
 }
 
 .hx-step-header:focus-visible {
-  outline: var(--h-stepper-step-header-focus-ring-width) var(--h-stepper-step-header-focus-ring-style)
-    var(--h-stepper-step-header-focus-ring-color);
+  outline: var(--h-stepper-step-header-focus-ring-width)
+    var(--h-stepper-step-header-focus-ring-style) var(--h-stepper-step-header-focus-ring-color);
   outline-offset: var(--h-stepper-step-header-focus-ring-offset);
   box-shadow: var(--h-stepper-step-header-focus-ring-shadow);
 }

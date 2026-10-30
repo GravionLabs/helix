@@ -10,27 +10,27 @@ dependency) and the overlay styles that come with `styles.css`.
 <hx-select [options]="['Free', 'Pro', 'Team']" [formField]="form.plan" />
 ```
 
-| Input            | Type                                | Default        | Description                                                         |
-| ---------------- | ----------------------------------- | -------------- | ------------------------------------------------------------------- |
-| `options`        | `unknown[]`                         | `[]`           | Objects or primitives.                                              |
-| `optionLabel`    | `string`                            | `'label'`      | Property shown for an object option.                                |
-| `optionValue`    | `string`                            | `'value'`      | Property used as the value; without it the option itself is used.   |
-| `optionDisabled` | `string`                            | `'disabled'`   | Property that disables an option.                                   |
-| `placeholder`    | `string`                            |                | Shown while nothing is selected.                                    |
-| `emptyMessage`   | `string`                            | `'No options'` | Shown when there are no options.                                    |
-| `filter`         | `boolean`                           | `false`        | A search field above the list (case-insensitive "contains").        |
-| `filterPlaceholder` | `string`                         | `'Search'`     | Placeholder and accessible name of the search field.                |
-| `filterBy`       | `string \| (option) => string`      | the label      | What the filter matches: a property name or accessor.               |
-| `emptyFilterMessage` | `string`                        | `'No results'` | Shown when the filter matches nothing.                              |
-| `variant`        | `'outlined' \| 'filled'`            | `'outlined'`   | A tinted field instead of an outline.                               |
-| `size`           | `'small' \| 'medium' \| 'large'`     | `'medium'`     | Font size and padding.                                              |
-| `fluid`          | `boolean`                           | `false`        | Full width of the container.                                        |
-| `showClear`      | `boolean`                           | `false`        | A button that resets the value to `null`.                           |
-| `inputId`        | `string`                            |                | Id of the trigger, for `<label for>`.                               |
-| `ariaLabel`      | `string`                            |                | Accessible name when there is no visible label.                     |
-| `ariaLabelledby` | `string`                            |                | Id of the element that names the select (`aria-labelledby` of the trigger). |
-| `ariaDescribedby` | `string \| null`                   |                | Id of a text that describes the select (`aria-describedby` of the trigger). |
-| `compareWith`    | `(a, b) => boolean`                 | `Object.is`    | How a value is matched to an option.                                |
+| Input                | Type                             | Default        | Description                                                                 |
+| -------------------- | -------------------------------- | -------------- | --------------------------------------------------------------------------- |
+| `options`            | `unknown[]`                      | `[]`           | Objects or primitives.                                                      |
+| `optionLabel`        | `string`                         | `'label'`      | Property shown for an object option.                                        |
+| `optionValue`        | `string`                         | `'value'`      | Property used as the value; without it the option itself is used.           |
+| `optionDisabled`     | `string`                         | `'disabled'`   | Property that disables an option.                                           |
+| `placeholder`        | `string`                         |                | Shown while nothing is selected.                                            |
+| `emptyMessage`       | `string`                         | `'No options'` | Shown when there are no options.                                            |
+| `filter`             | `boolean`                        | `false`        | A search field above the list (case-insensitive "contains").                |
+| `filterPlaceholder`  | `string`                         | `'Search'`     | Placeholder and accessible name of the search field.                        |
+| `filterBy`           | `string \| (option) => string`   | the label      | What the filter matches: a property name or accessor.                       |
+| `emptyFilterMessage` | `string`                         | `'No results'` | Shown when the filter matches nothing.                                      |
+| `variant`            | `'outlined' \| 'filled'`         | `'outlined'`   | A tinted field instead of an outline.                                       |
+| `size`               | `'small' \| 'medium' \| 'large'` | `'medium'`     | Font size and padding.                                                      |
+| `fluid`              | `boolean`                        | `false`        | Full width of the container.                                                |
+| `showClear`          | `boolean`                        | `false`        | A button that resets the value to `null`.                                   |
+| `inputId`            | `string`                         |                | Id of the trigger, for `<label for>`.                                       |
+| `ariaLabel`          | `string`                         |                | Accessible name when there is no visible label.                             |
+| `ariaLabelledby`     | `string`                         |                | Id of the element that names the select (`aria-labelledby` of the trigger). |
+| `ariaDescribedby`    | `string \| null`                 |                | Id of a text that describes the select (`aria-describedby` of the trigger). |
+| `compareWith`        | `(a, b) => boolean`              | `Object.is`    | How a value is matched to an option.                                        |
 
 - **Forms:** works with `ngModel`, reactive forms (it is a `ControlValueAccessor`) and signal forms
   (`[formField]`, it implements the form value control contract); `[(value)]` binds it without forms.

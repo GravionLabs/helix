@@ -10,12 +10,12 @@
 <hx-menu [model]="items" ariaLabel="Account" />
 ```
 
-| Input / output | Type                  | Default | Description                                                         |
-| -------------- | --------------------- | ------- | ------------------------------------------------------------------- |
-| `model`        | `HxMenuItem[]`        | `[]`    | The entries: label, icon, `routerLink`, `url`, `command`, `disabled`, `separator`, `badge`, `items`. |
-| `popup`        | `boolean`             | `false` | Open in an overlay with `toggle(event)` / `show(event)`; otherwise inline. |
-| `ariaLabel`    | `string`              |         | Name of the menu.                                                   |
-| `(triggered)`  | `HxMenuItem`          |         | An item was activated (after its `command`).                        |
+| Input / output | Type           | Default | Description                                                                                          |
+| -------------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `model`        | `HxMenuItem[]` | `[]`    | The entries: label, icon, `routerLink`, `url`, `command`, `disabled`, `separator`, `badge`, `items`. |
+| `popup`        | `boolean`      | `false` | Open in an overlay with `toggle(event)` / `show(event)`; otherwise inline.                           |
+| `ariaLabel`    | `string`       |         | Name of the menu.                                                                                    |
+| `(triggered)`  | `HxMenuItem`   |         | An item was activated (after its `command`).                                                         |
 
 `toggle(event)`, `show(event)` and `hide()` control a popup; it opens at the element of the event.
 

@@ -77,9 +77,7 @@
 .hx-fieldset-collapse {
   display: grid;
   grid-template-rows: 1fr;
-  transition:
-    grid-template-rows 0.2s,
-    visibility 0.2s;
+  transition: grid-template-rows 0.2s, visibility 0.2s;
 }
 
 .hx-fieldset-collapsed .hx-fieldset-collapse {

@@ -12,12 +12,12 @@ open while choosing; Escape and a click outside close it. It works with `ngModel
                  display="chip" filter showToggleAll [(ngModel)]="visited" />
 ```
 
-| Input                | Type                | Default                | Description                                             |
-| -------------------- | ------------------- | ---------------------- | ------------------------------------------------------- |
-| `display`            | `'comma' \| 'chip'` | `'comma'`              | Labels in a line, or a removable chip per value.        |
-| `maxSelectedLabels`  | `number`            | `3`                    | More values show `selectedItemsLabel` instead.          |
-| `selectedItemsLabel` | `string`            | `'{0} items selected'` | Summary text; `{0}` is the count.                       |
-| `filter`             | `boolean`           | `false`                | A search field above the list (`filterPlaceholder`).    |
+| Input                | Type                | Default                | Description                                                                        |
+| -------------------- | ------------------- | ---------------------- | ---------------------------------------------------------------------------------- |
+| `display`            | `'comma' \| 'chip'` | `'comma'`              | Labels in a line, or a removable chip per value.                                   |
+| `maxSelectedLabels`  | `number`            | `3`                    | More values show `selectedItemsLabel` instead.                                     |
+| `selectedItemsLabel` | `string`            | `'{0} items selected'` | Summary text; `{0}` is the count.                                                  |
+| `filter`             | `boolean`           | `false`                | A search field above the list (`filterPlaceholder`).                               |
 | `showToggleAll`      | `boolean`           | `false`                | A checkbox that selects or clears all visible, enabled options (`toggleAllLabel`). |
 
 - **Keyboard:** Arrow Down/Up, Enter or Space on the trigger open the panel; in the list the arrows, Home, End and

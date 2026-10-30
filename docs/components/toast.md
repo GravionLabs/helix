@@ -19,10 +19,10 @@ this.messages.clear('form');
 `clear(key?)` take messages away. `life` is 3000 ms by default, `sticky` keeps the message until it is closed,
 `closable` (default `true`) shows the close button.
 
-| Input      | Type                                                                                    | Default       | Description                                 |
-| ---------- | --------------------------------------------------------------------------------------- | ------------- | ------------------------------------------- |
-| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'center' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Where the stack sits.                       |
-| `key`      | `string`                                                                                |               | Show only messages sent with this key (without a key: those sent without). |
+| Input      | Type                                                                                                          | Default       | Description                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------- | ------------- | -------------------------------------------------------------------------- |
+| `position` | `'top-left' \| 'top-center' \| 'top-right' \| 'center' \| 'bottom-left' \| 'bottom-center' \| 'bottom-right'` | `'top-right'` | Where the stack sits.                                                      |
+| `key`      | `string`                                                                                                      |               | Show only messages sent with this key (without a key: those sent without). |
 
 - **Accessibility:** every message is a live region: `role="status"` with `aria-live="polite"` for info, success,
   secondary and contrast; `role="alert"` with `aria-live="assertive"` for warn and error. The close button is named.

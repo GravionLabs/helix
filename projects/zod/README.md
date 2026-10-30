@@ -9,11 +9,11 @@ Zod v4 adapter for Helix forms. The validators and their keys come from `@gravio
 
 ## Peer Dependencies
 
-| Package | Version |
-|---|---|
-| `zod` | `^4.0.0` |
-| `@gravionlabs/helix-ui` | `>=0.1.0` (the `validators` entry point) |
-| `@angular/core` / `@angular/common` / `@angular/forms` | `>=21` (dynamic forms: `>=21.2`) |
+| Package                                                | Version                                  |
+| ------------------------------------------------------ | ---------------------------------------- |
+| `zod`                                                  | `^4.0.0`                                 |
+| `@gravionlabs/helix-ui`                                | `>=0.1.0` (the `validators` entry point) |
+| `@angular/core` / `@angular/common` / `@angular/forms` | `>=21` (dynamic forms: `>=21.2`)         |
 
 ---
 
@@ -59,16 +59,16 @@ Validation runs through signal forms' `validateStandardSchema` against the whole
 
 ### Widget inference
 
-| Zod type | Widget |
-|---|---|
-| `z.string()` | `text` (`z.email()` → `email`) |
-| `z.number()` / `z.int()` | `number` |
-| `z.boolean()` | `checkbox` |
-| `z.date()` | `date` (`Date | null` model) |
-| `z.enum()` / `z.literal()` | `select` |
-| `z.array()` | `array` (add/remove UI) |
-| `z.object()` | `object` (fieldset recursion) |
-| `z.discriminatedUnion()` | `union` (variant switcher; switching **resets** the union value) |
+| Zod type                   | Widget                                                           |
+| -------------------------- | ---------------------------------------------------------------- |
+| `z.string()`               | `text` (`z.email()` → `email`)                                   |
+| `z.number()` / `z.int()`   | `number`                                                         |
+| `z.boolean()`              | `checkbox`                                                       |
+| `z.date()`                 | `date` (`Date                                                    | null` model) |
+| `z.enum()` / `z.literal()` | `select`                                                         |
+| `z.array()`                | `array` (add/remove UI)                                          |
+| `z.object()`               | `object` (fieldset recursion)                                    |
+| `z.discriminatedUnion()`   | `union` (variant switcher; switching **resets** the union value) |
 
 Anything else needs a `widget` override in its metadata pointing at a registered (custom) widget — unmapped types throw in dev mode.
 
@@ -148,10 +148,10 @@ fromZod(schema: ZodSchema, options?: ZodHelixOptions): ValidatorFn
 
 **Parameters**
 
-| Parameter | Type | Description |
-|---|---|---|
-| `schema` | `ZodSchema` | A Zod field schema. Prefer `UserSchema.shape.email` over a full object schema. Do **not** pass schemas with `.transform()` — use the pre-transform shape for form controls. |
-| `options` | `ZodHelixOptions` | Optional configuration (see below). |
+| Parameter | Type              | Description                                                                                                                                                                 |
+| --------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schema`  | `ZodSchema`       | A Zod field schema. Prefer `UserSchema.shape.email` over a full object schema. Do **not** pass schemas with `.transform()` — use the pre-transform shape for form controls. |
+| `options` | `ZodHelixOptions` | Optional configuration (see below).                                                                                                                                         |
 
 ### `ZodHelixOptions`
 
@@ -169,30 +169,30 @@ export interface ZodHelixOptions {
 > This library targets **Zod v4**. Zod v4 introduced breaking changes from v3:
 > `invalid_string` → `invalid_format` (with a `format` property), `too_small`/`too_big` use `origin` instead of `type`, and `not_integer` was replaced by `invalid_type` with `expected: 'int'`.
 
-| Zod v4 issue code | Condition | `ValidatorKey` |
-|---|---|---|
-| `invalid_type` | value is `''`, `null`, or `undefined` | `Required` |
-| `invalid_type` | `expected === 'int'` | `Integer` |
-| `invalid_type` | `expected === 'number'` / `'float'` | `Number` |
-| `invalid_format` | `format === 'email'` | `Email` |
-| `invalid_format` | `format === 'regex'` | `Pattern` |
-| `invalid_format` | `format === 'datetime'` / `'date'` / `'time'` | `Date` |
-| `too_small` | `origin === 'string'` or `'array'` | `MinLength` |
-| `too_big` | `origin === 'string'` or `'array'` | `MaxLength` |
-| `too_small` | `origin === 'number'` | `Min` |
-| `too_big` | `origin === 'number'` | `Max` |
-| `custom` | — | requires `fallbackKey` (see below) |
-| anything else | — | requires `fallbackKey` (see below) |
+| Zod v4 issue code | Condition                                     | `ValidatorKey`                     |
+| ----------------- | --------------------------------------------- | ---------------------------------- |
+| `invalid_type`    | value is `''`, `null`, or `undefined`         | `Required`                         |
+| `invalid_type`    | `expected === 'int'`                          | `Integer`                          |
+| `invalid_type`    | `expected === 'number'` / `'float'`           | `Number`                           |
+| `invalid_format`  | `format === 'email'`                          | `Email`                            |
+| `invalid_format`  | `format === 'regex'`                          | `Pattern`                          |
+| `invalid_format`  | `format === 'datetime'` / `'date'` / `'time'` | `Date`                             |
+| `too_small`       | `origin === 'string'` or `'array'`            | `MinLength`                        |
+| `too_big`         | `origin === 'string'` or `'array'`            | `MaxLength`                        |
+| `too_small`       | `origin === 'number'`                         | `Min`                              |
+| `too_big`         | `origin === 'number'`                         | `Max`                              |
+| `custom`          | —                                             | requires `fallbackKey` (see below) |
+| anything else     | —                                             | requires `fallbackKey` (see below) |
 
 All issues from a single `safeParse` are processed simultaneously, producing one error key per issue — equivalent to stacking multiple `Validators` calls.
 
 ### Known gaps — no automatic mapping
 
-| Scenario | Recommendation |
-|---|---|
-| `z.enum()` → `invalid_value` | Use `fallbackKey` or keep using `Validators.oneOf` |
-| `z.array()` item-level errors | Use `fallbackKey` or `Validators.allOf` |
-| `invalid_type` for `boolean` | Helix has no `Boolean` key — use `fallbackKey` |
+| Scenario                      | Recommendation                                     |
+| ----------------------------- | -------------------------------------------------- |
+| `z.enum()` → `invalid_value`  | Use `fallbackKey` or keep using `Validators.oneOf` |
+| `z.array()` item-level errors | Use `fallbackKey` or `Validators.allOf`            |
+| `invalid_type` for `boolean`  | Helix has no `Boolean` key — use `fallbackKey`     |
 
 ---
 
@@ -200,11 +200,11 @@ All issues from a single `safeParse` are processed simultaneously, producing one
 
 `Validators` defaults to `allowEmpty = true`: validation passes silently on empty values. `fromZod` mirrors this:
 
-| Scenario | Recommended pattern |
-|---|---|
-| Optional field with format check | Default `allowEmpty: true` — empty passes, invalid format shows error |
-| Mandatory field (required + format) | Stack `Validators.required('msg')` alongside `fromZod(schema)` |
-| Required via Zod only | `allowEmpty: false` — empty triggers `Required` (null/undefined) or `MinLength` (empty string) |
+| Scenario                            | Recommended pattern                                                                            |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Optional field with format check    | Default `allowEmpty: true` — empty passes, invalid format shows error                          |
+| Mandatory field (required + format) | Stack `Validators.required('msg')` alongside `fromZod(schema)`                                 |
+| Required via Zod only               | `allowEmpty: false` — empty triggers `Required` (null/undefined) or `MinLength` (empty string) |
 
 ```ts
 // Optional — empty passes, bad format shows Email error
@@ -336,7 +336,6 @@ export class RegisterComponent {
 
 The same errors are on `form.controls.email.errors`, so any code that reads `control.errors` (for example a summary of all field errors) works the same way.
 
-
 ---
 
 ## `UserSchema.shape` — Single Source of Truth
@@ -386,13 +385,13 @@ Those patterns live in your application (`src/app/schemas/`, `src/app/api/`, etc
 
 The library fully implements the `helix-zod` scope defined in `ZOD_ARCHITECTURE_HELIX.md §6b`:
 
-| Plan item | Status |
-|---|---|
-| `ZodHelixOptions` interface (`fallbackKey`, `allowEmpty`) | Implemented |
-| `HelixZodValidators.fromZod()` factory | Implemented |
-| Full Zod v4 issue → `ValidatorKey` mapping | Implemented |
-| `allowEmpty = true` default mirroring `Validators` | Implemented |
-| `ngDevMode` throw on unmapped issue without `fallbackKey` | Implemented |
-| Silent skip in production builds | Implemented |
-| `z.array().min()` → `MinLength` | Implemented |
-| App-level patterns (schemas, API services, Luxon) | Out of scope — application layer |
+| Plan item                                                 | Status                           |
+| --------------------------------------------------------- | -------------------------------- |
+| `ZodHelixOptions` interface (`fallbackKey`, `allowEmpty`) | Implemented                      |
+| `HelixZodValidators.fromZod()` factory                    | Implemented                      |
+| Full Zod v4 issue → `ValidatorKey` mapping                | Implemented                      |
+| `allowEmpty = true` default mirroring `Validators`        | Implemented                      |
+| `ngDevMode` throw on unmapped issue without `fallbackKey` | Implemented                      |
+| Silent skip in production builds                          | Implemented                      |
+| `z.array().min()` → `MinLength`                           | Implemented                      |
+| App-level patterns (schemas, API services, Luxon)         | Out of scope — application layer |

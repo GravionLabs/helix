@@ -27,7 +27,7 @@
 
 /* the tick (checked) and the bar (indeterminate) */
 .hx-checkbox::before {
-  content: "";
+  content: '';
   width: var(--h-checkbox-icon-size);
   height: var(--h-checkbox-icon-size);
   background: var(--h-checkbox-icon-checked-color);
@@ -35,11 +35,15 @@
   -webkit-mask: var(--hx-check) center / contain no-repeat;
   transform: scale(0);
   transition: transform var(--h-checkbox-transition-duration);
-  --hx-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 7.5 2.8 2.8L11 4.5'/%3E%3C/svg%3E");
+  --hx-check: url(
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 7.5 2.8 2.8L11 4.5'/%3E%3C/svg%3E"
+  );
 }
 
 .hx-checkbox:indeterminate::before {
-  --hx-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 7h8'/%3E%3C/svg%3E");
+  --hx-check: url(
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 7h8'/%3E%3C/svg%3E"
+  );
 }
 
 .hx-checkbox:checked,
@@ -96,7 +100,7 @@
   border-color: var(--h-checkbox-checked-disabled-border-color);
 }
 
-.hx-checkbox[aria-invalid="true"],
+.hx-checkbox[aria-invalid='true'],
 .hx-checkbox.ng-invalid.ng-touched {
   border-color: var(--h-checkbox-invalid-border-color);
 }

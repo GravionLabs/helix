@@ -33,10 +33,10 @@ npm install @gravionlabs/helix-ui
 `styles.css`, but only 36 stylesheets. Load **either** `styles.css` **or** `core.css`, plus `tokens.css`.
 
 | Output of `pnpm build:lib:css:ui` | Raw size |
-| --- | --- |
-| `styles.css` (60 components) | 266.1 kB |
+| --------------------------------- | -------- |
+| `styles.css` (60 components)      | 266.1 kB |
 | `core.css` (36 stylesheets, 48 %) | 128.3 kB |
-| `tokens.css` | 129.0 kB |
+| `tokens.css`                      | 129.0 kB |
 
 For comparison, `@gravionlabs/helix-shell/styles.css` is about 47 kB and `primeicons.css` about 19 kB, all raw.
 `tokens.css` stays whole in both cases, so it is the larger share of a component-only setup.
@@ -81,22 +81,22 @@ theme.setPrimary('emerald');   // one of HX_PRIMARY_COLORS
 theme.setSurface('zinc');      // one of HX_SURFACE_NAMES; null is the Helix default
 ```
 
-| Member | What it does |
-| --- | --- |
-| `dark()`, `setDark(on)`, `toggleDark()` | Dark mode: the class `app-dark` on `<html>` (or an attribute, see `darkSelector`). |
+| Member                                  | What it does                                                                                                                                                                                                                                        |
+| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dark()`, `setDark(on)`, `toggleDark()` | Dark mode: the class `app-dark` on `<html>` (or an attribute, see `darkSelector`).                                                                                                                                                                  |
 | `primary()`, `setPrimary(name \| null)` | The primary colour: `emerald`, `green`, `lime`, `orange`, `amber`, `yellow`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, or `noir` (black on light, white on dark). `null` is the colour of the preset. |
-| `surface()`, `setSurface(name \| null)` | The grey scale behind backgrounds, borders and text: `slate`, `gray`, `zinc`, `neutral`, `stone`, `soho`, `viva`, `ocean`. `null` is the Helix default. |
-| `css()` | The style text of the overrides, for an app that renders it itself (server rendering). |
+| `surface()`, `setSurface(name \| null)` | The grey scale behind backgrounds, borders and text: `slate`, `gray`, `zinc`, `neutral`, `stone`, `soho`, `viva`, `ocean`. `null` is the Helix default.                                                                                             |
+| `css()`                                 | The style text of the overrides, for an app that renders it itself (server rendering).                                                                                                                                                              |
 
 Options of `provideHxTheme`:
 
-| Option | Default | |
-| --- | --- | --- |
-| `darkSelector` | `'.app-dark'` | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. The published `tokens.css` keys on `.app-dark` only. |
-| `manageDark` | `true` | `false`: the host app owns the dark class or attribute, `HxTheme` never writes it to `<html>`; `dark()` still follows `setDark()` for the colour overrides. Example: [Theming](THEMING.md#an-app-that-owns-its-dark-mode). |
-| `storageKey` | `null` | Remembers the choice in `localStorage` under this key; a damaged or blocked storage is ignored. |
-| `dark` | the system setting | Dark mode when nothing is remembered (`prefers-color-scheme`). |
-| `primary`, `surface` | `null` | The colours when nothing is remembered. |
+| Option               | Default            |                                                                                                                                                                                                                            |
+| -------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `darkSelector`       | `'.app-dark'`      | A class or an attribute (`'[data-theme="dark"]'`); the selector `tokens.css` was built for. The published `tokens.css` keys on `.app-dark` only.                                                                           |
+| `manageDark`         | `true`             | `false`: the host app owns the dark class or attribute, `HxTheme` never writes it to `<html>`; `dark()` still follows `setDark()` for the colour overrides. Example: [Theming](THEMING.md#an-app-that-owns-its-dark-mode). |
+| `storageKey`         | `null`             | Remembers the choice in `localStorage` under this key; a damaged or blocked storage is ignored.                                                                                                                            |
+| `dark`               | the system setting | Dark mode when nothing is remembered (`prefers-color-scheme`).                                                                                                                                                             |
+| `primary`, `surface` | `null`             | The colours when nothing is remembered.                                                                                                                                                                                    |
 
 How it works: the primary scale `--h-primary-50 … 950` is pointed at another colour scale
 (`var(--h-emerald-500)`), the roles that depend on it (`--h-primary-color` is step 600 in light and 400 in dark)
@@ -120,15 +120,15 @@ const items: HxMenuItem[] = [
 ];
 ```
 
-| Field | Type | Meaning |
-| --- | --- | --- |
-| `label`, `ariaLabel` | `string` | Text; `ariaLabel` is the accessible name when an icon-only entry has no label. |
-| `icon` | `string` | CSS classes of an icon font, e.g. `pi pi-home`. |
-| `routerLink`, `queryParams` | `string \| unknown[]`, `object` | Router navigation; wins over `url`. |
-| `url`, `target` | `string` | External link and its target. |
-| `command` | `(event: { originalEvent: Event; item: HxMenuItem }) => void` | Called when the entry is activated. |
-| `items` | `HxMenuItem[]` | Submenu, or a group when the entry has no action. |
-| `disabled`, `visible`, `separator`, `id`, `badge` | | State, a hidden entry, a divider line, the element id, a short text next to the label. |
+| Field                                             | Type                                                          | Meaning                                                                                |
+| ------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `label`, `ariaLabel`                              | `string`                                                      | Text; `ariaLabel` is the accessible name when an icon-only entry has no label.         |
+| `icon`                                            | `string`                                                      | CSS classes of an icon font, e.g. `pi pi-home`.                                        |
+| `routerLink`, `queryParams`                       | `string \| unknown[]`, `object`                               | Router navigation; wins over `url`.                                                    |
+| `url`, `target`                                   | `string`                                                      | External link and its target.                                                          |
+| `command`                                         | `(event: { originalEvent: Event; item: HxMenuItem }) => void` | Called when the entry is activated.                                                    |
+| `items`                                           | `HxMenuItem[]`                                                | Submenu, or a group when the entry has no action.                                      |
+| `disabled`, `visible`, `separator`, `id`, `badge` |                                                               | State, a hidden entry, a divider line, the element id, a short text next to the label. |
 
 `HxBreadcrumbItem` is the same type.
 

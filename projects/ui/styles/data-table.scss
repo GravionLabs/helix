@@ -103,8 +103,8 @@
 }
 
 .hx-data-table-filter-button:focus-visible {
-  outline: var(--h-datatable-header-cell-focus-ring-width) var(--h-datatable-header-cell-focus-ring-style)
-    var(--h-datatable-header-cell-focus-ring-color);
+  outline: var(--h-datatable-header-cell-focus-ring-width)
+    var(--h-datatable-header-cell-focus-ring-style) var(--h-datatable-header-cell-focus-ring-color);
   outline-offset: var(--h-datatable-header-cell-focus-ring-offset);
   box-shadow: var(--h-datatable-header-cell-focus-ring-shadow);
 }
@@ -161,8 +161,8 @@
 }
 
 .hx-data-table-sort:focus-visible {
-  outline: var(--h-datatable-header-cell-focus-ring-width) var(--h-datatable-header-cell-focus-ring-style)
-    var(--h-datatable-header-cell-focus-ring-color);
+  outline: var(--h-datatable-header-cell-focus-ring-width)
+    var(--h-datatable-header-cell-focus-ring-style) var(--h-datatable-header-cell-focus-ring-color);
   outline-offset: var(--h-datatable-header-cell-focus-ring-offset);
   box-shadow: var(--h-datatable-header-cell-focus-ring-shadow);
 }
@@ -251,7 +251,8 @@
 }
 
 .hx-data-table-expander:focus-visible {
-  outline: var(--h-datatable-row-toggle-button-focus-ring-width) var(--h-datatable-row-toggle-button-focus-ring-style)
+  outline: var(--h-datatable-row-toggle-button-focus-ring-width)
+    var(--h-datatable-row-toggle-button-focus-ring-style)
     var(--h-datatable-row-toggle-button-focus-ring-color);
   outline-offset: var(--h-datatable-row-toggle-button-focus-ring-offset);
   box-shadow: var(--h-datatable-row-toggle-button-focus-ring-shadow);

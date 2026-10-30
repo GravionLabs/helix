@@ -135,22 +135,22 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `appTitle` | `string` | `'Helix'` | Application title forwarded to `HelixTopbar` |
-| `menu` | `HelixRouteMenuItem[]` | `[]` | Navigation menu model. Overrides route data when provided |
-| `topbarItems` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided |
-| `topbarActions` | `HelixTopbarAction[]` | `calendar`, `inbox`, `profile` | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks |
-| `brandIcon` | `string` | — | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon |
-| `navStyle` | `'sections' \| 'tree'` | `'sections'` | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
-| `navGroups` | `HelixNavGroup[]` | — | Explicit nav groups; win over the mapped `menu` |
+| Name            | Type                   | Default                              | Description                                                                                                                                                                                      |
+| --------------- | ---------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `appTitle`      | `string`               | `'Helix'`                            | Application title forwarded to `HelixTopbar`                                                                                                                                                     |
+| `menu`          | `HelixRouteMenuItem[]` | `[]`                                 | Navigation menu model. Overrides route data when provided                                                                                                                                        |
+| `topbarItems`   | `HelixTopbarItem[]`    | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided                                                                                                                                   |
+| `topbarActions` | `HelixTopbarAction[]`  | `calendar`, `inbox`, `profile`       | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks                                                                                                                     |
+| `brandIcon`     | `string`               | —                                    | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon                                                                                     |
+| `navStyle`      | `'sections' \| 'tree'` | `'sections'`                         | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
+| `navGroups`     | `HelixNavGroup[]`      | —                                    | Explicit nav groups; win over the mapped `menu`                                                                                                                                                  |
 
 #### Content slots
 
-| Selector | Description |
-|----------|-------------|
+| Selector           | Description                                                                                                                                                          |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[helixTopbarEnd]` | Forwarded into the [`HelixTopbar`](#helixtopbar) end slot (attribute selector, no directive needed). See the topbar section for placement and narrow-width behaviour |
-| `[hxStatusBarEnd]` | Projected at the right end of the status bar. See [status bar](#helixstatusbar) |
+| `[hxStatusBarEnd]` | Projected at the right end of the status bar. See [status bar](#helixstatusbar)                                                                                      |
 
 #### Example
 
@@ -178,18 +178,18 @@ Application header bar. Renders a menu toggle and breadcrumb trail on the left, 
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `appTitle` | `string` | `'Helix'` | Application name |
-| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered in the right-side dropdown |
-| `breadcrumbs` | `HxMenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
-| `items` | `HelixTopbarItem[]` | `darkmode`, `configurator`, `mobile` | Configuration items rendered in the right action cluster |
+| Name            | Type                  | Default                                   | Description                                                           |
+| --------------- | --------------------- | ----------------------------------------- | --------------------------------------------------------------------- |
+| `appTitle`      | `string`              | `'Helix'`                                 | Application name                                                      |
+| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered in the right-side dropdown                    |
+| `breadcrumbs`   | `HxMenuItem[]`        | Derived from route data                   | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
+| `items`         | `HelixTopbarItem[]`   | `darkmode`, `configurator`, `mobile`      | Configuration items rendered in the right action cluster              |
 
 #### Content Slots
 
-| Slot | Selector | Description |
-|------|----------|-------------|
-| End | `[helixTopbarEnd]` | Always-visible content at the start of the right cluster, e.g. a global filter |
+| Slot | Selector           | Description                                                                    |
+| ---- | ------------------ | ------------------------------------------------------------------------------ |
+| End  | `[helixTopbarEnd]` | Always-visible content at the start of the right cluster, e.g. a global filter |
 
 Behaviour of the End slot:
 - Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width.
@@ -230,19 +230,19 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `brand` | `string` | `''` | Brand name displayed on the left |
-| `environment` | `Environment \| CustomEnvironment \| string \| undefined` | `undefined` | `'development'`, `'testing'`, `'staging'`, `'production'` or a custom `{ label, severity }`. Unknown strings render as "Unknown" |
-| `note` | `string \| TemplateRef<unknown> \| undefined` | `undefined` | Optional note: plain text (e.g. "Build #1234") or a template for rich content such as a link. Links inherit the bar color and underline on hover |
-| `versions` | `HelixStatusBarVersion[]` | `[]` | Version labels displayed on the right: `{ label: string, value: string }` |
-| `tone` | `HelixStatusBarTone` | `'neutral'` | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray) |
-| `height` | `string` | `'var(--helix-status-bar-height, 3rem)'` | Bar height |
+| Name          | Type                                                      | Default                                  | Description                                                                                                                                      |
+| ------------- | --------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `brand`       | `string`                                                  | `''`                                     | Brand name displayed on the left                                                                                                                 |
+| `environment` | `Environment \| CustomEnvironment \| string \| undefined` | `undefined`                              | `'development'`, `'testing'`, `'staging'`, `'production'` or a custom `{ label, severity }`. Unknown strings render as "Unknown"                 |
+| `note`        | `string \| TemplateRef<unknown> \| undefined`             | `undefined`                              | Optional note: plain text (e.g. "Build #1234") or a template for rich content such as a link. Links inherit the bar color and underline on hover |
+| `versions`    | `HelixStatusBarVersion[]`                                 | `[]`                                     | Version labels displayed on the right: `{ label: string, value: string }`                                                                        |
+| `tone`        | `HelixStatusBarTone`                                      | `'neutral'`                              | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray)                           |
+| `height`      | `string`                                                  | `'var(--helix-status-bar-height, 3rem)'` | Bar height                                                                                                                                       |
 
 #### Content slots
 
-| Selector | Description |
-|----------|-------------|
+| Selector           | Description                                                                  |
+| ------------------ | ---------------------------------------------------------------------------- |
 | `[hxStatusBarEnd]` | Projected at the right end of the bar, after the versions. Hidden when empty |
 
 #### Example
@@ -276,13 +276,13 @@ With `<helix-app-layout>`, pass the template through `statusBarNote` (`string | 
 
 #### Tones
 
-| Tone | Background | Use case |
-|------|-----------|----------|
-| `staging` | Amber | Staging / QA environment |
-| `production` | Dark (surface-800) | Production environment |
-| `success` | Green | All-clear status |
-| `danger` | Red | Alert / error status |
-| `neutral` | Gray | Default / unknown |
+| Tone         | Background         | Use case                 |
+| ------------ | ------------------ | ------------------------ |
+| `staging`    | Amber              | Staging / QA environment |
+| `production` | Dark (surface-800) | Production environment   |
+| `success`    | Green              | All-clear status         |
+| `danger`     | Red                | Alert / error status     |
+| `neutral`    | Gray               | Default / unknown        |
 
 ---
 
@@ -295,16 +295,16 @@ Application footer with optional multi-column link layout and a branded copyrigh
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `brandName` | `string` | `'SAKAI'` | Brand name shown in the copyright line |
-| `brandUrl` | `string` | `'https://gravionlabs.github.io/helix/'` | URL the brand name links to |
-| `columns` | `HelixFooterColumn[]` | `[]` | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model |
+| Name        | Type                  | Default                                  | Description                                                                                                |
+| ----------- | --------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `brandName` | `string`              | `'SAKAI'`                                | Brand name shown in the copyright line                                                                     |
+| `brandUrl`  | `string`              | `'https://gravionlabs.github.io/helix/'` | URL the brand name links to                                                                                |
+| `columns`   | `HelixFooterColumn[]` | `[]`                                     | Optional link columns rendered side-by-side. Uses the same [`HelixFooterColumn`](#helixfootercolumn) model |
 
 #### Content Slots
 
-| Slot | Selector | Description |
-|------|----------|-------------|
+| Slot  | Selector          | Description                                     |
+| ----- | ----------------- | ----------------------------------------------- |
 | Start | `[gvFooterStart]` | Custom content rendered before the link columns |
 
 #### Example
@@ -375,11 +375,11 @@ not provided. The app title (`appTitle`) renders alongside regardless.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `model` | `HelixNavGroup[]` | `[]` | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
-| `appTitle` | `string` | `'Helix'` | Application title shown in the brand area. Hidden when nav is collapsed |
-| `brandIcon` | `string` | — | Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default hardcoded icon |
+| Name        | Type              | Default   | Description                                                                                                           |
+| ----------- | ----------------- | --------- | --------------------------------------------------------------------------------------------------------------------- |
+| `model`     | `HelixNavGroup[]` | `[]`      | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
+| `appTitle`  | `string`          | `'Helix'` | Application title shown in the brand area. Hidden when nav is collapsed                                               |
+| `brandIcon` | `string`          | —         | Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default hardcoded icon               |
 
 #### `HelixNavGroup`
 
@@ -436,11 +436,11 @@ const treeGroups = helixNavGroupsFromMenu(menu, 'tree'); // Overview folder
 The following components are exported for completeness but have **no public inputs**
 beyond what's listed here. They are orchestrated internally by `HelixAppLayout`.
 
-| Component | Selector | Purpose |
-|-----------|----------|---------|
-| `HelixNavRailItem` | `[helix-nav-rail-item]` | Recursive item renderer used by `HelixNavRail` |
-| `HelixConfigurator` | `<helix-configurator>` | Theme/layout configuration panel |
-| `HelixFloatingConfigurator` | `<helix-floating-configurator>` | Floating toggle button for the configurator |
+| Component                   | Selector                        | Purpose                                        |
+| --------------------------- | ------------------------------- | ---------------------------------------------- |
+| `HelixNavRailItem`          | `[helix-nav-rail-item]`         | Recursive item renderer used by `HelixNavRail` |
+| `HelixConfigurator`         | `<helix-configurator>`          | Theme/layout configuration panel               |
+| `HelixFloatingConfigurator` | `<helix-floating-configurator>` | Floating toggle button for the configurator    |
 
 ---
 
@@ -506,10 +506,10 @@ const links = helixMenuLinksFrom(menu, '/uikit');
 ```
 
 **Parameters:**
-| Param | Type | Description |
-|-------|------|-------------|
-| `items` | `HelixRouteMenuItem[]` | Source menu items |
-| `basePath` | `string` | Absolute base path prefix |
+| Param      | Type                   | Description               |
+| ---------- | ---------------------- | ------------------------- |
+| `items`    | `HelixRouteMenuItem[]` | Source menu items         |
+| `basePath` | `string`               | Absolute base path prefix |
 
 **Returns:** `HelixRouteMenuItem[]`
 
@@ -548,19 +548,19 @@ Where `breadcrumb` can be a static string or a function:
 
 ### State shape
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `menuVisible` | `boolean` | Whether the menu is shown |
-| `staticMenuDesktopInactive` | `boolean` | Legacy "hide the rail completely" flag. Still honoured by `HelixAppLayout`, but no longer reachable from the default UI |
-| `sidebarCollapsed` | `boolean` | Desktop rail collapsed to icons; persisted in `localStorage` (`helix.nav-rail.collapsed`) |
-| `overlayMenuActive` | `boolean` | Overlay menu open state |
-| `profileSidebarVisible` | `boolean` | Profile sidebar open state |
-| `configSidebarVisible` | `boolean` | Config sidebar open state |
-| `staticMenuMobileActive` | `boolean` | Static menu expanded on mobile |
-| `menuHoverActive` | `boolean` | Menu hover state (slim mode) |
-| `darkTheme()` | `boolean` | Dark mode: the value of `HxTheme.dark()` (read-only here) |
-| `primary()`, `surface()` | `HxPrimaryColor \| null`, `HxSurface \| null` | The chosen colours: the values of `HxTheme` |
-| `menuMode` | `'static' \| 'overlay'` | Menu mode |
+| Property                    | Type                                          | Description                                                                                                             |
+| --------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `menuVisible`               | `boolean`                                     | Whether the menu is shown                                                                                               |
+| `staticMenuDesktopInactive` | `boolean`                                     | Legacy "hide the rail completely" flag. Still honoured by `HelixAppLayout`, but no longer reachable from the default UI |
+| `sidebarCollapsed`          | `boolean`                                     | Desktop rail collapsed to icons; persisted in `localStorage` (`helix.nav-rail.collapsed`)                               |
+| `overlayMenuActive`         | `boolean`                                     | Overlay menu open state                                                                                                 |
+| `profileSidebarVisible`     | `boolean`                                     | Profile sidebar open state                                                                                              |
+| `configSidebarVisible`      | `boolean`                                     | Config sidebar open state                                                                                               |
+| `staticMenuMobileActive`    | `boolean`                                     | Static menu expanded on mobile                                                                                          |
+| `menuHoverActive`           | `boolean`                                     | Menu hover state (slim mode)                                                                                            |
+| `darkTheme()`               | `boolean`                                     | Dark mode: the value of `HxTheme.dark()` (read-only here)                                                               |
+| `primary()`, `surface()`    | `HxPrimaryColor \| null`, `HxSurface \| null` | The chosen colours: the values of `HxTheme`                                                                             |
+| `menuMode`                  | `'static' \| 'overlay'`                       | Menu mode                                                                                                               |
 
 ### Setup
 
@@ -594,24 +594,24 @@ Fully styled login page with email/password form. Emits credentials on submit; h
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `logoUrl` | `string` | `''` | URL of the brand logo image. Empty string hides the logo |
-| `logoAlt` | `string` | `'Logo'` | Alt text for the logo image |
-| `headline` | `string` | `'Welcome back!'` | Main heading text |
-| `subheadline` | `string` | `'Sign in to continue'` | Sub-heading below the headline |
-| `emailPlaceholder` | `string` | `'Email address'` | Placeholder text for the email field |
-| `passwordPlaceholder` | `string` | `'Password'` | Placeholder text for the password field |
-| `submitLabel` | `string` | `'Sign In'` | Label for the submit button |
-| `forgotPasswordLabel` | `string` | `'Forgot password?'` | Label for the forgot-password link |
-| `forgotPasswordRoute` | `string` | `'/auth/forgot'` | Router path for the forgot-password link |
-| `registerLabel` | `string` | `"Don't have an account?"` | Label for the register prompt |
-| `registerRoute` | `string` | `'/auth/register'` | Router path for the registration link |
+| Name                  | Type     | Default                    | Description                                              |
+| --------------------- | -------- | -------------------------- | -------------------------------------------------------- |
+| `logoUrl`             | `string` | `''`                       | URL of the brand logo image. Empty string hides the logo |
+| `logoAlt`             | `string` | `'Logo'`                   | Alt text for the logo image                              |
+| `headline`            | `string` | `'Welcome back!'`          | Main heading text                                        |
+| `subheadline`         | `string` | `'Sign in to continue'`    | Sub-heading below the headline                           |
+| `emailPlaceholder`    | `string` | `'Email address'`          | Placeholder text for the email field                     |
+| `passwordPlaceholder` | `string` | `'Password'`               | Placeholder text for the password field                  |
+| `submitLabel`         | `string` | `'Sign In'`                | Label for the submit button                              |
+| `forgotPasswordLabel` | `string` | `'Forgot password?'`       | Label for the forgot-password link                       |
+| `forgotPasswordRoute` | `string` | `'/auth/forgot'`           | Router path for the forgot-password link                 |
+| `registerLabel`       | `string` | `"Don't have an account?"` | Label for the register prompt                            |
+| `registerRoute`       | `string` | `'/auth/register'`         | Router path for the registration link                    |
 
 #### Outputs
 
-| Name | Payload | Description |
-|------|---------|-------------|
+| Name          | Payload                 | Description                                  |
+| ------------- | ----------------------- | -------------------------------------------- |
 | `loginSubmit` | `HelixLoginCredentials` | Emitted when the user submits the login form |
 
 #### Example
@@ -640,12 +640,12 @@ Generic error page (e.g. 500 Internal Server Error).
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | `'Error'` | Main error heading |
-| `subtitle` | `string` | `'Something went wrong'` | Supporting message below the title |
-| `homeLabel` | `string` | `'Go to Dashboard'` | Label for the home navigation button |
-| `homeRoute` | `string` | `'/'` | Router path for the home navigation button |
+| Name        | Type     | Default                  | Description                                |
+| ----------- | -------- | ------------------------ | ------------------------------------------ |
+| `title`     | `string` | `'Error'`                | Main error heading                         |
+| `subtitle`  | `string` | `'Something went wrong'` | Supporting message below the title         |
+| `homeLabel` | `string` | `'Go to Dashboard'`      | Label for the home navigation button       |
+| `homeRoute` | `string` | `'/'`                    | Router path for the home navigation button |
 
 #### Example
 
@@ -667,12 +667,12 @@ Access-denied / forbidden page (e.g. 403).
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | `'Access Denied'` | Main heading |
-| `subtitle` | `string` | `'You do not have permission to access this page'` | Supporting message |
-| `homeLabel` | `string` | `'Go to Dashboard'` | Label for the home navigation button |
-| `homeRoute` | `string` | `'/'` | Router path for the home navigation button |
+| Name        | Type     | Default                                            | Description                                |
+| ----------- | -------- | -------------------------------------------------- | ------------------------------------------ |
+| `title`     | `string` | `'Access Denied'`                                  | Main heading                               |
+| `subtitle`  | `string` | `'You do not have permission to access this page'` | Supporting message                         |
+| `homeLabel` | `string` | `'Go to Dashboard'`                                | Label for the home navigation button       |
+| `homeRoute` | `string` | `'/'`                                              | Router path for the home navigation button |
 
 ---
 
@@ -705,16 +705,16 @@ Blank page template with a title, optional subtitle, and a default content slot.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | `'Empty Page'` | Page heading |
-| `subtitle` | `string` | `''` | Optional supporting text below the heading |
+| Name       | Type     | Default        | Description                                |
+| ---------- | -------- | -------------- | ------------------------------------------ |
+| `title`    | `string` | `'Empty Page'` | Page heading                               |
+| `subtitle` | `string` | `''`           | Optional supporting text below the heading |
 
 #### Content Slots
 
-| Slot | Selector | Description |
-|------|----------|-------------|
-| Default | *(none)* | Any projected content rendered inside the page body |
+| Slot    | Selector | Description                                         |
+| ------- | -------- | --------------------------------------------------- |
+| Default | _(none)_ | Any projected content rendered inside the page body |
 
 #### Example
 
@@ -734,13 +734,13 @@ Blank page template with a title, optional subtitle, and a default content slot.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | `'404 — Not Found'` | Main heading |
-| `description` | `string` | `'The page you are looking for does not exist.'` | Description text |
-| `homeLabel` | `string` | `'Go to Dashboard'` | Label for the home navigation button |
-| `homeRoute` | `string` | `'/'` | Router path for the home navigation button |
-| `suggestions` | `HelixNotfoundSuggestion[]` | Several default suggestions | List of quick-navigation suggestion links |
+| Name          | Type                        | Default                                          | Description                                |
+| ------------- | --------------------------- | ------------------------------------------------ | ------------------------------------------ |
+| `title`       | `string`                    | `'404 — Not Found'`                              | Main heading                               |
+| `description` | `string`                    | `'The page you are looking for does not exist.'` | Description text                           |
+| `homeLabel`   | `string`                    | `'Go to Dashboard'`                              | Label for the home navigation button       |
+| `homeRoute`   | `string`                    | `'/'`                                            | Router path for the home navigation button |
+| `suggestions` | `HelixNotfoundSuggestion[]` | Several default suggestions                      | List of quick-navigation suggestion links  |
 
 #### Example
 
@@ -789,13 +789,13 @@ Marketing topbar with navigation links and login/register buttons.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `navLinks` | `HelixNavLink[]` | 4 links (home, features, pricing, contact) | Fragment-based anchor links for single-page scrolling |
-| `loginLabel` | `string` | `'Login'` | Label for the login button |
-| `loginRoute` | `string` | `'/auth/login'` | Router path for the login button |
-| `registerLabel` | `string` | `'Register'` | Label for the register button |
-| `registerRoute` | `string` | `'/auth/login'` | Router path for the register button |
+| Name            | Type             | Default                                    | Description                                           |
+| --------------- | ---------------- | ------------------------------------------ | ----------------------------------------------------- |
+| `navLinks`      | `HelixNavLink[]` | 4 links (home, features, pricing, contact) | Fragment-based anchor links for single-page scrolling |
+| `loginLabel`    | `string`         | `'Login'`                                  | Label for the login button                            |
+| `loginRoute`    | `string`         | `'/auth/login'`                            | Router path for the login button                      |
+| `registerLabel` | `string`         | `'Register'`                               | Label for the register button                         |
+| `registerRoute` | `string`         | `'/auth/login'`                            | Router path for the register button                   |
 
 #### Example
 
@@ -821,20 +821,20 @@ Full-width hero section with a two-part headline, description, call-to-action bu
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `headlineLight` | `string` | *(library default)* | Light-weight (thin font) portion of the headline |
-| `headline` | `string` | *(library default)* | Bold portion of the headline |
-| `description` | `string` | *(library default)* | Paragraph text below the headline |
-| `buttonLabel` | `string` | `'Get Started'` | Label for the CTA button |
-| `imageUrl` | `string` | *(library default)* | URL of the hero image |
-| `imageAlt` | `string` | `'Hero Image'` | Alt text for the hero image |
+| Name            | Type     | Default             | Description                                      |
+| --------------- | -------- | ------------------- | ------------------------------------------------ |
+| `headlineLight` | `string` | _(library default)_ | Light-weight (thin font) portion of the headline |
+| `headline`      | `string` | _(library default)_ | Bold portion of the headline                     |
+| `description`   | `string` | _(library default)_ | Paragraph text below the headline                |
+| `buttonLabel`   | `string` | `'Get Started'`     | Label for the CTA button                         |
+| `imageUrl`      | `string` | _(library default)_ | URL of the hero image                            |
+| `imageAlt`      | `string` | `'Hero Image'`      | Alt text for the hero image                      |
 
 #### Outputs
 
-| Name | Payload | Description |
-|------|---------|-------------|
-| `buttonClick` | `void` | Emitted when the CTA button is clicked |
+| Name          | Payload | Description                            |
+| ------------- | ------- | -------------------------------------- |
+| `buttonClick` | `void`  | Emitted when the CTA button is clicked |
 
 #### Example
 
@@ -859,12 +859,12 @@ Feature highlight grid with optional customer testimonial card.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `sectionTitle` | `string` | `'Marvelous Features'` | Section heading |
-| `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `features` | `HelixFeature[]` | 9 default feature cards | Array of feature cards to display in the grid |
-| `testimonial` | `HelixTestimonial \| null` | *(library default)* | Optional testimonial block. Pass `null` to hide |
+| Name              | Type                       | Default                 | Description                                     |
+| ----------------- | -------------------------- | ----------------------- | ----------------------------------------------- |
+| `sectionTitle`    | `string`                   | `'Marvelous Features'`  | Section heading                                 |
+| `sectionSubtitle` | `string`                   | _(library default)_     | Section sub-heading                             |
+| `features`        | `HelixFeature[]`           | 9 default feature cards | Array of feature cards to display in the grid   |
+| `testimonial`     | `HelixTestimonial \| null` | _(library default)_     | Optional testimonial block. Pass `null` to hide |
 
 #### Example
 
@@ -905,11 +905,11 @@ Alternating image/text highlight blocks for showcasing key product capabilities.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `sectionTitle` | `string` | `'Powerful Everywhere'` | Section heading |
-| `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `highlights` | `HelixHighlight[]` | 2 default highlight blocks | Array of highlight items with image and text |
+| Name              | Type               | Default                    | Description                                  |
+| ----------------- | ------------------ | -------------------------- | -------------------------------------------- |
+| `sectionTitle`    | `string`           | `'Powerful Everywhere'`    | Section heading                              |
+| `sectionSubtitle` | `string`           | _(library default)_        | Section sub-heading                          |
+| `highlights`      | `HelixHighlight[]` | 2 default highlight blocks | Array of highlight items with image and text |
 
 #### Example
 
@@ -946,16 +946,16 @@ Pricing plan cards section with click-to-select interaction.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `sectionTitle` | `string` | `'Matchless Pricing'` | Section heading |
-| `sectionSubtitle` | `string` | *(library default)* | Section sub-heading |
-| `plans` | `HelixPricingPlan[]` | 3 plans (Free / Startup / Enterprise) | Array of pricing plan cards |
+| Name              | Type                 | Default                               | Description                 |
+| ----------------- | -------------------- | ------------------------------------- | --------------------------- |
+| `sectionTitle`    | `string`             | `'Matchless Pricing'`                 | Section heading             |
+| `sectionSubtitle` | `string`             | _(library default)_                   | Section sub-heading         |
+| `plans`           | `HelixPricingPlan[]` | 3 plans (Free / Startup / Enterprise) | Array of pricing plan cards |
 
 #### Outputs
 
-| Name | Payload | Description |
-|------|---------|-------------|
+| Name         | Payload            | Description                                  |
+| ------------ | ------------------ | -------------------------------------------- |
 | `planSelect` | `HelixPricingPlan` | Emitted when a card or its button is clicked |
 
 #### Example
@@ -1004,11 +1004,11 @@ Landing page footer with brand link and multi-column link groups. Uses the same 
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `brandName` | `string` | `'SAKAI'` | Brand name displayed in the footer |
-| `homeRoute` | `string` | `'/'` | Router path the brand name links to |
-| `columns` | `HelixFooterColumn[]` | *(library defaults)* | Link columns. Shares the `HelixFooterColumn` model with `HelixFooter` |
+| Name        | Type                  | Default              | Description                                                           |
+| ----------- | --------------------- | -------------------- | --------------------------------------------------------------------- |
+| `brandName` | `string`              | `'SAKAI'`            | Brand name displayed in the footer                                    |
+| `homeRoute` | `string`              | `'/'`                | Router path the brand name links to                                   |
+| `columns`   | `HelixFooterColumn[]` | _(library defaults)_ | Link columns. Shares the `HelixFooterColumn` model with `HelixFooter` |
 
 ---
 
@@ -1023,12 +1023,12 @@ Small inline badge with color-coded severity and optional icon / label.
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `severity` | `BadgeSeverity` | — | `'info'` \| `'warn'` \| `'error'` \| `'success'` |
-| `label` | `string` | — | Text label inside the badge |
-| `icon` | `string` | — | HelixIcons class (`pi pi-*`), e.g. `'pi pi-check'` |
-| `size` | `'sm' \| 'md'` | `'md'` | Badge size variant |
+| Name       | Type            | Default | Description                                        |
+| ---------- | --------------- | ------- | -------------------------------------------------- |
+| `severity` | `BadgeSeverity` | —       | `'info'` \| `'warn'` \| `'error'` \| `'success'`   |
+| `label`    | `string`        | —       | Text label inside the badge                        |
+| `icon`     | `string`        | —       | HelixIcons class (`pi pi-*`), e.g. `'pi pi-check'` |
+| `size`     | `'sm' \| 'md'`  | `'md'`  | Badge size variant                                 |
 
 #### Example
 
@@ -1048,20 +1048,20 @@ Convenience wrapper around `HelixBadge` that maps a named environment to a fixed
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `environment` | `Environment \| CustomEnvironment` | — | `'development'` \| `'testing'` \| `'staging'` \| `'production'`, or `{ label: string; severity: 'info' \| 'warn' \| 'error' \| 'success' }` |
+| Name          | Type                               | Default | Description                                                                                                                                 |
+| ------------- | ---------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `environment` | `Environment \| CustomEnvironment` | —       | `'development'` \| `'testing'` \| `'staging'` \| `'production'`, or `{ label: string; severity: 'info' \| 'warn' \| 'error' \| 'success' }` |
 
 #### Mapped appearance
 
-| Environment | Severity | Icon | Label |
-|-------------|----------|------|-------|
-| `development` | success | `pi pi-code` | Development |
-| `testing` | info | `pi pi-flask` | Testing |
-| `staging` | warn | `pi pi-layers` | Staging |
-| `production` | error | `pi pi-verified` | Production |
-| *unknown* | info | `pi pi-question` | Unknown |
-| `{ label, severity }` | given severity | none | given label (also the accessible name) |
+| Environment           | Severity       | Icon             | Label                                  |
+| --------------------- | -------------- | ---------------- | -------------------------------------- |
+| `development`         | success        | `pi pi-code`     | Development                            |
+| `testing`             | info           | `pi pi-flask`    | Testing                                |
+| `staging`             | warn           | `pi pi-layers`   | Staging                                |
+| `production`          | error          | `pi pi-verified` | Production                             |
+| _unknown_             | info           | `pi pi-question` | Unknown                                |
+| `{ label, severity }` | given severity | none             | given label (also the accessible name) |
 
 #### Example
 
@@ -1080,13 +1080,13 @@ The header of a page: an optional breadcrumb, the title (an `h1` by default) wit
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — (required) | The page title |
-| `subtitle` | `string` | — | One line under the title |
-| `breadcrumb` | `HxBreadcrumbItem[]` | — | The trail above the title (rendered with `hx-breadcrumb`); its last item is the current page |
-| `home` | `HxBreadcrumbItem` | — | The first item of the breadcrumb, usually a home icon |
-| `headingLevel` | `1–6` | `1` | The heading element of the title |
+| Name           | Type                 | Default      | Description                                                                                  |
+| -------------- | -------------------- | ------------ | -------------------------------------------------------------------------------------------- |
+| `title`        | `string`             | — (required) | The page title                                                                               |
+| `subtitle`     | `string`             | —            | One line under the title                                                                     |
+| `breadcrumb`   | `HxBreadcrumbItem[]` | —            | The trail above the title (rendered with `hx-breadcrumb`); its last item is the current page |
+| `home`         | `HxBreadcrumbItem`   | —            | The first item of the breadcrumb, usually a home icon                                        |
+| `headingLevel` | `1–6`                | `1`          | The heading element of the title                                                             |
 
 #### Example
 
@@ -1106,18 +1106,18 @@ A dashboard figure on an `hx-card`: a label, the value, an icon in a tinted box,
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string` | — (required) | What the figure is; also the accessible name of the card |
-| `value` | `string \| number` | — (required) | The figure; a number is formatted with `format` |
-| `format` | `Intl.NumberFormatOptions` | — | e.g. `{ style: 'currency', currency: 'EUR' }` |
-| `locale` | `string` | browser | Locale of the number formats |
-| `icon` | `string` | — | Icon classes (`pi pi-users`) |
-| `severity` | `'primary' \| 'info' \| 'success' \| 'warn' \| 'danger'` | `'primary'` | Colour of the icon box |
-| `trend` | `number` | — | The change: positive is up (green), negative is down (red), 0 is flat |
-| `trendUnit` | `string` | `'%'` | Appended to the trend figure |
-| `trendLabel` | `string` | — | Text after the trend ("since last month") |
-| `trendDigits` | `number` | `1` | Fraction digits of the trend |
+| Name          | Type                                                     | Default      | Description                                                           |
+| ------------- | -------------------------------------------------------- | ------------ | --------------------------------------------------------------------- |
+| `label`       | `string`                                                 | — (required) | What the figure is; also the accessible name of the card              |
+| `value`       | `string \| number`                                       | — (required) | The figure; a number is formatted with `format`                       |
+| `format`      | `Intl.NumberFormatOptions`                               | —            | e.g. `{ style: 'currency', currency: 'EUR' }`                         |
+| `locale`      | `string`                                                 | browser      | Locale of the number formats                                          |
+| `icon`        | `string`                                                 | —            | Icon classes (`pi pi-users`)                                          |
+| `severity`    | `'primary' \| 'info' \| 'success' \| 'warn' \| 'danger'` | `'primary'`  | Colour of the icon box                                                |
+| `trend`       | `number`                                                 | —            | The change: positive is up (green), negative is down (red), 0 is flat |
+| `trendUnit`   | `string`                                                 | `'%'`        | Appended to the trend figure                                          |
+| `trendLabel`  | `string`                                                 | —            | Text after the trend ("since last month")                             |
+| `trendDigits` | `number`                                                 | `1`          | Fraction digits of the trend                                          |
 
 #### Example
 
@@ -1135,13 +1135,13 @@ The state of a list, table or page that has nothing to show: an icon, a title, a
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | `string` | — (required) | The heading |
-| `description` | `string` | — | What the user can do about it |
-| `icon` | `string` | — | Icon classes (`pi pi-inbox`) |
-| `size` | `'small' \| 'medium'` | `'medium'` | Padding and icon size |
-| `headingLevel` | `2–6` | `3` | The heading element of the title |
+| Name           | Type                  | Default      | Description                      |
+| -------------- | --------------------- | ------------ | -------------------------------- |
+| `title`        | `string`              | — (required) | The heading                      |
+| `description`  | `string`              | —            | What the user can do about it    |
+| `icon`         | `string`              | —            | Icon classes (`pi pi-inbox`)     |
+| `size`         | `'small' \| 'medium'` | `'medium'`   | Padding and icon size            |
+| `headingLevel` | `2–6`                 | `3`          | The heading element of the title |
 
 #### Example
 
@@ -1186,14 +1186,14 @@ A structural wrapper component that renders a label, projected input content, an
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string` | — | Label text shown above the projected input |
-| `control` | `AbstractControl \| null` | `null` | Reactive forms control for touched/invalid state detection |
-| `hint` | `string` | — | Helper text shown below the field; hidden when an error is active |
-| `error` | `string \| null` | `null` | External error message; overrides control-derived error |
-| `showLabel` | `boolean` | `true` | Show or hide the label |
-| `showHint` | `boolean` | `true` | Show or hide the hint/error area |
+| Name        | Type                      | Default | Description                                                       |
+| ----------- | ------------------------- | ------- | ----------------------------------------------------------------- |
+| `label`     | `string`                  | —       | Label text shown above the projected input                        |
+| `control`   | `AbstractControl \| null` | `null`  | Reactive forms control for touched/invalid state detection        |
+| `hint`      | `string`                  | —       | Helper text shown below the field; hidden when an error is active |
+| `error`     | `string \| null`          | `null`  | External error message; overrides control-derived error           |
+| `showLabel` | `boolean`                 | `true`  | Show or hide the label                                            |
+| `showHint`  | `boolean`                 | `true`  | Show or hide the hint/error area                                  |
 
 #### Computed `activeError`
 

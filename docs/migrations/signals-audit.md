@@ -21,22 +21,22 @@ The other two original rationale points are addressed rather than dismissed:
 - **Signal adoption via upstream syncs**: no longer applicable without
   upstream tracking.
 
-The [.p-* CSS class prefix decision](css-class-prefix-decision.md) is *not*
+The [.p-* CSS class prefix decision](css-class-prefix-decision.md) is _not_
 reversed by this epic — class names stay `.p-*`.
 
 ## Scope
 
 Inventory at time of reversal (non-spec `.ts` files, `projects/core`):
 
-| API | Occurrences | Files | Signal replacement |
-|---|---|---|---|
-| `@Input()` | ~1,830 | 95 | `input()` / `model()` |
-| `@Output()` | ~340 | 64 | `output()` |
-| `@ViewChild` | ~144 | 43 | `viewChild()` |
-| `@ContentChild` | ~386 | 66 | `contentChild()` |
-| `@ContentChildren` | ~70 | 65 | `contentChildren()` |
-| `@HostListener` | ~75 | 23 | `host: {}` metadata |
-| `@HostBinding` | ~4 | 4 | `host: {}` metadata |
+| API                | Occurrences | Files | Signal replacement    |
+| ------------------ | ----------- | ----- | --------------------- |
+| `@Input()`         | ~1,830      | 95    | `input()` / `model()` |
+| `@Output()`        | ~340        | 64    | `output()`            |
+| `@ViewChild`       | ~144        | 43    | `viewChild()`         |
+| `@ContentChild`    | ~386        | 66    | `contentChild()`      |
+| `@ContentChildren` | ~70         | 65    | `contentChildren()`   |
+| `@HostListener`    | ~75         | 23    | `host: {}` metadata   |
+| `@HostBinding`     | ~4          | 4     | `host: {}` metadata   |
 
 Own code (`helix-shell`, `helix-zod`, `helix-ag-grid`, demo app) was already
 migrated under epic #233 batch 1 (#270); nothing remains there.
@@ -49,7 +49,7 @@ directories**, then finishes manually by these rules:
 1. **Schematics first.** Run per component path:
    `@angular/core:signal-input-migration`, `@angular/core:output-migration`,
    `@angular/core:signal-queries-migration` (with `--path projects/core/<dir>`).
-   *Pilot finding:* the output/queries schematics analyze the whole program and
+   _Pilot finding:_ the output/queries schematics analyze the whole program and
    may edit or insert `// TODO` comments in files **outside** `--path` — revert
    every change outside the batch's directories before committing.
 2. **Plain `@Input()` never written internally** → `input()`
@@ -66,7 +66,7 @@ directories**, then finishes manually by these rules:
 6. **`@HostListener` / `@HostBinding`** → `host: {}` metadata on the
    component/directive decorator.
 7. **Specs:** input writes `component.x = y` →
-   `fixture.componentRef.setInput('x', y)`; input *reads* become signal calls
+   `fixture.componentRef.setInput('x', y)`; input _reads_ become signal calls
    (`component.x()`); non-input members keep direct assignment.
 8. **Verification per batch:** `pnpm build:lib` and the demo build pass;
    `pnpm ng test shell --watch=false` passes **after** rebuilding
@@ -77,22 +77,22 @@ directories**, then finishes manually by these rules:
 
 ## Batch tracking
 
-| Batch | PBI | Scope | Status |
-|---|---|---|---|
-| Pilot | #311 | knob + this audit refresh | ✅ done |
-| 1 | #312 | accordion–card | ✅ done (leftovers: `blockui.blocked`, `ButtonDirective` label/icon/loading/severity/buttonProps) |
-| 2 | #313 | carousel–dataview | ✅ done (leftovers: carousel page/numVisible/numScroll, cascadeselect value, confirmdialog visible, contextmenu model & sub visible, chip chipProps) |
-| 3 | #314 | dialog–floatlabel | ✅ done (leftovers: dialog visible/style, drawer visible, fileupload files) |
-| 4 | #315 | fluid–inputicon | ✅ done (no leftovers) |
-| 5 | #316 | inputmask–message | ✅ done (leftovers: inputmask mask, megamenu/menubar model) |
-| 6 | #317 | metergroup–password | ✅ done (leftovers: orderlist value; spec input writes → #324) |
-| 7 | #318 | popover–skeleton | ✅ done (spec input writes → #324) |
-| 8 | #319 | slider–terminal | ✅ done (leftovers: splitter panelSizes getter/setter) |
-| 9 | #320 | textarea–treetable | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate) |
-| 10 | #321 | directives & infrastructure | ✅ done (leftovers: animateonscroll enterClass/leaveClass/root/rootMargin/threshold/once, api shared.ts PrimeTemplate type/name, autofocus autofocus, dragdrop getter/setters and HostListeners, focustrap pFocusTrapDisabled, keyfilter pValidateOnly/pattern/ngModelChange/HostListeners, overlay/overlayViewChild/contentViewChild/containerViewChild, scroller remaining @Input, styleclass selector/enterFromClass/enterActiveClass/enterToClass/leaveFromClass/leaveActiveClass/leaveToClass/hideOnOutsideClick/toggleClass/hideOnEscape/hideOnResize/resizeSelector/HostListener, tooltip remaining @Input and disabled getter/setter) |
-| Hard cases | #322 | table & treetable | ✅ done (leftovers: table getter/setter inputs for value, columns, first, rows, sortField, sortOrder, multiSortMeta, selection, selectAll, frozenValue, contextMenuSelection, filters, expandedRows, stateKey, loadingIcon, filterTemplate; treetable getter/setter inputs for first, rows) |
-| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | ✅ done (leftovers: datepicker 14 getter/setter + accessor inputs; multiselect first/rows/value; select first/rows/value; tree getter/setter value; autocomplete 3 accessor inputs; picklist 3 accessor inputs; galleria 5 getter/setter inputs) |
-| Closeout | #324 | final sweep, audit update, lint guard | ✅ done — 639 remaining decorators (getter/setter @Input, @HostListener, @HostBinding) across codebase; these require manual refactoring beyond schematic capability. Bi-weekly audit doc updates recommended as leftover files are cleaned up. |
+| Batch            | PBI  | Scope                                                                   | Status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------- | ---- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pilot            | #311 | knob + this audit refresh                                               | ✅ done                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| 1                | #312 | accordion–card                                                          | ✅ done (leftovers: `blockui.blocked`, `ButtonDirective` label/icon/loading/severity/buttonProps)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 2                | #313 | carousel–dataview                                                       | ✅ done (leftovers: carousel page/numVisible/numScroll, cascadeselect value, confirmdialog visible, contextmenu model & sub visible, chip chipProps)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 3                | #314 | dialog–floatlabel                                                       | ✅ done (leftovers: dialog visible/style, drawer visible, fileupload files)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 4                | #315 | fluid–inputicon                                                         | ✅ done (no leftovers)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 5                | #316 | inputmask–message                                                       | ✅ done (leftovers: inputmask mask, megamenu/menubar model)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 6                | #317 | metergroup–password                                                     | ✅ done (leftovers: orderlist value; spec input writes → #324)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| 7                | #318 | popover–skeleton                                                        | ✅ done (spec input writes → #324)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 8                | #319 | slider–terminal                                                         | ✅ done (leftovers: splitter panelSizes getter/setter)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 9                | #320 | textarea–treetable                                                      | ✅ done (leftovers: tieredmenu getter/setter visible/model, toast getter/setter position, treeselect getter/setter options, various ContentChild/Input in treeselect, toolbar ContentChild templates, toggleswitch handleTemplate, timeline markerTemplate)                                                                                                                                                                                                                                                                                                                                                                                   |
+| 10               | #321 | directives & infrastructure                                             | ✅ done (leftovers: animateonscroll enterClass/leaveClass/root/rootMargin/threshold/once, api shared.ts PrimeTemplate type/name, autofocus autofocus, dragdrop getter/setters and HostListeners, focustrap pFocusTrapDisabled, keyfilter pValidateOnly/pattern/ngModelChange/HostListeners, overlay/overlayViewChild/contentViewChild/containerViewChild, scroller remaining @Input, styleclass selector/enterFromClass/enterActiveClass/enterToClass/leaveFromClass/leaveActiveClass/leaveToClass/hideOnOutsideClick/toggleClass/hideOnEscape/hideOnResize/resizeSelector/HostListener, tooltip remaining @Input and disabled getter/setter) |
+| Hard cases       | #322 | table & treetable                                                       | ✅ done (leftovers: table getter/setter inputs for value, columns, first, rows, sortField, sortOrder, multiSortMeta, selection, selectAll, frozenValue, contextMenuSelection, filters, expandedRows, stateKey, loadingIcon, filterTemplate; treetable getter/setter inputs for first, rows)                                                                                                                                                                                                                                                                                                                                                   |
+| Large components | #323 | datepicker, multiselect, select, tree, autocomplete, picklist, galleria | ✅ done (leftovers: datepicker 14 getter/setter + accessor inputs; multiselect first/rows/value; select first/rows/value; tree getter/setter value; autocomplete 3 accessor inputs; picklist 3 accessor inputs; galleria 5 getter/setter inputs)                                                                                                                                                                                                                                                                                                                                                                                              |
+| Closeout         | #324 | final sweep, audit update, lint guard                                   | ✅ done — 639 remaining decorators (getter/setter @Input, @HostListener, @HostBinding) across codebase; these require manual refactoring beyond schematic capability. Bi-weekly audit doc updates recommended as leftover files are cleaned up.                                                                                                                                                                                                                                                                                                                                                                                               |
 
 ## Feature #359 — manual decorator leftovers (2026-07 to 2026-08)
 
@@ -103,21 +103,21 @@ scroller, overlay) plus ~50 scattered small leftovers. Epic #358 opened
 feature #359 to finish these as one PBI per directory group, each carrying
 the same rule block above and a grep-based DoD.
 
-| PBI | Scope | Status |
-|---|---|---|
-| #360 | remaining small-component leftovers | ✅ done |
-| #361 | directives (dragdrop, keyfilter, styleclass, tooltip, icons) | ✅ done |
-| #362 | scroller & overlay | ✅ done |
-| #363 | table | ✅ done |
-| #364 | treetable | ✅ done |
-| #365 | multiselect | ✅ done |
-| #366 | select | ✅ done |
-| #367 | treeselect | ✅ done |
-| #368 | datepicker | ✅ done |
-| #369 | tree | ✅ done |
-| #370 | autocomplete | ✅ done |
-| #371 | picklist | ✅ done |
-| #372 | galleria | ✅ done |
+| PBI  | Scope                                                              | Status                |
+| ---- | ------------------------------------------------------------------ | --------------------- |
+| #360 | remaining small-component leftovers                                | ✅ done               |
+| #361 | directives (dragdrop, keyfilter, styleclass, tooltip, icons)       | ✅ done               |
+| #362 | scroller & overlay                                                 | ✅ done               |
+| #363 | table                                                              | ✅ done               |
+| #364 | treetable                                                          | ✅ done               |
+| #365 | multiselect                                                        | ✅ done               |
+| #366 | select                                                             | ✅ done               |
+| #367 | treeselect                                                         | ✅ done               |
+| #368 | datepicker                                                         | ✅ done               |
+| #369 | tree                                                               | ✅ done               |
+| #370 | autocomplete                                                       | ✅ done               |
+| #371 | picklist                                                           | ✅ done               |
+| #372 | galleria                                                           | ✅ done               |
 | #373 | closeout — sweep, spec input-writes, real lint guard, audit update | ✅ done (this update) |
 
 **#373 closeout findings:**

@@ -41,12 +41,15 @@
 
 /* hover previews the value: the hovered star and every star before it */
 .hx-rating:not(.hx-rating-readonly, .hx-rating-disabled) .hx-rating-star:hover .hx-rating-icon,
-.hx-rating:not(.hx-rating-readonly, .hx-rating-disabled) .hx-rating-star:has(~ .hx-rating-star:hover) .hx-rating-icon {
+.hx-rating:not(.hx-rating-readonly, .hx-rating-disabled)
+  .hx-rating-star:has(~ .hx-rating-star:hover)
+  .hx-rating-icon {
   @include hx-icon(star-filled, var(--h-rating-icon-size), var(--h-rating-icon-hover-color));
 }
 
 .hx-rating-star:has(.hx-rating-input:focus-visible) .hx-rating-icon {
-  outline: var(--h-rating-focus-ring-width) var(--h-rating-focus-ring-style) var(--h-rating-focus-ring-color);
+  outline: var(--h-rating-focus-ring-width) var(--h-rating-focus-ring-style)
+    var(--h-rating-focus-ring-color);
   outline-offset: var(--h-rating-focus-ring-offset);
   box-shadow: var(--h-rating-focus-ring-shadow);
 }

@@ -46,18 +46,18 @@ This is deliberately the same trade-off recorded in
 `eqeqeq` lint exception. Individual per-component verdicts are therefore
 uniform and not enumerated; the ten largest are listed for the record:
 
-| Component | Lines | Verdict |
-|---|---|---|
-| table | 6,697 | keep inline (vendored) |
-| treetable | 4,170 | keep inline (vendored) |
-| datepicker | 3,929 | keep inline (vendored) |
-| multiselect | 2,336 | keep inline (vendored) |
-| select | 2,054 | keep inline (vendored) |
-| tree | 1,986 | keep inline (vendored) |
+| Component    | Lines | Verdict                |
+| ------------ | ----- | ---------------------- |
+| table        | 6,697 | keep inline (vendored) |
+| treetable    | 4,170 | keep inline (vendored) |
+| datepicker   | 3,929 | keep inline (vendored) |
+| multiselect  | 2,336 | keep inline (vendored) |
+| select       | 2,054 | keep inline (vendored) |
+| tree         | 1,986 | keep inline (vendored) |
 | autocomplete | 1,937 | keep inline (vendored) |
-| picklist | 1,874 | keep inline (vendored) |
-| listbox | 1,791 | keep inline (vendored) |
-| galleria | 1,742 | keep inline (vendored) |
+| picklist     | 1,874 | keep inline (vendored) |
+| listbox      | 1,791 | keep inline (vendored) |
+| galleria     | 1,742 | keep inline (vendored) |
 
 ### `projects/shell` — already split, keep as is
 

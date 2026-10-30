@@ -100,9 +100,7 @@
   background: var(--h-multiselect-filled-hover-background);
 }
 
-.hx-multi-select-filled:not(.hx-multi-select-disabled):has(
-  .hx-multi-select-trigger:focus-visible
-),
+.hx-multi-select-filled:not(.hx-multi-select-disabled):has(.hx-multi-select-trigger:focus-visible),
 .hx-multi-select-filled.hx-multi-select-open {
   background: var(--h-multiselect-filled-focus-background);
 }
@@ -182,18 +180,18 @@
   color: var(--h-multiselect-option-focus-color);
 }
 
-.hx-multi-select-option[aria-selected="true"] {
+.hx-multi-select-option[aria-selected='true'] {
   background: var(--h-multiselect-option-selected-background);
   color: var(--h-multiselect-option-selected-color);
 }
 
-.hx-multi-select-option[aria-selected="true"]:hover,
-.hx-multi-select-option[aria-selected="true"].cdk-option-active {
+.hx-multi-select-option[aria-selected='true']:hover,
+.hx-multi-select-option[aria-selected='true'].cdk-option-active {
   background: var(--h-multiselect-option-selected-focus-background);
   color: var(--h-multiselect-option-selected-focus-color);
 }
 
-.hx-multi-select-option[aria-disabled="true"] {
+.hx-multi-select-option[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
   pointer-events: none;
@@ -206,7 +204,7 @@
   height: 0.875rem;
 }
 
-.hx-multi-select-option[aria-selected="true"] .hx-multi-select-check {
+.hx-multi-select-option[aria-selected='true'] .hx-multi-select-check {
   @include hx-icon(check, 0.875rem, var(--h-multiselect-option-selected-color), 3.4);
 }
 

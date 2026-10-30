@@ -5,10 +5,10 @@ One file per decision, numbered in the order they were taken, in the style of
 `accepted`, `superseded by ADR NNNN` or `deprecated`; it is not edited after acceptance except for
 that status line and links to later records.
 
-| ADR                                   | Title                                                                                | Status   |
-| ------------------------------------- | ------------------------------------------------------------------------------------ | -------- |
-| [0001](0001-styling-foundation.md)    | Styling foundation: Helix tokens on the vendored fork now, a vanilla library replaces it | accepted |
-| [0002](0002-retire-helix-core.md)     | Retire helix-core: helix-ui is the only component library                            | accepted |
+| ADR                                | Title                                                                                    | Status   |
+| ---------------------------------- | ---------------------------------------------------------------------------------------- | -------- |
+| [0001](0001-styling-foundation.md) | Styling foundation: Helix tokens on the vendored fork now, a vanilla library replaces it | accepted |
+| [0002](0002-retire-helix-core.md)  | Retire helix-core: helix-ui is the only component library                                | accepted |
 
 Template:
 

@@ -3,13 +3,13 @@
      Aliases the app's own helix surface tokens (already theme-aware via
      .app-dark through app-layout.scss), so the rail sits one step deeper
      than content cards in both themes. The accent is the primary colour. */
-  --helix-nav-text:        var(--text-color);
-  --helix-nav-text-muted:  var(--text-color-secondary);
-  --helix-nav-hover-bg:    var(--helix-surface-hover);
-  --helix-nav-active-bg:   color-mix(in srgb, var(--primary-color) 12%, transparent);
+  --helix-nav-text: var(--text-color);
+  --helix-nav-text-muted: var(--text-color-secondary);
+  --helix-nav-hover-bg: var(--helix-surface-hover);
+  --helix-nav-active-bg: color-mix(in srgb, var(--primary-color) 12%, transparent);
   --helix-nav-active-text: var(--text-color);
-  --helix-nav-accent:      var(--primary-color);
-  --helix-nav-border:      var(--helix-border);
+  --helix-nav-accent: var(--primary-color);
+  --helix-nav-border: var(--helix-border);
 
   display: contents;
 }
@@ -224,7 +224,9 @@
   background-color: transparent;
   color: var(--helix-nav-text-muted);
   cursor: pointer;
-  transition: background-color var(--element-transition-duration), color var(--element-transition-duration);
+  transition:
+    background-color var(--element-transition-duration),
+    color var(--element-transition-duration);
 
   &:hover {
     background-color: var(--helix-surface-hover);

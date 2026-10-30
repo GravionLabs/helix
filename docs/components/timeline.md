@@ -10,11 +10,11 @@
 </hx-timeline>
 ```
 
-| Input    | Type                                | Default      | Description                                  |
-| -------- | ----------------------------------- | ------------ | -------------------------------------------- |
-| `value`  | `unknown[]`                         | `[]`         | The events, handed to the templates.         |
-| `align`  | `'left' \| 'right' \| 'alternate'`   | `'left'`     | Which side of the line the content is on.    |
-| `layout` | `'vertical' \| 'horizontal'`        | `'vertical'` | Direction of the line.                       |
+| Input    | Type                               | Default      | Description                               |
+| -------- | ---------------------------------- | ------------ | ----------------------------------------- |
+| `value`  | `unknown[]`                        | `[]`         | The events, handed to the templates.      |
+| `align`  | `'left' \| 'right' \| 'alternate'` | `'left'`     | Which side of the line the content is on. |
+| `layout` | `'vertical' \| 'horizontal'`       | `'vertical'` | Direction of the line.                    |
 
 The templates `hxTimelineContent`, `hxTimelineOpposite` and `hxTimelineMarker` receive the event (`let-event`) and its
 index (`let-index="index"`). Without a marker template the line shows a ring with a dot.

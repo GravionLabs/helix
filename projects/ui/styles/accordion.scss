@@ -47,12 +47,12 @@
   color: var(--h-accordion-header-hover-color);
 }
 
-.hx-accordion-trigger[aria-expanded="true"] {
+.hx-accordion-trigger[aria-expanded='true'] {
   background: var(--h-accordion-header-active-background);
   color: var(--h-accordion-header-active-color);
 }
 
-.hx-accordion-trigger[aria-expanded="true"]:not(:disabled):hover {
+.hx-accordion-trigger[aria-expanded='true']:not(:disabled):hover {
   background: var(--h-accordion-header-active-hover-background);
   color: var(--h-accordion-header-active-hover-color);
 }
@@ -78,7 +78,7 @@
   background: var(--h-accordion-header-toggle-icon-hover-color);
 }
 
-.hx-accordion-trigger[aria-expanded="true"] .hx-accordion-icon {
+.hx-accordion-trigger[aria-expanded='true'] .hx-accordion-icon {
   background: var(--h-accordion-header-toggle-icon-active-color);
   transform: rotate(180deg);
 }
@@ -92,9 +92,7 @@
 .hx-accordion-collapse {
   display: grid;
   grid-template-rows: 1fr;
-  transition:
-    grid-template-rows 0.2s,
-    visibility 0.2s;
+  transition: grid-template-rows 0.2s, visibility 0.2s;
 }
 
 .hx-accordion-content[inert] .hx-accordion-collapse {

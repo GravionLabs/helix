@@ -11,14 +11,14 @@
 </hx-avatar-group>
 ```
 
-| Input       | Type                                | Default    | Description                                                       |
-| ----------- | ----------------------------------- | ---------- | ----------------------------------------------------------------- |
-| `label`     | `string`                            |            | Initials or a short text (or project content instead).            |
-| `icon`      | `string`                            |            | Icon font classes.                                                |
-| `image`     | `string`                            |            | Picture; wins over `icon`, which wins over `label`.               |
-| `size`      | `'normal' \| 'large' \| 'xlarge'`    | `'normal'` | 2rem, 3rem, 4rem.                                                 |
-| `shape`     | `'square' \| 'circle'`              | `'square'` | Corner radius or a circle.                                        |
-| `ariaLabel` | `string`                            |            | Accessible name; makes the avatar a named `img`.                  |
+| Input       | Type                              | Default    | Description                                            |
+| ----------- | --------------------------------- | ---------- | ------------------------------------------------------ |
+| `label`     | `string`                          |            | Initials or a short text (or project content instead). |
+| `icon`      | `string`                          |            | Icon font classes.                                     |
+| `image`     | `string`                          |            | Picture; wins over `icon`, which wins over `label`.    |
+| `size`      | `'normal' \| 'large' \| 'xlarge'` | `'normal'` | 2rem, 3rem, 4rem.                                      |
+| `shape`     | `'square' \| 'circle'`            | `'square'` | Corner radius or a circle.                             |
+| `ariaLabel` | `string`                          |            | Accessible name; makes the avatar a named `img`.       |
 
 The group takes `ariaLabel` and sets `role="group"`.
 
