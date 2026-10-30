@@ -14,20 +14,20 @@ the first record on screen.
 
 ## Inputs and outputs
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `rows` (model) | `number` | `10` | Records per page. |
-| `totalRecords` | `number` | `0` | Number of records in all. |
-| `first` (model) | `number` | `0` | Index of the first record shown (0-based). |
-| `rowsPerPageOptions` | `(number \| 'all')[]` | none | Shows the rows-per-page select; `'all'` adds an entry that shows one page with every record. |
-| `showAll` (model) | `boolean` | `false` | The "All" size is chosen (only in effect while `rowsPerPageOptions` contains `'all'`); `rows` is left unchanged. |
-| `allLabel` | `string` | `'All'` | The label of the `'all'` entry. |
-| `pageLinkSize` | `number` | `5` | Page links shown at most; the current page stays in the middle. |
-| `showCurrentPageReport` | `boolean` | `false` | Shows `currentPageReportTemplate` (polite live region). |
-| `currentPageReportTemplate` | `string` | `'{first} - {last} of {totalRecords}'` | Also `{page}` and `{pageCount}`. |
-| `showFirstLastButtons` | `boolean` | `true` | The first and last page buttons. |
-| `ariaLabel`, `firstPageLabel`, `previousPageLabel`, `nextPageLabel`, `lastPageLabel`, `pageLabelTemplate`, `rowsPerPageLabel` | `string` | English | The labels, for translation (`pageLabelTemplate` replaces `{page}`). |
-| `pageChange` | `HxPageEvent` | | `{ first, rows, page, pageCount }` after a user change; with "All" `rows` is the number of all records (at least 1) and `all: true` is set. |
+| Name                                                                                                                          | Type                  | Default                                |                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rows` (model)                                                                                                                | `number`              | `10`                                   | Records per page.                                                                                                                           |
+| `totalRecords`                                                                                                                | `number`              | `0`                                    | Number of records in all.                                                                                                                   |
+| `first` (model)                                                                                                               | `number`              | `0`                                    | Index of the first record shown (0-based).                                                                                                  |
+| `rowsPerPageOptions`                                                                                                          | `(number \| 'all')[]` | none                                   | Shows the rows-per-page select; `'all'` adds an entry that shows one page with every record.                                                |
+| `showAll` (model)                                                                                                             | `boolean`             | `false`                                | The "All" size is chosen (only in effect while `rowsPerPageOptions` contains `'all'`); `rows` is left unchanged.                            |
+| `allLabel`                                                                                                                    | `string`              | `'All'`                                | The label of the `'all'` entry.                                                                                                             |
+| `pageLinkSize`                                                                                                                | `number`              | `5`                                    | Page links shown at most; the current page stays in the middle.                                                                             |
+| `showCurrentPageReport`                                                                                                       | `boolean`             | `false`                                | Shows `currentPageReportTemplate` (polite live region).                                                                                     |
+| `currentPageReportTemplate`                                                                                                   | `string`              | `'{first} - {last} of {totalRecords}'` | Also `{page}` and `{pageCount}`.                                                                                                            |
+| `showFirstLastButtons`                                                                                                        | `boolean`             | `true`                                 | The first and last page buttons.                                                                                                            |
+| `ariaLabel`, `firstPageLabel`, `previousPageLabel`, `nextPageLabel`, `lastPageLabel`, `pageLabelTemplate`, `rowsPerPageLabel` | `string`              | English                                | The labels, for translation (`pageLabelTemplate` replaces `{page}`).                                                                        |
+| `pageChange`                                                                                                                  | `HxPageEvent`         |                                        | `{ first, rows, page, pageCount }` after a user change; with "All" `rows` is the number of all records (at least 1) and `all: true` is set. |
 
 `goTo(page)` (0-based, clamped) is public for a template reference.
 

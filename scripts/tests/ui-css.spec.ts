@@ -130,7 +130,7 @@ describe('helix-ui icons (styles/_icons.scss)', () => {
     sass.compileString(`@use 'icons' as *;\n${source}`, { loadPaths: [STYLES] }).css;
   const iconSource = readFileSync(resolve(STYLES, '_icons.scss'), 'utf8');
   const iconMap = iconSource.slice(iconSource.indexOf('$hx-icons: ('), iconSource.indexOf('\n);'));
-  const names = [...iconMap.matchAll(/^ {2}([a-z-]+): /gm)].map((m) => m[1]);
+  const names = [...iconMap.matchAll(/^ {2}([a-z-]+):(?: |$)/gm)].map((m) => m[1]);
 
   it('is a partial: it is no component stylesheet and emits no CSS of its own', () => {
     expect(componentStyles().map((s) => s.name)).not.toContain('icons');

@@ -7,7 +7,7 @@
 ## Context
 
 [ADR 0001](0001-styling-foundation.md) decided on 2026-10-07 to give Helix its own look as design tokens on the
-vendored PrimeNG fork (`@gravionlabs/helix-core`, 90 components, `h-` selectors, a vendored styling engine) *now*
+vendored PrimeNG fork (`@gravionlabs/helix-core`, 90 components, `h-` selectors, a vendored styling engine) _now_
 and to replace the fork with a vanilla Angular library (`@gravionlabs/helix-ui`, `hx-` selectors, plain CSS)
 as the long-term target.
 

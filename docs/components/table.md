@@ -19,13 +19,13 @@ paging, filtering and selection are not part of it: use AG Grid through `helix-a
 </div>
 ```
 
-| Input         | Type                            | Default    | Description                                                   |
-| ------------- | ------------------------------- | ---------- | ------------------------------------------------------------- |
-| `size`        | `'small' \| 'medium' \| 'large'` | `'medium'` | Cell padding.                                                 |
-| `striped`     | `boolean`                       | `false`    | Alternate body rows get a background.                         |
-| `gridlines`   | `boolean`                       | `false`    | Borders around every cell.                                    |
-| `hoverable`   | `boolean`                       | `false`    | Body rows change colour under the pointer.                    |
-| `stickyHeader`| `boolean`                       | `false`    | The header stays at the top of its scroll container.          |
+| Input          | Type                             | Default    | Description                                          |
+| -------------- | -------------------------------- | ---------- | ---------------------------------------------------- |
+| `size`         | `'small' \| 'medium' \| 'large'` | `'medium'` | Cell padding.                                        |
+| `striped`      | `boolean`                        | `false`    | Alternate body rows get a background.                |
+| `gridlines`    | `boolean`                        | `false`    | Borders around every cell.                           |
+| `hoverable`    | `boolean`                        | `false`    | Body rows change colour under the pointer.           |
+| `stickyHeader` | `boolean`                        | `false`    | The header stays at the top of its scroll container. |
 
 - **Scrolling:** wrap a wide table in `.hx-table-scroll` (`overflow: auto`); with `stickyHeader` also give the wrapper a
   `max-height`. A scroll container must be reachable by keyboard: give it `tabindex="0"`, `role="region"` and an

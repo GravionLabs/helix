@@ -87,13 +87,14 @@
   box-sizing: border-box;
   width: var(--h-timeline-event-marker-size);
   height: var(--h-timeline-event-marker-size);
-  border: var(--h-timeline-event-marker-border-width) solid var(--h-timeline-event-marker-border-color);
+  border: var(--h-timeline-event-marker-border-width) solid
+    var(--h-timeline-event-marker-border-color);
   border-radius: var(--h-timeline-event-marker-border-radius);
   background: var(--h-timeline-event-marker-background);
 }
 
 .hx-timeline-event-marker::after {
-  content: "";
+  content: '';
   width: var(--h-timeline-event-marker-content-size);
   height: var(--h-timeline-event-marker-content-size);
   border-radius: var(--h-timeline-event-marker-content-border-radius);

@@ -33,8 +33,8 @@
 
 .hx-input:enabled:focus {
   border-color: var(--h-inputtext-focus-border-color);
-  outline: var(--h-inputtext-focus-ring-width)
-    var(--h-inputtext-focus-ring-style) var(--h-inputtext-focus-ring-color);
+  outline: var(--h-inputtext-focus-ring-width) var(--h-inputtext-focus-ring-style)
+    var(--h-inputtext-focus-ring-color);
   outline-offset: var(--h-inputtext-focus-ring-offset);
   box-shadow: var(--h-inputtext-focus-ring-shadow);
 }
@@ -47,12 +47,12 @@
 }
 
 /* invalid */
-.hx-input[aria-invalid="true"],
+.hx-input[aria-invalid='true'],
 .hx-input.ng-invalid.ng-touched {
   border-color: var(--h-inputtext-invalid-border-color);
 }
 
-.hx-input[aria-invalid="true"]::placeholder,
+.hx-input[aria-invalid='true']::placeholder,
 .hx-input.ng-invalid.ng-touched::placeholder {
   color: var(--h-inputtext-invalid-placeholder-color);
 }

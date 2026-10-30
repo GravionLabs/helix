@@ -61,8 +61,8 @@
 }
 
 .hx-paginator-button:focus-visible {
-  outline: var(--h-paginator-nav-button-focus-ring-width) var(--h-paginator-nav-button-focus-ring-style)
-    var(--h-paginator-nav-button-focus-ring-color);
+  outline: var(--h-paginator-nav-button-focus-ring-width)
+    var(--h-paginator-nav-button-focus-ring-style) var(--h-paginator-nav-button-focus-ring-color);
   outline-offset: var(--h-paginator-nav-button-focus-ring-offset);
   box-shadow: var(--h-paginator-nav-button-focus-ring-shadow);
 }

@@ -22,18 +22,18 @@ Full screen: with `fullScreen` nothing is shown inline; `visible` opens the gall
 
 ## Inputs and outputs
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `value` | `HxGalleriaItem[]` | `[]` | `{ src, alt, thumbnailSrc?, title?, caption? }`. |
-| `activeIndex` (model) | `number` | `0` | The picture on the stage; `activeIndexChange` is its output. |
-| `numVisible` | `number` | `5` | Thumbnails shown at a time; the strip scrolls with its own buttons and follows the active picture. |
-| `circular` | `boolean` | `false` | After the last picture comes the first again. |
-| `autoplay`, `autoplayInterval` | `boolean`, `number` | `false`, `4000` | Next picture every `autoplayInterval` ms; pauses while the pointer or the focus is inside; off with reduced motion. |
-| `showThumbnails`, `showItemNavigators`, `showIndicators` | `boolean` | `true`, `true`, `false` | The strip, the previous/next buttons on the stage, dots on the stage. |
-| `thumbnailsPosition` | `'bottom' \| 'top' \| 'left' \| 'right'` | `'bottom'` | Where the strip sits. |
-| `fullScreen`, `visible` (model) | `boolean` | `false` | Full-screen mode and whether it is open (`visibleChange`). |
-| `height` | `string` | `'24rem'` | CSS height of the stage inline. |
-| `ariaLabel`, `prevLabel`, `nextLabel`, `closeLabel`, `itemLabelTemplate` | `string` | English | The labels (`{index}`, `{count}` are replaced). |
+| Name                                                                     | Type                                     | Default                 |                                                                                                                     |
+| ------------------------------------------------------------------------ | ---------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `value`                                                                  | `HxGalleriaItem[]`                       | `[]`                    | `{ src, alt, thumbnailSrc?, title?, caption? }`.                                                                    |
+| `activeIndex` (model)                                                    | `number`                                 | `0`                     | The picture on the stage; `activeIndexChange` is its output.                                                        |
+| `numVisible`                                                             | `number`                                 | `5`                     | Thumbnails shown at a time; the strip scrolls with its own buttons and follows the active picture.                  |
+| `circular`                                                               | `boolean`                                | `false`                 | After the last picture comes the first again.                                                                       |
+| `autoplay`, `autoplayInterval`                                           | `boolean`, `number`                      | `false`, `4000`         | Next picture every `autoplayInterval` ms; pauses while the pointer or the focus is inside; off with reduced motion. |
+| `showThumbnails`, `showItemNavigators`, `showIndicators`                 | `boolean`                                | `true`, `true`, `false` | The strip, the previous/next buttons on the stage, dots on the stage.                                               |
+| `thumbnailsPosition`                                                     | `'bottom' \| 'top' \| 'left' \| 'right'` | `'bottom'`              | Where the strip sits.                                                                                               |
+| `fullScreen`, `visible` (model)                                          | `boolean`                                | `false`                 | Full-screen mode and whether it is open (`visibleChange`).                                                          |
+| `height`                                                                 | `string`                                 | `'24rem'`               | CSS height of the stage inline.                                                                                     |
+| `ariaLabel`, `prevLabel`, `nextLabel`, `closeLabel`, `itemLabelTemplate` | `string`                                 | English                 | The labels (`{index}`, `{count}` are replaced).                                                                     |
 
 Templates: `hxGalleriaItem` (the stage; context `$implicit` item, `index`), `hxGalleriaThumbnail`, `hxGalleriaCaption`.
 `goTo(index)`, `next()` and `prev()` are public.

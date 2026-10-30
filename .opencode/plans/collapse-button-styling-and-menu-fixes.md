@@ -1,6 +1,7 @@
 # Collapse Button + Badge Hover + Menu Alignment + Active Indicator
 
 ## 1. Collapse button — render like a badge
+
 **File:** `sidebar.scss`
 - Remove `border: 1px solid ...`
 - Change `border-radius` from `var(--content-border-radius)` to `50%`
@@ -11,6 +12,7 @@
 - Icon styling: `<i>` inside button should be centered, no extra margin
 
 ## 2. Darkmode & configurator badges — add hover effect
+
 **File:** `dark-mode-badge.ts`
 The host has `display: inline-flex; width: 2.5rem; height: 2.5rem; border-radius: 50%` but no hover background. Add component-level styles:
 ```ts
@@ -23,6 +25,7 @@ styles: [`
 The wrapper `<div>` has the sizing but no hover. Either add the hover to the wrapper div or to `:host`. Simpler: add inline style `transition: background-color var(--element-transition-duration)` to wrapper, or add component styles similar to dark-mode.
 
 ## 3. Menu item alignment
+
 **File:** `menu-item.scss`
 
 Root items need to be less indented than children:
@@ -50,6 +53,7 @@ Collapsed override keeps icon centered:
 ```
 
 ## 4. Active menu item indicator
+
 **File:** `menu-item.scss`
 
 Add visual distinction for `.active-menuitem`:

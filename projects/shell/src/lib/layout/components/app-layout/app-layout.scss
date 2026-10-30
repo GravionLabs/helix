@@ -12,10 +12,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: calc(var(--helix-topbar-height) + var(--helix-layout-gap))
-           var(--helix-layout-gap)
-           calc(var(--helix-status-bar-height) + var(--helix-layout-gap))
-           var(--helix-layout-gap);
+  padding: calc(var(--helix-topbar-height) + var(--helix-layout-gap)) var(--helix-layout-gap)
+    calc(var(--helix-status-bar-height) + var(--helix-layout-gap)) var(--helix-layout-gap);
   transition: margin-left var(--layout-section-transition-duration);
 }
 

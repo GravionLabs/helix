@@ -43,7 +43,7 @@
   box-shadow: var(--hx-ring-shadow);
 }
 
-.hx-file-upload-choose[aria-disabled="true"] {
+.hx-file-upload-choose[aria-disabled='true'] {
   cursor: default;
   opacity: 0.6;
 }

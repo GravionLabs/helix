@@ -96,11 +96,7 @@
 }
 
 /* invalid */
-.hx-float-label:has(
-    > [aria-invalid="true"],
-    > .ng-invalid.ng-touched,
-    > .hx-select-invalid
-  )
+.hx-float-label:has(> [aria-invalid='true'], > .ng-invalid.ng-touched, > .hx-select-invalid)
   > label {
   color: var(--h-floatlabel-invalid-color);
 }

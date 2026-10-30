@@ -10,9 +10,9 @@
 </hx-icon-field>
 ```
 
-| Input          | Type                 | Default  | Description                                                   |
-| -------------- | -------------------- | -------- | ------------------------------------------------------------- |
-| `iconPosition` | `'left' \| 'right'`  | `'left'` | Start or end edge (follows the writing direction).            |
+| Input          | Type                | Default  | Description                                        |
+| -------------- | ------------------- | -------- | -------------------------------------------------- |
+| `iconPosition` | `'left' \| 'right'` | `'left'` | Start or end edge (follows the writing direction). |
 
 - **Behaviour:** the icon is centred vertically, does not catch clicks, and the field gets inline padding for it;
   the `small` and `large` sizes of the input are followed. Colour: `--h-iconfield-icon-color`.

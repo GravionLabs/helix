@@ -64,7 +64,7 @@ a.hx-breadcrumb-link:focus-visible {
   color: var(--h-breadcrumb-item-icon-color);
 }
 
-.hx-breadcrumb-link[aria-disabled="true"] {
+.hx-breadcrumb-link[aria-disabled='true'] {
   opacity: 0.6;
 }
 

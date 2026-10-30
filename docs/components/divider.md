@@ -8,11 +8,11 @@
 <hx-divider layout="vertical" />
 ```
 
-| Input    | Type                               | Default        | Description                                  |
-| -------- | ---------------------------------- | -------------- | -------------------------------------------- |
-| `layout` | `'horizontal' \| 'vertical'`       | `'horizontal'` | Direction of the line.                       |
-| `type`   | `'solid' \| 'dashed' \| 'dotted'`  | `'solid'`      | Line style.                                  |
-| `align`  | `'start' \| 'center' \| 'end'`     |                | Where the label sits; no effect without one. |
+| Input    | Type                              | Default        | Description                                  |
+| -------- | --------------------------------- | -------------- | -------------------------------------------- |
+| `layout` | `'horizontal' \| 'vertical'`      | `'horizontal'` | Direction of the line.                       |
+| `type`   | `'solid' \| 'dashed' \| 'dotted'` | `'solid'`      | Line style.                                  |
+| `align`  | `'start' \| 'center' \| 'end'`    |                | Where the label sits; no effect without one. |
 
 It has `role="separator"` and `aria-orientation`. Margins and colours come from the `--h-divider-*` tokens.
 

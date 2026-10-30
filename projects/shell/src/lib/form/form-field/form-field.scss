@@ -11,7 +11,16 @@
 
   &__control {
     // the projected helix-ui controls fill the field
-    ::ng-deep :is(.hx-input, .hx-select, .hx-multi-select, .hx-input-number, .hx-date-picker, .hx-auto-complete, .hx-password) {
+    ::ng-deep
+      :is(
+        .hx-input,
+        .hx-select,
+        .hx-multi-select,
+        .hx-input-number,
+        .hx-date-picker,
+        .hx-auto-complete,
+        .hx-password
+      ) {
       width: 100%;
     }
   }

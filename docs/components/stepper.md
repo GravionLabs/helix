@@ -19,11 +19,11 @@
 </hx-stepper>
 ```
 
-| Input       | Type                      | Default | Description                                                            |
-| ----------- | ------------------------- | ------- | ---------------------------------------------------------------------- |
+| Input       | Type                       | Default | Description                                                                  |
+| ----------- | -------------------------- | ------- | ---------------------------------------------------------------------------- |
 | `value`     | `string \| number \| null` | `null`  | `[(value)]`: the active step; while `null` the first enabled step is active. |
-| `linear`    | `boolean`                 | `false` | Steps after the active one are disabled in the header.                 |
-| `keepAlive` | `boolean`                 | `false` | Keep the content of lazy panels after their step is left.              |
+| `linear`    | `boolean`                  | `false` | Steps after the active one are disabled in the header.                       |
+| `keepAlive` | `boolean`                  | `false` | Keep the content of lazy panels after their step is left.                    |
 
 `hx-step` and `hx-step-panel` take `value` (required); a step also takes `disabled`. `next()` and `previous()` on the
 stepper (a template reference works) move to the neighbouring step.

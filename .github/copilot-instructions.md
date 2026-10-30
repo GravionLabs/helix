@@ -21,21 +21,25 @@ This is an Angular 22 workspace containing:
 ## Code Style
 
 ### Angular Components
+
 - Use Angular 21 conventions: no `.component` postfix in filenames (`topbar.ts`, not `topbar.component.ts`)
 - Each component must have **3 separate files**: `name.ts`, `name.html`, `name.scss`
 - All components must be `standalone: true`
 - Use `templateUrl` and `styleUrl` (not inline `template` or `styles`)
 
 ### Component Prefix
+
 - All library components use the `helix-` selector prefix (e.g., `helix-topbar`, `helix-nav-rail`)
 - All library class names use the `Helix` prefix (e.g., `HelixTopbar`, `HelixNavRail`)
 
 ### State Management
+
 - Use NgRx Signal Store (`@ngrx/signals`) for all state management in the library
 - Avoid using `LayoutService` – always use `LayoutStore` from the library
 - Import from `@gravionlabs/helix-shell`, never from local demo layout copies
 
 ### Dependency Injection
+
 - Use `inject()` function instead of constructor injection
 - Use `input()` and `output()` signals for component I/O where possible
 
@@ -55,10 +59,12 @@ projects/shell/src/lib/
 ```
 
 ## Exports
+
 - All public library exports go through `projects/shell/src/public-api.ts`
 - Never import directly from library source paths in the demo app – always use `@gravionlabs/helix-shell`
 
 ## Testing
+
 - Unit tests use the `*.spec.ts` naming convention
 - Run `pnpm test` for all tests, `pnpm run test:lib` for library tests only
 
@@ -67,11 +73,13 @@ projects/shell/src/lib/
 When asked to implement an issue or epic (e.g., "impl #85", "implement epic #85"):
 
 ### Branch Naming
+
 - Epic issues (`[EPIC]` in title): `epic/<number>-<slug>`
 - Others: derive prefix from conventional-commit type in title (`feat/`, `refactor/`, `fix/`, `chore/`) — `<number>-<slug>`
 - Always branch off `main` after `git pull --rebase`
 
 ### Sub-Task Order
+
 Read the epic with `gh issue view <number>`. Implement sub-tasks in checklist order. Each sub-task is one commit. Only commit when all three pass:
 ```bash
 pnpm run build:lib   # or pnpm run build for full workspace
@@ -80,6 +88,7 @@ pnpm test
 ```
 
 ### Commit Format
+
 ```
 <type>(<scope>): <description> (#<sub-issue-number>)
 
@@ -87,6 +96,7 @@ Part of epic #<epic-number>
 ```
 
 ### After All Sub-Tasks
+
 1. `git push -u origin <branch>`
 2. `gh pr create` — reference the epic/issue, list sub-tasks as checked
 3. `gh pr edit <pr-number> --add-reviewer "github-copilot[bot]"`

@@ -24,17 +24,17 @@ Content marked `hxCarouselHeader` / `hxCarouselFooter` is shown above / below th
 
 ## Inputs and outputs
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `value` | `T[]` | `[]` | The items. |
-| `numVisible`, `numScroll` | `number` | `1`, `1` | Items shown at a time, items moved per page. The last page is pulled back so it is full. |
-| `responsiveOptions` | `{ breakpoint, numVisible, numScroll }[]` | — | Counts for viewports up to `breakpoint` (a max-width); the smallest matching breakpoint wins. |
-| `circular` | `boolean` | `false` | After the last page comes the first again (and the buttons never disable). |
-| `autoplayInterval` | `number` | `0` | Milliseconds between automatic page changes; off when 0. Pauses while the pointer or the focus is inside; off when the user prefers reduced motion. |
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | Vertical slides inside `verticalViewPortHeight` (`'300px'`). |
-| `showIndicators`, `showNavigators` | `boolean` | `true` | The page indicators below, the previous/next buttons beside the items. |
-| `page` (model) | `number` | `0` | The current page (0-based); `pageChange` is its output. |
-| `ariaLabel`, `prevLabel`, `nextLabel`, `pageLabelTemplate`, `itemLabelTemplate` | `string` | English | The labels (`{page}`, `{pageCount}`, `{index}`, `{count}` are replaced). |
+| Name                                                                            | Type                                      | Default        |                                                                                                                                                     |
+| ------------------------------------------------------------------------------- | ----------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`                                                                         | `T[]`                                     | `[]`           | The items.                                                                                                                                          |
+| `numVisible`, `numScroll`                                                       | `number`                                  | `1`, `1`       | Items shown at a time, items moved per page. The last page is pulled back so it is full.                                                            |
+| `responsiveOptions`                                                             | `{ breakpoint, numVisible, numScroll }[]` | —              | Counts for viewports up to `breakpoint` (a max-width); the smallest matching breakpoint wins.                                                       |
+| `circular`                                                                      | `boolean`                                 | `false`        | After the last page comes the first again (and the buttons never disable).                                                                          |
+| `autoplayInterval`                                                              | `number`                                  | `0`            | Milliseconds between automatic page changes; off when 0. Pauses while the pointer or the focus is inside; off when the user prefers reduced motion. |
+| `orientation`                                                                   | `'horizontal' \| 'vertical'`              | `'horizontal'` | Vertical slides inside `verticalViewPortHeight` (`'300px'`).                                                                                        |
+| `showIndicators`, `showNavigators`                                              | `boolean`                                 | `true`         | The page indicators below, the previous/next buttons beside the items.                                                                              |
+| `page` (model)                                                                  | `number`                                  | `0`            | The current page (0-based); `pageChange` is its output.                                                                                             |
+| `ariaLabel`, `prevLabel`, `nextLabel`, `pageLabelTemplate`, `itemLabelTemplate` | `string`                                  | English        | The labels (`{page}`, `{pageCount}`, `{index}`, `{count}` are replaced).                                                                            |
 
 `goTo(page)`, `next()` and `prev()` are public for a template reference.
 

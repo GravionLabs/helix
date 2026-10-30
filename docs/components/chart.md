@@ -26,16 +26,16 @@ import { HxChart } from '@gravionlabs/helix-ui/chart';
 </hx-chart>
 ```
 
-| Input / output   | Type                                                                 | Default  | Description                                              |
-| ---------------- | -------------------------------------------------------------------- | -------- | -------------------------------------------------------- |
-| `type`           | `'bar' \| 'line' \| 'scatter' \| 'bubble' \| 'pie' \| 'doughnut' \| 'polarArea' \| 'radar'` | `'bar'`  | chart.js chart type.                                     |
-| `data`           | chart.js data                                                        | `{}`     | `{ labels, datasets }`; pass a new object to update.     |
-| `options`        | chart.js options                                                     | `{}`     | On top of the token defaults; yours win.                 |
-| `plugins`        | `unknown[]`                                                          | `[]`     | Extra plugins for this chart.                            |
-| `width`, `height`| CSS length                                                           |          | Size of the frame. With either set, the aspect ratio is not kept. |
-| `responsive`     | `boolean`                                                            | `true`   | Resize with the container.                               |
-| `ariaLabel`, `ariaLabelledBy` | `string`                                                |          | Accessible name of the canvas.                           |
-| `(dataSelect)`   | `{ originalEvent, element, dataset }`                                |          | A point or dataset was clicked.                          |
+| Input / output                | Type                                                                                        | Default | Description                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------- |
+| `type`                        | `'bar' \| 'line' \| 'scatter' \| 'bubble' \| 'pie' \| 'doughnut' \| 'polarArea' \| 'radar'` | `'bar'` | chart.js chart type.                                              |
+| `data`                        | chart.js data                                                                               | `{}`    | `{ labels, datasets }`; pass a new object to update.              |
+| `options`                     | chart.js options                                                                            | `{}`    | On top of the token defaults; yours win.                          |
+| `plugins`                     | `unknown[]`                                                                                 | `[]`    | Extra plugins for this chart.                                     |
+| `width`, `height`             | CSS length                                                                                  |         | Size of the frame. With either set, the aspect ratio is not kept. |
+| `responsive`                  | `boolean`                                                                                   | `true`  | Resize with the container.                                        |
+| `ariaLabel`, `ariaLabelledBy` | `string`                                                                                    |         | Accessible name of the canvas.                                    |
+| `(dataSelect)`                | `{ originalEvent, element, dataset }`                                                       |         | A point or dataset was clicked.                                   |
 
 - **Theme:** datasets without `backgroundColor` / `borderColor` get the Helix palette (`--h-primary-color`, then orange,
   green, purple, sky, red, yellow, teal; every point of a pie). Text, legend, tick and grid colours come from

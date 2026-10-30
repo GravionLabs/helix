@@ -33,13 +33,13 @@ gh project item-add 6 --owner GravionLabs --url https://github.com/GravionLabs/h
 
 ## Titles & labels
 
-| Type    | Label     | Title convention    |
-| ------- | --------- | ------------------- |
-| Epic    | `epic`    | `[Epic] <name>`     |
-| Feature | `feature` | `[Feature] <name>`  |
-| PBI     | `pbi`     | `[PBI] <name>`      |
-| Task    | `task`    | `[Task] <name>`     |
-| Bug     | `bug`     | `[Bug] <symptom>`   |
+| Type    | Label     | Title convention   |
+| ------- | --------- | ------------------ |
+| Epic    | `epic`    | `[Epic] <name>`    |
+| Feature | `feature` | `[Feature] <name>` |
+| PBI     | `pbi`     | `[PBI] <name>`     |
+| Task    | `task`    | `[Task] <name>`    |
+| Bug     | `bug`     | `[Bug] <symptom>`  |
 
 The issue forms in `.github/ISSUE_TEMPLATE/` pre-fill the prefix and the label. Commits and PR titles stay
 conventional (`feat: …`, `fix: …`, `chore: …`).
@@ -78,47 +78,47 @@ same fields as `### <Label>` headings, in this order, so it reads the same as on
 
 ### Epic (`epic.yml`)
 
-| Field            | Required | Content                                                   |
-| ---------------- | -------- | --------------------------------------------------------- |
-| Goal             | yes      | What outcome the epic delivers                            |
-| Related spec/ADR | no       | Link to a doc under `docs/` (e.g. `docs/ROADMAP.md`)      |
-| Sub-issues       | no       | One Feature per line (`- #12 Feature title`)              |
+| Field            | Required | Content                                              |
+| ---------------- | -------- | ---------------------------------------------------- |
+| Goal             | yes      | What outcome the epic delivers                       |
+| Related spec/ADR | no       | Link to a doc under `docs/` (e.g. `docs/ROADMAP.md`) |
+| Sub-issues       | no       | One Feature per line (`- #12 Feature title`)         |
 
 ### Feature (`feature.yml`)
 
-| Field       | Required | Content                                  |
-| ----------- | -------- | ---------------------------------------- |
-| Parent Epic | yes      | `#<number>` (always set) |
-| Description | yes      | What the feature delivers and why        |
-| Sub-issues  | no       | One PBI per line                         |
+| Field       | Required | Content                           |
+| ----------- | -------- | --------------------------------- |
+| Parent Epic | yes      | `#<number>` (always set)          |
+| Description | yes      | What the feature delivers and why |
+| Sub-issues  | no       | One PBI per line                  |
 
 ### PBI (`pbi.yml`)
 
-| Field               | Required | Content                                                                         |
-| ------------------- | -------- | ------------------------------------------------------------------------------- |
-| Parent Feature      | yes      | `#<number>`                                                                     |
-| Acceptance criteria | yes      | Testable bullets or Given/When/Then                                             |
-| Depends on          | yes      | PBIs that must close first (also as native "blocked by"), or "Nothing"          |
+| Field               | Required | Content                                                                                               |
+| ------------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| Parent Feature      | yes      | `#<number>`                                                                                           |
+| Acceptance criteria | yes      | Testable bullets or Given/When/Then                                                                   |
+| Depends on          | yes      | PBIs that must close first (also as native "blocked by"), or "Nothing"                                |
 | Verification        | yes      | Commands that prove it works (default `pnpm format:check && pnpm lint && pnpm test:ci && pnpm build`) |
-| Sub-issues          | no       | One Task per line                                                               |
+| Sub-issues          | no       | One Task per line                                                                                     |
 
 ### Task (`task.yml`)
 
-| Field                | Required | Content                                                              |
-| -------------------- | -------- | -------------------------------------------------------------------- |
-| Parent PBI or Bug    | yes      | `#<number>`                                                          |
-| Implementation notes | no       | How/where                                                            |
-| Files                | yes      | Files the task creates or changes, one per line                      |
-| Done when            | yes      | Checkboxes, ending with the parent PBI's verification commands       |
+| Field                | Required | Content                                                        |
+| -------------------- | -------- | -------------------------------------------------------------- |
+| Parent PBI or Bug    | yes      | `#<number>`                                                    |
+| Implementation notes | no       | How/where                                                      |
+| Files                | yes      | Files the task creates or changes, one per line                |
+| Done when            | yes      | Checkboxes, ending with the parent PBI's verification commands |
 
 ### Bug (`bug.yml`)
 
-| Field              | Required | Content                                             |
-| ------------------ | -------- | --------------------------------------------------- |
-| Steps to reproduce | yes      | Numbered steps                                      |
-| Expected vs actual | yes      | What should happen, what happens instead            |
+| Field              | Required | Content                                                       |
+| ------------------ | -------- | ------------------------------------------------------------- |
+| Steps to reproduce | yes      | Numbered steps                                                |
+| Expected vs actual | yes      | What should happen, what happens instead                      |
 | Area               | no       | `core` / `shell` / `zod` / `ag-grid` / `demo` / `docs` / `ci` |
-| Sub-issues         | no       | One Task per line, only if the fix is split up      |
+| Sub-issues         | no       | One Task per line, only if the fix is split up                |
 
 ## Creating issues with `gh`
 

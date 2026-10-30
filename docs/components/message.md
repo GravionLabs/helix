@@ -7,14 +7,14 @@
 <hx-message severity="info" variant="outlined" icon="pi pi-star" [life]="5000">Saved</hx-message>
 ```
 
-| Input        | Type                                                          | Default    | Description                                       |
-| ------------ | ------------------------------------------------------------- | ---------- | ------------------------------------------------- |
-| `severity`   | `'success' \| 'info' \| 'warn' \| 'error' \| 'secondary' \| 'contrast'` | `'info'`   | Colours and built-in icon.                        |
-| `variant`    | `'filled' \| 'outlined' \| 'simple'`                          | `'filled'` | Tinted box, outline only, or text only.           |
-| `size`       | `'small' \| 'medium' \| 'large'`                              | `'medium'` | Padding, text and icon size.                      |
-| `icon`       | `string`                                                      | `''`       | Icon classes (any icon font) instead of the built-in icon. |
-| `closable`   | `boolean`                                                     | `false`    | A close button (`closeLabel`, default `Close`).   |
-| `life`       | `number`                                                      | `0`        | Milliseconds until the message hides itself.      |
+| Input      | Type                                                                    | Default    | Description                                                |
+| ---------- | ----------------------------------------------------------------------- | ---------- | ---------------------------------------------------------- |
+| `severity` | `'success' \| 'info' \| 'warn' \| 'error' \| 'secondary' \| 'contrast'` | `'info'`   | Colours and built-in icon.                                 |
+| `variant`  | `'filled' \| 'outlined' \| 'simple'`                                    | `'filled'` | Tinted box, outline only, or text only.                    |
+| `size`     | `'small' \| 'medium' \| 'large'`                                        | `'medium'` | Padding, text and icon size.                               |
+| `icon`     | `string`                                                                | `''`       | Icon classes (any icon font) instead of the built-in icon. |
+| `closable` | `boolean`                                                               | `false`    | A close button (`closeLabel`, default `Close`).            |
+| `life`     | `number`                                                                | `0`        | Milliseconds until the message hides itself.               |
 
 `(close)` fires when the button or `life` hides the message.
 

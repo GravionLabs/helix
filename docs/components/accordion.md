@@ -13,11 +13,11 @@ A panel is `hx-accordion-panel` with a `value`, an `hx-accordion-header` and an 
 </hx-accordion>
 ```
 
-| Input          | Type                           | Default | Description                                                       |
-| -------------- | ------------------------------ | ------- | ----------------------------------------------------------------- |
-| `value`        | `string \| string[] \| null`    | `null`  | `[(value)]`: the `value` of the open panel, or the open values with `multiple`. |
-| `multiple`     | `boolean`                      | `false` | Panels open independently.                                        |
-| `headingLevel` | `number`                       | `3`     | Level of the headings around the header buttons.                  |
+| Input          | Type                         | Default | Description                                                                     |
+| -------------- | ---------------------------- | ------- | ------------------------------------------------------------------------------- |
+| `value`        | `string \| string[] \| null` | `null`  | `[(value)]`: the `value` of the open panel, or the open values with `multiple`. |
+| `multiple`     | `boolean`                    | `false` | Panels open independently.                                                      |
+| `headingLevel` | `number`                     | `3`     | Level of the headings around the header buttons.                                |
 
 A panel takes `value` (required) and `disabled`.
 

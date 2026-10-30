@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
@@ -13,6 +13,10 @@
         "noForEach": "off"
       },
       "correctness": {
+        "noUnknownPseudoElement": {
+          "level": "error",
+          "options": { "ignore": ["ng-deep"] }
+        },
         "noUnusedVariables": "warn",
         "useExhaustiveDependencies": "off"
       },
@@ -27,6 +31,19 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf"
+  },
+  "markdown": {
+    "parser": {
+      "frontmatter": true
+    },
+    "formatter": {
+      "formatEmbeds": false
+    }
+  },
+  "yaml": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
   },
   "css": {
     "parser": {
@@ -53,7 +70,20 @@
       "!**/*.svg",
       "!apps/site/.vitepress/theme/generated",
       "!scripts/tests/fixtures",
-      "!**/public"
+      "!**/public",
+      "!CHANGELOG.md",
+      "!apm.lock.yaml"
     ]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.scss"],
+      "css": {
+        "formatter": {
+          "quoteStyle": "single",
+          "lineWidth": 100
+        }
+      }
+    }
+  ]
 }

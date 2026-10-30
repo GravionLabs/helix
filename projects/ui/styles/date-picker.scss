@@ -122,7 +122,7 @@
   color: var(--h-datepicker-date-color);
 }
 
-.hx-date-picker-date:not(:disabled, [aria-disabled="true"]):hover {
+.hx-date-picker-date:not(:disabled, [aria-disabled='true']):hover {
   background: var(--h-datepicker-date-hover-background);
   color: var(--h-datepicker-date-hover-color);
 }
@@ -139,12 +139,12 @@
 }
 
 .hx-date-picker-date-selected,
-.hx-date-picker-date-selected:not(:disabled, [aria-disabled="true"]):hover {
+.hx-date-picker-date-selected:not(:disabled, [aria-disabled='true']):hover {
   background: var(--h-datepicker-date-selected-background);
   color: var(--h-datepicker-date-selected-color);
 }
 
-.hx-date-picker-date[aria-disabled="true"] {
+.hx-date-picker-date[aria-disabled='true'] {
   opacity: 0.4;
   cursor: default;
 }
@@ -263,7 +263,7 @@
 
 .hx-date-picker-invalid .hx-date-picker-input,
 .hx-date-picker.ng-invalid.ng-touched .hx-date-picker-input,
-.hx-date-picker-input[aria-invalid="true"] {
+.hx-date-picker-input[aria-invalid='true'] {
   border-color: var(--h-inputtext-invalid-border-color);
 }
 
@@ -295,8 +295,8 @@
 }
 
 .hx-date-picker-trigger:focus-visible {
-  outline: var(--h-datepicker-dropdown-focus-ring-width) var(--h-datepicker-dropdown-focus-ring-style)
-    var(--h-datepicker-dropdown-focus-ring-color);
+  outline: var(--h-datepicker-dropdown-focus-ring-width)
+    var(--h-datepicker-dropdown-focus-ring-style) var(--h-datepicker-dropdown-focus-ring-color);
   outline-offset: var(--h-datepicker-dropdown-focus-ring-offset);
   box-shadow: var(--h-datepicker-dropdown-focus-ring-shadow);
 }

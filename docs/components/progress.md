@@ -9,15 +9,15 @@ ring.
 <hx-progress-spinner ariaLabel="Saving" />
 ```
 
-| Component  | Input               | Type                              | Default         | Description                                   |
-| ---------- | ------------------- | --------------------------------- | --------------- | --------------------------------------------- |
-| bar        | `value`             | `number`                          | `0`             | 0 to 100, clamped.                            |
-| bar        | `mode`              | `'determinate' \| 'indeterminate'` | `'determinate'` | Indeterminate slides and has no value.        |
-| bar        | `showValue`, `unit` | `boolean`, `string`               | `true`, `'%'`   | The value text inside the bar.                |
-| bar        | `ariaLabel`         | `string`                          |                 | Accessible name.                              |
-| spinner    | `strokeWidth`       | `string`                          | `'2'`           | Ring width in the drawing.                    |
-| spinner    | `animationDuration` | `string`                          | `'2s'`          | CSS time of one turn.                         |
-| spinner    | `ariaLabel`         | `string`                          | `'Loading'`     | Accessible name.                              |
+| Component | Input               | Type                               | Default         | Description                            |
+| --------- | ------------------- | ---------------------------------- | --------------- | -------------------------------------- |
+| bar       | `value`             | `number`                           | `0`             | 0 to 100, clamped.                     |
+| bar       | `mode`              | `'determinate' \| 'indeterminate'` | `'determinate'` | Indeterminate slides and has no value. |
+| bar       | `showValue`, `unit` | `boolean`, `string`                | `true`, `'%'`   | The value text inside the bar.         |
+| bar       | `ariaLabel`         | `string`                           |                 | Accessible name.                       |
+| spinner   | `strokeWidth`       | `string`                           | `'2'`           | Ring width in the drawing.             |
+| spinner   | `animationDuration` | `string`                           | `'2s'`          | CSS time of one turn.                  |
+| spinner   | `ariaLabel`         | `string`                           | `'Loading'`     | Accessible name.                       |
 
 - **Accessibility:** `role="progressbar"` with `aria-valuemin`/`aria-valuemax` and, when determinate, `aria-valuenow`;
   the spinner and an indeterminate bar leave `aria-valuenow` out. Name every bar. Motion stops under

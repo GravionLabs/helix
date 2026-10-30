@@ -17,9 +17,9 @@
 .hx-dialog {
   display: grid;
   grid-template:
-    "title close" auto
-    "content content" minmax(0, 1fr)
-    "footer footer" auto / minmax(0, 1fr) auto;
+    'title close' auto
+    'content content' minmax(0, 1fr)
+    'footer footer' auto / minmax(0, 1fr) auto;
   box-sizing: border-box;
   width: 100%;
   max-height: inherit;

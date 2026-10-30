@@ -7,17 +7,17 @@
 <hx-split-button label="Save" icon="pi pi-save" [model]="items" (click)="save()" (triggered)="onPick($event)" />
 ```
 
-| Input / output     | Type                                     | Default           | Description                                              |
-| ------------------ | ---------------------------------------- | ----------------- | -------------------------------------------------------- |
-| `label`            | `string`                                 |                   | Text of the main button.                                 |
-| `icon`             | `string`                                 |                   | Icon font classes for the main button.                   |
-| `model`            | `HxMenuItem[]`                           | `[]`              | The related actions.                                     |
-| `variant`          | `'filled' \| 'outlined' \| 'text' \| 'link'` | `'filled'`        | As on `hx-button`.                                       |
-| `severity`         | `HxButtonSeverity`                       | `'primary'`       | As on `hx-button`.                                       |
-| `size`             | `'small' \| 'medium' \| 'large'`          | `'medium'`        | As on `hx-button`.                                       |
-| `rounded`, `raised`, `disabled` | `boolean`                   | `false`           | Pill shape, elevation shadow, disables both buttons.     |
-| `menuButtonLabel`  | `string`                                 | `'More actions'`  | Name of the menu button.                                 |
-| `(triggered)`      | `HxMenuItem`                             |                   | An item was activated (after its `command`).             |
+| Input / output                  | Type                                         | Default          | Description                                          |
+| ------------------------------- | -------------------------------------------- | ---------------- | ---------------------------------------------------- |
+| `label`                         | `string`                                     |                  | Text of the main button.                             |
+| `icon`                          | `string`                                     |                  | Icon font classes for the main button.               |
+| `model`                         | `HxMenuItem[]`                               | `[]`             | The related actions.                                 |
+| `variant`                       | `'filled' \| 'outlined' \| 'text' \| 'link'` | `'filled'`       | As on `hx-button`.                                   |
+| `severity`                      | `HxButtonSeverity`                           | `'primary'`      | As on `hx-button`.                                   |
+| `size`                          | `'small' \| 'medium' \| 'large'`             | `'medium'`       | As on `hx-button`.                                   |
+| `rounded`, `raised`, `disabled` | `boolean`                                    | `false`          | Pill shape, elevation shadow, disables both buttons. |
+| `menuButtonLabel`               | `string`                                     | `'More actions'` | Name of the menu button.                             |
+| `(triggered)`                   | `HxMenuItem`                                 |                  | An item was activated (after its `command`).         |
 
 `(click)` is the native click of the main button; clicks on the menu button do not reach it.
 

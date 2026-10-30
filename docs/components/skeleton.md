@@ -9,14 +9,14 @@
 </div>
 ```
 
-| Input          | Type                       | Default       | Description                                           |
-| -------------- | -------------------------- | ------------- | ----------------------------------------------------- |
-| `shape`        | `'rectangle' \| 'circle'`   | `'rectangle'` | A circle is always round.                             |
-| `width`        | `string`                   | `'100%'`      | Any CSS length.                                       |
-| `height`       | `string`                   | `'1rem'`      | Any CSS length.                                       |
-| `size`         | `string`                   |               | Width and height at once; wins over both.             |
-| `borderRadius` | `string`                   |               | Replaces the theme radius.                            |
-| `animation`    | `'wave' \| 'none'`          | `'wave'`      | The sweeping gradient; off under `prefers-reduced-motion`. |
+| Input          | Type                      | Default       | Description                                                |
+| -------------- | ------------------------- | ------------- | ---------------------------------------------------------- |
+| `shape`        | `'rectangle' \| 'circle'` | `'rectangle'` | A circle is always round.                                  |
+| `width`        | `string`                  | `'100%'`      | Any CSS length.                                            |
+| `height`       | `string`                  | `'1rem'`      | Any CSS length.                                            |
+| `size`         | `string`                  |               | Width and height at once; wins over both.                  |
+| `borderRadius` | `string`                  |               | Replaces the theme radius.                                 |
+| `animation`    | `'wave' \| 'none'`        | `'wave'`      | The sweeping gradient; off under `prefers-reduced-motion`. |
 
 - **Accessibility:** `aria-hidden="true"`, so a skeleton says nothing by itself. The container of the loading content
   announces the state: `aria-busy="true"` on it, or a visually hidden "Loading…" in a live region.

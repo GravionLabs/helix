@@ -12,11 +12,11 @@ reduced motion.
 </hx-panel>
 ```
 
-| Input       | Type      | Default | Description                                              |
-| ----------- | --------- | ------- | -------------------------------------------------------- |
-| `header`    | `string`  | `''`    | The title.                                               |
-| `toggleable` | `boolean` | `false` | A button in the header collapses and expands the content. |
-| `collapsed` | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable panel collapses. |
+| Input        | Type              | Default | Description                                               |
+| ------------ | ----------------- | ------- | --------------------------------------------------------- |
+| `header`     | `string`          | `''`    | The title.                                                |
+| `toggleable` | `boolean`         | `false` | A button in the header collapses and expands the content. |
+| `collapsed`  | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable panel collapses.       |
 
 - **Accessibility:** the toggle is a native `<button>` named by the title, with `aria-expanded` and `aria-controls`; the
   content is a `role="region"` labelled by the title, and `inert` while collapsed so its controls leave the tab order.

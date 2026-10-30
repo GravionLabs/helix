@@ -16,11 +16,11 @@
 </hx-tabs>
 ```
 
-| Input        | Type             | Default | Description                                                           |
-| ------------ | ---------------- | ------- | --------------------------------------------------------------------- |
+| Input        | Type             | Default | Description                                                                |
+| ------------ | ---------------- | ------- | -------------------------------------------------------------------------- |
 | `value`      | `string \| null` | `null`  | `[(value)]`: the active tab; while `null` the first enabled tab is active. |
-| `scrollable` | `boolean`        | `false` | Buttons at the ends of the list scroll tabs that overflow.            |
-| `keepAlive`  | `boolean`        | `false` | Keep the content of lazy panels after their tab is left.              |
+| `scrollable` | `boolean`        | `false` | Buttons at the ends of the list scroll tabs that overflow.                 |
+| `keepAlive`  | `boolean`        | `false` | Keep the content of lazy panels after their tab is left.                   |
 
 `hx-tab` and `hx-tab-panel` take `value` (required); a tab also takes `disabled`.
 

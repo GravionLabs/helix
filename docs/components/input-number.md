@@ -10,21 +10,21 @@ locale while the user types. It works with `ngModel`, reactive forms and signal 
 <hx-input-number ariaLabel="Price" mode="currency" currency="EUR" locale="de-DE" [formField]="form.price" />
 ```
 
-| Input                                  | Type                        | Default      | Description                                                         |
-| -------------------------------------- | --------------------------- | ------------ | ------------------------------------------------------------------- |
-| `min`, `max`                           | `number`                    |              | Limits; typed and stepped values are clamped to them.               |
-| `step`                                 | `number`                    | `1`          | Size of a step (arrows and buttons).                                |
-| `minFractionDigits`, `maxFractionDigits` | `number`                  | locale       | Fraction digits shown; values are rounded to `maxFractionDigits`.   |
-| `locale`                               | `string`                    | browser      | BCP 47 tag used to format and parse.                                |
-| `useGrouping`                          | `boolean`                   | `true`       | Thousands separators.                                               |
-| `mode`                                 | `'decimal' \| 'currency'`   | `'decimal'`  | `currency` needs `currency` (ISO 4217, default `USD`).              |
-| `prefix`, `suffix`                     | `string`                    |              | Text around the number, ignored when parsing.                       |
-| `showButtons`                          | `boolean`                   | `false`      | Increment and decrement buttons.                                    |
-| `buttonLayout`                         | `'stacked' \| 'horizontal'` | `'stacked'`  | One column on the end edge, or minus and plus on both sides.        |
-| `incrementLabel`, `decrementLabel`     | `string`                    | English      | Accessible names of the buttons, to translate.                      |
-| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                  |              | Id for `<label for>`, or the accessible name.                       |
-| `placeholder`                          | `string`                    |              | A hint, not a label.                                                |
-| `variant`, `size`, `fluid`             |                             | as `hx-input` | Same look as the text field.                                       |
+| Input                                    | Type                        | Default       | Description                                                       |
+| ---------------------------------------- | --------------------------- | ------------- | ----------------------------------------------------------------- |
+| `min`, `max`                             | `number`                    |               | Limits; typed and stepped values are clamped to them.             |
+| `step`                                   | `number`                    | `1`           | Size of a step (arrows and buttons).                              |
+| `minFractionDigits`, `maxFractionDigits` | `number`                    | locale        | Fraction digits shown; values are rounded to `maxFractionDigits`. |
+| `locale`                                 | `string`                    | browser       | BCP 47 tag used to format and parse.                              |
+| `useGrouping`                            | `boolean`                   | `true`        | Thousands separators.                                             |
+| `mode`                                   | `'decimal' \| 'currency'`   | `'decimal'`   | `currency` needs `currency` (ISO 4217, default `USD`).            |
+| `prefix`, `suffix`                       | `string`                    |               | Text around the number, ignored when parsing.                     |
+| `showButtons`                            | `boolean`                   | `false`       | Increment and decrement buttons.                                  |
+| `buttonLayout`                           | `'stacked' \| 'horizontal'` | `'stacked'`   | One column on the end edge, or minus and plus on both sides.      |
+| `incrementLabel`, `decrementLabel`       | `string`                    | English       | Accessible names of the buttons, to translate.                    |
+| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                    |               | Id for `<label for>`, or the accessible name.                     |
+| `placeholder`                            | `string`                    |               | A hint, not a label.                                              |
+| `variant`, `size`, `fluid`               |                             | as `hx-input` | Same look as the text field.                                      |
 
 - **Behaviour:** the value follows what is typed (clamped), the text is reformatted on blur or Enter. Text that is
   not a number leaves the value as it was. Arrow Up/Down step, Home/End jump to `min`/`max` when they are set.

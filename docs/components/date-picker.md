@@ -20,23 +20,23 @@ import { HX_DATE_RANGE_DAY_PRESETS } from '@gravionlabs/helix-ui';
 readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS; // Today, Last 7 days, This month
 ```
 
-| Input                   | Type                                  | Default    | Description                                       |
-| ----------------------- | ------------------------------------- | ---------- | ------------------------------------------------- |
-| `inline`                | `boolean`                             | `false`    | The calendar in the page, without a field.        |
-| `showIcon`              | `boolean`                             | `false`    | A calendar button at the end of the field.        |
-| `showButtonBar`         | `boolean`                             | `false`    | Today and Clear under the calendar of the popup (`todayLabel`, `clearLabel`). |
-| `dateFormat`            | `Intl.DateTimeFormatOptions`          | numeric `dd/mm/yyyy` order of the locale | Format of the text in the field. |
-| `placeholder`, `inputId` | `string`                             |            | Of the text field.                                |
-| `selectionMode`         | `'single' \| 'range' \| 'multiple'`   | `'single'` | What the value holds.                             |
-| `minDate`, `maxDate`    | `Date \| null`                        | `null`     | Earliest and latest day.                          |
-| `disabledDates`         | `Date[]`                              | `[]`       | Days that cannot be chosen.                       |
-| `firstDayOfWeek`        | `number`                              | `0`        | `0` Sunday … `6` Saturday.                        |
-| `locale`                | `string`                              | browser's  | BCP 47 tag for the names.                         |
-| `ariaLabel`, `ariaLabelledby` | `string`                        | `Calendar` | Name of the calendar.                             |
-| `presets`               | `HxDateTimeRangePreset[]`             | `[]`       | Ready-made ranges above the calendar, with `selectionMode="range"` only. |
-| `presetDisplay`         | `'buttons' \| 'select'`              | `'buttons'` | The presets as a row of buttons or in a select.  |
-| `presetsLabel`          | `string`                              | `'Presets'` | Name of the preset group and the select's placeholder. |
-| `presetRefusedLabel`    | `string`                              | `'This range cannot be chosen.'` | Message shown when a preset is refused. |
+| Input                         | Type                                | Default                                  | Description                                                                   |
+| ----------------------------- | ----------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------- |
+| `inline`                      | `boolean`                           | `false`                                  | The calendar in the page, without a field.                                    |
+| `showIcon`                    | `boolean`                           | `false`                                  | A calendar button at the end of the field.                                    |
+| `showButtonBar`               | `boolean`                           | `false`                                  | Today and Clear under the calendar of the popup (`todayLabel`, `clearLabel`). |
+| `dateFormat`                  | `Intl.DateTimeFormatOptions`        | numeric `dd/mm/yyyy` order of the locale | Format of the text in the field.                                              |
+| `placeholder`, `inputId`      | `string`                            |                                          | Of the text field.                                                            |
+| `selectionMode`               | `'single' \| 'range' \| 'multiple'` | `'single'`                               | What the value holds.                                                         |
+| `minDate`, `maxDate`          | `Date \| null`                      | `null`                                   | Earliest and latest day.                                                      |
+| `disabledDates`               | `Date[]`                            | `[]`                                     | Days that cannot be chosen.                                                   |
+| `firstDayOfWeek`              | `number`                            | `0`                                      | `0` Sunday … `6` Saturday.                                                    |
+| `locale`                      | `string`                            | browser's                                | BCP 47 tag for the names.                                                     |
+| `ariaLabel`, `ariaLabelledby` | `string`                            | `Calendar`                               | Name of the calendar.                                                         |
+| `presets`                     | `HxDateTimeRangePreset[]`           | `[]`                                     | Ready-made ranges above the calendar, with `selectionMode="range"` only.      |
+| `presetDisplay`               | `'buttons' \| 'select'`             | `'buttons'`                              | The presets as a row of buttons or in a select.                               |
+| `presetsLabel`                | `string`                            | `'Presets'`                              | Name of the preset group and the select's placeholder.                        |
+| `presetRefusedLabel`          | `string`                            | `'This range cannot be chosen.'`         | Message shown when a preset is refused.                                       |
 
 - **Range presets:** with `selectionMode="range"`, `presets` lists ready-made ranges above the calendar. They are
   opt-in: the list is empty by default, so no preset shows until you pass one (for the built-in day presets,

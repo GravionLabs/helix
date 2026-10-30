@@ -15,11 +15,16 @@
 }
 
 .hx-skeleton-wave::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   transform: translateX(-100%);
-  background: linear-gradient(90deg, transparent, var(--h-skeleton-animation-background), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--h-skeleton-animation-background),
+    transparent
+  );
   animation: hx-skeleton-wave 1.2s infinite;
 }
 

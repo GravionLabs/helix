@@ -79,11 +79,11 @@ side bar and tool panels, the set filter, the multi filter, the server-side row 
 
 `Intl`-based value formatters for column definitions:
 
-| Export | Formats |
-| --- | --- |
+| Export                                                           | Formats                                                       |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- |
 | `numberFormatter` / `rawNumberFormatter` / `intlNumberFormatter` | Numbers (grouped, raw, or custom `Intl.NumberFormat` options) |
-| `currencyFormatter` | Currency values |
-| `cetDateFormatter` / `cetTimeFormatter` / `cetDateTimeFormatter` | Dates/times in CET |
+| `currencyFormatter`                                              | Currency values                                               |
+| `cetDateFormatter` / `cetTimeFormatter` / `cetDateTimeFormatter` | Dates/times in CET                                            |
 
 ```ts
 import { currencyFormatter } from '@gravionlabs/helix-ag-grid';

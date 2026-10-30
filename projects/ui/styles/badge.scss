@@ -94,6 +94,6 @@
   outline: var(--h-overlaybadge-outline-width) solid var(--h-overlaybadge-outline-color);
 }
 
-[dir="rtl"] .hx-overlay-badge-badge {
+[dir='rtl'] .hx-overlay-badge-badge {
   transform: translate(-50%, -50%);
 }
