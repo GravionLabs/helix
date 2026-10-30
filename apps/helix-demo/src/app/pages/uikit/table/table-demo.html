@@ -1,8 +1,11 @@
-<h1 class="sr-only">Table</h1>
+<h1 class="sr-only">Native table</h1>
 <app-source-tabs library="helix-ui" directory="table" componentName="table-demo" [docs]="['table']">
   <div class="card flex flex-col gap-3">
-    <h2 class="demo-title">Table</h2>
-    <p class="m-0">Plain HTML tables with the Helix look. Sorting, paging and filtering are AG Grid's job (helix-ag-grid).</p>
+    <h2 class="demo-title">Native table</h2>
+    <p class="m-0">
+      A plain HTML <code>&lt;table hx-table&gt;</code> with the Helix look: no component and no column model, the markup is yours.
+      For sorting, paging, selection and filters use the <a routerLink="/uikit/data-table">Data table</a> component, for large grids AG Grid (helix-ag-grid).
+    </p>
     <div class="hx-table-scroll">
       <table hx-table striped hoverable>
         <caption>Invoices</caption>

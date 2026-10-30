@@ -47,13 +47,13 @@ describe('DEMO_MENU_MODEL Data table item', () => {
     expect(item?.icon).toBe('pi pi-fw pi-table');
   });
 
-  it('lists Table right after Data table under Components', () => {
+  it('lists Native table right after Data table under Components, with its own icon', () => {
     const uikit = DEMO_MENU_MODEL.find((item) => item.label === 'Components');
     const labels = uikit?.items?.map((i) => i.label) ?? [];
-    expect(labels.indexOf('Table')).toBe(labels.indexOf('Data table') + 1);
-    const item = uikit?.items?.find((i) => i.label === 'Table');
+    expect(labels.indexOf('Native table')).toBe(labels.indexOf('Data table') + 1);
+    const item = uikit?.items?.find((i) => i.label === 'Native table');
     expect(item?.routerLink).toEqual(['/uikit/table']);
-    expect(item?.icon).toBe('pi pi-fw pi-table');
+    expect(item?.icon).toBe('pi pi-fw pi-th-large');
   });
 
   it('resolves Data table and Table to their own routes', () => {
@@ -75,7 +75,7 @@ describe('uikit table route', () => {
     const route = uikitRoutes.find((r) => r.path === 'table');
     expect(route?.component).toBe(UikitTableDemo);
     expect(route?.redirectTo).toBeUndefined();
-    expect(route?.data).toEqual({ breadcrumb: 'Table' });
+    expect(route?.data).toEqual({ breadcrumb: 'Native table' });
   });
 });
 
@@ -139,8 +139,8 @@ describe('DEMO_MENU_MODEL AG Grid group', () => {
     ]);
   });
 
-  it('lists Table under Components and no longer Crud under Pages', () => {
-    expect(group('Components')?.items?.map((i) => i.label)).toContain('Table');
+  it('lists Native table under Components and no longer Crud under Pages', () => {
+    expect(group('Components')?.items?.map((i) => i.label)).toContain('Native table');
     const pages = group('Pages')?.items?.map((i) => i.label);
     expect(pages).not.toContain('Crud');
     expect(pages).toContain('Empty');
