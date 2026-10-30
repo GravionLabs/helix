@@ -1,5 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   HxButton,
   HxCell,
@@ -24,6 +25,7 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
     HxInput,
     HxRowExpansion,
     JsonPipe,
+    RouterLink,
   ],
   templateUrl: './data-table-demo.html',
   styleUrl: './data-table-demo.scss',

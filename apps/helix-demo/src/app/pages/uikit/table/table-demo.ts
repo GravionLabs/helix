@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { HxTable } from '@gravionlabs/helix-ui';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
@@ -6,7 +7,7 @@ import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 @Component({
   selector: 'app-uikit-table-demo',
   standalone: true,
-  imports: [SourceTabsComponent, HxTable],
+  imports: [SourceTabsComponent, HxTable, RouterLink],
   templateUrl: './table-demo.html',
   changeDetection: ChangeDetectionStrategy.Eager,
 })
