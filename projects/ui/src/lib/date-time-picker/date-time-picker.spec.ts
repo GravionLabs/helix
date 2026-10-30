@@ -398,11 +398,19 @@ describe('HxDateTimePicker', () => {
   });
 
   it('takes today when a time is set without a date', async () => {
-    host.when.set(null);
-    await settle();
-    await press(spin('dt', 'Hour'), 'ArrowUp');
-    const now = new Date();
-    expect(host.when()).toEqual(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 1, 0));
+    // Today must lie inside the host's minDate..maxDate; the picker reads it on creation, so the
+    // clock is pinned before a fresh fixture is created.
+    vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30), toFake: ['Date'] });
+    try {
+      fixture = TestBed.createComponent(DateTimeHost);
+      host = fixture.componentInstance;
+      host.when.set(null);
+      await settle();
+      await press(spin('dt', 'Hour'), 'ArrowUp');
+      expect(host.when()).toEqual(new Date(2026, 9, 14, 1, 0));
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('changes nothing while disabled', async () => {
