@@ -100,9 +100,7 @@
   background: var(--h-select-filled-hover-background);
 }
 
-.hx-select-filled:not(.hx-select-disabled):has(
-  .hx-select-trigger:focus-visible
-),
+.hx-select-filled:not(.hx-select-disabled):has(.hx-select-trigger:focus-visible),
 .hx-select-filled.hx-select-open {
   background: var(--h-select-filled-focus-background);
 }
@@ -182,18 +180,18 @@
   color: var(--h-select-option-focus-color);
 }
 
-.hx-select-option[aria-selected="true"] {
+.hx-select-option[aria-selected='true'] {
   background: var(--h-select-option-selected-background);
   color: var(--h-select-option-selected-color);
 }
 
-.hx-select-option[aria-selected="true"]:hover,
-.hx-select-option[aria-selected="true"].cdk-option-active {
+.hx-select-option[aria-selected='true']:hover,
+.hx-select-option[aria-selected='true'].cdk-option-active {
   background: var(--h-select-option-selected-focus-background);
   color: var(--h-select-option-selected-focus-color);
 }
 
-.hx-select-option[aria-disabled="true"] {
+.hx-select-option[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
   pointer-events: none;
@@ -206,7 +204,7 @@
   height: 0.875rem;
 }
 
-.hx-select-option[aria-selected="true"] .hx-select-check {
+.hx-select-option[aria-selected='true'] .hx-select-check {
   @include hx-icon(check, 0.875rem, var(--h-select-checkmark-color), 3.4);
 }
 

@@ -63,18 +63,18 @@
     color var(--h-menubar-transition-duration);
 }
 
-.hx-menubar-item:hover:not([aria-disabled="true"]),
+.hx-menubar-item:hover:not([aria-disabled='true']),
 .hx-menubar-item:focus-visible {
   background: var(--h-menubar-item-focus-background);
   color: var(--h-menubar-item-focus-color);
 }
 
-.hx-menubar-item[aria-expanded="true"] {
+.hx-menubar-item[aria-expanded='true'] {
   background: var(--h-menubar-item-active-background);
   color: var(--h-menubar-item-active-color);
 }
 
-.hx-menubar-item[aria-disabled="true"] {
+.hx-menubar-item[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
 }
@@ -83,17 +83,22 @@
   color: var(--h-menubar-item-icon-color);
 }
 
-.hx-menubar-item:hover:not([aria-disabled="true"]) .hx-menu-icon,
+.hx-menubar-item:hover:not([aria-disabled='true']) .hx-menu-icon,
 .hx-menubar-item:focus-visible .hx-menu-icon {
   color: var(--h-menubar-item-icon-focus-color);
 }
 
-.hx-menubar-item[aria-expanded="true"] .hx-menu-icon {
+.hx-menubar-item[aria-expanded='true'] .hx-menu-icon {
   color: var(--h-menubar-item-icon-active-color);
 }
 
 .hx-menubar-submenu-icon {
-  @include hx-icon(chevron-down, var(--h-menubar-submenu-icon-size), var(--h-menubar-submenu-icon-color), 2.4);
+  @include hx-icon(
+    chevron-down,
+    var(--h-menubar-submenu-icon-size),
+    var(--h-menubar-submenu-icon-color),
+    2.4
+  );
 }
 
 .hx-menubar-item:hover .hx-menubar-submenu-icon,
@@ -101,7 +106,7 @@
   background: var(--h-menubar-submenu-icon-focus-color);
 }
 
-.hx-menubar-item[aria-expanded="true"] .hx-menubar-submenu-icon {
+.hx-menubar-item[aria-expanded='true'] .hx-menubar-submenu-icon {
   background: var(--h-menubar-submenu-icon-active-color);
 }
 
@@ -128,7 +133,7 @@
   color: var(--h-menubar-item-color);
 }
 
-.hx-menubar-submenu .hx-menu-item:hover:not([aria-disabled="true"]),
+.hx-menubar-submenu .hx-menu-item:hover:not([aria-disabled='true']),
 .hx-menubar-submenu .hx-menu-item:focus-visible {
   background: var(--h-menubar-item-focus-background);
   color: var(--h-menubar-item-focus-color);
@@ -167,8 +172,8 @@
 }
 
 .hx-menubar-button:focus-visible {
-  outline: var(--h-menubar-mobile-button-focus-ring-width) var(--h-menubar-mobile-button-focus-ring-style)
-    var(--h-menubar-mobile-button-focus-ring-color);
+  outline: var(--h-menubar-mobile-button-focus-ring-width)
+    var(--h-menubar-mobile-button-focus-ring-style) var(--h-menubar-mobile-button-focus-ring-color);
   outline-offset: var(--h-menubar-mobile-button-focus-ring-offset);
   box-shadow: var(--h-menubar-mobile-button-focus-ring-shadow);
 }

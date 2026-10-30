@@ -67,7 +67,7 @@
 }
 
 .hx-tab-active::after {
-  content: "";
+  content: '';
   position: absolute;
   inset-inline: 0;
   bottom: var(--h-tabs-active-bar-bottom);

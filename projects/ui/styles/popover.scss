@@ -28,7 +28,7 @@
 }
 
 .hx-popover::before {
-  content: "";
+  content: '';
   position: absolute;
   inset-inline-start: var(--h-popover-arrow-offset);
   inset-block-start: -6px;

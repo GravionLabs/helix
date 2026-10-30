@@ -76,8 +76,10 @@
   border-radius: var(--h-slider-handle-border-radius);
   background: var(--h-slider-handle-background);
   /* the inner dot: a border of the content's inset, painted as the content background */
-  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
-    var(--h-slider-handle-content-background), var(--h-slider-handle-content-shadow);
+  box-shadow:
+    inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+      var(--h-slider-handle-content-background),
+    var(--h-slider-handle-content-shadow);
   cursor: pointer;
   pointer-events: auto;
   transition: background var(--h-slider-transition-duration);
@@ -90,8 +92,10 @@
   border: 0;
   border-radius: var(--h-slider-handle-border-radius);
   background: var(--h-slider-handle-background);
-  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
-    var(--h-slider-handle-content-background), var(--h-slider-handle-content-shadow);
+  box-shadow:
+    inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+      var(--h-slider-handle-content-background),
+    var(--h-slider-handle-content-shadow);
   cursor: pointer;
   pointer-events: auto;
   transition: background var(--h-slider-transition-duration);
@@ -99,14 +103,18 @@
 
 .hx-slider-input:enabled:hover::-webkit-slider-thumb {
   background: var(--h-slider-handle-hover-background);
-  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
-    var(--h-slider-handle-content-hover-background), var(--h-slider-handle-content-shadow);
+  box-shadow:
+    inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+      var(--h-slider-handle-content-hover-background),
+    var(--h-slider-handle-content-shadow);
 }
 
 .hx-slider-input:enabled:hover::-moz-range-thumb {
   background: var(--h-slider-handle-hover-background);
-  box-shadow: inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
-    var(--h-slider-handle-content-hover-background), var(--h-slider-handle-content-shadow);
+  box-shadow:
+    inset 0 0 0 calc((var(--h-slider-handle-width) - var(--h-slider-handle-content-width)) / 2)
+      var(--h-slider-handle-content-hover-background),
+    var(--h-slider-handle-content-shadow);
 }
 
 .hx-slider-input:focus-visible::-webkit-slider-thumb {

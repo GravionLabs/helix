@@ -67,12 +67,12 @@
   color: var(--h-datatable-row-hover-color);
 }
 
-.hx-table tbody tr[aria-selected="true"] {
+.hx-table tbody tr[aria-selected='true'] {
   background: var(--h-datatable-row-selected-background);
   color: var(--h-datatable-row-selected-color);
 }
 
-.hx-table tbody tr[aria-selected="true"] > * {
+.hx-table tbody tr[aria-selected='true'] > * {
   border-block-end-color: var(--h-datatable-body-cell-selected-border-color);
 }
 

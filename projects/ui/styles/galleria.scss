@@ -102,8 +102,8 @@
 }
 
 .hx-galleria-nav:focus-visible {
-  outline: var(--h-galleria-nav-button-focus-ring-width) var(--h-galleria-nav-button-focus-ring-style)
-    var(--h-galleria-nav-button-focus-ring-color);
+  outline: var(--h-galleria-nav-button-focus-ring-width)
+    var(--h-galleria-nav-button-focus-ring-style) var(--h-galleria-nav-button-focus-ring-color);
   outline-offset: var(--h-galleria-nav-button-focus-ring-offset);
   box-shadow: var(--h-galleria-nav-button-focus-ring-shadow);
 }
@@ -172,7 +172,8 @@
 }
 
 .hx-galleria-indicator:focus-visible {
-  outline: var(--h-galleria-indicator-button-focus-ring-width) var(--h-galleria-indicator-button-focus-ring-style)
+  outline: var(--h-galleria-indicator-button-focus-ring-width)
+    var(--h-galleria-indicator-button-focus-ring-style)
     var(--h-galleria-indicator-button-focus-ring-color);
   outline-offset: var(--h-galleria-indicator-button-focus-ring-offset);
   box-shadow: var(--h-galleria-indicator-button-focus-ring-shadow);
@@ -263,7 +264,8 @@
 }
 
 .hx-galleria-thumbnail-nav:focus-visible {
-  outline: var(--h-galleria-thumbnail-nav-button-focus-ring-width) var(--h-galleria-thumbnail-nav-button-focus-ring-style)
+  outline: var(--h-galleria-thumbnail-nav-button-focus-ring-width)
+    var(--h-galleria-thumbnail-nav-button-focus-ring-style)
     var(--h-galleria-thumbnail-nav-button-focus-ring-color);
   outline-offset: var(--h-galleria-thumbnail-nav-button-focus-ring-offset);
   box-shadow: var(--h-galleria-thumbnail-nav-button-focus-ring-shadow);
@@ -356,8 +358,8 @@
 }
 
 .hx-galleria-close:focus-visible {
-  outline: var(--h-galleria-close-button-focus-ring-width) var(--h-galleria-close-button-focus-ring-style)
-    var(--h-galleria-close-button-focus-ring-color);
+  outline: var(--h-galleria-close-button-focus-ring-width)
+    var(--h-galleria-close-button-focus-ring-style) var(--h-galleria-close-button-focus-ring-color);
   outline-offset: var(--h-galleria-close-button-focus-ring-offset);
   box-shadow: var(--h-galleria-close-button-focus-ring-shadow);
 }

@@ -184,8 +184,8 @@
 }
 
 .hx-message-close:focus-visible {
-  outline: var(--h-message-close-button-focus-ring-width) var(--h-message-close-button-focus-ring-style)
-    var(--hx-message-ring);
+  outline: var(--h-message-close-button-focus-ring-width)
+    var(--h-message-close-button-focus-ring-style) var(--hx-message-ring);
   outline-offset: var(--h-message-close-button-focus-ring-offset);
   box-shadow: var(--hx-message-ring-shadow);
 }

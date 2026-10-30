@@ -48,9 +48,7 @@
   color: var(--h-tree-node-color);
   cursor: pointer;
   user-select: none;
-  transition:
-    background var(--h-tree-transition-duration),
-    color var(--h-tree-transition-duration);
+  transition: background var(--h-tree-transition-duration), color var(--h-tree-transition-duration);
 }
 
 .hx-tree-node-content:hover {

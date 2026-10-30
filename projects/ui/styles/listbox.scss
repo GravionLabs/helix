@@ -71,18 +71,18 @@
   color: var(--h-listbox-option-focus-color);
 }
 
-.hx-listbox-option[aria-selected="true"] {
+.hx-listbox-option[aria-selected='true'] {
   background: var(--h-listbox-option-selected-background);
   color: var(--h-listbox-option-selected-color);
 }
 
-.hx-listbox-option[aria-selected="true"]:hover,
-.hx-listbox-option[aria-selected="true"].cdk-option-active {
+.hx-listbox-option[aria-selected='true']:hover,
+.hx-listbox-option[aria-selected='true'].cdk-option-active {
   background: var(--h-listbox-option-selected-focus-background);
   color: var(--h-listbox-option-selected-focus-color);
 }
 
-.hx-listbox-option[aria-disabled="true"] {
+.hx-listbox-option[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
   pointer-events: none;
@@ -100,7 +100,7 @@
   height: 0.875rem;
 }
 
-.hx-listbox-checkmark .hx-listbox-option[aria-selected="true"] .hx-listbox-check {
+.hx-listbox-checkmark .hx-listbox-option[aria-selected='true'] .hx-listbox-check {
   @include hx-icon(check, 0.875rem, var(--h-listbox-checkmark-color), 3.4);
 }
 

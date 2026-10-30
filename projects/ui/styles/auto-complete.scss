@@ -215,17 +215,17 @@
   color: var(--h-autocomplete-option-focus-color);
 }
 
-.hx-auto-complete-option[aria-selected="true"] {
+.hx-auto-complete-option[aria-selected='true'] {
   background: var(--h-autocomplete-option-selected-background);
   color: var(--h-autocomplete-option-selected-color);
 }
 
-.hx-auto-complete-option[aria-selected="true"].hx-auto-complete-option-active {
+.hx-auto-complete-option[aria-selected='true'].hx-auto-complete-option-active {
   background: var(--h-autocomplete-option-selected-focus-background);
   color: var(--h-autocomplete-option-selected-focus-color);
 }
 
-.hx-auto-complete-option[aria-disabled="true"] {
+.hx-auto-complete-option[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
 }
