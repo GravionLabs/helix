@@ -13,36 +13,36 @@ to) and, below it, a time picker for the start and one for the end. It is built 
 <hx-date-time-range-picker timeOnly [showMinutes]="false" [(value)]="opening" />
 ```
 
-| Input | Type | Default | Description |
-| ----- | ---- | ------- | ----------- |
-| `fromLabel`, `toLabel` | `string` | `From`, `To` | Names of the two time pickers. |
-| `separator` | `string` | `-` | The text between the two dates in the field. |
-| `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
-| `typeable` | `boolean` | `false` | The range can be typed into the field (see Typing); otherwise the field is read-only. |
-| `presets` | `HxDateTimeRangePreset[]` | `[]` | Ready-made ranges as buttons above the calendar (see below). |
-| `presetDisplay` | `'buttons' \| 'select'` | `'buttons'` | Presets as buttons, or as one select (see below). |
-| `presetsLabel` | `string` | `Presets` | Name of the preset group. |
-| `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string` | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons. |
-| `showTime` | `boolean` | `true` | The time pickers; `false` picks days only (midnight). |
-| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds` | | as the time picker | See [time picker](time-picker.md). `timeOnly` shows the time pickers without the calendar. |
-| `stepHour`, `stepMinute`, `stepSecond` | `number` | `1` | Step of the time columns. |
-| `dateFormat`, `locale`, `firstDayOfWeek` | | as the date picker | Format of the text, names, first weekday. |
-| `minDate`, `maxDate`, `disabledDates` | `Date`, `Date[]` | | Limits, compared including the time. |
-| `showButtonBar` | `boolean` | `false` | A Clear button (empties the range being edited) beside Cancel and Submit. |
-| `disabled`, `invalid` | `boolean` | `false` | |
-| `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
+| Input                                                     | Type                      | Default                                          | Description                                                                                |
+| --------------------------------------------------------- | ------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `fromLabel`, `toLabel`                                    | `string`                  | `From`, `To`                                     | Names of the two time pickers.                                                             |
+| `separator`                                               | `string`                  | `-`                                              | The text between the two dates in the field.                                               |
+| `placeholder`, `inputId`                                  | `string`                  |                                                  | Of the text field; the placeholder shows while the range is empty.                         |
+| `typeable`                                                | `boolean`                 | `false`                                          | The range can be typed into the field (see Typing); otherwise the field is read-only.      |
+| `presets`                                                 | `HxDateTimeRangePreset[]` | `[]`                                             | Ready-made ranges as buttons above the calendar (see below).                               |
+| `presetDisplay`                                           | `'buttons' \| 'select'`   | `'buttons'`                                      | Presets as buttons, or as one select (see below).                                          |
+| `presetsLabel`                                            | `string`                  | `Presets`                                        | Name of the preset group.                                                                  |
+| `chooseLabel`, `clearLabel`, `cancelLabel`, `submitLabel` | `string`                  | `Choose date range`, `Clear`, `Cancel`, `Submit` | Name of the button and the popup; text of the popup's buttons.                             |
+| `showTime`                                                | `boolean`                 | `true`                                           | The time pickers; `false` picks days only (midnight).                                      |
+| `timeOnly`, `hourFormat`, `showMinutes`, `showSeconds`    |                           | as the time picker                               | See [time picker](time-picker.md). `timeOnly` shows the time pickers without the calendar. |
+| `stepHour`, `stepMinute`, `stepSecond`                    | `number`                  | `1`                                              | Step of the time columns.                                                                  |
+| `dateFormat`, `locale`, `firstDayOfWeek`                  |                           | as the date picker                               | Format of the text, names, first weekday.                                                  |
+| `minDate`, `maxDate`, `disabledDates`                     | `Date`, `Date[]`          |                                                  | Limits, compared including the time.                                                       |
+| `showButtonBar`                                           | `boolean`                 | `false`                                          | A Clear button (empties the range being edited) beside Cancel and Submit.                  |
+| `disabled`, `invalid`                                     | `boolean`                 | `false`                                          |                                                                                            |
+| `ariaLabel`, `ariaLabelledby`                             | `string`                  |                                                  | Name of the field and the popup.                                                           |
 
 ## Exports
 
 Besides the component, `@gravionlabs/helix-ui` exports these types, lists and functions for ranges and presets:
 
-| Export | Description |
-| ------ | ----------- |
-| `HxDateTimeRangeValue` | The value, `{ from: Date \| null; to: Date \| null }`. |
-| `HxDateTimeRangePreset` | A preset, `{ label, from(context?), to(context?) }`. |
-| `HxDateTimeRangePresetContext` | What a preset's functions receive: `{ firstDayOfWeek }` of the picker. |
-| `HX_DATE_RANGE_PRESETS`, `HX_DATE_RANGE_DAY_PRESETS`, `hxDateRangePresets(labels)` | The built-in presets (see below). |
-| `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
+| Export                                                                             | Description                                                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `HxDateTimeRangeValue`                                                             | The value, `{ from: Date \| null; to: Date \| null }`.                 |
+| `HxDateTimeRangePreset`                                                            | A preset, `{ label, from(context?), to(context?) }`.                   |
+| `HxDateTimeRangePresetContext`                                                     | What a preset's functions receive: `{ firstDayOfWeek }` of the picker. |
+| `HX_DATE_RANGE_PRESETS`, `HX_DATE_RANGE_DAY_PRESETS`, `hxDateRangePresets(labels)` | The built-in presets (see below).                                      |
+| `hxParseDateMath`, `hxRelativeRangeExpressions`                                    | Date math (see below).                                                 |
 
 ## When to use which
 
@@ -98,13 +98,13 @@ Besides the component, `@gravionlabs/helix-ui` exports these types, lists and fu
   `h`, `d`, `w`, `M` (month), `y`. Day, week, month and year shifts follow the calendar (DST-safe, a month shift clamps
   the day). `/w` starts on `firstDayOfWeek`.
 
-  | Expression | Meaning |
-  | ---------- | ------- |
-  | `now` | The moment of the call. |
-  | `now-15m` | 15 minutes ago. |
-  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`). |
-  | `now/w` | Start of this week (the end of this week with `roundUp`). |
-  | `now+1M/M` | Start of next month. |
+  | Expression | Meaning                                                   |
+  | ---------- | --------------------------------------------------------- |
+  | `now`      | The moment of the call.                                   |
+  | `now-15m`  | 15 minutes ago.                                           |
+  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`).     |
+  | `now/w`    | Start of this week (the end of this week with `roundUp`). |
+  | `now+1M/M` | Start of next month.                                      |
 
   ```ts
   hxParseDateMath('now-7d/d', { firstDayOfWeek: 1 }); // 7 days ago, 00:00

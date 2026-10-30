@@ -19,20 +19,20 @@ ref.closed.subscribe((result) => console.log(result));
 // inside EditUser: inject(HX_DIALOG_DATA) is { id: 7 }; inject(HxDialogRef).close(result)
 ```
 
-| Input / output    | Type                     | Default    | Description                                                             |
-| ----------------- | ------------------------ | ---------- | ----------------------------------------------------------------------- |
-| `visible`         | `boolean`                | `false`    | `[(visible)]`: open or closed; closing from inside sets it to `false`.  |
-| `header`          | `string`                 |            | Title (a heading); content marked `hxDialogHeader` follows it.          |
-| `modal`           | `boolean`                | `true`     | Mask, focus trap, page behind hidden from assistive technology.         |
-| `closable`        | `boolean`                | `true`     | The close button.                                                       |
-| `closeOnEscape`   | `boolean`                | `true`     | Escape closes it.                                                       |
-| `dismissableMask` | `boolean`                | `false`    | A click on the mask closes it.                                          |
-| `position`        | `'center' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'center'` | Where it sits. |
-| `width`, `height` | CSS length               |            | Size; it never grows beyond the screen and the content scrolls.         |
-| `panelClass`      | `string \| string[]`     |            | Extra classes on the overlay pane.                                      |
-| `closeLabel`      | `string`                 | `'Close'`  | Name of the close button.                                               |
-| `ariaLabel`       | `string`                 |            | Name of the dialog when there is no `header`.                           |
-| `(shown)`, `(hidden)` | `void`               |            | Opened, closed (by whatever means).                                     |
+| Input / output        | Type                                                                                                                 | Default    | Description                                                            |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------------- |
+| `visible`             | `boolean`                                                                                                            | `false`    | `[(visible)]`: open or closed; closing from inside sets it to `false`. |
+| `header`              | `string`                                                                                                             |            | Title (a heading); content marked `hxDialogHeader` follows it.         |
+| `modal`               | `boolean`                                                                                                            | `true`     | Mask, focus trap, page behind hidden from assistive technology.        |
+| `closable`            | `boolean`                                                                                                            | `true`     | The close button.                                                      |
+| `closeOnEscape`       | `boolean`                                                                                                            | `true`     | Escape closes it.                                                      |
+| `dismissableMask`     | `boolean`                                                                                                            | `false`    | A click on the mask closes it.                                         |
+| `position`            | `'center' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'center'` | Where it sits.                                                         |
+| `width`, `height`     | CSS length                                                                                                           |            | Size; it never grows beyond the screen and the content scrolls.        |
+| `panelClass`          | `string \| string[]`                                                                                                 |            | Extra classes on the overlay pane.                                     |
+| `closeLabel`          | `string`                                                                                                             | `'Close'`  | Name of the close button.                                              |
+| `ariaLabel`           | `string`                                                                                                             |            | Name of the dialog when there is no `header`.                          |
+| `(shown)`, `(hidden)` | `void`                                                                                                               |            | Opened, closed (by whatever means).                                    |
 
 `HxDialogService.open(Component, config)` takes the same options (`header`, `width`, `modal`, `closable`,
 `closeOnEscape`, `dismissableMask`, `position`, `panelClass`, `closeLabel`, `ariaLabel`) plus `data`. It returns an

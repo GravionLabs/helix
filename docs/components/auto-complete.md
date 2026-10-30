@@ -11,16 +11,16 @@ while nothing is chosen. It works with `ngModel`, reactive forms (including `dis
                   forceSelection dropdown [(ngModel)]="country" />
 ```
 
-| Input            | Type      | Default             | Description                                                   |
-| ---------------- | --------- | ------------------- | ------------------------------------------------------------- |
-| `suggestions`    | `unknown[]` | `[]`              | What to show; set it in answer to `(complete)`.               |
-| `optionLabel`    | `string \| function` | `'label'` | The text of a suggestion (primitives are their own text).    |
-| `minLength`      | `number`  | `1`                 | Characters before `(complete)` fires.                         |
-| `delay`          | `number`  | `300`               | Milliseconds after the last key before `(complete)` fires.    |
-| `forceSelection` | `boolean` | `false`             | Text that matches no suggestion is cleared on blur.           |
-| `dropdown`       | `boolean` | `false`             | A button that asks for all suggestions (empty query).         |
-| `multiple`       | `boolean` | `false`             | Chosen values are removable chips; Backspace removes the last. |
-| `emptyMessage`   | `string`  | `'No results found'` | Shown and announced when the query finds nothing.            |
+| Input            | Type                 | Default              | Description                                                    |
+| ---------------- | -------------------- | -------------------- | -------------------------------------------------------------- |
+| `suggestions`    | `unknown[]`          | `[]`                 | What to show; set it in answer to `(complete)`.                |
+| `optionLabel`    | `string \| function` | `'label'`            | The text of a suggestion (primitives are their own text).      |
+| `minLength`      | `number`             | `1`                  | Characters before `(complete)` fires.                          |
+| `delay`          | `number`             | `300`                | Milliseconds after the last key before `(complete)` fires.     |
+| `forceSelection` | `boolean`            | `false`              | Text that matches no suggestion is cleared on blur.            |
+| `dropdown`       | `boolean`            | `false`              | A button that asks for all suggestions (empty query).          |
+| `multiple`       | `boolean`            | `false`              | Chosen values are removable chips; Backspace removes the last. |
+| `emptyMessage`   | `string`             | `'No results found'` | Shown and announced when the query finds nothing.              |
 
 - **Keyboard:** Arrow Down/Up open the panel and move, Home and End jump, Enter chooses, Escape closes, Tab leaves.
 - **Accessibility:** the field is a `combobox` with `aria-autocomplete="list"`, `aria-expanded`, `aria-controls` and

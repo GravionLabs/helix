@@ -7,15 +7,15 @@
 <hx-chip label="Angular" icon="pi pi-code" removable (remove)="drop('Angular')" />
 ```
 
-| Input / output | Type      | Default    | Description                                                              |
-| -------------- | --------- | ---------- | ------------------------------------------------------------------------ |
-| `label`        | `string`  |            | The text (or project content instead).                                   |
-| `icon`         | `string`  |            | Icon font classes; not shown when there is an `image`.                   |
-| `image`        | `string`  |            | Picture before the label.                                                |
+| Input / output | Type      | Default    | Description                                                               |
+| -------------- | --------- | ---------- | ------------------------------------------------------------------------- |
+| `label`        | `string`  |            | The text (or project content instead).                                    |
+| `icon`         | `string`  |            | Icon font classes; not shown when there is an `image`.                    |
+| `image`        | `string`  |            | Picture before the label.                                                 |
 | `imageAlt`     | `string`  | `''`       | Alternative text; decorative by default because the label names the chip. |
-| `removable`    | `boolean` | `false`    | Shows the remove button and makes the chip focusable.                    |
-| `removeLabel`  | `string`  | `'Remove'` | Name of the remove button.                                               |
-| `(remove)`     | `void`    |            | Remove pressed, or Backspace/Delete on the chip.                         |
+| `removable`    | `boolean` | `false`    | Shows the remove button and makes the chip focusable.                     |
+| `removeLabel`  | `string`  | `'Remove'` | Name of the remove button.                                                |
+| `(remove)`     | `void`    |            | Remove pressed, or Backspace/Delete on the chip.                          |
 
 The chip does not remove itself: drop it from your data in `(remove)`.
 

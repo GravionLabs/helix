@@ -54,9 +54,9 @@ keeps all upstream PrimeNG themes/presets working unchanged.
 ## Related decisions
 
 - [file-separation-analysis.md](file-separation-analysis.md) — template
-  extraction (reversed by epic #297; templates *are* extracted).
+  extraction (reversed by epic #297; templates _are_ extracted).
 - [signals-audit.md](signals-audit.md) — decorator APIs (reversed by epic
-  #297; decorators *are* migrated to signals). Unlike those two, this
+  #297; decorators _are_ migrated to signals). Unlike those two, this
   decision is **not** reversed by #297: the blocking dependency on the
   un-forked `@primeuix` styles layer is unaffected by the fork no longer
   tracking upstream PrimeNG.

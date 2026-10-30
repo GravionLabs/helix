@@ -13,34 +13,34 @@ used** list and one summary line each for the start and the end. The value is `{
 <hx-date-range-quick-select [formControl]="control" [commonlyUsed]="ranges" />
 ```
 
-| Input | Type | Default | Description |
-| ----- | ---- | ------- | ----------- |
-| `expression` (model) | `HxDateRangeExpression \| null` | `null` | The applied range as text (`{ from: 'now-15m', to: 'now' }`); see Expression model. |
-| `commonlyUsed` | `HxQuickSelectRange[]` | `HX_QUICK_SELECT_COMMONLY_USED` | The "Commonly used" list: `{ label, from, to }` with date math or ISO sides. |
-| `recentStorageKey` | `string \| null` | `hx-date-range-recent` | `localStorage` key of the "Recently used" list; `null` keeps it in memory only. |
-| `labels` | `Partial<HxQuickSelectLabels>` | English | Texts of the control, merged over the defaults. |
-| `minDate`, `maxDate` | `Date` | | Limits; the resolved range is moved inside. |
-| `firstDayOfWeek` | `number` | `0` | `0` Sunday … `6` Saturday; `/w` in date math and the calendar start on it. |
-| `locale`, `dateFormat` | `string`, `Intl.DateTimeFormatOptions` | the browser's | Names and format of the absolute dates in the field, the summary and the recent list. |
-| `separator` | `string` | `-` | The text between the two dates in the field. |
-| `placeholder`, `inputId` | `string` | | Of the text field; the placeholder shows while the range is empty. |
-| `chooseLabel` | `string` | `Choose date range` | Name of the button and (without `ariaLabel`) the popup. |
-| `disabled`, `invalid` | `boolean` | `false` | |
-| `ariaLabel`, `ariaLabelledby` | `string` | | Name of the field and the popup. |
+| Input                         | Type                                   | Default                         | Description                                                                           |
+| ----------------------------- | -------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------- |
+| `expression` (model)          | `HxDateRangeExpression \| null`        | `null`                          | The applied range as text (`{ from: 'now-15m', to: 'now' }`); see Expression model.   |
+| `commonlyUsed`                | `HxQuickSelectRange[]`                 | `HX_QUICK_SELECT_COMMONLY_USED` | The "Commonly used" list: `{ label, from, to }` with date math or ISO sides.          |
+| `recentStorageKey`            | `string \| null`                       | `hx-date-range-recent`          | `localStorage` key of the "Recently used" list; `null` keeps it in memory only.       |
+| `labels`                      | `Partial<HxQuickSelectLabels>`         | English                         | Texts of the control, merged over the defaults.                                       |
+| `minDate`, `maxDate`          | `Date`                                 |                                 | Limits; the resolved range is moved inside.                                           |
+| `firstDayOfWeek`              | `number`                               | `0`                             | `0` Sunday … `6` Saturday; `/w` in date math and the calendar start on it.            |
+| `locale`, `dateFormat`        | `string`, `Intl.DateTimeFormatOptions` | the browser's                   | Names and format of the absolute dates in the field, the summary and the recent list. |
+| `separator`                   | `string`                               | `-`                             | The text between the two dates in the field.                                          |
+| `placeholder`, `inputId`      | `string`                               |                                 | Of the text field; the placeholder shows while the range is empty.                    |
+| `chooseLabel`                 | `string`                               | `Choose date range`             | Name of the button and (without `ariaLabel`) the popup.                               |
+| `disabled`, `invalid`         | `boolean`                              | `false`                         |                                                                                       |
+| `ariaLabel`, `ariaLabelledby` | `string`                               |                                 | Name of the field and the popup.                                                      |
 
 ## Exports
 
 `@gravionlabs/helix-ui` exports the component and these types, lists and functions:
 
-| Export | Description |
-| ------ | ----------- |
-| `HxDateRangeQuickSelect` | The component. |
-| `HxDateRangeQuickSelectValue` | The value, `{ from: Date \| null; to: Date \| null }`. |
-| `HxDateRangeExpression` | The `expression` model, `{ from: string; to: string }`. |
-| `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })` | Resolves an expression to `{ from, to }`; the end rounds up. |
-| `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })` | Resolves one side (date math, an ISO date-time, or a date-only ISO text as local midnight). |
-| `hxParseDateMath`, `hxRelativeRangeExpressions` | Date math (see below). |
-| `HxQuickSelectLabels`, `HX_QUICK_SELECT_LABELS`, `HxQuickSelectRange`, `HX_QUICK_SELECT_COMMONLY_USED` | The texts and the "Commonly used" list. |
+| Export                                                                                                 | Description                                                                                 |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `HxDateRangeQuickSelect`                                                                               | The component.                                                                              |
+| `HxDateRangeQuickSelectValue`                                                                          | The value, `{ from: Date \| null; to: Date \| null }`.                                      |
+| `HxDateRangeExpression`                                                                                | The `expression` model, `{ from: string; to: string }`.                                     |
+| `hxResolveRangeExpression(expression, { now?, firstDayOfWeek? })`                                      | Resolves an expression to `{ from, to }`; the end rounds up.                                |
+| `hxResolveRangeSide(text, { now?, firstDayOfWeek?, roundUp? })`                                        | Resolves one side (date math, an ISO date-time, or a date-only ISO text as local midnight). |
+| `hxParseDateMath`, `hxRelativeRangeExpressions`                                                        | Date math (see below).                                                                      |
+| `HxQuickSelectLabels`, `HX_QUICK_SELECT_LABELS`, `HxQuickSelectRange`, `HX_QUICK_SELECT_COMMONLY_USED` | The texts and the "Commonly used" list.                                                     |
 
 ## When to use which
 
@@ -108,13 +108,13 @@ used** list and one summary line each for the start and the end. The value is `{
   `h`, `d`, `w`, `M` (month), `y`. Day, week, month and year shifts follow the calendar (DST-safe, a month shift clamps
   the day). `/w` starts on `firstDayOfWeek`. The end of a range rounds up, so `now/d` to `now/d` is the whole day.
 
-  | Expression | Meaning |
-  | ---------- | ------- |
-  | `now` | The moment of the call. |
-  | `now-15m` | 15 minutes ago. |
-  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`). |
-  | `now/w` | Start of this week (the end of this week with `roundUp`). |
-  | `now+1M/M` | Start of next month. |
+  | Expression | Meaning                                                   |
+  | ---------- | --------------------------------------------------------- |
+  | `now`      | The moment of the call.                                   |
+  | `now-15m`  | 15 minutes ago.                                           |
+  | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`).     |
+  | `now/w`    | Start of this week (the end of this week with `roundUp`). |
+  | `now+1M/M` | Start of next month.                                      |
 - **Forms:** with `ngModel` and reactive forms the control value is `{ from, to }`; with signal forms bind
   `[formField]`. There is no built-in required rule; use the validators of the form. `disabled` (also a disabled form
   control) disables the field, the button and the popup.

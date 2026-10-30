@@ -10,14 +10,14 @@ files. Files of the wrong type, too large, or beyond the limit are not added and
 <hx-file-upload mode="basic" accept=".csv" chooseLabel="Import" (select)="import($event)" />
 ```
 
-| Input                   | Type                    | Default      | Description                                          |
-| ----------------------- | ----------------------- | ------------ | ---------------------------------------------------- |
-| `mode`                  | `'basic' \| 'advanced'` | `'advanced'` | `basic`: only the choose button and the names.       |
-| `accept`                | `string`                | `''`         | `.png`, `image/*`, `application/pdf`, comma separated. |
-| `multiple`              | `boolean`               | `false`      | Several files; otherwise a new choice replaces the old. |
-| `maxFileSize`, `fileLimit` | `number`             |              | Largest file in bytes, most files in the list.       |
-| `progress`              | `number \| null`        | `null`       | 0 to 100; shows a bar while set.                     |
-| `chooseLabel`, `uploadLabel`, `cancelLabel`, `removeLabel`, `dropLabel` | `string` | | Texts. The three `invalid…Message` inputs take `{0}`, `{1}`. |
+| Input                                                                   | Type                    | Default      | Description                                                  |
+| ----------------------------------------------------------------------- | ----------------------- | ------------ | ------------------------------------------------------------ |
+| `mode`                                                                  | `'basic' \| 'advanced'` | `'advanced'` | `basic`: only the choose button and the names.               |
+| `accept`                                                                | `string`                | `''`         | `.png`, `image/*`, `application/pdf`, comma separated.       |
+| `multiple`                                                              | `boolean`               | `false`      | Several files; otherwise a new choice replaces the old.      |
+| `maxFileSize`, `fileLimit`                                              | `number`                |              | Largest file in bytes, most files in the list.               |
+| `progress`                                                              | `number \| null`        | `null`       | 0 to 100; shows a bar while set.                             |
+| `chooseLabel`, `uploadLabel`, `cancelLabel`, `removeLabel`, `dropLabel` | `string`                |              | Texts. The three `invalid…Message` inputs take `{0}`, `{1}`. |
 
 Outputs: `(select)` the files one choice or drop added, `(remove)` the file removed, `(clear)` Cancel emptied the
 list, `(upload)` all files in the list. `reset()` empties the list from code, and `files()` is the current list.

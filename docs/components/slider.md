@@ -10,13 +10,13 @@ with the `--h-slider-*` tokens. It works with `ngModel`, reactive forms (includi
 <hx-slider orientation="vertical" ariaLabel="Gain" [(value)]="gain" />
 ```
 
-| Input                                   | Type                         | Default        | Description                                        |
-| --------------------------------------- | ---------------------------- | -------------- | -------------------------------------------------- |
-| `range`                                 | `boolean`                    | `false`        | Two thumbs; the value is `[start, end]`.           |
-| `min`, `max`, `step`                    | `number`                     | `0`, `100`, `1` | Bounds and step.                                  |
-| `orientation`                           | `'horizontal' \| 'vertical'` | `'horizontal'` | A vertical slider has its minimum at the bottom.   |
-| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                    |                | `id` and name of the thumb of a single slider.     |
-| `ariaLabelStart`, `ariaLabelEnd`        | `string`                     |                | Names of the two thumbs of a range.                |
+| Input                                    | Type                         | Default         | Description                                      |
+| ---------------------------------------- | ---------------------------- | --------------- | ------------------------------------------------ |
+| `range`                                  | `boolean`                    | `false`         | Two thumbs; the value is `[start, end]`.         |
+| `min`, `max`, `step`                     | `number`                     | `0`, `100`, `1` | Bounds and step.                                 |
+| `orientation`                            | `'horizontal' \| 'vertical'` | `'horizontal'`  | A vertical slider has its minimum at the bottom. |
+| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                     |                 | `id` and name of the thumb of a single slider.   |
+| `ariaLabelStart`, `ariaLabelEnd`         | `string`                     |                 | Names of the two thumbs of a range.              |
 
 - **Behaviour:** in a range the start thumb never passes the end thumb. Only the thumbs take the pointer in a
   range.

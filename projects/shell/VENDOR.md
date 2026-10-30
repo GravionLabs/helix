@@ -4,13 +4,13 @@
 Tailwind v4 CSS plugin, which maps Tailwind utilities/variants to PrimeNG's
 `--p-*` design tokens and `data-p-*` state attributes.
 
-| | |
-| --- | --- |
-| Upstream package | `tailwindcss-primeui` |
-| Version | `0.6.1` |
-| License | MIT |
-| Source files | `node_modules/tailwindcss-primeui/v4/` |
-| Vendored | 2026-09-14 (epic #421, feature #431) |
+|                  |                                        |
+| ---------------- | -------------------------------------- |
+| Upstream package | `tailwindcss-primeui`                  |
+| Version          | `0.6.1`                                |
+| License          | MIT                                    |
+| Source files     | `node_modules/tailwindcss-primeui/v4/` |
+| Vendored         | 2026-09-14 (epic #421, feature #431)   |
 
 ## Why
 

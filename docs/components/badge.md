@@ -10,11 +10,11 @@ right corner of the element it wraps.
 </hx-overlay-badge>
 ```
 
-| Input      | Type                                                                          | Default     | Description                           |
-| ---------- | ----------------------------------------------------------------------------- | ----------- | ------------------------------------- |
-| `value`    | `string \| number \| null`                                                     | `null`      | The text; empty makes a dot.          |
-| `severity` | `'primary' \| 'secondary' \| 'success' \| 'info' \| 'warn' \| 'danger' \| 'contrast'` | `'primary'` | The colours.                          |
-| `size`     | `'small' \| 'medium' \| 'large' \| 'xlarge'`                                    | `'medium'`  | Height and font size.                 |
+| Input      | Type                                                                                  | Default     | Description                  |
+| ---------- | ------------------------------------------------------------------------------------- | ----------- | ---------------------------- |
+| `value`    | `string \| number \| null`                                                            | `null`      | The text; empty makes a dot. |
+| `severity` | `'primary' \| 'secondary' \| 'success' \| 'info' \| 'warn' \| 'danger' \| 'contrast'` | `'primary'` | The colours.                 |
+| `size`     | `'small' \| 'medium' \| 'large' \| 'xlarge'`                                          | `'medium'`  | Height and font size.        |
 
 The overlay badge takes the same three inputs.
 

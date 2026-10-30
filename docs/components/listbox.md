@@ -9,15 +9,15 @@ of values with `multiple`. It works with `ngModel`, reactive forms (including `d
 <hx-listbox ariaLabel="Toppings" [options]="toppings" multiple checkmark filter scrollHeight="12rem" [(value)]="chosen" />
 ```
 
-| Input               | Type      | Default       | Description                                             |
-| ------------------- | --------- | ------------- | ------------------------------------------------------- |
-| `multiple`          | `boolean` | `false`       | Several options can be chosen; the value is an array.   |
-| `checkmark`         | `boolean` | `false`       | A check in front of the selected options.               |
-| `filter`            | `boolean` | `false`       | A text field above the list narrows the options by label. |
-| `filterPlaceholder` | `string`  | `'Filter'`    | Placeholder and accessible name of the filter field.    |
-| `emptyMessage`      | `string`  | `'No options'` | Shown when no option matches.                          |
-| `scrollHeight`      | `string`  |               | Maximum height of the list (a CSS length); it scrolls beyond. |
-| `ariaLabel`, `ariaLabelledby` | `string` |       | Name of the list.                                       |
+| Input                         | Type      | Default        | Description                                                   |
+| ----------------------------- | --------- | -------------- | ------------------------------------------------------------- |
+| `multiple`                    | `boolean` | `false`        | Several options can be chosen; the value is an array.         |
+| `checkmark`                   | `boolean` | `false`        | A check in front of the selected options.                     |
+| `filter`                      | `boolean` | `false`        | A text field above the list narrows the options by label.     |
+| `filterPlaceholder`           | `string`  | `'Filter'`     | Placeholder and accessible name of the filter field.          |
+| `emptyMessage`                | `string`  | `'No options'` | Shown when no option matches.                                 |
+| `scrollHeight`                | `string`  |                | Maximum height of the list (a CSS length); it scrolls beyond. |
+| `ariaLabel`, `ariaLabelledby` | `string`  |                | Name of the list.                                             |
 
 - **Behaviour:** a single list keeps its choice when the chosen option is clicked again. The filter hides options but
   keeps a hidden option selected.

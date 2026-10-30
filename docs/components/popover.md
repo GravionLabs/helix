@@ -9,12 +9,12 @@
 </hx-popover>
 ```
 
-| Input / output    | Type      | Default | Description                                         |
-| ----------------- | --------- | ------- | --------------------------------------------------- |
-| `ariaLabel`, `ariaLabelledBy` | `string` |   | Name of the popover.                                |
-| `dismissable`     | `boolean` | `true`  | A click outside closes it.                          |
-| `closeOnEscape`   | `boolean` | `true`  | Escape closes it.                                   |
-| `(shown)`, `(hidden)` | `void` |         | Opened, closed.                                     |
+| Input / output                | Type      | Default | Description                |
+| ----------------------------- | --------- | ------- | -------------------------- |
+| `ariaLabel`, `ariaLabelledBy` | `string`  |         | Name of the popover.       |
+| `dismissable`                 | `boolean` | `true`  | A click outside closes it. |
+| `closeOnEscape`               | `boolean` | `true`  | Escape closes it.          |
+| `(shown)`, `(hidden)`         | `void`    |         | Opened, closed.            |
 
 `toggle(event, target?)`, `show(event, target?)` and `hide()` control it; it opens below the element of the event (or
 `target`) and above it when there is no room, the arrow follows. `open` is a signal.

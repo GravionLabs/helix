@@ -16,7 +16,7 @@ Helix has no visual identity of its own. The three surfaces people see look like
 - The documentation site (`apps/site`, VitePress) uses the stock default theme and shares no token with the
   components.
 
-What the fork *does* give us is a complete design-token model, in three layers, in TypeScript with `{ref}`
+What the fork _does_ give us is a complete design-token model, in three layers, in TypeScript with `{ref}`
 syntax: **primitive** (palettes, radii) → **semantic** (`primary`, `surface`, `formField`, `focusRing`, `text`,
 `content`, `overlay`, per `light`/`dark` colour scheme) → **component** (`themes/<preset>/<component>/index.ts`).
 The engine resolves them at runtime into `--h-*` custom properties and injects each component's CSS when
@@ -56,7 +56,7 @@ dark) for the docs site and the design-system sync; a VitePress custom theme bou
 - Low risk, additive, reversible; Aura, Lara and Nora keep working; PrimeNG fixes can still be cherry-picked.
 - Visual freedom bounded by the token model: colours, radii, spacing, type, shadows, focus rings per
   component are tokens, the DOM and the `h-*` class structure stay PrimeNG's.
-- The runtime engine stays. A later variant can resolve the tokens at build time (the static export *is*
+- The runtime engine stays. A later variant can resolve the tokens at build time (the static export _is_
   that CSS) and drop runtime preset switching, without touching components.
 
 ### B — A new vanilla Angular library, retire the fork
@@ -69,11 +69,11 @@ imports it.
   attribution.
 - The cost depends entirely on the parity bar (AI-assisted development, orders of magnitude):
 
-  | Bar    | Set                                                                                                                                                                   | Estimate     |
-  | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-  | B-lite | what shell/zod use + button, inputs, select, checkbox/radio/toggle, card, dialog/popover, toast, tabs, menu, breadcrumb, tooltip, badge/tag, skeleton, paginator (~20) | 1–3 months   |
-  | B-mid  | + datepicker, multiselect/autocomplete, tree, basic table, fileupload, stepper (~35)                                                                                  | 4–8 months   |
-  | B-full | all 90, incl. treetable, galleria, picklist/orderlist, dock, knob, terminal                                                                                           | years        |
+  | Bar    | Set                                                                                                                                                                    | Estimate   |
+  | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+  | B-lite | what shell/zod use + button, inputs, select, checkbox/radio/toggle, card, dialog/popover, toast, tabs, menu, breadcrumb, tooltip, badge/tag, skeleton, paginator (~20) | 1–3 months |
+  | B-mid  | + datepicker, multiselect/autocomplete, tree, basic table, fileupload, stepper (~35)                                                                                   | 4–8 months |
+  | B-full | all 90, incl. treetable, galleria, picklist/orderlist, dock, knob, terminal                                                                                            | years      |
 
 - B-full is not worth it. B-lite is viable only as a conscious scope cut: Helix stops being "PrimeNG with
   `h-` prefixes" and becomes a focused library; the demo shrinks with it. `helix-zod`'s dynamic forms are
@@ -96,7 +96,7 @@ isolation guarantee for free.
 **Hybrid: A now, B as the long-term target. PrimeNG is to disappear from the repository.**
 
 1. **Now (A).** `helixPreset` in `projects/core/themes/helix`, defined as `definePreset(auraPreset,
-   helixOverrides)` so the file holds only what Helix decides differently. Its *values* come from the design
+   helixOverrides)` so the file holds only what Helix decides differently. Its _values_ come from the design
    mockups (#521); until then it resolves to Aura. `scripts/export-tokens.mjs` writes the resolved tokens of a
    preset to `dist/tokens/<preset>.css` and `.json` (light, and dark under `.app-dark`) for the docs site
    theme, the design-system sync (#522) and the new library. The demo and the shell default to `helixPreset`;

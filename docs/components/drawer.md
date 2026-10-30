@@ -10,17 +10,17 @@
 </hx-drawer>
 ```
 
-| Input / output    | Type                                       | Default  | Description                                                    |
-| ----------------- | ------------------------------------------ | -------- | -------------------------------------------------------------- |
-| `visible`         | `boolean`                                  | `false`  | `[(visible)]`.                                                 |
-| `header`          | `string`                                   |          | Title (a heading).                                             |
-| `position`        | `'left' \| 'right' \| 'top' \| 'bottom'`   | `'left'` | The edge it slides in from.                                    |
-| `modal`           | `boolean`                                  | `true`   | Mask, focus trap, page behind hidden from assistive technology. |
-| `dismissable`     | `boolean`                                  | `true`   | A click on the mask closes a modal drawer.                     |
-| `closable`, `closeOnEscape` | `boolean`                        | `true`   | The close button; Escape closes it.                            |
-| `fullScreen`      | `boolean`                                  | `false`  | Covers the whole screen.                                       |
-| `width`, `height` | CSS length                                 | `20rem`  | `width` for left and right, `height` for top and bottom.       |
-| `panelClass`, `closeLabel`, `ariaLabel`, `(shown)`, `(hidden)` |               |          | As on `hx-dialog`.                                             |
+| Input / output                                                 | Type                                     | Default  | Description                                                     |
+| -------------------------------------------------------------- | ---------------------------------------- | -------- | --------------------------------------------------------------- |
+| `visible`                                                      | `boolean`                                | `false`  | `[(visible)]`.                                                  |
+| `header`                                                       | `string`                                 |          | Title (a heading).                                              |
+| `position`                                                     | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'` | The edge it slides in from.                                     |
+| `modal`                                                        | `boolean`                                | `true`   | Mask, focus trap, page behind hidden from assistive technology. |
+| `dismissable`                                                  | `boolean`                                | `true`   | A click on the mask closes a modal drawer.                      |
+| `closable`, `closeOnEscape`                                    | `boolean`                                | `true`   | The close button; Escape closes it.                             |
+| `fullScreen`                                                   | `boolean`                                | `false`  | Covers the whole screen.                                        |
+| `width`, `height`                                              | CSS length                               | `20rem`  | `width` for left and right, `height` for top and bottom.        |
+| `panelClass`, `closeLabel`, `ariaLabel`, `(shown)`, `(hidden)` |                                          |          | As on `hx-dialog`.                                              |
 
 - **Accessibility:** as for the dialog: `role="dialog"`, `aria-modal` (modal only), labelled by the title, focus to the
   first control, trapped, restored; Escape closes. The slide-in stops under `prefers-reduced-motion`; closing is

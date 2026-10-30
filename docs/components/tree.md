@@ -11,16 +11,16 @@ view pattern.
 `HxTreeNode`: `{ key, label, icon?, children?, leaf?, expanded?, loading?, disabled?, data? }`. Keys must be unique in
 the whole tree.
 
-| Input / output  | Type                                              | Default     | Description                                                          |
-| --------------- | ------------------------------------------------- | ----------- | -------------------------------------------------------------------- |
-| `value`         | `HxTreeNode[]`                                    | `[]`        | The root nodes; pass a new array to change the tree.                 |
-| `selectionMode` | `'none' \| 'single' \| 'multiple' \| 'checkbox'`  | `'none'`    | How nodes are selected.                                              |
-| `selection`     | `string \| string[] \| null`                      | `null`      | `[(selection)]`: a key (single) or keys (multiple, checkbox).        |
-| `filter`        | `boolean`                                         | `false`     | A text field above the tree filters by label.                        |
-| `filterMode`    | `'lenient' \| 'strict'`                           | `'lenient'` | Lenient: a match shows its children; strict: matches and ancestors.  |
-| `filterPlaceholder`, `filterLabel`, `emptyMessage` | `string`       | `''`, `'Filter'`, `'No results found'` | Texts.                          |
-| `ariaLabel`     | `string`                                          |             | Accessible name of the tree.                                         |
-| `(nodeExpand)`, `(nodeCollapse)` | `{ node }`                       |             | A node was expanded or collapsed.                                    |
+| Input / output                                     | Type                                             | Default                                | Description                                                         |
+| -------------------------------------------------- | ------------------------------------------------ | -------------------------------------- | ------------------------------------------------------------------- |
+| `value`                                            | `HxTreeNode[]`                                   | `[]`                                   | The root nodes; pass a new array to change the tree.                |
+| `selectionMode`                                    | `'none' \| 'single' \| 'multiple' \| 'checkbox'` | `'none'`                               | How nodes are selected.                                             |
+| `selection`                                        | `string \| string[] \| null`                     | `null`                                 | `[(selection)]`: a key (single) or keys (multiple, checkbox).       |
+| `filter`                                           | `boolean`                                        | `false`                                | A text field above the tree filters by label.                       |
+| `filterMode`                                       | `'lenient' \| 'strict'`                          | `'lenient'`                            | Lenient: a match shows its children; strict: matches and ancestors. |
+| `filterPlaceholder`, `filterLabel`, `emptyMessage` | `string`                                         | `''`, `'Filter'`, `'No results found'` | Texts.                                                              |
+| `ariaLabel`                                        | `string`                                         |                                        | Accessible name of the tree.                                        |
+| `(nodeExpand)`, `(nodeCollapse)`                   | `{ node }`                                       |                                        | A node was expanded or collapsed.                                   |
 
 `expand(key)`, `collapse(key)`, `toggle(key)`, `expandAll()`, `collapseAll()` and `select(key)` are public methods.
 

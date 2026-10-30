@@ -8,11 +8,11 @@
 </hx-fieldset>
 ```
 
-| Input       | Type              | Default | Description                                              |
-| ----------- | ----------------- | ------- | -------------------------------------------------------- |
-| `legend`    | `string`          | `''`    | The legend text.                                         |
-| `toggleable` | `boolean`        | `false` | The legend holds a button that collapses the content.    |
-| `collapsed` | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable fieldset collapses.   |
+| Input        | Type              | Default | Description                                            |
+| ------------ | ----------------- | ------- | ------------------------------------------------------ |
+| `legend`     | `string`          | `''`    | The legend text.                                       |
+| `toggleable` | `boolean`         | `false` | The legend holds a button that collapses the content.  |
+| `collapsed`  | `boolean` (model) | `false` | `[(collapsed)]`; only a toggleable fieldset collapses. |
 
 - **Accessibility:** it is a real fieldset and legend, so the group name is announced for the controls inside. When
   toggleable, the legend contains a `<button>` with `aria-expanded` and `aria-controls`; the content is `inert` while

@@ -7,14 +7,14 @@ It is not an npm package and has no build: Node scripts import the `.ts` files d
 
 ## Layers
 
-| File | Layer | What it holds |
-| --- | --- | --- |
-| `src/primitive.ts` | primitive | radii, the colour scales (muted Helix scales from `palettes.ts`, the neutral scales of Aura) |
-| `src/semantic.ts` | semantic | what the primitives mean: `primary`, `surface`, `text`, `formField`, `overlay`, … with `colorScheme.light` and `colorScheme.dark` |
+| File                       | Layer     | What it holds                                                                                                                                      |
+| -------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/primitive.ts`         | primitive | radii, the colour scales (muted Helix scales from `palettes.ts`, the neutral scales of Aura)                                                       |
+| `src/semantic.ts`          | semantic  | what the primitives mean: `primary`, `surface`, `text`, `formField`, `overlay`, … with `colorScheme.light` and `colorScheme.dark`                  |
 | `src/components/<name>.ts` | component | the token set of one component (`button`, `select`, `datatable`, …), 88 in total; `components/index.ts` lists them in the order the CSS is emitted |
-| `src/palettes.ts` | – | the muted colour scales, **generated** (see below) |
-| `src/tailwind.ts` | – | the unmuted Tailwind scales the generator reads |
-| `src/index.ts` | – | `helixTokens = { primitive, semantic, components }` and `palettes` |
+| `src/palettes.ts`          | –         | the muted colour scales, **generated** (see below)                                                                                                 |
+| `src/tailwind.ts`          | –         | the unmuted Tailwind scales the generator reads                                                                                                    |
+| `src/index.ts`             | –         | `helixTokens = { primitive, semantic, components }` and `palettes`                                                                                 |
 
 A leaf is a CSS value (`'#ffffff'`, `'0.5rem'`) or a reference to another token in braces
 (`'{primary.600}'`, `'{form.field.border.radius}'`). A reference becomes `var(--h-…)`; the variable of a token is

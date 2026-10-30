@@ -9,13 +9,13 @@ a `boolean`; it works with `ngModel`, reactive forms (including `disable()`) and
 <hx-toggle-button ariaLabel="Bold" onLabel="" offLabel="" onIcon="pi pi-bold" offIcon="pi pi-bold" [(value)]="bold" />
 ```
 
-| Input                          | Type                             | Default    | Description                                        |
-| ------------------------------ | -------------------------------- | ---------- | -------------------------------------------------- |
-| `onLabel`, `offLabel`          | `string`                         | `Yes`, `No` | Text per state; empty for an icon-only button.     |
-| `onIcon`, `offIcon`            | `string`                         | `''`       | Icon classes per state, for example `pi pi-check`. |
-| `size`                         | `'small' \| 'medium' \| 'large'` | `'medium'` | Font size and padding.                             |
-| `fluid`                        | `boolean`                        | `false`    | Full width of the container.                       |
-| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`               |            | `id` of the button, and its accessible name.       |
+| Input                                    | Type                             | Default     | Description                                        |
+| ---------------------------------------- | -------------------------------- | ----------- | -------------------------------------------------- |
+| `onLabel`, `offLabel`                    | `string`                         | `Yes`, `No` | Text per state; empty for an icon-only button.     |
+| `onIcon`, `offIcon`                      | `string`                         | `''`        | Icon classes per state, for example `pi pi-check`. |
+| `size`                                   | `'small' \| 'medium' \| 'large'` | `'medium'`  | Font size and padding.                             |
+| `fluid`                                  | `boolean`                        | `false`     | Full width of the container.                       |
+| `inputId`, `ariaLabel`, `ariaLabelledby` | `string`                         |             | `id` of the button, and its accessible name.       |
 
 - **Accessibility:** a native `<button>` with `aria-pressed`; Enter and Space toggle it and the focus ring shows
   on keyboard focus. Icons are `aria-hidden`; an icon-only toggle needs `ariaLabel`. When the labels differ per

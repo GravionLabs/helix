@@ -23,22 +23,22 @@ A column is `{ field, header, width?, align?, sortable?, filter? }`; `field` can
 
 ## Inputs
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `value` | `unknown[]` | `[]` | The rows. |
-| `columns` | `HxColumn[]` | `[]` | The column model. |
-| `dataKey` | `string` | none | The property that identifies a row: the DOM of a row survives a new array. |
-| `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Cell padding. |
-| `stripedRows`, `showGridlines` | `boolean` | `false` | Alternate row background; borders around every cell. |
-| `hoverRows` | `boolean` | `true` | Rows change colour under the pointer. |
-| `emptyMessage` | `string` | `'No records found'` | Shown in one cell across the table when there are no rows. |
-| `rowClass` | `(row) => string \| string[] \| Record<string, boolean>` | none | Classes for the `<tr>` of a row, as for `[class]`. |
-| `emptyValue` | `string` | `''` | Text for a cell whose value is `null` or `undefined` (not `0`, `false` or `''`); cell templates still get the raw value. |
-| `loading` | `boolean` | `false` | A spinner covers the table; `aria-busy="true"`. |
-| `caption` | `string` | none | Visible caption above the table. |
-| `ariaLabel` | `string` | none | Accessible name; without `caption` it is a visually hidden caption. |
-| `scrollHeight` | `string` | none | The body scrolls inside this height, the header stays in view. |
-| `scrollable` | `boolean` | `false` | A wide table scrolls horizontally. |
+| Name                           | Type                                                     | Default              |                                                                                                                          |
+| ------------------------------ | -------------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `value`                        | `unknown[]`                                              | `[]`                 | The rows.                                                                                                                |
+| `columns`                      | `HxColumn[]`                                             | `[]`                 | The column model.                                                                                                        |
+| `dataKey`                      | `string`                                                 | none                 | The property that identifies a row: the DOM of a row survives a new array.                                               |
+| `size`                         | `'small' \| 'medium' \| 'large'`                         | `'medium'`           | Cell padding.                                                                                                            |
+| `stripedRows`, `showGridlines` | `boolean`                                                | `false`              | Alternate row background; borders around every cell.                                                                     |
+| `hoverRows`                    | `boolean`                                                | `true`               | Rows change colour under the pointer.                                                                                    |
+| `emptyMessage`                 | `string`                                                 | `'No records found'` | Shown in one cell across the table when there are no rows.                                                               |
+| `rowClass`                     | `(row) => string \| string[] \| Record<string, boolean>` | none                 | Classes for the `<tr>` of a row, as for `[class]`.                                                                       |
+| `emptyValue`                   | `string`                                                 | `''`                 | Text for a cell whose value is `null` or `undefined` (not `0`, `false` or `''`); cell templates still get the raw value. |
+| `loading`                      | `boolean`                                                | `false`              | A spinner covers the table; `aria-busy="true"`.                                                                          |
+| `caption`                      | `string`                                                 | none                 | Visible caption above the table.                                                                                         |
+| `ariaLabel`                    | `string`                                                 | none                 | Accessible name; without `caption` it is a visually hidden caption.                                                      |
+| `scrollHeight`                 | `string`                                                 | none                 | The body scrolls inside this height, the header stays in view.                                                           |
+| `scrollable`                   | `boolean`                                                | `false`              | A wide table scrolls horizontally.                                                                                       |
 
 ## Sorting
 
@@ -49,13 +49,13 @@ sort. The state is in models, so it can be bound and restored:
 <hx-data-table [value]="rows" [columns]="columns" [(sortField)]="field" [(sortOrder)]="order" />
 ```
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `sortMode` | `'single' \| 'multiple'` | `'single'` | In `multiple` mode a click adds the column to the sort order (ascending, descending, removed); a small number shows the position. |
-| `sortField` (model), `sortOrder` (model) | `string \| null`, `1 \| -1` | `null`, `1` | The sorted column in `single` mode. |
-| `multiSortMeta` (model) | `{ field, order }[]` | `[]` | The sorted columns in `multiple` mode, most important first. |
-| `sortFirstOrder` | `'asc' \| 'desc'` | `'asc'` | The direction of the first click on a column (descending for numbers, say); `HxColumn.sortFirstOrder` overrides it per column. The next click gives the opposite order, then the sort is removed. |
-| `sortFunction` | `(rows, meta) => rows` | none | Replaces the client-side sort. |
+| Name                                     | Type                        | Default     |                                                                                                                                                                                                   |
+| ---------------------------------------- | --------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sortMode`                               | `'single' \| 'multiple'`    | `'single'`  | In `multiple` mode a click adds the column to the sort order (ascending, descending, removed); a small number shows the position.                                                                 |
+| `sortField` (model), `sortOrder` (model) | `string \| null`, `1 \| -1` | `null`, `1` | The sorted column in `single` mode.                                                                                                                                                               |
+| `multiSortMeta` (model)                  | `{ field, order }[]`        | `[]`        | The sorted columns in `multiple` mode, most important first.                                                                                                                                      |
+| `sortFirstOrder`                         | `'asc' \| 'desc'`           | `'asc'`     | The direction of the first click on a column (descending for numbers, say); `HxColumn.sortFirstOrder` overrides it per column. The next click gives the opposite order, then the sort is removed. |
+| `sortFunction`                           | `(rows, meta) => rows`      | none        | Replaces the client-side sort.                                                                                                                                                                    |
 
 The default order puts empty values last, compares numbers and dates by value and text by locale with numeric
 parts (`Item 2` before `Item 10`); `compareValues` is exported.
@@ -80,14 +80,14 @@ total grows later.
 <hx-data-table [value]="rows" [columns]="columns" dataKey="id" selectionMode="multiple" [(selection)]="selected" />
 ```
 
-| Name | Type | Default | |
-| --- | --- | --- | --- |
-| `selectionMode` | `'single' \| 'multiple'` | none | `single`: a click (or Enter/Space on the focused row) selects the row, a second click unselects it. `multiple`: a checkbox column with a select-all box in the header. |
-| `selection` (model) | row, `null` or rows | `null` | The selected row (`single`) or rows (`multiple`). Rows are compared by `dataKey` when set, so a new array of the same records keeps the selection. |
-| `metaKeySelection` | `boolean` | `false` | `multiple` without the checkbox column: a click selects only that row, Ctrl/Cmd+click (or Enter/Space) adds or removes it. |
-| `selectAllLabel`, `selectRowLabel` | `string` | `'Select all rows'`, `'Select row {row}'` | The accessible names of the checkboxes. |
+| Name                               | Type                     | Default                                   |                                                                                                                                                                        |
+| ---------------------------------- | ------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selectionMode`                    | `'single' \| 'multiple'` | none                                      | `single`: a click (or Enter/Space on the focused row) selects the row, a second click unselects it. `multiple`: a checkbox column with a select-all box in the header. |
+| `selection` (model)                | row, `null` or rows      | `null`                                    | The selected row (`single`) or rows (`multiple`). Rows are compared by `dataKey` when set, so a new array of the same records keeps the selection.                     |
+| `metaKeySelection`                 | `boolean`                | `false`                                   | `multiple` without the checkbox column: a click selects only that row, Ctrl/Cmd+click (or Enter/Space) adds or removes it.                                             |
+| `selectAllLabel`, `selectRowLabel` | `string`                 | `'Select all rows'`, `'Select row {row}'` | The accessible names of the checkboxes.                                                                                                                                |
 
-The select-all box selects all *filtered* rows of every page and is indeterminate when only some are selected.
+The select-all box selects all _filtered_ rows of every page and is indeterminate when only some are selected.
 
 ## Filtering
 
@@ -100,10 +100,10 @@ The select-all box selects all *filtered* rows of every page and is indeterminat
   button; the button shows an active state while the column is filtered. Keyboard: Tab to the button, Enter or Space
   opens, the focus moves to the input, Enter in the input or Escape closes and returns the focus to the button.
 
-| Input | Type | Default | Description |
-| --- | --- | --- | --- |
-| `filterDisplay` | `'row' \| 'menu'` | none | Where the column filters are: a filter row, or a popover from the header. |
-| `filterLabel`, `clearLabel` | `string` | `'Filter {header}'`, `'Clear'` | The accessible name of the filter inputs and buttons, and the text of the menu's clear button. |
+| Input                       | Type              | Default                        | Description                                                                                    |
+| --------------------------- | ----------------- | ------------------------------ | ---------------------------------------------------------------------------------------------- |
+| `filterDisplay`             | `'row' \| 'menu'` | none                           | Where the column filters are: a filter row, or a popover from the header.                      |
+| `filterLabel`, `clearLabel` | `string`          | `'Filter {header}'`, `'Clear'` | The accessible name of the filter inputs and buttons, and the text of the menu's clear button. |
 
 A change of a filter goes back to the first page. In `lazy` mode nothing is filtered by the table: the texts are in `lazyLoad`.
 
@@ -145,16 +145,16 @@ all records so the paginator knows how many pages there are.
 
 Templates are `ng-template`s inside the table:
 
-| Directive | Replaces | Context |
-| --- | --- | --- |
-| `hxCell="field"` | the cell content of that column | `$implicit` row, `value`, `index` |
-| `hxColumnHeader="field"` | adds content beside the label of that header, outside the sort button (links, icons) | `$implicit` column |
-| `hxTableHeader` | the header cells (inside the `<tr>`; write `<th scope="col">`) | `$implicit` columns |
-| `hxTableBody` | the cells of every row (write `<td>`) | `$implicit` row, `index`, `columns` |
-| `hxTableFooter` | adds a footer row (write `<td>`) | `$implicit` columns |
-| `hxTableCaption` | the caption text | none |
-| `hxRowExpansion` | adds the content of an opened row | `$implicit` row, `index`, `columns` |
-| `hxTableEmpty` | the content of the empty row (instead of `emptyMessage`) | none |
+| Directive                | Replaces                                                                             | Context                             |
+| ------------------------ | ------------------------------------------------------------------------------------ | ----------------------------------- |
+| `hxCell="field"`         | the cell content of that column                                                      | `$implicit` row, `value`, `index`   |
+| `hxColumnHeader="field"` | adds content beside the label of that header, outside the sort button (links, icons) | `$implicit` column                  |
+| `hxTableHeader`          | the header cells (inside the `<tr>`; write `<th scope="col">`)                       | `$implicit` columns                 |
+| `hxTableBody`            | the cells of every row (write `<td>`)                                                | `$implicit` row, `index`, `columns` |
+| `hxTableFooter`          | adds a footer row (write `<td>`)                                                     | `$implicit` columns                 |
+| `hxTableCaption`         | the caption text                                                                     | none                                |
+| `hxRowExpansion`         | adds the content of an opened row                                                    | `$implicit` row, `index`, `columns` |
+| `hxTableEmpty`           | the content of the empty row (instead of `emptyMessage`)                             | none                                |
 
 ## Accessibility
 
