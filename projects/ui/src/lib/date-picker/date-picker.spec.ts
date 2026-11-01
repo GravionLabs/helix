@@ -63,10 +63,14 @@ describe('HxDatePicker', () => {
   };
 
   beforeEach(async () => {
+    // the fixtures are in October 2026: today is fixed inside that month before the pickers read it
+    vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] });
     fixture = TestBed.createComponent(Host);
     host = fixture.componentInstance;
     await settle();
   });
+
+  afterEach(() => vi.useRealTimers());
 
   it('is a date grid: weekday headers, gridcells, the value selected', () => {
     const grid = el('single').querySelector('[role=grid]') as HTMLElement;
@@ -181,10 +185,8 @@ describe('HxDatePicker', () => {
   it('keeps one tab stop in the grid', () => {
     const stops = el('single').querySelectorAll('.hx-date-picker-date[tabindex="0"]');
     expect(stops.length).toBe(1);
-    // the focused day is today while the shown month is today's, else the selected day (9 October)
-    const now = new Date();
-    const todayKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    expect(['2026-10-9', todayKey]).toContain(stops[0].getAttribute('data-date'));
+    // the shown month is today's (14 October), so today takes the stop, not the selected day (9 October)
+    expect(stops[0].getAttribute('data-date')).toBe('2026-10-14');
   });
 
   it('goes to the next month and back with the header buttons', async () => {
