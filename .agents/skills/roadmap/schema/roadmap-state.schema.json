@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GravionLabs/skills/skills/delivery/roadmap/schema/roadmap-state.schema.json",
+  "title": "Get-RoadmapState.ps1 output",
+  "description": "Open Epics, Features, PBIs and Bugs with parent, blockers and milestone, plus the milestones with progress (Get-Milestones.ps1 -Mode list).",
+  "type": "object",
+  "required": ["issues", "milestones", "latestTag"],
+  "properties": {
+    "issues": {
+      "type": "array",
+      "description": "Open issues with a level label, number ascending, pull requests excluded.",
+      "items": {
+        "type": "object",
+        "required": ["number", "level", "title", "size", "labels", "parent", "blockedBy", "milestone", "url"],
+        "properties": {
+          "number": { "type": "integer" },
+          "level": { "enum": ["epic", "feature", "pbi", "bug"] },
+          "title": { "type": "string" },
+          "size": { "enum": ["S", "M", "L", null], "description": "From the body line `Size: <S|M|L>` or the label size:<S|M|L>; null when unknown." },
+          "labels": { "type": "array", "items": { "type": "string" } },
+          "parent": { "type": ["integer", "null"], "description": "Native sub-issue parent; null for none." },
+          "blockedBy": {
+            "type": "array",
+            "items": { "oneOf": [{ "type": "integer" }, { "type": "string", "pattern": "^[^/\\s#]+/[^/\\s#]+#[0-9]+$" }] },
+            "description": "Open native blockers: a number for a local one, `owner/repo#n` for one in another repository."
+          },
+          "milestone": { "type": ["string", "null"], "description": "Milestone title: M<n> [<Topic>], legacy x.y.z, or null." },
+          "url": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "milestones": {
+      "type": "array",
+      "description": "Open and closed, as Get-Milestones.ps1 -Mode list returns them.",
+      "items": {
+        "type": "object",
+        "required": ["number", "title", "state", "open", "closed", "progress"],
+        "properties": {
+          "number": { "type": "integer" },
+          "title": { "type": "string" },
+          "state": { "enum": ["open", "closed"] },
+          "dueOn": { "type": ["string", "null"] },
+          "open": { "type": "integer", "minimum": 0 },
+          "closed": { "type": "integer", "minimum": 0 },
+          "progress": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "tagged": { "type": "boolean" },
+          "issues": {
+            "type": "array",
+            "description": "Closed milestones only: their closed issues (pull requests excluded), number ascending.",
+            "items": {
+              "type": "object",
+              "required": ["number", "title"],
+              "properties": { "number": { "type": "integer" }, "title": { "type": "string" } }
+            }
+          },
+          "url": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "latestTag": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

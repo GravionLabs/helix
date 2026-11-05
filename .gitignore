@@ -50,15 +50,13 @@ apps/helix-demo/public/source/
 apps/helix-demo/src/app/shell/build-info.ts
 
 
-# APM dependencies
-apm_modules/
-.claude/
-
 # Documentation site (VitePress)
 /apps/site/.vitepress/dist
 /apps/site/.vitepress/cache
 /apps/site/.vitepress/theme/generated
 
-# apm-installed agent skills (run `apm install`)
-apm_modules/
-.agents/skills/
+# Agent files: keep the installed skills and the project config (`npx skills`)
+.agents/*
+!.agents/skills/
+!.agents/config.json
+!.agents/lessons/

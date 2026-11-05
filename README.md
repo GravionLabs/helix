@@ -53,7 +53,7 @@ export const appConfig: ApplicationConfig = {
 
 ## Agent skills
 
-Run `apm install` before working in this repo. It installs the Angular agent skills declared in `apm.yml`. The skill folders are git-ignored, so a fresh clone has none. Requires [apm](https://github.com/microsoft/apm).
+The Angular agent skills are installed with [`npx skills`](https://github.com/GravionLabs/skills) (`/skills-manage` in an agent) and committed: `skills-lock.json`, `.agents/skills/` and `.claude/skills/`. Update them with `npx skills update`.
 
 ## Documentation
 
