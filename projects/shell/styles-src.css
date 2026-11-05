@@ -44,6 +44,8 @@
   --helix-nav-width: 17rem;
   --helix-nav-width-collapsed: 4.75rem;
   --helix-layout-gap: 1.5rem;
+  --helix-panel-gap: 4px; /* inset panels: gap to each other and to the window edge */
+  --helix-panel-radius: 6px;
   --helix-control-height: 32px; /* chrome controls: icon buttons and text fields */
 }
 

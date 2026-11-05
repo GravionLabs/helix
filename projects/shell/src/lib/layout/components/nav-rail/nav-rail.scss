@@ -18,16 +18,19 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0;
-  bottom: 0; // not 100vh: stays above a page scrollbar, level with the status bar
-  left: 0;
+  // An inset panel on the frame: gap to the window edge and to the status bar.
+  top: var(--helix-panel-gap);
+  bottom: calc(var(--helix-status-bar-height) + var(--helix-panel-gap));
+  left: var(--helix-panel-gap);
   width: var(--helix-nav-width, 17rem);
   z-index: 999;
   overflow: hidden;
   user-select: none;
-  background: var(--helix-surface-chrome);
+  box-sizing: border-box;
+  background: var(--h-content-background);
   color: var(--helix-nav-text);
-  border-right: 1px solid var(--helix-nav-border);
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--helix-panel-radius);
   transition: width var(--layout-section-transition-duration);
 
   &.helix-nav-rail-collapsed {

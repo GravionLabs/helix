@@ -1,26 +1,40 @@
-// ===== LAYOUT WRAPPER =====
+// ===== FRAME =====
+// One ground (--helix-surface-chrome) behind everything. Topbar, nav rail, content panel and status
+// bar lie on it; the frame itself never scrolls, only the content panel does.
 .layout-wrapper {
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--helix-surface-chrome);
+  // Left edge of the content area: the rail's right edge. Overridden per nav state below.
+  --helix-content-offset: calc(var(--helix-panel-gap) + var(--helix-nav-width));
 }
 
-// ===== MAIN CONTAINER =====
-// Top padding clears the fixed topbar + gap.
-// Bottom padding clears the fixed status bar + gap.
-// Side padding provides the content gap from the nav rail edge.
-// margin-left is set per nav state in the responsive blocks below.
+// ===== CONTENT PANEL =====
+// The container fills the frame between the topbar and the status bar; the panel inside it is
+// inset by the panel gap on every side and scrolls inside itself.
 .layout-main-container {
+  position: fixed;
+  top: var(--helix-topbar-height);
+  bottom: var(--helix-status-bar-height);
+  left: var(--helix-content-offset);
+  right: 0;
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: calc(var(--helix-topbar-height) + var(--helix-layout-gap)) var(--helix-layout-gap)
-    calc(var(--helix-status-bar-height) + var(--helix-layout-gap)) var(--helix-layout-gap);
-  transition: margin-left var(--layout-section-transition-duration);
+  padding: var(--helix-panel-gap);
+  box-sizing: border-box;
+  transition: left var(--layout-section-transition-duration);
 }
 
 .layout-main {
   flex: 1 1 auto;
-  // Let wide content shrink instead of forcing a horizontal page scrollbar.
+  // Let wide content shrink instead of forcing a horizontal scrollbar.
   min-width: 0;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: var(--helix-layout-gap);
+  background: var(--h-content-background);
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--helix-panel-radius);
 }
 
 // ===== STATUS BAR (fixed bottom) =====
@@ -31,7 +45,6 @@
   left: 0;
   right: 0;
   z-index: 996;
-  transition: left var(--layout-section-transition-duration);
 }
 
 // ===== LAYOUT MASK =====
@@ -50,14 +63,10 @@
 @media (min-width: 992px) {
   .layout-wrapper {
     &.layout-overlay {
-      .layout-main-container {
-        margin-left: 0;
-      }
+      --helix-content-offset: 0px;
 
       .helix-nav-rail {
-        transform: translateX(-100%);
-        left: 0;
-        border-right: 1px solid var(--helix-border);
+        transform: translateX(calc(-100% - var(--helix-panel-gap)));
         transition:
           transform 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99),
           left 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
@@ -73,52 +82,21 @@
     }
 
     &.layout-static {
-      .layout-main-container {
-        margin-left: var(--helix-nav-width);
-      }
-
       .layout-topbar {
-        left: var(--helix-nav-width);
-        width: calc(100% - var(--helix-nav-width));
-      }
-
-      > helix-status-bar {
-        left: var(--helix-nav-width);
+        left: var(--helix-content-offset);
+        width: calc(100% - var(--helix-content-offset));
       }
 
       &.layout-static-inactive {
+        --helix-content-offset: 0px;
+
         .helix-nav-rail {
-          transform: translateX(-100%);
-          left: 0;
-        }
-
-        .layout-main-container {
-          margin-left: 0;
-        }
-
-        .layout-topbar {
-          left: 0;
-          width: 100%;
-        }
-
-        > helix-status-bar {
-          left: 0;
+          transform: translateX(calc(-100% - var(--helix-panel-gap)));
         }
       }
 
       &.layout-sidebar-collapsed {
-        .layout-main-container {
-          margin-left: var(--helix-nav-width-collapsed);
-        }
-
-        .layout-topbar {
-          left: var(--helix-nav-width-collapsed);
-          width: calc(100% - var(--helix-nav-width-collapsed));
-        }
-
-        > helix-status-bar {
-          left: var(--helix-nav-width-collapsed);
-        }
+        --helix-content-offset: calc(var(--helix-panel-gap) + var(--helix-nav-width-collapsed));
       }
     }
 
@@ -135,8 +113,15 @@
   }
 
   .layout-wrapper {
+    // Edge to edge: the content panel loses the frame gap, radius and border.
     .layout-main-container {
-      margin-left: 0;
+      left: 0;
+      padding: 0;
+    }
+
+    .layout-main {
+      border: 0;
+      border-radius: 0;
     }
 
     .layout-topbar {
@@ -144,9 +129,14 @@
       width: 100%;
     }
 
+    // The overlay rail is flush with the window: no gap, radius or panel border.
     .helix-nav-rail {
-      transform: translateX(-100%);
+      top: 0;
+      bottom: 0;
       left: 0;
+      border-radius: 0;
+      border-width: 0 1px 0 0;
+      transform: translateX(-100%);
       transition:
         transform 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99),
         left 0.4s cubic-bezier(0.05, 0.74, 0.2, 0.99);
@@ -166,7 +156,6 @@
 
 // ===== RESPONSIVE — wide screen cap =====
 @media screen and (min-width: 1960px) {
-  .layout-main,
   .landing-wrapper {
     width: 100%;
     max-width: 1760px;

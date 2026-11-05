@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -373,5 +374,50 @@ describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
     // The host's @if anchor comment is projected too, so only element children count.
     expect(slot().children.length).toBe(0);
     expect(slot().matches(':not(:has(*))')).toBe(true);
+  });
+});
+
+describe('HelixAppLayout inset frame', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+
+  const wrapper = (): HTMLElement => fixture.nativeElement.querySelector('.layout-wrapper');
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        set: { imports: [NgClass, HelixStatusBar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  });
+
+  it('renders the content panel (.layout-main) as the only child of the main container', () => {
+    const container = wrapper().querySelector(':scope > .layout-main-container');
+    expect(container?.children.length).toBe(1);
+    expect(container?.firstElementChild?.classList.contains('layout-main')).toBe(true);
+  });
+
+  it('keeps the nav rail, content panel and status bar as siblings on the frame', () => {
+    const tags = Array.from(wrapper().children).map(
+      (el) => el.tagName.toLowerCase() + (el.className ? `.${el.className}` : ''),
+    );
+    expect(tags).toContain('helix-nav-rail');
+    expect(tags).toContain('div.layout-main-container');
+    expect(tags).toContain('helix-status-bar');
+  });
+
+  it('adds no classic-layout class', () => {
+    expect(wrapper().className).not.toContain('classic');
+  });
+
+  it('puts the static state class on the frame by default', () => {
+    expect(wrapper().classList.contains('layout-static')).toBe(true);
+    expect(wrapper().classList.contains('layout-overlay')).toBe(false);
   });
 });
