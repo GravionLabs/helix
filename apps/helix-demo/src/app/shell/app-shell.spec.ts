@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { TestBed } from '@angular/core/testing';
 import { LayoutStore } from '@gravionlabs/helix-shell';
 import { HighlightLoader } from 'ngx-highlightjs';
@@ -19,5 +21,15 @@ describe('AppShell', () => {
     expect((shell as unknown as { versions: unknown }).versions).toEqual([
       { label: 'Helix', value: BUILD_VERSION },
     ]);
+  });
+
+  it('projects the topbar filter as an hx-input text field', () => {
+    const html = readFileSync(join(__dirname, 'app-shell.html'), 'utf8');
+    const filter = new DOMParser()
+      .parseFromString(html, 'text/html')
+      .querySelector('[helixTopbarEnd]');
+
+    expect(filter?.tagName).toBe('INPUT');
+    expect(filter?.hasAttribute('hx-input')).toBe(true);
   });
 });

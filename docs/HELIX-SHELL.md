@@ -162,7 +162,7 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
   [topbarActions]="myActions"
   brandIcon="/assets/logo.svg"
 >
-  <input helixTopbarEnd type="search" aria-label="Filter" placeholder="Filter" />
+  <input helixTopbarEnd hx-input type="search" aria-label="Filter" placeholder="Filter" />
   <button hxStatusBarEnd type="button">Reload</button>
 </helix-app-layout>
 ```
@@ -356,6 +356,8 @@ active route opens automatically on navigation and can still be collapsed by the
 Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible links;
 `Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
 close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
+
+**Chrome controls.** Icon buttons (topbar actions, the rail's collapse toggle) are squares of `--helix-control-height` (32px) with `border.radius.md`. The rail search uses the `hx-input` look (`--h-inputtext-*` tokens) at the same height; a text field projected into `[helixTopbarEnd]` should carry `hx-input` and gets that height.
 
 **Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
 icons and back — it is the only collapse control; the topbar hamburger is hidden there in

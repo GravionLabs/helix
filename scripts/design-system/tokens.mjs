@@ -181,6 +181,7 @@ export function shellConstants(css = fs.readFileSync(path.join(ROOT, 'projects/s
     'status-bar-height': get('helix-status-bar-height'),
     'nav-width': get('helix-nav-width'),
     'nav-width-collapsed': get('helix-nav-width-collapsed'),
+    'control-height': get('helix-control-height'),
   };
 }
 
@@ -199,6 +200,7 @@ export function buildSpacing(tokens, shell = shellConstants()) {
       { name: 'layout-gap', value: toPx(shell['layout-gap']), usage: 'Gap between cards and between columns of the application shell.' },
       { name: 'topbar-height', value: toPx(shell['topbar-height']), usage: 'Height of the shell topbar.' },
       { name: 'status-bar-height', value: toPx(shell['status-bar-height']), usage: 'Height of the shell status bar.' },
+      { name: 'control-height', value: toPx(shell['control-height']), usage: 'Height of the shell chrome controls: icon buttons and text fields of the topbar and nav rail.' },
       { name: 'nav-width', value: toPx(shell['nav-width']), usage: 'Width of the expanded nav rail.' },
       { name: 'nav-width-collapsed', value: toPx(shell['nav-width-collapsed']), usage: 'Width of the collapsed nav rail.' },
     ].filter((t) => t.value),
