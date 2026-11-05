@@ -71,6 +71,8 @@
       "!apps/site/.vitepress/theme/generated",
       "!scripts/tests/fixtures",
       "!**/public",
+      "!.agents/skills",
+      "!.claude/skills",
       "!CHANGELOG.md"
     ]
   },
