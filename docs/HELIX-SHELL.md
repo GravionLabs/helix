@@ -147,10 +147,10 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 
 #### Content slots
 
-| Selector           | Description                                                                                                                                                          |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[helixTopbarEnd]` | Forwarded into the [`HelixTopbar`](#helixtopbar) end slot (attribute selector, no directive needed). See the topbar section for placement and narrow-width behaviour |
-| `[hxStatusBarEnd]` | Projected at the right end of the status bar. See [status bar](#helixstatusbar)                                                                                      |
+| Selector           | Description                                                                                                                                                                                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[helixTopbarEnd]` | Forwarded into the [`HelixTopbar`](#helixtopbar) end slot (attribute selector, no directive needed; a projected text field still needs the `HxInput` directive imported for the `hx-input` look). See the topbar section for placement and narrow-width behaviour |
+| `[hxStatusBarEnd]` | Projected at the right end of the status bar. See [status bar](#helixstatusbar)                                                                                                                                                                                   |
 
 #### Example
 
@@ -357,7 +357,7 @@ Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible lin
 `Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
 close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
 
-**Chrome controls.** Icon buttons (topbar actions, the rail's collapse toggle) are squares of `--helix-control-height` (32px) with `border.radius.md`. The rail search uses the `hx-input` look (`--h-inputtext-*` tokens) at the same height; a text field projected into `[helixTopbarEnd]` should carry `hx-input` and gets that height.
+**Chrome controls.** Icon buttons (topbar actions, the rail's collapse toggle) are squares of `--helix-control-height` (32px) with `border.radius.md`. The rail search uses the `hx-input` look (`--h-inputtext-*` tokens) at the same height; a text field projected into `[helixTopbarEnd]` should carry `hx-input` and gets that height. The `hx-input` class comes from the `HxInput` directive host binding, so import `HxInput` in the consuming component; the bare attribute alone does not style the field.
 
 **Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
 icons and back — it is the only collapse control; the topbar hamburger is hidden there in

@@ -1,6 +1,5 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { LayoutStore } from '@gravionlabs/helix-shell';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { AppShell } from './app-shell';
@@ -23,13 +22,18 @@ describe('AppShell', () => {
     ]);
   });
 
-  it('projects the topbar filter as an hx-input text field', () => {
-    const html = readFileSync(join(__dirname, 'app-shell.html'), 'utf8');
-    const filter = new DOMParser()
-      .parseFromString(html, 'text/html')
-      .querySelector('[helixTopbarEnd]');
+  it('projects the topbar filter as an hx-input text field', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        { provide: HighlightLoader, useValue: { setTheme: () => undefined } },
+      ],
+    });
+    const fixture = TestBed.createComponent(AppShell);
+    await fixture.whenStable();
 
-    expect(filter?.tagName).toBe('INPUT');
-    expect(filter?.hasAttribute('hx-input')).toBe(true);
+    const filter = (fixture.nativeElement as HTMLElement).querySelector('input.topbar-filter');
+
+    expect(filter?.classList.contains('hx-input')).toBe(true);
   });
 });
