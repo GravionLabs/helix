@@ -192,6 +192,7 @@ Application header bar. Renders a menu toggle and breadcrumb trail on the left, 
 | End  | `[helixTopbarEnd]` | Always-visible content at the start of the right cluster, e.g. a global filter |
 
 Behaviour of the End slot:
+
 - Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width.
 - With content, the right cluster takes the free topbar width and the left part shrinks to the menu toggle and breadcrumbs, so a projected flex child with `flex: 1` (e.g. a filter bar) stretches up to the breadcrumbs. Without content the layout is unchanged.
 - Shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The config and action buttons keep their size.
@@ -203,6 +204,7 @@ Behaviour of the End slot:
 #### Layout
 
 The topbar is split into two sections:
+
 - **Left (`layout-topbar-start`)**: Menu toggle button followed by the breadcrumb with a home icon
 - **Right (`layout-topbar-end`)**: `[helixTopbarEnd]` slot wrapper (`layout-topbar-slot`), then the config menu (dark mode, configurator, alerts), the ellipsis button and the collapsible action menu
 
@@ -479,6 +481,7 @@ export const appRoutes: Routes = helixRoutesFrom(menu);
 ```
 
 Behaviour:
+
 - Items with `path` + `component` or `loadChildren` generate a route entry.
 - Items without `path` (visual-only section headers) are skipped, but their children are still recursed.
 - The `breadcrumb` value is injected into `route.data['breadcrumb']`.
@@ -508,6 +511,7 @@ const links = helixMenuLinksFrom(menu, '/uikit');
 ```
 
 **Parameters:**
+
 | Param      | Type                   | Description               |
 | ---------- | ---------------------- | ------------------------- |
 | `items`    | `HelixRouteMenuItem[]` | Source menu items         |
@@ -533,6 +537,7 @@ const crumbs = helixBreadcrumbsFromRoutes(route);
 ```
 
 Where `breadcrumb` can be a static string or a function:
+
 ```ts
 {
   path: 'users/:id',

@@ -62,7 +62,9 @@
   cursor: pointer;
   outline: 0 none;
   user-select: none;
-  transition: background var(--h-menu-transition-duration), color var(--h-menu-transition-duration);
+  transition:
+    background var(--h-menu-transition-duration),
+    color var(--h-menu-transition-duration);
 }
 
 .hx-menu-item:hover:not([aria-disabled='true']),
