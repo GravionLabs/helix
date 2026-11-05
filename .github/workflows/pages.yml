@@ -38,7 +38,7 @@ jobs:
           fetch-depth: 0
       - name: Determine version
         id: version
-        uses: GravionLabs/ci/versioning/determine-version@cbb01f83374efa76491226e97bcf1d5cf9674fab # main
+        uses: GravionLabs/ci/versioning/determine-version@v1
 
   build:
     name: Build the site
@@ -50,7 +50,7 @@ jobs:
       PAGES_BASE: /${{ github.event.repository.name }}/
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: GravionLabs/ci/node/setup@f2bce90da1f215b8da4da9fba22881e9255921d2 # main
+      - uses: GravionLabs/ci/node/setup@v1
         with:
           node-version: '26' # node/setup has no node-version-file input
           package-manager: pnpm
