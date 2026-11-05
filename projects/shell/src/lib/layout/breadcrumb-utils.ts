@@ -37,3 +37,14 @@ export function helixBreadcrumbsFromRoutes(route: ActivatedRoute): HxMenuItem[] 
 
   return breadcrumbs;
 }
+
+/** The title of the deepest active route: its `title` (static or resolved) or `data['title']`. */
+export function helixPageTitleFromRoutes(route: ActivatedRoute): string | undefined {
+  let current: ActivatedRoute | null = route;
+  while (current.firstChild) current = current.firstChild;
+  for (; current; current = current.parent) {
+    const title = current.snapshot.title ?? current.snapshot.data?.['title'];
+    if (typeof title === 'string' && title) return title;
+  }
+  return undefined;
+}

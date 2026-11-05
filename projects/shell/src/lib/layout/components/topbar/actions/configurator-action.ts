@@ -9,7 +9,7 @@ import { HelixConfigurator } from '../../configurator/configurator';
   template: `
     <div
       class="relative"
-      style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem;"
+      style="display: inline-flex; align-items: center; justify-content: center; width: var(--helix-control-height, 32px); height: var(--helix-control-height, 32px);"
     >
       <button
         type="button"
@@ -30,9 +30,9 @@ import { HelixConfigurator } from '../../configurator/configurator';
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
+        width: var(--helix-control-height, 32px);
+        height: var(--helix-control-height, 32px);
+        border-radius: var(--h-border-radius-md);
         cursor: pointer;
         transition: background-color var(--element-transition-duration);
       }

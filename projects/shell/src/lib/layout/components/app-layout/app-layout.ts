@@ -43,10 +43,13 @@ export class HelixAppLayout {
   appTitle = input('Helix');
   environment = input<EnvironmentValue | string | undefined>();
 
-  /** Topbar items. When provided, overrides the default darkmode / configurator / mobile items. */
+  /** Page title of the header where there is no breadcrumb trail. Defaults to the route title. */
+  pageTitle = input<string | undefined>();
+
+  /** Global actions of the nav rail footer. When provided, overrides the default darkmode / configurator / mobile items. */
   topbarItems = input<HelixTopbarItem[] | undefined>();
 
-  /** Topbar actions rendered in the right-side dropdown. */
+  /** Entries of the ellipsis menu in the nav rail footer. */
   topbarActions = input<HelixTopbarAction[] | undefined>();
 
   /**

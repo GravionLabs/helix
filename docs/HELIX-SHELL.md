@@ -131,7 +131,7 @@ export class AppComponent {
 **Selector:** `<helix-app-layout>`  
 **File:** `projects/shell/src/lib/layout/components/app-layout/app-layout.ts`
 
-Top-level shell that composes the topbar, nav rail, footer, and router outlet into a full application layout. Forwards `appTitle` to `HelixTopbar`.
+Top-level shell that composes the nav rail, the content panel (page header plus router outlet) and the status bar into a full application layout. Forwards `appTitle` to `HelixTopbar` and `HelixNavRail`.
 
 #### Inputs
 
@@ -139,8 +139,9 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 | --------------- | ---------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `appTitle`      | `string`               | `'Helix'`                            | Application title forwarded to `HelixTopbar`                                                                                                                                                     |
 | `menu`          | `HelixRouteMenuItem[]` | `[]`                                 | Navigation menu model. Overrides route data when provided                                                                                                                                        |
-| `topbarItems`   | `HelixTopbarItem[]`    | `darkmode`, `configurator`, `mobile` | Topbar config items. Overrides the default items when provided                                                                                                                                   |
-| `topbarActions` | `HelixTopbarAction[]`  | `calendar`, `inbox`, `profile`       | Topbar dropdown action buttons. Provide `command` callbacks to handle clicks                                                                                                                     |
+| `pageTitle`     | `string`               | route title                          | Title of the page header where there is no breadcrumb trail. Defaults to the title of the active route (`title` or `data['title']`), then the last breadcrumb, then `appTitle`                   |
+| `topbarItems`   | `HelixTopbarItem[]`    | `darkmode`, `configurator`, `mobile` | Global actions, now rendered in the **nav rail footer** (`darkmode`, `configurator`, `alert`, `action`; `mobile` is ignored). Overrides the default items when provided                          |
+| `topbarActions` | `HelixTopbarAction[]`  | `calendar`, `inbox`, `profile`       | Entries of the ellipsis menu in the **nav rail footer**. Provide `command` callbacks to handle clicks                                                                                            |
 | `brandIcon`     | `string`               | —                                    | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon                                                                                     |
 | `navStyle`      | `'sections' \| 'tree'` | `'sections'`                         | How `menu` maps onto the rail: top-level items with children as always-open section headings (`'sections'`), or as expandable folders (`'tree'`). See [`helixNavGroupsFromMenu`](#helixnavgroup) |
 | `navGroups`     | `HelixNavGroup[]`      | —                                    | Explicit nav groups; win over the mapped `menu`                                                                                                                                                  |
@@ -174,51 +175,41 @@ Top-level shell that composes the topbar, nav rail, footer, and router outlet in
 **Selector:** `<helix-topbar>`  
 **File:** `projects/shell/src/lib/layout/components/topbar/topbar.ts`
 
-Application header bar. Renders a menu toggle and breadcrumb trail on the left, and on the right the projected `[helixTopbarEnd]` content (in a `layout-topbar-slot` wrapper), the config items and the action buttons.
+Page header: the head of the content panel (`.layout-panel` of `HelixAppLayout`), 48px (`--helix-topbar-height`) with one divider below it. It is not a bar across the window any more. Renders the menu toggle, the breadcrumb trail (or the page title where there is no trail) on the left and the projected `[helixTopbarEnd]` content (in a `layout-topbar-slot` wrapper) on the right.
+
+**Breaking (inset layout, #1023):** the global actions left the header. `items` (dark mode, configurator, alerts, action buttons), `topbarActions` (the ellipsis menu) and `menuLabel` are no longer inputs of `helix-topbar`; they are inputs of [`helix-nav-rail`](#helixnavrail) (`items`, `menuActions`, `menuLabel`) and `helix-app-layout` still forwards `topbarItems` / `topbarActions` there. A direct `<helix-topbar>` user moves these bindings to the nav rail. The `layout-config-menu`, `layout-topbar-menu` and `layout-topbar-menu-button` elements are gone.
 
 #### Inputs
 
-| Name            | Type                  | Default                                   | Description                                                           |
-| --------------- | --------------------- | ----------------------------------------- | --------------------------------------------------------------------- |
-| `appTitle`      | `string`              | `'Helix'`                                 | Application name                                                      |
-| `topbarActions` | `HelixTopbarAction[]` | 3 icon buttons (calendar, inbox, profile) | Action buttons rendered in the right-side dropdown                    |
-| `breadcrumbs`   | `HxMenuItem[]`        | Derived from route data                   | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution |
-| `items`         | `HelixTopbarItem[]`   | `darkmode`, `configurator`, `mobile`      | Configuration items rendered in the right action cluster              |
+| Name          | Type           | Default                 | Description                                                                                                                                 |
+| ------------- | -------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `appTitle`    | `string`       | `'Helix'`               | Last-resort title, so the start of the header is never empty                                                                                |
+| `breadcrumbs` | `HxMenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution. A trail of two or more items replaces the page title                 |
+| `pageTitle`   | `string`       | route title             | Page title shown without a trail. Default: `title` / `data['title']` of the deepest active route, else the last breadcrumb, else `appTitle` |
 
 #### Content Slots
 
-| Slot | Selector           | Description                                                                    |
-| ---- | ------------------ | ------------------------------------------------------------------------------ |
-| End  | `[helixTopbarEnd]` | Always-visible content at the start of the right cluster, e.g. a global filter |
+| Slot | Selector           | Description                                                 |
+| ---- | ------------------ | ----------------------------------------------------------- |
+| End  | `[helixTopbarEnd]` | Page actions at the end of the header, e.g. a global filter |
 
 Behaviour of the End slot:
 
-- Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, before the config items and the ellipsis button and outside the collapsible menu, so it is visible at every width.
-- With content, the right cluster takes the free topbar width and the left part shrinks to the menu toggle and breadcrumbs, so a projected flex child with `flex: 1` (e.g. a filter bar) stretches up to the breadcrumbs. Without content the layout is unchanged.
-- Shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the topbar height stays fixed. The config and action buttons keep their size.
+- Rendered in a `layout-topbar-slot` wrapper inside `layout-topbar-end`, visible at every width.
+- With content, the end cluster takes the free header width and the start part shrinks to the menu toggle and breadcrumbs, so a projected flex child with `flex: 1` (e.g. a filter bar) stretches up to the breadcrumbs.
+- Shrinks or scrolls horizontally before the breadcrumbs lose their minimum width (12rem above 992px); it never wraps and the header height stays fixed.
 - The wrapper is collapsed when it contains no element, so unused layouts get no extra gap.
-- Focus order follows DOM order: slot content, config items, ellipsis button, menu actions.
 
-**Behaviour change for direct `<helix-topbar>` users:** `[helixTopbarEnd]` content used to sit after the actions and, on narrow widths, behind the ellipsis menu. It now renders before the config items and stays visible. The ellipsis menu switches at the shell breakpoint (992px), not Tailwind `lg` (1024px).
+#### Menu toggle
 
-#### Layout
-
-The topbar is split into two sections:
-
-- **Left (`layout-topbar-start`)**: Menu toggle button followed by the breadcrumb with a home icon
-- **Right (`layout-topbar-end`)**: `[helixTopbarEnd]` slot wrapper (`layout-topbar-slot`), then the config menu (dark mode, configurator, alerts), the ellipsis button and the collapsible action menu
+The toggle stays in the header start. In `static` menu mode it is mobile-only (hidden above 991px, where the rail has its own collapse toggle); below 992px, or in `overlay` mode, it opens the rail. The header is not part of the content that goes `inert` while the mobile menu is open.
 
 #### Example
 
 ```html
-<helix-topbar appTitle="My App" [topbarActions]="myActions" />
-```
-
-```ts
-myActions: HelixTopbarAction[] = [
-  { icon: 'pi pi-bell', label: 'Notifications', command: () => this.openNotifications() },
-  { icon: 'pi pi-user', label: 'Profile',        command: () => this.openProfile() },
-];
+<helix-topbar appTitle="My App" pageTitle="Reports">
+  <input helixTopbarEnd hx-input type="search" aria-label="Filter" />
+</helix-topbar>
 ```
 
 ---
@@ -364,7 +355,7 @@ close). Expandable items expose `aria-expanded`; the active link has `aria-curre
 **Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
 icons and back — it is the only collapse control; the topbar hamburger is hidden there in
 `static` menu mode. At ≤ 991px the rail is a drawer: the hamburger opens it with a mask, and
-a click outside or a navigation closes it (the drawer always shows labels). The collapsed
+a click outside or a navigation closes it (the drawer always shows labels). The footer holds the global actions (`items`, `menuActions`) on every width. The collapsed
 state is remembered in `localStorage` (reads/writes are guarded, so it works without storage).
 
 **Collapsed rail.** Links show a tooltip with their label. A section that has an `icon`
@@ -379,11 +370,14 @@ not provided. The app title (`appTitle`) renders alongside regardless.
 
 #### Inputs
 
-| Name        | Type              | Default   | Description                                                                                                           |
-| ----------- | ----------------- | --------- | --------------------------------------------------------------------------------------------------------------------- |
-| `model`     | `HelixNavGroup[]` | `[]`      | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items |
-| `appTitle`  | `string`          | `'Helix'` | Application title shown in the brand area. Hidden when nav is collapsed                                               |
-| `brandIcon` | `string`          | —         | Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default hardcoded icon               |
+| Name          | Type                  | Default          | Description                                                                                                                                                   |
+| ------------- | --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `model`       | `HelixNavGroup[]`     | `[]`             | Grouped navigation model — each group has an optional uppercase `section` label and a `HelixRouteMenuItem[]` of items                                         |
+| `appTitle`    | `string`              | `'Helix'`        | Application title shown in the brand area. Hidden when nav is collapsed                                                                                       |
+| `brandIcon`   | `string`              | —                | Brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default hardcoded icon                                                       |
+| `items`       | `HelixTopbarItem[]`   | `[]`             | Global actions in the footer: `darkmode`, `configurator`, `alert`, `action`. A collapsed rail stacks them as an icon column; the mobile drawer shows them too |
+| `menuActions` | `HelixTopbarAction[]` | `[]`             | Entries of the footer's ellipsis menu (not rendered when empty)                                                                                               |
+| `menuLabel`   | `string`              | `'More actions'` | Accessible name of the ellipsis button                                                                                                                        |
 
 #### `HelixNavGroup`
 

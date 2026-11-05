@@ -39,7 +39,7 @@
   --focus-ring-shadow: var(--h-focus-ring-shadow);
 
   /* ===== LAYOUT DIMENSIONS ===== */
-  --helix-topbar-height: 4rem;
+  --helix-topbar-height: 3rem; /* page header: the head of the content panel */
   --helix-status-bar-height: 3rem;
   --helix-nav-width: 17rem;
   --helix-nav-width-collapsed: 4.75rem;

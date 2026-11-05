@@ -13,51 +13,25 @@ import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/ro
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { HxBreadcrumb } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { helixBreadcrumbsFromRoutes } from '../../breadcrumb-utils';
-import { HelixDisclosure } from '../../disclosure';
+import { helixBreadcrumbsFromRoutes, helixPageTitleFromRoutes } from '../../breadcrumb-utils';
 import { LayoutStore } from '../../store/layout.store';
-import { HelixAlertAction } from './actions/alert-action';
-import { HelixConfiguratorAction } from './actions/configurator-action';
-import { HelixDarkModeAction } from './actions/dark-mode-action';
-import type { HelixTopbarAction, HelixTopbarItem } from './topbar.model';
 
-export type { HelixTopbarAction } from './topbar.model';
-
-const DEFAULT_ACTIONS: HelixTopbarAction[] = [
-  { icon: 'pi pi-calendar', label: 'Calendar' },
-  { icon: 'pi pi-inbox', label: 'Messages' },
-  { icon: 'pi pi-user', label: 'Profile' },
-];
-
-const DEFAULT_ITEMS: HelixTopbarItem[] = [
-  { type: 'darkmode' },
-  { type: 'configurator' },
-  { type: 'mobile' },
-];
+export type { HelixTopbarAction, HelixTopbarItem } from './topbar.model';
 
 @Component({
   selector: 'helix-topbar',
   standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    HelixAlertAction,
-    HelixConfiguratorAction,
-    HelixDarkModeAction,
-    HelixDisclosure,
-    HxBreadcrumb,
-  ],
+  imports: [RouterModule, CommonModule, HxBreadcrumb],
   templateUrl: './topbar.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './topbar.scss',
 })
 export class HelixTopbar implements OnInit, OnDestroy {
+  /** Last-resort page title, shown when the route offers neither breadcrumbs nor a title. */
   appTitle = input('Helix');
-  topbarActions = input<HelixTopbarAction[]>(DEFAULT_ACTIONS);
   breadcrumbs = input<HxMenuItem[] | undefined>(undefined);
-  /** Accessible name of the button that opens the actions menu on small screens. */
-  menuLabel = input('More actions');
-  items = input<HelixTopbarItem[]>(DEFAULT_ITEMS);
+  /** Page title shown where there is no breadcrumb trail. Defaults to the title of the active route. */
+  pageTitle = input<string | undefined>(undefined);
 
   store = inject(LayoutStore);
   private router = inject(Router);
@@ -87,4 +61,15 @@ export class HelixTopbar implements OnInit, OnDestroy {
   });
 
   protected showBreadcrumbs = computed(() => this.effectiveBreadcrumbs().length > 1);
+
+  /** Never empty: the `pageTitle` input, else the route title, else the last breadcrumb, else `appTitle`. */
+  protected effectiveTitle = computed(() => {
+    const explicit = this.pageTitle();
+    if (explicit) return explicit;
+    this.routeChange();
+    const fromRoute = helixPageTitleFromRoutes(this.route);
+    if (fromRoute) return fromRoute;
+    const crumbs = this.effectiveBreadcrumbs();
+    return crumbs[crumbs.length - 1]?.label || this.appTitle();
+  });
 }

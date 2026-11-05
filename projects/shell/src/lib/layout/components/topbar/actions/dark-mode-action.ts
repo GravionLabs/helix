@@ -20,7 +20,7 @@ import { LayoutStore } from '../../../store/layout.store';
   `,
   host: {
     style:
-      'display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer; transition: background-color var(--element-transition-duration);',
+      'display: inline-flex; align-items: center; justify-content: center; width: var(--helix-control-height, 32px); height: var(--helix-control-height, 32px); border-radius: var(--h-border-radius-md); cursor: pointer; transition: background-color var(--element-transition-duration);',
   },
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
