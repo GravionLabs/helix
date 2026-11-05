@@ -50,10 +50,13 @@ describe('contrast', () => {
 describe('shellConstants', () => {
   it('reads the layout dimensions from the shell stylesheet', () => {
     expect(
-      shellConstants('--helix-layout-gap: 1.5rem; --helix-topbar-height: 4rem;'),
+      shellConstants(
+        '--helix-layout-gap: 1.5rem; --helix-topbar-height: 4rem; --helix-control-height: 32px;',
+      ),
     ).toMatchObject({
       'layout-gap': '1.5rem',
       'topbar-height': '4rem',
+      'control-height': '32px',
     });
   });
 });

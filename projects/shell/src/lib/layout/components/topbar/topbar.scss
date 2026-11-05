@@ -58,6 +58,12 @@
     padding-block: 0.25rem;
     scrollbar-width: thin;
 
+    // A projected text field takes the chrome control height; its look comes from `hx-input`.
+    input.hx-input {
+      height: var(--helix-control-height, 32px);
+      padding-block: 0;
+    }
+
     // No projected element: collapse the wrapper so the flex gap does not apply.
     // Not :empty, because projected control-flow blocks leave comment anchors behind.
     &:not(:has(*)) {
@@ -88,9 +94,9 @@
     flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
+    border-radius: var(--h-border-radius-md);
+    width: var(--helix-control-height, 32px);
+    height: var(--helix-control-height, 32px);
     color: var(--text-color);
     transition: background-color var(--element-transition-duration);
     cursor: pointer;
@@ -193,7 +199,7 @@
         width: 100%;
         height: auto;
         justify-content: flex-start;
-        border-radius: var(--content-border-radius);
+        border-radius: var(--h-border-radius-md);
         padding: 0.5rem 1rem;
 
         i {

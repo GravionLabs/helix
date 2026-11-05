@@ -22,6 +22,14 @@ describe('HelixAlertAction', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should render the host as a compact 32px square, not a circle', () => {
+    fixture.detectChanges();
+    const style = getComputedStyle(fixture.nativeElement as HTMLElement);
+    expect(style.width).toBe('var(--helix-control-height, 32px)');
+    expect(style.height).toBe('var(--helix-control-height, 32px)');
+    expect(style.borderRadius).toBe('var(--h-border-radius-md)');
+  });
+
   it('should show count when > 0', () => {
     fixture.detectChanges();
     const countEl = fixture.nativeElement.querySelector('.alert-badge-count');

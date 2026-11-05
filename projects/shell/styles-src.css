@@ -44,6 +44,7 @@
   --helix-nav-width: 17rem;
   --helix-nav-width-collapsed: 4.75rem;
   --helix-layout-gap: 1.5rem;
+  --helix-control-height: 32px; /* chrome controls: icon buttons and text fields */
 }
 
 /* Light theme surfaces (the neutrals of the sibling sites, ADR 0001): a white page, a

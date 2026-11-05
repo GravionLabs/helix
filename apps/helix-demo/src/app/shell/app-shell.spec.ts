@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { LayoutStore } from '@gravionlabs/helix-shell';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { AppShell } from './app-shell';
@@ -19,5 +20,20 @@ describe('AppShell', () => {
     expect((shell as unknown as { versions: unknown }).versions).toEqual([
       { label: 'Helix', value: BUILD_VERSION },
     ]);
+  });
+
+  it('projects the topbar filter as an hx-input text field', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([]),
+        { provide: HighlightLoader, useValue: { setTheme: () => undefined } },
+      ],
+    });
+    const fixture = TestBed.createComponent(AppShell);
+    await fixture.whenStable();
+
+    const filter = (fixture.nativeElement as HTMLElement).querySelector('input.topbar-filter');
+
+    expect(filter?.classList.contains('hx-input')).toBe(true);
   });
 });
