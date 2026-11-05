@@ -33,7 +33,7 @@ jobs:
 
       - name: Determine version
         id: version
-        uses: GravionLabs/ci/versioning/determine-version@main
+        uses: GravionLabs/ci/versioning/determine-version@v1
 
   build-test:
     name: Build & Test
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: CI
-        uses: GravionLabs/ci/node/ci@main
+        uses: GravionLabs/ci/node/ci@v1
         with:
           node-version: '26' # GravionLabs/ci node/ci has no node-version-file input
           package-manager: pnpm
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create GitHub Release
-        uses: GravionLabs/ci/versioning/gh-release@main
+        uses: GravionLabs/ci/versioning/gh-release@v1
         with:
           version: ${{ needs.determine-version.outputs.semver }}
           tag-prefix: v
