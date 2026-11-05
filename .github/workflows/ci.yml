@@ -48,7 +48,7 @@ jobs:
       - name: CI
         uses: GravionLabs/ci/node/ci@main
         with:
-          node-version: '24'
+          node-version: '26' # GravionLabs/ci node/ci has no node-version-file input
           package-manager: pnpm
           lint-command: pnpm run lint
           build-command: pnpm run build
@@ -92,7 +92,7 @@ jobs:
       # per-account step only an npm org owner can do.
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version-file: .nvmrc
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Set package versions
