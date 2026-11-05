@@ -64,7 +64,6 @@ One page per component (usage, inputs and outputs, accessibility, tokens): see t
 - **Media:** [Carousel](components/carousel.md), [Galleria](components/galleria.md), [Image](components/image.md)
 - **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md) (entry point `@gravionlabs/helix-ui/chart`)
 
-
 ## Theming
 
 `tokens.css` gives every `--h-*` token its Helix value, light and dark. The theme service changes the colour

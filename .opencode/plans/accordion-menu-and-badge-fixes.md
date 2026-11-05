@@ -9,6 +9,7 @@
 ### `layout.store.ts`
 
 Add state + method:
+
 ```ts
 // initialState
 expandedRoot: null,
@@ -22,6 +23,7 @@ setExpandedRoot(key: string | null) {
 ### `menu-item.ts`
 
 Replace local `isManuallyExpanded` signal with a computed that reads from store:
+
 ```ts
 itemKey = computed(() => this.fullPath() ?? this.item()?.label ?? '');
 
@@ -31,6 +33,7 @@ isManuallyExpanded = computed(() => this.store.expandedRoot() === this.itemKey()
 ```
 
 Update `itemClick`:
+
 ```ts
 if (this.hasChildren()) {
   if (this.isExpanded()) {

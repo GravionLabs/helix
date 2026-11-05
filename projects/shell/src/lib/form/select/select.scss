@@ -20,7 +20,9 @@
   border-radius: var(--h-border-radius-md);
   appearance: none;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 
   &:focus {
     outline: 0 none;
