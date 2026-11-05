@@ -219,7 +219,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.25rem;
-  min-height: var(--helix-status-bar-height, 3rem);
+  min-height: calc(var(--helix-control-height, 32px) + 1rem);
   box-sizing: border-box;
   padding: 0.5rem 0.65rem;
 }

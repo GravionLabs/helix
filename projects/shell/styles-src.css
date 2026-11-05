@@ -40,7 +40,7 @@
 
   /* ===== LAYOUT DIMENSIONS ===== */
   --helix-topbar-height: 3rem; /* page header: the head of the content panel */
-  --helix-status-bar-height: 3rem;
+  --helix-status-bar-height: 28px; /* status bar: flat on the frame */
   --helix-nav-width: 17rem;
   --helix-nav-width-collapsed: 4.75rem;
   --helix-layout-gap: 1.5rem;
