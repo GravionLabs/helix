@@ -210,4 +210,84 @@ describe('HelixNavRail', () => {
       );
     });
   });
+
+  describe('footer actions', () => {
+    const footer = (): HTMLElement => fixture.nativeElement.querySelector('.helix-nav-rail-footer');
+    const actions = (): HTMLElement =>
+      fixture.nativeElement.querySelector('.helix-nav-rail-actions');
+
+    it('renders no action and no menu button by default', () => {
+      fixture.detectChanges();
+      expect(actions().children.length).toBe(0);
+      expect(fixture.nativeElement.querySelector('.helix-nav-rail-menu-button')).toBeNull();
+    });
+
+    it('renders the darkmode, configurator and alert items in the footer, in order', () => {
+      fixture.componentRef.setInput('items', [
+        { type: 'darkmode' },
+        { type: 'configurator' },
+        { type: 'alert', badgeCount: 2 },
+      ]);
+      fixture.detectChanges();
+      const tags = Array.from(actions().children).map((el) => el.tagName.toLowerCase());
+      expect(tags).toEqual([
+        'helix-dark-mode-action',
+        'helix-configurator-action',
+        'helix-alert-action',
+      ]);
+      expect(footer().contains(actions())).toBe(true);
+    });
+
+    it('renders an action item and runs its command', () => {
+      const command = vi.fn();
+      fixture.componentRef.setInput('items', [
+        { type: 'action', icon: 'pi pi-star', label: 'Star', command },
+      ]);
+      fixture.detectChanges();
+      const button = actions().querySelector('button.helix-nav-rail-action') as HTMLButtonElement;
+      expect(button.getAttribute('aria-label')).toBe('Star');
+      button.click();
+      expect(command).toHaveBeenCalledOnce();
+    });
+
+    it('ignores the legacy mobile item', () => {
+      fixture.componentRef.setInput('items', [{ type: 'mobile' }]);
+      fixture.detectChanges();
+      expect(actions().children.length).toBe(0);
+    });
+
+    it('opens the ellipsis menu with the menu actions and runs a command', () => {
+      vi.useFakeTimers();
+      try {
+        const command = vi.fn();
+        fixture.componentRef.setInput('menuActions', [
+          { icon: 'pi pi-user', label: 'Profile', command },
+        ]);
+        fixture.detectChanges();
+        const toggle = fixture.nativeElement.querySelector(
+          '.helix-nav-rail-menu-button',
+        ) as HTMLButtonElement;
+        const menu = fixture.nativeElement.querySelector('.helix-nav-rail-menu') as HTMLElement;
+        expect(menu.classList.contains('hidden')).toBe(true);
+        toggle.click();
+        expect(menu.classList.contains('hidden')).toBe(false);
+        expect(menu.textContent).toContain('Profile');
+        (menu.querySelector('button') as HTMLButtonElement).click();
+        expect(command).toHaveBeenCalledOnce();
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('keeps the actions in the footer when the rail is collapsed', () => {
+      fixture.componentRef.setInput('items', [{ type: 'darkmode' }]);
+      TestBed.inject(LayoutStore).toggleSidebar();
+      fixture.detectChanges();
+      expect(
+        fixture.nativeElement.querySelector(
+          '.helix-nav-rail-collapsed .helix-nav-rail-actions helix-dark-mode-action',
+        ),
+      ).toBeTruthy();
+    });
+  });
 });

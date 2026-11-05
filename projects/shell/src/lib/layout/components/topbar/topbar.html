@@ -11,54 +11,14 @@
     </button>
     @if (showBreadcrumbs()) {
       <hx-breadcrumb [model]="effectiveBreadcrumbs()" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
+    } @else {
+      <span class="layout-topbar-title">{{ effectiveTitle() }}</span>
     }
   </div>
 
   <div class="layout-topbar-end">
     <div class="layout-topbar-slot">
       <ng-content select="[helixTopbarEnd]" />
-    </div>
-
-    <div class="layout-config-menu">
-      @for (item of items(); track $index) {
-        @switch (item.type) {
-          @case ('darkmode') {
-            <helix-dark-mode-action />
-          }
-          @case ('configurator') {
-            <helix-configurator-action />
-          }
-          @case ('alert') {
-            <helix-alert-action [count]="item.badgeCount ?? 0" [alerts]="item.alerts" />
-          }
-          @case ('action') {
-            <button type="button" class="layout-topbar-action" (click)="item.command?.()">
-              <i [class]="item.icon ?? ''"></i>
-            </button>
-          }
-        }
-      }
-    </div>
-
-    <button
-      type="button"
-      class="layout-topbar-menu-button layout-topbar-action"
-      [attr.aria-label]="menuLabel()"
-      helixDisclosure
-      helixDisclosureAnimate
-    >
-      <i class="pi pi-ellipsis-v"></i>
-    </button>
-
-    <div class="layout-topbar-menu hidden">
-      <div class="layout-topbar-menu-content">
-        @for (action of topbarActions(); track action.icon) {
-          <button type="button" class="layout-topbar-action" (click)="action.command?.()">
-            <i [class]="action.icon"></i>
-            <span>{{ action.label }}</span>
-          </button>
-        }
-      </div>
     </div>
   </div>
 </div>

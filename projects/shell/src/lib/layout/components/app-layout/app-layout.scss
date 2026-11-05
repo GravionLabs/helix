@@ -11,11 +11,11 @@
 }
 
 // ===== CONTENT PANEL =====
-// The container fills the frame between the topbar and the status bar; the panel inside it is
-// inset by the panel gap on every side and scrolls inside itself.
+// The container fills the frame above the status bar; the panel inside it is inset by the panel
+// gap on every side. The page header is the head of the panel; only `.layout-main` scrolls.
 .layout-main-container {
   position: fixed;
-  top: var(--helix-topbar-height);
+  top: 0;
   bottom: var(--helix-status-bar-height);
   left: var(--helix-content-offset);
   right: 0;
@@ -25,16 +25,25 @@
   transition: left var(--layout-section-transition-duration);
 }
 
-.layout-main {
+.layout-panel {
   flex: 1 1 auto;
   // Let wide content shrink instead of forcing a horizontal scrollbar.
   min-width: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-sizing: border-box;
-  padding: var(--helix-layout-gap);
   background: var(--h-content-background);
   border: 1px solid var(--h-content-border-color);
   border-radius: var(--helix-panel-radius);
+}
+
+.layout-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: var(--helix-layout-gap);
 }
 
 // ===== STATUS BAR (fixed bottom) =====
@@ -82,11 +91,6 @@
     }
 
     &.layout-static {
-      .layout-topbar {
-        left: var(--helix-content-offset);
-        width: calc(100% - var(--helix-content-offset));
-      }
-
       &.layout-static-inactive {
         --helix-content-offset: 0px;
 
@@ -115,14 +119,9 @@
       padding: 0;
     }
 
-    .layout-main {
+    .layout-panel {
       border: 0;
       border-radius: 0;
-    }
-
-    .layout-topbar {
-      left: 0;
-      width: 100%;
     }
 
     // The overlay rail is flush with the window: no gap, radius or panel border.

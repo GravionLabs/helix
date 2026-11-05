@@ -1,4 +1,4 @@
-import { helixBreadcrumbsFromRoutes } from './breadcrumb-utils';
+import { helixBreadcrumbsFromRoutes, helixPageTitleFromRoutes } from './breadcrumb-utils';
 
 describe('helixBreadcrumbsFromRoutes', () => {
   it('should return breadcrumbs from static route data', () => {
@@ -93,5 +93,26 @@ describe('helixBreadcrumbsFromRoutes', () => {
     expect(result.length).toBe(2);
     expect(result[0].label).toBe('Parent');
     expect(result[1].label).toBe('Child');
+  });
+});
+
+describe('helixPageTitleFromRoutes', () => {
+  const route = (leaf: object, parent: object | null = null) =>
+    ({ snapshot: leaf, firstChild: null, parent }) as any;
+
+  it('returns the resolved title of the deepest route', () => {
+    const r = route({ title: 'Orders', data: {} }, route({ title: 'Shop', data: {} }));
+    expect(helixPageTitleFromRoutes(r)).toBe('Orders');
+  });
+
+  it('falls back to data.title, then to the parent route', () => {
+    expect(helixPageTitleFromRoutes(route({ data: { title: 'From data' } }))).toBe('From data');
+    expect(
+      helixPageTitleFromRoutes(route({ data: {} }, route({ title: 'Parent', data: {} }))),
+    ).toBe('Parent');
+  });
+
+  it('returns undefined when no route has a title', () => {
+    expect(helixPageTitleFromRoutes(route({ data: {} }))).toBeUndefined();
   });
 });

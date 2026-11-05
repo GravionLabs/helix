@@ -40,34 +40,9 @@ describe('HelixTopbar', () => {
     expect(component.appTitle()).toBe('MY APP');
   });
 
-  it('should have 3 default topbarActions', () => {
-    expect(component.topbarActions().length).toBe(3);
-  });
-
-  it('should reflect custom topbarActions input', () => {
-    const actions = [{ icon: 'pi pi-star', label: 'Star' }];
-    fixture.componentRef.setInput('topbarActions', actions);
-    fixture.detectChanges();
-    expect(component.topbarActions()).toEqual(actions);
-  });
-
   it('should have store injected', () => {
     const store = TestBed.inject(LayoutStore);
     expect(component.store).toBe(store);
-  });
-
-  it('should have 3 default items', () => {
-    expect(component.items().length).toBe(3);
-    expect(component.items()[0].type).toBe('darkmode');
-    expect(component.items()[1].type).toBe('configurator');
-    expect(component.items()[2].type).toBe('mobile');
-  });
-
-  it('should render alert item when items includes alert type', () => {
-    fixture.componentRef.setInput('items', [{ type: 'alert', badgeCount: 3 }]);
-    fixture.detectChanges();
-    const badge = fixture.nativeElement.querySelector('helix-alert-action');
-    expect(badge).toBeTruthy();
   });
 
   describe('breadcrumbs', () => {
@@ -97,29 +72,42 @@ describe('HelixTopbar', () => {
     });
   });
 
-  describe('actions menu', () => {
-    const menu = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-menu');
-    const toggle = (): HTMLButtonElement =>
-      fixture.nativeElement.querySelector('.layout-topbar-menu-button');
+  describe('page title', () => {
+    const title = (): HTMLElement | null =>
+      fixture.nativeElement.querySelector('.layout-topbar-title');
 
-    it('is hidden by default and does not use the Tailwind lg breakpoint', () => {
+    it('shows the appTitle on a route without breadcrumbs or title', () => {
+      fixture.componentRef.setInput('appTitle', 'MY APP');
       fixture.detectChanges();
-      expect(menu().classList.contains('hidden')).toBe(true);
-      expect(menu().classList.contains('lg:block')).toBe(false);
+      expect(title()?.textContent?.trim()).toBe('MY APP');
     });
 
-    it('toggles the hidden class when the ellipsis button is clicked', () => {
-      vi.useFakeTimers();
-      try {
-        fixture.detectChanges();
-        toggle().click();
-        expect(menu().classList.contains('hidden')).toBe(false);
-        toggle().click();
-        vi.advanceTimersByTime(400); // the close fade-out ends via its fallback timer
-        expect(menu().classList.contains('hidden')).toBe(true);
-      } finally {
-        vi.useRealTimers();
-      }
+    it('shows the pageTitle input in place of the breadcrumbs', () => {
+      fixture.componentRef.setInput('pageTitle', 'Reports');
+      fixture.detectChanges();
+      expect(title()?.textContent?.trim()).toBe('Reports');
+      expect(fixture.nativeElement.querySelector('hx-breadcrumb')).toBeNull();
+    });
+
+    it('shows the single breadcrumb label as the title', () => {
+      fixture.componentRef.setInput('breadcrumbs', [{ label: 'Dashboard' }]);
+      fixture.detectChanges();
+      expect(title()?.textContent?.trim()).toBe('Dashboard');
+    });
+
+    it('shows the breadcrumbs and no title when there is a trail', () => {
+      fixture.componentRef.setInput('breadcrumbs', [{ label: 'Home' }, { label: 'Page' }]);
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('hx-breadcrumb')).toBeTruthy();
+      expect(title()).toBeNull();
+    });
+
+    it('renders no global actions: they live in the nav rail', () => {
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(
+        el.querySelector('.layout-config-menu, .layout-topbar-menu, helix-dark-mode-action'),
+      ).toBeNull();
     });
   });
 
@@ -166,14 +154,12 @@ describe('HelixTopbar', () => {
 @Component({
   imports: [HelixTopbar],
   template: `
-    <helix-topbar [topbarActions]="actions">
+    <helix-topbar>
       <button helixTopbarEnd type="button" class="end-slot">End</button>
     </helix-topbar>
   `,
 })
-class TopbarEndHostComponent {
-  actions = [{ icon: 'pi pi-star', label: 'Star' }];
-}
+class TopbarEndHostComponent {}
 
 describe('HelixTopbar [helixTopbarEnd] slot', () => {
   beforeEach(async () => {
@@ -191,29 +177,12 @@ describe('HelixTopbar [helixTopbarEnd] slot', () => {
     return fixture.nativeElement as HTMLElement;
   };
 
-  it('renders projected content in the end cluster, outside the collapsible menu', async () => {
+  it('renders projected content in the end cluster of the header', async () => {
     const root = await render(TopbarEndHostComponent);
     const end = root.querySelector('.end-slot') as HTMLElement;
 
     expect(root.querySelector('.layout-topbar-end')?.contains(end)).toBe(true);
     expect(root.querySelector('.layout-topbar-slot')?.contains(end)).toBe(true);
-    expect(root.querySelector('.layout-topbar-menu')?.contains(end)).toBe(false);
-    expect(root.querySelector('.layout-topbar-menu-content')?.contains(end)).toBe(false);
-  });
-
-  it('places projected content before the config items, the ellipsis button and the menu actions', async () => {
-    const root = await render(TopbarEndHostComponent);
-    const end = root.querySelector('.end-slot') as HTMLElement;
-    const configMenu = root.querySelector('.layout-config-menu') as HTMLElement;
-    const ellipsis = root.querySelector('.layout-topbar-menu-button') as HTMLElement;
-    const action = root.querySelector('.layout-topbar-menu .layout-topbar-action') as HTMLElement;
-
-    const follows = (a: Node, b: Node): boolean =>
-      (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
-
-    expect(follows(end, configMenu)).toBe(true);
-    expect(follows(configMenu, ellipsis)).toBe(true);
-    expect(follows(ellipsis, action)).toBe(true);
   });
 
   it('leaves the slot wrapper empty without projected content', async () => {

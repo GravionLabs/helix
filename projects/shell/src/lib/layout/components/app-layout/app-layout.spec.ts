@@ -362,9 +362,6 @@ describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
     await render();
     expect(slot().contains(filter())).toBe(true);
     expect(filter()?.getAttribute('aria-label')).toBe('Filter');
-    expect(fixture.nativeElement.querySelector('.layout-topbar-menu')?.contains(filter())).toBe(
-      false,
-    );
   });
 
   it('leaves the topbar slot wrapper empty when nothing is projected', async () => {
@@ -397,10 +394,20 @@ describe('HelixAppLayout inset frame', () => {
     await fixture.whenStable();
   });
 
-  it('renders the content panel (.layout-main) as the only child of the main container', () => {
+  it('renders the content panel as the only child of the main container', () => {
     const container = wrapper().querySelector(':scope > .layout-main-container');
     expect(container?.children.length).toBe(1);
-    expect(container?.firstElementChild?.classList.contains('layout-main')).toBe(true);
+    expect(container?.firstElementChild?.classList.contains('layout-panel')).toBe(true);
+  });
+
+  it('puts the page header first in the panel, above the scrolling .layout-main', () => {
+    const panel = wrapper().querySelector('.layout-panel') as HTMLElement;
+    expect(panel.children[0].tagName.toLowerCase()).toBe('helix-topbar');
+    expect(panel.children[1].classList.contains('layout-main')).toBe(true);
+  });
+
+  it('does not render the page header as a child of the frame', () => {
+    expect(wrapper().querySelector(':scope > helix-topbar')).toBeNull();
   });
 
   it('keeps the nav rail, content panel and status bar as siblings on the frame', () => {
@@ -438,6 +445,14 @@ describe('HelixAppLayout inset frame', () => {
         configurable: true,
         value: 1024,
       });
+    });
+
+    it('keeps the page header, with the menu toggle, outside the inert region', () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      const header = fixture.nativeElement.querySelector('helix-topbar') as HTMLElement;
+      expect(panel().contains(header)).toBe(false);
+      expect(header.closest('[inert]')).toBeNull();
     });
 
     it('is not inert while the mobile menu is closed', () => {
