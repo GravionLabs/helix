@@ -71,8 +71,7 @@
       "!apps/site/.vitepress/theme/generated",
       "!scripts/tests/fixtures",
       "!**/public",
-      "!CHANGELOG.md",
-      "!apm.lock.yaml"
+      "!CHANGELOG.md"
     ]
   },
   "overrides": [

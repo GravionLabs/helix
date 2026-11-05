@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GravionLabs/skills/skills/delivery/roadmap/schema/set-issue-milestones.schema.json",
+  "title": "Set-IssueMilestones.ps1 output",
+  "description": "Milestones created and the status per assigned issue.",
+  "type": "object",
+  "required": ["created", "results"],
+  "properties": {
+    "created": { "type": "array", "items": { "type": "string" }, "description": "Titles of the milestones created by this run." },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue", "milestone", "status"],
+        "properties": {
+          "issue": { "type": "integer" },
+          "milestone": { "type": "string", "description": "Resolved milestone title." },
+          "status": { "enum": ["set", "unchanged"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "deliver review result",
+  "description": "Result of the last review round of a PBI, written by deliver to <git-common-dir>/.agents/state/review-<nr>.json.",
+  "type": "object",
+  "required": ["pbi", "branch", "sha", "round", "unmet", "review"],
+  "additionalProperties": false,
+  "properties": {
+    "pbi": { "type": "integer", "minimum": 1 },
+    "branch": { "type": "string", "minLength": 1 },
+    "sha": { "type": "string", "pattern": "^[0-9a-f]{7,64}$" },
+    "round": { "type": "integer", "minimum": 1 },
+    "unmet": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "review": { "$ref": "../../../shared/code-review/schema/review.schema.json" }
+  }
+}

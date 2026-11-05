@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "planner plan.json",
+  "type": "object",
+  "required": ["phase", "status", "parent_issue", "input_type", "level", "depth", "items", "questions", "assumptions", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "phase": { "const": "plan" },
+    "status": { "enum": ["ok", "fail"] },
+    "parent_issue": { "type": ["integer", "null"], "minimum": 1 },
+    "input_type": { "enum": ["epic", "feature", "pbi", "bug", "description"] },
+    "level": { "enum": ["feature", "pbi"] },
+    "depth": { "enum": ["quick", "standard", "deep"] },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "body", "size", "tier", "blocked_by", "files", "skills"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^p[0-9]+$" },
+          "title": { "type": "string", "minLength": 1 },
+          "body": { "type": "string", "minLength": 1 },
+          "size": { "enum": ["S", "M", "L"] },
+          "tier": { "enum": ["fast", "standard", "strong"] },
+          "blocked_by": {
+            "type": "array",
+            "items": { "oneOf": [{ "type": "string", "pattern": "^p[0-9]+$" }, { "type": "integer", "minimum": 1 }] }
+          },
+          "files": { "type": "array", "items": { "type": "string" } },
+          "skills": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "options", "recommended", "why", "blocks"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^q[0-9]+$" },
+          "question": { "type": "string", "minLength": 1 },
+          "options": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string" } },
+          "recommended": { "type": "string" },
+          "why": { "type": "string", "minLength": 1 },
+          "blocks": { "type": "array", "items": { "type": "string", "pattern": "^p[0-9]+$" } }
+        }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "summary": { "type": "string", "maxLength": 120 }
+  }
+}

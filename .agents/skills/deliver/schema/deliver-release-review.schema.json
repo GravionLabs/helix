@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "deliver release review result",
+  "description": "Result of the last release-review round of a milestone, written by deliver to <git-common-dir>/.agents/state/release-review-<key>.json; <key> is the M<n> or sub-number M<n>.<m> of the milestone title (M4 also for M4 Topic and the closed M4 Topic (0.2.0); M1.1 for M1.1 Topic, never M1), legacy: the title.",
+  "type": "object",
+  "required": ["milestone", "sha", "round", "review", "bugs"],
+  "additionalProperties": false,
+  "properties": {
+    "milestone": {
+      "description": "The key: M<n> or M<n>.<m> (never with a topic or the version in parentheses); legacy milestones: the title.",
+      "type": "string",
+      "minLength": 1,
+      "not": { "pattern": "^M[0-9]+(\\.[0-9]+)* " }
+    },
+    "sha": { "type": "string", "pattern": "^[0-9a-f]{7,64}$" },
+    "round": { "type": "integer", "minimum": 1 },
+    "review": { "$ref": "../../../shared/code-review/schema/review.schema.json" },
+    "bugs": { "type": "array", "items": { "type": "integer", "minimum": 1 } }
+  }
+}
