@@ -9,6 +9,7 @@
 1. [Installation](#installation)
 2. [Quick Start](#quick-start)
 3. [Layout Components](#layout-components)
+   - [Inset layout (frame and panels)](#inset-layout-frame-and-panels)
    - [HelixAppLayout](#helixapplayout)
    - [HelixTopbar](#helixtopbar)
    - [HelixStatusBar](#helixstatusbar)
@@ -126,12 +127,40 @@ export class AppComponent {
 
 ## Layout Components
 
+### Inset layout (frame and panels)
+
+The shell is laid out as a **frame** with **inset panels**. There is exactly one layout; there is no option to switch it.
+
+- **Frame.** One ground (`--helix-surface-chrome`) sits behind everything. The status bar lies flat on it, without background or hairline, and the frame itself never scrolls.
+- **Inset panels.** The nav rail and the content panel (`.layout-panel`) are panels with a 1px `--h-content-border-color` border, a `--helix-panel-radius` radius and `--helix-panel-gap` of space to each other and to the window edge.
+- **Page header.** The page header ([`HelixTopbar`](#helixtopbar): breadcrumb trail or page title, plus the projected `[helixTopbarEnd]` actions) is the head of the content panel, separated from the content by one divider. `.layout-main` below it scrolls inside the panel.
+- **Global actions** (dark mode, configurator, alerts, action buttons, the ellipsis menu) and the **collapse toggle** live in the footer of the nav rail. A collapsed rail stacks them as an icon column.
+- **Below 992px** the content panel goes edge to edge (no gap, radius or border) and the nav rail is an overlay drawer opened by the menu toggle in the page header.
+
+Moving an existing app from the previous shell: see the [inset shell migration notes](MIGRATION-inset-shell.md).
+
+#### Layout tokens
+
+Declared on `:root` in `projects/shell/styles-src.css`; override them in the app stylesheet.
+
+| Token                       | Default                      | Used for                                                                   |
+| --------------------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| `--helix-panel-radius`      | `6px`                        | Corner radius of the nav rail and the content panel                        |
+| `--helix-panel-gap`         | `4px`                        | Gap between the panels and between the panels and the window edge          |
+| `--helix-topbar-height`     | `3rem` (48px)                | Page header, the head of the content panel                                 |
+| `--helix-status-bar-height` | `28px`                       | Status bar; the rail and the container end above it                        |
+| `--helix-control-height`    | `32px`                       | Chrome controls: icon buttons (squares) and the rail search / header field |
+| `--helix-surface-chrome`    | theme-aware (light and dark) | Frame ground behind the panels and the status bar                          |
+| `--helix-nav-width`         | `17rem`                      | Nav rail width; `--helix-nav-width-collapsed` (`4.75rem`) when collapsed   |
+
+`--helix-control-height` is also exposed as the `control-height` spacing token of the design system.
+
 ### HelixAppLayout
 
 **Selector:** `<helix-app-layout>`  
 **File:** `projects/shell/src/lib/layout/components/app-layout/app-layout.ts`
 
-Top-level shell that composes the nav rail, the content panel (page header plus router outlet) and the status bar into a full application layout. Forwards `appTitle` to `HelixTopbar` and `HelixNavRail`.
+Top-level shell that composes the nav rail, the content panel (page header plus router outlet) and the status bar into a full application layout. Forwards `appTitle` to `HelixTopbar` and `HelixNavRail`. See the [inset layout](#inset-layout-frame-and-panels) for the frame/panel model.
 
 #### Inputs
 
@@ -175,9 +204,9 @@ Top-level shell that composes the nav rail, the content panel (page header plus 
 **Selector:** `<helix-topbar>`  
 **File:** `projects/shell/src/lib/layout/components/topbar/topbar.ts`
 
-Page header: the head of the content panel (`.layout-panel` of `HelixAppLayout`), 48px (`--helix-topbar-height`) with one divider below it. It is not a bar across the window any more. Renders the menu toggle, the breadcrumb trail (or the page title where there is no trail) on the left and the projected `[helixTopbarEnd]` content (in a `layout-topbar-slot` wrapper) on the right.
+Page header: the head of the content panel (`.layout-panel` of `HelixAppLayout`), 48px (`--helix-topbar-height`) with one divider below it. It is not a bar across the window. Renders the menu toggle, the breadcrumb trail (or the page title where there is no trail) on the left and the projected `[helixTopbarEnd]` content (in a `layout-topbar-slot` wrapper) on the right.
 
-**Breaking (inset layout, #1023):** the global actions left the header. `items` (dark mode, configurator, alerts, action buttons), `topbarActions` (the ellipsis menu) and `menuLabel` are no longer inputs of `helix-topbar`; they are inputs of [`helix-nav-rail`](#helixnavrail) (`items`, `menuActions`, `menuLabel`) and `helix-app-layout` still forwards `topbarItems` / `topbarActions` there. A direct `<helix-topbar>` user moves these bindings to the nav rail. The `layout-config-menu`, `layout-topbar-menu` and `layout-topbar-menu-button` elements are gone.
+**Breaking (inset layout, #1023; [migration notes](MIGRATION-inset-shell.md)):** the global actions left the header. `items` (dark mode, configurator, alerts, action buttons), `topbarActions` (the ellipsis menu) and `menuLabel` are no longer inputs of `helix-topbar`; they are inputs of [`helix-nav-rail`](#helixnavrail) (`items`, `menuActions`, `menuLabel`) and `helix-app-layout` still forwards `topbarItems` / `topbarActions` there. A direct `<helix-topbar>` user moves these bindings to the nav rail. The `layout-config-menu`, `layout-topbar-menu` and `layout-topbar-menu-button` elements are gone.
 
 #### Inputs
 
@@ -335,8 +364,8 @@ Branded side-navigation rail: gradient surface (theme-aware — "Harbor Tint" li
 (`--surface-card`/`--surface-ground`), so the rail matches the panels and body
 around it instead of an invented hue), a pill active state with a teal accent
 bar, expandable submenus, and collapse-to-icons. Wired into `HelixAppLayout` in
-place of the old
-`HelixSidebar`/`HelixMenu`. Items reuse `HelixRouteMenuItem` (the same shape
+place of a
+sidebar/menu pair. Items reuse `HelixRouteMenuItem` (the same shape
 consumed by `helixMenuLinksFrom`/`helixRoutesFrom`) — route-driven active state
 and breadcrumbs keep working unchanged.
 
@@ -1252,7 +1281,7 @@ All `HxMenuItem` fields are inherited: `label`, `icon`, `routerLink`, `visible`,
 
 ### HelixTopbarAction
 
-Used by [`HelixTopbar`](#helixtopbar) `topbarActions` input.
+Used by the [`HelixNavRail`](#helixnavrail) `menuActions` input (the ellipsis menu in the rail footer) and, through `HelixAppLayout`, by its `topbarActions` input.
 
 ```ts
 interface HelixTopbarAction {
