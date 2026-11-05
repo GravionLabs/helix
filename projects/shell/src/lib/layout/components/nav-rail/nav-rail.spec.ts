@@ -216,6 +216,11 @@ describe('HelixNavRail', () => {
     const actions = (): HTMLElement =>
       fixture.nativeElement.querySelector('.helix-nav-rail-actions');
 
+    it('keeps the collapse toggle inside the rail panel footer', () => {
+      fixture.detectChanges();
+      expect(footer().querySelector('.helix-nav-rail-collapse-button')).not.toBeNull();
+    });
+
     it('renders no action and no menu button by default', () => {
       fixture.detectChanges();
       expect(actions().children.length).toBe(0);

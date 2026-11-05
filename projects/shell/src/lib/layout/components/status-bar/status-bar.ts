@@ -4,12 +4,14 @@ import type { EnvironmentValue } from '../../../ui/badge/environment-badge';
 import { HelixEnvironmentBadge } from '../../../ui/badge/environment-badge';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from './status-bar.model';
 
+// Neutral lies flat on the frame ground. The other tones are a filled strip; each pairs white text
+// with a step of at least 4.5:1 (AA): amber-700 4.87, green-700 5.18, red-700 6.14, surface-800 16.05.
 const TONE_BG: Record<HelixStatusBarTone, string> = {
-  staging: 'var(--h-amber-600, #d97706)',
-  production: 'var(--h-surface-800, #1e293b)',
-  success: 'var(--h-green-600, #16a34a)',
-  danger: 'var(--h-red-600, #dc2626)',
-  neutral: 'var(--helix-surface-chrome, var(--surface-card))',
+  staging: 'var(--h-amber-700, #996548)',
+  production: 'var(--h-surface-800, #202127)',
+  success: 'var(--h-green-700, #4a7754)',
+  danger: 'var(--h-red-700, #984b43)',
+  neutral: 'transparent',
 };
 
 const TONE_TEXT: Record<HelixStatusBarTone, string> = {
@@ -35,7 +37,7 @@ export class HelixStatusBar {
   note = input<string | TemplateRef<unknown> | undefined>();
   versions = input<HelixStatusBarVersion[]>([]);
   tone = input<HelixStatusBarTone>('neutral');
-  height = input<string>('var(--helix-status-bar-height, 3rem)');
+  height = input<string>('var(--helix-status-bar-height, 28px)');
 
   protected envForBadge = computed(() => this.environment() || undefined);
   protected noteTemplate = computed(() => {
@@ -47,5 +49,6 @@ export class HelixStatusBar {
     return typeof n === 'string' ? n : '';
   });
   protected bgColor = computed(() => TONE_BG[this.tone()]);
+  protected tinted = computed(() => this.tone() !== 'neutral');
   protected textColor = computed(() => TONE_TEXT[this.tone()]);
 }

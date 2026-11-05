@@ -87,6 +87,30 @@ describe('HelixStatusBar', () => {
     expect(bg).toBeTruthy();
   });
 
+  it('should lie flat on the frame for the neutral tone', () => {
+    const el = fixture.nativeElement.querySelector('.helix-status-bar') as HTMLElement;
+    expect(el.style.backgroundColor).toBe('transparent');
+    expect(el.classList).not.toContain('helix-status-bar-tinted');
+  });
+
+  it.each([
+    ['staging', 'var(--h-amber-700, #996548)'],
+    ['production', 'var(--h-surface-800, #202127)'],
+    ['success', 'var(--h-green-700, #4a7754)'],
+    ['danger', 'var(--h-red-700, #984b43)'],
+  ] as const)('should fill the %s tone with an AA colour', (tone, bg) => {
+    fixture.componentRef.setInput('tone', tone);
+    fixture.detectChanges();
+    const el = fixture.nativeElement.querySelector('.helix-status-bar') as HTMLElement;
+    expect(el.classList).toContain('helix-status-bar-tinted');
+    expect(el.style.backgroundColor).toBe(bg);
+    expect(el.style.color).toBe('rgb(255, 255, 255)');
+  });
+
+  it('should default the height to the 28 px status bar token', () => {
+    expect(component.height()).toBe('var(--helix-status-bar-height, 28px)');
+  });
+
   it('should reflect custom height', () => {
     fixture.componentRef.setInput('height', '3rem');
     fixture.detectChanges();

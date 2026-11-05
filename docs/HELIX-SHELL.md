@@ -219,7 +219,7 @@ The toggle stays in the header start. In `static` menu mode it is mobile-only (h
 **Selector:** `<helix-status-bar>`  
 **File:** `projects/shell/src/lib/layout/components/status-bar/status-bar.ts`
 
-Thin full-bleed status bar at the bottom of the application layout. Displays brand, environment badge, note, and version labels. Background color is determined by the `tone` input.
+Flat status bar (28 px, 12 px text) on the frame ground at the bottom of the application layout: no background or hairline of its own, aligned to the panels' outer edges. Displays brand, environment badge, note, and version labels. The `neutral` tone is transparent; any other `tone` fills the bar with a colour that keeps white text at AA contrast.
 
 #### Inputs
 
@@ -229,8 +229,8 @@ Thin full-bleed status bar at the bottom of the application layout. Displays bra
 | `environment` | `Environment \| CustomEnvironment \| string \| undefined` | `undefined`                              | `'development'`, `'testing'`, `'staging'`, `'production'` or a custom `{ label, severity }`. Unknown strings render as "Unknown"                 |
 | `note`        | `string \| TemplateRef<unknown> \| undefined`             | `undefined`                              | Optional note: plain text (e.g. "Build #1234") or a template for rich content such as a link. Links inherit the bar color and underline on hover |
 | `versions`    | `HelixStatusBarVersion[]`                                 | `[]`                                     | Version labels displayed on the right: `{ label: string, value: string }`                                                                        |
-| `tone`        | `HelixStatusBarTone`                                      | `'neutral'`                              | Background tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red), `'neutral'` (gray)                           |
-| `height`      | `string`                                                  | `'var(--helix-status-bar-height, 3rem)'` | Bar height                                                                                                                                       |
+| `tone`        | `HelixStatusBarTone`                                      | `'neutral'`                              | Tone: `'staging'` (amber), `'production'` (dark), `'success'` (green), `'danger'` (red) fill the bar; `'neutral'` (default) is flat on the frame |
+| `height`      | `string`                                                  | `'var(--helix-status-bar-height, 28px)'` | Bar height                                                                                                                                       |
 
 #### Content slots
 
