@@ -108,10 +108,6 @@
 
 // ===== RESPONSIVE — ≤ 991px =====
 @media (max-width: 991px) {
-  .blocked-scroll {
-    overflow: hidden;
-  }
-
   .layout-wrapper {
     // Edge to edge: the content panel loses the frame gap, radius and border.
     .layout-main-container {
