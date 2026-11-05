@@ -11,7 +11,11 @@
     [brandIcon]="brandIcon()"
   ></helix-nav-rail>
   <div class="layout-main-container">
-    <div class="layout-main">
+    <div
+      #mainPanel
+      class="layout-main"
+      [attr.inert]="store.mobileMenuActive() ? '' : null"
+    >
       <router-outlet></router-outlet>
     </div>
   </div>

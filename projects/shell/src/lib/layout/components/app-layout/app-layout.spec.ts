@@ -1,6 +1,7 @@
+import { NgClass } from '@angular/common';
 import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixStatusBar } from '../status-bar/status-bar';
@@ -373,5 +374,107 @@ describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
     // The host's @if anchor comment is projected too, so only element children count.
     expect(slot().children.length).toBe(0);
     expect(slot().matches(':not(:has(*))')).toBe(true);
+  });
+});
+
+describe('HelixAppLayout inset frame', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+
+  const wrapper = (): HTMLElement => fixture.nativeElement.querySelector('.layout-wrapper');
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        set: { imports: [NgClass, HelixStatusBar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  });
+
+  it('renders the content panel (.layout-main) as the only child of the main container', () => {
+    const container = wrapper().querySelector(':scope > .layout-main-container');
+    expect(container?.children.length).toBe(1);
+    expect(container?.firstElementChild?.classList.contains('layout-main')).toBe(true);
+  });
+
+  it('keeps the nav rail, content panel and status bar as siblings on the frame', () => {
+    const tags = Array.from(wrapper().children).map(
+      (el) => el.tagName.toLowerCase() + (el.className ? `.${el.className}` : ''),
+    );
+    expect(tags).toContain('helix-nav-rail');
+    expect(tags).toContain('div.layout-main-container');
+    expect(tags).toContain('helix-status-bar');
+  });
+
+  it('adds no classic-layout class', () => {
+    expect(wrapper().className).not.toContain('classic');
+  });
+
+  it('puts the static state class on the frame by default', () => {
+    expect(wrapper().classList.contains('layout-static')).toBe(true);
+    expect(wrapper().classList.contains('layout-overlay')).toBe(false);
+  });
+
+  describe('content panel', () => {
+    const panel = (): HTMLElement => fixture.nativeElement.querySelector('.layout-main');
+    const openMobileMenu = (): void => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 500,
+      });
+      TestBed.inject(LayoutStore).onMenuToggle();
+    };
+
+    afterEach(() => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1024,
+      });
+    });
+
+    it('is not inert while the mobile menu is closed', () => {
+      expect(panel().hasAttribute('inert')).toBe(false);
+    });
+
+    it('becomes inert while the mobile overlay menu is open', async () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      expect(panel().hasAttribute('inert')).toBe(true);
+    });
+
+    it('does not block scrolling on the document body', async () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      expect(document.body.classList.contains('blocked-scroll')).toBe(false);
+    });
+
+    it('resets its scroll offset to the top after navigation', async () => {
+      const router = TestBed.inject(Router);
+      router.resetConfig([
+        { path: 'a', children: [] },
+        { path: 'b', children: [] },
+      ]);
+      await router.navigateByUrl('/a');
+      panel().scrollTop = 120;
+      await router.navigateByUrl('/b');
+      expect(panel().scrollTop).toBe(0);
+    });
+
+    it('keeps its offset when the navigation targets a fragment', async () => {
+      const router = TestBed.inject(Router);
+      router.resetConfig([{ path: 'a', children: [] }]);
+      await router.navigateByUrl('/a');
+      panel().scrollTop = 120;
+      await router.navigateByUrl('/a#section');
+      expect(panel().scrollTop).toBe(120);
+    });
   });
 });
