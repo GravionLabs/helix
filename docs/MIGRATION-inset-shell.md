@@ -22,7 +22,7 @@ The inset layout replaces the previous layout. There is no `classic` option and 
 
 ### `helix-app-layout`
 
-- New input `pageTitle` (default: title of the active route, then the last breadcrumb, then `appTitle`).
+- New input `pageTitle` (default: title of the deepest route that has a title, then the last breadcrumb, then `appTitle`).
 - `topbarItems` and `topbarActions` keep their names and meaning, but are now rendered in the nav rail footer. The `mobile` item is ignored.
 - `[helixTopbarEnd]` and `[hxStatusBarEnd]` projection are unchanged.
 
@@ -63,7 +63,7 @@ New in `projects/shell/styles-src.css`: `--helix-panel-gap` (4px), `--helix-pane
 3. Page header: give pages without a breadcrumb trail a route `title` (or set `pageTitle`), so the header start is not just the app title.
 4. Text fields projected into `[helixTopbarEnd]`: add `hx-input` and import the `HxInput` directive in the consuming component; the bare attribute does not style the field. Use `flex: 1` on a filter bar to let it fill the header.
 5. Status bar: keep the `tone` for environments; use `neutral` (default) for a flat bar. Check custom colours on the new frame ground, in light and dark.
-6. Remove CSS that targeted the old structure: the topbar hairline and background, the `layout-topbar-menu*` and `layout-config-menu` selectors, rail borders, and any `.layout-main` max-width or outer padding workaround. Style the panels through the tokens instead.
+6. Remove CSS that targeted the old structure: the topbar hairline and background, the `layout-topbar-menu*` and `layout-config-menu` selectors, rail borders, and any `.layout-main` max-width or outer padding workaround. Style the panels through the tokens instead. `app-layout` no longer sets the `blocked-scroll` class on `<body>` while the mobile menu is open: it makes `.layout-main` `inert`, and the panel scrolls instead of the window. Drop any styling of, or reliance on, `body.blocked-scroll`.
 7. Popups and absolutely positioned elements inside `[helixTopbarEnd]` are clipped at the panel edge (`.layout-panel` has `overflow: hidden`); use overlays that attach to the body (for example CDK overlays).
 8. In-page `#fragment` links no longer scroll the window; the content panel scrolls, not the page.
 
@@ -76,4 +76,4 @@ New in `projects/shell/styles-src.css`: `--helix-panel-gap` (4px), `--helix-pane
 - [ ] No leftover overrides for removed topbar elements.
 - [ ] Layout checked at 320px, 991px and 992px and above.
 
-The poimen app already follows the frame/inset model (4px gap, 6px radius, the same border and background tokens); the steps above are written from what changed in this repository. Details specific to poimen were not checked here.
+Apps such as poimen follow the same steps and checklist.

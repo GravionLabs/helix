@@ -168,7 +168,7 @@ Top-level shell that composes the nav rail, the content panel (page header plus 
 | --------------- | ---------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `appTitle`      | `string`               | `'Helix'`                            | Application title forwarded to `HelixTopbar`                                                                                                                                                     |
 | `menu`          | `HelixRouteMenuItem[]` | `[]`                                 | Navigation menu model. Overrides route data when provided                                                                                                                                        |
-| `pageTitle`     | `string`               | route title                          | Title of the page header where there is no breadcrumb trail. Defaults to the title of the active route (`title` or `data['title']`), then the last breadcrumb, then `appTitle`                   |
+| `pageTitle`     | `string`               | route title                          | Title of the page header where there is no breadcrumb trail. Defaults to the title of the deepest route that has a title (`title` or `data['title']`), then the last breadcrumb, then `appTitle` |
 | `topbarItems`   | `HelixTopbarItem[]`    | `darkmode`, `configurator`, `mobile` | Global actions, now rendered in the **nav rail footer** (`darkmode`, `configurator`, `alert`, `action`; `mobile` is ignored). Overrides the default items when provided                          |
 | `topbarActions` | `HelixTopbarAction[]`  | `calendar`, `inbox`, `profile`       | Entries of the ellipsis menu in the **nav rail footer**. Provide `command` callbacks to handle clicks                                                                                            |
 | `brandIcon`     | `string`               | —                                    | Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or URL to an SVG file. Falls back to the default helix icon                                                                                     |
@@ -210,11 +210,11 @@ Page header: the head of the content panel (`.layout-panel` of `HelixAppLayout`)
 
 #### Inputs
 
-| Name          | Type           | Default                 | Description                                                                                                                                 |
-| ------------- | -------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `appTitle`    | `string`       | `'Helix'`               | Last-resort title, so the start of the header is never empty                                                                                |
-| `breadcrumbs` | `HxMenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution. A trail of two or more items replaces the page title                 |
-| `pageTitle`   | `string`       | route title             | Page title shown without a trail. Default: `title` / `data['title']` of the deepest active route, else the last breadcrumb, else `appTitle` |
+| Name          | Type           | Default                 | Description                                                                                                                                           |
+| ------------- | -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `appTitle`    | `string`       | `'Helix'`               | Last-resort title, so the start of the header is never empty                                                                                          |
+| `breadcrumbs` | `HxMenuItem[]` | Derived from route data | Breadcrumb trail. Falls back to route `data['breadcrumb']` resolution. A trail of two or more items replaces the page title                           |
+| `pageTitle`   | `string`       | route title             | Page title shown without a trail. Default: `title` / `data['title']` of the deepest route that has a title, else the last breadcrumb, else `appTitle` |
 
 #### Content Slots
 
@@ -379,12 +379,14 @@ Keyboard: Tab reaches every link; `ArrowDown`/`ArrowUp` move between visible lin
 `Enter`/`Space` toggle an expandable item (also `ArrowRight` to open, `ArrowLeft` to
 close). Expandable items expose `aria-expanded`; the active link has `aria-current="page"`.
 
-**Chrome controls.** Icon buttons (topbar actions, the rail's collapse toggle) are squares of `--helix-control-height` (32px) with `border.radius.md`. The rail search uses the `hx-input` look (`--h-inputtext-*` tokens) at the same height; a text field projected into `[helixTopbarEnd]` should carry `hx-input` and gets that height. The `hx-input` class comes from the `HxInput` directive host binding, so import `HxInput` in the consuming component; the bare attribute alone does not style the field.
+**Chrome controls.** Icon buttons (the rail-footer actions, the rail's collapse toggle) are squares of `--helix-control-height` (32px) with `border.radius.md`. The rail search uses the `hx-input` look (`--h-inputtext-*` tokens) at the same height; a text field projected into `[helixTopbarEnd]` should carry `hx-input` and gets that height. The `hx-input` class comes from the `HxInput` directive host binding, so import `HxInput` in the consuming component; the bare attribute alone does not style the field.
 
 **Collapsing.** On desktop (> 991px) the rail's own toggle (bottom of the rail) collapses it to
 icons and back — it is the only collapse control; the topbar hamburger is hidden there in
 `static` menu mode. At ≤ 991px the rail is a drawer: the hamburger opens it with a mask, and
-a click outside or a navigation closes it (the drawer always shows labels). The footer holds the global actions (`items`, `menuActions`) on every width. The collapsed
+a click outside or a navigation closes it (the drawer always shows labels).
+
+The footer holds the global actions (`items`, `menuActions`) on every width. The collapsed
 state is remembered in `localStorage` (reads/writes are guarded, so it works without storage).
 
 **Collapsed rail.** Links show a tooltip with their label. A section that has an `icon`
