@@ -24,3 +24,10 @@ Template:
 ## Decision
 ## Consequences
 ```
+
+## Rule
+
+A pull request that changes `projects/*/src/**` or `apps/*/src/**`, or that closes an issue labelled
+`needs-decision`, must add or change a record in `docs/adr/`. A new record needs a `Status:` line and an unused
+number. The `PR checks` job (GravionLabs/ci `pr-checks.yml`) enforces it from `governance` in
+`.agents/config.json`; the label `skip-adr` skips the check.

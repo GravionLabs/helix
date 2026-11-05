@@ -1,0 +1,6 @@
+{
+  "governance": {
+    "adrDir": "docs/adr",
+    "adrPaths": ["projects/*/src/**", "apps/*/src/**"]
+  }
+}
