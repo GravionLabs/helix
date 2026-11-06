@@ -1,4 +1,15 @@
 <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-2">
+    <span id="helix-config-preset" class="text-sm text-muted-color font-semibold">Preset</span>
+    <hx-select-button
+      ariaLabelledby="helix-config-preset"
+      [ngModel]="preset()"
+      (ngModelChange)="onPresetChange($event)"
+      [options]="presetOptions()"
+      [allowEmpty]="false"
+      size="small"
+    />
+  </div>
   <div>
     <span class="text-sm text-muted-color font-semibold">Primary</span>
     <div class="pt-2 flex gap-2 flex-wrap justify-start">

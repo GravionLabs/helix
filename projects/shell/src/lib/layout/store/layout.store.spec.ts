@@ -315,6 +315,20 @@ describe('LayoutStore', () => {
       expect(theme.surface()).toBe('stone');
     });
 
+    it('reads and writes the preset of the service', () => {
+      const theme = TestBed.inject(HxTheme);
+      expect(store.preset()).toBe('helix');
+      expect(store.presetNames()).toEqual(['helix', 'vitepress', 'compact']);
+      store.setPreset('compact');
+      expect(theme.preset()).toBe('compact');
+      expect(store.density()).toBe('compact');
+      expect(store.activePrimary()).toBe('indigo');
+      expect(store.activeSurface()).toBeNull();
+      store.setPreset('vitepress');
+      expect(store.activePrimary()).toBeNull();
+      expect(() => store.setPreset('poimen')).toThrow(/unknown preset/);
+    });
+
     it('reads and writes the density of the service', () => {
       const theme = TestBed.inject(HxTheme);
       store.setDensity('compact');

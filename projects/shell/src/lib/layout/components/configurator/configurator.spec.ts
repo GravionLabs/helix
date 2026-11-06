@@ -70,12 +70,6 @@ describe('HelixConfigurator', () => {
     expect(component.surfaces.find((s) => s.name === 'slate')?.swatch).toBe('#64748b');
   });
 
-  it('has no preset chooser any more: the Helix preset is the only one', () => {
-    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
-    expect(text).not.toContain('Presets');
-    expect(component).not.toHaveProperty('presetOptions');
-  });
-
   it('renders a swatch button per primary colour and per surface, with the choice outlined', () => {
     fixture.detectChanges();
     expect(buttons('Primary')).toHaveLength(17);
@@ -101,6 +95,52 @@ describe('HelixConfigurator', () => {
       .find((b) => b.title === 'stone')
       ?.click();
     expect(theme.surface()).toBe('stone');
+  });
+
+  it('offers the three bundled presets, helix being the default', () => {
+    expect(component.presetOptions()).toEqual([
+      { label: 'Helix', value: 'helix' },
+      { label: 'Vitepress', value: 'vitepress' },
+      { label: 'Compact', value: 'compact' },
+    ]);
+    expect(component.preset()).toBe('helix');
+  });
+
+  it('onPresetChange("compact") selects the preset: the density follows, the swatch stays indigo', () => {
+    component.onPresetChange('compact');
+    expect(theme.preset()).toBe('compact');
+    expect(component.density()).toBe('compact');
+    expect(component.activePrimaryColor()).toBe('indigo');
+  });
+
+  it('the vitepress preset has a scale of its own: no swatch is marked active', () => {
+    component.onPresetChange('vitepress');
+    expect(component.activePrimaryColor()).toBeNull();
+    fixture.detectChanges();
+    expect(buttons('Primary').filter((b) => b.classList.contains('outline'))).toHaveLength(0);
+  });
+
+  it('a primary swatch chosen after a preset wins over it', () => {
+    component.onPresetChange('vitepress');
+    fixture.detectChanges();
+    buttons('Primary')
+      .find((b) => b.title === 'rose')
+      ?.click();
+    expect(component.activePrimaryColor()).toBe('rose');
+    expect(theme.css()).not.toContain('#3451b2');
+  });
+
+  it('rejects an unknown preset', () => {
+    expect(() => component.onPresetChange('poimen')).toThrow(/unknown preset/);
+  });
+
+  it('renders a Preset chooser above the Primary colour', () => {
+    fixture.detectChanges();
+    const labels = [...(fixture.nativeElement as HTMLElement).querySelectorAll('span')].map((s) =>
+      s.textContent?.trim(),
+    );
+    expect(labels.indexOf('Preset')).toBeGreaterThanOrEqual(0);
+    expect(labels.indexOf('Preset')).toBeLessThan(labels.indexOf('Primary'));
   });
 
   it('offers comfortable and compact, comfortable being the default', () => {

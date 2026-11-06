@@ -20,7 +20,7 @@ interface Swatch<Name extends string> {
 }
 
 /**
- * The theme panel of the shell: primary colour, surface, density and menu mode. The colours go to the theme service of
+ * The theme panel of the shell: preset, primary colour, surface, density and menu mode. The colours go to the theme service of
  * helix-ui (through the layout store), which changes CSS variables only; the panel itself knows no theme engine.
  */
 @Component({
@@ -60,9 +60,17 @@ export class HelixConfigurator {
   }));
 
   selectedPrimaryColor = computed(() => this.store.primary());
-  /** The colour in use: the chosen one, else the one of the Helix preset (indigo). */
-  activePrimaryColor = computed(() => this.store.primary() ?? 'indigo');
-  selectedSurfaceColor = computed(() => this.store.surface());
+  /** The colour in use: the chosen one, else the one of the preset (none when the preset has a scale of its own). */
+  activePrimaryColor = computed(() => this.store.activePrimary());
+  selectedSurfaceColor = computed(() => this.store.activeSurface());
+  /** The presets to choose from, bundled and the app's, as `Helix`, `Vitepress`, `Compact`. */
+  presetOptions = computed(() =>
+    this.store.presetNames().map((name) => ({
+      label: name.charAt(0).toUpperCase() + name.slice(1),
+      value: name,
+    })),
+  );
+  preset = computed(() => this.store.preset());
   densityOptions = [
     { label: 'Comfortable', value: 'comfortable' },
     { label: 'Compact', value: 'compact' },
@@ -77,6 +85,10 @@ export class HelixConfigurator {
       this.store.setSurface(color.name as HxSurface);
     }
     event.stopPropagation();
+  }
+
+  onPresetChange(preset: string) {
+    this.store.setPreset(preset);
   }
 
   onDensityChange(density: string) {

@@ -190,6 +190,64 @@ custom properties only, in one style sheet of its own that wins over `tokens.css
 that depend on the colour (`--h-primary-color` is step 600 in light and 400 in dark) stay the tokens' own, so every
 component follows.
 
+## Presets
+
+A preset is a name for the three knobs of the theme that belong together: a primary colour, a surface scale and a
+density ([ADR 0004](adr/0004-surface-roles-dark-elevation-density-and-named-theme-presets.md), decision 5). Three are
+bundled (`HX_THEME_PRESETS`):
+
+| Preset      | Primary                                      | Surface            | Density       |
+| ----------- | -------------------------------------------- | ------------------ | ------------- |
+| `helix`     | indigo (the default, writes no CSS)          | the Helix neutrals | `comfortable` |
+| `vitepress` | VitePress's indigo, an 11-step scale (below) | the Helix neutrals | `comfortable` |
+| `compact`   | indigo                                       | the Helix neutrals | `compact`     |
+
+The Helix neutrals are VitePress's (`surface: null`: the scale of `tokens.css`). `compact` is `helix` plus the compact
+[density](#density); poimen runs on it, there is no `poimen` preset.
+
+```ts
+provideHxTheme({ preset: 'vitepress', storageKey: 'my-app-theme' });
+inject(HxTheme).setPreset('compact');
+```
+
+**The user's own choices win.** `primary`, `surface` and `density` in the options, a choice remembered in
+`storageKey`, and `setPrimary()`, `setSurface()`, `setDensity()` all beat the preset. `setPreset()` starts over from the
+preset: it drops the choices made so far, so that the preset is seen. The configurator has a Preset chooser above
+Primary; its swatches, Surface and Density change the single value on top of the preset. `primary()`, `surface()` stay
+the user's own choice (`null` when there is none); `activePrimary()`, `activeSurface()` and `density()` are what is in
+use.
+
+**An app defines its own preset** with options only, no fork of the tokens; it is listed next to the bundled ones
+(`presetNames`, the configurator) and can carry a primary scale written out:
+
+```ts
+provideHxTheme({
+  presets: { forest: { primary: 'emerald', surface: 'stone', density: 'compact' } },
+  preset: 'forest',
+});
+```
+
+**The `vitepress` scale** is hand-written (`VITEPRESS_PRIMARY` in `presets.ts`), not derived from Tailwind: step 600
+`#3451b2` and step 400 `#a8b1ff` are VitePress's brand colours, with 7.08:1 on white and 8.5:1 on the dark panel
+(`#1b1b1f`) against 5.9:1 and 5.9:1 for Helix indigo.
+
+Contrast, checked per preset in `presets.spec.ts` with the ratios of the [audit](migrations/theme-audit.md) as expected
+values (AA is 4.5:1):
+
+| Check                                                        | helix | vitepress | compact |
+| ------------------------------------------------------------ | ----- | --------- | ------- |
+| Primary text on the light panel (step 600 on white)          | 5.91  | 7.08      | 5.91    |
+| Primary text on the dark panel (step 400 on `#1b1b1f`)       | 5.89  | 8.50      | 5.89    |
+| Filled button, light (white on step 600)                     | 5.91  | 7.08      | 5.91    |
+| Filled button, dark (`surface.950` on step 400)              | 6.20  | 8.95      | 6.20    |
+| Dark filled button on step 500 with white text (the audit's) | 4.30  | 4.90      | 4.30    |
+
+The last row is the finding of the audit: with white text on `primary.500` the Helix preset fails AA (4.30:1). The
+components do not paint that combination (a dark filled button is `surface.950` on step 400), so nothing was changed;
+a site that does paint it, as the docs site did, fails for `helix` and `compact`. The VitePress step 500 was chosen
+to pass. The `*.500` severity steps as text on white (green 2.36, orange 2.71, sky 2.80, red 3.59) are not preset
+dependent and are pinned in the spec as found; they are not changed here.
+
 ## Density
 
 `HxTheme` has `density: 'comfortable' | 'compact'` ([ADR 0004](adr/0004-surface-roles-dark-elevation-density-and-named-theme-presets.md),
@@ -279,7 +337,7 @@ To make the change for everyone, edit the token itself in `projects/tokens` inst
 `pnpm tokens:export` resolves the data and writes `dist/tokens/helix.css` (all `--h-*` variables, light and dark)
 and `helix.json` (the same by colour scheme). With `--base` only the primitive, semantic and global layers are written
 (~16 kB), enough for a page that is not built from Helix components, and `--dark=<selector>` picks the dark-scheme
-selector. Helix is the only preset with token data. The documentation site is themed this way: `pnpm tokens:site`
+selector. Helix is the only token data; the presets of `HxTheme` are bundles of options, not token sets. The documentation site is themed this way: `pnpm tokens:site`
 writes `apps/site/.vitepress/theme/generated/helix.base.css` with `.dark` as selector, and
 [`apps/site/.vitepress/theme/helix.css`](../apps/site/.vitepress/theme/helix.css) binds VitePress's `--vp-c-*`
 variables to the `--h-*` ones, so site and components share one palette.

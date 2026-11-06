@@ -94,8 +94,9 @@ export const appConfig: ApplicationConfig = {
 ```
 
 Without `provideHxTheme` the service still works with its defaults (light or the system setting, nothing
-remembered); the options are described in [Theming](HELIX-UI.md#theming). The configurator offers the primary
-colours and surfaces of that service and the menu mode; there is no longer a choice between Aura, Lara and Nora
+remembered); the options are described in [Theming](HELIX-UI.md#theming). The configurator offers the preset
+(`helix`, `vitepress`, `compact`, and those of the app; see [Theming](THEMING.md#presets)), the primary colours,
+the density and surfaces of that service and the menu mode; there is no longer a choice between Aura, Lara and Nora
 presets.
 
 ---
