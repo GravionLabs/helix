@@ -16,14 +16,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { HxTooltip } from '@gravionlabs/helix-ui';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { HelixDisclosure } from '../../disclosure';
 import type { HelixRouteMenuItem } from '../../route-menu.model';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixNavRailItem } from '../nav-rail-item/nav-rail-item';
-import { HelixAlertAction } from '../topbar/actions/alert-action';
-import { HelixConfiguratorAction } from '../topbar/actions/configurator-action';
-import { HelixDarkModeAction } from '../topbar/actions/dark-mode-action';
-import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model';
 import type { HelixNavGroup } from './nav-rail.model';
 
 const GROUPS_STORAGE_KEY = 'helix.nav-rail.collapsed-groups';
@@ -53,16 +48,7 @@ function filterItems(items: HelixRouteMenuItem[], query: string): HelixRouteMenu
 @Component({
   selector: 'helix-nav-rail',
   standalone: true,
-  imports: [
-    CommonModule,
-    HelixAlertAction,
-    HelixConfiguratorAction,
-    HelixDarkModeAction,
-    HelixDisclosure,
-    HelixNavRailItem,
-    HxTooltip,
-    RouterModule,
-  ],
+  imports: [CommonModule, HelixNavRailItem, HxTooltip, RouterModule],
   templateUrl: './nav-rail.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './nav-rail.scss',
@@ -85,15 +71,6 @@ export class HelixNavRail implements OnInit, OnDestroy {
    * Falls back to the default hardcoded icon when not provided.
    */
   brandIcon = input<string>();
-
-  /** Global actions of the footer: dark mode, configurator, alerts, custom icon buttons. */
-  items = input<HelixTopbarItem[]>([]);
-
-  /** Entries of the footer's ellipsis menu. The menu is not rendered when empty. */
-  menuActions = input<HelixTopbarAction[]>([]);
-
-  /** Accessible name of the button that opens the actions menu. */
-  menuLabel = input('More actions');
 
   protected isInlineSvg = computed(() => this.brandIcon()?.trim().startsWith('<svg') ?? false);
 

@@ -1,4 +1,28 @@
-<div class="layout-topbar">
+<ng-template #actionTpl let-entry>
+  @if (customTemplate(entry); as template) {
+    <ng-container [ngTemplateOutlet]="template" />
+  } @else {
+    @switch (entry.action) {
+      @case ('search') {
+        <helix-search-action
+          [placeholder]="searchPlaceholder()"
+          (search)="search.emit($event)"
+        />
+      }
+      @case ('darkMode') {
+        <helix-dark-mode-action />
+      }
+      @case ('configurator') {
+        <helix-configurator-action />
+      }
+      @case ('alerts') {
+        <helix-alert-action [count]="alerts().length" [alerts]="alerts()" />
+      }
+    }
+  }
+</ng-template>
+
+<div class="layout-topbar" [class.layout-topbar-narrow]="narrow()">
   <div class="layout-topbar-start">
     <button
       type="button"
@@ -14,11 +38,28 @@
     } @else {
       <span class="layout-topbar-title">{{ effectiveTitle() }}</span>
     }
+    @if (zones().start.length > 0) {
+      <div class="layout-topbar-zone layout-topbar-zone-start">
+        @for (entry of zones().start; track $index) {
+          <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+        }
+      </div>
+    }
   </div>
 
-  <div class="layout-topbar-end">
-    <div class="layout-topbar-slot">
-      <ng-content select="[helixTopbarEnd]" />
+  @if (zones().center.length > 0) {
+    <div class="layout-topbar-center layout-topbar-zone">
+      @for (entry of zones().center; track $index) {
+        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+      }
     </div>
-  </div>
+  }
+
+  @if (zones().end.length > 0) {
+    <div class="layout-topbar-end layout-topbar-zone">
+      @for (entry of zones().end; track $index) {
+        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+      }
+    </div>
+  }
 </div>

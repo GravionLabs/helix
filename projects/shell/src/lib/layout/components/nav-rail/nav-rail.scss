@@ -224,123 +224,10 @@
   padding: 0.5rem 0.65rem;
 }
 
-// Global actions: a row; with a collapsed rail an icon column above the collapse toggle.
-.helix-nav-rail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.25rem;
-  min-width: 0;
-}
-
 .helix-nav-rail-collapsed .helix-nav-rail-footer {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-
-  .helix-nav-rail-actions {
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
-}
-
-.helix-nav-rail-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: var(--helix-control-height, 32px);
-  height: var(--helix-control-height, 32px);
-  padding: 0;
-  border: none;
-  border-radius: var(--h-border-radius-md);
-  background-color: transparent;
-  color: var(--text-color);
-  cursor: pointer;
-  transition: background-color var(--element-transition-duration);
-
-  &:hover {
-    background-color: var(--helix-surface-hover);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: -2px;
-  }
-
-  i {
-    font-size: 1.25rem;
-  }
-}
-
-.helix-nav-rail-menu-anchor {
-  position: relative;
-}
-
-.helix-nav-rail-menu {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  margin-bottom: 0.5rem;
-  z-index: 1000;
-  min-width: 14rem;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  background-color: var(--helix-surface-overlay);
-  border: 1px solid var(--helix-border);
-  border-radius: var(--content-border-radius);
-  box-shadow:
-    0px 3px 5px rgba(0, 0, 0, 0.02),
-    0px 0px 2px rgba(0, 0, 0, 0.05),
-    0px 1px 4px rgba(0, 0, 0, 0.08);
-
-  &.hidden {
-    display: none;
-  }
-}
-
-.helix-nav-rail-menu-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  border-radius: var(--h-border-radius-md);
-  background: transparent;
-  color: var(--text-color);
-  font: inherit;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--helix-surface-hover);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: -2px;
-  }
-}
-
-// The popups of the action components (alerts, theme panel) open upwards from the footer.
-:host ::ng-deep .helix-nav-rail-actions {
-  .alert-badge-dropdown {
-    top: auto;
-    bottom: 100%;
-    right: auto;
-    left: 0;
-    margin: 0 0 0.5rem;
-  }
-
-  helix-configurator {
-    top: auto;
-    bottom: 100%;
-    right: auto;
-    left: 0;
-    margin-bottom: 0.5rem;
-  }
 }
 
 .helix-nav-rail-collapse-button {
@@ -370,7 +257,7 @@
   }
 }
 
-// The mobile drawer has no collapse mode; its footer keeps the global actions only.
+// The mobile drawer has no collapse mode.
 @media (max-width: 991px) {
   .helix-nav-rail-collapse-button {
     display: none;
