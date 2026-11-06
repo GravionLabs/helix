@@ -56,7 +56,7 @@ Each item: today, then the reference value.
 ### Contrast
 
 - Filled button on the site in dark mode: `primary.500` `#6c74be` with white text is **4.30:1** (below AA 4.5); the demo's own dark button (`primary.400` with `surface.950` text) is 6.2:1; VP `#3e63dd` with white is 5.21:1.
-- The `*.500` severity steps used as text on white: green `#74b881` 2.36:1, orange `#d48c67` 2.71:1, sky `#67a1c6` 2.80:1, red `#c76e67` 3.59:1 (the 45 % chroma cut at Tailwind's lightness); AA text needs 4.5:1. The 600 and 700 steps are not measured here.
+- The `*.500` severity steps used as text on white: green `#74b881` 2.36:1, orange `#d48c67` 2.71:1, sky `#67a1c6` 2.80:1, red `#c76e67` 3.59:1 (the 45 % chroma cut at Tailwind's lightness); AA text needs 4.5:1. On white, the 600 steps mostly fail too (red `#b55b52` 4.58:1 passes; green `#5e9869` 3.40:1, sky `#5282a6` 4.12:1 and orange `#c5775a` 3.41:1 fail), the 700 steps pass (red 6.14:1, green 5.18:1, sky 5.92:1, orange 4.96:1); text uses need the 700 step.
 - Field border `#c2c2c4` on white is 1.78:1 and, in dark, `#3c3c43` on `#161618` is 1.65:1, below the 3:1 of WCAG 1.4.11 for the boundary of a control. VP uses the same light value, so this is the reference's weakness as well; decide per component.
 - Fine (checked): text `#3c3c43` on white 10.9:1 (the VP value); muted text `#67676c` 5.62:1 on white, `#98989f` 5.99:1 on `#1b1b1f`; primary `#555dad` on white 5.91:1, `#8a94ce` on `#1b1b1f` 5.89:1.
 
