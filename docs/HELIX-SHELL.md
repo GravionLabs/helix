@@ -1303,23 +1303,6 @@ All `HxMenuItem` fields are inherited: `label`, `icon`, `routerLink`, `visible`,
 
 ---
 
-### HelixTopbarAction
-
-Used by the [`HelixNavRail`](#helixnavrail) `menuActions` input (the ellipsis menu in the rail footer) and, through `HelixAppLayout`, by its `topbarActions` input.
-
-```ts
-interface HelixTopbarAction {
-  /** HelixIcons class (pi pi-*), e.g. 'pi pi-search' */
-  icon: string;
-  /** Accessible label for the button */
-  label: string;
-  /** Optional click handler */
-  command?: () => void;
-}
-```
-
----
-
 ### HelixFooterLink
 
 Used by [`HelixFooterColumn`](#helixfootercolumn).
