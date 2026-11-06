@@ -3,6 +3,7 @@
 // bar lie on it; the frame itself never scrolls, only the content panel does.
 .layout-wrapper {
   height: 100vh;
+  /* biome-ignore lint/suspicious/noDuplicateProperties: deliberate fallback, browsers without dvh keep 100vh. */
   height: 100dvh;
   overflow: hidden;
   background: var(--helix-surface-chrome);
