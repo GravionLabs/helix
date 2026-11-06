@@ -202,7 +202,7 @@ export const semantic = {
       },
       list: {
         option: {
-          focusBackground: '{surface.100}',
+          focusBackground: '{surface.hover}',
           selectedBackground: '{highlight.background}',
           selectedFocusBackground: '{highlight.focus.background}',
           color: '{text.color}',
@@ -221,8 +221,8 @@ export const semantic = {
       },
       navigation: {
         item: {
-          focusBackground: '{surface.100}',
-          activeBackground: '{surface.100}',
+          focusBackground: '{surface.hover}',
+          activeBackground: '{surface.hover}',
           color: '{text.color}',
           focusColor: '{text.hover.color}',
           activeColor: '{text.hover.color}',
@@ -261,7 +261,7 @@ export const semantic = {
         panel: '{surface.900}',
         card: '{surface.800}',
         overlay: '{surface.800}',
-        hover: '{surface.800}',
+        hover: '{surface.700}',
       },
       border: {
         panel: '{surface.700}',
@@ -342,7 +342,7 @@ export const semantic = {
       },
       list: {
         option: {
-          focusBackground: '{surface.800}',
+          focusBackground: '{surface.hover}',
           selectedBackground: '{highlight.background}',
           selectedFocusBackground: '{highlight.focus.background}',
           color: '{text.color}',
@@ -361,8 +361,8 @@ export const semantic = {
       },
       navigation: {
         item: {
-          focusBackground: '{surface.800}',
-          activeBackground: '{surface.800}',
+          focusBackground: '{surface.hover}',
+          activeBackground: '{surface.hover}',
           color: '{text.color}',
           focusColor: '{text.hover.color}',
           activeColor: '{text.hover.color}',

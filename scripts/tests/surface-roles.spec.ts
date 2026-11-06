@@ -44,13 +44,13 @@ describe('surface roles (ADR 0004)', () => {
     expect(t['--h-border-divider']).toBe('var(--h-surface-100)');
   });
 
-  it('dark: frame 950, panel 900, card 800, overlay 800, hover 800, hairline and divider 700', () => {
+  it('dark: frame 950, panel 900, card 800, overlay 800, hover 700, hairline and divider 700', () => {
     const t = tokens.dark;
     expect(t['--h-surface-frame']).toBe('var(--h-surface-950)');
     expect(t['--h-surface-panel']).toBe('var(--h-surface-900)');
     expect(t['--h-surface-card']).toBe('var(--h-surface-800)');
     expect(t['--h-surface-overlay']).toBe('var(--h-surface-800)');
-    expect(t['--h-surface-hover']).toBe('var(--h-surface-800)');
+    expect(t['--h-surface-hover']).toBe('var(--h-surface-700)');
     expect(t['--h-border-panel']).toBe('var(--h-surface-700)');
     expect(t['--h-border-divider']).toBe('var(--h-surface-700)');
   });
@@ -103,5 +103,59 @@ describe('surface roles (ADR 0004)', () => {
         ).toBeGreaterThanOrEqual(4.5);
       }
     });
+  });
+
+  // #1060: the hover must show a step on every host it can sit on, not only on the panel.
+  describe.each(['light', 'dark'] as const)('hover against its host (%s)', (scheme) => {
+    // Resolved colours; the literals are the scale steps of semantic.ts.
+    const HOVER = { light: '#ebebef', dark: '#2e2e32' }[scheme];
+    const HOSTS = {
+      light: { frame: '#f6f6f7', panel: '#ffffff', card: '#ffffff', overlay: '#ffffff' },
+      dark: { frame: '#161618', panel: '#1b1b1f', card: '#202127', overlay: '#202127' },
+    }[scheme];
+
+    it('--h-surface-hover resolves to the documented step', () => {
+      expect(hex(scheme, '--h-surface-hover')).toBe(HOVER);
+    });
+
+    it.each(SURFACES)(
+      'hover differs from the %s host (lighter in dark, darker in light)',
+      (role) => {
+        const host = hex(scheme, `--h-surface-${role}`);
+        expect(host).toBe(HOSTS[role]);
+        expect(host).not.toBe(hex(scheme, '--h-surface-hover'));
+        if (scheme === 'dark') {
+          expect(luminance(hex(scheme, '--h-surface-hover'))).toBeGreaterThan(luminance(host));
+        } else {
+          expect(luminance(hex(scheme, '--h-surface-hover'))).toBeLessThan(luminance(host));
+        }
+      },
+    );
+
+    it('text, hover text and muted text on the hover background are 4.5:1', () => {
+      const hover = hex(scheme, '--h-surface-hover');
+      expect(contrast(hex(scheme, '--h-text-color'), hover)).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(hex(scheme, '--h-text-hover-color'), hover)).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(hex(scheme, '--h-text-muted-color'), hover)).toBeGreaterThanOrEqual(4.5);
+    });
+
+    it.each([
+      '--h-content-hover-background',
+      '--h-datatable-row-hover-background',
+      '--h-tree-node-hover-background',
+      '--h-tabbar-tab-hover-background',
+      '--h-list-option-focus-background',
+      '--h-navigation-item-focus-background',
+      '--h-menu-item-focus-background',
+    ])('%s resolves to the hover step, so rows and items on any host show it', (name) => {
+      expect(hex(scheme, name)).toBe(HOVER);
+    });
+  });
+
+  it('dark hover is 1.19:1 against a card or overlay host and 1.27:1 against the panel', () => {
+    const hover = hex('dark', '--h-surface-hover');
+    expect(contrast(hover, hex('dark', '--h-surface-card'))).toBeCloseTo(1.19, 2);
+    expect(contrast(hover, hex('dark', '--h-surface-overlay'))).toBeCloseTo(1.19, 2);
+    expect(contrast(hover, hex('dark', '--h-surface-panel'))).toBeCloseTo(1.27, 1);
   });
 });
