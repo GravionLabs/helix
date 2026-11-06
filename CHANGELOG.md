@@ -19,7 +19,7 @@ All notable changes to this project are documented here. Generated with
 
 ### Changed
 
-- **[breaking]** Inset shell layout (22.3, minor): frame ground with inset nav rail and content panel, page header inside the content panel, flat 28px status bar; global actions are configured through `topbarActions` (`HelixTopbarActionConfig[]`, zones start/center/end, default toolbar); the `[helixTopbarEnd]` slot, `topbarItems` and the nav rail inputs `items` / `menuActions` / `menuLabel` are removed. Migration notes: [docs/MIGRATION-inset-shell.md](docs/MIGRATION-inset-shell.md) (#1026)
+- **[breaking]** Inset shell layout (22.3, minor): frame ground with inset nav rail and content panel, page header inside the content panel, flat 28px status bar; global actions are configured through `topbarActions` (`HelixTopbarActionConfig[]`, zones start/center/end, default toolbar); the `[helixTopbarEnd]` slot, `topbarItems` and the nav rail inputs `items` / `menuActions` / `menuLabel` are removed. Migration notes: [docs/MIGRATION-inset-shell.md](docs/MIGRATION-inset-shell.md) (ADR 0003, #1026)
 - **[breaking]** Remove `@gravionlabs/helix-core` from the workspace: `@gravionlabs/helix-ui` is the only component library, theming runs on `tokens.css` and `provideHxTheme` (ADR 0002)
 - Migrate helix-shell and helix-demo from primeng to @gravionlabs/helix
 - Migrate to signals — slider–terminal (batch 8) (#319) (#349)

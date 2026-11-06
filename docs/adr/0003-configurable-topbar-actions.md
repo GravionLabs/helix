@@ -1,6 +1,6 @@
 # ADR 0003: Configurable topbar actions
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-06
 - Issues: #1044
 
