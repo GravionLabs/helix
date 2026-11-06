@@ -54,9 +54,14 @@ read the roles, not the scale steps:
 | `surface-panel`   | content panel, nav rail, page                                | `surface.0`   | `surface.900` |
 | `surface-card`    | cards, table head, code                                      | `surface.0`   | `surface.800` |
 | `surface-overlay` | dialog, popover, menu                                        | `surface.0`   | `surface.800` |
-| `surface-hover`   | hovered row, menu item, rail link                            | `surface.100` | `surface.800` |
+| `surface-hover`   | hovered row, menu item, rail link                            | `surface.100` | `surface.700` |
 | `border-panel`    | hairline around panels and cards, `--h-content-border-color` | `surface.200` | `surface.700` |
 | `border-divider`  | lines inside a panel (table rows, dividers)                  | `surface.100` | `surface.700` |
+
+In dark mode `surface-hover` is `surface.700`: one step lighter than a card or an overlay (`surface.800`) and two
+steps lighter than the panel (`surface.900`), so a hovered row, menu item or option shows a step on every host. It
+is the same colour as the hairline and the divider, so a divider beside a hovered row merges with it. Text keeps
+4.5:1 on it. In light mode it is `surface.100` on the white panel, card and overlay.
 
 In dark mode each level is one scale step lighter than what it sits on, with a hairline; an overlay is told apart
 from a card by its hairline and a 40 % black shadow, not by a fourth step. Cards have a 1 px `border-panel`
