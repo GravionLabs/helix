@@ -58,13 +58,14 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Message](message.md) | `hx-message` is an inline message next to the content it is about.                                                 |
 | [Tooltip](tooltip.md) | `[hx-tooltip]` shows a short text next to an element on hover and keyboard focus.                                  |
 
-## Navigation (6)
+## Navigation (7)
 
 | Component                   | Description                                                                                                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | [Menu](menu.md)             | `hx-menu` shows a list of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model), inline or as a popup, with nested submenus.           |
 | [Menubar](menubar.md)       | `hx-menubar` is a horizontal menu of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model) with dropdown submenus, on the CDK menubar. |
 | [Tabs](tabs.md)             | `hx-tabs` shows one panel at a time, chosen by a row of tabs, in the WAI-ARIA tabs pattern.                                      |
+| [Tab bar](tab-bar.md)       | `hx-tab-bar` is an editor-style tab strip with closable, draggable and scrollable tabs, without panels.                          |
 | [Stepper](stepper.md)       | `hx-stepper` shows the steps of a process as a row of headers above the panel of the active step.                                |
 | [Paginator](paginator.md)   | `hx-paginator` is the page navigation of a list or table: first, previous, page links, next, last and a rows-per-page select.    |
 | [Breadcrumb](breadcrumb.md) | `hx-breadcrumb` renders the path to the current page as a `nav` landmark with an ordered list.                                   |

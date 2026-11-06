@@ -1,0 +1,44 @@
+<h1 class="sr-only">Tab bar</h1>
+<app-source-tabs library="helix-ui" directory="tab-bar" componentName="tab-bar-demo" [docs]="['tab-bar']">
+  <div class="flex flex-col gap-layout">
+    <div class="card">
+      <h2 class="demo-title mb-2!">Many tabs</h2>
+      <p class="mb-3 text-muted-color">
+        Scroll with the buttons or the mouse wheel, open the list of all tabs, right-click a tab for its menu, drag tabs to reorder or into the
+        second bar. Delete or Ctrl+W close the focused tab. The last action: {{ last() }}.
+      </p>
+      <hx-tab-bar
+        ariaLabel="Open files"
+        groupId="left"
+        allTabsButton
+        [tabs]="files()"
+        [(value)]="activeFile"
+        [menu]="menu"
+        (closed)="close('left', $event)"
+        (pinned)="pin($event)"
+        (moved)="move('left', $event)"
+        (received)="receive('left', $event)"
+        (menuAction)="run('left', $event)"
+      />
+      <div class="p-4">Content of {{ activeFile() ?? 'no tab' }}</div>
+    </div>
+
+    <div class="card">
+      <h2 class="demo-title mb-2!">A second bar</h2>
+      <hx-tab-bar
+        ariaLabel="Pinned files"
+        groupId="right"
+        [tabs]="pinnedFiles()"
+        [(value)]="activePinned"
+        [menu]="menu"
+        (closed)="close('right', $event)"
+        (moved)="move('right', $event)"
+        (received)="receive('right', $event)"
+        (menuAction)="run('right', $event)"
+      >
+        <ng-template #tabContent let-tab><span class="pi pi-file" aria-hidden="true"></span></ng-template>
+      </hx-tab-bar>
+      <div class="p-4">Content of {{ activePinned() ?? 'no tab' }}</div>
+    </div>
+  </div>
+</app-source-tabs>

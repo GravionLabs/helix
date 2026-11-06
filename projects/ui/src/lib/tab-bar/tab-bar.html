@@ -1,0 +1,77 @@
+<hx-tab-scroller class="hx-tab-bar-strip" wheel>
+  <div
+    class="hx-tab-bar-tabs"
+    role="tablist"
+    aria-orientation="horizontal"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [class.hx-tab-bar-drop-end]="foreignAt() === tabs().length"
+    (dragover)="stripOver($event)"
+    (dragleave)="foreignAt.set(null)"
+    (drop)="stripDrop($event)"
+  >
+    @for (tab of tabs(); track tab.id; let i = $index) {
+      <div
+        class="hx-tab-bar-tab"
+        role="tab"
+        draggable="true"
+        [class.hx-tab-bar-tab-active]="tab.id === value()"
+        [class.hx-tab-bar-tab-preview]="tab.preview"
+        [class.hx-tab-bar-tab-attention]="tab.attention"
+        [class.hx-tab-bar-drop-before]="(dropAt() === i && dragging() !== null && dragging()! > i) || foreignAt() === i"
+        [class.hx-tab-bar-drop-after]="dropAt() === i && dragging() !== null && dragging()! < i"
+        [attr.aria-selected]="tab.id === value()"
+        [attr.aria-label]="tabName(tab)"
+        [attr.tabindex]="i === tabbable() ? 0 : -1"
+        [title]="tab.title ?? tab.label"
+        (click)="select(tab.id)"
+        (dblclick)="pinned.emit(tab.id)"
+        (contextmenu)="openMenu($event, tab.id)"
+        (mousedown)="$event.button === 1 && $event.preventDefault()"
+        (auxclick)="middleClick($event, tab.id)"
+        (keydown)="key($event, i)"
+        (dragstart)="dragStart($event, i)"
+        (dragover)="dragOver($event, i)"
+        (drop)="drop($event, i)"
+        (dragend)="dragEnd()"
+      >
+        @if (tabContent(); as tpl) {
+          <ng-container [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="{ $implicit: tab }" />
+        }
+        @if (tab.group) {
+          <span class="hx-tab-bar-group">{{ tab.group }} /</span>
+        }
+        <span class="hx-tab-bar-label">{{ tab.label }}</span>
+        @if (tab.unread) {
+          <span class="hx-tab-bar-unread" aria-hidden="true"></span>
+        }
+        <button
+          type="button"
+          class="hx-tab-bar-close"
+          tabindex="-1"
+          [attr.aria-label]="'Close ' + (tab.group ? tab.group + ' / ' : '') + tab.label"
+          (click)="$event.stopPropagation(); closed.emit(tab.id)"
+          (dblclick)="$event.stopPropagation()"
+        >
+          <span class="hx-tab-bar-close-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    }
+  </div>
+</hx-tab-scroller>
+<div class="hx-tab-bar-actions">
+  @if (allTabsButton() && overflowing()) {
+    <button
+      type="button"
+      class="hx-tab-bar-all"
+      aria-haspopup="menu"
+      aria-label="All tabs"
+      title="All tabs"
+      (click)="allMenu.toggle($event)"
+    >
+      <span class="hx-tab-bar-all-icon" aria-hidden="true"></span>
+    </button>
+  }
+  <ng-content />
+</div>
+<hx-menu #tabMenu popup ariaLabel="Tab actions" [model]="tabMenuModel()" />
+<hx-menu #allMenu popup ariaLabel="All tabs" [model]="allTabsModel()" />

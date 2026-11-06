@@ -1,6 +1,6 @@
 /*
  * Tabs: `<hx-tabs>`. A tab list with an active bar and panels from the `--h-tabs-*` tokens; with `scrollable`
- * the list scrolls and shows buttons at its ends.
+ * the list scrolls and shows buttons at its ends (`hx-tab-scroller`, shared with `hx-tab-bar`).
  */
 @use 'icons' as *;
 
@@ -16,8 +16,14 @@
   border-width: var(--h-tabs-tablist-border-width);
 }
 
-.hx-tab-scroller {
+.hx-tab-scroll {
+  position: relative;
+  display: block;
   flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hx-tab-scroller {
   overflow-x: auto;
   scrollbar-width: none;
 }

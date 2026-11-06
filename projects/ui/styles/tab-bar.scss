@@ -1,0 +1,194 @@
+/*
+ * Tab bar: `<hx-tab-bar>`. An editor-style tab strip from the `--h-tabbar-*` tokens; its scroll buttons are those of
+ * the tabs (`--h-tabs-nav-button-*`, styled in tabs.scss).
+ */
+@use 'icons' as *;
+
+.hx-tab-bar {
+  display: flex;
+  align-items: stretch;
+  min-height: var(--h-tabbar-min-height);
+  background: var(--h-tabbar-background);
+  border: solid var(--h-tabbar-border-color);
+  border-width: var(--h-tabbar-border-width);
+}
+
+/* the shared scroller (tabs.scss) as a row that fills the bar */
+.hx-tab-bar .hx-tab-scroll {
+  display: flex;
+}
+
+.hx-tab-bar .hx-tab-scroller {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+}
+
+.hx-tab-bar-tabs {
+  display: flex;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 100%;
+}
+
+.hx-tab-bar-tab {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-tabbar-tab-gap);
+  max-width: var(--h-tabbar-tab-max-width);
+  padding: var(--h-tabbar-tab-padding);
+  border-right: 1px solid var(--h-tabbar-tab-border-color);
+  color: var(--h-tabbar-tab-color);
+  cursor: pointer;
+  outline: 0 none;
+  user-select: none;
+  transition:
+    background var(--h-tabbar-transition-duration),
+    color var(--h-tabbar-transition-duration);
+}
+
+.hx-tab-bar-tab:hover {
+  background: var(--h-tabbar-tab-hover-background);
+  color: var(--h-tabbar-tab-hover-color);
+}
+
+.hx-tab-bar-tab-active,
+.hx-tab-bar-tab-active:hover {
+  background: var(--h-tabbar-tab-active-background);
+  color: var(--h-tabbar-tab-active-color);
+  box-shadow: inset 0 calc(-1 * var(--h-tabbar-active-bar-height)) 0
+    var(--h-tabbar-active-bar-background);
+}
+
+.hx-tab-bar-tab:focus-visible {
+  outline: var(--h-tabbar-tab-focus-ring-width) var(--h-tabbar-tab-focus-ring-style)
+    var(--h-tabbar-tab-focus-ring-color);
+  outline-offset: var(--h-tabbar-tab-focus-ring-offset);
+}
+
+.hx-tab-bar-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-tab-bar-tab-preview .hx-tab-bar-label {
+  font-style: italic;
+}
+
+.hx-tab-bar-tab.hx-tab-bar-drop-before {
+  box-shadow: inset 2px 0 0 var(--h-tabbar-drop-indicator-color);
+}
+
+.hx-tab-bar-tab.hx-tab-bar-drop-after {
+  box-shadow: inset -2px 0 0 var(--h-tabbar-drop-indicator-color);
+}
+
+.hx-tab-bar-tabs.hx-tab-bar-drop-end {
+  box-shadow: inset -2px 0 0 var(--h-tabbar-drop-indicator-color);
+}
+
+/* Needs the user: a ring around the tab. */
+.hx-tab-bar-tab-attention {
+  box-shadow:
+    inset 0 0 0 2px var(--h-tabbar-attention-color),
+    0 0 6px var(--h-tabbar-attention-color);
+}
+
+.hx-tab-bar-tab-attention.hx-tab-bar-tab-active {
+  box-shadow:
+    inset 0 0 0 2px var(--h-tabbar-attention-color),
+    inset 0 calc(-1 * var(--h-tabbar-active-bar-height)) 0 var(--h-tabbar-active-bar-background),
+    0 0 6px var(--h-tabbar-attention-color);
+}
+
+.hx-tab-bar-group {
+  flex: none;
+  max-width: 40%;
+  overflow: hidden;
+  color: var(--h-tabbar-group-color);
+  font-size: var(--h-tabbar-group-font-size);
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hx-tab-bar-unread {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--h-tabbar-unread-color);
+}
+
+.hx-tab-bar-close,
+.hx-tab-bar-all {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  outline: 0 none;
+}
+
+.hx-tab-bar-close {
+  width: var(--h-tabbar-close-size);
+  height: var(--h-tabbar-close-size);
+  border-radius: var(--h-tabbar-close-border-radius);
+  visibility: hidden;
+}
+
+.hx-tab-bar-tab-active .hx-tab-bar-close,
+.hx-tab-bar-tab:hover .hx-tab-bar-close,
+.hx-tab-bar-tab:focus-visible .hx-tab-bar-close {
+  visibility: visible;
+}
+
+.hx-tab-bar-close:hover,
+.hx-tab-bar-all:hover {
+  background: var(--h-tabbar-close-hover-background);
+}
+
+.hx-tab-bar-close-icon {
+  @include hx-icon(close, 0.75rem, currentcolor, 2.4);
+}
+
+.hx-tab-bar-all {
+  width: 2rem;
+  align-self: stretch;
+  color: var(--h-tabbar-tab-color);
+}
+
+.hx-tab-bar-all:hover {
+  color: var(--h-tabbar-tab-hover-color);
+}
+
+.hx-tab-bar-all:focus-visible {
+  outline: var(--h-tabbar-tab-focus-ring-width) var(--h-tabbar-tab-focus-ring-style)
+    var(--h-tabbar-tab-focus-ring-color);
+  outline-offset: var(--h-tabbar-tab-focus-ring-offset);
+}
+
+.hx-tab-bar-all-icon {
+  @include hx-icon(chevron-down, 1rem, currentcolor, 2.4);
+}
+
+.hx-tab-bar-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-tabbar-actions-gap);
+  padding: var(--h-tabbar-actions-padding);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-tab-bar-tab {
+    transition: none;
+  }
+}
