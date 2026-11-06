@@ -1,5 +1,10 @@
 import { computed, DestroyRef, inject } from '@angular/core';
-import { type HxPrimaryColor, type HxSurface, HxTheme } from '@gravionlabs/helix-ui';
+import {
+  type HxDensity,
+  type HxPrimaryColor,
+  type HxSurface,
+  HxTheme,
+} from '@gravionlabs/helix-ui';
 import {
   patchState,
   signalStore,
@@ -58,6 +63,7 @@ export const LayoutStore = signalStore(
     darkTheme: computed(() => theme.dark()),
     primary: computed(() => theme.primary()),
     surface: computed(() => theme.surface()),
+    density: computed(() => theme.density()),
     isDarkTheme: computed(() => theme.dark()),
     isOverlay: computed(() => store.menuMode() === 'overlay'),
     isStatic: computed(() => store.menuMode() === 'static'),
@@ -126,6 +132,9 @@ export const LayoutStore = signalStore(
     },
     setSurface(surface: HxSurface | null): void {
       theme.setSurface(surface);
+    },
+    setDensity(density: HxDensity): void {
+      theme.setDensity(density);
     },
     isDesktop(): boolean {
       return window.innerWidth > 991;

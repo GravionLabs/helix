@@ -103,6 +103,32 @@ describe('HelixConfigurator', () => {
     expect(theme.surface()).toBe('stone');
   });
 
+  it('offers comfortable and compact, comfortable being the default', () => {
+    expect(component.densityOptions.map((o) => o.value)).toEqual(['comfortable', 'compact']);
+    expect(component.density()).toBe('comfortable');
+  });
+
+  it('onDensityChange("compact") sets the density of the theme service, and back', () => {
+    component.onDensityChange('compact');
+    expect(theme.density()).toBe('compact');
+    expect(component.density()).toBe('compact');
+    component.onDensityChange('comfortable');
+    expect(theme.density()).toBe('comfortable');
+  });
+
+  it('renders a Density chooser', () => {
+    fixture.detectChanges();
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Density');
+  });
+
+  it('places the Density chooser directly after the Primary colour', () => {
+    fixture.detectChanges();
+    const labels = [...(fixture.nativeElement as HTMLElement).querySelectorAll('span')].map((s) =>
+      s.textContent?.trim(),
+    );
+    expect(labels.indexOf('Density')).toBe(labels.indexOf('Primary') + 1);
+  });
+
   it('onMenuModeChange("overlay") should call store.setMenuMode("overlay")', () => {
     component.onMenuModeChange('overlay');
     expect(store.menuMode()).toBe('overlay');

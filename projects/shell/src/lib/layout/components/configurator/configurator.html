@@ -14,6 +14,17 @@
       }
     </div>
   </div>
+  <div class="flex flex-col gap-2">
+    <span id="helix-config-density" class="text-sm text-muted-color font-semibold">Density</span>
+    <hx-select-button
+      ariaLabelledby="helix-config-density"
+      [ngModel]="density()"
+      (ngModelChange)="onDensityChange($event)"
+      [options]="densityOptions"
+      [allowEmpty]="false"
+      size="small"
+    />
+  </div>
   <div>
     <span class="text-sm text-muted-color font-semibold">Surface</span>
     <div class="pt-2 flex gap-2 flex-wrap justify-start">

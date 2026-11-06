@@ -6,6 +6,7 @@ import {
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,
   HX_SURFACES,
+  type HxDensity,
   type HxPrimaryColor,
   HxSelectButton,
   type HxSurface,
@@ -19,7 +20,7 @@ interface Swatch<Name extends string> {
 }
 
 /**
- * The theme panel of the shell: primary colour, surface and menu mode. The colours go to the theme service of
+ * The theme panel of the shell: primary colour, surface, density and menu mode. The colours go to the theme service of
  * helix-ui (through the layout store), which changes CSS variables only; the panel itself knows no theme engine.
  */
 @Component({
@@ -62,6 +63,11 @@ export class HelixConfigurator {
   /** The colour in use: the chosen one, else the one of the Helix preset (indigo). */
   activePrimaryColor = computed(() => this.store.primary() ?? 'indigo');
   selectedSurfaceColor = computed(() => this.store.surface());
+  densityOptions = [
+    { label: 'Comfortable', value: 'comfortable' },
+    { label: 'Compact', value: 'compact' },
+  ];
+  density = computed(() => this.store.density());
   menuMode = computed(() => this.store.menuMode());
 
   updateColors(event: Event, type: 'primary' | 'surface', color: Swatch<string>) {
@@ -71,6 +77,10 @@ export class HelixConfigurator {
       this.store.setSurface(color.name as HxSurface);
     }
     event.stopPropagation();
+  }
+
+  onDensityChange(density: string) {
+    this.store.setDensity(density as HxDensity);
   }
 
   onMenuModeChange(event: string) {

@@ -236,10 +236,12 @@ export {
 } from './lib/tabs/tabs';
 export { HxTag, type HxTagSeverity } from './lib/tag/tag';
 export {
+  HX_DENSITIES,
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,
   HX_SURFACES,
   HX_THEME_OPTIONS,
+  type HxDensity,
   type HxPrimaryColor,
   type HxSurface,
   HxTheme,

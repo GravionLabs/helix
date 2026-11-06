@@ -35,6 +35,9 @@ export const HX_PRIMARY_COLORS = [
   'noir',
 ] as const;
 export type HxPrimaryColor = (typeof HX_PRIMARY_COLORS)[number];
+/** The densities: `comfortable` is the Helix look as it is, `compact` the 13 px root with tighter shell sizes. */
+export const HX_DENSITIES = ['comfortable', 'compact'] as const;
+export type HxDensity = (typeof HX_DENSITIES)[number];
 export const HX_SURFACE_NAMES = Object.keys(HX_SURFACES) as HxSurface[];
 export type { HxSurface };
 
@@ -60,6 +63,8 @@ export interface HxThemeOptions {
   primary?: HxPrimaryColor | null;
   /** The surface scale when nothing is remembered; `null` is the one of the preset. */
   surface?: HxSurface | null;
+  /** The density when nothing is remembered; default `comfortable` (the Helix look, no override). */
+  density?: HxDensity;
   /**
    * Cross-fades the page when dark mode is switched, with the View Transitions API where the browser has it
    * (the first value at start-up is applied at once). Default `false`.
@@ -79,6 +84,7 @@ interface Saved {
   dark?: boolean;
   primary?: HxPrimaryColor | null;
   surface?: HxSurface | null;
+  density?: HxDensity;
 }
 
 /** A class (`.app-dark`) or an attribute (`[data-theme="dark"]`) selector, split into what the DOM needs. */
@@ -131,6 +137,15 @@ function surfaceCss(surface: HxSurface, dark: string): string {
 }
 
 /**
+ * The compact density, poimen's proportions (docs/THEMING.md): the 13 px root scales every `rem` token (controls,
+ * table rows, paddings); the shell sizes given in px or at 1.5 rem are set to their compact values. Comfortable
+ * writes nothing: it is the values of `tokens.css` and the shell styles.
+ */
+const COMPACT_CSS =
+  ':root:root{font-size:13px;--helix-layout-gap:1rem;' +
+  '--helix-control-height:28px;--helix-status-bar-height:24px;}';
+
+/**
  * Switches dark mode, the primary colour and the surface scale while the app runs, with CSS custom properties
  * only: no styling engine, no rebuild of the tokens. `tokens.css` defines every `--h-*` token for the Helix look;
  * this service overrides the ones that carry the colour choice, in a style sheet of its own that wins over
@@ -165,16 +180,24 @@ export class HxTheme {
     this.#saved.surface ?? this.#options.surface ?? null,
   );
 
+  readonly #density = signal<HxDensity>(
+    HX_DENSITIES.find((d) => d === this.#saved.density) ??
+      HX_DENSITIES.find((d) => d === this.#options.density) ??
+      'comfortable',
+  );
+
   readonly dark = this.#dark.asReadonly();
   readonly primary = this.#primary.asReadonly();
   readonly surface = this.#surface.asReadonly();
+  readonly density = this.#density.asReadonly();
 
-  /** The overrides for the chosen primary colour and surface (empty while both are the preset's own). */
+  /** The overrides for the chosen primary colour, surface and density (empty while all are the preset's own). */
   readonly css = computed(() => {
     const dark = this.#darkSelector.css;
     const primary = this.#primary();
     const surface = this.#surface();
-    return `${surface ? surfaceCss(surface, dark) : ''}${primary ? primaryCss(primary, dark) : ''}`;
+    const density = this.#density() === 'compact' ? COMPACT_CSS : '';
+    return `${surface ? surfaceCss(surface, dark) : ''}${primary ? primaryCss(primary, dark) : ''}${density}`;
   });
 
   #darkApplied = false;
@@ -201,7 +224,12 @@ export class HxTheme {
       if (this.#browser) this.#writeSheet(css);
     });
     effect(() =>
-      this.#save({ dark: this.#dark(), primary: this.#primary(), surface: this.#surface() }),
+      this.#save({
+        dark: this.#dark(),
+        primary: this.#primary(),
+        surface: this.#surface(),
+        density: this.#density(),
+      }),
     );
     // an instance that is not the root one (provided on a component) takes its overrides with it
     inject(DestroyRef).onDestroy(() => this.#remove?.());
@@ -227,6 +255,12 @@ export class HxTheme {
     if (surface !== null && !(surface in HX_SURFACES))
       throw new Error(`unknown surface "${surface}"`);
     this.#surface.set(surface);
+  }
+
+  /** `compact` is the 13 px root with tighter shell sizes; `comfortable` the Helix look as it is. */
+  setDensity(density: HxDensity): void {
+    if (!HX_DENSITIES.includes(density)) throw new Error(`unknown density "${density}"`);
+    this.#density.set(density);
   }
 
   #systemDark(): boolean {

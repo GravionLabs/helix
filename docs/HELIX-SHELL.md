@@ -81,7 +81,7 @@ now load `@gravionlabs/helix-shell/globals.css` after `styles.css`; apps that di
 `styles.css` still reads `[class*="app-dark"]` or `[data-theme="dark"]` for dark mode, see
 [Theming](THEMING.md#dark-mode).
 
-Dark mode, the primary colour and the surface are switched by the theme service of helix-ui, which the layout
+Dark mode, the primary colour, the surface and the density are switched by the theme service of helix-ui, which the layout
 store and the configurator use. Provide it once in the application config:
 
 ```ts

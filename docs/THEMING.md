@@ -190,6 +190,41 @@ custom properties only, in one style sheet of its own that wins over `tokens.css
 that depend on the colour (`--h-primary-color` is step 600 in light and 400 in dark) stay the tokens' own, so every
 component follows.
 
+## Density
+
+`HxTheme` has `density: 'comfortable' | 'compact'` ([ADR 0004](adr/0004-surface-roles-dark-elevation-density-and-named-theme-presets.md),
+decision 4), set with `setDensity()`, the `density` option or the configurator (next to the primary colour), and saved
+with the other choices. `comfortable` is the default and writes nothing: today's look. `compact` is poimen's
+proportions (13 px base, 4 px gaps; [audit](migrations/theme-audit.md)): it sets the root to 13 px, which scales every
+`rem` token, and overrides three shell sizes in the same style sheet. No new token layer.
+
+| Size                                      | Comfortable (14 px root) | Compact (13 px root)  |
+| ----------------------------------------- | ------------------------ | --------------------- |
+| Root font size                            | 14 px                    | 13 px                 |
+| Button and form field                     | 32.8 px                  | about 30.5 px (`rem`) |
+| Chrome control (`--helix-control-height`) | 32 px                    | 28 px                 |
+| Table row (with a 48 px thumbnail)        | 55 px                    | follows the root      |
+| Page header (`--helix-topbar-height`)     | 3rem, 42 px              | 3rem, 39 px (`rem`)   |
+| Content padding (`--helix-layout-gap`)    | 1.5rem, 21 px            | 1rem, 13 px           |
+| Panel gap (`--helix-panel-gap`)           | 4 px                     | 4 px                  |
+| Status bar (`--helix-status-bar-height`)  | 28 px                    | 24 px                 |
+
+The comfortable column is measured ([audit](migrations/theme-audit.md)). The compact heights are computed from the
+`rem` scaling (13/14) and were not measured in a browser. The table row is made of `rem` paddings and a fixed 48 px
+thumbnail that does not scale, so it shrinks by less than 13/14 and follows the root; no number is claimed. ag-grid
+rows use `--ag-row-height: 2rem` (`projects/ag-grid/styles-src.css`) and go from 28 px to 26 px.
+
+Where the compact values come from:
+
+- From the audit (poimen): the 13 px root and the 4 px gap.
+- Choices of this PBI, with no audit source: the 28 px chrome control and the 24 px status bar. poimen's 18 px toolbar
+  buttons are not adopted for every button: they suit a dense toolbar, but Helix buttons also carry labels and
+  form fields, which need a larger target; so the chrome controls are 28 px.
+- Deliberate deviation: compact does not scale the panel gap, because it is already poimen's 4 px in comfortable
+  (an override would be a no-op). It scales the layout gap (content padding, 1.5rem to 1rem) instead.
+
+The nav rail, page header and components follow through the `rem` tokens and the three shell variables.
+
 ## Overriding tokens in an application
 
 Override a token with a custom property, after `tokens.css` or with a selector that is stronger. The override
@@ -262,7 +297,7 @@ The tokens, the brand book and static previews of the components are generated a
 | Resolver                                                                    | `scripts/tokens/resolve.mjs`; users: `scripts/export-tokens.mjs`, `scripts/build-ui-css.mjs`, `scripts/design-system/` |
 | Runtime colour switching                                                    | `HxTheme` and `provideHxTheme` in `@gravionlabs/helix-ui` ([Theming](HELIX-UI.md#theming))                             |
 | Shell layer (`--helix-surface-*`, layout sizes, fonts, Tailwind colour map) | `projects/shell/styles-src.css`, `projects/shell/styles/helix-tailwind`                                                |
-| Configurator (primary / surface / menu mode)                                | `HelixConfigurator` in `@gravionlabs/helix-shell`                                                                      |
+| Configurator (primary / surface / density / menu mode)                      | `HelixConfigurator` in `@gravionlabs/helix-shell`                                                                      |
 
 ## Before helix-ui
 
