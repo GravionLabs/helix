@@ -351,6 +351,84 @@ describe('HxTabBar', () => {
       ]);
     });
 
+    it('stays open through the mouse release of the right click that opened it', async () => {
+      await rightClick(3);
+      // the browser fires auxclick (button 2) on the tab after the contextmenu event
+      tabs()[3].dispatchEvent(new MouseEvent('auxclick', { bubbles: true, button: 2 }));
+      await settle();
+      expect(menuItems().length).toBe(2);
+      menuItems()[0].click();
+      await settle();
+      expect(host.log).toEqual(['menu:d:close']);
+      expect(menuItems()).toEqual([]);
+    });
+
+    it('closes on a click outside and on Escape', async () => {
+      await rightClick(3);
+      document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await settle();
+      expect(menuItems()).toEqual([]);
+      await rightClick(3);
+      menuItems()[0].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }),
+      );
+      await settle();
+      expect(menuItems()).toEqual([]);
+      expect(host.log).toEqual([]);
+    });
+
+    it('opens with the ContextMenu key, activates an item and closes the menu', async () => {
+      // Enter on a menu item is the native activation of its button (a click); a synthetic keydown cannot drive it.
+      key(tabs()[3], 'ContextMenu');
+      await settle();
+      await settle();
+      expect(menuItems()[0].matches(':focus')).toBe(true);
+      menuItems()[0].click();
+      await settle();
+      expect(host.log).toEqual(['menu:d:close']);
+      expect(menuItems()).toEqual([]);
+    });
+
+    it('reopens at the new tab on a right click on another tab while open', async () => {
+      await rightClick(0);
+      tabs()[2].dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true }));
+      await settle();
+      expect(menuItems().length).toBe(3);
+      menuItems()[1].click();
+      await settle();
+      expect(host.log).toEqual(['menu:c:only-c']);
+    });
+
+    it('stays open with the same entries on a right click on the same tab again', async () => {
+      await rightClick(3);
+      await rightClick(3);
+      expect(menuItems().length).toBe(2);
+      tabs()[3].dispatchEvent(new MouseEvent('auxclick', { bubbles: true, button: 2 }));
+      await settle();
+      expect(menuItems().length).toBe(2);
+    });
+
+    it('closes on a middle click while open', async () => {
+      await rightClick(3);
+      document.body.dispatchEvent(new MouseEvent('auxclick', { bubbles: true, button: 1 }));
+      await settle();
+      expect(menuItems()).toEqual([]);
+    });
+
+    it('stays open through the release of a macOS ctrl+click that opened it', async () => {
+      await rightClick(3);
+      tabs()[3].dispatchEvent(new MouseEvent('click', { bubbles: true, button: 0, ctrlKey: true }));
+      await settle();
+      expect(menuItems().length).toBe(2);
+    });
+
+    it('closes on a plain left click on the opener tab', async () => {
+      await rightClick(3);
+      tabs()[3].dispatchEvent(new MouseEvent('click', { bubbles: true, button: 0 }));
+      await settle();
+      expect(menuItems()).toEqual([]);
+    });
+
     it('reports the chosen action with the tab id and closes the menu', async () => {
       await rightClick(3);
       menuItems()[0].click();

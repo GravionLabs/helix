@@ -32,8 +32,8 @@ export interface HxMenuPoint {
  *
  * An item with children and no action of its own, on the first level, is a group heading above its children; deeper
  * levels open as submenus. A popup menu opens at the element that called `toggle(event)` (or `show(event)`), or at a
- * point with `showAt({ x, y })` (a context menu), moves the
- * focus into the menu and returns it to that element on Escape or when an item is chosen.
+ * point with `showAt({ x, y })` (a context menu), moves the focus into the menu and returns it to that element on
+ * Escape or when an item is chosen.
  *
  * Keyboard (the WAI-ARIA menu pattern from the CDK): Arrow Down/Up move, Home and End jump, typing jumps by
  * label, Right or Enter opens a submenu and Left closes it, Enter or Space activates, Escape closes.
@@ -140,6 +140,15 @@ export class HxMenu {
 
   protected onOutsideClick(event: MouseEvent): void {
     const origin = this.origin();
-    if (!(origin instanceof Element && origin.contains(event.target as Node))) this.hide(false);
+    const target = event.target as Node;
+    // The release of the gesture that opened a context menu is not an outside click: the right click arrives as
+    // `auxclick` (button 2), the macOS ctrl+click as `click` (button 0, ctrl) on the opener. A menu opened by `showAt`
+    // without `returnFocus` has no opener to recognise, so it treats every such event as an outside click.
+    const releaseOfOpener =
+      (event.type === 'auxclick' && event.button === 2) ||
+      (event.type === 'click' && event.button === 0 && event.ctrlKey);
+    if (releaseOfOpener && !(origin instanceof Element) && this.#returnFocus?.contains(target))
+      return;
+    if (!(origin instanceof Element && origin.contains(target))) this.hide(false);
   }
 }
