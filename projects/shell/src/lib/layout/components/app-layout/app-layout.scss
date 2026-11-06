@@ -34,7 +34,8 @@
   overflow: hidden;
   box-sizing: border-box;
   background: var(--h-content-background);
-  border: 1px solid var(--h-content-border-color);
+  --helix-panel-border-width: 1px;
+  border: var(--helix-panel-border-width) solid var(--h-content-border-color);
   border-radius: var(--helix-panel-radius);
 }
 
@@ -44,6 +45,11 @@
   overflow: auto;
   box-sizing: border-box;
   padding: var(--helix-layout-gap);
+  // Below the page header: the same distance as from the nav rail to the content (panel gap, panel
+  // border, layout gap), so the content sits equally far from the rail and from the header.
+  padding-top: calc(
+    var(--helix-panel-gap) + var(--helix-panel-border-width) + var(--helix-layout-gap)
+  );
 }
 
 // ===== STATUS BAR (fixed bottom) =====
@@ -120,8 +126,14 @@
     }
 
     .layout-panel {
+      --helix-panel-border-width: 0px;
       border: 0;
       border-radius: 0;
+    }
+
+    // No frame gap or panel border here: the content keeps the layout gap on every side.
+    .layout-main {
+      padding-top: var(--helix-layout-gap);
     }
 
     // The overlay rail is flush with the window: no gap, radius or panel border.
