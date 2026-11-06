@@ -2,6 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/GravionLabs/skills/main/skills/shared/implementation/schema/config.schema.json",
   "governance": {
     "adrDir": "docs/adr",
-    "adrPaths": ["projects/*/src/**", "apps/*/src/**"]
+    "adrPaths": [
+      "projects/*/src/public-api.ts",
+      "projects/tokens/src/**",
+      "projects/ui/src/lib/theme/**"
+    ]
   }
 }

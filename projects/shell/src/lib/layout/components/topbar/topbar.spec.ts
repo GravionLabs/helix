@@ -47,6 +47,12 @@ describe('HelixTopbar', () => {
     expect(component.store).toBe(store);
   });
 
+  it('should stack above the page content so its panels are not covered', () => {
+    const style = getComputedStyle(fixture.nativeElement as HTMLElement);
+    expect(style.position).toBe('relative');
+    expect(Number(style.zIndex)).toBeGreaterThan(0);
+  });
+
   describe('breadcrumbs', () => {
     it('should have default effectiveBreadcrumbs empty', () => {
       const privateComp = component as unknown as HelixTopbarPrivate;
