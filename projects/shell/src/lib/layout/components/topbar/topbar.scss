@@ -21,15 +21,18 @@
   height: var(--helix-topbar-height, 3rem);
   padding: 0 var(--helix-panel-gap, 4px) 0 1rem;
   border-bottom: 1px solid var(--h-content-border-color);
-  display: flex;
+  // Three zones: start (toggle, breadcrumb or title), center, end. The side columns share the free
+  // width equally, so the center zone stays centered.
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 0.75rem;
 
   .layout-topbar-start {
+    grid-column: 1;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    flex: 1;
     min-width: 0;
   }
 
@@ -43,50 +46,34 @@
     color: var(--text-color);
   }
 
-  // May give way to the breadcrumbs' minimum width; only the slot inside it shrinks.
-  .layout-topbar-end {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-width: 0;
-  }
-
-  // [helixTopbarEnd] projection: the header has a fixed height, so the slot shrinks and scrolls
-  // instead of wrapping. overflow-y is hidden rather than auto to avoid a vertical scrollbar; the
-  // vertical padding keeps the default focus ring (1px + 2px offset) inside the clip box.
-  .layout-topbar-slot {
+  // Actions are icon buttons or fields; the header has a fixed height, so a zone never wraps.
+  .layout-topbar-zone {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    flex: 1 1 auto;
     min-width: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-block: 0.25rem;
-    scrollbar-width: thin;
-
-    // A projected text field takes the chrome control height; its look comes from `hx-input`.
-    input.hx-input {
-      height: var(--helix-control-height, 32px);
-      padding-block: 0;
-    }
-
-    // No projected element: collapse the wrapper so the flex gap does not apply.
-    // Not :empty, because projected control-flow blocks leave comment anchors behind.
-    &:not(:has(*)) {
-      display: none;
-    }
   }
 
-  // With projected content the end cluster takes the free width instead of the start part, so a
-  // growing slot control (e.g. a filter bar) can stretch up to the breadcrumbs.
-  &:has(.layout-topbar-slot > *) {
-    .layout-topbar-start {
-      flex: 0 1 auto;
-    }
+  .layout-topbar-zone-start {
+    margin-left: auto;
+  }
+
+  .layout-topbar-center {
+    grid-column: 2;
+    width: clamp(10rem, 30vw, 28rem);
+  }
+
+  .layout-topbar-end {
+    grid-column: 3;
+    justify-content: flex-end;
+  }
+
+  // Narrow: no center column; the center actions already render in the end zone.
+  &.layout-topbar-narrow {
+    grid-template-columns: minmax(0, 1fr) auto;
 
     .layout-topbar-end {
-      flex: 1 1 auto;
+      grid-column: 2;
     }
   }
 
@@ -131,7 +118,7 @@
       display: none;
     }
 
-    // Breadcrumbs keep a readable width; a wide slot gives way before them.
+    // Breadcrumbs keep a readable width; the zones give way before them.
     .layout-topbar-start {
       min-width: 12rem;
     }

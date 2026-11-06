@@ -7,6 +7,7 @@ import {
   type ElementRef,
   inject,
   input,
+  output,
   type TemplateRef,
   ViewEncapsulation,
   viewChild,
@@ -27,8 +28,9 @@ import type { HelixNavGroup } from '../nav-rail/nav-rail.model';
 import { type HelixNavStyle, helixNavGroupsFromMenu } from '../nav-rail/nav-rail.model';
 import { HelixStatusBar } from '../status-bar/status-bar';
 import type { HelixStatusBarTone, HelixStatusBarVersion } from '../status-bar/status-bar.model';
+import type { AlertItem } from '../topbar/actions/alert-action';
 import { HelixTopbar } from '../topbar/topbar';
-import type { HelixTopbarAction, HelixTopbarItem } from '../topbar/topbar.model';
+import type { HelixTopbarActionConfig } from '../topbar/topbar.model';
 
 @Component({
   selector: 'helix-app-layout',
@@ -46,11 +48,21 @@ export class HelixAppLayout {
   /** Page title of the header where there is no breadcrumb trail. Defaults to the route title. */
   pageTitle = input<string | undefined>();
 
-  /** Global actions of the nav rail footer. When provided, overrides the default darkmode / configurator / mobile items. */
-  topbarItems = input<HelixTopbarItem[] | undefined>();
+  /**
+   * Actions of the topbar, each with the zone it renders in (`start`, `center`, `end`).
+   * Without input the default toolbar renders; `[]` renders no actions. Use
+   * `defineTopbarActions` to change single entries of `HELIX_DEFAULT_TOPBAR_ACTIONS`.
+   */
+  topbarActions = input<HelixTopbarActionConfig[] | undefined>();
 
-  /** Entries of the ellipsis menu in the nav rail footer. */
-  topbarActions = input<HelixTopbarAction[] | undefined>();
+  /** Alert items of the `alerts` action; the default toolbar shows alerts when there are any. */
+  alerts = input<AlertItem[]>([]);
+
+  /** Placeholder of the `search` action. */
+  searchPlaceholder = input('Search');
+
+  /** Text of the `search` action, on every input. */
+  readonly search = output<string>();
 
   /**
    * Nav-rail brand icon: inline SVG (`<svg>…</svg>`) or a URL to an SVG file.
@@ -80,12 +92,6 @@ export class HelixAppLayout {
   /** Explicit nav groups. When provided, they win over the mapping of `menu`. */
   navGroups = input<HelixNavGroup[] | undefined>();
 
-  private static readonly DEFAULT_TOP_ACTIONS: HelixTopbarAction[] = [
-    { icon: 'pi pi-calendar', label: 'Calendar' },
-    { icon: 'pi pi-inbox', label: 'Messages' },
-    { icon: 'pi pi-user', label: 'Profile' },
-  ];
-
   store = inject(LayoutStore);
   private activatedRoute = inject(ActivatedRoute);
 
@@ -107,16 +113,6 @@ export class HelixAppLayout {
     if (input !== undefined) return input;
     return this.activatedRoute.snapshot.data['environment'];
   });
-
-  protected effectiveItems = computed<HelixTopbarItem[]>(() => {
-    const custom = this.topbarItems();
-    if (custom !== undefined) return custom;
-    return [{ type: 'darkmode' }, { type: 'configurator' }, { type: 'mobile' }];
-  });
-
-  protected effectiveTopbarActions = computed(
-    () => this.topbarActions() ?? HelixAppLayout.DEFAULT_TOP_ACTIONS,
-  );
 
   /** The scrolling content panel; the document itself no longer scrolls. */
   private mainPanel = viewChild<ElementRef<HTMLElement>>('mainPanel');

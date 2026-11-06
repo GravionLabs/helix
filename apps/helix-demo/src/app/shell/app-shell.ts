@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import type { HelixStatusBarVersion } from '@gravionlabs/helix-shell';
 import { HelixAppLayout, LayoutStore } from '@gravionlabs/helix-shell';
-import { HxInput } from '@gravionlabs/helix-ui';
 import { HighlightLoader } from 'ngx-highlightjs';
 import { BUILD_VERSION } from './build-info';
 import { DemoSettings } from './demo-settings';
@@ -10,7 +9,7 @@ import { DEMO_MENU_MODEL } from './menu.model';
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [HelixAppLayout, HxInput],
+  imports: [HelixAppLayout],
   templateUrl: './app-shell.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app-shell.scss',

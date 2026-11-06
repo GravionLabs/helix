@@ -77,3 +77,35 @@ New in `projects/shell/styles-src.css`: `--helix-panel-gap` (4px), `--helix-pane
 - [ ] Layout checked at 320px, 991px and 992px and above.
 
 Apps such as poimen follow the same steps and checklist.
+
+## Topbar actions (22.3)
+
+**Breaking** (#1044). The global actions moved again: from the nav rail footer into the page header, as one configurable list. The nav rail keeps only navigation and the collapse toggle.
+
+| Before                                                         | Now                                                                                                                  |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `topbarItems` (`darkmode`, `configurator`, `alert`, `action`)  | `topbarActions` entries `darkMode`, `configurator`, `alerts` (items via the `alerts` input), custom template actions |
+| `topbarActions: HelixTopbarAction[]` (ellipsis menu)           | Removed. `topbarActions` now takes `HelixTopbarActionConfig[]`; move menu entries to custom template actions         |
+| `helix-nav-rail` inputs `items`, `menuActions`, `menuLabel`    | Removed                                                                                                              |
+| `HelixTopbarItem`, `HelixTopbarItemType`, `HelixTopbarAction`  | Removed; use `HelixTopbarActionConfig`                                                                               |
+| `[helixTopbarEnd]` slot of `helix-app-layout` / `helix-topbar` | Removed, no deprecated path. Use a custom template action                                                            |
+
+Steps:
+
+1. Drop `topbarItems`. The default toolbar already shows search (center) plus dark mode and configurator (end); pass `[alerts]` to add the alerts action. Change single entries with `defineTopbarActions(HELIX_DEFAULT_TOPBAR_ACTIONS, [...])`.
+2. Move every control projected into `[helixTopbarEnd]` into an `<ng-template>` and list it as `{ action: { id: 'my-control', template }, position: 'end' }` (or `start` / `center`). A filter field becomes the built-in `search` action (listen to `(search)`).
+3. Replace ellipsis-menu entries with custom template actions (for example an icon button per entry).
+4. `[]` renders no actions. The center zone folds into the end zone up to 991px.
+5. Remove CSS that targeted `.layout-topbar-slot`, `.helix-nav-rail-actions` or `.helix-nav-rail-menu*`.
+
+```html
+<!-- before -->
+<helix-app-layout [topbarItems]="items" [topbarActions]="menu">
+  <input helixTopbarEnd hx-input type="search" aria-label="Filter" />
+</helix-app-layout>
+
+<!-- now -->
+<helix-app-layout [topbarActions]="actions" (search)="filter($event)" />
+```
+
+See [topbar actions](HELIX-SHELL.md#topbar-actions) in the shell reference.

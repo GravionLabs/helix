@@ -48,42 +48,6 @@ describe('HelixAppLayout', () => {
     expect(component.appTitle()).toBe('MY APP');
   });
 
-  it('effectiveItems() should include darkmode, configurator, mobile by default', () => {
-    const priv = component as unknown as { effectiveItems: () => { type: string }[] };
-    const items = priv.effectiveItems();
-    expect(items.length).toBe(3);
-    expect(items[0].type).toBe('darkmode');
-    expect(items[1].type).toBe('configurator');
-    expect(items[2].type).toBe('mobile');
-  });
-
-  it('effectiveItems() should return custom items when topbarItems input is set', () => {
-    const custom = [
-      { type: 'action' as const, icon: 'pi pi-bell', label: 'Alerts', command: () => {} },
-    ];
-    fixture.componentRef.setInput('topbarItems', custom);
-    const priv = component as unknown as { effectiveItems: () => { type: string }[] };
-    expect(priv.effectiveItems()).toEqual(custom);
-  });
-
-  it('effectiveTopbarActions() should return default actions when topbarActions not set', () => {
-    const priv = component as unknown as {
-      effectiveTopbarActions: () => { icon: string; label: string }[];
-    };
-    const actions = priv.effectiveTopbarActions();
-    expect(actions.length).toBe(3);
-    expect(actions[0].icon).toBe('pi pi-calendar');
-  });
-
-  it('effectiveTopbarActions() should return custom actions when topbarActions input is set', () => {
-    const custom = [{ icon: 'pi pi-cog', label: 'Settings', command: () => {} }];
-    fixture.componentRef.setInput('topbarActions', custom);
-    const priv = component as unknown as {
-      effectiveTopbarActions: () => { icon: string; label: string }[];
-    };
-    expect(priv.effectiveTopbarActions()).toEqual(custom);
-  });
-
   it('brandIcon() should reflect input', () => {
     expect(component.brandIcon()).toBeUndefined();
     fixture.componentRef.setInput('brandIcon', '<svg><path d="..." /></svg>');
@@ -210,9 +174,6 @@ describe('HelixAppLayout', () => {
   template: `
     <ng-template #tpl>Docs <a href="/docs">here</a></ng-template>
     <helix-app-layout [statusBarNote]="useTemplate() ? tpl : 'Plain note'">
-      @if (withTopbarEnd()) {
-        <input helixTopbarEnd aria-label="Filter" />
-      }
       @if (withEnd()) {
         <button hxStatusBarEnd type="button">Help</button>
       }
@@ -222,7 +183,6 @@ describe('HelixAppLayout', () => {
 class LayoutHostComponent {
   useTemplate = signal(false);
   withEnd = signal(true);
-  withTopbarEnd = signal(true);
 }
 
 describe('HelixAppLayout status bar forwarding', () => {
@@ -290,15 +250,9 @@ describe('HelixAppLayout status bar forwarding', () => {
 
 describe('HelixAppLayout topbar forwarding', () => {
   let fixture: ComponentFixture<LayoutHostComponent>;
-  let host: LayoutHostComponent;
 
-  const topbar = (): HTMLElement => fixture.nativeElement.querySelector('helix-topbar');
-  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
-
-  async function render(): Promise<void> {
-    fixture.detectChanges();
-    await fixture.whenStable();
-  }
+  const centerSearch = (): HTMLElement | null =>
+    fixture.nativeElement.querySelector('.layout-topbar-center helix-search-action');
 
   beforeEach(async () => {
     localStorage.clear();
@@ -307,70 +261,35 @@ describe('HelixAppLayout topbar forwarding', () => {
       providers: [provideRouter([])],
     })
       .overrideComponent(HelixAppLayout, {
-        // Topbar, nav-rail and router-outlet are left unknown (their CSS chokes jsdom), so the
-        // projected node is rendered as a direct child of the <helix-topbar> element.
-        set: { imports: [], styles: [], schemas: [NO_ERRORS_SCHEMA] },
-      })
-      .compileComponents();
-    fixture = TestBed.createComponent(LayoutHostComponent);
-    host = fixture.componentInstance;
-  });
-
-  it('projects [helixTopbarEnd] content into helix-topbar', async () => {
-    await render();
-    expect(topbar().contains(filter())).toBe(true);
-    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
-  });
-
-  it('renders nothing inside helix-topbar when no content is projected', async () => {
-    host.withTopbarEnd.set(false);
-    await render();
-    expect(filter()).toBeNull();
-    expect(topbar().children.length).toBe(0);
-  });
-});
-
-describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
-  let fixture: ComponentFixture<LayoutHostComponent>;
-  let host: LayoutHostComponent;
-
-  const slot = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-slot');
-  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
-
-  async function render(): Promise<void> {
-    fixture.detectChanges();
-    await fixture.whenStable();
-  }
-
-  beforeEach(async () => {
-    localStorage.clear();
-    await TestBed.configureTestingModule({
-      imports: [LayoutHostComponent],
-      providers: [provideRouter([])],
-    })
-      .overrideComponent(HelixAppLayout, {
-        // Real topbar so ngProjectAs is exercised end-to-end; nav-rail and router-outlet stay
-        // unknown (their CSS chokes jsdom), hence the schema.
+        // Real topbar; nav-rail and router-outlet stay unknown (their CSS chokes jsdom).
         set: { imports: [HelixTopbar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
       })
       .compileComponents();
     fixture = TestBed.createComponent(LayoutHostComponent);
-    host = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('lands [helixTopbarEnd] content inside the topbar slot wrapper', async () => {
-    await render();
-    expect(slot().contains(filter())).toBe(true);
-    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
+  it('renders the default toolbar when topbarActions is not set', () => {
+    expect(centerSearch()).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.layout-topbar-end helix-dark-mode-action'),
+    ).toBeTruthy();
   });
 
-  it('leaves the topbar slot wrapper empty when nothing is projected', async () => {
-    host.withTopbarEnd.set(false);
-    await render();
-    expect(filter()).toBeNull();
-    // The host's @if anchor comment is projected too, so only element children count.
-    expect(slot().children.length).toBe(0);
-    expect(slot().matches(':not(:has(*))')).toBe(true);
+  it('no longer projects [helixTopbarEnd] content', () => {
+    expect(fixture.nativeElement.querySelector('[helixTopbarEnd]')).toBeNull();
+  });
+
+  it('forwards the typed search text as the search output', async () => {
+    const texts: string[] = [];
+    fixture.debugElement.children[0].componentInstance.search.subscribe((t: string) =>
+      texts.push(t),
+    );
+    const input = centerSearch()?.querySelector('input') as HTMLInputElement;
+    input.value = 'abc';
+    input.dispatchEvent(new Event('input'));
+    expect(texts).toEqual(['abc']);
   });
 });
 

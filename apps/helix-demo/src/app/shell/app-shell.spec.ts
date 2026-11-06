@@ -22,7 +22,7 @@ describe('AppShell', () => {
     ]);
   });
 
-  it('projects the topbar filter as an hx-input text field', async () => {
+  it('renders the filter as the search action of the default toolbar', async () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
@@ -32,8 +32,10 @@ describe('AppShell', () => {
     const fixture = TestBed.createComponent(AppShell);
     await fixture.whenStable();
 
-    const filter = (fixture.nativeElement as HTMLElement).querySelector('input.topbar-filter');
+    const filter = (fixture.nativeElement as HTMLElement).querySelector(
+      '.layout-topbar-center helix-search-action input.hx-input',
+    );
 
-    expect(filter?.classList.contains('hx-input')).toBe(true);
+    expect(filter).not.toBeNull();
   });
 });

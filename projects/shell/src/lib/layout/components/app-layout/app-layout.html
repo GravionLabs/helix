@@ -3,14 +3,17 @@
     [model]="effectiveNavGroups()"
     [appTitle]="appTitle()"
     [brandIcon]="brandIcon()"
-    [items]="effectiveItems()"
-    [menuActions]="effectiveTopbarActions()"
   ></helix-nav-rail>
   <div class="layout-main-container">
     <div class="layout-panel">
-      <helix-topbar [pageTitle]="pageTitle()" [appTitle]="appTitle()">
-        <ng-content select="[helixTopbarEnd]" ngProjectAs="[helixTopbarEnd]" />
-      </helix-topbar>
+      <helix-topbar
+        [pageTitle]="pageTitle()"
+        [appTitle]="appTitle()"
+        [actions]="topbarActions()"
+        [alerts]="alerts()"
+        [searchPlaceholder]="searchPlaceholder()"
+        (search)="search.emit($event)"
+      />
       <div
         #mainPanel
         class="layout-main"

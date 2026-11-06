@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal, type TemplateRef, viewChild } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
+import type { AlertItem } from './actions/alert-action';
 import { HelixTopbar } from './topbar';
+import { defineTopbarActions, type HelixTopbarActionConfig } from './topbar.model';
 
 type HelixTopbarPrivate = {
   effectiveBreadcrumbs: () => HxMenuItem[];
@@ -101,14 +103,6 @@ describe('HelixTopbar', () => {
       expect(fixture.nativeElement.querySelector('hx-breadcrumb')).toBeTruthy();
       expect(title()).toBeNull();
     });
-
-    it('renders no global actions: they live in the nav rail', () => {
-      fixture.detectChanges();
-      const el = fixture.nativeElement as HTMLElement;
-      expect(
-        el.querySelector('.layout-config-menu, .layout-topbar-menu, helix-dark-mode-action'),
-      ).toBeNull();
-    });
   });
 
   describe('menu button', () => {
@@ -154,43 +148,188 @@ describe('HelixTopbar', () => {
 @Component({
   imports: [HelixTopbar],
   template: `
-    <helix-topbar>
-      <button helixTopbarEnd type="button" class="end-slot">End</button>
-    </helix-topbar>
+    <ng-template #tplA><button type="button" class="custom-a">A</button></ng-template>
+    <ng-template #tplB><button type="button" class="custom-b">B</button></ng-template>
+    <helix-topbar [actions]="actions()" [alerts]="alerts()" />
   `,
 })
-class TopbarEndHostComponent {}
+class TopbarActionsHostComponent {
+  tplA = viewChild.required<TemplateRef<unknown>>('tplA');
+  tplB = viewChild.required<TemplateRef<unknown>>('tplB');
+  actions = signal<HelixTopbarActionConfig[] | undefined>(undefined);
+  alerts = signal<AlertItem[]>([]);
+}
 
-describe('HelixTopbar [helixTopbarEnd] slot', () => {
-  beforeEach(async () => {
-    localStorage.clear();
-    await TestBed.configureTestingModule({
-      imports: [TopbarEndHostComponent, HelixTopbar],
-      providers: [provideRouter([])],
-    }).compileComponents();
-  });
+describe('HelixTopbar actions', () => {
+  let fixture: ComponentFixture<TopbarActionsHostComponent>;
+  let host: TopbarActionsHostComponent;
+  let narrowQuery: { matches: boolean; listener?: (e: { matches: boolean }) => void };
 
-  const render = async <T>(type: new () => T): Promise<HTMLElement> => {
-    const fixture = TestBed.createComponent(type);
+  const root = (): HTMLElement => fixture.nativeElement;
+  const zone = (name: string): HTMLElement | null => root().querySelector(`.layout-topbar-${name}`);
+  const tags = (name: string): string[] =>
+    Array.from(
+      zone(name)?.querySelectorAll(
+        'helix-search-action, helix-dark-mode-action, helix-configurator-action, helix-alert-action',
+      ) ?? [],
+    ).map((el) => el.tagName.toLowerCase());
+
+  async function render(): Promise<void> {
     fixture.detectChanges();
     await fixture.whenStable();
-    return fixture.nativeElement as HTMLElement;
-  };
+    fixture.detectChanges();
+  }
 
-  it('renders projected content in the end cluster of the header', async () => {
-    const root = await render(TopbarEndHostComponent);
-    const end = root.querySelector('.end-slot') as HTMLElement;
-
-    expect(root.querySelector('.layout-topbar-end')?.contains(end)).toBe(true);
-    expect(root.querySelector('.layout-topbar-slot')?.contains(end)).toBe(true);
+  beforeEach(async () => {
+    localStorage.clear();
+    narrowQuery = { matches: false };
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => ({
+        get matches() {
+          return narrowQuery.matches;
+        },
+        addEventListener: (_: string, l: (e: { matches: boolean }) => void) => {
+          narrowQuery.listener = l;
+        },
+        removeEventListener: () => undefined,
+      })),
+    );
+    await TestBed.configureTestingModule({
+      imports: [TopbarActionsHostComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
+    fixture = TestBed.createComponent(TopbarActionsHostComponent);
+    host = fixture.componentInstance;
   });
 
-  it('leaves the slot wrapper empty without projected content', async () => {
-    const root = await render(HelixTopbar);
-    const slot = root.querySelector('.layout-topbar-slot') as HTMLElement;
+  afterEach(() => vi.unstubAllGlobals());
 
-    expect(slot).toBeTruthy();
-    expect(slot.children.length).toBe(0);
-    expect(slot.matches(':not(:has(*))')).toBe(true);
+  it('renders the default toolbar: search in the center, dark mode and configurator at the end', async () => {
+    await render();
+    expect(zone('center')?.querySelector('helix-search-action')).not.toBeNull();
+    expect(tags('end')).toEqual(['helix-dark-mode-action', 'helix-configurator-action']);
+    expect(zone('center')?.querySelector('input.hx-input')).not.toBeNull();
+  });
+
+  it('adds alerts to the default toolbar when alert items are given', async () => {
+    host.alerts.set([{ id: '1', label: 'Down', severity: 'error' }]);
+    await render();
+    expect(tags('end')).toEqual([
+      'helix-dark-mode-action',
+      'helix-configurator-action',
+      'helix-alert-action',
+    ]);
+  });
+
+  it('renders no actions and no zones for []', async () => {
+    host.actions.set([]);
+    await render();
+    expect(zone('center')).toBeNull();
+    expect(zone('end')).toBeNull();
+    expect(root().querySelector('helix-dark-mode-action, helix-search-action')).toBeNull();
+  });
+
+  it('defaults position to end and places entries by position', async () => {
+    host.actions.set([
+      { action: 'darkMode' },
+      { action: 'search', position: 'center' },
+      { action: 'configurator', position: 'start' },
+    ]);
+    await render();
+    expect(zone('zone-start')?.querySelector('helix-configurator-action')).not.toBeNull();
+    expect(zone('center')?.querySelector('helix-search-action')).not.toBeNull();
+    expect(zone('end')?.querySelector('helix-dark-mode-action')).not.toBeNull();
+  });
+
+  it('sorts by order within a position and keeps list order for equal order', async () => {
+    host.actions.set([
+      { action: 'configurator', order: 2 },
+      { action: 'alerts', order: 1 },
+      { action: 'darkMode', order: 1 },
+    ]);
+    await render();
+    expect(tags('end')).toEqual([
+      'helix-alert-action',
+      'helix-dark-mode-action',
+      'helix-configurator-action',
+    ]);
+  });
+
+  it('skips hidden entries', async () => {
+    host.actions.set([{ action: 'darkMode', hidden: true }, { action: 'configurator' }]);
+    await render();
+    expect(tags('end')).toEqual(['helix-configurator-action']);
+  });
+
+  it('renders a custom template action in its zone', async () => {
+    host.actions.set([
+      { action: { id: 'a', template: host.tplA() }, position: 'center' },
+      { action: { id: 'b', template: host.tplB() } },
+    ]);
+    await render();
+    expect(zone('center')?.querySelector('button.custom-a')).not.toBeNull();
+    expect(zone('end')?.querySelector('button.custom-b')).not.toBeNull();
+  });
+
+  it('keeps the menu toggle and the title in the start zone regardless of actions', async () => {
+    host.actions.set([]);
+    await render();
+    expect(zone('start')?.querySelector('.layout-menu-button')).not.toBeNull();
+    expect(zone('start')?.querySelector('.layout-topbar-title')).not.toBeNull();
+  });
+
+  describe('narrow screens', () => {
+    it('folds the center actions into the end zone', async () => {
+      narrowQuery.matches = true;
+      await render();
+      expect(zone('center')).toBeNull();
+      expect(zone('end')?.querySelector('helix-search-action')).not.toBeNull();
+    });
+
+    it('follows the viewport when it crosses the breakpoint', async () => {
+      await render();
+      expect(zone('center')).not.toBeNull();
+      narrowQuery.listener?.({ matches: true });
+      await render();
+      expect(zone('center')).toBeNull();
+      expect(zone('end')?.querySelector('helix-search-action')).not.toBeNull();
+    });
+  });
+});
+
+describe('defineTopbarActions', () => {
+  const defaults: HelixTopbarActionConfig[] = [
+    { action: 'search', position: 'center' },
+    { action: 'darkMode', position: 'end', order: 1 },
+  ];
+
+  it('changes single fields of the matching entry and keeps the rest', () => {
+    const result = defineTopbarActions(defaults, [{ action: 'darkMode', hidden: true }]);
+    expect(result).toEqual([
+      { action: 'search', position: 'center' },
+      { action: 'darkMode', position: 'end', order: 1, hidden: true },
+    ]);
+  });
+
+  it('appends an override without a match', () => {
+    const result = defineTopbarActions(defaults, [{ action: 'alerts', position: 'start' }]);
+    expect(result.at(-1)).toEqual({ action: 'alerts', position: 'start' });
+    expect(result.length).toBe(3);
+  });
+
+  it('matches custom actions by id and does not mutate the defaults', () => {
+    const template = {} as TemplateRef<unknown>;
+    const base: HelixTopbarActionConfig[] = [{ action: { id: 'x', template } }];
+    const result = defineTopbarActions(base, [{ action: { id: 'x', template }, order: 5 }]);
+    expect(result.length).toBe(1);
+    expect(result[0].order).toBe(5);
+    expect(base[0].order).toBeUndefined();
+  });
+
+  it('returns a copy of the defaults without overrides', () => {
+    const result = defineTopbarActions(defaults);
+    expect(result).toEqual(defaults);
+    expect(result).not.toBe(defaults);
   });
 });
