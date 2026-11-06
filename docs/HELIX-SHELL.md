@@ -137,6 +137,10 @@ The shell is laid out as a **frame** with **inset panels**. There is exactly one
 - **Global actions** (search, dark mode, configurator, alerts, custom actions) live in the page header, configured by `topbarActions` (see [topbar actions](#topbar-actions)). The footer of the nav rail holds only the **collapse toggle**.
 - **Below 992px** the content panel goes edge to edge (no gap, radius or border) and the nav rail is an overlay drawer opened by the menu toggle in the page header.
 
+![The demo shell in the light theme: frame ground, inset nav rail and content panel with the page header, flat status bar](/screenshots/inset-shell-light.png)
+
+![The demo shell in the dark theme](/screenshots/inset-shell-dark.png)
+
 Moving an existing app from the previous shell: see the [inset shell migration notes](MIGRATION-inset-shell.md).
 
 #### Layout tokens
