@@ -30,7 +30,7 @@ Check the visual points below.
 
 ### `helix-topbar` (direct users only)
 
-- Removed inputs: `items`, `menuLabel`; `topbarActions` now takes `HelixTopbarActionConfig[]`.
+- Removed inputs: `items`, `menuLabel`; the `topbarActions` input (ellipsis menu) is now `actions` and takes `HelixTopbarActionConfig[]`.
 - New inputs: `pageTitle`, `alerts`.
 - Removed elements: `layout-config-menu`, `layout-topbar-menu`, `layout-topbar-menu-button`.
 
@@ -39,7 +39,7 @@ Check the visual points below.
 <helix-topbar [items]="items" [topbarActions]="actions" menuLabel="More" />
 
 <!-- now -->
-<helix-topbar pageTitle="Reports" [topbarActions]="actions" />
+<helix-topbar pageTitle="Reports" [actions]="actions" />
 ```
 
 ### `helix-nav-rail`
@@ -57,7 +57,7 @@ New in `projects/shell/styles-src.css`: `--helix-panel-gap` (4px), `--helix-pane
 
 ## Migration steps
 
-1. Upgrade `@gravionlabs/helix-shell` and run the app; with `<helix-app-layout>` the new layout applies without code changes.
+1. Upgrade `@gravionlabs/helix-shell` and run the app; with `<helix-app-layout>` the new layout applies without code changes unless you use the removed APIs (`topbarItems`, `[helixTopbarEnd]`, nav-rail `items`/`menuActions`/`menuLabel`).
 2. Move global actions into `topbarActions` (`HelixTopbarActionConfig[]`); follow [Topbar actions (22.3)](#topbar-actions-223) below.
 3. Page header: give pages without a breadcrumb trail a route `title` (or set `pageTitle`), so the header start is not just the app title.
 4. Controls that were projected into `[helixTopbarEnd]` become custom template actions; text fields inside them need `hx-input` and the `HxInput` directive import in the consuming component.
