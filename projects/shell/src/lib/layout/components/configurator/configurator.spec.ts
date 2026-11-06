@@ -121,6 +121,14 @@ describe('HelixConfigurator', () => {
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Density');
   });
 
+  it('places the Density chooser directly after the Primary colour', () => {
+    fixture.detectChanges();
+    const labels = [...(fixture.nativeElement as HTMLElement).querySelectorAll('span')].map((s) =>
+      s.textContent?.trim(),
+    );
+    expect(labels.indexOf('Density')).toBe(labels.indexOf('Primary') + 1);
+  });
+
   it('onMenuModeChange("overlay") should call store.setMenuMode("overlay")', () => {
     component.onMenuModeChange('overlay');
     expect(store.menuMode()).toBe('overlay');

@@ -142,7 +142,7 @@ function surfaceCss(surface: HxSurface, dark: string): string {
  * writes nothing: it is the values of `tokens.css` and the shell styles.
  */
 const COMPACT_CSS =
-  ':root:root{font-size:13px;--helix-layout-gap:1rem;--helix-panel-gap:4px;' +
+  ':root:root{font-size:13px;--helix-layout-gap:1rem;' +
   '--helix-control-height:28px;--helix-status-bar-height:24px;}';
 
 /**

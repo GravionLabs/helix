@@ -260,7 +260,7 @@ describe('HxTheme', () => {
       const css = sheet() ?? '';
       expect(css).toContain('font-size:13px');
       expect(css).toContain('--helix-layout-gap:1rem;');
-      expect(css).toContain('--helix-panel-gap:4px;');
+      expect(css).not.toContain('--helix-panel-gap');
       expect(css).toContain('--helix-control-height:28px;');
       expect(css).toContain('--helix-status-bar-height:24px;');
       theme.setDensity('comfortable');
