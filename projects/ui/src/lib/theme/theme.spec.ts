@@ -47,6 +47,7 @@ describe('HxTheme', () => {
     expect(theme.dark()).toBe(false);
     expect(theme.primary()).toBeNull();
     expect(theme.surface()).toBeNull();
+    expect(theme.density()).toBe('comfortable');
     expect(theme.css()).toBe('');
     expect(html.classList).not.toContain('app-dark');
   });
@@ -243,6 +244,176 @@ describe('HxTheme', () => {
     });
   });
 
+  describe('presets', () => {
+    const own = {
+      primary: 'teal',
+      surface: 'stone',
+      density: 'compact',
+    } as const;
+
+    it('is helix by default: no override at all', () => {
+      const theme = setup();
+      expect(theme.preset()).toBe('helix');
+      expect(theme.presetNames).toEqual(['helix', 'vitepress', 'compact']);
+      expect(theme.css()).toBe('');
+      expect(theme.density()).toBe('comfortable');
+      expect(theme.activePrimary()).toBe('indigo');
+    });
+
+    it('vitepress writes its own 11-step primary scale and nothing else', () => {
+      const theme = setup({ preset: 'vitepress' });
+      const css = theme.css();
+      expect(css).toContain('--h-primary-600:#3451b2;');
+      expect(css).toContain('--h-primary-400:#a8b1ff;');
+      expect(css.match(/--h-primary-\d+:/g)).toHaveLength(11);
+      expect(css).not.toContain('font-size');
+      expect(css).not.toContain('--h-surface-');
+      expect(theme.activePrimary()).toBeNull(); // a scale, not a named colour
+      expect(theme.primary()).toBeNull(); // not the user's choice
+    });
+
+    it('compact is helix with the compact density', () => {
+      const theme = setup({ preset: 'compact' });
+      expect(theme.density()).toBe('compact');
+      expect(theme.css()).toContain('font-size:13px');
+      expect(theme.css()).not.toContain('--h-primary-');
+      expect(theme.activePrimary()).toBe('indigo');
+    });
+
+    it('there is no poimen preset, and an unknown name is refused', () => {
+      expect(() => setup({ preset: 'poimen' })).toThrow(/unknown preset "poimen"/);
+      TestBed.resetTestingModule();
+      const theme = setup();
+      expect(() => theme.setPreset('poimen')).toThrow(/unknown preset/);
+      expect(theme.preset()).toBe('helix');
+    });
+
+    it('the choices in the options win over the preset', () => {
+      const theme = setup({ preset: 'vitepress', ...own });
+      expect(theme.activePrimary()).toBe('teal');
+      expect(theme.activeSurface()).toBe('stone');
+      expect(theme.density()).toBe('compact');
+      expect(theme.css()).toContain('--h-primary-500:var(--h-teal-500)');
+      expect(theme.css()).not.toContain('#3451b2');
+    });
+
+    it('a choice made after selecting a preset wins over it, selecting a preset starts over', () => {
+      const theme = setup();
+      theme.setPrimary('rose');
+      theme.setDensity('compact');
+      theme.setPreset('vitepress');
+      expect(theme.primary()).toBeNull();
+      expect(theme.density()).toBe('comfortable');
+      expect(theme.css()).toContain('#3451b2');
+      theme.setPrimary('rose');
+      expect(theme.css()).toContain('--h-primary-500:var(--h-rose-500)');
+      expect(theme.css()).not.toContain('#3451b2');
+      theme.setPreset('compact');
+      expect(theme.density()).toBe('compact');
+      theme.setDensity('comfortable'); // the user's own choice beats the preset's density
+      expect(theme.density()).toBe('comfortable');
+      expect(theme.css()).not.toContain('font-size');
+    });
+
+    it('going back to indigo after vitepress writes the indigo scale again', () => {
+      const theme = setup({ preset: 'vitepress' });
+      theme.setPrimary('indigo');
+      expect(theme.css()).toContain('--h-primary-500:var(--h-indigo-500)');
+    });
+
+    it('an app defines its own preset, with options only (no token fork)', () => {
+      const theme = setup({
+        presets: { forest: { primary: 'emerald', surface: 'stone', density: 'compact' } },
+        preset: 'forest',
+      });
+      expect(theme.presetNames).toEqual(['helix', 'vitepress', 'compact', 'forest']);
+      expect(theme.css()).toContain('--h-primary-500:var(--h-emerald-500)');
+      expect(theme.css()).toContain('--h-surface-500:#78716c');
+      expect(theme.density()).toBe('compact');
+    });
+
+    it('an app preset can carry a primary scale of its own, and replace a bundled name', () => {
+      const scale = {
+        50: '#fff',
+        100: '#eee',
+        200: '#ddd',
+        300: '#ccc',
+        400: '#bbb',
+        500: '#aaa',
+        600: '#999',
+        700: '#888',
+        800: '#777',
+        900: '#666',
+        950: '#555',
+      };
+      const theme = setup({
+        presets: { compact: { primary: scale, surface: null, density: 'comfortable' } },
+        preset: 'compact',
+      });
+      expect(theme.css()).toContain('--h-primary-600:#999;');
+      expect(theme.density()).toBe('comfortable');
+    });
+
+    it('remembers the preset, and the saved one wins over the option', () => {
+      const theme = setup({ storageKey: 'pre' });
+      theme.setPreset('vitepress');
+      TestBed.tick();
+      expect(JSON.parse(localStorage.getItem('pre') ?? '').preset).toBe('vitepress');
+      TestBed.resetTestingModule();
+      const next = setup({ storageKey: 'pre', preset: 'compact' });
+      expect(next.preset()).toBe('vitepress');
+    });
+
+    it('a saved preset that no longer exists falls back to the option', () => {
+      localStorage.setItem('gone', '{"preset":"retired"}');
+      expect(setup({ storageKey: 'gone', preset: 'compact' }).preset()).toBe('compact');
+    });
+  });
+
+  describe('density', () => {
+    it('comfortable is the default and writes nothing', () => {
+      const theme = setup();
+      theme.setDensity('comfortable');
+      TestBed.tick();
+      expect(theme.density()).toBe('comfortable');
+      expect(theme.css()).toBe('');
+    });
+
+    it('compact sets the 13 px root and the shell sizes', () => {
+      const theme = setup();
+      theme.setDensity('compact');
+      TestBed.tick();
+      const css = sheet() ?? '';
+      expect(css).toContain('font-size:13px');
+      expect(css).toContain('--helix-layout-gap:1rem;');
+      expect(css).not.toContain('--helix-panel-gap');
+      expect(css).toContain('--helix-control-height:28px;');
+      expect(css).toContain('--helix-status-bar-height:24px;');
+      theme.setDensity('comfortable');
+      TestBed.tick();
+      expect(sheet()).toBe('');
+    });
+
+    it('starts from the option and refuses an unknown density', () => {
+      const theme = setup({ density: 'compact' });
+      expect(theme.density()).toBe('compact');
+      expect(() => theme.setDensity('tiny' as never)).toThrow(/unknown density/);
+      expect(theme.density()).toBe('compact');
+    });
+
+    it('is saved and wins over the option at the next start; a bad saved value is ignored', () => {
+      const theme = setup({ storageKey: 'dens' });
+      theme.setDensity('compact');
+      TestBed.tick();
+      expect(JSON.parse(localStorage.getItem('dens') ?? '').density).toBe('compact');
+      TestBed.resetTestingModule();
+      expect(setup({ storageKey: 'dens', density: 'comfortable' }).density()).toBe('compact');
+      TestBed.resetTestingModule();
+      localStorage.setItem('dens', '{"density":"huge"}');
+      expect(setup({ storageKey: 'dens' }).density()).toBe('comfortable');
+    });
+  });
+
   it('keeps both overrides side by side and updates one style sheet, not several', () => {
     const theme = setup();
     theme.setPrimary('teal');
@@ -273,8 +444,10 @@ describe('HxTheme', () => {
       TestBed.tick();
       expect(JSON.parse(localStorage.getItem('my-theme') ?? '')).toEqual({
         dark: true,
+        preset: 'helix',
         primary: 'violet',
         surface: 'ocean',
+        density: null, // not chosen: the preset's
       });
 
       TestBed.resetTestingModule();

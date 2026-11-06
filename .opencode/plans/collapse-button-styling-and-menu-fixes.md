@@ -3,6 +3,7 @@
 ## 1. Collapse button — render like a badge
 
 **File:** `sidebar.scss`
+
 - Remove `border: 1px solid ...`
 - Change `border-radius` from `var(--content-border-radius)` to `50%`
 - Set `width: 2.5rem; height: 2.5rem` (like topbar badges)
@@ -15,6 +16,7 @@
 
 **File:** `dark-mode-badge.ts`
 The host has `display: inline-flex; width: 2.5rem; height: 2.5rem; border-radius: 50%` but no hover background. Add component-level styles:
+
 ```ts
 styles: [`
   :host(:hover) { background-color: var(--surface-hover); }
@@ -29,11 +31,13 @@ The wrapper `<div>` has the sizing but no hover. Either add the hover to the wra
 **File:** `menu-item.scss`
 
 Root items need to be less indented than children:
+
 - Root `<a>`: `padding: 0.75rem 1rem 0.75rem 0` (remove left padding)
 - Root font: slightly larger/weight
 - Children already have `margin-left: 1rem` from the non-root submenu rules — so they'll naturally indent relative to root
 
 Add root-specific styles:
+
 ```scss
 :host(.layout-root-menuitem) {
   > a {
@@ -45,6 +49,7 @@ Add root-specific styles:
 ```
 
 Collapsed override keeps icon centered:
+
 ```scss
 :host(.layout-sidebar-collapsed) > a {
   padding: 0.75rem;
@@ -57,6 +62,7 @@ Collapsed override keeps icon centered:
 **File:** `menu-item.scss`
 
 Add visual distinction for `.active-menuitem`:
+
 ```scss
 :host(.active-menuitem) {
   > a {

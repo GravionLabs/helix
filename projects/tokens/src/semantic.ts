@@ -123,6 +123,15 @@ export const semantic = {
         800: '#202127',
         900: '#1b1b1f',
         950: '#161618',
+        frame: '{surface.50}',
+        panel: '{surface.0}',
+        card: '{surface.0}',
+        overlay: '{surface.0}',
+        hover: '{surface.100}',
+      },
+      border: {
+        panel: '{surface.200}',
+        divider: '{surface.100}',
       },
       primary: {
         color: '{primary.600}',
@@ -168,32 +177,32 @@ export const semantic = {
         hoverMutedColor: '{surface.600}',
       },
       content: {
-        background: '{surface.0}',
-        hoverBackground: '{surface.100}',
-        borderColor: '{surface.200}',
+        background: '{surface.panel}',
+        hoverBackground: '{surface.hover}',
+        borderColor: '{border.panel}',
         color: '{text.color}',
         hoverColor: '{text.hover.color}',
       },
       overlay: {
         select: {
-          background: '{surface.0}',
-          borderColor: '{surface.200}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
         },
         popover: {
-          background: '{surface.0}',
-          borderColor: '{surface.200}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
         },
         modal: {
-          background: '{surface.0}',
-          borderColor: '{surface.200}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
         },
       },
       list: {
         option: {
-          focusBackground: '{surface.100}',
+          focusBackground: '{surface.hover}',
           selectedBackground: '{highlight.background}',
           selectedFocusBackground: '{highlight.focus.background}',
           color: '{text.color}',
@@ -212,8 +221,8 @@ export const semantic = {
       },
       navigation: {
         item: {
-          focusBackground: '{surface.100}',
-          activeBackground: '{surface.100}',
+          focusBackground: '{surface.hover}',
+          activeBackground: '{surface.hover}',
           color: '{text.color}',
           focusColor: '{text.hover.color}',
           activeColor: '{text.hover.color}',
@@ -248,6 +257,15 @@ export const semantic = {
         800: '#202127',
         900: '#1b1b1f',
         950: '#161618',
+        frame: '{surface.950}',
+        panel: '{surface.900}',
+        card: '{surface.800}',
+        overlay: '{surface.800}',
+        hover: '{surface.700}',
+      },
+      border: {
+        panel: '{surface.700}',
+        divider: '{surface.700}',
       },
       primary: {
         color: '{primary.400}',
@@ -293,32 +311,38 @@ export const semantic = {
         hoverMutedColor: '{surface.300}',
       },
       content: {
-        background: '{surface.900}',
-        hoverBackground: '{surface.800}',
-        borderColor: '{surface.700}',
+        background: '{surface.panel}',
+        hoverBackground: '{surface.hover}',
+        borderColor: '{border.panel}',
         color: '{text.color}',
         hoverColor: '{text.hover.color}',
       },
       overlay: {
         select: {
-          background: '{surface.900}',
-          borderColor: '{surface.700}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
+          shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4)',
         },
         popover: {
-          background: '{surface.900}',
-          borderColor: '{surface.700}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
+          shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4)',
         },
         modal: {
-          background: '{surface.900}',
-          borderColor: '{surface.700}',
+          background: '{surface.overlay}',
+          borderColor: '{border.panel}',
           color: '{text.color}',
+          shadow: '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.4)',
+        },
+        navigation: {
+          shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4)',
         },
       },
       list: {
         option: {
-          focusBackground: '{surface.800}',
+          focusBackground: '{surface.hover}',
           selectedBackground: '{highlight.background}',
           selectedFocusBackground: '{highlight.focus.background}',
           color: '{text.color}',
@@ -337,8 +361,8 @@ export const semantic = {
       },
       navigation: {
         item: {
-          focusBackground: '{surface.800}',
-          activeBackground: '{surface.800}',
+          focusBackground: '{surface.hover}',
+          activeBackground: '{surface.hover}',
           color: '{text.color}',
           focusColor: '{text.hover.color}',
           activeColor: '{text.hover.color}',

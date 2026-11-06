@@ -13,6 +13,7 @@
 ## Project Overview
 
 This is an Angular 22 workspace containing:
+
 - **`@gravionlabs/helix-ui`** – Vanilla, signal-based components (`hx-` selectors) on the Helix design tokens, plain CSS
 - **`@gravionlabs/helix-shell`** – A reusable Angular application shell (layout, nav rail, auth pages) with NgRx Signal Store state management
 - **`@gravionlabs/helix-zod`** and **`@gravionlabs/helix-ag-grid`** – Zod forms adapter and AG Grid helpers
@@ -81,6 +82,7 @@ When asked to implement an issue or epic (e.g., "impl #85", "implement epic #85"
 ### Sub-Task Order
 
 Read the epic with `gh issue view <number>`. Implement sub-tasks in checklist order. Each sub-task is one commit. Only commit when all three pass:
+
 ```bash
 pnpm run build:lib   # or pnpm run build for full workspace
 pnpm run lint

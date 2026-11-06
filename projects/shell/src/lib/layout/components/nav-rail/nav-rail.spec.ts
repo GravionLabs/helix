@@ -210,4 +210,22 @@ describe('HelixNavRail', () => {
       );
     });
   });
+
+  describe('footer', () => {
+    it('keeps the collapse toggle inside the rail panel footer', () => {
+      fixture.detectChanges();
+      const footer = fixture.nativeElement.querySelector('.helix-nav-rail-footer') as HTMLElement;
+      expect(footer.querySelector('.helix-nav-rail-collapse-button')).not.toBeNull();
+    });
+
+    it('holds only navigation chrome: no global actions or ellipsis menu', () => {
+      fixture.detectChanges();
+      const el = fixture.nativeElement as HTMLElement;
+      expect(
+        el.querySelector(
+          'helix-dark-mode-action, helix-configurator-action, helix-alert-action, .helix-nav-rail-actions, .helix-nav-rail-menu-button',
+        ),
+      ).toBeNull();
+    });
+  });
 });

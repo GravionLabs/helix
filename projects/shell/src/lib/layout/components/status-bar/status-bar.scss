@@ -2,14 +2,21 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0 1rem;
-  height: var(--helix-status-bar-height, 3rem);
+  // Flat on the frame: no background or hairline of its own; the text starts at the panels' outer edge.
+  padding: 0 var(--helix-panel-gap, 4px);
+  height: var(--helix-status-bar-height, 28px);
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   box-sizing: border-box;
-  border-top: 1px solid var(--helix-border, var(--surface-border));
+}
+
+// A non-neutral tone is a filled strip between the panels' outer edges.
+.helix-status-bar-tinted {
+  margin: 0 var(--helix-panel-gap, 4px);
+  padding: 0 0.75rem;
+  border-radius: var(--helix-panel-radius, 6px);
 }
 
 .helix-status-bar-brand {
@@ -18,7 +25,6 @@
 }
 
 .helix-status-bar-note {
-  opacity: 0.85;
   overflow: hidden;
   text-overflow: ellipsis;
   flex: 1;
@@ -58,7 +64,7 @@
 }
 
 .helix-status-bar-version-label {
-  opacity: 0.7;
+  font-weight: 400;
 }
 
 .helix-status-bar-version-value {

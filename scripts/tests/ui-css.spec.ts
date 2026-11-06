@@ -88,6 +88,7 @@ describe('helix-ui styles', () => {
     ['stepper', 'stepper/stepper.ts'],
     ['tag', 'tag/tag.ts'],
     ['table', 'table/table.ts'],
+    ['tab-bar', 'tab-bar/tab-bar.ts'],
     ['tabs', 'tabs/tabs.ts'],
     ['timeline', 'timeline/timeline.ts'],
     ['tree', 'tree/tree.ts'],

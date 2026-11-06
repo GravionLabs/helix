@@ -18,16 +18,20 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0;
-  bottom: 0; // not 100vh: stays above a page scrollbar, level with the status bar
-  left: 0;
+  // An inset panel on the frame: gap to the window edge and to the status bar.
+  top: var(--helix-panel-gap);
+  bottom: calc(var(--helix-status-bar-height) + var(--helix-panel-gap));
+  left: var(--helix-panel-gap);
   width: var(--helix-nav-width, 17rem);
   z-index: 999;
-  overflow: hidden;
+  // No overflow clip on the panel: the footer's popups open upwards over the content. The parts
+  // that must not spill (brand, list) clip themselves.
   user-select: none;
-  background: var(--helix-surface-chrome);
+  box-sizing: border-box;
+  background: var(--h-content-background);
   color: var(--helix-nav-text);
-  border-right: 1px solid var(--helix-nav-border);
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--helix-panel-radius);
   transition: width var(--layout-section-transition-duration);
 
   &.helix-nav-rail-collapsed {
@@ -145,15 +149,26 @@
   margin: 0.75rem 0.65rem 0;
   padding: 0 0.6rem;
   gap: 0.5rem;
-  height: 2.25rem;
-  border-radius: var(--content-border-radius);
-  border: 1px solid var(--helix-nav-border);
-  background: var(--helix-surface-ground, transparent);
+  box-sizing: border-box;
+  height: var(--helix-control-height, 32px);
+  // The `hx-input` look: same border, radius, background and focus as a text field.
+  border-radius: var(--h-inputtext-border-radius);
+  border: 1px solid var(--h-inputtext-border-color);
+  background: var(--h-inputtext-background);
   color: var(--helix-nav-text-muted);
+  transition:
+    border-color var(--h-inputtext-transition-duration),
+    outline-color var(--h-inputtext-transition-duration);
+
+  &:hover {
+    border-color: var(--h-inputtext-hover-border-color);
+  }
 
   &:focus-within {
-    border-color: var(--primary-color);
-    outline: 2px solid color-mix(in srgb, var(--primary-color) 35%, transparent);
+    border-color: var(--h-inputtext-focus-border-color);
+    outline: var(--h-inputtext-focus-ring-width) var(--h-inputtext-focus-ring-style)
+      var(--h-inputtext-focus-ring-color);
+    outline-offset: var(--h-inputtext-focus-ring-offset);
   }
 
   input {
@@ -163,11 +178,11 @@
     outline: 0;
     background: transparent;
     font: inherit;
-    font-size: 0.9rem;
-    color: var(--helix-nav-text);
+    font-size: 1rem;
+    color: var(--h-inputtext-color);
 
     &::placeholder {
-      color: var(--helix-nav-text-muted);
+      color: var(--h-inputtext-placeholder-color);
     }
   }
 
@@ -201,26 +216,29 @@
 .helix-nav-rail-footer {
   flex: 0 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: var(--helix-status-bar-height, 3rem);
-  padding-right: 1.25rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.25rem;
+  min-height: calc(var(--helix-control-height, 32px) + 1rem);
+  box-sizing: border-box;
+  padding: 0.5rem 0.65rem;
 }
 
 .helix-nav-rail-collapsed .helix-nav-rail-footer {
-  justify-content: center;
-  padding-right: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .helix-nav-rail-collapse-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: var(--helix-control-height, 32px);
+  height: var(--helix-control-height, 32px);
   padding: 0;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--h-border-radius-md);
   background-color: transparent;
   color: var(--helix-nav-text-muted);
   cursor: pointer;
@@ -239,9 +257,9 @@
   }
 }
 
-// The mobile drawer has no collapse mode; the hamburger is its only control.
+// The mobile drawer has no collapse mode.
 @media (max-width: 991px) {
-  .helix-nav-rail-footer {
+  .helix-nav-rail-collapse-button {
     display: none;
   }
 }

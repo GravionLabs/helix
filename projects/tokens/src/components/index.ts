@@ -71,6 +71,7 @@ import { splitbutton } from './splitbutton.ts';
 import { splitter } from './splitter.ts';
 import { stepper } from './stepper.ts';
 import { steps } from './steps.ts';
+import { tabbar } from './tabbar.ts';
 import { tabmenu } from './tabmenu.ts';
 import { tabs } from './tabs.ts';
 import { tabview } from './tabview.ts';
@@ -161,6 +162,7 @@ export const components = {
   splitter,
   stepper,
   steps,
+  tabbar,
   tabmenu,
   tabs,
   tabview,

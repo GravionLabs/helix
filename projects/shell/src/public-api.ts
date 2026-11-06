@@ -34,11 +34,17 @@ export { HelixAlertAction } from './lib/layout/components/topbar/actions/alert-a
 export { HelixConfiguratorAction } from './lib/layout/components/topbar/actions/configurator-action';
 export { HelixDarkModeAction } from './lib/layout/components/topbar/actions/dark-mode-action';
 export { HelixMobileMenuAction } from './lib/layout/components/topbar/actions/mobile-menu-action';
+export { HelixSearchAction } from './lib/layout/components/topbar/actions/search-action';
 export { HelixTopbar } from './lib/layout/components/topbar/topbar';
 export type {
-  HelixTopbarAction,
-  HelixTopbarItem,
-  HelixTopbarItemType,
+  HelixTopbarActionConfig,
+  HelixTopbarActionPosition,
+  HelixTopbarBuiltInAction,
+  HelixTopbarCustomAction,
+} from './lib/layout/components/topbar/topbar.model';
+export {
+  defineTopbarActions,
+  HELIX_DEFAULT_TOPBAR_ACTIONS,
 } from './lib/layout/components/topbar/topbar.model';
 // Tokens
 export type { HelixRouteMenuItem } from './lib/layout/route-menu.model';

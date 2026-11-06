@@ -1,4 +1,28 @@
-<div class="layout-topbar">
+<ng-template #actionTpl let-entry>
+  @if (customTemplate(entry); as template) {
+    <ng-container [ngTemplateOutlet]="template" />
+  } @else {
+    @switch (entry.action) {
+      @case ('search') {
+        <helix-search-action
+          [placeholder]="searchPlaceholder()"
+          (search)="search.emit($event)"
+        />
+      }
+      @case ('darkMode') {
+        <helix-dark-mode-action />
+      }
+      @case ('configurator') {
+        <helix-configurator-action />
+      }
+      @case ('alerts') {
+        <helix-alert-action [count]="alerts().length" [alerts]="alerts()" />
+      }
+    }
+  }
+</ng-template>
+
+<div class="layout-topbar" [class.layout-topbar-narrow]="narrow()">
   <div class="layout-topbar-start">
     <button
       type="button"
@@ -11,54 +35,31 @@
     </button>
     @if (showBreadcrumbs()) {
       <hx-breadcrumb [model]="effectiveBreadcrumbs()" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
+    } @else {
+      <span class="layout-topbar-title">{{ effectiveTitle() }}</span>
+    }
+    @if (zones().start.length > 0) {
+      <div class="layout-topbar-zone layout-topbar-zone-start">
+        @for (entry of zones().start; track $index) {
+          <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+        }
+      </div>
     }
   </div>
 
-  <div class="layout-topbar-end">
-    <div class="layout-topbar-slot">
-      <ng-content select="[helixTopbarEnd]" />
-    </div>
-
-    <div class="layout-config-menu">
-      @for (item of items(); track $index) {
-        @switch (item.type) {
-          @case ('darkmode') {
-            <helix-dark-mode-action />
-          }
-          @case ('configurator') {
-            <helix-configurator-action />
-          }
-          @case ('alert') {
-            <helix-alert-action [count]="item.badgeCount ?? 0" [alerts]="item.alerts" />
-          }
-          @case ('action') {
-            <button type="button" class="layout-topbar-action" (click)="item.command?.()">
-              <i [class]="item.icon ?? ''"></i>
-            </button>
-          }
-        }
+  @if (zones().center.length > 0) {
+    <div class="layout-topbar-center layout-topbar-zone">
+      @for (entry of zones().center; track $index) {
+        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
       }
     </div>
+  }
 
-    <button
-      type="button"
-      class="layout-topbar-menu-button layout-topbar-action"
-      [attr.aria-label]="menuLabel()"
-      helixDisclosure
-      helixDisclosureAnimate
-    >
-      <i class="pi pi-ellipsis-v"></i>
-    </button>
-
-    <div class="layout-topbar-menu hidden">
-      <div class="layout-topbar-menu-content">
-        @for (action of topbarActions(); track action.icon) {
-          <button type="button" class="layout-topbar-action" (click)="action.command?.()">
-            <i [class]="action.icon"></i>
-            <span>{{ action.label }}</span>
-          </button>
-        }
-      </div>
+  @if (zones().end.length > 0) {
+    <div class="layout-topbar-end layout-topbar-zone">
+      @for (entry of zones().end; track $index) {
+        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+      }
     </div>
-  </div>
+  }
 </div>

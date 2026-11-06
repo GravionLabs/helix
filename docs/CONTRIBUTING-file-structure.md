@@ -14,7 +14,6 @@ Decided in epic #233 (feature #241); analysis in
   (see `projects/shell/src/lib/layout/components/` for the reference
   layout).
 
-
 ## Control flow
 
 All templates use built-in control flow

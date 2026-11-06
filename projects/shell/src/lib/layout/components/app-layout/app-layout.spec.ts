@@ -1,6 +1,7 @@
+import { NgClass } from '@angular/common';
 import { Component, NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import type { HxMenuItem } from '@gravionlabs/helix-ui';
 import { LayoutStore } from '../../store/layout.store';
 import { HelixStatusBar } from '../status-bar/status-bar';
@@ -45,42 +46,6 @@ describe('HelixAppLayout', () => {
   it('should reflect custom appTitle input', () => {
     fixture.componentRef.setInput('appTitle', 'MY APP');
     expect(component.appTitle()).toBe('MY APP');
-  });
-
-  it('effectiveItems() should include darkmode, configurator, mobile by default', () => {
-    const priv = component as unknown as { effectiveItems: () => { type: string }[] };
-    const items = priv.effectiveItems();
-    expect(items.length).toBe(3);
-    expect(items[0].type).toBe('darkmode');
-    expect(items[1].type).toBe('configurator');
-    expect(items[2].type).toBe('mobile');
-  });
-
-  it('effectiveItems() should return custom items when topbarItems input is set', () => {
-    const custom = [
-      { type: 'action' as const, icon: 'pi pi-bell', label: 'Alerts', command: () => {} },
-    ];
-    fixture.componentRef.setInput('topbarItems', custom);
-    const priv = component as unknown as { effectiveItems: () => { type: string }[] };
-    expect(priv.effectiveItems()).toEqual(custom);
-  });
-
-  it('effectiveTopbarActions() should return default actions when topbarActions not set', () => {
-    const priv = component as unknown as {
-      effectiveTopbarActions: () => { icon: string; label: string }[];
-    };
-    const actions = priv.effectiveTopbarActions();
-    expect(actions.length).toBe(3);
-    expect(actions[0].icon).toBe('pi pi-calendar');
-  });
-
-  it('effectiveTopbarActions() should return custom actions when topbarActions input is set', () => {
-    const custom = [{ icon: 'pi pi-cog', label: 'Settings', command: () => {} }];
-    fixture.componentRef.setInput('topbarActions', custom);
-    const priv = component as unknown as {
-      effectiveTopbarActions: () => { icon: string; label: string }[];
-    };
-    expect(priv.effectiveTopbarActions()).toEqual(custom);
   });
 
   it('brandIcon() should reflect input', () => {
@@ -209,9 +174,6 @@ describe('HelixAppLayout', () => {
   template: `
     <ng-template #tpl>Docs <a href="/docs">here</a></ng-template>
     <helix-app-layout [statusBarNote]="useTemplate() ? tpl : 'Plain note'">
-      @if (withTopbarEnd()) {
-        <input helixTopbarEnd aria-label="Filter" />
-      }
       @if (withEnd()) {
         <button hxStatusBarEnd type="button">Help</button>
       }
@@ -221,7 +183,6 @@ describe('HelixAppLayout', () => {
 class LayoutHostComponent {
   useTemplate = signal(false);
   withEnd = signal(true);
-  withTopbarEnd = signal(true);
 }
 
 describe('HelixAppLayout status bar forwarding', () => {
@@ -289,15 +250,9 @@ describe('HelixAppLayout status bar forwarding', () => {
 
 describe('HelixAppLayout topbar forwarding', () => {
   let fixture: ComponentFixture<LayoutHostComponent>;
-  let host: LayoutHostComponent;
 
-  const topbar = (): HTMLElement => fixture.nativeElement.querySelector('helix-topbar');
-  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
-
-  async function render(): Promise<void> {
-    fixture.detectChanges();
-    await fixture.whenStable();
-  }
+  const centerSearch = (): HTMLElement | null =>
+    fixture.nativeElement.querySelector('.layout-topbar-center helix-search-action');
 
   beforeEach(async () => {
     localStorage.clear();
@@ -306,72 +261,186 @@ describe('HelixAppLayout topbar forwarding', () => {
       providers: [provideRouter([])],
     })
       .overrideComponent(HelixAppLayout, {
-        // Topbar, nav-rail and router-outlet are left unknown (their CSS chokes jsdom), so the
-        // projected node is rendered as a direct child of the <helix-topbar> element.
-        set: { imports: [], styles: [], schemas: [NO_ERRORS_SCHEMA] },
-      })
-      .compileComponents();
-    fixture = TestBed.createComponent(LayoutHostComponent);
-    host = fixture.componentInstance;
-  });
-
-  it('projects [helixTopbarEnd] content into helix-topbar', async () => {
-    await render();
-    expect(topbar().contains(filter())).toBe(true);
-    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
-  });
-
-  it('renders nothing inside helix-topbar when no content is projected', async () => {
-    host.withTopbarEnd.set(false);
-    await render();
-    expect(filter()).toBeNull();
-    expect(topbar().children.length).toBe(0);
-  });
-});
-
-describe('HelixAppLayout topbar forwarding into the real HelixTopbar', () => {
-  let fixture: ComponentFixture<LayoutHostComponent>;
-  let host: LayoutHostComponent;
-
-  const slot = (): HTMLElement => fixture.nativeElement.querySelector('.layout-topbar-slot');
-  const filter = (): HTMLElement | null => fixture.nativeElement.querySelector('[helixTopbarEnd]');
-
-  async function render(): Promise<void> {
-    fixture.detectChanges();
-    await fixture.whenStable();
-  }
-
-  beforeEach(async () => {
-    localStorage.clear();
-    await TestBed.configureTestingModule({
-      imports: [LayoutHostComponent],
-      providers: [provideRouter([])],
-    })
-      .overrideComponent(HelixAppLayout, {
-        // Real topbar so ngProjectAs is exercised end-to-end; nav-rail and router-outlet stay
-        // unknown (their CSS chokes jsdom), hence the schema.
+        // Real topbar; nav-rail and router-outlet stay unknown (their CSS chokes jsdom).
         set: { imports: [HelixTopbar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
       })
       .compileComponents();
     fixture = TestBed.createComponent(LayoutHostComponent);
-    host = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('lands [helixTopbarEnd] content inside the topbar slot wrapper', async () => {
-    await render();
-    expect(slot().contains(filter())).toBe(true);
-    expect(filter()?.getAttribute('aria-label')).toBe('Filter');
-    expect(fixture.nativeElement.querySelector('.layout-topbar-menu')?.contains(filter())).toBe(
-      false,
+  it('renders the default toolbar when topbarActions is not set', () => {
+    expect(centerSearch()).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.layout-topbar-end helix-dark-mode-action'),
+    ).toBeTruthy();
+  });
+
+  it('no longer projects [helixTopbarEnd] content', () => {
+    expect(fixture.nativeElement.querySelector('[helixTopbarEnd]')).toBeNull();
+  });
+
+  it('forwards the typed search text as the search output', async () => {
+    const texts: string[] = [];
+    fixture.debugElement.children[0].componentInstance.search.subscribe((t: string) =>
+      texts.push(t),
     );
+    const input = centerSearch()?.querySelector('input') as HTMLInputElement;
+    input.value = 'abc';
+    input.dispatchEvent(new Event('input'));
+    expect(texts).toEqual(['abc']);
+  });
+});
+
+describe('HelixAppLayout inset frame', () => {
+  let fixture: ComponentFixture<LayoutHostComponent>;
+
+  const wrapper = (): HTMLElement => fixture.nativeElement.querySelector('.layout-wrapper');
+
+  beforeEach(async () => {
+    localStorage.clear();
+    await TestBed.configureTestingModule({
+      imports: [LayoutHostComponent],
+      providers: [provideRouter([])],
+    })
+      .overrideComponent(HelixAppLayout, {
+        set: { imports: [NgClass, HelixStatusBar], styles: [], schemas: [NO_ERRORS_SCHEMA] },
+      })
+      .compileComponents();
+    fixture = TestBed.createComponent(LayoutHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('leaves the topbar slot wrapper empty when nothing is projected', async () => {
-    host.withTopbarEnd.set(false);
-    await render();
-    expect(filter()).toBeNull();
-    // The host's @if anchor comment is projected too, so only element children count.
-    expect(slot().children.length).toBe(0);
-    expect(slot().matches(':not(:has(*))')).toBe(true);
+  it('renders the content panel as the only child of the main container', () => {
+    const container = wrapper().querySelector(':scope > .layout-main-container');
+    expect(container?.children.length).toBe(1);
+    expect(container?.firstElementChild?.classList.contains('layout-panel')).toBe(true);
+  });
+
+  it('puts the page header first in the panel, above the scrolling .layout-main', () => {
+    const panel = wrapper().querySelector('.layout-panel') as HTMLElement;
+    expect(panel.children[0].tagName.toLowerCase()).toBe('helix-topbar');
+    expect(panel.children[1].classList.contains('layout-main')).toBe(true);
+  });
+
+  it('does not render the page header as a child of the frame', () => {
+    expect(wrapper().querySelector(':scope > helix-topbar')).toBeNull();
+  });
+
+  it('keeps the nav rail, content panel and status bar as siblings on the frame', () => {
+    const tags = Array.from(wrapper().children).map(
+      (el) => el.tagName.toLowerCase() + (el.className ? `.${el.className}` : ''),
+    );
+    expect(tags).toContain('helix-nav-rail');
+    expect(tags).toContain('div.layout-main-container');
+    expect(tags).toContain('helix-status-bar');
+  });
+
+  it('adds no classic-layout class', () => {
+    expect(wrapper().className).not.toContain('classic');
+  });
+
+  it('puts the static state class on the frame by default', () => {
+    expect(wrapper().classList.contains('layout-static')).toBe(true);
+    expect(wrapper().classList.contains('layout-overlay')).toBe(false);
+  });
+
+  describe('content panel', () => {
+    const panel = (): HTMLElement => fixture.nativeElement.querySelector('.layout-main');
+    const openMobileMenu = (): void => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 500,
+      });
+      TestBed.inject(LayoutStore).onMenuToggle();
+    };
+
+    afterEach(() => {
+      Object.defineProperty(window, 'innerWidth', {
+        writable: true,
+        configurable: true,
+        value: 1024,
+      });
+    });
+
+    it('keeps the page header, with the menu toggle, outside the inert region', () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      const header = fixture.nativeElement.querySelector('helix-topbar') as HTMLElement;
+      expect(panel().contains(header)).toBe(false);
+      expect(header.closest('[inert]')).toBeNull();
+    });
+
+    it('is not inert while the mobile menu is closed', () => {
+      expect(panel().hasAttribute('inert')).toBe(false);
+    });
+
+    it('becomes inert while the mobile overlay menu is open', async () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      expect(panel().hasAttribute('inert')).toBe(true);
+    });
+
+    it('does not block scrolling on the document body', async () => {
+      openMobileMenu();
+      fixture.detectChanges();
+      expect(document.body.classList.contains('blocked-scroll')).toBe(false);
+    });
+
+    it('resets its scroll offset to the top after navigation', async () => {
+      const router = TestBed.inject(Router);
+      router.resetConfig([
+        { path: 'a', children: [] },
+        { path: 'b', children: [] },
+      ]);
+      await router.navigateByUrl('/a');
+      panel().scrollTop = 120;
+      await router.navigateByUrl('/b');
+      expect(panel().scrollTop).toBe(0);
+    });
+
+    it('keeps its offset when the navigation targets a fragment', async () => {
+      const router = TestBed.inject(Router);
+      router.resetConfig([{ path: 'a', children: [] }]);
+      await router.navigateByUrl('/a');
+      panel().scrollTop = 120;
+      await router.navigateByUrl('/a#section');
+      expect(panel().scrollTop).toBe(120);
+    });
+  });
+});
+
+describe('HelixAppLayout content gaps', () => {
+  // The real stylesheet: jsdom does not resolve var(), so the rules are read as text.
+  function layoutStyles(): string {
+    TestBed.configureTestingModule({ imports: [HelixAppLayout], providers: [provideRouter([])] });
+    TestBed.createComponent(HelixAppLayout);
+    return Array.from(document.querySelectorAll('style'))
+      .map((style) => style.textContent ?? '')
+      .join('\n')
+      .replace(/\s+/g, ' ');
+  }
+
+  function rule(css: string, selector: string): string {
+    const match = css.match(new RegExp(`(?:^|[ }])${selector.replace('.', '\\.')} \\{([^}]*)\\}`));
+    return match?.[1] ?? '';
+  }
+
+  it('gives the content below the page header the same gap as the content next to the nav rail', () => {
+    const css = layoutStyles();
+    // Horizontal: rail edge, then the container's panel gap, the panel border, the main padding.
+    expect(rule(css, '.layout-main-container')).toContain('padding: var(--helix-panel-gap)');
+    expect(rule(css, '.layout-panel')).toContain('border: var(--helix-panel-border-width) solid');
+    expect(rule(css, '.layout-main')).toContain('padding: var(--helix-layout-gap)');
+    // Vertical: the same three terms between the page header and the content.
+    const top = rule(css, '.layout-main').match(/padding-top: calc\(([^;]*)\);/)?.[1] ?? '';
+    expect(top.split('+').map((term) => term.trim().replace(/^var\((.*)\)$/, '$1'))).toEqual([
+      '--helix-panel-gap',
+      '--helix-panel-border-width',
+      '--helix-layout-gap',
+    ]);
   });
 });

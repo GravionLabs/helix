@@ -33,7 +33,7 @@ jobs:
 
       - name: Determine version
         id: version
-        uses: GravionLabs/ci/versioning/determine-version@main
+        uses: GravionLabs/ci/versioning/determine-version@v1
 
   build-test:
     name: Build & Test
@@ -46,9 +46,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: CI
-        uses: GravionLabs/ci/node/ci@main
+        uses: GravionLabs/ci/node/ci@v1
         with:
-          node-version: '24'
+          node-version: '26' # GravionLabs/ci node/ci has no node-version-file input
           package-manager: pnpm
           lint-command: pnpm run lint
           build-command: pnpm run build
@@ -92,7 +92,7 @@ jobs:
       # per-account step only an npm org owner can do.
       - uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version-file: .nvmrc
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Set package versions
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create GitHub Release
-        uses: GravionLabs/ci/versioning/gh-release@main
+        uses: GravionLabs/ci/versioning/gh-release@v1
         with:
           version: ${{ needs.determine-version.outputs.semver }}
           tag-prefix: v

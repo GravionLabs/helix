@@ -32,6 +32,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/panel': ['accordion', 'card', 'divider', 'fieldset', 'panel', 'tabs', 'toolbar'],
   'uikit/overlay': ['confirm', 'dialog', 'drawer', 'popover', 'tooltip'],
   'uikit/menu': ['breadcrumb', 'menu', 'menubar', 'paginator', 'stepper'],
+  'uikit/tab-bar': ['tab-bar'],
   'uikit/message': ['message', 'toast'],
   'uikit/file': ['file-upload'],
   'charts/line': ['chart'],

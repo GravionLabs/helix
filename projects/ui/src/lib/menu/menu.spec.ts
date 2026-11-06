@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import type { HxMenuItem } from '../menu-item';
@@ -13,6 +13,7 @@ import { HxMenu } from './menu';
   `,
 })
 class Host {
+  @ViewChild('menu', { static: true }) menu!: HxMenu;
   triggered = 0;
   log: string[] = [];
   items = signal<HxMenuItem[]>([
@@ -184,5 +185,17 @@ describe('HxMenu', () => {
     exported.click();
     await settle();
     expect(host.log).toEqual(['export']);
+  });
+
+  it('opens at a point with showAt, returns the focus to the given element and ignores a second call', async () => {
+    host.menu.showAt({ x: 40, y: 60 }, trigger());
+    host.menu.showAt({ x: 1, y: 2 }, trigger());
+    await settle();
+    expect(popupMenu()?.getAttribute('aria-label')).toBe('Actions');
+    expect(document.querySelectorAll('.hx-menu-overlay').length).toBe(1);
+    host.menu.hide();
+    await settle();
+    expect(popupMenu()).toBeNull();
+    expect(document.activeElement).toBe(trigger());
   });
 });

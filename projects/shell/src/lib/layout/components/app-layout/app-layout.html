@@ -1,18 +1,26 @@
 <div class="layout-wrapper" [ngClass]="containerClass()">
-  <helix-topbar
-    [items]="effectiveItems()"
-    [topbarActions]="effectiveTopbarActions()"
-  >
-    <ng-content select="[helixTopbarEnd]" ngProjectAs="[helixTopbarEnd]" />
-  </helix-topbar>
   <helix-nav-rail
     [model]="effectiveNavGroups()"
     [appTitle]="appTitle()"
     [brandIcon]="brandIcon()"
   ></helix-nav-rail>
   <div class="layout-main-container">
-    <div class="layout-main">
-      <router-outlet></router-outlet>
+    <div class="layout-panel">
+      <helix-topbar
+        [pageTitle]="pageTitle()"
+        [appTitle]="appTitle()"
+        [actions]="topbarActions()"
+        [alerts]="alerts()"
+        [searchPlaceholder]="searchPlaceholder()"
+        (search)="search.emit($event)"
+      />
+      <div
+        #mainPanel
+        class="layout-main"
+        [attr.inert]="store.mobileMenuActive() ? '' : null"
+      >
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
   <helix-status-bar

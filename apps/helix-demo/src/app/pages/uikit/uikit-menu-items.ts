@@ -20,6 +20,7 @@ export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Panel', icon: 'pi pi-fw pi-tablet', path: 'panel' },
   { label: 'Overlay', icon: 'pi pi-fw pi-clone', path: 'overlay' },
   { label: 'Menu', icon: 'pi pi-fw pi-bars', path: 'menu' },
+  { label: 'Tab bar', icon: 'pi pi-fw pi-window-maximize', path: 'tab-bar' },
   { label: 'Message', icon: 'pi pi-fw pi-comment', path: 'message' },
   { label: 'File', icon: 'pi pi-fw pi-file', path: 'file' },
   { label: 'Timeline', icon: 'pi pi-fw pi-calendar', path: 'timeline' },

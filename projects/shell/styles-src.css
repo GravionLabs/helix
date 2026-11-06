@@ -39,26 +39,31 @@
   --focus-ring-shadow: var(--h-focus-ring-shadow);
 
   /* ===== LAYOUT DIMENSIONS ===== */
-  --helix-topbar-height: 4rem;
-  --helix-status-bar-height: 3rem;
+  --helix-topbar-height: 3rem; /* page header: the head of the content panel */
+  --helix-status-bar-height: 28px; /* status bar: flat on the frame */
   --helix-nav-width: 17rem;
   --helix-nav-width-collapsed: 4.75rem;
   --helix-layout-gap: 1.5rem;
+  --helix-panel-gap: 4px; /* inset panels: gap to each other and to the window edge */
+  --helix-panel-radius: 6px;
+  --helix-control-height: 32px; /* chrome controls: icon buttons and text fields */
 }
 
-/* Light theme surfaces (the neutrals of the sibling sites, ADR 0001): a white page, a
-   light-grey chrome, white cards with a hairline */
+/* Shell surfaces: aliases of the surface roles of the tokens (ADR 0004). The roles, per colour
+   scheme, live in `projects/tokens` (`surface.frame|panel|card|overlay|hover`, `border.panel`);
+   an application that overrides `--helix-surface-*` keeps working. */
 :root {
-  --helix-surface-ground: var(--h-surface-0); /* page background */
   --helix-surface-chrome: var(
-    --h-surface-50
-  ); /* chrome (nav rail, topbar, status bar) */
-  --helix-surface-card: var(--h-surface-0); /* cards / content panels */
-  --helix-surface-overlay: var(--h-surface-0); /* popovers / dialogs */
-  --helix-surface-hover: var(
-    --h-surface-100
-  ); /* hover states, on cards and on the chrome */
-  --helix-border: var(--h-surface-200); /* borders / dividers */
+    --h-surface-frame
+  ); /* frame: ground behind the panels */
+  --helix-surface-ground: var(
+    --h-surface-panel
+  ); /* page background: the panel */
+  --helix-surface-card: var(--h-surface-card); /* cards / content panels */
+  --helix-surface-overlay: var(--h-surface-overlay); /* popovers / dialogs */
+  --helix-surface-hover: var(--h-surface-hover); /* hover states */
+  --helix-border: var(--h-border-panel); /* hairline of panels and cards */
+  --helix-divider: var(--h-border-divider); /* lines inside a panel */
   --code-background: var(--h-surface-900);
   --code-color: var(--h-surface-200);
 
@@ -70,15 +75,8 @@
   --surface-border: var(--helix-border);
 }
 
-/* Dark theme surface scale */
 :root[class*="app-dark"],
 :root[data-theme="dark"] {
-  --helix-surface-ground: var(--h-surface-900);
-  --helix-surface-chrome: var(--h-surface-950);
-  --helix-surface-card: var(--h-surface-800);
-  --helix-surface-overlay: var(--h-surface-800);
-  --helix-surface-hover: var(--h-surface-700);
-  --helix-border: var(--h-surface-700);
   --code-background: var(--h-surface-950);
   --code-color: var(--h-surface-100);
 }

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GravionLabs/skills/skills/github/github-milestone/schema/milestones.schema.json",
+  "title": "Get-Milestones.ps1 output",
+  "description": "Milestone titles: M<n> [<Topic>] (open, topic without parentheses), M<n> [<Topic>] (x.y.z) (closed, released) or legacy x.y.z; others are listed, never current. One of eight shapes, by -Mode: current, list, show (a milestone detail), create, issues, close, rename or insert. M<n> may carry sub-numbers (M1.1) that sort between M<n> and M<n+1>.",
+  "oneOf": [
+    {
+      "title": "current",
+      "type": "object",
+      "required": ["latestTag", "current"],
+      "properties": {
+        "latestTag": { "$ref": "#/$defs/tag" },
+        "current": { "oneOf": [{ "$ref": "#/$defs/detail" }, { "type": "null" }] },
+        "hint": { "type": "string", "description": "Only when current is null." }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "list",
+      "type": "object",
+      "required": ["latestTag", "milestones"],
+      "properties": {
+        "latestTag": { "$ref": "#/$defs/tag" },
+        "milestones": {
+          "type": "array",
+          "description": "Open and closed: legacy x.y.z by semver, then M<n> by number, other titles last.",
+          "items": { "$ref": "#/$defs/summary" }
+        }
+      },
+      "additionalProperties": false
+    },
+    { "title": "show", "$ref": "#/$defs/detail" },
+    {
+      "title": "issues",
+      "type": "object",
+      "required": ["milestone", "issues"],
+      "properties": {
+        "milestone": {
+          "type": "object",
+          "required": ["number", "title", "state"],
+          "properties": { "number": { "type": "integer" }, "title": { "type": "string" }, "state": { "enum": ["open", "closed"] } }
+        },
+        "issues": {
+          "type": "array",
+          "description": "Issues of the milestone for -State, number ascending, pull requests excluded.",
+          "items": {
+            "type": "object",
+            "required": ["number", "title", "state", "body", "labels", "assignees"],
+            "properties": {
+              "number": { "type": "integer" },
+              "title": { "type": "string" },
+              "state": { "enum": ["open", "closed"] },
+              "closed_at": { "type": ["string", "null"], "description": "ISO 8601 close time, null while open." },
+              "body": { "type": ["string", "null"] },
+              "labels": { "type": "array", "items": { "type": "string" } },
+              "assignees": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "close",
+      "type": "object",
+      "required": ["closed", "milestone", "moved", "openIssues"],
+      "properties": {
+        "version": { "type": "string", "description": "Only for M<n> closed by this run: the x.y.z of the new title M<n> [<Topic>] (x.y.z)." },
+        "closed": { "type": "boolean", "description": "true: this run closed the milestone. false: it was already closed, or open issues remain (see openIssues)." },
+        "milestone": { "$ref": "#/$defs/milestoneRef", "description": "title is the new M<n> [<Topic>] (x.y.z) once renamed." },
+        "moved": {
+          "type": "array",
+          "description": "Open issues moved to -MoveTo before closing.",
+          "items": { "$ref": "#/$defs/issueRef" }
+        },
+        "openIssues": {
+          "type": "array",
+          "description": "Open issues that blocked the close (no -MoveTo); empty when closed or already closed.",
+          "items": { "$ref": "#/$defs/issueRef" }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "rename",
+      "type": "object",
+      "required": ["renamed", "previousTitle", "milestone"],
+      "properties": {
+        "renamed": { "const": true },
+        "previousTitle": { "type": "string" },
+        "milestone": { "$ref": "#/$defs/milestoneRef", "description": "title is the new title (-To)." }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "insert",
+      "type": "object",
+      "required": ["inserted", "dryRun", "title", "renames", "references"],
+      "properties": {
+        "inserted": { "type": "boolean", "description": "false on a dry run." },
+        "dryRun": { "type": "boolean" },
+        "title": { "type": "string", "description": "The inserted M<n>." },
+        "renames": {
+          "type": "array",
+          "description": "Open milestones shifted up by one, highest first; closed ones never appear.",
+          "items": {
+            "type": "object",
+            "required": ["number", "from", "to"],
+            "properties": { "number": { "type": "integer" }, "from": { "type": "string" }, "to": { "type": "string" } }
+          }
+        },
+        "references": {
+          "type": "array",
+          "description": "References to the old names that insert does not rewrite: issue bodies of the shifted milestones, ROADMAP.md, release-review state files.",
+          "items": {
+            "type": "object",
+            "required": ["where", "name", "hint"],
+            "properties": { "where": { "type": "string" }, "name": { "type": "string" }, "hint": { "type": "string" } }
+          }
+        },
+        "milestone": { "$ref": "#/$defs/milestoneRef", "description": "The created M<n>; absent on a dry run." }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "create",
+      "type": "object",
+      "required": ["created", "milestone"],
+      "properties": {
+        "created": { "type": "boolean", "description": "false: a milestone with that title existed and was left as is." },
+        "milestone": {
+          "type": "object",
+          "required": ["number", "title", "state", "url"],
+          "properties": {
+            "number": { "type": "integer" },
+            "title": { "type": "string" },
+            "state": { "enum": ["open", "closed"] },
+            "url": { "type": ["string", "null"] }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "milestoneRef": {
+      "type": "object",
+      "required": ["number", "title", "state", "url"],
+      "properties": {
+        "number": { "type": "integer" },
+        "title": { "type": "string" },
+        "state": { "enum": ["open", "closed"] },
+        "url": { "type": ["string", "null"] }
+      }
+    },
+    "issueRef": {
+      "type": "object",
+      "required": ["number", "title"],
+      "properties": { "number": { "type": "integer" }, "title": { "type": "string" } }
+    },
+    "tag": { "type": ["string", "null"], "description": "Highest v<x.y.z> tag, null without one." },
+    "summary": {
+      "type": "object",
+      "required": ["number", "title", "state", "dueOn", "open", "closed", "progress", "tagged", "url"],
+      "properties": {
+        "number": { "type": "integer" },
+        "title": { "type": "string" },
+        "state": { "enum": ["open", "closed"] },
+        "dueOn": { "type": ["string", "null"] },
+        "open": { "type": "integer", "minimum": 0 },
+        "closed": { "type": "integer", "minimum": 0 },
+        "progress": { "type": "integer", "minimum": 0, "maximum": 100, "description": "closed / (open + closed) in %, 0 when empty." },
+        "tagged": { "type": "boolean", "description": "The tag v<version> exists: version of the parentheses in M<n> [<Topic>] (x.y.z), the title for legacy x.y.z; false for M<n> without version." },
+        "url": { "type": ["string", "null"] }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["number", "title", "assignees"],
+      "properties": {
+        "number": { "type": "integer" },
+        "title": { "type": "string" },
+        "assignees": { "type": "array", "items": { "type": "string" } },
+        "blockers": {
+          "type": "array",
+          "description": "Only in blocked: the open blockers.",
+          "items": {
+            "type": "object",
+            "required": ["number", "title"],
+            "properties": {
+              "number": { "type": "integer" },
+              "title": { "type": "string" },
+              "repository": { "type": "string", "description": "owner/repo, only when the blocker is in another repository than the blocked issue." }
+            }
+          }
+        }
+      }
+    },
+    "detail": {
+      "allOf": [{ "$ref": "#/$defs/summary" }],
+      "type": "object",
+      "required": ["issues", "releasePr"],
+      "properties": {
+        "issues": {
+          "type": "object",
+          "description": "Open issues, pull requests excluded; each in the first matching group: needsDecision, needsRefinement, blocked, claimed, ready.",
+          "required": ["ready", "blocked", "needsDecision", "needsRefinement", "claimed"],
+          "properties": {
+            "ready": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+            "blocked": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+            "needsDecision": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+            "needsRefinement": { "type": "array", "items": { "$ref": "#/$defs/issue" } },
+            "claimed": { "type": "array", "items": { "$ref": "#/$defs/issue" } }
+          }
+        },
+        "releasePr": {
+          "description": "Open release PR release/next -> default branch (Get-ReleaseState.ps1 of github-release), else null.",
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["number", "url"],
+              "properties": { "number": { "type": "integer" }, "url": { "type": "string" } }
+            },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  }
+}

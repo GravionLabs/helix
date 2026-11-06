@@ -209,7 +209,7 @@ export class HelixNavRail implements OnInit, OnDestroy {
   }
 
   private isOutsideClicked(event: MouseEvent): boolean {
-    const topbarButtonEl = document.querySelector('.topbar-start > button');
+    const topbarButtonEl = document.querySelector('.layout-menu-button');
     const railEl = this.el.nativeElement;
     return !(
       railEl?.isSameNode(event.target as Node) ||

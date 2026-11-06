@@ -42,6 +42,7 @@
 ## sidebar.html (1 fix)
 
 Fix ngClass race condition on collapse toggle icon:
+
 - Before: `'pi pi-angle-double-left': !collapsed, 'pi pi-angle-double-right': collapsed`
 - After: `pi: true, 'pi-angle-double-left': !collapsed, 'pi-angle-double-right': collapsed`
 
@@ -52,6 +53,7 @@ Move `<helix-environment-badge>` after `{{ appTitle() }}` in the logo `<a>` tag.
 ## topbar.ts (1 fix)
 
 Update imports:
+
 - `./badges/dark-mode-badge` → `../badge/dark-mode-badge`
 - `./badges/configurator-badge` → `../badge/configurator-badge`
 - `./badges/mobile-menu-badge` → `../badge/mobile-menu-badge`
@@ -59,6 +61,7 @@ Update imports:
 ## public-api.ts (1 fix)
 
 Update export paths:
+
 - `topbar/badges/dark-mode-badge` → `badge/dark-mode-badge`
 - `topbar/badges/configurator-badge` → `badge/configurator-badge`
 - `topbar/badges/mobile-menu-badge` → `badge/mobile-menu-badge`

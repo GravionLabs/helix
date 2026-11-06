@@ -1,0 +1,26 @@
+# Pull request checks of the reusable workflow pr-checks.yml of GravionLabs/ci: readiness, ADR, spec and title.
+# The ruleset check is the aggregate "PR checks"; keep the job id `pr-checks`.
+name: PR checks
+
+on:
+  pull_request:
+    types:
+      [
+        opened,
+        edited,
+        synchronize,
+        reopened,
+        labeled,
+        unlabeled,
+        ready_for_review,
+      ]
+
+permissions: {}
+
+jobs:
+  pr-checks:
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    uses: GravionLabs/ci/.github/workflows/pr-checks.yml@v1

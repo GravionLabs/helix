@@ -17,6 +17,10 @@ describe('LayoutStore', () => {
       expect(store.primary()).toBeNull();
     });
 
+    it('should have default density comfortable', () => {
+      expect(store.density()).toBe('comfortable');
+    });
+
     it('should have default surface null', () => {
       expect(store.surface()).toBeNull();
     });
@@ -309,6 +313,28 @@ describe('LayoutStore', () => {
       expect(theme.dark()).toBe(true);
       expect(theme.primary()).toBe('rose');
       expect(theme.surface()).toBe('stone');
+    });
+
+    it('reads and writes the preset of the service', () => {
+      const theme = TestBed.inject(HxTheme);
+      expect(store.preset()).toBe('helix');
+      expect(store.presetNames()).toEqual(['helix', 'vitepress', 'compact']);
+      store.setPreset('compact');
+      expect(theme.preset()).toBe('compact');
+      expect(store.density()).toBe('compact');
+      expect(store.activePrimary()).toBe('indigo');
+      expect(store.activeSurface()).toBeNull();
+      store.setPreset('vitepress');
+      expect(store.activePrimary()).toBeNull();
+      expect(() => store.setPreset('poimen')).toThrow(/unknown preset/);
+    });
+
+    it('reads and writes the density of the service', () => {
+      const theme = TestBed.inject(HxTheme);
+      store.setDensity('compact');
+      expect(theme.density()).toBe('compact');
+      theme.setDensity('comfortable');
+      expect(store.density()).toBe('comfortable');
     });
 
     it('is left alone by reset(): the colours are not layout state', () => {

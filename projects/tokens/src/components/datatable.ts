@@ -7,7 +7,7 @@ export const datatable = {
     transitionDuration: '{transition.duration}',
   },
   header: {
-    background: '{content.background}',
+    background: '{surface.card}',
     borderColor: '{datatable.border.color}',
     color: '{content.color}',
     borderWidth: '0 0 1px 0',
@@ -20,7 +20,7 @@ export const datatable = {
     },
   },
   headerCell: {
-    background: '{content.background}',
+    background: '{surface.card}',
     hoverBackground: '{content.hover.background}',
     selectedBackground: '{highlight.background}',
     borderColor: '{datatable.border.color}',
@@ -184,7 +184,7 @@ export const datatable = {
   colorScheme: {
     light: {
       root: {
-        borderColor: '{content.border.color}',
+        borderColor: '{border.divider}',
       },
       row: {
         stripedBackground: '{surface.50}',
@@ -195,7 +195,7 @@ export const datatable = {
     },
     dark: {
       root: {
-        borderColor: '{surface.800}',
+        borderColor: '{border.divider}',
       },
       row: {
         stripedBackground: '{surface.950}',
