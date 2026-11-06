@@ -60,7 +60,10 @@ read the roles, not the scale steps:
 
 In dark mode `surface-hover` is `surface.700`: one step lighter than a card or an overlay (`surface.800`) and two
 steps lighter than the panel (`surface.900`), so a hovered row, menu item or option shows a step on every host. It
-is the same colour as the hairline and the divider, so a divider beside a hovered row merges with it. Text keeps
+is the same colour as the hairline, the dividers and the other `surface.700` controls (toggle-off, progress and
+slider tracks, ...), so a divider or such a control inside a hovered row merges with it (a known trade-off, a
+possible follow-up). The hard-coded 800 hovers not yet routed through `surface.hover` (text and outlined buttons,
+input number button, filled form field, toast and message close buttons) are the same follow-up. Text keeps
 4.5:1 on it. In light mode it is `surface.100` on the white panel, card and overlay.
 
 In dark mode each level is one scale step lighter than what it sits on, with a hairline; an overlay is told apart

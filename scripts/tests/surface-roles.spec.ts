@@ -132,7 +132,7 @@ describe('surface roles (ADR 0004)', () => {
       },
     );
 
-    it.each(SURFACES)('text and hover text on the hover background are 4.5:1 (%s host)', () => {
+    it('text, hover text and muted text on the hover background are 4.5:1', () => {
       const hover = hex(scheme, '--h-surface-hover');
       expect(contrast(hex(scheme, '--h-text-color'), hover)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(hex(scheme, '--h-text-hover-color'), hover)).toBeGreaterThanOrEqual(4.5);
@@ -152,10 +152,10 @@ describe('surface roles (ADR 0004)', () => {
     });
   });
 
-  it('dark hover is 1.18:1 against a card or overlay host and 1.27:1 against the panel', () => {
+  it('dark hover is 1.19:1 against a card or overlay host and 1.27:1 against the panel', () => {
     const hover = hex('dark', '--h-surface-hover');
-    expect(contrast(hover, hex('dark', '--h-surface-card'))).toBeCloseTo(1.18, 1);
-    expect(contrast(hover, hex('dark', '--h-surface-overlay'))).toBeCloseTo(1.18, 1);
+    expect(contrast(hover, hex('dark', '--h-surface-card'))).toBeCloseTo(1.19, 2);
+    expect(contrast(hover, hex('dark', '--h-surface-overlay'))).toBeCloseTo(1.19, 2);
     expect(contrast(hover, hex('dark', '--h-surface-panel'))).toBeCloseTo(1.27, 1);
   });
 });
