@@ -190,6 +190,29 @@ custom properties only, in one style sheet of its own that wins over `tokens.css
 that depend on the colour (`--h-primary-color` is step 600 in light and 400 in dark) stay the tokens' own, so every
 component follows.
 
+## Density
+
+`HxTheme` has `density: 'comfortable' | 'compact'` ([ADR 0004](adr/0004-surface-roles-dark-elevation-density-and-named-theme-presets.md),
+decision 4), set with `setDensity()`, the `density` option or the configurator (next to the primary colour), and saved
+with the other choices. `comfortable` is the default and writes nothing: today's look. `compact` is poimen's
+proportions (13 px base, 4 px gaps; [audit](migrations/theme-audit.md)): it sets the root to 13 px, which scales every
+`rem` token, and overrides four shell sizes in the same style sheet. No new token layer.
+
+| Size                                      | Comfortable (14 px root) | Compact (13 px root)  |
+| ----------------------------------------- | ------------------------ | --------------------- |
+| Root font size                            | 14 px                    | 13 px                 |
+| Button and form field                     | 32.8 px                  | about 30.5 px (`rem`) |
+| Chrome control (`--helix-control-height`) | 32 px                    | 28 px                 |
+| Table row (with a 48 px thumbnail)        | 55 px                    | about 51 px (`rem`)   |
+| Page header (`--helix-topbar-height`)     | 3rem, 42 px              | 3rem, 39 px (`rem`)   |
+| Content padding (`--helix-layout-gap`)    | 1.5rem, 21 px            | 1rem, 13 px           |
+| Panel gap (`--helix-panel-gap`)           | 4 px                     | 4 px                  |
+| Status bar (`--helix-status-bar-height`)  | 28 px                    | 24 px                 |
+
+The panel gap is already poimen's 4 px, so it is the same in both; the nav rail, page header, status bar and
+components follow through the `rem` tokens and the four shell variables. poimen's 18 px toolbar buttons are not
+adopted for every button: the chrome controls are 28 px.
+
 ## Overriding tokens in an application
 
 Override a token with a custom property, after `tokens.css` or with a selector that is stronger. The override
@@ -262,7 +285,7 @@ The tokens, the brand book and static previews of the components are generated a
 | Resolver                                                                    | `scripts/tokens/resolve.mjs`; users: `scripts/export-tokens.mjs`, `scripts/build-ui-css.mjs`, `scripts/design-system/` |
 | Runtime colour switching                                                    | `HxTheme` and `provideHxTheme` in `@gravionlabs/helix-ui` ([Theming](HELIX-UI.md#theming))                             |
 | Shell layer (`--helix-surface-*`, layout sizes, fonts, Tailwind colour map) | `projects/shell/styles-src.css`, `projects/shell/styles/helix-tailwind`                                                |
-| Configurator (primary / surface / menu mode)                                | `HelixConfigurator` in `@gravionlabs/helix-shell`                                                                      |
+| Configurator (primary / surface / density / menu mode)                      | `HelixConfigurator` in `@gravionlabs/helix-shell`                                                                      |
 
 ## Before helix-ui
 

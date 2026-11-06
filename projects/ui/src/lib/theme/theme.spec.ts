@@ -47,6 +47,7 @@ describe('HxTheme', () => {
     expect(theme.dark()).toBe(false);
     expect(theme.primary()).toBeNull();
     expect(theme.surface()).toBeNull();
+    expect(theme.density()).toBe('comfortable');
     expect(theme.css()).toBe('');
     expect(html.classList).not.toContain('app-dark');
   });
@@ -243,6 +244,50 @@ describe('HxTheme', () => {
     });
   });
 
+  describe('density', () => {
+    it('comfortable is the default and writes nothing', () => {
+      const theme = setup();
+      theme.setDensity('comfortable');
+      TestBed.tick();
+      expect(theme.density()).toBe('comfortable');
+      expect(theme.css()).toBe('');
+    });
+
+    it('compact sets the 13 px root and the shell sizes', () => {
+      const theme = setup();
+      theme.setDensity('compact');
+      TestBed.tick();
+      const css = sheet() ?? '';
+      expect(css).toContain('font-size:13px');
+      expect(css).toContain('--helix-layout-gap:1rem;');
+      expect(css).toContain('--helix-panel-gap:4px;');
+      expect(css).toContain('--helix-control-height:28px;');
+      expect(css).toContain('--helix-status-bar-height:24px;');
+      theme.setDensity('comfortable');
+      TestBed.tick();
+      expect(sheet()).toBe('');
+    });
+
+    it('starts from the option and refuses an unknown density', () => {
+      const theme = setup({ density: 'compact' });
+      expect(theme.density()).toBe('compact');
+      expect(() => theme.setDensity('tiny' as never)).toThrow(/unknown density/);
+      expect(theme.density()).toBe('compact');
+    });
+
+    it('is saved and wins over the option at the next start; a bad saved value is ignored', () => {
+      const theme = setup({ storageKey: 'dens' });
+      theme.setDensity('compact');
+      TestBed.tick();
+      expect(JSON.parse(localStorage.getItem('dens') ?? '').density).toBe('compact');
+      TestBed.resetTestingModule();
+      expect(setup({ storageKey: 'dens', density: 'comfortable' }).density()).toBe('compact');
+      TestBed.resetTestingModule();
+      localStorage.setItem('dens', '{"density":"huge"}');
+      expect(setup({ storageKey: 'dens' }).density()).toBe('comfortable');
+    });
+  });
+
   it('keeps both overrides side by side and updates one style sheet, not several', () => {
     const theme = setup();
     theme.setPrimary('teal');
@@ -275,6 +320,7 @@ describe('HxTheme', () => {
         dark: true,
         primary: 'violet',
         surface: 'ocean',
+        density: 'comfortable',
       });
 
       TestBed.resetTestingModule();

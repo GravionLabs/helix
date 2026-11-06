@@ -35,6 +35,17 @@
       }
     </div>
   </div>
+  <div class="flex flex-col gap-2">
+    <span id="helix-config-density" class="text-sm text-muted-color font-semibold">Density</span>
+    <hx-select-button
+      ariaLabelledby="helix-config-density"
+      [ngModel]="density()"
+      (ngModelChange)="onDensityChange($event)"
+      [options]="densityOptions"
+      [allowEmpty]="false"
+      size="small"
+    />
+  </div>
   @if (showMenuModeButton()) {
     <div class="flex flex-col gap-2">
       <span id="helix-config-menu-mode" class="text-sm text-muted-color font-semibold">Menu Mode</span>
