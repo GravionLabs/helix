@@ -14,6 +14,10 @@
 :host {
   display: block;
   flex: 0 0 auto;
+  // Its own stacking context above `.layout-main`: the panels that open from the header (configurator,
+  // alerts, actions menu) hang below it and must paint over the scrolling page content.
+  position: relative;
+  z-index: 1;
 }
 
 .layout-topbar {
