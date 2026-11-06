@@ -378,6 +378,8 @@ describe('HxDateTimeRangePicker', () => {
   beforeEach(async () => {
     // jsdom has no layout: the CDK listbox of the preset select scrolls the active option into view
     Element.prototype.scrollIntoView = () => {};
+    // the fixtures are in October 2026: a picker without a value opens in today's month, so today is fixed in it
+    vi.useFakeTimers({ now: new Date(2026, 9, 14, 15, 30, 20), toFake: ['Date'] });
     await TestBed.configureTestingModule({
       imports: [Host],
     }).compileComponents();
@@ -390,6 +392,7 @@ describe('HxDateTimeRangePicker', () => {
   afterEach(() => {
     fixture.destroy();
     Element.prototype.scrollIntoView = scrollIntoView;
+    vi.useRealTimers();
   });
 
   it('is one read-only field with one button', () => {
