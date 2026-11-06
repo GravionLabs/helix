@@ -35,8 +35,8 @@ The tokens are Aura's, adapted by Helix (decided in [ADR 0001](adr/0001-styling-
 - **Muted hues:** the primary and severity scales (indigo, red, green, sky, orange, purple, …) are
   Tailwind's with 45 % less chroma in OKLCH, same lightness (`palettes.ts`, generated from `tailwind.ts` by
   `pnpm palettes:generate [factor]`). Contrast ratios are those of Aura; the colours are quieter.
-- **Text:** near-black (`surface.950`) with a darker muted step (`surface.600`) for 4.5:1 contrast on
-  cards; the inverse in dark mode.
+- **Text:** `surface.600` (`#3c3c43`) with the muted step `surface.500` (`#67676c`, 5.6:1 on white); in dark
+  mode `#dfdfd6` and the muted step `surface.400` (`#98989f`). See the [theme audit](migrations/theme-audit.md).
 - **Radius:** Aura's 6 px (`border.radius.md`).
 - **Type:** Inter for text and headings (one family; headings are weight 700 with −0.02em tracking) and the
   system monospace for code, declared as `--helix-font-sans`, `--helix-font-display` (an alias of sans, so an
