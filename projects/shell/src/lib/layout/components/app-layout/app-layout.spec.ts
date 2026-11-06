@@ -412,3 +412,35 @@ describe('HelixAppLayout inset frame', () => {
     });
   });
 });
+
+describe('HelixAppLayout content gaps', () => {
+  // The real stylesheet: jsdom does not resolve var(), so the rules are read as text.
+  function layoutStyles(): string {
+    TestBed.configureTestingModule({ imports: [HelixAppLayout], providers: [provideRouter([])] });
+    TestBed.createComponent(HelixAppLayout);
+    return Array.from(document.querySelectorAll('style'))
+      .map((style) => style.textContent ?? '')
+      .join('\n')
+      .replace(/\s+/g, ' ');
+  }
+
+  function rule(css: string, selector: string): string {
+    const match = css.match(new RegExp(`(?:^|[ }])${selector.replace('.', '\\.')} \\{([^}]*)\\}`));
+    return match?.[1] ?? '';
+  }
+
+  it('gives the content below the page header the same gap as the content next to the nav rail', () => {
+    const css = layoutStyles();
+    // Horizontal: rail edge, then the container's panel gap, the panel border, the main padding.
+    expect(rule(css, '.layout-main-container')).toContain('padding: var(--helix-panel-gap)');
+    expect(rule(css, '.layout-panel')).toContain('border: var(--helix-panel-border-width) solid');
+    expect(rule(css, '.layout-main')).toContain('padding: var(--helix-layout-gap)');
+    // Vertical: the same three terms between the page header and the content.
+    const top = rule(css, '.layout-main').match(/padding-top: calc\(([^;]*)\);/)?.[1] ?? '';
+    expect(top.split('+').map((term) => term.trim().replace(/^var\((.*)\)$/, '$1'))).toEqual([
+      '--helix-panel-gap',
+      '--helix-panel-border-width',
+      '--helix-layout-gap',
+    ]);
+  });
+});

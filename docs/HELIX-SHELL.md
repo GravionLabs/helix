@@ -134,7 +134,7 @@ The shell is laid out as a **frame** with **inset panels**. There is exactly one
 
 - **Frame.** One ground (`--helix-surface-chrome`) sits behind everything. The status bar lies flat on it, without background or hairline, and the frame itself never scrolls.
 - **Inset panels.** The nav rail and the content panel (`.layout-panel`) are panels with a 1px `--h-content-border-color` border, a `--helix-panel-radius` radius and `--helix-panel-gap` of space to each other and to the window edge.
-- **Page header.** The page header ([`HelixTopbar`](#helixtopbar): breadcrumb trail or page title, plus the configurable [topbar actions](#topbar-actions)) is the head of the content panel, separated from the content by one divider. `.layout-main` below it scrolls inside the panel.
+- **Page header.** The page header ([`HelixTopbar`](#helixtopbar): breadcrumb trail or page title, plus the configurable [topbar actions](#topbar-actions)) is the head of the content panel, separated from the content by one divider. `.layout-main` below it scrolls inside the panel. The gap from the page header down to the content equals the gap from the nav rail across to the content: `--helix-panel-gap` + the 1px panel border + `--helix-layout-gap` (26px comfortable), so both scale together in compact density.
 - **Global actions** (search, dark mode, configurator, alerts, custom actions) live in the page header, configured by `topbarActions` (see [topbar actions](#topbar-actions)). The footer of the nav rail holds only the **collapse toggle**.
 - **Below 992px** the content panel goes edge to edge (no gap, radius or border) and the nav rail is an overlay drawer opened by the menu toggle in the page header.
 
