@@ -351,6 +351,44 @@ describe('HxTabBar', () => {
       ]);
     });
 
+    it('stays open through the mouse release of the right click that opened it', async () => {
+      await rightClick(3);
+      // the browser fires auxclick (button 2) on the tab after the contextmenu event
+      tabs()[3].dispatchEvent(new MouseEvent('auxclick', { bubbles: true, button: 2 }));
+      await settle();
+      expect(menuItems().length).toBe(2);
+      menuItems()[0].click();
+      await settle();
+      expect(host.log).toEqual(['menu:d:close']);
+      expect(menuItems()).toEqual([]);
+    });
+
+    it('closes on a click outside and on Escape', async () => {
+      await rightClick(3);
+      document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await settle();
+      expect(menuItems()).toEqual([]);
+      await rightClick(3);
+      menuItems()[0].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }),
+      );
+      await settle();
+      expect(menuItems()).toEqual([]);
+      expect(host.log).toEqual([]);
+    });
+
+    it('runs the focused action with Enter from the keyboard', async () => {
+      key(tabs()[3], 'ContextMenu');
+      await settle();
+      menuItems()[0].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+      );
+      menuItems()[0].click(); // Enter on a menu item button activates it
+      await settle();
+      expect(host.log).toEqual(['menu:d:close']);
+      expect(menuItems()).toEqual([]);
+    });
+
     it('reports the chosen action with the tab id and closes the menu', async () => {
       await rightClick(3);
       menuItems()[0].click();

@@ -140,6 +140,16 @@ export class HxMenu {
 
   protected onOutsideClick(event: MouseEvent): void {
     const origin = this.origin();
+    const target = event.target as Node;
+    // The release of the right click that opened a context menu arrives as `auxclick` on the opener: not an outside click.
+    if (
+      event.type === 'auxclick' &&
+      event.button === 2 &&
+      !(origin instanceof Element) &&
+      this.#returnFocus?.contains(target)
+    ) {
+      return;
+    }
     if (!(origin instanceof Element && origin.contains(event.target as Node))) this.hide(false);
   }
 }
