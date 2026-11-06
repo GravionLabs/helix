@@ -4,10 +4,11 @@ import type { TokenTree } from '../types.ts';
 
 export const card = {
   root: {
-    background: '{content.background}',
-    borderRadius: '{border.radius.xl}',
+    background: '{surface.card}',
+    borderColor: '{border.panel}',
+    borderRadius: '{border.radius.md}',
     color: '{content.color}',
-    shadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+    shadow: 'none',
   },
   body: {
     padding: '1.25rem',

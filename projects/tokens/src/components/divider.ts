@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const divider = {
   root: {
-    borderColor: '{content.border.color}',
+    borderColor: '{border.divider}',
   },
   content: {
     background: '{content.background}',

@@ -28,20 +28,44 @@ documentation site.
 The tokens are Aura's, adapted by Helix (decided in [ADR 0001](adr/0001-styling-foundation.md)):
 
 - **Neutrals:** one grey scale for both colour schemes (`surface.0…950`): the surfaces and greys of the stock
-  VitePress theme, so the demo, the docs and the other Gravion Labs sites look alike. Light: white page and
-  cards, `surface.50` chrome, `surface.200` hairlines; dark: `surface.900` page, `surface.950` chrome,
-  `surface.800` cards, text `#dfdfd6`.
+  VitePress theme, so the demo, the docs and the other Gravion Labs sites look alike. Components do not read the
+  steps but the [surface roles](#surface-roles); text in dark mode is `#dfdfd6`.
 - **Primary:** indigo: `primary.600` on light backgrounds, `primary.400` on dark ones.
 - **Muted hues:** the primary and severity scales (indigo, red, green, sky, orange, purple, …) are
   Tailwind's with 45 % less chroma in OKLCH, same lightness (`palettes.ts`, generated from `tailwind.ts` by
   `pnpm palettes:generate [factor]`). Contrast ratios are those of Aura; the colours are quieter.
 - **Text:** `surface.600` (`#3c3c43`) with the muted step `surface.500` (`#67676c`, 5.6:1 on white); in dark
   mode `#dfdfd6` and the muted step `surface.400` (`#98989f`). See the [theme audit](migrations/theme-audit.md).
-- **Radius:** Aura's 6 px (`border.radius.md`).
+- **Radius:** Aura's 6 px (`border.radius.md`), for panels and cards alike.
 - **Type:** Inter for text and headings (one family; headings are weight 700 with −0.02em tracking) and the
   system monospace for code, declared as `--helix-font-sans`, `--helix-font-display` (an alias of sans, so an
   application can give headings another face) and `--helix-font-mono` by `helix-shell`'s stylesheet. The font file
   is the application's: the demo loads it from `@fontsource-variable/inter` (self-hosted, no font CDN).
+
+## Surface roles
+
+Seven roles per colour scheme in `projects/tokens/src/semantic.ts` are the only source of the surfaces
+([ADR 0004](adr/0004-surface-roles-dark-elevation-density-and-named-theme-presets.md)). Components and the shell
+read the roles, not the scale steps:
+
+| Role (`--h-*`)    | Used for                                                     | Light         | Dark          |
+| ----------------- | ------------------------------------------------------------ | ------------- | ------------- |
+| `surface-frame`   | ground behind the shell, sidebar of the docs site            | `surface.50`  | `surface.950` |
+| `surface-panel`   | content panel, nav rail, page                                | `surface.0`   | `surface.900` |
+| `surface-card`    | cards, table head, code                                      | `surface.0`   | `surface.800` |
+| `surface-overlay` | dialog, popover, menu                                        | `surface.0`   | `surface.800` |
+| `surface-hover`   | hovered row, menu item, rail link                            | `surface.100` | `surface.800` |
+| `border-panel`    | hairline around panels and cards, `--h-content-border-color` | `surface.200` | `surface.700` |
+| `border-divider`  | lines inside a panel (table rows, dividers)                  | `surface.100` | `surface.700` |
+
+In dark mode each level is one scale step lighter than what it sits on, with a hairline; an overlay is told apart
+from a card by its hairline and a 40 % black shadow, not by a fourth step. Cards have a 1 px `border-panel`
+hairline, the panel radius (`border.radius.md`, 6 px) and no shadow in light mode. Text and muted text keep at
+least 4.5:1 on every surface (`scripts/tests/surface-roles.spec.ts`). The shell variables `--helix-surface-chrome`
+(frame), `--helix-surface-ground` (panel), `--helix-surface-card`, `--helix-surface-overlay`,
+`--helix-surface-hover`, `--helix-border` and the old `--surface-*` names are aliases of the roles, so an app that
+overrides them keeps working. The documentation site binds its `--vp-c-bg*`, `--vp-c-divider` and `--vp-c-gutter`
+to the same roles.
 
 ## In an application
 
