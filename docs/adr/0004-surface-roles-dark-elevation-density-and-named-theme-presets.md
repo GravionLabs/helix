@@ -3,6 +3,7 @@
 - Status: Proposed
 - Date: 2026-11-06
 - Issues: #1027, #1028, #1029
+- Implementation notes: the surface roles (decisions 1 to 3) are implemented in #1028; the density option (4) and presets (5) are not yet.
 
 ## Context
 
