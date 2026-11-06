@@ -1,11 +1,9 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   contentChild,
-  DestroyRef,
   Directive,
   ElementRef,
   effect,
@@ -15,9 +13,9 @@ import {
   signal,
   TemplateRef,
   untracked,
-  viewChild,
 } from '@angular/core';
 import { nextId } from '../internal/ids';
+import { HxTabScroller } from '../internal/tab-scroller/tab-scroller';
 
 /**
  * Tabs with panels, in the WAI-ARIA tabs pattern.
@@ -97,50 +95,18 @@ export class HxTabs {
 /** The row of tabs. Handles the arrow keys and, with `scrollable`, the scroll buttons. */
 @Component({
   selector: 'hx-tab-list',
+  imports: [HxTabScroller],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tab-list', '[class.hx-tab-list-scrollable]': 'tabs.scrollable()' },
   template: `
-    @if (tabs.scrollable() && overflowing()) {
-      <button type="button" class="hx-tab-nav hx-tab-nav-prev" tabindex="-1" aria-label="Scroll tabs left" (click)="scroll(-1)">
-        <span class="hx-tab-nav-icon-prev" aria-hidden="true"></span>
-      </button>
-    }
-    <div #scroller class="hx-tab-scroller" (scroll)="measure()">
+    <hx-tab-scroller [enabled]="tabs.scrollable()">
       <div class="hx-tab-tabs" role="tablist" (keydown)="onKeydown($event)"><ng-content /></div>
-    </div>
-    @if (tabs.scrollable() && overflowing()) {
-      <button type="button" class="hx-tab-nav hx-tab-nav-next" tabindex="-1" aria-label="Scroll tabs right" (click)="scroll(1)">
-        <span class="hx-tab-nav-icon-next" aria-hidden="true"></span>
-      </button>
-    }
+    </hx-tab-scroller>
   `,
 })
 export class HxTabList {
   protected readonly tabs = inject(HxTabs);
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
-  readonly #destroyRef = inject(DestroyRef);
-  private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
-  protected readonly overflowing = signal(false);
-
-  constructor() {
-    afterNextRender(() => {
-      this.measure();
-      if (typeof ResizeObserver === 'undefined') return;
-      const observer = new ResizeObserver(() => this.measure());
-      observer.observe(this.#host.nativeElement);
-      this.#destroyRef.onDestroy(() => observer.disconnect());
-    });
-  }
-
-  protected measure(): void {
-    const el = this.scroller()?.nativeElement;
-    if (el) this.overflowing.set(el.scrollWidth > el.clientWidth + 1);
-  }
-
-  protected scroll(direction: 1 | -1): void {
-    const el = this.scroller()?.nativeElement;
-    el?.scrollBy?.({ left: direction * el.clientWidth * 0.6, behavior: 'smooth' });
-  }
 
   protected onKeydown(event: KeyboardEvent): void {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;

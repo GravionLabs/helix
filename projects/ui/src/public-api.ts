@@ -167,7 +167,7 @@ export {
   hxResolveRangeSide,
 } from './lib/internal/quick-select/quick-select';
 export { HxListbox } from './lib/listbox/listbox';
-export { HxMenu } from './lib/menu/menu';
+export { HxMenu, type HxMenuPoint } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
 export { HxMenubar } from './lib/menubar/menubar';
 export {
@@ -218,6 +218,13 @@ export {
   type HxStepValue,
 } from './lib/stepper/stepper';
 export { HxSwitch } from './lib/switch/switch';
+export {
+  HxTabBar,
+  type HxTabBarItem,
+  type HxTabBarMenuItem,
+  type HxTabBarMove,
+  type HxTabBarReceive,
+} from './lib/tab-bar/tab-bar';
 export { HxTable, type HxTableSize } from './lib/table/table';
 export {
   HxTab,

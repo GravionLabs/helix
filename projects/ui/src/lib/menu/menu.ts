@@ -14,6 +14,12 @@ import {
 import type { HxMenuItem } from '../menu-item';
 import { HxMenuPanel } from './menu-panel';
 
+/** A point of the viewport, in client coordinates. */
+export interface HxMenuPoint {
+  x: number;
+  y: number;
+}
+
 /**
  * A menu of `HxMenuItem`s, inline or as a popup, with nested submenus, on `@angular/cdk/menu`.
  *
@@ -25,7 +31,8 @@ import { HxMenuPanel } from './menu-panel';
  * ```
  *
  * An item with children and no action of its own, on the first level, is a group heading above its children; deeper
- * levels open as submenus. A popup menu opens at the element that called `toggle(event)` (or `show(event)`), moves the
+ * levels open as submenus. A popup menu opens at the element that called `toggle(event)` (or `show(event)`), or at a
+ * point with `showAt({ x, y })` (a context menu), moves the
  * focus into the menu and returns it to that element on Escape or when an item is chosen.
  *
  * Keyboard (the WAI-ARIA menu pattern from the CDK): Arrow Down/Up move, Home and End jump, typing jumps by
@@ -70,7 +77,9 @@ export class HxMenu {
   readonly hidden = output<void>();
 
   readonly open = signal(false);
-  protected readonly origin = signal<Element | null>(null);
+  protected readonly origin = signal<Element | HxMenuPoint | null>(null);
+  /** Where the focus returns when the menu closes; the element of `show`, or the one given to `showAt`. */
+  #returnFocus: Element | null = null;
   protected readonly fallbackOrigin = document.body;
   protected readonly positions: ConnectedPosition[] = [
     { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 2 },
@@ -90,6 +99,16 @@ export class HxMenu {
     if (!this.popup() || this.open()) return;
     const target = (event.currentTarget ?? event.target) as Element | null;
     this.origin.set(target);
+    this.#returnFocus = target;
+    this.open.set(true);
+    this.shown.emit();
+  }
+
+  /** Opens the popup at a point of the viewport (a context menu); `returnFocus` gets the focus back on close. */
+  showAt(point: HxMenuPoint, returnFocus: Element | null = null): void {
+    if (!this.popup() || this.open()) return;
+    this.origin.set({ x: point.x, y: point.y });
+    this.#returnFocus = returnFocus;
     this.open.set(true);
     this.shown.emit();
   }
@@ -98,7 +117,7 @@ export class HxMenu {
     if (!this.open()) return;
     this.open.set(false);
     this.hidden.emit();
-    if (refocus) (this.origin() as HTMLElement | null)?.focus?.();
+    if (refocus) (this.#returnFocus as HTMLElement | null)?.focus?.();
   }
 
   protected onAttach(): void {
@@ -120,6 +139,7 @@ export class HxMenu {
   }
 
   protected onOutsideClick(event: MouseEvent): void {
-    if (!this.origin()?.contains(event.target as Node)) this.hide(false);
+    const origin = this.origin();
+    if (!(origin instanceof Element && origin.contains(event.target as Node))) this.hide(false);
   }
 }

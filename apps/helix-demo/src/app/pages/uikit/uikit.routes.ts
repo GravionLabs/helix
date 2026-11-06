@@ -18,6 +18,7 @@ import { MessagesDemo } from './message/messages-demo';
 import { MiscDemo } from './misc/misc-demo';
 import { OverlayDemo } from './overlay/overlay-demo';
 import { PanelsDemo } from './panel/panels-demo';
+import { TabBarDemo } from './tab-bar/tab-bar-demo';
 import { UikitTableDemo } from './table/table-demo';
 import { TimelineDemo } from './timeline/timeline-demo';
 import { TopbarDemo } from './topbar/topbar-demo';
@@ -40,6 +41,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   misc: MiscDemo,
   overlay: OverlayDemo,
   panel: PanelsDemo,
+  'tab-bar': TabBarDemo,
   table: UikitTableDemo,
   timeline: TimelineDemo,
   topbar: TopbarDemo,
