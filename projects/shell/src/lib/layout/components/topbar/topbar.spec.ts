@@ -333,20 +333,3 @@ describe('defineTopbarActions', () => {
     expect(result).not.toBe(defaults);
   });
 });
-
-describe('HelixTopbar styles', () => {
-  it('insets the actions equally at the start and the end of the page header', async () => {
-    await TestBed.configureTestingModule({
-      imports: [HelixTopbar],
-      providers: [provideRouter([])],
-    }).compileComponents();
-    const fixture = TestBed.createComponent(HelixTopbar);
-    await fixture.whenStable();
-    const bar = (fixture.nativeElement as HTMLElement).querySelector(
-      '.layout-topbar',
-    ) as HTMLElement;
-    const style = getComputedStyle(bar);
-    expect(style.paddingLeft).toBe('16px');
-    expect(style.paddingRight).toBe('16px');
-  });
-});

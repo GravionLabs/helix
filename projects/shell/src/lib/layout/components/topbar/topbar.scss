@@ -19,8 +19,7 @@
 .layout-topbar {
   box-sizing: border-box;
   height: var(--helix-topbar-height, 3rem);
-  // Same inset at both ends: the actions must not hug the panel border (was the 4px panel gap).
-  padding: 0 1rem;
+  padding: 0 var(--helix-panel-gap, 4px) 0 1rem;
   border-bottom: 1px solid var(--h-content-border-color);
   // Three zones: start (toggle, breadcrumb or title), center, end. The side columns share the free
   // width equally, so the center zone stays centered.
