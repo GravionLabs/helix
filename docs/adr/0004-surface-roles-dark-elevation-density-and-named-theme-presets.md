@@ -3,7 +3,7 @@
 - Status: Proposed
 - Date: 2026-11-06
 - Issues: #1027, #1028, #1029
-- Implementation notes: the surface roles (decisions 1 to 3) are implemented in #1028; the density option (decision 4) is implemented in #1049 (heights in `docs/THEMING.md`); presets (5) are not yet.
+- Implementation notes: the surface roles (decisions 1 to 3) are implemented in #1028; the density option (decision 4) is implemented in #1049 (heights in `docs/THEMING.md`); the presets (decision 5) are implemented in #1029 (`docs/THEMING.md`, Presets; the dark filled button and the severity ratios are pinned in `presets.spec.ts`, decision 6).
 
 ## Context
 

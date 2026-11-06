@@ -64,6 +64,10 @@ export const LayoutStore = signalStore(
     primary: computed(() => theme.primary()),
     surface: computed(() => theme.surface()),
     density: computed(() => theme.density()),
+    preset: computed(() => theme.preset()),
+    presetNames: computed(() => theme.presetNames),
+    activePrimary: computed(() => theme.activePrimary()),
+    activeSurface: computed(() => theme.activeSurface()),
     isDarkTheme: computed(() => theme.dark()),
     isOverlay: computed(() => store.menuMode() === 'overlay'),
     isStatic: computed(() => store.menuMode() === 'static'),
@@ -135,6 +139,9 @@ export const LayoutStore = signalStore(
     },
     setDensity(density: HxDensity): void {
       theme.setDensity(density);
+    },
+    setPreset(preset: string): void {
+      theme.setPreset(preset);
     },
     isDesktop(): boolean {
       return window.innerWidth > 991;

@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  HX_DENSITIES,
   HX_PRIMARY_COLORS,
   HX_SURFACE_NAMES,
   HX_THEME_OPTIONS,
@@ -39,7 +40,11 @@ import {
     HxTheme,
     {
       provide: HX_THEME_OPTIONS,
-      useFactory: () => ({ dark: inject(DOCUMENT).documentElement.classList.contains('app-dark') }),
+      useFactory: () => ({
+        dark: inject(DOCUMENT).documentElement.classList.contains('app-dark'),
+        // a preset of the app: a bundle of the same three knobs, no token is forked
+        presets: { forest: { primary: 'emerald', surface: 'stone', density: 'comfortable' } },
+      }),
     },
   ],
   templateUrl: './blocks-section.html',
@@ -50,6 +55,8 @@ export class HxBlocksSection {
   readonly theme = inject(HxTheme);
   readonly primaryColors = [...HX_PRIMARY_COLORS];
   readonly surfaces = [...HX_SURFACE_NAMES];
+  readonly presets = [...this.theme.presetNames];
+  readonly densities = [...HX_DENSITIES];
 
   readonly home: HxBreadcrumbItem = { icon: 'pi pi-home', routerLink: '/' };
   readonly trail: HxBreadcrumbItem[] = [

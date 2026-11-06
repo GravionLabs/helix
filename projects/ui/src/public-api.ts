@@ -241,11 +241,15 @@ export {
   HX_SURFACE_NAMES,
   HX_SURFACES,
   HX_THEME_OPTIONS,
+  HX_THEME_PRESETS,
+  type HxBundledPreset,
   type HxDensity,
   type HxPrimaryColor,
+  type HxPrimaryScale,
   type HxSurface,
   HxTheme,
   type HxThemeOptions,
+  type HxThemePreset,
   provideHxTheme,
 } from './lib/theme/theme';
 export { HxTimePicker, type HxTimePickerValue } from './lib/time-picker/time-picker';
