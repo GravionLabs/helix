@@ -2,6 +2,7 @@ import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravionlabs/helix-
 import { AG_GRID_MENU_ITEMS } from '../pages/ag-grid/ag-grid-menu-items';
 import { CHARTS_MENU_ITEMS } from '../pages/charts/charts-menu-items';
 import { Dashboard } from '../pages/dashboard/dashboard';
+import { DESKTOP_MENU_ITEMS } from '../pages/desktop/desktop-menu-items';
 import { Documentation } from '../pages/documentation/documentation';
 import { PAGES_MENU_ITEMS } from '../pages/pages-menu-items';
 import { UIKIT_MENU_ITEMS } from '../pages/uikit/uikit-menu-items';
@@ -38,6 +39,14 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
     path: 'charts',
     loadChildren: () => import('../pages/charts/charts.routes'),
     items: helixMenuLinksFrom(CHARTS_MENU_ITEMS, '/charts'),
+  },
+  {
+    label: 'Desktop',
+    icon: 'pi pi-fw pi-desktop',
+    breadcrumb: 'Desktop',
+    path: 'desktop',
+    loadChildren: () => import('../pages/desktop/desktop.routes'),
+    items: helixMenuLinksFrom(DESKTOP_MENU_ITEMS, '/desktop'),
   },
   {
     label: 'Pages',

@@ -14,9 +14,10 @@ import { DEMO_MENU_MODEL } from './menu.model';
 describe('DEMO_MENU_MODEL charts group', () => {
   const labels = DEMO_MENU_MODEL.map((item) => item.label);
 
-  it('sits after AG Grid and before Pages', () => {
+  it('sits after AG Grid and before Desktop', () => {
     expect(labels.indexOf('Charts')).toBe(labels.indexOf('AG Grid') + 1);
-    expect(labels.indexOf('Pages')).toBe(labels.indexOf('Charts') + 1);
+    expect(labels.indexOf('Desktop')).toBe(labels.indexOf('Charts') + 1);
+    expect(labels.indexOf('Pages')).toBe(labels.indexOf('Desktop') + 1);
   });
 
   it('links one item per chart type under /charts', () => {
@@ -122,6 +123,7 @@ describe('DEMO_MENU_MODEL AG Grid group', () => {
       'Components',
       'AG Grid',
       'Charts',
+      'Desktop',
       'Pages',
       'Resources',
     ]);
@@ -188,5 +190,15 @@ describe('lazy group routes', () => {
     const loaded = (await group('Charts')?.loadChildren?.()) as { default: unknown };
     expect(loaded.default).toBe(chartsRoutes);
     expect(chartsRoutes.find((r) => r.path === 'line')?.component).toBe(LineChartDemo);
+  });
+});
+
+describe('DEMO_MENU_MODEL desktop group', () => {
+  it('lists the package page under /desktop', () => {
+    const desktop = DEMO_MENU_MODEL.find((item) => item.label === 'Desktop');
+    expect(desktop?.path).toBe('desktop');
+    expect(desktop?.items?.map((i) => [i.label, i.routerLink])).toEqual([
+      ['Overview', ['/desktop/overview']],
+    ]);
   });
 });
