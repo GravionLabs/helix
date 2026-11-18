@@ -2,12 +2,12 @@
 
 `@gravionlabs/helix-desktop` is the desktop frame of Helix: an activity bar with views, a sidebar or tab area and a status bar, with the platform switch (`data-platform`). The decision is [ADR 0005](https://github.com/GravionLabs/helix/blob/main/docs/adr/0005-helix-desktop-package.md).
 
-The package builds, is tested and is published with the other packages. Components so far: `HxAppShell`, `HxAppToolbar`, `HxActivityBar`, `HxStatusBar`.
+The package builds, is tested and is published with the other packages. Components so far: `HxAppShell`, `HxAppToolbar`, `HxActivityBar`, `HxStatusBar`, and in the `/tauri` entry `HxStatusUpdate` with the update service.
 
 ## Entry points
 
 - `@gravionlabs/helix-desktop`: components, the view contract and the platform switch. It imports nothing from `@tauri-apps/*`.
-- `@gravionlabs/helix-desktop/tauri`: the Tauri bindings. The only entry that may import `@tauri-apps/*`; `pnpm lint:no-tauri` enforces it.
+- `@gravionlabs/helix-desktop/tauri`: the Tauri bindings (update service, `HxStatusUpdate`, app version and channel, `providePlatform()`). Outside Tauri every service is a no-op. The only entry that may import `@tauri-apps/*`; `pnpm lint:no-tauri` enforces it.
 
 ## Peer dependencies
 
@@ -101,3 +101,18 @@ The phone layout: the same views, a different shell. A top bar with the menu but
 ```html
 @if (platform === 'mobile') { <hx-mobile-shell ...> } @else { <hx-app-shell ...> }
 ```
+
+## The tauri entry
+
+`@tauri-apps/plugin-updater`, `plugin-process` and `api` are optional peer dependencies, loaded on first use. The plugin calls sit behind `HxUpdateBackend` (`check`, `install`, `relaunch`); provide `HX_UPDATE_BACKEND` to replace it in tests. Outside Tauri the backend is `noopUpdateBackend`.
+
+```ts
+bootstrapApplication(App, {
+  providers: [providePlatform(), provideHxAppInfo({ version: await readTauriVersion() })],
+});
+```
+
+- `HxUpdateService`: `state` is `idle`, `checking`, `current`, `available` (with `update`: version, notes), `installing` or `error` (with the failed `step`: `check`, `install` or `relaunch`). `start()` checks once; `check()` checks on request; `installAndRestart()` installs and restarts.
+- `provideHxAppInfo({ version, channel? })`: the channel is `stable` or `rc`, derived from a `-rc` version when not given. An RC build shows the badge (`<hx-status-app-version slot="end" />` shows the version and the badge) and `start()` does not check by itself.
+- `HxStatusUpdate` (`<hx-status-update slot="end" />`): the state as a status item with the version, the notes and "Install and restart" in the popover. Labels are inputs. Not rendered on mobile or while idle or current.
+- `providePlatform()` sets `data-platform` to `macos`, `windows`, `linux`, `ios`, `android` or `web`. `getHxPlatformKind()` maps it to the shell kind `desktop`, `mobile` or `web`.

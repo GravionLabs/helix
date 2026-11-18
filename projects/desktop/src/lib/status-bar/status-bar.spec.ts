@@ -124,4 +124,19 @@ describe('status bar', () => {
     fixture.detectChanges();
     expect(host.open()).toBe(false);
   });
+
+  it('projects the label of an item that is created later inside a block', () => {
+    @Component({
+      imports: [HxStatusItem],
+      template: `@if (on()) {<hx-status-item kind="button"><span id="late">Late</span></hx-status-item>}`,
+    })
+    class Late {
+      readonly on = signal(false);
+    }
+    const fixture = TestBed.createComponent(Late);
+    fixture.detectChanges();
+    fixture.componentInstance.on.set(true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('button #late')).toBeTruthy();
+  });
 });
