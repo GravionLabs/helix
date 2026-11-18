@@ -10,4 +10,12 @@ describe('DesktopDemo', () => {
     expect(text).toContain('@gravionlabs/helix-desktop');
     expect(text).toContain(HELIX_DESKTOP_VERSION);
   });
+
+  it('shows the mobile shell at phone width', () => {
+    const fixture = TestBed.createComponent(DesktopDemo);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('hx-mobile-shell .hx-bottom-bar')).not.toBeNull();
+    expect(root.querySelectorAll('hx-mobile-shell .hx-bottom-bar-item').length).toBe(3);
+  });
 });
