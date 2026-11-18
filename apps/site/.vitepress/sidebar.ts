@@ -39,6 +39,7 @@ export function sidebarOf(componentIndex: string): SidebarGroup[] {
         { text: 'Components', link: '/components/' },
         { text: 'Shell API', link: '/HELIX-SHELL' },
         { text: 'Helix UI', link: '/HELIX-UI' },
+        { text: 'Helix Desktop', link: '/HELIX-DESKTOP' },
         { text: 'Theming', link: '/THEMING' },
         { text: 'Roadmap', link: '/ROADMAP' },
       ],

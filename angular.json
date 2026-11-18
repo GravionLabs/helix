@@ -147,6 +147,41 @@
         }
       }
     },
+    "desktop": {
+      "projectType": "library",
+      "root": "projects/desktop",
+      "sourceRoot": "projects/desktop/src",
+      "prefix": "helix-desktop",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/desktop/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/desktop/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/desktop/tsconfig.spec.json",
+            "include": ["**/*.spec.ts", "../tauri/**/*.spec.ts"]
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
+          }
+        }
+      }
+    },
     "helix-demo": {
       "projectType": "application",
       "schematics": {

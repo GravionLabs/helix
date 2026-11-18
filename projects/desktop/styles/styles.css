@@ -1,0 +1,13 @@
+/*
+ * @gravionlabs/helix-desktop: the frame of the desktop shell. Reads only `--h-*` tokens (from
+ * `@gravionlabs/helix-ui/tokens.css`), so light and dark follow HxTheme with no rule of their own.
+ */
+@layer components {
+  [data-platform="desktop"] .hx-desktop-frame {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--h-surface-frame);
+    color: var(--h-text-color);
+  }
+}
