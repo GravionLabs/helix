@@ -2,7 +2,7 @@
 
 - Status: Proposed
 - Date: 2026-11-18
-- Issues: #1073, #1072, #1074
+- Issues: #1073, #1072, #1074, #1075
 
 ## Context
 
@@ -36,6 +36,15 @@ The shell chooses its form by platform, not by viewport width. The root element 
 ### Icons
 
 An app passes its own icons: either an inline SVG template (`TemplateRef`) or an icon name that the app resolves through an icon registry it provides. The package ships no icon font and no icon set beyond the few glyphs its own chrome needs, as inline SVG.
+
+### Activity bar
+
+`HxActivityBar` (`hx-activity-bar`) is the first component of the main entry. It takes `items` (a `HelixView` plus an optional `kind` of `'view'` or `'action'` and a `badge`), the `activeId` and `expanded`, and emits `selected` with the item id.
+
+- A view is a toggle with `aria-pressed`; an action is a plain button. Both carry an `aria-label` and a tooltip.
+- The active view is marked only while the sidebar is `expanded`, so a collapsed sidebar does not look as if it shows a view.
+- The rail is one tab stop (roving tabindex); arrow keys, Home and End move the focus. Items with `position: 'bottom'` (settings) sit at the bottom.
+- The icon follows the Icons rule above and is drawn in a box of one size.
 
 ### Adoption note for consumers
 
