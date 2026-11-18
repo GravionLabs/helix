@@ -60,7 +60,8 @@ describe('status bar', () => {
     const { root } = setup();
     const live = root.querySelectorAll('[role="status"]');
     expect(live.length).toBe(1);
-    expect(root.querySelector('#sync [role="status"]')).toBeTruthy();
+    expect(root.querySelector('#sync[role="status"]')).toBeTruthy();
+    expect(root.querySelector('hx-status-bar[role]')).toBeNull();
   });
 
   it('renders a button item and honors disabled', () => {

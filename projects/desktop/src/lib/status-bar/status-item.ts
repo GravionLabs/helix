@@ -42,6 +42,7 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
     '[class.hx-status-error]': "tone() === 'error'",
     '[class.hx-status-accent]': "tone() === 'accent'",
     '[attr.title]': 'null',
+    '[attr.role]': "announce() ? 'status' : null",
     '(document:keydown.escape)': 'close()',
     '(document:click)': 'onDocumentClick($event)',
   },
@@ -54,7 +55,6 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
         [attr.aria-label]="ariaLabel()"
         [attr.aria-haspopup]="hasPopover ? 'dialog' : null"
         [attr.aria-expanded]="hasPopover ? popoverOpen() : null"
-        [attr.role]="announce() ? 'status' : null"
         [disabled]="disabled()"
         (click)="onButtonClick()"
       >
@@ -65,7 +65,6 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
         class="hx-status-control"
         [attr.title]="title()"
         [attr.aria-label]="ariaLabel()"
-        [attr.role]="announce() ? 'status' : null"
       >
         <ng-content />
       </span>
