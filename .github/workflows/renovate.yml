@@ -1,0 +1,45 @@
+name: Renovate
+
+# Runs Renovate from here with a token of the GravionLabs CI app (secrets CI_APP_ID and CI_APP_PRIVATE_KEY): pull
+# requests opened with the default GITHUB_TOKEN do not start CI. Weekly, ahead of the "before 6am on monday" schedule
+# of .github/renovate.json5 (Zurich time); hourly on Monday morning so a held-back pull request is not missed by much.
+on:
+  schedule:
+    - cron: '0 3-4 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Only log what Renovate would do'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    name: Run Renovate
+    if: github.repository == 'GravionLabs/helix'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        id: app
+        with:
+          app-id: ${{ secrets.CI_APP_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+      - uses: renovatebot/github-action@1c0cf989c02653fba0efe7ca5772338860ca71dc # v46.3.12
+        with:
+          token: ${{ steps.app.outputs.token }}
+          configurationFile: .github/renovate.json5
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          RENOVATE_ONBOARDING: 'false'
+          RENOVATE_REQUIRE_CONFIG: 'required'
+          RENOVATE_DRY_RUN: ${{ inputs.dry-run && 'full' || '' }}
+          LOG_LEVEL: info
