@@ -1,3 +1,4 @@
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -35,6 +36,7 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
  */
 @Component({
   selector: 'hx-status-item',
+  imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-status-item',
@@ -58,7 +60,7 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
         [disabled]="disabled()"
         (click)="onButtonClick()"
       >
-        <ng-content />
+        <ng-container [ngTemplateOutlet]="content" />
       </button>
     } @else {
       <span
@@ -66,9 +68,10 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
         [attr.title]="title()"
         [attr.aria-label]="ariaLabel()"
       >
-        <ng-content />
+        <ng-container [ngTemplateOutlet]="content" />
       </span>
     }
+    <ng-template #content><ng-content /></ng-template>
     @if (popoverOpen()) {
       <div class="hx-status-popover"><ng-content select="[hxStatusPopover]" /></div>
     }
