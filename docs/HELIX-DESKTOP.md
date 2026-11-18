@@ -80,3 +80,24 @@ The layout: toolbar, activity bar, one sidebar, content, an optional right panel
 ## HxAppToolbar
 
 The 26 px bar at the top with `start`, `centre` (title) and `end` slots. It carries `data-tauri-drag-region` (also on the centre), so it drags a Tauri window; buttons in the start and end slot do not. `windowButtonsInset` reserves 78 px at the start for the macOS window buttons when the title bar is hidden.
+
+## HxMobileShell and HxBottomBar
+
+The phone layout: the same views, a different shell. A top bar with the menu button, the content, a bottom bar and a drawer (`HxDrawer` of helix-ui) for the sidebar views. There is no status bar and no hover tooltip; every touch target is at least 44 pt.
+
+```html
+<hx-mobile-shell #shell [items]="items" [(activeId)]="viewId" [(drawerOpen)]="drawer" heading="Helix">
+  <nav slot="drawer"><button (click)="shell.chooseView('files')">Files</button></nav>
+  ...the view of viewId...
+</hx-mobile-shell>
+```
+
+- `HxBottomBar` (`items`, `activeId`, `label`, output `selected`) shows the first five items (`HX_BOTTOM_BAR_MAX_ITEMS`); an item has the shape of an activity bar item.
+- `HxMobileShell`: `items`, models `activeId` and `drawerOpen`, inputs `heading`, `menuLabel`, `closeLabel`, `barLabel`. The `drawer` slot holds the sidebar views, `end` adds to the top bar. `chooseView(id)` activates a view and closes the drawer.
+- The drawer opens with the menu button; it closes with a tap outside, a swipe toward its edge, Escape and after a view was chosen.
+- Safe areas: the top bar, the bottom bar and the drawer pad with `env(safe-area-inset-*)`, the content with `env(keyboard-inset-height)`. Use `viewport-fit=cover` and `interactive-widget=resizes-content` in the viewport meta tag.
+- Pick the shell by platform, not by width: `getHxPlatform()` reads `data-platform` of the root element (`desktop`, `mobile` or `web`), `setHxPlatform()` sets it. A narrow desktop window keeps the desktop shell.
+
+```html
+@if (platform === 'mobile') { <hx-mobile-shell ...> } @else { <hx-app-shell ...> }
+```

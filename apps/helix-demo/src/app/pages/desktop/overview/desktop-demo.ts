@@ -5,6 +5,8 @@ import {
   type HxActivityBarItem,
   HxAppShell,
   HxAppToolbar,
+  type HxBottomBarItem,
+  HxMobileShell,
   HxStatusBar,
   HxStatusItem,
   HxStatusPopover,
@@ -20,6 +22,7 @@ import {
     HxActivityBar,
     HxAppShell,
     HxAppToolbar,
+    HxMobileShell,
     HxStatusBar,
     HxStatusItem,
     HxStatusPopover,
@@ -59,6 +62,18 @@ import {
       </hx-app-shell>
     </div>
 
+    <h3>HxMobileShell and HxBottomBar</h3>
+    <p>The phone shell at 375 px: top bar with the menu button, content, bottom bar (up to five items) and a drawer for the sidebar views.</p>
+    <div style="width: 375px; height: 560px; transform: translateZ(0); border: 1px solid var(--h-content-border-color)">
+      <hx-mobile-shell #phone [items]="mobileItems" [(activeId)]="mobileView" [(drawerOpen)]="drawerOpen" heading="Helix">
+        <nav slot="drawer" style="display: flex; flex-direction: column; padding: 8px">
+          <button type="button" (click)="phone.chooseView('files')">Files</button>
+          <button type="button" (click)="phone.chooseView('search')">Search</button>
+        </nav>
+        <p style="padding: 1rem">View: {{ mobileView() }}.</p>
+      </hx-mobile-shell>
+    </div>
+
     <h3>HxStatusBar</h3>
     <div style="border: 1px solid var(--h-content-border-color)">
       <hx-status-bar>
@@ -91,6 +106,13 @@ export class DesktopDemo {
   protected readonly viewId = signal<string | null>('files');
   protected readonly synced = signal(true);
   protected readonly updateOpen = signal(false);
+  protected readonly mobileView = signal<string | null>('files');
+  protected readonly drawerOpen = signal(false);
+  protected readonly mobileItems: HxBottomBarItem[] = [
+    { id: 'files', label: 'Files', icon: 'pi pi-folder', position: 'top' },
+    { id: 'search', label: 'Search', icon: 'pi pi-search', position: 'top', badge: 3 },
+    { id: 'settings', label: 'Settings', icon: 'pi pi-cog', position: 'bottom' },
+  ];
   protected readonly items: HxActivityBarItem[] = [
     { id: 'files', label: 'Files', icon: 'pi pi-folder', position: 'top' },
     { id: 'search', label: 'Search', icon: 'pi pi-search', position: 'top', badge: 3 },
