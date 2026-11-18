@@ -10,4 +10,86 @@
     background: var(--h-surface-frame);
     color: var(--h-text-color);
   }
+
+  .hx-activity-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 48px;
+    flex: none;
+    padding: 4px 0;
+    background: var(--h-surface-frame);
+    border-inline-end: 1px solid var(--h-content-border-color);
+  }
+  .hx-activity-bar-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .hx-activity-bar-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--h-text-muted-color);
+    cursor: pointer;
+  }
+  .hx-activity-bar-item:hover {
+    color: var(--h-text-color);
+    background: var(--h-content-hover-background);
+  }
+  .hx-activity-bar-item:focus-visible {
+    outline: 2px solid var(--h-primary-color);
+    outline-offset: -2px;
+  }
+  .hx-activity-bar-active {
+    color: var(--h-text-color);
+    box-shadow: inset 2px 0 0 var(--h-primary-color);
+  }
+  /* One icon size for templates and named icons alike. */
+  .hx-activity-bar-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 1;
+  }
+  .hx-activity-bar-icon > svg,
+  .hx-activity-bar-icon > * > svg {
+    width: 20px;
+    height: 20px;
+  }
+  .hx-activity-bar-badge {
+    position: absolute;
+    top: 3px;
+    inset-inline-end: 3px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background: var(--h-primary-color);
+    color: var(--h-primary-contrast-color);
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+  }
+  .hx-activity-bar-badge-dot {
+    min-width: 8px;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    top: 6px;
+    inset-inline-end: 6px;
+  }
 }
