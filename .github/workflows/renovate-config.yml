@@ -22,4 +22,6 @@ jobs:
         with:
           node-version-file: .nvmrc
       # No install of the repository: the validator is a one-off tool.
-      - run: pnpm dlx --package renovate@44.224.2 renovate-config-validator --strict .github/renovate.json5
+      # strictDepBuilds=false: the pnpm of this repository (12.3.4) otherwise ends with ERR_PNPM_IGNORED_BUILDS; the build
+      # scripts of the validator's dependencies stay unrun (re2 falls back to RegExp with a warning).
+      - run: pnpm --config.strictDepBuilds=false dlx --package renovate@44.224.2 renovate-config-validator --strict .github/renovate.json5
