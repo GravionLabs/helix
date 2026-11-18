@@ -174,4 +174,84 @@
     box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
     z-index: 10;
   }
+
+  .hx-app-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    background: var(--h-surface-frame);
+    color: var(--h-text-color);
+  }
+  .hx-app-shell-body {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+  .hx-app-shell-sidebar {
+    flex: none;
+    box-sizing: border-box;
+    overflow: auto;
+    background: var(--h-surface-frame);
+  }
+  .hx-app-shell-sidebar[hidden] {
+    display: none;
+  }
+  .hx-app-shell-resizer {
+    flex: none;
+    width: 5px;
+    margin-inline: -2px;
+    z-index: 1;
+    cursor: col-resize;
+    touch-action: none;
+    background: transparent;
+  }
+  .hx-app-shell-resizer:hover,
+  .hx-app-shell-resizer:focus-visible {
+    background: var(--h-primary-color);
+    outline: none;
+  }
+  .hx-app-shell-content {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--h-content-background, var(--h-surface-frame));
+    border: 1px solid var(--h-content-border-color);
+    border-radius: 6px;
+    margin: 0 4px 4px 0;
+  }
+
+  .hx-app-toolbar {
+    display: flex;
+    align-items: center;
+    flex: none;
+    box-sizing: border-box;
+    height: 26px;
+    padding: 0 8px;
+    background: var(--h-surface-frame);
+    color: var(--h-text-muted-color);
+    font-size: 12px;
+    user-select: none;
+  }
+  .hx-app-toolbar-inset {
+    padding-inline-start: 78px;
+  }
+  .hx-app-toolbar-start,
+  .hx-app-toolbar-end {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: none;
+  }
+  .hx-app-toolbar-centre {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
