@@ -10,6 +10,7 @@ plain CSS (`@gravionlabs/helix-ui`), an application shell, dynamic forms from Zo
 | [`@gravionlabs/helix-shell`](projects/shell)     | Application shell: layout (topbar, nav rail, footer), auth pages, landing widgets, layout signal store, and form infrastructure.                              |
 | [`@gravionlabs/helix-zod`](projects/zod)         | Zod v4 adapter: reactive-forms validator bridge and dynamic forms from annotated Zod schemas.                                                                 |
 | [`@gravionlabs/helix-ag-grid`](projects/ag-grid) | AG Grid helpers: value formatters, number parsers, and cell styles.                                                                                           |
+| [`@gravionlabs/helix-desktop`](projects/desktop) | Desktop frame (scaffold): activity bar, views, status bar, platform switch; Tauri bindings in the `/tauri` entry.                                             |
 | [`@gravionlabs/helix-ui`](projects/ui)           | Vanilla Angular components on the Helix tokens (plain CSS, no PrimeNG): button, form controls, select, divider, tooltip, breadcrumb, password, select button. |
 
 The documentation is published at
@@ -75,7 +76,7 @@ Requires Node ≥ 24 and [pnpm](https://pnpm.io).
 ```bash
 pnpm install
 pnpm start          # Build libs + serve the demo app
-pnpm build:lib      # Build all libraries (ui, shell, zod, ag-grid) (ends with pnpm tokens:export → dist/tokens/)
+pnpm build:lib      # Build all libraries (ui, shell, zod, ag-grid, desktop) (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
 pnpm lint           # biome + eslint + import guards
 ```

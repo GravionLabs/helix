@@ -45,7 +45,7 @@ module.exports = [
     // in the libraries, which are written with signals (#373). Spec files
     // are exempt: test-host components there legitimately use classic decorators.
     {
-        files: ['projects/{ui,shell,zod,ag-grid}/**/*.ts'],
+        files: ['projects/{ui,shell,zod,ag-grid,desktop}/**/*.ts'],
         ignores: ['projects/**/*.spec.ts'],
         rules: {
             'no-restricted-syntax': [

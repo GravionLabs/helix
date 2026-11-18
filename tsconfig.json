@@ -15,6 +15,10 @@
       "@gravionlabs/helix-shell": ["./projects/shell/src/public-api.ts"],
       "@gravionlabs/helix-zod": ["./projects/zod/src/public-api.ts"],
       "@gravionlabs/helix-ag-grid": ["./projects/ag-grid/src/public-api.ts"],
+      "@gravionlabs/helix-desktop": ["./projects/desktop/src/public-api.ts"],
+      "@gravionlabs/helix-desktop/tauri": [
+        "./projects/desktop/tauri/public_api.ts"
+      ],
       "@gravionlabs/helix-ui": ["./dist/ui"],
       "@gravionlabs/helix-ui/validators": ["./dist/ui/validators"],
       "@gravionlabs/helix-ui/chart": ["./dist/ui/chart"],
@@ -49,6 +53,12 @@
     },
     {
       "path": "./projects/ag-grid/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/desktop/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/desktop/tsconfig.spec.json"
     },
     {
       "path": "./apps/helix-demo/tsconfig.app.json"
