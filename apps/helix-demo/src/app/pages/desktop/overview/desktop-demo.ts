@@ -3,6 +3,8 @@ import {
   HELIX_DESKTOP_VERSION,
   HxActivityBar,
   type HxActivityBarItem,
+  HxAppShell,
+  HxAppToolbar,
   HxStatusBar,
   HxStatusItem,
   HxStatusPopover,
@@ -16,6 +18,8 @@ import {
   standalone: true,
   imports: [
     HxActivityBar,
+    HxAppShell,
+    HxAppToolbar,
     HxStatusBar,
     HxStatusItem,
     HxStatusPopover,
@@ -34,6 +38,25 @@ import {
         <p>Selected: {{ activeId() }}. Last: {{ last() }}. Sidebar {{ expanded() ? 'open' : 'collapsed' }}.</p>
         <button type="button" (click)="expanded.set(!expanded())">Toggle sidebar</button>
       </div>
+    </div>
+
+    <h3>HxAppShell and HxAppToolbar</h3>
+    <div style="height: 320px; border: 1px solid var(--h-content-border-color)">
+      <hx-app-shell #shell [(sidebarWidth)]="sidebarWidth" [(collapsed)]="collapsed" [(activeId)]="viewId">
+        <hx-app-toolbar slot="toolbar">
+          <button slot="start" type="button" (click)="shell.selectView(viewId() ?? 'files')">Sidebar</button>
+          <span slot="centre">Helix project</span>
+          <span slot="end">Share</span>
+        </hx-app-toolbar>
+        <hx-activity-bar slot="activity" [items]="items" [activeId]="shell.activeId()" [expanded]="!shell.collapsed()" (selected)="shell.selectView($event)" />
+        <nav slot="sidebar" style="padding: 8px">View: {{ shell.activeId() }}</nav>
+        <div style="padding: 1rem">
+          Content (the app's tab layout goes here). Sidebar {{ collapsed() ? 'collapsed' : sidebarWidth() + ' px' }}.
+          Drag the splitter or focus it and use the arrow keys.
+        </div>
+        <aside slot="panel" style="width: 120px; padding: 8px">Panel</aside>
+        <hx-status-bar slot="status"><hx-status-item slot="start">Ready</hx-status-item></hx-status-bar>
+      </hx-app-shell>
     </div>
 
     <h3>HxStatusBar</h3>
@@ -63,6 +86,9 @@ export class DesktopDemo {
   protected readonly expanded = signal(true);
   protected readonly last = signal('none');
   protected readonly zoom = signal(100);
+  protected readonly sidebarWidth = signal(220);
+  protected readonly collapsed = signal(false);
+  protected readonly viewId = signal<string | null>('files');
   protected readonly synced = signal(true);
   protected readonly updateOpen = signal(false);
   protected readonly items: HxActivityBarItem[] = [

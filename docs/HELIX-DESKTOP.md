@@ -2,7 +2,7 @@
 
 `@gravionlabs/helix-desktop` is the desktop frame of Helix: an activity bar with views, a sidebar or tab area and a status bar, with the platform switch (`data-platform`). The decision is [ADR 0005](https://github.com/GravionLabs/helix/blob/main/docs/adr/0005-helix-desktop-package.md).
 
-The package builds, is tested and is published with the other packages. Components so far: `HxActivityBar`, `HxStatusBar`.
+The package builds, is tested and is published with the other packages. Components so far: `HxAppShell`, `HxAppToolbar`, `HxActivityBar`, `HxStatusBar`.
 
 ## Entry points
 
@@ -56,3 +56,27 @@ The 22 px bottom bar with a start and an end group. Items are projected, not con
 - An element with `hxStatusPopover` inside a button item opens above the bar; Escape and a click outside close it.
 - `HxStatusZoom`: `value` (two-way, percent), `min`, `max`, `step`, `reset`. The percentage resets.
 - `HxStatusVersion`: `version` and an optional `channel` badge.
+
+## HxAppShell
+
+The layout: toolbar, activity bar, one sidebar, content, an optional right panel and the status bar. Project each part with a `slot` attribute; unslotted content is the main area and takes the app's tab layout (the shell has no tab logic).
+
+```html
+<hx-app-shell #shell [(sidebarWidth)]="width" [(collapsed)]="collapsed" [(activeId)]="viewId" (sidebarChange)="store($event)">
+  <hx-app-toolbar slot="toolbar">...</hx-app-toolbar>
+  <hx-activity-bar slot="activity" [items]="items" [activeId]="shell.activeId()" [expanded]="!shell.collapsed()" (selected)="shell.selectView($event)" />
+  <nav slot="sidebar">...</nav>
+  <hx-tab-bar>...</hx-tab-bar>
+  <aside slot="panel">...</aside>
+  <hx-status-bar slot="status">...</hx-status-bar>
+</hx-app-shell>
+```
+
+- Slots: `toolbar`, `activity`, `sidebar`, `panel`, `status`, and the default slot for content.
+- One sidebar: the app shows the view of `activeId` in it. `selectView(id)` collapses the sidebar when `id` is the active view, and otherwise makes it active and expands the sidebar.
+- Models: `sidebarWidth` (px), `collapsed`, `activeId`. Inputs: `minWidth` (160), `maxWidth` (480), `step` (16), `resizerLabel`, `fixedWidth`. Output `sidebarChange` emits `{ width, collapsed }` so the app can store them.
+- The splitter is `role="separator"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. Drag it, or use Left/Right (Shift: 4 times the step), Home and End.
+
+## HxAppToolbar
+
+The 26 px bar at the top with `start`, `centre` (title) and `end` slots. It carries `data-tauri-drag-region` (also on the centre), so it drags a Tauri window; buttons in the start and end slot do not. `windowButtonsInset` reserves 78 px at the start for the macOS window buttons when the title bar is hidden.
