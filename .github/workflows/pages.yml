@@ -33,12 +33,12 @@ jobs:
     outputs:
       npm-version: ${{ steps.version.outputs.npm-version }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
       - name: Determine version
         id: version
-        uses: GravionLabs/ci/versioning/determine-version@v1
+        uses: GravionLabs/ci/versioning/determine-version@511932d4b5d0d7c77149bb705cfc2b6bae5f2df1 # v1.15.0
 
   build:
     name: Build the site
@@ -49,8 +49,8 @@ jobs:
       # Every piece knows where it lives: https://<owner>.github.io/<repository>/…
       PAGES_BASE: /${{ github.event.repository.name }}/
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: GravionLabs/ci/node/setup@v1
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: GravionLabs/ci/node/setup@511932d4b5d0d7c77149bb705cfc2b6bae5f2df1 # v1.15.0
         with:
           node-version: '26' # node/setup has no node-version-file input
           package-manager: pnpm
@@ -73,7 +73,7 @@ jobs:
         run: pnpm pages:assemble
       - name: Upload the site
         if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: dist/pages
 
@@ -90,4 +90,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

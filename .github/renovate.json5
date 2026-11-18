@@ -1,0 +1,64 @@
+// Renovate keeps the npm packages (root, apps/site, the library manifests under projects/) and the GitHub Actions
+// current: a few grouped pull requests a week against release/next, gated by CI, merged by a person (no automerge).
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  // github>GravionLabs/ci: 7 days minimum release age (security fixes and GravionLabs/ci exempt), actions pinned to
+  // commit SHAs. No minimum release age is set here.
+  extends: [
+    'config:recommended',
+    ':semanticCommits',
+    ':dependencyDashboard',
+    'github>GravionLabs/ci',
+  ],
+  baseBranchPatterns: ['release/next'],
+  // `chore(deps): ...` keeps dependency updates out of the release notes.
+  // Issue titles start with their level (.github/ISSUE_CONVENTIONS.md): the dashboard is a PBI.
+  dependencyDashboard: true,
+  dependencyDashboardTitle: '[PBI] chore: Dependency Dashboard',
+  semanticCommitType: 'chore',
+  semanticCommitScope: 'deps',
+  timezone: 'Europe/Zurich',
+  schedule: ['before 6am on monday'],
+  lockFileMaintenance: { enabled: true, schedule: ['before 6am on the first day of the month'] },
+  // Raise the range in package.json to the new version instead of leaving it as it was.
+  rangeStrategy: 'bump',
+  automerge: false,
+  labels: ['dependencies'],
+  enabledManagers: ['npm', 'github-actions'],
+  ignorePaths: ['**/node_modules/**', '**/dist/**'],
+  // A known vulnerability gets a pull request at once, outside the schedule.
+  vulnerabilityAlerts: { enabled: true, labels: ['security'], schedule: ['at any time'] },
+  osvVulnerabilityAlerts: true,
+  packageRules: [
+    {
+      groupName: 'angular',
+      // Angular pins the range of TypeScript it supports: they move together.
+      matchPackageNames: [
+        '@angular/**',
+        '@angular-devkit/**',
+        '@schematics/angular',
+        'ng-packagr',
+        'typescript',
+      ],
+    },
+    {
+      groupName: 'angular-eslint',
+      matchPackageNames: ['angular-eslint', '@angular-eslint/**', '@typescript-eslint/**'],
+    },
+    { groupName: 'tailwindcss', matchPackageNames: ['tailwindcss', '@tailwindcss/**'] },
+    { groupName: 'ag-grid', matchPackageNames: ['ag-grid-angular', 'ag-grid-community'] },
+    { groupName: 'vitest', matchPackageNames: ['vitest', '@vitest/**'] },
+    {
+      // The published libraries (@gravionlabs/helix-*) keep the wide ranges their consumers install against: a
+      // range is only widened when a new version falls outside it, never raised to the newest version.
+      matchManagers: ['npm'],
+      matchFileNames: ['projects/**'],
+      rangeStrategy: 'widen',
+    },
+    {
+      // Majors get their own pull requests, labelled, and a person decides.
+      matchUpdateTypes: ['major'],
+      addLabels: ['major'],
+    },
+  ],
+}
