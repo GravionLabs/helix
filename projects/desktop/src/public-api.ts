@@ -6,3 +6,6 @@
  */
 
 export const HELIX_DESKTOP_VERSION = '0.1.0';
+
+export * from './lib/activity-bar/activity-bar';
+export * from './lib/view';
