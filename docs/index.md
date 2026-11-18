@@ -37,7 +37,7 @@ features:
   - title: '@gravionlabs/helix-ag-grid'
     details: Value formatters, number parsers and cell styles for AG Grid.
   - title: '@gravionlabs/helix-desktop'
-    details: The desktop frame (scaffold): views, status bar and the platform switch, Tauri bindings in an optional entry.
+    details: 'The desktop frame (scaffold): views, status bar and the platform switch, Tauri bindings in an optional entry.'
     link: /HELIX-DESKTOP
 ---
 
