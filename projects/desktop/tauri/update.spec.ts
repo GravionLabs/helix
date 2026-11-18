@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { setHxPlatform } from '@gravionlabs/helix-desktop';
 import { channelOfVersion, HX_APP_INFO, provideHxAppInfo, readTauriVersion } from './app-info';
 import { detectHxOs, providePlatform } from './platform';
+import { HxStatusAppVersion } from './status-app-version';
 import { HxStatusUpdate } from './status-update';
 import { HX_UPDATE_BACKEND, HxUpdateService } from './update.service';
 import { defaultUpdateBackend, type HxUpdateBackend, noopUpdateBackend } from './update-backend';
@@ -243,5 +244,28 @@ describe('HxStatusUpdate', () => {
     fixture.detectChanges();
     expect(svc.state().status).toBe('available');
     expect(q('hx-status-item')).toBeNull();
+  });
+});
+
+@Component({ imports: [HxStatusAppVersion], template: '<hx-status-app-version />' })
+class VersionHost {}
+
+describe('HxStatusAppVersion', () => {
+  const render = (version: string) => {
+    TestBed.configureTestingModule({ providers: [provideHxAppInfo({ version })] });
+    const f = TestBed.createComponent(VersionHost);
+    f.detectChanges();
+    return f.nativeElement as HTMLElement;
+  };
+
+  it('shows the RC badge on an RC build', () => {
+    const el = render('1.5.0-rc.1');
+    expect(el.querySelector('.hx-status-channel')?.textContent?.trim()).toBe('RC');
+  });
+
+  it('shows no badge on stable', () => {
+    const el = render('1.5.0');
+    expect(el.querySelector('.hx-status-version-text')?.textContent).toContain('v1.5.0');
+    expect(el.querySelector('.hx-status-channel')).toBeNull();
   });
 });

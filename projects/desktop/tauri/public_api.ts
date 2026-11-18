@@ -10,6 +10,7 @@ export const HELIX_DESKTOP_TAURI = true;
 
 export * from './app-info';
 export * from './platform';
+export * from './status-app-version';
 export * from './status-update';
 export * from './update.service';
 export * from './update-backend';
