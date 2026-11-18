@@ -1,5 +1,5 @@
 // Renovate keeps the npm packages (root, apps/site, the library manifests under projects/) and the GitHub Actions
-// current: a few grouped pull requests a week against release/next, gated by CI, merged by a person (no automerge).
+// current: a few grouped pull requests a week against the default branch, gated by CI, merged by a person (no automerge).
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   // github>GravionLabs/ci: 7 days minimum release age (security fixes and GravionLabs/ci exempt), actions pinned to
@@ -10,7 +10,6 @@
     ':dependencyDashboard',
     'github>GravionLabs/ci',
   ],
-  baseBranchPatterns: ['release/next'],
   // `chore(deps): ...` keeps dependency updates out of the release notes.
   // Issue titles start with their level (.github/ISSUE_CONVENTIONS.md): the dashboard is a PBI.
   dependencyDashboard: true,
