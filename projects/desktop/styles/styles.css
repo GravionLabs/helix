@@ -92,4 +92,86 @@
     top: 6px;
     inset-inline-end: 6px;
   }
+  .hx-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 22px;
+    padding: 0 4px;
+    background: var(--h-surface-frame);
+    border-block-start: 1px solid var(--h-content-border-color);
+    color: var(--h-text-muted-color);
+    font-size: 12px;
+    line-height: 1;
+  }
+  .hx-status-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+  }
+  .hx-status-item,
+  .hx-status-zoom,
+  .hx-status-version {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .hx-status-control {
+    display: inline-flex;
+    align-items: center;
+    height: 18px;
+    padding: 0 6px;
+    border: 0;
+    border-radius: 3px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+  }
+  button.hx-status-control {
+    cursor: pointer;
+  }
+  button.hx-status-control:hover:not(:disabled) {
+    color: var(--h-text-color);
+    background: var(--h-content-hover-background);
+  }
+  button.hx-status-control:focus-visible {
+    outline: 2px solid var(--h-primary-color);
+    outline-offset: -2px;
+  }
+  button.hx-status-control:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .hx-status-warn {
+    color: var(--h-warn-color, #b45309);
+  }
+  .hx-status-error {
+    color: var(--h-error-color, #b91c1c);
+  }
+  .hx-status-accent {
+    color: var(--h-primary-color);
+  }
+  .hx-status-channel {
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--h-primary-color);
+    color: var(--h-primary-contrast-color);
+    font-size: 10px;
+  }
+  .hx-status-popover {
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 0;
+    margin-block-end: 4px;
+    min-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid var(--h-content-border-color);
+    border-radius: 6px;
+    background: var(--h-content-background, var(--h-surface-frame));
+    color: var(--h-text-color);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+    z-index: 10;
+  }
 }

@@ -3,13 +3,25 @@ import {
   HELIX_DESKTOP_VERSION,
   HxActivityBar,
   type HxActivityBarItem,
+  HxStatusBar,
+  HxStatusItem,
+  HxStatusPopover,
+  HxStatusVersion,
+  HxStatusZoom,
 } from '@gravionlabs/helix-desktop';
 
 /** The package page of `@gravionlabs/helix-desktop`: the components with a live demo. */
 @Component({
   selector: 'app-desktop-demo',
   standalone: true,
-  imports: [HxActivityBar],
+  imports: [
+    HxActivityBar,
+    HxStatusBar,
+    HxStatusItem,
+    HxStatusPopover,
+    HxStatusZoom,
+    HxStatusVersion,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <h2>&#64;gravionlabs/helix-desktop</h2>
@@ -23,6 +35,26 @@ import {
         <button type="button" (click)="expanded.set(!expanded())">Toggle sidebar</button>
       </div>
     </div>
+
+    <h3>HxStatusBar</h3>
+    <div style="border: 1px solid var(--h-content-border-color)">
+      <hx-status-bar>
+        <hx-status-item slot="start" [announce]="true">{{ synced() ? 'Synced' : 'Syncing...' }}</hx-status-item>
+        <hx-status-item slot="start" kind="button" tone="warn" title="Show problems" ariaLabel="2 warnings">2 warnings</hx-status-item>
+        <hx-status-item slot="start" tone="error">1 error</hx-status-item>
+        <hx-status-item slot="end" kind="button" tone="accent" title="Update available" ariaLabel="Update details" [(popoverOpen)]="updateOpen">
+          Update 1.5.0
+          <div hxStatusPopover>
+            <strong>1.5.0 is ready.</strong>
+            <p>Restart to install. Escape or a click outside closes this.</p>
+          </div>
+        </hx-status-item>
+        <hx-status-zoom slot="end" [(value)]="zoom" />
+        <hx-status-version slot="end" version="1.4.0" channel="RC" />
+      </hx-status-bar>
+    </div>
+    <p>Zoom {{ zoom() }}%.
+      <button type="button" (click)="synced.set(!synced())">Toggle sync state</button></p>
   `,
 })
 export class DesktopDemo {
@@ -30,6 +62,9 @@ export class DesktopDemo {
   protected readonly activeId = signal<string | null>('files');
   protected readonly expanded = signal(true);
   protected readonly last = signal('none');
+  protected readonly zoom = signal(100);
+  protected readonly synced = signal(true);
+  protected readonly updateOpen = signal(false);
   protected readonly items: HxActivityBarItem[] = [
     { id: 'files', label: 'Files', icon: 'pi pi-folder', position: 'top' },
     { id: 'search', label: 'Search', icon: 'pi pi-search', position: 'top', badge: 3 },

@@ -8,4 +8,8 @@
 export const HELIX_DESKTOP_VERSION = '0.1.0';
 
 export * from './lib/activity-bar/activity-bar';
+export * from './lib/status-bar/status-bar';
+export * from './lib/status-bar/status-item';
+export * from './lib/status-bar/status-version';
+export * from './lib/status-bar/status-zoom';
 export * from './lib/view';
