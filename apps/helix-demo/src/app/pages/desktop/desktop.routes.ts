@@ -1,10 +1,12 @@
 import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
+import { DesktopComponentsDemo } from './components/desktop-components-demo';
 import { DESKTOP_MENU_ITEMS } from './desktop-menu-items';
-import { DesktopDemo } from './overview/desktop-demo';
+import { DesktopOverviewDemo } from './overview/desktop-overview-demo';
 
 const COMPONENTS: Record<string, Type<unknown>> = {
-  overview: DesktopDemo,
+  overview: DesktopOverviewDemo,
+  components: DesktopComponentsDemo,
 };
 
 export default [

@@ -14,9 +14,9 @@ import {
   HxStatusZoom,
 } from '@gravionlabs/helix-desktop';
 
-/** The package page of `@gravionlabs/helix-desktop`: the components with a live demo. */
+/** The components of `@gravionlabs/helix-desktop` one by one, each with a live demo. */
 @Component({
-  selector: 'app-desktop-demo',
+  selector: 'app-desktop-components-demo',
   standalone: true,
   imports: [
     HxActivityBar,
@@ -95,7 +95,7 @@ import {
       <button type="button" (click)="synced.set(!synced())">Toggle sync state</button></p>
   `,
 })
-export class DesktopDemo {
+export class DesktopComponentsDemo {
   protected readonly version = HELIX_DESKTOP_VERSION;
   protected readonly activeId = signal<string | null>('files');
   protected readonly expanded = signal(true);

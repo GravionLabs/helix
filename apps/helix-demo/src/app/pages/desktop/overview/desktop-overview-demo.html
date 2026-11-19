@@ -1,0 +1,202 @@
+<h1 class="sr-only">Desktop overview</h1>
+<app-source-tabs library="helix-desktop" directory="desktop/overview" componentName="desktop-overview-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">poimen on helix-desktop</h2>
+    <p class="m-0">
+      The poimen interface rebuilt on the desktop shell, with sample data. A click on a pane previews it in a tab,
+      a double click pins it. The activity bar switches the sidebar view; a click on the active view collapses the
+      sidebar. Version {{ version }}.
+    </p>
+    <div class="frame">
+      <hx-app-shell
+        #shell
+        [(sidebarWidth)]="sidebarWidth"
+        [(collapsed)]="collapsed"
+        [(activeId)]="view"
+        [minWidth]="220"
+      >
+        <hx-app-toolbar slot="toolbar">
+          <button slot="start" type="button" class="bar-button">Plugins</button>
+          <span slot="centre">Poimen</span>
+          <button
+            slot="end"
+            type="button"
+            class="bar-button"
+            title="Toggle the output panel"
+            [attr.aria-pressed]="outputOpen()"
+            (click)="outputOpen.set(!outputOpen())"
+          >
+            Output
+          </button>
+        </hx-app-toolbar>
+
+        <hx-activity-bar
+          slot="activity"
+          [items]="activity()"
+          [activeId]="shell.activeId()"
+          [expanded]="!shell.collapsed()"
+          (selected)="select($event, shell)"
+        />
+
+        <section slot="sidebar" class="side" [attr.aria-label]="view()">
+          @switch (view()) {
+            @case ('explorer') {
+              <header class="side-head"><h3>Explorer</h3></header>
+              <ul class="files">
+                @for (file of files; track file) {
+                  <li [class.dir]="file.endsWith('/')">{{ file }}</li>
+                }
+              </ul>
+            }
+            @case ('notifications') {
+              <header class="side-head"><h3>Notifications</h3></header>
+              <ul class="notifications">
+                @for (entry of blocked(); track entry.pane.id) {
+                  <li>
+                    <button type="button" class="notice" (click)="pin(entry.pane.id)">
+                      <span class="dot blocked"></span>
+                      <span><strong>{{ entry.space.name }}</strong> / {{ entry.pane.label }} needs you</span>
+                    </button>
+                  </li>
+                } @empty {
+                  <li class="muted">Nothing waits for you.</li>
+                }
+              </ul>
+            }
+            @default {
+              <header class="side-head"><h3>Spaces</h3></header>
+              <input
+                hx-input
+                fluid
+                class="filter"
+                type="search"
+                placeholder="Filter by name, agent, branch"
+                aria-label="Filter spaces"
+                [value]="filter()"
+                (input)="filter.set($any($event.target).value)"
+              />
+              <ul class="spaces">
+                @for (space of spaces(); track space.id) {
+                  <li>
+                    <button
+                      type="button"
+                      class="space"
+                      [attr.aria-expanded]="!isFolded(space.id)"
+                      (click)="toggleSpace(space.id)"
+                    >
+                      <span class="dot" [class]="space.state"></span>
+                      <span class="space-name">{{ space.name }}</span>
+                      <span class="state" [class]="space.state">{{ space.state }}</span>
+                      <span class="meta">{{ space.branch }} · {{ space.path }}</span>
+                      <i class="pi" [class.pi-chevron-down]="!isFolded(space.id)" [class.pi-chevron-right]="isFolded(space.id)" aria-hidden="true"></i>
+                    </button>
+                    @if (!isFolded(space.id)) {
+                      <ul class="panes">
+                        @for (pane of space.panes; track pane.id) {
+                          <li>
+                            <button
+                              type="button"
+                              class="pane"
+                              [class.active]="isOpen(pane.id)"
+                              [attr.aria-current]="isOpen(pane.id) ? 'true' : null"
+                              (click)="preview(pane.id)"
+                              (dblclick)="pin(pane.id)"
+                            >
+                              <span class="kind">{{ pane.kind === 'agent' ? 'CL' : '>_' }}</span>
+                              <span class="dot" [class]="pane.state"></span>
+                              <span class="pane-label">{{ pane.label }}</span>
+                              @if (pane.kind === 'agent') {
+                                <span class="state" [class]="pane.state">{{ pane.state }}</span>
+                              }
+                            </button>
+                          </li>
+                        }
+                      </ul>
+                    }
+                  </li>
+                } @empty {
+                  <li class="muted">No space matches.</li>
+                }
+              </ul>
+            }
+          }
+        </section>
+
+        <div class="editor">
+          @if (tabs().length) {
+            <hx-tab-bar
+              ariaLabel="Open panes"
+              [tabs]="tabs()"
+              [(value)]="activeTab"
+              (closed)="close($event)"
+              (pinned)="pinTab($event)"
+            />
+            <div class="view">
+              @if (activePane(); as entry) {
+                <div class="terminal" role="log" [attr.aria-label]="entry.space.name + ' / ' + entry.pane.label">
+                  @for (line of entry.pane.lines; track $index) {
+                    <div class="line">{{ line }}</div>
+                  }
+                  <div class="line">demo % <span class="cursor"></span></div>
+                </div>
+              } @else {
+                <div class="settings">
+                  <h3>Settings</h3>
+                  <p>The settings of the app open as a tab, like a pane. Close the tab to go back.</p>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="empty">
+              <p>Pick a pane on the left.</p>
+              <p class="hint">
+                A click previews a pane in a tab, a double click pins it. Closing a tab only closes the view; the
+                pane keeps running.
+              </p>
+            </div>
+          }
+          @if (outputOpen()) {
+            <section class="output" aria-label="Output">
+              <header>Output</header>
+              <pre>[api-gateway] claude: reading src/middleware/rate-limit.ts
+    [web-app] claude: waiting for a decision
+    [docs-site] claude: done</pre>
+            </section>
+          }
+        </div>
+
+        <hx-status-bar slot="status">
+          <hx-status-item slot="start"><span class="dot done"></span>herdr connected</hx-status-item>
+          @if (waiting()) {
+            <hx-status-item
+              slot="start"
+              kind="button"
+              tone="warn"
+              title="Show the panes that wait for you"
+              (click)="showWaiting(shell)"
+            >
+              {{ waiting() }} waiting
+            </hx-status-item>
+          }
+          <hx-status-item
+            slot="start"
+            kind="button"
+            title="Toggle the output panel"
+            (click)="outputOpen.set(!outputOpen())"
+          >
+            <i class="pi pi-desktop" aria-hidden="true"></i> Output
+          </hx-status-item>
+          @if (position(); as pos) {
+            <ng-container ngProjectAs="[slot=end]">
+              <hx-status-item>{{ pos }}</hx-status-item>
+              <hx-status-item><i class="pi pi-pencil" aria-hidden="true"></i> Input</hx-status-item>
+              <hx-status-item>119×46</hx-status-item>
+            </ng-container>
+          }
+          <hx-status-version slot="end" [version]="version" />
+          <hx-status-item slot="end">herdr 0.9.5</hx-status-item>
+        </hx-status-bar>
+      </hx-app-shell>
+    </div>
+  </div>
+</app-source-tabs>
