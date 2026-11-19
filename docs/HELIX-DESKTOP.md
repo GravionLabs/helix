@@ -77,6 +77,21 @@ The layout: toolbar, activity bar, one sidebar, content, an optional right panel
 - Models: `sidebarWidth` (px), `collapsed`, `activeId`. Inputs: `minWidth` (160), `maxWidth` (480), `step` (16), `resizerLabel`, `fixedWidth`. Output `sidebarChange` emits `{ width, collapsed }` so the app can store them.
 - The splitter is `role="separator"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. Drag it, or use Left/Right (Shift: 4 times the step), Home and End.
 
+### Inset layout (frame and panels)
+
+The shell uses the inset layout of helix-shell (see [HELIX-SHELL.md](HELIX-SHELL.md#inset-layout-frame-and-panels)). There is one layout and no option to switch it.
+
+- **Frame.** `--h-surface-frame` sits behind everything. The toolbar and the status bar lie flat on it; inside the shell the status bar has no top hairline.
+- **Inset panels.** The activity bar, the sidebar, the content and the `panel` slot each have a 1px `--h-content-border-color` border, the panel radius and `--h-content-background`, with the panel gap to each other and to the window edge.
+- **Splitter.** The sidebar splitter fills the gap between the sidebar and the content. Its hit area is a few pixels wider than the gap, so it stays usable with a gap of 0. A collapsed sidebar leaves one gap between the activity bar and the content.
+
+| Token                  | Default | Used for                                                          |
+| ---------------------- | ------- | ----------------------------------------------------------------- |
+| `--helix-panel-radius` | `6px`   | Corner radius of the panels                                       |
+| `--helix-panel-gap`    | `4px`   | Gap between the panels and to the window edge; `0` makes it flush |
+
+They are the tokens of helix-shell, so one value in the app stylesheet sets both packages. helix-desktop has its own fallbacks and does not need the shell stylesheet.
+
 ## HxAppToolbar
 
 The 26 px bar at the top with `start`, `centre` (title) and `end` slots. It carries `data-tauri-drag-region` (also on the centre), so it drags a Tauri window; buttons in the start and end slot do not. `windowButtonsInset` reserves 78 px at the start for the macOS window buttons when the title bar is hidden.

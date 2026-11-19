@@ -51,6 +51,14 @@ describe('DesktopOverviewDemo', () => {
     expect(root.querySelector('.empty')?.textContent).toContain('Pick a pane on the left.');
   });
 
+  it('shows poimen in the status bar, not herdr', async () => {
+    pane('web-app', 'claude').click();
+    await render();
+    const status = root.querySelector('hx-app-shell hx-status-bar')?.textContent ?? '';
+    expect(status).toContain('poimen connected');
+    expect(root.textContent?.toLowerCase()).not.toContain('herdr');
+  });
+
   it('previews a pane on click and replaces the preview with the next one', async () => {
     pane('web-app', 'claude').click();
     await render();
