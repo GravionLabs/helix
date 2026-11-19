@@ -175,7 +175,15 @@
     z-index: 10;
   }
 
+  /*
+   * The inset layout, as in helix-shell: a frame ground with inset panels. The activity bar, the sidebar,
+   * the content and the panel are framed on all sides with a gap to each other and to the window edge;
+   * the toolbar and the status bar lie flat on the frame. Gap and radius are the tokens of helix-shell,
+   * with fallbacks so the shell stylesheet is not needed; `--helix-panel-gap: 0` gives a flush layout.
+   */
   .hx-app-shell {
+    --hx-panel-gap: var(--helix-panel-gap, 4px);
+    --hx-panel-radius: var(--helix-panel-radius, 6px);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -187,24 +195,44 @@
     display: flex;
     flex: 1;
     min-height: 0;
+    padding: var(--hx-panel-gap);
+  }
+  .hx-app-shell-body > .hx-activity-bar,
+  .hx-app-shell-sidebar,
+  .hx-app-shell-content,
+  .hx-app-shell-body > [slot="panel"] {
+    box-sizing: border-box;
+    border: 1px solid var(--h-content-border-color);
+    border-radius: var(--hx-panel-radius);
+    background: var(--h-content-background, var(--h-surface-frame));
+    overflow: hidden;
+  }
+  .hx-app-shell-body > .hx-activity-bar {
+    margin-inline-end: var(--hx-panel-gap);
   }
   .hx-app-shell-sidebar {
     flex: none;
-    box-sizing: border-box;
     overflow: auto;
-    background: var(--h-surface-frame);
   }
   .hx-app-shell-sidebar[hidden] {
     display: none;
   }
+  /* The resize handle fills the gap between the sidebar and the content; ::before widens the hit area, so
+     the handle stays usable when the gap is 0. */
   .hx-app-shell-resizer {
+    position: relative;
     flex: none;
-    width: 5px;
-    margin-inline: -2px;
+    width: var(--hx-panel-gap);
     z-index: 1;
     cursor: col-resize;
     touch-action: none;
     background: transparent;
+  }
+  .hx-app-shell-resizer::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: -3px;
   }
   .hx-app-shell-resizer:hover,
   .hx-app-shell-resizer:focus-visible {
@@ -217,11 +245,13 @@
     min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    background: var(--h-content-background, var(--h-surface-frame));
-    border: 1px solid var(--h-content-border-color);
-    border-radius: 6px;
-    margin: 0 4px 4px 0;
+  }
+  .hx-app-shell-body > [slot="panel"] {
+    flex: none;
+    margin-inline-start: var(--hx-panel-gap);
+  }
+  .hx-app-shell > .hx-status-bar {
+    border-block-start: 0;
   }
 
   .hx-app-toolbar {
