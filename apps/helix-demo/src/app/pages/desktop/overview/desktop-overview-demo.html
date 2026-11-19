@@ -166,7 +166,7 @@
         </div>
 
         <hx-status-bar slot="status">
-          <hx-status-item slot="start"><span class="dot done"></span>herdr connected</hx-status-item>
+          <hx-status-item slot="start"><span class="dot done"></span>poimen connected</hx-status-item>
           @if (waiting()) {
             <hx-status-item
               slot="start"
@@ -186,15 +186,13 @@
           >
             <i class="pi pi-desktop" aria-hidden="true"></i> Output
           </hx-status-item>
-          @if (position(); as pos) {
+          @if (activePane()) {
             <ng-container ngProjectAs="[slot=end]">
-              <hx-status-item>{{ pos }}</hx-status-item>
               <hx-status-item><i class="pi pi-pencil" aria-hidden="true"></i> Input</hx-status-item>
               <hx-status-item>119×46</hx-status-item>
             </ng-container>
           }
           <hx-status-version slot="end" [version]="version" />
-          <hx-status-item slot="end">herdr 0.9.5</hx-status-item>
         </hx-status-bar>
       </hx-app-shell>
     </div>
