@@ -194,11 +194,12 @@ describe('lazy group routes', () => {
 });
 
 describe('DEMO_MENU_MODEL desktop group', () => {
-  it('lists the package page under /desktop', () => {
+  it('lists the overview and the components page under /desktop', () => {
     const desktop = DEMO_MENU_MODEL.find((item) => item.label === 'Desktop');
     expect(desktop?.path).toBe('desktop');
     expect(desktop?.items?.map((i) => [i.label, i.routerLink])).toEqual([
       ['Overview', ['/desktop/overview']],
+      ['Components', ['/desktop/components']],
     ]);
   });
 });

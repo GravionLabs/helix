@@ -1,0 +1,267 @@
+/* poimen on helix-desktop: only --h-* tokens, so light and dark follow HxTheme. */
+:host {
+  --state-working: var(--h-primary-color);
+  --state-blocked: var(--h-orange-500);
+  --state-done: var(--h-green-500);
+  --state-idle: var(--h-text-muted-color);
+  display: block;
+}
+
+.frame {
+  height: min(720px, calc(100vh - 220px));
+  min-height: 480px;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-content-border-radius);
+  overflow: hidden;
+}
+
+.frame hx-app-shell {
+  height: 100%;
+}
+
+.bar-button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  padding: 0 6px;
+  cursor: pointer;
+}
+
+.bar-button[aria-pressed='true'] {
+  color: var(--h-primary-color);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* sidebar */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: auto;
+  font-size: 13px;
+}
+
+.side-head h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--h-text-muted-color);
+  padding: 4px;
+}
+
+.dot {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--state-idle);
+}
+
+.dot.working {
+  background: var(--state-working);
+}
+.dot.blocked {
+  background: var(--state-blocked);
+}
+.dot.done {
+  background: var(--state-done);
+}
+
+.state {
+  font-size: 11px;
+}
+.state.working {
+  color: var(--state-working);
+}
+.state.blocked {
+  color: var(--state-blocked);
+}
+.state.done {
+  color: var(--state-done);
+}
+
+.space,
+.pane,
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  padding: 3px 4px;
+  text-align: start;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.space:hover,
+.pane:hover,
+.notice:hover {
+  background: var(--h-content-hover-background);
+}
+
+.space .space-name {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 11px;
+}
+
+.space .state {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.space .meta {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--h-text-muted-color);
+  font-size: 11px;
+}
+
+.space .pi {
+  font-size: 10px;
+  color: var(--h-text-muted-color);
+}
+
+.panes {
+  padding-inline-start: 12px;
+}
+
+.pane.active {
+  background: var(--h-highlight-background);
+  color: var(--h-highlight-color);
+  box-shadow: inset 3px 0 0 var(--h-primary-color);
+}
+
+.pane .kind {
+  min-width: 18px;
+  padding: 0 3px;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  text-align: center;
+}
+
+.pane .pane-label {
+  font-weight: 600;
+}
+
+.files li {
+  padding: 3px 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.files li:not(.dir) {
+  padding-inline-start: 20px;
+}
+
+/* editor area */
+.editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.view {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.terminal {
+  padding: 10px 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre;
+}
+
+.terminal .line {
+  min-height: 1.45em;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--h-text-color);
+}
+
+.settings {
+  padding: 16px;
+}
+
+.settings h3 {
+  margin-top: 0;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--h-text-muted-color);
+}
+
+.empty .hint {
+  max-width: 360px;
+  font-size: 13px;
+}
+
+.output {
+  flex: none;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--h-content-border-color);
+}
+
+.output header {
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--h-text-muted-color);
+}
+
+.output pre {
+  flex: 1;
+  margin: 0;
+  padding: 0 12px 8px;
+  overflow: auto;
+  font-size: 12px;
+}
+
+hx-status-item .dot {
+  margin-inline-end: 6px;
+}

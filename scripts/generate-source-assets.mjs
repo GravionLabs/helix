@@ -19,6 +19,7 @@ const PAGE_GROUPS = [
   { dir: `${PAGES}/uikit`, prefix: '' },
   { dir: `${PAGES}/ag-grid`, prefix: 'ag-grid/' },
   { dir: `${PAGES}/charts`, prefix: 'charts/' },
+  { dir: `${PAGES}/desktop`, prefix: 'desktop/' },
 ];
 const OUT_DIR = 'apps/helix-demo/public/source';
 

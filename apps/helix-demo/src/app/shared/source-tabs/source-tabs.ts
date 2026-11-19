@@ -23,7 +23,12 @@ interface SourceTab {
 const LANGUAGES: Record<string, string> = { html: 'xml', scss: 'scss', ts: 'typescript' };
 
 /** The package a demo page belongs to; shown as a tag beside the tabs. */
-export type DemoLibrary = 'helix-ui' | 'helix-ag-grid' | 'helix-shell' | 'helix-zod';
+export type DemoLibrary =
+  | 'helix-ui'
+  | 'helix-ag-grid'
+  | 'helix-shell'
+  | 'helix-zod'
+  | 'helix-desktop';
 
 /** The documentation site; a component page is `components/<slug>/`. */
 export const DOCS_URL = 'https://gravionlabs.github.io/helix/';

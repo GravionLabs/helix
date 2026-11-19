@@ -17,7 +17,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 const ROOT = resolve(__dirname, '../..');
 const SCRIPT = join(ROOT, 'scripts/generate-source-assets.mjs');
 const PAGES = join(ROOT, 'apps/helix-demo/src/app/pages');
-const LIBRARIES = ['helix-ui', 'helix-ag-grid', 'helix-shell', 'helix-zod'];
+const LIBRARIES = ['helix-ui', 'helix-ag-grid', 'helix-shell', 'helix-zod', 'helix-desktop'];
 
 function* htmlFiles(dir: string): Generator<string> {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {

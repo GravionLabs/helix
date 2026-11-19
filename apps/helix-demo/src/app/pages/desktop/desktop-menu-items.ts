@@ -7,4 +7,5 @@ import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
  */
 export const DESKTOP_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Overview', icon: 'pi pi-fw pi-desktop', path: 'overview' },
+  { label: 'Components', icon: 'pi pi-fw pi-th-large', path: 'components' },
 ];
