@@ -218,7 +218,8 @@
               "dist/shell/globals.css",
               "dist/ag-grid/styles.css",
               "dist/ui/tokens.css",
-              "dist/ui/styles.css"
+              "dist/ui/styles.css",
+              "dist/desktop/styles.css"
             ]
           },
           "configurations": {
