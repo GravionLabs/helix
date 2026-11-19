@@ -210,13 +210,6 @@ export class DesktopOverviewDemo {
   /** The pane of the active tab; null for the settings tab and when no tab is open. */
   protected readonly activePane = computed(() => this.panes.get(this.activeTab() ?? '') ?? null);
 
-  /** `w<space>:p<pane>` of the active pane, as herdr numbers them. */
-  protected readonly position = computed(() => {
-    const entry = this.activePane();
-    if (!entry) return null;
-    return `w${SPACES.indexOf(entry.space) + 1}:p${entry.space.panes.indexOf(entry.pane) + 1}`;
-  });
-
   protected select(id: string, shell: HxAppShell): void {
     if (id === SETTINGS_TAB) this.openSettings();
     else shell.selectView(id);
