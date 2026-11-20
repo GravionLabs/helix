@@ -25,7 +25,29 @@
       (keydown)="onKeydown($event)"
     ></div>
   }
-  <main class="hx-app-shell-content"><ng-content /></main>
+  <div class="hx-app-shell-main">
+    <main class="hx-app-shell-content"><ng-content /></main>
+    @if (bottomOpen()) {
+      <div
+        class="hx-app-shell-resizer hx-app-shell-resizer-bottom"
+        role="separator"
+        aria-orientation="horizontal"
+        tabindex="0"
+        [attr.aria-label]="bottomResizerLabel()"
+        [attr.aria-valuenow]="height()"
+        [attr.aria-valuemin]="minBottomHeight()"
+        [attr.aria-valuemax]="maxBottomHeight()"
+        (pointerdown)="onBottomPointerDown($event)"
+        (pointermove)="onBottomPointerMove($event)"
+        (pointerup)="onBottomPointerEnd($event)"
+        (pointercancel)="onBottomPointerEnd($event)"
+        (keydown)="onBottomKeydown($event)"
+      ></div>
+    }
+    <div class="hx-app-shell-bottom" [hidden]="!bottomOpen()" [style.height.px]="height()">
+      <ng-content select="[slot=bottom]" />
+    </div>
+  </div>
   <ng-content select="[slot=panel]" />
 </div>
 <ng-content select="[slot=status]" />

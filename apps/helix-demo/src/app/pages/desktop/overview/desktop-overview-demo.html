@@ -14,6 +14,7 @@
         [(collapsed)]="collapsed"
         [(activeId)]="view"
         [minWidth]="220"
+        [(bottomOpen)]="outputOpen"
       >
         <hx-app-toolbar slot="toolbar">
           <button slot="start" type="button" class="bar-button">Plugins</button>
@@ -155,15 +156,14 @@
               </p>
             </div>
           }
-          @if (outputOpen()) {
-            <section class="output" aria-label="Output">
-              <header>Output</header>
-              <pre>[api-gateway] claude: reading src/middleware/rate-limit.ts
-    [web-app] claude: waiting for a decision
-    [docs-site] claude: done</pre>
-            </section>
-          }
         </div>
+
+        <section slot="bottom" class="output" aria-label="Output">
+          <header>Output</header>
+          <pre>[api-gateway] claude: reading src/middleware/rate-limit.ts
+[web-app] claude: waiting for a decision
+[docs-site] claude: done</pre>
+        </section>
 
         <hx-status-bar slot="status">
           <hx-status-item slot="start"><span class="dot done"></span>poimen connected</hx-status-item>

@@ -138,9 +138,9 @@ describe('DesktopOverviewDemo', () => {
     )!;
     output.click();
     await render();
-    expect(root.querySelector('section.output')).not.toBeNull();
+    expect(root.querySelector<HTMLElement>('.hx-app-shell-bottom')?.hidden).toBe(false);
     output.click();
     await render();
-    expect(root.querySelector('section.output')).toBeNull();
+    expect(root.querySelector<HTMLElement>('.hx-app-shell-bottom')?.hidden).toBe(true);
   });
 });
