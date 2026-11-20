@@ -173,7 +173,7 @@
               kind="button"
               tone="warn"
               title="Show the panes that wait for you"
-              (pressed)="showWaiting(shell)"
+              (pressed)="shell.showView('notifications')"
             >
               {{ waiting() }} waiting
             </hx-status-item>
