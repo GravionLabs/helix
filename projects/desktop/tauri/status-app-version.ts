@@ -7,7 +7,7 @@ import { HX_APP_INFO } from './app-info';
   selector: 'hx-status-app-version',
   imports: [HxStatusVersion],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<hx-status-version [version]="info.version" [channel]="info.channel === 'rc' ? 'RC' : null" />`,
+  templateUrl: './status-app-version.html',
 })
 export class HxStatusAppVersion {
   protected readonly info = inject(HX_APP_INFO);

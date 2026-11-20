@@ -18,7 +18,7 @@ const isPage = (path: string) =>
   /(uikit|ag-grid|charts)\/[^/]+\/[^/]+-demo\.html$/.test(path) ||
   path.endsWith('ag-grid/crud/crud.html') ||
   path.endsWith('dashboard/dashboard.html') ||
-  path.endsWith('documentation/documentation.ts');
+  path.endsWith('documentation/documentation.html');
 
 describe('demo headings', () => {
   const files = [...sources(PAGES)];
@@ -40,10 +40,10 @@ describe('demo headings', () => {
   });
 
   it('never skips a level: no h3 or deeper without an h2 on the page', () => {
-    for (const page of files.filter(isPage)) {
+    const skipping = files.filter(isPage).filter((page) => {
       const html = readFileSync(page, 'utf8');
-      if (/<h[3-6][\s>]/.test(html))
-        expect({ page, h2: /<h2[\s>]/.test(html) }).toEqual({ page, h2: true });
-    }
+      return /<h[3-6][\s>]/.test(html) && !/<h2[\s>]/.test(html);
+    });
+    expect(skipping).toEqual([]);
   });
 });

@@ -46,7 +46,7 @@ import { HxTabScroller } from '../internal/tab-scroller/tab-scroller';
   selector: 'hx-tabs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tabs' },
-  template: '<ng-content />',
+  templateUrl: './tabs.html',
 })
 export class HxTabs {
   /** The `value` of the active tab. */
@@ -98,11 +98,7 @@ export class HxTabs {
   imports: [HxTabScroller],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tab-list', '[class.hx-tab-list-scrollable]': 'tabs.scrollable()' },
-  template: `
-    <hx-tab-scroller [enabled]="tabs.scrollable()">
-      <div class="hx-tab-tabs" role="tablist" (keydown)="onKeydown($event)"><ng-content /></div>
-    </hx-tab-scroller>
-  `,
+  templateUrl: './tab-list.html',
 })
 export class HxTabList {
   protected readonly tabs = inject(HxTabs);
@@ -147,7 +143,7 @@ export class HxTabList {
     '(keydown.enter)': 'onClick()',
     '(keydown.space)': 'onSpace($event)',
   },
-  template: '<ng-content />',
+  templateUrl: './tab.html',
 })
 export class HxTab {
   protected readonly tabs = inject(HxTabs);
@@ -178,7 +174,7 @@ export class HxTab {
   selector: 'hx-tab-panels',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tab-panels' },
-  template: '<ng-content />',
+  templateUrl: './tab-panels.html',
 })
 export class HxTabPanels {}
 
@@ -201,15 +197,7 @@ export class HxTabContent {
     '[attr.aria-labelledby]': 'tabs.tabId(value())',
     '[hidden]': '!active()',
   },
-  template: `
-    @if (lazy(); as lazy) {
-      @if (render()) {
-        <ng-container [ngTemplateOutlet]="lazy.template" />
-      }
-    } @else {
-      <ng-content />
-    }
-  `,
+  templateUrl: './tab-panel.html',
 })
 export class HxTabPanel {
   protected readonly tabs = inject(HxTabs);

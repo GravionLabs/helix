@@ -92,24 +92,7 @@ const targetOf = (target: Element | Event | null | undefined): Element | null =>
   imports: [HxDialogFrame, HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-confirm-anchor' },
-  template: `
-    <ng-template #panel>
-      @if (current(); as c) {
-        <hx-dialog-frame [header]="c.header" [titleId]="titleId" [closable]="false">
-          <div class="hx-confirm-content">
-            @if (c.icon) {
-              <span class="hx-confirm-icon" [class]="c.icon" aria-hidden="true"></span>
-            }
-            <p class="hx-confirm-message" [id]="messageId">{{ c.message }}</p>
-          </div>
-          <ng-container ngProjectAs="[hxDialogFooter]">
-            <button hx-button type="button" variant="text" severity="secondary" class="hx-confirm-reject" (click)="answer(false)">{{ c.rejectLabel ?? 'No' }}</button>
-            <button hx-button type="button" class="hx-confirm-accept" [severity]="c.acceptSeverity ?? 'primary'" (click)="answer(true)">{{ c.acceptLabel ?? 'Yes' }}</button>
-          </ng-container>
-        </hx-dialog-frame>
-      }
-    </ng-template>
-  `,
+  templateUrl: './confirm-dialog.html',
 })
 export class HxConfirmDialog {
   readonly #dialog = inject(Dialog);
@@ -192,22 +175,7 @@ export class HxConfirmDialog {
   imports: [HxPopover, HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-confirm-anchor' },
-  template: `
-    <hx-popover #popover role="alertdialog" panelClass="hx-confirm-popup" ariaLabel="Confirmation" [ariaDescribedBy]="messageId" (hidden)="onHidden()">
-      @if (current(); as c) {
-        <div class="hx-confirm-popup-content">
-          @if (c.icon) {
-            <span class="hx-confirm-popup-icon" [class]="c.icon" aria-hidden="true"></span>
-          }
-          <span class="hx-confirm-popup-message" [id]="messageId">{{ c.message }}</span>
-        </div>
-        <div class="hx-confirm-popup-footer">
-          <button hx-button type="button" variant="text" severity="secondary" size="small" class="hx-confirm-reject" (click)="answer(false)">{{ c.rejectLabel ?? 'No' }}</button>
-          <button hx-button type="button" size="small" class="hx-confirm-accept" [severity]="c.acceptSeverity ?? 'primary'" (click)="answer(true)">{{ c.acceptLabel ?? 'Yes' }}</button>
-        </div>
-      }
-    </hx-popover>
-  `,
+  templateUrl: './confirm-popup.html',
 })
 export class HxConfirmPopup {
   private readonly popover = viewChild.required<HxPopover>('popover');

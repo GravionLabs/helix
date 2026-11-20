@@ -23,13 +23,7 @@ import {
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.Eager,
-  template: `
-    <p class="m-0">Hello {{ data.name }}, this component was opened by the dialog service.</p>
-    <div class="mt-4 flex justify-end gap-2">
-      <button hx-button type="button" variant="text" (click)="ref.close()">Cancel</button>
-      <button hx-button type="button" (click)="ref.close('confirmed')">Confirm</button>
-    </div>
-  `,
+  templateUrl: './dialog-content-demo.html',
 })
 export class HxDialogContentDemo {
   protected readonly data = inject(HX_DIALOG_DATA) as { name: string };

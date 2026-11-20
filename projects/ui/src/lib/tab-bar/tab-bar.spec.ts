@@ -492,8 +492,8 @@ describe('HxTabBar', () => {
 
     it('scrolls by a share of the strip width with the buttons', async () => {
       await overflow(1200);
-      const scrollBy = vi.fn();
-      scroller().scrollBy = scrollBy;
+      const scrollBy = vi.fn<(options: ScrollToOptions) => void>();
+      scroller().scrollBy = scrollBy as HTMLElement['scrollBy'];
       navButtons()[1].click();
       navButtons()[0].click();
       expect(scrollBy.mock.calls.map(([o]) => o.left)).toEqual([180, -180]);

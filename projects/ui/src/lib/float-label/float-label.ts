@@ -32,7 +32,7 @@ export type HxFloatLabelVariant = 'over' | 'in' | 'on';
     '[class.hx-float-label-in]': "variant() === 'in'",
     '[class.hx-float-label-on]': "variant() === 'on'",
   },
-  template: '<ng-content />',
+  templateUrl: './float-label.html',
 })
 export class HxFloatLabel {
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);

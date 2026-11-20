@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: 'helix-ui',
   imports: [],
-  template: ` <p>helix-ui works!</p> `,
+  templateUrl: './helix-ui.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: ``,
 })

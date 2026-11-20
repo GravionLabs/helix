@@ -1,0 +1,25 @@
+@for (item of visible(); track item.id) {
+  <button
+    type="button"
+    class="hx-bottom-bar-item"
+    [class.hx-bottom-bar-active]="isActive(item)"
+    [attr.data-id]="item.id"
+    [attr.aria-label]="item.label"
+    [attr.aria-pressed]="item.kind === 'action' ? null : isActive(item)"
+    (click)="selected.emit(item.id)"
+  >
+    <span class="hx-bottom-bar-icon" aria-hidden="true">
+      @if (asTemplate(item.icon); as tpl) {
+        <ng-container [ngTemplateOutlet]="tpl" />
+      } @else {
+        <span [class]="item.icon"></span>
+      }
+    </span>
+    <span class="hx-bottom-bar-label">{{ item.label }}</span>
+    @if (item.badge !== undefined && item.badge !== null) {
+      <span class="hx-bottom-bar-badge" [class.hx-bottom-bar-badge-dot]="item.badge === true">{{
+        item.badge === true ? '' : item.badge
+      }}</span>
+    }
+  </button>
+}

@@ -31,7 +31,7 @@ const SEVERITY: Record<Invoice['status'], HxTagSeverity> = {
   standalone: true,
   imports: [HxTag],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<hx-tag [value]="status()" [severity]="severity()" rounded />`,
+  templateUrl: './status-cell.html',
 })
 export class StatusCell implements ICellRendererAngularComp {
   protected readonly status = signal('');
@@ -55,10 +55,7 @@ export class StatusCell implements ICellRendererAngularComp {
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <button hx-button type="button" variant="text" size="small" (click)="act('edit')">Edit</button>
-    <button hx-button type="button" variant="text" severity="danger" size="small" (click)="act('delete')">Delete</button>
-  `,
+  templateUrl: './actions-cell.html',
 })
 export class ActionsCell implements ICellRendererAngularComp {
   #params: ICellRendererParams<Invoice> | undefined;

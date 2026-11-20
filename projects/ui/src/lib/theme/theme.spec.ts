@@ -119,7 +119,7 @@ describe('HxTheme', () => {
     });
 
     it('cross-fades with the View Transitions API when asked to, but not at start-up', () => {
-      const start = vi.fn((update: () => void) => update());
+      const start = vi.fn<(update: () => void) => void>((update) => update());
       Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });
       try {
         const theme = setup({ viewTransition: true, dark: true });
@@ -135,7 +135,7 @@ describe('HxTheme', () => {
     });
 
     it('does not use view transitions unless asked to', () => {
-      const start = vi.fn((update: () => void) => update());
+      const start = vi.fn<(update: () => void) => void>((update) => update());
       Object.defineProperty(document, 'startViewTransition', { configurable: true, value: start });
       try {
         const theme = setup();
@@ -522,6 +522,6 @@ describe('parseDarkSelector', () => {
     expect(() => parseDarkSelector('@media (prefers-color-scheme: dark)')).toThrow(
       /class .* or an attribute/,
     );
-    expect(() => parseDarkSelector('body .dark')).toThrow();
+    expect(() => parseDarkSelector('body .dark')).toThrow(/class .* or an attribute/);
   });
 });

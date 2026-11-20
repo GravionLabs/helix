@@ -70,77 +70,7 @@ export function matchesAccept(file: File, accept: string): boolean {
     '[class.hx-file-upload-disabled]': 'disabled()',
     '[class.hx-file-upload-highlight]': 'dragging()',
   },
-  template: `
-    @if (mode() === 'basic') {
-      <label class="hx-button hx-file-upload-choose" [class.hx-button-disabled]="disabled()" [attr.aria-disabled]="disabled() ? 'true' : null">
-        <input #picker type="file" class="hx-file-upload-input" [accept]="accept()" [multiple]="multiple()" [disabled]="disabled()" (change)="onPick($event)" />
-        {{ chooseLabel() }}
-      </label>
-      @if (files().length) {
-        <span class="hx-file-upload-names">{{ names() }}</span>
-      }
-    } @else {
-      <div class="hx-file-upload-header">
-        <label class="hx-button hx-file-upload-choose" [attr.aria-disabled]="disabled() ? 'true' : null">
-          <input #picker type="file" class="hx-file-upload-input" [accept]="accept()" [multiple]="multiple()" [disabled]="disabled()" (change)="onPick($event)" />
-          {{ chooseLabel() }}
-        </label>
-        @if (showUploadButton()) {
-          <button hx-button type="button" severity="secondary" [disabled]="disabled() || !files().length" (click)="doUpload()">{{ uploadLabel() }}</button>
-        }
-        @if (showCancelButton()) {
-          <button hx-button type="button" severity="secondary" [disabled]="disabled() || !files().length" (click)="cancel()">{{ cancelLabel() }}</button>
-        }
-      </div>
-      <div
-        class="hx-file-upload-content"
-        (dragenter)="onDrag($event, true)"
-        (dragover)="onDrag($event, true)"
-        (dragleave)="onDrag($event, false)"
-        (drop)="onDrop($event)"
-      >
-        @if (progress() !== null && progress() !== undefined) {
-          <div
-            class="hx-file-upload-progress"
-            role="progressbar"
-            aria-label="Upload progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            [attr.aria-valuenow]="progress()"
-          >
-            <div class="hx-file-upload-progress-bar" [style.width.%]="progress()"></div>
-          </div>
-        }
-        <div class="hx-file-upload-messages" [id]="messagesId" role="status" aria-live="polite">
-          @for (message of messages(); track $index) {
-            <p class="hx-file-upload-message">{{ message }}</p>
-          }
-        </div>
-        @if (files().length) {
-          <ul class="hx-file-upload-list">
-            @for (file of files(); track file) {
-              <li class="hx-file-upload-file">
-                <span class="hx-file-upload-file-info">
-                  <span class="hx-file-upload-file-name">{{ file.name }}</span>
-                  <span class="hx-file-upload-file-size">{{ size(file) }}</span>
-                </span>
-                <button hx-button type="button" variant="outlined" severity="danger" size="small" [attr.aria-label]="'Remove ' + file.name" [disabled]="disabled()" (click)="removeFile(file)">{{ removeLabel() }}</button>
-              </li>
-            }
-          </ul>
-        } @else {
-          <p class="hx-file-upload-empty">{{ dropLabel() }}</p>
-        }
-      </div>
-    }
-    @if (mode() === 'basic') {
-      <div class="hx-file-upload-messages" [id]="messagesId" role="status" aria-live="polite">
-        @for (message of messages(); track $index) {
-          <p class="hx-file-upload-message">{{ message }}</p>
-        }
-      </div>
-    }
-  `,
+  templateUrl: './file-upload.html',
 })
 export class HxFileUpload {
   readonly mode = input<HxFileUploadMode>('advanced');
@@ -174,6 +104,7 @@ export class HxFileUpload {
   );
 
   /** The files that were added by one choice or drop. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly select = output<File[]>();
   /** The file the user removed from the list. */
   readonly remove = output<File>();

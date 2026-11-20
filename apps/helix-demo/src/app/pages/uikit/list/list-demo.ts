@@ -25,7 +25,7 @@ export class ListDemo implements OnInit {
   readonly products = signal<Product[]>([]);
 
   ngOnInit() {
-    this.#products.getProductsSmall().then((data) => this.products.set(data.slice(0, 6)));
+    void this.#products.getProductsSmall().then((data) => this.products.set(data.slice(0, 6)));
   }
 
   severity(product: Product): HxTagSeverity {

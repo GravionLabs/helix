@@ -37,8 +37,8 @@ describe('demo pages: Docs tab', () => {
     for (const [route, slugs] of Object.entries(DEMO_ROUTES)) {
       expect(docs[route], route).toEqual([...slugs]);
     }
-    for (const [page, slugs] of Object.entries(docs)) {
-      if (slugs.length) expect(DEMO_ROUTES[page], page).toBeDefined();
+    for (const [page] of Object.entries(docs).filter(([, slugs]) => slugs.length)) {
+      expect(DEMO_ROUTES[page], page).toBeDefined();
     }
   });
 

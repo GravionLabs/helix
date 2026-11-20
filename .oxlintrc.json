@@ -1,0 +1,124 @@
+// oxlint config of this repository (ADR 0006 of GravionLabs/skills, #1116). The rules are mapped by hand from the
+// former biome.json (Biome recommended with its overrides) and the former ESLint config; every rule that is off or
+// lowered names its reason. ESLint lints the Angular templates (`**/*.html`) only, see eslint.config.mjs.
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "vitest"],
+  "jsPlugins": ["@angular-eslint/eslint-plugin", "./scripts/lint/oxlint-plugin-helix.mjs"],
+  "categories": { "correctness": "error" },
+  "options": { "typeAware": true },
+  "ignorePatterns": [
+    "**/dist",
+    "**/node_modules",
+    "**/coverage",
+    "**/.angular",
+    "**/test-results",
+    "out-tsc/**",
+    // Biome and ESLint did not lint plain JavaScript either
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.cjs",
+    "apps/site/.vitepress/cache",
+    "apps/site/.vitepress/dist",
+    "apps/site/.vitepress/theme/generated",
+    "scripts/tests/fixtures",
+    "**/public",
+    // installed agent skills (`npx skills`), owned by GravionLabs/skills
+    ".agents/**",
+    ".claude/**",
+    ".opencode/**"
+  ],
+  "rules": {
+    // Biome recommended
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "no-useless-constructor": "error",
+    "no-useless-rename": "error",
+    "no-useless-catch": "error",
+    "no-useless-escape": "error",
+    "no-unneeded-ternary": "error",
+    "no-sequences": "error",
+    "no-lone-blocks": "error",
+    "no-self-compare": "error",
+    "no-prototype-builtins": "error",
+    "no-fallthrough": "error",
+    "no-case-declarations": "error",
+    "no-empty-pattern": "error",
+    "no-unsafe-optional-chaining": "error",
+    "no-unused-private-class-members": "warn",
+    "no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrors": "none" }
+    ],
+    "prefer-template": "warn",
+    "oxc/no-accumulating-spread": "warn",
+    "typescript/prefer-optional-chain": "warn",
+    "typescript/consistent-type-imports": "warn",
+    "typescript/no-misused-new": "error",
+    "typescript/no-unsafe-declaration-merging": "error",
+    "typescript/prefer-namespace-keyword": "error",
+    "typescript/prefer-as-const": "error",
+    "typescript/no-extra-non-null-assertion": "error",
+    "typescript/no-non-null-asserted-optional-chain": "error",
+    "unicorn/prefer-node-protocol": "warn",
+    "vitest/no-focused-tests": "error",
+    // vitest's expect takes an optional message as second argument
+    "vitest/valid-expect": ["error", { "maxArgs": 2 }],
+    // type-aware rules
+    "typescript/no-floating-promises": "error",
+    "typescript/await-thenable": "error",
+    "typescript/no-misused-promises": "error",
+    // Angular class rules (@angular-eslint/eslint-plugin as JS plugin)
+    "@angular-eslint/contextual-lifecycle": "error",
+    "@angular-eslint/no-empty-lifecycle-method": "error",
+    "@angular-eslint/no-input-rename": "error",
+    "@angular-eslint/no-inputs-metadata-property": "error",
+    "@angular-eslint/no-output-native": "error",
+    "@angular-eslint/no-output-on-prefix": "error",
+    "@angular-eslint/no-output-rename": "error",
+    "@angular-eslint/no-outputs-metadata-property": "error",
+    "@angular-eslint/prefer-inject": "error",
+    "@angular-eslint/prefer-on-push-component-change-detection": "error",
+    "@angular-eslint/prefer-standalone": "error",
+    "@angular-eslint/use-pipe-transform-interface": "error",
+    "@angular-eslint/use-lifecycle-interface": "warn",
+    // templates live in .html files, so ESLint's template rules see them all; short inline styles stay allowed
+    // and animations stay allowed (the defaults of 3 and 15 lines flag four shell components; ESLint does not lint them)
+    "@angular-eslint/component-max-inline-declarations": [
+      "error",
+      { "template": 0, "styles": 1000, "animations": 1000 }
+    ],
+    // hx: helix-ui and helix-desktop, helix: helix-shell, helix-zod and helix-ag-grid, app: the demo
+    "@angular-eslint/component-selector": [
+      "error",
+      { "type": ["element", "attribute"], "prefix": ["hx", "helix", "app"], "style": "kebab-case" }
+    ]
+    // not set: @angular-eslint/directive-selector. The released directive selectors of helix-ui mix kebab-case
+    // ([hx-button]) and camelCase ([hxStepContent]), and the rule takes one style; a rename breaks consumers
+  },
+  "overrides": [
+    {
+      // OnPush is the default since Angular 22; these components opt out with ChangeDetectionStrategy.Eager on
+      // purpose (75 in shell, zod and the demo); moving them to OnPush changes their behavior and is a change of its own
+      "files": ["projects/shell/**/*.ts", "projects/zod/**/*.ts", "apps/helix-demo/**/*.ts"],
+      "rules": { "@angular-eslint/prefer-on-push-component-change-detection": "off" }
+    },
+    {
+      // the libraries are written with signals (#373)
+      "files": ["projects/{ui,shell,zod,ag-grid}/**/*.ts", "scripts/lint/probe/**/*.ts"],
+      "rules": { "helix/no-decorator-api": "error" }
+    },
+    {
+      // test hosts keep inline templates and may use classic decorators; specs save and restore prototype methods
+      // (`const scrollIntoView = Element.prototype.scrollIntoView`), which unbound-method flags
+      "files": ["**/*.spec.ts"],
+      "rules": {
+        "@angular-eslint/component-max-inline-declarations": "off",
+        "helix/no-decorator-api": "off",
+        "typescript/unbound-method": "off"
+      }
+    }
+  ]
+}

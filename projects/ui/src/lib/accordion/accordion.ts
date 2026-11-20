@@ -44,7 +44,7 @@ export type HxAccordionValue = string | string[] | null;
     class: 'hx-accordion',
     '(keydown)': 'onKeydown($event)',
   },
-  template: '<ng-content />',
+  templateUrl: './accordion.html',
 })
 export class HxAccordion {
   /** The `value` of the open panel, or the values of the open panels with `multiple`. */
@@ -111,7 +111,7 @@ export class HxAccordion {
     '[class.hx-accordion-panel-open]': 'expanded()',
     '[class.hx-accordion-panel-disabled]': 'disabled()',
   },
-  template: '<ng-content />',
+  templateUrl: './accordion-panel.html',
 })
 export class HxAccordionPanel {
   /** Identifies the panel in the accordion's `value`. */
@@ -157,30 +157,7 @@ export class HxAccordionPanel {
   imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-accordion-header' },
-  template: `
-    <ng-template #button>
-      <button
-        type="button"
-        class="hx-accordion-trigger"
-        [id]="panel.headerId"
-        [attr.aria-expanded]="panel.expanded()"
-        [attr.aria-controls]="panel.contentId"
-        [disabled]="panel.disabled()"
-        (click)="panel.toggle()"
-      >
-        <span class="hx-accordion-title"><ng-content /></span>
-        <span class="hx-accordion-icon" aria-hidden="true"></span>
-      </button>
-    </ng-template>
-    @switch (level()) {
-      @case (1) { <h1 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h1> }
-      @case (2) { <h2 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h2> }
-      @case (3) { <h3 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h3> }
-      @case (4) { <h4 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h4> }
-      @case (5) { <h5 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h5> }
-      @default { <h6 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h6> }
-    }
-  `,
+  templateUrl: './accordion-header.html',
 })
 export class HxAccordionHeader {
   protected readonly panel = inject(HxAccordionPanel);
@@ -197,15 +174,7 @@ export class HxAccordionHeader {
     class: 'hx-accordion-content',
     '[attr.inert]': "panel.expanded() ? null : ''",
   },
-  template: `
-    <div class="hx-accordion-collapse">
-      <div class="hx-accordion-collapse-inner">
-        <div class="hx-accordion-body" role="region" [id]="panel.contentId" [attr.aria-labelledby]="panel.headerId">
-          <ng-content />
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './accordion-content.html',
 })
 export class HxAccordionContent {
   protected readonly panel = inject(HxAccordionPanel);

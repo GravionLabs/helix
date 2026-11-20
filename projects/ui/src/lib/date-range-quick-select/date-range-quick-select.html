@@ -150,6 +150,7 @@
           [id]="editorId(s)"
           [attr.aria-labelledby]="sideButtonId(s)"
         >
+          <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- composite widget: focus moves over its items (roving tabindex or aria-activedescendant) -->
           <div
             class="hx-date-range-quick-select-tabs"
             role="tablist"

@@ -17,9 +17,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'hx-status-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-status-bar' },
-  template: `
-    <div class="hx-status-group hx-status-start"><ng-content select="[slot=start]" /></div>
-    <div class="hx-status-group hx-status-end"><ng-content select="[slot=end]" /></div>
-  `,
+  templateUrl: './status-bar.html',
 })
 export class HxStatusBar {}

@@ -1,0 +1,5 @@
+<div class="hx-progress-bar-value" [style.width.%]="indeterminate() ? null : clamped()">
+  @if (showValue() && !indeterminate()) {
+    <span class="hx-progress-bar-label">{{ clamped() }}{{ unit() }}</span>
+  }
+</div>

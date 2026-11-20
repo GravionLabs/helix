@@ -17,7 +17,7 @@ export type HelixWidgetKind =
   | 'object'
   | 'array'
   | 'union'
-  // biome-ignore lint/complexity/noBannedTypes: `string & {}` keeps literal autocomplete while allowing custom keys
+  // `string & {}` keeps literal autocomplete while allowing custom keys
   | (string & {});
 
 export interface HelixSelectOption {
@@ -131,5 +131,5 @@ export function readHelixMeta(schema: z.ZodType): HelixFieldMeta {
   }
 
   // Innermost first so outer layers overwrite inner ones.
-  return layers.reverse().reduce<HelixFieldMeta>((acc, layer) => ({ ...acc, ...layer }), {});
+  return Object.assign({}, ...layers.reverse());
 }

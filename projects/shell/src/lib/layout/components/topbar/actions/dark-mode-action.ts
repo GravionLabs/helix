@@ -6,18 +6,7 @@ import { LayoutStore } from '../../../store/layout.store';
   selector: 'helix-dark-mode-action',
   standalone: true,
   imports: [CommonModule],
-  template: `
-    <button type="button" class="layout-topbar-action" (click)="store.toggleDarkMode()">
-      <i
-        [ngClass]="{
-          pi: true,
-          'pi-moon': store.isDarkTheme(),
-          'pi-sun': !store.isDarkTheme(),
-        }"
-        style="font-size: 1.4rem;"
-      ></i>
-    </button>
-  `,
+  templateUrl: './dark-mode-action.html',
   host: {
     style:
       'display: inline-flex; align-items: center; justify-content: center; width: var(--helix-control-height, 32px); height: var(--helix-control-height, 32px); border-radius: var(--h-border-radius-md); cursor: pointer; transition: background-color var(--element-transition-duration);',

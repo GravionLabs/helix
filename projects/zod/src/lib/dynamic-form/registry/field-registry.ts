@@ -35,11 +35,12 @@ export class HelixFieldWidgetResolver {
     for (let i = flat.length - 1; i >= 0; i--) {
       if (flat[i].widget === widget) return flat[i].component;
     }
+    const hint =
+      typeof ngDevMode !== 'undefined' && ngDevMode
+        ? 'Did you forget provideHelixDynamicForms() or a custom { widgets: [...] } registration?'
+        : '';
     throw new Error(
-      `[HelixFieldWidgetResolver] No widget registered for kind "${widget}". ` +
-        (typeof ngDevMode !== 'undefined' && ngDevMode
-          ? `Did you forget provideHelixDynamicForms() or a custom { widgets: [...] } registration?`
-          : ''),
+      `[HelixFieldWidgetResolver] No widget registered for kind "${widget}". ${hint}`,
     );
   }
 }

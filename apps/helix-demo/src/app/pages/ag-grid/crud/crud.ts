@@ -145,7 +145,7 @@ export class Crud implements OnInit {
   ];
 
   ngOnInit() {
-    this.#productService.getProducts().then((data) => this.products.set(data));
+    void this.#productService.getProducts().then((data) => this.products.set(data));
   }
 
   onGridReady(event: GridReadyEvent<Product>) {

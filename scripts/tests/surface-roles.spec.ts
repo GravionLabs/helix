@@ -124,11 +124,9 @@ describe('surface roles (ADR 0004)', () => {
         const host = hex(scheme, `--h-surface-${role}`);
         expect(host).toBe(HOSTS[role]);
         expect(host).not.toBe(hex(scheme, '--h-surface-hover'));
-        if (scheme === 'dark') {
-          expect(luminance(hex(scheme, '--h-surface-hover'))).toBeGreaterThan(luminance(host));
-        } else {
-          expect(luminance(hex(scheme, '--h-surface-hover'))).toBeLessThan(luminance(host));
-        }
+        // 1: the hover is lighter than the host, -1: darker
+        const direction = Math.sign(luminance(hex(scheme, '--h-surface-hover')) - luminance(host));
+        expect(direction).toBe(scheme === 'dark' ? 1 : -1);
       },
     );
 

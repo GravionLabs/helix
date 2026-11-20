@@ -23,19 +23,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input, output } f
     '(keydown.backspace)': 'onKey($event)',
     '(keydown.delete)': 'onKey($event)',
   },
-  template: `
-    @if (image()) {
-      <img class="hx-chip-image" [src]="image()" [alt]="imageAlt()" />
-    } @else if (icon()) {
-      <span class="hx-chip-icon" [class]="icon()" aria-hidden="true"></span>
-    }
-    <span class="hx-chip-label">{{ label() }}<ng-content /></span>
-    @if (removable()) {
-      <button type="button" class="hx-chip-remove" [attr.aria-label]="removeLabel()" (click)="remove.emit()">
-        <span class="hx-chip-remove-icon" aria-hidden="true"></span>
-      </button>
-    }
-  `,
+  templateUrl: './chip.html',
 })
 export class HxChip {
   /** The text; content can be projected as well. */

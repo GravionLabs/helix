@@ -5,12 +5,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'hx-status-version',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-status-version' },
-  template: `
-    <span class="hx-status-control hx-status-version-text">v{{ version() }}</span>
-    @if (channel()) {
-      <span class="hx-status-channel">{{ channel() }}</span>
-    }
-  `,
+  templateUrl: './status-version.html',
 })
 export class HxStatusVersion {
   readonly version = input.required<string>();

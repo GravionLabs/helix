@@ -17,46 +17,7 @@ import { HxUpdateService } from './update.service';
   selector: 'hx-status-update',
   imports: [HxStatusItem, HxStatusPopover],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    @if (visible()) {
-      <hx-status-item
-        kind="button"
-        [announce]="true"
-        [tone]="tone()"
-        [title]="label()"
-        [ariaLabel]="label()"
-        [(popoverOpen)]="open"
-      >
-        <span class="hx-update-label">{{ label() }}</span>
-        <div hxStatusPopover class="hx-update-details">
-          @switch (state().status) {
-            @case ('error') {
-              <p class="hx-update-message">{{ errorText() }}</p>
-              <button type="button" class="hx-update-action" (click)="service.check()">
-                {{ retryLabel() }}
-              </button>
-            }
-            @default {
-              @if (service.update(); as update) {
-                <p class="hx-update-version">{{ update.version }}</p>
-                @if (update.notes) {
-                  <p class="hx-update-notes">{{ update.notes }}</p>
-                }
-                <button
-                  type="button"
-                  class="hx-update-action"
-                  [disabled]="state().status === 'installing'"
-                  (click)="service.installAndRestart()"
-                >
-                  {{ installLabel() }}
-                </button>
-              }
-            }
-          }
-        </div>
-      </hx-status-item>
-    }
-  `,
+  templateUrl: './status-update.html',
 })
 export class HxStatusUpdate {
   protected readonly service = inject(HxUpdateService);

@@ -114,7 +114,7 @@ export class InputDemo implements OnInit {
   inputGroupValue = false;
 
   ngOnInit() {
-    this.#countries.getCountries().then((countries) => {
+    void this.#countries.getCountries().then((countries) => {
       this.allCountries = countries;
     });
   }

@@ -1,0 +1,10 @@
+<button type="button" class="layout-topbar-action" (click)="store.toggleDarkMode()">
+  <i
+    [ngClass]="{
+      pi: true,
+      'pi-moon': store.isDarkTheme(),
+      'pi-sun': !store.isDarkTheme(),
+    }"
+    style="font-size: 1.4rem;"
+  ></i>
+</button>

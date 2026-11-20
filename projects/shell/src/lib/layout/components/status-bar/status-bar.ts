@@ -32,7 +32,7 @@ const TONE_TEXT: Record<HelixStatusBarTone, string> = {
 })
 export class HelixStatusBar {
   brand = input('');
-  environment = input<EnvironmentValue | string | undefined>();
+  environment = input<EnvironmentValue | (string & {}) | undefined>();
   /** Note text, or a template for richer content such as links. */
   note = input<string | TemplateRef<unknown> | undefined>();
   versions = input<HelixStatusBarVersion[]>([]);

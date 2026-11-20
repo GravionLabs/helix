@@ -104,7 +104,7 @@ describe('HxToast', () => {
   });
 
   it('runs the action once, closes the toast and keeps role status without taking focus', async () => {
-    const run = vi.fn();
+    const run = vi.fn<() => void>();
     service.add({ summary: 'Hidden', sticky: true, action: { label: 'Undo', run } });
     await settle();
     const item = items('main')[0];

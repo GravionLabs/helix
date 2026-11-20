@@ -40,39 +40,7 @@ export interface HxSidebarState {
   selector: 'hx-app-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-app-shell' },
-  template: `
-    <ng-content select="[slot=toolbar]" />
-    <div class="hx-app-shell-body">
-      <ng-content select="[slot=activity]" />
-      <div
-        class="hx-app-shell-sidebar"
-        [hidden]="collapsed()"
-        [style.width.px]="width()"
-      >
-        <ng-content select="[slot=sidebar]" />
-      </div>
-      @if (!collapsed()) {
-        <div
-          class="hx-app-shell-resizer"
-          role="separator"
-          aria-orientation="vertical"
-          tabindex="0"
-          [attr.aria-label]="resizerLabel()"
-          [attr.aria-valuenow]="width()"
-          [attr.aria-valuemin]="minWidth()"
-          [attr.aria-valuemax]="maxWidth()"
-          (pointerdown)="onPointerDown($event)"
-          (pointermove)="onPointerMove($event)"
-          (pointerup)="onPointerEnd($event)"
-          (pointercancel)="onPointerEnd($event)"
-          (keydown)="onKeydown($event)"
-        ></div>
-      }
-      <main class="hx-app-shell-content"><ng-content /></main>
-      <ng-content select="[slot=panel]" />
-    </div>
-    <ng-content select="[slot=status]" />
-  `,
+  templateUrl: './app-shell.html',
 })
 export class HxAppShell {
   /** The sidebar width in px (two-way); it is kept between `minWidth` and `maxWidth`. */

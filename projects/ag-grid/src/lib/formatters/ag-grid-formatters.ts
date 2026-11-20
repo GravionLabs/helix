@@ -4,7 +4,6 @@ import type { ValueFormatterParams } from 'ag-grid-community';
  * The row type of the formatters. A formatter only reads the value, so it must fit a column of any row type;
  * `unknown` would make it unusable in a typed `ColDef<Row>` (the row node type is invariant).
  */
-// biome-ignore lint/suspicious/noExplicitAny: any row type, see above
 export type AnyRow = any;
 
 /** Type alias for AG Grid's `ValueFormatterParams`, used by all formatter functions. */

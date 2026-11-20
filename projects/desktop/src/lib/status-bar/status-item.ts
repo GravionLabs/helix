@@ -48,34 +48,7 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
     '(document:keydown.escape)': 'close()',
     '(document:click)': 'onDocumentClick($event)',
   },
-  template: `
-    @if (kind() === 'button') {
-      <button
-        type="button"
-        class="hx-status-control"
-        [attr.title]="title()"
-        [attr.aria-label]="ariaLabel()"
-        [attr.aria-haspopup]="hasPopover ? 'dialog' : null"
-        [attr.aria-expanded]="hasPopover ? popoverOpen() : null"
-        [disabled]="disabled()"
-        (click)="onButtonClick()"
-      >
-        <ng-container [ngTemplateOutlet]="content" />
-      </button>
-    } @else {
-      <span
-        class="hx-status-control"
-        [attr.title]="title()"
-        [attr.aria-label]="ariaLabel()"
-      >
-        <ng-container [ngTemplateOutlet]="content" />
-      </span>
-    }
-    <ng-template #content><ng-content /></ng-template>
-    @if (popoverOpen()) {
-      <div class="hx-status-popover"><ng-content select="[hxStatusPopover]" /></div>
-    }
-  `,
+  templateUrl: './status-item.html',
 })
 export class HxStatusItem {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

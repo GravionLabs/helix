@@ -1,0 +1,5 @@
+<!-- Lint probe (#1116): each element breaks one template rule on purpose, see probe.ts. -->
+<img src="probe.png" />
+<input ([ngModel])="label" />
+<div (click)="pick()">Pick</div>
+<p *ngIf="label">{{ label }}</p>

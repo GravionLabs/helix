@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
  */
 @Component({
   selector: 'hx-button-group',
-  template: '<ng-content />',
+  templateUrl: './button-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-button-group', role: 'group', '[attr.aria-label]': 'ariaLabel() || null' },
 })

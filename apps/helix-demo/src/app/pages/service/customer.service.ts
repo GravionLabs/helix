@@ -1,6 +1,5 @@
-// biome-ignore lint/style/useImportType: DI token, must be value import
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 export interface Country {
   name?: string;
@@ -9030,7 +9029,7 @@ export class CustomerService {
     ];
   }
 
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   getCustomersMini() {
     return Promise.resolve(this.getData().slice(0, 5));

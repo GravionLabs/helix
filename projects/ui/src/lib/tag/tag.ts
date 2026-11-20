@@ -33,12 +33,7 @@ export type HxTagSeverity =
     '[class.hx-tag-danger]': "severity() === 'danger'",
     '[class.hx-tag-contrast]': "severity() === 'contrast'",
   },
-  template: `
-    @if (icon()) {
-      <span class="hx-tag-icon" [class]="icon()" aria-hidden="true"></span>
-    }
-    <span class="hx-tag-label">{{ value() }}<ng-content /></span>
-  `,
+  templateUrl: './tag.html',
 })
 export class HxTag {
   /** The text; content can be projected instead. */

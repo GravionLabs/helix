@@ -27,40 +27,7 @@ const SWIPE_DISTANCE = 48;
   imports: [HxBottomBar, HxDrawer],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-mobile-shell' },
-  template: `
-    <header class="hx-mobile-shell-bar">
-      <button
-        type="button"
-        class="hx-mobile-shell-menu"
-        [attr.aria-label]="menuLabel()"
-        aria-haspopup="dialog"
-        [attr.aria-expanded]="drawerOpen()"
-        (click)="drawerOpen.set(true)"
-      >
-        <span aria-hidden="true">&#9776;</span>
-      </button>
-      <span class="hx-mobile-shell-title">{{ heading() }}</span>
-      <ng-content select="[slot=end]" />
-    </header>
-    <main class="hx-mobile-shell-content"><ng-content /></main>
-    <hx-bottom-bar [items]="items()" [activeId]="activeId()" [label]="barLabel()" (selected)="onBarSelect($event)" />
-    <hx-drawer
-      [(visible)]="drawerOpen"
-      position="left"
-      [ariaLabel]="menuLabel()"
-      [closeLabel]="closeLabel()"
-      width="min(20rem, 85vw)"
-      panelClass="hx-mobile-shell-drawer"
-    >
-      <div
-        class="hx-mobile-shell-drawer-body"
-        (touchstart)="onTouchStart($event)"
-        (touchend)="onTouchEnd($event)"
-      >
-        <ng-content select="[slot=drawer]" />
-      </div>
-    </hx-drawer>
-  `,
+  templateUrl: './mobile-shell.html',
 })
 export class HxMobileShell {
   /** The views and actions of the bottom bar (at most five are shown). */
