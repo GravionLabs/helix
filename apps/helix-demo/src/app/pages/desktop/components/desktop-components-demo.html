@@ -54,6 +54,12 @@
         <p>Restart to install. Escape or a click outside closes this.</p>
       </div>
     </hx-status-item>
+    @if (!synced()) {
+      <ng-container ngProjectAs="[slot=end]">
+        <hx-status-item>Offline</hx-status-item>
+        <hx-status-item>2 queued</hx-status-item>
+      </ng-container>
+    }
     <hx-status-zoom slot="end" [(value)]="zoom" />
     <hx-status-version slot="end" version="1.4.0" channel="RC" />
   </hx-status-bar>

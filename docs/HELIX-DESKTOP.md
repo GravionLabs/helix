@@ -54,6 +54,20 @@ The 22 px bottom bar with a start and an end group. Items are projected, not con
 - `HxStatusItem`: `kind` `'text'` (default) or `'button'`, `title`, `ariaLabel`, `disabled`, `tone` (`neutral`, `warn`, `error`, `accent`), `announce`, `popoverOpen` (two-way). Output `pressed` fires when a button item is activated (click, Enter, Space), not for a disabled or text item or a click inside the popover.
 - `announce` sets `role="status"` on that item only; the bar is not a live region. Use it for values that change on their own.
 - An element with `hxStatusPopover` inside a button item opens above the bar; Escape and a click outside close it.
+- Conditional items: an `@if` block projects only when it has one root node and a `slot` attribute on it. For a group of items in one slot, wrap them in `<ng-container ngProjectAs="[slot=end]">` (without it Angular reports NG8011 and the items are not projected). The wrapper adds no element.
+
+  ```html
+  <hx-status-bar>
+    @if (activePane()) {
+      <ng-container ngProjectAs="[slot=end]">
+        <hx-status-item>Input</hx-status-item>
+        <hx-status-item>119×46</hx-status-item>
+      </ng-container>
+    }
+    <hx-status-version slot="end" version="1.4.0" />
+  </hx-status-bar>
+  ```
+
 - `HxStatusZoom`: `value` (two-way, percent), `min`, `max`, `step`, `reset`. The percentage resets.
 - `HxStatusVersion`: `version` and an optional `channel` badge.
 
