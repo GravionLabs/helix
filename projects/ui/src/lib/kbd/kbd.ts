@@ -25,14 +25,7 @@ function isMac(): boolean {
  */
 @Component({
   selector: 'hx-kbd',
-  template: `
-    @for (key of keys(); track $index) {
-      @if ($index > 0 && plus()) {
-        <span class="hx-kbd-separator" aria-hidden="true">+</span>
-      }
-      <kbd class="hx-kbd-key">{{ key }}</kbd>
-    }
-  `,
+  templateUrl: './kbd.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-kbd',
