@@ -16,7 +16,7 @@ import { HelixFieldWidgetBase } from '@gravionlabs/helix-zod';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingWidget extends HelixFieldWidgetBase<number | null> {
-  // biome-ignore lint/complexity/useLiteralKeys: `stars` is an index-signature key (TS4111)
+  // `stars` is an index-signature key (TS4111)
   protected readonly stars = computed(() => (this.descriptor().meta['stars'] as number) ?? 5);
 
   protected onChange(value: number | null): void {

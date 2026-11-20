@@ -352,14 +352,11 @@ export function readRecentRanges(key: string | null): HxDateRangeExpression[] | 
     const parsed: unknown = JSON.parse(text ?? '[]');
     if (!Array.isArray(parsed)) return [];
     // de-duplicated on read too: an edited or older list may hold the same range twice
-    return parsed
-      .filter(isRange)
-      .reduce<HxDateRangeExpression[]>(
-        (list, { from, to }) =>
-          list.some((r) => r.from === from && r.to === to) ? list : [...list, { from, to }],
-        [],
-      )
-      .slice(0, RECENT_MAX);
+    const list: HxDateRangeExpression[] = [];
+    for (const { from, to } of parsed.filter(isRange)) {
+      if (!list.some((r) => r.from === from && r.to === to)) list.push({ from, to });
+    }
+    return list.slice(0, RECENT_MAX);
   } catch {
     return []; // damaged data: start empty
   }

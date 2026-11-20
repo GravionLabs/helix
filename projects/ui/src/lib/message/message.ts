@@ -60,6 +60,7 @@ export class HxMessage {
   readonly life = input(0, { transform: numberAttribute });
 
   /** The message was closed by the button or by `life`. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly close = output<void>();
 
   protected readonly visible = signal(true);

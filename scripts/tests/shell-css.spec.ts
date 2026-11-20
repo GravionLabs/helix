@@ -23,7 +23,7 @@ const unlayeredSelectors = (css: string): string[] => {
   for (const ch of css.replace(/\/\*[\s\S]*?\*\//g, '')) {
     if (ch === '{') {
       const head = buf.trim();
-      if (/^@layer/.test(head)) layerDepths.push(depth);
+      if (head.startsWith('@layer')) layerDepths.push(depth);
       else if (layerDepths.length === 0 && !head.startsWith('@')) found.push(head);
       depth++;
       buf = '';

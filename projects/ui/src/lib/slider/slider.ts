@@ -47,7 +47,6 @@ export type HxSliderValue = number | readonly [number, number];
   templateUrl: './slider.html',
 })
 // `any`: the contract types `min` and `max` like the value, which is a number or a pair here
-// biome-ignore lint/suspicious/noExplicitAny: see above
 export class HxSlider implements ControlValueAccessor, FormValueControl<any> {
   /** Two thumbs; the value is `[start, end]`. */
   readonly range = input(false, { transform: booleanAttribute });

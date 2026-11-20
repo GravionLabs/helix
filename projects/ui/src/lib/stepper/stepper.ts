@@ -181,6 +181,7 @@ export class HxStepContent {
 
   static ngTemplateContextGuard(
     _: HxStepContent,
+    // oxlint-disable-next-line no-unused-vars -- the parameter exists for the type predicate of Angular's context guard
     context: unknown,
   ): context is HxStepContentContext {
     return true;

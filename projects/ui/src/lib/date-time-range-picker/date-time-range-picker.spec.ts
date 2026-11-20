@@ -1026,7 +1026,7 @@ describe('HxDateTimeRangePicker', () => {
   });
 
   it('works with ngModel', async () => {
-    expect(input('model').value).toBe('9/9/2026'.replace('9/9', '10/9') + ' 09:00 -');
+    expect(input('model').value).toBe(`${'9/9/2026'.replace('9/9', '10/9')} 09:00 -`);
     await open('model');
     await click(day(12));
     await submit();

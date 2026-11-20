@@ -31,7 +31,8 @@ function* htmlFiles(dir: string): Generator<string> {
 const pages = [...htmlFiles(PAGES)]
   .map((f) => relative(PAGES, f))
   .filter(
-    (f) => (/-demo\.html$/.test(f) && !f.includes('/sections/')) || f === 'ag-grid/crud/crud.html',
+    (f) =>
+      (f.endsWith('-demo.html') && !f.includes('/sections/')) || f === 'ag-grid/crud/crud.html',
   );
 
 function attr(tag: string, name: string): string | undefined {
@@ -47,6 +48,7 @@ beforeAll(() => {
   mkdirSync(join(cwd, 'apps/helix-demo/src/app'), { recursive: true });
   symlinkSync(PAGES, join(cwd, 'apps/helix-demo/src/app/pages'), 'dir');
   const result = spawnSync(process.execPath, [SCRIPT], { cwd, encoding: 'utf8' });
+  // oxlint-disable-next-line vitest/no-standalone-expect -- deliberate check in a hook: it guards every test of the file
   expect(result.status, result.stderr).toBe(0);
   out = join(cwd, 'apps/helix-demo/public/source');
 });

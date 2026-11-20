@@ -68,6 +68,7 @@ export class HelixTopbar implements OnInit, OnDestroy {
   alerts = input<AlertItem[]>([]);
   searchPlaceholder = input('Search');
   /** Text of the `search` action, on every input. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly search = output<string>();
 
   store = inject(LayoutStore);

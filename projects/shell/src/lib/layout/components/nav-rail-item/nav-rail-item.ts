@@ -186,7 +186,8 @@ export class HelixNavRailItem implements AfterViewInit {
     if (this.hasChildren()) {
       event.preventDefault();
       if (this.isCollapsed()) {
-        this.flyoutOpen() ? this.closeFlyout(false) : this.openFlyout();
+        if (this.flyoutOpen()) this.closeFlyout(false);
+        else this.openFlyout();
       } else {
         this.store.setExpanded(this.itemKey(), !this.isExpanded());
       }

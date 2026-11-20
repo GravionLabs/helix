@@ -75,6 +75,8 @@ export class HxTooltip {
 
   /** The text. Empty or null shows nothing. */
   readonly text = input<string | null | undefined>('', { alias: 'hx-tooltip' });
+  // The inputs carry the directive's prefix in templates (released API) and short names in the class.
+  /* oxlint-disable @angular-eslint/no-input-rename */
   readonly position = input<HxTooltipPosition>('top', { alias: 'hxTooltipPosition' });
   readonly event = input<HxTooltipEvent>('both', { alias: 'hxTooltipEvent' });
   readonly disabled = input(false, { alias: 'hxTooltipDisabled' });
@@ -92,6 +94,7 @@ export class HxTooltip {
     alias: 'hxTooltipWhenTruncated',
     transform: booleanAttribute,
   });
+  /* oxlint-enable @angular-eslint/no-input-rename */
 
   protected readonly bubbleId = nextId('hx-tooltip');
   protected readonly shown = signal(false);

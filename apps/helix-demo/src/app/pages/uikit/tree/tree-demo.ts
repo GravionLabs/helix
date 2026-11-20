@@ -89,6 +89,6 @@ export class TreeDemo implements OnInit {
   }
 
   ngOnInit() {
-    this.#nodes.getFiles().then((files) => this.treeValue.set(files as HxTreeNode[]));
+    void this.#nodes.getFiles().then((files) => this.treeValue.set(files as HxTreeNode[]));
   }
 }

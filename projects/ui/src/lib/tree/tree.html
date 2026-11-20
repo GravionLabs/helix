@@ -9,6 +9,7 @@
     (input)="query.set($any($event.target).value)"
   />
 }
+<!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- composite widget: focus moves over its items (roving tabindex or aria-activedescendant) -->
 <ul
   class="hx-tree-list"
   role="tree"
@@ -38,6 +39,7 @@
       [attr.aria-disabled]="item.node.disabled ? 'true' : null"
       [attr.tabindex]="item.node.key === tabKey() ? 0 : -1"
     >
+      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- the focusable treeitem around it handles the keys -->
       <div
         class="hx-tree-node-content"
         [class.hx-tree-node-selected]="mode() !== 'checkbox' && isSelected(item.node.key)"

@@ -146,6 +146,8 @@ the same rule block above and a grep-based DoD.
   `projects/core/**/*.ts`, excluding `*.spec.ts`. Verified to fail `pnpm
   lint` when a decorator is (temporarily) reintroduced into a fork source
   file. #324 had claimed this guard but never landed it.
+  Since #1116 the guard is the oxlint rule `helix/no-decorator-api`
+  (`scripts/lint/oxlint-plugin-helix.mjs`).
 
 ## Definition of done (epic #297, closed out by feature #359 / #373)
 

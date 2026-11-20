@@ -268,7 +268,7 @@ export class HxTree {
   }
 
   collapseAll(): void {
-    for (const key of [...this.#expanded()]) this.collapse(key);
+    for (const key of this.#expanded()) this.collapse(key);
   }
 
   protected onToggleClick(item: ViewNode, event: Event): void {

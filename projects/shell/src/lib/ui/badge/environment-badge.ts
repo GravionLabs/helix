@@ -33,7 +33,7 @@ function isKnownEnvironment(value: string): value is Environment {
   templateUrl: './environment-badge.html',
 })
 export class HelixEnvironmentBadge {
-  environment = input.required<EnvironmentValue | string>();
+  environment = input.required<EnvironmentValue | (string & {})>();
 
   protected mapped = computed(() => {
     const env = this.environment();

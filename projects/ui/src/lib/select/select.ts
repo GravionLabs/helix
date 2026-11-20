@@ -228,6 +228,7 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   #filterText(option: unknown, by: Accessor<never, string>, fallback: string): string {
     if (option === null || typeof option !== 'object') return fallback;
     if (typeof by === 'function') return String((by as (o: unknown) => string)(option) ?? '');
+    // oxlint-disable-next-line typescript/no-base-to-string -- the values are unknown by design; String() is the fallback text
     return by in option ? String((option as Record<string, unknown>)[by] ?? '') : '';
   }
 

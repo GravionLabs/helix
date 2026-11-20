@@ -104,6 +104,7 @@ export class HxFileUpload {
   );
 
   /** The files that were added by one choice or drop. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly select = output<File[]>();
   /** The file the user removed from the list. */
   readonly remove = output<File>();

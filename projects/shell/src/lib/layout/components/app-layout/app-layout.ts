@@ -43,7 +43,7 @@ import type { HelixTopbarActionConfig } from '../topbar/topbar.model';
 })
 export class HelixAppLayout {
   appTitle = input('Helix');
-  environment = input<EnvironmentValue | string | undefined>();
+  environment = input<EnvironmentValue | (string & {}) | undefined>();
 
   /** Page title of the header where there is no breadcrumb trail. Defaults to the route title. */
   pageTitle = input<string | undefined>();
@@ -62,6 +62,7 @@ export class HelixAppLayout {
   searchPlaceholder = input('Search');
 
   /** Text of the `search` action, on every input. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly search = output<string>();
 
   /**
@@ -71,7 +72,7 @@ export class HelixAppLayout {
   brandIcon = input<string>();
 
   /** Status bar inputs */
-  statusBarEnvironment = input<EnvironmentValue | string | undefined>();
+  statusBarEnvironment = input<EnvironmentValue | (string & {}) | undefined>();
   statusBarNote = input<string | TemplateRef<unknown> | undefined>();
   statusBarTone = input<HelixStatusBarTone>('neutral');
   statusBarVersions = input<HelixStatusBarVersion[]>([]);
@@ -108,7 +109,7 @@ export class HelixAppLayout {
       helixNavGroupsFromMenu(this.effectiveMenu() as HelixRouteMenuItem[], this.navStyle()),
   );
 
-  protected effectiveEnvironment = computed<EnvironmentValue | string | undefined>(() => {
+  protected effectiveEnvironment = computed<EnvironmentValue | (string & {}) | undefined>(() => {
     const input = this.environment();
     if (input !== undefined) return input;
     return this.activatedRoute.snapshot.data['environment'];

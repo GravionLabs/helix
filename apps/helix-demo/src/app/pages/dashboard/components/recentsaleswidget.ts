@@ -27,6 +27,6 @@ export class RecentSalesWidget implements OnInit {
   productService = inject(ProductService);
 
   ngOnInit() {
-    this.productService.getProductsSmall().then((data) => this.products.set(data));
+    void this.productService.getProductsSmall().then((data) => this.products.set(data));
   }
 }

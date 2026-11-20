@@ -87,6 +87,6 @@ describe('generate-build-info', () => {
     const result = run({ HELIX_VERSION: value });
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('is not a version');
-    expect(() => generated()).toThrow();
+    expect(() => generated()).toThrow(/ENOENT/);
   });
 });
