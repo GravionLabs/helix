@@ -1,6 +1,7 @@
 import { Overlay, type OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
@@ -83,6 +84,14 @@ export class HxTooltip {
   });
   /** Milliseconds before it appears. */
   readonly showDelay = input(0, { alias: 'hxTooltipShowDelay' });
+  /**
+   * Opens only while the host text is cut off by an ellipsis (`scrollWidth > clientWidth`). Measured when the
+   * tooltip is about to open, not on resize. For file names, tab labels and sidebar rows.
+   */
+  readonly whenTruncated = input(false, {
+    alias: 'hxTooltipWhenTruncated',
+    transform: booleanAttribute,
+  });
 
   protected readonly bubbleId = nextId('hx-tooltip');
   protected readonly shown = signal(false);
@@ -147,6 +156,8 @@ export class HxTooltip {
 
   #create(text: string): void {
     if (this.#ref) return;
+    const host = this.#host.nativeElement;
+    if (this.whenTruncated() && host.scrollWidth <= host.clientWidth) return;
     this.#ref = this.#overlay.create({
       positionStrategy: this.#strategy(),
       scrollStrategy: this.#overlay.scrollStrategies.close(),

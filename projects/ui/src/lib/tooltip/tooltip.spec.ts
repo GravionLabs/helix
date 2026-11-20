@@ -8,11 +8,13 @@ import { HxTooltip } from './tooltip';
     <button id="both" [hx-tooltip]="text()" hxTooltipPosition="right" [hxTooltipDisabled]="off()" [hxTooltipShortcut]="shortcut()">A</button>
     <button id="hover" hx-tooltip="Only hover" hxTooltipEvent="hover">B</button>
     <button id="focus" hx-tooltip="Only focus" hxTooltipEvent="focus">C</button>
+    <span id="trunc" hx-tooltip="Long name" hxTooltipWhenTruncated style="display:block;width:50px;overflow:hidden;white-space:nowrap">{{ label() }}</span>
   `,
 })
 class Host {
   text = signal('Add item');
   off = signal(false);
+  label = signal('x'.repeat(200));
   shortcut = signal<string[] | undefined>(undefined);
 }
 
@@ -124,5 +126,50 @@ describe('HxTooltip', () => {
     fixture.componentInstance.shortcut.set([]);
     await settle();
     expect(bubble()?.querySelector('hx-kbd')).toBeNull();
+  });
+
+  describe('hxTooltipWhenTruncated', () => {
+    // no layout in the test DOM: the width of the content is a signal-driven stub
+    beforeEach(() => {
+      const t = el('trunc');
+      Object.defineProperty(t, 'clientWidth', { configurable: true, value: 50 });
+      Object.defineProperty(t, 'scrollWidth', {
+        configurable: true,
+        get: () => (fixture.componentInstance.label().length > 10 ? 200 : 50),
+      });
+    });
+
+    it('opens when the text is cut off', async () => {
+      fire('trunc', 'mouseenter');
+      await settle();
+      expect(bubble()?.textContent?.trim()).toBe('Long name');
+    });
+
+    it('does not open when the text fits', async () => {
+      fixture.componentInstance.label.set('x');
+      await settle();
+      fire('trunc', 'mouseenter');
+      await settle();
+      expect(bubble()).toBeNull();
+    });
+
+    it('measures at open time, not before', async () => {
+      fixture.componentInstance.label.set('x');
+      await settle();
+      fire('trunc', 'mouseenter');
+      await settle();
+      expect(bubble()).toBeNull();
+      fixture.componentInstance.label.set('x'.repeat(200));
+      await settle();
+      fire('trunc', 'mouseenter');
+      await settle();
+      expect(bubble()).toBeTruthy();
+    });
+
+    it('is unchanged without the option', async () => {
+      fire('hover', 'mouseenter');
+      await settle();
+      expect(bubble()).toBeTruthy();
+    });
   });
 });
