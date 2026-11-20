@@ -8,11 +8,11 @@
 <hx-kbd [keys]="['⌘', 'K']" size="sm" separator="none" />
 ```
 
-| Input       | Type                | Default                            | Description                                         |
-| ----------- | ------------------- | ---------------------------------- | --------------------------------------------------- |
-| `keys`      | `string[]`          | `[]`                               | The labels, one cap each, in order.                 |
-| `size`      | `'md' \| 'sm'`      | `'md'`                             | `sm` fits dense rows and menus.                     |
-| `separator` | `'+' \| 'none'`     | platform: `'none'` on macOS, `'+'` | `'+'` joins the caps, `'none'` puts them side by side. |
+| Input       | Type            | Default                            | Description                                            |
+| ----------- | --------------- | ---------------------------------- | ------------------------------------------------------ |
+| `keys`      | `string[]`      | `[]`                               | The labels, one cap each, in order.                    |
+| `size`      | `'md' \| 'sm'`  | `'md'`                             | `sm` fits dense rows and menus.                        |
+| `separator` | `'+' \| 'none'` | platform: `'none'` on macOS, `'+'` | `'+'` joins the caps, `'none'` puts them side by side. |
 
 The component does not translate or rename keys. The app passes the labels for the platform of the user (`'⌘'` on
 macOS, `'Ctrl'` on Windows and Linux) and, if it wants, in the language of the user.
