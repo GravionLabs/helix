@@ -103,6 +103,44 @@ describe('HxToast', () => {
     expect(items('main').length).toBe(0);
   });
 
+  it('runs the action once, closes the toast and keeps role status without taking focus', async () => {
+    const run = vi.fn();
+    service.add({ summary: 'Hidden', sticky: true, action: { label: 'Undo', run } });
+    await settle();
+    const item = items('main')[0];
+    expect(item.getAttribute('role')).toBe('status');
+    expect(item.contains(document.activeElement)).toBe(false);
+    const buttons = [...item.querySelectorAll<HTMLButtonElement>('button')];
+    expect(buttons.map((b) => b.textContent?.trim())).toEqual(['Undo', '']);
+    expect(buttons[0].type).toBe('button');
+    buttons[0].click();
+    buttons[0].click();
+    await settle();
+    expect(run).toHaveBeenCalledTimes(1);
+    expect(items('main').length).toBe(0);
+  });
+
+  it('pauses the countdown while the action has the focus', async () => {
+    service.add({ summary: 'Undo me', life: 60, action: { label: 'Undo', run: () => undefined } });
+    await settle();
+    const item = items('main')[0];
+    item.dispatchEvent(new Event('focusin', { bubbles: true }));
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    await settle();
+    expect(items('main').length).toBe(1);
+  });
+
+  it('removes a message from code with remove(id)', async () => {
+    const id = service.add({ summary: 'Gone soon', sticky: true });
+    service.add({ summary: 'Stays', sticky: true });
+    await settle();
+    service.remove(id);
+    await settle();
+    expect(items('main').map((i) => i.querySelector('.hx-toast-summary')?.textContent)).toEqual([
+      'Stays',
+    ]);
+  });
+
   it('shows keyed messages only in the toast with that key', async () => {
     service.add({ summary: 'General', sticky: true });
     service.add({ summary: 'Form', sticky: true, key: 'form' });

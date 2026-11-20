@@ -15,6 +15,8 @@ export interface HxToastMessageInput {
   closable?: boolean;
   /** Only a `<hx-toast key="…">` with the same key shows it. */
   key?: string;
+  /** One text button before the close button, e.g. Undo. Pressing it runs `run` once and closes the toast. */
+  action?: { label: string; run: () => void };
 }
 
 export interface HxToastMessage extends HxToastMessageInput {

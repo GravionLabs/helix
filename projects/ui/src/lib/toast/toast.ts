@@ -49,6 +49,9 @@ export type HxToastPosition =
           <div class="hx-toast-detail">{{ message().detail }}</div>
         }
       </div>
+      @if (message().action; as action) {
+        <button type="button" class="hx-toast-action" (click)="runAction()">{{ action.label }}</button>
+      }
       @if (message().closable !== false) {
         <button type="button" class="hx-toast-close" aria-label="Close" (click)="close()">
           <span class="hx-toast-close-icon" aria-hidden="true"></span>
@@ -65,6 +68,7 @@ export class HxToastItem implements OnInit {
   #timer: ReturnType<typeof setTimeout> | undefined;
   #remaining = 0;
   #started = 0;
+  #acted = false;
 
   constructor() {
     this.#destroyRef.onDestroy(() => clearTimeout(this.#timer));
@@ -94,6 +98,13 @@ export class HxToastItem implements OnInit {
   protected resume(): void {
     if (this.message().sticky || this.#timer !== undefined) return;
     this.#start();
+  }
+
+  protected runAction(): void {
+    if (this.#acted) return;
+    this.#acted = true;
+    this.close();
+    this.message().action?.run();
   }
 
   protected close(): void {
