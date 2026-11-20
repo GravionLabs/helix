@@ -1,0 +1,48 @@
+// oxfmt config of this repository (ADR 0006 of GravionLabs/skills, #1116). Options migrated from the Biome formatter
+// (`oxfmt --migrate=biome`); the ignore patterns replace Biome's `files.includes` allowlist, which oxfmt does not take.
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "quoteProps": "as-needed",
+  "trailingComma": "all",
+  "semi": true,
+  "arrowParens": "always",
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "sortPackageJson": false,
+  // Biome formatted neither inline Angular templates nor Markdown code blocks (`formatEmbeds: false`)
+  "embeddedLanguageFormatting": "off",
+  // CSS keeps Biome's double quotes: scripts/tests/desktop-css.spec.ts matches selectors such as [slot="panel"] as text
+  "overrides": [{ "files": ["**/*.css"], "options": { "singleQuote": false } }],
+  "ignorePatterns": [
+    "**/dist",
+    "**/node_modules",
+    "**/.angular",
+    "**/coverage",
+    "**/test-results",
+    // not formatted by Biome either: scripts, templates, images and TOML
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.cjs",
+    "**/*.html",
+    "**/*.svg",
+    "**/*.toml",
+    // generated files and fixtures
+    "apps/site/.vitepress/theme/generated",
+    "apps/site/.vitepress/cache",
+    "apps/site/.vitepress/dist",
+    "scripts/tests/fixtures",
+    "**/public",
+    "pnpm-lock.yaml",
+    "CHANGELOG.md",
+    // installed agent skills (`npx skills`), owned by GravionLabs/skills
+    ".agents/**",
+    ".claude/skills",
+    ".opencode/**"
+  ]
+}

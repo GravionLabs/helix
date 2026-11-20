@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: '26' # GravionLabs/ci node/ci has no node-version-file input
           package-manager: pnpm
-          lint-command: pnpm run lint
+          lint-command: pnpm run format:check && pnpm run lint
           build-command: pnpm run build
           run-tests: true
           test-command: pnpm run test:ci
