@@ -1,0 +1,9 @@
+<hx-dialog-frame
+  [header]="data.config.header"
+  [titleId]="data.titleId"
+  [closable]="data.config.closable ?? true"
+  [closeLabel]="data.config.closeLabel ?? 'Close'"
+  (closeClick)="data.ref.close()"
+>
+  <ng-container [ngComponentOutlet]="data.component" [ngComponentOutletInjector]="injector" />
+</hx-dialog-frame>

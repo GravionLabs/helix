@@ -5,23 +5,7 @@ export type BadgeSeverity = 'info' | 'warn' | 'error' | 'success';
 @Component({
   selector: 'helix-badge',
   standalone: true,
-  template: `
-    <span
-      class="helix-badge"
-      [class.helix-badge--sm]="size() === 'sm'"
-      [class.helix-badge--info]="severity() === 'info'"
-      [class.helix-badge--warn]="severity() === 'warn'"
-      [class.helix-badge--error]="severity() === 'error'"
-      [class.helix-badge--success]="severity() === 'success'"
-    >
-      @if (icon(); as icn) {
-        <i [class]="icn"></i>
-      }
-      @if (label(); as lbl) {
-        <span class="helix-badge__label">{{ lbl }}</span>
-      }
-    </span>
-  `,
+  templateUrl: './badge.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `

@@ -15,7 +15,7 @@ export type HxDividerAlign = 'start' | 'center' | 'end';
  */
 @Component({
   selector: 'hx-divider',
-  template: '<ng-content />',
+  templateUrl: './divider.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-divider',

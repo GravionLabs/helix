@@ -118,10 +118,11 @@ describe('helix-ui core.css content', () => {
       const dir = resolve(ROOT, 'projects/ui/src/lib', name);
       expect(existsSync(dir), `${dir} exists`).toBe(true);
       const source = readdirSync(dir)
-        .filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts'))
+        // the component classes and their templates (#1116: templates live in .html files)
+        .filter((f) => (f.endsWith('.ts') && !f.endsWith('.spec.ts')) || f.endsWith('.html'))
         .map((f) => readFileSync(join(dir, f), 'utf8'))
         .join('\n')
-        .replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, ''); // comments mention sibling components
+        .replace(/\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->|\/\/.*$/gm, ''); // comments mention sibling components
       const full = buildStyles(styles);
       const styled = (css: string, c: string) => new RegExp(`\\.${c}(?![\\w-])`).test(css);
       const classes = [...new Set([...source.matchAll(/\b(hx-[a-z][\w-]*)/g)].map((m) => m[1]))];

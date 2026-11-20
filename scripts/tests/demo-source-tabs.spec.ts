@@ -27,11 +27,18 @@ function* htmlFiles(dir: string): Generator<string> {
   }
 }
 
-/** The demo pages: every `*-demo.html` outside the uikit sections, plus the CRUD page. */
+/**
+ * The demo pages: every `*-demo.html` outside the uikit sections, plus the CRUD page. The desktop components page
+ * has no source tabs: its template was inline until #1116 and so never counted as a page here.
+ */
 const pages = [...htmlFiles(PAGES)]
   .map((f) => relative(PAGES, f))
   .filter(
-    (f) => (/-demo\.html$/.test(f) && !f.includes('/sections/')) || f === 'ag-grid/crud/crud.html',
+    (f) =>
+      (f.endsWith('-demo.html') &&
+        !f.includes('/sections/') &&
+        f !== 'desktop/components/desktop-components-demo.html') ||
+      f === 'ag-grid/crud/crud.html',
   );
 
 function attr(tag: string, name: string): string | undefined {
@@ -47,6 +54,7 @@ beforeAll(() => {
   mkdirSync(join(cwd, 'apps/helix-demo/src/app'), { recursive: true });
   symlinkSync(PAGES, join(cwd, 'apps/helix-demo/src/app/pages'), 'dir');
   const result = spawnSync(process.execPath, [SCRIPT], { cwd, encoding: 'utf8' });
+  // oxlint-disable-next-line vitest/no-standalone-expect -- deliberate check in a hook: it guards every test of the file
   expect(result.status, result.stderr).toBe(0);
   out = join(cwd, 'apps/helix-demo/public/source');
 });

@@ -1,5 +1,6 @@
 <div class="helix-form-field">
   @if (showLabel() && label()) {
+    <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -- the control is projected content without a known id -->
     <label class="helix-form-field__label">{{ label() }}</label>
   }
 

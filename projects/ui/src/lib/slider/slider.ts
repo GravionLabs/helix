@@ -44,60 +44,9 @@ export type HxSliderValue = number | readonly [number, number];
     '[style.--hx-slider-end]': "endPercent() + '%'",
     '(focusout)': 'onFocusOut($event)',
   },
-  template: `
-    <div class="hx-slider-track"><div class="hx-slider-fill"></div></div>
-    @if (range()) {
-      <input
-        type="range"
-        class="hx-slider-input hx-slider-input-start"
-        [style.z-index]="startPercent() > 50 ? 3 : 1"
-        [min]="lower()"
-        [max]="upper()"
-        [step]="step()"
-        [value]="start()"
-        [disabled]="isDisabled()"
-        [attr.aria-label]="ariaLabelStart()"
-        [attr.aria-labelledby]="ariaLabelledby()"
-        [attr.aria-orientation]="orientation()"
-        [attr.aria-invalid]="invalid() ? 'true' : null"
-        (input)="onInput($event, 0)"
-      />
-      <input
-        type="range"
-        class="hx-slider-input hx-slider-input-end"
-        [style.z-index]="2"
-        [min]="lower()"
-        [max]="upper()"
-        [step]="step()"
-        [value]="end()"
-        [disabled]="isDisabled()"
-        [attr.aria-label]="ariaLabelEnd()"
-        [attr.aria-labelledby]="ariaLabelledby()"
-        [attr.aria-orientation]="orientation()"
-        [attr.aria-invalid]="invalid() ? 'true' : null"
-        (input)="onInput($event, 1)"
-      />
-    } @else {
-      <input
-        type="range"
-        class="hx-slider-input"
-        [attr.id]="inputId() ?? null"
-        [min]="lower()"
-        [max]="upper()"
-        [step]="step()"
-        [value]="end()"
-        [disabled]="isDisabled()"
-        [attr.aria-label]="ariaLabel()"
-        [attr.aria-labelledby]="ariaLabelledby()"
-        [attr.aria-orientation]="orientation()"
-        [attr.aria-invalid]="invalid() ? 'true' : null"
-        (input)="onInput($event, 1)"
-      />
-    }
-  `,
+  templateUrl: './slider.html',
 })
 // `any`: the contract types `min` and `max` like the value, which is a number or a pair here
-// biome-ignore lint/suspicious/noExplicitAny: see above
 export class HxSlider implements ControlValueAccessor, FormValueControl<any> {
   /** Two thumbs; the value is `[start, end]`. */
   readonly range = input(false, { transform: booleanAttribute });

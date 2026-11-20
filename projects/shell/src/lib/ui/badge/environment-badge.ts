@@ -30,16 +30,10 @@ function isKnownEnvironment(value: string): value is Environment {
   standalone: true,
   imports: [HelixBadge],
   changeDetection: ChangeDetectionStrategy.Eager,
-  template: `
-    <helix-badge
-      [severity]="mapped().severity"
-      [icon]="mapped().icon"
-      [label]="mapped().label"
-    />
-  `,
+  templateUrl: './environment-badge.html',
 })
 export class HelixEnvironmentBadge {
-  environment = input.required<EnvironmentValue | string>();
+  environment = input.required<EnvironmentValue | (string & {})>();
 
   protected mapped = computed(() => {
     const env = this.environment();

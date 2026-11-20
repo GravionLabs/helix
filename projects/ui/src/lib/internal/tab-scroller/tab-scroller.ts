@@ -20,21 +20,7 @@ import {
   selector: 'hx-tab-scroller',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tab-scroll' },
-  template: `
-    @if (enabled() && overflowing()) {
-      <button #prev type="button" class="hx-tab-nav hx-tab-nav-prev" tabindex="-1" aria-label="Scroll tabs left" (click)="scroll(-1)">
-        <span class="hx-tab-nav-icon-prev" aria-hidden="true"></span>
-      </button>
-    }
-    <div #scroller class="hx-tab-scroller" (scroll)="measure()" (wheel)="onWheel($event)">
-      <ng-content />
-    </div>
-    @if (enabled() && overflowing()) {
-      <button #next type="button" class="hx-tab-nav hx-tab-nav-next" tabindex="-1" aria-label="Scroll tabs right" (click)="scroll(1)">
-        <span class="hx-tab-nav-icon-next" aria-hidden="true"></span>
-      </button>
-    }
-  `,
+  templateUrl: './tab-scroller.html',
 })
 export class HxTabScroller {
   /** Show the scroll buttons while the tabs overflow. */

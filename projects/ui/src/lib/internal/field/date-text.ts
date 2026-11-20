@@ -3,7 +3,7 @@ import { startOfDay, withTime } from '../dates';
 /** A date from the text: numbers in the order the locale writes them, or `yyyy-mm-dd`. */
 export function parseDateText(text: string, locale?: string): Date | null {
   const numbers = text.match(/\d+/g)?.map(Number);
-  if (!numbers || numbers.length !== 3) return null;
+  if (numbers?.length !== 3) return null;
   let [year, month, day] = [0, 0, 0];
   if (/^\d{4}\D/.test(text.trim())) {
     [year, month, day] = numbers;

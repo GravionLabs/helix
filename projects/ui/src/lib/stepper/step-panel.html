@@ -1,0 +1,7 @@
+@if (lazy(); as lazy) {
+  @if (render()) {
+    <ng-container [ngTemplateOutlet]="lazy.template" [ngTemplateOutletContext]="context()" />
+  }
+} @else {
+  <ng-content />
+}

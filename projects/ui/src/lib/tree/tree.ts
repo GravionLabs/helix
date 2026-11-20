@@ -101,93 +101,7 @@ interface ViewNode {
   imports: [NgTemplateOutlet, HxInput, HxCheckbox],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tree' },
-  template: `
-    @if (filter()) {
-      <input
-        hx-input
-        type="search"
-        class="hx-tree-filter"
-        [placeholder]="filterPlaceholder()"
-        [attr.aria-label]="filterLabel()"
-        [value]="query()"
-        (input)="query.set($any($event.target).value)"
-      />
-    }
-    <ul
-      class="hx-tree-list"
-      role="tree"
-      [attr.aria-label]="ariaLabel() || null"
-      [attr.aria-multiselectable]="multiple() ? 'true' : null"
-      (keydown)="onKeydown($event)"
-      (focusin)="onFocusIn($event)"
-    >
-      <ng-container [ngTemplateOutlet]="level" [ngTemplateOutletContext]="{ $implicit: view(), depth: 1 }" />
-    </ul>
-    @if (filtering() && view().length === 0) {
-      <div class="hx-tree-empty" role="status">{{ emptyMessage() }}</div>
-    }
-
-    <ng-template #level let-items let-depth="depth">
-      @for (item of items; track item.node.key; let i = $index) {
-        <li
-          class="hx-tree-node"
-          role="treeitem"
-          [attr.data-key]="item.node.key"
-          [attr.aria-level]="depth"
-          [attr.aria-setsize]="items.length"
-          [attr.aria-posinset]="i + 1"
-          [attr.aria-expanded]="item.leaf ? null : isOpen(item)"
-          [attr.aria-selected]="mode() === 'single' || mode() === 'multiple' ? isSelected(item.node.key) : null"
-          [attr.aria-checked]="mode() === 'checkbox' ? checkState(item.node.key) : null"
-          [attr.aria-disabled]="item.node.disabled ? 'true' : null"
-          [attr.tabindex]="item.node.key === tabKey() ? 0 : -1"
-        >
-          <div
-            class="hx-tree-node-content"
-            [class.hx-tree-node-selected]="mode() !== 'checkbox' && isSelected(item.node.key)"
-            [class.hx-tree-node-disabled]="item.node.disabled"
-            (click)="onClick(item, $event)"
-          >
-            <span class="hx-tree-node-toggle" [class.hx-tree-node-toggle-leaf]="item.leaf" aria-hidden="true" (click)="onToggleClick(item, $event)">
-              @if (item.node.loading) {
-                <span class="hx-tree-loading-icon"></span>
-              } @else if (!item.leaf) {
-                <span class="hx-tree-toggle-icon" [class.hx-tree-toggle-icon-open]="isOpen(item)"></span>
-              }
-            </span>
-            @if (mode() === 'checkbox') {
-              <input
-                hx-checkbox
-                type="checkbox"
-                class="hx-tree-node-checkbox"
-                tabindex="-1"
-                aria-hidden="true"
-                [checked]="checkState(item.node.key) === 'true'"
-                [indeterminate]="checkState(item.node.key) === 'mixed'"
-                [disabled]="!!item.node.disabled"
-              />
-            }
-            @if (template(); as tpl) {
-              <ng-container
-                [ngTemplateOutlet]="tpl.template"
-                [ngTemplateOutletContext]="{ $implicit: item.node, selected: isSelected(item.node.key), expanded: isOpen(item), level: depth }"
-              />
-            } @else {
-              @if (item.node.icon) {
-                <span class="hx-tree-node-icon" [class]="item.node.icon" aria-hidden="true"></span>
-              }
-              <span class="hx-tree-node-label">{{ item.node.label }}</span>
-            }
-          </div>
-          @if (!item.leaf && isOpen(item) && item.children.length) {
-            <ul class="hx-tree-group" role="group">
-              <ng-container [ngTemplateOutlet]="level" [ngTemplateOutletContext]="{ $implicit: item.children, depth: depth + 1 }" />
-            </ul>
-          }
-        </li>
-      }
-    </ng-template>
-  `,
+  templateUrl: './tree.html',
 })
 export class HxTree {
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -354,7 +268,7 @@ export class HxTree {
   }
 
   collapseAll(): void {
-    for (const key of [...this.#expanded()]) this.collapse(key);
+    for (const key of this.#expanded()) this.collapse(key);
   }
 
   protected onToggleClick(item: ViewNode, event: Event): void {

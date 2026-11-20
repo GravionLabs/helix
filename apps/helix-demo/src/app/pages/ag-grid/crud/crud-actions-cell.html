@@ -1,0 +1,6 @@
+<button hx-button type="button" iconOnly rounded variant="outlined" [attr.aria-label]="'Edit ' + name()" (click)="edit()">
+  <span class="pi pi-pencil hx-button-icon" aria-hidden="true"></span>
+</button>
+<button hx-button type="button" iconOnly rounded variant="outlined" severity="danger" [attr.aria-label]="'Delete ' + name()" (click)="remove()">
+  <span class="pi pi-trash hx-button-icon" aria-hidden="true"></span>
+</button>

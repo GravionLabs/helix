@@ -1,0 +1,45 @@
+@if (filter()) {
+  <div class="hx-listbox-header">
+    <input
+      type="text"
+      class="hx-listbox-filter"
+      autocomplete="off"
+      [attr.aria-label]="filterPlaceholder()"
+      [attr.aria-controls]="listId"
+      [placeholder]="filterPlaceholder()"
+      [disabled]="isDisabled()"
+      [value]="query()"
+      (input)="query.set($any($event.target).value)"
+    />
+  </div>
+}
+<div class="hx-listbox-scroll" [style.max-height]="scrollHeight()">
+  <div
+    cdkListbox
+    class="hx-listbox-list"
+    [id]="listId"
+    [cdkListboxMultiple]="multiple()"
+    [cdkListboxDisabled]="isDisabled()"
+    [cdkListboxValue]="selectedValues()"
+    [cdkListboxUseActiveDescendant]="true"
+    [cdkListboxCompareWith]="compareWith()"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-labelledby]="ariaLabelledby() ?? null"
+    [attr.aria-invalid]="invalid() ? 'true' : null"
+    (cdkListboxValueChange)="onSelect($event)"
+  >
+    @for (item of visibleItems(); track item) {
+      <div
+        class="hx-listbox-option"
+        [cdkOption]="item.value"
+        [cdkOptionDisabled]="item.disabled"
+        [cdkOptionTypeaheadLabel]="item.label"
+      >
+        <span class="hx-listbox-check" aria-hidden="true"></span>
+        <span>{{ item.label }}</span>
+      </div>
+    } @empty {
+      <div class="hx-listbox-empty">{{ emptyMessage() }}</div>
+    }
+  </div>
+</div>

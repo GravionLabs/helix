@@ -1,0 +1,4 @@
+# Formatting-only commits, ignored by git blame (git config blame.ignoreRevsFile .git-blame-ignore-revs)
+
+# style: format the repository with oxfmt (#1116)
+311e60ca4fc7fbeb8a9d2cc701ee8d7c8f703713

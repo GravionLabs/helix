@@ -97,6 +97,7 @@ export function compareValues(a: unknown, b: unknown): number {
   if (aEmpty || bEmpty) return aEmpty && bEmpty ? 0 : aEmpty ? 1 : -1;
   if (typeof a === 'number' && typeof b === 'number') return a - b;
   if (a instanceof Date && b instanceof Date) return a.getTime() - b.getTime();
+  // oxlint-disable-next-line typescript/no-base-to-string -- the values are unknown by design; String() is the fallback text
   return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' });
 }
 
@@ -349,6 +350,7 @@ export class HxDataTable implements OnInit {
     const columnFilters = Object.entries(this.filters()).filter(([, text]) => text.trim());
     if (!global && !columnFilters.length) return value;
     const has = (row: unknown, field: string, text: string) =>
+      // oxlint-disable-next-line typescript/no-base-to-string -- the values are unknown by design; String() is the fallback text
       String(resolveField(row, field) ?? '')
         .toLowerCase()
         .includes(text);
@@ -524,6 +526,7 @@ export class HxDataTable implements OnInit {
   }
 
   protected rowKey(row: unknown, index: number): string {
+    // oxlint-disable-next-line typescript/no-base-to-string -- the values are unknown by design; String() is the fallback text
     return String(this.dataKey() ? (resolveField(row, this.dataKey() as string) ?? index) : index);
   }
 

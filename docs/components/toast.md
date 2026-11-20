@@ -15,7 +15,7 @@ this.messages.add({ severity: 'error', summary: 'Failed', sticky: true, key: 'fo
 this.messages.clear('form');
 ```
 
-`add({ severity, summary, detail, life, sticky, closable, key })` returns the id of the message; `remove(id)` and
+`add({ severity, summary, detail, life, sticky, closable, key, action })` returns the id of the message; `remove(id)` and
 `clear(key?)` take messages away. `life` is 3000 ms by default, `sticky` keeps the message until it is closed,
 `closable` (default `true`) shows the close button.
 
@@ -28,6 +28,21 @@ this.messages.clear('form');
   secondary and contrast; `role="alert"` with `aria-live="assertive"` for warn and error. The close button is named.
   The timer of a message pauses while the pointer or the focus is on it, so it is not removed while someone reads it or
   reaches for its close button. Motion stops under `prefers-reduced-motion`.
+
+## Action
+
+A message can carry one action, so an app can offer Undo instead of asking first. The button sits before the close
+button; pressing it runs `run` once and closes the toast. The toast does not take the focus when it appears; the button
+is reachable with Tab, and the timer pauses while the focus is inside. Close a toast from code with `remove(id)`.
+
+```ts
+const id = this.messages.add({
+  summary: 'Project hidden',
+  life: 6000,
+  action: { label: 'Undo', run: () => this.unhide() },
+});
+// later, when the hidden thing is gone: this.messages.remove(id);
+```
 
 ## Tokens
 

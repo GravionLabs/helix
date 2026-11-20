@@ -1,0 +1,4 @@
+<hx-tab-scroller [enabled]="tabs.scrollable()">
+  <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- composite widget: focus moves over its items (roving tabindex or aria-activedescendant) -->
+  <div class="hx-tab-tabs" role="tablist" (keydown)="onKeydown($event)"><ng-content /></div>
+</hx-tab-scroller>

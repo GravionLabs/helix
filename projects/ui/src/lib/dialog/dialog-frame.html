@@ -1,0 +1,8 @@
+<h2 class="hx-dialog-title" [id]="titleId()">{{ header() }}<ng-content select="[hxDialogHeader]" /></h2>
+<div class="hx-dialog-content"><ng-content /></div>
+<div class="hx-dialog-footer"><ng-content select="[hxDialogFooter]" /></div>
+@if (closable()) {
+  <button type="button" class="hx-dialog-close" [attr.aria-label]="closeLabel()" (click)="closeClick.emit()">
+    <span class="hx-dialog-close-icon" aria-hidden="true"></span>
+  </button>
+}

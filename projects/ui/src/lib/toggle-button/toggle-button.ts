@@ -41,28 +41,7 @@ export type HxToggleButtonSize = 'small' | 'medium' | 'large';
     '[class.hx-toggle-button-invalid]': 'invalid()',
     '[class.hx-toggle-button-disabled]': 'isDisabled()',
   },
-  template: `
-    <button
-      type="button"
-      class="hx-toggle-button-control"
-      [attr.id]="inputId() ?? null"
-      [attr.aria-pressed]="value()"
-      [attr.aria-label]="ariaLabel()"
-      [attr.aria-labelledby]="ariaLabelledby()"
-      [disabled]="isDisabled()"
-      (click)="toggle()"
-      (blur)="onBlur()"
-    >
-      <span class="hx-toggle-button-content">
-        @if (icon(); as icon) {
-          <i class="hx-toggle-button-icon" [class]="icon" aria-hidden="true"></i>
-        }
-        @if (label(); as label) {
-          <span class="hx-toggle-button-label">{{ label }}</span>
-        }
-      </span>
-    </button>
-  `,
+  templateUrl: './toggle-button.html',
 })
 export class HxToggleButton implements ControlValueAccessor, FormValueControl<boolean> {
   readonly onLabel = input('Yes');

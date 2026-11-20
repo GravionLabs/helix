@@ -31,7 +31,7 @@ export type HxIconPosition = 'left' | 'right';
     '[class.hx-icon-field-left]': "iconPosition() === 'left'",
     '[class.hx-icon-field-right]': "iconPosition() === 'right'",
   },
-  template: '<ng-content />',
+  templateUrl: './icon-field.html',
 })
 export class HxIconField {
   readonly iconPosition = input<HxIconPosition>('left');

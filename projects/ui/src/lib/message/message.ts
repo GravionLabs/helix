@@ -45,21 +45,7 @@ export type HxMessageSize = 'small' | 'medium' | 'large';
     '[attr.role]': "severity() === 'error' ? 'alert' : 'status'",
     '[hidden]': '!visible()',
   },
-  template: `
-    <div class="hx-message-content">
-      @if (icon()) {
-        <i class="hx-message-icon-custom" [class]="icon()" aria-hidden="true"></i>
-      } @else {
-        <span class="hx-message-icon" aria-hidden="true"></span>
-      }
-      <span class="hx-message-text"><ng-content /></span>
-      @if (closable()) {
-        <button type="button" class="hx-message-close" [attr.aria-label]="closeLabel()" (click)="dismiss()">
-          <span class="hx-message-close-icon" aria-hidden="true"></span>
-        </button>
-      }
-    </div>
-  `,
+  templateUrl: './message.html',
 })
 export class HxMessage {
   readonly severity = input<HxMessageSeverity>('info');
@@ -74,6 +60,7 @@ export class HxMessage {
   readonly life = input(0, { transform: numberAttribute });
 
   /** The message was closed by the button or by `life`. */
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly close = output<void>();
 
   protected readonly visible = signal(true);

@@ -60,36 +60,7 @@ export class HxTimelineMarker {
     '[class.hx-timeline-vertical]': "layout() === 'vertical'",
     '[class.hx-timeline-horizontal]': "layout() === 'horizontal'",
   },
-  template: `
-    <ol class="hx-timeline-events">
-      @for (event of value(); track $index; let i = $index; let last = $last) {
-        <li class="hx-timeline-event" [class.hx-timeline-event-reversed]="reversed(i)">
-          <div class="hx-timeline-event-opposite">
-            @if (opposite(); as opposite) {
-              <ng-container [ngTemplateOutlet]="opposite.template" [ngTemplateOutletContext]="{ $implicit: event, index: i }" />
-            }
-          </div>
-          <div class="hx-timeline-event-separator" aria-hidden="true">
-            @if (marker(); as marker) {
-              <div class="hx-timeline-event-marker-custom">
-                <ng-container [ngTemplateOutlet]="marker.template" [ngTemplateOutletContext]="{ $implicit: event, index: i }" />
-              </div>
-            } @else {
-              <div class="hx-timeline-event-marker"></div>
-            }
-            @if (!last) {
-              <div class="hx-timeline-event-connector"></div>
-            }
-          </div>
-          <div class="hx-timeline-event-content">
-            @if (content(); as content) {
-              <ng-container [ngTemplateOutlet]="content.template" [ngTemplateOutletContext]="{ $implicit: event, index: i }" />
-            }
-          </div>
-        </li>
-      }
-    </ol>
-  `,
+  templateUrl: './timeline.html',
 })
 export class HxTimeline {
   /** The events; any objects, handed to the templates. */

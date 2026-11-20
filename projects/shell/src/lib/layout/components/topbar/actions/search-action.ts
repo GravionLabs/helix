@@ -6,17 +6,7 @@ import { HxInput } from '@gravionlabs/helix-ui';
   selector: 'helix-search-action',
   standalone: true,
   imports: [HxInput],
-  template: `
-    <input
-      hx-input
-      type="search"
-      autocomplete="off"
-      class="helix-search-action-input"
-      [attr.aria-label]="label()"
-      [placeholder]="placeholder()"
-      (input)="search.emit($any($event.target).value)"
-    />
-  `,
+  templateUrl: './search-action.html',
   host: { style: 'display: flex; flex: 1 1 auto; min-width: 0;' },
   styles: [
     `
@@ -33,5 +23,6 @@ import { HxInput } from '@gravionlabs/helix-ui';
 export class HelixSearchAction {
   placeholder = input('Search');
   label = input('Search');
+  // oxlint-disable-next-line @angular-eslint/no-output-native -- released public output name; a rename breaks consumers
   readonly search = output<string>();
 }

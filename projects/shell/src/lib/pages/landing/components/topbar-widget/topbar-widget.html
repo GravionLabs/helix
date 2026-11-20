@@ -55,7 +55,9 @@
     @for (link of navLinks(); track link.label) {
       <li>
         <a
+          tabindex="0"
           (click)="router.navigate([link.route], { fragment: link.fragment })"
+          (keydown.enter)="router.navigate([link.route], { fragment: link.fragment })"
           class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl"
         >
           <span>{{ link.label }}</span>

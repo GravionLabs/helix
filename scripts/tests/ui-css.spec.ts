@@ -93,6 +93,7 @@ describe('helix-ui styles', () => {
     ['timeline', 'timeline/timeline.ts'],
     ['tree', 'tree/tree.ts'],
     ['toast', 'toast/toast.ts'],
+    ['kbd', 'kbd/kbd.ts'],
     ['tooltip', 'tooltip/tooltip.ts'],
     ['switch', 'switch/switch.ts'],
   ])('styles every class the %s directive sets', (name, file) => {

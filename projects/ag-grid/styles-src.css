@@ -18,11 +18,7 @@
   --ag-border-color: var(--h-content-border-color);
   --ag-wrapper-border: none;
   --ag-row-border: solid 1px var(--h-content-border-color);
-  --ag-odd-row-background-color: color-mix(
-    in srgb,
-    transparent,
-    var(--h-content-border-color) 10%
-  );
+  --ag-odd-row-background-color: color-mix(in srgb, transparent, var(--h-content-border-color) 10%);
   --ag-row-hover-color: var(--h-content-hover-background);
 
   /* ── Typography ───────────────────────────────────────────────────────── */

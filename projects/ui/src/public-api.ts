@@ -24,16 +24,8 @@ export {
   type HxAvatarShape,
   type HxAvatarSize,
 } from './lib/avatar/avatar';
-export {
-  HxBadge,
-  type HxBadgeSeverity,
-  type HxBadgeSize,
-  HxOverlayBadge,
-} from './lib/badge/badge';
-export {
-  HxBreadcrumb,
-  type HxBreadcrumbItem,
-} from './lib/breadcrumb/breadcrumb';
+export { HxBadge, type HxBadgeSeverity, type HxBadgeSize, HxOverlayBadge } from './lib/badge/badge';
+export { HxBreadcrumb, type HxBreadcrumbItem } from './lib/breadcrumb/breadcrumb';
 export {
   HxButton,
   type HxButtonSeverity,
@@ -166,6 +158,7 @@ export {
   hxResolveRangeExpression,
   hxResolveRangeSide,
 } from './lib/internal/quick-select/quick-select';
+export { HxKbd, type HxKbdSeparator, type HxKbdSize } from './lib/kbd/kbd';
 export { HxListbox } from './lib/listbox/listbox';
 export { HxMenu, type HxMenuPoint } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';
@@ -201,11 +194,7 @@ export {
   type HxSkeletonAnimation,
   type HxSkeletonShape,
 } from './lib/skeleton/skeleton';
-export {
-  HxSlider,
-  type HxSliderOrientation,
-  type HxSliderValue,
-} from './lib/slider/slider';
+export { HxSlider, type HxSliderOrientation, type HxSliderValue } from './lib/slider/slider';
 export { HxSplitButton } from './lib/split-button/split-button';
 export {
   HxStep,
@@ -226,14 +215,7 @@ export {
   type HxTabBarReceive,
 } from './lib/tab-bar/tab-bar';
 export { HxTable, type HxTableSize } from './lib/table/table';
-export {
-  HxTab,
-  HxTabContent,
-  HxTabList,
-  HxTabPanel,
-  HxTabPanels,
-  HxTabs,
-} from './lib/tabs/tabs';
+export { HxTab, HxTabContent, HxTabList, HxTabPanel, HxTabPanels, HxTabs } from './lib/tabs/tabs';
 export { HxTag, type HxTagSeverity } from './lib/tag/tag';
 export {
   HX_DENSITIES,
@@ -271,11 +253,7 @@ export {
 export { HxToast, HxToastItem, type HxToastPosition } from './lib/toast/toast';
 export { HxToggleButton, type HxToggleButtonSize } from './lib/toggle-button/toggle-button';
 export { HxToolbar } from './lib/toolbar/toolbar';
-export {
-  HxTooltip,
-  type HxTooltipEvent,
-  type HxTooltipPosition,
-} from './lib/tooltip/tooltip';
+export { HxTooltip, type HxTooltipEvent, type HxTooltipPosition } from './lib/tooltip/tooltip';
 export {
   HxTree,
   type HxTreeFilterMode,

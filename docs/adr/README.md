@@ -12,6 +12,7 @@ that status line and links to later records.
 | [0003](0003-configurable-topbar-actions.md)                                  | Configurable topbar actions                                                              | accepted |
 | [0004](0004-surface-roles-dark-elevation-density-and-named-theme-presets.md) | Surface roles, dark elevation, density and named theme presets                           | proposed |
 | [0005](0005-helix-desktop-package.md)                                        | helix-desktop package, entry points and view contract                                    | proposed |
+| [0006](0006-key-cap-component-and-tooltip-shortcut.md)                       | Key-cap component and a shortcut in the tooltip                                          | proposed |
 
 Template:
 

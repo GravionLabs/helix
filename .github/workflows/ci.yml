@@ -50,7 +50,7 @@ jobs:
         with:
           node-version: '26' # GravionLabs/ci node/ci has no node-version-file input
           package-manager: pnpm
-          lint-command: pnpm run lint
+          lint-command: pnpm run format:check && pnpm run lint
           build-command: pnpm run build
           run-tests: true
           test-command: pnpm run test:ci
@@ -90,6 +90,7 @@ jobs:
       # that's configured for a given package, its publish step below 404s /
       # 401s with no trusted publisher found — configuring it is a manual,
       # per-account step only an npm org owner can do.
+      # A new package must exist on npm first: see docs/RELEASING.md.
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .nvmrc
@@ -102,13 +103,9 @@ jobs:
             npm --prefix "./$dir" version "${{ needs.determine-version.outputs.npm-version }}" --no-git-tag-version --allow-same-version
           done
 
+      # Skips a package whose version is already on npm, so a re-run after a partial publish completes (#1107).
       - name: Publish packages
-        run: |
-          set -euo pipefail
-          for dir in ui shell zod ag-grid desktop; do
-            # The leading ./ keeps npm from reading the name as a "user/repo" git shorthand.
-            npm publish "./$dir" --access public --provenance
-          done
+        run: node scripts/publish-packages.mjs "${{ needs.determine-version.outputs.npm-version }}" ui shell zod ag-grid desktop
 
   release:
     name: Release

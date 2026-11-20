@@ -6,23 +6,7 @@ import { HelixConfigurator } from '../../configurator/configurator';
   selector: 'helix-configurator-action',
   standalone: true,
   imports: [HelixDisclosure, HelixConfigurator],
-  template: `
-    <div
-      class="relative"
-      style="display: inline-flex; align-items: center; justify-content: center; width: var(--helix-control-height, 32px); height: var(--helix-control-height, 32px);"
-    >
-      <button
-        type="button"
-        class="layout-topbar-action layout-topbar-action-highlight"
-        [attr.aria-label]="label()"
-        helixDisclosure
-        helixDisclosureAnimate
-      >
-        <i class="pi pi-palette" style="font-size: 1.4rem;"></i>
-      </button>
-      <helix-configurator />
-    </div>
-  `,
+  templateUrl: './configurator-action.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `

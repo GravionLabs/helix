@@ -46,41 +46,7 @@ export interface HxActivityBarItem extends Pick<HelixView, 'id' | 'label' | 'ico
     '[attr.aria-label]': 'label()',
     '(keydown)': 'onKeydown($event)',
   },
-  template: `
-    @for (group of groups(); track group.name) {
-      <div class="hx-activity-bar-group" [class.hx-activity-bar-bottom]="group.name === 'bottom'">
-        @for (item of group.items; track item.id) {
-          <button
-            #button
-            type="button"
-            class="hx-activity-bar-item"
-            [class.hx-activity-bar-active]="isActive(item)"
-            [attr.data-id]="item.id"
-            [attr.aria-label]="item.label"
-            [attr.aria-pressed]="isView(item) ? isActive(item) : null"
-            [attr.title]="item.label"
-            [attr.tabindex]="item.id === tabStopId() ? 0 : -1"
-            (click)="select(item)"
-          >
-            <span class="hx-activity-bar-icon" aria-hidden="true">
-              @if (asTemplate(item.icon); as tpl) {
-                <ng-container [ngTemplateOutlet]="tpl" />
-              } @else {
-                <span [class]="item.icon"></span>
-              }
-            </span>
-            @if (item.badge !== undefined && item.badge !== null) {
-              <span
-                class="hx-activity-bar-badge"
-                [class.hx-activity-bar-badge-dot]="item.badge === true"
-                >{{ item.badge === true ? '' : item.badge }}</span
-              >
-            }
-          </button>
-        }
-      </div>
-    }
-  `,
+  templateUrl: './activity-bar.html',
 })
 export class HxActivityBar {
   /** The views and actions; `position` puts them at the top or the bottom (settings). */

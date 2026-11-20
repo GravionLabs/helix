@@ -17,7 +17,7 @@ export type HxSkeletonAnimation = 'wave' | 'none';
  */
 @Component({
   selector: 'hx-skeleton',
-  template: '',
+  templateUrl: './skeleton.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-skeleton',

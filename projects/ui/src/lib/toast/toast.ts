@@ -38,24 +38,7 @@ export type HxToastPosition =
     '(focusin)': 'pause()',
     '(focusout)': 'resume()',
   },
-  template: `
-    <div class="hx-toast-content">
-      <span class="hx-toast-icon" aria-hidden="true"></span>
-      <div class="hx-toast-text">
-        @if (message().summary) {
-          <span class="hx-toast-summary">{{ message().summary }}</span>
-        }
-        @if (message().detail) {
-          <div class="hx-toast-detail">{{ message().detail }}</div>
-        }
-      </div>
-      @if (message().closable !== false) {
-        <button type="button" class="hx-toast-close" aria-label="Close" (click)="close()">
-          <span class="hx-toast-close-icon" aria-hidden="true"></span>
-        </button>
-      }
-    </div>
-  `,
+  templateUrl: './toast-item.html',
 })
 export class HxToastItem implements OnInit {
   readonly message = input.required<HxToastMessage>();
@@ -65,6 +48,7 @@ export class HxToastItem implements OnInit {
   #timer: ReturnType<typeof setTimeout> | undefined;
   #remaining = 0;
   #started = 0;
+  #acted = false;
 
   constructor() {
     this.#destroyRef.onDestroy(() => clearTimeout(this.#timer));
@@ -94,6 +78,13 @@ export class HxToastItem implements OnInit {
   protected resume(): void {
     if (this.message().sticky || this.#timer !== undefined) return;
     this.#start();
+  }
+
+  protected runAction(): void {
+    if (this.#acted) return;
+    this.#acted = true;
+    this.close();
+    this.message().action?.run();
   }
 
   protected close(): void {
@@ -128,11 +119,7 @@ export class HxToastItem implements OnInit {
     '[class.hx-toast-bottom-center]': "position() === 'bottom-center'",
     '[class.hx-toast-bottom-right]': "position() === 'bottom-right'",
   },
-  template: `
-    @for (message of shown(); track message.id) {
-      <hx-toast-item [message]="message" />
-    }
-  `,
+  templateUrl: './toast.html',
 })
 export class HxToast {
   readonly #service = inject(HxMessageService);

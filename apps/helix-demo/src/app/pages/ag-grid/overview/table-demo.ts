@@ -120,7 +120,7 @@ export class TableDemo implements OnInit {
   ];
 
   ngOnInit() {
-    this.#customers.getCustomersMedium().then((customers) => {
+    void this.#customers.getCustomersMedium().then((customers) => {
       this.rows.set(customers);
       this.loading.set(false);
     });

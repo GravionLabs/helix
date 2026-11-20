@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-// biome-ignore lint/style/useImportType: DI token, must be value import
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { HxButton } from '@gravionlabs/helix-ui';
 import { HelixFloatingConfigurator } from '../../../../layout/components/floating-configurator/floating-configurator';
@@ -29,5 +28,5 @@ export class HelixTopbarWidget {
   registerLabel = input('Register');
   registerRoute = input('/auth/login');
 
-  constructor(public router: Router) {}
+  router = inject(Router);
 }

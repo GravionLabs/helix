@@ -17,12 +17,14 @@
         [class.hx-tab-bar-tab-active]="tab.id === value()"
         [class.hx-tab-bar-tab-preview]="tab.preview"
         [class.hx-tab-bar-tab-attention]="tab.attention"
+        [class.hx-tab-bar-tab-modified]="tab.modified"
+        [class.hx-tab-bar-tab-missing]="tab.missing"
         [class.hx-tab-bar-drop-before]="(dropAt() === i && dragging() !== null && dragging()! > i) || foreignAt() === i"
         [class.hx-tab-bar-drop-after]="dropAt() === i && dragging() !== null && dragging()! < i"
         [attr.aria-selected]="tab.id === value()"
         [attr.aria-label]="tabName(tab)"
         [attr.tabindex]="i === tabbable() ? 0 : -1"
-        [title]="tab.title ?? tab.label"
+        [title]="tooltip(tab)"
         (click)="select(tab.id)"
         (dblclick)="pinned.emit(tab.id)"
         (contextmenu)="openMenu($event, tab.id)"
@@ -44,16 +46,21 @@
         @if (tab.unread) {
           <span class="hx-tab-bar-unread" aria-hidden="true"></span>
         }
-        <button
-          type="button"
-          class="hx-tab-bar-close"
-          tabindex="-1"
-          [attr.aria-label]="'Close ' + (tab.group ? tab.group + ' / ' : '') + tab.label"
-          (click)="$event.stopPropagation(); closed.emit(tab.id)"
-          (dblclick)="$event.stopPropagation()"
-        >
-          <span class="hx-tab-bar-close-icon" aria-hidden="true"></span>
-        </button>
+        <span class="hx-tab-bar-slot">
+          @if (tab.modified) {
+            <span class="hx-tab-bar-modified" role="img" [attr.aria-label]="modifiedLabel()"></span>
+          }
+          <button
+            type="button"
+            class="hx-tab-bar-close"
+            tabindex="-1"
+            [attr.aria-label]="'Close ' + (tab.group ? tab.group + ' / ' : '') + tab.label"
+            (click)="$event.stopPropagation(); closed.emit(tab.id)"
+            (dblclick)="$event.stopPropagation()"
+          >
+            <span class="hx-tab-bar-close-icon" aria-hidden="true"></span>
+          </button>
+        </span>
       </div>
     }
   </div>

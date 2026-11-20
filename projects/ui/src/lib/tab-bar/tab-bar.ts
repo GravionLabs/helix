@@ -37,6 +37,10 @@ export interface HxTabBarItem {
   attention?: boolean;
   /** Shows an unread mark. */
   unread?: boolean;
+  /** Unsaved changes: a dot in the place of the close button (hovering the tab shows the button). */
+  modified?: boolean;
+  /** The file is gone: the label is struck through and the tab has the tooltip `missingTitle`. */
+  missing?: boolean;
 }
 
 /** An entry of the tab context menu; `action` is reported back with the tab id by `menuAction`. */
@@ -93,6 +97,9 @@ let activeDrag: { group: string; id: string } | null = null;
  * (first/last) tab and select it, Delete or Ctrl+W close the focused tab, the Menu key or Shift+F10 open its
  * context menu. A middle click closes a tab.
  *
+ * Marks: `modified` shows a dot in the slot of the close button (hover or focus shows the button; the width never
+ * changes), `missing` strikes the label through; both also show in the all-tabs menu.
+ *
  * Content: `<ng-template #tabContent let-tab>` renders extra content after the label of every tab; projected content
  * sits at the right end of the bar.
  */
@@ -118,6 +125,11 @@ export class HxTabBar {
   readonly menu = input<readonly HxTabBarMenuItem[]>([]);
   /** A button at the right end, while the tabs overflow, opens a menu of every tab. */
   readonly allTabsButton = input(false, { transform: booleanAttribute });
+
+  /** Accessible text of the dot of a tab with `modified`. */
+  readonly modifiedLabel = input('Unsaved changes');
+  /** Tooltip (and text in the all-tabs menu) of a tab with `missing`. */
+  readonly missingTitle = input('File missing');
 
   /** The close button or the middle click of a tab, or Delete / Ctrl+W on it. */
   readonly closed = output<string>();
@@ -152,8 +164,8 @@ export class HxTabBar {
   protected readonly allTabsModel = computed<HxMenuItem[]>(() =>
     this.tabs().map((tab) => ({
       label: tab.group ? `${tab.group} / ${tab.label}` : tab.label,
-      badge: tab.attention ? '!' : undefined,
-      ariaLabel: tab.attention ? this.tabName(tab) : undefined,
+      badge: this.menuBadge(tab),
+      ariaLabel: tab.attention || tab.modified || tab.missing ? this.tabName(tab) : undefined,
       command: () => {
         this.select(tab.id);
         afterNextRender(() => this.revealActive(), { injector: this.#injector });
@@ -172,7 +184,25 @@ export class HxTabBar {
 
   protected tabName(tab: HxTabBarItem): string {
     const name = tab.group ? `${tab.group} / ${tab.label}` : tab.label;
-    return tab.attention ? `${name}, needs attention` : name;
+    const marks = [
+      tab.attention ? 'needs attention' : '',
+      tab.modified ? this.modifiedLabel().toLowerCase() : '',
+      tab.missing ? this.missingTitle().toLowerCase() : '',
+    ].filter(Boolean);
+    return marks.length ? `${name}, ${marks.join(', ')}` : name;
+  }
+
+  private menuBadge(tab: HxTabBarItem): string | undefined {
+    const marks = [
+      tab.attention ? '!' : '',
+      tab.modified ? '●' : '',
+      tab.missing ? this.missingTitle() : '',
+    ].filter(Boolean);
+    return marks.length ? marks.join(' ') : undefined;
+  }
+
+  protected tooltip(tab: HxTabBarItem): string {
+    return tab.missing ? this.missingTitle() : (tab.title ?? tab.label);
   }
 
   protected select(id: string): void {

@@ -11,14 +11,19 @@ import { HxAppToolbar } from './app-toolbar';
       [(sidebarWidth)]="width"
       [(collapsed)]="collapsed"
       [(activeId)]="activeId"
+      [(bottomHeight)]="bottomHeight"
+      [(bottomOpen)]="bottomOpen"
       (sidebarChange)="changes.push($event)"
     >
       <hx-app-toolbar slot="toolbar"><span slot="centre">Title</span></hx-app-toolbar>
       <button slot="activity" id="files" (click)="shell.selectView('files')">Files</button>
       <button slot="activity" id="search" (click)="shell.selectView('search')">Search</button>
+      <button slot="activity" id="show-files" (click)="shell.showView('files')">Show</button>
+      <button slot="activity" id="show-search" (click)="shell.showView('search')">Show</button>
       <nav slot="sidebar" id="sidebar">Sidebar</nav>
       <div id="content">Content</div>
       <aside slot="panel" id="panel">Panel</aside>
+      <section slot="bottom" id="bottom">Bottom</section>
       <footer slot="status" id="status">Status</footer>
     </hx-app-shell>
   `,
@@ -27,6 +32,8 @@ class Host {
   readonly width = signal(260);
   readonly collapsed = signal(false);
   readonly activeId = signal<string | null>('files');
+  readonly bottomHeight = signal(200);
+  readonly bottomOpen = signal(false);
   readonly changes: HxSidebarState[] = [];
 }
 
@@ -87,6 +94,25 @@ describe('HxAppShell', () => {
     expect(host.activeId()).toBe('files');
   });
 
+  it('shows the active view without collapsing the sidebar', () => {
+    const { host, sidebar, click } = setup();
+    click('show-files');
+    click('show-files');
+    expect(host.collapsed()).toBe(false);
+    expect(host.activeId()).toBe('files');
+    expect(sidebar().hidden).toBe(false);
+  });
+
+  it('shows another view and expands a collapsed sidebar, and reports it', () => {
+    const { host, click } = setup();
+    click('files');
+    expect(host.collapsed()).toBe(true);
+    click('show-search');
+    expect(host.collapsed()).toBe(false);
+    expect(host.activeId()).toBe('search');
+    expect(host.changes.at(-1)).toEqual({ width: 260, collapsed: false });
+  });
+
   it('exposes the separator with its range', () => {
     const { separator } = setup();
     expect(separator().getAttribute('aria-orientation')).toBe('vertical');
@@ -141,6 +167,90 @@ describe('HxAppShell', () => {
     const { host, press } = setup();
     press('a');
     expect(host.width()).toBe(260);
+  });
+});
+
+describe('HxAppShell bottom panel', () => {
+  const setup = (open = true) => {
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.bottomOpen.set(open);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    const $ = <T extends HTMLElement>(s: string) => root.querySelector(s) as T;
+    const bottom = () => $('.hx-app-shell-bottom');
+    const splitter = () => $('.hx-app-shell-resizer-bottom');
+    const press = (key: string, shiftKey = false) => {
+      splitter().dispatchEvent(
+        new KeyboardEvent('keydown', { key, shiftKey, bubbles: true, cancelable: true }),
+      );
+      fixture.detectChanges();
+    };
+    return { fixture, host: fixture.componentInstance, $, bottom, splitter, press };
+  };
+
+  it('projects the slot below the content, next to the sidebar', () => {
+    const { $ } = setup();
+    expect($('.hx-app-shell-main #bottom')).toBeTruthy();
+    expect($('.hx-app-shell-main .hx-app-shell-content #bottom')).toBeNull();
+    expect($('.hx-app-shell-body > #files')).toBeTruthy();
+    expect($('#files').closest('.hx-app-shell-main')).toBeNull();
+  });
+
+  it('hides the slot and the splitter when closed', () => {
+    const { bottom, splitter, host, fixture } = setup(false);
+    expect(bottom().hidden).toBe(true);
+    expect(splitter()).toBeNull();
+    host.bottomOpen.set(true);
+    fixture.detectChanges();
+    expect(bottom().hidden).toBe(false);
+    expect(splitter()).not.toBeNull();
+  });
+
+  it('exposes a horizontal separator with its range', () => {
+    const { splitter, bottom } = setup();
+    expect(splitter().getAttribute('aria-orientation')).toBe('horizontal');
+    expect(splitter().getAttribute('aria-valuenow')).toBe('200');
+    expect(splitter().getAttribute('aria-valuemin')).toBe('80');
+    expect(splitter().getAttribute('aria-valuemax')).toBe('480');
+    expect(splitter().tabIndex).toBe(0);
+    expect(bottom().style.height).toBe('200px');
+  });
+
+  it('resizes with the arrow keys, Home and End, within the range', () => {
+    const { host, press } = setup();
+    press('ArrowUp');
+    expect(host.bottomHeight()).toBe(216);
+    press('ArrowDown');
+    press('ArrowDown');
+    expect(host.bottomHeight()).toBe(184);
+    press('ArrowUp', true);
+    expect(host.bottomHeight()).toBe(248);
+    press('End');
+    expect(host.bottomHeight()).toBe(480);
+    press('ArrowUp');
+    expect(host.bottomHeight()).toBe(480);
+    press('Home');
+    expect(host.bottomHeight()).toBe(80);
+    press('ArrowDown');
+    expect(host.bottomHeight()).toBe(80);
+    press('a');
+    expect(host.bottomHeight()).toBe(80);
+  });
+
+  it('resizes with the pointer: dragging up grows the panel', () => {
+    const { host, splitter, fixture } = setup();
+    const el = splitter();
+    const ev = (type: string, clientY: number) =>
+      new PointerEvent(type, { clientY, pointerId: 1, button: 0, bubbles: true, cancelable: true });
+    el.dispatchEvent(ev('pointerdown', 500));
+    el.dispatchEvent(ev('pointermove', 460));
+    fixture.detectChanges();
+    expect(host.bottomHeight()).toBe(240);
+    el.dispatchEvent(ev('pointermove', -2000));
+    expect(host.bottomHeight()).toBe(480);
+    el.dispatchEvent(ev('pointerup', -2000));
+    el.dispatchEvent(ev('pointermove', 900));
+    expect(host.bottomHeight()).toBe(480);
   });
 });
 

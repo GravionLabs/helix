@@ -1,11 +1,10 @@
-// biome-ignore lint/style/useImportType: DI token, must be value import
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class IconService {
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
 
   icons!: any[];
 

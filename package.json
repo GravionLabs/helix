@@ -30,15 +30,15 @@
     "test:ci": "pnpm demo:generate-build-info && ng test shell --configuration=ci && ng test ui --watch=false && ng test desktop --watch=false && ng test helix-demo --configuration=ci --watch=false && pnpm --filter @helix/site test:ci && pnpm test:scripts",
     "test:site": "pnpm --filter @helix/site test",
     "test:scripts": "vitest run --config scripts/vitest.config.mts",
-    "format": "biome format --write .",
-    "format:check": "biome format .",
-    "lint": "pnpm demo:generate-build-info && biome check . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" && pnpm lint:no-primeng && pnpm lint:no-primeuix && pnpm lint:no-core && pnpm lint:no-tauri && pnpm lint:tokens",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "pnpm demo:generate-build-info && pnpm build:ui:ensure && oxlint --ignore-pattern \"scripts/lint/probe/**\" && eslint \"**/*.html\" && pnpm lint:no-primeng && pnpm lint:no-primeuix && pnpm lint:no-core && pnpm lint:no-tauri && pnpm lint:tokens",
     "lint:no-primeng": "! grep -rn \"from 'primeng\" --include='*.ts' --include='*.html' projects/shell projects/zod projects/ag-grid apps/helix-demo/src",
     "lint:no-primeuix": "! grep -rnE \"from '@primeuix/|require\\('@primeuix/\" --include='*.ts' --include='*.html' projects apps",
     "lint:no-core": "! grep -rnE \"['\\\"]@gravionlabs/helix-core\" --include='*.ts' --include='*.html' --include='*.css' --include='*.scss' --include='*.json' projects apps/helix-demo/src",
     "lint:no-tauri": "! grep -rnE \"['\\\"]@tauri-apps/\" --include='*.ts' --include='*.html' --include='*.css' --exclude-dir=tauri projects/desktop apps/helix-demo/src",
     "lint:tokens": "tsc -p projects/tokens",
-    "lint:fix": "biome check --write . && eslint \"projects/**/*.{ts,html}\" \"apps/**/*.{ts,html}\" --fix",
+    "lint:fix": "oxlint --fix --ignore-pattern \"scripts/lint/probe/**\" && eslint \"**/*.html\" --fix",
     "prepare": "husky"
   },
   "private": true,
@@ -69,13 +69,10 @@
     "@angular/build": "^22.2.6",
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.4",
-    "@biomejs/biome": "^2.6.5",
     "@tailwindcss/cli": "^4.3.4",
     "@tauri-apps/api": "^2.12.4",
     "@tauri-apps/plugin-process": "^2.4.0",
     "@tauri-apps/plugin-updater": "^2.14.1",
-    "@typescript-eslint/eslint-plugin": "^8.72.1",
-    "@typescript-eslint/parser": "^8.72.1",
     "@vitest/coverage-v8": "^5.1.0",
     "ag-grid-angular": "^36.3.0",
     "ag-grid-community": "^36.3.0",
@@ -88,17 +85,24 @@
     "jsdom": "^30.1.3",
     "lint-staged": "^17.6.0",
     "ng-packagr": "^22.2.6",
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
+    "oxlint-tsgolint": "7.0.2007",
     "sass": "^1.107.1",
     "typescript": "~6.0.3",
     "vitest": "^5.1.0",
     "zod": "^4.6.7"
   },
   "lint-staged": {
-    "*.ts": [
-      "biome check --write --no-errors-on-unmatched"
+    "*.{ts,mts}": [
+      "oxlint --fix --no-error-on-unmatched-pattern --ignore-pattern \"scripts/lint/probe/**\"",
+      "oxfmt --no-error-on-unmatched-pattern"
+    ],
+    "*.{json,md,css,scss,yml,yaml}": [
+      "oxfmt --no-error-on-unmatched-pattern"
     ],
     "*.html": [
-      "eslint --fix"
+      "eslint --fix --no-warn-ignored"
     ]
   }
 }

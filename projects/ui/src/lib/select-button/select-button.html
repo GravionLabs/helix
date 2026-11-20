@@ -1,0 +1,13 @@
+@for (item of items(); track $index) {
+  <button
+    type="button"
+    class="hx-select-button-option"
+    [class.hx-select-button-option-checked]="isChecked(item)"
+    [attr.aria-pressed]="isChecked(item)"
+    [disabled]="isDisabled() || item.disabled"
+    (click)="toggle(item)"
+    (blur)="onBlur()"
+  >
+    <span class="hx-select-button-content">{{ item.label }}</span>
+  </button>
+}

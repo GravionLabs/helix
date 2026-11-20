@@ -42,7 +42,13 @@
     },
     {
       groupName: 'angular-eslint',
-      matchPackageNames: ['angular-eslint', '@angular-eslint/**', '@typescript-eslint/**'],
+      matchPackageNames: ['angular-eslint', '@angular-eslint/**'],
+    },
+    {
+      // oxlint loads @angular-eslint/eslint-plugin as an alpha JS plugin (ADR 0006 of GravionLabs/skills): the oxc tools
+      // move together, at exact versions, and an update must keep scripts/tests/lint-probe.spec.ts green.
+      groupName: 'oxc',
+      matchPackageNames: ['oxlint', 'oxfmt', 'oxlint-tsgolint'],
     },
     { groupName: 'tailwindcss', matchPackageNames: ['tailwindcss', '@tailwindcss/**'] },
     { groupName: 'ag-grid', matchPackageNames: ['ag-grid-angular', 'ag-grid-community'] },

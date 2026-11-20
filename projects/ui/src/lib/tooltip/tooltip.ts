@@ -1,6 +1,7 @@
 import { Overlay, type OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
@@ -12,6 +13,7 @@ import {
   signal,
 } from '@angular/core';
 import { nextId } from '../internal/ids';
+import { HxKbd } from '../kbd/kbd';
 
 export type HxTooltipPosition = 'top' | 'right' | 'bottom' | 'left';
 export type HxTooltipEvent = 'hover' | 'focus' | 'both';
@@ -19,12 +21,14 @@ export type HxTooltipEvent = 'hover' | 'focus' | 'both';
 /** The bubble. Created by the directive in a CDK overlay. */
 @Component({
   selector: 'hx-tooltip-bubble',
-  template: '{{ text() }}',
+  imports: [HxKbd],
+  templateUrl: './tooltip.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tooltip', role: 'tooltip', '[id]': 'id' },
 })
 export class HxTooltipBubble {
   readonly text = signal('');
+  readonly shortcut = signal<readonly string[]>([]);
   id = '';
 }
 
@@ -50,6 +54,8 @@ const OPPOSITE: Record<HxTooltipPosition, HxTooltipPosition> = {
  * ```html
  * <button hx-button iconOnly aria-label="Add" hx-tooltip="Add item" hxTooltipPosition="right">+</button>
  * ```
+ *
+ * `hxTooltipShortcut` adds key caps (`<hx-kbd>`) after the text. Put `aria-keyshortcuts` on the host yourself.
  */
 @Directive({
   selector: '[hx-tooltip]',
@@ -69,11 +75,26 @@ export class HxTooltip {
 
   /** The text. Empty or null shows nothing. */
   readonly text = input<string | null | undefined>('', { alias: 'hx-tooltip' });
+  // The inputs carry the directive's prefix in templates (released API) and short names in the class.
+  /* oxlint-disable @angular-eslint/no-input-rename */
   readonly position = input<HxTooltipPosition>('top', { alias: 'hxTooltipPosition' });
   readonly event = input<HxTooltipEvent>('both', { alias: 'hxTooltipEvent' });
   readonly disabled = input(false, { alias: 'hxTooltipDisabled' });
+  /** A keyboard shortcut shown as key caps after the text, one entry per key. Not translated. */
+  readonly shortcut = input<readonly string[] | null | undefined>(undefined, {
+    alias: 'hxTooltipShortcut',
+  });
   /** Milliseconds before it appears. */
   readonly showDelay = input(0, { alias: 'hxTooltipShowDelay' });
+  /**
+   * Opens only while the host text is cut off by an ellipsis (`scrollWidth > clientWidth`). Measured when the
+   * tooltip is about to open, not on resize. For file names, tab labels and sidebar rows.
+   */
+  readonly whenTruncated = input(false, {
+    alias: 'hxTooltipWhenTruncated',
+    transform: booleanAttribute,
+  });
+  /* oxlint-enable @angular-eslint/no-input-rename */
 
   protected readonly bubbleId = nextId('hx-tooltip');
   protected readonly shown = signal(false);
@@ -88,6 +109,8 @@ export class HxTooltip {
       const text = this.text();
       if (this.disabled() || !text) this.hide();
       else if (this.#bubble) this.#bubble.text.set(text);
+      const shortcut = this.shortcut() ?? [];
+      this.#bubble?.shortcut.set(shortcut);
       this.position();
       this.#ref?.updatePositionStrategy(this.#strategy());
     });
@@ -136,6 +159,8 @@ export class HxTooltip {
 
   #create(text: string): void {
     if (this.#ref) return;
+    const host = this.#host.nativeElement;
+    if (this.whenTruncated() && host.scrollWidth <= host.clientWidth) return;
     this.#ref = this.#overlay.create({
       positionStrategy: this.#strategy(),
       scrollStrategy: this.#overlay.scrollStrategies.close(),
@@ -144,6 +169,7 @@ export class HxTooltip {
     const bubble = this.#ref.attach(new ComponentPortal(HxTooltipBubble));
     bubble.instance.id = this.bubbleId;
     bubble.instance.text.set(text);
+    bubble.instance.shortcut.set(this.shortcut() ?? []);
     this.#bubble = bubble.instance;
     this.shown.set(true);
   }

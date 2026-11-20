@@ -18,10 +18,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'hx-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-toolbar' },
-  template: `
-    <div class="hx-toolbar-start"><ng-content select="[hxToolbarStart]" /></div>
-    <div class="hx-toolbar-center"><ng-content select="[hxToolbarCenter]" /></div>
-    <div class="hx-toolbar-end"><ng-content select="[hxToolbarEnd]" /></div>
-  `,
+  templateUrl: './toolbar.html',
 })
 export class HxToolbar {}

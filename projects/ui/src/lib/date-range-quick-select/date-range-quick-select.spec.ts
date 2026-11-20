@@ -246,6 +246,7 @@ describe('HxDateRangeQuickSelect', () => {
     // destroying the control leaves no popup behind, whatever the test left open
     const left = popup();
     left?.closest('.cdk-overlay-pane')?.remove();
+    // oxlint-disable-next-line vitest/no-standalone-expect -- deliberate check in a hook: it guards every test of the file
     expect(left).toBeNull();
     Element.prototype.scrollIntoView = scrollIntoView;
     vi.useRealTimers();
@@ -1245,7 +1246,7 @@ describe('HxDateRangeQuickSelect', () => {
     });
 
     it('commits a typed date once when Enter is followed by change', async () => {
-      const changes = vi.fn();
+      const changes = vi.fn<(value: unknown) => void>();
       fixture.debugElement
         .query((d) => d.nativeElement === el('quick'))
         .componentInstance.value.subscribe(changes);

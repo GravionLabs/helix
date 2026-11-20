@@ -60,16 +60,7 @@ function positionStrategy(overlay: Overlay, position: HxDialogPosition): Positio
   selector: 'hx-dialog-frame',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-dialog' },
-  template: `
-    <h2 class="hx-dialog-title" [id]="titleId()">{{ header() }}<ng-content select="[hxDialogHeader]" /></h2>
-    <div class="hx-dialog-content"><ng-content /></div>
-    <div class="hx-dialog-footer"><ng-content select="[hxDialogFooter]" /></div>
-    @if (closable()) {
-      <button type="button" class="hx-dialog-close" [attr.aria-label]="closeLabel()" (click)="closeClick.emit()">
-        <span class="hx-dialog-close-icon" aria-hidden="true"></span>
-      </button>
-    }
-  `,
+  templateUrl: './dialog-frame.html',
 })
 export class HxDialogFrame {
   readonly header = input<string>();
@@ -102,15 +93,7 @@ export class HxDialogFrame {
   imports: [HxDialogFrame],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-dialog-anchor' },
-  template: `
-    <ng-template #panel>
-      <hx-dialog-frame [header]="header()" [titleId]="titleId" [closable]="closable()" [closeLabel]="closeLabel()" (closeClick)="visible.set(false)">
-        <ng-container ngProjectAs="[hxDialogHeader]"><ng-content select="[hxDialogHeader]" /></ng-container>
-        <ng-content />
-        <ng-container ngProjectAs="[hxDialogFooter]"><ng-content select="[hxDialogFooter]" /></ng-container>
-      </hx-dialog-frame>
-    </ng-template>
-  `,
+  templateUrl: './dialog.html',
 })
 export class HxDialog {
   readonly #dialog = inject(Dialog);
@@ -263,17 +246,7 @@ const HX_DIALOG_HOST_DATA = new InjectionToken<HostData>('HX_DIALOG_HOST_DATA');
   selector: 'hx-dialog-host',
   imports: [HxDialogFrame, NgComponentOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <hx-dialog-frame
-      [header]="data.config.header"
-      [titleId]="data.titleId"
-      [closable]="data.config.closable ?? true"
-      [closeLabel]="data.config.closeLabel ?? 'Close'"
-      (closeClick)="data.ref.close()"
-    >
-      <ng-container [ngComponentOutlet]="data.component" [ngComponentOutletInjector]="injector" />
-    </hx-dialog-frame>
-  `,
+  templateUrl: './dialog-host.html',
 })
 export class HxDialogHost {
   protected readonly data = inject<HostData>(HX_DIALOG_HOST_DATA);

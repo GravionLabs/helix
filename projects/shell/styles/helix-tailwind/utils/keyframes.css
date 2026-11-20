@@ -2,16 +2,8 @@
   @keyframes enter {
     from {
       opacity: var(--h-enter-opacity, 1);
-      transform: translate3d(
-          var(--h-enter-translate-x, 0),
-          var(--h-enter-translate-y, 0),
-          0
-        )
-        scale3d(
-          var(--h-enter-scale, 1),
-          var(--h-enter-scale, 1),
-          var(--h-enter-scale, 1)
-        )
+      transform: translate3d(var(--h-enter-translate-x, 0), var(--h-enter-translate-y, 0), 0)
+        scale3d(var(--h-enter-scale, 1), var(--h-enter-scale, 1), var(--h-enter-scale, 1))
         rotate(var(--h-enter-rotate, 0));
     }
   }
@@ -19,16 +11,8 @@
   @keyframes leave {
     to {
       opacity: var(--h-leave-opacity, 1);
-      transform: translate3d(
-          var(--h-leave-translate-x, 0),
-          var(--h-leave-translate-y, 0),
-          0
-        )
-        scale3d(
-          var(--h-leave-scale, 1),
-          var(--h-leave-scale, 1),
-          var(--h-leave-scale, 1)
-        )
+      transform: translate3d(var(--h-leave-translate-x, 0), var(--h-leave-translate-y, 0), 0)
+        scale3d(var(--h-leave-scale, 1), var(--h-leave-scale, 1), var(--h-leave-scale, 1))
         rotate(var(--h-leave-rotate, 0));
     }
   }
