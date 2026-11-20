@@ -167,4 +167,36 @@ describe('status bar', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('button #late')).toBeTruthy();
   });
+
+  it('places a conditional group of items in the end slot with ngProjectAs', () => {
+    @Component({
+      imports: [HxStatusBar, HxStatusItem],
+      template: `
+        <hx-status-bar>
+          <hx-status-item slot="start">Ready</hx-status-item>
+          @if (on()) {
+            <ng-container ngProjectAs="[slot=end]">
+              <hx-status-item id="a">A</hx-status-item>
+              <hx-status-item id="b">B</hx-status-item>
+            </ng-container>
+          }
+        </hx-status-bar>
+      `,
+    })
+    class Group {
+      readonly on = signal(false);
+    }
+    const fixture = TestBed.createComponent(Group);
+    const root = fixture.nativeElement as HTMLElement;
+    fixture.detectChanges();
+    expect(root.querySelector('.hx-status-end #a')).toBeNull();
+    fixture.componentInstance.on.set(true);
+    fixture.detectChanges();
+    expect(root.querySelector('.hx-status-end #a')).toBeTruthy();
+    expect(root.querySelector('.hx-status-end #b')).toBeTruthy();
+    expect(root.querySelector('.hx-status-start #a')).toBeNull();
+    fixture.componentInstance.on.set(false);
+    fixture.detectChanges();
+    expect(root.querySelector('.hx-status-end #a')).toBeNull();
+  });
 });
