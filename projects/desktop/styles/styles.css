@@ -292,8 +292,7 @@
     height: 100%;
     min-height: 0;
     box-sizing: border-box;
-    padding-inline: env(safe-area-inset-left, 0px)
-      env(safe-area-inset-right, 0px);
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
     background: var(--h-surface-frame);
     color: var(--h-text-color);
   }
@@ -337,8 +336,7 @@
     padding-block-end: env(keyboard-inset-height, 0px);
   }
   .hx-mobile-shell-drawer {
-    padding-block: env(safe-area-inset-top, 0px)
-      env(safe-area-inset-bottom, 0px);
+    padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
     padding-inline-start: env(safe-area-inset-left, 0px);
     box-sizing: border-box;
   }

@@ -69,6 +69,7 @@ Besides the component, `@gravionlabs/helix-ui` exports these types, lists and fu
   ```html
   <hx-date-time-range-picker placeholder="Pick a range" [presets]="presets" [(value)]="range" />
   ```
+
 - **Built-in presets:** `presets` is empty by default; opt in with the ready-made lists. `HX_DATE_RANGE_PRESETS` has
   Last 15 minutes, Last 1 hour, Last 6 hours, Last 24 hours, Last 7 days, Last 30 days, Today, Yesterday, This week and
   This month. Last 7 days and Last 30 days count calendar days: they start at midnight of the first day (today and the
@@ -88,6 +89,7 @@ Besides the component, `@gravionlabs/helix-ui` exports these types, lists and fu
   readonly dayPresets = HX_DATE_RANGE_DAY_PRESETS;
   readonly german = hxDateRangePresets({ today: 'Heute', yesterday: 'Gestern' });
   ```
+
 - **Preset select:** with `presetDisplay="select"` the presets are one `hx-select` above the calendar instead of a row
   of buttons. It has no value of its own: it shows the placeholder each time the popup opens, and choosing an entry
   fills the draft exactly as a button does (Submit applies it, Cancel drops it). Once the draft changes otherwise (a
@@ -110,6 +112,7 @@ Besides the component, `@gravionlabs/helix-ui` exports these types, lists and fu
   hxParseDateMath('now-7d/d', { firstDayOfWeek: 1 }); // 7 days ago, 00:00
   hxParseDateMath('now-7x'); // null
   ```
+
 - **Field:** read-only unless `typeable`; click, the button, Arrow Down, Enter or Space open the popup. The popup edits a draft:
   Submit makes it the value, Cancel, Escape, a click outside or the focus leaving the control drop it.
 - **Typing** (`typeable`): the field takes the range as it shows it, `from separator to` (`10/12/2026 08:30 - 10/14/2026 16:45`).
