@@ -215,12 +215,6 @@ export class DesktopOverviewDemo {
     else shell.selectView(id);
   }
 
-  /** Shows the notifications; unlike the activity bar, a second click does not collapse the sidebar. */
-  protected showWaiting(shell: HxAppShell): void {
-    if (shell.activeId() !== 'notifications' || shell.collapsed())
-      shell.selectView('notifications');
-  }
-
   protected toggleSpace(id: string): void {
     this.folded.update((set) => {
       const next = new Set(set);

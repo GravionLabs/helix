@@ -88,7 +88,7 @@ The layout: toolbar, activity bar, one sidebar, content, an optional right panel
 ```
 
 - Slots: `toolbar`, `activity`, `sidebar`, `panel`, `bottom`, `status`, and the default slot for content.
-- One sidebar: the app shows the view of `activeId` in it. `selectView(id)` collapses the sidebar when `id` is the active view, and otherwise makes it active and expands the sidebar.
+- One sidebar: the app shows the view of `activeId` in it. `selectView(id)` collapses the sidebar when `id` is the active view, and otherwise makes it active and expands the sidebar. `showView(id)` never collapses: it activates the view and expands the sidebar, for links from outside the activity bar (status bar, notifications, commands). Both report through `sidebarChange`.
 - Models: `sidebarWidth` (px), `collapsed`, `activeId`. Inputs: `minWidth` (160), `maxWidth` (480), `step` (16), `resizerLabel`, `fixedWidth`. Output `sidebarChange` emits `{ width, collapsed }` so the app can store them.
 - The splitter is `role="separator"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. Drag it, or use Left/Right (Shift: 4 times the step), Home and End.
 - Bottom panel: `slot="bottom"` lies below the content, next to the sidebar and not under the activity bar. Models: `bottomOpen` (closed hides the slot and its splitter; `toggleBottom()` flips it) and `bottomHeight` (px). Inputs: `minBottomHeight` (80), `maxBottomHeight` (480), `bottomResizerLabel`. Its splitter is a horizontal `role="separator"`: drag it, or use Up/Down (Shift: 4 times the step), Home and End.

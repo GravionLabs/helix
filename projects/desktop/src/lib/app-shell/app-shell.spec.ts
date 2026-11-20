@@ -18,6 +18,8 @@ import { HxAppToolbar } from './app-toolbar';
       <hx-app-toolbar slot="toolbar"><span slot="centre">Title</span></hx-app-toolbar>
       <button slot="activity" id="files" (click)="shell.selectView('files')">Files</button>
       <button slot="activity" id="search" (click)="shell.selectView('search')">Search</button>
+      <button slot="activity" id="show-files" (click)="shell.showView('files')">Show</button>
+      <button slot="activity" id="show-search" (click)="shell.showView('search')">Show</button>
       <nav slot="sidebar" id="sidebar">Sidebar</nav>
       <div id="content">Content</div>
       <aside slot="panel" id="panel">Panel</aside>
@@ -90,6 +92,25 @@ describe('HxAppShell', () => {
     click('files');
     expect(host.collapsed()).toBe(false);
     expect(host.activeId()).toBe('files');
+  });
+
+  it('shows the active view without collapsing the sidebar', () => {
+    const { host, sidebar, click } = setup();
+    click('show-files');
+    click('show-files');
+    expect(host.collapsed()).toBe(false);
+    expect(host.activeId()).toBe('files');
+    expect(sidebar().hidden).toBe(false);
+  });
+
+  it('shows another view and expands a collapsed sidebar, and reports it', () => {
+    const { host, click } = setup();
+    click('files');
+    expect(host.collapsed()).toBe(true);
+    click('show-search');
+    expect(host.collapsed()).toBe(false);
+    expect(host.activeId()).toBe('search');
+    expect(host.changes.at(-1)).toEqual({ width: 260, collapsed: false });
   });
 
   it('exposes the separator with its range', () => {

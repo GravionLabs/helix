@@ -32,7 +32,7 @@ export interface HxSidebarState {
  * ```
  *
  * There is one sidebar: the app puts the view of `activeId` into it. `selectView` collapses the sidebar
- * when the active view is selected again and expands it for another one. The splitter is a
+ * when the active view is selected again and expands it for another one; `showView` only shows a view. The splitter is a
  * `role="separator"`: drag it, or use the arrow keys (Shift for a larger step), Home and End. The shell
  * has no tab logic: the unslotted content is the app's tab layout.
  *
@@ -93,6 +93,16 @@ export class HxAppShell {
       this.activeId.set(id);
       this.collapsed.set(false);
     }
+    this.report();
+  }
+
+  /**
+   * Show a sidebar view without toggling: activates it and expands the sidebar, and never collapses it.
+   * For links to a view from outside the activity bar (status bar, notifications, commands).
+   */
+  showView(id: string): void {
+    this.activeId.set(id);
+    this.collapsed.set(false);
     this.report();
   }
 
