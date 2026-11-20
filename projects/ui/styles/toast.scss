@@ -196,6 +196,32 @@
   font-weight: var(--h-toast-detail-font-weight);
 }
 
+.hx-toast-action {
+  flex: none;
+  padding: 0.25rem 0.5rem;
+  border: 0;
+  border-radius: var(--h-toast-close-button-border-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  outline: 0 none;
+  transition: background var(--h-toast-transition-duration);
+}
+
+.hx-toast-action:hover {
+  background: var(--hx-toast-hover);
+}
+
+.hx-toast-action:focus-visible {
+  outline: var(--h-toast-close-button-focus-ring-width) var(--h-toast-close-button-focus-ring-style)
+    var(--hx-toast-ring);
+  outline-offset: var(--h-toast-close-button-focus-ring-offset);
+  box-shadow: var(--hx-toast-ring-shadow);
+}
+
 .hx-toast-close {
   display: inline-flex;
   flex: none;
@@ -233,6 +259,7 @@
     animation: none;
   }
 
+  .hx-toast-action,
   .hx-toast-close {
     transition: none;
   }

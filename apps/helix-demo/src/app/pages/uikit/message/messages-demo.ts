@@ -24,6 +24,18 @@ export class MessagesDemo {
   username = '';
   email = '';
 
+  showUndo() {
+    this.#messages.add({
+      severity: 'info',
+      summary: 'Project hidden',
+      life: 6000,
+      action: {
+        label: 'Undo',
+        run: () => this.show('success', 'Restored', 'The project is visible again'),
+      },
+    });
+  }
+
   show(severity: HxToastSeverity, summary: string, detail: string) {
     this.#messages.add({ severity, summary, detail });
   }

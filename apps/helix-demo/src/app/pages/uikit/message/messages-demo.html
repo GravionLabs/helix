@@ -9,6 +9,7 @@
           <button hx-button type="button" severity="info" (click)="show('info', 'Info Message', 'Helix rocks')">Info</button>
           <button hx-button type="button" severity="warn" (click)="show('warn', 'Warn Message', 'There are unsaved changes')">Warn</button>
           <button hx-button type="button" severity="danger" (click)="show('error', 'Error Message', 'Validation failed')">Error</button>
+          <button hx-button type="button" severity="secondary" (click)="showUndo()">Undo</button>
           <hx-toast />
         </div>
 
