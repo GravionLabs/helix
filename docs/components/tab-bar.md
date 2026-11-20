@@ -33,14 +33,16 @@ Use `hx-tabs` for a page or card split into a few sections; use `hx-tab-bar` for
 
 ## Inputs and outputs
 
-| Input           | Type                 | Default | Description                                                                  |
-| --------------- | -------------------- | ------- | ---------------------------------------------------------------------------- |
-| `tabs`          | `HxTabBarItem[]`     | -       | Required. The tabs, in order.                                                |
-| `value`         | `string \| null`     | `null`  | `[(value)]`: the `id` of the active tab.                                     |
-| `ariaLabel`     | `string`             | -       | Accessible name of the tab strip.                                            |
-| `groupId`       | `string`             | `''`    | Identifies the bar when a tab is dragged between bars.                       |
-| `menu`          | `HxTabBarMenuItem[]` | `[]`    | Entries of the context menu; none disables it.                               |
-| `allTabsButton` | `boolean`            | `false` | While the tabs overflow, a button at the right end opens a menu of all tabs. |
+| Input           | Type                 | Default             | Description                                                                  |
+| --------------- | -------------------- | ------------------- | ---------------------------------------------------------------------------- |
+| `tabs`          | `HxTabBarItem[]`     | -                   | Required. The tabs, in order.                                                |
+| `value`         | `string \| null`     | `null`              | `[(value)]`: the `id` of the active tab.                                     |
+| `ariaLabel`     | `string`             | -                   | Accessible name of the tab strip.                                            |
+| `groupId`       | `string`             | `''`                | Identifies the bar when a tab is dragged between bars.                       |
+| `menu`          | `HxTabBarMenuItem[]` | `[]`                | Entries of the context menu; none disables it.                               |
+| `allTabsButton` | `boolean`            | `false`             | While the tabs overflow, a button at the right end opens a menu of all tabs. |
+| `modifiedLabel` | `string`             | `'Unsaved changes'` | Accessible text of the dot of a tab with `modified`.                         |
+| `missingTitle`  | `string`             | `'File missing'`    | Tooltip of a tab with `missing`, also shown in the all-tabs menu.            |
 
 | Output        | Payload                                       | Description                                                          |
 | ------------- | --------------------------------------------- | -------------------------------------------------------------------- |
@@ -53,7 +55,9 @@ Use `hx-tabs` for a page or card split into a few sections; use `hx-tab-bar` for
 
 The bar reports, the app changes `tabs`: remove the tab on `closed`, reorder on `moved`, take the tab over on `received` (and remove it from the other bar).
 
-`HxTabBarItem`: `id`, `label`, and optional `group` (shown in capitals before the label), `title` (tooltip, the label by default), `preview` (italic), `attention` (rings the tab) and `unread` (a dot).
+`HxTabBarItem`: `id`, `label`, and optional `group` (shown in capitals before the label), `title` (tooltip, the label by default), `preview` (italic), `attention` (rings the tab) and `unread` (a dot), `modified` and `missing` (see below).
+
+**Unsaved and missing files:** `modified` shows a dot in the slot of the close button (hovering or focusing the tab shows the button instead), so the tab width never changes when the dot appears or goes; the dot has the accessible text `modifiedLabel`. `missing` strikes the label through and sets the tooltip to `missingTitle`. Both marks are part of the tab name and show in the all-tabs menu (`●` and the `missingTitle` text).
 
 `HxTabBarMenuItem`: `action`, `label`, and optional `shortcut` (shown next to the label), `disabled` and `appliesTo(tabId)` (the entry is offered only for tabs where it returns `true`).
 

@@ -10,6 +10,8 @@ import { HxTabBar, type HxTabBarItem, type HxTabBarMenuItem } from './tab-bar';
       groupId="left"
       ariaLabel="Editors"
       allTabsButton
+      [modifiedLabel]="dotLabel()"
+      [missingTitle]="missingText()"
       [tabs]="left()"
       [(value)]="active"
       [menu]="menu"
@@ -33,6 +35,8 @@ import { HxTabBar, type HxTabBarItem, type HxTabBarMenuItem } from './tab-bar';
 })
 class Host {
   log: string[] = [];
+  dotLabel = signal('Unsaved changes');
+  missingText = signal('File missing');
   active = signal<string | null>('b');
   left = signal<HxTabBarItem[]>([
     { id: 'a', label: 'alpha' },
@@ -176,6 +180,55 @@ describe('HxTabBar', () => {
           b.getAttribute('aria-label'),
         ),
       ).toEqual(['Close alpha / terminal', 'Close beta / terminal', 'Close solo']);
+    });
+  });
+
+  describe('unsaved and missing marks', () => {
+    beforeEach(async () => {
+      host.left.set([
+        { id: 'a', label: 'alpha', modified: true },
+        { id: 'b', label: 'beta', missing: true, title: 'Own title' },
+        { id: 'c', label: 'gamma', attention: true, unread: true },
+      ]);
+      await settle();
+    });
+
+    it('puts a dot with an accessible text in the slot of the close button', () => {
+      const [modified, missing] = tabs();
+      const dot = modified.querySelector('.hx-tab-bar-slot .hx-tab-bar-modified') as HTMLElement;
+      expect(dot.getAttribute('role')).toBe('img');
+      expect(dot.getAttribute('aria-label')).toBe('Unsaved changes');
+      expect(modified.querySelector('.hx-tab-bar-slot .hx-tab-bar-close')).not.toBeNull();
+      expect(modified.getAttribute('aria-label')).toBe('alpha, unsaved changes');
+      expect(missing.querySelector('.hx-tab-bar-modified')).toBeNull();
+    });
+
+    it('takes the texts from the inputs', async () => {
+      host.dotLabel.set('Ungespeichert');
+      host.missingText.set('Datei fehlt');
+      await settle();
+      const [modified, missing] = tabs();
+      expect(modified.querySelector('.hx-tab-bar-modified')?.getAttribute('aria-label')).toBe(
+        'Ungespeichert',
+      );
+      expect(missing.title).toBe('Datei fehlt');
+    });
+
+    it('strikes a missing file through, with the tooltip from the input', () => {
+      const missing = tabs()[1];
+      expect(missing.classList.contains('hx-tab-bar-tab-missing')).toBe(true);
+      expect(missing.title).toBe('File missing');
+      expect(missing.getAttribute('aria-label')).toBe('beta, file missing');
+      expect(tabs()[0].title).toBe('alpha');
+    });
+
+    it('keeps attention and unread and the close button', () => {
+      const other = tabs()[2];
+      expect(other.classList.contains('hx-tab-bar-tab-attention')).toBe(true);
+      expect(other.querySelector('.hx-tab-bar-unread')).not.toBeNull();
+      expect(other.getAttribute('aria-label')).toBe('gamma, needs attention');
+      (other.querySelector('.hx-tab-bar-close') as HTMLElement).click();
+      expect(host.log).toContain('closed:c');
     });
   });
 
@@ -532,6 +585,19 @@ describe('HxTabBar', () => {
       await settle();
       expect(host.active()).toBe('e');
       expect(menuItems()).toEqual([]);
+    });
+
+    it('shows the unsaved and missing marks in the all-tabs menu', async () => {
+      host.left.set([
+        { id: 'a', label: 'alpha', modified: true },
+        { id: 'b', label: 'beta', missing: true },
+      ]);
+      await overflow(1200);
+      (allButton() as HTMLElement).click();
+      await settle();
+      expect(menuItems().map((i) => i.textContent?.trim())).toEqual(['alpha●', 'betaFile missing']);
+      expect(menuItems()[0].getAttribute('aria-label')).toBe('alpha, unsaved changes');
+      expect(menuItems()[1].getAttribute('aria-label')).toBe('beta, file missing');
     });
 
     it('scrolls the active tab into view when it changes', async () => {
