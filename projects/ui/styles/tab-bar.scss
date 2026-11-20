@@ -124,6 +124,45 @@
   background: var(--h-tabbar-unread-color);
 }
 
+/* The close button and the dot of unsaved changes share one slot, so the tab keeps its width. */
+.hx-tab-bar-slot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--h-tabbar-close-size);
+  height: var(--h-tabbar-close-size);
+}
+
+.hx-tab-bar-slot > * {
+  grid-area: 1 / 1;
+}
+
+.hx-tab-bar-modified {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentcolor;
+}
+
+.hx-tab-bar-tab-modified:hover .hx-tab-bar-modified,
+.hx-tab-bar-tab-modified:focus-visible .hx-tab-bar-modified {
+  visibility: hidden;
+}
+
+/* a tab with unsaved changes shows the close button only on hover or focus, also when active */
+.hx-tab-bar-tab-modified.hx-tab-bar-tab-active .hx-tab-bar-close {
+  visibility: hidden;
+}
+
+.hx-tab-bar-tab-modified.hx-tab-bar-tab-active:hover .hx-tab-bar-close,
+.hx-tab-bar-tab-modified.hx-tab-bar-tab-active:focus-visible .hx-tab-bar-close {
+  visibility: visible;
+}
+
+.hx-tab-bar-tab-missing .hx-tab-bar-label {
+  text-decoration: line-through;
+}
+
 .hx-tab-bar-close,
 .hx-tab-bar-all {
   display: inline-grid;

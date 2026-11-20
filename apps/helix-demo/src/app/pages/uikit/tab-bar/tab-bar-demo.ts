@@ -21,6 +21,8 @@ export class TabBarDemo {
       preview: i === 3,
       attention: i === 17,
       unread: i === 20,
+      modified: i === 1 || i === 22,
+      missing: i === 2 || i === 23,
     })),
   );
   readonly pinnedFiles = signal<HxTabBarItem[]>([
