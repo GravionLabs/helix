@@ -39,6 +39,7 @@ import { inputgroup } from './inputgroup.ts';
 import { inputnumber } from './inputnumber.ts';
 import { inputotp } from './inputotp.ts';
 import { inputtext } from './inputtext.ts';
+import { kbd } from './kbd.ts';
 import { knob } from './knob.ts';
 import { listbox } from './listbox.ts';
 import { megamenu } from './megamenu.ts';
@@ -130,6 +131,7 @@ export const components = {
   inputnumber,
   inputotp,
   inputtext,
+  kbd,
   knob,
   listbox,
   megamenu,

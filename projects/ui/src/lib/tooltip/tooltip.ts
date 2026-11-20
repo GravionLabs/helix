@@ -12,6 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { nextId } from '../internal/ids';
+import { HxKbd } from '../kbd/kbd';
 
 export type HxTooltipPosition = 'top' | 'right' | 'bottom' | 'left';
 export type HxTooltipEvent = 'hover' | 'focus' | 'both';
@@ -19,12 +20,14 @@ export type HxTooltipEvent = 'hover' | 'focus' | 'both';
 /** The bubble. Created by the directive in a CDK overlay. */
 @Component({
   selector: 'hx-tooltip-bubble',
-  template: '{{ text() }}',
+  imports: [HxKbd],
+  template: `{{ text() }}@if (shortcut().length) {<hx-kbd [keys]="shortcut()" size="sm" />}`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tooltip', role: 'tooltip', '[id]': 'id' },
 })
 export class HxTooltipBubble {
   readonly text = signal('');
+  readonly shortcut = signal<readonly string[]>([]);
   id = '';
 }
 
@@ -50,6 +53,8 @@ const OPPOSITE: Record<HxTooltipPosition, HxTooltipPosition> = {
  * ```html
  * <button hx-button iconOnly aria-label="Add" hx-tooltip="Add item" hxTooltipPosition="right">+</button>
  * ```
+ *
+ * `hxTooltipShortcut` adds key caps (`<hx-kbd>`) after the text. Put `aria-keyshortcuts` on the host yourself.
  */
 @Directive({
   selector: '[hx-tooltip]',
@@ -72,6 +77,10 @@ export class HxTooltip {
   readonly position = input<HxTooltipPosition>('top', { alias: 'hxTooltipPosition' });
   readonly event = input<HxTooltipEvent>('both', { alias: 'hxTooltipEvent' });
   readonly disabled = input(false, { alias: 'hxTooltipDisabled' });
+  /** A keyboard shortcut shown as key caps after the text, one entry per key. Not translated. */
+  readonly shortcut = input<readonly string[] | null | undefined>(undefined, {
+    alias: 'hxTooltipShortcut',
+  });
   /** Milliseconds before it appears. */
   readonly showDelay = input(0, { alias: 'hxTooltipShowDelay' });
 
@@ -88,6 +97,8 @@ export class HxTooltip {
       const text = this.text();
       if (this.disabled() || !text) this.hide();
       else if (this.#bubble) this.#bubble.text.set(text);
+      const shortcut = this.shortcut() ?? [];
+      this.#bubble?.shortcut.set(shortcut);
       this.position();
       this.#ref?.updatePositionStrategy(this.#strategy());
     });
@@ -144,6 +155,7 @@ export class HxTooltip {
     const bubble = this.#ref.attach(new ComponentPortal(HxTooltipBubble));
     bubble.instance.id = this.bubbleId;
     bubble.instance.text.set(text);
+    bubble.instance.shortcut.set(this.shortcut() ?? []);
     this.#bubble = bubble.instance;
     this.shown.set(true);
   }

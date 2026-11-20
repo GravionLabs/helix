@@ -5,7 +5,7 @@ import { HxTooltip } from './tooltip';
 @Component({
   imports: [HxTooltip],
   template: `
-    <button id="both" [hx-tooltip]="text()" hxTooltipPosition="right" [hxTooltipDisabled]="off()">A</button>
+    <button id="both" [hx-tooltip]="text()" hxTooltipPosition="right" [hxTooltipDisabled]="off()" [hxTooltipShortcut]="shortcut()">A</button>
     <button id="hover" hx-tooltip="Only hover" hxTooltipEvent="hover">B</button>
     <button id="focus" hx-tooltip="Only focus" hxTooltipEvent="focus">C</button>
   `,
@@ -13,6 +13,7 @@ import { HxTooltip } from './tooltip';
 class Host {
   text = signal('Add item');
   off = signal(false);
+  shortcut = signal<string[] | undefined>(undefined);
 }
 
 describe('HxTooltip', () => {
@@ -92,5 +93,36 @@ describe('HxTooltip', () => {
     fixture.componentInstance.text.set('Changed');
     await settle();
     expect(bubble()?.textContent?.trim()).toBe('Changed');
+  });
+
+  it('shows no key caps without a shortcut', async () => {
+    fire('both', 'mouseenter');
+    await settle();
+    expect(bubble()?.querySelector('hx-kbd')).toBeNull();
+  });
+
+  it('shows the shortcut as key caps after the text', async () => {
+    fixture.componentInstance.shortcut.set(['Ctrl', 'K']);
+    await settle();
+    fire('both', 'mouseenter');
+    await settle();
+    const kbd = bubble()?.querySelector('hx-kbd') as HTMLElement;
+    expect(kbd).toBeTruthy();
+    expect(kbd.classList).toContain('hx-kbd-sm');
+    expect([...kbd.querySelectorAll('kbd')].map((k) => k.textContent)).toEqual(['Ctrl', 'K']);
+    expect(bubble()?.textContent?.trim().startsWith('Add item')).toBe(true);
+    // the caps are inside the described-by element, so a screen reader gets them as text
+    expect(el('both').getAttribute('aria-describedby')).toBe(bubble()?.id);
+  });
+
+  it('follows the shortcut while visible', async () => {
+    fire('both', 'mouseenter');
+    await settle();
+    fixture.componentInstance.shortcut.set(['Esc']);
+    await settle();
+    expect(bubble()?.querySelectorAll('kbd').length).toBe(1);
+    fixture.componentInstance.shortcut.set([]);
+    await settle();
+    expect(bubble()?.querySelector('hx-kbd')).toBeNull();
   });
 });

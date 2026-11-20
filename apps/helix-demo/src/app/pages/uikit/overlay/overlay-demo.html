@@ -1,5 +1,5 @@
 <h1 class="sr-only">Overlay</h1>
-<app-source-tabs library="helix-ui" directory="overlay" componentName="overlay-demo" [docs]="['confirm', 'dialog', 'drawer', 'popover', 'tooltip']">
+<app-source-tabs library="helix-ui" directory="overlay" componentName="overlay-demo" [docs]="['confirm', 'dialog', 'drawer', 'kbd', 'popover', 'tooltip']">
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card h-full">
@@ -47,6 +47,13 @@
         <div class="inline-flex gap-3">
           <input hx-input type="text" placeholder="Username" aria-label="Username" hx-tooltip="Your username" />
           <button hx-button type="button" hx-tooltip="Click to proceed">Save</button>
+          <button hx-button type="button" hx-tooltip="Command palette" [hxTooltipShortcut]="['Ctrl', 'Shift', 'P']" aria-keyshortcuts="Control+Shift+P">Palette</button>
+        </div>
+        <h2 class="demo-title mt-4 mb-2!">Kbd</h2>
+        <div class="flex flex-wrap items-center gap-4">
+          <hx-kbd [keys]="['Ctrl', 'Shift', 'P']" />
+          <hx-kbd [keys]="['⌘', 'K']" separator="none" />
+          <hx-kbd [keys]="['Ctrl', 'S']" size="sm" separator="+" />
         </div>
       </div>
     </div>
