@@ -22,7 +22,7 @@ export type HxTooltipEvent = 'hover' | 'focus' | 'both';
 @Component({
   selector: 'hx-tooltip-bubble',
   imports: [HxKbd],
-  template: `{{ text() }}@if (shortcut().length) {<hx-kbd [keys]="shortcut()" size="sm" />}`,
+  templateUrl: './tooltip.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-tooltip', role: 'tooltip', '[id]': 'id' },
 })

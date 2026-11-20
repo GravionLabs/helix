@@ -38,34 +38,7 @@ import {
   imports: [CdkConnectedOverlay],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-popover-anchor' },
-  template: `
-    <ng-template
-      cdkConnectedOverlay
-      cdkConnectedOverlayPanelClass="hx-popover-overlay"
-      [cdkConnectedOverlayOrigin]="origin() ?? fallbackOrigin"
-      [cdkConnectedOverlayOpen]="open()"
-      [cdkConnectedOverlayPositions]="positions"
-      (overlayOutsideClick)="onOutsideClick($event)"
-      (overlayKeydown)="onKeydown($event)"
-      (positionChange)="onPosition($event)"
-      (attach)="onAttach()"
-      (detach)="onDetach()"
-    >
-      <div
-        #panel
-        class="hx-popover"
-        [class]="panelClass() ?? ''"
-        [attr.role]="role()"
-        [class.hx-popover-above]="above()"
-        [class.hx-popover-end]="end()"
-        [attr.aria-label]="ariaLabel() || null"
-        [attr.aria-labelledby]="ariaLabelledBy() || null"
-        [attr.aria-describedby]="ariaDescribedBy() || null"
-      >
-        <div class="hx-popover-content"><ng-content /></div>
-      </div>
-    </ng-template>
-  `,
+  templateUrl: './popover.html',
 })
 export class HxPopover {
   readonly #injector = inject(Injector);

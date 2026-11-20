@@ -13,37 +13,7 @@ import { ChangeDetectionStrategy, Component, input, model } from '@angular/core'
   selector: 'hx-status-zoom',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-status-zoom' },
-  template: `
-    <button
-      type="button"
-      class="hx-status-control hx-status-zoom-out"
-      title="Zoom out"
-      aria-label="Zoom out"
-      [disabled]="value() <= min()"
-      (click)="change(-step())"
-    >
-      &minus;
-    </button>
-    <button
-      type="button"
-      class="hx-status-control hx-status-zoom-level"
-      title="Reset zoom"
-      [attr.aria-label]="'Reset zoom, ' + value() + ' percent'"
-      (click)="set(reset())"
-    >
-      {{ value() }}%
-    </button>
-    <button
-      type="button"
-      class="hx-status-control hx-status-zoom-in"
-      title="Zoom in"
-      aria-label="Zoom in"
-      [disabled]="value() >= max()"
-      (click)="change(step())"
-    >
-      +
-    </button>
-  `,
+  templateUrl: './status-zoom.html',
 })
 export class HxStatusZoom {
   /** The zoom level in percent. */

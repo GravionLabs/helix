@@ -23,11 +23,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@an
     '[class.hx-app-toolbar-inset]': 'windowButtonsInset()',
     'data-tauri-drag-region': '',
   },
-  template: `
-    <div class="hx-app-toolbar-start"><ng-content select="[slot=start]" /></div>
-    <div class="hx-app-toolbar-centre" data-tauri-drag-region><ng-content select="[slot=centre]" /></div>
-    <div class="hx-app-toolbar-end"><ng-content select="[slot=end]" /></div>
-  `,
+  templateUrl: './app-toolbar.html',
 })
 export class HxAppToolbar {
   /** Reserve room at the start for the macOS window buttons (a hidden title bar). */

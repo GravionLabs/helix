@@ -42,27 +42,7 @@ import { nextId } from '../internal/ids';
     '[class.hx-rating-invalid]': 'invalid()',
     '(focusout)': 'onFocusOut($event)',
   },
-  template: `
-    @for (n of items(); track n) {
-      @if (readonly()) {
-        <span class="hx-rating-star" [class.hx-rating-star-active]="n <= current()"><span class="hx-rating-icon"></span></span>
-      } @else {
-        <label class="hx-rating-star" [class.hx-rating-star-active]="n <= current()">
-          <input
-            type="radio"
-            class="hx-rating-input"
-            [name]="groupName"
-            [value]="n"
-            [checked]="n === value()"
-            [disabled]="isDisabled()"
-            [attr.aria-label]="n === 1 ? '1 star' : n + ' stars'"
-            (change)="select(n)"
-          />
-          <span class="hx-rating-icon"></span>
-        </label>
-      }
-    }
-  `,
+  templateUrl: './rating.html',
 })
 export class HxRating implements ControlValueAccessor, FormValueControl<number | null> {
   /** The number of stars. */

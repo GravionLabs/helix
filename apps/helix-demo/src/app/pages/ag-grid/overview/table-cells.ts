@@ -20,7 +20,7 @@ const SEVERITY: Record<string, HxTagSeverity> = {
   imports: [HxTag],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: flex; align-items: center; height: 100%' },
-  template: `<hx-tag [value]="status()" [severity]="severity()" />`,
+  templateUrl: './status-cell.html',
 })
 export class StatusCell implements ICellRendererAngularComp {
   protected readonly status = signal('');
@@ -44,7 +44,7 @@ export class StatusCell implements ICellRendererAngularComp {
   imports: [HxProgressBar],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: flex; align-items: center; height: 100%; width: 100%' },
-  template: `<hx-progress-bar style="flex: 1" [value]="value()" [showValue]="false" [ariaLabel]="'Activity ' + value() + '%'" />`,
+  templateUrl: './activity-cell.html',
 })
 export class ActivityCell implements ICellRendererAngularComp {
   protected readonly value = signal(0);
@@ -71,12 +71,7 @@ export interface TableContext {
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <button hx-button type="button" variant="text" size="small" [attr.aria-label]="'View ' + name()" (click)="view()">
-      <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
-      View
-    </button>
-  `,
+  templateUrl: './action-cell.html',
 })
 export class ActionCell implements ICellRendererAngularComp {
   #customer: Customer | undefined;

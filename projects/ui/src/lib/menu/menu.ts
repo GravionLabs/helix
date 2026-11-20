@@ -43,25 +43,7 @@ export interface HxMenuPoint {
   imports: [CdkConnectedOverlay, HxMenuPanel],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-menu', '[class.hx-menu-popup]': 'popup()' },
-  template: `
-    @if (popup()) {
-      <ng-template
-        cdkConnectedOverlay
-        cdkConnectedOverlayPanelClass="hx-menu-overlay"
-        [cdkConnectedOverlayOrigin]="origin() ?? fallbackOrigin"
-        [cdkConnectedOverlayOpen]="open()"
-        [cdkConnectedOverlayPositions]="positions"
-        (overlayOutsideClick)="onOutsideClick($event)"
-        (overlayKeydown)="onOverlayKeydown($event)"
-        (attach)="onAttach()"
-        (detach)="open.set(false)"
-      >
-        <hx-menu-panel class="hx-menu-root" [items]="model()" [ariaLabel]="ariaLabel()" (triggered)="onTriggered($event)" />
-      </ng-template>
-    } @else {
-      <hx-menu-panel class="hx-menu-root" [items]="model()" [ariaLabel]="ariaLabel()" (triggered)="triggered.emit($event)" />
-    }
-  `,
+  templateUrl: './menu.html',
 })
 export class HxMenu {
   readonly #injector = inject(Injector);

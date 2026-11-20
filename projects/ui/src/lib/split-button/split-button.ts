@@ -38,39 +38,7 @@ import type { HxMenuItem } from '../menu-item';
     '[class.hx-split-button-raised]': 'raised()',
     '[class.hx-split-button-outlined]': "variant() === 'outlined'",
   },
-  template: `
-    <button
-      hx-button
-      type="button"
-      class="hx-split-button-main"
-      [variant]="variant()"
-      [severity]="severity()"
-      [size]="size()"
-      [disabled]="disabled()"
-    >
-      @if (icon()) {
-        <span class="hx-button-icon" [class]="icon()" aria-hidden="true"></span>
-      }
-      {{ label() }}
-    </button>
-    <button
-      hx-button
-      iconOnly
-      type="button"
-      class="hx-split-button-menu"
-      aria-haspopup="menu"
-      [variant]="variant()"
-      [severity]="severity()"
-      [size]="size()"
-      [disabled]="disabled()"
-      [attr.aria-expanded]="menu.open()"
-      [attr.aria-label]="menuButtonLabel()"
-      (click)="$event.stopPropagation(); menu.toggle($event)"
-    >
-      <span class="hx-split-button-chevron" aria-hidden="true"></span>
-    </button>
-    <hx-menu #menu popup [model]="model()" [ariaLabel]="menuButtonLabel()" (triggered)="triggered.emit($event)" />
-  `,
+  templateUrl: './split-button.html',
 })
 export class HxSplitButton {
   /** Text of the main button. */

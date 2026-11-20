@@ -26,17 +26,7 @@ export type HxAvatarShape = 'square' | 'circle';
     '[class.hx-avatar-xl]': "size() === 'xlarge'",
     '[class.hx-avatar-circle]': "shape() === 'circle'",
   },
-  template: `
-    @if (image()) {
-      <img class="hx-avatar-image" [src]="image()" alt="" />
-    } @else if (icon()) {
-      <span class="hx-avatar-icon" [class]="icon()" aria-hidden="true"></span>
-    } @else if (label()) {
-      <span class="hx-avatar-label" [attr.aria-hidden]="ariaLabel() ? 'true' : null">{{ label() }}</span>
-    } @else {
-      <ng-content />
-    }
-  `,
+  templateUrl: './avatar.html',
 })
 export class HxAvatar {
   /** Initials or a short text. */
@@ -65,7 +55,7 @@ export class HxAvatar {
   selector: 'hx-avatar-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-avatar-group', role: 'group', '[attr.aria-label]': 'ariaLabel() || null' },
-  template: '<ng-content />',
+  templateUrl: './avatar-group.html',
 })
 export class HxAvatarGroup {
   /** Accessible name of the group. */

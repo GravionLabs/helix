@@ -1,0 +1,13 @@
+<div class="hx-message-content">
+  @if (icon()) {
+    <i class="hx-message-icon-custom" [class]="icon()" aria-hidden="true"></i>
+  } @else {
+    <span class="hx-message-icon" aria-hidden="true"></span>
+  }
+  <span class="hx-message-text"><ng-content /></span>
+  @if (closable()) {
+    <button type="button" class="hx-message-close" [attr.aria-label]="closeLabel()" (click)="dismiss()">
+      <span class="hx-message-close-icon" aria-hidden="true"></span>
+    </button>
+  }
+</div>

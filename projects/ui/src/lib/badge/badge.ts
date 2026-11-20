@@ -23,7 +23,7 @@ export type HxBadgeSize = 'small' | 'medium' | 'large' | 'xlarge';
  */
 @Component({
   selector: 'hx-badge',
-  template: '{{ value() }}',
+  templateUrl: './badge.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-badge',
@@ -66,7 +66,7 @@ export class HxBadge {
 @Component({
   selector: 'hx-overlay-badge',
   imports: [HxBadge],
-  template: `<ng-content /><hx-badge class="hx-overlay-badge-badge" [value]="value()" [severity]="severity()" [size]="size()" />`,
+  templateUrl: './overlay-badge.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-overlay-badge' },
 })

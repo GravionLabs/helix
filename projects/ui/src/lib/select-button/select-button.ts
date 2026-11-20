@@ -40,21 +40,7 @@ export type HxSelectButtonSize = 'small' | 'medium' | 'large';
     '[class.hx-select-button-invalid]': 'invalid()',
     '[class.hx-select-button-disabled]': 'isDisabled()',
   },
-  template: `
-    @for (item of items(); track $index) {
-      <button
-        type="button"
-        class="hx-select-button-option"
-        [class.hx-select-button-option-checked]="isChecked(item)"
-        [attr.aria-pressed]="isChecked(item)"
-        [disabled]="isDisabled() || item.disabled"
-        (click)="toggle(item)"
-        (blur)="onBlur()"
-      >
-        <span class="hx-select-button-content">{{ item.label }}</span>
-      </button>
-    }
-  `,
+  templateUrl: './select-button.html',
 })
 export class HxSelectButton implements ControlValueAccessor, FormValueControl<unknown> {
   readonly options = input<readonly unknown[]>([]);

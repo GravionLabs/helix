@@ -18,7 +18,7 @@ export interface CrudContext {
   host: { style: 'display: flex; align-items: center; height: 100%' },
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<img [src]="src()" alt="" style="width: 48px" class="rounded" />`,
+  templateUrl: './crud-image-cell.html',
 })
 export class CrudImageCell implements ICellRendererAngularComp {
   protected readonly src = signal('');
@@ -40,7 +40,7 @@ export class CrudImageCell implements ICellRendererAngularComp {
   standalone: true,
   imports: [HxRating],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<hx-rating readonly [value]="value()" [ariaLabel]="'Rated ' + (value() ?? 0) + ' of 5'" />`,
+  templateUrl: './crud-rating-cell.html',
 })
 export class CrudRatingCell implements ICellRendererAngularComp {
   protected readonly value = signal<number | null>(null);
@@ -68,7 +68,7 @@ const SEVERITY: Record<string, HxTagSeverity> = {
   standalone: true,
   imports: [HxTag],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<hx-tag [value]="status()" [severity]="severity()" />`,
+  templateUrl: './crud-status-cell.html',
 })
 export class CrudStatusCell implements ICellRendererAngularComp {
   protected readonly status = signal('');
@@ -91,14 +91,7 @@ export class CrudStatusCell implements ICellRendererAngularComp {
   standalone: true,
   imports: [HxButton],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <button hx-button type="button" iconOnly rounded variant="outlined" [attr.aria-label]="'Edit ' + name()" (click)="edit()">
-      <span class="pi pi-pencil hx-button-icon" aria-hidden="true"></span>
-    </button>
-    <button hx-button type="button" iconOnly rounded variant="outlined" severity="danger" [attr.aria-label]="'Delete ' + name()" (click)="remove()">
-      <span class="pi pi-trash hx-button-icon" aria-hidden="true"></span>
-    </button>
-  `,
+  templateUrl: './crud-actions-cell.html',
   styles: ':host { display: inline-flex; gap: 0.5rem; align-items: center; }',
 })
 export class CrudActionsCell implements ICellRendererAngularComp {

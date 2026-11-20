@@ -17,35 +17,7 @@ import { HxSelect } from '../../select/select';
 @Component({
   selector: 'hx-range-presets',
   imports: [HxSelect],
-  template: `
-    @if (display() === 'select') {
-      <hx-select
-        class="hx-range-preset-select"
-        fluid
-        [options]="presets()"
-        optionLabel="label"
-        [optionValue]="presetValue"
-        [placeholder]="label()"
-        [ariaLabel]="label()"
-        [ariaDescribedby]="describedBy()"
-        [disabled]="disabled()"
-        [value]="selected()"
-        (valueChange)="chooseInSelect($event)"
-      />
-    } @else {
-      @for (preset of presets(); track $index) {
-        <button
-          type="button"
-          class="hx-date-picker-button hx-range-preset"
-          [disabled]="disabled()"
-          [attr.aria-describedby]="describedBy()"
-          (click)="chosen.emit(preset)"
-        >
-          {{ preset.label }}
-        </button>
-      }
-    }
-  `,
+  templateUrl: './range-presets.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'hx-range-presets',

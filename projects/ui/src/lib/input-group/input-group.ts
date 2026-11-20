@@ -20,7 +20,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'hx-input-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-input-group' },
-  template: '<ng-content />',
+  templateUrl: './input-group.html',
 })
 export class HxInputGroup {}
 
@@ -29,6 +29,6 @@ export class HxInputGroup {}
   selector: 'hx-input-group-addon',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-input-group-addon' },
-  template: '<ng-content />',
+  templateUrl: './input-group-addon.html',
 })
 export class HxInputGroupAddon {}

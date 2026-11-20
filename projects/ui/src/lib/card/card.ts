@@ -31,25 +31,7 @@ import {
   imports: [NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-card' },
-  template: `
-    <ng-template #titleText>{{ title() }}<ng-content select="[hxCardTitle]" /></ng-template>
-    <div class="hx-card-header"><ng-content select="[hxCardHeader]" /></div>
-    <div class="hx-card-body">
-      <div class="hx-card-caption">
-        @switch (level()) {
-          @case (1) { <h1 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h1> }
-          @case (2) { <h2 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h2> }
-          @case (3) { <h3 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h3> }
-          @case (4) { <h4 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h4> }
-          @case (5) { <h5 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h5> }
-          @default { <h6 class="hx-card-title"><ng-container [ngTemplateOutlet]="titleText" /></h6> }
-        }
-        <div class="hx-card-subtitle">{{ subtitle() }}<ng-content select="[hxCardSubtitle]" /></div>
-      </div>
-      <div class="hx-card-content"><ng-content /></div>
-      <div class="hx-card-footer"><ng-content select="[hxCardFooter]" /></div>
-    </div>
-  `,
+  templateUrl: './card.html',
 })
 export class HxCard {
   /** A shortcut for the title slot. */

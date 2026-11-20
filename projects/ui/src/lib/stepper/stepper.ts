@@ -58,7 +58,7 @@ export interface HxStepContentContext {
   selector: 'hx-stepper',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-stepper' },
-  template: '<ng-content />',
+  templateUrl: './stepper.html',
 })
 export class HxStepper {
   /** The `value` of the active step. */
@@ -124,7 +124,7 @@ export class HxStepper {
   selector: 'hx-step-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-step-list', role: 'list' },
-  template: '<ng-content />',
+  templateUrl: './step-list.html',
 })
 export class HxStepList {}
 
@@ -140,29 +140,7 @@ export class HxStepList {}
     '[class.hx-step-disabled]': 'unavailable()',
     '[class.hx-step-last]': 'last()',
   },
-  template: `
-    <button
-      type="button"
-      class="hx-step-header"
-      [id]="stepper.stepId(value())"
-      [disabled]="unavailable()"
-      [attr.aria-current]="active() ? 'step' : null"
-      [attr.aria-controls]="stepper.panelId(value())"
-      (click)="stepper.activate(value())"
-    >
-      <span class="hx-step-number" aria-hidden="true">
-        @if (completed()) {
-          <span class="hx-step-check"></span>
-        } @else {
-          {{ index() + 1 }}
-        }
-      </span>
-      <span class="hx-step-title"><ng-content /></span>
-    </button>
-    @if (!last()) {
-      <span class="hx-step-separator" aria-hidden="true"></span>
-    }
-  `,
+  templateUrl: './step.html',
 })
 export class HxStep {
   protected readonly stepper = inject(HxStepper);
@@ -192,7 +170,7 @@ export class HxStep {
   selector: 'hx-step-panels',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-step-panels' },
-  template: '<ng-content />',
+  templateUrl: './step-panels.html',
 })
 export class HxStepPanels {}
 
@@ -221,15 +199,7 @@ export class HxStepContent {
     '[attr.aria-labelledby]': 'stepper.stepId(value())',
     '[hidden]': '!active()',
   },
-  template: `
-    @if (lazy(); as lazy) {
-      @if (render()) {
-        <ng-container [ngTemplateOutlet]="lazy.template" [ngTemplateOutletContext]="context()" />
-      }
-    } @else {
-      <ng-content />
-    }
-  `,
+  templateUrl: './step-panel.html',
 })
 export class HxStepPanel {
   protected readonly stepper = inject(HxStepper);

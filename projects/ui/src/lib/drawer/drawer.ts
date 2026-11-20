@@ -38,15 +38,7 @@ export type HxDrawerPosition = 'left' | 'right' | 'top' | 'bottom';
   imports: [HxDialogFrame],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-drawer-anchor' },
-  template: `
-    <ng-template #panel>
-      <hx-dialog-frame class="hx-drawer" [header]="header()" [titleId]="titleId" [closable]="closable()" [closeLabel]="closeLabel()" (closeClick)="visible.set(false)">
-        <ng-container ngProjectAs="[hxDialogHeader]"><ng-content select="[hxDialogHeader]" /></ng-container>
-        <ng-content />
-        <ng-container ngProjectAs="[hxDialogFooter]"><ng-content select="[hxDialogFooter]" /></ng-container>
-      </hx-dialog-frame>
-    </ng-template>
-  `,
+  templateUrl: './drawer.html',
 })
 export class HxDrawer {
   readonly #dialog = inject(Dialog);

@@ -22,31 +22,7 @@ import { nextId } from '../internal/ids';
     '[class.hx-fieldset-toggleable]': 'toggleable()',
     '[class.hx-fieldset-collapsed]': 'isCollapsed()',
   },
-  template: `
-    <fieldset class="hx-fieldset-box">
-      <legend class="hx-fieldset-legend">
-        @if (toggleable()) {
-          <button
-            type="button"
-            class="hx-fieldset-toggle"
-            [attr.aria-expanded]="!isCollapsed()"
-            [attr.aria-controls]="contentId"
-            (click)="toggle()"
-          >
-            <span class="hx-fieldset-toggle-icon" aria-hidden="true"></span>
-            <span>{{ legend() }}</span>
-          </button>
-        } @else {
-          <span class="hx-fieldset-legend-text">{{ legend() }}</span>
-        }
-      </legend>
-      <div class="hx-fieldset-collapse" [attr.inert]="isCollapsed() ? '' : null">
-        <div class="hx-fieldset-collapse-inner">
-          <div class="hx-fieldset-content" [id]="contentId"><ng-content /></div>
-        </div>
-      </div>
-    </fieldset>
-  `,
+  templateUrl: './fieldset.html',
 })
 export class HxFieldset {
   /** The legend text. */

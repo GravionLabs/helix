@@ -38,27 +38,7 @@ export type HxToastPosition =
     '(focusin)': 'pause()',
     '(focusout)': 'resume()',
   },
-  template: `
-    <div class="hx-toast-content">
-      <span class="hx-toast-icon" aria-hidden="true"></span>
-      <div class="hx-toast-text">
-        @if (message().summary) {
-          <span class="hx-toast-summary">{{ message().summary }}</span>
-        }
-        @if (message().detail) {
-          <div class="hx-toast-detail">{{ message().detail }}</div>
-        }
-      </div>
-      @if (message().action; as action) {
-        <button type="button" class="hx-toast-action" (click)="runAction()">{{ action.label }}</button>
-      }
-      @if (message().closable !== false) {
-        <button type="button" class="hx-toast-close" aria-label="Close" (click)="close()">
-          <span class="hx-toast-close-icon" aria-hidden="true"></span>
-        </button>
-      }
-    </div>
-  `,
+  templateUrl: './toast-item.html',
 })
 export class HxToastItem implements OnInit {
   readonly message = input.required<HxToastMessage>();
@@ -139,11 +119,7 @@ export class HxToastItem implements OnInit {
     '[class.hx-toast-bottom-center]': "position() === 'bottom-center'",
     '[class.hx-toast-bottom-right]': "position() === 'bottom-right'",
   },
-  template: `
-    @for (message of shown(); track message.id) {
-      <hx-toast-item [message]="message" />
-    }
-  `,
+  templateUrl: './toast.html',
 })
 export class HxToast {
   readonly #service = inject(HxMessageService);

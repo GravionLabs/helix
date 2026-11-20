@@ -121,18 +121,7 @@ function merge(defaults: Json, overrides: Json): Json {
   selector: 'hx-chart',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-chart' },
-  template: `
-    <div class="hx-chart-frame" [style.width]="width() ?? null" [style.height]="height() ?? null">
-      <canvas
-        #canvas
-        class="hx-chart-canvas"
-        role="img"
-        [attr.aria-label]="ariaLabel() || null"
-        [attr.aria-labelledby]="ariaLabelledBy() || null"
-        (click)="onClick($event)"
-      ><ng-content select="[hxChartFallback]" /></canvas>
-    </div>
-  `,
+  templateUrl: './chart.html',
 })
 export class HxChart {
   readonly #host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;

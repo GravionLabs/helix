@@ -12,17 +12,7 @@ import { HelixFieldWidgetBase } from '@gravionlabs/helix-zod';
   selector: 'app-rating-widget',
   standalone: true,
   imports: [HxRating, HelixFormField],
-  template: `
-    <helix-form-field [label]="label()" [hint]="hint()" [error]="firstError()">
-      <hx-rating
-        [ariaLabel]="label()"
-        [stars]="stars()"
-        [disabled]="state().disabled()"
-        [value]="state().value()"
-        (valueChange)="onChange($event)"
-      />
-    </helix-form-field>
-  `,
+  templateUrl: './rating-widget.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RatingWidget extends HelixFieldWidgetBase<number | null> {

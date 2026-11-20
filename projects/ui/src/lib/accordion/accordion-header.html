@@ -1,0 +1,22 @@
+<ng-template #button>
+  <button
+    type="button"
+    class="hx-accordion-trigger"
+    [id]="panel.headerId"
+    [attr.aria-expanded]="panel.expanded()"
+    [attr.aria-controls]="panel.contentId"
+    [disabled]="panel.disabled()"
+    (click)="panel.toggle()"
+  >
+    <span class="hx-accordion-title"><ng-content /></span>
+    <span class="hx-accordion-icon" aria-hidden="true"></span>
+  </button>
+</ng-template>
+@switch (level()) {
+  @case (1) { <h1 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h1> }
+  @case (2) { <h2 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h2> }
+  @case (3) { <h3 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h3> }
+  @case (4) { <h4 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h4> }
+  @case (5) { <h5 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h5> }
+  @default { <h6 class="hx-accordion-heading"><ng-container [ngTemplateOutlet]="button" /></h6> }
+}
