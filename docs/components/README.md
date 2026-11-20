@@ -70,13 +70,14 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Paginator](paginator.md)   | `hx-paginator` is the page navigation of a list or table: first, previous, page links, next, last and a rows-per-page select.    |
 | [Breadcrumb](breadcrumb.md) | `hx-breadcrumb` renders the path to the current page as a `nav` landmark with an ordered list.                                   |
 
-## Display (7)
+## Display (8)
 
 | Component               | Description                                                                                                              |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | [Avatar](avatar.md)     | `hx-avatar` shows a picture, an icon or initials for a person; `hx-avatar-group` overlaps several.                       |
 | [Badge](badge.md)       | `hx-badge` is a small count or status marker; without a `value` it is a dot.                                             |
 | [Chip](chip.md)         | `hx-chip` is a compact element for an entity, optionally removable.                                                      |
+| [Kbd](kbd.md)           | `hx-kbd` shows a keyboard shortcut as key caps; `hxTooltipShortcut` shows it in a tooltip.                               |
 | [Tag](tag.md)           | `hx-tag` is a label for a category or a status.                                                                          |
 | [Progress](progress.md) | `hx-progress-bar` fills from 0 to 100 or slides while the duration is unknown; `hx-progress-spinner` is a spinning ring. |
 | [Skeleton](skeleton.md) | `hx-skeleton` is a placeholder shaped like the content that is still loading.                                            |

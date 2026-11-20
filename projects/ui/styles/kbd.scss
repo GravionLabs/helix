@@ -1,0 +1,59 @@
+/*
+ * Key caps: `hx-kbd` (one `.hx-kbd-key` per key), coloured by the `--h-kbd-*` tokens. Inside a tooltip bubble the
+ * caps read the `--h-kbd-tooltip-*` tokens, because the bubble is dark in both themes.
+ */
+.hx-kbd {
+  --hx-kbd-height: var(--h-kbd-height);
+  --hx-kbd-min-width: var(--h-kbd-min-width);
+  --hx-kbd-padding-x: var(--h-kbd-padding-x);
+  --hx-kbd-font-size: var(--h-kbd-font-size);
+  --hx-kbd-gap: var(--h-kbd-gap);
+  --hx-kbd-background: var(--h-kbd-background);
+  --hx-kbd-color: var(--h-kbd-color);
+  --hx-kbd-border-color: var(--h-kbd-border-color);
+  --hx-kbd-separator-color: var(--h-kbd-separator-color);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hx-kbd-gap);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.hx-kbd-sm {
+  --hx-kbd-height: var(--h-kbd-sm-height);
+  --hx-kbd-min-width: var(--h-kbd-sm-min-width);
+  --hx-kbd-padding-x: var(--h-kbd-sm-padding-x);
+  --hx-kbd-font-size: var(--h-kbd-sm-font-size);
+  --hx-kbd-gap: var(--h-kbd-sm-gap);
+}
+
+.hx-kbd-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--hx-kbd-min-width);
+  height: var(--hx-kbd-height);
+  padding: 0 var(--hx-kbd-padding-x);
+  border: var(--h-kbd-border-width) solid var(--hx-kbd-border-color);
+  border-radius: var(--h-kbd-border-radius);
+  background: var(--hx-kbd-background);
+  color: var(--hx-kbd-color);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--hx-kbd-font-size);
+  line-height: 1;
+}
+
+.hx-kbd-separator {
+  color: var(--hx-kbd-separator-color);
+  font-size: var(--hx-kbd-font-size);
+  line-height: 1;
+}
+
+.hx-tooltip .hx-kbd {
+  --hx-kbd-background: var(--h-kbd-tooltip-background);
+  --hx-kbd-color: var(--h-kbd-tooltip-color);
+  --hx-kbd-border-color: var(--h-kbd-tooltip-border-color);
+  --hx-kbd-separator-color: var(--h-kbd-tooltip-separator-color);
+  margin-inline-start: 0.5rem;
+}

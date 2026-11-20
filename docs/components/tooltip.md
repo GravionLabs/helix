@@ -15,6 +15,17 @@ hints, for example the name of an icon-only button, never for essential informat
 | `hxTooltipEvent`     | `'hover' \| 'focus' \| 'both'`           | `'both'` | What opens it.                                 |
 | `hxTooltipDisabled`  | `boolean`                                | `false`  | Never shows.                                   |
 | `hxTooltipShowDelay` | `number`                                 | `0`      | Milliseconds before it appears.                |
+| `hxTooltipShortcut`  | `string[]`                               |          | A shortcut shown as key caps after the text.   |
+
+## Shortcut
+
+`hxTooltipShortcut` shows a keyboard shortcut as small [key caps](kbd.md) after the text. The keys are not translated:
+pass the labels for the platform. The caps are text inside the tooltip, so a screen reader reads them. Set
+`aria-keyshortcuts` on the host yourself.
+
+```html
+<button hx-button hx-tooltip="Save" [hxTooltipShortcut]="['Ctrl', 'S']" aria-keyshortcuts="Control+S">Save</button>
+```
 
 ## Tokens
 
