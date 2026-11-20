@@ -4,8 +4,5 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "assets": [
-    "LICENSE.md",
-    { "input": "styles", "glob": "styles.css", "output": "." }
-  ]
+  "assets": ["LICENSE.md", { "input": "styles", "glob": "styles.css", "output": "." }]
 }

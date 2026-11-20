@@ -79,6 +79,7 @@ pnpm start          # Build libs + serve the demo app
 pnpm build:lib      # Build all libraries (ui, shell, zod, ag-grid, desktop) (ends with pnpm tokens:export → dist/tokens/)
 pnpm test:lib       # Run library unit tests
 pnpm lint           # biome + eslint + import guards
+pnpm format         # format with oxfmt (pnpm format:check only checks)
 ```
 
 ## Attribution & License

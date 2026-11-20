@@ -63,6 +63,7 @@ used** list and one summary line each for the start and the end. The value is `{
     { label: 'Yesterday', from: 'now-1d/d', to: 'now-1d/d' },
   ];
   ```
+
 - **Recently used:** the last 5 applied ranges, newest first, without duplicates, kept in `localStorage` under
   `recentStorageKey` (if storage is blocked, or the key is `null`, the list lives in memory for the session). A range
   is added when it is applied by Apply, a list entry or, when the popup closes, an edit of a side. A click applies it
@@ -102,6 +103,7 @@ used** list and one summary line each for the start and the end. The value is `{
   // the range the expression stands for now
   range = this.expression() ? hxResolveRangeExpression(this.expression()!) : { from: null, to: null };
   ```
+
 - **Date math:** `hxParseDateMath(expression, { now?, firstDayOfWeek?, roundUp? })` returns a `Date`, or `null` for an
   invalid text (it never throws). Grammar: `now`, then any number of `+N<unit>` or `-N<unit>` (shift) and `/<unit>`
   (round down to the start of the unit; to its last millisecond with `roundUp`). Units are case-sensitive: `s`, `m`,
@@ -115,6 +117,7 @@ used** list and one summary line each for the start and the end. The value is `{
   | `now-1d/d` | Start of yesterday (end of yesterday with `roundUp`).     |
   | `now/w`    | Start of this week (the end of this week with `roundUp`). |
   | `now+1M/M` | Start of next month.                                      |
+
 - **Forms:** with `ngModel` and reactive forms the control value is `{ from, to }`; with signal forms bind
   `[formField]`. There is no built-in required rule; use the validators of the form. `disabled` (also a disabled form
   control) disables the field, the button and the popup.
@@ -122,6 +125,7 @@ used** list and one summary line each for the start and the end. The value is `{
   ```html
   <hx-date-range-quick-select [formField]="filterForm.period" [(expression)]="expression" />
   ```
+
 - **Keyboard:** the field is read-only; click, the button, Arrow Down, Enter or Space open the popup. Tab moves through
   the quick select row, the lists and the summary lines; the tabs of a side editor follow the tab pattern. Escape closes
   the innermost open layer: a calendar or select list, then the side editor, then the popup. The focus leaving the

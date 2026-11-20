@@ -53,12 +53,8 @@
    scheme, live in `projects/tokens` (`surface.frame|panel|card|overlay|hover`, `border.panel`);
    an application that overrides `--helix-surface-*` keeps working. */
 :root {
-  --helix-surface-chrome: var(
-    --h-surface-frame
-  ); /* frame: ground behind the panels */
-  --helix-surface-ground: var(
-    --h-surface-panel
-  ); /* page background: the panel */
+  --helix-surface-chrome: var(--h-surface-frame); /* frame: ground behind the panels */
+  --helix-surface-ground: var(--h-surface-panel); /* page background: the panel */
   --helix-surface-card: var(--h-surface-card); /* cards / content panels */
   --helix-surface-overlay: var(--h-surface-overlay); /* popovers / dialogs */
   --helix-surface-hover: var(--h-surface-hover); /* hover states */
@@ -88,11 +84,9 @@
    declared here; the font file is the application's (`@fontsource-variable/inter` in
    its styles). */
 :root {
-  --helix-font-sans:
-    "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --helix-font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
   --helix-font-display: var(--helix-font-sans);
-  --helix-font-mono:
-    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --helix-font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 }
 
 a {

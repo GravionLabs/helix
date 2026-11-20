@@ -27,33 +27,11 @@
     }
   },
   "formatter": {
-    "enabled": true,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf"
-  },
-  "markdown": {
-    "parser": {
-      "frontmatter": true
-    },
-    "formatter": {
-      "formatEmbeds": false
-    }
-  },
-  "yaml": {
-    "formatter": {
-      "quoteStyle": "single"
-    }
+    "enabled": false
   },
   "css": {
     "parser": {
       "tailwindDirectives": true
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "single",
-      "lineWidth": 100
     }
   },
   "files": {
@@ -73,18 +51,8 @@
       "!**/public",
       "!.agents/skills",
       "!.claude/skills",
-      "!CHANGELOG.md"
+      "!CHANGELOG.md",
+      "!.oxfmtrc.json"
     ]
-  },
-  "overrides": [
-    {
-      "includes": ["**/*.scss"],
-      "css": {
-        "formatter": {
-          "quoteStyle": "single",
-          "lineWidth": 100
-        }
-      }
-    }
-  ]
+  }
 }
