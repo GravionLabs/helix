@@ -10,10 +10,10 @@ import { HxStatusZoom } from './status-zoom';
   template: `
     <button id="outside" type="button">outside</button>
     <hx-status-bar>
-      <hx-status-item slot="start" id="text" tone="warn" title="Tip" ariaLabel="Warnings">2 warnings</hx-status-item>
+      <hx-status-item slot="start" id="text" tone="warn" title="Tip" ariaLabel="Warnings" (pressed)="presses = presses + 100">2 warnings</hx-status-item>
       <hx-status-item slot="start" id="sync" [announce]="true">Synced</hx-status-item>
-      <hx-status-item slot="start" id="btn" kind="button" [disabled]="disabled()" (click)="clicks = clicks + 1">Go</hx-status-item>
-      <hx-status-item slot="start" id="upd" kind="button" tone="accent" [(popoverOpen)]="open">
+      <hx-status-item slot="start" id="btn" kind="button" [disabled]="disabled()" (pressed)="presses = presses + 1">Go</hx-status-item>
+      <hx-status-item slot="start" id="upd" kind="button" tone="accent" [(popoverOpen)]="open" (pressed)="updatePresses = updatePresses + 1">
         Update
         <div hxStatusPopover id="details">Details</div>
       </hx-status-item>
@@ -27,7 +27,8 @@ class Host {
   readonly open = signal(false);
   readonly disabled = signal(false);
   readonly channel = signal<string | null>('RC');
-  clicks = 0;
+  presses = 0;
+  updatePresses = 0;
 }
 
 describe('status bar', () => {
@@ -100,6 +101,33 @@ describe('status bar', () => {
     host.channel.set(null);
     fixture.detectChanges();
     expect(q('.hx-status-channel')).toBeNull();
+  });
+
+  it('emits pressed for an enabled button item only', () => {
+    const { fixture, q, host } = setup();
+    q<HTMLButtonElement>('#btn button').click();
+    expect(host.presses).toBe(1);
+    host.disabled.set(true);
+    fixture.detectChanges();
+    q<HTMLButtonElement>('#btn button').click();
+    q('#btn').click(); // a click on the host, not on the button
+    expect(host.presses).toBe(1);
+    q('#text .hx-status-control').click();
+    expect(host.presses).toBe(1);
+  });
+
+  it('emits pressed and toggles the popover; a click inside the popover does not emit', () => {
+    const { fixture, q, host } = setup();
+    q<HTMLButtonElement>('#upd button').click();
+    fixture.detectChanges();
+    expect(host.open()).toBe(true);
+    expect(host.updatePresses).toBe(1);
+    q('#details').click();
+    expect(host.updatePresses).toBe(1);
+    q<HTMLButtonElement>('#upd button').click();
+    fixture.detectChanges();
+    expect(host.open()).toBe(false);
+    expect(host.updatePresses).toBe(2);
   });
 
   it('opens a popover on click; Escape and an outside click close it', () => {

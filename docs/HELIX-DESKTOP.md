@@ -51,7 +51,7 @@ The 22 px bottom bar with a start and an end group. Items are projected, not con
 </hx-status-bar>
 ```
 
-- `HxStatusItem`: `kind` `'text'` (default) or `'button'`, `title`, `ariaLabel`, `disabled`, `tone` (`neutral`, `warn`, `error`, `accent`), `announce`, `popoverOpen` (two-way).
+- `HxStatusItem`: `kind` `'text'` (default) or `'button'`, `title`, `ariaLabel`, `disabled`, `tone` (`neutral`, `warn`, `error`, `accent`), `announce`, `popoverOpen` (two-way). Output `pressed` fires when a button item is activated (click, Enter, Space), not for a disabled or text item or a click inside the popover.
 - `announce` sets `role="status"` on that item only; the bar is not a live region. Use it for values that change on their own.
 - An element with `hxStatusPopover` inside a button item opens above the bar; Escape and a click outside close it.
 - `HxStatusZoom`: `value` (two-way, percent), `min`, `max`, `step`, `reset`. The percentage resets.

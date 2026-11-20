@@ -173,7 +173,7 @@
               kind="button"
               tone="warn"
               title="Show the panes that wait for you"
-              (click)="showWaiting(shell)"
+              (pressed)="showWaiting(shell)"
             >
               {{ waiting() }} waiting
             </hx-status-item>
@@ -182,7 +182,7 @@
             slot="start"
             kind="button"
             title="Toggle the output panel"
-            (click)="outputOpen.set(!outputOpen())"
+            (pressed)="outputOpen.set(!outputOpen())"
           >
             <i class="pi pi-desktop" aria-hidden="true"></i> Output
           </hx-status-item>
