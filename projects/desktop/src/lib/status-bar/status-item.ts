@@ -8,6 +8,7 @@ import {
   inject,
   input,
   model,
+  output,
 } from '@angular/core';
 
 /** Marks the content of a status item that opens as a popover above the bar. */
@@ -29,6 +30,8 @@ export type HxStatusTone = 'neutral' | 'warn' | 'error' | 'accent';
  * ```
  *
  * - `kind`: `'text'` (default) or `'button'`.
+ * - `pressed`: emits when a button item is activated (click, Enter or Space). Not for a disabled item, a text
+ *   item or a click inside the popover.
  * - `announce`: sets `role="status"` on the item, for a value that changes while the user works (a sync
  *   state). The bar itself is not a live region.
  * - An element with `hxStatusPopover` inside the item is a popover above the bar, shown while
@@ -92,6 +95,8 @@ export class HxStatusItem {
   readonly announce = input(false);
   /** Whether the popover is open. */
   readonly popoverOpen = model(false);
+  /** Emits when a button item is activated by click, Enter or Space. */
+  readonly pressed = output<void>();
 
   private readonly popover = contentChild(HxStatusPopover);
 
@@ -101,6 +106,7 @@ export class HxStatusItem {
 
   protected onButtonClick(): void {
     if (this.hasPopover) this.popoverOpen.update((open) => !open);
+    this.pressed.emit();
   }
 
   protected close(): void {
