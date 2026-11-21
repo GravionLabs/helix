@@ -1,13 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="m10 16 1.5 1.5" />
-  <path d="m14 8-1.5-1.5" />
-  <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993" />
-  <path d="m16.5 10.5 1 1" />
-  <path d="m17 6-2.891-2.891" />
-  <path d="M2 15c6.667-6 13.333 0 20-6" />
-  <path d="m20 9 .891.891" />
-  <path d="M3.109 14.109 4 15" />
-  <path d="m6.5 12.5 1 1" />
-  <path d="m7 18 2.891 2.891" />
-  <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993" />
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset="1" stop-color="#12102e"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- crossbar: one turn of the helix, the pink strand behind the cyan one -->
+  <path d="M 160 256 C 200.7 176 215.3 176 256 256 S 311.3 336 352 256" fill="none" stroke="#f0abfc" stroke-width="38" stroke-linecap="round"/>
+  <path d="M 160 256 C 200.7 336 215.3 336 256 256 S 311.3 176 352 256" fill="none" stroke="#67e8f9" stroke-width="38" stroke-linecap="round"/>
+
+  <!-- stems of the H -->
+  <rect x="92" y="104" width="76" height="304" rx="27" fill="#ffffff"/>
+  <rect x="344" y="104" width="76" height="304" rx="27" fill="#ffffff"/>
 </svg>
