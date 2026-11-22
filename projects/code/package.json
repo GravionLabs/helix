@@ -1,0 +1,64 @@
+{
+  "name": "@gravionlabs/helix-code",
+  "version": "0.1.0",
+  "description": "Helix code editing for Angular: CodeMirror editor, diff and merge views. Git views in the /git entry.",
+  "license": "MIT",
+  "keywords": [
+    "helix",
+    "angular",
+    "codemirror",
+    "editor",
+    "diff"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/code"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular/cdk": ">=22",
+    "@angular/common": ">=22",
+    "@angular/core": ">=22",
+    "@angular/forms": ">=22",
+    "@codemirror/commands": "^6",
+    "@codemirror/language": "^6",
+    "@codemirror/language-data": "^6",
+    "@codemirror/merge": "^6",
+    "@codemirror/search": "^6",
+    "@codemirror/state": "^6",
+    "@codemirror/view": "^6",
+    "@lezer/highlight": "^1"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependenciesMeta": {
+    "@codemirror/commands": {
+      "optional": true
+    },
+    "@codemirror/language": {
+      "optional": true
+    },
+    "@codemirror/language-data": {
+      "optional": true
+    },
+    "@codemirror/merge": {
+      "optional": true
+    },
+    "@codemirror/search": {
+      "optional": true
+    },
+    "@codemirror/state": {
+      "optional": true
+    },
+    "@codemirror/view": {
+      "optional": true
+    },
+    "@lezer/highlight": {
+      "optional": true
+    }
+  }
+}
