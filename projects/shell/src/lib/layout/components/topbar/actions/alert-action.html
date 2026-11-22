@@ -1,4 +1,9 @@
-<button type="button" class="alert-badge-trigger" (click)="open.set(!open())" (blur)="open.set(false)">
+<button
+  type="button"
+  class="alert-badge-trigger"
+  (click)="open.set(!open())"
+  (blur)="open.set(false)"
+>
   <i class="pi pi-bell"></i>
   @if (count() > 0) {
     <span class="alert-badge-count">{{ count() }}</span>

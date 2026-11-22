@@ -32,8 +32,14 @@
     </hx-accordion>
     <h3 class="demo-title">Multiple</h3>
     <hx-accordion multiple [(value)]="openMany">
-      <hx-accordion-panel value="x"><hx-accordion-header>X</hx-accordion-header><hx-accordion-content>Content X</hx-accordion-content></hx-accordion-panel>
-      <hx-accordion-panel value="y"><hx-accordion-header>Y</hx-accordion-header><hx-accordion-content>Content Y</hx-accordion-content></hx-accordion-panel>
+      <hx-accordion-panel value="x"
+        ><hx-accordion-header>X</hx-accordion-header
+        ><hx-accordion-content>Content X</hx-accordion-content></hx-accordion-panel
+      >
+      <hx-accordion-panel value="y"
+        ><hx-accordion-header>Y</hx-accordion-header
+        ><hx-accordion-content>Content Y</hx-accordion-content></hx-accordion-panel
+      >
     </hx-accordion>
   </div>
 
@@ -55,7 +61,10 @@
 
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Panel</h2>
-    <hx-panel header="Static panel">Content of a panel without a toggle.<div hxPanelFooter>Footer</div></hx-panel>
+    <hx-panel header="Static panel"
+      >Content of a panel without a toggle.
+      <div hxPanelFooter>Footer</div></hx-panel
+    >
     <hx-panel header="Toggleable panel" toggleable [(collapsed)]="collapsed">
       <button hxPanelHeader hx-button size="small" variant="outlined" type="button">Action</button>
       The content collapses and expands.

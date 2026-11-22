@@ -2,3 +2,6 @@
 
 # style: format the repository with oxfmt (#1116)
 311e60ca4fc7fbeb8a9d2cc701ee8d7c8f703713
+
+# style: format Angular templates with oxfmt (#1167)
+8e2beeba5127c94ef63052b0cc033c5d8bcc197b

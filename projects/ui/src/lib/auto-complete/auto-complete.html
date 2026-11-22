@@ -64,7 +64,13 @@
   (detach)="open.set(false)"
 >
   <div class="hx-auto-complete-panel">
-    <div class="hx-auto-complete-list" role="listbox" [id]="panelId" [attr.aria-multiselectable]="multiple() ? 'true' : null" [attr.aria-label]="ariaLabel() ?? placeholder() ?? null">
+    <div
+      class="hx-auto-complete-list"
+      role="listbox"
+      [id]="panelId"
+      [attr.aria-multiselectable]="multiple() ? 'true' : null"
+      [attr.aria-label]="ariaLabel() ?? placeholder() ?? null"
+    >
       @for (item of items(); track $index) {
         <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- listbox option: the input keeps the focus and handles the keys (aria-activedescendant) -->
         <div

@@ -1,4 +1,11 @@
-<hx-popover #popover role="alertdialog" panelClass="hx-confirm-popup" ariaLabel="Confirmation" [ariaDescribedBy]="messageId" (hidden)="onHidden()">
+<hx-popover
+  #popover
+  role="alertdialog"
+  panelClass="hx-confirm-popup"
+  ariaLabel="Confirmation"
+  [ariaDescribedBy]="messageId"
+  (hidden)="onHidden()"
+>
   @if (current(); as c) {
     <div class="hx-confirm-popup-content">
       @if (c.icon) {
@@ -7,8 +14,27 @@
       <span class="hx-confirm-popup-message" [id]="messageId">{{ c.message }}</span>
     </div>
     <div class="hx-confirm-popup-footer">
-      <button hx-button type="button" variant="text" severity="secondary" size="small" class="hx-confirm-reject" (click)="answer(false)">{{ c.rejectLabel ?? 'No' }}</button>
-      <button hx-button type="button" size="small" class="hx-confirm-accept" [severity]="c.acceptSeverity ?? 'primary'" (click)="answer(true)">{{ c.acceptLabel ?? 'Yes' }}</button>
+      <button
+        hx-button
+        type="button"
+        variant="text"
+        severity="secondary"
+        size="small"
+        class="hx-confirm-reject"
+        (click)="answer(false)"
+      >
+        {{ c.rejectLabel ?? 'No' }}
+      </button>
+      <button
+        hx-button
+        type="button"
+        size="small"
+        class="hx-confirm-accept"
+        [severity]="c.acceptSeverity ?? 'primary'"
+        (click)="answer(true)"
+      >
+        {{ c.acceptLabel ?? 'Yes' }}
+      </button>
     </div>
   }
 </hx-popover>

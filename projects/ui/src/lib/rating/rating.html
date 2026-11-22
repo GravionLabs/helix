@@ -1,6 +1,8 @@
 @for (n of items(); track n) {
   @if (readonly()) {
-    <span class="hx-rating-star" [class.hx-rating-star-active]="n <= current()"><span class="hx-rating-icon"></span></span>
+    <span class="hx-rating-star" [class.hx-rating-star-active]="n <= current()"
+      ><span class="hx-rating-icon"></span
+    ></span>
   } @else {
     <label class="hx-rating-star" [class.hx-rating-star-active]="n <= current()">
       <input

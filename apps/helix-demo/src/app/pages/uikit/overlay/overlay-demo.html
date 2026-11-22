@@ -1,5 +1,10 @@
 <h1 class="sr-only">Overlay</h1>
-<app-source-tabs library="helix-ui" directory="overlay" componentName="overlay-demo" [docs]="['confirm', 'dialog', 'drawer', 'kbd', 'popover', 'tooltip']">
+<app-source-tabs
+  library="helix-ui"
+  directory="overlay"
+  componentName="overlay-demo"
+  [docs]="['confirm', 'dialog', 'drawer', 'kbd', 'popover', 'tooltip']"
+>
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card h-full">
@@ -16,21 +21,42 @@
       <div class="card">
         <h2 class="demo-title mb-2!">Popover</h2>
         <div class="flex flex-wrap gap-1">
-          <button hx-button type="button" aria-haspopup="dialog" (click)="op.toggle($event)">Show</button>
+          <button hx-button type="button" aria-haspopup="dialog" (click)="op.toggle($event)">
+            Show
+          </button>
           <hx-popover #op ariaLabel="Products">
             <div class="hx-table-scroll" style="width: 26rem; max-width: 80vw">
               <table hx-table hoverable size="small">
-                <caption>Pick a product</caption>
+                <caption>
+                  Pick a product
+                </caption>
                 <thead>
-                  <tr><th scope="col">Name</th><th scope="col">Image</th><th scope="col">Price</th></tr>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Price</th>
+                  </tr>
                 </thead>
                 <tbody>
                   @for (product of products(); track product.id) {
                     <tr>
                       <th scope="row">
-                        <button hx-button type="button" variant="link" (click)="selectProduct(op, product)">{{ product.name }}</button>
+                        <button
+                          hx-button
+                          type="button"
+                          variant="link"
+                          (click)="selectProduct(op, product)"
+                        >
+                          {{ product.name }}
+                        </button>
                       </th>
-                      <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" alt="" class="w-16 shadow-sm" /></td>
+                      <td>
+                        <img
+                          [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
+                          alt=""
+                          class="w-16 shadow-sm"
+                        />
+                      </td>
                       <td>{{ product.price | currency: 'USD' }}</td>
                     </tr>
                   }
@@ -45,9 +71,23 @@
       <div class="card">
         <h2 class="demo-title mb-2!">Tooltip</h2>
         <div class="inline-flex gap-3">
-          <input hx-input type="text" placeholder="Username" aria-label="Username" hx-tooltip="Your username" />
+          <input
+            hx-input
+            type="text"
+            placeholder="Username"
+            aria-label="Username"
+            hx-tooltip="Your username"
+          />
           <button hx-button type="button" hx-tooltip="Click to proceed">Save</button>
-          <button hx-button type="button" hx-tooltip="Command palette" [hxTooltipShortcut]="['Ctrl', 'Shift', 'P']" aria-keyshortcuts="Control+Shift+P">Palette</button>
+          <button
+            hx-button
+            type="button"
+            hx-tooltip="Command palette"
+            [hxTooltipShortcut]="['Ctrl', 'Shift', 'P']"
+            aria-keyshortcuts="Control+Shift+P"
+          >
+            Palette
+          </button>
         </div>
         <h2 class="demo-title mt-4 mb-2!">Kbd</h2>
         <div class="flex flex-wrap items-center gap-4">
@@ -61,18 +101,65 @@
       <div class="card h-full">
         <h2 class="demo-title mb-2!">Drawer</h2>
         @for (side of ['left', 'right', 'top', 'bottom']; track side) {
-          <hx-drawer header="Drawer" [position]="$any(side)" [visible]="drawer() === side" (visibleChange)="drawer.set($event ? $any(side) : null)">
+          <hx-drawer
+            header="Drawer"
+            [position]="$any(side)"
+            [visible]="drawer() === side"
+            (visibleChange)="drawer.set($event ? $any(side) : null)"
+          >
             <p>{{ lorem }}</p>
           </hx-drawer>
         }
-        <hx-drawer header="Drawer" fullScreen [(visible)]="full"><p>{{ lorem }}</p></hx-drawer>
+        <hx-drawer header="Drawer" fullScreen [(visible)]="full"
+          ><p>{{ lorem }}</p></hx-drawer
+        >
 
         <div class="flex flex-wrap gap-1">
-          <button hx-button type="button" iconOnly aria-label="Left drawer" (click)="drawer.set('left')"><span class="pi pi-arrow-right hx-button-icon" aria-hidden="true"></span></button>
-          <button hx-button type="button" iconOnly aria-label="Right drawer" (click)="drawer.set('right')"><span class="pi pi-arrow-left hx-button-icon" aria-hidden="true"></span></button>
-          <button hx-button type="button" iconOnly aria-label="Top drawer" (click)="drawer.set('top')"><span class="pi pi-arrow-down hx-button-icon" aria-hidden="true"></span></button>
-          <button hx-button type="button" iconOnly aria-label="Bottom drawer" (click)="drawer.set('bottom')"><span class="pi pi-arrow-up hx-button-icon" aria-hidden="true"></span></button>
-          <button hx-button type="button" iconOnly aria-label="Full screen drawer" (click)="full = true"><span class="pi pi-external-link hx-button-icon" aria-hidden="true"></span></button>
+          <button
+            hx-button
+            type="button"
+            iconOnly
+            aria-label="Left drawer"
+            (click)="drawer.set('left')"
+          >
+            <span class="pi pi-arrow-right hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            hx-button
+            type="button"
+            iconOnly
+            aria-label="Right drawer"
+            (click)="drawer.set('right')"
+          >
+            <span class="pi pi-arrow-left hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            hx-button
+            type="button"
+            iconOnly
+            aria-label="Top drawer"
+            (click)="drawer.set('top')"
+          >
+            <span class="pi pi-arrow-down hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            hx-button
+            type="button"
+            iconOnly
+            aria-label="Bottom drawer"
+            (click)="drawer.set('bottom')"
+          >
+            <span class="pi pi-arrow-up hx-button-icon" aria-hidden="true"></span>
+          </button>
+          <button
+            hx-button
+            type="button"
+            iconOnly
+            aria-label="Full screen drawer"
+            (click)="full = true"
+          >
+            <span class="pi pi-external-link hx-button-icon" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
 

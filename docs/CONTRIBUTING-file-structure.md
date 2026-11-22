@@ -36,6 +36,13 @@ enforced by `@angular-eslint/template/prefer-control-flow` (see
   rules). Config: `.oxlintrc.json`, `eslint.config.mjs`. `pnpm lint` builds
   `dist/ui` first when it is missing: the other projects import
   `@gravionlabs/helix-ui` from there, and the type-aware rules need its types.
+- `pnpm lint:styles` (part of `pnpm lint`; `pnpm lint:fix` fixes): Stylelint
+  lints every `.css` and `.scss` file (`stylelint.config.mjs`,
+  `stylelint-config-standard-scss`). The token rule: no hex colors and no
+  `rgb()`/`rgba()`/`hsl()`/`hsla()` in component styles, and `font-size` is a
+  `var(--…)` or a step of the type scale; use a token (`var(--h-…)`). Only
+  files that define tokens or are generated may use raw values, through an
+  `overrides` entry that names its reason. Formatting stays with oxfmt.
 - `pnpm format` / `pnpm format:check`: oxfmt (`.oxfmtrc.json`).
 - A disabled rule, in the config or in an `oxlint-disable-next-line` /
   `eslint-disable-next-line` comment, names its reason.

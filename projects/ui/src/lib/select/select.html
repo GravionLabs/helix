@@ -23,7 +23,12 @@
   <span class="hx-select-chevron" aria-hidden="true"></span>
 </button>
 @if (canClear()) {
-  <button type="button" class="hx-select-clear" aria-label="Clear selection" (click)="clear($event)">
+  <button
+    type="button"
+    class="hx-select-clear"
+    aria-label="Clear selection"
+    (click)="clear($event)"
+  >
     <span class="hx-select-clear-icon" aria-hidden="true"></span>
   </button>
 }
@@ -79,7 +84,9 @@
           <span>{{ item.label }}</span>
         </div>
       } @empty {
-        <div class="hx-select-empty">{{ query().trim() ? emptyFilterMessage() : emptyMessage() }}</div>
+        <div class="hx-select-empty">
+          {{ query().trim() ? emptyFilterMessage() : emptyMessage() }}
+        </div>
       }
     </div>
     @if (filter()) {

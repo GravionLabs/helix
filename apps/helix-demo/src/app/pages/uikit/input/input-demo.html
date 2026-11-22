@@ -1,5 +1,10 @@
 <h1 class="sr-only">Input</h1>
-<app-source-tabs library="helix-ui" directory="input" componentName="input-demo" [docs]="['auto-complete', 'date-picker', 'date-range-quick-select', 'date-time-picker', 'date-time-range-picker', 'float-label', 'form-controls', 'icon-field', 'input-group', 'input-number', 'listbox', 'multi-select', 'password', 'rating', 'select', 'select-button', 'slider', 'time-picker', 'toggle-button']">
+<app-source-tabs
+  library="helix-ui"
+  directory="input"
+  componentName="input-demo"
+  [docs]="['auto-complete', 'date-picker', 'date-range-quick-select', 'date-time-picker', 'date-time-range-picker', 'float-label', 'form-controls', 'icon-field', 'input-group', 'input-number', 'listbox', 'multi-select', 'password', 'rating', 'select', 'select-button', 'slider', 'time-picker', 'toggle-button']"
+>
   <div class="flex flex-col gap-layout">
     <div class="flex flex-col md:flex-row gap-layout">
       <div class="md:w-1/2 flex flex-col">
@@ -8,7 +13,13 @@
           <div class="flex flex-col md:flex-row gap-3">
             <input hx-input type="text" placeholder="Default" aria-label="Default" />
             <input hx-input type="text" placeholder="Disabled" aria-label="Disabled" disabled />
-            <input hx-input type="text" placeholder="Invalid" aria-label="Invalid" aria-invalid="true" />
+            <input
+              hx-input
+              type="text"
+              placeholder="Invalid"
+              aria-label="Invalid"
+              aria-invalid="true"
+            />
           </div>
 
           <h2 class="demo-title">Icons</h2>
@@ -28,7 +39,13 @@
           </hx-float-label>
 
           <h2 class="demo-title">Textarea</h2>
-          <textarea hx-input autoResize placeholder="Your Message" aria-label="Your message" rows="3"></textarea>
+          <textarea
+            hx-input
+            autoResize
+            placeholder="Your Message"
+            aria-label="Your message"
+            rows="3"
+          ></textarea>
 
           <h2 class="demo-title">AutoComplete</h2>
           <hx-auto-complete
@@ -55,7 +72,14 @@
           <div class="flex flex-col md:flex-row gap-3">
             @for (city of cityNames; track city; let i = $index) {
               <div class="flex items-center gap-2">
-                <input hx-radio type="radio" [id]="'option' + i" name="option" [value]="city" [(ngModel)]="radioValue" />
+                <input
+                  hx-radio
+                  type="radio"
+                  [id]="'option' + i"
+                  name="option"
+                  [value]="city"
+                  [(ngModel)]="radioValue"
+                />
                 <label [for]="'option' + i" class="leading-none">{{ city }}</label>
               </div>
             }
@@ -65,22 +89,43 @@
           <div class="flex flex-col md:flex-row gap-3">
             @for (city of cityNames; track city; let i = $index) {
               <div class="flex items-center gap-2">
-                <input hx-checkbox type="checkbox" [id]="'checkOption' + i" [(ngModel)]="cityChecks[city]" />
+                <input
+                  hx-checkbox
+                  type="checkbox"
+                  [id]="'checkOption' + i"
+                  [(ngModel)]="cityChecks[city]"
+                />
                 <label [for]="'checkOption' + i">{{ city }}</label>
               </div>
             }
           </div>
 
           <h2 class="demo-title">ToggleSwitch</h2>
-          <label class="flex items-center gap-2"><input hx-switch type="checkbox" [(ngModel)]="switchValue" /> Notifications</label>
+          <label class="flex items-center gap-2"
+            ><input hx-switch type="checkbox" [(ngModel)]="switchValue" /> Notifications</label
+          >
         </div>
 
         <div class="card flex flex-col gap-3">
           <h2 class="demo-title">Listbox</h2>
-          <hx-listbox ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" filter [(ngModel)]="listboxValue" />
+          <hx-listbox
+            ariaLabel="City"
+            [options]="cities"
+            optionLabel="name"
+            optionValue="code"
+            filter
+            [(ngModel)]="listboxValue"
+          />
 
           <h2 class="demo-title">Select</h2>
-          <hx-select ariaLabel="City" [options]="cities" optionLabel="name" optionValue="code" placeholder="Select" [(ngModel)]="selectValue" />
+          <hx-select
+            ariaLabel="City"
+            [options]="cities"
+            optionLabel="name"
+            optionValue="code"
+            placeholder="Select"
+            [(ngModel)]="selectValue"
+          />
 
           <h2 class="demo-title">MultiSelect</h2>
           <hx-multi-select
@@ -114,7 +159,11 @@
           <hx-toggle-button onLabel="Yes" offLabel="No" [(ngModel)]="toggleValue" />
 
           <h2 class="demo-title">SelectButton</h2>
-          <hx-select-button ariaLabel="Option" [options]="selectButtonValues" [(ngModel)]="selectButtonValue" />
+          <hx-select-button
+            ariaLabel="Option"
+            [options]="selectButtonValues"
+            [(ngModel)]="selectButtonValue"
+          />
         </div>
       </div>
     </div>

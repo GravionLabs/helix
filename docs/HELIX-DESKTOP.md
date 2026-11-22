@@ -22,6 +22,30 @@ The package builds, is tested and is published with the other packages. Componen
 
 Only `--h-*` tokens are read, so light and dark follow `HxTheme`.
 
+## Tauri content security policy
+
+A Tauri app on Helix needs this `app.security` block in `src-tauri/tauri.conf.json`; without `dangerousDisableAssetCspModification` the release build renders without its component and grid styles:
+
+```json
+"security": {
+  "csp": {
+    "default-src": "'self'",
+    "script-src": "'self'",
+    "style-src": "'self' 'unsafe-inline'",
+    "img-src": "'self' data:",
+    "font-src": "'self' data:",
+    "connect-src": "ipc: http://ipc.localhost"
+  },
+  "dangerousDisableAssetCspModification": ["style-src"]
+}
+```
+
+**Why:** when Tauri serves the bundled assets it adds hashes and nonces to `script-src` and `style-src`, for example for the critical CSS Angular inlines into `index.html`. Once a directive carries a hash or a nonce, browsers ignore `'unsafe-inline'` in it. Every `<style>` element inserted at runtime is then blocked: the Angular component styles and the CSS that the AG Grid Theming API (`helixGridTheme` of `@gravionlabs/helix-ag-grid`) injects. Turning the rewriting off for `style-src` only keeps the automatic hashes of `script-src`, so inline scripts stay blocked. Tauri only rewrites `style-src` when `index.html` holds a `<style>` element, so an app that builds with `"inlineCritical": false` works without the setting by accident; set it anyway, the next inline style breaks the app.
+
+**Symptoms:** the global styles still load (tokens, fonts, background), but the views lose their padding and gaps, and the grids show their column headers as stacked text without rows, so the lists look empty.
+
+**Why it shows only in installers:** with `"devCsp": null`, `tauri dev` runs without any policy. Set `devCsp` to the same policy, plus what the dev server needs (for example `ws://localhost:<port>` in `connect-src` for live reload), so a CSP problem shows during development. Passing nonces through instead (Angular `CSP_NONCE`, AG Grid `styleNonce`) does not work, because Tauri does not hand its nonces to the app.
+
 ## HxActivityBar
 
 The 48 px icon rail at the far left. It selects the sidebar view, opens tab views and holds actions.
@@ -143,7 +167,8 @@ bootstrapApplication(App, {
 });
 ```
 
-- `HxUpdateService`: `state` is `idle`, `checking`, `current`, `available` (with `update`: version, notes), `installing` or `error` (with the failed `step`: `check`, `install` or `relaunch`). `start()` checks once; `check()` checks on request; `installAndRestart()` installs and restarts.
+- `HxUpdateService`: `state` is `idle`, `checking`, `current`, `available` (with `update`: version, notes), `installing` (with `percent`, 0 to 100, `null` while the size is unknown) or `error` (with the failed `step`: `check`, `install` or `relaunch`). `start()` checks once; `check()` checks on request; `check({ manual: true })` leaves `current` visible for a moment (`currentShown()`), then goes back to `idle`; `installAndRestart()` installs and restarts, and retries after a failed `install` step.
+- `HX_UPDATE_BEFORE_INSTALL`: an async function `(update) => void | Promise<void>` the service awaits after the state is `installing` and before the install, for example to save the open document. When it throws, the state is `error` with step `install` and the update stays available for the retry (`installAndRestart()` again). Provide it with `{ provide: HX_UPDATE_BEFORE_INSTALL, useValue: async () => { await save(); } }`.
 - `provideHxAppInfo({ version, channel? })`: the channel is `stable` or `rc`, derived from a `-rc` version when not given. An RC build shows the badge (`<hx-status-app-version slot="end" />` shows the version and the badge) and `start()` does not check by itself.
-- `HxStatusUpdate` (`<hx-status-update slot="end" />`): the state as a status item with the version, the notes and "Install and restart" in the popover. Labels are inputs. Not rendered on mobile or while idle or current.
+- `HxStatusUpdate` (`<hx-status-update slot="end" />`): the state as a status item with the version, the notes and "Install and restart" in the popover. Labels are inputs; while installing it shows the percent ("Installing update 42%"). Not rendered on mobile or while idle or current, unless `alwaysVisible` (default `false`) is set: then it shows "Check for updates", a click runs `check({ manual: true })` and the result "Up to date" stays visible for a moment.
 - `providePlatform()` sets `data-platform` to `macos`, `windows`, `linux`, `ios`, `android` or `web`. `getHxPlatformKind()` maps it to the shell kind `desktop`, `mobile` or `web`.

@@ -240,7 +240,7 @@
   }
 
   @keyframes zoomin {
-    from {
+    0% {
       transform: scale3d(0.3, 0.3, 0.3);
       opacity: 0;
     }
@@ -250,7 +250,7 @@
   }
 
   @keyframes zoomindown {
-    from {
+    0% {
       transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
       opacity: 0;
     }
@@ -261,7 +261,7 @@
   }
 
   @keyframes zoominleft {
-    from {
+    0% {
       transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
       opacity: 0;
     }

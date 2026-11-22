@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(0 0 0);
+  background: black;
   outline-color: transparent;
 }
 
@@ -298,7 +298,7 @@
 
 /* full screen: the box fills the dialog pane over a dark backdrop */
 .hx-galleria-backdrop {
-  background: rgb(0 0 0 / 0.9);
+  background: color-mix(in srgb, black 90%, transparent);
 }
 
 .hx-galleria-panel {

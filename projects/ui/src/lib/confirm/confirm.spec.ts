@@ -64,7 +64,7 @@ describe('HxConfirmationService with the dialog and the popup', () => {
       const message = document.querySelector('.hx-confirm-message') as HTMLElement;
       expect(message.textContent).toBe('Delete this item?');
       expect(container()?.getAttribute('aria-describedby')).toBe(message.id);
-      expect(document.querySelector('.hx-dialog h2')?.textContent).toBe('Delete');
+      expect(document.querySelector('.hx-dialog h2')?.textContent?.trim()).toBe('Delete');
       expect(container()?.getAttribute('aria-labelledby')).toBe(
         document.querySelector('.hx-dialog h2')?.id,
       );

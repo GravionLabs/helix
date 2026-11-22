@@ -8,8 +8,25 @@
         <p class="hx-confirm-message" [id]="messageId">{{ c.message }}</p>
       </div>
       <ng-container ngProjectAs="[hxDialogFooter]">
-        <button hx-button type="button" variant="text" severity="secondary" class="hx-confirm-reject" (click)="answer(false)">{{ c.rejectLabel ?? 'No' }}</button>
-        <button hx-button type="button" class="hx-confirm-accept" [severity]="c.acceptSeverity ?? 'primary'" (click)="answer(true)">{{ c.acceptLabel ?? 'Yes' }}</button>
+        <button
+          hx-button
+          type="button"
+          variant="text"
+          severity="secondary"
+          class="hx-confirm-reject"
+          (click)="answer(false)"
+        >
+          {{ c.rejectLabel ?? 'No' }}
+        </button>
+        <button
+          hx-button
+          type="button"
+          class="hx-confirm-accept"
+          [severity]="c.acceptSeverity ?? 'primary'"
+          (click)="answer(true)"
+        >
+          {{ c.acceptLabel ?? 'Yes' }}
+        </button>
       </ng-container>
     </hx-dialog-frame>
   }

@@ -26,8 +26,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  inset-inline-start: var(--hx-slider-start, 0%);
-  inset-inline-end: calc(100% - var(--hx-slider-end, 0%));
+  inset-inline: var(--hx-slider-start, 0%) calc(100% - var(--hx-slider-end, 0%));
   border-radius: inherit;
   background: var(--h-slider-range-background);
 }

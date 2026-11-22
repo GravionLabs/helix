@@ -58,7 +58,7 @@ legend {
 }
 
 /* a narrow screen puts the label above its controls instead of beside them */
-@media (max-width: 40rem) {
+@media (width <= 40rem) {
   .row {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.375rem;
@@ -68,7 +68,7 @@ legend {
     min-width: 0;
   }
 
-  .cell > input:not([type='checkbox']):not([type='radio']),
+  .cell > input:not([type='checkbox'], [type='radio']),
   .cell > textarea {
     min-width: 0;
     max-width: 100%;

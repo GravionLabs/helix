@@ -1,9 +1,15 @@
 <h1 class="sr-only">AG Grid CRUD</h1>
-<app-source-tabs library="helix-ag-grid" directory="ag-grid/crud" componentName="crud" [extraSources]="['crud-cells.ts']">
+<app-source-tabs
+  library="helix-ag-grid"
+  directory="ag-grid/crud"
+  componentName="crud"
+  [extraSources]="['crud-cells.ts']"
+>
   <p class="mt-0 mb-3">
     This page shows create, read, update and delete on AG Grid Community with the Helix theme of
-    <code>&#64;gravionlabs/helix-ag-grid</code>: the list is an AG Grid with row selection, quick filter, sorting and
-    paging; <code>hx-toolbar</code>, <code>hx-dialog</code>, <code>hx-confirm-dialog</code> and <code>hx-toast</code>
+    <code>&#64;gravionlabs/helix-ag-grid</code>: the list is an AG Grid with row selection, quick
+    filter, sorting and paging; <code>hx-toolbar</code>, <code>hx-dialog</code>,
+    <code>hx-confirm-dialog</code> and <code>hx-toast</code>
     from helix-ui do the rest.
   </p>
   <hx-toolbar class="mb-3">
@@ -73,14 +79,28 @@
       }
       <div>
         <label for="name" class="mb-2 block font-bold">Name</label>
-        <input hx-input fluid id="name" [(ngModel)]="product.name" required [attr.aria-invalid]="submitted && !product.name ? 'true' : null" />
+        <input
+          hx-input
+          fluid
+          id="name"
+          [(ngModel)]="product.name"
+          required
+          [attr.aria-invalid]="submitted && !product.name ? 'true' : null"
+        />
         @if (submitted && !product.name) {
           <small class="text-red-500">Name is required.</small>
         }
       </div>
       <div>
         <label for="description" class="mb-2 block font-bold">Description</label>
-        <textarea hx-input fluid autoResize id="description" [(ngModel)]="product.description" rows="3"></textarea>
+        <textarea
+          hx-input
+          fluid
+          autoResize
+          id="description"
+          [(ngModel)]="product.description"
+          rows="3"
+        ></textarea>
       </div>
 
       <div>
@@ -101,7 +121,14 @@
         <div class="grid grid-cols-12 gap-3">
           @for (category of categories; track category) {
             <div class="col-span-6 flex items-center gap-2">
-              <input hx-radio type="radio" name="category" [id]="'category-' + category" [value]="category" [(ngModel)]="product.category" />
+              <input
+                hx-radio
+                type="radio"
+                name="category"
+                [id]="'category-' + category"
+                [value]="category"
+                [(ngModel)]="product.category"
+              />
               <label [for]="'category-' + category">{{ category }}</label>
             </div>
           }
@@ -111,7 +138,14 @@
       <div class="grid grid-cols-12 gap-3">
         <div class="col-span-6">
           <label for="price" class="mb-2 block font-bold">Price</label>
-          <hx-input-number fluid inputId="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" />
+          <hx-input-number
+            fluid
+            inputId="price"
+            [(ngModel)]="product.price"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+          />
         </div>
         <div class="col-span-6">
           <label for="quantity" class="mb-2 block font-bold">Quantity</label>

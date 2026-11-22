@@ -24,7 +24,13 @@
             <th scope="row" style="width: 35%; min-width: 7rem;">{{ product.name }}</th>
             <td style="width: 35%; min-width: 8rem;">{{ product.price | currency: 'USD' }}</td>
             <td style="width: 15%;">
-              <button hx-button type="button" iconOnly variant="text" [attr.aria-label]="'View ' + product.name">
+              <button
+                hx-button
+                type="button"
+                iconOnly
+                variant="text"
+                [attr.aria-label]="'View ' + product.name"
+              >
                 <span class="pi pi-search hx-button-icon" aria-hidden="true"></span>
               </button>
             </td>

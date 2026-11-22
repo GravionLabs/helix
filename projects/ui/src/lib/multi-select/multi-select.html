@@ -44,7 +44,12 @@
   <span class="hx-multi-select-chevron" aria-hidden="true"></span>
 </div>
 @if (canClear()) {
-  <button type="button" class="hx-multi-select-clear" aria-label="Clear selection" (click)="clear($event)">
+  <button
+    type="button"
+    class="hx-multi-select-clear"
+    aria-label="Clear selection"
+    (click)="clear($event)"
+  >
     <span class="hx-multi-select-clear-icon" aria-hidden="true"></span>
   </button>
 }

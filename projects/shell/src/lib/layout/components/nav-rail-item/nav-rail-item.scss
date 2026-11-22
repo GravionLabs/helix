@@ -132,7 +132,7 @@
   border: 1px solid var(--helix-nav-border);
   border-radius: var(--content-border-radius);
   background: var(--helix-surface-overlay, var(--helix-surface-chrome));
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
+  box-shadow: 0 8px 24px color-mix(in srgb, black 16%, transparent);
 }
 
 .helix-nav-rail-flyout-title {

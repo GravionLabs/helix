@@ -2,8 +2,9 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Helix UI form controls</h2>
     <p class="m-0">
-      <code>hx-input</code>, <code>hx-checkbox</code>, <code>hx-radio</code> and <code>hx-switch</code> from
-      <code>&#64;gravionlabs/helix-ui</code> are native controls drawn with CSS on the design tokens.
+      <code>hx-input</code>, <code>hx-checkbox</code>, <code>hx-radio</code> and
+      <code>hx-switch</code> from <code>&#64;gravionlabs/helix-ui</code> are native controls drawn
+      with CSS on the design tokens.
     </p>
   </div>
 
@@ -11,7 +12,9 @@
     <h2 class="demo-title">Text fields</h2>
     <div class="row">
       <span class="label">default</span>
-      <span class="cell"><input hx-input type="text" placeholder="Default" [(ngModel)]="text" /></span>
+      <span class="cell"
+        ><input hx-input type="text" placeholder="Default" [(ngModel)]="text"
+      /></span>
     </div>
     <div class="row">
       <span class="label">disabled</span>
@@ -34,7 +37,9 @@
     </div>
     <div class="row">
       <span class="label">textarea</span>
-      <span class="cell"><textarea hx-input rows="3" placeholder="Your message" [(ngModel)]="note"></textarea></span>
+      <span class="cell">
+        <textarea hx-input rows="3" placeholder="Your message" [(ngModel)]="note"></textarea>
+      </span>
     </div>
   </div>
 
@@ -53,8 +58,13 @@
     <div class="row">
       <span class="label">radio</span>
       <span class="cell">
-        <label><input type="radio" hx-radio name="ui-plan" value="free" [(ngModel)]="plan" /> Free</label>
-        <label><input type="radio" hx-radio name="ui-plan" value="pro" [(ngModel)]="plan" /> Pro</label>
+        <label
+          ><input type="radio" hx-radio name="ui-plan" value="free" [(ngModel)]="plan" />
+          Free</label
+        >
+        <label
+          ><input type="radio" hx-radio name="ui-plan" value="pro" [(ngModel)]="plan" /> Pro</label
+        >
         <label><input type="radio" hx-radio name="ui-plan-off" disabled /> Disabled</label>
       </span>
     </div>
@@ -79,8 +89,9 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">A signal form</h2>
     <p class="m-0">
-      Angular signal forms (<code>form()</code>, <code>[formField]</code>) on the native controls: validation
-      messages are bound with <code>aria-invalid</code> and <code>aria-describedby</code>.
+      Angular signal forms (<code>form()</code>, <code>[formField]</code>) on the native controls:
+      validation messages are bound with <code>aria-invalid</code> and
+      <code>aria-describedby</code>.
     </p>
     <form class="flex flex-col gap-4" (submit)="send($event)" novalidate>
       <div class="field">
@@ -116,11 +127,20 @@
       </div>
       <fieldset>
         <legend>Plan</legend>
-        <label class="cell"><input type="radio" hx-radio value="free" [formField]="signup.plan" /> Free</label>
-        <label class="cell"><input type="radio" hx-radio value="pro" [formField]="signup.plan" /> Pro</label>
+        <label class="cell"
+          ><input type="radio" hx-radio value="free" [formField]="signup.plan" /> Free</label
+        >
+        <label class="cell"
+          ><input type="radio" hx-radio value="pro" [formField]="signup.plan" /> Pro</label
+        >
       </fieldset>
-      <label class="cell"><input type="checkbox" hx-checkbox [formField]="signup.newsletter" /> Send me the newsletter</label>
-      <label class="cell"><input type="checkbox" hx-switch [formField]="signup.darkMode" /> Dark mode</label>
+      <label class="cell"
+        ><input type="checkbox" hx-checkbox [formField]="signup.newsletter" /> Send me the
+        newsletter</label
+      >
+      <label class="cell"
+        ><input type="checkbox" hx-switch [formField]="signup.darkMode" /> Dark mode</label
+      >
       <div class="flex gap-2 items-center">
         <button hx-button type="submit" [loading]="sending()">Sign up</button>
         @if (sent(); as s) {

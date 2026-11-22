@@ -4,11 +4,7 @@
   }
 
   @if (showSubmit()) {
-    <button
-      type="submit"
-      class="helix-dynamic-form__submit"
-      [disabled]="formTree()().submitting()"
-    >
+    <button type="submit" class="helix-dynamic-form__submit" [disabled]="formTree()().submitting()">
       {{ submitLabel() }}
     </button>
   }

@@ -3,14 +3,23 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Native table</h2>
     <p class="m-0">
-      A plain HTML <code>&lt;table hx-table&gt;</code> with the Helix look: no component and no column model, the markup is yours.
-      For sorting, paging, selection and filters use the <a routerLink="/uikit/data-table">Data table</a> component, for large grids AG Grid (helix-ag-grid).
+      A plain HTML <code>&lt;table hx-table&gt;</code> with the Helix look: no component and no
+      column model, the markup is yours. For sorting, paging, selection and filters use the
+      <a routerLink="/uikit/data-table">Data table</a> component, for large grids AG Grid
+      (helix-ag-grid).
     </p>
     <div class="hx-table-scroll">
       <table hx-table striped hoverable>
-        <caption>Invoices</caption>
+        <caption>
+          Invoices
+        </caption>
         <thead>
-          <tr><th scope="col">No.</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col">Amount</th></tr>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
+          </tr>
         </thead>
         <tbody>
           @for (invoice of invoices; track invoice.no) {
@@ -22,25 +31,54 @@
             </tr>
           }
         </tbody>
-        <tfoot><tr><th scope="row" colspan="3">Total</th><td>{{ total }}</td></tr></tfoot>
+        <tfoot>
+          <tr>
+            <th scope="row" colspan="3">Total</th>
+            <td>{{ total }}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr))">
       <table hx-table size="small" gridlines>
-        <caption>Small, with gridlines</caption>
-        <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+        <caption>
+          Small, with gridlines
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Customer</th>
+          </tr>
+        </thead>
         <tbody>
           @for (invoice of invoices.slice(0, 3); track invoice.no) {
-            <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+            <tr>
+              <th scope="row">{{ invoice.no }}</th>
+              <td>{{ invoice.customer }}</td>
+            </tr>
           }
         </tbody>
       </table>
-      <div class="hx-table-scroll" style="max-height: 11rem" tabindex="0" role="region" aria-label="Invoices with a sticky header">
+      <div
+        class="hx-table-scroll"
+        style="max-height: 11rem"
+        tabindex="0"
+        role="region"
+        aria-label="Invoices with a sticky header"
+      >
         <table hx-table size="large" stickyHeader>
-          <thead><tr><th scope="col">No.</th><th scope="col">Customer</th></tr></thead>
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Customer</th>
+            </tr>
+          </thead>
           <tbody>
             @for (invoice of invoices; track invoice.no) {
-              <tr><th scope="row">{{ invoice.no }}</th><td>{{ invoice.customer }}</td></tr>
+              <tr>
+                <th scope="row">{{ invoice.no }}</th>
+                <td>{{ invoice.customer }}</td>
+              </tr>
             }
           </tbody>
         </table>

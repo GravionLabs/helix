@@ -2,27 +2,52 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Theme service</h2>
     <p class="m-0">
-      <code>HxTheme</code> switches the primary colour and the surface scale with CSS variables only, in light and dark
-      mode. A preset (<code>helix</code>, <code>vitepress</code>, <code>compact</code>) sets all three together; your own
-      choice of primary colour, surface or density wins over it. Here it is provided for this page, with an extra preset
-      of the app (<code>forest</code>); an app uses <code>provideHxTheme()</code>.
+      <code>HxTheme</code> switches the primary colour and the surface scale with CSS variables
+      only, in light and dark mode. A preset (<code>helix</code>, <code>vitepress</code>,
+      <code>compact</code>) sets all three together; your own choice of primary colour, surface or
+      density wins over it. Here it is provided for this page, with an extra preset of the app
+      (<code>forest</code>); an app uses <code>provideHxTheme()</code>.
     </p>
     <div class="flex flex-wrap items-end gap-4">
       <div class="field">
         <label for="theme-preset">Preset</label>
-        <hx-select inputId="theme-preset" [options]="presets" [ngModel]="theme.preset()" (ngModelChange)="theme.setPreset($event)" />
+        <hx-select
+          inputId="theme-preset"
+          [options]="presets"
+          [ngModel]="theme.preset()"
+          (ngModelChange)="theme.setPreset($event)"
+        />
       </div>
       <div class="field">
         <label for="theme-density">Density</label>
-        <hx-select inputId="theme-density" [options]="densities" [ngModel]="theme.density()" (ngModelChange)="theme.setDensity($event)" />
+        <hx-select
+          inputId="theme-density"
+          [options]="densities"
+          [ngModel]="theme.density()"
+          (ngModelChange)="theme.setDensity($event)"
+        />
       </div>
       <div class="field">
         <label for="theme-primary">Primary colour</label>
-        <hx-select inputId="theme-primary" placeholder="Of the preset" showClear [options]="primaryColors" [ngModel]="theme.primary()" (ngModelChange)="theme.setPrimary($event)" />
+        <hx-select
+          inputId="theme-primary"
+          placeholder="Of the preset"
+          showClear
+          [options]="primaryColors"
+          [ngModel]="theme.primary()"
+          (ngModelChange)="theme.setPrimary($event)"
+        />
       </div>
       <div class="field">
         <label for="theme-surface">Surface</label>
-        <hx-select inputId="theme-surface" placeholder="Of the preset" showClear [options]="surfaces" [ngModel]="theme.surface()" (ngModelChange)="theme.setSurface($event)" />
+        <hx-select
+          inputId="theme-surface"
+          placeholder="Of the preset"
+          showClear
+          [options]="surfaces"
+          [ngModel]="theme.surface()"
+          (ngModelChange)="theme.setSurface($event)"
+        />
       </div>
       <button hx-button>Primary button</button>
       <button hx-button variant="outlined">Outlined</button>
@@ -52,10 +77,21 @@
     <p class="m-0">Hover or focus the buttons. Escape closes the tooltip.</p>
     <div class="flex flex-wrap gap-3">
       @for (p of positions; track p) {
-        <button hx-button variant="outlined" [hx-tooltip]="'Tooltip on the ' + p" [hxTooltipPosition]="p">{{ p }}</button>
+        <button
+          hx-button
+          variant="outlined"
+          [hx-tooltip]="'Tooltip on the ' + p"
+          [hxTooltipPosition]="p"
+        >
+          {{ p }}
+        </button>
       }
-      <button hx-button variant="text" hx-tooltip="Only on keyboard focus" hxTooltipEvent="focus">focus only</button>
-      <button hx-button variant="text" hx-tooltip="Disabled" [hxTooltipDisabled]="true">disabled tooltip</button>
+      <button hx-button variant="text" hx-tooltip="Only on keyboard focus" hxTooltipEvent="focus">
+        focus only
+      </button>
+      <button hx-button variant="text" hx-tooltip="Disabled" [hxTooltipDisabled]="true">
+        disabled tooltip
+      </button>
     </div>
   </div>
 
@@ -81,12 +117,23 @@
     <h2 class="demo-title">Select button</h2>
     <div class="field">
       <span id="align-label">Alignment (one, cannot be empty)</span>
-      <hx-select-button ariaLabelledby="align-label" [options]="alignOptions" [allowEmpty]="false" [(value)]="align" />
+      <hx-select-button
+        ariaLabelledby="align-label"
+        [options]="alignOptions"
+        [allowEmpty]="false"
+        [(value)]="align"
+      />
       <span class="hint">Value: {{ align() }}</span>
     </div>
     <div class="field">
       <span id="top-label">Toppings (several)</span>
-      <hx-select-button ariaLabelledby="top-label" size="small" multiple [options]="toppingOptions" [(value)]="toppings" />
+      <hx-select-button
+        ariaLabelledby="top-label"
+        size="small"
+        multiple
+        [options]="toppingOptions"
+        [(value)]="toppings"
+      />
       <span class="hint">Value: {{ toppings().join(', ') || 'none' }}</span>
     </div>
   </div>

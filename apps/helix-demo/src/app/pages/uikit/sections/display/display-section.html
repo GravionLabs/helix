@@ -21,7 +21,13 @@
     <h3 class="demo-title">Overlay badge</h3>
     <div class="flex flex-wrap items-center gap-6">
       <hx-overlay-badge value="2" severity="danger">
-        <button hx-button iconOnly variant="outlined" severity="secondary" aria-label="Notifications, 2 new">
+        <button
+          hx-button
+          iconOnly
+          variant="outlined"
+          severity="secondary"
+          aria-label="Notifications, 2 new"
+        >
           <span class="pi pi-bell hx-button-icon"></span>
         </button>
       </hx-overlay-badge>
@@ -55,12 +61,20 @@
     <div class="flex flex-wrap items-center gap-3">
       <hx-chip label="Action" />
       <hx-chip label="Icon" icon="pi pi-apple" />
-      <hx-chip label="Picture" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" />
+      <hx-chip
+        label="Picture"
+        image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      />
     </div>
     <p class="m-0">Removable: press the x, or focus a chip and press Backspace or Delete.</p>
     <div class="flex flex-wrap items-center gap-3">
       @for (chip of chips(); track chip) {
-        <hx-chip [label]="chip" removable [removeLabel]="'Remove ' + chip" (remove)="remove(chip)" />
+        <hx-chip
+          [label]="chip"
+          removable
+          [removeLabel]="'Remove ' + chip"
+          (remove)="remove(chip)"
+        />
       } @empty {
         <span>All removed. Reload the page to get them back.</span>
       }
@@ -73,11 +87,21 @@
       <hx-avatar label="JK" ariaLabel="Jerome K" />
       <hx-avatar icon="pi pi-user" size="large" ariaLabel="User" />
       <hx-avatar label="AE" size="xlarge" shape="circle" ariaLabel="Amy Elsner" />
-      <hx-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" size="large" ariaLabel="Amy Elsner" />
+      <hx-avatar
+        image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+        shape="circle"
+        size="large"
+        ariaLabel="Amy Elsner"
+      />
     </div>
     <h3 class="demo-title">Group</h3>
     <hx-avatar-group ariaLabel="Team">
-      <hx-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" size="large" ariaLabel="Amy Elsner" />
+      <hx-avatar
+        image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+        shape="circle"
+        size="large"
+        ariaLabel="Amy Elsner"
+      />
       <hx-avatar label="AB" shape="circle" size="large" ariaLabel="A B" />
       <hx-avatar label="CD" shape="circle" size="large" ariaLabel="C D" />
       <hx-avatar label="+2" shape="circle" size="large" ariaLabel="2 more members" />
@@ -101,8 +125,24 @@
     <h2 class="demo-title">Progress</h2>
     <hx-progress-bar [value]="progress()" ariaLabel="Upload" />
     <div class="flex gap-2">
-      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(max(0, progress() - 10))">-10</button>
-      <button hx-button type="button" variant="outlined" size="small" (click)="progress.set(min(100, progress() + 10))">+10</button>
+      <button
+        hx-button
+        type="button"
+        variant="outlined"
+        size="small"
+        (click)="progress.set(max(0, progress() - 10))"
+      >
+        -10
+      </button>
+      <button
+        hx-button
+        type="button"
+        variant="outlined"
+        size="small"
+        (click)="progress.set(min(100, progress() + 10))"
+      >
+        +10
+      </button>
     </div>
     <hx-progress-bar mode="indeterminate" ariaLabel="Loading" />
     <div class="flex items-center gap-4">
@@ -119,14 +159,18 @@
       </hx-timeline>
       <hx-timeline [value]="orders" align="alternate">
         <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
-        <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+        <ng-template hxTimelineOpposite let-event
+          ><small>{{ event.date }}</small></ng-template
+        >
         <ng-template hxTimelineMarker let-event><span [class]="event.icon"></span></ng-template>
       </hx-timeline>
     </div>
     <h3 class="demo-title">Horizontal</h3>
     <hx-timeline [value]="orders" layout="horizontal" align="alternate">
       <ng-template hxTimelineContent let-event>{{ event.status }}</ng-template>
-      <ng-template hxTimelineOpposite let-event><small>{{ event.date }}</small></ng-template>
+      <ng-template hxTimelineOpposite let-event
+        ><small>{{ event.date }}</small></ng-template
+      >
     </hx-timeline>
   </div>
 </div>

@@ -97,7 +97,7 @@ describe('HxDialog', () => {
     expect(container()?.getAttribute('role')).toBe('dialog');
     expect(container()?.getAttribute('aria-modal')).toBe('true');
     const title = frame()?.querySelector('h2.hx-dialog-title') as HTMLElement;
-    expect(title.textContent).toBe('Edit profile');
+    expect(title.textContent?.trim()).toBe('Edit profile');
     expect(container()?.getAttribute('aria-labelledby')).toBe(title.id);
     expect(backdrop()).toBeTruthy();
     expect(frame()?.querySelector('.hx-dialog-footer #save')).toBeTruthy();
