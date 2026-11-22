@@ -8,3 +8,4 @@ export {
   type HxCodeColor,
   type HxCodeRole,
 } from './lib/theme/code-highlight';
+export { hxLanguageFor, hxLoadLanguage, HX_CODE_LANGUAGES } from './lib/language/language';

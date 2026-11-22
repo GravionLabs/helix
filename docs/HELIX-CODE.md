@@ -47,7 +47,18 @@ Colors follow the CSS variables, so a switch between light and dark (`.app-dark`
 
 ## Languages
 
-Planned.
+`hxLanguageFor(path, languages?)` returns the `LanguageDescription` for a file name, or `null`. `hxLoadLanguage(path, languages?)` resolves to the `LanguageSupport`, or `null`; a failed load resolves to `null` and does not throw. Both are plain functions and need no injection context; `languages` defaults to `@codemirror/language-data`. Each grammar is a lazy chunk, so none is in the first bundle.
+
+```ts
+import { hxLoadLanguage } from '@gravionlabs/helix-code';
+
+const support = await hxLoadLanguage('src/app/app.ts');
+if (support) view.dispatch({ effects: language.reconfigure(support) });
+```
+
+A view that loads a language for a changing file must ignore a late result of an earlier file (a generation counter), as `hx-code-editor` does.
+
+To ship fewer grammars, provide a shorter list with the token `HX_CODE_LANGUAGES` (default `@codemirror/language-data`). Only `hx-code-editor` reads the token and passes it to the functions; when you call them yourself, pass the list as `languages`.
 
 ## Editor
 
