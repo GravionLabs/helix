@@ -1,0 +1,10 @@
+import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
+
+/**
+ * Menu metadata for the code section.
+ * No component imports — safe to include in the main bundle.
+ * `code.routes.ts` uses this same array to generate Angular routes.
+ */
+export const CODE_MENU_ITEMS: HelixRouteMenuItem[] = [
+  { label: 'Overview', icon: 'pi pi-fw pi-code', path: 'overview' },
+];

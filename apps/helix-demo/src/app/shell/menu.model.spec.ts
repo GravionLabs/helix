@@ -17,7 +17,8 @@ describe('DEMO_MENU_MODEL charts group', () => {
   it('sits after AG Grid and before Desktop', () => {
     expect(labels.indexOf('Charts')).toBe(labels.indexOf('AG Grid') + 1);
     expect(labels.indexOf('Desktop')).toBe(labels.indexOf('Charts') + 1);
-    expect(labels.indexOf('Pages')).toBe(labels.indexOf('Desktop') + 1);
+    expect(labels.indexOf('Code')).toBe(labels.indexOf('Desktop') + 1);
+    expect(labels.indexOf('Pages')).toBe(labels.indexOf('Code') + 1);
   });
 
   it('links one item per chart type under /charts', () => {
@@ -124,6 +125,7 @@ describe('DEMO_MENU_MODEL AG Grid group', () => {
       'AG Grid',
       'Charts',
       'Desktop',
+      'Code',
       'Pages',
       'Resources',
     ]);

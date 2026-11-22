@@ -20,6 +20,7 @@ const PAGE_GROUPS = [
   { dir: `${PAGES}/ag-grid`, prefix: 'ag-grid/' },
   { dir: `${PAGES}/charts`, prefix: 'charts/' },
   { dir: `${PAGES}/desktop`, prefix: 'desktop/' },
+  { dir: `${PAGES}/code`, prefix: 'code/' },
 ];
 const OUT_DIR = 'apps/helix-demo/public/source';
 

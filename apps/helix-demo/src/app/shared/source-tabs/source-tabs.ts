@@ -28,7 +28,8 @@ export type DemoLibrary =
   | 'helix-ag-grid'
   | 'helix-shell'
   | 'helix-zod'
-  | 'helix-desktop';
+  | 'helix-desktop'
+  | 'helix-code';
 
 /** The documentation site; a component page is `components/<slug>/`. */
 export const DOCS_URL = 'https://gravionlabs.github.io/helix/';

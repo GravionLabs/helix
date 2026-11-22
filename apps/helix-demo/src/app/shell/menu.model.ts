@@ -1,6 +1,7 @@
 import { type HelixRouteMenuItem, helixMenuLinksFrom } from '@gravionlabs/helix-shell';
 import { AG_GRID_MENU_ITEMS } from '../pages/ag-grid/ag-grid-menu-items';
 import { CHARTS_MENU_ITEMS } from '../pages/charts/charts-menu-items';
+import { CODE_MENU_ITEMS } from '../pages/code/code-menu-items';
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { DESKTOP_MENU_ITEMS } from '../pages/desktop/desktop-menu-items';
 import { Documentation } from '../pages/documentation/documentation';
@@ -47,6 +48,14 @@ export const DEMO_MENU_MODEL: HelixRouteMenuItem[] = [
     path: 'desktop',
     loadChildren: () => import('../pages/desktop/desktop.routes'),
     items: helixMenuLinksFrom(DESKTOP_MENU_ITEMS, '/desktop'),
+  },
+  {
+    label: 'Code',
+    icon: 'pi pi-fw pi-code',
+    breadcrumb: 'Code',
+    path: 'code',
+    loadChildren: () => import('../pages/code/code.routes'),
+    items: helixMenuLinksFrom(CODE_MENU_ITEMS, '/code'),
   },
   {
     label: 'Pages',

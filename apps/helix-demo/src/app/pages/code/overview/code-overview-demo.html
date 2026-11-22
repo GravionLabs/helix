@@ -1,0 +1,49 @@
+<h1 class="sr-only">Code overview</h1>
+<app-source-tabs library="helix-code" directory="code/overview" componentName="code-overview-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">@gravionlabs/helix-code</h2>
+    <p class="m-0">
+      Code editing for Angular: a CodeMirror editor, diff and merge views, and Git views. Data comes
+      in through inputs, events go out through outputs; the library has no Git access. Version
+      {{ version }}.
+    </p>
+
+    <h3 class="section-title">Install</h3>
+    <pre class="install"><code>{{ installLine }}</code></pre>
+
+    <h3 class="section-title">Entries</h3>
+    <ul class="entries">
+      <li>
+        <code>&#64;gravionlabs/helix-code</code>: editor host, theme, languages, diff view,
+        comments, conflict markers and merge picker.
+      </li>
+      <li>
+        <code>&#64;gravionlabs/helix-code/git</code>: changed files and commit graph. It imports no
+        CodeMirror package.
+      </li>
+    </ul>
+
+    <h3 class="section-title">Peer dependencies</h3>
+    <p class="m-0">Required:</p>
+    <ul class="peers required">
+      @for (peer of requiredPeers; track peer.name) {
+        <li>
+          <code>{{ peer.name }}</code> {{ peer.range }}
+          <span class="note">{{ peer.note }}</span>
+        </li>
+      }
+    </ul>
+    <p class="m-0">
+      CodeMirror, all optional: an app that uses only <code>/git</code> installs none of them.
+      <code>&#64;codemirror/autocomplete</code> stays with the app.
+    </p>
+    <ul class="peers codemirror">
+      @for (peer of codemirrorPeers; track peer.name) {
+        <li>
+          <code>{{ peer.name }}</code> {{ peer.range }}
+          <span class="note">{{ peer.note }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</app-source-tabs>
