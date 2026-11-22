@@ -28,5 +28,35 @@
       </ng-template>
     </hx-commit-graph>
     <p class="m-0" aria-live="polite">Copied: {{ copied() ?? 'nothing' }}</p>
+
+    <h2 class="demo-title">10,000 commits</h2>
+    <p class="m-0">
+      Only the visible rows are in the DOM. <code>loadMore</code> loads the next 500 commits when
+      you come within 20 rows of the end.
+    </p>
+    <p class="m-0" aria-live="polite">
+      Loaded: {{ bigCommits().length }} of 10000. Selected: {{ bigSelected() ?? 'none' }}
+    </p>
+    <div class="flex gap-2">
+      <button type="button" class="p-button p-button-sm" (click)="reveal(250)">
+        Reveal commit 250
+      </button>
+      <button type="button" class="p-button p-button-sm" (click)="reveal(9000)">
+        Reveal commit 9000
+      </button>
+    </div>
+    @if (revealMissing()) {
+      <p class="m-0" role="status">That commit is not loaded yet.</p>
+    }
+    <hx-commit-graph
+      #big
+      aria-label="Long history"
+      [commits]="bigCommits()"
+      [selected]="bigSelected()"
+      [hasMore]="hasMore()"
+      [loading]="loading()"
+      (selectedChange)="bigSelected.set($event)"
+      (loadMore)="loadMore()"
+    />
   </div>
 </app-source-tabs>

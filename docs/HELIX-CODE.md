@@ -136,7 +136,7 @@ Details: [Conflict markers](components/conflict-markers.md).
 
 ## Commit graph
 
-`<hx-commit-graph [commits] [selected] (selectedChange)>` from `@gravionlabs/helix-code/git` draws the history as rows: SVG graph, ref labels, message, author and time. `maxLanes` (default 12) folds further lanes into the last one, `formatTime` formats the time (default relative), `<ng-template hxCommitGraphRowCell>` adds content to each row, and the lane colors are `--hx-graph-lane-1` to `-8`. Arrow keys, Home and End move the selection. Details: [Commit graph](components/commit-graph.md).
+`<hx-commit-graph [commits] [selected] (selectedChange)>` from `@gravionlabs/helix-code/git` draws the history as rows: SVG graph, ref labels, message, author and time. `maxLanes` (default 12) folds further lanes into the last one, `formatTime` formats the time (default relative), `<ng-template hxCommitGraphRowCell>` adds content to each row, and the lane colors are `--hx-graph-lane-1` to `-8`. Arrow keys, Home and End move the selection. Only the visible rows are rendered (`rowHeight`, default 28 px; `buffer` rows around them), `[hasMore]`, `[loading]` and `(loadMore)` page in more commits, and `reveal(id)` scrolls a loaded commit into view. Details: [Commit graph](components/commit-graph.md).
 
 ```ts
 import { HxCommitGraph } from '@gravionlabs/helix-code/git';
