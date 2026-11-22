@@ -186,7 +186,7 @@ const buildDecorations = (
         );
       }
     }
-    // Side 1: before the comment boxes of the same line, which use a larger side.
+    // Side 1: first; thread boxes use side 2, comment boxes side 3.
     ranges.push(
       Decoration.widget({
         widget: new FindingBox(placed, actionLabel),

@@ -23,14 +23,22 @@
       [comments]="comments()"
       [commentable]="commentable()"
       [findings]="findings"
+      [threads]="threads()"
       findingActionLabel="Send to agent"
       (commentAdded)="add($event)"
       (findingAction)="sent.set($event)"
+      (replyAdded)="reply($event)"
+      (resolvedChange)="resolve($event)"
     />
     <p aria-live="polite" class="m-0">{{ comments().length }} comment(s)</p>
     <p class="m-0">
       A blocking finding and a note are shown with <code>findings</code>; the button of
       <code>findingActionLabel</code> emits <code>findingAction</code>.
+    </p>
+    <p class="m-0">
+      <code>threads</code> shows an open and a resolved thread. Reply in the field at the end of a
+      thread; the Resolve button emits <code>resolvedChange</code>, a resolved thread collapses to
+      one line and expands on click.
     </p>
     <p aria-live="polite" class="m-0">
       @if (sent(); as action) {

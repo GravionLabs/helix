@@ -61,4 +61,27 @@ describe('ReviewDemo', () => {
     expect(el().textContent).toContain('Sent finding f1');
     expect(el().textContent).toContain('return sum * (1 + tax);');
   });
+
+  it('shows an open and a resolved thread', () => {
+    const boxes = [...el().querySelectorAll('.cm-thread-box')];
+    expect(boxes.length).toBe(2);
+    expect(boxes.filter((b) => b.classList.contains('cm-thread-collapsed')).length).toBe(1);
+    expect(el().textContent).toContain('The loop is easier to debug.');
+  });
+
+  it('adds a reply and resolves a thread', async () => {
+    const input = el().querySelector<HTMLTextAreaElement>('.cm-thread-input')!;
+    input.value = 'Fair enough';
+    input.dispatchEvent(new Event('input'));
+    el().querySelector<HTMLButtonElement>('.cm-thread-reply')!.click();
+    await settle();
+    expect(el().textContent).toContain('Fair enough');
+    el()
+      .querySelector<HTMLButtonElement>(
+        '.cm-thread-box:not(.cm-thread-resolved) .cm-thread-resolve',
+      )!
+      .click();
+    await settle();
+    expect(el().querySelectorAll('.cm-thread-collapsed').length).toBe(2);
+  });
 });
