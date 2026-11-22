@@ -102,6 +102,7 @@
       "oxfmt --no-error-on-unmatched-pattern"
     ],
     "*.html": [
+      "oxfmt --no-error-on-unmatched-pattern",
       "eslint --fix --no-warn-ignored"
     ]
   }
