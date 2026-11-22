@@ -104,7 +104,20 @@ Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with
 
 ## Conflicts
 
-Planned.
+Pure functions for line diffs and merging two texts hunk by hunk; no component and no Angular dependency.
+
+- `hxDiffLines(oldText, newText): HxDiffRow[]` returns rows `{kind: 'same' | 'add' | 'del', text, segments?}`; `text` has no line break. CRLF is read as LF and a final line break adds no line, so `'x\n'` and `'x'` give no rows. A run of deleted lines followed by a run of added lines is paired in order and gets word `segments` (`HxSegment {text, changed}`); surplus rows get none.
+- `hxWordDiff(oldLine, newLine)` returns `{old: HxSegment[], new: HxSegment[]}`.
+- `hxDiffStat(rows)` returns `{added, removed}`.
+- `hxMergeParts(mine, theirs): HxMergePart[]` splits the difference into `{kind: 'same', lines}` and `{kind: 'hunk', index, mine, theirs}`.
+- `hxMergeText(parts, choices, endsWithBreak)` builds the merged text. `choices` maps a hunk `index` to `HxMergeChoice` (`'mine' | 'theirs' | 'both'`); a hunk without a choice takes `'mine'`. The result ends with a line break when `endsWithBreak` is true and it has lines.
+
+The algorithm is a longest common subsequence over lines (and over tokens for words) after the common head and tail are trimmed. If the remaining middle has more than 4,000,000 cells (lines x lines), it falls back to "all deleted, then all added".
+
+```ts
+const parts = hxMergeParts(mine, theirs);
+const merged = hxMergeText(parts, { 0: 'both' }, mine.endsWith('\n'));
+```
 
 ## Commit graph
 
