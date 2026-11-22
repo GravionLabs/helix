@@ -60,5 +60,9 @@
     "@lezer/highlight": {
       "optional": true
     }
+  },
+  "exports": {
+    ".": "./src/public-api.ts",
+    "./git": "./git/src/public-api.ts"
   }
 }
