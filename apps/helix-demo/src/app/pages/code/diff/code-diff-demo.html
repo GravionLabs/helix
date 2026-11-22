@@ -33,17 +33,49 @@
         Unified</label
       >
       <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'auto'"
+          (change)="layout.set('auto')"
+        />
+        Auto (split from 900 px)</label
+      >
+      <label
         ><input type="checkbox" [checked]="collapse()" (change)="collapse.set(!collapse())" />
         Collapse unchanged</label
       >
     </div>
-    <hx-diff-view
-      aria-label="Changes in greet.ts"
-      path="greet.ts"
-      [original]="original()"
-      [modified]="modified()"
-      [layout]="layout()"
-      [collapseUnchanged]="collapse()"
-    />
+    <div class="flex flex-wrap items-center gap-2">
+      <button type="button" class="p-button p-button-outlined" (click)="diff().previous()">
+        Previous change
+      </button>
+      <button type="button" class="p-button p-button-outlined" (click)="diff().next()">
+        Next change
+      </button>
+      <span aria-live="polite">{{ diff().currentChange() }} of {{ diff().changeCount() }}</span>
+      <label class="ml-4"
+        >Width
+        <input
+          type="range"
+          min="400"
+          max="1400"
+          step="10"
+          [value]="width()"
+          (input)="resize($event)"
+        />
+        {{ width() }} px</label
+      >
+    </div>
+    <div class="max-w-full" [style.width.px]="width()">
+      <hx-diff-view
+        aria-label="Changes in greet.ts"
+        path="greet.ts"
+        [original]="original()"
+        [modified]="modified()"
+        [layout]="layout()"
+        [collapseUnchanged]="collapse()"
+      />
+    </div>
   </div>
 </app-source-tabs>

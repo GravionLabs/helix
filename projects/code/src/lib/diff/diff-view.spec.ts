@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import {
   language,
   LanguageDescription,
@@ -8,7 +9,7 @@ import {
 } from '@codemirror/language';
 import { EditorView } from '@codemirror/view';
 import { HX_CODE_LANGUAGES } from '../language/language';
-import { HxDiffView } from './diff-view';
+import { HxDiffView, type HxDiffLayout } from './diff-view';
 
 @Component({
   imports: [HxDiffView],
@@ -18,6 +19,7 @@ import { HxDiffView } from './diff-view';
     [modified]="modified()"
     [path]="path()"
     [layout]="layout()"
+    [splitMinWidth]="minWidth()"
     [collapseUnchanged]="collapse()"
   />`,
 })
@@ -25,7 +27,8 @@ class Host {
   readonly original = signal('one\ntwo\nthree');
   readonly modified = signal('one\ntwo changed\nthree');
   readonly path = signal('');
-  readonly layout = signal<'split' | 'unified'>('split');
+  readonly layout = signal<HxDiffLayout>('split');
+  readonly minWidth = signal(900);
   readonly collapse = signal<boolean | { margin?: number; minSize?: number }>(true);
 }
 
@@ -188,5 +191,174 @@ describe('HxDiffView', () => {
     expect(container.querySelector('.cm-editor')).not.toBeNull();
     fixture.destroy();
     expect(container.querySelector('.cm-editor')).toBeNull();
+  });
+
+  describe('navigation', () => {
+    const view = () =>
+      fixture.debugElement.query(By.directive(HxDiffView)).componentInstance as HxDiffView;
+    const three = async () => {
+      host.original.set(lines(60));
+      host.modified.set(
+        lines(60)
+          .replace('line 5\n', 'line five\n')
+          .replace('line 30\n', 'line thirty\n')
+          .replace('line 55\n', 'line fifty\n'),
+      );
+      await settle();
+    };
+    const head = () =>
+      EditorView.findFromDOM(el().querySelector<HTMLElement>('.cm-merge-b')!)!.state.selection.main
+        .head;
+
+    it('counts the changes', async () => {
+      expect(view().changeCount()).toBe(1);
+      expect(view().currentChange()).toBe(0);
+      await three();
+      expect(view().changeCount()).toBe(3);
+      expect(view().currentChange()).toBe(0);
+    });
+
+    it('moves to the next change and wraps at the last', async () => {
+      await three();
+      const seen: number[] = [];
+      for (let i = 0; i < 4; i++) {
+        view().next();
+        seen.push(view().currentChange());
+      }
+      expect(seen).toEqual([1, 2, 3, 1]);
+      expect(head()).toBe('line 0\nline 1\nline 2\nline 3\nline 4\n'.length);
+    });
+
+    it('moves to the previous change and wraps at the first', async () => {
+      await three();
+      const seen: number[] = [];
+      for (let i = 0; i < 4; i++) {
+        view().previous();
+        seen.push(view().currentChange());
+      }
+      expect(seen).toEqual([3, 2, 1, 3]);
+    });
+
+    it('does nothing without changes, and counts in the unified layout', async () => {
+      host.modified.set(host.original());
+      await settle();
+      expect(view().changeCount()).toBe(0);
+      view().next();
+      view().previous();
+      expect(view().currentChange()).toBe(0);
+      await three();
+      host.layout.set('unified');
+      await settle();
+      expect(view().changeCount()).toBe(3);
+      view().next();
+      view().next();
+      expect(view().currentChange()).toBe(2);
+    });
+
+    it('follows the cursor', async () => {
+      await three();
+      const b = EditorView.findFromDOM(el().querySelector<HTMLElement>('.cm-merge-b')!)!;
+      const pos = b.state.doc.line(31).from;
+      b.dispatch({ selection: { anchor: pos } });
+      expect(view().currentChange()).toBe(2);
+    });
+
+    it('reveals a line of the modified text and expands the collapsed region', async () => {
+      await three();
+      expect(el().querySelectorAll('.cm-merge-b .cm-collapsedLines').length).toBe(2);
+      view().revealLine(15, 'modified');
+      await settle();
+      expect(el().querySelectorAll('.cm-merge-b .cm-collapsedLines').length).toBe(1);
+      expect(head()).toBe(
+        EditorView.findFromDOM(el().querySelector<HTMLElement>('.cm-merge-b')!)!.state.doc.line(15)
+          .from,
+      );
+    });
+
+    it('reveals a line of the original text, in both layouts, and clamps', async () => {
+      await three();
+      view().revealLine(15, 'original');
+      await settle();
+      expect(el().querySelectorAll('.cm-merge-a .cm-collapsedLines').length).toBe(1);
+      host.layout.set('unified');
+      await settle();
+      expect(el().querySelectorAll('.cm-collapsedLines').length).toBe(2);
+      view().revealLine(15, 'original');
+      await settle();
+      expect(el().querySelectorAll('.cm-collapsedLines').length).toBe(1);
+      view().revealLine(9999, 'original');
+      view().revealLine(-3, 'modified');
+      await settle();
+      expect(el().querySelector('.cm-content')).not.toBeNull();
+    });
+  });
+
+  describe('layout auto', () => {
+    let observers: { callback: ResizeObserverCallback; disconnected: boolean }[];
+    const resize = async (width: number) => {
+      for (const o of observers) {
+        o.callback([{ contentRect: { width } } as ResizeObserverEntry], {} as ResizeObserver);
+      }
+      await settle();
+    };
+
+    beforeEach(async () => {
+      observers = [];
+      vi.stubGlobal(
+        'ResizeObserver',
+        class {
+          readonly #entry: { callback: ResizeObserverCallback; disconnected: boolean };
+          constructor(callback: ResizeObserverCallback) {
+            this.#entry = { callback, disconnected: false };
+            observers.push(this.#entry);
+          }
+          observe(): void {}
+          unobserve(): void {}
+          disconnect(): void {
+            this.#entry.disconnected = true;
+          }
+        },
+      );
+      fixture.destroy();
+      fixture = TestBed.createComponent(Host);
+      host = fixture.componentInstance;
+      host.layout.set('auto');
+      await settle();
+    });
+    afterEach(() => vi.unstubAllGlobals());
+
+    it('waits for the first measurement of the host', () => {
+      expect(el().querySelector('.cm-editor')).toBeNull();
+    });
+
+    it('is split from the minimum width and unified below, following the host', async () => {
+      await resize(900);
+      expect(el().querySelectorAll('.cm-editor').length).toBe(2);
+      await resize(899);
+      expect(el().querySelectorAll('.cm-editor').length).toBe(1);
+      await resize(1200);
+      expect(el().querySelectorAll('.cm-editor').length).toBe(2);
+    });
+
+    it('does not rebuild while the layout stays the same', async () => {
+      await resize(1000);
+      const before = el().querySelector('.cm-editor');
+      await resize(1100);
+      expect(el().querySelector('.cm-editor')).toBe(before);
+    });
+
+    it('uses splitMinWidth', async () => {
+      host.minWidth.set(500);
+      await resize(600);
+      expect(el().querySelectorAll('.cm-editor').length).toBe(2);
+      host.minWidth.set(700);
+      await settle();
+      expect(el().querySelectorAll('.cm-editor').length).toBe(1);
+    });
+
+    it('stops observing with the component', () => {
+      fixture.destroy();
+      expect(observers.every((o) => o.disconnected)).toBe(true);
+    });
   });
 });

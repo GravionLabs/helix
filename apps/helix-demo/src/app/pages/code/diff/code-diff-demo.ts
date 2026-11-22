@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { HxDiffView, type HxDiffLayout } from '@gravionlabs/helix-code';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
@@ -40,7 +40,9 @@ export const g = 8;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeDiffDemo {
+  protected readonly diff = viewChild.required(HxDiffView);
   protected readonly layout = signal<HxDiffLayout>('split');
+  protected readonly width = signal(600);
   protected readonly collapse = signal(true);
   protected readonly original = signal(BEFORE);
   protected readonly modified = signal(AFTER);
@@ -50,6 +52,10 @@ export class CodeDiffDemo {
     { label: 'New file', before: '', after: AFTER },
     { label: 'Deleted file', before: BEFORE, after: '' },
   ];
+
+  protected resize(event: Event): void {
+    this.width.set(Number((event.target as HTMLInputElement).value));
+  }
 
   protected show(before: string, after: string): void {
     this.original.set(before);
