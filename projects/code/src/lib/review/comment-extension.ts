@@ -39,7 +39,7 @@ interface Draft {
   readonly start: number;
   readonly end: number;
   readonly anchor: number;
-  readonly text: string;
+  text: string;
 }
 
 const setComments = StateEffect.define<readonly HxPlacedComment[]>();
@@ -134,6 +134,7 @@ class DraftBox extends WidgetType {
     save.addEventListener('click', submit);
     cancel.addEventListener('click', () => close(false, ''));
     input.addEventListener('input', () => {
+      this.draft.text = input.value;
       save.disabled = !input.value.trim();
     });
     input.addEventListener('keydown', (event) => {
@@ -236,10 +237,8 @@ function openDraft(view: EditorView, line: number, extend: boolean): boolean {
   const doc = view.state.doc;
   if (line < 1 || line > doc.lines) return false;
   const old = state.draft;
-  const text =
-    old && view.dom.querySelector<HTMLTextAreaElement>('.cm-comment-input')?.value
-      ? view.dom.querySelector<HTMLTextAreaElement>('.cm-comment-input')!.value
-      : (old?.text ?? '');
+  const textarea = view.dom.querySelector<HTMLTextAreaElement>('.cm-comment-input');
+  const text = textarea ? textarea.value : (old?.text ?? '');
   const anchor = extend && old ? old.anchor : line;
   const draft: Draft = {
     start: Math.min(anchor, line),
