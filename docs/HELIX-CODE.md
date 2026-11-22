@@ -136,4 +136,12 @@ Details: [Conflict markers](components/conflict-markers.md).
 
 ## Commit graph
 
-Planned.
+`@gravionlabs/helix-code/git` has `hxLayoutCommits(commits, previous?)`, a pure function that turns commits into rows for drawing. It draws nothing and sorts nothing: the input order is the order of `git log --topo-order` or `--date-order` (a commit before its parents).
+
+- Input `HxCommit {id, parents, message, author, time, refs?}`; `time` is Unix seconds, `refs` are `{name, kind: 'branch' | 'remote' | 'tag' | 'head'}`.
+- Output `{rows, state}`. One `HxGraphRow {lane, color, hasIncoming, segments}` per commit. `hasIncoming` says that a line enters the dot from the top edge (false for a branch tip).
+- A segment `{fromLane, toLane, color, kind}` runs inside its row from the top edge to the bottom edge; `kind` is `pass-through` (including the first parent continuing in the commit's lane), `branch-out` (from the dot to a further parent's lane) or `merge-in` (a lane that expects the commit ends in the dot). The bottom of row i meets the top of row i+1 at the same lane.
+- The first parent stays in the commit's lane. A tip takes the lowest free lane. A freed lane is reused.
+- Colors are palette indexes 0 to 7 (`--hx-graph-lane-1` to `-8`): every new line takes the next value of a counter mod 8 and keeps it until it ends.
+- Paging: pass the `state` of the last call as `previous`; two pages give the same rows as one call. A parent outside the list keeps its lane open in `state`.
+- 10,000 commits lay out in well under 200 ms on a development machine; the unit test logs the time and fails above 1 s.

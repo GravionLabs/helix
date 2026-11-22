@@ -7,3 +7,14 @@ export {
   type HxChangedFile,
   type HxChangeStatus,
 } from './changed-files/changed-files';
+
+export {
+  hxLayoutCommits,
+  HX_GRAPH_COLORS,
+  type HxCommit,
+  type HxCommitRef,
+  type HxGraphRow,
+  type HxGraphSegment,
+  type HxLayoutState,
+  type HxOpenLane,
+} from './commit-layout';
