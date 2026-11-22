@@ -1226,7 +1226,7 @@ describe('HxDateRangeQuickSelect', () => {
 
       await typeDate('soon');
       expect(host.quick().from).toEqual(new Date(2026, 9, 9, 8, 30));
-      expect(error()?.textContent).toBe('Choose a start and an end that can be applied.');
+      expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
       expect(error()?.getAttribute('role')).toBe('alert');
       expect(sideDate().getAttribute('aria-invalid')).toBe('true');
       expect(sideDate().getAttribute('aria-describedby')).toBe(error()!.id);
@@ -1274,7 +1274,7 @@ describe('HxDateRangeQuickSelect', () => {
         await fill(sideAmount(), text);
         expect({ text, value: host.quick() }).toEqual({ text, value: applied });
         expect(host.quickExpr()).toEqual({ from: 'now-15m', to: 'now' });
-        expect(error()?.textContent).toBe('Choose a start and an end that can be applied.');
+        expect(error()?.textContent?.trim()).toBe('Choose a start and an end that can be applied.');
         expect(sideAmount().getAttribute('aria-invalid')).toBe('true');
         expect(sideAmount().getAttribute('aria-describedby')).toBe(error()!.id);
         // the summary keeps the applied side
