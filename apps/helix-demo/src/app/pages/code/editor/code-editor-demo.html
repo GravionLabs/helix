@@ -1,0 +1,46 @@
+<h1 class="sr-only">Code editor</h1>
+<app-source-tabs library="helix-code" directory="code/editor" componentName="code-editor-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Editor</h2>
+    <p class="m-0">
+      <code>hx-code-editor</code> hosts a CodeMirror editor. The language follows the file name; the
+      Helix theme is applied by default.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      @for (f of files; track f) {
+        <button type="button" class="p-button p-button-outlined" (click)="open(f)">{{ f }}</button>
+      }
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <label
+        ><input type="checkbox" [checked]="readOnly()" (change)="readOnly.set(!readOnly())" /> Read
+        only</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          [checked]="lineNumbers()"
+          (change)="lineNumbers.set(!lineNumbers())"
+        />
+        Line numbers</label
+      >
+      <label
+        ><input
+          type="checkbox"
+          [checked]="lineWrapping()"
+          (change)="lineWrapping.set(!lineWrapping())"
+        />
+        Line wrapping</label
+      >
+    </div>
+    <hx-code-editor
+      aria-label="Source code"
+      [(value)]="text"
+      [path]="path()"
+      [readOnly]="readOnly()"
+      [lineNumbers]="lineNumbers()"
+      [lineWrapping]="lineWrapping()"
+    />
+    <p class="m-0">{{ text().length }} characters</p>
+  </div>
+</app-source-tabs>

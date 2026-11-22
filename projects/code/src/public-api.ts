@@ -9,3 +9,4 @@ export {
   type HxCodeRole,
 } from './lib/theme/code-highlight';
 export { hxLanguageFor, hxLoadLanguage, HX_CODE_LANGUAGES } from './lib/language/language';
+export { HxCodeEditor } from './lib/editor/code-editor';
