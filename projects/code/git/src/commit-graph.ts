@@ -4,18 +4,27 @@ import {
   computed,
   contentChild,
   Directive,
+  effect,
   inject,
   input,
   output,
   signal,
   TemplateRef,
+  untracked,
+  viewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
+import {
   type HxCommit,
   type HxCommitRef,
   type HxGraphRow,
+  type HxLayoutState,
   HX_GRAPH_COLORS,
   hxLayoutCommits,
 } from './commit-layout';
@@ -47,7 +56,7 @@ export class HxCommitGraphRowCell {
   }
 }
 
-/** Width of one lane and height of one row, in SVG units (px). */
+/** Width of one lane in SVG units (px); the default height of one row. */
 const LANE_WIDTH = 16;
 const ROW_HEIGHT = 28;
 const DOT_RADIUS = 4;
@@ -75,15 +84,19 @@ interface Row {
   readonly subject: string;
 }
 
-/** Builds the SVG shapes of one row; lanes from `maxLanes - 1` on are folded into the last lane. */
+/**
+ * Builds the SVG shapes of one row of `rowHeight` px; lanes from `maxLanes - 1` on are folded into
+ * the last lane.
+ */
 export function hxGraphRowShapes(
   layout: HxGraphRow,
   maxLanes: number,
   merge: boolean,
+  rowHeight = ROW_HEIGHT,
 ): { paths: Path[]; dot: Dot } {
   const last = Math.max(1, maxLanes) - 1;
   const x = (lane: number) => Math.min(lane, last) * LANE_WIDTH + LANE_WIDTH / 2;
-  const cy = ROW_HEIGHT / 2;
+  const cy = rowHeight / 2;
 
   // The line color of the last lane is fixed, so a folded line keeps its color from row to row.
   const lastColor = last % HX_GRAPH_COLORS;
@@ -105,14 +118,14 @@ export function hxGraphRowShapes(
     const color = colorAt(Math.max(s.fromLane, s.toLane), s.color);
     switch (s.kind) {
       case 'pass-through':
-        if (s.fromLane === layout.lane) line(x(s.fromLane), cy, x(s.toLane), ROW_HEIGHT, color);
-        else line(x(s.fromLane), 0, x(s.toLane), ROW_HEIGHT, colorAt(s.fromLane, s.color));
+        if (s.fromLane === layout.lane) line(x(s.fromLane), cy, x(s.toLane), rowHeight, color);
+        else line(x(s.fromLane), 0, x(s.toLane), rowHeight, colorAt(s.fromLane, s.color));
         break;
       case 'merge-in':
         line(x(s.fromLane), 0, x(s.toLane), cy, colorAt(s.fromLane, s.color));
         break;
       case 'branch-out':
-        line(x(s.fromLane), cy, x(s.toLane), ROW_HEIGHT, colorAt(s.toLane, s.color));
+        line(x(s.fromLane), cy, x(s.toLane), rowHeight, colorAt(s.toLane, s.color));
         break;
     }
   }
@@ -145,9 +158,39 @@ const REF_LABEL: Record<HxCommitRef['kind'], string> = {
 
 let nextId = 0;
 
+interface Model {
+  readonly rows: readonly Row[];
+  /** Lanes the layout needs, before `maxLanes` limits them. */
+  readonly lanes: number;
+  /** Index of each commit id. */
+  readonly index: ReadonlyMap<string, number>;
+  /** `append` when the commits continued the previous list, else `full`. */
+  readonly kind: 'append' | 'full';
+}
+
+/** What the model needs from the previous run to continue it. */
+interface Cache {
+  readonly commits: readonly HxCommit[];
+  readonly state: HxLayoutState;
+  readonly layout: readonly HxGraphRow[];
+  readonly rows: readonly Row[];
+  readonly lanes: number;
+  readonly index: ReadonlyMap<string, number>;
+  readonly format: (secs: number) => string;
+  readonly maxLanes: number;
+  readonly rowHeight: number;
+}
+
+function lanesOf(row: HxGraphRow, from: number): number {
+  let n = Math.max(from, row.lane + 1);
+  for (const s of row.segments) n = Math.max(n, s.fromLane + 1, s.toLane + 1);
+  return n;
+}
+
 /**
  * Shows a commit history as rows: the graph, ref labels, message, author and time. One commit is
- * selected; arrow keys, Home and End move.
+ * selected; arrow keys, Home and End move. Only the visible rows are in the DOM; `loadMore` asks
+ * for the next page.
  *
  * ```html
  * <hx-commit-graph aria-label="History" [commits]="commits" [(selected)]="id" />
@@ -155,7 +198,7 @@ let nextId = 0;
  */
 @Component({
   selector: 'hx-commit-graph',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf],
   templateUrl: './commit-graph.html',
   styleUrl: './commit-graph.scss',
   encapsulation: ViewEncapsulation.Emulated,
@@ -164,10 +207,13 @@ let nextId = 0;
     class: 'hx-commit-graph',
     '[attr.aria-label]': 'null',
     '[attr.aria-labelledby]': 'null',
+    '[style.--hx-commit-graph-row-height]': 'rowHeight() + "px"',
   },
 })
 export class HxCommitGraph {
   readonly #uid = `hx-commit-graph-${nextId++}`;
+  #cache: Cache | null = null;
+  #loadMoreFor = -1;
 
   /** The commits, a commit before its parents. */
   readonly commits = input.required<readonly HxCommit[]>();
@@ -175,6 +221,16 @@ export class HxCommitGraph {
   readonly selected = input<string | null>(null);
   /** Maximum number of lanes drawn; further lanes are folded into the last one. */
   readonly maxLanes = input(12);
+  /** Height of one row in px. Rows and their SVG have exactly this height. */
+  readonly rowHeight = input(ROW_HEIGHT);
+  /** Rows rendered above and below the visible rows. */
+  readonly buffer = input(5);
+  /** Whether more commits can be loaded; `loadMore` fires only while this is true. */
+  readonly hasMore = input(false);
+  /** Whether a page is loading; shows a row with a spinner and holds back `loadMore`. */
+  readonly loading = input(false);
+  /** `loadMore` fires when the last rendered row is within this many rows of the end. */
+  readonly loadMoreThreshold = input(20);
   /** Formats a Unix time in seconds; the default is relative ("5 min ago"). */
   readonly formatTime = input<(secs: number) => string>(hxFormatCommitTime);
   /** The accessible name of the list. */
@@ -182,56 +238,162 @@ export class HxCommitGraph {
   readonly ariaLabelledby = input<string | null>(null, { alias: 'aria-labelledby' });
   /** Emits the id of the commit the user selects. */
   readonly selectedChange = output<string>();
+  /** Emits when the user reaches the end of the loaded commits and `hasMore` is true. */
+  readonly loadMore = output<void>();
 
   protected readonly rowCell = contentChild(HxCommitGraphRowCell);
-  protected readonly active = signal(-1);
-  protected readonly rowHeight = ROW_HEIGHT;
+  protected readonly viewport = viewChild(CdkVirtualScrollViewport);
+  protected readonly active = signal<string | null>(null);
   protected readonly dotRadius = DOT_RADIUS;
+  readonly #lastRendered = signal(-1);
 
-  protected readonly layout = computed(() => hxLayoutCommits(this.commits()).rows);
+  protected readonly bufferPx = computed(() => Math.max(0, this.buffer()) * this.rowHeight());
 
-  /** Number of lanes the graph column shows. */
-  protected readonly laneCount = computed(() => {
-    const max = Math.max(1, this.maxLanes());
-    let n = 1;
-    for (const row of this.layout()) {
-      n = Math.max(n, row.lane + 1);
-      for (const s of row.segments) n = Math.max(n, s.fromLane + 1, s.toLane + 1);
-    }
-    return Math.min(n, max);
-  });
-
-  protected readonly graphWidth = computed(() => this.laneCount() * LANE_WIDTH);
-
-  protected readonly rows = computed<readonly Row[]>(() => {
+  protected readonly model = computed<Model>(() => {
+    const commits = this.commits();
     const format = this.formatTime();
-    const max = this.maxLanes();
-    const layout = this.layout();
-    return this.commits().map((commit, i) => {
-      const shapes = hxGraphRowShapes(layout[i], max, commit.parents.length > 1);
-      return {
+    const maxLanes = this.maxLanes();
+    const rowHeight = this.rowHeight();
+    const prev = this.#cache;
+    const sameLook =
+      !!prev &&
+      prev.format === format &&
+      prev.maxLanes === maxLanes &&
+      prev.rowHeight === rowHeight;
+    const append =
+      !!prev &&
+      commits.length >= prev.commits.length &&
+      prev.commits.every((c, i) => commits[i]?.id === c.id);
+
+    let state: HxLayoutState;
+    let layout: readonly HxGraphRow[];
+    if (append) {
+      const more = hxLayoutCommits(commits.slice(prev.commits.length), prev.state);
+      state = more.state;
+      layout = prev.layout.concat(more.rows);
+    } else {
+      const full = hxLayoutCommits(commits);
+      state = full.state;
+      layout = full.rows;
+    }
+
+    // Rows of an unchanged look stay as they are; a changed look builds them all again.
+    const keep = append && sameLook;
+    const from = keep ? prev.commits.length : 0;
+    const built = keep ? prev.rows.slice() : [];
+    const index = keep ? new Map(prev.index) : new Map<string, number>();
+    let lanes = keep ? prev.lanes : 1;
+    for (let i = from; i < commits.length; i++) {
+      const commit = commits[i];
+      lanes = lanesOf(layout[i], lanes);
+      index.set(commit.id, i);
+      built.push({
         id: `${this.#uid}-${i}`,
         commit,
         layout: layout[i],
-        ...shapes,
+        ...hxGraphRowShapes(layout[i], maxLanes, commit.parents.length > 1, rowHeight),
         name: commit.author,
         time: format(commit.time),
         subject: commit.message.split('\n', 1)[0],
         refs: (commit.refs ?? []).map((r) => ({ name: r.name, kind: r.kind })),
-      };
-    });
+      });
+    }
+
+    this.#cache = {
+      commits,
+      state,
+      layout,
+      rows: built,
+      lanes,
+      index,
+      format,
+      maxLanes,
+      rowHeight,
+    };
+    return { rows: built, lanes, index, kind: append ? 'append' : 'full' };
   });
+
+  protected readonly rows = computed(() => this.model().rows);
+
+  /** Number of lanes the graph column shows. */
+  protected readonly laneCount = computed(() =>
+    Math.min(this.model().lanes, Math.max(1, this.maxLanes())),
+  );
+
+  protected readonly graphWidth = computed(() => this.laneCount() * LANE_WIDTH);
 
   protected readonly activeIndex = computed(() => {
     const n = this.rows().length;
     if (n === 0) return -1;
+    const index = this.model().index;
     const a = this.active();
-    if (a >= 0) return Math.min(a, n - 1);
-    const s = this.rows().findIndex((r) => r.commit.id === this.selected());
-    return s >= 0 ? s : 0;
+    const own = a === null ? undefined : index.get(a);
+    if (own !== undefined) return own;
+    return index.get(this.selected() ?? '') ?? 0;
   });
 
   protected readonly activeId = computed(() => this.rows()[this.activeIndex()]?.id ?? null);
+
+  constructor() {
+    // Follow the rendered range of the viewport.
+    effect((onCleanup) => {
+      const viewport = this.viewport();
+      if (!viewport) return;
+      this.#lastRendered.set(viewport.getRenderedRange().end - 1);
+      const sub = viewport.renderedRangeStream.subscribe((r) => this.#lastRendered.set(r.end - 1));
+      onCleanup(() => sub.unsubscribe());
+    });
+
+    // Page in the next commits once, until the list grows.
+    effect(() => {
+      const length = this.commits().length;
+      const last = this.#lastRendered();
+      const near = last >= length - this.loadMoreThreshold();
+      if (!this.hasMore() || this.loading() || length === 0 || !near) return;
+      untracked(() => {
+        if (this.#loadMoreFor === length) return;
+        this.#loadMoreFor = length;
+        this.loadMore.emit();
+      });
+    });
+
+    // A list that did not continue the old one: keep the scroll position inside the new length.
+    effect(() => {
+      const model = this.model();
+      const viewport = this.viewport();
+      if (model.kind !== 'full' || !viewport) return;
+      untracked(() => {
+        const max = Math.max(0, model.rows.length * this.rowHeight() - viewport.getViewportSize());
+        if (viewport.measureScrollOffset() > max) viewport.scrollToOffset(max);
+      });
+    });
+  }
+
+  /**
+   * Scrolls a loaded commit to the nearest visible position. Returns `false`, without scrolling,
+   * when the commit is not loaded.
+   */
+  reveal(id: string): boolean {
+    const index = this.model().index.get(id);
+    if (index === undefined) return false;
+    this.#scrollTo(index);
+    return true;
+  }
+
+  #scrollTo(index: number): void {
+    const viewport = this.viewport();
+    if (!viewport) return;
+    const height = this.rowHeight();
+    const top = index * height;
+    const offset = viewport.measureScrollOffset();
+    const size = viewport.getViewportSize();
+    if (top < offset) viewport.scrollToOffset(top);
+    else if (top + height > offset + size) viewport.scrollToOffset(top + height - size);
+  }
+
+  protected trackRow(_index: number, row: Row): string {
+    return row.commit.id;
+  }
 
   protected refLabel(kind: HxCommitRef['kind']): string {
     return REF_LABEL[kind];
@@ -244,7 +406,7 @@ export class HxCommitGraph {
   protected select(index: number): void {
     const row = this.rows()[index];
     if (!row) return;
-    this.active.set(index);
+    this.active.set(row.commit.id);
     this.selectedChange.emit(row.commit.id);
   }
 
@@ -276,6 +438,6 @@ export class HxCommitGraph {
     }
     event.preventDefault();
     this.select(next);
-    document.getElementById(this.rows()[next].id)?.scrollIntoView?.({ block: 'nearest' });
+    this.#scrollTo(next);
   }
 }

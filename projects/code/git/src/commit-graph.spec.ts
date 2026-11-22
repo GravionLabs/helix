@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HxCommitGraph,
@@ -36,12 +36,18 @@ const COMMITS: HxCommit[] = [
       [commits]="commits()"
       [selected]="selected()"
       [maxLanes]="maxLanes()"
+      [rowHeight]="rowHeight()"
+      [buffer]="buffer()"
+      [hasMore]="hasMore()"
+      [loading]="loading()"
+      [loadMoreThreshold]="threshold()"
       [formatTime]="fmt"
+      (loadMore)="loads = loads + 1"
       (selectedChange)="picked.push($event); selected.set($event)"
     >
       @if (withCell) {
         <ng-template hxCommitGraphRowCell let-commit let-row="row">
-          <button type="button" class="cell">{{ commit.id }}@{{ row.lane }}</button>
+          <button type="button" class="cell">{{ commit.id }}@{{ row.lane }}{{ seen(commit.id, row) }}</button>
         </ng-template>
       }
     </hx-commit-graph>
@@ -51,38 +57,76 @@ class Host {
   commits = signal<HxCommit[]>(COMMITS);
   selected = signal<string | null>(null);
   maxLanes = signal(12);
+  rowHeight = signal(28);
+  buffer = signal(5);
+  hasMore = signal(false);
+  loading = signal(false);
+  threshold = signal(20);
+  loads = 0;
   picked: string[] = [];
   withCell = false;
+  graph = viewChild.required(HxCommitGraph);
   fmt = (s: number) => `t${s}`;
+  /** The layout objects each commit showed; one object means its row was never laid out again. */
+  layouts = new Map<string, Set<object>>();
+  seen(id: string, row: object): string {
+    const set = this.layouts.get(id) ?? new Set();
+    set.add(row);
+    this.layouts.set(id, set);
+    return '';
+  }
+}
+
+/** jsdom has no layout: give every element a viewport height of `px`. */
+function mockViewportHeight(px: number): void {
+  vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(px);
+  // jsdom has no `scrollTo`; set the offset and tell the viewport.
+  HTMLElement.prototype.scrollTo = function (this: HTMLElement, opts?: ScrollToOptions | number) {
+    this.scrollTop = typeof opts === 'object' ? (opts.top ?? 0) : 0;
+    this.dispatchEvent(new Event('scroll'));
+  } as typeof HTMLElement.prototype.scrollTo;
 }
 
 describe('HxCommitGraph', () => {
   let fixture: ComponentFixture<Host>;
+
+  beforeEach(() => mockViewportHeight(280));
+  afterEach(() => vi.restoreAllMocks());
   const el = () => fixture.nativeElement as HTMLElement;
   const list = () => el().querySelector<HTMLElement>('[role=listbox]')!;
   const options = () => [...el().querySelectorAll<HTMLElement>('[role=option]')];
 
-  function create(withCell = false): void {
+  /** The viewport measures and renders in a microtask and after change detection. */
+  async function flush(): Promise<void> {
+    for (let i = 0; i < 3; i++) {
+      fixture.detectChanges();
+      await fixture.whenStable();
+      await new Promise((r) => setTimeout(r, 0));
+    }
+    fixture.detectChanges();
+  }
+
+  async function create(withCell = false): Promise<void> {
     TestBed.configureTestingModule({});
     fixture = TestBed.createComponent(Host);
     fixture.componentInstance.withCell = withCell;
-    fixture.detectChanges();
+    await flush();
   }
 
-  function key(k: string): void {
+  async function key(k: string): Promise<void> {
     list().dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true }));
-    fixture.detectChanges();
+    await flush();
   }
 
-  it('renders a listbox with one option per commit and an accessible name', () => {
-    create();
+  it('renders a listbox with one option per commit and an accessible name', async () => {
+    await create();
     expect(list().getAttribute('aria-label')).toBe('History');
     expect(options().length).toBe(4);
     expect(options()[1].getAttribute('aria-label')).toBe('Main work, Bob, t900');
   });
 
-  it('shows the first line of the message with the full text as tooltip, author and time', () => {
-    create();
+  it('shows the first line of the message with the full text as tooltip, author and time', async () => {
+    await create();
     const first = options()[0];
     const msg = first.querySelector<HTMLElement>('.hx-commit-graph-message')!;
     expect(msg.textContent).toBe('Merge feature');
@@ -91,60 +135,246 @@ describe('HxCommitGraph', () => {
     expect(first.querySelector('.hx-commit-graph-time')!.textContent).toBe('t1000');
   });
 
-  it('draws an SVG per row with a distinct dot for a merge commit', () => {
-    create();
+  it('draws an SVG per row with a distinct dot for a merge commit', async () => {
+    await create();
     expect(options().every((o) => o.querySelector('svg path'))).toBe(true);
     const dots = options().map((o) => o.querySelector('circle')!);
     expect(dots[0].classList.contains('is-merge')).toBe(true);
     expect(dots[1].classList.contains('is-merge')).toBe(false);
   });
 
-  it('renders ref labels by kind before the message', () => {
-    create();
+  it('renders ref labels by kind before the message', async () => {
+    await create();
     const refs = [...options()[0].querySelectorAll<HTMLElement>('.hx-commit-graph-ref')];
     expect(refs.map((r) => r.dataset['kind'])).toEqual(['branch', 'head', 'remote', 'tag']);
     const msg = options()[0].querySelector('.hx-commit-graph-message')!;
     expect(refs[0].compareDocumentPosition(msg) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it('selects on click and marks aria-selected', () => {
-    create();
+  it('selects on click and marks aria-selected', async () => {
+    await create();
     options()[2].click();
-    fixture.detectChanges();
+    await flush();
     expect(fixture.componentInstance.picked).toEqual(['b']);
     expect(options()[2].getAttribute('aria-selected')).toBe('true');
   });
 
-  it('moves the selection with arrows, Home and End', () => {
-    create();
-    key('ArrowDown');
-    key('ArrowDown');
+  it('moves the selection with arrows, Home and End', async () => {
+    await create();
+    await key('ArrowDown');
+    await key('ArrowDown');
     expect(fixture.componentInstance.picked).toEqual(['a', 'b']);
-    key('ArrowUp');
-    key('End');
-    key('Home');
+    await key('ArrowUp');
+    await key('End');
+    await key('Home');
     expect(fixture.componentInstance.picked).toEqual(['a', 'b', 'a', 'r', 'm']);
     expect(list().getAttribute('aria-activedescendant')).toBe(options()[0].id);
   });
 
-  it('renders the row cell template per row with the commit and its layout', () => {
-    create(true);
+  it('renders the row cell template per row with the commit and its layout', async () => {
+    await create(true);
     const cells = [...el().querySelectorAll('.cell')].map((c) => c.textContent);
     expect(cells).toEqual(['m@0', 'a@0', 'b@1', 'r@0']);
   });
 
-  it('exports the directive and the component', () => {
+  it('exports the directive and the component', async () => {
     expect(api.HxCommitGraph).toBe(HxCommitGraph);
     expect(api.HxCommitGraphRowCell).toBe(HxCommitGraphRowCell);
   });
 
-  it('limits the graph width to maxLanes', () => {
-    create();
+  it('limits the graph width to maxLanes', async () => {
+    await create();
     const wide = options()[0].querySelector('svg')!.getAttribute('width');
     fixture.componentInstance.maxLanes.set(1);
-    fixture.detectChanges();
+    await flush();
     expect(options()[0].querySelector('svg')!.getAttribute('width')).toBe('16');
     expect(Number(wide)).toBeGreaterThan(16);
+  });
+  describe('virtual scrolling and paging', () => {
+    const line = (from: number, to: number): HxCommit[] =>
+      Array.from({ length: to - from }, (_, k) => {
+        const i = from + k;
+        return {
+          id: `c${i}`,
+          parents: [`c${i + 1}`],
+          message: `Commit ${i}`,
+          author: 'Ada',
+          time: 1_000_000 - i,
+        };
+      });
+    const frame = () => new Promise((r) => requestAnimationFrame(r));
+    const host = () => fixture.componentInstance;
+    const viewport = () => el().querySelector<HTMLElement>('cdk-virtual-scroll-viewport')!;
+    async function scrollTo(top: number): Promise<void> {
+      viewport().scrollTop = top;
+      viewport().dispatchEvent(new Event('scroll'));
+      await frame();
+      await flush();
+    }
+    const firstVisible = () => Math.floor(viewport().scrollTop / host().rowHeight());
+
+    it('sets the row height on the host, the rows and the SVG', async () => {
+      await create();
+      host().rowHeight.set(40);
+      await flush();
+      const root = el().querySelector<HTMLElement>('hx-commit-graph')!;
+      expect(root.style.getPropertyValue('--hx-commit-graph-row-height')).toBe('40px');
+      expect(options()[0].querySelector('svg')!.getAttribute('height')).toBe('40');
+      // The last segment of a row ends on the row's bottom edge.
+      expect(options()[1].querySelector('path')!.getAttribute('d')).toContain('V');
+    });
+
+    it('draws segments up to the row height', () => {
+      const row = { lane: 0, color: 0, hasIncoming: true, segments: [] };
+      const withLine = {
+        ...row,
+        segments: [{ fromLane: 0, toLane: 0, color: 0, kind: 'pass-through' as const }],
+      };
+      expect(hxGraphRowShapes(withLine, 12, false, 40).paths.map((p) => p.d)).toEqual([
+        'M8 0V20',
+        'M8 20V40',
+      ]);
+    });
+
+    it('renders only the visible rows of 10,000 commits', async () => {
+      await create();
+      host().commits.set(line(0, 10_000));
+      await flush();
+      const max = Math.ceil(280 / 28) + 2 * 5;
+      expect(options().length).toBeGreaterThan(0);
+      expect(options().length).toBeLessThanOrEqual(max);
+      await scrollTo(28 * 5000);
+      expect(options().length).toBeLessThanOrEqual(max);
+      expect(options().some((o) => o.getAttribute('aria-label')!.startsWith('Commit 5000'))).toBe(
+        true,
+      );
+    });
+
+    it('fires loadMore near the end, once, only while hasMore and not loading', async () => {
+      await create();
+      host().commits.set(line(0, 100));
+      host().threshold.set(20);
+      await flush();
+      expect(host().loads).toBe(0); // hasMore is false
+
+      host().hasMore.set(true);
+      await flush();
+      expect(host().loads).toBe(0); // the last rendered row is far from the end
+
+      await scrollTo(28 * 100);
+      expect(host().loads).toBe(1);
+      await scrollTo(28 * 100 - 28);
+      expect(host().loads).toBe(1); // once until commits grows
+
+      host().loading.set(true);
+      host().commits.set(line(0, 200));
+      await flush();
+      await scrollTo(28 * 200);
+      expect(host().loads).toBe(1); // loading holds it back
+      host().loading.set(false);
+      await flush();
+      expect(host().loads).toBe(2);
+    });
+
+    it('shows a loading row with a spinner', async () => {
+      await create();
+      expect(el().querySelector('.hx-commit-graph-spinner')).toBeNull();
+      host().loading.set(true);
+      await flush();
+      expect(
+        el().querySelector('.hx-commit-graph-loading .hx-commit-graph-spinner'),
+      ).not.toBeNull();
+    });
+
+    it('keeps the scroll offset, the first visible commit and the selection on append', async () => {
+      await create();
+      host().commits.set(line(0, 100));
+      host().selected.set('c30');
+      await flush();
+      await scrollTo(28 * 40);
+      const picked = host().picked.length;
+      const first = firstVisible();
+
+      host().commits.set(line(0, 150));
+      await flush();
+      expect(viewport().scrollTop).toBe(28 * 40);
+      expect(firstVisible()).toBe(first);
+      expect(host().picked.length).toBe(picked);
+      expect(host().selected()).toBe('c30');
+      expect(viewport().querySelector('.is-selected')).toBeNull(); // c30 is above the window
+      await scrollTo(28 * 25);
+      expect(viewport().querySelector('.is-selected')!.getAttribute('aria-label')).toContain(
+        'Commit 30',
+      );
+    });
+
+    it('continues the layout on an append and lays out again on a replace', async () => {
+      await create(true);
+      host().commits.set(line(0, 100));
+      await flush();
+      host().commits.set(line(0, 130));
+      await flush();
+      // c50 was laid out once: the append continued from the saved state.
+      await scrollTo(28 * 40);
+      expect(host().layouts.get('c50')!.size).toBe(1);
+
+      host().commits.set([{ ...line(0, 1)[0], id: 'x' }, ...line(1, 130)]);
+      await flush();
+      expect(host().layouts.get('c50')!.size).toBe(2);
+    });
+
+    it('lays out in full and clamps the scroll position when the list is replaced', async () => {
+      await create();
+      host().commits.set(line(0, 1000));
+      await flush();
+      await scrollTo(28 * 900);
+      host().commits.set(line(5000, 5050));
+      await flush();
+      expect(viewport().scrollTop).toBeLessThanOrEqual(28 * 50 - 280);
+      expect(options().length).toBeGreaterThan(0);
+    });
+
+    it('keeps the selection by id when the list is replaced, without selectedChange', async () => {
+      await create();
+      host().commits.set(line(0, 50));
+      host().selected.set('c10');
+      await flush();
+      host().commits.set(line(5, 60));
+      await flush();
+      expect(host().picked).toEqual([]);
+      expect(options().find((o) => o.classList.contains('is-selected'))!.id).toBeTruthy();
+      expect(
+        options()
+          .find((o) => o.classList.contains('is-selected'))!
+          .getAttribute('aria-label'),
+      ).toContain('Commit 10');
+    });
+
+    it('scrolls the selected row into view with the keyboard', async () => {
+      await create();
+      host().commits.set(line(0, 100));
+      await flush();
+      await key('End');
+      expect(host().picked.at(-1)).toBe('c99');
+      expect(viewport().scrollTop).toBe(28 * 100 - 280);
+      await key('Home');
+      expect(viewport().scrollTop).toBe(0);
+    });
+
+    it('reveals a loaded commit at the nearest position and refuses an unknown one', async () => {
+      await create();
+      host().commits.set(line(0, 100));
+      await flush();
+      const graph = host().graph();
+      expect(graph.reveal('c50')).toBe(true);
+      expect(viewport().scrollTop).toBe(28 * 51 - 280);
+      await scrollTo(28 * 60);
+      expect(graph.reveal('c50')).toBe(true);
+      expect(viewport().scrollTop).toBe(28 * 50);
+      const before = viewport().scrollTop;
+      expect(graph.reveal('nope')).toBe(false);
+      expect(viewport().scrollTop).toBe(before);
+    });
   });
 });
 
