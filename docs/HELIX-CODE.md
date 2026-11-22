@@ -38,7 +38,7 @@ The library has no Git, file system or Tauri access. Data comes in through signa
 `hxCodeTheme()` and `hxCodeHighlight()` give every editor and diff view of an app the Helix look. Both return a CodeMirror extension; add them to the `extensions` of the editor.
 
 ```ts
-import { hxCodeHighlight, hxCodeTheme } from '@gravionlabs/helix-code';
+import { hxCodeHighlight, hxCodeTheme } from "@gravionlabs/helix-code";
 
 const extensions = [hxCodeTheme(), hxCodeHighlight()];
 ```
@@ -50,9 +50,9 @@ Colors follow the CSS variables, so a switch between light and dark (`.app-dark`
 `hxLanguageFor(path, languages?)` returns the `LanguageDescription` for a file name, or `null`. `hxLoadLanguage(path, languages?)` resolves to the `LanguageSupport`, or `null`; a failed load resolves to `null` and does not throw. Both are plain functions and need no injection context; `languages` defaults to `@codemirror/language-data`. Each grammar is a lazy chunk, so none is in the first bundle.
 
 ```ts
-import { hxLoadLanguage } from '@gravionlabs/helix-code';
+import { hxLoadLanguage } from "@gravionlabs/helix-code";
 
-const support = await hxLoadLanguage('src/app/app.ts');
+const support = await hxLoadLanguage("src/app/app.ts");
 if (support) view.dispatch({ effects: language.reconfigure(support) });
 ```
 
@@ -72,7 +72,13 @@ Inputs change the running view; it is never rebuilt. Details: [Code editor](comp
 
 ## Diff
 
-Planned.
+`<hx-diff-view>` shows two versions of a text, read-only: `original` and `modified` (both required), `path` for the language, `layout` (`'split'` default, or `'unified'`) and `collapseUnchanged` (default on: margin 3, minimum 4). Changed words are marked and the gutter shows `+` and `-`, so the change does not rely on color alone.
+
+```html
+<hx-diff-view aria-label="Changes" path="src/app/app.ts" [original]="before" [modified]="after" />
+```
+
+Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with defaults for light and dark. Details: [Diff view](components/diff-view.md).
 
 ## Review
 

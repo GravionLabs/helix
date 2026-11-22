@@ -1,0 +1,49 @@
+<h1 class="sr-only">Diff view</h1>
+<app-source-tabs library="helix-code" directory="code/diff" componentName="code-diff-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Diff view</h2>
+    <p class="m-0">
+      <code>hx-diff-view</code> shows two versions of a text, side by side or unified, read-only.
+      Changed words are marked and the gutter shows <code>+</code> and <code>-</code>.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      @for (m of modes; track m.label) {
+        <button type="button" class="p-button p-button-outlined" (click)="show(m.before, m.after)">
+          {{ m.label }}
+        </button>
+      }
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'split'"
+          (change)="layout.set('split')"
+        />
+        Split</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'unified'"
+          (change)="layout.set('unified')"
+        />
+        Unified</label
+      >
+      <label
+        ><input type="checkbox" [checked]="collapse()" (change)="collapse.set(!collapse())" />
+        Collapse unchanged</label
+      >
+    </div>
+    <hx-diff-view
+      aria-label="Changes in greet.ts"
+      path="greet.ts"
+      [original]="original()"
+      [modified]="modified()"
+      [layout]="layout()"
+      [collapseUnchanged]="collapse()"
+    />
+  </div>
+</app-source-tabs>
