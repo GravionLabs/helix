@@ -85,6 +85,8 @@ export class HxCodeEditor implements ControlValueAccessor, FormValueControl<stri
   readonly view = this.#view.asReadonly();
 
   private readonly container = viewChild.required<ElementRef<HTMLElement>>('container');
+  /** Text written by a form control: it must not emit `valueChange`, so it bypasses the model. */
+  readonly #written = signal<{ text: string } | null>(null);
   readonly #cvaDisabled = signal(false);
   protected readonly isDisabled = () => this.disabled() || this.#cvaDisabled();
 
@@ -104,7 +106,7 @@ export class HxCodeEditor implements ControlValueAccessor, FormValueControl<stri
       const view = new EditorView({
         parent: this.container().nativeElement,
         state: EditorState.create({
-          doc: untracked(this.value),
+          doc: untracked(() => this.#written()?.text ?? this.value()),
           extensions: [
             hxCodeTheme(),
             hxCodeHighlight(),
@@ -135,14 +137,10 @@ export class HxCodeEditor implements ControlValueAccessor, FormValueControl<stri
     });
 
     // The value binding: replace the document in place (scroll position and view are kept).
+    effect(() => this.#setDocument(this.value() ?? ''));
     effect(() => {
-      const value = this.value() ?? '';
-      const view = this.#view();
-      if (!view || view.state.doc.toString() === value) return;
-      view.dispatch({
-        changes: { from: 0, to: view.state.doc.length, insert: value },
-        annotations: external.of(true),
-      });
+      const written = this.#written();
+      if (written) this.#setDocument(written.text);
     });
 
     effect(() => {
@@ -191,6 +189,15 @@ export class HxCodeEditor implements ControlValueAccessor, FormValueControl<stri
     this.#view()?.focus();
   }
 
+  #setDocument(text: string): void {
+    const view = this.#view();
+    if (!view || view.state.doc.toString() === text) return;
+    view.dispatch({
+      changes: { from: 0, to: view.state.doc.length, insert: text },
+      annotations: external.of(true),
+    });
+  }
+
   #readOnlyExtension(): Extension {
     const locked = this.readOnly() || this.isDisabled();
     return [EditorState.readOnly.of(locked), EditorView.editable.of(!this.isDisabled())];
@@ -211,7 +218,7 @@ export class HxCodeEditor implements ControlValueAccessor, FormValueControl<stri
   }
 
   writeValue(value: string | null): void {
-    this.value.set(value ?? '');
+    this.#written.set({ text: value ?? '' });
   }
   registerOnChange(fn: (value: string) => void): void {
     this.#onChange = fn;

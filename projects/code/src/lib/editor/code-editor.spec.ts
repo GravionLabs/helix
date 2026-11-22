@@ -177,6 +177,15 @@ describe('HxCodeEditor in a reactive form', () => {
     expect(editor.view()!.state.doc.toString()).toBe('next');
   });
 
+  it('does not emit valueChange for a write from the control', () => {
+    const emitted = vi.fn<() => void>();
+    editor.value.subscribe(emitted);
+    fixture.componentInstance.control.setValue('quiet');
+    fixture.detectChanges();
+    expect(editor.view()!.state.doc.toString()).toBe('quiet');
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
   it('reports user edits to the control', () => {
     const v = editor.view()!;
     v.dispatch({ changes: { from: 0, insert: '>' } });
