@@ -1,11 +1,15 @@
 <h1 class="sr-only">Desktop overview</h1>
-<app-source-tabs library="helix-desktop" directory="desktop/overview" componentName="desktop-overview-demo">
+<app-source-tabs
+  library="helix-desktop"
+  directory="desktop/overview"
+  componentName="desktop-overview-demo"
+>
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">poimen on helix-desktop</h2>
     <p class="m-0">
-      The poimen interface rebuilt on the desktop shell, with sample data. A click on a pane previews it in a tab,
-      a double click pins it. The activity bar switches the sidebar view; a click on the active view collapses the
-      sidebar. Version {{ version }}.
+      The poimen interface rebuilt on the desktop shell, with sample data. A click on a pane
+      previews it in a tab, a double click pins it. The activity bar switches the sidebar view; a
+      click on the active view collapses the sidebar. Version {{ version }}.
     </p>
     <div class="frame">
       <hx-app-shell
@@ -56,7 +60,10 @@
                   <li>
                     <button type="button" class="notice" (click)="pin(entry.pane.id)">
                       <span class="dot blocked"></span>
-                      <span><strong>{{ entry.space.name }}</strong> / {{ entry.pane.label }} needs you</span>
+                      <span
+                        ><strong>{{ entry.space.name }}</strong> / {{ entry.pane.label }} needs
+                        you</span
+                      >
                     </button>
                   </li>
                 } @empty {
@@ -89,7 +96,12 @@
                       <span class="space-name">{{ space.name }}</span>
                       <span class="state" [class]="space.state">{{ space.state }}</span>
                       <span class="meta">{{ space.branch }} · {{ space.path }}</span>
-                      <i class="pi" [class.pi-chevron-down]="!isFolded(space.id)" [class.pi-chevron-right]="isFolded(space.id)" aria-hidden="true"></i>
+                      <i
+                        class="pi"
+                        [class.pi-chevron-down]="!isFolded(space.id)"
+                        [class.pi-chevron-right]="isFolded(space.id)"
+                        aria-hidden="true"
+                      ></i>
                     </button>
                     @if (!isFolded(space.id)) {
                       <ul class="panes">
@@ -134,7 +146,11 @@
             />
             <div class="view">
               @if (activePane(); as entry) {
-                <div class="terminal" role="log" [attr.aria-label]="entry.space.name + ' / ' + entry.pane.label">
+                <div
+                  class="terminal"
+                  role="log"
+                  [attr.aria-label]="entry.space.name + ' / ' + entry.pane.label"
+                >
                   @for (line of entry.pane.lines; track $index) {
                     <div class="line">{{ line }}</div>
                   }
@@ -143,7 +159,9 @@
               } @else {
                 <div class="settings">
                   <h3>Settings</h3>
-                  <p>The settings of the app open as a tab, like a pane. Close the tab to go back.</p>
+                  <p>
+                    The settings of the app open as a tab, like a pane. Close the tab to go back.
+                  </p>
                 </div>
               }
             </div>
@@ -151,8 +169,8 @@
             <div class="empty">
               <p>Pick a pane on the left.</p>
               <p class="hint">
-                A click previews a pane in a tab, a double click pins it. Closing a tab only closes the view; the
-                pane keeps running.
+                A click previews a pane in a tab, a double click pins it. Closing a tab only closes
+                the view; the pane keeps running.
               </p>
             </div>
           }
@@ -160,13 +178,16 @@
 
         <section slot="bottom" class="output" aria-label="Output">
           <header>Output</header>
-          <pre>[api-gateway] claude: reading src/middleware/rate-limit.ts
+          <pre>
+[api-gateway] claude: reading src/middleware/rate-limit.ts
 [web-app] claude: waiting for a decision
 [docs-site] claude: done</pre>
         </section>
 
         <hx-status-bar slot="status">
-          <hx-status-item slot="start"><span class="dot done"></span>poimen connected</hx-status-item>
+          <hx-status-item slot="start"
+            ><span class="dot done"></span>poimen connected</hx-status-item
+          >
           @if (waiting()) {
             <hx-status-item
               slot="start"

@@ -5,7 +5,12 @@
 }
 <span class="hx-chip-label">{{ label() }}<ng-content /></span>
 @if (removable()) {
-  <button type="button" class="hx-chip-remove" [attr.aria-label]="removeLabel()" (click)="remove.emit()">
+  <button
+    type="button"
+    class="hx-chip-remove"
+    [attr.aria-label]="removeLabel()"
+    (click)="remove.emit()"
+  >
     <span class="hx-chip-remove-icon" aria-hidden="true"></span>
   </button>
 }

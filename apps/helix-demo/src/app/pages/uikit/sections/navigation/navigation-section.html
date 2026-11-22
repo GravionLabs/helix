@@ -8,7 +8,9 @@
     <h2 class="demo-title">Menu</h2>
     <div class="flex flex-wrap items-start gap-6">
       <div>
-        <button hx-button type="button" aria-haspopup="menu" (click)="popup.toggle($event)">Popup menu</button>
+        <button hx-button type="button" aria-haspopup="menu" (click)="popup.toggle($event)">
+          Popup menu
+        </button>
         <hx-menu #popup popup ariaLabel="Actions" [model]="items" />
       </div>
       <hx-menu ariaLabel="Account (inline)" [model]="grouped" />
@@ -17,7 +19,10 @@
 
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Menubar</h2>
-    <p class="m-0">Left and Right move between the items, Down opens a submenu. Below 960px wide it collapses into a button.</p>
+    <p class="m-0">
+      Left and Right move between the items, Down opens a submenu. Below 960px wide it collapses
+      into a button.
+    </p>
     <hx-menubar ariaLabel="Main" [model]="bar">
       <strong hxMenubarStart>Helix</strong>
       <button hxMenubarEnd hx-button type="button" size="small">Sign in</button>
@@ -27,9 +32,25 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Split button</h2>
     <div class="flex flex-wrap items-center gap-3">
-      <hx-split-button label="Save" icon="pi pi-save" [model]="saveItems" (click)="saved.set('saved')" />
-      <hx-split-button label="Outlined" variant="outlined" severity="secondary" [model]="saveItems" />
-      <hx-split-button label="Rounded raised" rounded raised severity="success" [model]="saveItems" />
+      <hx-split-button
+        label="Save"
+        icon="pi pi-save"
+        [model]="saveItems"
+        (click)="saved.set('saved')"
+      />
+      <hx-split-button
+        label="Outlined"
+        variant="outlined"
+        severity="secondary"
+        [model]="saveItems"
+      />
+      <hx-split-button
+        label="Rounded raised"
+        rounded
+        raised
+        severity="success"
+        [model]="saveItems"
+      />
       <hx-split-button label="Small" size="small" [model]="saveItems" />
       <hx-split-button label="Disabled" disabled [model]="saveItems" />
     </div>
@@ -38,14 +59,28 @@
 
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Paginator</h2>
-    <hx-paginator [(first)]="first" [(rows)]="rows" [totalRecords]="120" [rowsPerPageOptions]="[10, 20, 50]" showCurrentPageReport />
+    <hx-paginator
+      [(first)]="first"
+      [(rows)]="rows"
+      [totalRecords]="120"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      showCurrentPageReport
+    />
     <p class="m-0">First record: {{ first() }}, rows per page: {{ rows() }}.</p>
-    <hx-paginator [first]="0" [rows]="10" [totalRecords]="30" [pageLinkSize]="3" [showFirstLastButtons]="false" />
+    <hx-paginator
+      [first]="0"
+      [rows]="10"
+      [totalRecords]="30"
+      [pageLinkSize]="3"
+      [showFirstLastButtons]="false"
+    />
   </div>
 
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Stepper</h2>
-    <p class="m-0">Linear: the later steps are disabled until Next is pressed. Going back is always possible.</p>
+    <p class="m-0">
+      Linear: the later steps are disabled until Next is pressed. Going back is always possible.
+    </p>
     <hx-stepper [(value)]="step" linear>
       <hx-step-list>
         <hx-step [value]="1">Account</hx-step>
@@ -66,7 +101,9 @@
             <div class="flex flex-col items-start gap-3">
               <span>Where should we send it?</span>
               <div class="flex gap-2">
-                <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">Back</button>
+                <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">
+                  Back
+                </button>
                 <button hx-button type="button" (click)="activateCallback(3)">Next</button>
               </div>
             </div>
@@ -76,7 +113,9 @@
           <ng-template hxStepContent let-activateCallback="activateCallback">
             <div class="flex flex-col items-start gap-3">
               <span>All done.</span>
-              <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">Start over</button>
+              <button hx-button type="button" variant="outlined" (click)="activateCallback(1)">
+                Start over
+              </button>
             </div>
           </ng-template>
         </hx-step-panel>
@@ -94,8 +133,14 @@
         <hx-tab value="d">Team</hx-tab>
       </hx-tab-list>
       <hx-tab-panels>
-        <hx-tab-panel value="a">Profile content. Left and Right move between the tabs.</hx-tab-panel>
-        <hx-tab-panel value="b"><ng-template hxTabContent>Billing content, created when first shown.</ng-template></hx-tab-panel>
+        <hx-tab-panel value="a"
+          >Profile content. Left and Right move between the tabs.</hx-tab-panel
+        >
+        <hx-tab-panel value="b"
+          ><ng-template hxTabContent
+            >Billing content, created when first shown.</ng-template
+          ></hx-tab-panel
+        >
         <hx-tab-panel value="c">Not reachable.</hx-tab-panel>
         <hx-tab-panel value="d">Team content.</hx-tab-panel>
       </hx-tab-panels>

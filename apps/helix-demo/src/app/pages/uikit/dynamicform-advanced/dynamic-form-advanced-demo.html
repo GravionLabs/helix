@@ -1,6 +1,10 @@
 <h1 class="sr-only">Dynamic Form Advanced</h1>
-<app-source-tabs library="helix-zod" directory="dynamicform-advanced" componentName="dynamic-form-advanced-demo"
-  [extraSources]="['rating-widget.ts', 'advanced-error-resolver.ts', 'domain-schema.ts']">
+<app-source-tabs
+  library="helix-zod"
+  directory="dynamicform-advanced"
+  componentName="dynamic-form-advanced-demo"
+  [extraSources]="['rating-widget.ts', 'advanced-error-resolver.ts', 'domain-schema.ts']"
+>
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card flex flex-col gap-3 h-full">
@@ -8,12 +12,13 @@
         <ul class="text-sm text-muted-color list-disc pl-5 flex flex-col gap-1">
           <li>
             <b>Custom widget</b> — the score renders a Helix rating registered as
-            <code>widget: 'rating'</code> via <code>provideHelixDynamicForms(&#123; widgets &#125;)</code>.
+            <code>widget: 'rating'</code> via
+            <code>provideHelixDynamicForms(&#123; widgets &#125;)</code>.
           </li>
           <li>
-            <b>Conditional states</b> — non-draft status makes the title
-            <code>readonly</code>, "archived" <code>disables</code> the score, and escalating makes the
-            reason <code>required</code>.
+            <b>Conditional states</b> — non-draft status makes the title <code>readonly</code>,
+            "archived" <code>disables</code> the score, and escalating makes the reason
+            <code>required</code>.
           </li>
           <li>
             <b>Central error resolver</b> — required/e-mail messages come from a route-provided
@@ -48,7 +53,9 @@
         @if (submittedValue(); as value) {
           <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
         } @else {
-          <p class="text-sm text-muted-color">Submit the form with valid values to see the parsed output.</p>
+          <p class="text-sm text-muted-color">
+            Submit the form with valid values to see the parsed output.
+          </p>
         }
       </div>
     </div>
@@ -87,8 +94,8 @@
           <pre class="dynamic-form-advanced-demo__json">{{ value | json }}</pre>
         } @else {
           <p class="text-sm text-muted-color">
-            Set priority to "high" to see the conditional required date, or "low" to hide the
-            notify toggle.
+            Set priority to "high" to see the conditional required date, or "low" to hide the notify
+            toggle.
           </p>
         }
       </div>

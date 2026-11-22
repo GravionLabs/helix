@@ -28,15 +28,27 @@
       <thead>
         <tr>
           @if (expanderColumn()) {
-            <th scope="col" class="hx-data-table-expander-cell"><span class="hx-data-table-caption-hidden">Row details</span></th>
+            <th scope="col" class="hx-data-table-expander-cell">
+              <span class="hx-data-table-caption-hidden">Row details</span>
+            </th>
           }
           @if (checkboxColumn()) {
             <th scope="col" class="hx-data-table-select-cell">
-              <input type="checkbox" hx-checkbox [attr.aria-label]="selectAllLabel()" [checked]="allSelected()" [indeterminate]="someSelected()" (change)="toggleSelectAll($any($event.target).checked)" />
+              <input
+                type="checkbox"
+                hx-checkbox
+                [attr.aria-label]="selectAllLabel()"
+                [checked]="allSelected()"
+                [indeterminate]="someSelected()"
+                (change)="toggleSelectAll($any($event.target).checked)"
+              />
             </th>
           }
           @if (headerTemplate(); as tpl) {
-            <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
+            <ng-container
+              [ngTemplateOutlet]="tpl.template"
+              [ngTemplateOutletContext]="{ $implicit: columns() }"
+            />
           } @else {
             @for (column of columns(); track column.field) {
               <th
@@ -51,9 +63,15 @@
                 @let menu = filterDisplay() === 'menu' && column.filter;
                 @if (extra || menu) {
                   <div class="hx-data-table-header-content">
-                    <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
+                    <ng-container
+                      [ngTemplateOutlet]="label"
+                      [ngTemplateOutletContext]="{ $implicit: column }"
+                    />
                     @if (extra) {
-                      <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletContext]="{ $implicit: column }" />
+                      <ng-container
+                        [ngTemplateOutlet]="extra"
+                        [ngTemplateOutletContext]="{ $implicit: column }"
+                      />
                     }
                     @if (menu) {
                       <button
@@ -70,7 +88,10 @@
                     }
                   </div>
                 } @else {
-                  <ng-container [ngTemplateOutlet]="label" [ngTemplateOutletContext]="{ $implicit: column }" />
+                  <ng-container
+                    [ngTemplateOutlet]="label"
+                    [ngTemplateOutletContext]="{ $implicit: column }"
+                  />
                 }
               </th>
             }
@@ -78,12 +99,24 @@
         </tr>
         @if (filterRow()) {
           <tr class="hx-data-table-filter-row">
-            @if (expanderColumn()) { <th></th> }
-            @if (checkboxColumn()) { <th></th> }
+            @if (expanderColumn()) {
+              <th></th>
+            }
+            @if (checkboxColumn()) {
+              <th></th>
+            }
             @for (column of columns(); track column.field) {
               <th>
                 @if (column.filter) {
-                  <input type="text" hx-input size="small" fluid [attr.aria-label]="filterLabelFor(column)" [value]="filters()[column.field] ?? ''" (input)="setFilter(column, $any($event.target).value)" />
+                  <input
+                    type="text"
+                    hx-input
+                    size="small"
+                    fluid
+                    [attr.aria-label]="filterLabelFor(column)"
+                    [value]="filters()[column.field] ?? ''"
+                    (input)="setFilter(column, $any($event.target).value)"
+                  />
                 }
               </th>
             }
@@ -103,21 +136,40 @@
           >
             @if (expanderColumn()) {
               <td class="hx-data-table-expander-cell">
-                <button type="button" class="hx-data-table-expander" [class.hx-data-table-expander-open]="isExpanded(row, i)" [attr.aria-expanded]="isExpanded(row, i)" [attr.aria-label]="isExpanded(row, i) ? collapseLabel() : expandLabel()" (click)="toggleExpansion(row, i)"></button>
+                <button
+                  type="button"
+                  class="hx-data-table-expander"
+                  [class.hx-data-table-expander-open]="isExpanded(row, i)"
+                  [attr.aria-expanded]="isExpanded(row, i)"
+                  [attr.aria-label]="isExpanded(row, i) ? collapseLabel() : expandLabel()"
+                  (click)="toggleExpansion(row, i)"
+                ></button>
               </td>
             }
             @if (checkboxColumn()) {
               <td class="hx-data-table-select-cell">
-                <input type="checkbox" hx-checkbox [attr.aria-label]="selectRowLabel().replace('{row}', '' + (first() + i + 1))" [checked]="isSelected(row)" (change)="toggleRowCheckbox(row, $any($event.target).checked)" />
+                <input
+                  type="checkbox"
+                  hx-checkbox
+                  [attr.aria-label]="selectRowLabel().replace('{row}', '' + (first() + i + 1))"
+                  [checked]="isSelected(row)"
+                  (change)="toggleRowCheckbox(row, $any($event.target).checked)"
+                />
               </td>
             }
             @if (bodyTemplate(); as tpl) {
-              <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
+              <ng-container
+                [ngTemplateOutlet]="tpl.template"
+                [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }"
+              />
             } @else {
               @for (column of columns(); track column.field) {
                 <td [class]="'hx-data-table-align-' + (column.align ?? 'left')">
                   @if (cells().get(column.field); as cell) {
-                    <ng-container [ngTemplateOutlet]="cell" [ngTemplateOutletContext]="{ $implicit: row, value: valueOf(row, column), index: i }" />
+                    <ng-container
+                      [ngTemplateOutlet]="cell"
+                      [ngTemplateOutletContext]="{ $implicit: row, value: valueOf(row, column), index: i }"
+                    />
                   } @else {
                     {{ valueOf(row, column) ?? emptyValue() }}
                   }
@@ -129,7 +181,10 @@
             @if (isExpanded(row, i)) {
               <tr class="hx-data-table-expansion">
                 <td [attr.colspan]="colspan()">
-                  <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }" />
+                  <ng-container
+                    [ngTemplateOutlet]="tpl.template"
+                    [ngTemplateOutletContext]="{ $implicit: row, index: i, columns: columns() }"
+                  />
                 </td>
               </tr>
             }
@@ -149,9 +204,16 @@
       @if (footerTemplate(); as tpl) {
         <tfoot>
           <tr>
-            @if (expanderColumn()) { <td></td> }
-            @if (checkboxColumn()) { <td></td> }
-            <ng-container [ngTemplateOutlet]="tpl.template" [ngTemplateOutletContext]="{ $implicit: columns() }" />
+            @if (expanderColumn()) {
+              <td></td>
+            }
+            @if (checkboxColumn()) {
+              <td></td>
+            }
+            <ng-container
+              [ngTemplateOutlet]="tpl.template"
+              [ngTemplateOutletContext]="{ $implicit: columns() }"
+            />
           </tr>
         </tfoot>
       }
@@ -181,11 +243,34 @@
 
 @if (filterDisplay() === 'menu') {
   @let active = activeFilterColumn();
-  <hx-popover panelClass="hx-data-table-filter-popover" [ariaLabel]="active ? filterLabelFor(active) : undefined" (hidden)="activeFilterColumn.set(null)">
+  <hx-popover
+    panelClass="hx-data-table-filter-popover"
+    [ariaLabel]="active ? filterLabelFor(active) : undefined"
+    (hidden)="activeFilterColumn.set(null)"
+  >
     @if (active) {
       <div class="hx-data-table-filter-menu">
-        <input #filterInput type="text" hx-input size="small" fluid [attr.aria-label]="filterLabelFor(active)" [value]="filters()[active.field] ?? ''" (input)="setFilter(active, $any($event.target).value)" (keydown.enter)="filterPopover()?.hide()" />
-        <button hx-button type="button" size="small" variant="text" class="hx-data-table-filter-clear" (click)="clearFilter(active)">{{ clearLabel() }}</button>
+        <input
+          #filterInput
+          type="text"
+          hx-input
+          size="small"
+          fluid
+          [attr.aria-label]="filterLabelFor(active)"
+          [value]="filters()[active.field] ?? ''"
+          (input)="setFilter(active, $any($event.target).value)"
+          (keydown.enter)="filterPopover()?.hide()"
+        />
+        <button
+          hx-button
+          type="button"
+          size="small"
+          variant="text"
+          class="hx-data-table-filter-clear"
+          (click)="clearFilter(active)"
+        >
+          {{ clearLabel() }}
+        </button>
       </div>
     }
   </hx-popover>
@@ -195,7 +280,12 @@
   @if (column.sortable) {
     <button type="button" class="hx-data-table-sort" (click)="sort(column)">
       <span>{{ column.header }}</span>
-      <span class="hx-data-table-sort-icon" [class.hx-data-table-sort-asc]="orderOf(column) === 1" [class.hx-data-table-sort-desc]="orderOf(column) === -1" aria-hidden="true"></span>
+      <span
+        class="hx-data-table-sort-icon"
+        [class.hx-data-table-sort-asc]="orderOf(column) === 1"
+        [class.hx-data-table-sort-desc]="orderOf(column) === -1"
+        aria-hidden="true"
+      ></span>
       @if (sortRank(column); as rank) {
         <span class="hx-data-table-sort-rank" aria-hidden="true">{{ rank }}</span>
       }

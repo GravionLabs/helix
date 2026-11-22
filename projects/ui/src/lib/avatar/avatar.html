@@ -3,7 +3,11 @@
 } @else if (icon()) {
   <span class="hx-avatar-icon" [class]="icon()" aria-hidden="true"></span>
 } @else if (label()) {
-  <span class="hx-avatar-label" [attr.aria-hidden]="ariaLabel() ? 'true' : null">{{ label() }}</span>
+  <span
+    class="hx-avatar-label"
+    [attr.aria-hidden]="ariaLabel() ? 'true' : null"
+    >{{ label() }}</span
+  >
 } @else {
   <ng-content />
 }

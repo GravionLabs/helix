@@ -68,7 +68,7 @@ describe('HxDrawer', () => {
     expect(container()?.getAttribute('role')).toBe('dialog');
     expect(container()?.getAttribute('aria-modal')).toBe('true');
     const title = frame()?.querySelector('h2') as HTMLElement;
-    expect(title.textContent).toBe('Filters');
+    expect(title.textContent?.trim()).toBe('Filters');
     expect(container()?.getAttribute('aria-labelledby')).toBe(title.id);
     expect(frame()?.querySelector('#q')).toBeTruthy();
     expect(frame()?.querySelector('.hx-dialog-footer #done')).toBeTruthy();

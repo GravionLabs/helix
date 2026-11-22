@@ -1,5 +1,10 @@
 <h1 class="sr-only">Timeline</h1>
-<app-source-tabs library="helix-ui" directory="timeline" componentName="timeline-demo" [docs]="['timeline']">
+<app-source-tabs
+  library="helix-ui"
+  directory="timeline"
+  componentName="timeline-demo"
+  [docs]="['timeline']"
+>
   <div class="grid grid-cols-12 gap-layout">
     <div class="col-span-12 sm:col-span-6">
       <div class="card">
@@ -29,7 +34,9 @@
       <div class="card">
         <h2 class="demo-title mb-2!">Opposite Content</h2>
         <hx-timeline [value]="events1">
-          <ng-template hxTimelineContent let-event><small class="text-muted-color">{{ event.date }}</small></ng-template>
+          <ng-template hxTimelineContent let-event
+            ><small class="text-muted-color">{{ event.date }}</small></ng-template
+          >
           <ng-template hxTimelineOpposite let-event>{{ event.status }}</ng-template>
         </hx-timeline>
       </div>
@@ -39,21 +46,31 @@
         <h2 class="demo-title mb-2!">Templating</h2>
         <hx-timeline [value]="events1" align="alternate">
           <ng-template hxTimelineMarker let-event>
-            <span class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm" [style.background-color]="event.color">
+            <span
+              class="flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm"
+              [style.background-color]="event.color"
+            >
               <i [class]="event.icon"></i>
             </span>
           </ng-template>
           <ng-template hxTimelineContent let-event>
             <hx-card [title]="event.status" [subtitle]="event.date" [headingLevel]="3">
               @if (event.image) {
-                <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + event.image" alt="" width="200" class="shadow" />
+                <img
+                  [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + event.image"
+                  alt=""
+                  width="200"
+                  class="shadow"
+                />
               }
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse,
-                cupiditate neque quas!
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur
+                error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam
+                nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
               </p>
-              <div hxCardFooter><button hx-button type="button" variant="text">Read more</button></div>
+              <div hxCardFooter>
+                <button hx-button type="button" variant="text">Read more</button>
+              </div>
             </hx-card>
           </ng-template>
         </hx-timeline>

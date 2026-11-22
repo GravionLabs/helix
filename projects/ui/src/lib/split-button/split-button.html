@@ -28,4 +28,10 @@
 >
   <span class="hx-split-button-chevron" aria-hidden="true"></span>
 </button>
-<hx-menu #menu popup [model]="model()" [ariaLabel]="menuButtonLabel()" (triggered)="triggered.emit($event)" />
+<hx-menu
+  #menu
+  popup
+  [model]="model()"
+  [ariaLabel]="menuButtonLabel()"
+  (triggered)="triggered.emit($event)"
+/>

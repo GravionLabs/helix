@@ -1,28 +1,53 @@
 <h2>&#64;gravionlabs/helix-desktop</h2>
-<p>The desktop frame of Helix: activity bar, views, status bar and the platform switch. Version {{ version }}.</p>
+<p>
+  The desktop frame of Helix: activity bar, views, status bar and the platform switch. Version
+  {{ version }}.
+</p>
 
 <h3>HxActivityBar</h3>
 <div style="display: flex; height: 280px; border: 1px solid var(--h-content-border-color)">
-  <hx-activity-bar [items]="items" [activeId]="activeId()" [expanded]="expanded()" (selected)="select($event)" />
+  <hx-activity-bar
+    [items]="items"
+    [activeId]="activeId()"
+    [expanded]="expanded()"
+    (selected)="select($event)"
+  />
   <div style="padding: 1rem">
-    <p>Selected: {{ activeId() }}. Last: {{ last() }}. Sidebar {{ expanded() ? 'open' : 'collapsed' }}.</p>
+    <p>
+      Selected: {{ activeId() }}. Last: {{ last() }}. Sidebar
+      {{ expanded() ? 'open' : 'collapsed' }}.
+    </p>
     <button type="button" (click)="expanded.set(!expanded())">Toggle sidebar</button>
   </div>
 </div>
 
 <h3>HxAppShell and HxAppToolbar</h3>
 <div style="height: 320px; border: 1px solid var(--h-content-border-color)">
-  <hx-app-shell #shell [(sidebarWidth)]="sidebarWidth" [(collapsed)]="collapsed" [(activeId)]="viewId">
+  <hx-app-shell
+    #shell
+    [(sidebarWidth)]="sidebarWidth"
+    [(collapsed)]="collapsed"
+    [(activeId)]="viewId"
+  >
     <hx-app-toolbar slot="toolbar">
-      <button slot="start" type="button" (click)="shell.selectView(viewId() ?? 'files')">Sidebar</button>
+      <button slot="start" type="button" (click)="shell.selectView(viewId() ?? 'files')">
+        Sidebar
+      </button>
       <span slot="centre">Helix project</span>
       <span slot="end">Share</span>
     </hx-app-toolbar>
-    <hx-activity-bar slot="activity" [items]="items" [activeId]="shell.activeId()" [expanded]="!shell.collapsed()" (selected)="shell.selectView($event)" />
+    <hx-activity-bar
+      slot="activity"
+      [items]="items"
+      [activeId]="shell.activeId()"
+      [expanded]="!shell.collapsed()"
+      (selected)="shell.selectView($event)"
+    />
     <nav slot="sidebar" style="padding: 8px">View: {{ shell.activeId() }}</nav>
     <div style="padding: 1rem">
-      Content (the app's tab layout goes here). Sidebar {{ collapsed() ? 'collapsed' : sidebarWidth() + ' px' }}.
-      Drag the splitter or focus it and use the arrow keys.
+      Content (the app's tab layout goes here). Sidebar
+      {{ collapsed() ? 'collapsed' : sidebarWidth() + ' px' }}. Drag the splitter or focus it and
+      use the arrow keys.
     </div>
     <aside slot="panel" style="width: 120px; padding: 8px">Panel</aside>
     <hx-status-bar slot="status"><hx-status-item slot="start">Ready</hx-status-item></hx-status-bar>
@@ -30,9 +55,20 @@
 </div>
 
 <h3>HxMobileShell and HxBottomBar</h3>
-<p>The phone shell at 375 px: top bar with the menu button, content, bottom bar (up to five items) and a drawer for the sidebar views.</p>
-<div style="width: 375px; height: 560px; transform: translateZ(0); border: 1px solid var(--h-content-border-color)">
-  <hx-mobile-shell #phone [items]="mobileItems" [(activeId)]="mobileView" [(drawerOpen)]="drawerOpen" heading="Helix">
+<p>
+  The phone shell at 375 px: top bar with the menu button, content, bottom bar (up to five items)
+  and a drawer for the sidebar views.
+</p>
+<div
+  style="width: 375px; height: 560px; transform: translateZ(0); border: 1px solid var(--h-content-border-color)"
+>
+  <hx-mobile-shell
+    #phone
+    [items]="mobileItems"
+    [(activeId)]="mobileView"
+    [(drawerOpen)]="drawerOpen"
+    heading="Helix"
+  >
     <nav slot="drawer" style="display: flex; flex-direction: column; padding: 8px">
       <button type="button" (click)="phone.chooseView('files')">Files</button>
       <button type="button" (click)="phone.chooseView('search')">Search</button>
@@ -44,10 +80,28 @@
 <h3>HxStatusBar</h3>
 <div style="border: 1px solid var(--h-content-border-color)">
   <hx-status-bar>
-    <hx-status-item slot="start" [announce]="true">{{ synced() ? 'Synced' : 'Syncing...' }}</hx-status-item>
-    <hx-status-item slot="start" kind="button" tone="warn" title="Show problems" ariaLabel="2 warnings">2 warnings</hx-status-item>
+    <hx-status-item
+      slot="start"
+      [announce]="true"
+      >{{ synced() ? 'Synced' : 'Syncing...' }}</hx-status-item
+    >
+    <hx-status-item
+      slot="start"
+      kind="button"
+      tone="warn"
+      title="Show problems"
+      ariaLabel="2 warnings"
+      >2 warnings</hx-status-item
+    >
     <hx-status-item slot="start" tone="error">1 error</hx-status-item>
-    <hx-status-item slot="end" kind="button" tone="accent" title="Update available" ariaLabel="Update details" [(popoverOpen)]="updateOpen">
+    <hx-status-item
+      slot="end"
+      kind="button"
+      tone="accent"
+      title="Update available"
+      ariaLabel="Update details"
+      [(popoverOpen)]="updateOpen"
+    >
       Update 1.5.0
       <div hxStatusPopover>
         <strong>1.5.0 is ready.</strong>
@@ -64,5 +118,7 @@
     <hx-status-version slot="end" version="1.4.0" channel="RC" />
   </hx-status-bar>
 </div>
-<p>Zoom {{ zoom() }}%.
-  <button type="button" (click)="synced.set(!synced())">Toggle sync state</button></p>
+<p>
+  Zoom {{ zoom() }}%.
+  <button type="button" (click)="synced.set(!synced())">Toggle sync state</button>
+</p>
