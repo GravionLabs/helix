@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.editor {
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-content-border-radius);
+  overflow: hidden;
+}

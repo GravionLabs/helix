@@ -99,3 +99,9 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Data table](data-table.md) | `hx-data-table` is a table with a column model: cell templates, sorting, paging (client side or lazy), selection, filters, row expansion, caption, empty and loading state, a scrolling body with a sticky header. |
 | [Tree](tree.md)             | `hx-tree` shows hierarchical data with expand and collapse, selection, a filter and lazy children, in the WAI-ARIA tree view pattern.                                                                              |
 | [Chart](chart.md)           | `hx-chart` is a [chart.js](https://www.chartjs.org/) chart whose colours, grid and font come from the Helix tokens; import it from `@gravionlabs/helix-ui/chart`.                                                  |
+
+## Code (1)
+
+| Component                   | Description                                                                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Code theme](code-theme.md) | `hxCodeTheme()` and `hxCodeHighlight()` give a CodeMirror editor the Helix look: surfaces on the `--h-*` tokens, syntax colors on `--hx-code-*`. |

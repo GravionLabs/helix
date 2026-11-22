@@ -2,9 +2,11 @@ import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { CODE_MENU_ITEMS } from './code-menu-items';
 import { CodeOverviewDemo } from './overview/code-overview-demo';
+import { CodeThemeDemo } from './theme/code-theme-demo';
 
 const COMPONENTS: Record<string, Type<unknown>> = {
   overview: CodeOverviewDemo,
+  theme: CodeThemeDemo,
 };
 
 export default [
