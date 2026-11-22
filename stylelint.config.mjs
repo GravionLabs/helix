@@ -60,6 +60,21 @@ export default {
   },
   overrides: [
     {
+      // sizes that are off the type scale (px and odd rem values); snapping them would change the rendered
+      // output, so they stay until a design review picks scale steps. New code uses a token or a scale step.
+      files: [
+        'apps/helix-demo/src/app/pages/desktop/overview/desktop-overview-demo.scss',
+        'apps/helix-demo/src/app/pages/uikit/dynamicform-json/dynamic-form-json-demo.scss',
+        'apps/helix-demo/src/app/shared/source-tabs/source-tabs.scss',
+        'projects/desktop/styles/styles.css',
+        'projects/shell/src/lib/layout/components/nav-rail-item/nav-rail-item.scss',
+        'projects/shell/src/lib/layout/components/nav-rail/nav-rail.scss',
+        'projects/shell/src/lib/layout/components/topbar/actions/alert-action.scss',
+        'projects/shell/src/lib/ui/empty-state/empty-state.scss',
+      ],
+      rules: { 'declaration-property-value-allowed-list': null },
+    },
+    {
       // opt-in page globals: the 14px base size of the page is deliberately in px, not root-relative
       // (scripts/tests/shell-css.spec.ts asserts it)
       files: ['projects/shell/globals-src.css'],
