@@ -155,6 +155,6 @@ helix/
 ## Published to
 
 The public npm registry, under the `@gravionlabs` scope (`@gravionlabs/helix-ui`,
-`@gravionlabs/helix-shell`, `@gravionlabs/helix-zod`, `@gravionlabs/helix-ag-grid`). Publishing is currently manual
+`@gravionlabs/helix-shell`, `@gravionlabs/helix-zod`, `@gravionlabs/helix-ag-grid`, `@gravionlabs/helix-desktop`, `@gravionlabs/helix-code`). Publishing is currently manual
 (`workflow_dispatch` with `force-publish`) until #381's rename has settled — see
 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml).
