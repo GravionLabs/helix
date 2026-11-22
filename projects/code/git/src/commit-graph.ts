@@ -265,6 +265,9 @@ export class HxCommitGraph {
       commits.length >= prev.commits.length &&
       prev.commits.every((c, i) => commits[i]?.id === c.id);
 
+    // A replaced list may have the same length as before: let it page again.
+    if (!append) this.#loadMoreFor = -1;
+
     let state: HxLayoutState;
     let layout: readonly HxGraphRow[];
     if (append) {
@@ -278,7 +281,8 @@ export class HxCommitGraph {
     }
 
     // Rows of an unchanged look stay as they are; a changed look builds them all again.
-    const keep = append && sameLook;
+    // Commit objects that changed (new refs, same id) need new rows.
+    const keep = append && sameLook && prev.commits.every((c, i) => commits[i] === c);
     const from = keep ? prev.commits.length : 0;
     const built = keep ? prev.rows.slice() : [];
     const index = keep ? new Map(prev.index) : new Map<string, number>();
@@ -346,6 +350,7 @@ export class HxCommitGraph {
 
     // Page in the next commits once, until the list grows.
     effect(() => {
+      this.model(); // a replaced list resets the guard below
       const length = this.commits().length;
       const last = this.#lastRendered();
       const near = last >= length - this.loadMoreThreshold();

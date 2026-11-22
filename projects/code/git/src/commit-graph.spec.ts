@@ -276,6 +276,32 @@ describe('HxCommitGraph', () => {
       expect(host().loads).toBe(2);
     });
 
+    it('shows new refs when the same ids come back as new commit objects', async () => {
+      await create();
+      host().commits.set(line(0, 10));
+      await flush();
+      host().commits.set(
+        line(0, 10).map((c, i) =>
+          i === 0 ? { ...c, refs: [{ name: 'moved', kind: 'branch' as const }] } : c,
+        ),
+      );
+      await flush();
+      expect(options()[0].querySelector('.hx-commit-graph-ref')!.textContent).toBe('moved');
+    });
+
+    it('pages again after the list is replaced by one of the same length', async () => {
+      await create();
+      host().hasMore.set(true);
+      host().commits.set(line(0, 100));
+      await flush();
+      await scrollTo(28 * 100);
+      expect(host().loads).toBe(1);
+      host().commits.set(line(1000, 1100));
+      await flush();
+      await scrollTo(28 * 100);
+      expect(host().loads).toBe(2);
+    });
+
     it('shows a loading row with a spinner', async () => {
       await create();
       expect(el().querySelector('.hx-commit-graph-spinner')).toBeNull();
