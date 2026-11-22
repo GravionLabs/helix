@@ -46,4 +46,16 @@ describe('CodeDiffDemo', () => {
     await settle();
     expect(el().querySelector('.cm-merge-b .cm-content')?.textContent).toContain('greeting');
   });
+
+  it('steps through the changes with a count', async () => {
+    const button = (label: string) =>
+      [...el().querySelectorAll('button')].find((b) => b.textContent?.trim() === label)!;
+    expect(el().textContent).toContain('0 of 2');
+    button('Next change').click();
+    await settle();
+    expect(el().textContent).toContain('1 of 2');
+    button('Previous change').click();
+    await settle();
+    expect(el().textContent).toContain('2 of 2');
+  });
 });

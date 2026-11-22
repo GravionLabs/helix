@@ -72,7 +72,7 @@ Inputs change the running view; it is never rebuilt. Details: [Code editor](comp
 
 ## Diff
 
-`<hx-diff-view>` shows two versions of a text, read-only: `original` and `modified` (both required), `path` for the language, `layout` (`'split'` default, or `'unified'`) and `collapseUnchanged` (default on: margin 3, minimum 4). Changed words are marked and the gutter shows `+` and `-`, so the change does not rely on color alone.
+`<hx-diff-view>` shows two versions of a text, read-only: `original` and `modified` (both required), `path` for the language, `layout` (`'split'` default, `'unified'`, or `'auto'`: split from `splitMinWidth` px of the host, default 900, else unified; it follows the host, not the window) and `collapseUnchanged` (default on: margin 3, minimum 4). Changed words are marked and the gutter shows `+` and `-`, so the change does not rely on color alone. `next()` and `previous()` step through the changes (with wrap-around), `changeCount()` and `currentChange()` give "3 of 12", and `revealLine(line, side)` scrolls to a line and expands the collapsed region around it.
 
 ```html
 <hx-diff-view aria-label="Changes" path="src/app/app.ts" [original]="before" [modified]="after" />
