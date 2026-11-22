@@ -19,6 +19,7 @@ const demoRoutes = [
   ...uikitRoutes,
   ...sectionRoutes('ag-grid', 'apps/helix-demo/src/app/pages/ag-grid/ag-grid-menu-items.ts'),
   ...sectionRoutes('charts', 'apps/helix-demo/src/app/pages/charts/charts-menu-items.ts'),
+  ...sectionRoutes('code', 'apps/helix-demo/src/app/pages/code/code-menu-items.ts'),
 ];
 
 describe('DEMO_ROUTES', () => {
@@ -62,6 +63,11 @@ describe('demoLinkOf', () => {
   it('gives table its own Components page and the AG Grid page no docs link', () => {
     expect(demoRouteOf('table')).toBe('uikit/table');
     expect(DEMO_ROUTES['ag-grid/overview']).toBeUndefined();
+  });
+
+  it('has the overview route of the Code area, and no docs link for it yet', () => {
+    expect(demoRoutes).toContain('code/overview');
+    expect(DEMO_ROUTES['code/overview']).toBeUndefined();
   });
 
   it('is null for a component without a demo page', () => {

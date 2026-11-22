@@ -1,5 +1,5 @@
 /**
- * The demo page (a route under `/uikit/`, `/ag-grid/` or `/charts/`, see the `*_MENU_ITEMS` of the demo) that shows each component
+ * The demo page (a route under `/uikit/`, `/ag-grid/`, `/charts/` or `/code/`, see the `*_MENU_ITEMS` of the demo) that shows each component
  * page of `docs/components`: `{ demo route: component pages }`. A component without an entry has no demo.
  */
 export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
