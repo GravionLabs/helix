@@ -32,6 +32,8 @@ export default {
       true,
       { ignoreAtRules: ['theme', 'utility', 'custom-variant', 'variant', 'source', 'plugin', 'apply', 'config', 'reference'] },
     ],
+    // an Angular `styleUrl` needs its file even when a component has no styles yet
+    'no-empty-source': null,
     // the former Biome rules
     'declaration-block-no-duplicate-properties': [
       true,
