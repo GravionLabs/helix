@@ -54,7 +54,7 @@
 
 /* the preview overlay */
 .hx-image-backdrop {
-  background: rgb(0 0 0 / 0.9);
+  background: color-mix(in srgb, black 90%, transparent);
 }
 
 .hx-image-panel {
@@ -88,10 +88,8 @@
 
 .hx-image-toolbar {
   position: absolute;
-  top: var(--h-image-toolbar-position-top);
-  right: var(--h-image-toolbar-position-right);
-  bottom: var(--h-image-toolbar-position-bottom);
-  left: var(--h-image-toolbar-position-left);
+  inset: var(--h-image-toolbar-position-top) var(--h-image-toolbar-position-right)
+    var(--h-image-toolbar-position-bottom) var(--h-image-toolbar-position-left);
   z-index: 1;
   display: flex;
   gap: var(--h-image-toolbar-gap);

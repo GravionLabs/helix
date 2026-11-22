@@ -1,7 +1,5 @@
 @mixin focused() {
-  outline-width: var(--focus-ring-width);
-  outline-style: var(--focus-ring-style);
-  outline-color: var(--focus-ring-color);
+  outline: var(--focus-ring-color) var(--focus-ring-style) var(--focus-ring-width);
   outline-offset: var(--focus-ring-offset);
   box-shadow: var(--focus-ring-shadow);
   transition:
@@ -103,7 +101,7 @@
     }
 
     &:focus-visible {
-      @include focused();
+      @include focused;
     }
 
     i {
@@ -117,7 +115,7 @@
     margin-left: -0.5rem;
   }
 
-  @media (min-width: 992px) {
+  @media (width >= 992px) {
     .layout-menu-button-mobile-only {
       display: none;
     }
@@ -129,7 +127,7 @@
   }
 }
 
-@media (max-width: 991px) {
+@media (width <= 991px) {
   .layout-topbar {
     padding: 0 0.5rem;
 
@@ -161,9 +159,7 @@
       border-radius: 50%;
       padding: 0;
       cursor: pointer;
-      outline-color: transparent;
-      outline-width: 2px;
-      outline-style: solid;
+      outline: transparent solid 2px;
       outline-offset: 1px;
 
       &.active-color {
