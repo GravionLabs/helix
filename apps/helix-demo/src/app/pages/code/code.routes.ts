@@ -4,6 +4,7 @@ import { CODE_MENU_ITEMS } from './code-menu-items';
 import { CodeChangedFilesDemo } from './changed-files/code-changed-files-demo';
 import { ConflictMergeDemo } from './conflict-merge/conflict-merge-demo';
 import { ConflictMarkersDemo } from './conflict-markers/conflict-markers';
+import { CodeCommitGraphDemo } from './commit-graph/code-commit-graph-demo';
 import { CodeDiffDemo } from './diff/code-diff-demo';
 import { CodeEditorDemo } from './editor/code-editor-demo';
 import { CodeLanguageDemo } from './language/code-language-demo';
@@ -18,6 +19,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   language: CodeLanguageDemo,
   diff: CodeDiffDemo,
   'changed-files': CodeChangedFilesDemo,
+  'commit-graph': CodeCommitGraphDemo,
   review: ReviewDemo,
   'conflict-markers': ConflictMarkersDemo,
   'conflict-merge': ConflictMergeDemo,

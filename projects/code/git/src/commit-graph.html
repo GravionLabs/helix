@@ -1,0 +1,65 @@
+<div
+  class="hx-commit-graph-list"
+  role="listbox"
+  tabindex="0"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+  [attr.aria-activedescendant]="activeId()"
+  (keydown)="onKeydown($event)"
+>
+  @for (row of rows(); track row.commit.id; let i = $index) {
+    <div class="hx-commit-graph-row" role="none">
+      <!-- Keys are handled on the listbox (aria-activedescendant), so the options take no focus. -->
+      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+      <div
+        class="hx-commit-graph-option"
+        role="option"
+        [id]="row.id"
+        [attr.aria-label]="label(row)"
+        [attr.aria-selected]="row.commit.id === selected()"
+        [class.is-selected]="row.commit.id === selected()"
+        [class.is-active]="i === activeIndex()"
+        (click)="select(i)"
+      >
+        <svg
+          class="hx-commit-graph-svg"
+          aria-hidden="true"
+          [attr.width]="graphWidth()"
+          [attr.height]="rowHeight"
+        >
+          @for (p of row.paths; track $index) {
+            <path class="hx-commit-graph-line" [attr.d]="p.d" [attr.data-color]="p.color" />
+          }
+          <circle
+            class="hx-commit-graph-dot"
+            [class.is-merge]="row.dot.merge"
+            [attr.data-color]="row.dot.color"
+            [attr.cx]="row.dot.cx"
+            [attr.cy]="rowHeight / 2"
+            [attr.r]="row.dot.merge ? dotRadius + 1 : dotRadius"
+          />
+        </svg>
+        @for (ref of row.refs; track $index) {
+          <span
+            class="hx-commit-graph-ref"
+            [attr.data-kind]="ref.kind"
+            [attr.title]="refLabel(ref.kind)"
+            >{{ ref.name }}</span
+          >
+        }
+        <span class="hx-commit-graph-message" [attr.title]="row.commit.message">{{
+          row.subject
+        }}</span>
+        <span class="hx-commit-graph-author">{{ row.name }}</span>
+        <span class="hx-commit-graph-time">{{ row.time }}</span>
+      </div>
+      @if (rowCell(); as cell) {
+        <span class="hx-commit-graph-cell">
+          <ng-container
+            *ngTemplateOutlet="cell.template; context: { $implicit: row.commit, row: row.layout }"
+          />
+        </span>
+      }
+    </div>
+  }
+</div>

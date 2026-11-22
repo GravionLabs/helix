@@ -136,6 +136,14 @@ Details: [Conflict markers](components/conflict-markers.md).
 
 ## Commit graph
 
+`<hx-commit-graph [commits] [selected] (selectedChange)>` from `@gravionlabs/helix-code/git` draws the history as rows: SVG graph, ref labels, message, author and time. `maxLanes` (default 12) folds further lanes into the last one, `formatTime` formats the time (default relative), `<ng-template hxCommitGraphRowCell>` adds content to each row, and the lane colors are `--hx-graph-lane-1` to `-8`. Arrow keys, Home and End move the selection. Details: [Commit graph](components/commit-graph.md).
+
+```ts
+import { HxCommitGraph } from '@gravionlabs/helix-code/git';
+```
+
+### Layout function
+
 `@gravionlabs/helix-code/git` has `hxLayoutCommits(commits, previous?)`, a pure function that turns commits into rows for drawing. It draws nothing and sorts nothing: the input order is the order of `git log --topo-order` or `--date-order` (a commit before its parents).
 
 - Input `HxCommit {id, parents, message, author, time, refs?}`; `time` is Unix seconds, `refs` are `{name, kind: 'branch' | 'remote' | 'tag' | 'head'}`.

@@ -18,3 +18,10 @@ export {
   type HxLayoutState,
   type HxOpenLane,
 } from './commit-layout';
+
+export {
+  HxCommitGraph,
+  HxCommitGraphRowCell,
+  hxFormatCommitTime,
+  type HxCommitGraphRowCellContext,
+} from './commit-graph';
