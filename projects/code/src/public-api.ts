@@ -50,3 +50,4 @@ export {
   hxPreviousConflict,
   type HxConflictChoice,
 } from './lib/conflict/conflict-markers';
+export { HxConflictMerge } from './lib/conflict/conflict-merge';

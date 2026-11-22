@@ -130,6 +130,10 @@ const merged = hxMergeText(parts, { 0: 'both' }, mine.endsWith('\n'));
 
 Details: [Conflict markers](components/conflict-markers.md).
 
+## Conflict merge
+
+`<hx-conflict-merge [mine] [theirs]>` merges two versions of a text: shared lines are shown once, each differing part shows both sides and offers mine, theirs or both (default mine), and the result can be edited by hand. `merged` emits the final text, `cancelled` the cancel. It renders no dialog and imports nothing from helix-ui; the app places it, for example in `hx-dialog`. Details: [Conflict merge](components/conflict-merge.md).
+
 ## Commit graph
 
 Planned.
