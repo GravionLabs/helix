@@ -84,4 +84,20 @@ describe('ReviewDemo', () => {
     await settle();
     expect(el().querySelectorAll('.cm-thread-collapsed').length).toBe(2);
   });
+
+  it('accepts and rejects changes and shows pending count and result', async () => {
+    const pending = () => el().querySelector('[data-testid="pending"]')!.textContent;
+    const result = () => el().querySelector('[data-testid="result"]')!.textContent;
+    expect(pending()).toContain('2 change(s) pending');
+    expect(result()).toContain('return sum * (1 + tax);');
+    el().querySelector<HTMLButtonElement>('.cm-review-reject')!.click();
+    await settle();
+    expect(pending()).toContain('1 change(s) pending');
+    expect(result()).toContain('total(items: number[]): number');
+    expect(result()).toContain('return sum * (1 + tax);');
+    el().querySelector<HTMLButtonElement>('.cm-review-accept')!.click();
+    await settle();
+    expect(pending()).toContain('0 change(s) pending');
+    expect(result()).toContain('return sum * (1 + tax);');
+  });
 });

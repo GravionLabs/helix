@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import {
   HxDiffView,
+  type HxDiffChangeDecided,
   type HxDiffComment,
   type HxDiffCommentAdded,
   type HxDiffFinding,
@@ -100,7 +101,12 @@ export class ReviewDemo {
       ],
     },
   ]);
+  protected readonly decisions = signal<readonly HxDiffChangeDecided[]>([]);
   protected readonly sent = signal<HxDiffFindingAction | null>(null);
+
+  protected decide(decided: HxDiffChangeDecided): void {
+    this.decisions.update((list) => [...list, decided]);
+  }
 
   protected reply(added: HxDiffReplyAdded): void {
     this.threads.update((list) =>

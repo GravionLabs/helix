@@ -100,6 +100,8 @@ Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with
 <hx-diff-view [original]="before" [modified]="after" commentable [comments]="comments" (commentAdded)="add($event)" />
 ```
 
+`[reviewable]="true"` (unified layout only; ignored with `split`) adds an Accept and a Reject button to each change. `(changeDecided)` emits `{index, decision}` with a stable `index` in the initial list of changes; `result()` is the text after the decisions so far, `pendingChanges()` the number of undecided changes, `acceptAll()` / `rejectAll()` decide the rest. Details: [Diff view](components/diff-view.md#accept-and-reject).
+
 ## Conflicts
 
 Planned.

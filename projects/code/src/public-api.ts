@@ -12,6 +12,8 @@ export { hxLanguageFor, hxLoadLanguage, HX_CODE_LANGUAGES } from './lib/language
 export { HxCodeEditor } from './lib/editor/code-editor';
 export {
   HxDiffView,
+  type HxChangeDecision,
+  type HxDiffChangeDecided,
   type HxDiffCollapse,
   type HxDiffCommentAdded,
   type HxDiffFindingAction,
