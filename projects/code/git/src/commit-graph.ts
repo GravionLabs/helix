@@ -12,7 +12,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { type HxCommit, type HxCommitRef, type HxGraphRow, hxLayoutCommits } from './commit-layout';
+import {
+  type HxCommit,
+  type HxCommitRef,
+  type HxGraphRow,
+  HX_GRAPH_COLORS,
+  hxLayoutCommits,
+} from './commit-layout';
 
 /** Context of the `hxCommitGraphRowCell` template: `$implicit` is the commit, `row` its layout. */
 export interface HxCommitGraphRowCellContext {
@@ -79,16 +85,9 @@ export function hxGraphRowShapes(
   const x = (lane: number) => Math.min(lane, last) * LANE_WIDTH + LANE_WIDTH / 2;
   const cy = ROW_HEIGHT / 2;
 
-  // The line color of the last lane in this row: what folded items are drawn in.
-  let lastColor: number | undefined;
-  if (layout.lane === last) lastColor = layout.color;
-  for (const s of layout.segments) {
-    if (lastColor === undefined && s.kind === 'pass-through' && s.fromLane === last) {
-      lastColor = s.color;
-    }
-  }
-  const colorAt = (lane: number, own: number) =>
-    lane >= last && lastColor !== undefined ? lastColor : own;
+  // The line color of the last lane is fixed, so a folded line keeps its color from row to row.
+  const lastColor = last % HX_GRAPH_COLORS;
+  const colorAt = (lane: number, own: number) => (lane >= last ? lastColor : own);
 
   const paths: Path[] = [];
   const line = (x1: number, y1: number, x2: number, y2: number, color: number) => {

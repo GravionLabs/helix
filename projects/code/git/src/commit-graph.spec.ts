@@ -161,14 +161,25 @@ describe('hxGraphRowShapes folding', () => {
   });
 
   it('clamps lanes beyond maxLanes - 1 into the last lane in its color', () => {
-    // maxLanes 3: last lane is index 2 (x = 2*16+8 = 40), color 5.
+    // maxLanes 3: last lane is index 2 (x = 2*16+8 = 40), its line color is 2.
     const { paths, dot } = hxGraphRowShapes(layout(4, 1), 3, false);
     expect(dot.cx).toBe(40);
-    expect(dot.color).toBe(5);
-    expect(paths.every((p) => p.color === 5)).toBe(true);
+    expect(dot.color).toBe(2);
+    expect(paths.every((p) => p.color === 2)).toBe(true);
     expect(
       paths.every((p) => !/M(4[1-9]|[5-9]\d)/.test(p.d) && !/ 4[1-9]| [5-9]\d/.test(p.d)),
     ).toBe(true);
+  });
+
+  it('folds to the same color when nothing sits on the last lane itself', () => {
+    const row = {
+      lane: 0,
+      color: 1,
+      hasIncoming: false,
+      segments: [{ fromLane: 3, toLane: 3, color: 6, kind: 'pass-through' as const }],
+    };
+    const { paths } = hxGraphRowShapes(row, 3, false);
+    expect(paths.map((p) => p.color)).toEqual([2]);
   });
 
   it('keeps lanes and colors inside the limit', () => {
