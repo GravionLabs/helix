@@ -40,7 +40,7 @@ A Tauri app on Helix needs this `app.security` block in `src-tauri/tauri.conf.js
 }
 ```
 
-**Why:** when Tauri serves the bundled assets it adds hashes and nonces to `script-src` and `style-src`, for example for the critical CSS Angular inlines into `index.html`. Once a directive carries a hash or a nonce, browsers ignore `'unsafe-inline'` in it. Every `<style>` element inserted at runtime is then blocked: the Angular component styles and the CSS that the AG Grid Theming API (`helixGridTheme` of `@gravionlabs/helix-ag-grid`) injects. Turning the rewriting off for `style-src` only keeps the automatic hashes of `script-src`, so inline scripts stay blocked.
+**Why:** when Tauri serves the bundled assets it adds hashes and nonces to `script-src` and `style-src`, for example for the critical CSS Angular inlines into `index.html`. Once a directive carries a hash or a nonce, browsers ignore `'unsafe-inline'` in it. Every `<style>` element inserted at runtime is then blocked: the Angular component styles and the CSS that the AG Grid Theming API (`helixGridTheme` of `@gravionlabs/helix-ag-grid`) injects. Turning the rewriting off for `style-src` only keeps the automatic hashes of `script-src`, so inline scripts stay blocked. Tauri only rewrites `style-src` when `index.html` holds a `<style>` element, so an app that builds with `"inlineCritical": false` works without the setting by accident; set it anyway, the next inline style breaks the app.
 
 **Symptoms:** the global styles still load (tokens, fonts, background), but the views lose their padding and gaps, and the grids show their column headers as stacked text without rows, so the lists look empty.
 
