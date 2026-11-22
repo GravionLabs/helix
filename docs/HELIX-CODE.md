@@ -35,7 +35,15 @@ The library has no Git, file system or Tauri access. Data comes in through signa
 
 ## Theme
 
-Planned.
+`hxCodeTheme()` and `hxCodeHighlight()` give every editor and diff view of an app the Helix look. Both return a CodeMirror extension; add them to the `extensions` of the editor.
+
+```ts
+import { hxCodeHighlight, hxCodeTheme } from '@gravionlabs/helix-code';
+
+const extensions = [hxCodeTheme(), hxCodeHighlight()];
+```
+
+Colors follow the CSS variables, so a switch between light and dark (`.app-dark`) needs no rebuild. Details, variables and contrast: [Code theme](components/code-theme.md).
 
 ## Languages
 

@@ -1,0 +1,15 @@
+<h1 class="sr-only">Code theme</h1>
+<app-source-tabs library="helix-code" directory="code/theme" componentName="code-theme-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Code theme</h2>
+    <p class="m-0">
+      <code>hxCodeTheme()</code> and <code>hxCodeHighlight()</code> give an editor the Helix look.
+      Switch the theme of the app: the colors follow the CSS variables, the editor is not rebuilt.
+    </p>
+    <div #editor class="editor"></div>
+    <p class="m-0">
+      Override a syntax color with <code>--hx-code-keyword</code>, <code>--hx-code-string</code> and
+      so on; font with <code>--hx-code-font-family</code> and <code>--hx-code-font-size</code>.
+    </p>
+  </div>
+</app-source-tabs>
