@@ -22,6 +22,30 @@ The package builds, is tested and is published with the other packages. Componen
 
 Only `--h-*` tokens are read, so light and dark follow `HxTheme`.
 
+## Tauri content security policy
+
+A Tauri app on Helix needs this `app.security` block in `src-tauri/tauri.conf.json`; without `dangerousDisableAssetCspModification` the release build renders without its component and grid styles:
+
+```json
+"security": {
+  "csp": {
+    "default-src": "'self'",
+    "script-src": "'self'",
+    "style-src": "'self' 'unsafe-inline'",
+    "img-src": "'self' data:",
+    "font-src": "'self' data:",
+    "connect-src": "ipc: http://ipc.localhost"
+  },
+  "dangerousDisableAssetCspModification": ["style-src"]
+}
+```
+
+**Why:** when Tauri serves the bundled assets it adds hashes and nonces to `script-src` and `style-src`, for example for the critical CSS Angular inlines into `index.html`. Once a directive carries a hash or a nonce, browsers ignore `'unsafe-inline'` in it. Every `<style>` element inserted at runtime is then blocked: the Angular component styles and the CSS that the AG Grid Theming API (`helixGridTheme` of `@gravionlabs/helix-ag-grid`) injects. Turning the rewriting off for `style-src` only keeps the automatic hashes of `script-src`, so inline scripts stay blocked. Tauri only rewrites `style-src` when `index.html` holds a `<style>` element, so an app that builds with `"inlineCritical": false` works without the setting by accident; set it anyway, the next inline style breaks the app.
+
+**Symptoms:** the global styles still load (tokens, fonts, background), but the views lose their padding and gaps, and the grids show their column headers as stacked text without rows, so the lists look empty.
+
+**Why it shows only in installers:** with `"devCsp": null`, `tauri dev` runs without any policy. Set `devCsp` to the same policy, plus what the dev server needs (for example `ws://localhost:<port>` in `connect-src` for live reload), so a CSP problem shows during development. Passing nonces through instead (Angular `CSP_NONCE`, AG Grid `styleNonce`) does not work, because Tauri does not hand its nonces to the app.
+
 ## HxActivityBar
 
 The 48 px icon rail at the far left. It selects the sidebar view, opens tab views and holds actions.

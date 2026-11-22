@@ -24,3 +24,5 @@ The Helix desktop frame for Angular: activity bar, views, status bar and the pla
 ```
 
 The styles read only `--h-*` tokens, so light and dark follow `HxTheme`.
+
+In a Tauri app the content security policy must leave `style-src` alone (`"dangerousDisableAssetCspModification": ["style-src"]`), or the release build renders without its component and grid styles. See [Tauri content security policy](https://github.com/GravionLabs/helix/blob/main/docs/HELIX-DESKTOP.md#tauri-content-security-policy).
