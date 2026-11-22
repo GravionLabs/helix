@@ -10,3 +10,5 @@ export {
 } from './lib/theme/code-highlight';
 export { hxLanguageFor, hxLoadLanguage, HX_CODE_LANGUAGES } from './lib/language/language';
 export { HxCodeEditor } from './lib/editor/code-editor';
+export { HxDiffView, type HxDiffCollapse, type HxDiffLayout } from './lib/diff/diff-view';
+export { hxDiffTheme, HX_DIFF_PALETTE } from './lib/diff/diff-theme';

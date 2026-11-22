@@ -1,0 +1,39 @@
+# Diff view
+
+`hx-diff-view` from `@gravionlabs/helix-code` shows two versions of a text, side by side or unified, read-only. It highlights the syntax, marks the changed words inside a changed line, shows a change gutter and collapses long unchanged regions. It needs the optional peers `@codemirror/state`, `@codemirror/view`, `@codemirror/merge`, `@codemirror/language` and `@lezer/highlight`, plus `@codemirror/language-data` for the default language list.
+
+```html
+<hx-diff-view aria-label="Changes in app.ts" path="src/app/app.ts" [original]="before" [modified]="after" layout="unified" />
+```
+
+## Inputs
+
+| Name                            | Type                                               | Description                                                                      |
+| ------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `original` (required)           | `string`                                           | The old version. Empty: a new file.                                              |
+| `modified` (required)           | `string`                                           | The new version. Empty: a deleted file.                                          |
+| `path`                          | `string`                                           | A file name or path; it selects the language. Empty or unknown: plain text.      |
+| `layout`                        | `'split' \| 'unified'`                             | `split` (default): two columns. `unified`: one column, removed lines inline.     |
+| `collapseUnchanged`             | `boolean \| { margin?: number; minSize?: number }` | Default `true`: 3 lines stay visible around a change, at least 4 lines collapse. |
+| `aria-label`, `aria-labelledby` | `string`                                           | The accessible name; it is moved onto the content element.                       |
+
+## Behaviour
+
+- The view is rebuilt when `original`, `modified`, `layout`, `path` or `collapseUnchanged` changes. A theme switch needs no rebuild.
+- The language loads lazily; a late result of an earlier input is ignored.
+- Both versions may be empty strings (new file, deleted file).
+- The view is destroyed with the component.
+
+## Colors
+
+| Variable                                                     | Meaning                           |
+| ------------------------------------------------------------ | --------------------------------- |
+| `--hx-diff-added-background`, `--hx-diff-removed-background` | the tint of an added/removed line |
+| `--hx-diff-added-mark`, `--hx-diff-removed-mark`             | the tint of a changed word        |
+| `--hx-diff-added-sign`, `--hx-diff-removed-sign`             | the color of the gutter `+` / `-` |
+
+The defaults for light and dark (`.app-dark`) are set by the component. Override a variable anywhere above it; the override wins in both themes. `hxDiffTheme()` is the same theme as a CodeMirror extension.
+
+## Accessibility
+
+Added and removed lines are told apart without color: the gutter shows `+` and `-`. The content is read-only (`aria-readonly`); give the host an `aria-label` or `aria-labelledby`.
