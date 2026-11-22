@@ -1,6 +1,7 @@
 import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { CODE_MENU_ITEMS } from './code-menu-items';
+import { CodeChangedFilesDemo } from './changed-files/code-changed-files-demo';
 import { CodeDiffDemo } from './diff/code-diff-demo';
 import { CodeEditorDemo } from './editor/code-editor-demo';
 import { CodeLanguageDemo } from './language/code-language-demo';
@@ -13,6 +14,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   editor: CodeEditorDemo,
   language: CodeLanguageDemo,
   diff: CodeDiffDemo,
+  'changed-files': CodeChangedFilesDemo,
 };
 
 export default [

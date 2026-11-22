@@ -1,0 +1,45 @@
+<h1 class="sr-only">Changed files</h1>
+<app-source-tabs
+  library="helix-code"
+  directory="code/changed-files"
+  componentName="code-changed-files-demo"
+>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Changed files</h2>
+    <p class="m-0">
+      <code>hx-changed-files</code> lists the files of a change set with status, folder and line
+      counts. Use the arrow keys and Enter, or click. The app renders one list per section.
+    </p>
+    <p class="m-0" aria-live="polite">Selected: {{ selected() ?? 'none' }}</p>
+    <h3 id="cf-staged" class="m-0">Staged</h3>
+    <hx-changed-files
+      aria-labelledby="cf-staged"
+      [files]="stagedFiles()"
+      [selected]="selected()"
+      (selectedChange)="selected.set($event)"
+    >
+      <ng-template hxChangedFileActions let-file>
+        <button
+          type="button"
+          class="p-button p-button-text p-button-sm"
+          (click)="unstage(file.path)"
+        >
+          Unstage
+        </button>
+      </ng-template>
+    </hx-changed-files>
+    <h3 id="cf-changes" class="m-0">Changes</h3>
+    <hx-changed-files
+      aria-labelledby="cf-changes"
+      [files]="unstaged()"
+      [selected]="selected()"
+      (selectedChange)="selected.set($event)"
+    >
+      <ng-template hxChangedFileActions let-file>
+        <button type="button" class="p-button p-button-text p-button-sm" (click)="stage(file.path)">
+          Stage
+        </button>
+      </ng-template>
+    </hx-changed-files>
+  </div>
+</app-source-tabs>

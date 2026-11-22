@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-border-radius, 6px);
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.hx-changed-files-header {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-bottom: 1px solid var(--h-content-border-color);
+  color: var(--h-text-muted-color, inherit);
+}
+
+.hx-changed-files-list {
+  max-height: 100%;
+  overflow: auto;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--p-primary-color, currentcolor);
+    outline-offset: -2px;
+  }
+}
+
+.hx-changed-files-row {
+  display: flex;
+  align-items: center;
+}
+
+.hx-changed-files-option {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, currentcolor 6%, transparent);
+  }
+
+  &.is-selected {
+    background: color-mix(in srgb, var(--p-primary-color, currentcolor) 15%, transparent);
+  }
+
+  &.is-active {
+    box-shadow: inset 2px 0 0 var(--p-primary-color, currentcolor);
+  }
+}
+
+.hx-changed-files-status {
+  flex: none;
+  width: 1.25rem;
+  text-align: center;
+  font-weight: 600;
+  font-family: monospace;
+
+  &[data-status='added'],
+  &[data-status='untracked'] {
+    color: var(--hx-changed-added-color, var(--h-green-700));
+  }
+
+  &[data-status='deleted'],
+  &[data-status='conflicted'] {
+    color: var(--hx-changed-removed-color, var(--h-red-700));
+  }
+
+  &[data-status='modified'] {
+    color: var(--p-primary-color, currentcolor);
+  }
+
+  &[data-status='renamed'] {
+    color: var(--h-text-muted-color, currentcolor);
+  }
+}
+
+.hx-changed-files-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hx-changed-files-path {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.hx-changed-files-name {
+  flex: none;
+}
+
+.hx-changed-files-folder,
+.hx-changed-files-old,
+.hx-changed-files-binary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--h-text-muted-color, inherit);
+}
+
+.hx-changed-files-counts {
+  display: flex;
+  flex: none;
+  gap: 0.5rem;
+}
+
+.hx-changed-files-add {
+  color: var(--hx-changed-added-color, var(--h-green-700));
+}
+
+.hx-changed-files-del {
+  color: var(--hx-changed-removed-color, var(--h-red-700));
+}
+
+.hx-changed-files-actions {
+  display: flex;
+  flex: none;
+  gap: 0.25rem;
+  padding-right: 0.5rem;
+}

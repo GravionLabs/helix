@@ -1,0 +1,67 @@
+<div class="hx-changed-files-header" aria-live="polite">
+  <span class="hx-changed-files-count"
+    >{{ totals().count }} {{ totals().count === 1 ? 'file' : 'files' }}</span
+  >
+  <span class="hx-changed-files-add">+{{ totals().additions }}</span>
+  <span class="hx-changed-files-del">−{{ totals().deletions }}</span>
+</div>
+<div
+  class="hx-changed-files-list"
+  role="listbox"
+  tabindex="0"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby()"
+  [attr.aria-activedescendant]="activeId()"
+  (keydown)="onKeydown($event)"
+>
+  @for (row of rows(); track row.file.path; let i = $index) {
+    <div class="hx-changed-files-row" role="none">
+      <!-- Keys are handled on the listbox (aria-activedescendant), so the options take no focus. -->
+      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+      <div
+        class="hx-changed-files-option"
+        role="option"
+        [id]="row.id"
+        [attr.aria-selected]="row.file.path === selected()"
+        [class.is-selected]="row.file.path === selected()"
+        [class.is-active]="i === activeIndex()"
+        (click)="select(i)"
+      >
+        <span
+          class="hx-changed-files-status"
+          [attr.data-status]="row.file.status"
+          [attr.title]="row.label"
+          aria-hidden="true"
+          >{{ row.letter }}</span
+        >
+        <span class="hx-changed-files-sr">{{ row.label }}, </span>
+        <span class="hx-changed-files-path">
+          <span class="hx-changed-files-name">{{ row.name }}</span>
+          @if (row.folder) {
+            <span class="hx-changed-files-folder">{{ row.folder }}</span>
+          }
+          @if (row.file.oldPath) {
+            <span class="hx-changed-files-old">{{ row.file.oldPath }} →</span>
+          }
+        </span>
+        @if (row.file.binary) {
+          <span class="hx-changed-files-binary">binary</span>
+        } @else if (row.counts) {
+          <span class="hx-changed-files-counts">
+            @if (row.file.additions !== undefined) {
+              <span class="hx-changed-files-add">+{{ row.file.additions }}</span>
+            }
+            @if (row.file.deletions !== undefined) {
+              <span class="hx-changed-files-del">−{{ row.file.deletions }}</span>
+            }
+          </span>
+        }
+      </div>
+      @if (actions(); as a) {
+        <span class="hx-changed-files-actions">
+          <ng-container *ngTemplateOutlet="a.template; context: { $implicit: row.file }" />
+        </span>
+      }
+    </div>
+  }
+</div>

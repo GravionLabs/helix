@@ -80,6 +80,14 @@ Inputs change the running view; it is never rebuilt. Details: [Code editor](comp
 
 Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with defaults for light and dark. Details: [Diff view](components/diff-view.md).
 
+## Changed files
+
+`<hx-changed-files>` from `@gravionlabs/helix-code/git` lists the files of a change set (`HxChangedFile`: `path`, `oldPath`, `status`, `additions`, `deletions`, `binary`) with status letter, name, muted folder and `+n −n`, and a header with the count and totals. `files` and `selected` are inputs, `selectedChange` the output; arrow keys move and Enter selects. An `<ng-template hxChangedFileActions>` adds actions per row. One list per section (Conflicts, Staged, Changes). Details: [Changed files](components/changed-files.md).
+
+```html
+<hx-changed-files aria-label="Changes" [files]="files" [selected]="path" (selectedChange)="path = $event" />
+```
+
 ## Review
 
 Planned.
