@@ -14,4 +14,5 @@ export const CODE_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Changed files', icon: 'pi pi-fw pi-list', path: 'changed-files' },
   { label: 'Review', icon: 'pi pi-fw pi-comments', path: 'review' },
   { label: 'Conflict markers', icon: 'pi pi-fw pi-exclamation-triangle', path: 'conflict-markers' },
+  { label: 'Conflict merge', icon: 'pi pi-fw pi-clone', path: 'conflict-merge' },
 ];

@@ -109,3 +109,4 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Changed files](changed-files.md)       | `hx-changed-files` (from `@gravionlabs/helix-code/git`) lists the files of a change set with status, folder and line counts; select by mouse or keyboard, row action slot. |
 | [Code theme](code-theme.md)             | `hxCodeTheme()` and `hxCodeHighlight()` give a CodeMirror editor the Helix look: surfaces on the `--h-*` tokens, syntax colors on `--hx-code-*`.                           |
 | [Conflict markers](conflict-markers.md) | `hxConflictMarkers()` shows Git conflict markers as blocks with Accept ours, Accept theirs and Accept both, plus count and next/previous commands.                         |
+| [Conflict merge](conflict-merge.md)     | `<hx-conflict-merge>` merges two versions of a text: each differing part offers mine, theirs or both, and the result can be edited.                                        |
