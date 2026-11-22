@@ -32,12 +32,7 @@
     {
       groupName: 'angular',
       // Angular pins the range of TypeScript it supports: they move together.
-      matchPackageNames: [
-        '@angular/**',
-        '@angular-devkit/**',
-        '@schematics/angular',
-        'typescript',
-      ],
+      matchPackageNames: ['@angular/**', '@angular-devkit/**', '@schematics/angular', 'typescript'],
     },
     {
       groupName: 'angular-eslint',
