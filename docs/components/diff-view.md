@@ -18,6 +18,9 @@
 | `collapseUnchanged`             | `boolean \| { margin?: number; minSize?: number }` | Default `true`: 3 lines stay visible around a change, at least 4 lines collapse.                                                                         |
 | `comments`                      | `HxDiffComment[]`                                  | Comments to show below their last line. Default none. Changing them does not rebuild the view or close an open draft.                                    |
 | `commentable`                   | `boolean`                                          | `true`: a click on a line number opens a comment box. Default `false`; without it the view behaves as before.                                            |
+| `findings`                      | `HxDiffFinding[]`                                  | Review findings to show below their last line, the lines marked in the gutter. Default none. Changing them does not rebuild the view.                    |
+| `findingActionLabel`            | `string`                                           | Label of a button on each finding box. Default empty: no button.                                                                                         |
+| `findingAction`                 | output `{ id, quote }`                             | The button of a finding box was pressed; `quote` is the text of its lines on its side.                                                                   |
 | `aria-label`, `aria-labelledby` | `string`                                           | The accessible name; it is moved onto the content element.                                                                                               |
 
 ## Navigation
@@ -62,6 +65,16 @@ keymap.of([{ key: 'Mod-Alt-m', run: openCommentDraft }]);
 ```
 
 Colors come from `--h-*` tokens (`--h-primary-color`, `--h-highlight-background`, `--h-content-border-color`, …).
+
+## Findings
+
+`findings` shows review findings (`HxDiffFinding`: `id`, `side`, `startLine`, `endLine`, `severity` `'blocking' | 'note'`, `title`, `detail?`). Each is a box below its last line with severity (an inline SVG icon and the word Blocking or Note, not color alone), title and detail; its lines get a mark in the line-number gutter. Findings do not need `commentable`. On the same line findings come before comments.
+
+```html
+<hx-diff-view [original]="before" [modified]="after" [findings]="findings()" findingActionLabel="Send to agent" (findingAction)="send($event)" />
+```
+
+With `findingActionLabel` each box has a button; `findingAction` emits `{ id, quote }`, `quote` being the text of the lines `startLine`..`endLine` on `side`. In the unified layout a finding on the `original` side hangs below the matching line of the modified text (its lines are not marked). A finding outside the text is not shown.
 
 ## Behaviour
 
