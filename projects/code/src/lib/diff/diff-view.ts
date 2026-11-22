@@ -39,6 +39,12 @@ import {
   quoteOf,
   showComments,
 } from '../review/comment-extension';
+import {
+  findingExtension,
+  type HxDiffFinding,
+  type HxPlacedFinding,
+  showFindings,
+} from '../review/finding-extension';
 import { hxCodeHighlight } from '../theme/code-highlight';
 import { hxCodeTheme } from '../theme/code-theme';
 import { hxDiffTheme } from './diff-theme';
@@ -64,6 +70,12 @@ export interface HxDiffCommentAdded {
   readonly quote: string;
 }
 
+/** The action of a finding box was used: the finding and the text of its lines on its side. */
+export interface HxDiffFindingAction {
+  readonly id: string;
+  readonly quote: string;
+}
+
 const DEFAULT_SPLIT_MIN_WIDTH = 900;
 const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
 
@@ -77,6 +89,9 @@ const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
  *
  * With `commentable`, a click on a line number opens a comment box (Shift-click extends the range)
  * and `commentAdded` reports the saved text; `comments` are shown below their last line.
+ *
+ * `findings` are shown as boxes below their last line, the lines marked in the gutter; with
+ * `findingActionLabel` each box has a button and `findingAction` reports `{id, quote}`.
  *
  * The view is rebuilt when a text, `layout`, `path` or `collapseUnchanged` changes; a theme switch
  * needs no rebuild (colors are CSS variables `--hx-diff-added-*`, `--hx-diff-removed-*`).
@@ -112,6 +127,12 @@ export class HxDiffView {
   readonly comments = input<readonly HxDiffComment[]>([]);
   /** `true`: a click on a line number opens a comment box. Default off. */
   readonly commentable = input(false);
+  /** The review findings to show, below their last line. Changing them does not rebuild the view. */
+  readonly findings = input<readonly HxDiffFinding[]>([]);
+  /** The label of the button on each finding box. Empty (default): no button. */
+  readonly findingActionLabel = input('');
+  /** The button of a finding box was pressed. */
+  readonly findingAction = output<HxDiffFindingAction>();
   /** A comment was written; the app stores it and passes it back through `comments`. */
   readonly commentAdded = output<HxDiffCommentAdded>();
   readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
@@ -163,6 +184,26 @@ export class HxDiffView {
       });
     },
   });
+  readonly #findingExtension = findingExtension({
+    action: (view, finding) => {
+      const views = this.#views;
+      const split = !!views && views.original !== views.modified;
+      let quote = '';
+      if (views && finding.endLine >= finding.startLine && finding.startLine >= 1) {
+        const target = split
+          ? finding.side === 'original'
+            ? views.original
+            : views.modified
+          : view;
+        const doc =
+          !split && finding.side === 'original' ? getOriginalDoc(target.state) : target.state.doc;
+        if (finding.endLine <= doc.lines) {
+          quote = doc.sliceString(doc.line(finding.startLine).from, doc.line(finding.endLine).to);
+        }
+      }
+      this.findingAction.emit({ id: finding.id, quote });
+    },
+  });
   #generation = 0;
   #destroy: (() => void) | null = null;
   #views: { original: EditorView; modified: EditorView } | null = null;
@@ -194,6 +235,8 @@ export class HxDiffView {
       this.#built();
       this.commentable();
       this.comments();
+      this.findings();
+      this.findingActionLabel();
       untracked(() => this.#showReview());
     });
 
@@ -227,6 +270,8 @@ export class HxDiffView {
     if (!views) return;
     const commentable = this.commentable();
     const comments = this.comments();
+    const findings = this.findings();
+    const actionLabel = this.findingActionLabel();
     const split = views.original !== views.modified;
     for (const [side, view] of [
       ['original', views.original],
@@ -242,6 +287,10 @@ export class HxDiffView {
         ? comments.flatMap((c) => this.#place(c, side, view, views.modified, split))
         : [];
       showComments(view, placed);
+      const placedFindings = findings.flatMap((f) =>
+        this.#placeFinding(f, side, view, views.modified, split),
+      );
+      showFindings(view, placedFindings, actionLabel);
     }
     this.#reviewOn = commentable;
   }
@@ -254,18 +303,41 @@ export class HxDiffView {
     modified: EditorView,
     split: boolean,
   ): HxPlacedComment[] {
-    if (split ? c.side !== side : false) return [];
+    const at = this.#placeLines(c, side, view, modified, split);
+    return at ? [{ comment: c, ...at }] : [];
+  }
+
+  /** Where a finding shows in `view`; `[]` when it belongs to the other editor. */
+  #placeFinding(
+    f: HxDiffFinding,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedFinding[] {
+    const at = this.#placeLines(f, side, view, modified, split);
+    return at ? [{ finding: f, ...at }] : [];
+  }
+
+  #placeLines(
+    c: { side: HxDiffSide; startLine: number; endLine: number },
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): { start: number; end: number; mark: boolean } | null {
+    if (split ? c.side !== side : false) return null;
     const lines = view.state.doc.lines;
     if (c.side === 'modified' || split) {
-      if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > lines) return [];
-      return [{ comment: c, start: c.startLine, end: c.endLine, mark: true }];
+      if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > lines) return null;
+      return { start: c.startLine, end: c.endLine, mark: true };
     }
-    // Unified layout, comment on the old text: it hangs below the matching line of the new text.
+    // Unified layout, text on the old side: it hangs below the matching line of the new text.
     const original = getOriginalDoc(modified.state);
-    if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > original.lines) return [];
+    if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > original.lines) return null;
     const at = this.#map(modified, original.line(c.endLine).from, true);
     const end = modified.state.doc.lineAt(Math.min(at, modified.state.doc.length)).number;
-    return [{ comment: c, start: end, end, mark: false }];
+    return { start: end, end, mark: false };
   }
 
   /** Moves to the next change; after the last one it wraps to the first. */
@@ -388,6 +460,7 @@ export class HxDiffView {
       lineNumbers(),
       this.#language.of([]),
       this.#review.of([]),
+      this.#findingExtension,
       EditorView.updateListener.of((update) => {
         if (update.selectionSet && !update.docChanged && update.view === this.#views?.modified) {
           this.#current.set(this.#indexAt(update.view));

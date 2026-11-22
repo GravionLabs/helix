@@ -47,4 +47,18 @@ describe('ReviewDemo', () => {
     expect(el().textContent).toContain('2 comment(s)');
     expect(el().textContent).toContain('Why start at zero?');
   });
+
+  it('shows a blocking finding and a note', () => {
+    const boxes = [...el().querySelectorAll('.cm-finding-box')];
+    expect(boxes.map((b) => b.classList.contains('cm-finding-blocking'))).toContain(true);
+    expect(boxes.map((b) => b.classList.contains('cm-finding-note'))).toContain(true);
+    expect(boxes.map((b) => b.textContent).join()).toContain('Negative tax');
+  });
+
+  it('reports the quote when the finding action is used', async () => {
+    el().querySelector<HTMLButtonElement>('.cm-finding-blocking .cm-finding-action')!.click();
+    await settle();
+    expect(el().textContent).toContain('Sent finding f1');
+    expect(el().textContent).toContain('return sum * (1 + tax);');
+  });
 });

@@ -22,8 +22,22 @@
       [modified]="modified"
       [comments]="comments()"
       [commentable]="commentable()"
+      [findings]="findings"
+      findingActionLabel="Send to agent"
       (commentAdded)="add($event)"
+      (findingAction)="sent.set($event)"
     />
     <p aria-live="polite" class="m-0">{{ comments().length }} comment(s)</p>
+    <p class="m-0">
+      A blocking finding and a note are shown with <code>findings</code>; the button of
+      <code>findingActionLabel</code> emits <code>findingAction</code>.
+    </p>
+    <p aria-live="polite" class="m-0">
+      @if (sent(); as action) {
+        Sent finding {{ action.id }}: <code>{{ action.quote }}</code>
+      } @else {
+        No finding sent.
+      }
+    </p>
   </div>
 </app-source-tabs>

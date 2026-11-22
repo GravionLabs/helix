@@ -203,7 +203,7 @@ function decorate(
         ranges.push(Decoration.line({ class: 'cm-commented-line' }).range(doc.line(n).from));
       }
     }
-    ranges.push(Decoration.widget({ widget, block: true, side: 1 }).range(doc.line(end).to));
+    ranges.push(Decoration.widget({ widget, block: true, side: 2 }).range(doc.line(end).to));
   };
   for (const c of comments) place(c.start, c.end, new CommentBox(c), c.mark);
   if (draft) {
