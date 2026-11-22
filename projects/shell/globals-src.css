@@ -2,7 +2,7 @@
    rem and the body of their own application. Load it after styles.css (and the tokens) to get the Helix page look. */
 html {
   height: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.2;
 }
 

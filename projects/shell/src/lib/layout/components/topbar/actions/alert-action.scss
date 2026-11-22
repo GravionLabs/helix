@@ -29,7 +29,7 @@
 }
 
 .alert-badge-trigger i {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
 }
 
 .alert-badge-count {
@@ -43,7 +43,7 @@
   height: 1rem;
   padding: 0 0.25rem;
   border-radius: 9999px;
-  background-color: var(--h-red-500, #ef4444);
+  background-color: var(--h-badge-danger-background);
   color: white;
   font-size: 0.625rem;
   font-weight: 700;
@@ -56,10 +56,10 @@
   right: 0;
   margin-top: 0.5rem;
   min-width: 16rem;
-  background-color: var(--surface-overlay, white);
-  border: 1px solid var(--surface-border, #e5e7eb);
+  background-color: var(--h-surface-overlay);
+  border: 1px solid var(--h-border-panel);
   border-radius: var(--content-border-radius, 6px);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px color-mix(in srgb, black 10%, transparent);
   z-index: 1000;
   padding: 0.5rem;
 }
@@ -71,32 +71,32 @@
   padding: 0.5rem;
   border-radius: var(--content-border-radius, 6px);
   text-decoration: none;
-  color: var(--text-color, #1f2937);
+  color: var(--h-text-color);
   cursor: pointer;
 }
 
 .alert-badge-item:hover {
-  background-color: var(--surface-hover, #f3f4f6);
+  background-color: var(--h-surface-hover);
 }
 
 .alert-badge-dot {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: var(--h-info-500, #3b82f6);
+  background-color: var(--h-badge-info-background);
   flex-shrink: 0;
 }
 
 .alert-badge-item--warn .alert-badge-dot {
-  background-color: var(--h-warn-500, #f59e0b);
+  background-color: var(--h-badge-warn-background);
 }
 
 .alert-badge-item--error .alert-badge-dot {
-  background-color: var(--h-red-500, #ef4444);
+  background-color: var(--h-badge-danger-background);
 }
 
 .alert-badge-item--success .alert-badge-dot {
-  background-color: var(--h-green-500, #22c55e);
+  background-color: var(--h-badge-success-background);
 }
 
 .alert-badge-label {

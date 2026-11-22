@@ -52,12 +52,12 @@ button {
   padding: 10px;
   box-sizing: border-box;
   overflow: auto;
-  font-size: 13px;
+  font-size: 0.875rem;
 }
 
 .side-head h3 {
   margin: 0;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
@@ -86,7 +86,7 @@ button {
 }
 
 .state {
-  font-size: 11px;
+  font-size: 0.75rem;
 }
 .state.working {
   color: var(--state-working);
@@ -123,7 +123,7 @@ button {
 .space .space-name {
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 11px;
+  font-size: 0.75rem;
 }
 
 .space .state {
@@ -137,11 +137,11 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--h-text-muted-color);
-  font-size: 11px;
+  font-size: 0.75rem;
 }
 
 .space .pi {
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--h-text-muted-color);
 }
 
@@ -161,7 +161,7 @@ button {
   border: 1px solid var(--h-content-border-color);
   border-radius: 3px;
   font-family: ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 0.625rem;
   text-align: center;
 }
 
@@ -172,7 +172,7 @@ button {
 .files li {
   padding: 3px 4px;
   font-family: ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .files li:not(.dir) {
@@ -196,7 +196,7 @@ button {
 .terminal {
   padding: 10px 12px;
   font-family: ui-monospace, monospace;
-  font-size: 13px;
+  font-size: 0.875rem;
   line-height: 1.45;
   white-space: pre;
 }
@@ -234,7 +234,7 @@ button {
 
 .empty .hint {
   max-width: 360px;
-  font-size: 13px;
+  font-size: 0.875rem;
 }
 
 .output {
@@ -246,7 +246,7 @@ button {
 
 .output header {
   padding: 4px 12px;
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -258,7 +258,7 @@ button {
   margin: 0;
   padding: 0 12px 8px;
   overflow: auto;
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 hx-status-item .dot {

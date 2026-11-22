@@ -61,7 +61,7 @@
     justify-content: center;
     width: 20px;
     height: 20px;
-    font-size: 20px;
+    font-size: 1.25rem;
     line-height: 1;
   }
   .hx-activity-bar-icon > svg,
@@ -80,7 +80,7 @@
     border-radius: 8px;
     background: var(--h-primary-color);
     color: var(--h-primary-contrast-color);
-    font-size: 10px;
+    font-size: 0.625rem;
     line-height: 16px;
     text-align: center;
   }
@@ -102,7 +102,7 @@
     background: var(--h-surface-frame);
     border-block-start: 1px solid var(--h-content-border-color);
     color: var(--h-text-muted-color);
-    font-size: 12px;
+    font-size: 0.75rem;
     line-height: 1;
   }
   .hx-status-group {
@@ -145,10 +145,10 @@
     cursor: default;
   }
   .hx-status-warn {
-    color: var(--h-warn-color, #b45309);
+    color: var(--h-warn-color, var(--h-orange-700));
   }
   .hx-status-error {
-    color: var(--h-error-color, #b91c1c);
+    color: var(--h-error-color, var(--h-red-700));
   }
   .hx-status-accent {
     color: var(--h-primary-color);
@@ -158,7 +158,7 @@
     border-radius: 3px;
     background: var(--h-primary-color);
     color: var(--h-primary-contrast-color);
-    font-size: 10px;
+    font-size: 0.625rem;
   }
   .hx-status-popover {
     position: absolute;
@@ -171,7 +171,7 @@
     border-radius: 6px;
     background: var(--h-content-background, var(--h-surface-frame));
     color: var(--h-text-color);
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+    box-shadow: 0 4px 16px color-mix(in srgb, black 20%, transparent);
     z-index: 10;
   }
 
@@ -288,7 +288,7 @@
     padding: 0 8px;
     background: var(--h-surface-frame);
     color: var(--h-text-muted-color);
-    font-size: 12px;
+    font-size: 0.75rem;
     user-select: none;
   }
   .hx-app-toolbar-inset {
@@ -317,7 +317,7 @@
     height: 100%;
     min-height: 0;
     box-sizing: border-box;
-    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+    padding-inline: env(safe-area-inset-left, 0) env(safe-area-inset-right, 0);
     background: var(--h-surface-frame);
     color: var(--h-text-color);
   }
@@ -328,7 +328,7 @@
     flex: none;
     box-sizing: border-box;
     min-height: calc(44px + env(safe-area-inset-top, 0px));
-    padding-top: env(safe-area-inset-top, 0px);
+    padding-top: env(safe-area-inset-top, 0);
     border-block-end: 1px solid var(--h-content-border-color);
   }
   .hx-mobile-shell-menu {
@@ -341,7 +341,7 @@
     border: 0;
     background: transparent;
     color: inherit;
-    font-size: 20px;
+    font-size: 1.25rem;
   }
   .hx-mobile-shell-title {
     flex: 1;
@@ -358,11 +358,11 @@
     overscroll-behavior: contain;
     background: var(--h-content-background, var(--h-surface-frame));
     /* The keyboard overlays the page where the browser does not resize it. */
-    padding-block-end: env(keyboard-inset-height, 0px);
+    padding-block-end: env(keyboard-inset-height, 0);
   }
   .hx-mobile-shell-drawer {
-    padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
-    padding-inline-start: env(safe-area-inset-left, 0px);
+    padding-block: env(safe-area-inset-top, 0) env(safe-area-inset-bottom, 0);
+    padding-inline-start: env(safe-area-inset-left, 0);
     box-sizing: border-box;
   }
   .hx-mobile-shell-drawer-body {
@@ -381,7 +381,7 @@
     display: flex;
     flex: none;
     box-sizing: border-box;
-    padding-block-end: env(safe-area-inset-bottom, 0px);
+    padding-block-end: env(safe-area-inset-bottom, 0);
     background: var(--h-surface-frame);
     border-block-start: 1px solid var(--h-content-border-color);
   }
@@ -400,7 +400,7 @@
     background: transparent;
     color: var(--h-text-muted-color);
     font: inherit;
-    font-size: 11px;
+    font-size: 0.75rem;
     -webkit-tap-highlight-color: transparent;
   }
   .hx-bottom-bar-item:focus-visible {
@@ -416,7 +416,7 @@
     justify-content: center;
     width: 24px;
     height: 24px;
-    font-size: 22px;
+    font-size: 1.25rem;
     line-height: 1;
   }
   .hx-bottom-bar-icon > svg,
@@ -441,7 +441,7 @@
     border-radius: 8px;
     background: var(--h-primary-color);
     color: var(--h-primary-contrast-color);
-    font-size: 10px;
+    font-size: 0.625rem;
     line-height: 16px;
     text-align: center;
   }

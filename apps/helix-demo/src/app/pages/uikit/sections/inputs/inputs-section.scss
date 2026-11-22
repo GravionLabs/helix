@@ -15,7 +15,7 @@
 }
 
 .error {
-  color: var(--h-form-field-invalid-placeholder-color, var(--h-danger-color, #dc2626));
+  color: var(--h-form-field-invalid-placeholder-color, var(--h-badge-danger-background));
   font-size: 0.875rem;
 }
 

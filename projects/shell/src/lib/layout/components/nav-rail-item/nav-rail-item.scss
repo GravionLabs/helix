@@ -38,7 +38,7 @@
   border-radius: var(--content-border-radius);
   cursor: pointer;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 500;
   white-space: nowrap;
   outline: 0 none;
@@ -81,7 +81,7 @@
 
 .helix-nav-rail-icon {
   flex: 0 0 auto;
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   transition: color var(--element-transition-duration);
 }
 
@@ -92,7 +92,7 @@
 
 .helix-nav-rail-chevron {
   margin-left: auto;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   transition: transform var(--element-transition-duration);
 
   &.helix-nav-rail-chevron-open {
@@ -112,7 +112,7 @@
   .helix-nav-rail-link {
     margin-left: 0.4rem;
     padding-block: 0.45rem;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -132,12 +132,12 @@
   border: 1px solid var(--helix-nav-border);
   border-radius: var(--content-border-radius);
   background: var(--helix-surface-overlay, var(--helix-surface-chrome));
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.16);
+  box-shadow: 0 8px 24px color-mix(in srgb, black 16%, transparent);
 }
 
 .helix-nav-rail-flyout-title {
   padding: 0.5rem 1.15rem 0.3rem;
-  font-size: 0.66rem;
+  font-size: 0.625rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
