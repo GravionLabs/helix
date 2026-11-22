@@ -26,3 +26,14 @@ export { hxDiffTheme, HX_DIFF_PALETTE } from './lib/diff/diff-theme';
 export { openCommentDraft, type HxDiffComment } from './lib/review/comment-extension';
 export type { HxDiffFinding } from './lib/review/finding-extension';
 export type { HxDiffThread, HxDiffThreadComment } from './lib/review/thread-extension';
+export {
+  hxDiffLines,
+  hxDiffStat,
+  hxMergeParts,
+  hxMergeText,
+  hxWordDiff,
+  type HxDiffRow,
+  type HxMergeChoice,
+  type HxMergePart,
+  type HxSegment,
+} from './lib/conflict/line-diff';
