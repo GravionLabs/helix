@@ -5,7 +5,12 @@ import { channelOfVersion, HX_APP_INFO, provideHxAppInfo, readTauriVersion } fro
 import { detectHxOs, providePlatform } from './platform';
 import { HxStatusAppVersion } from './status-app-version';
 import { HxStatusUpdate } from './status-update';
-import { HX_UPDATE_BACKEND, HxUpdateService } from './update.service';
+import {
+  HX_UPDATE_BACKEND,
+  HX_UPDATE_BEFORE_INSTALL,
+  HX_UPDATE_CURRENT_MS,
+  HxUpdateService,
+} from './update.service';
 import { defaultUpdateBackend, type HxUpdateBackend, noopUpdateBackend } from './update-backend';
 
 const info = { version: '1.5.0', notes: 'Fixes', date: null };
@@ -116,6 +121,90 @@ describe('HxUpdateService', () => {
   }
 });
 
+describe('HxUpdateService hook, progress and manual check', () => {
+  const withHook = (backend: HxUpdateBackend, hook: () => void | Promise<void>) => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: HX_UPDATE_BACKEND, useValue: backend },
+        { provide: HX_UPDATE_BEFORE_INSTALL, useValue: hook },
+        provideHxAppInfo({ version: '1.4.0' }),
+      ],
+    });
+    return TestBed.inject(HxUpdateService);
+  };
+
+  it('runs the hook while installing, before the install', async () => {
+    const b = fake();
+    const seen: string[] = [];
+    const s: HxUpdateService = withHook(b, async () => {
+      await Promise.resolve();
+      seen.push(s.state().status);
+      b.calls.push('hook');
+    });
+    await s.check();
+    await s.installAndRestart();
+    expect(seen).toEqual(['installing']);
+    expect(b.calls).toEqual(['check', 'hook', 'install', 'relaunch']);
+  });
+
+  it('a throwing hook stops the install, and the install can be retried', async () => {
+    const b = fake();
+    let fail = true;
+    const s = withHook(b, () => {
+      if (fail) throw new Error('note not saved');
+    });
+    await s.check();
+    await s.installAndRestart();
+    expect(s.state()).toEqual({ status: 'error', step: 'install', message: 'note not saved' });
+    expect(b.calls).toEqual(['check']);
+    fail = false;
+    await s.installAndRestart();
+    expect(b.calls).toEqual(['check', 'install', 'relaunch']);
+  });
+
+  it('carries the download percent while installing', async () => {
+    let report!: (p: number | null) => void;
+    let finish!: () => void;
+    const s = service(
+      fake({
+        install: (onProgress) => {
+          report = onProgress!;
+          return new Promise<void>((r) => (finish = r));
+        },
+      }),
+    );
+    await s.check();
+    const p = s.installAndRestart();
+    await Promise.resolve();
+    expect(s.state()).toMatchObject({ status: 'installing', percent: null });
+    report(42);
+    expect(s.state()).toMatchObject({ status: 'installing', percent: 42 });
+    finish();
+    await p;
+  });
+
+  describe('manual check', () => {
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    it('shows current for a moment, then goes idle', async () => {
+      const s = service(fake({ check: () => Promise.resolve(null) }));
+      await s.check({ manual: true });
+      expect(s.state().status).toBe('current');
+      expect(s.currentShown()).toBe(true);
+      vi.advanceTimersByTime(HX_UPDATE_CURRENT_MS);
+      expect(s.state().status).toBe('idle');
+      expect(s.currentShown()).toBe(false);
+    });
+
+    it('an automatic check does not show current', async () => {
+      const s = service(fake({ check: () => Promise.resolve(null) }));
+      await s.check();
+      expect(s.currentShown()).toBe(false);
+    });
+  });
+});
+
 describe('web fallback', () => {
   it('resolves every call to a no-op outside Tauri', async () => {
     expect(defaultUpdateBackend()).toBe(noopUpdateBackend);
@@ -168,6 +257,9 @@ describe('providePlatform', () => {
 
 @Component({ imports: [HxStatusUpdate], template: '<hx-status-update />' })
 class Host {}
+
+@Component({ imports: [HxStatusUpdate], template: '<hx-status-update [alwaysVisible]="true" />' })
+class AlwaysHost {}
 
 describe('HxStatusUpdate', () => {
   afterEach(() => setHxPlatform('web'));
@@ -235,6 +327,58 @@ describe('HxStatusUpdate', () => {
     fixture.detectChanges();
     expect(q('.hx-update-message')?.textContent).toContain('check: x');
     expect(q('.hx-update-action')?.textContent).toContain('Try again');
+  });
+
+  it('shows the download percent while installing', async () => {
+    const { fixture, svc, q } = await setup(
+      fake({
+        install: (onProgress) => {
+          onProgress?.(42);
+          return new Promise(() => undefined);
+        },
+      }),
+    );
+    await svc.check();
+    void svc.installAndRestart();
+    await Promise.resolve();
+    fixture.detectChanges();
+    expect(q('hx-status-item')?.textContent).toContain('Installing update 42%');
+  });
+
+  it('leaves no empty popover frame when the state goes from available to installing', async () => {
+    const { fixture, svc, root, q } = await setup(
+      fake({ install: () => new Promise(() => undefined) }),
+    );
+    await svc.check();
+    fixture.detectChanges();
+    q('.hx-status-control')!.click();
+    fixture.detectChanges();
+    expect(root.querySelectorAll('.hx-status-popover')).toHaveLength(1);
+    void svc.installAndRestart();
+    fixture.detectChanges();
+    const frames = Array.from(root.querySelectorAll('.hx-status-popover'));
+    expect(frames).toHaveLength(1);
+    expect(frames[0].textContent?.trim()).not.toBe('');
+  });
+
+  it('with alwaysVisible shows "Check for updates" in idle and runs a manual check on a click', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: HX_UPDATE_BACKEND, useValue: fake({ check: () => Promise.resolve(null) }) },
+        provideHxAppInfo({ version: '1.4.0' }),
+      ],
+    });
+    const fixture = TestBed.createComponent(AlwaysHost);
+    const svc = TestBed.inject(HxUpdateService);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('hx-status-item')?.textContent).toContain('Check for updates');
+    expect(root.querySelector('.hx-status-popover')).toBeNull();
+    (root.querySelector('.hx-status-control') as HTMLElement).click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(svc.state().status).toBe('current');
+    expect(root.querySelector('hx-status-item')?.textContent).toContain('Up to date');
   });
 
   it('is not rendered on mobile', async () => {
