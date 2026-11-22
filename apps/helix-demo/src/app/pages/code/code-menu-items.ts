@@ -12,4 +12,5 @@ export const CODE_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Language', icon: 'pi pi-fw pi-globe', path: 'language' },
   { label: 'Diff', icon: 'pi pi-fw pi-arrows-h', path: 'diff' },
   { label: 'Changed files', icon: 'pi pi-fw pi-list', path: 'changed-files' },
+  { label: 'Review', icon: 'pi pi-fw pi-comments', path: 'review' },
 ];

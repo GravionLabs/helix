@@ -90,7 +90,11 @@ Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with
 
 ## Review
 
-Planned.
+`<hx-diff-view>` takes line comments: `[commentable]="true"` lets the reviewer click a line number (Shift-click for a range) and write a comment; `(commentAdded)` emits `{side, startLine, endLine, text, quote}` and the app passes saved comments back as `[comments]` (`HxDiffComment`: `id`, `side`, `startLine`, `endLine`, `text`, `author?`, `time?`). They show below their last line in both layouts, and changing `comments` does not rebuild the editor or close an open draft. `openCommentDraft` is a CodeMirror command for keyboard access; the app binds the key. Details: [Diff view](components/diff-view.md#line-comments).
+
+```html
+<hx-diff-view [original]="before" [modified]="after" commentable [comments]="comments" (commentAdded)="add($event)" />
+```
 
 ## Conflicts
 

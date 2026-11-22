@@ -1,0 +1,29 @@
+<h1 class="sr-only">Review</h1>
+<app-source-tabs library="helix-code" directory="code/review" componentName="review-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Line comments</h2>
+    <p class="m-0">
+      Click a line number of <code>hx-diff-view</code> to write a comment, Shift-click to extend the
+      range. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> cancels. The app
+      stores the comment and passes it back through <code>comments</code>.
+    </p>
+    <label
+      ><input
+        type="checkbox"
+        [checked]="commentable()"
+        (change)="commentable.set(!commentable())"
+      />
+      Commentable</label
+    >
+    <hx-diff-view
+      aria-label="Changes in total.ts"
+      path="total.ts"
+      [original]="original"
+      [modified]="modified"
+      [comments]="comments()"
+      [commentable]="commentable()"
+      (commentAdded)="add($event)"
+    />
+    <p aria-live="polite" class="m-0">{{ comments().length }} comment(s)</p>
+  </div>
+</app-source-tabs>

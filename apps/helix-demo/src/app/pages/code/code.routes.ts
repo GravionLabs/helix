@@ -6,6 +6,7 @@ import { CodeDiffDemo } from './diff/code-diff-demo';
 import { CodeEditorDemo } from './editor/code-editor-demo';
 import { CodeLanguageDemo } from './language/code-language-demo';
 import { CodeOverviewDemo } from './overview/code-overview-demo';
+import { ReviewDemo } from './review/review-demo';
 import { CodeThemeDemo } from './theme/code-theme-demo';
 
 const COMPONENTS: Record<string, Type<unknown>> = {
@@ -15,6 +16,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   language: CodeLanguageDemo,
   diff: CodeDiffDemo,
   'changed-files': CodeChangedFilesDemo,
+  review: ReviewDemo,
 };
 
 export default [
