@@ -59,8 +59,12 @@
       <ng-container [ngTemplateOutlet]="calendar" />
       @if (showButtonBar()) {
         <div class="hx-date-picker-buttonbar">
-          <button type="button" class="hx-date-picker-button" (click)="selectToday()">{{ todayLabel() }}</button>
-          <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+          <button type="button" class="hx-date-picker-button" (click)="selectToday()">
+            {{ todayLabel() }}
+          </button>
+          <button type="button" class="hx-date-picker-button" (click)="clear()">
+            {{ clearLabel() }}
+          </button>
         </div>
       }
     </div>
@@ -68,13 +72,13 @@
 }
 
 <ng-template #calendar>
-<div
-  class="hx-date-picker-panel"
-  role="group"
-  [attr.aria-label]="ariaLabel() ?? 'Calendar'"
-  [attr.aria-labelledby]="ariaLabelledby() ?? null"
-  (focusout)="onFocusOut($event)"
->
+  <div
+    class="hx-date-picker-panel"
+    role="group"
+    [attr.aria-label]="ariaLabel() ?? 'Calendar'"
+    [attr.aria-labelledby]="ariaLabelledby() ?? null"
+    (focusout)="onFocusOut($event)"
+  >
     @if (shownPresets().length > 0) {
       <hx-range-presets
         [presets]="shownPresets()"
@@ -86,7 +90,9 @@
         (chosen)="applyPreset($event)"
       />
       @if (presetError()) {
-        <p class="hx-date-picker-error" role="alert" [id]="presetErrorId">{{ presetRefusedLabel() }}</p>
+        <p class="hx-date-picker-error" role="alert" [id]="presetErrorId">
+          {{ presetRefusedLabel() }}
+        </p>
       }
     }
     <hx-calendar
@@ -104,5 +110,5 @@
       [today]="today"
       (picked)="pick($event)"
     />
-</div>
+  </div>
 </ng-template>

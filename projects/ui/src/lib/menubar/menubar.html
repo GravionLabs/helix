@@ -10,7 +10,13 @@
   >
     <span class="hx-menubar-button-icon" aria-hidden="true"></span>
   </button>
-  <hx-menu #menu popup [model]="model()" [ariaLabel]="ariaLabel()" (triggered)="triggered.emit($event)" />
+  <hx-menu
+    #menu
+    popup
+    [model]="model()"
+    [ariaLabel]="ariaLabel()"
+    (triggered)="triggered.emit($event)"
+  />
 } @else {
   <div cdkMenuBar class="hx-menubar-list" [attr.aria-label]="ariaLabel() ?? null">
     <ng-template #content let-item let-submenu="submenu">
@@ -39,14 +45,32 @@
           [attr.id]="item.id ?? null"
           [attr.aria-label]="item.ariaLabel ?? null"
         >
-          <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item, submenu: true }" />
+          <ng-container
+            [ngTemplateOutlet]="content"
+            [ngTemplateOutletContext]="{ $implicit: item, submenu: true }"
+          />
         </button>
         <ng-template #sub>
-          <hx-menu-panel class="hx-menubar-submenu" [items]="item.items ?? []" [groups]="false" [notify]="notify" />
+          <hx-menu-panel
+            class="hx-menubar-submenu"
+            [items]="item.items ?? []"
+            [groups]="false"
+            [notify]="notify"
+          />
         </ng-template>
       } @else if (item.disabled) {
-        <button type="button" class="hx-menubar-item" cdkMenuItem [cdkMenuItemDisabled]="true" [attr.id]="item.id ?? null" [attr.aria-label]="item.ariaLabel ?? null">
-          <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item }" />
+        <button
+          type="button"
+          class="hx-menubar-item"
+          cdkMenuItem
+          [cdkMenuItemDisabled]="true"
+          [attr.id]="item.id ?? null"
+          [attr.aria-label]="item.ariaLabel ?? null"
+        >
+          <ng-container
+            [ngTemplateOutlet]="content"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
         </button>
       } @else if (item.routerLink) {
         <a
@@ -59,7 +83,10 @@
           [attr.aria-label]="item.ariaLabel ?? null"
           (click)="run(item, $event)"
         >
-          <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item }" />
+          <ng-container
+            [ngTemplateOutlet]="content"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
         </a>
       } @else if (item.url) {
         <a
@@ -71,7 +98,10 @@
           [attr.aria-label]="item.ariaLabel ?? null"
           (click)="run(item, $event)"
         >
-          <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item }" />
+          <ng-container
+            [ngTemplateOutlet]="content"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
         </a>
       } @else {
         <button
@@ -82,7 +112,10 @@
           [attr.aria-label]="item.ariaLabel ?? null"
           (click)="run(item, $event)"
         >
-          <ng-container [ngTemplateOutlet]="content" [ngTemplateOutletContext]="{ $implicit: item }" />
+          <ng-container
+            [ngTemplateOutlet]="content"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
         </button>
       }
     }

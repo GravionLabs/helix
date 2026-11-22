@@ -4,7 +4,15 @@
       <span class="hx-date-picker-time-separator" aria-hidden="true">:</span>
     }
     <div class="hx-date-picker-time-column">
-      <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="disabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, 1)">
+      <button
+        type="button"
+        class="hx-date-picker-time-button"
+        tabindex="-1"
+        aria-hidden="true"
+        [disabled]="disabled()"
+        (mousedown)="$event.preventDefault()"
+        (click)="stepTime(column, 1)"
+      >
         <span class="hx-date-picker-time-up-icon" aria-hidden="true"></span>
       </button>
       <div
@@ -21,7 +29,15 @@
       >
         {{ column.text }}
       </div>
-      <button type="button" class="hx-date-picker-time-button" tabindex="-1" aria-hidden="true" [disabled]="disabled()" (mousedown)="$event.preventDefault()" (click)="stepTime(column, -1)">
+      <button
+        type="button"
+        class="hx-date-picker-time-button"
+        tabindex="-1"
+        aria-hidden="true"
+        [disabled]="disabled()"
+        (mousedown)="$event.preventDefault()"
+        (click)="stepTime(column, -1)"
+      >
         <span class="hx-date-picker-time-down-icon" aria-hidden="true"></span>
       </button>
     </div>

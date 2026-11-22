@@ -1,7 +1,17 @@
 <ng-template #panel>
-  <hx-dialog-frame [header]="header()" [titleId]="titleId" [closable]="closable()" [closeLabel]="closeLabel()" (closeClick)="visible.set(false)">
-    <ng-container ngProjectAs="[hxDialogHeader]"><ng-content select="[hxDialogHeader]" /></ng-container>
+  <hx-dialog-frame
+    [header]="header()"
+    [titleId]="titleId"
+    [closable]="closable()"
+    [closeLabel]="closeLabel()"
+    (closeClick)="visible.set(false)"
+  >
+    <ng-container ngProjectAs="[hxDialogHeader]"
+      ><ng-content select="[hxDialogHeader]"
+    /></ng-container>
     <ng-content />
-    <ng-container ngProjectAs="[hxDialogFooter]"><ng-content select="[hxDialogFooter]" /></ng-container>
+    <ng-container ngProjectAs="[hxDialogFooter]"
+      ><ng-content select="[hxDialogFooter]"
+    /></ng-container>
   </hx-dialog-frame>
 </ng-template>

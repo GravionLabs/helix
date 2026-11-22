@@ -9,10 +9,7 @@
       <option value="" [selected]="value() === null">{{ placeholder() }}</option>
     }
     @for (opt of processedOptions(); track $index) {
-      <option
-        [value]="$index"
-        [selected]="isSelected(opt.value)"
-      >
+      <option [value]="$index" [selected]="isSelected(opt.value)">
         {{ opt.label }}
       </option>
     }

@@ -6,5 +6,6 @@
     [attr.aria-label]="ariaLabel() || null"
     [attr.aria-labelledby]="ariaLabelledBy() || null"
     (click)="onClick($event)"
-  ><ng-content select="[hxChartFallback]" /></canvas>
+    ><ng-content select="[hxChartFallback]"
+  /></canvas>
 </div>

@@ -6,7 +6,12 @@
   }
   <span class="hx-message-text"><ng-content /></span>
   @if (closable()) {
-    <button type="button" class="hx-message-close" [attr.aria-label]="closeLabel()" (click)="dismiss()">
+    <button
+      type="button"
+      class="hx-message-close"
+      [attr.aria-label]="closeLabel()"
+      (click)="dismiss()"
+    >
       <span class="hx-message-close-icon" aria-hidden="true"></span>
     </button>
   }

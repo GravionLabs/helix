@@ -4,9 +4,9 @@
     <h2 class="demo-title">Customers</h2>
     <p class="m-0">
       This page shows AG Grid Community with the Helix theme (<code>helixGridTheme</code> of
-      <code>&#64;gravionlabs/helix-ag-grid</code>): column filters (text, number, date), quick filter, sorting, pinning,
-      multi-row selection, paging, and tags, progress bars and buttons in the cells. Small static tables use
-      <code>table[hx-table]</code> (see the dashboard).
+      <code>&#64;gravionlabs/helix-ag-grid</code>): column filters (text, number, date), quick
+      filter, sorting, pinning, multi-row selection, paging, and tags, progress bars and buttons in
+      the cells. Small static tables use <code>table[hx-table]</code> (see the dashboard).
     </p>
     <div class="flex flex-wrap items-center gap-3">
       <hx-icon-field>
@@ -20,7 +20,13 @@
           (input)="quickFilter.set($any($event.target).value)"
         />
       </hx-icon-field>
-      <button hx-button type="button" variant="outlined" severity="secondary" (click)="clearFilters()">
+      <button
+        hx-button
+        type="button"
+        variant="outlined"
+        severity="secondary"
+        (click)="clearFilters()"
+      >
         <span class="pi pi-filter-slash hx-button-icon" aria-hidden="true"></span>
         Clear filters
       </button>
