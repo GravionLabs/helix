@@ -8,4 +8,5 @@ import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
 export const CODE_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Overview', icon: 'pi pi-fw pi-code', path: 'overview' },
   { label: 'Theme', icon: 'pi pi-fw pi-palette', path: 'theme' },
+  { label: 'Language', icon: 'pi pi-fw pi-globe', path: 'language' },
 ];
