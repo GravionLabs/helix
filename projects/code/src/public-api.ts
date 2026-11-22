@@ -13,7 +13,9 @@ export { HxCodeEditor } from './lib/editor/code-editor';
 export {
   HxDiffView,
   type HxDiffCollapse,
+  type HxDiffCommentAdded,
   type HxDiffLayout,
   type HxDiffSide,
 } from './lib/diff/diff-view';
 export { hxDiffTheme, HX_DIFF_PALETTE } from './lib/diff/diff-theme';
+export { openCommentDraft, type HxDiffComment } from './lib/review/comment-extension';

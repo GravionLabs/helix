@@ -16,6 +16,8 @@
 | `layout`                        | `'split' \| 'unified' \| 'auto'`                   | `split` (default): two columns. `unified`: one column, removed lines inline. `auto`: split when the host is at least `splitMinWidth` wide, else unified. |
 | `splitMinWidth`                 | `number`                                           | With `layout="auto"`: the host width in px from which the view is split. Default 900.                                                                    |
 | `collapseUnchanged`             | `boolean \| { margin?: number; minSize?: number }` | Default `true`: 3 lines stay visible around a change, at least 4 lines collapse.                                                                         |
+| `comments`                      | `HxDiffComment[]`                                  | Comments to show below their last line. Default none. Changing them does not rebuild the view or close an open draft.                                    |
+| `commentable`                   | `boolean`                                          | `true`: a click on a line number opens a comment box. Default `false`; without it the view behaves as before.                                            |
 | `aria-label`, `aria-labelledby` | `string`                                           | The accessible name; it is moved onto the content element.                                                                                               |
 
 ## Navigation
@@ -37,6 +39,29 @@ The component has methods and signals so an app can build its own controls (it b
 ```
 
 With `layout="auto"` the view follows the width of its host element (a `ResizeObserver`), not of the window, so a resizable panel switches the layout. It is built after the first measurement. `effectiveLayout()` tells which layout is in use.
+
+## Line comments
+
+With `commentable`, a click on a line number opens a draft box below that line; Shift-click extends the range, and the lines of the range are marked. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd> or the button saves, <kbd>Esc</kbd> or Cancel closes; an empty text cannot be saved. The view stores nothing: it emits `commentAdded` and the app passes the comment back through `comments`. One draft is open at a time.
+
+```html
+<hx-diff-view [original]="before" [modified]="after" commentable [comments]="comments()" (commentAdded)="add($event)" />
+```
+
+| Type                 | Fields                                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `HxDiffComment`      | `id`, `side` (`'original' \| 'modified'`), `startLine`, `endLine` (1-based), `text`, `author?`, `time?` (ISO 8601 string) |
+| `HxDiffCommentAdded` | `side`, `startLine`, `endLine`, `text`, `quote` (the text of those lines on `side`)                                       |
+
+In the unified layout a draft is opened on the modified text; a comment on the `original` side hangs below the matching line of the modified text (its lines are not marked).
+
+**Keyboard.** `openCommentDraft(view)` is a CodeMirror command that opens the draft on the line of the cursor; focus moves into the textarea and back to the editor when the box closes. It returns `false` when comments are off. The app binds the key:
+
+```ts
+keymap.of([{ key: 'Mod-Alt-m', run: openCommentDraft }]);
+```
+
+Colors come from `--h-*` tokens (`--h-primary-color`, `--h-highlight-background`, `--h-content-border-color`, …).
 
 ## Behaviour
 

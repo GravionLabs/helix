@@ -8,6 +8,7 @@ import {
   ElementRef,
   inject,
   input,
+  output,
   signal,
   untracked,
   viewChild,
@@ -30,6 +31,14 @@ import {
 } from '@codemirror/state';
 import { EditorView, lineNumbers } from '@codemirror/view';
 import { HX_CODE_LANGUAGES, hxLoadLanguage } from '../language/language';
+import {
+  commentExtension,
+  discardDraft,
+  type HxDiffComment,
+  type HxPlacedComment,
+  quoteOf,
+  showComments,
+} from '../review/comment-extension';
 import { hxCodeHighlight } from '../theme/code-highlight';
 import { hxCodeTheme } from '../theme/code-theme';
 import { hxDiffTheme } from './diff-theme';
@@ -46,6 +55,15 @@ export interface HxDiffCollapse {
   readonly minSize?: number;
 }
 
+/** A comment the reviewer wrote: the lines on `side` and the text of those lines as `quote`. */
+export interface HxDiffCommentAdded {
+  readonly side: HxDiffSide;
+  readonly startLine: number;
+  readonly endLine: number;
+  readonly text: string;
+  readonly quote: string;
+}
+
 const DEFAULT_SPLIT_MIN_WIDTH = 900;
 const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
 
@@ -56,6 +74,9 @@ const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
  * ```html
  * <hx-diff-view aria-label="Changes" path="app.ts" [original]="before" [modified]="after" />
  * ```
+ *
+ * With `commentable`, a click on a line number opens a comment box (Shift-click extends the range)
+ * and `commentAdded` reports the saved text; `comments` are shown below their last line.
  *
  * The view is rebuilt when a text, `layout`, `path` or `collapseUnchanged` changes; a theme switch
  * needs no rebuild (colors are CSS variables `--hx-diff-added-*`, `--hx-diff-removed-*`).
@@ -87,6 +108,12 @@ export class HxDiffView {
   readonly splitMinWidth = input(DEFAULT_SPLIT_MIN_WIDTH);
   /** `true` (default): margin 3, minimum 4. `false`: show everything. Or set both numbers. */
   readonly collapseUnchanged = input<boolean | HxDiffCollapse>(true);
+  /** The comments to show, below their last line. Changing them does not rebuild the view. */
+  readonly comments = input<readonly HxDiffComment[]>([]);
+  /** `true`: a click on a line number opens a comment box. Default off. */
+  readonly commentable = input(false);
+  /** A comment was written; the app stores it and passes it back through `comments`. */
+  readonly commentAdded = output<HxDiffCommentAdded>();
   readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
   readonly ariaLabelledby = input<string | null>(null, {
     alias: 'aria-labelledby',
@@ -112,6 +139,30 @@ export class HxDiffView {
   private readonly container = viewChild.required<ElementRef<HTMLElement>>('container');
   readonly #ready = signal(false);
   readonly #language = new Compartment();
+  readonly #review = new Compartment();
+  readonly #built = signal(0);
+  #reviewOn = false;
+  readonly #commentExtension = commentExtension({
+    opened: (view) => {
+      const views = this.#views;
+      if (!views || views.original === views.modified) return;
+      discardDraft(view === views.original ? views.modified : views.original);
+    },
+    saved: (view, startLine, endLine, text) => {
+      const views = this.#views;
+      const side: HxDiffSide =
+        views && views.original !== views.modified && view === views.original
+          ? 'original'
+          : 'modified';
+      this.commentAdded.emit({
+        side,
+        startLine,
+        endLine,
+        text,
+        quote: quoteOf(view, startLine, endLine),
+      });
+    },
+  });
   #generation = 0;
   #destroy: (() => void) | null = null;
   #views: { original: EditorView; modified: EditorView } | null = null;
@@ -140,6 +191,13 @@ export class HxDiffView {
     });
 
     effect(() => {
+      this.#built();
+      this.commentable();
+      this.comments();
+      untracked(() => this.#showReview());
+    });
+
+    effect(() => {
       if (!this.#ready()) return;
       const original = this.original();
       const modified = this.modified();
@@ -153,6 +211,7 @@ export class HxDiffView {
         this.#teardown();
         const views = this.#build(layout, original, modified, collapse, label);
         this.#changes.set(this.#chunks(views[views.length - 1]).length);
+        this.#built.update((n) => n + 1);
         void hxLoadLanguage(path, this.#languages).then((support) => {
           if (generation !== this.#generation || !support) return;
           for (const view of views) {
@@ -161,6 +220,52 @@ export class HxDiffView {
         });
       });
     });
+  }
+
+  #showReview(): void {
+    const views = this.#views;
+    if (!views) return;
+    const commentable = this.commentable();
+    const comments = this.comments();
+    const split = views.original !== views.modified;
+    for (const [side, view] of [
+      ['original', views.original],
+      ['modified', views.modified],
+    ] as const) {
+      if (!split && side === 'original') continue;
+      if (this.#reviewOn !== commentable) {
+        view.dispatch({
+          effects: this.#review.reconfigure(commentable ? this.#commentExtension : []),
+        });
+      }
+      const placed = commentable
+        ? comments.flatMap((c) => this.#place(c, side, view, views.modified, split))
+        : [];
+      showComments(view, placed);
+    }
+    this.#reviewOn = commentable;
+  }
+
+  /** Where a comment shows in `view`; `[]` when it belongs to the other editor. */
+  #place(
+    c: HxDiffComment,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedComment[] {
+    if (split ? c.side !== side : false) return [];
+    const lines = view.state.doc.lines;
+    if (c.side === 'modified' || split) {
+      if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > lines) return [];
+      return [{ comment: c, start: c.startLine, end: c.endLine, mark: true }];
+    }
+    // Unified layout, comment on the old text: it hangs below the matching line of the new text.
+    const original = getOriginalDoc(modified.state);
+    if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > original.lines) return [];
+    const at = this.#map(modified, original.line(c.endLine).from, true);
+    const end = modified.state.doc.lineAt(Math.min(at, modified.state.doc.length)).number;
+    return [{ comment: c, start: end, end, mark: false }];
   }
 
   /** Moves to the next change; after the last one it wraps to the first. */
@@ -282,6 +387,7 @@ export class HxDiffView {
       EditorView.editable.of(false),
       lineNumbers(),
       this.#language.of([]),
+      this.#review.of([]),
       EditorView.updateListener.of((update) => {
         if (update.selectionSet && !update.docChanged && update.view === this.#views?.modified) {
           this.#current.set(this.#indexAt(update.view));
@@ -337,6 +443,7 @@ export class HxDiffView {
     this.#destroy?.();
     this.#destroy = null;
     this.#views = null;
+    this.#reviewOn = false;
     this.#changes.set(0);
     this.#current.set(0);
   }
