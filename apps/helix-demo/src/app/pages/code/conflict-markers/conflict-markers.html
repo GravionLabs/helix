@@ -1,0 +1,24 @@
+<h1 class="sr-only">Conflict markers</h1>
+<app-source-tabs
+  library="helix-code"
+  directory="code/conflict-markers"
+  componentName="conflict-markers"
+>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Conflict markers</h2>
+    <p class="m-0">
+      <code>hxConflictMarkers()</code> shows each conflict as a block with the actions Accept ours,
+      Accept theirs and Accept both. Alt+Down and Alt+Up move to the next and the previous conflict.
+    </p>
+    <div class="flex flex-wrap items-center gap-4">
+      <button type="button" class="p-button p-button-outlined" (click)="reset()">Reset</button>
+      <span role="status">{{ count() === 1 ? "1 conflict" : count() + " conflicts" }} left</span>
+    </div>
+    <hx-code-editor
+      aria-label="File with conflicts"
+      path="app.ts"
+      [(value)]="text"
+      [extensions]="extensions"
+    />
+  </div>
+</app-source-tabs>

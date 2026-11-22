@@ -37,3 +37,16 @@ export {
   type HxMergePart,
   type HxSegment,
 } from './lib/conflict/line-diff';
+export {
+  hxParseConflicts,
+  type HxConflict,
+  type HxConflictRange,
+} from './lib/conflict/conflict-parser';
+export {
+  hxConflictCount,
+  hxConflictField,
+  hxConflictMarkers,
+  hxNextConflict,
+  hxPreviousConflict,
+  type HxConflictChoice,
+} from './lib/conflict/conflict-markers';

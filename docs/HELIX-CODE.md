@@ -119,6 +119,17 @@ const parts = hxMergeParts(mine, theirs);
 const merged = hxMergeText(parts, { 0: 'both' }, mine.endsWith('\n'));
 ```
 
+## Conflict markers
+
+`hxConflictMarkers()` is a CodeMirror extension for files with Git conflict markers: the ours, base and theirs lines are colored, the marker lines dimmed, and a row above each conflict offers Accept ours, Accept theirs and Accept both (one undoable change). Pass it to `hx-code-editor` through `extensions`.
+
+- `hxParseConflicts(text): HxConflict[]` returns `{start, end, ours, base?, theirs, oursLabel, baseLabel?, theirsLabel}` with 0-based lines; malformed markers are skipped.
+- `hxConflictField` holds the conflicts, `hxConflictCount(state)` returns how many are left.
+- `hxNextConflict` and `hxPreviousConflict` move the cursor; there is no default key map, the app binds them.
+- Colors: `--hx-code-conflict-ours-bg`, `--hx-code-conflict-theirs-bg`, `--hx-code-conflict-marker-opacity`.
+
+Details: [Conflict markers](components/conflict-markers.md).
+
 ## Commit graph
 
 Planned.

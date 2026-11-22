@@ -2,6 +2,7 @@ import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { CODE_MENU_ITEMS } from './code-menu-items';
 import { CodeChangedFilesDemo } from './changed-files/code-changed-files-demo';
+import { ConflictMarkersDemo } from './conflict-markers/conflict-markers';
 import { CodeDiffDemo } from './diff/code-diff-demo';
 import { CodeEditorDemo } from './editor/code-editor-demo';
 import { CodeLanguageDemo } from './language/code-language-demo';
@@ -17,6 +18,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   diff: CodeDiffDemo,
   'changed-files': CodeChangedFilesDemo,
   review: ReviewDemo,
+  'conflict-markers': ConflictMarkersDemo,
 };
 
 export default [
