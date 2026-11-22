@@ -198,7 +198,7 @@ export function undefinedVariables(styles, tokens) {
   return [...used].filter((v) => !defined.has(v)).sort();
 }
 
-/** Adds `./styles.css`, `./core.css` and `./tokens.css` to the exports map of dist/ui (ng-packagr knows only the TS entry). */
+/** Adds `./styles.css`, `./core.css` and `./tokens.css` to the exports map of dist/ui (the library builder knows only the TS entry). */
 export function addCssExports(dist = OUT) {
   const file = path.join(dist, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));

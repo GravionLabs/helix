@@ -26,5 +26,8 @@
   },
   "sideEffects": [
     "**/*.css"
-  ]
+  ],
+  "exports": {
+    ".": "./src/public-api.ts"
+  }
 }

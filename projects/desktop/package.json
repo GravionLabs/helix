@@ -42,5 +42,9 @@
     "@tauri-apps/plugin-updater": {
       "optional": true
     }
+  },
+  "exports": {
+    ".": "./src/public-api.ts",
+    "./tauri": "./tauri/public_api.ts"
   }
 }

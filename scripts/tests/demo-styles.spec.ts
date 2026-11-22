@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join, posix, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
@@ -13,18 +13,25 @@ const demoStyles: string[] = JSON.parse(read('angular.json')).projects['helix-de
 const tailwindOutputs = (text: string): string[] =>
   [...text.matchAll(/-o (dist\/[\w-]+\/styles\.css)/g)].map((m) => m[1]);
 
-/** `dist/<pkg>/styles.css` that ng-packagr copies as an asset of a library (helix-desktop). */
+/** `dist/<pkg>/styles.css` that the library builder copies as an asset of a library (helix-desktop). */
 function packagedStylesheets(): string[] {
+  const projects: Record<
+    string,
+    {
+      architect?: {
+        build?: { builder?: string; options?: { assets?: unknown[]; outputPath?: string } };
+      };
+    }
+  > = JSON.parse(read('angular.json')).projects;
   const found: string[] = [];
-  for (const dir of readdirSync(join(ROOT, 'projects'), { withFileTypes: true })) {
-    const file = join('projects', dir.name, 'ng-package.json');
-    if (!dir.isDirectory() || !existsSync(join(ROOT, file))) continue;
-    const pkg = JSON.parse(read(file));
-    const copiesStyles = (pkg.assets ?? []).some(
-      (a: string | { glob?: string }) => typeof a === 'object' && a.glob === 'styles.css',
+  for (const [name, project] of Object.entries(projects)) {
+    const build = project.architect?.build;
+    if (build?.builder !== '@angular/build:library') continue;
+    const copiesStyles = (build.options?.assets ?? []).some(
+      (a) => typeof a === 'object' && (a as { glob?: string }).glob === 'styles.css',
     );
     if (copiesStyles)
-      found.push(posix.join(posix.normalize(pkg.dest.replace(/^(\.\.\/)+/, '')), 'styles.css'));
+      found.push(posix.join(build.options?.outputPath ?? `dist/${name}`, 'styles.css'));
   }
   return found;
 }
