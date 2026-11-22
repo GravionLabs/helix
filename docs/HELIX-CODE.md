@@ -94,6 +94,8 @@ Colors are the CSS variables `--hx-diff-added-*` and `--hx-diff-removed-*`, with
 
 `[findings]` (`HxDiffFinding`: `id`, `side`, `startLine`, `endLine`, `severity: 'blocking' | 'note'`, `title`, `detail?`) shows review findings as boxes below their last line with the lines marked in the gutter; severity is an icon plus text. With `findingActionLabel` each box has a button and `(findingAction)` emits `{id, quote}`. Details: [Diff view](components/diff-view.md#findings).
 
+`[threads]` (`HxDiffThread`: `id`, `side`, `startLine`, `endLine`, `resolved`, `comments: {id, author, time, text}[]`) shows a review thread as one box with its comments, a reply field (`(replyAdded)` emits `{threadId, text}`) and a resolve button (`(resolvedChange)` emits `{threadId, resolved}`); a resolved thread is collapsed to one line. `[renderComment]` renders Markdown; the result is sanitized by the library. Boxes on one line: findings, threads, comments. Details: [Diff view](components/diff-view.md#threads).
+
 ```html
 <hx-diff-view [original]="before" [modified]="after" commentable [comments]="comments" (commentAdded)="add($event)" />
 ```

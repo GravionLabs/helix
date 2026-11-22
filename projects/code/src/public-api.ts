@@ -16,8 +16,11 @@ export {
   type HxDiffCommentAdded,
   type HxDiffFindingAction,
   type HxDiffLayout,
+  type HxDiffReplyAdded,
+  type HxDiffResolvedChange,
   type HxDiffSide,
 } from './lib/diff/diff-view';
 export { hxDiffTheme, HX_DIFF_PALETTE } from './lib/diff/diff-theme';
 export { openCommentDraft, type HxDiffComment } from './lib/review/comment-extension';
 export type { HxDiffFinding } from './lib/review/finding-extension';
+export type { HxDiffThread, HxDiffThreadComment } from './lib/review/thread-extension';

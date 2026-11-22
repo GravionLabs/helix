@@ -5,6 +5,9 @@ import {
   type HxDiffCommentAdded,
   type HxDiffFinding,
   type HxDiffFindingAction,
+  type HxDiffReplyAdded,
+  type HxDiffResolvedChange,
+  type HxDiffThread,
 } from '@gravionlabs/helix-code';
 import { SourceTabsComponent } from '../../../shared/source-tabs/source-tabs';
 
@@ -69,7 +72,62 @@ export class ReviewDemo {
       detail: 'Say that tax is a rate, 0.2 for 20 percent.',
     },
   ];
+  protected readonly threads = signal<readonly HxDiffThread[]>([
+    {
+      id: 't1',
+      side: 'modified',
+      startLine: 5,
+      endLine: 5,
+      resolved: false,
+      comments: [
+        { id: 't1a', author: 'Ada', time: '2026-11-21T10:00:00Z', text: 'Why not `reduce`?' },
+        {
+          id: 't1b',
+          author: 'Bob',
+          time: '2026-11-21T11:30:00Z',
+          text: 'The loop is easier to debug.',
+        },
+      ],
+    },
+    {
+      id: 't2',
+      side: 'modified',
+      startLine: 2,
+      endLine: 2,
+      resolved: true,
+      comments: [
+        { id: 't2a', author: 'Ada', time: '2026-11-19T08:00:00Z', text: 'Start at zero.' },
+      ],
+    },
+  ]);
   protected readonly sent = signal<HxDiffFindingAction | null>(null);
+
+  protected reply(added: HxDiffReplyAdded): void {
+    this.threads.update((list) =>
+      list.map((t) =>
+        t.id === added.threadId
+          ? {
+              ...t,
+              comments: [
+                ...t.comments,
+                {
+                  id: `${t.id}-${t.comments.length + 1}`,
+                  author: 'You',
+                  time: new Date().toISOString(),
+                  text: added.text,
+                },
+              ],
+            }
+          : t,
+      ),
+    );
+  }
+
+  protected resolve(change: HxDiffResolvedChange): void {
+    this.threads.update((list) =>
+      list.map((t) => (t.id === change.threadId ? { ...t, resolved: change.resolved } : t)),
+    );
+  }
 
   protected add(added: HxDiffCommentAdded): void {
     this.comments.update((list) => [

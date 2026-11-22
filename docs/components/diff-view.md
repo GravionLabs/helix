@@ -21,6 +21,10 @@
 | `findings`                      | `HxDiffFinding[]`                                  | Review findings to show below their last line, the lines marked in the gutter. Default none. Changing them does not rebuild the view.                    |
 | `findingActionLabel`            | `string`                                           | Label of a button on each finding box. Default empty: no button.                                                                                         |
 | `findingAction`                 | output `{ id, quote }`                             | The button of a finding box was pressed; `quote` is the text of its lines on its side.                                                                   |
+| `threads`                       | `HxDiffThread[]`                                   | Review threads to show below their last line. Default none. Changing them does not rebuild the view.                                                     |
+| `renderComment`                 | `(text: string) => string`                         | Optional: comment text to HTML (Markdown). The result passes Angular `DomSanitizer` before it is inserted. Default: plain text.                          |
+| `replyAdded`                    | output `{ threadId, text }`                        | The reply field at the end of a thread was sent.                                                                                                         |
+| `resolvedChange`                | output `{ threadId, resolved }`                    | The resolve button of a thread was pressed.                                                                                                              |
 | `aria-label`, `aria-labelledby` | `string`                                           | The accessible name; it is moved onto the content element.                                                                                               |
 
 ## Navigation
@@ -75,6 +79,16 @@ Colors come from `--h-*` tokens (`--h-primary-color`, `--h-highlight-background`
 ```
 
 With `findingActionLabel` each box has a button; `findingAction` emits `{ id, quote }`, `quote` being the text of the lines `startLine`..`endLine` on `side`. In the unified layout a finding on the `original` side hangs below the matching line of the modified text (its lines are not marked). A finding outside the text is not shown.
+
+## Threads
+
+`threads` shows review threads (`HxDiffThread`: `id`, `side`, `startLine`, `endLine`, `resolved`, `comments: {id, author, time, text}[]`; `time` is ISO 8601). A thread is one box below its last line with its comments in order, each with author and relative time (`Intl.RelativeTimeFormat`; the full timestamp is in the `title`). A reply field at the end emits `replyAdded { threadId, text }` (Ctrl/Cmd+Enter sends); the app stores the reply and passes the thread back. The button Resolve / Unresolve emits `resolvedChange { threadId, resolved }`. A resolved thread is collapsed to one line and expands on click. Threads do not need `commentable` and can be used together with `comments`; on the same line the order is findings, threads, comments.
+
+```html
+<hx-diff-view [original]="before" [modified]="after" [threads]="threads()" [renderComment]="markdown" (replyAdded)="reply($event)" (resolvedChange)="resolve($event)" />
+```
+
+`renderComment` lets an app render Markdown. The library passes its result through `DomSanitizer.sanitize(SecurityContext.HTML, …)` before it is inserted, so scripts and event handlers are removed even if the renderer lets them through. Without it the text is plain. A thread outside the text is not shown; in the unified layout a thread on the `original` side hangs below the matching line of the modified text.
 
 ## Behaviour
 

@@ -9,6 +9,7 @@ import {
   inject,
   input,
   output,
+  SecurityContext,
   signal,
   untracked,
   viewChild,
@@ -30,6 +31,7 @@ import {
   type Text,
 } from '@codemirror/state';
 import { EditorView, lineNumbers } from '@codemirror/view';
+import { DomSanitizer } from '@angular/platform-browser';
 import { HX_CODE_LANGUAGES, hxLoadLanguage } from '../language/language';
 import {
   commentExtension,
@@ -45,6 +47,12 @@ import {
   type HxPlacedFinding,
   showFindings,
 } from '../review/finding-extension';
+import {
+  type HxDiffThread,
+  type HxPlacedThread,
+  showThreads,
+  threadExtension,
+} from '../review/thread-extension';
 import { hxCodeHighlight } from '../theme/code-highlight';
 import { hxCodeTheme } from '../theme/code-theme';
 import { hxDiffTheme } from './diff-theme';
@@ -70,6 +78,18 @@ export interface HxDiffCommentAdded {
   readonly quote: string;
 }
 
+/** A reply was written in a thread. */
+export interface HxDiffReplyAdded {
+  readonly threadId: string;
+  readonly text: string;
+}
+
+/** The resolve button of a thread was used. */
+export interface HxDiffResolvedChange {
+  readonly threadId: string;
+  readonly resolved: boolean;
+}
+
 /** The action of a finding box was used: the finding and the text of its lines on its side. */
 export interface HxDiffFindingAction {
   readonly id: string;
@@ -93,6 +113,11 @@ const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
  * `findings` are shown as boxes below their last line, the lines marked in the gutter; with
  * `findingActionLabel` each box has a button and `findingAction` reports `{id, quote}`.
  *
+ * `threads` (`HxDiffThread`) are boxes below their last line, after findings and before comments:
+ * the comments in order, a reply field (`replyAdded`) and a resolve button (`resolvedChange`); a
+ * resolved thread is one line until clicked. `renderComment` turns text into HTML (Markdown); its
+ * result is sanitized with Angular `DomSanitizer` before it is inserted.
+ *
  * The view is rebuilt when a text, `layout`, `path` or `collapseUnchanged` changes; a theme switch
  * needs no rebuild (colors are CSS variables `--hx-diff-added-*`, `--hx-diff-removed-*`).
  */
@@ -110,6 +135,7 @@ const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
 })
 export class HxDiffView {
   readonly #languages = inject(HX_CODE_LANGUAGES);
+  readonly #sanitizer = inject(DomSanitizer);
 
   /** The old version. Empty: a new file. */
   readonly original = input.required<string>();
@@ -133,6 +159,14 @@ export class HxDiffView {
   readonly findingActionLabel = input('');
   /** The button of a finding box was pressed. */
   readonly findingAction = output<HxDiffFindingAction>();
+  /** The review threads to show, below their last line. Changing them does not rebuild the view. */
+  readonly threads = input<readonly HxDiffThread[]>([]);
+  /** Optional: text of a comment to HTML (e.g. Markdown). The result is sanitized. Default plain text. */
+  readonly renderComment = input<((text: string) => string) | null>(null);
+  /** A reply was written in a thread; the app stores it and passes the thread back. */
+  readonly replyAdded = output<HxDiffReplyAdded>();
+  /** The resolve button of a thread was used. */
+  readonly resolvedChange = output<HxDiffResolvedChange>();
   /** A comment was written; the app stores it and passes it back through `comments`. */
   readonly commentAdded = output<HxDiffCommentAdded>();
   readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
@@ -204,6 +238,12 @@ export class HxDiffView {
       this.findingAction.emit({ id: finding.id, quote });
     },
   });
+  readonly #threadExtension = threadExtension({
+    reply: (_view, threadId, text) => this.replyAdded.emit({ threadId, text }),
+    resolve: (_view, threadId, resolved) => this.resolvedChange.emit({ threadId, resolved }),
+  });
+  #renderCache: { source: (text: string) => string; wrapped: (text: string) => string } | null =
+    null;
   #generation = 0;
   #destroy: (() => void) | null = null;
   #views: { original: EditorView; modified: EditorView } | null = null;
@@ -237,6 +277,8 @@ export class HxDiffView {
       this.comments();
       this.findings();
       this.findingActionLabel();
+      this.threads();
+      this.renderComment();
       untracked(() => this.#showReview());
     });
 
@@ -272,6 +314,8 @@ export class HxDiffView {
     const comments = this.comments();
     const findings = this.findings();
     const actionLabel = this.findingActionLabel();
+    const threads = this.threads();
+    const render = this.#renderer();
     const split = views.original !== views.modified;
     for (const [side, view] of [
       ['original', views.original],
@@ -291,6 +335,10 @@ export class HxDiffView {
         this.#placeFinding(f, side, view, views.modified, split),
       );
       showFindings(view, placedFindings, actionLabel);
+      const placedThreads = threads.flatMap((t) =>
+        this.#placeThread(t, side, view, views.modified, split),
+      );
+      showThreads(view, placedThreads, render);
     }
     this.#reviewOn = commentable;
   }
@@ -317,6 +365,30 @@ export class HxDiffView {
   ): HxPlacedFinding[] {
     const at = this.#placeLines(f, side, view, modified, split);
     return at ? [{ finding: f, ...at }] : [];
+  }
+
+  /** Where a thread shows in `view`; `[]` when it belongs to the other editor. */
+  #placeThread(
+    t: HxDiffThread,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedThread[] {
+    const at = this.#placeLines(t, side, view, modified, split);
+    return at ? [{ thread: t, ...at }] : [];
+  }
+
+  /** The app's renderer wrapped so that its HTML always passes the Angular sanitizer. */
+  #renderer(): ((text: string) => string) | null {
+    const render = this.renderComment();
+    if (!render) return null;
+    const cached = this.#renderCache;
+    if (cached?.source === render) return cached.wrapped;
+    const wrapped = (text: string): string =>
+      this.#sanitizer.sanitize(SecurityContext.HTML, render(text)) ?? '';
+    this.#renderCache = { source: render, wrapped };
+    return wrapped;
   }
 
   #placeLines(
@@ -461,6 +533,7 @@ export class HxDiffView {
       this.#language.of([]),
       this.#review.of([]),
       this.#findingExtension,
+      this.#threadExtension,
       EditorView.updateListener.of((update) => {
         if (update.selectionSet && !update.docChanged && update.view === this.#views?.modified) {
           this.#current.set(this.#indexAt(update.view));
