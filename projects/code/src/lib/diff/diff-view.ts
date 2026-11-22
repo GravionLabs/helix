@@ -16,10 +16,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {
+  acceptChunk,
   type Chunk,
   getChunks,
   getOriginalDoc,
   MergeView,
+  rejectChunk,
   uncollapseUnchanged,
   unifiedMergeView,
 } from '@codemirror/merge';
@@ -96,6 +98,15 @@ export interface HxDiffFindingAction {
   readonly quote: string;
 }
 
+/** The decision on one change in review mode. */
+export type HxChangeDecision = 'accept' | 'reject';
+
+/** A change was decided: its position in the initial list of changes and the decision. */
+export interface HxDiffChangeDecided {
+  readonly index: number;
+  readonly decision: HxChangeDecision;
+}
+
 const DEFAULT_SPLIT_MIN_WIDTH = 900;
 const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
 
@@ -118,7 +129,13 @@ const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
  * resolved thread is one line until clicked. `renderComment` turns text into HTML (Markdown); its
  * result is sanitized with Angular `DomSanitizer` before it is inserted.
  *
- * The view is rebuilt when a text, `layout`, `path` or `collapseUnchanged` changes; a theme switch
+ * With `reviewable` (unified layout only, ignored with `layout="split"`) each change has an accept
+ * and a reject button; `changeDecided` reports `{index, decision}` (`index` is the position in the
+ * initial list of changes and stays stable), `result()` is the text after the decisions so far
+ * (undecided changes stay as in `modified`), `pendingChanges()` counts the undecided changes, and
+ * `acceptAll()` / `rejectAll()` decide the rest. A decided change leaves `changeCount()`.
+ *
+ * The view is rebuilt when a text, `layout`, `path`, `reviewable` or `collapseUnchanged` changes; a theme switch
  * needs no rebuild (colors are CSS variables `--hx-diff-added-*`, `--hx-diff-removed-*`).
  */
 @Component({
@@ -169,6 +186,10 @@ export class HxDiffView {
   readonly resolvedChange = output<HxDiffResolvedChange>();
   /** A comment was written; the app stores it and passes it back through `comments`. */
   readonly commentAdded = output<HxDiffCommentAdded>();
+  /** `true`: each change has an accept and a reject button. Unified layout only. Default off. */
+  readonly reviewable = input(false);
+  /** A change was accepted or rejected. */
+  readonly changeDecided = output<HxDiffChangeDecided>();
   readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
   readonly ariaLabelledby = input<string | null>(null, {
     alias: 'aria-labelledby',
@@ -182,6 +203,11 @@ export class HxDiffView {
   readonly changeCount = this.#changes.asReadonly();
   /** The 1-based number of the change at the cursor; 0 when no change is selected yet. */
   readonly currentChange = this.#current.asReadonly();
+  readonly #result = signal('');
+  /** The text after the decisions so far; undecided changes show as in `modified`. */
+  readonly result = this.#result.asReadonly();
+  /** The number of changes without a decision. */
+  readonly pendingChanges = this.#changes.asReadonly();
   /** The layout in use: `auto` resolved by the host width. `null` while `auto` is not measured. */
   readonly effectiveLayout = computed<'split' | 'unified' | null>(() => {
     const layout = this.layout();
@@ -246,7 +272,10 @@ export class HxDiffView {
     null;
   #generation = 0;
   #destroy: (() => void) | null = null;
+  /** Initial index of each undecided change, in document order. */
+  #undecided: number[] = [];
   #views: { original: EditorView; modified: EditorView } | null = null;
+  #reviewMode = false;
 
   constructor() {
     const destroyRef = inject(DestroyRef);
@@ -288,14 +317,18 @@ export class HxDiffView {
       const modified = this.modified();
       const layout = this.effectiveLayout();
       if (layout === null) return;
+      const reviewable = this.reviewable() && layout === 'unified';
       const path = this.path();
       const collapse = this.#collapse();
       const label = this.#labels();
       const generation = ++this.#generation;
       untracked(() => {
         this.#teardown();
-        const views = this.#build(layout, original, modified, collapse, label);
-        this.#changes.set(this.#chunks(views[views.length - 1]).length);
+        const views = this.#build(layout, original, modified, collapse, label, reviewable);
+        const count = this.#chunks(views[views.length - 1]).length;
+        this.#undecided = Array.from({ length: count }, (_, i) => i);
+        this.#changes.set(count);
+        this.#result.set(modified);
         this.#built.update((n) => n + 1);
         void hxLoadLanguage(path, this.#languages).then((support) => {
           if (generation !== this.#generation || !support) return;
@@ -412,6 +445,65 @@ export class HxDiffView {
     return { start: end, end, mark: false };
   }
 
+  /** Accepts every undecided change: the modified text is kept. */
+  acceptAll(): void {
+    this.#decideAll('accept');
+  }
+
+  /** Rejects every undecided change: the original lines are restored. */
+  rejectAll(): void {
+    this.#decideAll('reject');
+  }
+
+  #decideAll(decision: HxChangeDecision): void {
+    const view = this.#views?.modified;
+    if (!view || !this.#reviewing) return;
+    for (let chunk = this.#chunks(view)[0]; chunk; chunk = this.#chunks(view)[0]) {
+      if (!this.#decide(view, chunk.fromB, decision)) break;
+    }
+  }
+
+  /** Decides the change at `pos` and reports it. Returns false when there is none. */
+  #decide(view: EditorView, pos: number, decision: HxChangeDecision): boolean {
+    const position = this.#chunks(view).findIndex((c) => c.fromB <= pos && pos <= c.endB);
+    if (position < 0) return false;
+    const done = decision === 'accept' ? acceptChunk(view, pos) : rejectChunk(view, pos);
+    if (!done) return false;
+    const [index] = this.#undecided.splice(position, 1);
+    this.#sync(view);
+    this.changeDecided.emit({ index, decision });
+    return true;
+  }
+
+  /** The buttons of a change; `mergeControls` of `unifiedMergeView`. */
+  #control(type: 'accept' | 'reject'): HTMLElement {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `cm-review-button cm-review-${type}`;
+    button.textContent = type === 'accept' ? 'Accept' : 'Reject';
+    button.setAttribute(
+      'aria-label',
+      type === 'accept' ? 'Accept this change' : 'Reject this change',
+    );
+    // `click`, not `mousedown`: Enter and Space on the focused button work as well.
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = this.#views?.modified;
+      const widget = button.closest('.cm-deletedChunk');
+      if (!view || !widget) return;
+      this.#decide(view, view.posAtDOM(widget), type);
+    });
+    return button;
+  }
+
+  /** Brings counts, cursor index and result up to date after the document or the chunks changed. */
+  #sync(view: EditorView): void {
+    const count = this.#chunks(view).length;
+    if (count !== this.#changes()) this.#changes.set(count);
+    this.#result.set(view.state.doc.toString());
+    this.#current.set(this.#indexAt(view));
+  }
+
   /** Moves to the next change; after the last one it wraps to the first. */
   next(): void {
     const count = this.#changes();
@@ -522,6 +614,12 @@ export class HxDiffView {
     return EditorView.contentAttributes.of(attributes);
   }
 
+  get #reviewing(): boolean {
+    return (
+      this.#views !== null && this.#views.original === this.#views.modified && this.#reviewMode
+    );
+  }
+
   #shared(labels: Extension): Extension[] {
     return [
       hxCodeTheme(),
@@ -549,7 +647,9 @@ export class HxDiffView {
     modified: string,
     collapse: HxDiffCollapse | null,
     labels: Extension,
+    reviewable: boolean,
   ): EditorView[] {
+    this.#reviewMode = reviewable;
     const parent = this.container().nativeElement;
     const collapseUnchanged = collapse ?? undefined;
     if (layout === 'unified') {
@@ -560,7 +660,7 @@ export class HxDiffView {
           ...this.#shared(labels),
           unifiedMergeView({
             original,
-            mergeControls: false,
+            mergeControls: reviewable ? (type) => this.#control(type) : false,
             gutter: true,
             highlightChanges: true,
             collapseUnchanged,
@@ -590,6 +690,8 @@ export class HxDiffView {
     this.#destroy = null;
     this.#views = null;
     this.#reviewOn = false;
+    this.#reviewMode = false;
+    this.#undecided = [];
     this.#changes.set(0);
     this.#current.set(0);
   }

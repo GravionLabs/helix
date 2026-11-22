@@ -362,3 +362,129 @@ describe('HxDiffView', () => {
     });
   });
 });
+
+@Component({
+  imports: [HxDiffView],
+  template: `<hx-diff-view
+    aria-label="Changes"
+    [original]="original"
+    [modified]="modified"
+    [layout]="layout()"
+    [reviewable]="reviewable()"
+    [collapseUnchanged]="false"
+    (changeDecided)="decided.push($event)"
+  />`,
+})
+class ReviewHost {
+  readonly original = lines(10);
+  readonly modified = lines(10)
+    .replace('line 1\n', 'line one\n')
+    .replace('line 4\n', 'line 4\nadded\n')
+    .replace('line 8\n', '');
+  readonly layout = signal<HxDiffLayout>('unified');
+  readonly reviewable = signal(true);
+  readonly decided: { index: number; decision: string }[] = [];
+}
+
+describe('HxDiffView review', () => {
+  let fixture: ComponentFixture<ReviewHost>;
+  const el = () => fixture.nativeElement as HTMLElement;
+  const view = () =>
+    fixture.debugElement.query(By.directive(HxDiffView)).componentInstance as HxDiffView;
+  const settle = async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  };
+  const button = (type: string, n: number) =>
+    el().querySelectorAll<HTMLButtonElement>(`.cm-review-${type}`)[n];
+  const editor = () => EditorView.findFromDOM(el().querySelector<HTMLElement>('.cm-editor')!)!;
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: HX_CODE_LANGUAGES, useValue: [] }],
+    });
+    fixture = TestBed.createComponent(ReviewHost);
+    await settle();
+  });
+
+  it('shows accept and reject buttons with names for each change', () => {
+    expect(el().querySelectorAll('.cm-review-accept').length).toBe(3);
+    expect(button('accept', 0).getAttribute('aria-label')).toBe('Accept this change');
+    expect(button('reject', 0).getAttribute('aria-label')).toBe('Reject this change');
+    expect(button('accept', 0).tagName).toBe('BUTTON');
+    expect(view().pendingChanges()).toBe(3);
+  });
+
+  it('has no buttons without reviewable or with the split layout', async () => {
+    fixture.componentInstance.reviewable.set(false);
+    await settle();
+    expect(el().querySelector('.cm-review-button')).toBeNull();
+    fixture.componentInstance.reviewable.set(true);
+    fixture.componentInstance.layout.set('split');
+    await settle();
+    expect(el().querySelector('.cm-review-button')).toBeNull();
+    expect(view().pendingChanges()).toBe(3);
+  });
+
+  it('rejects a change, restores the original and keeps the index stable', async () => {
+    button('reject', 0).click();
+    await settle();
+    expect(view().result()).toContain('line 1\n');
+    expect(view().result()).not.toContain('line one');
+    expect(view().pendingChanges()).toBe(2);
+    expect(view().changeCount()).toBe(2);
+    button('accept', 0).click();
+    await settle();
+    expect(view().result()).toContain('added');
+    expect(fixture.componentInstance.decided).toEqual([
+      { index: 0, decision: 'reject' },
+      { index: 1, decision: 'accept' },
+    ]);
+    button('reject', 0).click();
+    await settle();
+    expect(fixture.componentInstance.decided[2]).toEqual({ index: 2, decision: 'reject' });
+    expect(view().result()).toBe(lines(10).replace('line 4\n', 'line 4\nadded\n'));
+    expect(view().pendingChanges()).toBe(0);
+    expect(editor().state.doc.toString()).toBe(view().result());
+  });
+
+  it('counts only undecided changes for the navigation', async () => {
+    view().next();
+    view().next();
+    expect(view().currentChange()).toBe(2);
+    button('accept', 0).click();
+    await settle();
+    expect(view().changeCount()).toBe(2);
+    expect(view().currentChange()).toBeLessThanOrEqual(2);
+  });
+
+  it('accepts all', async () => {
+    view().acceptAll();
+    await settle();
+    expect(view().result()).toBe(fixture.componentInstance.modified);
+    expect(view().pendingChanges()).toBe(0);
+    expect(fixture.componentInstance.decided.map((d) => d.index)).toEqual([0, 1, 2]);
+    expect(fixture.componentInstance.decided.every((d) => d.decision === 'accept')).toBe(true);
+  });
+
+  it('rejects all', async () => {
+    view().rejectAll();
+    await settle();
+    expect(view().result()).toBe(fixture.componentInstance.original);
+    expect(view().pendingChanges()).toBe(0);
+    expect(fixture.componentInstance.decided.map((d) => d.decision)).toEqual([
+      'reject',
+      'reject',
+      'reject',
+    ]);
+  });
+
+  it('ignores acceptAll and rejectAll with the split layout', async () => {
+    fixture.componentInstance.layout.set('split');
+    await settle();
+    view().rejectAll();
+    expect(fixture.componentInstance.decided).toEqual([]);
+    expect(view().pendingChanges()).toBe(3);
+  });
+});

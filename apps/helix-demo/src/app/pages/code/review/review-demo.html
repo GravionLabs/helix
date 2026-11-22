@@ -48,4 +48,30 @@
       }
     </p>
   </div>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Accept and reject</h2>
+    <p class="m-0">
+      With <code>reviewable</code> (unified layout only) each change has an Accept and a Reject
+      button. <code>changeDecided</code> reports the decision, <code>result()</code> is the text
+      after the decisions so far.
+    </p>
+    <div class="flex gap-2">
+      <button type="button" (click)="reviewed.acceptAll()">Accept all</button>
+      <button type="button" (click)="reviewed.rejectAll()">Reject all</button>
+    </div>
+    <hx-diff-view
+      #reviewed
+      aria-label="Review of total.ts"
+      path="total.ts"
+      layout="unified"
+      [reviewable]="true"
+      [original]="original"
+      [modified]="modified"
+      (changeDecided)="decide($event)"
+    />
+    <p aria-live="polite" class="m-0" data-testid="pending">
+      {{ reviewed.pendingChanges() }} change(s) pending
+    </p>
+    <pre class="m-0" data-testid="result">{{ reviewed.result() }}</pre>
+  </div>
 </app-source-tabs>

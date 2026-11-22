@@ -25,6 +25,8 @@
 | `renderComment`                 | `(text: string) => string`                         | Optional: comment text to HTML (Markdown). The result passes Angular `DomSanitizer` before it is inserted. Default: plain text.                          |
 | `replyAdded`                    | output `{ threadId, text }`                        | The reply field at the end of a thread was sent.                                                                                                         |
 | `resolvedChange`                | output `{ threadId, resolved }`                    | The resolve button of a thread was pressed.                                                                                                              |
+| `reviewable`                    | `boolean`                                          | `true`: each change has an Accept and a Reject button. Unified layout only; ignored with `layout="split"`. Default `false`.                              |
+| `changeDecided`                 | output `{ index, decision }`                       | A change was accepted or rejected; `index` is its position in the initial list of changes and stays stable.                                              |
 | `aria-label`, `aria-labelledby` | `string`                                           | The accessible name; it is moved onto the content element.                                                                                               |
 
 ## Navigation
@@ -89,6 +91,24 @@ With `findingActionLabel` each box has a button; `findingAction` emits `{ id, qu
 ```
 
 `renderComment` lets an app render Markdown. The library passes its result through `DomSanitizer.sanitize(SecurityContext.HTML, …)` before it is inserted, so scripts and event handlers are removed even if the renderer lets them through. Without it the text is plain. A thread outside the text is not shown; in the unified layout a thread on the `original` side hangs below the matching line of the modified text.
+
+## Accept and reject
+
+With `reviewable` each change of the **unified** layout has an Accept and a Reject button (native buttons with an `aria-label`, reachable by Tab, Enter and Space). With `layout="split"` (or `auto` resolved to split) the input is ignored and no buttons show.
+
+```html
+<hx-diff-view #diff layout="unified" [reviewable]="true" [original]="before" [modified]="after" (changeDecided)="log($event)" />
+<p>{{ diff.pendingChanges() }} pending</p>
+<pre>{{ diff.result() }}</pre>
+```
+
+- Accept keeps the modified lines, reject restores the original lines.
+- `changeDecided` emits `{ index, decision: 'accept' | 'reject' }`; `index` counts in the initial list of changes, so it does not shift after other decisions (type `HxChangeDecision`).
+- `result()` is the text after the decisions so far; changes without a decision stay as in `modified`.
+- `pendingChanges()` counts the undecided changes. A decided change leaves the list, so `changeCount()` and `currentChange()` count only undecided changes.
+- `acceptAll()` and `rejectAll()` decide every undecided change (one `changeDecided` each); they do nothing outside the reviewable unified layout.
+- A change of `original`, `modified`, `reviewable` or the layout rebuilds the view and drops the decisions.
+- Not included: editing a change by hand, writing the result to disk or Git.
 
 ## Behaviour
 

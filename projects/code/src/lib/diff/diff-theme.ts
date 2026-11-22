@@ -86,6 +86,21 @@ export function hxDiffTheme(): Extension {
         background: 'var(--h-content-hover-background)',
       },
       '.cm-deletedChunk': { backgroundColor: color('removed', 'background') },
+      '.cm-chunkButtons': { display: 'flex', gap: '6px', padding: '2px 4px' },
+      '.cm-review-button': {
+        font: 'inherit',
+        color: 'inherit',
+        background: 'var(--h-content-background)',
+        border: '1px solid var(--h-content-border-color)',
+        borderRadius: 'var(--h-border-radius, 4px)',
+        padding: '0 8px',
+        cursor: 'pointer',
+      },
+      '.cm-review-button:hover': { background: 'var(--h-content-hover-background)' },
+      '.cm-review-button:focus-visible': {
+        outline: '2px solid var(--h-primary-color)',
+        outlineOffset: '1px',
+      },
     }),
   ];
 }
