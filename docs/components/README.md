@@ -100,8 +100,9 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Tree](tree.md)             | `hx-tree` shows hierarchical data with expand and collapse, selection, a filter and lazy children, in the WAI-ARIA tree view pattern.                                                                              |
 | [Chart](chart.md)           | `hx-chart` is a [chart.js](https://www.chartjs.org/) chart whose colours, grid and font come from the Helix tokens; import it from `@gravionlabs/helix-ui/chart`.                                                  |
 
-## Code (1)
+## Code (2)
 
-| Component                   | Description                                                                                                                                      |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Code theme](code-theme.md) | `hxCodeTheme()` and `hxCodeHighlight()` give a CodeMirror editor the Helix look: surfaces on the `--h-*` tokens, syntax colors on `--hx-code-*`. |
+| Component                     | Description                                                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Code editor](code-editor.md) | `hx-code-editor` hosts a CodeMirror editor: text in and out, language by file path, Helix theme, form control, `extensions` for app features.    |
+| [Code theme](code-theme.md)   | `hxCodeTheme()` and `hxCodeHighlight()` give a CodeMirror editor the Helix look: surfaces on the `--h-*` tokens, syntax colors on `--hx-code-*`. |

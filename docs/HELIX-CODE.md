@@ -62,7 +62,13 @@ To ship fewer grammars, provide a shorter list with the token `HX_CODE_LANGUAGES
 
 ## Editor
 
-Planned.
+`<hx-code-editor>` hosts a CodeMirror editor: `[(value)]` for the text, `path` for the language, `readOnly`, `lineNumbers`, `lineWrapping`, and `extensions` for the features of the app. The Helix theme and highlighting are on by default, and it works in template-driven, reactive and signal forms.
+
+```html
+<hx-code-editor aria-label="Source" path="src/app/app.ts" [(value)]="text" [extensions]="extra" />
+```
+
+Inputs change the running view; it is never rebuilt. Details: [Code editor](components/code-editor.md).
 
 ## Diff
 

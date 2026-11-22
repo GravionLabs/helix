@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  min-height: 6rem;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-border-radius, 6px);
+  overflow: hidden;
+}
+
+:host(.hx-code-editor-invalid) {
+  border-color: var(--h-form-field-invalid-border-color);
+}
+
+:host(.hx-code-editor-disabled) {
+  opacity: 0.6;
+}
+
+.hx-code-editor-container {
+  height: 100%;
+}
+
+.hx-code-editor-container ::ng-deep .cm-editor {
+  height: 100%;
+}
+
+.hx-code-editor-container ::ng-deep .cm-editor.cm-focused {
+  outline: 2px solid var(--h-primary-color);
+  outline-offset: -2px;
+}

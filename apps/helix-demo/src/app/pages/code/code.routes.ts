@@ -1,6 +1,7 @@
 import type { Type } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { CODE_MENU_ITEMS } from './code-menu-items';
+import { CodeEditorDemo } from './editor/code-editor-demo';
 import { CodeLanguageDemo } from './language/code-language-demo';
 import { CodeOverviewDemo } from './overview/code-overview-demo';
 import { CodeThemeDemo } from './theme/code-theme-demo';
@@ -8,6 +9,7 @@ import { CodeThemeDemo } from './theme/code-theme-demo';
 const COMPONENTS: Record<string, Type<unknown>> = {
   overview: CodeOverviewDemo,
   theme: CodeThemeDemo,
+  editor: CodeEditorDemo,
   language: CodeLanguageDemo,
 };
 
