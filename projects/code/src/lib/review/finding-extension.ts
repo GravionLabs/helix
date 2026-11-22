@@ -63,7 +63,7 @@ const icon = (severity: HxDiffFinding['severity']): SVGElement => {
   shape.setAttribute('fill', 'currentColor');
   const glyph = document.createElementNS(SVG_NS, 'path');
   glyph.setAttribute('fill', 'none');
-  glyph.setAttribute('stroke', 'var(--h-content-background, #fff)');
+  glyph.setAttribute('stroke', 'var(--h-content-background)');
   glyph.setAttribute('stroke-width', '1.6');
   glyph.setAttribute('stroke-linecap', 'round');
   if (severity === 'blocking') {
@@ -264,7 +264,7 @@ export function findingExtension(handlers: HxFindingHandlers): Extension {
     field,
     EditorView.baseTheme({
       '.cm-finding-gutter-blocking': {
-        boxShadow: 'inset 3px 0 0 var(--h-danger-color, #c62828)',
+        boxShadow: 'inset 3px 0 0 var(--h-danger-color)',
         fontWeight: 'bold',
       },
       '.cm-finding-gutter-note': {
@@ -284,7 +284,7 @@ export function findingExtension(handlers: HxFindingHandlers): Extension {
         fontFamily: 'inherit',
       },
       '.cm-finding-box.cm-finding-blocking': {
-        borderLeft: '3px solid var(--h-danger-color, #c62828)',
+        borderLeft: '3px solid var(--h-danger-color)',
       },
       '.cm-finding-head': { display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' },
       '.cm-finding-severity': {
@@ -293,7 +293,7 @@ export function findingExtension(handlers: HxFindingHandlers): Extension {
         gap: '4px',
         fontWeight: 'bold',
       },
-      '.cm-finding-blocking .cm-finding-icon': { color: 'var(--h-danger-color, #c62828)' },
+      '.cm-finding-blocking .cm-finding-icon': { color: 'var(--h-danger-color)' },
       '.cm-finding-note .cm-finding-icon': {
         color: 'var(--h-info-color, var(--h-primary-color))',
       },

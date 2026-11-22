@@ -2,7 +2,7 @@
 
 - Status: Proposed
 - Date: 2026-11-22
-- Issues: #1138, #1133
+- Issues: #1138, #1133, #1148
 
 ## Context
 
@@ -53,3 +53,4 @@ The library has no Git, file system or Tauri access: data comes in through signa
 - A new lint rule and a second entry point to maintain.
 - Follow-ups: the files of #1146, #1154, #1155 and #1156 move to `projects/code/git/` with `projects/code/git/src/public-api.ts`; #1139 adds the `/git` entry (`ng-package.json`) and `lint:no-codemirror`.
 - The app ranges move from pins (poimen) to `^6` peers; apps own the installed versions.
+- The public API grows with the review types of the diff view (`HxDiffComment`, `HxDiffFinding`, #1147, #1148); they are plain interfaces and add no dependency.
