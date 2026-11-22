@@ -1,0 +1,77 @@
+<h1 class="sr-only">Review</h1>
+<app-source-tabs library="helix-code" directory="code/review" componentName="review-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Line comments</h2>
+    <p class="m-0">
+      Click a line number of <code>hx-diff-view</code> to write a comment, Shift-click to extend the
+      range. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>Enter</kbd> saves, <kbd>Esc</kbd> cancels. The app
+      stores the comment and passes it back through <code>comments</code>.
+    </p>
+    <label
+      ><input
+        type="checkbox"
+        [checked]="commentable()"
+        (change)="commentable.set(!commentable())"
+      />
+      Commentable</label
+    >
+    <hx-diff-view
+      aria-label="Changes in total.ts"
+      path="total.ts"
+      [original]="original"
+      [modified]="modified"
+      [comments]="comments()"
+      [commentable]="commentable()"
+      [findings]="findings"
+      [threads]="threads()"
+      findingActionLabel="Send to agent"
+      (commentAdded)="add($event)"
+      (findingAction)="sent.set($event)"
+      (replyAdded)="reply($event)"
+      (resolvedChange)="resolve($event)"
+    />
+    <p aria-live="polite" class="m-0">{{ comments().length }} comment(s)</p>
+    <p class="m-0">
+      A blocking finding and a note are shown with <code>findings</code>; the button of
+      <code>findingActionLabel</code> emits <code>findingAction</code>.
+    </p>
+    <p class="m-0">
+      <code>threads</code> shows an open and a resolved thread. Reply in the field at the end of a
+      thread; the Resolve button emits <code>resolvedChange</code>, a resolved thread collapses to
+      one line and expands on click.
+    </p>
+    <p aria-live="polite" class="m-0">
+      @if (sent(); as action) {
+        Sent finding {{ action.id }}: <code>{{ action.quote }}</code>
+      } @else {
+        No finding sent.
+      }
+    </p>
+  </div>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Accept and reject</h2>
+    <p class="m-0">
+      With <code>reviewable</code> (unified layout only) each change has an Accept and a Reject
+      button. <code>changeDecided</code> reports the decision, <code>result()</code> is the text
+      after the decisions so far.
+    </p>
+    <div class="flex gap-2">
+      <button type="button" (click)="reviewed.acceptAll()">Accept all</button>
+      <button type="button" (click)="reviewed.rejectAll()">Reject all</button>
+    </div>
+    <hx-diff-view
+      #reviewed
+      aria-label="Review of total.ts"
+      path="total.ts"
+      layout="unified"
+      [reviewable]="true"
+      [original]="original"
+      [modified]="modified"
+      (changeDecided)="decide($event)"
+    />
+    <p aria-live="polite" class="m-0" data-testid="pending">
+      {{ reviewed.pendingChanges() }} change(s) pending
+    </p>
+    <pre class="m-0" data-testid="result">{{ reviewed.result() }}</pre>
+  </div>
+</app-source-tabs>

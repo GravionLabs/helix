@@ -1,0 +1,18 @@
+<h1 class="sr-only">Code language</h1>
+<app-source-tabs library="helix-code" directory="code/language" componentName="code-language-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Language by file name</h2>
+    <p class="m-0">
+      <code>hxLoadLanguage(path)</code> loads the CodeMirror language for a file name. Each grammar
+      is a lazy chunk, so it is fetched only when a file of that language is shown.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      @for (f of files; track f) {
+        <button type="button" class="p-button p-button-outlined" (click)="pick(f)">{{ f }}</button>
+      }
+    </div>
+    <p class="m-0" aria-live="polite">
+      <strong>{{ file() }}</strong> {{ result() }}
+    </p>
+  </div>
+</app-source-tabs>

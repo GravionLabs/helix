@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-border-radius, 6px);
+  overflow: hidden;
+}
+
+.hx-diff-view-container ::ng-deep .cm-mergeView {
+  width: 100%;
+}
+
+.hx-diff-view-container ::ng-deep .cm-mergeViewEditors > div + div {
+  border-left: 1px solid var(--h-content-border-color);
+}

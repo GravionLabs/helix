@@ -55,3 +55,20 @@ describe('the sidebar of the real docs', () => {
     expect(new Set(pages).size).toBe(pages.length);
   });
 });
+
+describe('the guides of the sidebar', () => {
+  const guides = sidebarOf(index)[0].items;
+
+  it('lists the Helix Code guide, and its file exists', () => {
+    expect(guides).toContainEqual({ text: 'Helix Code', link: '/HELIX-CODE' });
+    expect(readFileSync(resolve(docs, 'HELIX-CODE.md'), 'utf8')).toContain('# Helix Code');
+  });
+
+  it('links every guide to an existing file', () => {
+    const missing = guides
+      .map((g) => g.link)
+      .filter((l) => l !== '/' && l !== '/components/')
+      .filter((l) => !readdirSync(docs).includes(`${l.slice(1)}.md`));
+    expect(missing).toEqual([]);
+  });
+});

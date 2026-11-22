@@ -1,0 +1,81 @@
+<h1 class="sr-only">Diff view</h1>
+<app-source-tabs library="helix-code" directory="code/diff" componentName="code-diff-demo">
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Diff view</h2>
+    <p class="m-0">
+      <code>hx-diff-view</code> shows two versions of a text, side by side or unified, read-only.
+      Changed words are marked and the gutter shows <code>+</code> and <code>-</code>.
+    </p>
+    <div class="flex flex-wrap gap-2">
+      @for (m of modes; track m.label) {
+        <button type="button" class="p-button p-button-outlined" (click)="show(m.before, m.after)">
+          {{ m.label }}
+        </button>
+      }
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'split'"
+          (change)="layout.set('split')"
+        />
+        Split</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'unified'"
+          (change)="layout.set('unified')"
+        />
+        Unified</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="layout"
+          [checked]="layout() === 'auto'"
+          (change)="layout.set('auto')"
+        />
+        Auto (split from 900 px)</label
+      >
+      <label
+        ><input type="checkbox" [checked]="collapse()" (change)="collapse.set(!collapse())" />
+        Collapse unchanged</label
+      >
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button type="button" class="p-button p-button-outlined" (click)="diff().previous()">
+        Previous change
+      </button>
+      <button type="button" class="p-button p-button-outlined" (click)="diff().next()">
+        Next change
+      </button>
+      <span aria-live="polite">{{ diff().currentChange() }} of {{ diff().changeCount() }}</span>
+      <label class="ml-4"
+        >Width
+        <input
+          type="range"
+          min="400"
+          max="1400"
+          step="10"
+          [value]="width()"
+          (input)="resize($event)"
+        />
+        {{ width() }} px</label
+      >
+    </div>
+    <div class="max-w-full" [style.width.px]="width()">
+      <hx-diff-view
+        aria-label="Changes in greet.ts"
+        path="greet.ts"
+        [original]="original()"
+        [modified]="modified()"
+        [layout]="layout()"
+        [collapseUnchanged]="collapse()"
+      />
+    </div>
+  </div>
+</app-source-tabs>

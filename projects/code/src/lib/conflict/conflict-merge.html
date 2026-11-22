@@ -1,0 +1,77 @@
+<p class="hx-conflict-merge-summary" role="status">
+  {{ hunks().length === 1 ? '1 difference' : hunks().length + ' differences' }}
+  @if (hunks().length > 0) {
+    · {{ unresolved() }} not chosen yet
+  }
+</p>
+
+<div class="hx-conflict-merge-parts">
+  @for (part of parts(); track $index) {
+    @if (part.kind === 'same') {
+      <pre class="hx-conflict-merge-same">{{ lines(part.lines) }}</pre>
+    } @else {
+      <fieldset class="hx-conflict-merge-hunk">
+        <legend>Difference {{ part.index + 1 }}</legend>
+        <div class="hx-conflict-merge-sides">
+          <div class="hx-conflict-merge-side hx-conflict-merge-mine">
+            <span class="hx-conflict-merge-side-label">{{ mineLabel() }}</span>
+            <pre>{{ lines(part.mine) }}</pre>
+          </div>
+          <div class="hx-conflict-merge-side hx-conflict-merge-theirs">
+            <span class="hx-conflict-merge-side-label">{{ theirsLabel() }}</span>
+            <pre>{{ lines(part.theirs) }}</pre>
+          </div>
+        </div>
+        <div
+          class="hx-conflict-merge-choices"
+          role="radiogroup"
+          [attr.aria-label]="'Choice for difference ' + (part.index + 1)"
+        >
+          @for (option of choiceOptions; track option.value) {
+            <label>
+              <input
+                type="radio"
+                [name]="id + '-' + part.index"
+                [value]="option.value"
+                [checked]="choiceOf(part.index) === option.value"
+                (click)="choose(part.index, option.value)"
+              />
+              {{
+                option.value === 'mine'
+                  ? mineLabel()
+                  : option.value === 'theirs'
+                    ? theirsLabel()
+                    : 'Both'
+              }}
+            </label>
+          }
+        </div>
+      </fieldset>
+    }
+  }
+</div>
+
+<div class="hx-conflict-merge-result">
+  <label [for]="id + '-result'">Result</label>
+  <textarea
+    [id]="id + '-result'"
+    rows="10"
+    spellcheck="false"
+    [value]="text()"
+    (input)="onEdit($event)"
+  ></textarea>
+  @if (pending()) {
+    <div class="hx-conflict-merge-prompt" role="alert">
+      <span>Your edit of the result will be lost. Overwrite it with the new choice?</span>
+      <button type="button" class="hx-conflict-merge-overwrite" (click)="overwrite()">
+        Overwrite
+      </button>
+      <button type="button" class="hx-conflict-merge-keep" (click)="keepEdit()">Keep edit</button>
+    </div>
+  }
+</div>
+
+<div class="hx-conflict-merge-actions">
+  <button type="button" class="hx-conflict-merge-cancel" (click)="cancelled.emit()">Cancel</button>
+  <button type="button" class="hx-conflict-merge-confirm" (click)="confirm()">Merge</button>
+</div>

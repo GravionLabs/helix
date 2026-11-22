@@ -1,0 +1,190 @@
+/* The lane color defaults are literal hex values on purpose: the contrast test reads them. */
+/* stylelint-disable color-no-hex */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: var(--hx-commit-graph-height, 24rem);
+  --hx-commit-graph-row-height: 28px;
+  --hx-graph-lane-1: #2563eb;
+  --hx-graph-lane-2: #15803d;
+  --hx-graph-lane-3: #c2410c;
+  --hx-graph-lane-4: #7e22ce;
+  --hx-graph-lane-5: #0f766e;
+  --hx-graph-lane-6: #be185d;
+  --hx-graph-lane-7: #a16207;
+  --hx-graph-lane-8: #0e7490;
+  border: 1px solid var(--h-content-border-color);
+  border-radius: var(--h-border-radius, 6px);
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+:host-context(.app-dark) {
+  --hx-graph-lane-1: #60a5fa;
+  --hx-graph-lane-2: #4ade80;
+  --hx-graph-lane-3: #fb923c;
+  --hx-graph-lane-4: #c084fc;
+  --hx-graph-lane-5: #2dd4bf;
+  --hx-graph-lane-6: #f472b6;
+  --hx-graph-lane-7: #facc15;
+  --hx-graph-lane-8: #22d3ee;
+}
+
+/* stylelint-enable color-no-hex */
+
+.hx-commit-graph-list {
+  flex: 1;
+  min-height: 0;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--p-primary-color, currentcolor);
+    outline-offset: -2px;
+  }
+}
+
+.hx-commit-graph-row {
+  display: flex;
+  box-sizing: border-box;
+  height: var(--hx-commit-graph-row-height);
+  align-items: center;
+}
+
+.hx-commit-graph-option {
+  display: flex;
+  height: 100%;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+  padding-right: 0.75rem;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, currentcolor 6%, transparent);
+  }
+
+  &.is-selected {
+    background: color-mix(in srgb, var(--p-primary-color, currentcolor) 15%, transparent);
+  }
+
+  &.is-active {
+    box-shadow: inset 2px 0 0 var(--p-primary-color, currentcolor);
+  }
+}
+
+.hx-commit-graph-svg {
+  display: block;
+  flex: none;
+  fill: none;
+}
+
+.hx-commit-graph-line {
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.hx-commit-graph-dot {
+  stroke-width: 2;
+
+  &.is-merge {
+    fill: var(--h-content-background);
+  }
+}
+
+@for $i from 0 through 7 {
+  [data-color='#{$i}'] {
+    &.hx-commit-graph-line {
+      stroke: var(--hx-graph-lane-#{$i + 1});
+    }
+
+    &.hx-commit-graph-dot {
+      stroke: var(--hx-graph-lane-#{$i + 1});
+      fill: var(--hx-graph-lane-#{$i + 1});
+    }
+
+    &.hx-commit-graph-dot.is-merge {
+      fill: var(--h-content-background);
+    }
+  }
+}
+
+.hx-commit-graph-ref {
+  flex: none;
+  padding: 0 0.375rem;
+  border: 1px solid currentcolor;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+
+  &[data-kind='branch'] {
+    color: var(--p-primary-color, currentcolor);
+  }
+
+  &[data-kind='remote'] {
+    border-style: dashed;
+    color: var(--h-text-muted-color, currentcolor);
+  }
+
+  &[data-kind='tag'] {
+    border-radius: 2px;
+    color: var(--hx-changed-added-color, var(--h-green-700));
+  }
+
+  &[data-kind='head'] {
+    border-width: 2px;
+    font-weight: 700;
+  }
+}
+
+.hx-commit-graph-message {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hx-commit-graph-author,
+.hx-commit-graph-time {
+  flex: none;
+  color: var(--h-text-muted-color, inherit);
+  white-space: nowrap;
+}
+
+.hx-commit-graph-cell {
+  display: flex;
+  flex: none;
+  gap: 0.25rem;
+  padding-right: 0.5rem;
+}
+
+.hx-commit-graph-loading {
+  display: flex;
+  height: var(--hx-commit-graph-row-height);
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  border-top: 1px solid var(--h-content-border-color);
+  color: var(--h-text-muted-color, inherit);
+}
+
+.hx-commit-graph-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: hx-commit-graph-spin 0.8s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 4s;
+  }
+}
+
+@keyframes hx-commit-graph-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

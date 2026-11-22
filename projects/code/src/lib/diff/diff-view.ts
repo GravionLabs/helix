@@ -1,0 +1,698 @@
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  SecurityContext,
+  signal,
+  untracked,
+  viewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  acceptChunk,
+  type Chunk,
+  getChunks,
+  getOriginalDoc,
+  MergeView,
+  rejectChunk,
+  uncollapseUnchanged,
+  unifiedMergeView,
+} from '@codemirror/merge';
+import {
+  Compartment,
+  EditorSelection,
+  EditorState,
+  type Extension,
+  type Text,
+} from '@codemirror/state';
+import { EditorView, lineNumbers } from '@codemirror/view';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HX_CODE_LANGUAGES, hxLoadLanguage } from '../language/language';
+import {
+  commentExtension,
+  discardDraft,
+  type HxDiffComment,
+  type HxPlacedComment,
+  quoteOf,
+  showComments,
+} from '../review/comment-extension';
+import {
+  findingExtension,
+  type HxDiffFinding,
+  type HxPlacedFinding,
+  showFindings,
+} from '../review/finding-extension';
+import {
+  type HxDiffThread,
+  type HxPlacedThread,
+  showThreads,
+  threadExtension,
+} from '../review/thread-extension';
+import { hxCodeHighlight } from '../theme/code-highlight';
+import { hxCodeTheme } from '../theme/code-theme';
+import { hxDiffTheme } from './diff-theme';
+
+/** How the two versions are laid out. `auto`: split when the host is wide enough, else unified. */
+export type HxDiffLayout = 'auto' | 'split' | 'unified';
+
+/** The text a line number refers to. */
+export type HxDiffSide = 'original' | 'modified';
+
+/** The collapsing of unchanged regions: `margin` lines stay visible, at least `minSize` collapse. */
+export interface HxDiffCollapse {
+  readonly margin?: number;
+  readonly minSize?: number;
+}
+
+/** A comment the reviewer wrote: the lines on `side` and the text of those lines as `quote`. */
+export interface HxDiffCommentAdded {
+  readonly side: HxDiffSide;
+  readonly startLine: number;
+  readonly endLine: number;
+  readonly text: string;
+  readonly quote: string;
+}
+
+/** A reply was written in a thread. */
+export interface HxDiffReplyAdded {
+  readonly threadId: string;
+  readonly text: string;
+}
+
+/** The resolve button of a thread was used. */
+export interface HxDiffResolvedChange {
+  readonly threadId: string;
+  readonly resolved: boolean;
+}
+
+/** The action of a finding box was used: the finding and the text of its lines on its side. */
+export interface HxDiffFindingAction {
+  readonly id: string;
+  readonly quote: string;
+}
+
+/** The decision on one change in review mode. */
+export type HxChangeDecision = 'accept' | 'reject';
+
+/** A change was decided: its position in the initial list of changes and the decision. */
+export interface HxDiffChangeDecided {
+  readonly index: number;
+  readonly decision: HxChangeDecision;
+}
+
+const DEFAULT_SPLIT_MIN_WIDTH = 900;
+const DEFAULT_COLLAPSE = { margin: 3, minSize: 4 } as const;
+
+/**
+ * Shows two versions of a text, side by side or unified, read-only: syntax highlighting, marked
+ * changed words, a change gutter with `+` and `-`, and collapsed unchanged regions.
+ *
+ * ```html
+ * <hx-diff-view aria-label="Changes" path="app.ts" [original]="before" [modified]="after" />
+ * ```
+ *
+ * With `commentable`, a click on a line number opens a comment box (Shift-click extends the range)
+ * and `commentAdded` reports the saved text; `comments` are shown below their last line.
+ *
+ * `findings` are shown as boxes below their last line, the lines marked in the gutter; with
+ * `findingActionLabel` each box has a button and `findingAction` reports `{id, quote}`.
+ *
+ * `threads` (`HxDiffThread`) are boxes below their last line, after findings and before comments:
+ * the comments in order, a reply field (`replyAdded`) and a resolve button (`resolvedChange`); a
+ * resolved thread is one line until clicked. `renderComment` turns text into HTML (Markdown); its
+ * result is sanitized with Angular `DomSanitizer` before it is inserted.
+ *
+ * With `reviewable` (unified layout only, ignored with `layout="split"`) each change has an accept
+ * and a reject button; `changeDecided` reports `{index, decision}` (`index` is the position in the
+ * initial list of changes and stays stable), `result()` is the text after the decisions so far
+ * (undecided changes stay as in `modified`), `pendingChanges()` counts the undecided changes, and
+ * `acceptAll()` / `rejectAll()` decide the rest. A decided change leaves `changeCount()`.
+ *
+ * The view is rebuilt when a text, `layout`, `path`, `reviewable` or `collapseUnchanged` changes; a theme switch
+ * needs no rebuild (colors are CSS variables `--hx-diff-added-*`, `--hx-diff-removed-*`).
+ */
+@Component({
+  selector: 'hx-diff-view',
+  templateUrl: './diff-view.html',
+  styleUrl: './diff-view.scss',
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'hx-diff-view',
+    '[attr.aria-label]': 'null',
+    '[attr.aria-labelledby]': 'null',
+  },
+})
+export class HxDiffView {
+  readonly #languages = inject(HX_CODE_LANGUAGES);
+  readonly #sanitizer = inject(DomSanitizer);
+
+  /** The old version. Empty: a new file. */
+  readonly original = input.required<string>();
+  /** The new version. Empty: a deleted file. */
+  readonly modified = input.required<string>();
+  /** A file name or path; it selects the language. Empty: plain text. */
+  readonly path = input('');
+  /** `split` (default), `unified`, or `auto`: split from `splitMinWidth` of the host, else unified. */
+  readonly layout = input<HxDiffLayout>('split');
+  /** With `layout="auto"`: the host width in px from which the split layout is used. */
+  readonly splitMinWidth = input(DEFAULT_SPLIT_MIN_WIDTH);
+  /** `true` (default): margin 3, minimum 4. `false`: show everything. Or set both numbers. */
+  readonly collapseUnchanged = input<boolean | HxDiffCollapse>(true);
+  /** The comments to show, below their last line. Changing them does not rebuild the view. */
+  readonly comments = input<readonly HxDiffComment[]>([]);
+  /** `true`: a click on a line number opens a comment box. Default off. */
+  readonly commentable = input(false);
+  /** The review findings to show, below their last line. Changing them does not rebuild the view. */
+  readonly findings = input<readonly HxDiffFinding[]>([]);
+  /** The label of the button on each finding box. Empty (default): no button. */
+  readonly findingActionLabel = input('');
+  /** The button of a finding box was pressed. */
+  readonly findingAction = output<HxDiffFindingAction>();
+  /** The review threads to show, below their last line. Changing them does not rebuild the view. */
+  readonly threads = input<readonly HxDiffThread[]>([]);
+  /** Optional: text of a comment to HTML (e.g. Markdown). The result is sanitized. Default plain text. */
+  readonly renderComment = input<((text: string) => string) | null>(null);
+  /** A reply was written in a thread; the app stores it and passes the thread back. */
+  readonly replyAdded = output<HxDiffReplyAdded>();
+  /** The resolve button of a thread was used. */
+  readonly resolvedChange = output<HxDiffResolvedChange>();
+  /** A comment was written; the app stores it and passes it back through `comments`. */
+  readonly commentAdded = output<HxDiffCommentAdded>();
+  /** `true`: each change has an accept and a reject button. Unified layout only. Default off. */
+  readonly reviewable = input(false);
+  /** A change was accepted or rejected. */
+  readonly changeDecided = output<HxDiffChangeDecided>();
+  readonly ariaLabel = input<string | null>(null, { alias: 'aria-label' });
+  readonly ariaLabelledby = input<string | null>(null, {
+    alias: 'aria-labelledby',
+  });
+
+  readonly #host = inject<ElementRef<HTMLElement>>(ElementRef);
+  readonly #width = signal<number | null>(null);
+  readonly #changes = signal(0);
+  readonly #current = signal(0);
+  /** The number of changes (chunks) of the diff. */
+  readonly changeCount = this.#changes.asReadonly();
+  /** The 1-based number of the change at the cursor; 0 when no change is selected yet. */
+  readonly currentChange = this.#current.asReadonly();
+  readonly #result = signal('');
+  /** The text after the decisions so far; undecided changes show as in `modified`. */
+  readonly result = this.#result.asReadonly();
+  /** The number of changes without a decision. */
+  readonly pendingChanges = this.#changes.asReadonly();
+  /** The layout in use: `auto` resolved by the host width. `null` while `auto` is not measured. */
+  readonly effectiveLayout = computed<'split' | 'unified' | null>(() => {
+    const layout = this.layout();
+    if (layout !== 'auto') return layout;
+    const width = this.#width();
+    if (width === null) return null;
+    return width >= this.splitMinWidth() ? 'split' : 'unified';
+  });
+
+  private readonly container = viewChild.required<ElementRef<HTMLElement>>('container');
+  readonly #ready = signal(false);
+  readonly #language = new Compartment();
+  readonly #review = new Compartment();
+  readonly #built = signal(0);
+  #reviewOn = false;
+  readonly #commentExtension = commentExtension({
+    opened: (view) => {
+      const views = this.#views;
+      if (!views || views.original === views.modified) return;
+      discardDraft(view === views.original ? views.modified : views.original);
+    },
+    saved: (view, startLine, endLine, text) => {
+      const views = this.#views;
+      const side: HxDiffSide =
+        views && views.original !== views.modified && view === views.original
+          ? 'original'
+          : 'modified';
+      this.commentAdded.emit({
+        side,
+        startLine,
+        endLine,
+        text,
+        quote: quoteOf(view, startLine, endLine),
+      });
+    },
+  });
+  readonly #findingExtension = findingExtension({
+    action: (view, finding) => {
+      const views = this.#views;
+      const split = !!views && views.original !== views.modified;
+      let quote = '';
+      if (views && finding.endLine >= finding.startLine && finding.startLine >= 1) {
+        const target = split
+          ? finding.side === 'original'
+            ? views.original
+            : views.modified
+          : view;
+        const doc =
+          !split && finding.side === 'original' ? getOriginalDoc(target.state) : target.state.doc;
+        if (finding.endLine <= doc.lines) {
+          quote = doc.sliceString(doc.line(finding.startLine).from, doc.line(finding.endLine).to);
+        }
+      }
+      this.findingAction.emit({ id: finding.id, quote });
+    },
+  });
+  readonly #threadExtension = threadExtension({
+    reply: (_view, threadId, text) => this.replyAdded.emit({ threadId, text }),
+    resolve: (_view, threadId, resolved) => this.resolvedChange.emit({ threadId, resolved }),
+  });
+  #renderCache: { source: (text: string) => string; wrapped: (text: string) => string } | null =
+    null;
+  #generation = 0;
+  #destroy: (() => void) | null = null;
+  /** Initial index of each undecided change, in document order. */
+  #undecided: number[] = [];
+  #views: { original: EditorView; modified: EditorView } | null = null;
+  #reviewMode = false;
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+    let observer: ResizeObserver | null = null;
+    afterNextRender(() => {
+      this.#ready.set(true);
+      if (typeof ResizeObserver === 'undefined') {
+        this.#width.set(this.#host.nativeElement.getBoundingClientRect().width);
+        return;
+      }
+      // The host element is observed, not the window: a resizable panel switches the layout too.
+      observer = new ResizeObserver((entries) => {
+        const entry = entries[entries.length - 1];
+        if (entry) this.#width.set(entry.contentRect.width);
+      });
+      observer.observe(this.#host.nativeElement);
+    });
+
+    destroyRef.onDestroy(() => {
+      observer?.disconnect();
+      this.#generation++;
+      this.#teardown();
+    });
+
+    effect(() => {
+      this.#built();
+      this.commentable();
+      this.comments();
+      this.findings();
+      this.findingActionLabel();
+      this.threads();
+      this.renderComment();
+      untracked(() => this.#showReview());
+    });
+
+    effect(() => {
+      if (!this.#ready()) return;
+      const original = this.original();
+      const modified = this.modified();
+      const layout = this.effectiveLayout();
+      if (layout === null) return;
+      const reviewable = this.reviewable() && layout === 'unified';
+      const path = this.path();
+      const collapse = this.#collapse();
+      const label = this.#labels();
+      const generation = ++this.#generation;
+      untracked(() => {
+        this.#teardown();
+        const views = this.#build(layout, original, modified, collapse, label, reviewable);
+        const count = this.#chunks(views[views.length - 1]).length;
+        this.#undecided = Array.from({ length: count }, (_, i) => i);
+        this.#changes.set(count);
+        this.#result.set(modified);
+        this.#built.update((n) => n + 1);
+        void hxLoadLanguage(path, this.#languages).then((support) => {
+          if (generation !== this.#generation || !support) return;
+          for (const view of views) {
+            view.dispatch({ effects: this.#language.reconfigure(support) });
+          }
+        });
+      });
+    });
+  }
+
+  #showReview(): void {
+    const views = this.#views;
+    if (!views) return;
+    const commentable = this.commentable();
+    const comments = this.comments();
+    const findings = this.findings();
+    const actionLabel = this.findingActionLabel();
+    const threads = this.threads();
+    const render = this.#renderer();
+    const split = views.original !== views.modified;
+    for (const [side, view] of [
+      ['original', views.original],
+      ['modified', views.modified],
+    ] as const) {
+      if (!split && side === 'original') continue;
+      if (this.#reviewOn !== commentable) {
+        view.dispatch({
+          effects: this.#review.reconfigure(commentable ? this.#commentExtension : []),
+        });
+      }
+      const placed = commentable
+        ? comments.flatMap((c) => this.#place(c, side, view, views.modified, split))
+        : [];
+      showComments(view, placed);
+      const placedFindings = findings.flatMap((f) =>
+        this.#placeFinding(f, side, view, views.modified, split),
+      );
+      showFindings(view, placedFindings, actionLabel);
+      const placedThreads = threads.flatMap((t) =>
+        this.#placeThread(t, side, view, views.modified, split),
+      );
+      showThreads(view, placedThreads, render);
+    }
+    this.#reviewOn = commentable;
+  }
+
+  /** Where a comment shows in `view`; `[]` when it belongs to the other editor. */
+  #place(
+    c: HxDiffComment,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedComment[] {
+    const at = this.#placeLines(c, side, view, modified, split);
+    return at ? [{ comment: c, ...at }] : [];
+  }
+
+  /** Where a finding shows in `view`; `[]` when it belongs to the other editor. */
+  #placeFinding(
+    f: HxDiffFinding,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedFinding[] {
+    const at = this.#placeLines(f, side, view, modified, split);
+    return at ? [{ finding: f, ...at }] : [];
+  }
+
+  /** Where a thread shows in `view`; `[]` when it belongs to the other editor. */
+  #placeThread(
+    t: HxDiffThread,
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): HxPlacedThread[] {
+    const at = this.#placeLines(t, side, view, modified, split);
+    return at ? [{ thread: t, ...at }] : [];
+  }
+
+  /** The app's renderer wrapped so that its HTML always passes the Angular sanitizer. */
+  #renderer(): ((text: string) => string) | null {
+    const render = this.renderComment();
+    if (!render) return null;
+    const cached = this.#renderCache;
+    if (cached?.source === render) return cached.wrapped;
+    const wrapped = (text: string): string =>
+      this.#sanitizer.sanitize(SecurityContext.HTML, render(text)) ?? '';
+    this.#renderCache = { source: render, wrapped };
+    return wrapped;
+  }
+
+  #placeLines(
+    c: { side: HxDiffSide; startLine: number; endLine: number },
+    side: HxDiffSide,
+    view: EditorView,
+    modified: EditorView,
+    split: boolean,
+  ): { start: number; end: number; mark: boolean } | null {
+    if (split ? c.side !== side : false) return null;
+    const lines = view.state.doc.lines;
+    if (c.side === 'modified' || split) {
+      if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > lines) return null;
+      return { start: c.startLine, end: c.endLine, mark: true };
+    }
+    // Unified layout, text on the old side: it hangs below the matching line of the new text.
+    const original = getOriginalDoc(modified.state);
+    if (c.endLine < c.startLine || c.startLine < 1 || c.endLine > original.lines) return null;
+    const at = this.#map(modified, original.line(c.endLine).from, true);
+    const end = modified.state.doc.lineAt(Math.min(at, modified.state.doc.length)).number;
+    return { start: end, end, mark: false };
+  }
+
+  /** Accepts every undecided change: the modified text is kept. */
+  acceptAll(): void {
+    this.#decideAll('accept');
+  }
+
+  /** Rejects every undecided change: the original lines are restored. */
+  rejectAll(): void {
+    this.#decideAll('reject');
+  }
+
+  #decideAll(decision: HxChangeDecision): void {
+    const view = this.#views?.modified;
+    if (!view || !this.#reviewing) return;
+    for (let chunk = this.#chunks(view)[0]; chunk; chunk = this.#chunks(view)[0]) {
+      if (!this.#decide(view, chunk.fromB, decision)) break;
+    }
+  }
+
+  /** Decides the change at `pos` and reports it. Returns false when there is none. */
+  #decide(view: EditorView, pos: number, decision: HxChangeDecision): boolean {
+    const position = this.#chunks(view).findIndex((c) => c.fromB <= pos && pos <= c.endB);
+    if (position < 0) return false;
+    const done = decision === 'accept' ? acceptChunk(view, pos) : rejectChunk(view, pos);
+    if (!done) return false;
+    const [index] = this.#undecided.splice(position, 1);
+    this.#sync(view);
+    this.changeDecided.emit({ index, decision });
+    return true;
+  }
+
+  /** The buttons of a change; `mergeControls` of `unifiedMergeView`. */
+  #control(type: 'accept' | 'reject'): HTMLElement {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `cm-review-button cm-review-${type}`;
+    button.textContent = type === 'accept' ? 'Accept' : 'Reject';
+    button.setAttribute(
+      'aria-label',
+      type === 'accept' ? 'Accept this change' : 'Reject this change',
+    );
+    // `click`, not `mousedown`: Enter and Space on the focused button work as well.
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = this.#views?.modified;
+      const widget = button.closest('.cm-deletedChunk');
+      if (!view || !widget) return;
+      this.#decide(view, view.posAtDOM(widget), type);
+    });
+    return button;
+  }
+
+  /** Brings counts, cursor index and result up to date after the document or the chunks changed. */
+  #sync(view: EditorView): void {
+    const count = this.#chunks(view).length;
+    if (count !== this.#changes()) this.#changes.set(count);
+    this.#result.set(view.state.doc.toString());
+    this.#current.set(this.#indexAt(view));
+  }
+
+  /** Moves to the next change; after the last one it wraps to the first. */
+  next(): void {
+    const count = this.#changes();
+    if (count) this.#goTo(this.#current() % count);
+  }
+
+  /** Moves to the previous change; before the first one it wraps to the last. */
+  previous(): void {
+    const count = this.#changes();
+    if (count) this.#goTo(this.#current() <= 1 ? count - 1 : this.#current() - 2);
+  }
+
+  /**
+   * Scrolls to a 1-based line of the original or the modified text and expands a collapsed region
+   * around it. A line outside the text is clamped.
+   */
+  revealLine(line: number, side: HxDiffSide = 'modified'): void {
+    const views = this.#views;
+    if (!views) return;
+    const split = this.effectiveLayout() === 'split';
+    const original = side === 'original';
+    const view = split && original ? views.original : views.modified;
+    const doc = !split && original ? getOriginalDoc(view.state) : view.state.doc;
+    const own = this.#lineStart(doc, line);
+    // Position in the modified text and, in split layout, in the original text.
+    const b = original ? this.#map(view, own, true) : own;
+    const a = original ? own : this.#map(views.modified, own, false);
+    this.#uncollapse(views.modified, b);
+    if (split) this.#uncollapse(views.original, a);
+    const pos = original && split ? a : b;
+    view.dispatch({
+      effects: EditorView.scrollIntoView(pos, { y: 'center' }),
+      selection: { anchor: pos },
+    });
+  }
+
+  #lineStart(doc: Text, line: number): number {
+    const n = Math.min(Math.max(Math.trunc(line) || 1, 1), doc.lines);
+    return doc.line(n).from;
+  }
+
+  /** Maps a position of the original text (`fromA`) or of the modified text to the other one. */
+  #map(view: EditorView, pos: number, fromA: boolean): number {
+    let delta = 0;
+    for (const chunk of this.#chunks(view)) {
+      const [from, to] = fromA ? [chunk.fromA, chunk.toA] : [chunk.fromB, chunk.toB];
+      if (pos < from) break;
+      if (pos < to) return fromA ? chunk.fromB : chunk.fromA;
+      delta += fromA
+        ? chunk.toB - chunk.fromB - (chunk.toA - chunk.fromA)
+        : chunk.toA - chunk.fromA - (chunk.toB - chunk.fromB);
+    }
+    return Math.max(pos + delta, 0);
+  }
+
+  /** Expands the collapsed region that contains `pos`. */
+  #uncollapse(view: EditorView, pos: number): void {
+    const starts: number[] = [];
+    for (const source of view.state.facet(EditorView.decorations)) {
+      if (typeof source === 'function') continue;
+      source.between(0, view.state.doc.length, (from, to, deco) => {
+        const widget = deco.spec.widget as { type?: string } | undefined;
+        if (widget?.type === 'collapsed-unchanged-code' && from <= pos && pos <= to)
+          starts.push(from);
+      });
+    }
+    if (starts.length) {
+      view.dispatch({ effects: starts.map((from) => uncollapseUnchanged.of(from)) });
+    }
+  }
+
+  #goTo(index: number): void {
+    const view = this.#views?.modified;
+    const chunk = view && this.#chunks(view)[index];
+    if (!view || !chunk) return;
+    view.dispatch({
+      selection: { anchor: chunk.fromB },
+      userEvent: 'select.byChunk',
+      effects: EditorView.scrollIntoView(EditorSelection.range(chunk.endB, chunk.fromB), {
+        y: 'center',
+      }),
+    });
+  }
+
+  /** The 1-based number of the change that contains the cursor; 0 when there is none. */
+  #indexAt(view: EditorView): number {
+    const head = view.state.selection.main.head;
+    return this.#chunks(view).findIndex((c) => c.fromB <= head && head <= c.endB) + 1;
+  }
+
+  #chunks(view: EditorView): readonly Chunk[] {
+    return getChunks(view.state)?.chunks ?? [];
+  }
+
+  #collapse(): HxDiffCollapse | null {
+    const value = this.collapseUnchanged();
+    if (value === false) return null;
+    if (value === true) return DEFAULT_COLLAPSE;
+    return { ...DEFAULT_COLLAPSE, ...value };
+  }
+
+  #labels(): Extension {
+    const attributes: Record<string, string> = { 'aria-readonly': 'true' };
+    const label = this.ariaLabel();
+    const labelledby = this.ariaLabelledby();
+    if (label) attributes['aria-label'] = label;
+    if (labelledby) attributes['aria-labelledby'] = labelledby;
+    return EditorView.contentAttributes.of(attributes);
+  }
+
+  get #reviewing(): boolean {
+    return (
+      this.#views !== null && this.#views.original === this.#views.modified && this.#reviewMode
+    );
+  }
+
+  #shared(labels: Extension): Extension[] {
+    return [
+      hxCodeTheme(),
+      hxCodeHighlight(),
+      hxDiffTheme(),
+      EditorState.readOnly.of(true),
+      EditorView.editable.of(false),
+      lineNumbers(),
+      this.#language.of([]),
+      this.#review.of([]),
+      this.#findingExtension,
+      this.#threadExtension,
+      EditorView.updateListener.of((update) => {
+        if (update.selectionSet && !update.docChanged && update.view === this.#views?.modified) {
+          this.#current.set(this.#indexAt(update.view));
+        }
+      }),
+      labels,
+    ];
+  }
+
+  #build(
+    layout: 'split' | 'unified',
+    original: string,
+    modified: string,
+    collapse: HxDiffCollapse | null,
+    labels: Extension,
+    reviewable: boolean,
+  ): EditorView[] {
+    this.#reviewMode = reviewable;
+    const parent = this.container().nativeElement;
+    const collapseUnchanged = collapse ?? undefined;
+    if (layout === 'unified') {
+      const view = new EditorView({
+        parent,
+        doc: modified,
+        extensions: [
+          ...this.#shared(labels),
+          unifiedMergeView({
+            original,
+            mergeControls: reviewable ? (type) => this.#control(type) : false,
+            gutter: true,
+            highlightChanges: true,
+            collapseUnchanged,
+          }),
+        ],
+      });
+      this.#destroy = () => view.destroy();
+      this.#views = { original: view, modified: view };
+      return [view];
+    }
+    const extensions = this.#shared(labels);
+    const merge = new MergeView({
+      parent,
+      a: { doc: original, extensions },
+      b: { doc: modified, extensions },
+      gutter: true,
+      highlightChanges: true,
+      collapseUnchanged,
+    });
+    this.#destroy = () => merge.destroy();
+    this.#views = { original: merge.a, modified: merge.b };
+    return [merge.a, merge.b];
+  }
+
+  #teardown(): void {
+    this.#destroy?.();
+    this.#destroy = null;
+    this.#views = null;
+    this.#reviewOn = false;
+    this.#reviewMode = false;
+    this.#undecided = [];
+    this.#changes.set(0);
+    this.#current.set(0);
+  }
+}

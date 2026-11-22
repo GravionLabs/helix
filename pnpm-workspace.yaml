@@ -9,3 +9,19 @@ allowBuilds:
 # 7 days, in minutes: a younger release reaches neither the lockfile nor an install (GravionLabs/ci#239).
 minimumReleaseAge: 10080
 shamefullyHoist: true
+minimumReleaseAgeExclude:
+  # Angular 22.3.0 (2026-11-18) is exempt from the 7-day rule on purpose; remove after 2026-11-26.
+  - '@angular-devkit/architect@0.2203.0'
+  - '@angular-devkit/core@22.3.0'
+  - '@angular-devkit/schematics@22.3.0'
+  - '@angular/build@22.3.0'
+  - '@angular/cdk@22.3.0'
+  - '@angular/cli@22.3.0'
+  - '@angular/common@22.3.0'
+  - '@angular/compiler-cli@22.3.0'
+  - '@angular/compiler@22.3.0'
+  - '@angular/core@22.3.0'
+  - '@angular/forms@22.3.0'
+  - '@angular/platform-browser@22.3.0'
+  - '@angular/router@22.3.0'
+  - '@schematics/angular@22.3.0'

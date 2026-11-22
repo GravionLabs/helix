@@ -1,0 +1,33 @@
+<h1 class="sr-only">Conflict merge</h1>
+<app-source-tabs
+  library="helix-code"
+  directory="code/conflict-merge"
+  componentName="conflict-merge-demo"
+>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Conflict merge</h2>
+    <p class="m-0">
+      <code>hx-conflict-merge</code> merges two versions of a text: each differing part offers mine,
+      theirs or both, and the result can be edited. The component renders no dialog; here it sits in
+      an <code>hx-dialog</code>.
+    </p>
+    <div>
+      <button type="button" class="p-button p-button-outlined" (click)="visible.set(true)">
+        Merge two versions
+      </button>
+    </div>
+    @if (merged() !== null) {
+      <pre class="m-0" aria-label="Merged text">{{ merged() }}</pre>
+    }
+  </div>
+  <hx-dialog [(visible)]="visible" header="Merge" width="48rem">
+    <hx-conflict-merge
+      [mine]="mine"
+      [theirs]="theirs"
+      mineLabel="My list"
+      theirsLabel="Their list"
+      (merged)="take($event)"
+      (cancelled)="visible.set(false)"
+    />
+  </hx-dialog>
+</app-source-tabs>

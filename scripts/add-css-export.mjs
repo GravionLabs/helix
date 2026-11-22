@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * ng-packagr generates dist/<pkg>/package.json's "exports" map from the TS
+ * The library builder generates dist/<pkg>/package.json's "exports" map from the TS
  * entry point only; it knows nothing about the styles.css the tailwindcss
  * CLI drops into the same directory afterward (build:lib:css /
  * build:lib:css:ag-grid). Without an explicit "./styles.css" export,

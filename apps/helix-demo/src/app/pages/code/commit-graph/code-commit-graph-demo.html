@@ -1,0 +1,62 @@
+<h1 class="sr-only">Commit graph</h1>
+<app-source-tabs
+  library="helix-code"
+  directory="code/commit-graph"
+  componentName="code-commit-graph-demo"
+>
+  <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Commit graph</h2>
+    <p class="m-0">
+      <code>hx-commit-graph</code> draws the history with lanes, ref labels, message, author and
+      time. Use the arrow keys, Home and End, or click.
+    </p>
+    <p class="m-0" aria-live="polite">Selected: {{ selected() ?? 'none' }}</p>
+    <hx-commit-graph
+      aria-label="History"
+      [commits]="commits"
+      [selected]="selected()"
+      (selectedChange)="selected.set($event)"
+    >
+      <ng-template hxCommitGraphRowCell let-commit>
+        <button
+          type="button"
+          class="p-button p-button-text p-button-sm"
+          (click)="copied.set(commit.id)"
+        >
+          Copy id
+        </button>
+      </ng-template>
+    </hx-commit-graph>
+    <p class="m-0" aria-live="polite">Copied: {{ copied() ?? 'nothing' }}</p>
+
+    <h2 class="demo-title">10,000 commits</h2>
+    <p class="m-0">
+      Only the visible rows are in the DOM. <code>loadMore</code> loads the next 500 commits when
+      you come within 20 rows of the end.
+    </p>
+    <p class="m-0" aria-live="polite">
+      Loaded: {{ bigCommits().length }} of 10000. Selected: {{ bigSelected() ?? 'none' }}
+    </p>
+    <div class="flex gap-2">
+      <button type="button" class="p-button p-button-sm" (click)="reveal(250)">
+        Reveal commit 250
+      </button>
+      <button type="button" class="p-button p-button-sm" (click)="reveal(9000)">
+        Reveal commit 9000
+      </button>
+    </div>
+    @if (revealMissing()) {
+      <p class="m-0" role="status">That commit is not loaded yet.</p>
+    }
+    <hx-commit-graph
+      #big
+      aria-label="Long history"
+      [commits]="bigCommits()"
+      [selected]="bigSelected()"
+      [hasMore]="hasMore()"
+      [loading]="loading()"
+      (selectedChange)="bigSelected.set($event)"
+      (loadMore)="loadMore()"
+    />
+  </div>
+</app-source-tabs>

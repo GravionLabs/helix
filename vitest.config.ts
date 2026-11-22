@@ -11,6 +11,8 @@ export default defineConfig({
       '@gravionlabs/helix-shell': resolve(__dirname, 'projects/shell/src/public-api.ts'),
       '@gravionlabs/helix-zod': resolve(__dirname, 'projects/zod/src/public-api.ts'),
       '@gravionlabs/helix-ag-grid': resolve(__dirname, 'projects/ag-grid/src/public-api.ts'),
+      '@gravionlabs/helix-code/git': resolve(__dirname, 'projects/code/git/src/public-api.ts'),
+      '@gravionlabs/helix-code': resolve(__dirname, 'projects/code/src/public-api.ts'),
       '@gravionlabs/helix-desktop/tauri': resolve(
         __dirname,
         'projects/desktop/tauri/public_api.ts',

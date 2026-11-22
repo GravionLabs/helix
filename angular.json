@@ -13,7 +13,7 @@
       "prefix": "helix",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/shell/tsconfig.lib.prod.json"
@@ -47,7 +47,7 @@
       "prefix": "helix-zod",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/zod/tsconfig.lib.prod.json"
@@ -81,7 +81,7 @@
       "prefix": "helix",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ag-grid/tsconfig.lib.prod.json"
@@ -115,7 +115,7 @@
       "prefix": "hx",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ui/tsconfig.lib.prod.json"
@@ -150,7 +150,7 @@
       "prefix": "helix-desktop",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/desktop/tsconfig.lib.prod.json"
@@ -159,13 +159,57 @@
               "tsConfig": "projects/desktop/tsconfig.lib.json"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "assets": [
+              {
+                "input": "projects/desktop/styles",
+                "glob": "styles.css",
+                "output": "."
+              }
+            ]
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/desktop/tsconfig.spec.json",
             "include": ["**/*.spec.ts", "../tauri/**/*.spec.ts"]
+          },
+          "configurations": {
+            "ci": {
+              "coverage": true,
+              "coverageReporters": ["cobertura"],
+              "reporters": ["junit"],
+              "outputFile": "test-results/junit.xml"
+            }
+          }
+        }
+      }
+    },
+    "code": {
+      "projectType": "library",
+      "root": "projects/code",
+      "sourceRoot": "projects/code/src",
+      "prefix": "helix-code",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:library",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/code/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/code/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/code/tsconfig.spec.json",
+            "include": ["**/*.spec.ts", "../git/**/*.spec.ts"]
           },
           "configurations": {
             "ci": {
