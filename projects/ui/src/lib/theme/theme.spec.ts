@@ -17,7 +17,18 @@ import {
 } from './theme';
 
 const html = document.documentElement;
-const sheet = () => document.querySelector('style[data-hx-theme]')?.textContent ?? null;
+/** The CSS the service wrote: its constructed style sheet where the DOM has them (jsdom 31), else its `<style>`. */
+const sheet = (): string | null => {
+  const adopted = document.adoptedStyleSheets;
+  if (adopted?.length) {
+    // the CSSOM pretty-prints the rules; the service writes them without spaces
+    return adopted
+      .map((s) => Array.from(s.cssRules, (r) => r.cssText).join(''))
+      .join('')
+      .replace(/\s*([{}:;])\s*/g, '$1');
+  }
+  return document.querySelector('style[data-hx-theme]')?.textContent ?? null;
+};
 
 function setup(options: HxThemeOptions = {}, platform: 'browser' | 'server' = 'browser') {
   TestBed.configureTestingModule({
@@ -423,7 +434,9 @@ describe('HxTheme', () => {
     expect(sheet()).toContain('--h-surface-500:#64748b');
     theme.setPrimary('pink');
     TestBed.tick();
-    expect(document.querySelectorAll('style[data-hx-theme]')).toHaveLength(1);
+    expect(
+      document.querySelectorAll('style[data-hx-theme]').length + document.adoptedStyleSheets.length,
+    ).toBe(1);
     expect(sheet()).toContain('--h-primary-500:var(--h-pink-500)');
     expect(sheet()).not.toContain('teal');
   });
