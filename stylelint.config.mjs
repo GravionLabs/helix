@@ -58,5 +58,12 @@ export default {
     'color-no-hex': true,
     'function-disallowed-list': ['rgb', 'rgba', 'hsl', 'hsla'],
   },
-  overrides: [],
+  overrides: [
+    {
+      // opt-in page globals: the 14px base size of the page is deliberately in px, not root-relative
+      // (scripts/tests/shell-css.spec.ts asserts it)
+      files: ['projects/shell/globals-src.css'],
+      rules: { 'declaration-property-value-allowed-list': null },
+    },
+  ],
 };
