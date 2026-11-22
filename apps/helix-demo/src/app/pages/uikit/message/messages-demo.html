@@ -1,26 +1,77 @@
 <h1 class="sr-only">Message</h1>
-<app-source-tabs library="helix-ui" directory="message" componentName="messages-demo" [docs]="['message', 'toast']">
+<app-source-tabs
+  library="helix-ui"
+  directory="message"
+  componentName="messages-demo"
+  [docs]="['message', 'toast']"
+>
   <div class="flex flex-col md:flex-row gap-layout">
     <div class="md:w-1/2 flex flex-col">
       <div class="card h-full">
         <h2 class="demo-title mb-2!">Toast</h2>
         <div class="flex flex-wrap gap-1">
-          <button hx-button type="button" severity="success" (click)="show('success', 'Success Message', 'Message sent')">Success</button>
-          <button hx-button type="button" severity="info" (click)="show('info', 'Info Message', 'Helix rocks')">Info</button>
-          <button hx-button type="button" severity="warn" (click)="show('warn', 'Warn Message', 'There are unsaved changes')">Warn</button>
-          <button hx-button type="button" severity="danger" (click)="show('error', 'Error Message', 'Validation failed')">Error</button>
+          <button
+            hx-button
+            type="button"
+            severity="success"
+            (click)="show('success', 'Success Message', 'Message sent')"
+          >
+            Success
+          </button>
+          <button
+            hx-button
+            type="button"
+            severity="info"
+            (click)="show('info', 'Info Message', 'Helix rocks')"
+          >
+            Info
+          </button>
+          <button
+            hx-button
+            type="button"
+            severity="warn"
+            (click)="show('warn', 'Warn Message', 'There are unsaved changes')"
+          >
+            Warn
+          </button>
+          <button
+            hx-button
+            type="button"
+            severity="danger"
+            (click)="show('error', 'Error Message', 'Validation failed')"
+          >
+            Error
+          </button>
           <button hx-button type="button" severity="secondary" (click)="showUndo()">Undo</button>
           <hx-toast />
         </div>
 
         <h2 class="demo-title mt-3! mb-2!">Inline</h2>
         <div class="mb-2 flex flex-wrap items-center gap-2">
-          <input hx-input [(ngModel)]="username" placeholder="Username" aria-label="Username" aria-invalid="true" aria-describedby="username-error" />
-          <hx-message id="username-error" severity="error" size="small">Username is required</hx-message>
+          <input
+            hx-input
+            [(ngModel)]="username"
+            placeholder="Username"
+            aria-label="Username"
+            aria-invalid="true"
+            aria-describedby="username-error"
+          />
+          <hx-message id="username-error" severity="error" size="small"
+            >Username is required</hx-message
+          >
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <input hx-input [(ngModel)]="email" placeholder="Email" aria-label="Email" aria-invalid="true" aria-describedby="email-error" />
-          <hx-message id="email-error" severity="error" size="small" icon="pi pi-times-circle">Email is required</hx-message>
+          <input
+            hx-input
+            [(ngModel)]="email"
+            placeholder="Email"
+            aria-label="Email"
+            aria-invalid="true"
+            aria-describedby="email-error"
+          />
+          <hx-message id="email-error" severity="error" size="small" icon="pi pi-times-circle"
+            >Email is required</hx-message
+          >
         </div>
       </div>
     </div>

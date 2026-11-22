@@ -4,10 +4,7 @@
   } @else {
     @switch (entry.action) {
       @case ('search') {
-        <helix-search-action
-          [placeholder]="searchPlaceholder()"
-          (search)="search.emit($event)"
-        />
+        <helix-search-action [placeholder]="searchPlaceholder()" (search)="search.emit($event)" />
       }
       @case ('darkMode') {
         <helix-dark-mode-action />
@@ -34,14 +31,20 @@
       <i class="pi pi-bars"></i>
     </button>
     @if (showBreadcrumbs()) {
-      <hx-breadcrumb [model]="effectiveBreadcrumbs()" [home]="{ icon: 'pi pi-home', routerLink: '/' }" />
+      <hx-breadcrumb
+        [model]="effectiveBreadcrumbs()"
+        [home]="{ icon: 'pi pi-home', routerLink: '/' }"
+      />
     } @else {
       <span class="layout-topbar-title">{{ effectiveTitle() }}</span>
     }
     @if (zones().start.length > 0) {
       <div class="layout-topbar-zone layout-topbar-zone-start">
         @for (entry of zones().start; track $index) {
-          <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+          <ng-container
+            [ngTemplateOutlet]="actionTpl"
+            [ngTemplateOutletContext]="{ $implicit: entry.config }"
+          />
         }
       </div>
     }
@@ -50,7 +53,10 @@
   @if (zones().center.length > 0) {
     <div class="layout-topbar-center layout-topbar-zone">
       @for (entry of zones().center; track $index) {
-        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+        <ng-container
+          [ngTemplateOutlet]="actionTpl"
+          [ngTemplateOutletContext]="{ $implicit: entry.config }"
+        />
       }
     </div>
   }
@@ -58,7 +64,10 @@
   @if (zones().end.length > 0) {
     <div class="layout-topbar-end layout-topbar-zone">
       @for (entry of zones().end; track $index) {
-        <ng-container [ngTemplateOutlet]="actionTpl" [ngTemplateOutletContext]="{ $implicit: entry.config }" />
+        <ng-container
+          [ngTemplateOutlet]="actionTpl"
+          [ngTemplateOutletContext]="{ $implicit: entry.config }"
+        />
       }
     </div>
   }

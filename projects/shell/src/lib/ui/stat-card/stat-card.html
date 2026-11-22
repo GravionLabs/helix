@@ -9,7 +9,10 @@
     }
   </div>
   @if (direction(); as direction) {
-    <p class="helix-stat-card__trend" [class]="'helix-stat-card__trend helix-stat-card__trend--' + direction">
+    <p
+      class="helix-stat-card__trend"
+      [class]="'helix-stat-card__trend helix-stat-card__trend--' + direction"
+    >
       <i
         class="helix-stat-card__arrow"
         [class.pi]="true"

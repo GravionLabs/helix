@@ -13,7 +13,12 @@
   <ng-content select="[slot=end]" />
 </header>
 <main class="hx-mobile-shell-content"><ng-content /></main>
-<hx-bottom-bar [items]="items()" [activeId]="activeId()" [label]="barLabel()" (selected)="onBarSelect($event)" />
+<hx-bottom-bar
+  [items]="items()"
+  [activeId]="activeId()"
+  [label]="barLabel()"
+  (selected)="onBarSelect($event)"
+/>
 <hx-drawer
   [(visible)]="drawerOpen"
   position="left"

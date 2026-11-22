@@ -145,10 +145,10 @@
     cursor: default;
   }
   .hx-status-warn {
-    color: var(--h-warn-color, #b45309);
+    color: var(--h-warn-color, var(--h-orange-700));
   }
   .hx-status-error {
-    color: var(--h-error-color, #b91c1c);
+    color: var(--h-error-color, var(--h-red-700));
   }
   .hx-status-accent {
     color: var(--h-primary-color);
@@ -171,7 +171,7 @@
     border-radius: 6px;
     background: var(--h-content-background, var(--h-surface-frame));
     color: var(--h-text-color);
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+    box-shadow: 0 4px 16px color-mix(in srgb, black 20%, transparent);
     z-index: 10;
   }
 
@@ -317,7 +317,7 @@
     height: 100%;
     min-height: 0;
     box-sizing: border-box;
-    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+    padding-inline: env(safe-area-inset-left, 0) env(safe-area-inset-right, 0);
     background: var(--h-surface-frame);
     color: var(--h-text-color);
   }
@@ -328,7 +328,7 @@
     flex: none;
     box-sizing: border-box;
     min-height: calc(44px + env(safe-area-inset-top, 0px));
-    padding-top: env(safe-area-inset-top, 0px);
+    padding-top: env(safe-area-inset-top, 0);
     border-block-end: 1px solid var(--h-content-border-color);
   }
   .hx-mobile-shell-menu {
@@ -358,11 +358,11 @@
     overscroll-behavior: contain;
     background: var(--h-content-background, var(--h-surface-frame));
     /* The keyboard overlays the page where the browser does not resize it. */
-    padding-block-end: env(keyboard-inset-height, 0px);
+    padding-block-end: env(keyboard-inset-height, 0);
   }
   .hx-mobile-shell-drawer {
-    padding-block: env(safe-area-inset-top, 0px) env(safe-area-inset-bottom, 0px);
-    padding-inline-start: env(safe-area-inset-left, 0px);
+    padding-block: env(safe-area-inset-top, 0) env(safe-area-inset-bottom, 0);
+    padding-inline-start: env(safe-area-inset-left, 0);
     box-sizing: border-box;
   }
   .hx-mobile-shell-drawer-body {
@@ -381,7 +381,7 @@
     display: flex;
     flex: none;
     box-sizing: border-box;
-    padding-block-end: env(safe-area-inset-bottom, 0px);
+    padding-block-end: env(safe-area-inset-bottom, 0);
     background: var(--h-surface-frame);
     border-block-start: 1px solid var(--h-content-border-color);
   }

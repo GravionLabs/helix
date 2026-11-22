@@ -1,11 +1,7 @@
 <ng-content select="[slot=toolbar]" />
 <div class="hx-app-shell-body">
   <ng-content select="[slot=activity]" />
-  <div
-    class="hx-app-shell-sidebar"
-    [hidden]="collapsed()"
-    [style.width.px]="width()"
-  >
+  <div class="hx-app-shell-sidebar" [hidden]="collapsed()" [style.width.px]="width()">
     <ng-content select="[slot=sidebar]" />
   </div>
   @if (!collapsed()) {

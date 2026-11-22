@@ -32,6 +32,11 @@ Every colour is a `var(--h-*)` reference (`--h-content-background`, `--h-text-co
 grid follows dark mode (`.app-dark`) and a primary colour that changes at runtime without any code. Refine it with
 `helixGridTheme.withParams({ rowHeight: 36 })`.
 
+The theme needs no stylesheet because AG Grid injects its CSS at runtime as `<style>` elements, so a content security
+policy has to allow inline styles. In a Tauri app that also means `"dangerousDisableAssetCspModification": ["style-src"]`;
+otherwise the grid shows its headers as stacked text without rows. See
+[Tauri content security policy](https://github.com/GravionLabs/helix/blob/main/docs/HELIX-DESKTOP.md#tauri-content-security-policy).
+
 **Why the Theming API and not CSS variables:** since AG Grid 33 the default theme is configured through the `theme`
 grid option; the `--ag-*` CSS custom properties only drive the legacy `ag-theme-*` classes (`theme="legacy"`). The
 Theming API takes `var()` references as parameter values, is typed, and needs no stylesheet. The package still ships

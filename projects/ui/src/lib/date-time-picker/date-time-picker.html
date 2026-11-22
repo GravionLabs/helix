@@ -60,8 +60,12 @@
       <ng-container [ngTemplateOutlet]="panel" />
       @if (showButtonBar()) {
         <div class="hx-date-time-picker-buttonbar">
-          <button type="button" class="hx-date-time-picker-button" (click)="selectToday()">{{ todayLabel() }}</button>
-          <button type="button" class="hx-date-time-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+          <button type="button" class="hx-date-time-picker-button" (click)="selectToday()">
+            {{ todayLabel() }}
+          </button>
+          <button type="button" class="hx-date-time-picker-button" (click)="clear()">
+            {{ clearLabel() }}
+          </button>
         </div>
       }
     </div>

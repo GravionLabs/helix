@@ -12,11 +12,7 @@
     <ng-container [ngTemplateOutlet]="content" />
   </button>
 } @else {
-  <span
-    class="hx-status-control"
-    [attr.title]="title()"
-    [attr.aria-label]="ariaLabel()"
-  >
+  <span class="hx-status-control" [attr.title]="title()" [attr.aria-label]="ariaLabel()">
     <ng-container [ngTemplateOutlet]="content" />
   </span>
 }

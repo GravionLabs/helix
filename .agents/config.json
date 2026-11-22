@@ -7,5 +7,12 @@
       "projects/tokens/src/**",
       "projects/ui/src/lib/theme/**"
     ]
-  }
+  },
+  "checks": [
+    {
+      "name": "stylelint",
+      "command": "pnpm lint:styles",
+      "fast": true
+    }
+  ]
 }

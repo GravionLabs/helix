@@ -18,7 +18,10 @@
   (keydown)="onKeydown($event)"
   (focusin)="onFocusIn($event)"
 >
-  <ng-container [ngTemplateOutlet]="level" [ngTemplateOutletContext]="{ $implicit: view(), depth: 1 }" />
+  <ng-container
+    [ngTemplateOutlet]="level"
+    [ngTemplateOutletContext]="{ $implicit: view(), depth: 1 }"
+  />
 </ul>
 @if (filtering() && view().length === 0) {
   <div class="hx-tree-empty" role="status">{{ emptyMessage() }}</div>
@@ -46,11 +49,19 @@
         [class.hx-tree-node-disabled]="item.node.disabled"
         (click)="onClick(item, $event)"
       >
-        <span class="hx-tree-node-toggle" [class.hx-tree-node-toggle-leaf]="item.leaf" aria-hidden="true" (click)="onToggleClick(item, $event)">
+        <span
+          class="hx-tree-node-toggle"
+          [class.hx-tree-node-toggle-leaf]="item.leaf"
+          aria-hidden="true"
+          (click)="onToggleClick(item, $event)"
+        >
           @if (item.node.loading) {
             <span class="hx-tree-loading-icon"></span>
           } @else if (!item.leaf) {
-            <span class="hx-tree-toggle-icon" [class.hx-tree-toggle-icon-open]="isOpen(item)"></span>
+            <span
+              class="hx-tree-toggle-icon"
+              [class.hx-tree-toggle-icon-open]="isOpen(item)"
+            ></span>
           }
         </span>
         @if (mode() === 'checkbox') {
@@ -79,7 +90,10 @@
       </div>
       @if (!item.leaf && isOpen(item) && item.children.length) {
         <ul class="hx-tree-group" role="group">
-          <ng-container [ngTemplateOutlet]="level" [ngTemplateOutletContext]="{ $implicit: item.children, depth: depth + 1 }" />
+          <ng-container
+            [ngTemplateOutlet]="level"
+            [ngTemplateOutletContext]="{ $implicit: item.children, depth: depth + 1 }"
+          />
         </ul>
       }
     </li>

@@ -1,6 +1,18 @@
 @if (mode() === 'basic') {
-  <label class="hx-button hx-file-upload-choose" [class.hx-button-disabled]="disabled()" [attr.aria-disabled]="disabled() ? 'true' : null">
-    <input #picker type="file" class="hx-file-upload-input" [accept]="accept()" [multiple]="multiple()" [disabled]="disabled()" (change)="onPick($event)" />
+  <label
+    class="hx-button hx-file-upload-choose"
+    [class.hx-button-disabled]="disabled()"
+    [attr.aria-disabled]="disabled() ? 'true' : null"
+  >
+    <input
+      #picker
+      type="file"
+      class="hx-file-upload-input"
+      [accept]="accept()"
+      [multiple]="multiple()"
+      [disabled]="disabled()"
+      (change)="onPick($event)"
+    />
     {{ chooseLabel() }}
   </label>
   @if (files().length) {
@@ -8,15 +20,42 @@
   }
 } @else {
   <div class="hx-file-upload-header">
-    <label class="hx-button hx-file-upload-choose" [attr.aria-disabled]="disabled() ? 'true' : null">
-      <input #picker type="file" class="hx-file-upload-input" [accept]="accept()" [multiple]="multiple()" [disabled]="disabled()" (change)="onPick($event)" />
+    <label
+      class="hx-button hx-file-upload-choose"
+      [attr.aria-disabled]="disabled() ? 'true' : null"
+    >
+      <input
+        #picker
+        type="file"
+        class="hx-file-upload-input"
+        [accept]="accept()"
+        [multiple]="multiple()"
+        [disabled]="disabled()"
+        (change)="onPick($event)"
+      />
       {{ chooseLabel() }}
     </label>
     @if (showUploadButton()) {
-      <button hx-button type="button" severity="secondary" [disabled]="disabled() || !files().length" (click)="doUpload()">{{ uploadLabel() }}</button>
+      <button
+        hx-button
+        type="button"
+        severity="secondary"
+        [disabled]="disabled() || !files().length"
+        (click)="doUpload()"
+      >
+        {{ uploadLabel() }}
+      </button>
     }
     @if (showCancelButton()) {
-      <button hx-button type="button" severity="secondary" [disabled]="disabled() || !files().length" (click)="cancel()">{{ cancelLabel() }}</button>
+      <button
+        hx-button
+        type="button"
+        severity="secondary"
+        [disabled]="disabled() || !files().length"
+        (click)="cancel()"
+      >
+        {{ cancelLabel() }}
+      </button>
     }
   </div>
   <div
@@ -51,7 +90,18 @@
               <span class="hx-file-upload-file-name">{{ file.name }}</span>
               <span class="hx-file-upload-file-size">{{ size(file) }}</span>
             </span>
-            <button hx-button type="button" variant="outlined" severity="danger" size="small" [attr.aria-label]="'Remove ' + file.name" [disabled]="disabled()" (click)="removeFile(file)">{{ removeLabel() }}</button>
+            <button
+              hx-button
+              type="button"
+              variant="outlined"
+              severity="danger"
+              size="small"
+              [attr.aria-label]="'Remove ' + file.name"
+              [disabled]="disabled()"
+              (click)="removeFile(file)"
+            >
+              {{ removeLabel() }}
+            </button>
           </li>
         }
       </ul>

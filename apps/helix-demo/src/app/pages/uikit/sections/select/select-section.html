@@ -2,8 +2,9 @@
   <div class="card flex flex-col gap-3">
     <h2 class="demo-title">Helix UI Select</h2>
     <p class="m-0">
-      <code>hx-select</code> from <code>&#64;gravionlabs/helix-ui</code> is a listbox in a CDK overlay with a
-      combobox trigger. It works with <code>ngModel</code>, reactive forms and signal forms.
+      <code>hx-select</code> from <code>&#64;gravionlabs/helix-ui</code> is a listbox in a CDK
+      overlay with a combobox trigger. It works with <code>ngModel</code>, reactive forms and signal
+      forms.
     </p>
   </div>
 
@@ -11,7 +12,15 @@
     <h2 class="demo-title">Basics</h2>
     <div class="row">
       <label class="label" for="city">Objects</label>
-      <hx-select inputId="city" placeholder="Select a city" [options]="cities" optionLabel="name" optionValue="code" [(ngModel)]="city" [showClear]="true" />
+      <hx-select
+        inputId="city"
+        placeholder="Select a city"
+        [options]="cities"
+        optionLabel="name"
+        optionValue="code"
+        [(ngModel)]="city"
+        [showClear]="true"
+      />
       <span>Value: {{ city ?? 'none' }}</span>
     </div>
     <div class="row">
@@ -37,7 +46,17 @@
     <h2 class="demo-title">Filter</h2>
     <div class="row">
       <label class="label" for="instrument">Search</label>
-      <hx-select inputId="instrument" filter filterPlaceholder="Search instruments" placeholder="Select an instrument" [options]="instruments" optionLabel="name" optionValue="code" [filterBy]="'code'" [(ngModel)]="instrument" />
+      <hx-select
+        inputId="instrument"
+        filter
+        filterPlaceholder="Search instruments"
+        placeholder="Select an instrument"
+        [options]="instruments"
+        optionLabel="name"
+        optionValue="code"
+        [filterBy]="'code'"
+        [(ngModel)]="instrument"
+      />
       <span>Value: {{ instrument ?? 'none' }}</span>
     </div>
   </div>
@@ -58,12 +77,19 @@
     <h2 class="demo-title">Signal form</h2>
     <form class="flex flex-col gap-3" (submit)="$event.preventDefault(); submit()">
       <label for="plan">Plan</label>
-      <hx-select inputId="plan" placeholder="Choose a plan" [options]="['Free', 'Pro', 'Team']" [formField]="planForm.plan" />
+      <hx-select
+        inputId="plan"
+        placeholder="Choose a plan"
+        [options]="['Free', 'Pro', 'Team']"
+        [formField]="planForm.plan"
+      />
       @if (planForm.plan().touched() && planForm.plan().invalid()) {
         <span class="error" aria-live="polite">{{ planForm.plan().errors()[0].message }}</span>
       }
       <div><button hx-button type="submit">Save</button></div>
-      @if (submitted()) { <span>Saved: {{ model().plan }}</span> }
+      @if (submitted()) {
+        <span>Saved: {{ model().plan }}</span>
+      }
     </form>
   </div>
 </div>

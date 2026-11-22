@@ -88,7 +88,11 @@
         @if (showTime() || timeOnly()) {
           <div class="hx-date-time-range-picker-times">
             <div class="hx-date-time-range-picker-time">
-              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ fromLabel() }}</span>
+              <span
+                class="hx-date-time-range-picker-caption"
+                aria-hidden="true"
+                >{{ fromLabel() }}</span
+              >
               <hx-time-picker
                 inline
                 class="hx-date-time-range-picker-from"
@@ -106,7 +110,11 @@
               />
             </div>
             <div class="hx-date-time-range-picker-time">
-              <span class="hx-date-time-range-picker-caption" aria-hidden="true">{{ toLabel() }}</span>
+              <span
+                class="hx-date-time-range-picker-caption"
+                aria-hidden="true"
+                >{{ toLabel() }}</span
+              >
               <hx-time-picker
                 inline
                 class="hx-date-time-range-picker-to"
@@ -128,15 +136,25 @@
       </div>
       <div class="hx-date-picker-buttonbar hx-date-time-range-picker-footer">
         @if (showButtonBar()) {
-          <button type="button" class="hx-date-picker-button" (click)="clear()">{{ clearLabel() }}</button>
+          <button type="button" class="hx-date-picker-button" (click)="clear()">
+            {{ clearLabel() }}
+          </button>
         }
         <span class="hx-date-time-range-picker-spacer"></span>
-        <button type="button" class="hx-date-picker-button hx-date-time-range-picker-cancel" (click)="close(true)">{{ cancelLabel() }}</button>
+        <button
+          type="button"
+          class="hx-date-picker-button hx-date-time-range-picker-cancel"
+          (click)="close(true)"
+        >
+          {{ cancelLabel() }}
+        </button>
         <button
           type="button"
           class="hx-date-picker-button hx-date-time-range-picker-submit"
           (click)="submit()"
-        >{{ submitLabel() }}</button>
+        >
+          {{ submitLabel() }}
+        </button>
       </div>
     </div>
   </ng-template>

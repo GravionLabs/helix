@@ -1,5 +1,10 @@
 <h1 class="sr-only">Misc</h1>
-<app-source-tabs library="helix-ui" directory="misc" componentName="misc-demo" [docs]="['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag']">
+<app-source-tabs
+  library="helix-ui"
+  directory="misc"
+  componentName="misc-demo"
+  [docs]="['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag']"
+>
   <div class="card">
     <h2 class="demo-title mb-2!">ProgressBar</h2>
     <div class="flex flex-col md:flex-row gap-3">
@@ -28,19 +33,36 @@
           <div class="font-semibold my-4">Overlay</div>
           <div class="flex gap-3">
             <hx-overlay-badge value="2">
-              <span class="pi pi-bell" style="font-size: 2rem" role="img" aria-label="Notifications, 2 new"></span>
+              <span
+                class="pi pi-bell"
+                style="font-size: 2rem"
+                role="img"
+                aria-label="Notifications, 2 new"
+              ></span>
             </hx-overlay-badge>
             <hx-overlay-badge value="4" severity="danger">
-              <span class="pi pi-calendar" style="font-size: 2rem" role="img" aria-label="Calendar, 4 events"></span>
+              <span
+                class="pi pi-calendar"
+                style="font-size: 2rem"
+                role="img"
+                aria-label="Calendar, 4 events"
+              ></span>
             </hx-overlay-badge>
             <hx-overlay-badge severity="danger">
-              <span class="pi pi-envelope" style="font-size: 2rem" role="img" aria-label="Mail, unread"></span>
+              <span
+                class="pi pi-envelope"
+                style="font-size: 2rem"
+                role="img"
+                aria-label="Mail, unread"
+              ></span>
             </hx-overlay-badge>
           </div>
 
           <div class="font-semibold my-4">Button</div>
           <div class="flex gap-1">
-            <button hx-button type="button">Emails <hx-badge value="8" severity="secondary" size="small" /></button>
+            <button hx-button type="button">
+              Emails <hx-badge value="8" severity="secondary" size="small" />
+            </button>
             <button hx-button type="button" severity="warn">
               <span class="pi pi-users hx-button-icon" aria-hidden="true"></span>
               Messages
@@ -96,15 +118,31 @@
           <div class="font-semibold mb-2">Group</div>
           <hx-avatar-group ariaLabel="Team" class="mb-2">
             @for (name of avatars; track name) {
-              <hx-avatar [image]="avatarBase + name + '.png'" size="large" shape="circle" [ariaLabel]="name" />
+              <hx-avatar
+                [image]="avatarBase + name + '.png'"
+                size="large"
+                shape="circle"
+                [ariaLabel]="name"
+              />
             }
-            <hx-avatar label="+2" shape="circle" size="large" ariaLabel="2 more members" style="background-color: #9c27b0; color: #ffffff" />
+            <hx-avatar
+              label="+2"
+              shape="circle"
+              size="large"
+              ariaLabel="2 more members"
+              style="background-color: #9c27b0; color: #ffffff"
+            />
           </hx-avatar-group>
 
           <div class="font-semibold my-4">Label - Circle</div>
           <div class="flex items-center gap-2">
             <hx-avatar label="P" size="xlarge" shape="circle" />
-            <hx-avatar label="V" size="large" shape="circle" style="background-color: #2196f3; color: #ffffff" />
+            <hx-avatar
+              label="V"
+              size="large"
+              shape="circle"
+              style="background-color: #2196f3; color: #ffffff"
+            />
             <hx-avatar label="U" shape="circle" style="background-color: #9c27b0; color: #ffffff" />
           </div>
 

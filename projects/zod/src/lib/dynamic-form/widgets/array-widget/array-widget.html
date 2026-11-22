@@ -12,7 +12,15 @@
     </div>
   }
 
-  <button hx-button type="button" variant="outlined" class="helix-array-widget__add" (click)="add()">{{ addLabel() }}</button>
+  <button
+    hx-button
+    type="button"
+    variant="outlined"
+    class="helix-array-widget__add"
+    (click)="add()"
+  >
+    {{ addLabel() }}
+  </button>
 
   @if (firstError(); as err) {
     <small class="helix-array-widget__message helix-array-widget__message--error">{{ err }}</small>

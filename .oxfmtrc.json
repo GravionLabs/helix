@@ -19,17 +19,24 @@
   "embeddedLanguageFormatting": "off",
   // CSS keeps Biome's double quotes: scripts/tests/desktop-css.spec.ts matches selectors such as [slot="panel"] as text
   "overrides": [{ "files": ["**/*.css"], "options": { "singleQuote": false } }],
+  // Angular templates are formatted as `angular-html` (ADR 0006 of GravionLabs/skills, #1167); the two plain pages
+  // (apps/helix-demo/src/index.html, apps/site/scripts/404.html) stay plain HTML
+  "associations": [
+    {
+      "files": ["apps/helix-demo/src/app/**/*.html", "projects/**/*.html"],
+      "language": "angular-html"
+    }
+  ],
   "ignorePatterns": [
     "**/dist",
     "**/node_modules",
     "**/.angular",
     "**/coverage",
     "**/test-results",
-    // not formatted by Biome either: scripts, templates, images and TOML
+    // not formatted by Biome either: scripts, images and TOML
     "**/*.js",
     "**/*.mjs",
     "**/*.cjs",
-    "**/*.html",
     "**/*.svg",
     "**/*.toml",
     // generated files and fixtures
@@ -37,6 +44,8 @@
     "apps/site/.vitepress/cache",
     "apps/site/.vitepress/dist",
     "scripts/tests/fixtures",
+    // the lint probe has deliberate violations that scripts/tests/lint-probe.spec.ts checks
+    "scripts/lint/probe/**",
     "**/public",
     "pnpm-lock.yaml",
     "CHANGELOG.md",
