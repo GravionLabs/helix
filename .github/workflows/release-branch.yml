@@ -24,7 +24,7 @@ jobs:
       contents: read
       issues: write
       pull-requests: write
-    uses: GravionLabs/ci/.github/workflows/release-branch.yml@v1
+    uses: GravionLabs/ci/.github/workflows/release-branch.yml@a4dc7df4dca51c5402b2e440451f59cb13ea5259 # v1
     with:
       project-url: https://github.com/users/GravionLabs/projects/17
       dry-run: ${{ inputs.dry-run == true }}
