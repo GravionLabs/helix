@@ -6,6 +6,14 @@
 .DESCRIPTION
     Verifies that required tools are installed: PowerShell, Git, Node.js, npm.
     Optionally checks for optional tools (gh, curl, jq, yq, ast-grep, python).
+    ast-grep is required, even without -Full, when the git toplevel (or the working
+    directory) has an sgconfig.yml. The binary is `ast-grep`, never `sg` (on Linux
+    `sg` is the shadow-utils command).
+    actionlint, zizmor and shellcheck are required, even without -Full, when the git
+    toplevel (or the working directory) has a .github/workflows/ directory; otherwise
+    they are not checked.
+    gitleaks is required, even without -Full, when the git toplevel (or the working
+    directory) has a .gitleaks.toml; otherwise it is optional (-Full).
     Can auto-install missing tools using platform-specific package managers.
 
 .PARAMETER Full
@@ -25,7 +33,7 @@
     # Auto-installs missing tools
 
 .LINK
-    https://github.com/GravionLabs/skills/blob/main/docs/prerequisites.md
+    https://github.com/GravionLabs/skills/blob/main/site/prerequisites.md
 #>
 param(
     [switch]$Full,
@@ -93,7 +101,11 @@ function Install-Tool {
         } elseif ($OS_MacOS) {
             & brew install $installer.brew
         } elseif ($OS_Linux) {
-            & sudo apt-get install -y $installer.apt 2>/dev/null || & sudo dnf install -y $installer.dnf 2>/dev/null
+            if (-not ($installer.npm -or $installer.pipx -or $installer.go -or $installer.apt -or $installer.dnf)) {
+                Write-Host "    ✗ No package manager entry for $Tool on Linux. See the install hint." -ForegroundColor Red
+                return $false
+            }
+            if ($installer.npm) { & npm install -g $installer.npm } elseif ($installer.pipx) { & pipx install $installer.pipx } elseif ($installer.go) { & go install $installer.go } else { & sudo apt-get install -y $installer.apt 2>/dev/null || & sudo dnf install -y $installer.dnf 2>/dev/null }
         }
         
         # Verify installation
@@ -154,6 +166,61 @@ if (Test-Tool 'npm') {
     $results.missing += 'npm'
 }
 
+# ===== ast-grep: required where sgconfig.yml exists =====
+$astGrepRequired = $false
+$repoRoot = $null
+if (Test-Tool 'git') {
+    $repoRoot = (git rev-parse --show-toplevel 2>$null | Select-Object -First 1)
+}
+foreach ($root in @($repoRoot, (Get-Location).Path)) {
+    if ($root -and (Test-Path -LiteralPath (Join-Path $root 'sgconfig.yml'))) { $astGrepRequired = $true; break }
+}
+if ($astGrepRequired) {
+    if (Test-Tool 'ast-grep') {
+        $results.runtime['ast-grep'] = "✓ $(Get-ToolVersion 'ast-grep')"
+        Write-Host "  ✓ ast-grep (sgconfig.yml found): $(Get-ToolVersion 'ast-grep')" -ForegroundColor Green
+    } else {
+        $results.runtime['ast-grep'] = "✗ NOT FOUND"
+        Write-Host "  ✗ ast-grep (required, sgconfig.yml found): NOT FOUND" -ForegroundColor Red
+        $results.missing += 'ast-grep'
+    }
+}
+
+# ===== actionlint, zizmor, shellcheck: required where .github/workflows/ exists =====
+$workflowTools = @('actionlint', 'zizmor', 'shellcheck')
+$workflowsPresent = $false
+foreach ($root in @($repoRoot, (Get-Location).Path)) {
+    if ($root -and (Test-Path -LiteralPath (Join-Path $root '.github/workflows') -PathType Container)) { $workflowsPresent = $true; break }
+}
+if ($workflowsPresent) {
+    foreach ($tool in $workflowTools) {
+        if (Test-Tool $tool) {
+            $results.runtime[$tool] = "✓ $(Get-ToolVersion $tool)"
+            Write-Host "  ✓ $tool (.github/workflows found): $(Get-ToolVersion $tool)" -ForegroundColor Green
+        } else {
+            $results.runtime[$tool] = "✗ NOT FOUND"
+            Write-Host "  ✗ $tool (required, .github/workflows found): NOT FOUND" -ForegroundColor Red
+            $results.missing += $tool
+        }
+    }
+}
+
+# ===== gitleaks: required where .gitleaks.toml exists =====
+$gitleaksRequired = $false
+foreach ($root in @($repoRoot, (Get-Location).Path)) {
+    if ($root -and (Test-Path -LiteralPath (Join-Path $root '.gitleaks.toml') -PathType Leaf)) { $gitleaksRequired = $true; break }
+}
+if ($gitleaksRequired) {
+    if (Test-Tool 'gitleaks') {
+        $results.runtime['gitleaks'] = "✓ $(Get-ToolVersion 'gitleaks' @('version'))"
+        Write-Host "  ✓ gitleaks (.gitleaks.toml found): $(Get-ToolVersion 'gitleaks' @('version'))" -ForegroundColor Green
+    } else {
+        $results.runtime['gitleaks'] = "✗ NOT FOUND"
+        Write-Host "  ✗ gitleaks (required, .gitleaks.toml found): NOT FOUND" -ForegroundColor Red
+        $results.missing += 'gitleaks'
+    }
+}
+
 # ===== OPTIONAL Prerequisites =====
 if ($Full) {
     Write-Host "`n=== OPTIONAL Prerequisites ===" -ForegroundColor Cyan
@@ -164,12 +231,15 @@ if ($Full) {
         'jq',
         'yq',
         'ast-grep',
+        'gitleaks',
         'python'
     )
     
     foreach ($tool in $optionalTools) {
+        if ($astGrepRequired -and $tool -eq 'ast-grep') { continue }
+        if ($gitleaksRequired -and $tool -eq 'gitleaks') { continue }
         if (Test-Tool $tool) {
-            $version = Get-ToolVersion $tool
+            $version = if ($tool -eq 'gitleaks') { Get-ToolVersion $tool @('version') } else { Get-ToolVersion $tool }
             $results.optional[$tool] = "✓ $version"
             Write-Host "  ✓ $tool : $version" -ForegroundColor Green
         } else {
@@ -191,6 +261,11 @@ if ($results.missing.Count -eq 0) {
         'Git'        = @{ windows = 'winget install Git.Git';              macos = 'brew install git';        linux = 'sudo apt-get install git' }
         'Node.js'    = @{ windows = 'winget install OpenJS.NodeJS';        macos = 'brew install node';       linux = 'sudo apt-get install nodejs' }
         'npm'        = @{ windows = 'included with Node.js';               macos = 'brew install node';       linux = 'sudo apt-get install npm' }
+        'ast-grep'   = @{ windows = 'winget install ast-grep.ast-grep';    macos = 'brew install ast-grep';   linux = 'npm install -g @ast-grep/cli' }
+        'actionlint' = @{ windows = 'winget install rhysd.actionlint';     macos = 'brew install actionlint'; linux = 'go install github.com/rhysd/actionlint/cmd/actionlint@latest' }
+        'zizmor'     = @{ windows = 'pipx install zizmor';                 macos = 'brew install zizmor';     linux = 'pipx install zizmor' }
+        'shellcheck' = @{ windows = 'winget install koalaman.shellcheck';  macos = 'brew install shellcheck'; linux = 'sudo apt-get install shellcheck' }
+        'gitleaks'   = @{ windows = 'winget install Gitleaks.Gitleaks';    macos = 'brew install gitleaks';   linux = 'download a release from https://github.com/gitleaks/gitleaks/releases and put gitleaks on PATH' }
     }
 
     $installers = @{
@@ -198,6 +273,11 @@ if ($results.missing.Count -eq 0) {
         'Git'        = @{ winget = 'Git.Git';              brew = 'git';        apt = 'git';        dnf = 'git' }
         'Node.js'    = @{ winget = 'OpenJS.NodeJS';        brew = 'node';       apt = 'nodejs';     dnf = 'nodejs' }
         'npm'        = @{ winget = 'OpenJS.NodeJS';        brew = 'node';       apt = 'npm';        dnf = 'npm' }
+        'ast-grep'   = @{ winget = 'ast-grep.ast-grep';    brew = 'ast-grep';   npm = '@ast-grep/cli' }
+        'actionlint' = @{ winget = 'rhysd.actionlint';     brew = 'actionlint'; go = 'github.com/rhysd/actionlint/cmd/actionlint@latest' }
+        'zizmor'     = @{ winget = 'zizmor.zizmor';        brew = 'zizmor';     pipx = 'zizmor' }
+        'shellcheck' = @{ winget = 'koalaman.shellcheck';  brew = 'shellcheck'; apt = 'shellcheck'; dnf = 'ShellCheck' }
+        'gitleaks'   = @{ winget = 'Gitleaks.Gitleaks';    brew = 'gitleaks' }
     }
 
     Write-Host "✗ Missing Prerequisites" -ForegroundColor Red
@@ -214,7 +294,7 @@ if ($results.missing.Count -eq 0) {
     }
 
     Write-Host "Run with -AutoInstall flag to attempt automatic installation." -ForegroundColor Yellow
-    Write-Host "See docs/prerequisites.md for detailed instructions." -ForegroundColor Yellow
+    Write-Host "See site/prerequisites.md for detailed instructions." -ForegroundColor Yellow
 
     if ($AutoInstall) {
         Write-Host "`n  Attempting auto-install..." -ForegroundColor Yellow

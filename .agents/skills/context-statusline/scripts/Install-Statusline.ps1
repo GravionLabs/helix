@@ -12,8 +12,9 @@
   exist, for example when the skill was deployed for the other client only. On Linux/macOS paths under $HOME are written as ~/...;
   on Windows the home directory is %USERPROFILE% (never Git Bash's HOME) and paths are written absolute in forward-slash form
   (C:/Users/<user>/.claude/...), quoted when they contain whitespace; re-running migrates ~/... entries to that form.
-  -Client claude (default): sets 'statusLine' and 'subagentStatusLine' in ~/.claude/settings.json to
-  node <scripts>/statusline.mjs and node <scripts>/subagent-statusline.mjs.
+  -Client claude (default): sets 'statusLine' in ~/.claude/settings.json to
+  node <scripts>/statusline.mjs and removes our own 'subagentStatusLine' of an older version
+  (Claude Code 2.1.323 removed that setting).
   -Client copilot: sets 'statusLine' (with padding 1) in <copilot home>/settings.json plus the feature flag STATUS_LINE
   in feature_flags.enabled (added once, other flags kept). <copilot home> is $COPILOT_HOME when set, else ~/.copilot.
   Copilot CLI has no subagent status line. -Client all does both.
@@ -26,7 +27,7 @@
   -Uninstall removes only our entries and the copies of older versions; the STATUS_LINE flag is left in place (it may be
   wanted by another status line). The skill files are never touched. Supports -WhatIf and -Confirm.
 .PARAMETER Client     claude (default), copilot or all.
-.PARAMETER Force      Replace foreign statusLine / subagentStatusLine entries.
+.PARAMETER Force      Replace a foreign statusLine entry.
 .PARAMETER Uninstall  Remove our entries (status lines and hook) and the copies of older versions.
 .PARAMETER NoContextWarning  Do not register the context warning hook.
 #>
@@ -121,7 +122,7 @@ function Set-Hook($root, [string]$hookEvent, [bool]$nested, [string]$cmd, [bool]
 function Get-Cfg([string]$name) {
   if ($name -eq 'claude') {
     @{ Name = 'claude'; Dir = (Join-Path (Get-UserHome) '.claude'); Scripts = (Get-ScriptDir '.claude'); Padding = $false; HookEvent = 'UserPromptSubmit'; Nested = $true
-       Keys = [ordered]@{ statusLine = 'statusline.mjs'; subagentStatusLine = 'subagent-statusline.mjs' } }
+       Keys = [ordered]@{ statusLine = 'statusline.mjs' } }
   } else {
     $dir = if ($env:COPILOT_HOME) { $env:COPILOT_HOME } else { Join-Path (Get-UserHome) '.copilot' }
     @{ Name = 'copilot'; Dir = $dir; Scripts = (Get-ScriptDir '.agents'); Padding = $true; HookEvent = 'postToolUse'; Nested = $false; Keys = [ordered]@{ statusLine = 'statusline.mjs' } }
@@ -163,6 +164,9 @@ if (-not $root) { $root = [System.Text.Json.Nodes.JsonObject]::new() }
 $before = $root.ToJsonString()
 
 # Decide changes
+# subagentStatusLine was removed in Claude Code 2.1.323: no longer written, our own entry of an older version is removed.
+$legacy = if ($cfg.Name -eq 'claude' -and $null -ne $root['subagentStatusLine'] -and (& $isOurs $root['subagentStatusLine'])) { @('subagentStatusLine') } else { @() }
+foreach ($k in $legacy) { [void]$root.Remove($k) }
 $foreign = @()
 foreach ($k in $keys.Keys) {
   $cur = $root[$k]
@@ -201,7 +205,7 @@ if ($settingsChanged) {
   $so.WriteIndented = $true
   $so.Encoder = [System.Text.Encodings.Web.JavaScriptEncoder]::UnsafeRelaxedJsonEscaping
   $out = $root.ToJsonString($so) + "`n"
-  if ($PSCmdlet.ShouldProcess($settings, 'Update statusLine / subagentStatusLine / context warning hook')) {
+  if ($PSCmdlet.ShouldProcess($settings, 'Update statusLine / context warning hook')) {
     New-Item -ItemType Directory -Path $clientDir -Force | Out-Null
     if (Test-Path -LiteralPath $settings) {
       $bak = "$settings.bak-$([DateTime]::UtcNow.ToString('yyyyMMddHHmmssfff'))"

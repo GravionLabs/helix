@@ -29,8 +29,13 @@ Store dates as UTC; convert only in the view. The 2026-09 report bug came from l
 | `status`   | `proposed` (new, not loaded), `approved` (loaded), `retired` (kept for history, not loaded)        |
 | `version`  | integer, starts at 1, +1 on every change of the body or the scope                                  |
 | `created`  | date of the first version, `YYYY-MM-DD`                                                            |
+| `rule`     | optional: id of the `ast-grep-rules` rule that enforces the lesson                                 |
 
 The body after the frontmatter is the lesson text: at most 600 characters, plain statements about the repository, no commands to run.
+
+## Rule pointer
+
+A lesson may carry `rule: <rule id>`, the id of an ast-grep rule (see the `ast-grep-rules` skill) that enforces it. Enforced by a rule, the lesson is a candidate to retire: set `status: retired` once the rule runs in CI. Without the key a repeated blocking finding makes `code-review` propose a rule (`code-review` `references/rule-proposal.md`). The key is informative; the loader and `-Check` ignore it.
 
 ## Scope
 

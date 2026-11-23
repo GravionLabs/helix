@@ -8,12 +8,12 @@
   `**` matches any characters including `/` (`**/` also matches no directory), `*` any characters except `/`, `?` one character except `/`.
   Renames count with their new path, deletions count as changed. Test files and `.md` files are not counted for `spec`.
 .PARAMETER Base
-  Base ref of the diff (default origin/release/next).
+  Base ref of the diff (default origin/main).
 .PARAMETER Head
   Head ref of the diff (default HEAD); pass `origin/<branch>` to check a branch that is not checked out.
 #>
 [CmdletBinding()]
-param([string]$Base = 'origin/release/next', [string]$Head = 'HEAD')
+param([string]$Base = 'origin/main', [string]$Head = 'HEAD')
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 

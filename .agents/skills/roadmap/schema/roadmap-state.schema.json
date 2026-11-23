@@ -11,20 +11,44 @@
       "description": "Open issues with a level label, number ascending, pull requests excluded.",
       "items": {
         "type": "object",
-        "required": ["number", "level", "title", "size", "labels", "parent", "blockedBy", "milestone", "url"],
+        "required": [
+          "number",
+          "level",
+          "title",
+          "size",
+          "labels",
+          "parent",
+          "blockedBy",
+          "milestone",
+          "url"
+        ],
         "properties": {
           "number": { "type": "integer" },
           "level": { "enum": ["epic", "feature", "pbi", "bug"] },
           "title": { "type": "string" },
-          "size": { "enum": ["S", "M", "L", null], "description": "From the body line `Size: <S|M|L>` or the label size:<S|M|L>; null when unknown." },
+          "size": {
+            "enum": ["S", "M", "L", null],
+            "description": "From the body line `Size: <S|M|L>` or the label size:<S|M|L>; null when unknown."
+          },
           "labels": { "type": "array", "items": { "type": "string" } },
-          "parent": { "type": ["integer", "null"], "description": "Native sub-issue parent; null for none." },
+          "parent": {
+            "type": ["integer", "null"],
+            "description": "Native sub-issue parent; null for none."
+          },
           "blockedBy": {
             "type": "array",
-            "items": { "oneOf": [{ "type": "integer" }, { "type": "string", "pattern": "^[^/\\s#]+/[^/\\s#]+#[0-9]+$" }] },
+            "items": {
+              "oneOf": [
+                { "type": "integer" },
+                { "type": "string", "pattern": "^[^/\\s#]+/[^/\\s#]+#[0-9]+$" }
+              ]
+            },
             "description": "Open native blockers: a number for a local one, `owner/repo#n` for one in another repository."
           },
-          "milestone": { "type": ["string", "null"], "description": "Milestone title: M<n> [<Topic>], legacy x.y.z, or null." },
+          "milestone": {
+            "type": ["string", "null"],
+            "description": "Milestone title: M<n> [<Topic>], legacy x.y.z, or null."
+          },
           "url": { "type": ["string", "null"] }
         },
         "additionalProperties": false

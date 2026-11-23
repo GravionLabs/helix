@@ -38,7 +38,7 @@ Run it with a shell in the caller's context. Output not a JSON object with a `la
 
 `governance` reports the ADR and spec folders: `configured` is true when `.agents/config.json` has a `governance` key (`adrDir`/`specDir` from it, else the default folders docs/adr and docs/specs); counts are `NNNN-*.md` files in `adrDir` and `*.md` files in `specDir`. When `hint` is not null, show it to the user as is.
 
-`tools` is found by config files in the project root: `vitest` (`vitest.config.*`, `vite.config.*` with a `test` block, or `vitest` in `package.json`), `biome` (`biome.json[c]`), `eslint` (`eslint.config.*`, `.eslintrc*`), `prettier` (`.prettierrc*`, `prettier.config.*`), `jest` (`jest.config.*`), `pytest` (`pytest.ini`, `[tool.pytest` in `pyproject.toml`), `cargo` (`Cargo.toml`).
+`tools` is found by config files in the project root: `vitest` (`vitest.config.*`, `vite.config.*` with a `test` block, or `vitest` in `package.json`), `biome` (`biome.json[c]`), `eslint` (`eslint.config.*`, `.eslintrc*`), `prettier` (`.prettierrc*`, `prettier.config.*`), `oxlint` (`.oxlintrc.json`), `oxfmt` (`.oxfmtrc.json[c]`), `jest` (`jest.config.*`), `pytest` (`pytest.ini`, `[tool.pytest` in `pyproject.toml`), `cargo` (`Cargo.toml`).
 
 On failure the script exits non-zero with the error on stderr. No stack detected → all arrays empty.
 

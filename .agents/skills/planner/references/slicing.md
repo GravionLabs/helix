@@ -24,3 +24,13 @@ A change touching many call sites is never one item. Plan it as:
 | S    | a few files, one concern, minutes of work                      |
 | M    | one module or component with its tests, one session            |
 | L    | at the edge of one session; split it unless it cannot be split |
+
+## Protected paths
+
+`deliver-loop.mts` never merges a pull request that changes a protected path; a person merges it, and every PBI blocked by it waits too. Do not let ordinary work wait on that.
+
+1. Read the list: `deliver.protectedPaths` of `.agents/config.json` (it replaces the default), else the default list in `protected-paths.json` of the `deliver` skill (`.claude/skills/deliver/`, `~/.claude/skills/deliver/`, `.agents/skills/deliver/`; in this repository `skills/delivery/deliver/`). `dir/` is a directory at the root, anything else a file name anywhere, compared without regard to case.
+2. Per planned item check from its `files` and the exploration whether it will probably change a protected path (a CI workflow, an agent setting, a script or dependency in a package manifest).
+3. Such a change is cut into its own PBI, as small as possible: only the files that trigger the guard, nothing else. The label `interactive` goes in `labels`; the rest of the work is not in it.
+4. A following item gets the `interactive` PBI in `blocked_by` only when it needs the change; otherwise it stays independent and the loop delivers it.
+5. The plan names the `interactive` PBIs (ids and titles) in the summary and the reply and advises delivering them first, in a session: `/deliver <nr>`.

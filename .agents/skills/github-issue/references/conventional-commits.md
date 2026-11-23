@@ -40,4 +40,4 @@ Examples: `[Bug] fix: x` → `fix/<nr>-x`, `[PBI] feat(github): y` → `feat/<nr
 
 ## Issue footer
 
-A commit for a PBI or Bug ends with `Refs #<nr>`, not `Closes`: PRs target `release/next` (or `release/x.y`), so `Closes` would not fire there; the PR carries `Closes #<nr>`. Subject keeps `(#<nr>)`; the footer is its own last line, matched by `git log -E --grep "^Refs #<nr>$"`.
+A commit for a PBI or Bug ends with `Refs #<nr>`, not `Closes`: a PR into `release/next` (or `release/x.y`) would not fire `Closes` there; the PR carries `Closes #<nr>`. Subject keeps `(#<nr>)`; the footer is its own last line, matched by `git log -E --grep "^Refs #<nr>$"`.

@@ -36,7 +36,7 @@ $milestones = @($st.milestones)
 function Get-Key([string]$title) { if ($title -cmatch '^(M[0-9]+(?:\.[0-9]+)*)(?= |$)') { $Matches[1] } else { $title } }
 function Get-Num([string]$title) { if ($title -cmatch '^M([0-9]+(?:\.[0-9]+)*)(?= |$)') { $q = @($Matches[1] -split '\.' | ForEach-Object { $_.PadLeft(8, '0') }); (0..7 | ForEach-Object { if ($_ -lt $q.Count) { $q[$_] } else { '00000000' } }) -join '' } else { '' } }
 function Get-Cell([string]$s) { ($s -replace '\|', '\|') -replace '\s+', ' ' }
-# display width as Biome's Markdown formatter counts it: wide (CJK, emoji) characters 2, combining marks and joiners 0
+# display width as the Markdown formatter (oxfmt, formerly Biome) counts it: wide (CJK, emoji) characters 2, combining marks and joiners 0
 function Get-Width([string]$s) {
   $w = 0
   foreach ($r in $s.EnumerateRunes()) {
@@ -50,7 +50,7 @@ function Get-Width([string]$s) {
   }
   $w
 }
-# tables are padded to the widest cell and the delimiter row to column width, exactly like Biome formats them, so `biome check` leaves them unchanged
+# tables are padded to the widest cell and the delimiter row to column width, exactly like oxfmt formats them, so `oxfmt --check` leaves them unchanged
 function Get-Table([string[]]$head, $rows) {
   $n = $head.Count
   $grid = [System.Collections.Generic.List[object]]::new()
@@ -134,6 +134,13 @@ $source = if ($exists) { $full } else { Join-Path $PSScriptRoot '../templates/RO
 $text = (Get-Content -Raw $source) -replace "`r`n", "`n"
 $old = if ($exists) { $text } else { '' }
 
+# block keys are compared by numeric value (`done M1` = `done M001`); a matched block is rewritten to the key of the state
+function Get-NormKey([string]$k) {
+  if ($k -cmatch '^(?<kind>plan|done) M(?<n>[0-9]+(?:\.[0-9]+)*)$') { "$($Matches.kind) M" + ((@($Matches.n -split '\.' | ForEach-Object { [int]$_ })) -join '.') } else { $k }
+}
+$byNorm = @{}
+foreach ($k in $blocks.Keys) { $byNorm[(Get-NormKey $k)] = $k }
+
 $seen = @{}
 $blockRx = '(?s)<!-- roadmap:begin (?<key>[^>]+?) -->\n(?<body>.*?)<!-- roadmap:end -->\n?'
 $sb = [System.Text.StringBuilder]::new()
@@ -142,9 +149,11 @@ foreach ($mt in [regex]::Matches($text, $blockRx)) {
   [void]$sb.Append($text.Substring($pos, $mt.Index - $pos))
   $pos = $mt.Index + $mt.Length
   $key = $mt.Groups['key'].Value.Trim()
+  $norm = Get-NormKey $key
+  if ($byNorm.ContainsKey($norm) -and -not $seen.ContainsKey($byNorm[$norm])) { $key = $byNorm[$norm] }
   if ($blocks.Contains($key)) {
     $seen[$key] = $true
-    [void]$sb.Append("<!-- roadmap:begin $key -->`n$($blocks[$key])`n<!-- roadmap:end -->`n")
+    [void]$sb.Append("<!-- roadmap:begin $key -->`n`n$($blocks[$key])`n`n<!-- roadmap:end -->`n")
   }
   # a plan block of a milestone that is no longer open is dropped: its done block takes over
   elseif ($key -notlike 'plan *') { [void]$sb.Append($mt.Value) }
@@ -152,7 +161,7 @@ foreach ($mt in [regex]::Matches($text, $blockRx)) {
 $text = $sb.Append($text.Substring($pos)).ToString()
 
 function Add-Block([string]$text, [string]$key, [string]$slot) {
-  $b = "<!-- roadmap:begin $key -->`n$($blocks[$key])`n<!-- roadmap:end -->`n`n"
+  $b = "<!-- roadmap:begin $key -->`n`n$($blocks[$key])`n`n<!-- roadmap:end -->`n`n"
   $sl = "<!-- roadmap:slot $slot -->"
   if ($text.Contains($sl)) { return $text.Replace($sl, $b + $sl) }
   $at = $text.IndexOf("`n## Later")

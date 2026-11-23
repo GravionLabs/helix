@@ -3,6 +3,7 @@
     "deliver",
     "grill-me",
     "planner",
+    "poimen-lead",
     "retro",
     "roadmap",
     "skills-manage"
@@ -17,8 +18,11 @@
   "github": [
     "github-issue",
     "github-milestone",
+    "github-pages",
+    "github-project",
     "github-pull-request",
-    "github-release"
+    "github-release",
+    "github-workflow-lint"
   ],
   "go": [
     "go-implementation",
@@ -41,12 +45,18 @@
   ],
   "shared": [
     "adr",
+    "agents-md",
+    "ast-grep-rules",
     "check-prerequisites",
     "code-review",
     "detect-techstack",
     "diagnose",
     "implementation",
-    "lessons"
+    "lessons",
+    "project-setup",
+    "ratchet",
+    "secret-scan",
+    "ui-styleguide"
   ],
   "skill-tooling": [
     "skill-audit",
@@ -57,8 +67,7 @@
     "context-statusline"
   ],
   "ts": [
-    "setup-biome-husky",
-    "setup-prettier-eslint-husky",
+    "setup-oxc-husky",
     "ts-create-project",
     "ts-implementation",
     "ts-mcp-server-generator",

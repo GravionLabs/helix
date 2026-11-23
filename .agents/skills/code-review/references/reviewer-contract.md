@@ -45,3 +45,7 @@ Print one JSON object that validates against `schema/review.schema.json`, nothin
   "notes": ["`parseAll` could reuse `parse`"]
 }
 ```
+
+## Output form `findings`
+
+On request (`form: findings`) print the result in the findings format of poimen instead (`{ version, sha, source, findings[] }`, schema `findings.schema.json` in the docs of GravionLabs/poimen), to stdout only: `code-review` stays read-only and the caller saves the file. The mapping lives in `pwsh scripts/ConvertTo-Findings.ps1 -Review <result.json> -Sha <reviewed commit>`: `blocking[]` keeps `file`, `line`, `title`, `why`, `rule` with severity `blocking`; `unmet[]` is `blocking` without location; `notes[]` is `note` without location.

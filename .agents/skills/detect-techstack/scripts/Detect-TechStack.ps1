@@ -59,6 +59,8 @@ if ((Test-RootFile 'vitest.config.*') -or (Test-RootMatch 'vite.config.*' '\btes
 if ((Test-RootFile 'biome.json') -or (Test-RootFile 'biome.jsonc')) { $tools.Add('biome') }
 if ((Test-RootFile 'eslint.config.*') -or (Test-RootFile '.eslintrc*')) { $tools.Add('eslint') }
 if ((Test-RootFile '.prettierrc*') -or (Test-RootFile 'prettier.config.*')) { $tools.Add('prettier') }
+if (Test-RootFile '.oxlintrc.json') { $tools.Add('oxlint') }
+if ((Test-RootFile '.oxfmtrc.json') -or (Test-RootFile '.oxfmtrc.jsonc')) { $tools.Add('oxfmt') }
 if (Test-RootFile 'jest.config.*') { $tools.Add('jest') }
 if ((Test-RootFile 'pytest.ini') -or (Test-RootMatch 'pyproject.toml' '(?m)^\[tool\.pytest')) { $tools.Add('pytest') }
 if (Test-RootFile 'Cargo.toml') { $tools.Add('cargo') }
@@ -255,7 +257,7 @@ $adrCount = @(Get-ChildItem -LiteralPath (Join-Path $rootFull $adrRel) -File -Fi
 $specCount = @(Get-ChildItem -LiteralPath (Join-Path $rootFull $specRel) -File -Filter '*.md' -ErrorAction SilentlyContinue).Count
 $govHint = $null
 if (-not $govConfigured -and ($adrCount + $specCount) -gt 0) {
-  $govHint = 'docs/adr or docs/specs found but no governance key in .agents/config.json; add it to opt in (docs/usage/project-config.md)'
+  $govHint = 'docs/adr or docs/specs found but no governance key in .agents/config.json; add it to opt in (site/usage/project-config.md)'
 }
 
 $report = [ordered]@{

@@ -4,7 +4,7 @@ Loaded only when `.agents/config.json` has the `governance` key (names: `skills/
 
 ## Run
 
-From the project root: `pwsh scripts/Get-GovernanceMatches.ps1 [-Base <ref>] [-Head <ref>]` (defaults `origin/release/next` and `HEAD`; a branch that is not checked out, such as `origin/<branch>`, goes in `-Head`). It prints `{ "governance": false }` without the key; else `adr.matched`, `adr.adrFiles` and `spec[]` (`glob`, `spec`, `changedFiles`, `specChanged`). Globs follow CI (`**`, `*`, `?`, paths relative to the repository root); test files (case-sensitive: `*.test.*`, `*.spec.*`, `test_*`, `test/`, `tests/`, `__tests__/`, `*Tests.cs`, `*.Tests/`) and `.md` files are not counted for `spec`.
+From the project root: `pwsh scripts/Get-GovernanceMatches.ps1 [-Base <ref>] [-Head <ref>]` (defaults `origin/main` and `HEAD`; a branch that is not checked out, such as `origin/<branch>`, goes in `-Head`). It prints `{ "governance": false }` without the key; else `adr.matched`, `adr.adrFiles` and `spec[]` (`glob`, `spec`, `changedFiles`, `specChanged`). Globs follow CI (`**`, `*`, `?`, paths relative to the repository root); test files (case-sensitive: `*.test.*`, `*.spec.*`, `test_*`, `test/`, `tests/`, `__tests__/`, `*Tests.cs`, `*.Tests/`) and `.md` files are not counted for `spec`.
 
 Inputs from the caller: the labels of the issue (none passed: no skip) and the implementer `notes`.
 

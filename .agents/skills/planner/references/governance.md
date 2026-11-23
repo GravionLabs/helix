@@ -1,6 +1,6 @@
 # Governance: ADR and spec rules
 
-Loaded only when `.agents/config.json` has `governance` (names: `adrDir`, `adrPaths`, `specDir`, `specMap`, see `docs/usage/project-config.md`). Without it planning and refinement are unchanged and this file is not read.
+Loaded only when `.agents/config.json` has `governance` (names: `adrDir`, `adrPaths`, `specDir`, `specMap`, see `site/usage/project-config.md`). Without it planning and refinement are unchanged and this file is not read.
 
 ## Decision PBI
 

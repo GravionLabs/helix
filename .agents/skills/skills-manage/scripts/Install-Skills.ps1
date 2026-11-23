@@ -272,6 +272,9 @@ if (-not $Global -and (Test-Path -LiteralPath $gitignore -PathType Leaf)) {
   if (@($gi | Where-Object { $_ -match '^/?\.agents(/(\*{1,2})?)?$' }).Count -gt 0) {
     $notes.Add('.gitignore ignores .agents/: that hides the installed skills (.agents/skills/), the project config (.agents/config.json) and the committed lessons (.agents/lessons/). Remove the line, or keep them with !.agents/skills/, !.agents/config.json and !.agents/lessons/.')
   }
+  if (@($gi | Where-Object { $_ -match '^/?\.agents/proof/?$' }).Count -eq 0) {
+    $notes.Add('.gitignore lacks .agents/proof/: add it (next to the !.agents/lessons/ exception), the proof of a delivery is never committed.')
+  }
 }
 
 $result = [ordered]@{ dryRun = [bool]$DryRun; groups = @($wanted) }

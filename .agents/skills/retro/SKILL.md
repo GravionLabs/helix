@@ -28,7 +28,6 @@ Issue number (`retro 197`), session id, or nothing = the newest run.
 7. **Retire lessons.** Check the `approved` lessons of the scope against the runs after their `created` date; a repeated finding or fix rounds on a lesson's topic → a draft proposal to retire it (`status: retired`, evidence: the run). Procedure: `references/lessons.md`, section "Retire ineffective lessons".
 8. **Flow diagram.** Draw the order of the agent calls (main session, subagent roles) per PBI as Mermaid, from measured sources only; without a source write "flow not measured". Load `references/flow.md` for sources, limits and the example.
 
-
 ## Rules
 
 - Nothing is created, edited or pushed without the user's approval: no issue, no PR, no file change, no lesson file in the repository. Show drafts, ask, then create with `github-issue` (PBIs) or per `references/lessons.md` (lessons).

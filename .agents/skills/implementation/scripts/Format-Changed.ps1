@@ -4,7 +4,8 @@
   Without -Language, -Extensions and -Command the changed files are grouped by extension (.ts .tsx .js .jsx .mjs .cjs .json .css .html: ts; .py: py;
   .cs .csproj .sln .slnx: dotnet; .rs: rust; .go: go) and each detected language runs its defaults (a `format.<Language>` config entry still replaces them); other extensions are ignored.
   Precedence: `.agents/config.json` entry `format.<Language>` (legacy `.agents/format.json`; `"format": false` disables), then explicit -Extensions/-Command, then the built-in defaults of -Language
-  (ts, ng: prettier then eslint, or biome check when biome.json[c] is at the git toplevel; py: ruff format then ruff check --fix;
+  (ts, ng: prettier then eslint, or biome check when biome.json[c] is at the git toplevel; in an oxc project oxfmt instead of prettier
+  (.oxfmtrc.json[c]) and oxlint --fix instead of eslint (.oxlintrc.json), ng then eslint on .html only; py: ruff format then ruff check --fix;
   dotnet: dotnet format; rust: cargo fmt; go: gofmt).
 .PARAMETER Language
   Key into `format` of `<repo>/.agents/config.json`; an entry there replaces -Extensions, -Command and -Requires (a configured tool that is missing is an error).
@@ -13,12 +14,18 @@
   Extensions to keep, e.g. '.ts','.tsx' (one comma-separated string works too; the leading dot is optional).
 .PARAMETER Command
   Command line with a {files} placeholder, e.g. 'npx prettier --write {files}'. Without the placeholder the files are appended.
+.PARAMETER Lint
+  Lint instead of format: reads the `lint` key of `.agents/config.json` (`false` disables; entry `lint.<Language>` with `command` (string or array) and optional `extensions`),
+  else the built-in lint defaults of -Language (ts, ng: eslint, or biome lint in a Biome project, or oxlint (ng: plus eslint on .html) with .oxlintrc.json; py: ruff check; dotnet: dotnet format analyzers; rust: cargo clippy; go: golangci-lint).
+  Read-only: a command that exits non-zero fails the run with that exit code; a command without {files} runs as it is (no files appended); the success line reads `linted: <n> files`. Not combinable with -Check.
 .PARAMETER Requires
   Optional probe command; it must exit 0 (e.g. 'npx --no-install prettier --version'), otherwise the run is skipped with `skipped: <tool> not configured`.
 .PARAMETER Check
   Read-only intent: the command passed is the check command; the success line reads `checked: <n> files`.
 .PARAMETER Base
   Also include the files changed in `<Base>...HEAD`. Default: uncommitted changes only (staged, unstaged, untracked).
+.PARAMETER Staged
+  Only the staged files (`git diff --cached --name-only --diff-filter=ACMR`), for a pre-commit hook; unstaged and untracked files and -Base are ignored.
 .PARAMETER WhatIf
   Prints the resolved steps (override, -Command or defaults; -Check selects the check commands) as JSON
   `[{ tool, extensions, requires, commands }]` and exits 0 without probing or running anything.
@@ -28,14 +35,25 @@ param(
   [string[]]$Extensions,
   [string]$Command,
   [switch]$Check,
+  [switch]$Lint,
   [string]$Requires,
   [string]$Base,
+  [switch]$Staged,
   [switch]$WhatIf
 )
 $ErrorActionPreference = 'Stop'
+if ($Lint -and $Check) { Write-Error 'error: -Lint and -Check cannot be combined' -ErrorAction Continue; exit 1 }
 
 $root = (& git rev-parse --show-toplevel 2>$null)
 if ($LASTEXITCODE -ne 0 -or -not $root) { Write-Output 'skipped: not a git repository'; exit 0 }
+
+# a config file at the git toplevel (a nested one is no project config)
+function Test-TopFile([string]$Name) { Test-Path -LiteralPath (Join-Path $root $Name) -PathType Leaf }
+$hasBiome = (Test-TopFile 'biome.json') -or (Test-TopFile 'biome.jsonc')
+$hasOxfmt = (Test-TopFile '.oxfmtrc.json') -or (Test-TopFile '.oxfmtrc.jsonc')
+$hasOxlint = Test-TopFile '.oxlintrc.json'
+# Stylelint (ADR 0008): any stylelint.config.* or .stylelintrc* at the toplevel
+$hasStylelint = [bool](Get-ChildItem -LiteralPath $root -File -Force -ErrorAction SilentlyContinue | Where-Object { $_.Name -like 'stylelint.config.*' -or $_.Name -like '.stylelintrc*' })
 
 function Stop-Fail([string]$Message) { Write-Error "error: $Message" -ErrorAction Continue; exit 1 }
 # `1 -is [pscustomobject]` is true in PowerShell: ask for the real type
@@ -52,6 +70,10 @@ function Get-GitNames {
   Split-GitNames $out
 }
 function Get-ChangedFiles {
+if ($Staged) {
+  $st = @(Get-GitNames @('diff', '--cached', '--name-only', '-z', '--diff-filter=ACMR', '--'))
+  return @($st | Select-Object -Unique | Where-Object { $_ -and (Test-Path -LiteralPath (Join-Path $root $_) -PathType Leaf) })
+}
 $names = [System.Collections.Generic.List[string]]::new()
 if ($Base) {
   # a bad ref must fail loudly: a swallowed error would let -Check pass with nothing checked
@@ -80,8 +102,8 @@ if (-not $Language -and -not $Extensions -and -not $Command) {
   $langOf['.py'] = 'py'
   foreach ($e in '.cs', '.csproj', '.sln', '.slnx') { $langOf[$e] = 'dotnet' }
   $langOf['.rs'] = 'rust'; $langOf['.go'] = 'go'
-  # Markdown and YAML only in a Biome project (Biome >= 2.6 formats them)
-  if ((Test-Path -LiteralPath (Join-Path $root 'biome.json') -PathType Leaf) -or (Test-Path -LiteralPath (Join-Path $root 'biome.jsonc') -PathType Leaf)) {
+  # Markdown and YAML only in a Biome project (Biome >= 2.6 formats them) or an oxfmt project
+  if ($hasBiome -or $hasOxfmt) {
     foreach ($e in '.md', '.yml', '.yaml') { $langOf[$e] = 'ts' }
   }
   $present = @(Get-ChangedFiles | ForEach-Object { $langOf[[IO.Path]::GetExtension($_).ToLowerInvariant()] } | Where-Object { $_ })
@@ -90,7 +112,9 @@ if (-not $Language -and -not $Extensions -and -not $Command) {
   foreach ($l in $detected) {
     $sp = @{ Language = $l }
     if ($Check) { $sp.Check = $true }
+    if ($Lint) { $sp.Lint = $true }
     if ($Base) { $sp.Base = $Base }
+    if ($Staged) { $sp.Staged = $true }
     if ($WhatIf) { $sp.WhatIf = $true }
     if ($WhatIf) { $json = (& $PSCommandPath @sp | Out-String); if ($LASTEXITCODE -eq 0 -and $json.Trim()) { $all += @($json | ConvertFrom-Json) } }
     else { & $PSCommandPath @sp }
@@ -107,6 +131,7 @@ $commands = @(); $override = $false; $disabled = $false
 $configFile = Join-Path $root '.agents/config.json'
 $legacyFile = Join-Path $root '.agents/format.json'
 $srcName = '.agents/config.json'
+$cfgKey = if ($Lint) { 'lint' } else { 'format' }
 $formatCfg = $null; $haveFormat = $false
 if ($Language) {
   if (Test-Path -LiteralPath $configFile -PathType Leaf) {
@@ -121,15 +146,15 @@ if ($Language) {
         if ($known -notcontains $p) { Stop-Fail ".agents/config.json: unknown key '$p' (known: $($known -join ', '))" }
       }
     }
-    $fp = $cfg.PSObject.Properties['format']
+    $fp = $cfg.PSObject.Properties[$cfgKey]
     if ($fp) {
       $haveFormat = $true; $formatCfg = $fp.Value
       if (-not (($formatCfg -is [bool] -and -not $formatCfg) -or (Test-JsonObject $formatCfg))) {
-        Stop-Fail ".agents/config.json: key 'format' must be false or a map of language to entry"
+        Stop-Fail ".agents/config.json: key '$cfgKey' must be false or a map of language to entry"
       }
     }
   }
-  if (Test-Path -LiteralPath $legacyFile -PathType Leaf) {
+  if (-not $Lint -and (Test-Path -LiteralPath $legacyFile -PathType Leaf)) {
     if ($haveFormat) {
       Write-Error 'notice: .agents/config.json and the deprecated .agents/format.json both define format; .agents/config.json wins, delete .agents/format.json' -ErrorAction Continue
     }
@@ -146,7 +171,7 @@ elseif ($haveFormat) {
   $entry = if ($formatCfg -is [pscustomobject]) { $formatCfg.PSObject.Properties[$Language] } else { $null }
   if ($entry) {
     $override = $true
-    $key = if ($Check) { 'check' } else { 'format' }
+    $key = if ($Lint) { 'command' } elseif ($Check) { 'check' } else { 'format' }
     $entryVal = $entry.Value
     $cmdProp = if ($entryVal -is [pscustomobject]) { $entryVal.PSObject.Properties[$key] } else { $null }
     if (-not $cmdProp) { Stop-Fail "${srcName}: entry '$Language' has no '$key' command" }
@@ -182,17 +207,59 @@ $defaults = @{
   go     = @(
     @{ Tool = 'gofmt'; Ext = @('.go'); Requires = $null; Format = @('gofmt -w {files}'); Check = @('gofmt -l {files}') })
 }
+$plainDefaults = @{ ts = $defaults['ts']; ng = $defaults['ng'] }
 # a Biome project (biome.json[c] at the toplevel) replaces prettier + eslint with one biome step on the prettier extensions plus Markdown and YAML
-if ((Test-Path -LiteralPath (Join-Path $root 'biome.json') -PathType Leaf) -or (Test-Path -LiteralPath (Join-Path $root 'biome.jsonc') -PathType Leaf)) {
+if ($hasBiome) {
   foreach ($lang in 'ts', 'ng') {
     $defaults[$lang] = @(@{ Tool = 'biome'; Ext = $defaults[$lang][0].Ext + @('.md', '.yml', '.yaml'); Requires = 'npx --no-install biome --version'; Format = @('npx biome check --write --no-errors-on-unmatched {files}'); Check = @('npx biome check --no-errors-on-unmatched {files}') })
+  }
+}
+# an oxc project (ADR 0006) wins over a biome.json[c] left from a migration: .oxfmtrc.json[c] replaces prettier with oxfmt (plus Markdown
+# and YAML), .oxlintrc.json replaces eslint with oxlint --fix; ng keeps eslint for the .html templates (oxlint does not parse them)
+if ($hasOxfmt -or $hasOxlint) {
+  foreach ($lang in 'ts', 'ng') {
+    $fmt = $plainDefaults[$lang][0]; $fix = $plainDefaults[$lang][1]
+    if ($hasOxfmt) { $fmt = @{ Tool = 'oxfmt'; Ext = $fmt.Ext + @('.md', '.yml', '.yaml'); Requires = 'npx --no-install oxfmt --version'; Format = @('npx --no-install oxfmt --no-error-on-unmatched-pattern {files}'); Check = @('npx --no-install oxfmt --check --no-error-on-unmatched-pattern {files}') } }
+    if ($hasOxlint) { $fix = @{ Tool = 'oxlint'; Ext = $fix.Ext; Requires = 'npx --no-install oxlint --version'; Format = @('npx --no-install oxlint --fix --no-error-on-unmatched-pattern {files}'); Check = @('npx --no-install oxlint --no-error-on-unmatched-pattern {files}') } }
+    $defaults[$lang] = @($fmt, $fix)
+  }
+  if ($hasOxlint) { $defaults['ng'] += @{ Tool = 'eslint'; Ext = @('.html'); Requires = 'npx --no-install eslint --version'; Format = @('npx --no-install eslint --fix {files}'); Check = @('npx --no-install eslint {files}') } }
+}
+
+# lint defaults (read-only; rust runs on the whole crate, so its command has no {files})
+$lintDefaults = @{
+  ts     = @(@{ Tool = 'eslint'; Ext = $exts5 + '.jsx'; Requires = 'npx --no-install eslint --version'; Lint = @('npx --no-install eslint {files}') })
+  ng     = @(@{ Tool = 'eslint'; Ext = $exts5; Requires = 'npx --no-install eslint --version'; Lint = @('npx --no-install eslint {files}') })
+  py     = @(@{ Tool = 'ruff'; Ext = @('.py', '.pyi'); Requires = 'uv run ruff --version'; Lint = @('uv run ruff check {files}') })
+  dotnet = @(@{ Tool = 'dotnet'; Ext = @('.cs'); Requires = 'dotnet format --version'; Lint = @('dotnet format analyzers --verify-no-changes --include {files}') })
+  rust   = @(@{ Tool = 'cargo'; Ext = @('.rs'); Requires = 'cargo clippy --version'; Lint = @('cargo clippy --all-targets -- -D warnings') })
+  go     = @(@{ Tool = 'golangci-lint'; Ext = @('.go'); Requires = 'golangci-lint --version'; Lint = @('golangci-lint run {files}') })
+}
+if ($hasBiome) {
+  foreach ($lang in 'ts', 'ng') {
+    $lintDefaults[$lang] = @(@{ Tool = 'biome'; Ext = $lintDefaults[$lang][0].Ext + @('.json', '.css', '.html'); Requires = 'npx --no-install biome --version'; Lint = @('npx biome lint --no-errors-on-unmatched {files}') })
+  }
+}
+if ($hasOxlint) {
+  $lintDefaults['ts'] = @(@{ Tool = 'oxlint'; Ext = $exts5 + '.jsx'; Requires = 'npx --no-install oxlint --version'; Lint = @('npx --no-install oxlint --no-error-on-unmatched-pattern {files}') })
+  $lintDefaults['ng'] = @(@{ Tool = 'oxlint'; Ext = $exts5; Requires = 'npx --no-install oxlint --version'; Lint = @('npx --no-install oxlint --no-error-on-unmatched-pattern {files}') },
+    @{ Tool = 'eslint'; Ext = @('.html'); Requires = 'npx --no-install eslint --version'; Lint = @('npx --no-install eslint {files}') })
+}
+# stylelint.config.* (ADR 0008): lint .css/.scss too, wherever the language lints (ts, ng)
+if ($hasStylelint) {
+  foreach ($lang in 'ts', 'ng') {
+    $lintDefaults[$lang] += @{ Tool = 'stylelint'; Ext = @('.css', '.scss'); Requires = 'npx --no-install stylelint --version'; Lint = @('npx --no-install stylelint {files}') }
   }
 }
 
 $steps = @()
 if ($override) {
+  if (-not $Extensions -and $Lint -and $lintDefaults.ContainsKey($Language)) { $Extensions = @($lintDefaults[$Language] | ForEach-Object { $_.Ext }) }
   if (-not $Extensions) { Stop-Fail '-Extensions is required (no $srcName entry supplies them)' }
   $steps = @(@{ Tool = $null; Ext = $Extensions; Requires = $null; Commands = $commands })
+}
+elseif ($Lint -and -not $Command -and -not $Extensions -and $Language -and $lintDefaults.ContainsKey($Language)) {
+  $steps = @($lintDefaults[$Language] | ForEach-Object { @{ Tool = $_.Tool; Ext = $_.Ext; Requires = $_.Requires; Commands = $_.Lint } })
 }
 elseif (-not $Command -and -not $Extensions -and $Language -and $defaults.ContainsKey($Language)) {
   $mode = if ($Check) { 'Check' } else { 'Format' }
@@ -222,7 +289,7 @@ function ConvertTo-Ext($List) {
 
 $existing = Get-ChangedFiles
 
-function Get-ArgList([string[]]$Tokens, [string[]]$Safe) {
+function Get-ArgList([string[]]$Tokens, [string[]]$Safe, [bool]$AppendFiles = $true) {
   $argList = [System.Collections.Generic.List[string]]::new()
   $placed = $false
   foreach ($t in $Tokens | Select-Object -Skip 1) {
@@ -230,7 +297,7 @@ function Get-ArgList([string[]]$Tokens, [string[]]$Safe) {
     elseif ($t.Contains('{files}')) { $argList.Add($t.Replace('{files}', ($Safe -join ';'))); $placed = $true } # embedded: files joined by ';'
     else { $argList.Add($t) }
   }
-  if (-not $placed) { foreach ($f in $Safe) { $argList.Add($f) } }
+  if (-not $placed -and $AppendFiles) { foreach ($f in $Safe) { $argList.Add($f) } }
   , $argList.ToArray()
 }
 
@@ -259,7 +326,7 @@ try {
     # a name starting with '-' must not read as an option
     $safe = @($files | ForEach-Object { if ($_.StartsWith('-')) { "./$_" } else { $_ } })
     foreach ($t in $st.Plans) {
-      $al = Get-ArgList $t $safe
+      $al = Get-ArgList $t $safe (-not $Lint)
       & $t[0] @al
       if ($LASTEXITCODE -ne 0) { $code = $LASTEXITCODE; break }
     }
@@ -268,5 +335,5 @@ try {
   }
 } finally { Pop-Location }
 if ($code -ne 0) { exit $code }
-if ($done.Count -gt 0) { Write-Output ("{0}: {1} files" -f ($(if ($Check) { 'checked' } else { 'formatted' }), $done.Count)) }
+if ($done.Count -gt 0) { Write-Output ("{0}: {1} files" -f ($(if ($Lint) { 'linted' } elseif ($Check) { 'checked' } else { 'formatted' }), $done.Count)) }
 elseif ($skipped -eq 0) { Write-Output 'skipped: no changed files' }

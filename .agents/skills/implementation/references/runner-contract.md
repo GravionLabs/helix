@@ -23,13 +23,27 @@ Read the files the issue names, then follow `SKILL.md` and the `<lang>-implement
 
 Print one JSON object that validates against `schema/implementer.schema.json`, nothing else.
 
-| Property       | Meaning                                                                        |
-| -------------- | ------------------------------------------------------------------------------ |
-| `status`       | `done` (committed, tests green) or `blocked` (nothing committed that is red)   |
-| `commit`       | SHA of the commit; `null` when `blocked` without a commit                      |
-| `filesChanged` | paths changed by the commit, relative to the worktree                          |
-| `testsRun`     | the test commands run and their outcome, one string                            |
-| `notes`        | decisions, deviations, follow-ups; for `blocked` the reason and what is needed |
+| Property       | Meaning                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| `status`       | `done` (committed, tests green) or `blocked` (nothing committed that is red)                              |
+| `commit`       | SHA of the commit; `null` when `blocked` without a commit                                                 |
+| `filesChanged` | paths changed by the commit, relative to the worktree                                                     |
+| `testsRun`     | the test commands run and their outcome, one string                                                       |
+| `notes`        | decisions, deviations, follow-ups; for `blocked` the reason and what is needed                            |
+| `risk`         | `{level, what, backout}`: `low`, `medium` or `high`; what could break and for whom; how to undo it        |
+| `visual_proof` | `{before, after}` (paths or text) or `{na}` (the reason); required, `na` for a change that is not visible |
+
+Both `risk` and `visual_proof` are always required, also for `blocked`. `deliver` puts them into the pull request body. Risk levels are those of `github-pull-request` `references/risk-and-proof.md`: the highest level of the changes wins.
+
+## Visual proof
+
+A change is visible when it touches UI files (`.html`, `.css`, `.scss`, `.tsx`, `.jsx`, `.vue`, `.svelte`, `*.component.ts`) or changes the behavior of an app a person runs. Then:
+
+- start the app with the `run` skill (or drive the browser with the browser skills), take a before screenshot (the base state) and an after screenshot;
+- store them under `.agents/proof/<branch>/` (`<branch>` the issue branch) and put those paths into `visual_proof.before` and `visual_proof.after`; describe what differs in text next to the path;
+- the files are never committed or staged (the directory is gitignored); a person attaches images to the pull request when needed.
+
+Any other change: `visual_proof.na` with the reason, for example `no UI change, skill text only`. Never invent a screenshot path.
 
 ```json
 {
@@ -37,6 +51,12 @@ Print one JSON object that validates against `schema/implementer.schema.json`, n
   "commit": "a1b2c3d",
   "filesChanged": ["src/parse.ts", "src/parse.test.ts"],
   "testsRun": "pnpm vitest run src/parse.test.ts: 6 passed",
-  "notes": []
+  "notes": [],
+  "risk": {
+    "level": "low",
+    "what": "parser only, covered by tests",
+    "backout": "revert the commit"
+  },
+  "visual_proof": { "na": "no UI change, parser only" }
 }
 ```

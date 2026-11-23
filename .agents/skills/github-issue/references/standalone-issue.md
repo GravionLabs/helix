@@ -8,7 +8,7 @@ Applies to: **PBI**, **Bug**, **Feature** (no PBIs). A legacy `[Task]` sub-issue
 
 1. Read issue: `gh issue view <nr> --json title,body,labels`
 2. Derive the branch name `<type>/<nr>-<slug>` per `conventional-commits.md` (type from the issue title after stripping the level prefix)
-3. Resolve the integration branch `<base>` once per `release-branches.md`: `pwsh <github-release dir>/scripts/Get-ReleaseState.ps1 -Mode base -Issue <nr>` (`release/next`, else a `release/<x.y>`; source `none` or a `warning`: cut one with `github-release` first). Create branch: `git fetch origin <base>; git checkout -b <branch> origin/<base>`
+3. Resolve the base branch `<base>` once per `release-branches.md`: `pwsh <github-release dir>/scripts/Get-ReleaseState.ps1 -Mode base -Issue <nr>` (the default branch; working through a milestone: add `-Branch release/next`; a `warning`: run `github-release cut` first). Create branch: `git fetch origin <base>; git checkout -b <branch> origin/<base>`
 4. Note the parent from the body's first line (`Parent Epic: #N` / `Parent Feature: #N`), if present. Closing this issue updates the parent's progress automatically via its native sub-issue link — there is nothing to tick afterwards.
 
 ## Phase 2 — Implement
@@ -23,7 +23,7 @@ Applies to: **PBI**, **Bug**, **Feature** (no PBIs). A legacy `[Task]` sub-issue
 
 ## Phase 3 — Verify + PR
 
-9. Verify per `implementation`: targeted tests per commit, ONE full build + test suite run before the review, and again after the last fix round. Fix failures; never commit red.
+9. Verify per `implementation`: targeted tests per commit, the fast `checks` of `.agents/config.json` before the tests and after every fix, ONE full build + test suite run before the review, and again after a fix round only when the fix touched code outside what the fast checks and targeted tests cover. Fix failures; never commit red.
 10. Run the `code-review` skill once on `git diff origin/<base>...HEAD`; fix every blocking finding before the pull request.
 11. Push: `git push -u origin HEAD`
 12. Create the PR with the `github-pull-request` skill (`base_branch: <base>`); the skill owns title and footer

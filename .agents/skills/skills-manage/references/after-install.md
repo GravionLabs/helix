@@ -6,7 +6,8 @@
 | :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `skills-lock.json`                   | commit (source and ref per skill; `npx skills update` and `npx skills check` read it)                                                                                                                                                                                                                                           |
 | `.agents/skills/`, `.claude/skills/` | commit (instant context on clone). `.agents/skills/` holds the copies for OpenCode and Copilot; `.claude/skills/` links to them (copies on Windows)                                                                                                                                                                             |
-| `.agents/config.json`                | commit (project config, see [project config](https://github.com/GravionLabs/skills/blob/main/docs/usage/project-config.md)). A `.gitignore` line `.agents/*` without exceptions hides it and the installed skills: add `!.agents/skills/`, `!.agents/config.json` and `!.agents/lessons/` below it; the installer prints a note |
+| `.agents/config.json`                | commit (project config, see [project config](https://github.com/GravionLabs/skills/blob/main/site/usage/project-config.md)). A `.gitignore` line `.agents/*` without exceptions hides it and the installed skills: add `!.agents/skills/`, `!.agents/config.json` and `!.agents/lessons/` below it; the installer prints a note |
+| `.gitignore`                         | add `.agents/proof/` (next to the `!.agents/lessons/` exception): the proof of a delivery is never committed; the installer prints a note when the line is missing                                                                                                                                                              |
 
 Updates: `/skills-manage update [-g]`, or `npx skills check` (exit 1 when an update exists, usable in CI), `npx skills update` (all) or `npx skills update <name>`.
 
@@ -31,20 +32,13 @@ A skill installed both globally (`-g`) and in the project may resolve to the glo
 
 ## Delivery
 
-Delivery runs through the `deliver` skill (`/deliver <nr>`, harness-neutral), not through a separate runner.
+`/skills-manage delivery` also offers the `deliver-loop` command: `pwsh scripts/Install-LoopShim.ps1` writes a launcher (`~/.local/bin/deliver-loop`, on Windows `deliver-loop.cmd` and `deliver-loop.ps1` in `%USERPROFILE%\.local\bin`), removes the old `# >>> deliver-loop >>>` function from the shell profiles, and reports when `.local/bin` is not in `PATH` (it never changes `PATH`). The loop needs Node 24 or newer: it runs `.mts` files with Node's built-in type stripping, there is no build step.
 
-Before the first `/deliver <nr> --unattended`, propose the shell allowlist of the harness and let the user confirm it (never write it unasked): `.claude/settings.json` (`permissions.allow`) for Claude Code, `opencode.json` (`permission.bash`) for OpenCode, `--allow-tool 'shell(…)'` flags for Copilot CLI. The entries are `git`, `gh`, `herdr pane report-metadata`, `pwsh` for the cleanup script of `deliver` and the verify commands of the repository's `AGENTS.md` (build, test, format, lint): read them from its `## Commands` section and name them. The templates per harness are in `permissions.md` in the references of the `deliver` skill; without them an unattended run stops at the first prompt. The per-project settings the skills read live in `.agents/config.json`.
+Delivery runs through the `deliver` skill (`/deliver <nr>`, or `node scripts/deliver-loop.mts --milestone <M>` for a set), harness-neutral. Settings live under `deliver` in `.agents/config.json`; the session needs `git`, `gh` and the verify commands of the repository's `AGENTS.md` (build, test, format, lint), read from its `## Commands` section.
 
-## deliver-loop shell command
+## project-setup offer
 
-`scripts/Install-LoopShim.ps1` (offered after the `delivery` group, asks first) adds the function `deliver-loop` to `~/.zshrc`, `~/.bashrc` or the PowerShell profile, between `# >>> deliver-loop >>>` markers (a second run changes nothing, an outdated block is replaced). It finds the installed script in `.claude/skills/deliver`, `.agents/skills/deliver` (project), `~/.claude/skills/deliver`, `~/.agents/skills/deliver` and passes all arguments through; no copy, so `npx skills update` keeps it current. Nothing found: message and exit 1.
-
-```powershell
-deliver-loop -Milestone 1.3.0 -Max 5 -Model sonnet
-deliver-loop -Target 12,14 -Harness copilot -Model gpt-5
-```
-
-In herdr (`HERDR_ENV=1`) it starts the loop in its own workspace `<repo> · deliver` (tab `deliver-loop`); elsewhere in the current terminal.
+After a project install (not `-g`) of `shared`, which carries `project-setup`, `skills-manage` asks whether to run `/project-setup` (formatter, linter, base files, `.editorconfig`). Yes delegates to that skill, no leaves it for later. A global install never asks: the choices are per project.
 
 ## Coming from apm-hub
 
