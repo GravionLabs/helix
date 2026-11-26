@@ -46,6 +46,7 @@ export function sidebarOf(componentIndex: string): SidebarGroup[] {
         { text: 'UX forms', link: '/styleguide/forms' },
         { text: 'UX components', link: '/styleguide/components' },
         { text: 'UX color', link: '/styleguide/color' },
+        { text: 'UX platform', link: '/styleguide/platform' },
         { text: 'UX rules', link: '/styleguide/ux-rules' },
         { text: 'Lint preset', link: '/LINT' },
         { text: 'Roadmap', link: '/ROADMAP' },

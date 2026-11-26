@@ -72,6 +72,8 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - Every action is a native control (`hx-button`, `[hx-list-row]`, an `hx-menu` item), so it works from the keyboard.
 - A shown shortcut is implemented: `hxTooltipShortcut` or [`hx-kbd`](../components/kbd.md) with the keys of the
   user's platform, and `aria-keyshortcuts` on the control.
+- Read [platform.md](platform.md) when you show or handle a shortcut, write CSS for a desktop app, or change a Tauri
+  app on Linux (WebKitGTK) or Windows (WebView2).
 
 ## Enforcement
 
