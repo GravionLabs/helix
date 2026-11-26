@@ -107,6 +107,7 @@ export {
   type HxDialogPosition,
   HxDialogRef,
   HxDialogService,
+  type HxDialogSize,
 } from './lib/dialog/dialog';
 export {
   HxDivider,

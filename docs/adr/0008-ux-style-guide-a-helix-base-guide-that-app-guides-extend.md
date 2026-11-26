@@ -1,7 +1,8 @@
 # ADR 0008: UX style guide: a Helix base guide that app guides extend
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-26
+- Accepted: 2026-11-26, with amendments to decisions 2, 4 and 6 (#1227)
 - Issues: #1208, #1205, #1206, #1204 (objective)
 - Builds on: [ADR 0002](0002-retire-helix-core.md), [ADR 0004](0004-surface-roles-dark-elevation-density-and-named-theme-presets.md)
 
@@ -33,23 +34,27 @@ per topic, roles instead of values, a review rubric with a fixed output, and rul
    becomes part of it. It is the only base: apps do not copy it.
 2. **Shape.** A core file of at most 100 lines and deep dives an agent reads only when a task touches the topic:
    `forms`, `dialogs`, `components` (button hierarchy, which primitive for which job), `color` (the `--h-*` roles of
-   ADR 0004), `ux-rules` (today's `UX-RULES.md`) and `ux-review-rubric`. The shape is the one of the `ui-styleguide`
-   templates, so the skill and the guide stay interchangeable.
+   ADR 0004), `platform`, `ux-rules` (today's `UX-RULES.md`, moved to `docs/styleguide/ux-rules.md` with a pointer
+   left behind) and `ux-review-rubric`. Typography and spacing are in the core file. The shape is the one of the
+   `ui-styleguide` templates, so the skill and the guide stay interchangeable.
 3. **Content rules.** The guide names roles, never values; the tokens hold the values. Every rule is measurable and
    names the Helix component, directive or token that carries it. A rule without a carrier is a gap in Helix and an
    issue, not a rule an app implements by hand.
 4. **Versioned with the packages.** The guide is published in `@gravionlabs/helix-ui`, so an app reads the guide of
-   the version it installs, and on the docs site. A new or stricter rule is a changelog entry of the release that
-   brings it.
+   the version it installs, and on the docs site. Its source is `docs/styleguide/` (core file `STYLEGUIDE.md`, the
+   deep dives beside it), shipped 1:1 as `node_modules/@gravionlabs/helix-ui/styleguide/` with the export
+   `./styleguide/*`; in the packaged copy, links to component pages are rewritten to the docs site. A new or stricter
+   rule is a changelog entry of the release that brings it.
 5. **App guides extend it.** Each app has a `docs/STYLEGUIDE.md` that names the base guide (path in
    `node_modules`), lists only the app's own rules and deviations, each with a reason, and is linked from
    `AGENTS.md`. An app may tighten a base rule; it relaxes one only as a named deviation. The `ui-styleguide` skill
    creates and syncs app guides in this form.
-6. **Enforcement.** Helix publishes a lint preset: Stylelint (no hex, no raw color functions, font sizes from the
-   scale) and a template check (no raw `<button>`, `<input>`, `<select>`, `<textarea>`, `<progress>` without a Helix
-   directive), each with an allowlist whose entries name a reason. The preset blocks in CI. The review rubric
-   produces notes; a rubric finding blocks only when an acceptance criterion names it, as the `code-review` skill
-   already does.
+6. **Enforcement.** Helix publishes a lint preset, `@gravionlabs/helix-lint`
+   ([ADR 0009](0009-type-scale-spacing-form-field-list-row-and-lint-preset.md)): Stylelint (no hex, no raw color
+   functions, font sizes from the scale) and a template check (no raw `<button>`, `<input>`, `<select>`,
+   `<textarea>`, `<progress>` without a Helix directive), each with an allowlist whose entries name a reason. The
+   preset blocks in CI. The review rubric produces notes; a rubric finding blocks only when an acceptance criterion
+   names it, as the `code-review` skill already does.
 7. **Language.** English, like the rest of `docs/`.
 
 ## Consequences

@@ -6,6 +6,7 @@ import {
   type HxDialogPosition,
   HxDialogRef,
   HxDialogService,
+  type HxDialogSize,
 } from './dialog';
 
 @Component({
@@ -15,7 +16,8 @@ import {
     <hx-dialog
       [(visible)]="open"
       header="Edit profile"
-      width="20rem"
+      [width]="width()"
+      [size]="size()"
       [modal]="modal()"
       [closeOnEscape]="closeOnEscape()"
       [dismissableMask]="mask()"
@@ -32,6 +34,8 @@ import {
 })
 class Host {
   open = signal(false);
+  width = signal<string | undefined>('20rem');
+  size = signal<HxDialogSize>('md');
   modal = signal(true);
   closeOnEscape = signal(true);
   mask = signal(false);
@@ -102,6 +106,37 @@ describe('HxDialog', () => {
     expect(backdrop()).toBeTruthy();
     expect(frame()?.querySelector('.hx-dialog-footer #save')).toBeTruthy();
     expect((document.querySelector('.cdk-overlay-pane') as HTMLElement).style.width).toBe('20rem');
+  });
+
+  const pane = () => document.querySelector('.cdk-overlay-pane') as HTMLElement;
+  const sizeClasses = () =>
+    [...pane().classList].filter((name) => name.startsWith('hx-dialog-size-'));
+
+  it('is size md by default', async () => {
+    host.unnamed.set(true);
+    await settle();
+    expect(sizeClasses()).toEqual(['hx-dialog-size-md']);
+    expect(pane().style.width).toBe('');
+  });
+
+  it.each(['sm', 'md', 'lg'] as const)(
+    'size %s sets its class and no fixed width',
+    async (size) => {
+      host.width.set(undefined);
+      host.size.set(size);
+      host.open.set(true);
+      await settle();
+      expect(sizeClasses()).toEqual([`hx-dialog-size-${size}`]);
+      expect(pane().style.width).toBe('');
+    },
+  );
+
+  it.each(['sm', 'md', 'lg'] as const)('width wins over size %s', async (size) => {
+    host.size.set(size);
+    host.open.set(true);
+    await settle();
+    // an inline width beats the width of the size class
+    expect(pane().style.width).toBe('20rem');
   });
 
   it('uses ariaLabel when there is no header', async () => {

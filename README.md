@@ -63,8 +63,9 @@ Browse it as a website at [gravionlabs.github.io/helix](https://gravionlabs.gith
 - [Component docs](docs/components/README.md) — one page per `@gravionlabs/helix-ui` component
 - [`helix-shell` API reference](docs/HELIX-SHELL.md)
 - [Helix UI](docs/HELIX-UI.md) — the component library: install, theming, validators, rules
+- [Lint preset](docs/LINT.md) — `@gravionlabs/helix-lint`: the Stylelint and ESLint configs
 - [Theming](docs/THEMING.md) — the Helix tokens, dark mode, overriding tokens, static token export
-- [UX rules](docs/UX-RULES.md) — feedback by duration, which element for what, confirm or undo, tooltips, texts, motion
+- [UX style guide](docs/styleguide/STYLEGUIDE.md) — the base guide for apps: tokens, color, type and spacing, components, UX rules, platform, lint
 - [Design System](docs/CONTRIBUTING-design-system.md) — the generated brand book, tokens and component previews
 - [Roadmap](docs/ROADMAP.md)
 - [Architecture decision records](docs/adr/README.md)

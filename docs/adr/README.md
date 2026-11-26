@@ -10,15 +10,16 @@ that status line and links to later records.
 | [0001](0001-styling-foundation.md)                                           | Styling foundation: Helix tokens on the vendored fork now, a vanilla library replaces it | accepted |
 | [0002](0002-retire-helix-core.md)                                            | Retire helix-core: helix-ui is the only component library                                | accepted |
 | [0003](0003-configurable-topbar-actions.md)                                  | Configurable topbar actions                                                              | accepted |
-| [0004](0004-surface-roles-dark-elevation-density-and-named-theme-presets.md) | Surface roles, dark elevation, density and named theme presets                           | proposed |
+| [0004](0004-surface-roles-dark-elevation-density-and-named-theme-presets.md) | Surface roles, dark elevation, density and named theme presets                           | accepted |
 | [0005](0005-helix-desktop-package.md)                                        | helix-desktop package, entry points and view contract                                    | proposed |
 | [0006](0006-key-cap-component-and-tooltip-shortcut.md)                       | Key-cap component and a shortcut in the tooltip                                          | proposed |
 | [0007](0007-helix-code-package.md)                                           | helix-code package, entry points and CodeMirror dependency                               | proposed |
-| [0008](0008-ux-style-guide-a-helix-base-guide-that-app-guides-extend.md)     | UX style guide: a Helix base guide that app guides extend                                | proposed |
+| [0008](0008-ux-style-guide-a-helix-base-guide-that-app-guides-extend.md)     | UX style guide: a Helix base guide that app guides extend                                | accepted |
 | [0009](0009-type-scale-spacing-form-field-list-row-and-lint-preset.md)       | Type scale, spacing, form field, list row and lint preset                                | accepted |
 | [0010](0010-component-tokens-reference-the-type-and-spacing-steps.md)        | Component tokens reference the type and spacing steps                                    | proposed |
 | [0011](0011-hx-field-wiring-context-and-error-visibility.md)                 | How `hx-field` wires a control and when it shows the error                               | proposed |
 | [0012](0012-list-row-roles-tab-stop-and-selected-state.md)                   | Roles, tab stop and selected state of `hx-list`                                          | proposed |
+| [0013](0013-size-classes-for-hx-dialog.md)                                   | Size classes for `hx-dialog`                                                             | proposed |
 
 Template:
 

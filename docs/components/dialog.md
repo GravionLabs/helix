@@ -4,12 +4,10 @@
 returns its result.
 
 ```html
-<hx-dialog [(visible)]="open" header="Edit profile" width="30rem">
+<hx-dialog [(visible)]="open" header="Edit profile" size="md">
   <input hx-input [(ngModel)]="name" aria-label="Name" />
-  <div hxDialogFooter>
-    <button hx-button variant="text" (click)="open = false">Cancel</button>
-    <button hx-button (click)="save()">Save</button>
-  </div>
+  <button hxDialogFooter hx-button type="button" variant="text" severity="secondary" (click)="open = false">Cancel</button>
+  <button hxDialogFooter hx-button type="button" (click)="save()">Save</button>
 </hx-dialog>
 ```
 
@@ -28,13 +26,29 @@ ref.closed.subscribe((result) => console.log(result));
 | `closeOnEscape`       | `boolean`                                                                                                            | `true`     | Escape closes it.                                                      |
 | `dismissableMask`     | `boolean`                                                                                                            | `false`    | A click on the mask closes it.                                         |
 | `position`            | `'center' \| 'top' \| 'bottom' \| 'left' \| 'right' \| 'top-left' \| 'top-right' \| 'bottom-left' \| 'bottom-right'` | `'center'` | Where it sits.                                                         |
-| `width`, `height`     | CSS length                                                                                                           |            | Size; it never grows beyond the screen and the content scrolls.        |
+| `size`                | `'sm' \| 'md' \| 'lg'`                                                                                               | `'md'`     | Width class by content, see [Sizes](#sizes).                           |
+| `width`, `height`     | CSS length                                                                                                           |            | Fixed size; `width` wins over `size`.                                  |
 | `panelClass`          | `string \| string[]`                                                                                                 |            | Extra classes on the overlay pane.                                     |
 | `closeLabel`          | `string`                                                                                                             | `'Close'`  | Name of the close button.                                              |
 | `ariaLabel`           | `string`                                                                                                             |            | Name of the dialog when there is no `header`.                          |
 | `(shown)`, `(hidden)` | `void`                                                                                                               |            | Opened, closed (by whatever means).                                    |
 
-`HxDialogService.open(Component, config)` takes the same options (`header`, `width`, `modal`, `closable`,
+## Sizes
+
+Pick the class by what the dialog holds; the dialog never grows beyond the screen and the content scrolls.
+
+| `size` | Token                 | Value   | Content                                   |
+| ------ | --------------------- | ------- | ----------------------------------------- |
+| `sm`   | `--h-dialog-sm-width` | `24rem` | A confirmation or a short message.        |
+| `md`   | `--h-dialog-md-width` | `32rem` | A form of a few fields in one column.     |
+| `lg`   | `--h-dialog-lg-width` | `56rem` | A wide form (several columns) or a table. |
+
+`width` is for the rare content that fits no class. To change a class for the whole app, override its token. The size is
+read when the dialog opens.
+
+## Service
+
+`HxDialogService.open(Component, config)` takes the same options except `size` (`header`, `width`, `modal`, `closable`,
 `closeOnEscape`, `dismissableMask`, `position`, `panelClass`, `closeLabel`, `ariaLabel`) plus `data`. It returns an
 `HxDialogRef` with `close(result)`, `closed` (emits the result, or `undefined` when closed some other way) and
 `componentInstance`.

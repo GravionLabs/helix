@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { componentGroups, componentPagesOf, sidebarOf } from '../.vitepress/sidebar';
 
@@ -64,11 +64,30 @@ describe('the guides of the sidebar', () => {
     expect(readFileSync(resolve(docs, 'HELIX-CODE.md'), 'utf8')).toContain('# Helix Code');
   });
 
+  it('lists the lint preset guide', () => {
+    expect(guides).toContainEqual({ text: 'Lint preset', link: '/LINT' });
+  });
+
+  it('lists the UX style guide and the UX rules in its folder', () => {
+    expect(guides).toContainEqual({ text: 'UX style guide', link: '/styleguide/STYLEGUIDE' });
+    expect(guides).toContainEqual({ text: 'UX forms', link: '/styleguide/forms' });
+    expect(guides).toContainEqual({ text: 'UX dialogs', link: '/styleguide/dialogs' });
+    expect(guides).toContainEqual({ text: 'Form patterns', link: '/styleguide/form-patterns' });
+    expect(guides).toContainEqual({ text: 'UX components', link: '/styleguide/components' });
+    expect(guides).toContainEqual({ text: 'UX color', link: '/styleguide/color' });
+    expect(guides).toContainEqual({ text: 'UX platform', link: '/styleguide/platform' });
+    expect(guides).toContainEqual({ text: 'UX rules', link: '/styleguide/ux-rules' });
+    expect(guides).toContainEqual({
+      text: 'UX review rubric',
+      link: '/styleguide/ux-review-rubric',
+    });
+  });
+
   it('links every guide to an existing file', () => {
     const missing = guides
       .map((g) => g.link)
       .filter((l) => l !== '/' && l !== '/components/')
-      .filter((l) => !readdirSync(docs).includes(`${l.slice(1)}.md`));
+      .filter((l) => !existsSync(resolve(docs, `${l.slice(1)}.md`)));
     expect(missing).toEqual([]);
   });
 });

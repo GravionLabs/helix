@@ -32,6 +32,7 @@ describe('helix-ui core.css build (#925)', () => {
     expect(readdirSync(out).sort()).toEqual([
       'core.css',
       'package.json',
+      'styleguide',
       'styles.css',
       'tokens.css',
     ]);
@@ -58,6 +59,7 @@ describe('helix-ui core.css build (#925)', () => {
       './styles.css': './styles.css',
       './core.css': './core.css',
       './tokens.css': './tokens.css',
+      './styleguide/*': './styleguide/*',
     });
   });
 
