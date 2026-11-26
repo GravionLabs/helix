@@ -1,6 +1,6 @@
 // Semantic tokens: what the primitives mean (primary, surface, text, form field, overlay …), with the light and dark colour schemes.
 // Originally extracted from the Helix preset of the former helix-core; this file is the source now.
-import type { TokenTree } from './types.ts';
+import type { FontSizeScale, SpaceScale, TokenTree } from './types.ts';
 
 export const semantic = {
   transitionDuration: '0.2s',
@@ -14,6 +14,26 @@ export const semantic = {
   disabledOpacity: '0.6',
   iconSize: '1rem',
   anchorGutter: '2px',
+  // the type scale and the spacing scale (ADR 0009): rem, so the density scales them
+  fontSize: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    md: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
+    '2xl': '1.5rem',
+    '3xl': '2rem',
+  } satisfies FontSizeScale,
+  space: {
+    1: '0.25rem',
+    2: '0.5rem',
+    3: '0.75rem',
+    4: '1rem',
+    5: '1.25rem',
+    6: '1.5rem',
+    7: '1.75rem',
+    8: '2rem',
+  } satisfies SpaceScale,
   primary: {
     50: '{indigo.50}',
     100: '{indigo.100}',
@@ -28,15 +48,15 @@ export const semantic = {
     950: '{indigo.950}',
   },
   formField: {
-    paddingX: '0.75rem',
-    paddingY: '0.5rem',
+    paddingX: '{space.3}',
+    paddingY: '{space.2}',
     sm: {
-      fontSize: '0.875rem',
+      fontSize: '{fontSize.sm}',
       paddingX: '0.625rem',
       paddingY: '0.375rem',
     },
     lg: {
-      fontSize: '1.125rem',
+      fontSize: '{fontSize.lg}',
       paddingX: '0.875rem',
       paddingY: '0.625rem',
     },
@@ -79,7 +99,7 @@ export const semantic = {
     item: {
       padding: '0.5rem 0.75rem',
       borderRadius: '{border.radius.sm}',
-      gap: '0.5rem',
+      gap: '{space.2}',
     },
     submenuLabel: {
       padding: '0.5rem 0.75rem',
@@ -96,12 +116,12 @@ export const semantic = {
     },
     popover: {
       borderRadius: '{border.radius.md}',
-      padding: '0.75rem',
+      padding: '{space.3}',
       shadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
     },
     modal: {
       borderRadius: '{border.radius.xl}',
-      padding: '1.25rem',
+      padding: '{space.5}',
       shadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
     },
     navigation: {

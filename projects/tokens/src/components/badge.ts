@@ -6,7 +6,7 @@ export const badge = {
   root: {
     borderRadius: '{border.radius.md}',
     padding: '0 0.5rem',
-    fontSize: '0.75rem',
+    fontSize: '{fontSize.xs}',
     fontWeight: '700',
     minWidth: '1.5rem',
     height: '1.5rem',
@@ -20,12 +20,12 @@ export const badge = {
     height: '1.25rem',
   },
   lg: {
-    fontSize: '0.875rem',
+    fontSize: '{fontSize.sm}',
     minWidth: '1.75rem',
     height: '1.75rem',
   },
   xl: {
-    fontSize: '1rem',
+    fontSize: '{fontSize.md}',
     minWidth: '2rem',
     height: '2rem',
   },

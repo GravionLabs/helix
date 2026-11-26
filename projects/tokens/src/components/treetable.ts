@@ -21,7 +21,7 @@ export const treetable = {
     color: '{content.color}',
     hoverColor: '{content.hover.color}',
     selectedColor: '{highlight.color}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '0.75rem 1rem',
     focusRing: {
       width: '{focus.ring.width}',
@@ -52,7 +52,7 @@ export const treetable = {
   bodyCell: {
     borderColor: '{treetable.border.color}',
     padding: '0.75rem 1rem',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   footerCell: {
     background: '{content.background}',

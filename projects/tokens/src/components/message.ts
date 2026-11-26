@@ -10,7 +10,7 @@ export const message = {
   },
   content: {
     padding: '0.5rem 0.75rem',
-    gap: '0.5rem',
+    gap: '{space.2}',
     sm: {
       padding: '0.375rem 0.625rem',
     },
@@ -19,13 +19,13 @@ export const message = {
     },
   },
   text: {
-    fontSize: '1rem',
+    fontSize: '{fontSize.md}',
     fontWeight: '500',
     sm: {
-      fontSize: '0.875rem',
+      fontSize: '{fontSize.sm}',
     },
     lg: {
-      fontSize: '1.125rem',
+      fontSize: '{fontSize.lg}',
     },
   },
   icon: {

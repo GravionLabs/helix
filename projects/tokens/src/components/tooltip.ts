@@ -5,7 +5,7 @@ import type { TokenTree } from '../types.ts';
 export const tooltip = {
   root: {
     maxWidth: '12.5rem',
-    gutter: '0.25rem',
+    gutter: '{space.1}',
     shadow: '{overlay.popover.shadow}',
     padding: '0.5rem 0.75rem',
     borderRadius: '{overlay.popover.border.radius}',

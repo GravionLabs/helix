@@ -12,7 +12,7 @@ export const terminal = {
     borderRadius: '{form.field.border.radius}',
   },
   prompt: {
-    gap: '0.25rem',
+    gap: '{space.1}',
   },
   commandResponse: {
     margin: '2px 0',

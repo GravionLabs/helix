@@ -27,8 +27,8 @@ export const image = {
     borderColor: 'rgba(255,255,255,0.2)',
     borderWidth: '1px',
     borderRadius: '30px',
-    padding: '.5rem',
-    gap: '0.5rem',
+    padding: '{space.2}',
+    gap: '{space.2}',
   },
   action: {
     hoverBackground: 'rgba(255,255,255,0.1)',

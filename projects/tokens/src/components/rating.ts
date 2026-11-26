@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const rating = {
   root: {
-    gap: '0.25rem',
+    gap: '{space.1}',
     transitionDuration: '{transition.duration}',
     focusRing: {
       width: '{focus.ring.width}',

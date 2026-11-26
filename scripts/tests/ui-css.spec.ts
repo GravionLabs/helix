@@ -123,6 +123,12 @@ describe('helix-ui tokens', () => {
     expect(tokens).toContain(':root,:host{--h-');
     expect(tokens).toContain('.app-dark');
     expect(tokens).toMatch(/--h-button-primary-background:/);
+    for (const step of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']) {
+      expect(tokens).toContain(`--h-font-size-${step}:`);
+    }
+    for (let step = 1; step <= 8; step++) {
+      expect(tokens).toContain(`--h-space-${step}:${step / 4}rem;`);
+    }
   });
 });
 

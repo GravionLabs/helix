@@ -13,7 +13,7 @@ export const drawer = {
     padding: '{overlay.modal.padding}',
   },
   title: {
-    fontSize: '1.5rem',
+    fontSize: '{fontSize.2xl}',
     fontWeight: '600',
   },
   content: {

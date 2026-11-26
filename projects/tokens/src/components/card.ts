@@ -11,14 +11,14 @@ export const card = {
     shadow: 'none',
   },
   body: {
-    padding: '1.25rem',
-    gap: '0.5rem',
+    padding: '{space.5}',
+    gap: '{space.2}',
   },
   caption: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   title: {
-    fontSize: '1.25rem',
+    fontSize: '{fontSize.xl}',
     fontWeight: '500',
   },
   subtitle: {

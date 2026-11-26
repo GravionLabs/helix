@@ -4,9 +4,9 @@ import type { TokenTree } from '../types.ts';
 
 export const breadcrumb = {
   root: {
-    padding: '1rem',
+    padding: '{space.4}',
     background: '{content.background}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     transitionDuration: '{transition.duration}',
   },
   item: {

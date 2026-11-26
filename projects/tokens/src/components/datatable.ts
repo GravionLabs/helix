@@ -27,7 +27,7 @@ export const datatable = {
     color: '{content.color}',
     hoverColor: '{content.hover.color}',
     selectedColor: '{highlight.color}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '0.75rem 1rem',
     focusRing: {
       width: '{focus.ring.width}',
@@ -134,7 +134,7 @@ export const datatable = {
     },
   },
   filter: {
-    inlineGap: '0.5rem',
+    inlineGap: '{space.2}',
     overlaySelect: {
       background: '{overlay.select.background}',
       borderColor: '{overlay.select.border.color}',
@@ -149,7 +149,7 @@ export const datatable = {
       color: '{overlay.popover.color}',
       shadow: '{overlay.popover.shadow}',
       padding: '{overlay.popover.padding}',
-      gap: '0.5rem',
+      gap: '{space.2}',
     },
     rule: {
       borderColor: '{content.border.color}',

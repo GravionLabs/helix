@@ -7,11 +7,11 @@ export const carousel = {
     transitionDuration: '{transition.duration}',
   },
   content: {
-    gap: '0.25rem',
+    gap: '{space.1}',
   },
   indicatorList: {
-    padding: '1rem',
-    gap: '0.5rem',
+    padding: '{space.4}',
+    gap: '{space.2}',
   },
   indicator: {
     width: '2rem',

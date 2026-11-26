@@ -17,28 +17,28 @@ export const fileupload = {
     borderColor: 'unset',
     borderWidth: '0',
     borderRadius: '0',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   content: {
     highlightBorderColor: '{primary.color}',
     padding: '0 1.125rem 1.125rem 1.125rem',
-    gap: '1rem',
+    gap: '{space.4}',
   },
   file: {
-    padding: '1rem',
-    gap: '1rem',
+    padding: '{space.4}',
+    gap: '{space.4}',
     borderColor: '{content.border.color}',
     info: {
-      gap: '0.5rem',
+      gap: '{space.2}',
     },
   },
   fileList: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   progressbar: {
     height: '0.25rem',
   },
   basic: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
 } satisfies TokenTree;

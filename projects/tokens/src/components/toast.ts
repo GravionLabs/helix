@@ -14,18 +14,18 @@ export const toast = {
   },
   content: {
     padding: '{overlay.popover.padding}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   text: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   summary: {
     fontWeight: '500',
-    fontSize: '1rem',
+    fontSize: '{fontSize.md}',
   },
   detail: {
     fontWeight: '500',
-    fontSize: '0.875rem',
+    fontSize: '{fontSize.sm}',
   },
   closeButton: {
     width: '1.75rem',

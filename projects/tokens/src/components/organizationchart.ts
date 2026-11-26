@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const organizationchart = {
   root: {
-    gutter: '0.75rem',
+    gutter: '{space.3}',
     transitionDuration: '{transition.duration}',
   },
   node: {

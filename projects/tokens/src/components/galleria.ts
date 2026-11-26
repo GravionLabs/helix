@@ -15,7 +15,7 @@ export const galleria = {
     color: '{surface.100}',
     hoverColor: '{surface.0}',
     size: '3rem',
-    gutter: '0.5rem',
+    gutter: '{space.2}',
     prev: {
       borderRadius: '50%',
     },
@@ -40,7 +40,7 @@ export const galleria = {
   thumbnailNavButton: {
     size: '2rem',
     borderRadius: '{content.border.radius}',
-    gutter: '0.5rem',
+    gutter: '{space.2}',
     focusRing: {
       width: '{focus.ring.width}',
       style: '{focus.ring.style}',
@@ -55,11 +55,11 @@ export const galleria = {
   caption: {
     background: 'rgba(0, 0, 0, 0.5)',
     color: '{surface.100}',
-    padding: '1rem',
+    padding: '{space.4}',
   },
   indicatorList: {
-    gap: '0.5rem',
-    padding: '1rem',
+    gap: '{space.2}',
+    padding: '{space.4}',
   },
   indicatorButton: {
     width: '1rem',
@@ -84,7 +84,7 @@ export const galleria = {
   },
   closeButton: {
     size: '3rem',
-    gutter: '0.5rem',
+    gutter: '{space.2}',
     background: 'rgba(255, 255, 255, 0.1)',
     hoverBackground: 'rgba(255, 255, 255, 0.2)',
     color: '{surface.50}',

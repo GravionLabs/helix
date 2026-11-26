@@ -13,8 +13,8 @@ export const stepper = {
     size: '2px',
   },
   step: {
-    padding: '0.5rem',
-    gap: '1rem',
+    padding: '{space.2}',
+    gap: '{space.4}',
   },
   stepHeader: {
     padding: '0',
@@ -26,7 +26,7 @@ export const stepper = {
       offset: '{focus.ring.offset}',
       shadow: '{focus.ring.shadow}',
     },
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   stepTitle: {
     color: '{text.muted.color}',
@@ -53,6 +53,6 @@ export const stepper = {
     background: '{content.background}',
     color: '{content.color}',
     padding: '0',
-    indent: '1rem',
+    indent: '{space.4}',
   },
 } satisfies TokenTree;

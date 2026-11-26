@@ -8,14 +8,14 @@ export const megamenu = {
     borderColor: '{content.border.color}',
     borderRadius: '{content.border.radius}',
     color: '{content.color}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     verticalOrientation: {
       padding: '{navigation.list.padding}',
       gap: '{navigation.list.gap}',
     },
     horizontalOrientation: {
       padding: '0.5rem 0.75rem',
-      gap: '0.5rem',
+      gap: '{space.2}',
     },
     transitionDuration: '{transition.duration}',
   },
@@ -45,7 +45,7 @@ export const megamenu = {
     borderRadius: '{content.border.radius}',
     color: '{content.color}',
     shadow: '{overlay.navigation.shadow}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   submenu: {
     padding: '{navigation.list.padding}',

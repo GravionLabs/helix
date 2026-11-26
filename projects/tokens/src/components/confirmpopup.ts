@@ -14,14 +14,14 @@ export const confirmpopup = {
   },
   content: {
     padding: '{overlay.popover.padding}',
-    gap: '1rem',
+    gap: '{space.4}',
   },
   icon: {
     size: '1.5rem',
     color: '{overlay.popover.color}',
   },
   footer: {
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '0 {overlay.popover.padding} {overlay.popover.padding} {overlay.popover.padding}',
   },
 } satisfies TokenTree;
