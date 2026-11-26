@@ -51,6 +51,22 @@ For comparison, `@gravionlabs/helix-shell/styles.css` is about 47 kB and `primei
 
 A component outside the list renders unstyled with `core.css`; use `styles.css` then.
 
+## UX style guide
+
+The package ships the [UX style guide](styleguide/STYLEGUIDE.md) of its version, the base guide for apps
+([ADR 0008](adr/0008-ux-style-guide-a-helix-base-guide-that-app-guides-extend.md)), with its deep dives beside it:
+
+```text
+node_modules/@gravionlabs/helix-ui/styleguide/STYLEGUIDE.md
+```
+
+- An app's own guide (`docs/STYLEGUIDE.md`) names this path as its base and lists only the app's rules and
+  deviations ([How app guides extend](styleguide/STYLEGUIDE.md#how-app-guides-extend-this-guide)).
+- The files are exported as `@gravionlabs/helix-ui/styleguide/*`.
+- `pnpm build:lib:css:ui` copies `docs/styleguide/*.md`. Links inside the folder stay relative; links that leave it
+  point to the [docs site](https://gravionlabs.github.io/helix/), and to GitHub for what the site does not publish
+  (the ADRs).
+
 ## Components
 
 One page per component (usage, inputs and outputs, accessibility, tokens): see the [component reference](components/README.md).
