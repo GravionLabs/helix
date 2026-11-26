@@ -59,10 +59,11 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Message](message.md) | `hx-message` is an inline message next to the content it is about.                                                 |
 | [Tooltip](tooltip.md) | `[hx-tooltip]` shows a short text next to an element on hover and keyboard focus.                                  |
 
-## Navigation (7)
+## Navigation (8)
 
 | Component                   | Description                                                                                                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [List row](list-row.md)     | `hx-list` with `[hx-list-row]` is a list of button and link rows with roving focus, for sidebars, search results and pickers.    |
 | [Menu](menu.md)             | `hx-menu` shows a list of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model), inline or as a popup, with nested submenus.           |
 | [Menubar](menubar.md)       | `hx-menubar` is a horizontal menu of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model) with dropdown submenus, on the CDK menubar. |
 | [Tabs](tabs.md)             | `hx-tabs` shows one panel at a time, chosen by a row of tabs, in the WAI-ARIA tabs pattern.                                      |

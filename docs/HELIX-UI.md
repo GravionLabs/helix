@@ -46,7 +46,7 @@ For comparison, `@gravionlabs/helix-shell/styles.css` is about 47 kB and `primei
   password, popover, progress, radio, select, skeleton, split-button, switch, tab-bar, tabs, tag, toast, toolbar, tooltip, and
   the CDK overlay styles.
 - **Only in `styles.css`:** chart; galleria, carousel, image; table, data-table, tree, timeline, paginator;
-  date-picker, time-picker, date-time-picker, date-time-range-picker, date-range-quick-select; menubar, breadcrumb, stepper; auto-complete,
+  date-picker, time-picker, date-time-picker, date-time-range-picker, date-range-quick-select; menubar, breadcrumb, stepper, list; auto-complete,
   multi-select, file-upload, rating, slider, select-button, toggle-button.
 
 A component outside the list renders unstyled with `core.css`; use `styles.css` then.
@@ -59,7 +59,7 @@ One page per component (usage, inputs and outputs, accessibility, tokens): see t
 - **Form controls:** [Form controls](components/form-controls.md), [Float label](components/float-label.md), [Icon field](components/icon-field.md), [Input group](components/input-group.md), [Input number](components/input-number.md), [Password](components/password.md), [Select](components/select.md), [Auto complete](components/auto-complete.md), [Multi select](components/multi-select.md), [Listbox](components/listbox.md), [Date picker](components/date-picker.md), [Date time picker](components/date-time-picker.md), [Date time range picker](components/date-time-range-picker.md), [Date range quick select](components/date-range-quick-select.md), [Time picker](components/time-picker.md), [File upload](components/file-upload.md), [Rating](components/rating.md), [Slider](components/slider.md)
 - **Containers:** [Card](components/card.md), [Panel](components/panel.md), [Fieldset](components/fieldset.md), [Accordion](components/accordion.md), [Toolbar](components/toolbar.md), [Divider](components/divider.md)
 - **Overlays and messages:** [Dialog](components/dialog.md), [Drawer](components/drawer.md), [Popover](components/popover.md), [Confirm](components/confirm.md), [Toast](components/toast.md), [Message](components/message.md), [Tooltip](components/tooltip.md)
-- **Navigation:** [Menu](components/menu.md), [Menubar](components/menubar.md), [Tabs](components/tabs.md), [Tab bar](components/tab-bar.md), [Stepper](components/stepper.md), [Paginator](components/paginator.md), [Breadcrumb](components/breadcrumb.md)
+- **Navigation:** [List row](components/list-row.md), [Menu](components/menu.md), [Menubar](components/menubar.md), [Tabs](components/tabs.md), [Tab bar](components/tab-bar.md), [Stepper](components/stepper.md), [Paginator](components/paginator.md), [Breadcrumb](components/breadcrumb.md)
 - **Display:** [Avatar](components/avatar.md), [Badge](components/badge.md), [Chip](components/chip.md), [Kbd](components/kbd.md), [Tag](components/tag.md), [Progress](components/progress.md), [Skeleton](components/skeleton.md), [Timeline](components/timeline.md)
 - **Media:** [Carousel](components/carousel.md), [Galleria](components/galleria.md), [Image](components/image.md)
 - **Data:** [Table](components/table.md), [Data table](components/data-table.md), [Tree](components/tree.md), [Chart](components/chart.md) (entry point `@gravionlabs/helix-ui/chart`)
