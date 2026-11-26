@@ -46,6 +46,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - No raw `<button>`, `<input>`, `<select>`, `<textarea>` or `<progress>` without its Helix directive or component.
 - A text input, checkbox, radio, switch or `hx-select` of a form sits in an [`hx-field`](../components/form-field.md)
   with a `label`.
+- Read [forms.md](forms.md) when you add or change a form.
 - A modal decision is an [`hx-dialog`](../components/dialog.md) with its actions in `hxDialogFooter`.
 - An icon-only `hx-button` (`iconOnly`) has an `aria-label` and an `hx-tooltip`.
 - Hover, focus, active and disabled states are the component's; the app sets `disabled`, it draws no state itself.

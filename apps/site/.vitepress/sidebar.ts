@@ -43,6 +43,7 @@ export function sidebarOf(componentIndex: string): SidebarGroup[] {
         { text: 'Helix Code', link: '/HELIX-CODE' },
         { text: 'Theming', link: '/THEMING' },
         { text: 'UX style guide', link: '/styleguide/STYLEGUIDE' },
+        { text: 'UX forms', link: '/styleguide/forms' },
         { text: 'UX rules', link: '/styleguide/ux-rules' },
         { text: 'Lint preset', link: '/LINT' },
         { text: 'Roadmap', link: '/ROADMAP' },
