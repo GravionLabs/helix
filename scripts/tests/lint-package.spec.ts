@@ -36,7 +36,7 @@ describe('@gravionlabs/helix-lint package', () => {
     const stylelint = (await import(pathToFileURL(join(out, pkg.exports['./stylelint'])).href))
       .default;
     const eslint = (await import(pathToFileURL(join(out, pkg.exports['./eslint'])).href)).default;
-    expect(stylelint).toEqual({});
+    expect(Object.keys(stylelint.rules)).toContain('color-no-hex');
     expect(Object.keys(eslint[0].rules)).toEqual(['helix/no-raw-control']);
   });
 
