@@ -1,0 +1,21 @@
+@if (label()) {
+  <label class="hx-field-label" [attr.for]="labelFor()"
+    >{{ label() }}
+    @if (isRequired()) {
+      <span class="hx-field-required" aria-hidden="true">*</span>
+    }
+  </label>
+}
+<div #box class="hx-field-control"><ng-content /></div>
+@if (hint()) {
+  <div class="hx-field-hint" [id]="hintId">{{ hint() }}</div>
+}
+<!-- always in the DOM: a live region announces only what changes inside it -->
+<div
+  class="hx-field-error"
+  [class.hx-field-error-shown]="!!message()"
+  [id]="errorId"
+  aria-live="polite"
+>
+  {{ message() }}
+</div>

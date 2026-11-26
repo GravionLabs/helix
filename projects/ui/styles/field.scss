@@ -1,0 +1,64 @@
+/*
+ * Form field: `<hx-field>`, a column of label, control, hint and error. A checkbox, radio or switch stands
+ * before its label on one line. Type scale and spacing tokens; the colours are the semantic text and form
+ * field tokens.
+ */
+.hx-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--h-space-1);
+}
+
+.hx-field-label {
+  font-size: var(--h-font-size-sm);
+  font-weight: 500;
+}
+
+.hx-field-required {
+  color: var(--h-form-field-invalid-placeholder-color);
+}
+
+.hx-field-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.hx-field-control > :is(.hx-input, .hx-select) {
+  align-self: stretch;
+}
+
+.hx-field-hint {
+  color: var(--h-text-muted-color);
+  font-size: var(--h-font-size-sm);
+}
+
+.hx-field-error {
+  color: var(--h-form-field-invalid-placeholder-color);
+  font-size: var(--h-font-size-sm);
+}
+
+/* the empty live region stays in the accessibility tree but takes no room, not even a gap */
+.hx-field-error:not(.hx-field-error-shown) {
+  position: absolute;
+}
+
+/* checkbox, radio, switch: control and label on one line, the texts below */
+.hx-field:has(> .hx-field-control > :is(.hx-checkbox, .hx-radio, .hx-switch)) {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--h-space-2);
+
+  > .hx-field-control {
+    grid-area: 1 / 1;
+  }
+
+  > .hx-field-label {
+    grid-area: 1 / 2;
+  }
+
+  > :is(.hx-field-hint, .hx-field-error) {
+    grid-column: 1 / -1;
+  }
+}

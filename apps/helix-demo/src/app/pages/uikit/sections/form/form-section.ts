@@ -1,7 +1,21 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { email, FormField, form, minLength, required, submit } from '@angular/forms/signals';
-import { HxButton, HxCheckbox, HxInput, HxRadio, HxSwitch } from '@gravionlabs/helix-ui';
+import {
+  HxButton,
+  HxCheckbox,
+  HxField,
+  HxInput,
+  HxRadio,
+  HxSelect,
+  HxSwitch,
+} from '@gravionlabs/helix-ui';
 
 interface Signup {
   name: string;
@@ -15,7 +29,18 @@ interface Signup {
 @Component({
   selector: 'app-form-section',
   standalone: true,
-  imports: [FormsModule, FormField, HxInput, HxCheckbox, HxRadio, HxSwitch, HxButton],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    FormField,
+    HxField,
+    HxInput,
+    HxSelect,
+    HxCheckbox,
+    HxRadio,
+    HxSwitch,
+    HxButton,
+  ],
   templateUrl: './form-section.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './form-section.scss',
@@ -27,6 +52,17 @@ export class HxFormSection {
   agree = true;
   plan = 'pro';
   dark = true;
+
+  nickname = '';
+
+  // the reactive form
+  readonly cities = ['Berlin', 'Oslo', 'Rome'];
+  /* oxlint-disable typescript/unbound-method -- Angular's validators are static functions */
+  readonly profile = new FormGroup({
+    fullName: new FormControl('', Validators.required),
+    city: new FormControl<string | null>(null, Validators.required),
+  });
+  /* oxlint-enable typescript/unbound-method */
 
   // the signal form
   readonly model = signal<Signup>({

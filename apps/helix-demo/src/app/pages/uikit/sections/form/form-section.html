@@ -87,44 +87,39 @@
   </div>
 
   <div class="card flex flex-col gap-3">
+    <h2 class="demo-title">Form field: reactive and template-driven</h2>
+    <p class="m-0">
+      <code>hx-field</code> renders the label, hint, error and required marker and wires
+      <code>aria-describedby</code> and <code>aria-invalid</code>. Leave a field to see its error.
+    </p>
+    <form class="fields" [formGroup]="profile">
+      <hx-field label="Full name" hint="As on your passport" error="Enter your name">
+        <input hx-input formControlName="fullName" />
+      </hx-field>
+      <hx-field label="City" error="Pick a city">
+        <hx-select formControlName="city" placeholder="Select a city" [options]="cities" />
+      </hx-field>
+    </form>
+    <div class="fields">
+      <hx-field label="Nickname" error="Enter a nickname">
+        <input hx-input required name="nickname" [(ngModel)]="nickname" />
+      </hx-field>
+    </div>
+  </div>
+
+  <div class="card flex flex-col gap-3">
     <h2 class="demo-title">A signal form</h2>
     <p class="m-0">
-      Angular signal forms (<code>form()</code>, <code>[formField]</code>) on the native controls:
-      validation messages are bound with <code>aria-invalid</code> and
-      <code>aria-describedby</code>.
+      Angular signal forms (<code>form()</code>, <code>[formField]</code>) in <code>hx-field</code>:
+      the message of the first error shows once the field is touched.
     </p>
-    <form class="flex flex-col gap-4" (submit)="send($event)" novalidate>
-      <div class="field">
-        <label for="su-name">Name</label>
-        <input
-          hx-input
-          id="su-name"
-          [formField]="signup.name"
-          [attr.aria-invalid]="signup.name().touched() && signup.name().invalid() ? 'true' : null"
-          aria-describedby="su-name-error"
-        />
-        <span class="error" id="su-name-error" aria-live="polite">
-          @if (signup.name().touched() && signup.name().errors()[0]; as e) {
-            {{ e.message }}
-          }
-        </span>
-      </div>
-      <div class="field">
-        <label for="su-email">Email</label>
-        <input
-          hx-input
-          id="su-email"
-          type="email"
-          [formField]="signup.email"
-          [attr.aria-invalid]="signup.email().touched() && signup.email().invalid() ? 'true' : null"
-          aria-describedby="su-email-error"
-        />
-        <span class="error" id="su-email-error" aria-live="polite">
-          @if (signup.email().touched() && signup.email().errors()[0]; as e) {
-            {{ e.message }}
-          }
-        </span>
-      </div>
+    <form class="fields" (submit)="send($event)" novalidate>
+      <hx-field label="Name">
+        <input hx-input [formField]="signup.name" />
+      </hx-field>
+      <hx-field label="Email" hint="We never share it">
+        <input hx-input type="email" [formField]="signup.email" />
+      </hx-field>
       <fieldset>
         <legend>Plan</legend>
         <label class="cell"
@@ -134,13 +129,12 @@
           ><input type="radio" hx-radio value="pro" [formField]="signup.plan" /> Pro</label
         >
       </fieldset>
-      <label class="cell"
-        ><input type="checkbox" hx-checkbox [formField]="signup.newsletter" /> Send me the
-        newsletter</label
-      >
-      <label class="cell"
-        ><input type="checkbox" hx-switch [formField]="signup.darkMode" /> Dark mode</label
-      >
+      <hx-field label="Send me the newsletter">
+        <input type="checkbox" hx-checkbox [formField]="signup.newsletter" />
+      </hx-field>
+      <hx-field label="Dark mode">
+        <input type="checkbox" hx-switch [formField]="signup.darkMode" />
+      </hx-field>
       <div class="flex gap-2 items-center">
         <button hx-button type="submit" [loading]="sending()">Sign up</button>
         @if (sent(); as s) {
