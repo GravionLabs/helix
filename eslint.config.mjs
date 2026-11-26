@@ -18,6 +18,8 @@ export default defineConfig(
       '.opencode/**',
       // deliberate violations, linted by scripts/tests/lint-probe.spec.ts
       'scripts/lint/probe/**',
+      // deliberate violations, linted by scripts/tests/lint-preset-template.spec.ts
+      'scripts/tests/fixtures/lint-preset/**',
     ],
   },
   {
