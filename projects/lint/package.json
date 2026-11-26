@@ -1,0 +1,38 @@
+{
+  "name": "@gravionlabs/helix-lint",
+  "version": "0.1.0",
+  "description": "Helix lint preset: Stylelint config and ESLint flat config with the helix template rules.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "helix",
+    "angular",
+    "stylelint",
+    "eslint",
+    "lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GravionLabs/helix.git",
+    "directory": "projects/lint"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular-eslint/template-parser": "^22",
+    "eslint": "^10",
+    "stylelint": "^18"
+  },
+  "exports": {
+    "./stylelint": "./stylelint.mjs",
+    "./eslint": "./eslint.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "stylelint.mjs",
+    "eslint.mjs",
+    "README.md",
+    "LICENSE.md"
+  ]
+}
