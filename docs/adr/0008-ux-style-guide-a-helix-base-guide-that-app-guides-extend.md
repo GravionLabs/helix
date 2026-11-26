@@ -18,7 +18,7 @@ screen is put together:
   from templates, but each project gets a full copy. No app has one yet.
 - The inventory of 2026-11-26 shows what fills the gap. Nixe has 167 of 181 buttons and all 44 inputs as
   hand-styled native elements, 16 stylesheets with their own control look and 9 px font sizes. Poimen has all 28
-  selects raw. The *Clone vault* dialog in nixe has an unlabelled field, two buttons of equal weight and a disabled
+  selects raw. The _Clone vault_ dialog in nixe has an unlabelled field, two buttons of equal weight and a disabled
   primary action without a reason.
 - Helix has no type scale tokens, no form field and no list row, so apps hand-build exactly these (#1206).
 - An agent writes most of the UI code. It follows what it is pointed at: a guide in the repository, linked from
