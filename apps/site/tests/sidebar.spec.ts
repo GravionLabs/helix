@@ -75,6 +75,10 @@ describe('the guides of the sidebar', () => {
     expect(guides).toContainEqual({ text: 'UX color', link: '/styleguide/color' });
     expect(guides).toContainEqual({ text: 'UX platform', link: '/styleguide/platform' });
     expect(guides).toContainEqual({ text: 'UX rules', link: '/styleguide/ux-rules' });
+    expect(guides).toContainEqual({
+      text: 'UX review rubric',
+      link: '/styleguide/ux-review-rubric',
+    });
   });
 
   it('links every guide to an existing file', () => {

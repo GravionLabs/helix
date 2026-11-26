@@ -81,6 +81,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
   the scale) and the template rule `helix/no-raw-control`.
 - Every exception is a `helixAllow` entry with a reason.
 - What lint cannot check is reviewed; a review finding blocks only when an acceptance criterion names it.
+- Read [ux-review-rubric.md](ux-review-rubric.md) when you review a UI change: its questions and fixed output.
 
 ## How app guides extend this guide
 
