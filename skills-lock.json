@@ -1,14 +1,6 @@
 {
   "version": 2,
   "skills": {
-    "angular-developer": {
-      "source": "angular/skills",
-      "ref": "d422d3c17e27c9860f3df91b6e617ad80970ba05",
-      "sourceType": "github",
-      "skillPath": "angular-developer/SKILL.md",
-      "computedHash": "c3fe0b393345c673eb7e1c329727728e1dc7716ddfa9a2bd97b67e7f4e974222",
-      "commit": "d422d3c17e27c9860f3df91b6e617ad80970ba05"
-    },
     "ng-ag-grid": {
       "source": "GravionLabs/skills",
       "sourceType": "github",

@@ -85,7 +85,7 @@ jobs:
       # id-token: write permission) — no NPM_TOKEN secret needed, and no auth
       # token is configured below on purpose. This requires a one-time setup
       # on npmjs.com per package — for each of @gravionlabs/helix-ui,
-      # helix-shell, helix-zod, helix-ag-grid, helix-desktop, helix-code: Settings → Trusted Publisher →
+      # helix-shell, helix-zod, helix-ag-grid, helix-desktop, helix-code, helix-lint: Settings → Trusted Publisher →
       # GitHub Actions → owner GravionLabs, repo helix, workflow ci.yml. Until
       # that's configured for a given package, its publish step below 404s /
       # 401s with no trusted publisher found — configuring it is a manual,
@@ -99,13 +99,13 @@ jobs:
       - name: Set package versions
         run: |
           set -euo pipefail
-          for dir in ui shell zod ag-grid desktop code; do
+          for dir in ui shell zod ag-grid desktop code lint; do
             npm --prefix "./$dir" version "${{ needs.determine-version.outputs.npm-version }}" --no-git-tag-version --allow-same-version
           done
 
       # Skips a package whose version is already on npm, so a re-run after a partial publish completes (#1107).
       - name: Publish packages
-        run: node scripts/publish-packages.mjs "${{ needs.determine-version.outputs.npm-version }}" ui shell zod ag-grid desktop code
+        run: node scripts/publish-packages.mjs "${{ needs.determine-version.outputs.npm-version }}" ui shell zod ag-grid desktop code lint
 
   release:
     name: Release
