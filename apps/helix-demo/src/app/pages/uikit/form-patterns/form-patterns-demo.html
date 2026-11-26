@@ -1,0 +1,78 @@
+<h1 class="sr-only">Form patterns</h1>
+<app-source-tabs library="helix-ui" directory="form-patterns" componentName="form-patterns-demo">
+  <div class="card">
+    <h2 class="demo-title">Form dialog</h2>
+    <p class="intro">
+      A dialog that follows the form and dialog rules of the UX style guide. Press Clone with an
+      empty field to see the errors.
+    </p>
+    <button hx-button type="button" (click)="show()">Clone vault…</button>
+  </div>
+
+  <hx-dialog
+    header="Clone vault"
+    size="md"
+    [visible]="open()"
+    (visibleChange)="open.set($event)"
+    [closable]="!form.dirty"
+    [closeOnEscape]="!form.dirty"
+  >
+    <form id="clone-vault-form" class="form" [formGroup]="form" (ngSubmit)="clone()">
+      <hx-field
+        label="Repository URL"
+        hint="HTTPS or SSH"
+        [error]="form.controls.url.errors?.['Required']"
+        required
+      >
+        <input hx-input formControlName="url" autocomplete="off" spellcheck="false" />
+      </hx-field>
+
+      <div class="path-picker">
+        <label for="clone-vault-folder">Target folder</label>
+        <hx-input-group>
+          <input
+            hx-input
+            id="clone-vault-folder"
+            formControlName="folder"
+            readonly
+            aria-required="true"
+            [attr.aria-invalid]="folderError() ? 'true' : null"
+            [attr.aria-describedby]="folderError() ? 'clone-vault-folder-error' : null"
+          />
+          <button
+            hx-button
+            type="button"
+            severity="secondary"
+            [disabled]="saving()"
+            (click)="browse()"
+          >
+            Browse…
+          </button>
+        </hx-input-group>
+        @if (folderError(); as error) {
+          <hx-message id="clone-vault-folder-error" severity="error" variant="simple" size="small">
+            {{ error }}
+          </hx-message>
+        }
+      </div>
+    </form>
+
+    <button
+      hxDialogFooter
+      hx-button
+      type="button"
+      variant="text"
+      severity="secondary"
+      [disabled]="saving()"
+      (click)="cancel()"
+    >
+      Cancel
+    </button>
+    <button hxDialogFooter hx-button type="submit" form="clone-vault-form" [loading]="saving()">
+      Clone
+    </button>
+  </hx-dialog>
+
+  <hx-confirm-dialog />
+  <hx-toast />
+</app-source-tabs>

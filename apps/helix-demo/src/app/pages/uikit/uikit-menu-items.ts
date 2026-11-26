@@ -7,6 +7,7 @@ import type { HelixRouteMenuItem } from '@gravionlabs/helix-shell';
  */
 export const UIKIT_MENU_ITEMS: HelixRouteMenuItem[] = [
   { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', path: 'formlayout' },
+  { label: 'Form patterns', icon: 'pi pi-fw pi-check-circle', path: 'form-patterns' },
   { label: 'Dynamic Form', icon: 'pi pi-fw pi-sliders-h', path: 'dynamicform' },
   { label: 'Dynamic Form Advanced', icon: 'pi pi-fw pi-star', path: 'dynamicform-advanced' },
   { label: 'Dynamic Form JSON', icon: 'pi pi-fw pi-database', path: 'dynamicform-json' },

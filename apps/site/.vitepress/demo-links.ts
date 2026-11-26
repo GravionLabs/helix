@@ -41,6 +41,11 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
   'uikit/misc': ['avatar', 'badge', 'chip', 'progress', 'skeleton', 'tag'],
 };
 
+/** The demo page that runs the example of a guide: `{ guide page, relative to `docs`: demo route }`. */
+export const GUIDE_DEMO_ROUTES: Readonly<Record<string, string>> = {
+  'styleguide/form-patterns.md': 'uikit/form-patterns',
+};
+
 /** The demo route that shows a component page (`button`), or null when there is none. */
 export function demoRouteOf(component: string): string | null {
   for (const [route, components] of Object.entries(DEMO_ROUTES)) {
@@ -53,6 +58,14 @@ export function demoRouteOf(component: string): string | null {
 export function demoLinkOf(component: string, base: string): string | null {
   const route = demoRouteOf(component);
   return route ? `${base}demo/${route}` : null;
+}
+
+/** The address of the demo of a page of the site (`components/button.md`), or null. */
+function pageDemoLinkOf(path: string, base: string): string | null {
+  const guide = GUIDE_DEMO_ROUTES[path];
+  if (guide) return `${base}demo/${guide}`;
+  const component = /^components\/([^/]+)\.md$/.exec(path)?.[1];
+  return component ? demoLinkOf(component, base) : null;
 }
 
 interface Token {
@@ -70,13 +83,12 @@ interface Markdown {
 }
 
 /**
- * Site only: under the title of a component page, "Open in the demo" links to the demo page that shows it.
+ * Site only: under the title of a component page or of a guide with an example, "Open in the demo" links to the demo page that shows it.
  * The Markdown stays plain for GitHub, which has no demo.
  */
 export function demoLinksPlugin(md: Markdown, base: string): void {
   md.core.ruler.push('helix_demo_links', (state) => {
-    const page = /^components\/([^/]+)\.md$/.exec(state.env.relativePath ?? '')?.[1];
-    const href = page ? demoLinkOf(page, base) : null;
+    const href = pageDemoLinkOf(state.env.relativePath ?? '', base);
     if (!href) return;
     const at = state.tokens.findIndex((t) => t.type === 'heading_close');
     if (at < 0) return;
