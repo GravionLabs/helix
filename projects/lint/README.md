@@ -12,4 +12,35 @@ The lint preset of Helix: a Stylelint config and an ESLint flat config that enfo
 pnpm add -D @gravionlabs/helix-lint
 ```
 
-The package is in development: both configs are empty placeholders. Usage follows in #1214.
+## Stylelint
+
+| Rule                                      | Result                                                      |
+| ----------------------------------------- | ----------------------------------------------------------- |
+| `color-no-hex`                            | no hex colors                                               |
+| `function-disallowed-list`                | no `rgb()`, `rgba()`, `hsl()` or `hsla()`                   |
+| `declaration-property-value-allowed-list` | `font-size` only from the type scale, a keyword or a `calc` |
+
+Allowed as `font-size`: `var(--h-font-size-*)`, `inherit`, `initial`, `unset`, `revert`, `smaller`, `larger`, and
+`calc()` or `clamp()` over `--h-font-size-*` tokens and unitless numbers. Every other `var()`, component tokens
+included, is reported.
+
+The preset sets no `extends` and no formatting rules; add it next to your base config. `helixAllow` writes an
+exception as an `overrides` entry. It throws without `files`, `rules` or a `reason`.
+
+```js
+// stylelint.config.mjs
+import { helixAllow } from '@gravionlabs/helix-lint/stylelint';
+
+export default {
+  extends: ['stylelint-config-standard-scss', '@gravionlabs/helix-lint/stylelint'],
+  overrides: [
+    helixAllow({
+      files: ['src/app/legacy/**'],
+      rules: ['declaration-property-value-allowed-list'],
+      reason: 'Off-scale sizes until the legacy screens move to the type scale',
+    }),
+  ],
+};
+```
+
+The package is in development: the ESLint config is an empty placeholder (#1213).

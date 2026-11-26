@@ -26,7 +26,7 @@ describe('@gravionlabs/helix-lint package', () => {
     expect(Object.keys(pkg.exports)).toEqual(expect.arrayContaining(['./stylelint', './eslint']));
   });
 
-  it('build copies the package to the out dir with valid placeholder entries', async () => {
+  it('build copies the package to the out dir with importable entries', async () => {
     out = join(mkdtempSync(join(tmpdir(), 'helix-lint-')), 'lint');
     buildLint(src, out);
     for (const file of ['package.json', 'README.md', 'LICENSE.md']) {
@@ -35,7 +35,7 @@ describe('@gravionlabs/helix-lint package', () => {
     const stylelint = (await import(pathToFileURL(join(out, pkg.exports['./stylelint'])).href))
       .default;
     const eslint = (await import(pathToFileURL(join(out, pkg.exports['./eslint'])).href)).default;
-    expect(stylelint).toEqual({});
+    expect(Object.keys(stylelint.rules)).toContain('color-no-hex');
     expect(eslint).toEqual([]);
   });
 
