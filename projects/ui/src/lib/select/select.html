@@ -6,14 +6,15 @@
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
   aria-haspopup="listbox"
-  [attr.id]="inputId() ?? null"
+  [attr.id]="inputId() ?? field()?.controlId ?? null"
   [disabled]="isDisabled()"
   [attr.aria-expanded]="open()"
   [attr.aria-controls]="open() ? panelId : null"
   [attr.aria-label]="ariaLabel() ?? null"
   [attr.aria-labelledby]="ariaLabelledby() ?? null"
-  [attr.aria-describedby]="ariaDescribedby() ?? null"
-  [attr.aria-invalid]="invalid() ? 'true' : null"
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-invalid]="showsInvalid() ? 'true' : null"
+  [attr.aria-required]="field()?.isRequired() ? 'true' : null"
   (click)="toggle()"
   (keydown)="onTriggerKeydown($event)"
 >

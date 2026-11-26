@@ -41,17 +41,21 @@ checkbox; use it for a setting that takes effect immediately and name the settin
 
 ### Labels, invalid state, messages
 
-- Give every control a visible `<label>` (wrap the control in it, or use `for`/`id`); a placeholder is a hint.
-- The invalid look comes from `aria-invalid="true"` and from Angular's `ng-invalid ng-touched` classes, so
-  reactive and template-driven forms need nothing more. With signal forms, bind it yourself and point the
-  control at its message:
+Put the control in an [`hx-field`](form-field.md): it renders the label, the hint, the error and the required
+marker and wires `id`/`for`, `aria-describedby`, `aria-invalid` and `aria-required` in template-driven,
+reactive and signal forms.
 
 ```html
-<input hx-input id="email" type="email" [formField]="form.email"
-       [attr.aria-invalid]="form.email().touched() && form.email().invalid() ? 'true' : null"
-       aria-describedby="email-error" />
-<span id="email-error" aria-live="polite">@if (form.email().touched()) { {{ form.email().errors()[0]?.message }} }</span>
+<hx-field label="Email">
+  <input hx-input type="email" [formField]="form.email" />
+</hx-field>
 ```
+
+Without a field (a table cell, a label that wraps its checkbox):
+
+- Give every control a visible `<label>` (wrap the control in it, or use `for`/`id`) or an `aria-label`; a
+  placeholder is a hint.
+- The invalid look comes from `aria-invalid="true"` and from Angular's `ng-invalid ng-touched` classes.
 
 The demo page "Helix UI Form" shows all of this, including a signal form with
 `required`, `minLength` and `email` validators and a loading submit button.
