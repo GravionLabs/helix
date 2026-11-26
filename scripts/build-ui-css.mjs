@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// The CSS of @gravionlabs/helix-ui (#541): dist/ui/styles.css, dist/ui/core.css and dist/ui/tokens.css.
+// The CSS of @gravionlabs/helix-ui (#541): dist/ui/styles.css, dist/ui/core.css and dist/ui/tokens.css; it also
+// copies the UX style guide to dist/ui/styleguide/ (scripts/build-styleguide.mjs).
 //
 //   styles.css  projects/ui/styles/*.scss (compiled to plain CSS), one file per component, in a `components` cascade layer:
 //               an application's unlayered CSS and Tailwind's `utilities` layer win over it, so a
@@ -17,6 +18,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
 import { helixTokens } from '../projects/tokens/src/index.ts';
+import { buildStyleguide } from './build-styleguide.mjs';
 import { DARK_SELECTOR } from './export-tokens.mjs';
 import { resolveTokens } from './tokens/resolve.mjs';
 
@@ -201,12 +203,13 @@ export function undefinedVariables(styles, tokens) {
   return [...used].filter((v) => !defined.has(v)).sort();
 }
 
-/** Adds `./styles.css`, `./core.css` and `./tokens.css` to the exports map of dist/ui (the library builder knows only the TS entry). */
-export function addCssExports(dist = OUT) {
+/** Adds the stylesheets and `./styleguide/*` to the exports map of dist/ui (the library builder knows only the TS entry). */
+export function addAssetExports(dist = OUT) {
   const file = path.join(dist, 'package.json');
   const pkg = JSON.parse(fs.readFileSync(file, 'utf8'));
   pkg.exports ??= {};
   for (const name of ['styles.css', 'core.css', 'tokens.css']) pkg.exports[`./${name}`] = `./${name}`;
+  pkg.exports['./styleguide/*'] = './styleguide/*';
   fs.writeFileSync(file, `${JSON.stringify(pkg, null, 2)}\n`);
 }
 
@@ -224,9 +227,11 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   fs.writeFileSync(path.join(OUT, 'styles.css'), stylesCss);
   fs.writeFileSync(path.join(OUT, 'core.css'), coreCss);
   fs.writeFileSync(path.join(OUT, 'tokens.css'), tokensCss);
-  if (fs.existsSync(path.join(OUT, 'package.json'))) addCssExports(OUT);
+  const guide = buildStyleguide(OUT);
+  if (fs.existsSync(path.join(OUT, 'package.json'))) addAssetExports(OUT);
   const kB = (css) => `${(Buffer.byteLength(css) / 1024).toFixed(1)} kB`;
   console.log(
     `dist/ui (raw): styles.css ${kB(stylesCss)} (${styles.length} stylesheets), core.css ${kB(coreCss)} (${CORE_COMPONENTS.length} stylesheets), tokens.css ${kB(tokensCss)}`,
   );
+  console.log(`dist/ui/styleguide: ${guide.join(', ')}`);
 }
