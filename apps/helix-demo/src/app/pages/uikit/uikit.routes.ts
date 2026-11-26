@@ -9,6 +9,7 @@ import { DynamicFormAdvancedDemo } from './dynamicform-advanced/dynamic-form-adv
 import { RatingWidget } from './dynamicform-advanced/rating-widget';
 import { DynamicFormJsonDemo } from './dynamicform-json/dynamic-form-json-demo';
 import { FileDemo } from './file/file-demo';
+import { FormPatternsDemo } from './form-patterns/form-patterns-demo';
 import { FormLayoutDemo } from './formlayout/form-layout-demo';
 import { InputDemo } from './input/input-demo';
 import { ListDemo } from './list/list-demo';
@@ -33,6 +34,7 @@ const COMPONENTS: Record<string, Type<unknown>> = {
   'dynamicform-json': DynamicFormJsonDemo,
   file: FileDemo,
   formlayout: FormLayoutDemo,
+  'form-patterns': FormPatternsDemo,
   input: InputDemo,
   list: ListDemo,
   media: MediaDemo,

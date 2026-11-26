@@ -52,6 +52,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
   build a component.
 - A modal decision is an [`hx-dialog`](../components/dialog.md) with its actions in `hxDialogFooter`.
 - Read [dialogs.md](dialogs.md) when you add or change a dialog or a confirmation.
+- Read [form-patterns.md](form-patterns.md) when you build a dialog with a form: a complete example.
 - An icon-only `hx-button` (`iconOnly`) has an `aria-label` and an `hx-tooltip`.
 - Hover, focus, active and disabled states are the component's; the app sets `disabled`, it draws no state itself.
 

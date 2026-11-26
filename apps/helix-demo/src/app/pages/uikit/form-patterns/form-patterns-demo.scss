@@ -1,0 +1,16 @@
+.intro {
+  margin: 0 0 var(--h-space-4);
+  color: var(--h-text-muted-color);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-space-4);
+}
+
+.path-picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-space-1);
+}

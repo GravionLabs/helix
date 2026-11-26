@@ -1,6 +1,12 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { DEMO_ROUTES, demoLinkOf, demoLinksPlugin, demoRouteOf } from '../.vitepress/demo-links';
+import {
+  DEMO_ROUTES,
+  demoLinkOf,
+  demoLinksPlugin,
+  demoRouteOf,
+  GUIDE_DEMO_ROUTES,
+} from '../.vitepress/demo-links';
 
 const repo = resolve(__dirname, '../../..');
 
@@ -36,6 +42,13 @@ describe('DEMO_ROUTES', () => {
       .flat()
       .filter((c) => !pages.has(c));
     expect(unknown).toEqual([]);
+  });
+
+  it('only maps guides that exist to routes that exist in the demo', () => {
+    for (const [page, route] of Object.entries(GUIDE_DEMO_ROUTES)) {
+      expect(existsSync(resolve(repo, 'docs', page)), page).toBe(true);
+      expect(demoRoutes).toContain(route);
+    }
   });
 
   it('links the chart docs to the first chart demo page', () => {
@@ -102,6 +115,11 @@ describe('demoLinksPlugin', () => {
     expect(tokens[3].content).toContain('href="/helix/demo/uikit/button"');
     expect(tokens[3].content).toContain('Open in the demo');
     expect(tokens).toHaveLength(5);
+  });
+
+  it('adds the link to the Form patterns guide', () => {
+    const tokens = run('styleguide/form-patterns.md');
+    expect(tokens[3].content).toContain('href="/helix/demo/uikit/form-patterns"');
   });
 
   it('leaves other pages and components without a demo alone', () => {
