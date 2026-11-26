@@ -27,6 +27,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - A view or dialog has at most one filled primary `hx-button`; `danger` is for destructive actions, never for Cancel.
 - The focus ring tokens mark focus only.
 - A status is never color alone: an `hx-tag` has a text, an `hx-message` keeps its icon and a text.
+- Read [color.md](color.md) when you set a color in app CSS, show a status or pick a `severity`.
 
 ## Typography and spacing
 
@@ -47,6 +48,8 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - A text input, checkbox, radio, switch or `hx-select` of a form sits in an [`hx-field`](../components/form-field.md)
   with a `label`.
 - Read [forms.md](forms.md) when you add or change a form.
+- Read [components.md](components.md) when you add or change a button, a list or any other control, or before you
+  build a component.
 - A modal decision is an [`hx-dialog`](../components/dialog.md) with its actions in `hxDialogFooter`.
 - Read [dialogs.md](dialogs.md) when you add or change a dialog or a confirmation.
 - An icon-only `hx-button` (`iconOnly`) has an `aria-label` and an `hx-tooltip`.
@@ -70,6 +73,8 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - Every action is a native control (`hx-button`, `[hx-list-row]`, an `hx-menu` item), so it works from the keyboard.
 - A shown shortcut is implemented: `hxTooltipShortcut` or [`hx-kbd`](../components/kbd.md) with the keys of the
   user's platform, and `aria-keyshortcuts` on the control.
+- Read [platform.md](platform.md) when you show or handle a shortcut, write CSS for a desktop app, or change a Tauri
+  app on Linux (WebKitGTK) or Windows (WebView2).
 
 ## Enforcement
 
@@ -77,6 +82,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
   the scale) and the template rule `helix/no-raw-control`.
 - Every exception is a `helixAllow` entry with a reason.
 - What lint cannot check is reviewed; a review finding blocks only when an acceptance criterion names it.
+- Read [ux-review-rubric.md](ux-review-rubric.md) when you review a UI change: its questions and fixed output.
 
 ## How app guides extend this guide
 

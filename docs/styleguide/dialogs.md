@@ -22,13 +22,14 @@ The actions of a dialog are `hx-button`s in the footer.
 
 - Each button has the `hxDialogFooter` attribute itself. No wrapper element holds them: `--h-dialog-footer-gap` spaces
   only the direct children of the footer.
-- A footer has exactly one primary action: the one `hx-button` of the filled `variant` (the default). Every other
-  button is `variant="text"` or `variant="outlined"`.
+- A footer has exactly one primary action: the one `hx-button` with the filled `variant` and the `primary` severity
+  (both the defaults). Every other button takes the `variant` and `severity` of its job in the
+  [button hierarchy](components.md#button-hierarchy), so none of them is `primary` and filled.
 - Order in the template, which is the order on screen: secondary actions first, the primary action last.
-- Cancel is `severity="secondary"`, never `danger`.
-- A destructive action is `severity="danger"` and names what it does ("Delete"). Next to another primary action it is
-  `variant="text"` and the first button of the footer, so Cancel stands between it and the primary action. A dialog
-  whose primary action is destructive is a [confirmation](#confirmations).
+- Cancel is `variant="text"` and `severity="secondary"`, never `danger`.
+- A destructive action is `severity="danger"` and names what it does ("Delete"). Next to a primary action it is
+  `variant="outlined"` and the first button of the footer, so Cancel stands between it and the primary action. A
+  dialog whose main action is destructive is a [confirmation](#confirmations).
 - Every button but a submit button is `type="button"`.
 - The gap above the footer is the bottom of `--h-dialog-content-padding`. The app adds no margin, padding or spacer
   between content and footer.
@@ -49,8 +50,8 @@ The actions of a dialog are `hx-button`s in the footer.
 ## Default focus
 
 `hx-dialog` focuses the element with `cdkFocusInitial`; without one, the first element in the dialog that can be
-tabbed to, in DOM order: content, footer, close button. It focuses the dialog itself when there is none, and gives the
-focus back when it closes.
+tabbed to, in DOM order: header, content, footer, close button. It focuses the dialog itself when there is none, and
+gives the focus back when it closes.
 
 - A dialog with a form starts on its first field: the field is the first tabbable element of the content, so the app
   does nothing. If a link or button comes before it, the field has `cdkFocusInitial`.
@@ -112,6 +113,8 @@ async cancel(): Promise<void> {
 
 ADR 0008, decision 3: what Helix does not carry is no rule here.
 
-- `hx-dialog` does not ask before Escape or the close button discard changes; they are off instead.
-- The footer has no separate place at its start for a destructive action.
-- `HxDialogService` has no footer and no `size`.
+- `hx-dialog` does not ask before Escape or the close button discard changes; they are off instead:
+  [#1253](https://github.com/GravionLabs/helix/issues/1253).
+- The footer has no separate place at its start for a destructive action:
+  [#1255](https://github.com/GravionLabs/helix/issues/1255).
+- `HxDialogService` has no footer and no `size`: [#1254](https://github.com/GravionLabs/helix/issues/1254).
