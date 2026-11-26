@@ -42,6 +42,7 @@ import { inputtext } from './inputtext.ts';
 import { kbd } from './kbd.ts';
 import { knob } from './knob.ts';
 import { listbox } from './listbox.ts';
+import { listRow } from './listrow.ts';
 import { megamenu } from './megamenu.ts';
 import { menu } from './menu.ts';
 import { menubar } from './menubar.ts';
@@ -134,6 +135,7 @@ export const components = {
   kbd,
   knob,
   listbox,
+  listRow,
   megamenu,
   menu,
   menubar,

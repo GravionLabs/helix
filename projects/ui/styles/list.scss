@@ -1,0 +1,112 @@
+/*
+ * List and list rows: `<hx-list>` with `[hx-list-row]` buttons and links, from the `--h-list-row-*` tokens. A row
+ * holds a leading `.hx-list-row-icon`, a `.hx-list-row-label` that truncates and a trailing `.hx-list-row-meta`
+ * (text or badge). The tokens are rem based, so the compact density scales the rows.
+ */
+.hx-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--h-list-row-list-gap);
+  min-width: 0;
+}
+
+.hx-list-row {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--h-list-row-gap);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: var(--h-list-row-padding-y) var(--h-list-row-padding-x);
+  border: 0 none;
+  border-radius: var(--h-list-row-border-radius);
+  background: var(--h-list-row-background);
+  color: var(--h-list-row-color);
+  font: inherit;
+  font-size: var(--h-list-row-font-size);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* the author `display` above would otherwise win over the `hidden` attribute */
+.hx-list-row[hidden] {
+  display: none;
+}
+
+:where(.hx-list-row-icon) {
+  flex: none;
+  color: var(--h-list-row-icon-color);
+}
+
+.hx-list-row-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* no specificity (`:where`), so a badge or tag used as the meta keeps its own colour and size */
+:where(.hx-list-row-meta) {
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--h-list-row-meta-color);
+  font-size: var(--h-list-row-meta-font-size);
+}
+
+.hx-list-row:hover {
+  background: var(--h-list-row-hover-background);
+  color: var(--h-list-row-hover-color);
+}
+
+/* current: an accent bar at the start edge and a heavier label */
+.hx-list-row-current {
+  background: var(--h-list-row-current-background);
+  color: var(--h-list-row-current-color);
+  box-shadow: inset var(--h-list-row-current-indicator-width) 0 0
+    var(--h-list-row-current-indicator-color);
+  font-weight: var(--h-list-row-current-font-weight);
+}
+
+.hx-list-row-current:dir(rtl) {
+  box-shadow: inset calc(-1 * var(--h-list-row-current-indicator-width)) 0 0
+    var(--h-list-row-current-indicator-color);
+}
+
+.hx-list-row-selected {
+  background: var(--h-list-row-selected-background);
+  color: var(--h-list-row-selected-color);
+}
+
+.hx-list-row-selected:hover {
+  background: var(--h-list-row-selected-hover-background);
+  color: var(--h-list-row-selected-hover-color);
+}
+
+/* on a state background the muted colours would lose contrast: icon and meta follow the row */
+:where(.hx-list-row:is(:hover, .hx-list-row-current, .hx-list-row-selected))
+  > :where(.hx-list-row-icon, .hx-list-row-meta) {
+  color: inherit;
+}
+
+.hx-list-row:focus-visible {
+  outline: var(--h-list-row-focus-ring-width) var(--h-list-row-focus-ring-style)
+    var(--h-list-row-focus-ring-color);
+  outline-offset: var(--h-list-row-focus-ring-offset);
+}
+
+.hx-list-row:disabled,
+.hx-list-row[aria-disabled='true'] {
+  opacity: var(--h-list-row-disabled-opacity);
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .hx-list-row-selected {
+    border: 1px solid Highlight;
+  }
+}

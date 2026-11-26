@@ -25,6 +25,7 @@ export const DEMO_ROUTES: Readonly<Record<string, readonly string[]>> = {
     'toggle-button',
   ],
   'uikit/button': ['button', 'button-group', 'split-button'],
+  'uikit/list': ['list-row'],
   'uikit/tree': ['tree'],
   'uikit/data-table': ['data-table'],
   'uikit/table': ['table'],

@@ -60,6 +60,7 @@ describe('helix-ui styles', () => {
     ['drawer', 'drawer/drawer.ts'],
     ['fieldset', 'fieldset/fieldset.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
+    ['list', 'list/list.ts'],
     ['listbox', 'listbox/listbox.ts'],
     ['menu', 'menu/menu.ts'],
     ['menu', 'menu/menu-panel.ts'],
@@ -111,6 +112,23 @@ describe('helix-ui styles', () => {
         c,
         styled: true,
       });
+    }
+  });
+});
+
+describe('list rows', () => {
+  it('colours the meta slot without specificity, so a badge in it keeps its own colours', () => {
+    const css = (componentStyles().find((s) => s.name === 'list')?.css ?? '').replace(
+      /\/\*[\s\S]*?\*\//g,
+      '',
+    );
+    const selectors = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .filter(([, selector, body]) => selector.includes('-meta') && /(?<![\w-])color:/.test(body))
+      .map(([, selector]) => selector.trim());
+    expect(selectors).toHaveLength(2);
+    // every compound selector of both rules sits inside `:where()`
+    for (const selector of selectors) {
+      expect(selector).toMatch(/^:where\([\s\S]*\)(\s*>\s*:where\([^)]*\))?$/);
     }
   });
 });

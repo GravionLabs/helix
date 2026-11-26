@@ -18,6 +18,7 @@ that status line and links to later records.
 | [0009](0009-type-scale-spacing-form-field-list-row-and-lint-preset.md)       | Type scale, spacing, form field, list row and lint preset                                | accepted |
 | [0010](0010-component-tokens-reference-the-type-and-spacing-steps.md)        | Component tokens reference the type and spacing steps                                    | proposed |
 | [0011](0011-hx-field-wiring-context-and-error-visibility.md)                 | How `hx-field` wires a control and when it shows the error                               | proposed |
+| [0012](0012-list-row-roles-tab-stop-and-selected-state.md)                   | Roles, tab stop and selected state of `hx-list`                                          | proposed |
 
 Template:
 

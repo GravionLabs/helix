@@ -160,6 +160,7 @@ export {
   hxResolveRangeSide,
 } from './lib/internal/quick-select/quick-select';
 export { HxKbd, type HxKbdSeparator, type HxKbdSize } from './lib/kbd/kbd';
+export { HxList, type HxListRole, HxListRow, type HxListRowCurrent } from './lib/list/list';
 export { HxListbox } from './lib/listbox/listbox';
 export { HxMenu, type HxMenuPoint } from './lib/menu/menu';
 export type { HxMenuItem, HxMenuItemCommandEvent } from './lib/menu-item';

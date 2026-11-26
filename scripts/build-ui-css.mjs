@@ -53,6 +53,7 @@ export const TOKEN_COMPONENTS = {
   image: ['image'],
   kbd: ['kbd'],
   input: ['inputtext', 'textarea'],
+  list: ['listRow'],
   listbox: ['listbox', 'inputtext'],
   menu: ['menu', 'tieredmenu'],
   menubar: ['menubar'],
