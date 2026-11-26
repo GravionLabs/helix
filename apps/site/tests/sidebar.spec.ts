@@ -71,6 +71,7 @@ describe('the guides of the sidebar', () => {
   it('lists the UX style guide and the UX rules in its folder', () => {
     expect(guides).toContainEqual({ text: 'UX style guide', link: '/styleguide/STYLEGUIDE' });
     expect(guides).toContainEqual({ text: 'UX forms', link: '/styleguide/forms' });
+    expect(guides).toContainEqual({ text: 'UX dialogs', link: '/styleguide/dialogs' });
     expect(guides).toContainEqual({ text: 'UX components', link: '/styleguide/components' });
     expect(guides).toContainEqual({ text: 'UX color', link: '/styleguide/color' });
     expect(guides).toContainEqual({ text: 'UX platform', link: '/styleguide/platform' });

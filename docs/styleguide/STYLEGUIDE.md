@@ -51,6 +51,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - Read [components.md](components.md) when you add or change a button, a list or any other control, or before you
   build a component.
 - A modal decision is an [`hx-dialog`](../components/dialog.md) with its actions in `hxDialogFooter`.
+- Read [dialogs.md](dialogs.md) when you add or change a dialog or a confirmation.
 - An icon-only `hx-button` (`iconOnly`) has an `aria-label` and an `hx-tooltip`.
 - Hover, focus, active and disabled states are the component's; the app sets `disabled`, it draws no state itself.
 

@@ -1,7 +1,7 @@
 # Forms
 
 Deep dive of the [UX style guide](STYLEGUIDE.md): read it when you add or change a form. It says how a form is
-built from Helix parts. Dialog layout is not part of it.
+built from Helix parts. Dialog layout is in [dialogs.md](dialogs.md).
 
 ## Field anatomy
 

@@ -6,10 +6,8 @@ returns its result.
 ```html
 <hx-dialog [(visible)]="open" header="Edit profile" size="md">
   <input hx-input [(ngModel)]="name" aria-label="Name" />
-  <div hxDialogFooter>
-    <button hx-button variant="text" (click)="open = false">Cancel</button>
-    <button hx-button (click)="save()">Save</button>
-  </div>
+  <button hxDialogFooter hx-button type="button" variant="text" severity="secondary" (click)="open = false">Cancel</button>
+  <button hxDialogFooter hx-button type="button" (click)="save()">Save</button>
 </hx-dialog>
 ```
 
