@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { componentGroups, componentPagesOf, sidebarOf } from '../.vitepress/sidebar';
 
@@ -68,11 +68,16 @@ describe('the guides of the sidebar', () => {
     expect(guides).toContainEqual({ text: 'Lint preset', link: '/LINT' });
   });
 
+  it('lists the UX style guide and the UX rules in its folder', () => {
+    expect(guides).toContainEqual({ text: 'UX style guide', link: '/styleguide/STYLEGUIDE' });
+    expect(guides).toContainEqual({ text: 'UX rules', link: '/styleguide/ux-rules' });
+  });
+
   it('links every guide to an existing file', () => {
     const missing = guides
       .map((g) => g.link)
       .filter((l) => l !== '/' && l !== '/components/')
-      .filter((l) => !readdirSync(docs).includes(`${l.slice(1)}.md`));
+      .filter((l) => !existsSync(resolve(docs, `${l.slice(1)}.md`)));
     expect(missing).toEqual([]);
   });
 });

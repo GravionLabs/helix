@@ -1,6 +1,6 @@
 # Helix lint preset (`@gravionlabs/helix-lint`)
 
-The lint preset enforces the part of the [UX rules](UX-RULES.md) a linter can check: colors and font sizes come from
+The lint preset enforces the part of the [UX rules](styleguide/ux-rules.md) a linter can check: colors and font sizes come from
 the tokens, and a raw control in a template needs its Helix directive or component. It is a Stylelint config and an
 ESLint flat config ([ADR 0009](adr/0009-type-scale-spacing-form-field-list-row-and-lint-preset.md)). Helix lints
 itself with it.
