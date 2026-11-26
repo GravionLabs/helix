@@ -27,6 +27,7 @@ A deviation needs a reason in the PR. Names are those of `@gravionlabs/helix-ui`
 - A view or dialog has at most one filled primary `hx-button`; `danger` is for destructive actions, never for Cancel.
 - The focus ring tokens mark focus only.
 - A status is never color alone: an `hx-tag` has a text, an `hx-message` keeps its icon and a text.
+- Read [color.md](color.md) when you set a color in app CSS, show a status or pick a `severity`.
 
 ## Typography and spacing
 
