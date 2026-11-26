@@ -10,6 +10,15 @@ export const dialog = {
     borderRadius: '{overlay.modal.border.radius}',
     shadow: '{overlay.modal.shadow}',
   },
+  sm: {
+    width: '24rem',
+  },
+  md: {
+    width: '32rem',
+  },
+  lg: {
+    width: '56rem',
+  },
   header: {
     padding: '{overlay.modal.padding}',
     gap: '{space.2}',
