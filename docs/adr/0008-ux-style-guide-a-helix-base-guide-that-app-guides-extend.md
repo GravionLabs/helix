@@ -2,7 +2,7 @@
 
 - Status: Proposed
 - Date: 2026-11-26
-- Issues: #1205, #1206, #1204 (objective)
+- Issues: #1208, #1205, #1206, #1204 (objective)
 - Builds on: [ADR 0002](0002-retire-helix-core.md), [ADR 0004](0004-surface-roles-dark-elevation-density-and-named-theme-presets.md)
 
 ## Context
