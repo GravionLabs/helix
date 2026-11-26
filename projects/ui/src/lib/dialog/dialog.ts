@@ -34,6 +34,9 @@ export type HxDialogPosition =
   | 'bottom-left'
   | 'bottom-right';
 
+/** Width class of `hx-dialog`, by content: a confirmation, a form of a few fields, a wide form or table. */
+export type HxDialogSize = 'sm' | 'md' | 'lg';
+
 /** Where a dialog sits on the screen, as a CDK global position strategy. */
 function positionStrategy(overlay: Overlay, position: HxDialogPosition): PositionStrategy {
   const strategy = overlay.position().global();
@@ -112,7 +115,9 @@ export class HxDialog {
   /** Clicking the mask closes a modal dialog. */
   readonly dismissableMask = input(false, { transform: booleanAttribute });
   readonly position = input<HxDialogPosition>('center');
-  /** CSS width, e.g. `30rem`. */
+  /** Width class by content, from the `--h-dialog-<size>-width` tokens. */
+  readonly size = input<HxDialogSize>('md');
+  /** CSS width, e.g. `30rem`; wins over `size`. */
   readonly width = input<string>();
   readonly height = input<string>();
   /** Extra CSS classes for the overlay pane. */
@@ -149,7 +154,11 @@ export class HxDialog {
     const ref = this.#dialog.open(panel, {
       hasBackdrop: modal,
       backdropClass: 'hx-dialog-backdrop',
-      panelClass: ['hx-dialog-panel', ...[this.panelClass() ?? []].flat()],
+      panelClass: [
+        'hx-dialog-panel',
+        `hx-dialog-size-${this.size()}`,
+        ...[this.panelClass() ?? []].flat(),
+      ],
       width: this.width(),
       height: this.height(),
       maxWidth: 'calc(100vw - 2rem)',

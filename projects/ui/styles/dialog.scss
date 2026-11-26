@@ -2,12 +2,19 @@
  * Dialog: `<hx-dialog>` and the dialogs of `HxDialogService`. The box (`.hx-dialog`) is a grid of the title, the
  * content and the footer, with the close button in the title row (it comes last in the DOM, so the content gets the
  * focus first). The mask is `.hx-dialog-backdrop`; the pane and the global positioning are the CDK's. The content
- * scrolls when the dialog is taller than the screen.
+ * scrolls when the dialog is taller than the screen. `.hx-dialog-size-sm|md|lg` set the width of the pane.
  */
 @use 'icons' as *;
 
 .hx-dialog-anchor {
   display: none;
+}
+
+// The width of the pane by `size`; a `width` is an inline style on the pane and wins.
+@each $size in sm, md, lg {
+  .hx-dialog-size-#{$size} {
+    width: var(--h-dialog-#{$size}-width);
+  }
 }
 
 .hx-dialog-backdrop {

@@ -27,6 +27,15 @@ describe('helix-ui styles', () => {
     }
   });
 
+  it('takes the width of each dialog size from its token', () => {
+    const css = styles.find((s) => s.name === 'dialog')?.css ?? '';
+    for (const size of ['sm', 'md', 'lg']) {
+      expect(css).toContain(
+        `.hx-dialog-size-${size} {\n  width: var(--h-dialog-${size}-width);\n}`,
+      );
+    }
+  });
+
   it('lets the select panel fill the overlay pane, which is a flex row', () => {
     const select = styles.find((s) => s.name === 'select')?.css ?? '';
     expect(select).toMatch(/\.hx-select-panel \{[^}]*flex: 1 1 auto/);
