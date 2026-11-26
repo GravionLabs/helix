@@ -1,7 +1,7 @@
 # @gravionlabs/helix-lint
 
-The lint preset of Helix: a Stylelint config and an ESLint flat config that enforce the UX style guide. See
-[ADR 0009](../../docs/adr/0009-type-scale-spacing-form-field-list-row-and-lint-preset.md).
+The lint preset of Helix: a Stylelint config and an ESLint flat config that enforce the UX style guide. Full docs:
+[Lint preset](https://github.com/GravionLabs/helix/blob/main/docs/LINT.md).
 
 - `@gravionlabs/helix-lint/stylelint`: the Stylelint config.
 - `@gravionlabs/helix-lint/eslint`: the ESLint flat config.
@@ -9,7 +9,14 @@ The lint preset of Helix: a Stylelint config and an ESLint flat config that enfo
 `stylelint`, `eslint` and `@angular-eslint/template-parser` are peer dependencies.
 
 ```sh
-pnpm add -D @gravionlabs/helix-lint
+pnpm add -D @gravionlabs/helix-lint stylelint eslint @angular-eslint/template-parser
+```
+
+## Commands
+
+```sh
+stylelint "**/*.{css,scss}"
+eslint "**/*.html"
 ```
 
 ## Stylelint
@@ -74,4 +81,8 @@ export default defineConfig(
 );
 ```
 
-The package is in development. Adoption follows in #1214.
+## Adopting the preset in an app
+
+Start with an allowlist phase (ADR 0008, Consequences): add the preset, write one `helixAllow` entry with its reason
+for what you do not fix in the same change, let the lint run block in CI, then migrate the files and remove the
+entries. A new or stricter rule of a later release is adopted the same way.

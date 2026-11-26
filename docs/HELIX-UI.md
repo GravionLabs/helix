@@ -179,6 +179,11 @@ reduced motion.
 Apps are free to keep PrimeIcons (`pi pi-*`) for the content of their own pages and for the `icon` field of menu
 items; helix-ui components that take an icon (`icon="pi pi-home"`) accept the classes of any icon font.
 
+## Lint preset
+
+`@gravionlabs/helix-lint` is the Stylelint and ESLint preset for apps that use helix-ui: colors and font sizes from
+the tokens, no raw controls without a Helix directive. See [Lint preset](LINT.md).
+
 ## Relation to helix-core
 
 `helix-ui` replaced the components of the vendored PrimeNG fork `@gravionlabs/helix-core` ([ADR 0001](adr/0001-styling-foundation.md), [ADR 0002](adr/0002-retire-helix-core.md)). The fork is removed from the workspace; `helix-shell`, `helix-zod`, `helix-ag-grid` and the demo use `helix-ui` only, and `pnpm lint:no-core` fails when anything imports `helix-core`.

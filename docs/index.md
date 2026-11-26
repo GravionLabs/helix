@@ -62,5 +62,5 @@ import { HxButton } from '@gravionlabs/helix-ui';
 
 Components are standalone elements (`<hx-select>`) and attributes on native elements (`<button hx-button>`). Browse
 the [component reference](components/README.md), the [helix-ui overview](HELIX-UI.md), the
-[shell API](HELIX-SHELL.md) or the [roadmap](ROADMAP.md). Colours, dark mode and the primary colour are CSS custom
+[shell API](HELIX-SHELL.md), the [lint preset](LINT.md) or the [roadmap](ROADMAP.md). Colours, dark mode and the primary colour are CSS custom
 properties (`--h-*`) that the theme service of helix-ui changes at runtime; see [Theming](THEMING.md).

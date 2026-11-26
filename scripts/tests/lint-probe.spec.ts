@@ -48,6 +48,12 @@ describe('lint probe', () => {
       '@angular-eslint/template/click-events-have-key-events',
       '@angular-eslint/template/interactive-supports-focus',
       '@angular-eslint/template/prefer-control-flow',
+      'helix/no-raw-control',
+      'helix/no-raw-control',
     ]);
+    // probe.html has a raw <input> too, so the raw <button> of the probe is asserted by its message
+    expect(result.messages.map((m) => m.message)).toContainEqual(
+      expect.stringContaining('Raw `<button>`'),
+    );
   });
 });
