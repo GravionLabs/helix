@@ -1,6 +1,5 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
 // @ts-expect-error plain .mjs script without types
@@ -11,7 +10,7 @@ const pkg = JSON.parse(readFileSync(join(src, 'package.json'), 'utf8'));
 
 describe('@gravionlabs/helix-lint package', () => {
   let out: string | undefined;
-  afterEach(() => out && rmSync(out, { recursive: true, force: true }));
+  afterEach(() => out && rmSync(dirname(out), { recursive: true, force: true }));
 
   it('declares the package of ADR 0009', () => {
     expect(pkg.name).toBe('@gravionlabs/helix-lint');
@@ -26,8 +25,10 @@ describe('@gravionlabs/helix-lint package', () => {
     expect(Object.keys(pkg.exports)).toEqual(expect.arrayContaining(['./stylelint', './eslint']));
   });
 
-  it('build copies the package to the out dir with valid placeholder entries', async () => {
-    out = join(mkdtempSync(join(tmpdir(), 'helix-lint-')), 'lint');
+  it('build copies the package to the out dir with importable entries', async () => {
+    // inside the workspace, so the peer dependencies of the entries resolve
+    mkdirSync('dist', { recursive: true });
+    out = join(mkdtempSync(resolve('dist/helix-lint-')), 'lint');
     buildLint(src, out);
     for (const file of ['package.json', 'README.md', 'LICENSE.md']) {
       expect(existsSync(join(out, file))).toBe(true);
@@ -36,7 +37,7 @@ describe('@gravionlabs/helix-lint package', () => {
       .default;
     const eslint = (await import(pathToFileURL(join(out, pkg.exports['./eslint'])).href)).default;
     expect(stylelint).toEqual({});
-    expect(eslint).toEqual([]);
+    expect(Object.keys(eslint[0].rules)).toEqual(['helix/no-raw-control']);
   });
 
   it('ci versions and publishes lint', () => {
