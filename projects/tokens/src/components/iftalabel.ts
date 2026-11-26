@@ -10,11 +10,11 @@ export const iftalabel = {
     transitionDuration: '0.2s',
     positionX: '{form.field.padding.x}',
     top: '{form.field.padding.y}',
-    fontSize: '0.75rem',
+    fontSize: '{fontSize.xs}',
     fontWeight: '400',
   },
   input: {
-    paddingTop: '1.5rem',
+    paddingTop: '{space.6}',
     paddingBottom: '{form.field.padding.y}',
   },
 } satisfies TokenTree;

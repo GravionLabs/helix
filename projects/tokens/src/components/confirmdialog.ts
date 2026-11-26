@@ -8,6 +8,6 @@ export const confirmdialog = {
     color: '{overlay.modal.color}',
   },
   content: {
-    gap: '1rem',
+    gap: '{space.4}',
   },
 } satisfies TokenTree;

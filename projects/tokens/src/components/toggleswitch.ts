@@ -7,7 +7,7 @@ export const toggleswitch = {
     width: '2.5rem',
     height: '1.5rem',
     borderRadius: '30px',
-    gap: '0.25rem',
+    gap: '{space.1}',
     shadow: '{form.field.shadow}',
     focusRing: {
       width: '{focus.ring.width}',

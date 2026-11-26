@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { HX_FIELD } from '../internal/field/context';
 import { nextId } from '../internal/ids';
 import { type Accessor, compareValues, type HxOption, resolveOptions } from '../internal/options';
 
@@ -53,7 +54,7 @@ export type HxSelectItem<V = unknown> = HxOption<V>;
  *
  * `options` may hold primitives (label = the value as text) or objects (`optionLabel`, `optionValue` and
  * `optionDisabled` name a key or give a function; defaults `label`, `value` and `disabled`).
- * Give the select a visible `<label for>` (with `inputId`) or an `ariaLabel`.
+ * Give the select a visible `<label for>` (with `inputId`) or an `ariaLabel`, or put it in an `hx-field`.
  */
 @Component({
   selector: 'hx-select',
@@ -70,7 +71,7 @@ export type HxSelectItem<V = unknown> = HxOption<V>;
     '[class.hx-select-fluid]': 'fluid()',
     '[class.hx-select-disabled]': 'isDisabled()',
     '[class.hx-select-has-clear]': 'canClear()',
-    '[class.hx-select-invalid]': 'invalid()',
+    '[class.hx-select-invalid]': 'showsInvalid()',
     '[class.hx-filled]': '!!selected()',
     '(focusout)': 'onFocusOut($event)',
   },
@@ -113,6 +114,17 @@ export class HxSelect<V = unknown> implements ControlValueAccessor, FormValueCon
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
   readonly touch = output<void>();
+
+  /** The surrounding `hx-field`, when this is the control it wires. */
+  readonly #field = inject(HX_FIELD, { optional: true });
+  protected readonly field = computed(() =>
+    this.#field?.control() === this.#host.nativeElement ? this.#field : null,
+  );
+  // inside a field the select shows as invalid with it (once touched), not as soon as the value is invalid
+  protected readonly showsInvalid = computed(() => this.field()?.invalid() ?? this.invalid());
+  protected readonly describedBy = computed(
+    () => [this.ariaDescribedby(), this.field()?.describedBy()].filter(Boolean).join(' ') || null,
+  );
 
   readonly open = signal(false);
   protected readonly panelWidth = signal(0);

@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const inputotp = {
   root: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   input: {
     width: '2.5rem',

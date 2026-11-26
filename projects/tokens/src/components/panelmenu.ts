@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const panelmenu = {
   root: {
-    gap: '0.5rem',
+    gap: '{space.2}',
     transitionDuration: '{transition.duration}',
   },
   panel: {
@@ -27,7 +27,7 @@ export const panelmenu = {
     focusBackground: '{navigation.item.focus.background}',
     color: '{navigation.item.color}',
     focusColor: '{navigation.item.focus.color}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '{navigation.item.padding}',
     borderRadius: '{content.border.radius}',
     icon: {
@@ -36,7 +36,7 @@ export const panelmenu = {
     },
   },
   submenu: {
-    indent: '1rem',
+    indent: '{space.4}',
   },
   submenuIcon: {
     color: '{navigation.submenu.icon.color}',

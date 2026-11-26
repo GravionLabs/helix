@@ -5,7 +5,7 @@ import type { TokenTree } from '../types.ts';
 export const paginator = {
   root: {
     padding: '0.5rem 1rem',
-    gap: '0.25rem',
+    gap: '{space.1}',
     borderRadius: '{content.border.radius}',
     background: '{content.background}',
     color: '{content.color}',

@@ -8,6 +8,8 @@ import {
   hexToRgb,
   shellConstants,
 } from '../design-system/tokens.mjs';
+import { resolveTokens } from '../tokens/resolve.mjs';
+import { helixTokens } from '../../projects/tokens/src/index.ts';
 
 const EXPORT = resolve(__dirname, '../../dist/tokens/helix.json');
 
@@ -58,6 +60,51 @@ describe('shellConstants', () => {
       'topbar-height': '4rem',
       'control-height': '32px',
     });
+  });
+});
+
+describe('type scale and spacing groups', () => {
+  const { tokens } = buildTokens(resolveTokens(helixTokens).json, { shell: {} });
+
+  it('lists the spacing steps, in px of the 14px root', () => {
+    const steps = tokens.spacing.tokens.filter((t: { name: string }) =>
+      t.name.startsWith('space-'),
+    );
+    expect(steps.map((t: { name: string; value: string }) => [t.name, t.value])).toEqual([
+      ['space-1', '3.5px'],
+      ['space-2', '7px'],
+      ['space-3', '10.5px'],
+      ['space-4', '14px'],
+      ['space-5', '17.5px'],
+      ['space-6', '21px'],
+      ['space-7', '24.5px'],
+      ['space-8', '28px'],
+    ]);
+  });
+
+  it('lists the type scale', () => {
+    const scale = tokens.type.groups.find((g: { name: string }) => g.name === 'Type scale');
+    expect(
+      scale?.styles.map((s: { name: string; fontSize: string }) => [s.name, s.fontSize]),
+    ).toEqual([
+      ['font-size-xs', '10.5px'],
+      ['font-size-sm', '12.25px'],
+      ['font-size-md', '14px'],
+      ['font-size-lg', '15.75px'],
+      ['font-size-xl', '17.5px'],
+      ['font-size-2xl', '21px'],
+      ['font-size-3xl', '28px'],
+    ]);
+  });
+
+  it('keeps the field paddings and text sizes, which now reference the steps', () => {
+    const spacing = tokens.spacing.tokens as { name: string; value: string }[];
+    expect(spacing.find((t) => t.name === 'field-padding-x')?.value).toBe('10.5px');
+    expect(spacing.find((t) => t.name === 'field-padding-y')?.value).toBe('7px');
+    const text = tokens.type.groups.find((g: { name: string }) => g.name === 'Text');
+    const size = (name: string) =>
+      text?.styles.find((s: { name: string }) => s.name === name)?.fontSize;
+    expect([size('small'), size('large')]).toEqual(['12.25px', '15.75px']);
   });
 });
 

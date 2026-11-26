@@ -47,7 +47,7 @@ export const tabbar = {
     color: '{green.500}',
   },
   actions: {
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '0 0.625rem',
   },
   colorScheme: {

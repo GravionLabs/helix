@@ -13,7 +13,7 @@ export const floatlabel = {
     positionY: '{form.field.padding.y}',
     fontWeight: '500',
     active: {
-      fontSize: '0.75rem',
+      fontSize: '{fontSize.xs}',
       fontWeight: '400',
     },
   },
@@ -24,7 +24,7 @@ export const floatlabel = {
   },
   in: {
     input: {
-      paddingTop: '1.5rem',
+      paddingTop: '{space.6}',
       paddingBottom: '{form.field.padding.y}',
     },
     active: {

@@ -60,6 +60,7 @@ describe('helix-ui styles', () => {
     ['drawer', 'drawer/drawer.ts'],
     ['fieldset', 'fieldset/fieldset.ts'],
     ['icon-field', 'icon-field/icon-field.ts'],
+    ['list', 'list/list.ts'],
     ['listbox', 'listbox/listbox.ts'],
     ['menu', 'menu/menu.ts'],
     ['menu', 'menu/menu-panel.ts'],
@@ -115,6 +116,23 @@ describe('helix-ui styles', () => {
   });
 });
 
+describe('list rows', () => {
+  it('colours the meta slot without specificity, so a badge in it keeps its own colours', () => {
+    const css = (componentStyles().find((s) => s.name === 'list')?.css ?? '').replace(
+      /\/\*[\s\S]*?\*\//g,
+      '',
+    );
+    const selectors = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .filter(([, selector, body]) => selector.includes('-meta') && /(?<![\w-])color:/.test(body))
+      .map(([, selector]) => selector.trim());
+    expect(selectors).toHaveLength(2);
+    // every compound selector of both rules sits inside `:where()`
+    for (const selector of selectors) {
+      expect(selector).toMatch(/^:where\([\s\S]*\)(\s*>\s*:where\([^)]*\))?$/);
+    }
+  });
+});
+
 describe('helix-ui tokens', () => {
   it('defines every token the styles read, light and dark', async () => {
     const styles = componentStyles();
@@ -123,6 +141,12 @@ describe('helix-ui tokens', () => {
     expect(tokens).toContain(':root,:host{--h-');
     expect(tokens).toContain('.app-dark');
     expect(tokens).toMatch(/--h-button-primary-background:/);
+    for (const step of ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']) {
+      expect(tokens).toContain(`--h-font-size-${step}:`);
+    }
+    for (let step = 1; step <= 8; step++) {
+      expect(tokens).toContain(`--h-space-${step}:${step / 4}rem;`);
+    }
   });
 });
 

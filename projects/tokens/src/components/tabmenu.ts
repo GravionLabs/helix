@@ -25,7 +25,7 @@ export const tabmenu = {
     padding: '1rem 1.125rem',
     fontWeight: '600',
     margin: '0 0 -1px 0',
-    gap: '0.5rem',
+    gap: '{space.2}',
     focusRing: {
       width: '{focus.ring.width}',
       style: '{focus.ring.style}',

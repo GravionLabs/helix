@@ -21,7 +21,7 @@ export const datepicker = {
     padding: '0 0 0.5rem 0',
   },
   title: {
-    gap: '0.5rem',
+    gap: '{space.2}',
     fontWeight: '500',
   },
   dropdown: {
@@ -69,7 +69,7 @@ export const datepicker = {
     margin: '0.5rem 0 0 0',
   },
   weekDay: {
-    padding: '0.25rem',
+    padding: '{space.1}',
     fontWeight: '500',
     color: '{content.color}',
   },
@@ -84,7 +84,7 @@ export const datepicker = {
     width: '2rem',
     height: '2rem',
     borderRadius: '50%',
-    padding: '0.25rem',
+    padding: '{space.1}',
     focusRing: {
       width: '{focus.ring.width}',
       style: '{focus.ring.style}',
@@ -114,8 +114,8 @@ export const datepicker = {
   timePicker: {
     padding: '0.5rem 0 0 0',
     borderColor: '{content.border.color}',
-    gap: '0.5rem',
-    buttonGap: '0.25rem',
+    gap: '{space.2}',
+    buttonGap: '{space.1}',
   },
   colorScheme: {
     light: {

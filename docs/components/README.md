@@ -12,11 +12,12 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Toggle button](toggle-button.md) | `hx-toggle-button` is a two-state button with its own labels, the look of one Select button segment.                                                    |
 | [Select button](select-button.md) | `hx-select-button` is a choice among a few options as a joined group of toggle buttons: native buttons with `aria-pressed` in a `role="group"`.         |
 
-## Form controls (16)
+## Form controls (17)
 
 | Component                                             | Description                                                                                                                                                                                                                                                                                                |
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Form controls](form-controls.md)                     | `hx-input`, `hx-checkbox`, `hx-radio` and `hx-switch` are **native elements drawn with CSS**, not wrapper components: they work unchanged with template-driven forms, reactive forms and Angular's signal forms, keep the native keyboard and screen-reader behaviour, and need no `ControlValueAccessor`. |
+| [Form field](form-field.md)                           | `hx-field` is a form field around one control: label, hint, error, required marker and the ARIA wiring.                                                                                                                                                                                                    |
 | [Float label](float-label.md)                         | `hx-float-label` wraps one control and its `<label for>` (the label comes after the control).                                                                                                                                                                                                              |
 | [Icon field](icon-field.md)                           | `hx-icon-field` puts an icon inside a text field.                                                                                                                                                                                                                                                          |
 | [Input group](input-group.md)                         | `hx-input-group` joins a field with text or button addons into one control.                                                                                                                                                                                                                                |
@@ -58,10 +59,11 @@ One page per component of `@gravionlabs/helix-ui`: usage, inputs and outputs, ac
 | [Message](message.md) | `hx-message` is an inline message next to the content it is about.                                                 |
 | [Tooltip](tooltip.md) | `[hx-tooltip]` shows a short text next to an element on hover and keyboard focus.                                  |
 
-## Navigation (7)
+## Navigation (8)
 
 | Component                   | Description                                                                                                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| [List row](list-row.md)     | `hx-list` with `[hx-list-row]` is a list of button and link rows with roving focus, for sidebars, search results and pickers.    |
 | [Menu](menu.md)             | `hx-menu` shows a list of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model), inline or as a popup, with nested submenus.           |
 | [Menubar](menubar.md)       | `hx-menubar` is a horizontal menu of [`HxMenuItem`s](../HELIX-UI.md#menu-item-model) with dropdown submenus, on the CDK menubar. |
 | [Tabs](tabs.md)             | `hx-tabs` shows one panel at a time, chosen by a row of tabs, in the WAI-ARIA tabs pattern.                                      |

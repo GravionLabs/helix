@@ -1,5 +1,68 @@
 <h1 class="sr-only">List</h1>
-<app-source-tabs library="helix-ui" directory="list" componentName="list-demo">
+<app-source-tabs
+  library="helix-ui"
+  directory="list"
+  componentName="list-demo"
+  [docs]="['list-row']"
+>
+  <div class="card list-rows">
+    <section>
+      <h2 class="demo-title">Selected rows</h2>
+      <hx-list aria-label="Branches">
+        @for (item of branches; track item.name) {
+          <button
+            hx-list-row
+            type="button"
+            [selected]="branch() === item.name"
+            [disabled]="item.locked"
+            (click)="branch.set(item.name)"
+          >
+            <span class="hx-list-row-icon pi pi-share-alt" aria-hidden="true"></span>
+            <span class="hx-list-row-label">{{ item.name }}</span>
+            <span class="hx-list-row-meta">{{ item.updated }}</span>
+          </button>
+        }
+      </hx-list>
+    </section>
+
+    <section>
+      <h2 class="demo-title">Navigation with the current page</h2>
+      <nav aria-label="Pages">
+        <hx-list>
+          <a hx-list-row routerLink="/uikit/list" current="page">
+            <span class="hx-list-row-icon pi pi-list" aria-hidden="true"></span>
+            <span class="hx-list-row-label">List</span>
+          </a>
+          <a hx-list-row routerLink="/uikit/tree">
+            <span class="hx-list-row-icon pi pi-share-alt" aria-hidden="true"></span>
+            <span class="hx-list-row-label">Tree</span>
+          </a>
+          <a hx-list-row routerLink="/uikit/menu">
+            <span class="hx-list-row-icon pi pi-bars" aria-hidden="true"></span>
+            <span class="hx-list-row-label">Menu</span>
+          </a>
+        </hx-list>
+      </nav>
+    </section>
+
+    <section>
+      <h2 class="demo-title">Listbox of results</h2>
+      <hx-list role="listbox" aria-label="Results">
+        @for (item of results; track item.title) {
+          <button
+            hx-list-row
+            type="button"
+            [selected]="result() === item.title"
+            (click)="result.set(item.title)"
+          >
+            <span class="hx-list-row-label">{{ item.title }}</span>
+            <hx-badge class="hx-list-row-meta" [value]="item.hits" />
+          </button>
+        }
+      </hx-list>
+    </section>
+  </div>
+
   <div class="card">
     <div class="mb-3 flex items-center justify-between gap-3">
       <h2 class="demo-title m-0">Products</h2>

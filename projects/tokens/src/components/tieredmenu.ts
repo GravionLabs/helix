@@ -31,7 +31,7 @@ export const tieredmenu = {
     },
   },
   submenu: {
-    mobileIndent: '1rem',
+    mobileIndent: '{space.4}',
   },
   submenuIcon: {
     size: '{navigation.submenu.icon.size}',

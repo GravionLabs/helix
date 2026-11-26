@@ -14,6 +14,11 @@ that status line and links to later records.
 | [0005](0005-helix-desktop-package.md)                                        | helix-desktop package, entry points and view contract                                    | proposed |
 | [0006](0006-key-cap-component-and-tooltip-shortcut.md)                       | Key-cap component and a shortcut in the tooltip                                          | proposed |
 | [0007](0007-helix-code-package.md)                                           | helix-code package, entry points and CodeMirror dependency                               | proposed |
+| [0008](0008-ux-style-guide-a-helix-base-guide-that-app-guides-extend.md)     | UX style guide: a Helix base guide that app guides extend                                | proposed |
+| [0009](0009-type-scale-spacing-form-field-list-row-and-lint-preset.md)       | Type scale, spacing, form field, list row and lint preset                                | accepted |
+| [0010](0010-component-tokens-reference-the-type-and-spacing-steps.md)        | Component tokens reference the type and spacing steps                                    | proposed |
+| [0011](0011-hx-field-wiring-context-and-error-visibility.md)                 | How `hx-field` wires a control and when it shows the error                               | proposed |
+| [0012](0012-list-row-roles-tab-stop-and-selected-state.md)                   | Roles, tab stop and selected state of `hx-list`                                          | proposed |
 
 Template:
 

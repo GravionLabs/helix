@@ -27,20 +27,11 @@
   align-items: center;
 }
 
-.field {
+.fields {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--h-space-4);
   max-width: 24rem;
-}
-
-.field label {
-  font-weight: 500;
-}
-
-.error {
-  color: var(--h-form-field-invalid-border-color);
-  font-size: 0.875rem;
 }
 
 fieldset {

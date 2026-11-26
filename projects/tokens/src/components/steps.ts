@@ -18,7 +18,7 @@ export const steps = {
       offset: '{focus.ring.offset}',
       shadow: '{focus.ring.shadow}',
     },
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   itemLabel: {
     color: '{text.muted.color}',

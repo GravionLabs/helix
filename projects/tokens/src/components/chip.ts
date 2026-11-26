@@ -5,9 +5,9 @@ import type { TokenTree } from '../types.ts';
 export const chip = {
   root: {
     borderRadius: '16px',
-    paddingX: '0.75rem',
-    paddingY: '0.5rem',
-    gap: '0.5rem',
+    paddingX: '{space.3}',
+    paddingY: '{space.2}',
+    gap: '{space.2}',
     transitionDuration: '{transition.duration}',
   },
   image: {

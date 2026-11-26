@@ -75,6 +75,41 @@ least 4.5:1 on every surface (`scripts/tests/surface-roles.spec.ts`). The shell 
 overrides them keeps working. The documentation site binds its `--vp-c-bg*`, `--vp-c-divider` and `--vp-c-gutter`
 to the same roles.
 
+## Type scale and spacing
+
+Two scales in the semantic layer (`projects/tokens/src/semantic.ts`), decided in
+[ADR 0009](adr/0009-type-scale-spacing-form-field-list-row-and-lint-preset.md). They are the same in light and dark.
+
+**Use a token, never a px size**: `font-size: var(--h-font-size-sm)`, `gap: var(--h-space-2)`.
+
+| Type token (`--h-*`) | Value    | Comfortable (14 px root) | Compact (13 px root) |
+| -------------------- | -------- | ------------------------ | -------------------- |
+| `font-size-xs`       | 0.75rem  | 10.5 px                  | 9.75 px              |
+| `font-size-sm`       | 0.875rem | 12.25 px                 | 11.375 px            |
+| `font-size-md`       | 1rem     | 14 px                    | 13 px                |
+| `font-size-lg`       | 1.125rem | 15.75 px                 | 14.625 px            |
+| `font-size-xl`       | 1.25rem  | 17.5 px                  | 16.25 px             |
+| `font-size-2xl`      | 1.5rem   | 21 px                    | 19.5 px              |
+| `font-size-3xl`      | 2rem     | 28 px                    | 26 px                |
+
+| Spacing token (`--h-*`) | Value   | Comfortable (14 px root) | Compact (13 px root) |
+| ----------------------- | ------- | ------------------------ | -------------------- |
+| `space-1`               | 0.25rem | 3.5 px                   | 3.25 px              |
+| `space-2`               | 0.5rem  | 7 px                     | 6.5 px               |
+| `space-3`               | 0.75rem | 10.5 px                  | 9.75 px              |
+| `space-4`               | 1rem    | 14 px                    | 13 px                |
+| `space-5`               | 1.25rem | 17.5 px                  | 16.25 px             |
+| `space-6`               | 1.5rem  | 21 px                    | 19.5 px              |
+| `space-7`               | 1.75rem | 24.5 px                  | 22.75 px             |
+| `space-8`               | 2rem    | 28 px                    | 26 px                |
+
+[Density](#density) needs no token of its own: both scales are in `rem`, so `compact` scales them with the 13 px
+root. The px columns assume the root sizes of `globals.css` and the density; with another root they follow it.
+
+A component token whose font size, padding, gap or indent equals a step references it (`'{fontSize.sm}'`,
+`'{space.2}'`), so overriding a step changes those components too. Values between the steps and shorthands of
+several lengths are written out, as are widths, heights and icon sizes, which are dimensions rather than spacing.
+
 ## In an application
 
 Load the tokens and the component styles of helix-ui, and the font:

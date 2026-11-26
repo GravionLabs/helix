@@ -4,9 +4,9 @@ import type { TokenTree } from '../types.ts';
 
 export const togglebutton = {
   root: {
-    padding: '0.25rem',
+    padding: '{space.1}',
     borderRadius: '{content.border.radius}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     fontWeight: '500',
     disabledBackground: '{form.field.disabled.background}',
     disabledBorderColor: '{form.field.disabled.background}',
@@ -22,11 +22,11 @@ export const togglebutton = {
     transitionDuration: '{form.field.transition.duration}',
     sm: {
       fontSize: '{form.field.sm.font.size}',
-      padding: '0.25rem',
+      padding: '{space.1}',
     },
     lg: {
       fontSize: '{form.field.lg.font.size}',
-      padding: '0.25rem',
+      padding: '{space.1}',
     },
   },
   icon: {

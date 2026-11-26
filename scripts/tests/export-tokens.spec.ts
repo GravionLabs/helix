@@ -46,6 +46,39 @@ describe('the Helix tokens (projects/tokens)', () => {
     expect(helix.dark['--h-text-color']).toBe('#dfdfd6');
   });
 
+  it.each([false, true])(
+    'export the type and spacing scales to CSS and JSON (base: %s)',
+    (base) => {
+      const expected = {
+        '--h-font-size-xs': '0.75rem',
+        '--h-font-size-sm': '0.875rem',
+        '--h-font-size-md': '1rem',
+        '--h-font-size-lg': '1.125rem',
+        '--h-font-size-xl': '1.25rem',
+        '--h-font-size-2xl': '1.5rem',
+        '--h-font-size-3xl': '2rem',
+        '--h-space-1': '0.25rem',
+        '--h-space-2': '0.5rem',
+        '--h-space-3': '0.75rem',
+        '--h-space-4': '1rem',
+        '--h-space-5': '1.25rem',
+        '--h-space-6': '1.5rem',
+        '--h-space-7': '1.75rem',
+        '--h-space-8': '2rem',
+      };
+      const dir = mkdtempSync(join(tmpdir(), 'tokens-'));
+      const { stem } = exportPreset('helix', { outDir: dir, base });
+      const css = readFileSync(join(dir, `${stem}.css`), 'utf8');
+      const json = JSON.parse(readFileSync(join(dir, `${stem}.json`), 'utf8'));
+      for (const [name, value] of Object.entries(expected)) {
+        expect(css, name).toContain(`${name}:${value};`);
+        expect(json.light[name], name).toBe(value);
+        expect(json.dark[name], name).toBeUndefined();
+      }
+      rmSync(dir, { recursive: true });
+    },
+  );
+
   it('export to files for the presets that have data, and refuse the others', () => {
     expect(PRESETS).toEqual(['helix']);
     expect(() => loadTokens('aura')).toThrow(/only helix has token data/);

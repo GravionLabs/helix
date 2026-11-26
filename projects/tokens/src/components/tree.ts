@@ -6,9 +6,9 @@ export const tree = {
   root: {
     background: '{content.background}',
     color: '{content.color}',
-    padding: '1rem',
+    padding: '{space.4}',
     gap: '2px',
-    indent: '1rem',
+    indent: '{space.4}',
     transitionDuration: '{transition.duration}',
   },
   node: {
@@ -26,7 +26,7 @@ export const tree = {
       offset: '-1px',
       shadow: '{focus.ring.shadow}',
     },
-    gap: '0.25rem',
+    gap: '{space.1}',
   },
   nodeIcon: {
     color: '{text.muted.color}',

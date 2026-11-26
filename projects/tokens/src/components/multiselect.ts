@@ -68,7 +68,7 @@ export const multiselect = {
     selectedFocusColor: '{list.option.selected.focus.color}',
     padding: '{list.option.padding}',
     borderRadius: '{list.option.border.radius}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   optionGroup: {
     background: '{list.option.group.background}',

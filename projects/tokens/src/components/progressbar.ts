@@ -13,7 +13,7 @@ export const progressbar = {
   },
   label: {
     color: '{primary.contrast.color}',
-    fontSize: '0.75rem',
+    fontSize: '{fontSize.xs}',
     fontWeight: '600',
   },
 } satisfies TokenTree;
