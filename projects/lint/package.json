@@ -32,6 +32,8 @@
   "files": [
     "stylelint.mjs",
     "eslint.mjs",
+    "allow.mjs",
+    "rules",
     "README.md",
     "LICENSE.md"
   ]
