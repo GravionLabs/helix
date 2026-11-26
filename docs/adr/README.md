@@ -14,6 +14,7 @@ that status line and links to later records.
 | [0005](0005-helix-desktop-package.md)                                        | helix-desktop package, entry points and view contract                                    | proposed |
 | [0006](0006-key-cap-component-and-tooltip-shortcut.md)                       | Key-cap component and a shortcut in the tooltip                                          | proposed |
 | [0007](0007-helix-code-package.md)                                           | helix-code package, entry points and CodeMirror dependency                               | proposed |
+| [0008](0008-ux-style-guide-a-helix-base-guide-that-app-guides-extend.md)     | UX style guide: a Helix base guide that app guides extend                                | proposed |
 
 Template:
 
