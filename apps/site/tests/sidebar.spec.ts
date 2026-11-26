@@ -64,6 +64,10 @@ describe('the guides of the sidebar', () => {
     expect(readFileSync(resolve(docs, 'HELIX-CODE.md'), 'utf8')).toContain('# Helix Code');
   });
 
+  it('lists the lint preset guide', () => {
+    expect(guides).toContainEqual({ text: 'Lint preset', link: '/LINT' });
+  });
+
   it('links every guide to an existing file', () => {
     const missing = guides
       .map((g) => g.link)

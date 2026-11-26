@@ -1,5 +1,10 @@
 // Stylelint config of this repository (#1168). oxlint lints only JS/TS; this lints CSS and SCSS and enforces the
-// design tokens (projects/tokens/src, exported as CSS by `pnpm tokens:export`). Formatting stays with oxfmt.
+// design tokens (projects/tokens/src, exported as CSS by `pnpm tokens:export`) with the Helix lint preset
+// (docs/LINT.md), imported by path because the package is built from this repository. Formatting stays with oxfmt.
+import preset, { helixAllow } from './projects/lint/stylelint.mjs';
+
+const FONT_SIZE = 'declaration-property-value-allowed-list';
+
 /** @type {import('stylelint').Config} */
 export default {
   extends: ['stylelint-config-standard-scss'],
@@ -13,16 +18,8 @@ export default {
     'apps/site/.vitepress/dist/**',
   ],
   rules: {
-    // type scale: a token or one step of the helix scale (rem steps of the shell headings and the form field sizes)
-    'declaration-property-value-allowed-list': {
-      'font-size': [
-        '/^var\\(--/',
-        '/^(inherit|initial|unset|revert|smaller|larger)$/',
-        '/^(0\\.625|0\\.75|0\\.875|1|1\\.125|1\\.25|1\\.5|1\\.75|2|2\\.5)(rem|em)$/',
-        '/^calc\\(/',
-        '/^clamp\\(/',
-      ],
-    },
+    // token rules of the preset: no hex colors, no raw color functions, font sizes from the type scale
+    ...preset.rules,
     // switched off: helix classes are `helix-x__y--z` / `hx-` BEM, not kebab-case
     'selector-class-pattern': null,
     // switched off: blank lines are formatting; oxfmt owns formatting and keeps the author's blank lines
@@ -54,14 +51,30 @@ export default {
       { ignore: ['consecutive-duplicates-with-different-values'] },
     ],
     'selector-pseudo-element-no-unknown': [true, { ignorePseudoElements: ['ng-deep'] }],
-    // token rules: colors come from tokens, not from raw values
-    'color-no-hex': true,
-    'function-disallowed-list': ['rgb', 'rgba', 'hsl', 'hsla'],
   },
   overrides: [
+    // a later entry replaces the value of `rules` set before it, so the allowlist entries stay last
     {
-      // sizes that are off the type scale (px and odd rem values); snapping them would change the rendered
-      // output, so they stay until a design review picks scale steps. New code uses a token or a scale step.
+      // still enforced, with a wider value list than the preset; the helper checks files, rules and reason
+      ...helixAllow({
+        files: ['**/*.{css,scss}'],
+        rules: [FONT_SIZE],
+        reason:
+          'Helix has not migrated its own CSS to the type scale tokens: rem and em steps of the scale, component font-size tokens and calc() or clamp() stay allowed until it does',
+      }),
+      rules: {
+        [FONT_SIZE]: {
+          'font-size': [
+            '/^var\\(--/',
+            '/^(inherit|initial|unset|revert|smaller|larger)$/',
+            '/^(0\\.625|0\\.75|0\\.875|1|1\\.125|1\\.25|1\\.5|1\\.75|2|2\\.5)(rem|em)$/',
+            '/^calc\\(/',
+            '/^clamp\\(/',
+          ],
+        },
+      },
+    },
+    helixAllow({
       files: [
         'apps/helix-demo/src/app/pages/desktop/overview/desktop-overview-demo.scss',
         'apps/helix-demo/src/app/pages/uikit/dynamicform-json/dynamic-form-json-demo.scss',
@@ -72,13 +85,15 @@ export default {
         'projects/shell/src/lib/layout/components/topbar/actions/alert-action.scss',
         'projects/shell/src/lib/ui/empty-state/empty-state.scss',
       ],
-      rules: { 'declaration-property-value-allowed-list': null },
-    },
-    {
-      // opt-in page globals: the 14px base size of the page is deliberately in px, not root-relative
-      // (scripts/tests/shell-css.spec.ts asserts it)
+      rules: [FONT_SIZE],
+      reason:
+        'Sizes off the type scale (px and odd rem values): snapping them changes the rendered output, so they stay until a design review picks scale steps',
+    }),
+    helixAllow({
       files: ['projects/shell/globals-src.css'],
-      rules: { 'declaration-property-value-allowed-list': null },
-    },
+      rules: [FONT_SIZE],
+      reason:
+        'Opt-in page globals: the 14px base size of the page is deliberately in px (scripts/tests/shell-css.spec.ts asserts it)',
+    }),
   ],
 };
